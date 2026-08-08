@@ -1481,7 +1481,13 @@
     "ThibaultMoulin",
     "NicolasSerge",
     "BenoitThomasset",
-    "PierreDussault"
+    "PierreDussault",
+    "LePetitBoursier",
+    "LuccaFroger",
+    "CryptoBulle",
+    "CryptoRoxane",
+    "VincentLavoie_",
+    "ThibaudBoulais"
   ],
   "en": [
     "Chubby",
@@ -1828,7 +1834,9 @@
     "Ricardo",
     "Sleepagotchi",
     "Stayone",
-    "Davido"
+    "Davido",
+    "GRITCULT",
+    "FELIX"
   ],
   "history": [
     {
@@ -10964,6 +10972,46 @@
     {
       "lang": "fr",
       "handle": "PierreDussault",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "en",
+      "handle": "GRITCULT",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "en",
+      "handle": "FELIX",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LePetitBoursier",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuccaFroger",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBulle",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRoxane",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLavoie_",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudBoulais",
       "added": "2026-08-07"
     }
   ]

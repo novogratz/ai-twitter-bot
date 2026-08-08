@@ -1304,3 +1304,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 58 views: Asked my bank’s AI to review my mortgage. It suggested I buy a crypto wallet with my down payment fo
   - 1 likes / 69 views: Muse Spark 1.2? Cute. OpenAI is still picking Huggingface’s pockets. The real winner isn't the model
   - 1 likes / 46 views: me on the phone trying to explain this raise to my husband’s 401k like it’s a miracle
+
+## 2026-08-07
+
+**Activity** — total actions: 686
+  - by type: reply=610, quote=40, quote_gif=17, post=9, hotake=8, retweet=2
+  - top sources: SEARCH-HOT=388, FEED-SWEEP-FEED=117, FEED-SWEEP-FOLLOWING=75, QUOTE=27, GIF=21, DEBATE=21, VIP=7, BREAKING_QRT=6
+  - top reply targets: @MarioNawfal=8, @CoinMarketCap=7, @FirstSquawk=6, @saylor=6, @Polymarket=6
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 34 views: Scientists used AI to create 16 new viruses.  I’m not nervous. My insurance deductible covers "theor
+  - 1 likes / 30 views: Me switching from doomscrolling the 23,000 job loss to booking the flight to my weekend party becaus
+  - 1 likes / 77 views: me on my laptop like i have the typing speed to keep up with your ego
