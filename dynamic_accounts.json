@@ -1512,7 +1512,16 @@
     "CyrilHedrick",
     "NicolasVieille",
     "RomainGuedj",
-    "JulienGagnon"
+    "JulienGagnon",
+    "NolwennBoulay",
+    "GaspDeFrim",
+    "OlivierTauran",
+    "ThomDutot",
+    "JulesGauthier",
+    "ThibautG",
+    "RomainBouquier",
+    "AlexisDebove",
+    "Crypto_Ben"
   ],
   "en": [
     "Chubby",
@@ -11186,6 +11195,51 @@
     {
       "lang": "fr",
       "handle": "JulienGagnon",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "NolwennBoulay",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspDeFrim",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierTauran",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomDutot",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesGauthier",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautG",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBouquier",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDebove",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Ben",
       "added": "2026-08-08"
     }
   ]
