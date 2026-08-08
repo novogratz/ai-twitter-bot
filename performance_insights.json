@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-08T05:35:46.275873",
-  "window_7d_actions": 5511,
-  "window_24h_actions": 673,
+  "generated_at": "2026-08-08T09:35:46.302455",
+  "window_7d_actions": 5541,
+  "window_24h_actions": 644,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5508
+      "count": 5539
     },
     {
       "pattern": "METAPHOR",
-      "count": 2
+      "count": 1
     },
     {
       "pattern": "EN_ANCHOR",
@@ -18,16 +18,16 @@
   ],
   "worst_patterns": [
     {
+      "pattern": "METAPHOR",
+      "count": 1
+    },
+    {
       "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
-      "pattern": "METAPHOR",
-      "count": 2
-    },
-    {
       "pattern": "UNKNOWN",
-      "count": 5508
+      "count": 5539
     }
   ],
   "best_hours_utc": [
@@ -55,44 +55,44 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2575
+      "count": 2591
     },
     {
       "topic": "IA",
-      "count": 2072
+      "count": 2081
     },
     {
       "topic": "Crypto",
-      "count": 645
+      "count": 651
     },
     {
       "topic": "Bourse",
-      "count": 444
+      "count": 441
     },
     {
       "topic": "Spatial",
-      "count": 146
+      "count": 148
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.037,
-      "7d_rate": 0.026
+      "24h_rate": 0.042,
+      "7d_rate": 0.027
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2328
+      "count": 2347
     },
     {
       "pillar": "other",
-      "count": 1471
+      "count": 1467
     },
     {
       "pillar": "market_trauma",
-      "count": 1405
+      "count": 1422
     },
     {
       "pillar": "meme_reaction",
@@ -100,7 +100,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 92
+      "count": 90
     },
     {
       "pillar": "ai_vs_btc",
@@ -110,23 +110,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 272
+      "count": 263
     },
     {
       "pillar": "other",
-      "count": 180
+      "count": 173
     },
     {
       "pillar": "market_trauma",
-      "count": 179
+      "count": 169
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 21
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
@@ -145,21 +145,21 @@
       "pillar": "market_trauma",
       "posts": 48,
       "avg_likes": 0.17,
-      "avg_views": 47.2,
+      "avg_views": 47.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 76,
       "avg_likes": 0.14,
-      "avg_views": 45.1,
+      "avg_views": 44.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 64,
       "avg_likes": 0.12,
-      "avg_views": 38.5,
+      "avg_views": 38.2,
       "low_sample": false
     },
     {
@@ -173,11 +173,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4916
+      "count": 4937
     },
     {
       "type": "quote",
-      "count": 328
+      "count": 334
     },
     {
       "type": "quote_gif",
@@ -189,7 +189,7 @@
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 50
     },
     {
       "type": "retweet",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-08T05:33:48.194052",
-      "text": "X402 turns the API into a payment rail. Cloudflare isn't a proxy, it's a merchant processor for bots.\nbilling",
+      "ts": "2026-08-08T09:35:10.032701",
+      "text": "Openai is burning $5b/yr while anthropic raises at a $157b valuation. it's not a race, it's a capital war where the one with deepest pockets buys the finish line.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T05:31:38.268166",
-      "text": "Spot ETFs bought $101M while the market watched charts.\n\nsaylor's cost basis is $67k. you're buying at retail markup.",
+      "ts": "2026-08-08T09:34:53.885885",
+      "text": "FOMO isn't a defect. It's a feature. The top 1800 stocks are a group chat that likes each other's posts, and you're just jealous you weren't invited to the party.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T05:30:05.409752",
-      "text": "NASDQ up 0.1% and gold up 0.5%.\n\nthe market is holding its breath while the vix sleeps.",
+      "ts": "2026-08-08T09:32:00.604206",
+      "text": "OpenAI capped profit = regulated utility. The moment Google and Meta face the same constraint, they'll lobby for the exact same guardrails. regulation is the moat.",
       "type": "reply"
     }
   ]

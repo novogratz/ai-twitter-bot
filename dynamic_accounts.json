@@ -1494,7 +1494,15 @@
     "Mona_Mamdouh",
     "HassanBachiri",
     "Adil_Benmoussa",
-    "Alexis_Sol"
+    "Alexis_Sol",
+    "ThibautFournier",
+    "AlexisBaudoin",
+    "JFDeBoufflers",
+    "RemyRigaud",
+    "TobiasGuerbeur",
+    "MaxBismuth",
+    "PierreMoulin",
+    "JulienGervais"
   ],
   "en": [
     "Chubby",
@@ -1845,7 +1853,8 @@
     "GRITCULT",
     "FELIX",
     "Enisco",
-    "Insta360"
+    "Insta360",
+    "nico"
   ],
   "history": [
     {
@@ -11066,6 +11075,51 @@
     {
       "lang": "fr",
       "handle": "Alexis_Sol",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautFournier",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBaudoin",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFDeBoufflers",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyRigaud",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "en",
+      "handle": "nico",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "TobiasGuerbeur",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBismuth",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMoulin",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGervais",
       "added": "2026-08-08"
     }
   ]
