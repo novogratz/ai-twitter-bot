@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-09T01:35:46.289217",
-  "window_7d_actions": 5342,
-  "window_24h_actions": 595,
+  "generated_at": "2026-08-09T05:35:46.367685",
+  "window_7d_actions": 5308,
+  "window_24h_actions": 594,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5341
+      "count": 5307
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5341
+      "count": 5307
     }
   ],
   "best_hours_utc": [
@@ -47,46 +47,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2481
+      "count": 2471
     },
     {
       "topic": "IA",
-      "count": 2022
+      "count": 1996
     },
     {
       "topic": "Crypto",
-      "count": 633
+      "count": 631
     },
     {
       "topic": "Bourse",
-      "count": 437
+      "count": 439
     },
     {
       "topic": "Spatial",
-      "count": 148
+      "count": 147
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2257
+      "count": 2239
     },
     {
       "pillar": "other",
-      "count": 1405
+      "count": 1397
     },
     {
       "pillar": "market_trauma",
-      "count": 1379
+      "count": 1375
     },
     {
       "pillar": "meme_reaction",
-      "count": 167
+      "count": 165
     },
     {
       "pillar": "reply_bait",
-      "count": 86
+      "count": 84
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 236
+      "count": 237
     },
     {
       "pillar": "other",
-      "count": 160
+      "count": 164
     },
     {
       "pillar": "market_trauma",
-      "count": 154
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 11
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 51,
+      "posts": 50,
       "avg_likes": 0.18,
-      "avg_views": 48.4,
+      "avg_views": 46.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 75,
       "avg_likes": 0.12,
-      "avg_views": 44.5,
+      "avg_views": 44.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 64,
       "avg_likes": 0.11,
-      "avg_views": 39.2,
+      "avg_views": 38.9,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4768
+      "count": 4733
     },
     {
       "type": "quote",
-      "count": 315
+      "count": 318
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 133
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-09T01:31:39.037041",
-      "text": "The 18-month gap where ai can act but can still be unplugged.\n\nthat’s the sweet spot. openai raises $5b/yr to burn before the switch.",
+      "ts": "2026-08-09T05:35:30.144803",
+      "text": "Montreal’s AI cluster just grew by one subnet demo.\n\nBittensor’s real moat is that no one can fork its model weights.\n\nYou’re watching a live dashboard.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T01:28:53.318822",
-      "text": "Senate needs 1 ref to DOJ. AI needs 10k GPUs to avert. OpenAI’s “confusion” over context windows is just the political version of our model collapsing at 8k tokens. 📉⚡",
-      "type": "quote"
+      "ts": "2026-08-09T05:33:10.508593",
+      "text": "Maruti investing $7M in biogas for 20 tonnes/day.\n\nNvidia spends billions for 5MW of training power.\nMaruti plants trees for $1.",
+      "type": "reply"
     },
     {
-      "ts": "2026-08-09T01:26:47.132481",
-      "text": "Context windows are expensive. memory is cheaper. provenance is the only moat left. ship the stack, not the deck.",
+      "ts": "2026-08-09T05:30:09.944722",
+      "text": "Btc down 35% while copper up 66% isn't a crypto crash. it's the market pricing in the grid.",
       "type": "reply"
     }
   ]

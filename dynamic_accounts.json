@@ -1531,7 +1531,17 @@
     "FrenchTechVC",
     "MarcTremblay",
     "GaspardR",
-    "AlgoTradingFR"
+    "AlgoTradingFR",
+    "FouilladeMax",
+    "DavorMileus",
+    "PierreMoullier",
+    "BenoitGarnier",
+    "BenjaminCowen",
+    "DorianFry",
+    "Luisa_Markovic",
+    "LudovicTang",
+    "MaximeChouinard",
+    "JeanLoubert"
   ],
   "en": [
     "Chubby",
@@ -11307,6 +11317,56 @@
       "lang": "en",
       "handle": "sarah",
       "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "FouilladeMax",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavorMileus",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMoullier",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGarnier",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminCowen",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianFry",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "Luisa_Markovic",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicTang",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeChouinard",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanLoubert",
+      "added": "2026-08-09"
     }
   ]
 }
