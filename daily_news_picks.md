@@ -16772,3 +16772,31 @@ what you get for $0:
 In late 2024, after the o3 test-time compute demo, I c
   - https://x.com/fchollet/status/2085796727362052241
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 477).
+
+## 2026-08-09
+- **@wolf_bitcoin_** (6 likes, score 7/10) — INVESTOR PAUL BARRON ON WHERE MARKETS STAND RIGHT NOW:
+
+"13 governments are now holding a combined $26.8 billion in Bitcoin. The US leads in holdings but does not lead in clarity. Very unusual things
+  - https://x.com/WOLF_Bitcoin_/status/2086286349993226687
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 12).
+- **@yourfriendsommi** (51 likes, score 9/10) — Juicy News #1466
+
+ Bitcoin $65,000
+ Ethereum $1900
+ ETH-BTC = 0.029
+
+ Oil $78
+
+ Team PEDOPHILES defeat Team CENSORSHIP as the Bitcoin BIP 110 Fails 
+ 97% of Bitcoin holders want Altcoins and DeFi on B
+  - https://x.com/yourfriendSOMMI/status/2086216884039618722
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 63).
+- **@bitcoinarchive** (0 likes, score 9/10) — Bitcoin looks discounted and the $64,000 support is gaining strength — Ray Salmond, analyst.
+
+"Negative news is having a diminished impact."
+
+"Dips to $62,000 are quickly being bought."
+
+$70k is inevi
+  - https://x.com/BitcoinArchive/status/2086181339003301908
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 62).
