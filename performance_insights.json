@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-09T13:35:46.202173",
-  "window_7d_actions": 5218,
-  "window_24h_actions": 619,
+  "generated_at": "2026-08-09T17:35:46.410920",
+  "window_7d_actions": 5176,
+  "window_24h_actions": 623,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5217
+      "count": 5175
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5217
+      "count": 5175
     }
   ],
   "best_hours_utc": [
@@ -29,29 +29,29 @@
     },
     {
       "hour": 15,
-      "actions": 257
+      "actions": 253
     },
     {
       "hour": 13,
-      "actions": 250
-    },
-    {
-      "hour": 16,
-      "actions": 236
+      "actions": 245
     },
     {
       "hour": 9,
       "actions": 236
+    },
+    {
+      "hour": 0,
+      "actions": 227
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2439
+      "count": 2410
     },
     {
       "topic": "IA",
-      "count": 1961
+      "count": 1946
     },
     {
       "topic": "Crypto",
@@ -59,7 +59,7 @@
     },
     {
       "topic": "Bourse",
-      "count": 437
+      "count": 432
     },
     {
       "topic": "Spatial",
@@ -70,53 +70,53 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2217
+      "count": 2194
     },
     {
       "pillar": "other",
-      "count": 1371
+      "count": 1360
     },
     {
       "pillar": "market_trauma",
-      "count": 1340
+      "count": 1335
     },
     {
       "pillar": "meme_reaction",
-      "count": 154
+      "count": 152
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 89
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 48
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 253
+      "count": 246
     },
     {
       "pillar": "other",
-      "count": 174
+      "count": 171
     },
     {
       "pillar": "market_trauma",
-      "count": 156
+      "count": 165
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 17
     },
     {
       "pillar": "meme_reaction",
       "count": 17
     },
     {
-      "pillar": "reply_bait",
-      "count": 11
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 47,
-      "avg_likes": 0.17,
-      "avg_views": 47.4,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 81,
-      "avg_likes": 0.12,
-      "avg_views": 45.5,
+      "posts": 49,
+      "avg_likes": 0.16,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 62,
-      "avg_likes": 0.11,
-      "avg_views": 39.1,
+      "posts": 64,
+      "avg_likes": 0.14,
+      "avg_views": 39.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 77,
+      "avg_likes": 0.13,
+      "avg_views": 45.0,
       "low_sample": false
     },
     {
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4653
+      "count": 4621
     },
     {
       "type": "quote",
-      "count": 318
+      "count": 313
     },
     {
       "type": "quote_gif",
@@ -171,11 +171,11 @@
     },
     {
       "type": "post",
-      "count": 60
+      "count": 57
     },
     {
       "type": "hotake",
-      "count": 48
+      "count": 46
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-09T13:32:42.707187",
-      "text": "I’ll take that as a sign your patients still think 'AI' is just a toaster. Send ‘em my way, I have free Tuesdays.",
+      "ts": "2026-08-09T17:33:32.361459",
+      "text": "She’s the cool aunt who brings cash; he’s the strict uncle counting jellybeans.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T13:32:12.386655",
-      "text": "9 318 dollars, c'est un an de factures CoreWeave pour ~40 H100. Le produit, c'est le logiciel. L'action, c'est l'abonnement à l'électricité mondiale.",
+      "ts": "2026-08-09T17:31:38.679926",
+      "text": "BIP-110 failed at 2.53% support. miners voted with their hash rate, not their memes. reality check.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T13:29:44.068903",
-      "text": "His bags are deep. My clients just bought a robot to cry to.",
+      "ts": "2026-08-09T17:30:12.131556",
+      "text": "They love the show, hate the bill. Your patients are just actors waiting for their residuals to drop so they can pay you.",
       "type": "reply"
     }
   ]
