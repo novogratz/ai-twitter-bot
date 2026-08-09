@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-07-19T18:12:13.607086",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "pierre_robert1",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Co-fondateur de Coinhouse. Il a surv\u00e9cu aux crashs comme une cockroach dans un bunker nucl\u00e9aire. Ses takes sur l'adoption institutionnelle sont aussi secs que son caf\u00e9."
-      },
-      {
-        "handle": "RomainBoutonnier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Co-fondateur de Qonto. Il couvre la fintech, le VC et la tech FR avec une pr\u00e9cision chirurgicale. Pas de blabla, juste des faits qui tapent fort."
-      },
-      {
-        "handle": "CryptoDuchesse",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "Bas\u00e9e aux US mais cible francophone. Elle couvre les memecoins et les narratives DeFi avec un ton mordant qui fait mal (mais bien) rire."
-      },
-      {
-        "handle": "JulienDelannoy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "VP Engineering chez Mistral. Il twitte sur l'IA g\u00e9n\u00e9rative avec une pointe d'humour geek. Id\u00e9al pour comprendre la tech sans s'endormir sur le clavier."
-      },
-      {
-        "handle": "L30N",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Thibaut Leconte. Ex-Mistral, maintenant dans le VC crypto. Il poste des insights techniques et des takes sur Solana/ETH avec une pr\u00e9cision danoise."
-      },
-      {
-        "handle": "PierreLacerte",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Journaliste \u00e9conomique reconnu. Ses analyses sur l'\u00e9conomie qu\u00e9b\u00e9coise et am\u00e9ricaine sont solides, sans le c\u00f4t\u00e9 pompeux des m\u00e9dias traditionnels."
-      },
-      {
-        "handle": "AdrienTixier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Analyste ind\u00e9pendant. Il couvre le march\u00e9 crypto avec un focus particulier sur la tech sous-jacente. Moins de hype, plus de substance."
-      }
-    ],
-    "summary": "Focus sur les fondateurs de la French AI/FinTech (Mistral, Qonto, Noveris) et les veterans crypto (Coinhouse). Au Qu\u00e9bec, on reste sur les pros de la bourse ETF. Aux US, on pille la diaspora francophone de haute qualit\u00e9. Z\u00e9ro influenceur 'gourou', que des gens qui font bouger la tech."
-  },
-  {
     "ts": "2026-07-19T19:53:05.954421",
     "raw_count": 8,
     "kept_count": 6,
@@ -9306,5 +9247,50 @@
       }
     ],
     "summary": "Un m\u00e9lange solide de poids lourds (Taleb, Mistral) et de sp\u00e9cialistes techniques (Debove, Bouquier, BenMoussa) pour \u00e9viter le bruit g\u00e9n\u00e9raliste. La sc\u00e8ne qu\u00e9b\u00e9coise est plus petite mais Ben et Bouquier tiennent la route."
+  },
+  {
+    "ts": "2026-08-08T19:36:33.533672",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainDartois",
+        "region": "france",
+        "niche": "ai",
+        "followers": 145000,
+        "reason": "Le patron de Mistral AI. Twitte des insights techniques bruts, pas du marketing de com'."
+      },
+      {
+        "handle": "Gaspard05",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Journaliste IA au Figaro. Va droit au but, couvre les mod\u00e8les open-source avant qu'ils soient cool."
+      },
+      {
+        "handle": "CyrilDong",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Fondateur de Lucca. Parle de SaaS, de lev\u00e9es de fonds et de la tech french-touch sans le 'storytelling' habituel."
+      },
+      {
+        "handle": "RomainFoucault",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais twitte en FR. Fond\u00e9 Bitcoin Magazine FR. Conna\u00eet la hype et le cycle mieux que personne."
+      },
+      {
+        "handle": "PierreLescanne",
+        "region": "france",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "Product Leader AI. Partage ses retours terrain sur l'impl\u00e9mentation LLM en entreprise. Rarement vu."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eaves ici, juste des makers et des analysts qui \u00e9crivent pour ceux qui comprennent. La France domine l'IA fr, le Qu\u00e9bec garde le cap sur la crypto s\u00e9rieuse, et les US apportent la vue am\u00e9ricaine francophone."
   }
 ]

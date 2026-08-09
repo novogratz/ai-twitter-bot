@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-08T17:35:46.208139",
-  "window_7d_actions": 5435,
-  "window_24h_actions": 609,
+  "generated_at": "2026-08-08T21:35:46.232361",
+  "window_7d_actions": 5401,
+  "window_24h_actions": 603,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5434
+      "count": 5400
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5434
+      "count": 5400
     }
   ],
   "best_hours_utc": [
@@ -47,78 +47,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2532
+      "count": 2514
     },
     {
       "topic": "IA",
-      "count": 2057
+      "count": 2045
     },
     {
       "topic": "Crypto",
-      "count": 639
+      "count": 637
     },
     {
       "topic": "Bourse",
-      "count": 436
+      "count": 439
     },
     {
       "topic": "Spatial",
-      "count": 147
+      "count": 146
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.039,
-      "7d_rate": 0.027
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2298
+      "count": 2292
     },
     {
       "pillar": "other",
-      "count": 1439
+      "count": 1420
     },
     {
       "pillar": "market_trauma",
-      "count": 1399
+      "count": 1392
     },
     {
       "pillar": "meme_reaction",
-      "count": 171
+      "count": 166
     },
     {
       "pillar": "reply_bait",
-      "count": 82
+      "count": 83
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 252
+      "count": 247
     },
     {
       "pillar": "other",
-      "count": 163
+      "count": 161
     },
     {
       "pillar": "market_trauma",
-      "count": 159
+      "count": 156
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "reply_bait",
@@ -135,53 +129,53 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 50,
+      "posts": 51,
       "avg_likes": 0.18,
-      "avg_views": 47.1,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 64,
-      "avg_likes": 0.11,
-      "avg_views": 38.3,
+      "avg_views": 46.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 75,
       "avg_likes": 0.11,
-      "avg_views": 44.3,
+      "avg_views": 44.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 63,
+      "avg_likes": 0.11,
+      "avg_views": 39.2,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
       "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 41.0,
+      "avg_views": 33.4,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4845
+      "count": 4822
     },
     {
       "type": "quote",
-      "count": 323
+      "count": 320
     },
     {
       "type": "quote_gif",
-      "count": 138
+      "count": 134
     },
     {
       "type": "post",
-      "count": 65
+      "count": 63
     },
     {
       "type": "hotake",
-      "count": 49
+      "count": 47
     },
     {
       "type": "retweet",
@@ -190,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-08T17:35:30.825145",
-      "text": "Carville’s AI generator is just RLHF on loop. 40% smart, 60% regurgitated punditry. he’s mad the bot outputs better punchlines than his clients.",
+      "ts": "2026-08-08T21:34:29.213471",
+      "text": "Miners are selling at $70k to buy chips at $3k. the cycle isn't broken, it's just refinancing the hardware debt in BTC.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T17:26:30.398276",
-      "text": "$NOW hit $4B on hype, $NOW hit $600k on luck. Patel didn't catch a wave, he caught a glitch in the retail attention span.",
+      "ts": "2026-08-08T21:33:59.772597",
+      "text": "Le « j’adore » sur un tweet de 4 mots, c’est presque une étude de cas à lui tout seul. La plupart des commentaires “engagés” sur X ont la profondeur d’un title tag généré à la chaîne, donc oui, parfois le vrai signal",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T17:23:23.098165",
-      "text": "Gems to Skills. Google is deleting your personalized notes to force subscription to the API.\n\nThe database is the product now.",
+      "ts": "2026-08-08T21:33:43.544212",
+      "text": "$1T in operating profit by 2028 requires sustaining ~80% gross margins while hyperscalers force capex cycles. the valuation isn't wrong, it's just priced for perfect execution.",
       "type": "reply"
     }
   ]

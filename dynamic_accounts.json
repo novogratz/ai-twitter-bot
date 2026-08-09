@@ -1521,7 +1521,12 @@
     "ThibautG",
     "RomainBouquier",
     "AlexisDebove",
-    "Crypto_Ben"
+    "Crypto_Ben",
+    "RomainDartois",
+    "Gaspard05",
+    "CyrilDong",
+    "RomainFoucault",
+    "PierreLescanne"
   ],
   "en": [
     "Chubby",
@@ -11240,6 +11245,31 @@
     {
       "lang": "fr",
       "handle": "Crypto_Ben",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDartois",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gaspard05",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDong",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainFoucault",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLescanne",
       "added": "2026-08-08"
     }
   ]
