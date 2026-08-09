@@ -1541,7 +1541,15 @@
     "Luisa_Markovic",
     "LudovicTang",
     "MaximeChouinard",
-    "JeanLoubert"
+    "JeanLoubert",
+    "jchancel",
+    "JulienGosselin",
+    "RomainLefebvre",
+    "NicolasRouvier",
+    "NathanLabbe",
+    "AlexisPrieur",
+    "JulienDeWit",
+    "VincentLacroix"
   ],
   "en": [
     "Chubby",
@@ -1895,7 +1903,9 @@
     "Insta360",
     "nico",
     "ollama",
-    "sarah"
+    "sarah",
+    "King",
+    "AGENTuzohcrypto"
   ],
   "history": [
     {
@@ -11366,6 +11376,56 @@
     {
       "lang": "fr",
       "handle": "JeanLoubert",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "King",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "jchancel",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGosselin",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLefebvre",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasRouvier",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "AGENTuzohcrypto",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanLabbe",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisPrieur",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeWit",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLacroix",
       "added": "2026-08-09"
     }
   ]
