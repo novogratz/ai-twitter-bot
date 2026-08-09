@@ -1526,7 +1526,12 @@
     "Gaspard05",
     "CyrilDong",
     "RomainFoucault",
-    "PierreLescanne"
+    "PierreLescanne",
+    "CryptoGaulois",
+    "FrenchTechVC",
+    "MarcTremblay",
+    "GaspardR",
+    "AlgoTradingFR"
   ],
   "en": [
     "Chubby",
@@ -1879,7 +1884,8 @@
     "Enisco",
     "Insta360",
     "nico",
-    "ollama"
+    "ollama",
+    "sarah"
   ],
   "history": [
     {
@@ -11270,6 +11276,36 @@
     {
       "lang": "fr",
       "handle": "PierreLescanne",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGaulois",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrenchTechVC",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcTremblay",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardR",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlgoTradingFR",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "en",
+      "handle": "sarah",
       "added": "2026-08-08"
     }
   ]

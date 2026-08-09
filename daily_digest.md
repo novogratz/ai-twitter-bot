@@ -1318,3 +1318,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 34 views: Scientists used AI to create 16 new viruses.  I’m not nervous. My insurance deductible covers "theor
   - 1 likes / 30 views: Me switching from doomscrolling the 23,000 job loss to booking the flight to my weekend party becaus
   - 1 likes / 77 views: me on my laptop like i have the typing speed to keep up with your ego
+
+## 2026-08-08
+
+**Activity** — total actions: 603
+  - by type: reply=527, quote=37, quote_gif=21, hotake=8, post=8, retweet=2
+  - top sources: SEARCH-HOT=339, FEED-SWEEP-FEED=104, FEED-SWEEP-FOLLOWING=56, GIF=26, QUOTE=24, DEBATE=17, VIP=10, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=12, @DanKornas=7, @StockSavvyShay=7, @kimmonismus=6, @FirstSquawk=6
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 14 views: Greg Abel is finally spending Berkshire’s cash pile.  The market is terrified of inflation. The real
+  - 1 likes / 80 views: Coinbase treating the US government like a confused toddler finally getting a bedtime story
+  - 1 likes / 48 views: me telling the government "you can track her but she has a very good lawyer"

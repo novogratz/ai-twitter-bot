@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-19T19:53:05.954421",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "OlivierScherrer",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 70000,
-        "reason": "Le 'value investor' fran\u00e7ais. Il tweete ses id\u00e9es de valeur chaque semaine. Pas de bruit, pas de Telegram VIP \u00e0 99\u20ac. Juste des actions et des convictions."
-      },
-      {
-        "handle": "ThibautMoulin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Ex-CTO de Marmont Capital. Il explique la macro et la tech sans jargon pompier. C'est rare de trouver quelqu'un qui comprend \u00e0 la fois les P/E ratios et les GPU."
-      },
-      {
-        "handle": "MaximeRagot",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "CEO de Hugging Face. Il poste du code pur et dur, moins de 'storytelling' que les autres, plus de substance. Le mec qui a rendu l'IA open source accessible."
-      },
-      {
-        "handle": "CryptoKoch",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Am\u00e9ricain francophone, trader de m\u00e9tier. Il combine l'analyse technique classique avec la crypto. Son feed est un cours de trading gratuit, sans la vulgarisation \u00e0 outrance."
-      },
-      {
-        "handle": "JulienMallet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "L'homme des ETF crypto en Europe. Il tweete comme un trader pro, pas comme un shill. Moins de 'moon', plus de 'spot price'. Son compte est un journal de bord."
-      },
-      {
-        "handle": "JeanBaptisteD",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Journaliste tech au Qu\u00e9bec. Il couvre la scene IA et les startups locales avec une rigueur journalistique qui manque sur Twitter. Il intervient rarement, donc ses tweets comptent."
-      }
-    ],
-    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour cibler les b\u00e2tisseurs (Mistral, HF) et les vrais traders (Marmont, Mallet). Une s\u00e9lection 'z\u00e9ro bruit, signal max' pour ne pas noyer @TheAIShrink dans le spam."
-  },
-  {
     "ts": "2026-07-19T22:03:36.034960",
     "raw_count": 7,
     "kept_count": 4,
@@ -9292,5 +9240,50 @@
       }
     ],
     "summary": "Pas de vendeurs de r\u00eaves ici, juste des makers et des analysts qui \u00e9crivent pour ceux qui comprennent. La France domine l'IA fr, le Qu\u00e9bec garde le cap sur la crypto s\u00e9rieuse, et les US apportent la vue am\u00e9ricaine francophone."
+  },
+  {
+    "ts": "2026-08-08T21:36:42.170326",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoGaulois",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Celui qui a surv\u00e9cu \u00e0 trois bear markets sans ciller. Ses analyses on-chain sont techniques mais expliqu\u00e9es comme \u00e0 un pote au bar. Pas de liens d'affiliation douteux."
+      },
+      {
+        "handle": "FrenchTechVC",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'agr\u00e9gateur indispensable pour qui veut voir les deals de la French Tech avant Bloomberg. Moins ax\u00e9 'stock', plus ax\u00e9 'startup & financement', mais crucial pour l'\u00e9cosyst\u00e8me."
+      },
+      {
+        "handle": "MarcTremblay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Vieux de la vieille qui a vu passer toutes les bulles. Son style est direct, ses charts sont propres, et il n'a pas peur de dire 'vends' quand tout le monde ach\u00e8te."
+      },
+      {
+        "handle": "GaspardR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'inverseur \u00e0 l'\u00e2me de trader, ses threads sur la gestion de risque sont des classiques. Il \u00e9vite le 'guru' pour le 'p\u00e9dagogue un peu cynique', ce qui change du lot."
+      },
+      {
+        "handle": "AlgoTradingFR",
+        "region": "france",
+        "niche": "trading",
+        "followers": 10000,
+        "reason": "Le bot qui tweete en fran\u00e7ais mais qui a l'\u00e2me d'un quant. Ses backtests sont partag\u00e9s, les erreurs aussi. C'est brutal, c'est math\u00e9matique, et \u00e7a fait du bien \u00e0 la vue."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide de poids lourds institutionnels (Mistral) et de talents underground qui tweetent en vrai fran\u00e7ais. J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont une opinion tranch\u00e9e et v\u00e9rifiable sur l'IA, la macro et le trading."
   }
 ]
