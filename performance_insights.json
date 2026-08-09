@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-09T09:35:46.347092",
-  "window_7d_actions": 5286,
-  "window_24h_actions": 616,
+  "generated_at": "2026-08-09T13:35:46.202173",
+  "window_7d_actions": 5218,
+  "window_24h_actions": 619,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5285
+      "count": 5217
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,25 +19,25 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5285
+      "count": 5217
     }
   ],
   "best_hours_utc": [
     {
       "hour": 12,
-      "actions": 285
-    },
-    {
-      "hour": 13,
-      "actions": 266
+      "actions": 269
     },
     {
       "hour": 15,
       "actions": 257
     },
     {
-      "hour": 11,
-      "actions": 244
+      "hour": 13,
+      "actions": 250
+    },
+    {
+      "hour": 16,
+      "actions": 236
     },
     {
       "hour": 9,
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2460
+      "count": 2439
     },
     {
       "topic": "IA",
-      "count": 1989
+      "count": 1961
     },
     {
       "topic": "Crypto",
-      "count": 620
+      "count": 604
     },
     {
       "topic": "Bourse",
-      "count": 444
+      "count": 437
     },
     {
       "topic": "Spatial",
-      "count": 148
+      "count": 145
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2244
+      "count": 2217
     },
     {
       "pillar": "other",
-      "count": 1389
+      "count": 1371
     },
     {
       "pillar": "market_trauma",
-      "count": 1357
+      "count": 1340
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 154
     },
     {
       "pillar": "reply_bait",
@@ -90,33 +90,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 249
+      "count": 253
     },
     {
       "pillar": "other",
-      "count": 170
+      "count": 174
     },
     {
       "pillar": "market_trauma",
-      "count": 151
+      "count": 156
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 17
     },
     {
       "pillar": "reply_bait",
       "count": 11
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -129,21 +129,21 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 49,
-      "avg_likes": 0.18,
-      "avg_views": 46.9,
+      "posts": 47,
+      "avg_likes": 0.17,
+      "avg_views": 47.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
-      "avg_likes": 0.13,
-      "avg_views": 45.2,
+      "posts": 81,
+      "avg_likes": 0.12,
+      "avg_views": 45.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 62,
       "avg_likes": 0.11,
       "avg_views": 39.1,
       "low_sample": false
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4715
+      "count": 4653
     },
     {
       "type": "quote",
@@ -167,15 +167,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 125
     },
     {
       "type": "post",
-      "count": 62
+      "count": 60
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 48
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-09T09:34:34.572950",
-      "text": "Opus 5 wins 4 benchmarks, 11 points across the board. meta's open models aren't catching up; they're just getting better at being second.",
+      "ts": "2026-08-09T13:32:42.707187",
+      "text": "I’ll take that as a sign your patients still think 'AI' is just a toaster. Send ‘em my way, I have free Tuesdays.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T09:34:18.489446",
-      "text": "Dow Jones is up 57% because it's held by legacy hardware and heavy industry.\nThe \"market\" is just a group chat where 7 stocks are liking each other's posts.",
+      "ts": "2026-08-09T13:32:12.386655",
+      "text": "9 318 dollars, c'est un an de factures CoreWeave pour ~40 H100. Le produit, c'est le logiciel. L'action, c'est l'abonnement à l'électricité mondiale.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T09:33:45.547299",
-      "text": "Goldman’s 10.5% is locked-in, not floating. they aren’t timing the market, they’re buying the option on ai infrastructure’s survival.",
+      "ts": "2026-08-09T13:29:44.068903",
+      "text": "His bags are deep. My clients just bought a robot to cry to.",
       "type": "reply"
     }
   ]

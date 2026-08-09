@@ -1549,7 +1549,18 @@
     "NathanLabbe",
     "AlexisPrieur",
     "JulienDeWit",
-    "VincentLacroix"
+    "VincentLacroix",
+    "HassanBouacheri",
+    "MaximeAguillon",
+    "ThomasPy",
+    "ValentinDubois",
+    "LionelRoussel",
+    "CyrilAbergel",
+    "MaximeFleury",
+    "AlexisChauvenne",
+    "VincentFavre",
+    "DavidBriere",
+    "PierreLevasseur"
   ],
   "en": [
     "Chubby",
@@ -11426,6 +11437,61 @@
     {
       "lang": "fr",
       "handle": "VincentLacroix",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "HassanBouacheri",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAguillon",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasPy",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinDubois",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelRoussel",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilAbergel",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeFleury",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisChauvenne",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentFavre",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidBriere",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLevasseur",
       "added": "2026-08-09"
     }
   ]
