@@ -1560,7 +1560,9 @@
     "AlexisChauvenne",
     "VincentFavre",
     "DavidBriere",
-    "PierreLevasseur"
+    "PierreLevasseur",
+    "CryptoMapMonde",
+    "RomainFoucart"
   ],
   "en": [
     "Chubby",
@@ -1916,7 +1918,11 @@
     "ollama",
     "sarah",
     "King",
-    "AGENTuzohcrypto"
+    "AGENTuzohcrypto",
+    "Muskonomy",
+    "vLLM",
+    "tess",
+    "jimmy"
   ],
   "history": [
     {
@@ -11492,6 +11498,36 @@
     {
       "lang": "fr",
       "handle": "PierreLevasseur",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Muskonomy",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "vLLM",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "tess",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "jimmy",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMapMonde",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainFoucart",
       "added": "2026-08-09"
     }
   ]

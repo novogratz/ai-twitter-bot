@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-20T14:03:02.022340",
-    "raw_count": 11,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThomasCormen",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Journaliste crypto fran\u00e7ais de r\u00e9f\u00e9rence. Il couvre la r\u00e9gulation EU et les grands mouvements on-chain avec un \u0153il de lynx. Moins hype, plus vrai."
-      },
-      {
-        "handle": "AlexisBourgeon",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Co-fondateur de Mistral. Il twitte avec le rythme cardiaque d'un trader crypto et l'\u00e9rudition d'un prof de fac. Rarement vu, toujours pertinent."
-      },
-      {
-        "handle": "RaphaelLeclerc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Fondateur de DeepML. C'est l'un des rares fran\u00e7ais \u00e0 expliquer le LLM stack technique sans se prendre pour un guru crypto. Du concret."
-      },
-      {
-        "handle": "VincentLavoie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 10000,
-        "reason": "Analyste ind\u00e9pendant QCA. Il fait des threads techniques sur les march\u00e9s US et CAN en FR. Pas de formation \u00e0 vendre, juste du graphisme propre."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs crypto FR qui vendent du r\u00eave pour garder les vrais b\u00e2tisseurs (Mistral, DeepML) et les analysts techniques. Pour le Qu\u00e9bec, j'ai vis\u00e9 les ind\u00e9pendants qui font des threads techniques plut\u00f4t que des quotes \u00e0 chaque tweet de Musk."
-  },
-  {
     "ts": "2026-07-20T18:09:36.035943",
     "raw_count": 8,
     "kept_count": 5,
@@ -9306,5 +9268,29 @@
       }
     ],
     "summary": "Un mix solide entre les g\u00e9ants de l'analyse macro FR (Cyril, Julien) et des p\u00e9pites techniques (Chauvenne pour l'IA). Le Qu\u00e9bec et la diaspora US sont couverts avec des comptes actifs et non-vendeurs."
+  },
+  {
+    "ts": "2026-08-09T15:36:16.007054",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoMapMonde",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Info pure, z\u00e9ro shillage. Leur compte est plus fiable que la plupart des influenceurs qui te vendent un EAU."
+      },
+      {
+        "handle": "RomainFoucart",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Le pape de la fintech fran\u00e7aise. Pas de pub pour son livre, que du concret."
+      }
+    ],
+    "summary": "Le top des comptes FR se porte bien : Mistral brille pour l'IA, Dionne pour le Qu\u00e9bec tech, et Girault/Girault pour la finance de terrain sans blabla."
   }
 ]
