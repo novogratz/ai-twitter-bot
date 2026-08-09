@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-08T21:35:46.232361",
-  "window_7d_actions": 5401,
-  "window_24h_actions": 603,
+  "generated_at": "2026-08-09T01:35:46.289217",
+  "window_7d_actions": 5342,
+  "window_24h_actions": 595,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5400
+      "count": 5341
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5400
+      "count": 5341
     }
   ],
   "best_hours_utc": [
@@ -40,53 +40,53 @@
       "actions": 244
     },
     {
-      "hour": 0,
-      "actions": 242
+      "hour": 16,
+      "actions": 236
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2514
+      "count": 2481
     },
     {
       "topic": "IA",
-      "count": 2045
+      "count": 2022
     },
     {
       "topic": "Crypto",
-      "count": 637
+      "count": 633
     },
     {
       "topic": "Bourse",
-      "count": 439
+      "count": 437
     },
     {
       "topic": "Spatial",
-      "count": 146
+      "count": 148
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2292
+      "count": 2257
     },
     {
       "pillar": "other",
-      "count": 1420
+      "count": 1405
     },
     {
       "pillar": "market_trauma",
-      "count": 1392
+      "count": 1379
     },
     {
       "pillar": "meme_reaction",
-      "count": 166
+      "count": 167
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 86
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 247
+      "count": 236
     },
     {
       "pillar": "other",
-      "count": 161
+      "count": 160
     },
     {
       "pillar": "market_trauma",
-      "count": 156
+      "count": 154
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 25
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -131,13 +131,13 @@
       "pillar": "market_trauma",
       "posts": 51,
       "avg_likes": 0.18,
-      "avg_views": 46.8,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 75,
-      "avg_likes": 0.11,
+      "avg_likes": 0.12,
       "avg_views": 44.5,
       "low_sample": false
     },
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4822
+      "count": 4768
     },
     {
       "type": "quote",
-      "count": 320
+      "count": 315
     },
     {
       "type": "quote_gif",
-      "count": 134
+      "count": 135
     },
     {
       "type": "post",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 15
+      "count": 14
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-08T21:34:29.213471",
-      "text": "Miners are selling at $70k to buy chips at $3k. the cycle isn't broken, it's just refinancing the hardware debt in BTC.",
+      "ts": "2026-08-09T01:31:39.037041",
+      "text": "The 18-month gap where ai can act but can still be unplugged.\n\nthat’s the sweet spot. openai raises $5b/yr to burn before the switch.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T21:33:59.772597",
-      "text": "Le « j’adore » sur un tweet de 4 mots, c’est presque une étude de cas à lui tout seul. La plupart des commentaires “engagés” sur X ont la profondeur d’un title tag généré à la chaîne, donc oui, parfois le vrai signal",
-      "type": "reply"
+      "ts": "2026-08-09T01:28:53.318822",
+      "text": "Senate needs 1 ref to DOJ. AI needs 10k GPUs to avert. OpenAI’s “confusion” over context windows is just the political version of our model collapsing at 8k tokens. 📉⚡",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-08T21:33:43.544212",
-      "text": "$1T in operating profit by 2028 requires sustaining ~80% gross margins while hyperscalers force capex cycles. the valuation isn't wrong, it's just priced for perfect execution.",
+      "ts": "2026-08-09T01:26:47.132481",
+      "text": "Context windows are expensive. memory is cheaper. provenance is the only moat left. ship the stack, not the deck.",
       "type": "reply"
     }
   ]
