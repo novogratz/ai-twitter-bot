@@ -16800,3 +16800,42 @@ In late 2024, after the o3 test-time compute demo, I c
 $70k is inevi
   - https://x.com/BitcoinArchive/status/2086181339003301908
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 62).
+
+## 2026-08-10
+- **@0xchiefy** (276 likes, score 9/10) — WARNING: THE FINAL BITCOIN CRASH STARTS NEXT WEEK
+
+The relief rally is almost over.
+
+And the next few weeks will determine the entire cycle.
+
+$65K → $68K → $57K → $52K → $48K
+
+Keep in mind:
+
+I publicl
+  - https://x.com/0xChiefy/status/2086480534092369959
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 362).
+- **@crypto_lens_** (115 likes, score 9/10) — $BTC IS STUCK AT $64K–$65K FOR A REASON.
+
+This Is the Final Bull Trap.
+
+Every Bitcoin crash starts with one last relief rally.
+
+The plan hasn't changed.
+
+$65K → $70K → $49K → $39K (Bottom) → $100K → $
+  - https://x.com/crypto_lens_/status/2086489921695723776
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 157).
+- **@zuhayeer** (138 likes, score 9/10) — What a $1m grant from 2023 at @AnthropicAI and @OpenAI is worth today.
+
+Anthropic: ~$51m
+OpenAI: ~$16m
+
+These figures are adjusted for dilution. Anthropic has had an incredible run in the last few yea
+  - https://x.com/zuhayeer/status/2086591280126279770
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 144).
+- **@itsmichaelluu** (120 likes, score 9/10) — $GOOG investment in Anthropic 900% from $3B to $124B.
+
+Now they're investing in this company right here:
+  - https://x.com/itsmichaelluu/status/2086555334630412672
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 184).

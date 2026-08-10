@@ -1562,7 +1562,22 @@
     "DavidBriere",
     "PierreLevasseur",
     "CryptoMapMonde",
-    "RomainFoucart"
+    "RomainFoucart",
+    "Hugo_Marchand",
+    "LorenzoBertelli",
+    "MathieuDuss",
+    "BenjaminFL",
+    "AlexisKorbel",
+    "MathieuD",
+    "JulienDumoul",
+    "BourseInfo",
+    "MaxenceDufour",
+    "GaspDeGins",
+    "J3r0m",
+    "AlexandreB",
+    "VincentBouchard",
+    "Gilles",
+    "PierreDufresne"
   ],
   "en": [
     "Chubby",
@@ -1922,7 +1937,12 @@
     "Muskonomy",
     "vLLM",
     "tess",
-    "jimmy"
+    "jimmy",
+    "spor",
+    "MTS",
+    "dray",
+    "Farzad",
+    "NeilXbt"
   ],
   "history": [
     {
@@ -11528,6 +11548,106 @@
     {
       "lang": "fr",
       "handle": "RomainFoucart",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "Hugo_Marchand",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoBertelli",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuss",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "spor",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminFL",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisKorbel",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuD",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDumoul",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "MTS",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "dray",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Farzad",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "NeilXbt",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseInfo",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxenceDufour",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspDeGins",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "J3r0m",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreB",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBouchard",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gilles",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDufresne",
       "added": "2026-08-09"
     }
   ]
