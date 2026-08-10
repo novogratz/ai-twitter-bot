@@ -1577,7 +1577,18 @@
     "AlexandreB",
     "VincentBouchard",
     "Gilles",
-    "PierreDufresne"
+    "PierreDufresne",
+    "Cryptosauvage",
+    "RomainFouques",
+    "VittorioBianco",
+    "BenjaminBel",
+    "LavoieTrading",
+    "Thibault_M",
+    "RaphaelMouly",
+    "MarcChabot",
+    "VincentMoulin",
+    "Crypto_Thom",
+    "LucasMangin"
   ],
   "en": [
     "Chubby",
@@ -1942,7 +1953,10 @@
     "MTS",
     "dray",
     "Farzad",
-    "NeilXbt"
+    "NeilXbt",
+    "CLUTCH",
+    "JAKEGTV",
+    "Similarweb"
   ],
   "history": [
     {
@@ -11649,6 +11663,76 @@
       "lang": "fr",
       "handle": "PierreDufresne",
       "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "CLUTCH",
+      "added": "2026-08-09"
+    },
+    {
+      "lang": "en",
+      "handle": "JAKEGTV",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cryptosauvage",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainFouques",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "VittorioBianco",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminBel",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "LavoieTrading",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Similarweb",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Thibault_M",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelMouly",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcChabot",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentMoulin",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Thom",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasMangin",
+      "added": "2026-08-10"
     }
   ]
 }

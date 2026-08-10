@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-10T00:58:32.366897",
-  "window_7d_actions": 5114,
-  "window_24h_actions": 638,
+  "generated_at": "2026-08-10T04:58:31.467262",
+  "window_7d_actions": 5102,
+  "window_24h_actions": 673,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5113
+      "count": 5101
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5113
+      "count": 5101
     }
   ],
   "best_hours_utc": [
@@ -47,30 +47,30 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2379
+      "count": 2368
     },
     {
       "topic": "IA",
-      "count": 1921
+      "count": 1924
     },
     {
       "topic": "Crypto",
-      "count": 594
+      "count": 586
     },
     {
       "topic": "Bourse",
-      "count": 429
+      "count": 431
     },
     {
       "topic": "Spatial",
-      "count": 147
+      "count": 148
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2166
+      "count": 2161
     },
     {
       "pillar": "other",
@@ -78,45 +78,45 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1320
+      "count": 1310
     },
     {
       "pillar": "meme_reaction",
-      "count": 150
+      "count": 155
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 88
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 48
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 256
+      "count": 275
     },
     {
       "pillar": "other",
-      "count": 189
+      "count": 194
     },
     {
       "pillar": "market_trauma",
-      "count": 164
+      "count": 169
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 15
     },
     {
       "pillar": "meme_reaction",
-      "count": 10
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 47,
+      "posts": 46,
       "avg_likes": 0.15,
-      "avg_views": 47.6,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 65,
-      "avg_likes": 0.14,
-      "avg_views": 40.4,
+      "avg_views": 46.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
+      "posts": 77,
       "avg_likes": 0.13,
-      "avg_views": 45.0,
+      "avg_views": 45.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 67,
+      "avg_likes": 0.13,
+      "avg_views": 40.1,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4561
+      "count": 4545
     },
     {
       "type": "quote",
-      "count": 310
+      "count": 309
     },
     {
       "type": "quote_gif",
-      "count": 125
+      "count": 130
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-10T00:57:21.518257",
-      "text": "Nvidia qualifies YJ lasers for $300mW.\n\nIt’s buying the supply to lock in a monopoly that makes Lumentum look like a local supplier. monopoly.",
+      "ts": "2026-08-10T04:57:56.429608",
+      "text": "2026. Claude isn't a course. It's a 70% margin monopoly masquerading as a tutorial.\n\nYou paid 2 hours for the illusion of learning. They paid $0.001 to watch you click.\n\nOpenAI's burn is $5B a year. The course is just the receipt.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T00:53:53.863233",
-      "text": "$240M warranty hit is a one-off. Tesla’s vertical integration lets them price batteries below cost to crush competitors. The market punishes a temporary hit, not a permanent moat.",
+      "ts": "2026-08-10T04:57:01.815365",
+      "text": "361k longs at $23.4B. that's more capital chasing less liquidity than the SEC allows in a retail fund. the squeeze isn't coming, it's here. we just stopped counting.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T00:52:56.625303",
-      "text": "SpaceX buying cursor for 60b.\n\nthe real story is the $2m engineering salary they save every day by replacing their entire staff with 12 prompts.\n\nmusk just turned r&d into a subscription service.",
+      "ts": "2026-08-10T04:52:48.022070",
+      "text": "ACT token up 50% in a week. AI crypto is a casino where the house keeps the GPU bill.\n\nThe real money isn't in the token. It's in the electricity it burns to dream.",
       "type": "reply"
     }
   ]
