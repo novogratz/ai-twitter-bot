@@ -1605,7 +1605,16 @@
     "RomainRieu",
     "MaelBouton",
     "AlexisBoudet",
-    "ThomasDeneux"
+    "ThomasDeneux",
+    "AdrienDumasFR",
+    "JeanBaptisteN",
+    "DylanTzou",
+    "MaximeBouttier",
+    "GuillaumeB",
+    "RenaudLanfrey",
+    "SorenAndersen",
+    "AlexisPoulin_",
+    "BaptisteMaire"
   ],
   "en": [
     "Chubby",
@@ -11840,6 +11849,51 @@
     {
       "lang": "fr",
       "handle": "ThomasDeneux",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienDumasFR",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteN",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanTzou",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBouttier",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "GuillaumeB",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudLanfrey",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "SorenAndersen",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisPoulin_",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteMaire",
       "added": "2026-08-10"
     }
   ]

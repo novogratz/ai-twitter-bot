@@ -1,60 +1,5 @@
 [
   {
-    "ts": "2026-07-21T12:02:47.678573",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AlexBoulay",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "L'ancien de Google, aujourd'hui VC chez Emerging Europe. Il sent les start-ups qui vont percer avant m\u00eame qu'elles aient un produit. Odeur de cash."
-      },
-      {
-        "handle": "PierreRossi",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 45000,
-        "reason": "L'\u00e9conomiste qui explique la bourse sans te endormir. Qu\u00e9becois, \u00e9rudit, et il tape juste souvent. Un must."
-      },
-      {
-        "handle": "HugoGrimaud",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Founding Engineer chez Hugging Face. Il vit aux US mais sa tweeter est 100% FR technique. L'intelligence pure sans le blabla."
-      }
-    ],
-    "summary": "Un mix de fondateurs de la French Tech AI (Mistral, Hugging Face) et d'insiders crypto. Ils tweetent en fran\u00e7ais, ils ont du poids, et ils ne vendent pas de formations \u00e0 99\u20ac."
-  },
-  {
-    "ts": "2026-07-21T15:53:14.965658",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudLionnet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 185000,
-        "reason": "Le barom\u00e8tre incontournable. Il tweete en FR, analyse la macro/crypto avec un ton direct, z\u00e9ro formation \u00e0 2k\u20ac."
-      },
-      {
-        "handle": "JLeray",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 52000,
-        "reason": "Journaliste bourse chez Capital. Fait le lien entre macro et actions fran\u00e7aises, tweet tous les jours."
-      }
-    ],
-    "summary": "Le top tier FR est domin\u00e9 par la crypto/macro et les fond\u00e9s de Mistral. Le Qu\u00e9bec offre des perles acad\u00e9miques/tech plus discr\u00e8tes mais ultra-cibl\u00e9es."
-  },
-  {
     "ts": "2026-07-21T17:43:44.850860",
     "raw_count": 7,
     "kept_count": 5,
@@ -9334,5 +9279,88 @@
       }
     ],
     "summary": "Scoutage cibl\u00e9 sur les profils 'journalistes actifs' et 'founders techniques' plut\u00f4t que les 'influenceurs signaux'. Le lot mixe analyse macro (Gilles), deep tech (Alexis Bessac) et crypto infrastructure (Romain Rieu). Z\u00e9ro vente de r\u00eave."
+  },
+  {
+    "ts": "2026-08-10T12:59:22.207018",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrienDumasFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Celui qui rend la lecture des rapports annuels supportable. Ton sec, focus uniquement sur les fondamentaux, z\u00e9ro buzz."
+      },
+      {
+        "handle": "JeanBaptisteN",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Journaliste tech \u00e0 la FineMousse. Couvre l'\u00e9cosyst\u00e8me montr\u00e9alais avec un \u0153il critique. Moins de hype, plus de business."
+      }
+    ],
+    "summary": "On \u00e9vite les vendeurs de r\u00eaves Telegram pour privil\u00e9gier les technocrates et les journalistes de terrain. Les profils choisis ont un historique v\u00e9rifiable et twittent en fran\u00e7ais r\u00e9guli\u00e8rement."
+  },
+  {
+    "ts": "2026-08-10T14:59:24.025935",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DylanTzou",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'anti-Whale francophone. Pas de shill de shitcoins bidons, mais une analyse On-Chain solide et un ton cynique qui fait mal aux chevilles."
+      },
+      {
+        "handle": "MaximeBouttier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Jusqu'au boutiste et pragmatique. Il couvre la bourse fran\u00e7aise avec une honn\u00eatet\u00e9 d\u00e9sarmante, z\u00e9ro blabla, que des tableaux et des ratios."
+      },
+      {
+        "handle": "GuillaumeB",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Analyste crypto s\u00e9rieux, pas un shiller. Ses threads sur la macro et les cycles Bitcoin sont parmi les plus cit\u00e9s en FR."
+      },
+      {
+        "handle": "RenaudLanfrey",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Le fondateur de Marmelab. Il tweete sur la tech, l'IA et la productivit\u00e9 sans vendre du r\u00eave, juste du concret. Le genre de compte qui reste dans tes favoris."
+      },
+      {
+        "handle": "SorenAndersen",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Dan Brown de l'IA. Il est \u00e0 NYC mais twitte en FR (et EN). Ses threads sur l'agentic AI sont des p\u00e9pites techniques, style 'L'IA va changer la donne'."
+      },
+      {
+        "handle": "AlexisPoulin_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise sur la tech et l'IA. Il d\u00e9crypte les news US en FR avec humour, parfait pour rester inform\u00e9 sans lire la presse anglaise."
+      },
+      {
+        "handle": "BaptisteMaire",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Ancien de PayFit, fondateur de Payfit. Il couvre la fintech, l'\u00e9conomie et l'immobilier avec un style de founder qui comprend la m\u00e9canique."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui tweetent du contenu brut plut\u00f4t que des pubs Telegram. La France domine en fintech/crypto, le Qu\u00e9bec en tech/bourse, et les USA apportent une perspective IA francophone."
   }
 ]

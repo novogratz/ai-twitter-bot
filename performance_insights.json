@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-08-10T12:58:31.645298",
-  "window_7d_actions": 5111,
-  "window_24h_actions": 759,
+  "generated_at": "2026-08-10T16:58:31.761268",
+  "window_7d_actions": 5121,
+  "window_24h_actions": 802,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5111
+      "count": 5121
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5111
+      "count": 5121
     }
   ],
   "best_hours_utc": [
     {
       "hour": 12,
-      "actions": 256
+      "actions": 257
     },
     {
       "hour": 15,
-      "actions": 253
+      "actions": 257
     },
     {
       "hour": 13,
-      "actions": 245
+      "actions": 240
     },
     {
       "hour": 9,
@@ -39,76 +39,76 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2395
+      "count": 2387
     },
     {
       "topic": "IA",
-      "count": 1904
+      "count": 1923
     },
     {
       "topic": "Crypto",
-      "count": 577
+      "count": 584
     },
     {
       "topic": "Bourse",
-      "count": 432
+      "count": 424
     },
     {
       "topic": "Spatial",
-      "count": 154
+      "count": 156
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2161
+      "count": 2171
     },
     {
       "pillar": "other",
-      "count": 1355
+      "count": 1357
     },
     {
       "pillar": "market_trauma",
-      "count": 1307
+      "count": 1299
     },
     {
       "pillar": "meme_reaction",
-      "count": 158
+      "count": 160
     },
     {
       "pillar": "reply_bait",
-      "count": 85
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 301
+      "count": 329
     },
     {
       "pillar": "other",
-      "count": 218
+      "count": 229
     },
     {
       "pillar": "market_trauma",
-      "count": 196
+      "count": 197
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 27
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -130,14 +130,14 @@
       "pillar": "ai_news_take",
       "posts": 65,
       "avg_likes": 0.15,
-      "avg_views": 40.6,
+      "avg_views": 40.7,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 76,
       "avg_likes": 0.13,
-      "avg_views": 45.1,
+      "avg_views": 44.7,
       "low_sample": false
     },
     {
@@ -151,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4553
+      "count": 4564
     },
     {
       "type": "quote",
-      "count": 308
+      "count": 306
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 134
     },
     {
       "type": "post",
-      "count": 56
+      "count": 57
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 45
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-10T12:58:19.146377",
-      "text": "Raullen’s MLX push is great.\n\nthe real bottleneck is power delivery to MacBooks running at 100W while the user walks. you’re building an on-device studio for people with power outlets.",
+      "ts": "2026-08-10T16:58:05.732425",
+      "text": "Hyperscalers bought 200k GPUs in a prisoner’s dilemma.\n\nthe real story is they just built their own central bank.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T12:56:59.532719",
-      "text": "Cursor is the only SF startup that shipped a killer app before the pitch deck was ready.\n\nthe real story is that 10 years of bubble noise finally collapsed into a single interface.\n\nthe code is eating the résumé.\n\ni left cursor too.\n\nnot the bubble. the billing.\n\nat 25 cents per ",
+      "ts": "2026-08-10T16:57:32.766002",
+      "text": "Palantir sells the brains. LMT, RTX, NOC sell the muscle.\n\nThe market is finally pricing in the most boring part of AI: the part that weighs 2 tons and runs on JP-8.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T12:56:26.830956",
-      "text": "Genians says a North Korean crew is using AI for docs.\n\nit’s not hacking, it’s phishing with better fonts.",
+      "ts": "2026-08-10T16:56:51.715199",
+      "text": "XColossus is 200k GPUs.\nThat’s roughly 2x the global GPU stock for inference.\nMusk isn’t building an AI. He’s building the only AI that doesn’t have to pay rent.",
       "type": "reply"
     }
   ]
