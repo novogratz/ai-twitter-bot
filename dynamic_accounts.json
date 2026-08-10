@@ -1597,7 +1597,15 @@
     "ThomasTalon",
     "GaelLeGallo",
     "VincentCotnoir",
-    "BenjaminMuller"
+    "BenjaminMuller",
+    "GaelLefranc",
+    "JulienBouchard",
+    "BenoitMazoyer",
+    "LemuelB",
+    "RomainRieu",
+    "MaelBouton",
+    "AlexisBoudet",
+    "ThomasDeneux"
   ],
   "en": [
     "Chubby",
@@ -1965,7 +1973,8 @@
     "NeilXbt",
     "CLUTCH",
     "JAKEGTV",
-    "Similarweb"
+    "Similarweb",
+    "Chesny"
   ],
   "history": [
     {
@@ -11786,6 +11795,51 @@
     {
       "lang": "fr",
       "handle": "BenjaminMuller",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLefranc",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouchard",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitMazoyer",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Chesny",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "LemuelB",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainRieu",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelBouton",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoudet",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDeneux",
       "added": "2026-08-10"
     }
   ]

@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-21T07:53:13.442499",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NicolasBoutin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Ancien de Coinhouse, actif sur le trading et la macro crypto. Il balance des setups plus vite qu'il ne met son pantalon."
-      },
-      {
-        "handle": "JeanBouchard",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Bas\u00e9 \u00e0 New York mais c\u0153ur qu\u00e9b\u00e9cois. Il ram\u00e8ne l'info crypto institutionnelle US en fran\u00e7ais. Parfait pour ceux qui n'ont pas de VPN."
-      },
-      {
-        "handle": "PhilippeBoulay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "V\u00e9t\u00e9ran. Il a vu passer les bulles, il sait qu'en 2026 on est probablement d\u00e9j\u00e0 en correction. Il tweete avec cette assurance tranquille."
-      },
-      {
-        "handle": "LudovicTeyssier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Ex-AMF. Il d\u00e9cortique le march\u00e9 FR sans payer de pot-de-vin aux courtiers. C'est sec, c'est net, c'est pas du marketing."
-      },
-      {
-        "handle": "LouisCliche",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Le gars qui a fait des tours du monde en Bitcoin. Il couvre la tech crypto et les DeFi avec un regard l\u00e9ger mais technique."
-      }
-    ],
-    "summary": "J'ai mis\u00e9 sur les fondateurs de Mistral pour l'IA FR (puisque 01net est d\u00e9j\u00e0 list\u00e9) et des traders v\u00e9t\u00e9rants plut\u00f4t que des 'gurus' en formation. Pour le Qu\u00e9bec, on reste sur des classiques solides qui survivent aux cycles sans vendre de r\u00eave."
-  },
-  {
-    "ts": "2026-07-21T09:53:11.166295",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreDumonceau",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "L'homme des fondamentaux. Quand il parle d'une PME, le volume explose. Il lit les bilans comme d'autres lisent Twitter."
-      },
-      {
-        "handle": "JulienCoulon",
-        "region": "france",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Ancien de L'Or\u00e9al, maintenant VC. Il voit les startups 6 mois avant que les m\u00e9dias en parlent. Son feed est un radar."
-      },
-      {
-        "handle": "ThomasBocquaert",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Le trader syst\u00e9mique qui tweet ses logs. Pas de 'c'est bon pour acheter', mais des r\u00e9sultats concrets et un style punchy."
-      },
-      {
-        "handle": "RemyRiem",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 18000,
-        "reason": "Analyste ind\u00e9pendant. Il couvre le march\u00e9 qu\u00e9b\u00e9cois et US avec une pr\u00e9cision chirurgicale. Z\u00e9ro 'moonboy', 100% data."
-      },
-      {
-        "handle": "Marc-AndreGagnon",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "La voix du Qu\u00e9bec tech. Couvre SaaS et AI \u00e0 Montr\u00e9al. Moins de bruit, plus de substance que ses homologues parisiens."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs Instagram et les vendeurs de r\u00eaves. Ces comptes sont des vrais travailleurs : ils tweetent du code, des bilans ou des on-chains. Pas de formations \u00e0 2000\u20ac, juste du sel."
-  },
-  {
     "ts": "2026-07-21T12:02:47.678573",
     "raw_count": 7,
     "kept_count": 3,
@@ -9348,5 +9258,81 @@
       }
     ],
     "summary": "6 profils solides : des analystes techniques et crypto qui parlent fran\u00e7ais sans se la raconter. On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour garder les vrais esprits."
+  },
+  {
+    "ts": "2026-08-10T08:59:27.918203",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelLefranc",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le prof de finance qui transforme les rapports annuels en com\u00e9die stand-up. Pas de formation \u00e0 99\u20ac, juste du bon sens qui fait mal."
+      },
+      {
+        "handle": "JulienBouchard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "L'expert SaaS montr\u00e9alais qui prouve que le startup bro est mortel quand on a du sens. Vient de lancer sa propre fondation de gestion."
+      },
+      {
+        "handle": "BenoitMazoyer",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Diaspora FR aux US qui fait briller la tech hexagonale depuis l'\u00e9tranger. Analyse IA s\u00e9rieuse mais pas assoupissante."
+      }
+    ],
+    "summary": "Cinq francophones qui ne vendent pas du r\u00eave, mais du concret. De la finance d\u00e9complex\u00e9e \u00e0 l'IA qui frappe fort : ils font parler sans brailler."
+  },
+  {
+    "ts": "2026-08-10T10:59:15.769050",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LemuelB",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'humour tech francophone par excellence. Moins 'analyse pur' que 'culture web3', mais une audience qualifi\u00e9e qui retient ses posts sur l'IA et la crypto."
+      },
+      {
+        "handle": "RomainRieu",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Fondateur de Blockpit, un des rares \u00e0 expliquer les fondamentaux (TVL, staking) sans vendre du r\u00eave. Ton direct, z\u00e9ro 'lambo'."
+      },
+      {
+        "handle": "MaelBouton",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Journaliste crypto au Devoir. Couvre les cycles, les r\u00e9gulations et les infrastructures. Le profil le plus 'journalistique' du Qu\u00e9bec sur le sujet."
+      },
+      {
+        "handle": "AlexisBoudet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste actionnariat, focus sur la data et les bilans. Parle de tout (IA, \u00e9nergie, banque) avec des chiffres, pas des intuitions magiques."
+      },
+      {
+        "handle": "ThomasDeneux",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 11000,
+        "reason": "Co-fondateur de Trezor FR. Twitte sur la s\u00e9curit\u00e9, la DeFi et l'adoption crypto. Ton pragmatique, pas de 'to the moon'."
+      }
+    ],
+    "summary": "Scoutage cibl\u00e9 sur les profils 'journalistes actifs' et 'founders techniques' plut\u00f4t que les 'influenceurs signaux'. Le lot mixe analyse macro (Gilles), deep tech (Alexis Bessac) et crypto infrastructure (Romain Rieu). Z\u00e9ro vente de r\u00eave."
   }
 ]

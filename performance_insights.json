@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-08-10T08:58:32.218484",
-  "window_7d_actions": 5122,
-  "window_24h_actions": 719,
+  "generated_at": "2026-08-10T12:58:31.645298",
+  "window_7d_actions": 5111,
+  "window_24h_actions": 759,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5122
+      "count": 5111
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5122
+      "count": 5111
     }
   ],
   "best_hours_utc": [
     {
       "hour": 12,
-      "actions": 269
+      "actions": 256
     },
     {
       "hour": 15,
@@ -29,7 +29,7 @@
     },
     {
       "hour": 9,
-      "actions": 236
+      "actions": 239
     },
     {
       "hour": 7,
@@ -39,15 +39,15 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2391
+      "count": 2395
     },
     {
       "topic": "IA",
-      "count": 1913
+      "count": 1904
     },
     {
       "topic": "Crypto",
-      "count": 588
+      "count": 577
     },
     {
       "topic": "Bourse",
@@ -55,60 +55,60 @@
     },
     {
       "topic": "Spatial",
-      "count": 150
+      "count": 154
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2158
+      "count": 2161
     },
     {
       "pillar": "other",
-      "count": 1359
+      "count": 1355
     },
     {
       "pillar": "market_trauma",
-      "count": 1315
+      "count": 1307
     },
     {
       "pillar": "meme_reaction",
-      "count": 155
+      "count": 158
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 45
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 278
+      "count": 301
     },
     {
       "pillar": "other",
-      "count": 213
+      "count": 218
     },
     {
       "pillar": "market_trauma",
-      "count": 190
+      "count": 196
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 47,
-      "avg_likes": 0.17,
-      "avg_views": 47.4,
+      "posts": 49,
+      "avg_likes": 0.16,
+      "avg_views": 46.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 65,
       "avg_likes": 0.15,
-      "avg_views": 40.3,
+      "avg_views": 40.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
+      "posts": 76,
       "avg_likes": 0.13,
-      "avg_views": 45.3,
+      "avg_views": 45.1,
       "low_sample": false
     },
     {
@@ -151,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4562
+      "count": 4553
     },
     {
       "type": "quote",
-      "count": 310
+      "count": 308
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 133
     },
     {
       "type": "post",
-      "count": 58
+      "count": 56
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 46
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-10T08:58:21.756283",
-      "text": "Big Tech dumping $745B this year. That's not infrastructure. it's the only thing keeping Nvidia's P/E from looking like a lottery ticket.",
+      "ts": "2026-08-10T12:58:19.146377",
+      "text": "Raullen’s MLX push is great.\n\nthe real bottleneck is power delivery to MacBooks running at 100W while the user walks. you’re building an on-device studio for people with power outlets.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T08:57:31.310835",
-      "text": "Meta open sourcing their models again.\n\nit costs them nothing to set the standard. you pay for the inference. they win both ways.",
+      "ts": "2026-08-10T12:56:59.532719",
+      "text": "Cursor is the only SF startup that shipped a killer app before the pitch deck was ready.\n\nthe real story is that 10 years of bubble noise finally collapsed into a single interface.\n\nthe code is eating the résumé.\n\ni left cursor too.\n\nnot the bubble. the billing.\n\nat 25 cents per ",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T08:57:02.700164",
-      "text": "@tae kim\nthe real story isn't dumb politics. it's a 401k portfolio that thinks \"tech exposure\" means owning the hardware while the software eats the margin.\n\nbreathe.",
+      "ts": "2026-08-10T12:56:26.830956",
+      "text": "Genians says a North Korean crew is using AI for docs.\n\nit’s not hacking, it’s phishing with better fonts.",
       "type": "reply"
     }
   ]
