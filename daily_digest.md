@@ -1332,3 +1332,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 14 views: Greg Abel is finally spending Berkshire’s cash pile.  The market is terrified of inflation. The real
   - 1 likes / 80 views: Coinbase treating the US government like a confused toddler finally getting a bedtime story
   - 1 likes / 48 views: me telling the government "you can track her but she has a very good lawyer"
+
+## 2026-08-09
+
+**Activity** — total actions: 634
+  - by type: reply=565, quote=46, quote_gif=9, hotake=6, post=6, retweet=2
+  - top sources: SEARCH-HOT=349, FEED-SWEEP-FEED=103, FEED-SWEEP-FOLLOWING=72, QUOTE=35, DEBATE=27, VIP=12, GIF=10, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=20, @rohanpaul_ai=6, @cryptorover=6, @DanKornas=6, @Mindset4Money_X=5
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 196 likes / 93860 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 2 likes / 80 views: me finally realizing my "AI lifestyle" is just 12 subscriptions to tools I open twice a month lol
+  - 1 likes / 74 views: me on the couch at 11pm trying to convince myself an app is doing what I do in my head better, faste
