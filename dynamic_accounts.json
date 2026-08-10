@@ -1588,7 +1588,16 @@
     "MarcChabot",
     "VincentMoulin",
     "Crypto_Thom",
-    "LucasMangin"
+    "LucasMangin",
+    "ThauThau",
+    "RomainB",
+    "AdriDumasFr",
+    "MaximeDemeure",
+    "MaximePom",
+    "ThomasTalon",
+    "GaelLeGallo",
+    "VincentCotnoir",
+    "BenjaminMuller"
   ],
   "en": [
     "Chubby",
@@ -11732,6 +11741,51 @@
     {
       "lang": "fr",
       "handle": "LucasMangin",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThauThau",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainB",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdriDumasFr",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDemeure",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePom",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasTalon",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeGallo",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentCotnoir",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMuller",
       "added": "2026-08-10"
     }
   ]

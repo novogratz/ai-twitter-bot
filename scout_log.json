@@ -1,53 +1,5 @@
 [
   {
-    "ts": "2026-07-21T03:53:05.310435",
-    "raw_count": 8,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Cyril",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Vieux de la tech qui couvre maintenant l'impact de l'IA sur le SaaS. Son r\u00e9seau est immense et il croise souvent des info-flux VIP."
-      }
-    ],
-    "summary": "On balance du lourd avec les fondateurs de Mistral et DeepL pour la cr\u00e9dibilit\u00e9 technique, et on compl\u00e8te avec les v\u00e9t\u00e9rans comme 0xMaci et AdrianHD qui garantissent la r\u00e9gularit\u00e9 et l'angle FR. Z\u00e9ro gourou formation, juste du hard skills et des insights."
-  },
-  {
-    "ts": "2026-07-21T05:58:03.584915",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mister_marchal",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "La voix rationnelle dans un d\u00e9sert de fous du CAC40 qui crient au loup chaque matin."
-      },
-      {
-        "handle": "santiagotrombetta",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "L'expert Mistral qui explique l'IA profonde sans vendre de soupe."
-      },
-      {
-        "handle": "cyril_b",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "La diaspora FR qui domine l'infra AI aux USA, twitte sec et efficace."
-      }
-    ],
-    "summary": "Un mix parfait entre les v\u00e9t\u00e9rans de la crypto FR, les profils IA puristes et la p\u00e9pite qu\u00e9b\u00e9coise qui en fait un rayon."
-  },
-  {
     "ts": "2026-07-21T07:53:13.442499",
     "raw_count": 10,
     "kept_count": 5,
@@ -9299,5 +9251,102 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la bouse : pas de vendeurs de r\u00eaves \u00e0 99\u20ac, juste des profils qui ont de l'exp\u00e9rience dans les dents. La France domine l'IA (Mistral), le Qu\u00e9bec est le roi de la crypto s\u00e9rieuse, et les USA apportent la finesse VC franco-am\u00e9ricaine."
+  },
+  {
+    "ts": "2026-08-10T04:59:43.047195",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThauThau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "L'ex-Mistral qui raconte le monde tech avec le cynisme juste. Moins 'buzz', plus 'vrai'. Pas de pub pour son cours \u00e0 97\u20ac."
+      },
+      {
+        "handle": "RomainB",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Am\u00e9ricain francophone bas\u00e9 \u00e0 SF. Il tweete l'IA US avec une touche europ\u00e9enne. Moins hype, plus 'what works'."
+      },
+      {
+        "handle": "MathieuLanfranchi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Ancien de Coinhouse/Parity. Il tweete l'infra, pas le hype. Ceux qui suivent le Bitcoin depuis 2017 le connaissent d\u00e9j\u00e0."
+      },
+      {
+        "handle": "AdriDumasFr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Focus LLMs et agents. Des threads techniques mais lisibles. Il \u00e9vite le 'AI will kill you' pour montrer ce qui code vraiment."
+      },
+      {
+        "handle": "MaximeDemeure",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 14000,
+        "reason": "Fintech FR. Il couvre les regtech et la data. Pas de signaux, juste des insights business que les investisseurs lisent."
+      },
+      {
+        "handle": "BenjaminHoffmann",
+        "region": "france",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "CTO de Malt (ex). Il tweete sur l'IA applied au SaaS et \u00e0 la B2B. Le genre de compte qui fait gagner du temps aux pros."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les fondateurs techniques (Mistral/HFT) et les VC locaux pour \u00e9viter les 'gourous' du signal Telegram. Le focus est sur l'infra et le business, pas le buzz. Les qu\u00e9b\u00e9cois et la diaspora US sont bien repr\u00e9sent\u00e9s par des comptes actifs qui tweetent en FR sans accent."
+  },
+  {
+    "ts": "2026-08-10T06:59:12.977789",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximePom",
+        "region": "france",
+        "niche": "tech",
+        "followers": 165000,
+        "reason": "L'expert technique de Numerama qui d\u00e9cortique l'IA et la tech sans se payer de t\u00eate. Il twitte en FR, audience massive, z\u00e9ro pub pour sa t\u00e9l\u00e9."
+      },
+      {
+        "handle": "ThomasTalon",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 145000,
+        "reason": "Crypto fr, fondamentaliste, twitte en FR. Il balance des vues claires sur la blockchain sans vendre son eau \u00e0 199\u20ac/an."
+      },
+      {
+        "handle": "GaelLeGallo",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'analyste du Figaro. Il couvre la macro et les actions avec pr\u00e9cision. Comptable s\u00e9rieux mais toujours pertinent, pas un guru qui crie sur les toits."
+      },
+      {
+        "handle": "VincentCotnoir",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Journaliste tech qu\u00e9b\u00e9cois reconnu. Il couvre les startups, la IA et la tech avec un ton l\u00e9ger mais des infos solides. Actif et FR."
+      },
+      {
+        "handle": "BenjaminMuller",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Crypto fran\u00e7ais install\u00e9 \u00e0 NY. Il mixe l'actualit\u00e9 US et FR. Twitte en FR, bonne analyse on-chain, pas un vendeur de r\u00eave."
+      }
+    ],
+    "summary": "6 profils solides : des analystes techniques et crypto qui parlent fran\u00e7ais sans se la raconter. On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour garder les vrais esprits."
   }
 ]

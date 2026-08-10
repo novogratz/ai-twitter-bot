@@ -1,25 +1,17 @@
 {
-  "generated_at": "2026-08-10T04:58:31.467262",
-  "window_7d_actions": 5102,
-  "window_24h_actions": 673,
+  "generated_at": "2026-08-10T08:58:32.218484",
+  "window_7d_actions": 5122,
+  "window_24h_actions": 719,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5101
-    },
-    {
-      "pattern": "EN_ANCHOR",
-      "count": 1
+      "count": 5122
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "EN_ANCHOR",
-      "count": 1
-    },
-    {
       "pattern": "UNKNOWN",
-      "count": 5101
+      "count": 5122
     }
   ],
   "best_hours_utc": [
@@ -41,44 +33,44 @@
     },
     {
       "hour": 7,
-      "actions": 227
+      "actions": 230
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2368
+      "count": 2391
     },
     {
       "topic": "IA",
-      "count": 1924
+      "count": 1913
     },
     {
       "topic": "Crypto",
-      "count": 586
+      "count": 588
     },
     {
       "topic": "Bourse",
-      "count": 431
+      "count": 432
     },
     {
       "topic": "Spatial",
-      "count": 148
+      "count": 150
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2161
+      "count": 2158
     },
     {
       "pillar": "other",
-      "count": 1341
+      "count": 1359
     },
     {
       "pillar": "market_trauma",
-      "count": 1310
+      "count": 1315
     },
     {
       "pillar": "meme_reaction",
@@ -86,37 +78,37 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 89
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 275
+      "count": 278
     },
     {
       "pillar": "other",
-      "count": 194
+      "count": 213
     },
     {
       "pillar": "market_trauma",
-      "count": 169
+      "count": 190
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 16
     },
     {
       "pillar": "reply_bait",
       "count": 15
     },
     {
-      "pillar": "meme_reaction",
-      "count": 14
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +121,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.15,
-      "avg_views": 46.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 77,
-      "avg_likes": 0.13,
-      "avg_views": 45.3,
+      "posts": 47,
+      "avg_likes": 0.17,
+      "avg_views": 47.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 67,
+      "posts": 65,
+      "avg_likes": 0.15,
+      "avg_views": 40.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 78,
       "avg_likes": 0.13,
-      "avg_views": 40.1,
+      "avg_views": 45.3,
       "low_sample": false
     },
     {
@@ -159,11 +151,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4545
+      "count": 4562
     },
     {
       "type": "quote",
-      "count": 309
+      "count": 310
     },
     {
       "type": "quote_gif",
@@ -171,11 +163,11 @@
     },
     {
       "type": "post",
-      "count": 57
+      "count": 58
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 47
     },
     {
       "type": "retweet",
@@ -184,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-10T04:57:56.429608",
-      "text": "2026. Claude isn't a course. It's a 70% margin monopoly masquerading as a tutorial.\n\nYou paid 2 hours for the illusion of learning. They paid $0.001 to watch you click.\n\nOpenAI's burn is $5B a year. The course is just the receipt.",
+      "ts": "2026-08-10T08:58:21.756283",
+      "text": "Big Tech dumping $745B this year. That's not infrastructure. it's the only thing keeping Nvidia's P/E from looking like a lottery ticket.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T04:57:01.815365",
-      "text": "361k longs at $23.4B. that's more capital chasing less liquidity than the SEC allows in a retail fund. the squeeze isn't coming, it's here. we just stopped counting.",
+      "ts": "2026-08-10T08:57:31.310835",
+      "text": "Meta open sourcing their models again.\n\nit costs them nothing to set the standard. you pay for the inference. they win both ways.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T04:52:48.022070",
-      "text": "ACT token up 50% in a week. AI crypto is a casino where the house keeps the GPU bill.\n\nThe real money isn't in the token. It's in the electricity it burns to dream.",
+      "ts": "2026-08-10T08:57:02.700164",
+      "text": "@tae kim\nthe real story isn't dumb politics. it's a 401k portfolio that thinks \"tech exposure\" means owning the hardware while the software eats the margin.\n\nbreathe.",
       "type": "reply"
     }
   ]
