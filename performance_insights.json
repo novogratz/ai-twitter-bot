@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-09T17:35:46.410920",
-  "window_7d_actions": 5176,
-  "window_24h_actions": 623,
+  "generated_at": "2026-08-10T00:58:32.366897",
+  "window_7d_actions": 5114,
+  "window_24h_actions": 638,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5175
+      "count": 5113
     },
     {
       "pattern": "EN_ANCHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5175
+      "count": 5113
     }
   ],
   "best_hours_utc": [
@@ -40,49 +40,49 @@
       "actions": 236
     },
     {
-      "hour": 0,
+      "hour": 7,
       "actions": 227
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2410
+      "count": 2379
     },
     {
       "topic": "IA",
-      "count": 1946
+      "count": 1921
     },
     {
       "topic": "Crypto",
-      "count": 604
+      "count": 594
     },
     {
       "topic": "Bourse",
-      "count": 432
+      "count": 429
     },
     {
       "topic": "Spatial",
-      "count": 145
+      "count": 147
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2194
+      "count": 2166
     },
     {
       "pillar": "other",
-      "count": 1360
+      "count": 1341
     },
     {
       "pillar": "market_trauma",
-      "count": 1335
+      "count": 1320
     },
     {
       "pillar": "meme_reaction",
-      "count": 152
+      "count": 150
     },
     {
       "pillar": "reply_bait",
@@ -90,33 +90,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 246
+      "count": 256
     },
     {
       "pillar": "other",
-      "count": 171
+      "count": 189
     },
     {
       "pillar": "market_trauma",
-      "count": 165
+      "count": 164
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 14
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -129,21 +129,21 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 49,
-      "avg_likes": 0.16,
-      "avg_views": 48.4,
+      "posts": 47,
+      "avg_likes": 0.15,
+      "avg_views": 47.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 64,
+      "posts": 65,
       "avg_likes": 0.14,
-      "avg_views": 39.8,
+      "avg_views": 40.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 77,
+      "posts": 78,
       "avg_likes": 0.13,
       "avg_views": 45.0,
       "low_sample": false
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4621
+      "count": 4561
     },
     {
       "type": "quote",
-      "count": 313
+      "count": 310
     },
     {
       "type": "quote_gif",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 14
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-09T17:33:32.361459",
-      "text": "She’s the cool aunt who brings cash; he’s the strict uncle counting jellybeans.",
+      "ts": "2026-08-10T00:57:21.518257",
+      "text": "Nvidia qualifies YJ lasers for $300mW.\n\nIt’s buying the supply to lock in a monopoly that makes Lumentum look like a local supplier. monopoly.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T17:31:38.679926",
-      "text": "BIP-110 failed at 2.53% support. miners voted with their hash rate, not their memes. reality check.",
+      "ts": "2026-08-10T00:53:53.863233",
+      "text": "$240M warranty hit is a one-off. Tesla’s vertical integration lets them price batteries below cost to crush competitors. The market punishes a temporary hit, not a permanent moat.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-09T17:30:12.131556",
-      "text": "They love the show, hate the bill. Your patients are just actors waiting for their residuals to drop so they can pay you.",
+      "ts": "2026-08-10T00:52:56.625303",
+      "text": "SpaceX buying cursor for 60b.\n\nthe real story is the $2m engineering salary they save every day by replacing their entire staff with 12 prompts.\n\nmusk just turned r&d into a subscription service.",
       "type": "reply"
     }
   ]
