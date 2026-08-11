@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-22T03:43:40.458247",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickael_martin",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 50000,
-        "reason": "Bas\u00e9 aux US mais twitte r\u00e9guli\u00e8rement en FR sur le SaaS, le B2B et la tech. Il couvre la Silicon Valley sans en faire un temple du r\u00eave, juste un business."
-      },
-      {
-        "handle": "thomas_schmitz",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 28000,
-        "reason": "Founder de Qonto, il couvre la startup finance avec un m\u00e9lange rare de pragmatisme et de cynisme. Parle de SaaS, de croissance et de cash. Pas de 'moon' en vue."
-      },
-      {
-        "handle": "m4rce",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Co-founder de Mistral AI, il mixe code et vision produit sans \u00eatre un guru en robe de chambre. Le mec qui prouve que les Fran\u00e7ais savent encore coder \u00e0 grande \u00e9chelle."
-      },
-      {
-        "handle": "lucas_park",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Un des rares Qu\u00e9b\u00e9cois s\u00e9rieux sur le space crypto. Il couvre les NFTs, la DeFi et l'infrastructure. Twitte en FR avec un humour d\u00e9cal\u00e9 typique."
-      }
-    ],
-    "summary": "Une s\u00e9lection sans blabla : des experts qui twittent, pas des influenceurs qui posent. Le Mix France/Quebec/USA est l\u00e0, avec du s\u00e9rieux derri\u00e8re le sourire."
-  },
-  {
-    "ts": "2026-07-22T05:56:56.486836",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautM",
-        "region": "france",
-        "niche": "tech",
-        "followers": 140000,
-        "reason": "L'anti-Louis Gardel de la tech. Il balance des insights bourse/tech sans vendre sa vie, style direct et \u00e9pur\u00e9."
-      },
-      {
-        "handle": "LionelT",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "G\u00e9rant de fonds, pas de 'community manager' dans l'\u00e2me. Ses threads sur la macro-\u00e9conomie sont plus utiles que 99% des news."
-      },
-      {
-        "handle": "FabiMousset",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Cr\u00e9ateur de contenu qu\u00e9b\u00e9cois, couvre march\u00e9s et crypto. Il a d\u00e9croch\u00e9 Elon Musk pour un podcast, \u00e7a parle de lui-m\u00eame."
-      },
-      {
-        "handle": "MaximeAguilera",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Fintech expert bas\u00e9 aux US mais tr\u00e8s actif dans la diaspora. Il d\u00e9cortique les mod\u00e8les \u00e9conomiques des n\u00e9o-banques sans se coucher."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour garder les architectes. Une concentration forte sur la Tech fran\u00e7aise (Mistral) et le trading qu\u00e9b\u00e9cois solide, sans les influenceurs TikTok qui crient."
-  },
-  {
     "ts": "2026-07-22T08:01:22.420497",
     "raw_count": 8,
     "kept_count": 7,
@@ -9334,5 +9258,88 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les fondateurs techniques (Bourgeois, Bessac) et les analysts macro (Chadid, Borday). Qu\u00e9bec bien repr\u00e9sent\u00e9 pour \u00e9viter l'\u00e9cho de Paris."
+  },
+  {
+    "ts": "2026-08-11T00:59:43.480832",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienRigot",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'ancien de JPMorgan qui explique la macro sans endormir le lectorat, pur jus de Wall Street d\u00e9gueulass\u00e9."
+      },
+      {
+        "handle": "BenjaminDussert",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien de Coinhouse, il couvre le march\u00e9 avec la pr\u00e9cision d'un comptable qui a d\u00e9couvert le DeFi."
+      }
+    ],
+    "summary": "Un m\u00e9lange de mastodontes institutionnels et de petits poucets qui bossent vraiment la niche. On \u00e9vite les influenceurs crypto qui vendent des NFTs \u00e0 0.5 ETH et les 'gurus' de trading sur YouTube."
+  },
+  {
+    "ts": "2026-08-11T02:59:33.652010",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudoP2P",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "L'humour crypto-fran\u00e7ais ultime. Il prouve qu'on peut avoir 55k followers sans vendre de groupe Telegram VIP \u00e0 50\u20ac/mois."
+      },
+      {
+        "handle": "AlexDionneQc",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La voix tranquille du Qu\u00e9bec crypto. Il analyse sans crier. On est loin du 'TO THE MOON' hyst\u00e9rique."
+      },
+      {
+        "handle": "Nicolascolas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 23000,
+        "reason": "Le trader de guerre qui a surv\u00e9cu aux crashs en restant sobre. Pas de vente de r\u00eave, juste du peps et du graph."
+      },
+      {
+        "handle": "MaximeCyr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Le mec qui a boss\u00e9 chez Mistral et explique l'IA comme si tu avais un QI normal. Plus utile que tes cours LinkedIn."
+      },
+      {
+        "handle": "RomainLemarchand",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Fondateur de Deepmind-like et il twitte sa tech sans jargon incompr\u00e9hensible. Le genre de compte qu'on mute pour ne pas rater."
+      },
+      {
+        "handle": "MathieuLeclercq",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le 'product guy' qui ne fait pas de pub pour ses propres outils. Rare chez nous, on garde celui-l\u00e0."
+      },
+      {
+        "handle": "SylvainCohen",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Le VC am\u00e9ricain qui a appris le fran\u00e7ais par passion. Il rep\u00e8re les gems FR avant les gros fonds US."
+      }
+    ],
+    "summary": "Scoutage cibl\u00e9 : on a \u00e9vit\u00e9 les vendeurs de r\u00eaves classiques pour privil\u00e9gier les vrais analystes qui tweetent en fran\u00e7ais, y compris au Qu\u00e9bec et pour la diaspora US."
   }
 ]

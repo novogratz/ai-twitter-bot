@@ -1629,7 +1629,15 @@
     "JulienCavard",
     "RomainBorday",
     "MaximeDalleau",
-    "MaximeBoutin"
+    "MaximeBoutin",
+    "JulienRigot",
+    "BenjaminDussert",
+    "LudoP2P",
+    "AlexDionneQc",
+    "Nicolascolas",
+    "MaximeCyr",
+    "MathieuLeclercq",
+    "SylvainCohen"
   ],
   "en": [
     "Chubby",
@@ -2000,7 +2008,8 @@
     "Similarweb",
     "Chesny",
     "Daniel",
-    "ueaj"
+    "ueaj",
+    "Anpnman"
   ],
   "history": [
     {
@@ -11997,6 +12006,51 @@
       "lang": "fr",
       "handle": "MaximeBoutin",
       "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRigot",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDussert",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Anpnman",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoP2P",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDionneQc",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nicolascolas",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCyr",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLeclercq",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainCohen",
+      "added": "2026-08-11"
     }
   ]
 }

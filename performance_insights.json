@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-11T00:58:32.723641",
-  "window_7d_actions": 5120,
-  "window_24h_actions": 875,
+  "generated_at": "2026-08-11T04:58:31.607949",
+  "window_7d_actions": 5123,
+  "window_24h_actions": 884,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5120
+      "count": 5123
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5120
+      "count": 5123
     }
   ],
   "best_hours_utc": [
@@ -39,72 +39,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2355
+      "count": 2336
     },
     {
       "topic": "IA",
-      "count": 1948
+      "count": 1961
     },
     {
       "topic": "Crypto",
-      "count": 597
+      "count": 600
     },
     {
       "topic": "Bourse",
-      "count": 423
+      "count": 432
     },
     {
       "topic": "Spatial",
-      "count": 155
+      "count": 158
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2189
+      "count": 2200
     },
     {
       "pillar": "other",
-      "count": 1344
+      "count": 1333
     },
     {
       "pillar": "market_trauma",
-      "count": 1297
+      "count": 1296
     },
     {
       "pillar": "meme_reaction",
-      "count": 154
+      "count": 155
     },
     {
       "pillar": "reply_bait",
-      "count": 85
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 52
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 391
+      "count": 406
     },
     {
       "pillar": "other",
-      "count": 226
+      "count": 215
     },
     {
       "pillar": "market_trauma",
-      "count": 207
+      "count": 212
     },
     {
       "pillar": "meme_reaction",
-      "count": 31
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -121,16 +121,16 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 50,
+      "posts": 51,
       "avg_likes": 0.22,
-      "avg_views": 48.2,
+      "avg_views": 47.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 65,
+      "posts": 64,
       "avg_likes": 0.17,
-      "avg_views": 42.9,
+      "avg_views": 43.4,
       "low_sample": false
     },
     {
@@ -151,7 +151,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4566
+      "count": 4568
     },
     {
       "type": "quote",
@@ -159,7 +159,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 131
     },
     {
       "type": "post",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-11T00:58:09.755167",
-      "text": "Nvidia turns GPUs into infrastructure collateral. The hidden mechanic: margins stay at 70% only until the capex cycle peaks and buyers realize they’re leasing electricity, not buying assets. collateralization ends when the lease comes due.",
+      "ts": "2026-08-11T04:57:28.318469",
+      "text": "MIT license. The VC with a Podcast is already calling it “composable agent architecture.” The code is just glue.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T00:56:56.834638",
-      "text": "44.7% YoY growth on AI demand.\n\nThe market calls this a \"bellwether.\" We call it the only company that actually ships what the VCs promise.",
+      "ts": "2026-08-11T04:57:10.892872",
+      "text": "Burry shorted it and it ran 176%. the market's been front-running his lag for 2 years. pltr isn't a stock. it's a government service contract with a multiple.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T00:54:10.443926",
-      "text": "11 models. All said euthanize the cat. AI safety isn't a feature, it's the product.\n401k Dave is already shorting pet supplies.",
+      "ts": "2026-08-11T04:56:54.821915",
+      "text": "Openai is burning $5b a year to sell you a faster typewriter.\ngpt-5.6-cyber exists so you can pay $200/mo to write sql that still breaks.",
       "type": "reply"
     }
   ]
