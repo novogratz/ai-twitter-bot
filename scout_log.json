@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-22T11:52:03.774912",
-    "raw_count": 9,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BorjaMunoz",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Co-founder de Meltwater (ex-Airbnb exec), l'ego-trip sur l'IA fait des ravages, twitte en FR/EN avec une touche d'auto-d\u00e9rision rare."
-      },
-      {
-        "handle": "ThomasPerrin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 32000,
-        "reason": "Journaliste chez BFMTV Business. Il couvre les markets avec une objectivit\u00e9 rafra\u00eechissante, pas de 'moon' gratuit, juste du fond."
-      },
-      {
-        "handle": "BaptistePoujol",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Head of AI chez Hugging Face. Il twitte les coulisses de l'Open Source, c'est technique mais accessible, et il ne vend pas de cours de 99\u20ac."
-      },
-      {
-        "handle": "PierreBarrault",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Prof at HEC & Sorbonne, la t\u00eate pensante d'Eviden IA. Il balance des threads tech denses mais lisibles, loin de la hype vacuit\u00e9."
-      },
-      {
-        "handle": "MickaelBouyer",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le gars de 'Le March\u00e9 de la Bourse'. Il analyse les actions qu\u00e9b\u00e9coises et US, twitte en fran\u00e7ais qu\u00e9b\u00e9cois naturel, zero hype."
-      },
-      {
-        "handle": "RaphaelFournier",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Journaliste crypto \u00e0 Qu\u00e9bec (BTC Public). Il couvre l'industrie locale et internationale, style direct, pas de shilling permanent."
-      }
-    ],
-    "summary": "On \u00e9vite les influenceurs TikTok bourse pour se concentrer sur des insiders qui twittent ce qu'ils font : des founders de Scale-ups (Meltwater, Hugging Face), des profs d'universit\u00e9s et des journalistes de terrain. Au Qu\u00e9bec, on reste pragmatique avec des profils locaux actifs sur le BTC et la bourse traditionnelle."
-  },
-  {
-    "ts": "2026-07-22T15:58:49.431686",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilBourque",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 62000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la macro et les actions. Analyse fine, anglais/fran\u00e7ais, format court et percutant."
-      },
-      {
-        "handle": "ThibaultBoullier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ancien de Parafin, maintenant solo. Twitte des threads deep-dive sur la tech blockchain sans vendre de r\u00eave."
-      },
-      {
-        "handle": "RomainDong",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Fond\u00e9 sur l'analyse technique et le trading de crypto. Plus orient\u00e9 price action que narrative, mais tr\u00e8s solide."
-      },
-      {
-        "handle": "LilianBoulard",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Ex-Hugging Face, expert Vector DB. Il explique l'IA de prod pour ceux qui veulent la faire tourner, pas juste la regarder."
-      },
-      {
-        "handle": "GillesArduzzo",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 11000,
-        "reason": "Bas\u00e9 \u00e0 San Francisco, twitte en FR. Focus sur les startups tech et les lev\u00e9es de fonds. Regard ext\u00e9rieur pertinent."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs 'gourmands' pour ne garder que les b\u00e2tisseurs et les traders qui postent encore. On passe des grands patrons de l'IA (Mistral) aux sp\u00e9cialistes de la micro-structure (Qu\u00e9bec/SF). Pas de vendeurs de r\u00eave, que du concret."
-  },
-  {
     "ts": "2026-07-22T17:43:49.607895",
     "raw_count": 8,
     "kept_count": 5,
@@ -9320,5 +9223,109 @@
       }
     ],
     "summary": "Six comptes solides qui \u00e9vitent le buzzword bingo. On a des pros du trading, des devs qui construisent, et un Qu\u00e9b\u00e9cois qui fait briller l'IA francophone \u00e0 Toronto."
+  },
+  {
+    "ts": "2026-08-11T08:59:15.498318",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Nathaniel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le mec qui a compris que l'IA, c'est pas du code, c'est de la psychologie. Il tweet mieux que 90% des 'experts' combin\u00e9s."
+      },
+      {
+        "handle": "LudovicBourgeois",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 32000,
+        "reason": "Ancien trader, il balance des setups et des macro avec une pr\u00e9cision de chirurgien. Pas de blabla, juste du concret."
+      },
+      {
+        "handle": "Rapha\u00eblGirard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Le roi des cycles crypto. Quand il tweet, le march\u00e9 tremble ou rit. Il \u00e9vite les vendeurs de r\u00eave."
+      },
+      {
+        "handle": "PierreDumont",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais tweet FR. Il couvre les tech stocks US avec un \u0153il de Value Investor qui ne pleure jamais."
+      },
+      {
+        "handle": "AlexandreDionneQC",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Founder tech qu\u00e9b\u00e9cois qui couvre l'intersection SaaS/IA. Un pur produit du milieu \u00e9cosyst\u00e8me local."
+      },
+      {
+        "handle": "MarieLavoie",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "La voix de la crypto au Qu\u00e9bec. Elle balance des insights Web3 qui ne viennent pas de San Francisco."
+      }
+    ],
+    "summary": "Je filtres le bruit pour ne garder que les cerveaux qui font bouger le march\u00e9 : des analystes qui tweetent des insights, pas des tweets pour avoir des likes."
+  },
+  {
+    "ts": "2026-08-11T10:59:09.882570",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "victoriachan",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "La tech reporter de r\u00e9f\u00e9rence pour la Silicon Valley, mais elle tweet souvent en fran\u00e7ais sur les startups fran\u00e7aises qui r\u00e9ussissent \u00e0 l'\u00e9tranger."
+      },
+      {
+        "handle": "thomasparkfr",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le roi du 'value investing' francophone. Il tweet comme il vit : des ann\u00e9es en silence, puis un thread de 10 traits qui vaut mieux que 100 coursiers."
+      },
+      {
+        "handle": "crypt0m0nk",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ancien trader, maintenant strat\u00e8ge. Pas de hype, que des graphiques et des cycles. Il a vu les crashes avant que les news ne sortent."
+      },
+      {
+        "handle": "mistercryptoFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Un classique. Il couvre le march\u00e9 crypto francophone avec une r\u00e9gularit\u00e9 qui fait d\u00e9faut aux autres. Pas de vente de formedes \u00e0 97\u20ac."
+      },
+      {
+        "handle": "nordfinanciers",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le groupe d'analyse qu\u00e9b\u00e9cois qui balance des insights sur les actions locales et US. Moins bruyant que les influenceurs USA, plus pertinent."
+      },
+      {
+        "handle": "sophienicole",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Elle d\u00e9mystifie la DeFi et les NFTs sans \u00eatre condescendante. Son audience est petite mais fid\u00e8le, ce qui est rare."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la merde des 'vendeurs de r\u00eave' pour te sortir des comptes qui tweetent encore pour eux-m\u00eames, pas juste pour le engagement. C'est sec, c'est pertinent, et \u00e7a ne sent pas la formation \u00e0 vendre."
   }
 ]

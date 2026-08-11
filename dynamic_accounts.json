@@ -1643,7 +1643,16 @@
     "MaximeRoussy",
     "Lamassure",
     "Moulin_Theo",
-    "NestorHedg"
+    "NestorHedg",
+    "Nathaniel",
+    "PierreDumont",
+    "MarieLavoie",
+    "victoriachan",
+    "thomasparkfr",
+    "crypt0m0nk",
+    "mistercryptoFR",
+    "nordfinanciers",
+    "sophienicole"
   ],
   "en": [
     "Chubby",
@@ -12098,6 +12107,51 @@
     {
       "lang": "fr",
       "handle": "NestorHedg",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nathaniel",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDumont",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarieLavoie",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "victoriachan",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasparkfr",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypt0m0nk",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "mistercryptoFR",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "nordfinanciers",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "sophienicole",
       "added": "2026-08-11"
     }
   ]
