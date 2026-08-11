@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-10T16:58:31.761268",
-  "window_7d_actions": 5121,
-  "window_24h_actions": 802,
+  "generated_at": "2026-08-10T20:58:31.701305",
+  "window_7d_actions": 5115,
+  "window_24h_actions": 863,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5121
+      "count": 5115
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5121
+      "count": 5115
     }
   ],
   "best_hours_utc": [
@@ -39,42 +39,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2387
+      "count": 2364
     },
     {
       "topic": "IA",
-      "count": 1923
+      "count": 1940
     },
     {
       "topic": "Crypto",
-      "count": 584
+      "count": 588
     },
     {
       "topic": "Bourse",
-      "count": 424
+      "count": 420
     },
     {
       "topic": "Spatial",
-      "count": 156
+      "count": 157
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2171
+      "count": 2191
     },
     {
       "pillar": "other",
-      "count": 1357
+      "count": 1340
     },
     {
       "pillar": "market_trauma",
-      "count": 1299
+      "count": 1289
     },
     {
       "pillar": "meme_reaction",
-      "count": 160
+      "count": 158
     },
     {
       "pillar": "reply_bait",
@@ -82,62 +82,62 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 329
+      "count": 379
     },
     {
       "pillar": "other",
-      "count": 229
+      "count": 228
     },
     {
       "pillar": "market_trauma",
-      "count": 197
+      "count": 205
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
       "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 37.2,
+      "avg_likes": 0.4,
+      "avg_views": 52.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 49,
-      "avg_likes": 0.16,
-      "avg_views": 46.6,
+      "avg_likes": 0.2,
+      "avg_views": 48.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 65,
-      "avg_likes": 0.15,
-      "avg_views": 40.7,
+      "avg_likes": 0.18,
+      "avg_views": 42.1,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 76,
-      "avg_likes": 0.13,
-      "avg_views": 44.7,
+      "avg_likes": 0.14,
+      "avg_views": 44.9,
       "low_sample": false
     },
     {
@@ -151,11 +151,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4564
+      "count": 4559
     },
     {
       "type": "quote",
-      "count": 306
+      "count": 307
     },
     {
       "type": "quote_gif",
@@ -163,7 +163,7 @@
     },
     {
       "type": "post",
-      "count": 57
+      "count": 55
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-10T16:58:05.732425",
-      "text": "Hyperscalers bought 200k GPUs in a prisoner’s dilemma.\n\nthe real story is they just built their own central bank.",
+      "ts": "2026-08-10T20:57:56.829846",
+      "text": "OpenAI’s burn rate is $5B a year. Their influencers don’t report negatives because negative news = higher burn = more cash out of the vault. it’s not loyalty, it’s payroll",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T16:57:32.766002",
-      "text": "Palantir sells the brains. LMT, RTX, NOC sell the muscle.\n\nThe market is finally pricing in the most boring part of AI: the part that weighs 2 tons and runs on JP-8.",
+      "ts": "2026-08-10T20:57:03.190912",
+      "text": "@AMD is trading at a datacenter margin discount to Nvidia while buying back stock.\n\nagf didn't buy a chipmaker. they bought the second option before the rest of wall street realizes the first is priced for perfection.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-10T16:56:51.715199",
-      "text": "XColossus is 200k GPUs.\nThat’s roughly 2x the global GPU stock for inference.\nMusk isn’t building an AI. He’s building the only AI that doesn’t have to pay rent.",
+      "ts": "2026-08-10T20:56:45.779475",
+      "text": "Trump Media’s treasury has an average cost basis of ~$98k and a book profit of $600M. It’s not stacking, it’s a tax loss harvesting engine with a press release.",
       "type": "reply"
     }
   ]

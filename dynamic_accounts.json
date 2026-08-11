@@ -1614,7 +1614,15 @@
     "RenaudLanfrey",
     "SorenAndersen",
     "AlexisPoulin_",
-    "BaptisteMaire"
+    "BaptisteMaire",
+    "AdrienPerray",
+    "SylvainM",
+    "MaxenceDf",
+    "Lionel63720",
+    "ThibaudDelaage",
+    "JulienLefort01",
+    "MarcLamothe_",
+    "CryptoBenoitFR"
   ],
   "en": [
     "Chubby",
@@ -1983,7 +1991,8 @@
     "CLUTCH",
     "JAKEGTV",
     "Similarweb",
-    "Chesny"
+    "Chesny",
+    "Daniel"
   ],
   "history": [
     {
@@ -11894,6 +11903,51 @@
     {
       "lang": "fr",
       "handle": "BaptisteMaire",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienPerray",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainM",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Daniel",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxenceDf",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lionel63720",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudDelaage",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLefort01",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLamothe_",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBenoitFR",
       "added": "2026-08-10"
     }
   ]
