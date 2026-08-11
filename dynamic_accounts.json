@@ -1637,7 +1637,13 @@
     "Nicolascolas",
     "MaximeCyr",
     "MathieuLeclercq",
-    "SylvainCohen"
+    "SylvainCohen",
+    "SylvainLeGal",
+    "GaelLebrat",
+    "MaximeRoussy",
+    "Lamassure",
+    "Moulin_Theo",
+    "NestorHedg"
   ],
   "en": [
     "Chubby",
@@ -2009,7 +2015,9 @@
     "Chesny",
     "Daniel",
     "ueaj",
-    "Anpnman"
+    "Anpnman",
+    "KuCoin",
+    "Mayah"
   ],
   "history": [
     {
@@ -12050,6 +12058,46 @@
     {
       "lang": "fr",
       "handle": "SylvainCohen",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "en",
+      "handle": "KuCoin",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeGal",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLebrat",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRoussy",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Mayah",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lamassure",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Moulin_Theo",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "NestorHedg",
       "added": "2026-08-11"
     }
   ]

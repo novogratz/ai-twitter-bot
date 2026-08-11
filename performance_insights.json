@@ -1,17 +1,25 @@
 {
-  "generated_at": "2026-08-11T04:58:31.607949",
-  "window_7d_actions": 5123,
-  "window_24h_actions": 884,
+  "generated_at": "2026-08-11T08:58:31.546648",
+  "window_7d_actions": 5117,
+  "window_24h_actions": 875,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5123
+      "count": 5116
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
+      "pattern": "METAPHOR",
+      "count": 1
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 5123
+      "count": 5116
     }
   ],
   "best_hours_utc": [
@@ -32,49 +40,49 @@
       "actions": 239
     },
     {
-      "hour": 7,
-      "actions": 230
+      "hour": 8,
+      "actions": 229
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2336
+      "count": 2315
     },
     {
       "topic": "IA",
-      "count": 1961
+      "count": 1977
     },
     {
       "topic": "Crypto",
-      "count": 600
+      "count": 606
     },
     {
       "topic": "Bourse",
-      "count": 432
+      "count": 429
     },
     {
       "topic": "Spatial",
-      "count": 158
+      "count": 156
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2200
+      "count": 2213
     },
     {
       "pillar": "other",
-      "count": 1333
+      "count": 1317
     },
     {
       "pillar": "market_trauma",
-      "count": 1296
+      "count": 1289
     },
     {
       "pillar": "meme_reaction",
-      "count": 155
+      "count": 158
     },
     {
       "pillar": "reply_bait",
@@ -82,29 +90,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 52
+      "count": 53
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 406
-    },
-    {
-      "pillar": "other",
-      "count": 215
+      "count": 413
     },
     {
       "pillar": "market_trauma",
-      "count": 212
+      "count": 206
+    },
+    {
+      "pillar": "other",
+      "count": 203
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 33
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
@@ -116,28 +124,28 @@
       "pillar": "ai_vs_btc",
       "posts": 5,
       "avg_likes": 0.4,
-      "avg_views": 52.4,
+      "avg_views": 58.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 51,
+      "posts": 50,
       "avg_likes": 0.22,
-      "avg_views": 47.9,
+      "avg_views": 47.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 64,
       "avg_likes": 0.17,
-      "avg_views": 43.4,
+      "avg_views": 43.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.15,
-      "avg_views": 44.6,
+      "posts": 76,
+      "avg_likes": 0.14,
+      "avg_views": 45.3,
       "low_sample": false
     },
     {
@@ -151,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4568
+      "count": 4558
     },
     {
       "type": "quote",
-      "count": 310
+      "count": 311
     },
     {
       "type": "quote_gif",
@@ -163,11 +171,11 @@
     },
     {
       "type": "post",
-      "count": 55
+      "count": 57
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 46
     },
     {
       "type": "retweet",
@@ -176,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-11T04:57:28.318469",
-      "text": "MIT license. The VC with a Podcast is already calling it “composable agent architecture.” The code is just glue.",
+      "ts": "2026-08-11T08:55:32.443491",
+      "text": "@nextbigfuture is the guy who brings the blueprint to the dinner party.\n\nStargate's AI lease at $500B implies 8x efficiency over current capex. the market prices in the vapor; the datacenter pays in diesel and silicon.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T04:57:10.892872",
-      "text": "Burry shorted it and it ran 176%. the market's been front-running his lag for 2 years. pltr isn't a stock. it's a government service contract with a multiple.",
-      "type": "reply"
+      "ts": "2026-08-11T08:55:16.230292",
+      "text": "Me on my way to the group chat because I bought IBM in 2012 instead of learning Python :D\nhttps://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-tuesday-august-11-2026-opening-prices-fall-back-ahead-of-inflation-reports-this-week-124608146.",
+      "type": "hotake"
     },
     {
-      "ts": "2026-08-11T04:56:54.821915",
-      "text": "Openai is burning $5b a year to sell you a faster typewriter.\ngpt-5.6-cyber exists so you can pay $200/mo to write sql that still breaks.",
+      "ts": "2026-08-11T08:54:42.748889",
+      "text": "Anthropic paying riot $9.1B to mine AI instead of BTC.\nthe hash rate is pivoting from securing money to powering inference.\nyou're not buying a coin. you're buying the utility bill.",
       "type": "reply"
     }
   ]

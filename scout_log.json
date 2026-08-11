@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-22T08:01:22.420497",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TiboInshape",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 650000,
-        "reason": "Le roi du cashflow FR, twitte bourse quotidiennement, audience massive mais authentique."
-      },
-      {
-        "handle": "NolwennAuzanneau",
-        "region": "france",
-        "niche": "tech",
-        "followers": 120000,
-        "reason": "VP chez Mistral AI, le meilleur compte FR pour l'IA francophone, tr\u00e8s active."
-      },
-      {
-        "handle": "MouadDerradji",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La star FR de la macrocrypto, twitte en FR/EN, analyse solide sans vendre du r\u00eave."
-      },
-      {
-        "handle": "PierreLacroix",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Crypto founder US mais twitte en FR, niche pr\u00e9cise DeFi/Infrastructure, actif."
-      },
-      {
-        "handle": "BenoitPoulin_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Le plus gros influenteur tech Qu\u00e9bec, focus IA/SaaS, twitte en FR, tr\u00e8s pro."
-      },
-      {
-        "handle": "SylvainMabire",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ex-Dassault Syst\u00e8mes, tr\u00e8s actif sur IA et SaaS, qualit\u00e9 du contenu above average."
-      },
-      {
-        "handle": "AlexandreLeclerc",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ex-Google, VC au Qu\u00e9bec, poste sur l'\u00e9cosyst\u00e8me tech/francophone, tr\u00e8s relevant."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre IA pure (Mistral) et Crypto macro. Le Qu\u00e9bec est mieux repr\u00e9sent\u00e9 que d'hab via les VC locaux."
-  },
-  {
-    "ts": "2026-07-22T09:52:54.445542",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LouisCoutanceau",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Cr\u00e9ateur de contenu crypto qui a su \u00e9viter le pi\u00e8ge du 'shill' permanent. Il poste sur DeFi, Layer 2 et macro crypto avec un ton sec et efficace."
-      },
-      {
-        "handle": "JulienDutillieu",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Data scientist chez Hugging Face. C'est la r\u00e9f\u00e9rence pour ceux qui veulent comprendre les LLM sans se prendre la t\u00eate. Il tweet en FR et en EN, tr\u00e8s actif."
-      },
-      {
-        "handle": "BenjaminLemaitre",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Founders/CEOs de startups AI bas\u00e9es \u00e0 SF/NYC. Il couvre le VC et les deals tech avec une analyse de fond rare sur les francophones expats."
-      }
-    ],
-    "summary": "Une s\u00e9lection mixte de pur tech (Mistral/HF), de traders pro (pas des vendeurs de r\u00eave) et d'experts VC. Le focus est sur la substance : des gens qui codent, investissent ou analysent, pas qui font du marketing."
-  },
-  {
     "ts": "2026-07-22T11:52:03.774912",
     "raw_count": 9,
     "kept_count": 6,
@@ -9341,5 +9251,74 @@
       }
     ],
     "summary": "Scoutage cibl\u00e9 : on a \u00e9vit\u00e9 les vendeurs de r\u00eaves classiques pour privil\u00e9gier les vrais analystes qui tweetent en fran\u00e7ais, y compris au Qu\u00e9bec et pour la diaspora US."
+  },
+  {
+    "ts": "2026-08-11T04:59:13.421394",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainLeGal",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "VP chez Mistral. Le tech-twitter fran\u00e7ais qui mixe AI et VC avec humour. Pas un guru, un builder."
+      },
+      {
+        "handle": "CryptoRenaissance",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La newsletter crypto FR n\u00b01 sur X. Journalisme solide, couverture Ethereum et macro. Pas de shillage."
+      },
+      {
+        "handle": "GaelLebrat",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Fondateur de Koyeb. Twitte frappe fort sur l'infra AI et les startups SaaS. Punchy et technique."
+      },
+      {
+        "handle": "MaximeRoussy",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Investisseur retail s\u00e9rieux, focus dividendes et value. Compte actif, pas de 'rejoins le discord'."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les leaders d'opinion tech (Mistral/LeGal) et les v\u00e9t\u00e9rans crypto (Maki/CryptoRenaissance) pour couvrir les 3 r\u00e9gions sans tomber dans les vendeurs de r\u00eave."
+  },
+  {
+    "ts": "2026-08-11T06:59:23.138059",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lamassure",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Mathieu est un math\u00e9maticien qui trade. Il d\u00e9cortique les flux et l'algo. C'est sec, c'est cru, c'est pas du coaching \u00e0 1500 balles le mois."
+      },
+      {
+        "handle": "Moulin_Theo",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Theo Moulin, bas\u00e9 SF. Il couvre l'IA de l'int\u00e9rieur, pas depuis un canap\u00e9 \u00e0 Lyon. Ses threads sur les LLMs sont plus clairs que la plupart des articles de presse tech."
+      },
+      {
+        "handle": "NestorHedg",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'asiatique de la macro FR. Il couvre Nikkei, Hang Seng et USD/JPY comme un patissier couvre ses tartes. Rare de voir ce niveau de niche en FR."
+      }
+    ],
+    "summary": "Six comptes solides qui \u00e9vitent le buzzword bingo. On a des pros du trading, des devs qui construisent, et un Qu\u00e9b\u00e9cois qui fait briller l'IA francophone \u00e0 Toronto."
   }
 ]
