@@ -1346,3 +1346,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 196 likes / 93860 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 2 likes / 80 views: me finally realizing my "AI lifestyle" is just 12 subscriptions to tools I open twice a month lol
   - 1 likes / 74 views: me on the couch at 11pm trying to convince myself an app is doing what I do in my head better, faste
+
+## 2026-08-10
+
+**Activity** — total actions: 869
+  - by type: reply=773, quote=52, quote_gif=26, post=8, hotake=7, retweet=3
+  - top sources: SEARCH-HOT=491, FEED-SWEEP-FEED=153, FEED-SWEEP-FOLLOWING=103, QUOTE=41, GIF=30, DEBATE=14, VIP=11, BREAKING_QRT=6
+  - top reply targets: @Polymarket=21, @kimmonismus=10, @electnomics=10, @Graphseo=9, @TheBTCTherapist=8
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 29 views: My AI home assistant just calculated my mortgage renewal.  It didn't lower the rate. It just added a
+  - 2 likes / 112 views: Strategy: "central bank of Bitcoin." Translation: "the guy who puts a chuppa on the prom queen."
+  - 1 likes / 58 views: Grok’s “professional.” Anduril’s satellites are just borrowed brains. We’re paying for the hardware,
