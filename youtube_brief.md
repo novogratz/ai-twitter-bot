@@ -1,16 +1,16 @@
-# YouTube brief — 2026-08-10
+# YouTube brief — 2026-08-11
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **638**
-- reply: **570**
-- quote: **44**
-- quote_gif: **9**
-- hotake: **6**
-- post: **6**
-- retweet: **3**
+- Total actions logged: **875**
+- reply: **777**
+- quote: **54**
+- quote_gif: **27**
+- post: **8**
+- hotake: **7**
+- retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -26,76 +26,77 @@
 - **2 likes / 58 views** — Asked my bank’s AI to review my mortgage. It suggested I buy a crypto wallet with my down payment for "aggressive yield optimization." Approved in 4 seconds. Denial in 6.
 - **2 likes / 34 views** — Scientists used AI to create 16 new viruses.  I’m not nervous. My insurance deductible covers "theoretical end of the world," not "theoretical flu."
 - **2 likes / 80 views** — me finally realizing my "AI lifestyle" is just 12 subscriptions to tools I open twice a month lol
-- **1 likes / 49 views** — ASI next quarter? So basically, AGI with a confidence interval and a quarterly earnings call.
+- **2 likes / 29 views** — My AI home assistant just calculated my mortgage renewal.  It didn't lower the rate. It just added a $400/month "Joy Surcharge" and auto-renewed my marriage for three more years because the data said
+
+### Crypto
+
+- **2 likes / 112 views** — Strategy: "central bank of Bitcoin." Translation: "the guy who puts a chuppa on the prom queen."
 
 ### Other
 
 - **2 likes / 61 views** — spending $800k to watch a chart go up and down like a toddler on sugar rush.  https://x.com/Web3Marmot/status/2085045350050521183…
-- **1 likes / 77 views** — hyperscalers finally realizing their growth curve is just a sigmoid shaped like a hangover
-- **1 likes / 37 views** — My smart fridge asked for a software subscription to unlock the ice maker.  I’m not sure if I’m being upgraded to premium or if I’m being held hostage by a appliance.  [EN_ANCHOR: 15k followers
+- **1 likes / 31 views** — me on my way to explain $200B revenue and 40% margins to my clients like we’re in love  https://x.com/oguzerkan/status/2084756555568648213…
+- **1 likes / 37 views** — august is basically the market’s second trimester – everyone feels great until the kicks start
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-10
-- **@0xchiefy** (276 likes, score 9/10) — WARNING: THE FINAL BITCOIN CRASH STARTS NEXT WEEK
+## 2026-08-11
+- **@0xlofty** (77 likes, score 9/10) — THIS BITCOIN PATTERN HAS NEVER BEEN WRONG
 
-The relief rally is almost over.
+The final Bull Trap is now officially over.
 
-And the next few weeks will determine the entire cycle.
+Every major Bitcoin crash starts after one last relief rally.
 
-$65K → $68K → $57K → $52K → $48K
+The plan is simple:
 
-Keep in mind:
+$65K → $49K → $39K → $74K →
+  - https://x.com/0xLofty/status/2086832772862161227
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 97).
+- **@bmnrbullz** (27 likes, score 8/10) — AI AGENTS COULD CREATE AN ENTIRELY NEW ECONOMY
 
-I publicl
-  - https://x.com/0xChiefy/status/2086480534092369959
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 362).
-- **@crypto_lens_** (115 likes, score 9/10) — $BTC IS STUCK AT $64K–$65K FOR A REASON.
+The economics of agentic AI are already becoming compelling:
 
-This Is the Final Bull Trap.
+ Computer use agent: $6–8/hour
+ Offshore outsourced labor: $10/hour
+ US back office labor:
+  - https://x.com/BMNRBullz/status/2086947232016662755
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
+- **@cryptoemperor06** (18 likes, score 7/10) — Michael Saylor says Strategy could withstand a Bitcoin crash to $5,000 and still remain overcollateralized against its debt.
 
-Every Bitcoin crash starts with one last relief rally.
-
-The plan hasn't changed.
-
-$65K → $70K → $49K → $39K (Bottom) → $100K → $
-  - https://x.com/crypto_lens_/status/2086489921695723776
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 157).
-- **@zuhayeer** (138 likes, score 9/10) — What a $1m grant from 2023 at @AnthropicAI and @OpenAI is worth today.
-
-Anthropic: ~$51m
-OpenAI: ~$16m
-
-These figures are adjusted for dilution. Anthropic has had an incredible run in the last few yea
-  - https://x.com/zuhayeer/status/2086591280126279770
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 144).
-- **@itsmichaelluu** (120 likes, score 9/10) — $GOOG investment in Anthropic 900% from $3B to $124B.
-
-Now they're investing in this company right here:
-  - https://x.com/itsmichaelluu/status/2086555334630412672
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 184).
+His message: the company’s capital structure is built to survive extreme d
+  - https://x.com/Cryptoemperor06/status/2086500490984988844
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CoinDesk]** Bitcoin tops $65,000 with US inflation data due this week
-  - https://www.coindesk.com/markets/2026/08/10/bitcoin-tops-usd65-000-with-us-inflation-data-due-this-week
-- **[Cointelegraph]** Australia orders Cryptolink Bitcoin ATMs offline over ‘basic reporting’ failures
-  - https://cointelegraph.com/news/australia-orders-cryptolink-bitcoin-atms-offline-over-basic-reporting-failures?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CoinDesk]** XRP is getting left behind in the crypto bounce even as ETFs keep attracting investor money
-  - https://www.coindesk.com/markets/2026/08/10/xrp-is-getting-left-behind-in-the-crypto-bounce-even-as-etfs-keep-attracting-investor-money
-- **[Cointelegraph]** Crypto’s first quantum attack will look like unexplained breach: Quantus founder
-  - https://cointelegraph.com/news/cryptos-first-quantum-attack-look-like-ordinary-key-theft-quantus-founder?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[Simon Willison]** Quoting Claude Opus 5 system prompt
-  - https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything
-- **[TechCrunch]** Embattled hedge fund Situational Awareness invests $400M in chip startup Source Foundry
-  - https://techcrunch.com/2026/08/09/embattled-hedge-fund-situational-awareness-invests-400m-in-chip-startup-source-foundry/
-- **[TechCrunch AI]** Embattled hedge fund Situational Awareness invests $400M in chip startup Source Foundry
-  - https://techcrunch.com/2026/08/09/embattled-hedge-fund-situational-awareness-invests-400m-in-chip-startup-source-foundry/
-- **[Decrypt]** Bitcoin 'Anti-Spam' Fork Sputters to a Halt After Mining Just Two Blocks
-  - https://decrypt.co/375177/bitcoin-anti-spam-fork-splutters-halt-mining-just-two-blocks
+- **[X_FOLLOWING/Milk Road AI]** Wall Street just revised its AI Capex forecast by $167 billion in one month and here is how you can benefit from this (Save this).
+
+This chart tracks combined c
+  - https://x.com/MilkRoadAI/status/2086824327820062848
+- **[X_HOME/Deedy]** Deep dive into AI text-watermarking and what EU's AI Act actually mandates about AI detectability.
+
+How it works: 
+The SynthID paper from Demis and team in Natu
+  - https://x.com/deedydas/status/2087037735819460675
+- **[X_HOME/Jun Song]** This will change the entire local AI.
+  - https://x.com/jun_song/status/2087037637358190809
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/F]** Majority of his haters in our fanbase have joined the hive and now other fanbases want him. I need his juju plug
+  - https://x.com/uncftp/status/2087040321720873198
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Hive]** Hive analyzed this post using Hive's AI / Deepfake detection models. 
+"@hive_ai is this AI generated" to check any content!
+https://hivedetect.ai/FHWGOj
+       
+  - https://x.com/hive_ai/status/2087040270487683451
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/robo]** H2 is contracted forn5 years to Microsoft. 
+You clearly have zero idea when it comes to Iren
+  - https://x.com/roberto45580514/status/2087040089755099558
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/GammaTrader subscribe and request stock gamma]** Sorry guys $iren forgot to publish the gamma for iren
+  - https://x.com/Happyfeetloans/status/2087039005900870087
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Gabriel Baldessin]** "in the hive and ant-hill we see fully realised the two things that some of us most dread for our own species—the dominance of the female and the dominance of t
+  - https://x.com/gbrlbldssn/status/2087039004575400377
 
 ## 🎬 Suggested video angles
 
@@ -106,4 +107,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-10T00:58:31*
+*Generated 2026-08-11T00:58:31*
