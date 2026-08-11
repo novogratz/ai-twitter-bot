@@ -16839,3 +16839,30 @@ These figures are adjusted for dilution. Anthropic has had an incredible run in 
 Now they're investing in this company right here:
   - https://x.com/itsmichaelluu/status/2086555334630412672
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 184).
+
+## 2026-08-11
+- **@0xlofty** (77 likes, score 9/10) — THIS BITCOIN PATTERN HAS NEVER BEEN WRONG
+
+The final Bull Trap is now officially over.
+
+Every major Bitcoin crash starts after one last relief rally.
+
+The plan is simple:
+
+$65K → $49K → $39K → $74K →
+  - https://x.com/0xLofty/status/2086832772862161227
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 97).
+- **@bmnrbullz** (27 likes, score 8/10) — AI AGENTS COULD CREATE AN ENTIRELY NEW ECONOMY
+
+The economics of agentic AI are already becoming compelling:
+
+ Computer use agent: $6–8/hour
+ Offshore outsourced labor: $10/hour
+ US back office labor:
+  - https://x.com/BMNRBullz/status/2086947232016662755
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
+- **@cryptoemperor06** (18 likes, score 7/10) — Michael Saylor says Strategy could withstand a Bitcoin crash to $5,000 and still remain overcollateralized against its debt.
+
+His message: the company’s capital structure is built to survive extreme d
+  - https://x.com/Cryptoemperor06/status/2086500490984988844
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).

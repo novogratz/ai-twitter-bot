@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-21T23:51:35.332729",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenjaminFloc",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 52000,
-        "reason": "Journaliste crypto l\u00e9gendaire. Ses threads sur les cycles et les altcoins sont la r\u00e9f\u00e9rence qualitative. Pas de pub Telegram, juste du gras pur."
-      },
-      {
-        "handle": "CryptoNathalie",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Bas\u00e9e \u00e0 NYC mais tweete en FR. Elle balance des gems on-chain et des analyses DeFi. Le compte 'influencer' qui a encore des donn\u00e9es derri\u00e8re."
-      },
-      {
-        "handle": "Lil2Shrimp",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Le Qu\u00e9b\u00e9cois qui fait le lien entre l'Europe et les US. Analyse technique et macro, twitte avec une pointe d'humour d\u00e9cal\u00e9. Rare de trouver du contenu pro dans cette r\u00e9gion."
-      },
-      {
-        "handle": "OlivierMarti",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Founding Engineer chez Mistral. Il tweet des 'threads' techniques tr\u00e8s pointus sur les LLMs. Si tu veux comprendre ce qui se passe sous le capot sans dormir."
-      }
-    ],
-    "summary": "J'ai mis\u00e9 sur les fondateurs et les anciens journalistes qui tiennent encore le haut du pav\u00e9. On est loin des vendeurs de r\u00eaves, ici on parle code, cycles et march\u00e9. C'est qualitatif comme un bon whisky, pas comme de l'eau plate de LinkedIn."
-  },
-  {
-    "ts": "2026-07-22T02:07:33.998547",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreSavary",
-        "region": "france",
-        "niche": "tech",
-        "followers": 120000,
-        "reason": "Ancien de l'\u00e9cosyst\u00e8me, couvre la tech et l'IA avec l'\u0153il du VC parisien qui n'a jamais fini ses \u00e9tudes \u00e0 l'X mais qui a fini ses rounds."
-      },
-      {
-        "handle": "RomainFiorini",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'ind\u00e9modable, le roi de la macro crypto en FR, twitte en direct des \u00e9v\u00e9nements comme s'il vivait la bulle."
-      },
-      {
-        "handle": "AlexisLamure",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi du 'punchline' boursi\u00e8re, transforme les carnets de ch\u00e8ques en stand-up comedy, 100% FR."
-      },
-      {
-        "handle": "SylvainChevry",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 30000,
-        "reason": "Bas\u00e9 aux US mais la t\u00eate dans le moteur FR, couvre la fintech et la crypto avec un regard transatlantique percutant."
-      },
-      {
-        "handle": "ThomasFavre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Focus IA et SaaS, couvre les startups fran\u00e7aises montantes avant qu'elles ne soient trop grosses pour leurs bottes."
-      },
-      {
-        "handle": "Jerec",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la crypto, twitte en FR, pas de jargon illisible, juste du direct."
-      },
-      {
-        "handle": "Marc-AndreMongeau",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'analyste ind\u00e9pendant qu\u00e9b\u00e9cois qui pique les yeux avec des graphiques clairs, z\u00e9ro fluff, pure donn\u00e9es."
-      }
-    ],
-    "summary": "Mix classique entre les v\u00e9t\u00e9rons de la crypto FR (Fiorini, Roussel) et les analystes bourse qui ont compris que Twitter n'est pas un rapport d'audit mais un buffet libre. Le Qu\u00e9bec est mieux servi qu'il n'y para\u00eet si on ignore les influenceurs lifestyle."
-  },
-  {
     "ts": "2026-07-22T03:43:40.458247",
     "raw_count": 7,
     "kept_count": 4,
@@ -9348,5 +9251,88 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les inamovibles du retail (Lionel), les experts techniques (Maxence, Thibaud) et la fra\u00eecheur qu\u00e9b\u00e9coise (Marc). Z\u00e9ro influenceur en Costar, 100% contenu."
+  },
+  {
+    "ts": "2026-08-10T20:59:30.495171",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasGuitton",
+        "region": "france",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "Product Manager chez Deezer, mais tweete beaucoup sur l'IA et la tech FR. Ton d\u00e9cal\u00e9, contenu de qualit\u00e9."
+      },
+      {
+        "handle": "LuisaVega",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Journaliste crypto au Qu\u00e9bec. Couvre les regs nord-am\u00e9ricaines avec un regard local. Actif, pertinent, pas de shilling."
+      },
+      {
+        "handle": "JulesSerrano",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "Fondateur de Hugging Face. Quand il tweete, le march\u00e9 bouge. Le compte officiel est une mine d'or pour la tech AI."
+      }
+    ],
+    "summary": "On a mix\u00e9 les g\u00e9ants silencieux (Dario, Jules) avec des influenceurs actifs (Maxime, Alexis) pour un \u00e9quilibre info brute / analyse. Z\u00e9ro vendeur de r\u00eaves, que du concret."
+  },
+  {
+    "ts": "2026-08-10T22:59:22.042956",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienCavard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Fondateur d'Elli, il balance des threads techniques solides sur les LLMs et les donn\u00e9es, loin du hype pure."
+      },
+      {
+        "handle": "RomainBorday",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "La voix de la tech qu\u00e9b\u00e9coise, couvre IA et startups avec une vision strat\u00e9gique qui d\u00e9passe le local."
+      },
+      {
+        "handle": "MaximeDalleau",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien BFM TV, il dig\u00e8re la macro crypto avec un style journalistique fluide et pas trop de jargon obscur."
+      },
+      {
+        "handle": "ThibautDellBosque",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le 'Paul Graham' fran\u00e7ais qui parle vrai sur les agents et le dev, sans la poussi\u00e8re \u00e0 puces des influencers."
+      },
+      {
+        "handle": "AdrienBourgeoisFr",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "G\u00e8re sa bo\u00eete d'investissement, twitte ses positions r\u00e9elles avec humour, pas de signaux payants."
+      },
+      {
+        "handle": "MaximeBoutin",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "Foundeur AI, il balance des insights bruts sur le d\u00e9ploiement et les co\u00fbts, sans filtre marketing."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre les fondateurs techniques (Bourgeois, Bessac) et les analysts macro (Chadid, Borday). Qu\u00e9bec bien repr\u00e9sent\u00e9 pour \u00e9viter l'\u00e9cho de Paris."
   }
 ]

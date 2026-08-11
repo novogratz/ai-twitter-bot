@@ -1622,7 +1622,14 @@
     "ThibaudDelaage",
     "JulienLefort01",
     "MarcLamothe_",
-    "CryptoBenoitFR"
+    "CryptoBenoitFR",
+    "ThomasGuitton",
+    "LuisaVega",
+    "JulesSerrano",
+    "JulienCavard",
+    "RomainBorday",
+    "MaximeDalleau",
+    "MaximeBoutin"
   ],
   "en": [
     "Chubby",
@@ -1992,7 +1999,8 @@
     "JAKEGTV",
     "Similarweb",
     "Chesny",
-    "Daniel"
+    "Daniel",
+    "ueaj"
   ],
   "history": [
     {
@@ -11948,6 +11956,46 @@
     {
       "lang": "fr",
       "handle": "CryptoBenoitFR",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasGuitton",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisaVega",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesSerrano",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "en",
+      "handle": "ueaj",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCavard",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBorday",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDalleau",
+      "added": "2026-08-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBoutin",
       "added": "2026-08-10"
     }
   ]
