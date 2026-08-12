@@ -1682,7 +1682,15 @@
     "JulienDeux",
     "CyrilBourgeois",
     "NathanPineau",
-    "NolwennB5"
+    "NolwennB5",
+    "MaximeLeClerc",
+    "JulienHerman",
+    "JulienVallier",
+    "LucasD",
+    "CyrilRoussel",
+    "Deneb",
+    "CoinhouseFR",
+    "MaximeBesson"
   ],
   "en": [
     "Chubby",
@@ -2060,7 +2068,8 @@
     "MMCrypto",
     "Asimov",
     "Mia",
-    "soli"
+    "soli",
+    "XenAI"
   ],
   "history": [
     {
@@ -12357,6 +12366,51 @@
       "lang": "fr",
       "handle": "NolwennB5",
       "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLeClerc",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHerman",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVallier",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasD",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "XenAI",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilRoussel",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Deneb",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CoinhouseFR",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBesson",
+      "added": "2026-08-12"
     }
   ]
 }

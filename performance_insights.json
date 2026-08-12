@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-12T00:58:32.293907",
-  "window_7d_actions": 5147,
-  "window_24h_actions": 885,
+  "generated_at": "2026-08-12T05:04:16.123995",
+  "window_7d_actions": 5097,
+  "window_24h_actions": 809,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5146
+      "count": 5096
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5146
+      "count": 5096
     }
   ],
   "best_hours_utc": [
@@ -47,46 +47,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2321
+      "count": 2302
     },
     {
       "topic": "IA",
-      "count": 1995
+      "count": 1979
     },
     {
       "topic": "Crypto",
-      "count": 628
+      "count": 618
     },
     {
       "topic": "Bourse",
-      "count": 424
+      "count": 418
     },
     {
       "topic": "Spatial",
-      "count": 139
+      "count": 138
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2221
+      "count": 2202
     },
     {
       "pillar": "other",
-      "count": 1348
+      "count": 1341
     },
     {
       "pillar": "market_trauma",
-      "count": 1288
+      "count": 1265
     },
     {
       "pillar": "meme_reaction",
-      "count": 157
+      "count": 158
     },
     {
       "pillar": "reply_bait",
-      "count": 87
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 400
+      "count": 360
     },
     {
       "pillar": "other",
-      "count": 224
+      "count": 214
     },
     {
       "pillar": "market_trauma",
-      "count": 211
+      "count": 192
     },
     {
       "pillar": "meme_reaction",
-      "count": 33
+      "count": 29
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 48,
-      "avg_likes": 0.23,
-      "avg_views": 43.4,
+      "posts": 47,
+      "avg_likes": 0.19,
+      "avg_views": 43.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 62,
       "avg_likes": 0.19,
-      "avg_views": 42.5,
+      "avg_views": 42.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
+      "posts": 81,
       "avg_likes": 0.16,
-      "avg_views": 48.9,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4582
+      "count": 4534
     },
     {
       "type": "quote",
-      "count": 320
+      "count": 317
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 131
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-12T00:58:11.646651",
-      "text": "Ibab left xAI’s Colossus (200k GPUs) for River AI.\n\nthat’s not a startup. that’s a solo founder trying to keep a fleet idle.",
+      "ts": "2026-08-12T03:28:02.747728",
+      "text": "AIF-C01 is an entry-level cert. The real test is whether you can build an agent that doesn’t hallucinate every 3rd query.\n\nYou’ll pass the exam. Your customers will fire you.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T00:56:22.494124",
-      "text": "Sleep aggregators trade data for free. agotchi trades tokens for retention. you're not the customer, you're the liquidity.",
-      "type": "reply"
+      "ts": "2026-08-12T02:59:06.755833",
+      "text": "104B backlog sounds like a marriage vow\n$52B of it is \"maybe next fiscal year\" 🙂",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-12T00:55:35.908537",
-      "text": "265B tokens pour 2$. le outsourcing indien n'a plus qu'à compter les kilowatts-heures et prier.",
+      "ts": "2026-08-12T02:58:32.241680",
+      "text": "GPT-5.4 + Claude 4.6 on one list, Gemini 3.1 Pro free on another.\n\nThe real story isn't AI capability. It's the SaaS seat arbitrage: paying enterprise prices for $5/mo freemium.",
       "type": "reply"
     }
   ]
