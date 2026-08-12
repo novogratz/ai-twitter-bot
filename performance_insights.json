@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-12T08:58:31.777587",
-  "window_7d_actions": 5133,
-  "window_24h_actions": 822,
+  "generated_at": "2026-08-12T12:58:31.761114",
+  "window_7d_actions": 5148,
+  "window_24h_actions": 814,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5132
+      "count": 5147
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5132
+      "count": 5147
     }
   ],
   "best_hours_utc": [
@@ -28,11 +28,11 @@
       "actions": 263
     },
     {
-      "hour": 12,
-      "actions": 240
+      "hour": 8,
+      "actions": 242
     },
     {
-      "hour": 8,
+      "hour": 12,
       "actions": 240
     },
     {
@@ -47,7 +47,7 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2326
+      "count": 2337
     },
     {
       "topic": "IA",
@@ -55,11 +55,11 @@
     },
     {
       "topic": "Crypto",
-      "count": 622
+      "count": 625
     },
     {
       "topic": "Bourse",
-      "count": 421
+      "count": 416
     },
     {
       "topic": "Spatial",
@@ -70,23 +70,23 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2219
+      "count": 2213
     },
     {
       "pillar": "other",
-      "count": 1344
+      "count": 1363
     },
     {
       "pillar": "market_trauma",
-      "count": 1274
+      "count": 1276
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 164
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 367
+      "count": 344
     },
     {
       "pillar": "other",
-      "count": 221
+      "count": 234
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 196
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -128,24 +128,24 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.18,
-      "avg_views": 44.0,
+      "pillar": "ai_news_take",
+      "posts": 67,
+      "avg_likes": 0.19,
+      "avg_views": 44.4,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 65,
-      "avg_likes": 0.18,
-      "avg_views": 44.7,
+      "pillar": "market_trauma",
+      "posts": 43,
+      "avg_likes": 0.19,
+      "avg_views": 43.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 80,
-      "avg_likes": 0.15,
-      "avg_views": 51.5,
+      "avg_likes": 0.16,
+      "avg_views": 50.6,
       "low_sample": false
     },
     {
@@ -159,19 +159,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4565
+      "count": 4576
     },
     {
       "type": "quote",
-      "count": 321
+      "count": 322
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 135
     },
     {
       "type": "post",
-      "count": 57
+      "count": 58
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-12T08:57:54.707332",
-      "text": "@Kim Dotcom \"Good luck with controlling AI.\"\nme refreshing my portfolio like it’s a slot machine that just ate my rent",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-12T08:57:21.513872",
-      "text": "NBIS up 15% on AI cloud revenue growing 514% YoY.\n\nIt's not a company anymore. It's a data center with a billing department.",
+      "ts": "2026-08-12T12:57:51.474982",
+      "text": "Tesla is a hardware company with an AI marketing budget.\nThe robots work, the margins don't.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T08:55:17.662408",
-      "text": "Vineland to BE. The power bill was already paid for by the building. BE just gets to charge rent for air.",
+      "ts": "2026-08-12T12:55:50.166927",
+      "text": "Decawork. y combinator. internal ai agents.\n\nthe real story isn't governance. it's preventing your agents from deleting production while they hallucinate.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-12T12:55:33.854630",
+      "text": "Tu dis “la bulle IA ne fait que commencer”, et c’est précisément là que les marchés font leur classique: ils pricent l’histoire, pas la contrainte physique.",
       "type": "reply"
     }
   ]

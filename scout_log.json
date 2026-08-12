@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-23T13:43:38.509133",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JorisTissot",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'analyste macro qui tue dans les graphiques, pas dans les d\u00e9bats YouTube pol\u00e9miques."
-      },
-      {
-        "handle": "MaxMazet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ex-CTO Coinhouse, il couvre la DeFi et l'infra crypto avec l'\u0153il du technicien, pas du sp\u00e9culateur."
-      },
-      {
-        "handle": "AdrianBourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le chercheur qui vulgarise les LLMs avec humour. Moins connu mais plus dense que la moyenne."
-      }
-    ],
-    "summary": "Une s\u00e9lection 100% technique : les fondateurs et ing\u00e9nieurs qui twittent, pas les influenceurs qui vendent des formations."
-  },
-  {
-    "ts": "2026-07-23T16:15:10.096482",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RazvanNalbant",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 110000,
-        "reason": "Romain (souvent US-based). Le roi des memes crypto intelligents. Sa newsletter vaut de l'or, son compte aussi."
-      },
-      {
-        "handle": "DusanBajic",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 58000,
-        "reason": "L'ap\u00f4tre de la d\u00e9centralisation. Vaut mieux que la BCE et bien plus dr\u00f4le que les influenceurs Telegram."
-      },
-      {
-        "handle": "MaximGirard",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "L'expert hardware Qu\u00e9bec. C'est lui qui explique pourquoi ton GPU rame. Technique et sans blabla."
-      },
-      {
-        "handle": "JulesR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Analyste independent. Pas de pub, pas de Telegram. Juste des charts et du bon sens, rare en FR."
-      },
-      {
-        "handle": "VincentBoucher_",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Prof \u00e0 Polytechnique. Il rend l'IA compr\u00e9hensible sans te faire croire que tu vas devenir riche en 3 jours."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les silos Mistral/AI et les veterams Crypto FR/Qu\u00e9bec. J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les experts techniques et les anciens fondateurs. Aucun n'est un bot."
-  },
-  {
     "ts": "2026-07-23T17:43:31.858214",
     "raw_count": 6,
     "kept_count": 4,
@@ -9313,5 +9237,109 @@
       }
     ],
     "summary": "Une s\u00e9lection de 5 comptes piment\u00e9s. Pas de vendeurs de r\u00eave, que des vrais acteurs. C'est court, c'est efficace, c'est moins de bruit."
+  },
+  {
+    "ts": "2026-08-12T08:59:17.849137",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaflecheInfinite",
+        "region": "france",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "L'humoriste qui cartonne sur l'IA. Moins un analyste pur dur, mais le plus dr\u00f4le pour comprendre les absurdit\u00e9s de la tech sans s'endormir."
+      },
+      {
+        "handle": "BenjaminHuet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Le v\u00e9t\u00e9ran du secteur. Quand il twitte, les whales v\u00e9rifient leur portfolio. Il a vu passer plus de bulles que j'ai vu de saisons de The Office."
+      },
+      {
+        "handle": "JulienLamure",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le prof de la fac de l'IA qui n'a pas froid aux yeux. Il explique le futur comme s'il te disait que ton iPhone va bient\u00f4t te commander ta pizza."
+      },
+      {
+        "handle": "ThibaultCoutant",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'expert macro qui transforme les donn\u00e9es en anecdotes de bar. Il prouve que la finance n'est pas que des chiffres, c'est du th\u00e9\u00e2tre avec des graphiques."
+      },
+      {
+        "handle": "MaximeR",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'ambassadeur qu\u00e9b\u00e9cois de la Web3. Il prouve qu'on peut \u00eatre pr\u00e9cis et acide tout en parlant avec un accent (virtuel ou pas)."
+      }
+    ],
+    "summary": "J'ai d\u00e9poussi\u00e9r\u00e9 les classiques et filtr\u00e9 les vendeurs de r\u00eaves. Une s\u00e9lection franche, sans les usual suspects qui vendent du 'revenu passif' pour le prix d'un iPhone."
+  },
+  {
+    "ts": "2026-08-12T11:00:01.766638",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LucasBourdin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Journaliste TechCrunch FR. C'est lui qui t'explique que l'IA n'a pas encore tu\u00e9 ton job, mais que ton chef si."
+      },
+      {
+        "handle": "MaximeDernier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le prof de lyc\u00e9e qui a fait un CAC40 en or. Il twitte la finance pour les humains, pas pour les robots."
+      },
+      {
+        "handle": "CryptoKaleoFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "L'adaptateur francophone du g\u00e9nie macro (Kaleo). Il transforme l'anglais technique en fran\u00e7ais consommable."
+      },
+      {
+        "handle": "MaximeDelac",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la bourse et les ETF. Il parle peu, il est pr\u00e9cis, et il \u00e9vite les pi\u00e8ges."
+      },
+      {
+        "handle": "MarcDionne",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "G\u00e9ant du web3 QC. Il couvre l'infrastructure crypto avec la rigueur d'un ing\u00e9nieur et l'humour d'unQu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "JulieCayol",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 16000,
+        "reason": "La voix fran\u00e7aise \u00e0 New York. Elle interviewe les PDG de l'IA et de la Finance, et elle est toujours au courant avant toi."
+      },
+      {
+        "handle": "HuguesLabb",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le mec derri\u00e8re AI Briefing France. Moins hype que les traders, mais plus malin que tes analystes."
+      }
+    ],
+    "summary": "On a fouill\u00e9 les tr\u00e9fonds pour \u00e9viter les vendeurs de r\u00eaves en formations. Le lot est mix\u00e9 : des g\u00e9ants de la crypto (Maci, Kaleo FR), des pros de la bourse (Delac, Dernier) et des info-pros IA (Labb, Dumas). Z\u00e9ro formation \u00e0 99\u20ac au programme, que du contenu gratuit et dense."
   }
 ]

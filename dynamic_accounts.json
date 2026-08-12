@@ -1693,7 +1693,18 @@
     "MaximeBesson",
     "LaFrenchTrader",
     "Coinhouse",
-    "CryptoBasics"
+    "CryptoBasics",
+    "BenjaminHuet",
+    "JulienLamure",
+    "ThibaultCoutant",
+    "MaximeR",
+    "LucasBourdin",
+    "MaximeDernier",
+    "CryptoKaleoFR",
+    "MaximeDelac",
+    "MarcDionne",
+    "JulieCayol",
+    "HuguesLabb"
   ],
   "en": [
     "Chubby",
@@ -2072,7 +2083,8 @@
     "Asimov",
     "Mia",
     "soli",
-    "XenAI"
+    "XenAI",
+    "Nebius"
   ],
   "history": [
     {
@@ -12428,6 +12440,66 @@
     {
       "lang": "fr",
       "handle": "CryptoBasics",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Nebius",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminHuet",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLamure",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultCoutant",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeR",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasBourdin",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDernier",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKaleoFR",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDelac",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDionne",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieCayol",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesLabb",
       "added": "2026-08-12"
     }
   ]
