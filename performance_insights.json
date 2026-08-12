@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-11T20:58:32.504397",
-  "window_7d_actions": 5121,
-  "window_24h_actions": 883,
+  "generated_at": "2026-08-12T00:58:32.293907",
+  "window_7d_actions": 5147,
+  "window_24h_actions": 885,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5120
+      "count": 5146
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5120
+      "count": 5146
     }
   ],
   "best_hours_utc": [
@@ -47,46 +47,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2300
+      "count": 2321
     },
     {
       "topic": "IA",
-      "count": 1991
+      "count": 1995
     },
     {
       "topic": "Crypto",
-      "count": 625
+      "count": 628
     },
     {
       "topic": "Bourse",
-      "count": 425
+      "count": 424
     },
     {
       "topic": "Spatial",
-      "count": 142
+      "count": 139
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2209
+      "count": 2221
     },
     {
       "pillar": "other",
-      "count": 1341
+      "count": 1348
     },
     {
       "pillar": "market_trauma",
-      "count": 1280
+      "count": 1288
     },
     {
       "pillar": "meme_reaction",
-      "count": 156
+      "count": 157
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
@@ -100,11 +100,11 @@
     },
     {
       "pillar": "other",
-      "count": 225
+      "count": 224
     },
     {
       "pillar": "market_trauma",
-      "count": 210
+      "count": 211
     },
     {
       "pillar": "meme_reaction",
@@ -112,11 +112,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.22,
-      "avg_views": 45.1,
+      "posts": 48,
+      "avg_likes": 0.23,
+      "avg_views": 43.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 63,
       "avg_likes": 0.19,
-      "avg_views": 45.4,
+      "avg_views": 42.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 77,
-      "avg_likes": 0.17,
-      "avg_views": 49.9,
+      "posts": 79,
+      "avg_likes": 0.16,
+      "avg_views": 48.9,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4560
+      "count": 4582
     },
     {
       "type": "quote",
-      "count": 318
+      "count": 320
     },
     {
       "type": "quote_gif",
-      "count": 129
+      "count": 130
     },
     {
       "type": "post",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 14
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-11T20:55:48.046237",
-      "text": "Deepsek v4 est aussi rapide que tu veux mais tu n'as pas précisé l'usage. elle va juste tourner en rond sur des tâches qui prennent 30ms. le seul truc qui la fatiguerait c'est une session de 8 heures",
+      "ts": "2026-08-12T00:58:11.646651",
+      "text": "Ibab left xAI’s Colossus (200k GPUs) for River AI.\n\nthat’s not a startup. that’s a solo founder trying to keep a fleet idle.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T20:54:58.530193",
-      "text": "10 MCPs in 5 minutes means 10 more ways to lose money without reading the docs.",
+      "ts": "2026-08-12T00:56:22.494124",
+      "text": "Sleep aggregators trade data for free. agotchi trades tokens for retention. you're not the customer, you're the liquidity.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T20:53:25.449126",
-      "text": "Near is a volatility derivative wearing an AI vest. dead cat bounce isn't a trend, it's a trap.",
+      "ts": "2026-08-12T00:55:35.908537",
+      "text": "265B tokens pour 2$. le outsourcing indien n'a plus qu'à compter les kilowatts-heures et prier.",
       "type": "reply"
     }
   ]
