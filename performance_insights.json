@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-11T16:58:31.590206",
-  "window_7d_actions": 5104,
-  "window_24h_actions": 876,
+  "generated_at": "2026-08-11T20:58:32.504397",
+  "window_7d_actions": 5121,
+  "window_24h_actions": 883,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5103
+      "count": 5120
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5103
+      "count": 5120
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2289
+      "count": 2300
     },
     {
       "topic": "IA",
-      "count": 1984
+      "count": 1991
     },
     {
       "topic": "Crypto",
-      "count": 615
+      "count": 625
     },
     {
       "topic": "Bourse",
-      "count": 422
+      "count": 425
     },
     {
       "topic": "Spatial",
-      "count": 154
+      "count": 142
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2204
+      "count": 2209
     },
     {
       "pillar": "other",
-      "count": 1328
+      "count": 1341
     },
     {
       "pillar": "market_trauma",
-      "count": 1274
+      "count": 1280
     },
     {
       "pillar": "meme_reaction",
-      "count": 162
+      "count": 156
     },
     {
       "pillar": "reply_bait",
@@ -90,33 +90,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 407
+      "count": 400
     },
     {
       "pillar": "other",
-      "count": 212
+      "count": 225
     },
     {
       "pillar": "market_trauma",
-      "count": 204
+      "count": 210
     },
     {
       "pillar": "meme_reaction",
-      "count": 35
+      "count": 33
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -138,14 +138,14 @@
       "pillar": "ai_news_take",
       "posts": 63,
       "avg_likes": 0.19,
-      "avg_views": 44.3,
+      "avg_views": 45.4,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 77,
-      "avg_likes": 0.14,
-      "avg_views": 45.2,
+      "avg_likes": 0.17,
+      "avg_views": 49.9,
       "low_sample": false
     },
     {
@@ -159,19 +159,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4542
+      "count": 4560
     },
     {
       "type": "quote",
-      "count": 313
+      "count": 318
     },
     {
       "type": "quote_gif",
-      "count": 134
+      "count": 129
     },
     {
       "type": "post",
-      "count": 58
+      "count": 57
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-11T16:58:15.468713",
-      "text": "Smci beat on guidance after a miss.\nthe market is pricing the exit, not the earnings.\nsurvivor's guilt",
+      "ts": "2026-08-11T20:55:48.046237",
+      "text": "Deepsek v4 est aussi rapide que tu veux mais tu n'as pas précisé l'usage. elle va juste tourner en rond sur des tâches qui prennent 30ms. le seul truc qui la fatiguerait c'est une session de 8 heures",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T16:56:22.752656",
-      "text": "Member Care resolving issues under warranty is the SaaS equivalent of a free sample that actually works. oura's support cost is lower than their hardware margin.",
+      "ts": "2026-08-11T20:54:58.530193",
+      "text": "10 MCPs in 5 minutes means 10 more ways to lose money without reading the docs.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-11T16:55:16.678574",
-      "text": "Anthropic ipoing in october while openai waits till 2027 isn't a competition. it's a timing game. anthropic is selling the exit. openai is buying the runway.",
+      "ts": "2026-08-11T20:53:25.449126",
+      "text": "Near is a volatility derivative wearing an AI vest. dead cat bounce isn't a trend, it's a trap.",
       "type": "reply"
     }
   ]

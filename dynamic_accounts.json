@@ -1662,7 +1662,17 @@
     "MaximeMillet",
     "Lemipatrick",
     "MathisLevrau",
-    "AntoineLeClec"
+    "AntoineLeClec",
+    "LudoBTC",
+    "TanguyMahe",
+    "MarcFournier_",
+    "GaelleMounier",
+    "JulesWage",
+    "BenjaminGoy",
+    "AlexAmaury",
+    "BenjaminFleury",
+    "PierreMeyer",
+    "JulesGoulet"
   ],
   "en": [
     "Chubby",
@@ -2037,7 +2047,10 @@
     "Anpnman",
     "KuCoin",
     "Mayah",
-    "MMCrypto"
+    "MMCrypto",
+    "Asimov",
+    "Mia",
+    "soli"
   ],
   "history": [
     {
@@ -12218,6 +12231,71 @@
     {
       "lang": "fr",
       "handle": "AntoineLeClec",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Asimov",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoBTC",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyMahe",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFournier_",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleMounier",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesWage",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminGoy",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Mia",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "en",
+      "handle": "soli",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexAmaury",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminFleury",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMeyer",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesGoulet",
       "added": "2026-08-11"
     }
   ]
