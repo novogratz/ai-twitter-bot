@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-23T17:43:31.858214",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilPDJ",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "Le roi du 'crypto Twitter' fran\u00e7ais, humour sec, analyse fondamentale, 100% FR. Pas de formation \u00e0 vendre, juste du talent."
-      },
-      {
-        "handle": "TontonCrypto",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Plus ax\u00e9 trading/technique que Cyril. Cha\u00eene YouTube en FR, tweets tr\u00e8s qualitatifs sur le march\u00e9 crypto. Communaut\u00e9 fid\u00e8le."
-      },
-      {
-        "handle": "HugoLeclerq_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Journaliste tech IA, couvre Mistral et l'\u00e9cosyst\u00e8me fran\u00e7ais. Moins 'influencer', plus 'insider'. Qualit\u00e9 brute."
-      },
-      {
-        "handle": "JulienLeCorguilleroy",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Cr\u00e9ateur de contenu qu\u00e9b\u00e9cois sur la finance personnelle et l'investissement. Ton d\u00e9contract\u00e9, contenu \u00e9ducatif solide en FR."
-      }
-    ],
-    "summary": "Un mix de v\u00e9t\u00e9rons (Cyril, Benj) et de sp\u00e9cialistes tech (Hugo). Z\u00e9ro formation \u00e0 99\u20ac, uniquement des analystes qui bossent."
-  },
-  {
-    "ts": "2026-07-23T19:43:50.693657",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NabilMounir",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Nabil Mounir, bas\u00e9 aux US mais francophone. Il connecte la tech US au march\u00e9 FR. Des posts VC et IA tr\u00e8s pertinents."
-      },
-      {
-        "handle": "ThibaultG",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 42000,
-        "reason": "Thibault Gallouin. Il d\u00e9cortique les bilans avec la pr\u00e9cision d'un chirurgien et le sarcasme d'un ex. 100% action fran\u00e7ais, z\u00e9ro blabla."
-      },
-      {
-        "handle": "MounirSaidani",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Co-founder de Mistral. Plus pointu que les autres. Il explique la tech en vrai, pas comme un commercial qui te vend un stage."
-      },
-      {
-        "handle": "MaximeCollot",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Hacker chez Mistral. Il tweete sur le code, les benchmarks et les p\u00e9rip\u00e9ties du training. C'est du concret, pas du vague."
-      },
-      {
-        "handle": "BenjaminD",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Un des rares \u00e0 garder un ton sec sur les march\u00e9s FR. Pas de 'achetez du CAC40', juste de l'analyse financi\u00e8re propre."
-      },
-      {
-        "handle": "CoralieLevasseur",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Strat\u00e8ge IA chez Mistral. Elle balance des insights tech/business plus fins que tes deux meilleurs analystes. Elle tweet en FR et EN."
-      },
-      {
-        "handle": "LucD",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Luc De Blois. Plus ancien que toi. Il couvre la macro et la bourse qu\u00e9b\u00e9coise avec un style classique qui ne se prend pas la t\u00eate."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le vent pour ne garder que du gras. Mistral est en pilote, les gars de la bourse qu\u00e9b\u00e9coise sont l\u00e0, et on a gliss\u00e9 deux p\u00e9pites bas\u00e9es aux US. Le tout sans vendeur de formation."
-  },
-  {
     "ts": "2026-07-23T23:51:54.010858",
     "raw_count": 7,
     "kept_count": 2,
@@ -9341,5 +9244,102 @@
       }
     ],
     "summary": "On a fouill\u00e9 les tr\u00e9fonds pour \u00e9viter les vendeurs de r\u00eaves en formations. Le lot est mix\u00e9 : des g\u00e9ants de la crypto (Maci, Kaleo FR), des pros de la bourse (Delac, Dernier) et des info-pros IA (Labb, Dumas). Z\u00e9ro formation \u00e0 99\u20ac au programme, que du contenu gratuit et dense."
+  },
+  {
+    "ts": "2026-08-12T12:59:14.466226",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasKuhn",
+        "region": "france",
+        "niche": "tech",
+        "followers": 80000,
+        "reason": "Journaliste Tech & IA (ex-01net, ex-LeMonde). Il croise les tendances tech avec la finance et l'investissement."
+      },
+      {
+        "handle": "mulliez_c",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Ex-HNRI, aujourd'hui VC chez Partech. Il couvre la tech et l'IA en FR avec un style clair, sans pub pour son co-working."
+      },
+      {
+        "handle": "Nakamoto_Francois",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le patron de Coinhouse. Il tweet en FR, il a du poids, et il \u00e9vite le syndrome du 'join my telegram'."
+      },
+      {
+        "handle": "BourseQuebec",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le compte de r\u00e9f\u00e9rence pour la Bourse de Montr\u00e9al. Infos brutes, pas de formation \u00e0 199\u20ac."
+      },
+      {
+        "handle": "JeanDionneQC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste \u00e0 La Presse, il d\u00e9cortique les march\u00e9s avec des tweets quotidiens en fran\u00e7ais et un ton direct."
+      },
+      {
+        "handle": "CryptoDion",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Qu\u00e9b\u00e9cois vivant aux USA. Il parle crypto et macro US en fran\u00e7ais. Rare, pertinent, et pas un bot."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que des pros qui bossent : journalistes de presse \u00e9crite (La Presse, 01net), VCs institutionnels et fondateurs de p\u00e9pites (Mistral, Ledger). On a de l'IA, de la crypto, de la bourse et du VC, sans aucune pub de groupe Telegram."
+  },
+  {
+    "ts": "2026-08-12T14:59:17.695507",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HassanAgha",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 175000,
+        "reason": "Le roi de l'infosec AI aux USA. Moins hype que les 'AI Agents' mais plus concret, il twitte en EN/FR mix et couvre les fondamentaux de la s\u00e9curit\u00e9 IA."
+      },
+      {
+        "handle": "CryptoMacros",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Compte collectif de traders crypto francophones. Macro + On-chain. Ils \u00e9vitent les coins obs\u00e8ques et se concentrent sur les mouvements de march\u00e9 r\u00e9els."
+      },
+      {
+        "handle": "JulienCorduneanu",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Ex-Head of AI chez Deezer, maintenant VC/AI. Il twitte des threads techniques sur le RAG et l'infrastructure. Pas de vente de r\u00eave, que du concret."
+      },
+      {
+        "handle": "PierreBoudreau",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Prof de Data Science au UdeM. Il d\u00e9crypte les papiers de recherche IA pour les mortels. C'est l'anti-vendeur de r\u00eave: brut de d\u00e9coffrage et \u00e9rudit."
+      },
+      {
+        "handle": "AlexandreDionneQC",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "CTO chez Hivert (Fintech/IA). Il balance des insights tech/finance pr\u00e9cis. Pas de blabla politique, juste du code et de l'architecture IA appliqu\u00e9e."
+      }
+    ],
+    "summary": "La sc\u00e8ne IA FR est domin\u00e9e par des ex-LinkedIn qui ont enfin trouv\u00e9 leur voix (Benmoussa, Corduneanu), tandis que le Qu\u00e9bec se distingue par une approche acad\u00e9mique appliqu\u00e9e (Boudreau, Dionne). Aux USA, Hassan Agha reste le seul francophone de talent capable de rivaliser avec les anglophones sur la s\u00e9curit\u00e9 IA."
   }
 ]

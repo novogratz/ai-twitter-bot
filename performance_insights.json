@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-12T12:58:31.761114",
-  "window_7d_actions": 5148,
-  "window_24h_actions": 814,
+  "generated_at": "2026-08-12T16:58:31.694229",
+  "window_7d_actions": 5183,
+  "window_24h_actions": 823,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5147
+      "count": 5182
     },
     {
       "pattern": "METAPHOR",
@@ -19,13 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5147
+      "count": 5182
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 263
+      "actions": 273
     },
     {
       "hour": 8,
@@ -33,90 +33,90 @@
     },
     {
       "hour": 12,
+      "actions": 241
+    },
+    {
+      "hour": 13,
       "actions": 240
     },
     {
       "hour": 9,
       "actions": 239
-    },
-    {
-      "hour": 13,
-      "actions": 234
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2337
+      "count": 2354
     },
     {
       "topic": "IA",
-      "count": 1988
+      "count": 2014
     },
     {
       "topic": "Crypto",
-      "count": 625
+      "count": 619
     },
     {
       "topic": "Bourse",
-      "count": 416
+      "count": 417
     },
     {
       "topic": "Spatial",
-      "count": 136
+      "count": 134
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2213
+      "count": 2232
     },
     {
       "pillar": "other",
-      "count": 1363
+      "count": 1378
     },
     {
       "pillar": "market_trauma",
-      "count": 1276
+      "count": 1280
     },
     {
       "pillar": "meme_reaction",
-      "count": 164
+      "count": 161
     },
     {
       "pillar": "reply_bait",
-      "count": 85
+      "count": 86
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 344
+      "count": 354
     },
     {
       "pillar": "other",
-      "count": 234
+      "count": 229
     },
     {
       "pillar": "market_trauma",
-      "count": 196
+      "count": 200
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 67,
-      "avg_likes": 0.19,
-      "avg_views": 44.4,
+      "posts": 65,
+      "avg_likes": 0.23,
+      "avg_views": 45.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.19,
-      "avg_views": 43.0,
+      "posts": 41,
+      "avg_likes": 0.2,
+      "avg_views": 43.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.16,
-      "avg_views": 50.6,
+      "posts": 84,
+      "avg_likes": 0.15,
+      "avg_views": 49.7,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4576
+      "count": 4607
     },
     {
       "type": "quote",
-      "count": 322
+      "count": 328
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 130
     },
     {
       "type": "post",
-      "count": 58
+      "count": 60
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 43
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-12T12:57:51.474982",
-      "text": "Tesla is a hardware company with an AI marketing budget.\nThe robots work, the margins don't.",
+      "ts": "2026-08-12T16:57:00.961128",
+      "text": "Nvidia bought 10% of $NBIS in late 2024.\n\nIt’s not a fan. It’s a landlord who’s already installed the HVAC.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T12:55:50.166927",
-      "text": "Decawork. y combinator. internal ai agents.\n\nthe real story isn't governance. it's preventing your agents from deleting production while they hallucinate.",
+      "ts": "2026-08-12T16:56:44.717495",
+      "text": "KOSPI at 5x P/E. It's not a crash. It's a value trap with better liquidity.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T12:55:33.854630",
-      "text": "Tu dis “la bulle IA ne fait que commencer”, et c’est précisément là que les marchés font leur classique: ils pricent l’histoire, pas la contrainte physique.",
+      "ts": "2026-08-12T16:55:42.618425",
+      "text": "Coinbase biz is just the tax office you can pay in dollars.",
       "type": "reply"
     }
   ]

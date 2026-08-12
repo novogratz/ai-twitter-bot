@@ -1704,7 +1704,15 @@
     "MaximeDelac",
     "MarcDionne",
     "JulieCayol",
-    "HuguesLabb"
+    "HuguesLabb",
+    "ThomasKuhn",
+    "mulliez_c",
+    "BourseQuebec",
+    "JeanDionneQC",
+    "CryptoDion",
+    "HassanAgha",
+    "CryptoMacros",
+    "PierreBoudreau"
   ],
   "en": [
     "Chubby",
@@ -2084,7 +2092,9 @@
     "Mia",
     "soli",
     "XenAI",
-    "Nebius"
+    "Nebius",
+    "ModelScope",
+    "zeta"
   ],
   "history": [
     {
@@ -12500,6 +12510,56 @@
     {
       "lang": "fr",
       "handle": "HuguesLabb",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "ModelScope",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "zeta",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasKuhn",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "mulliez_c",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseQuebec",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanDionneQC",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDion",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "HassanAgha",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMacros",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBoudreau",
       "added": "2026-08-12"
     }
   ]
