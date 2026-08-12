@@ -1,15 +1,15 @@
-# YouTube brief — 2026-08-11
+# YouTube brief — 2026-08-12
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **875**
-- reply: **777**
-- quote: **54**
-- quote_gif: **27**
-- post: **8**
-- hotake: **7**
+- Total actions logged: **885**
+- reply: **787**
+- quote: **55**
+- quote_gif: **26**
+- post: **11**
+- hotake: **4**
 - retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -42,61 +42,67 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-11
-- **@0xlofty** (77 likes, score 9/10) — THIS BITCOIN PATTERN HAS NEVER BEEN WRONG
+## 2026-08-12
+- **@coinbureau** (34 likes, score 9/10) — ALERT: $NVDA credit risk surges near RECORD highs.
 
-The final Bull Trap is now officially over.
+Nvidia’s 5-year credit default swap (CDS) spread widened to 79.8 bps, more than 2x its late-May level and just below its July 29 record of 83.7 bps.
+  - https://x.com/coinbureau/status/2087382972278448381
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 64).
+- **@zuhayeer** (88 likes, score 9/10) — Yesterday, @OpenAI completed a $7B tender offer, buying back stock from employees, offering partial liquidity to ICs who have been at OpenAI for at least 2 years.
 
-Every major Bitcoin crash starts after one last relief rally.
+The newest individuals who were elig
+  - https://x.com/zuhayeer/status/2087345651478933636
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 94).
+- **@erikcason** (185 likes, score 8/10) — Elephant in the room:
 
-The plan is simple:
+How the hell is Anthropic or OpenAI ever going to become profitable?
 
-$65K → $49K → $39K → $74K →
-  - https://x.com/0xLofty/status/2086832772862161227
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 97).
-- **@bmnrbullz** (27 likes, score 8/10) — AI AGENTS COULD CREATE AN ENTIRELY NEW ECONOMY
+That’s the neat part…
 
-The economics of agentic AI are already becoming compelling:
-
- Computer use agent: $6–8/hour
- Offshore outsourced labor: $10/hour
- US back office labor:
-  - https://x.com/BMNRBullz/status/2086947232016662755
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
-- **@cryptoemperor06** (18 likes, score 7/10) — Michael Saylor says Strategy could withstand a Bitcoin crash to $5,000 and still remain overcollateralized against its debt.
-
-His message: the company’s capital structure is built to survive extreme d
-  - https://x.com/Cryptoemperor06/status/2086500490984988844
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).
+They won’t
+  - https://x.com/Erikcason/status/2087307746014331297
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 247).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Milk Road AI]** Wall Street just revised its AI Capex forecast by $167 billion in one month and here is how you can benefit from this (Save this).
+- **[X_HOME/FernandaTrendIVT]** NETFLIX $NFLX according to Fernanda Trend 
 
-This chart tracks combined c
-  - https://x.com/MilkRoadAI/status/2086824327820062848
-- **[X_HOME/Deedy]** Deep dive into AI text-watermarking and what EU's AI Act actually mandates about AI detectability.
+Price at the time of the tweet 
+74.74$
 
-How it works: 
-The SynthID paper from Demis and team in Natu
-  - https://x.com/deedydas/status/2087037735819460675
-- **[X_HOME/Jun Song]** This will change the entire local AI.
-  - https://x.com/jun_song/status/2087037637358190809
-- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/F]** Majority of his haters in our fanbase have joined the hive and now other fanbases want him. I need his juju plug
-  - https://x.com/uncftp/status/2087040321720873198
-- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Hive]** Hive analyzed this post using Hive's AI / Deepfake detection models. 
-"@hive_ai is this AI generated" to check any content!
-https://hivedetect.ai/FHWGOj
-       
-  - https://x.com/hive_ai/status/2087040270487683451
-- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/robo]** H2 is contracted forn5 years to Microsoft. 
-You clearly have zero idea when it comes to Iren
-  - https://x.com/roberto45580514/status/2087040089755099558
-- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/GammaTrader subscribe and request stock gamma]** Sorry guys $iren forgot to publish the gamma for iren
-  - https://x.com/Happyfeetloans/status/2087039005900870087
-- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Gabriel Baldessin]** "in the hive and ant-hill we see fully realised the two things that some of us most dread for our own species—the dominance of the female and the dominance of t
-  - https://x.com/gbrlbldssn/status/2087039004575400377
+Fernanda is a handmade Trend, everything is made by hand without the help of
+  - https://x.com/FernandaTrend8/status/2087249568354242592
+- **[X_FOLLOWING/Sam Badawi]** Treasury Secretary Scott Bessent just praised $META release of Muse Glimmer, calling it “another win for American innovation.”
+
+Bessent says maintaining U.S. AI
+  - https://x.com/Sam_Badawi/status/2087378029286993947
+- **[X_HOME/ƁĘŊŤØ§]** Morning  $IRON 
+
+just scrolling through the feed and came across the latest @IronAllies_ post about the Iron Lords. only 101 hand-drawn 1/1s at 0.25 ETH, set to
+  - https://x.com/Bency1749379/status/2087400556729872562
+- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Harry (𝜏,𝜏)]** Newly registered Bittensor subnets are heading for the door after less than 2 months.
+
+They were here to extract emissions but got hit with a  V440 Emission Gat
+  - https://x.com/princeharry_za/status/2087395485334048789
+- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Shashii τao]** The TAO Daily shared a shorter cut of Const (@const_reborn) appearing on the TWiST podcast with Jason Calacanis.
+
+In the episode, Const walks through Bittensor 
+  - https://x.com/DkingYooo18516/status/2087386833697280416
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Pack Quest is good]** LOL, GPU STICKING TO THE RAMS TO THE RAM SLOT
+  - https://x.com/good_p4ck/status/2087402480720023707
+- **[X_HOME/Global Markets Investor]** Korean retail investors are left holding the bag:
+
+Domestic retail investors have purchased +$60 billion of KOSPI shares since October 2025.
+
+Foreign investors 
+  - https://x.com/GlobalMktObserv/status/2087400119498895822
+- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Andy ττ]** $TAO is the next evolution of the same economic idea.
+
+Bitcoin taught the world how to turn energy + computation into scarce digital value.
+
+Now Bitcoin miners 
+  - https://x.com/bittingthembits/status/2087214142415413547
 
 ## 🎬 Suggested video angles
 
@@ -107,4 +113,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-11T00:58:31*
+*Generated 2026-08-12T00:58:31*
