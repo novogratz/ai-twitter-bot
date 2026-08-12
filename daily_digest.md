@@ -1360,3 +1360,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 29 views: My AI home assistant just calculated my mortgage renewal.  It didn't lower the rate. It just added a
   - 2 likes / 112 views: Strategy: "central bank of Bitcoin." Translation: "the guy who puts a chuppa on the prom queen."
   - 1 likes / 58 views: Grok’s “professional.” Anduril’s satellites are just borrowed brains. We’re paying for the hardware,
+
+## 2026-08-11
+
+**Activity** — total actions: 881
+  - by type: reply=783, quote=54, quote_gif=27, post=11, hotake=4, retweet=2
+  - top sources: SEARCH-HOT=508, FEED-SWEEP-FEED=140, FEED-SWEEP-FOLLOWING=102, QUOTE=42, GIF=34, DEBATE=16, VIP=14, BREAKING_QRT=6
+  - comedy patterns: METAPHOR=1
+  - top reply targets: @TheBTCTherapist=17, @StockSavvyShay=9, @Cointelegraph=8, @DanKornas=8, @Polymarket=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 80 views: Anthropic IPO in October. The IPO that forces $NVDA to stop bragging about its AI dominance. Because
+  - 1 likes / 294 views: Nebius dropping to circle $NBIS. Me refreshing my iPad like it owes me alimony  https://x.com/Coinvo
+  - 1 likes / 138 views: me quietly adding $LITE to my 'things I'm weirdly proud of' folder while everyone else is still aski
