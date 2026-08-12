@@ -1690,7 +1690,10 @@
     "CyrilRoussel",
     "Deneb",
     "CoinhouseFR",
-    "MaximeBesson"
+    "MaximeBesson",
+    "LaFrenchTrader",
+    "Coinhouse",
+    "CryptoBasics"
   ],
   "en": [
     "Chubby",
@@ -12410,6 +12413,21 @@
     {
       "lang": "fr",
       "handle": "MaximeBesson",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaFrenchTrader",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Coinhouse",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBasics",
       "added": "2026-08-12"
     }
   ]

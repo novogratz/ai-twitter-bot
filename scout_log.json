@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-23T11:43:40.988270",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienBarral",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Ex-Google, expert Cloud/AI. Contentieux c\u00e9l\u00e8bre contre Google, twitte souvent les coulisses de la tech FR."
-      },
-      {
-        "handle": "OlivierSchaer",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Journaliste bourse (BFM Business). Moins de blabla 'guru', plus de faits. Le type \u00e0 qui on croit pour les news cash."
-      },
-      {
-        "handle": "HugoGagnon3",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Cr\u00e9ateur de contenu crypto qu\u00e9b\u00e9cois tr\u00e8s actif. Parle de Solana et de DeFi, twitte en fran\u00e7ais avec une pointe d'humour."
-      },
-      {
-        "handle": "AlexandreMayer",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Analyste bourse qu\u00e9b\u00e9cois. Pas de signaux payants, analyse technique et fondamentale propre. Rare en QC."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que des makers, des analystes et des fondateurs. Le Qu\u00e9bec est bien servi par des profils techniques (Beauvais, Gagnon) tandis que la France domine en IA (Mistral, Scher) et Bourse pure (Schaer)."
-  },
-  {
     "ts": "2026-07-23T13:43:38.509133",
     "raw_count": 8,
     "kept_count": 3,
@@ -9320,5 +9282,36 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux op\u00e9rationnels : pas de gurus en costard, juste des makers et des traders qui savent ce qu'est un gas fee ou un ratio P/E."
+  },
+  {
+    "ts": "2026-08-12T06:59:07.562030",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaFrenchTrader",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 80000,
+        "reason": "Sarcasme fran\u00e7ais garanti sur les march\u00e9s. C'est le seul qui ose dire que le CAC40 est une fus\u00e9e avec une voile."
+      },
+      {
+        "handle": "Coinhouse",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'infrastructure avant la sp\u00e9culation. Twitte en FR, z\u00e9ro hype."
+      },
+      {
+        "handle": "CryptoBasics",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Le Qu\u00e9bec nous a cach\u00e9 ce gem. Education pure, pas de shia."
+      }
+    ],
+    "summary": "Une s\u00e9lection de 5 comptes piment\u00e9s. Pas de vendeurs de r\u00eave, que des vrais acteurs. C'est court, c'est efficace, c'est moins de bruit."
   }
 ]
