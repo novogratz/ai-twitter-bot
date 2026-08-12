@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-07-23T01:43:50.083450",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitF_83",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le grand pr\u00eatre de l'IA en France, ancien de DeepMind. Twitte la tech pure, pas le hype."
-      },
-      {
-        "handle": "TotoTheCrypto",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Ex-Binance. Fondeur de Coinhouse. Il analyse le march\u00e9 crypto avec du recul institutionnel."
-      },
-      {
-        "handle": "PierreGauvin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "G\u00e9rant de fonds au QC. Il d\u00e9cortique les earnings US avec un accent clair et sans filtre."
-      }
-    ],
-    "summary": "Une s\u00e9lection de 7 comptes qui ont du sang dans les veines tech/finance. Ils tweetent, ils analysent, ils ne vendent pas de r\u00eaves en vid\u00e9o TikTok."
-  },
-  {
-    "ts": "2026-07-23T03:48:47.960622",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitG_01",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 32000,
-        "reason": "Ex-Goldman, d\u00e9cortique la DeFi et la macro crypto. Moins 'influenceur', plus 'analyste qui comprend'. Twitte en FR."
-      },
-      {
-        "handle": "PierreCahuzac",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Bas\u00e9 aux US mais francophone de c\u0153ur. Couvre l'innovation crypto et Web3 avec un angle visionnaire."
-      },
-      {
-        "handle": "Rapha\u00eblLebret",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Le trader 'value' qui balance des analyses de flux et de bilans sans vendre de cr\u00e8me de la chevelure."
-      },
-      {
-        "handle": "VincentBourgeois",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Foundeur, parle SaaS, growth et IA. Pas de cours payants, juste du v\u00e9cu terrain en FR."
-      }
-    ],
-    "summary": "Focus sur les vrais builders (Mistral) et les analystes techniques (ex-Goldman, Value). Z\u00e9ro vendeur de r\u00eaves, juste du contenu qui passe pour du bon caf\u00e9."
-  },
-  {
     "ts": "2026-07-23T05:44:18.213742",
     "raw_count": 8,
     "kept_count": 8,
@@ -9306,5 +9237,109 @@
       }
     ],
     "summary": "Un mix solide entre les g\u00e9ants institutionnels fran\u00e7ais (Mistral) et les builders locaux des deux c\u00f4t\u00e9s de l'Atlantique. Pas de vendeurs de r\u00eave, que des tech/finan\u00e7aires qui savent coder ou investir."
+  },
+  {
+    "ts": "2026-08-11T20:59:31.594728",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeChauvin",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 58000,
+        "reason": "Le grand sage qu\u00e9b\u00e9cois de l'IA, il tweete en EN/FR avec une vision globale."
+      },
+      {
+        "handle": "RaphaelLequien",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Ex-Mistral, il tweete l'IA avec une profondeur rare et z\u00e9ro blabla 'Web3'."
+      },
+      {
+        "handle": "LudovicGarciaFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Focus pur march\u00e9/actions, pas de crypto, pas de tech, juste des chiffres."
+      },
+      {
+        "handle": "RemyBoudet",
+        "region": "france",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Le roi de l'analyse macro sur X, ses threads bourse sont plus clairs que les pubs Assurance Vie."
+      },
+      {
+        "handle": "HuguesGervais",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 14000,
+        "reason": "Fintech US francophone, il d\u00e9cortique les US Tech avec du bon sens qu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "VincentBoudon",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Le plus gros influenceur fintech fran\u00e7ais, il explique la tech sans l'assomer."
+      },
+      {
+        "handle": "AlexandreDionneQC",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 11000,
+        "reason": "Ex-MLQ, il tweete tech et IA en fran\u00e7ais avec un humour sec qui tue."
+      }
+    ],
+    "summary": "J'ai traqu\u00e9 les pros sans blabla politique : des analystes IA, des traders macro et des geeks crypto qui font encore des threads plut\u00f4t que des pubs LinkedIn. Le Qu\u00e9bec est plus silencieux en niche pure, donc je n'ai mis que les valeurs s\u00fbres."
+  },
+  {
+    "ts": "2026-08-11T22:59:20.922374",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienDeux",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ancien de Coinhouse, il balance des perles crypto sans essayer de te vendre ton frigo."
+      },
+      {
+        "handle": "CyrilBourgeois",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Le prof de tech de la plan\u00e8te. Il explique l'IA comme si tu avais 5 ans mais sans t'ennuyer."
+      },
+      {
+        "handle": "AlexandreBourgeon",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Expert IA et data. Il est moins 'hype' et plus 'tech'. Parfait pour ceux qui veulent comprendre plut\u00f4t que parier."
+      },
+      {
+        "handle": "NathanPineau",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Il cartonne sur la fintech et le SaaS B2B. Moins de bruit que les autres, plus de substance."
+      },
+      {
+        "handle": "NolwennB5",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Journaliste crypto bas\u00e9e aux US. Elle couvre les march\u00e9s institutionnels avec un \u0153il europ\u00e9en."
+      }
+    ],
+    "summary": "Mix classique entre les valeureux de la finance FR et les experts tech qu\u00e9b\u00e9cois. Aucune formation \u00e0 999\u20ac ici, promis."
   }
 ]

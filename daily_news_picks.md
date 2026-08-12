@@ -16866,3 +16866,24 @@ The economics of agentic AI are already becoming compelling:
 His message: the company’s capital structure is built to survive extreme d
   - https://x.com/Cryptoemperor06/status/2086500490984988844
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).
+
+## 2026-08-12
+- **@coinbureau** (34 likes, score 9/10) — ALERT: $NVDA credit risk surges near RECORD highs.
+
+Nvidia’s 5-year credit default swap (CDS) spread widened to 79.8 bps, more than 2x its late-May level and just below its July 29 record of 83.7 bps.
+  - https://x.com/coinbureau/status/2087382972278448381
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 64).
+- **@zuhayeer** (88 likes, score 9/10) — Yesterday, @OpenAI completed a $7B tender offer, buying back stock from employees, offering partial liquidity to ICs who have been at OpenAI for at least 2 years.
+
+The newest individuals who were elig
+  - https://x.com/zuhayeer/status/2087345651478933636
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 94).
+- **@erikcason** (185 likes, score 8/10) — Elephant in the room:
+
+How the hell is Anthropic or OpenAI ever going to become profitable?
+
+That’s the neat part…
+
+They won’t
+  - https://x.com/Erikcason/status/2087307746014331297
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 247).

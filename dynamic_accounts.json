@@ -1672,7 +1672,17 @@
     "AlexAmaury",
     "BenjaminFleury",
     "PierreMeyer",
-    "JulesGoulet"
+    "JulesGoulet",
+    "MaximeChauvin",
+    "RaphaelLequien",
+    "LudovicGarciaFR",
+    "RemyBoudet",
+    "HuguesGervais",
+    "VincentBoudon",
+    "JulienDeux",
+    "CyrilBourgeois",
+    "NathanPineau",
+    "NolwennB5"
   ],
   "en": [
     "Chubby",
@@ -12296,6 +12306,56 @@
     {
       "lang": "fr",
       "handle": "JulesGoulet",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeChauvin",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLequien",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicGarciaFR",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyBoudet",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesGervais",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoudon",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeux",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBourgeois",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanPineau",
+      "added": "2026-08-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "NolwennB5",
       "added": "2026-08-11"
     }
   ]
