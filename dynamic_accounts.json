@@ -1744,7 +1744,13 @@
     "CryptoMeme",
     "mehdi_serra",
     "JulienVermard",
-    "LudoLebailly"
+    "LudoLebailly",
+    "Raphaelpaquin",
+    "LacasseJulien",
+    "GaelLeMarec",
+    "DianeTremblay2",
+    "AntoineFauquet",
+    "MathieuDrouin"
   ],
   "en": [
     "Chubby",
@@ -12770,6 +12776,36 @@
     {
       "lang": "fr",
       "handle": "LudoLebailly",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raphaelpaquin",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LacasseJulien",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeMarec",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "DianeTremblay2",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineFauquet",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDrouin",
       "added": "2026-08-13"
     }
   ]

@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-24T17:43:29.096766",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ArxivScout",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "La bible technique en FR pour les chercheurs et devs qui veulent suivre l'IA sans les bulles info. Moins hype que Mistral officiel, mais plus utile."
-      },
-      {
-        "handle": "BenoitGirard",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Cofondateur de Coinhouse au Qu\u00e9bec, il balance du concret sur la r\u00e9gulation et l'adoption crypto, sans vendre du r\u00eave en Telegram."
-      },
-      {
-        "handle": "MaelleGiannotti",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directrice g\u00e9n\u00e9rale de Mistral AI. Ses threads sur la short-termism de l'IA sont les meilleures antidotes aux discours 'IA nous sauvera tout'."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des influenceurs formations pour ne garder que les techniciens qui font avancer le sujet. Rochard est l'exception anglophone indispensable car sa qualit\u00e9 d\u00e9passe largement la plupart des comptes 100% FR."
-  },
-  {
     "ts": "2026-07-24T19:43:42.800979",
     "raw_count": 6,
     "kept_count": 4,
@@ -9369,5 +9338,64 @@
       }
     ],
     "summary": "Le lot est serr\u00e9 entre les valeurs s\u00fbres de la tech boursi\u00e8re (Serra, Vermard) et les poids lourds de l'IA. Le Qu\u00e9bec apporte une touche plus crypto/tech pure avec Dionne, tandis que l'USA reste le terrain de jeu naturel pour TheAIShrink."
+  },
+  {
+    "ts": "2026-08-13T10:59:16.057364",
+    "raw_count": 9,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LefebvreFrederic",
+        "region": "france",
+        "niche": "tech",
+        "followers": 32000,
+        "reason": "L'expert SaaS & IA de chez HEC. Moins hype que les influenceurs de 500k, plus utile que votre voisin trader."
+      },
+      {
+        "handle": "Raphaelpaquin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "La r\u00e9f\u00e9rence tech qu\u00e9b\u00e9coise. Moins de 'moon', plus de 'merging' et d'acquisitions r\u00e9elles."
+      },
+      {
+        "handle": "LacasseJulien",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 22000,
+        "reason": "Diaspora FR aux US. Couvre Wall Street et la tech avec le flair parisien et le cynisme new-yorkais."
+      },
+      {
+        "handle": "GaelLeMarec",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Co-fondateur de Ledger. Parle de crypto et de tech en FR sans crier au scandale \u00e0 chaque tweet."
+      },
+      {
+        "handle": "DianeTremblay2",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Annie Lacroix a disparu en 2022, Diane est la nouvelle providence crypto de Montr\u00e9al. S\u00e9rieux et francophone."
+      },
+      {
+        "handle": "AntoineFauquet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 14000,
+        "reason": "Fondamentaux purs. Parle SaaS, IA et business model. Z\u00e9ro hype, 100% intellos."
+      },
+      {
+        "handle": "MathieuDrouin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Consultant crypto qu\u00e9b\u00e9cois. Pas de token shitcoin, juste de l'analyse DeFi et macro en FR."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour garder les analystes qui savent quoi acheter et ceux qui savent pourquoi \u00e7a a baiss\u00e9. Du Mistral officiel aux cracks qu\u00e9b\u00e9cois, il y a du solide."
   }
 ]
