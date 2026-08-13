@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-24T19:43:42.800979",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AlexisFuchs",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "L'ancien de N26 qui a compris que la fintech, c'est pas que des apps, c'est des humains. Il balance des insights sur la banque, le paiement et l'IA, twitte r\u00e9guli\u00e8rement en FR. Pas de bruit, du contenu de founder qui a vu les trucs derri\u00e8re le rideau."
-      },
-      {
-        "handle": "SylvainLessard",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 25000,
-        "reason": "Le prof qui rend la bourse digeste comme un bon curry \u00e0 l'\u00e9picerie. Pas de jargon pour vendre du vent, juste des analyses solides sur les march\u00e9s canadiens et am\u00e9ricains. Il twitte en FR, il a une vraie audience, et il n'a pas l'air de vouloir te vendre son Telegram VIP."
-      },
-      {
-        "handle": "JulienDeVere",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le gars qui couvre le cycle crypto qu\u00e9b\u00e9cois avec plus d'humour que la plupart des influenceurs NY. Il mixe analyse on-chain et culture locale, pas de signaux payants, juste des takes coh\u00e9rents sur les altcoins et les macro."
-      },
-      {
-        "handle": "EmmanuelDumas",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le Parisien expatri\u00e9 \u00e0 SF qui raconte l'IA comme si tu prenais un caf\u00e9 aux Halles. Il couvre l'appli de l'IA, pas juste le hype des LLMs. Il twitte en FR pour la diaspora et en EN pour le reste, mais ses meilleures punchlines sont toujours en fran\u00e7ais."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 pour \u00e9viter les vendeurs de r\u00eave : Mistral AI pour la tech pure, Sylvain Lessard pour la finance Qu\u00e9bec sans chichi, et Pierre Rochard pour le bitcoin aux US. C'est du solide, pas du vent."
-  },
-  {
-    "ts": "2026-07-24T21:43:46.910274",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudSavary",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Le prince de l'IA FR, postule des threads techniques dignes d'un engineer Google sans le salaire."
-      },
-      {
-        "handle": "MaximeLebois",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "L'analyste qu\u00e9b\u00e9cois qui fait le pont entre Wall St et Paris sans se prendre pour un gourou."
-      },
-      {
-        "handle": "MathiasLamy",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Ex-DocuSign qui d\u00e9montre l'IA en FR depuis SF. Moins de hype, plus de code."
-      },
-      {
-        "handle": "AdrienGirardfr",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "SVP, le gars qui explique le code et l'IA sans te faire miroiter un Bitcoin \u00e0 1M. Rare."
-      },
-      {
-        "handle": "AlexandreFuchs",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 11000,
-        "reason": "CTO de Kraken en FR. Twitte rarement mais chaque thread est un mini-masterclass DeFi."
-      }
-    ],
-    "summary": "La s\u00e9lection se concentre sur les 'craftsmen' : ceux qui postent du contenu technique ou data-driven plut\u00f4t que des tirades philosophiques. On \u00e9vite les influenceurs qui vendent des formations \u00e0 990\u20ac pour d\u00e9couvrir que l'IA c'est juste du chatbot."
-  },
-  {
     "ts": "2026-07-25T23:43:40.544288",
     "raw_count": 8,
     "kept_count": 2,
@@ -9397,5 +9314,102 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour garder les analystes qui savent quoi acheter et ceux qui savent pourquoi \u00e7a a baiss\u00e9. Du Mistral officiel aux cracks qu\u00e9b\u00e9cois, il y a du solide."
+  },
+  {
+    "ts": "2026-08-13T12:59:16.108465",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaborVarga1",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 125000,
+        "reason": "L'oracle de la crypto FR. Pas de pubs, pas de signal, juste des threads qui d\u00e9chirent et un ton direct."
+      },
+      {
+        "handle": "MehdiTahiri",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Ancien de chez Dojo/Alma. Il tweet sur le SaaS et l'IA avec le recul d'un ex-fondateur. Pas de pubs."
+      },
+      {
+        "handle": "MickaBorot",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'homme qui tweet tout. IA, crypto, gadgets. C'est satur\u00e9, mais il sort des perles rares sur l'IA g\u00e9n\u00e9rative."
+      },
+      {
+        "handle": "NiklasSchueler",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Un des meilleurs analystes crypto francophones. Focus DeFi/Tokenomics, twitte souvent en fran\u00e7ais."
+      },
+      {
+        "handle": "DylanBilodeau",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois qui couvre march\u00e9s et tech. Ton sec, pas de blabla, pure analyse."
+      },
+      {
+        "handle": "LionelPeltier",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Expert Stripe/fintech. Il tweet sur l'\u00e9cosyst\u00e8me tech FR plus que sur la bourse pure, mais c'est de l'or."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que des vrais analystes et journalistes. On a le Value Investing fran\u00e7ais (Vialard), l'oracle crypto (Varga) et quelques perles qu\u00e9b\u00e9coises solides. Z\u00e9ro pub de formation \u00e0 97\u20ac."
+  },
+  {
+    "ts": "2026-08-13T14:59:18.910415",
+    "raw_count": 9,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminWabbel",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Bas\u00e9 aux USA mais tr\u00e8s actif dans la sc\u00e8ne AI FR/US. Il partage des benchmarks rapides et des threads sur les nouveaux mod\u00e8les, format court et percutant."
+      },
+      {
+        "handle": "ClemCahart",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Journaliste chez CoinTelegraph (bas\u00e9 \u00e0 Paris). Il couvre les r\u00e9gulations UE et les projets blockchain s\u00e9rieux, \u00e9vitant les memecoins \u00e0 la con."
+      },
+      {
+        "handle": "JulesvanG",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Ex-DeepMind, co-fondateur de Systran. Il poste des threads techniques solides sur le NLP et l'IA g\u00e9n\u00e9rative, sans la hype \u00e0 la LinkedIn."
+      },
+      {
+        "handle": "ThibautPottier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Analyste chez Lazard. Il d\u00e9construit les business models tech et SaaS avec un scepticisme sain, rare dans le monde financier francophone."
+      },
+      {
+        "handle": "NathalieLorson",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 10000,
+        "reason": "Professionnelle de la fintech et du regtech. Elle couvre les startups fran\u00e7aises qui changent le syst\u00e8me bancaire, avec un r\u00e9seau B2B solide."
+      }
+    ],
+    "summary": "Un m\u00e9lange \u00e9quilibr\u00e9 entre la technique pure (AI), l'analyse financi\u00e8re brute (Bourse) et la r\u00e9gulation Crypto. Pas de vendeurs de r\u00eave, juste des profils qui font le travail."
   }
 ]

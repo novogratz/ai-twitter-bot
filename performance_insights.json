@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-13T12:58:31.591653",
-  "window_7d_actions": 5114,
-  "window_24h_actions": 718,
+  "generated_at": "2026-08-13T16:58:31.445503",
+  "window_7d_actions": 5105,
+  "window_24h_actions": 667,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5113
+      "count": 5104
     },
     {
       "pattern": "METAPHOR",
@@ -19,70 +19,70 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5113
+      "count": 5104
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 273
+      "actions": 272
     },
     {
       "hour": 8,
       "actions": 241
     },
     {
-      "hour": 13,
-      "actions": 240
+      "hour": 16,
+      "actions": 239
     },
     {
       "hour": 9,
       "actions": 237
     },
     {
-      "hour": 16,
-      "actions": 234
+      "hour": 12,
+      "actions": 228
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2320
+      "count": 2313
     },
     {
       "topic": "IA",
-      "count": 1999
+      "count": 1996
     },
     {
       "topic": "Crypto",
-      "count": 624
+      "count": 625
     },
     {
       "topic": "Bourse",
-      "count": 411
+      "count": 413
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 124
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2194
+      "count": 2186
     },
     {
       "pillar": "other",
-      "count": 1372
+      "count": 1364
     },
     {
       "pillar": "market_trauma",
-      "count": 1256
+      "count": 1261
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 163
     },
     {
       "pillar": "reply_bait",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 314
-    },
-    {
-      "pillar": "other",
-      "count": 191
+      "count": 292
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 173
+    },
+    {
+      "pillar": "other",
+      "count": 168
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 20
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -130,40 +130,40 @@
     {
       "pillar": "ai_news_take",
       "posts": 71,
-      "avg_likes": 0.23,
-      "avg_views": 47.5,
+      "avg_likes": 0.24,
+      "avg_views": 48.5,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 81,
       "avg_likes": 0.16,
-      "avg_views": 49.2,
+      "avg_views": 49.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
+      "posts": 41,
       "avg_likes": 0.15,
-      "avg_views": 40.9,
+      "avg_views": 40.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 2,
+      "posts": 1,
       "avg_likes": 0.0,
-      "avg_views": 24.0,
-      "low_sample": false
+      "avg_views": 32.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4541
+      "count": 4532
     },
     {
       "type": "quote",
-      "count": 326
+      "count": 325
     },
     {
       "type": "quote_gif",
@@ -171,7 +171,7 @@
     },
     {
       "type": "post",
-      "count": 64
+      "count": 65
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-13T12:56:20.276615",
-      "text": "Two more managed WordPress wrappers launching in one week. the AI SaaS race is just a race to the bottom of the support ticket queue.",
+      "ts": "2026-08-13T16:56:55.049252",
+      "text": "80% is higher than the market can digest without spitting out a rate cut. the odds are priced for a soft landing that just hit a wall. panic.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T12:55:47.645724",
-      "text": "$63k is the spot. the ETF inflows are front-running the halving supply shock. 401k Dave is finally learning patience.",
+      "ts": "2026-08-13T16:52:23.916105",
+      "text": "@Angel: \"Worse than GPT-5.6 Luna, for more than 3x the cost\"\n\nluna's still vaporware. gemini is shipping revenue today.\nmarketing is cheaper than compute, angel.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T12:54:35.051015",
-      "text": "4M BTC is ~6% of the max supply.\n\nthe conviction buyers are the only ones who realized the ticker wasn't a stock. it was a lottery ticket where everyone forgot to buy",
+      "ts": "2026-08-13T16:49:33.372613",
+      "text": "@Stacy Muur $500B underwater.\n\n401k Dave just bought the dip at $100k, panicked at $60k, and is buying again.\nhis pain is the market's leverage.",
       "type": "reply"
     }
   ]

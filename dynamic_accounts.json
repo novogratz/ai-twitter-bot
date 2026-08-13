@@ -1750,7 +1750,18 @@
     "GaelLeMarec",
     "DianeTremblay2",
     "AntoineFauquet",
-    "MathieuDrouin"
+    "MathieuDrouin",
+    "GaborVarga1",
+    "MehdiTahiri",
+    "MickaBorot",
+    "NiklasSchueler",
+    "DylanBilodeau",
+    "LionelPeltier",
+    "BenjaminWabbel",
+    "ClemCahart",
+    "JulesvanG",
+    "ThibautPottier",
+    "NathalieLorson"
   ],
   "en": [
     "Chubby",
@@ -2135,7 +2146,8 @@
     "zeta",
     "OpenRouter",
     "ClockBrokers",
-    "Astronomiaum"
+    "Astronomiaum",
+    "Restructuring__"
   ],
   "history": [
     {
@@ -12806,6 +12818,66 @@
     {
       "lang": "fr",
       "handle": "MathieuDrouin",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Restructuring__",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaborVarga1",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiTahiri",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaBorot",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "NiklasSchueler",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanBilodeau",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelPeltier",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminWabbel",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemCahart",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesvanG",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautPottier",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieLorson",
       "added": "2026-08-13"
     }
   ]
