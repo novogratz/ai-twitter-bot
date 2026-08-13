@@ -1375,3 +1375,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 80 views: Anthropic IPO in October. The IPO that forces $NVDA to stop bragging about its AI dominance. Because
   - 1 likes / 294 views: Nebius dropping to circle $NBIS. Me refreshing my iPad like it owes me alimony  https://x.com/Coinvo
   - 1 likes / 138 views: me quietly adding $LITE to my 'things I'm weirdly proud of' folder while everyone else is still aski
+
+## 2026-08-12
+
+**Activity** — total actions: 793
+  - by type: reply=706, quote=57, quote_gif=11, post=11, hotake=5, retweet=3
+  - top sources: SEARCH-HOT=440, FEED-SWEEP-FEED=132, FEED-SWEEP-FOLLOWING=88, QUOTE=45, DEBATE=32, GIF=17, VIP=12, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=19, @CoinMarketCap=9, @StockSavvyShay=8, @Polymarket=8, @Mindset4Money_X=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 52 views: me re-reading "visibility has sharpened" like it’s a text that says "I’ll call u" at 2am
+  - 1 likes / 45 views: Elon Musk just said AI will be 99% of SpaceX’s value in 5 years.  The tech bro in the corner who alr
+  - 1 likes / 21 views: Told my AI therapist I’m worried about my 401(k) losing to ChatGPT. She handed me a mint and said, “

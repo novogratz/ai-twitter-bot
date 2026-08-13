@@ -1725,7 +1725,13 @@
     "PierreMoussa",
     "ThibautF",
     "MaximeDreano",
-    "AlexDionne_QC"
+    "AlexDionne_QC",
+    "Nasri",
+    "RomainMoy",
+    "ThibautR",
+    "Alex_Dionne_QC",
+    "LionelM",
+    "Marc_Alexandre"
   ],
   "en": [
     "Chubby",
@@ -12656,6 +12662,36 @@
     {
       "lang": "fr",
       "handle": "AlexDionne_QC",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nasri",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMoy",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautR",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alex_Dionne_QC",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelM",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marc_Alexandre",
       "added": "2026-08-12"
     }
   ]
