@@ -1720,7 +1720,12 @@
     "louis_cabane",
     "mickablog",
     "maxi_1000",
-    "MaeldeTregoret"
+    "MaeldeTregoret",
+    "Lefroid",
+    "PierreMoussa",
+    "ThibautF",
+    "MaximeDreano",
+    "AlexDionne_QC"
   ],
   "en": [
     "Chubby",
@@ -12626,6 +12631,31 @@
     {
       "lang": "fr",
       "handle": "MaeldeTregoret",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lefroid",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMoussa",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautF",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDreano",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDionne_QC",
       "added": "2026-08-12"
     }
   ]

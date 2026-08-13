@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-24T03:43:49.683685",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelleTeyssandier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Journaliste crypto ultra fiable, ex-Bloomberg. Elle couvre l'infra et la macrocrypto sans vendredi des cours \u00e0 2000 balles."
-      },
-      {
-        "handle": "EthanCarter",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Tech VC fran\u00e7ais vivant \u00e0 SF. Il twitte en FR sur les startups US. Le pont parfait entre la French Tech et la Silicon Valley."
-      },
-      {
-        "handle": "OlivierBoutin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Directeur de fonds qu\u00e9b\u00e9cois. Il poste des analyses techniques et fondamentales s\u00e8ches, exactement ce qu'on veut pour la bourse."
-      }
-    ],
-    "summary": "On couvre Mistral et la data bourse pour la France, le trading concret pour le Qu\u00e9bec, et le view from SF pour la diaspora. Z\u00e9ro vend-de-cours, que du fond."
-  },
-  {
     "ts": "2026-07-24T05:43:40.567177",
     "raw_count": 8,
     "kept_count": 5,
@@ -9369,5 +9338,57 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les architectes : Deneb pour le Qu\u00e9bec, JulienG pour la crypto FR, et Rochard pour l'IA US francophone. Pas de formations, juste du nerf."
+  },
+  {
+    "ts": "2026-08-12T20:59:26.391576",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lefroid",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "Le grand-p\u00e8re du fricastcrypto. Il a tout vu, tout dit et garde son bon sens. Moins hype que les autres, mais plus de substance."
+      },
+      {
+        "handle": "PierreMoussa",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "L'IA francophone aux US. Il a acc\u00e8s aux insiders de Palo Alto et le traduit pour nous sans jargon inutile."
+      },
+      {
+        "handle": "ThibautF",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'anti-guru. Pas de courbes flamm\u00e9es, juste du bon sens boursier. Il tweete rarement, donc chaque tweet a du poids."
+      },
+      {
+        "handle": "AdrienBourgeoisFr",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Le barom\u00e8tre des fintechs FR. Il connecte mieux les dots que personne et son ton est toujours frais."
+      },
+      {
+        "handle": "MaximeDreano",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Le roi de la tech \u00e0 Montr\u00e9al. Il couvre IA et startups avec un angle pragmatique qui manque trop souvent."
+      },
+      {
+        "handle": "AlexDionne_QC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La voix qui porte au Qu\u00e9bec. Il couvre l'\u00e9cosyst\u00e8me crypto local sans se voiler la face sur les scams."
+      }
+    ],
+    "summary": "J'ai chass\u00e9 les comptes qui font du bruit pour garder ceux qui font du bruit utile. Pas de formations \u00e0 999\u20ac, pas de Telegram VIP, juste des cerveaux qui analysent le march\u00e9 r\u00e9el. C'est propre, c'est net, c'est payant en attention."
   }
 ]
