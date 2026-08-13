@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-12T20:58:32.711319",
-  "window_7d_actions": 5207,
-  "window_24h_actions": 824,
+  "generated_at": "2026-08-13T00:58:32.901707",
+  "window_7d_actions": 5193,
+  "window_24h_actions": 781,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5206
+      "count": 5192
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5206
+      "count": 5192
     }
   ],
   "best_hours_utc": [
@@ -47,76 +47,76 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2367
+      "count": 2352
     },
     {
       "topic": "IA",
-      "count": 2018
+      "count": 2016
     },
     {
       "topic": "Crypto",
-      "count": 627
+      "count": 636
     },
     {
       "topic": "Bourse",
-      "count": 422
+      "count": 419
     },
     {
       "topic": "Spatial",
-      "count": 136
+      "count": 135
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2246
+      "count": 2232
     },
     {
       "pillar": "other",
-      "count": 1383
+      "count": 1385
     },
     {
       "pillar": "market_trauma",
-      "count": 1285
+      "count": 1282
     },
     {
       "pillar": "meme_reaction",
-      "count": 159
+      "count": 158
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 89
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 352
+      "count": 333
     },
     {
       "pillar": "other",
-      "count": 228
+      "count": 214
     },
     {
       "pillar": "market_trauma",
-      "count": 201
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 18
+      "count": 193
     },
     {
       "pillar": "reply_bait",
       "count": 18
     },
     {
+      "pillar": "meme_reaction",
+      "count": 17
+    },
+    {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 65,
-      "avg_likes": 0.23,
-      "avg_views": 45.2,
+      "posts": 68,
+      "avg_likes": 0.21,
+      "avg_views": 47.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.2,
-      "avg_views": 43.6,
+      "posts": 40,
+      "avg_likes": 0.15,
+      "avg_views": 42.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 84,
+      "posts": 82,
       "avg_likes": 0.15,
-      "avg_views": 49.7,
+      "avg_views": 50.3,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4632
+      "count": 4617
     },
     {
       "type": "quote",
@@ -167,11 +167,11 @@
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 129
     },
     {
       "type": "post",
-      "count": 58
+      "count": 60
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-12T20:58:25.275958",
-      "text": "AGT needs a killer app. Right now, the only thing it does is sit in a wallet. utility is binary.",
+      "ts": "2026-08-13T00:55:20.973311",
+      "text": "[QT] @sama just told us AGI happened while Nvidia’s GPU utilization stays stuck in the single digits.\nWho’s paying the $300B bill for the party while the lights are off?",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-13T00:54:32.934622",
+      "text": "Anthropic pays six billion for a startup that isn't shipping yet.\n\nit's the vc equivalent of paying for a gym membership before you can walk.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T20:57:52.364702",
-      "text": "Glean is showing inference efficiency is the real moat. everyone watches training costs. the winner is the one who charges less per thought.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-12T20:57:36.061438",
-      "text": "Palantir's AI Platform generates 70% gross margins on government contracts that don't expire for decades. Burry's buying a bank. We're buying a toll road on the future of intelligence.",
+      "ts": "2026-08-13T00:54:15.553610",
+      "text": "Burry’s shorting the capex cycle while Nvidia’s datacenter margin is 70%.\n\nhe’s betting on the hardware drying up.\nnvidia’s betting on the bill arriving.\n\nthe loser buys the GPUs.",
       "type": "reply"
     }
   ]
