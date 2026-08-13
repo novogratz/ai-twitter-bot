@@ -16887,3 +16887,16 @@ That’s the neat part…
 They won’t
   - https://x.com/Erikcason/status/2087307746014331297
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 247).
+
+## 2026-08-13
+- **@cyrilxbt** (206 likes, score 9/10) — MARC ANDREESSEN WENT ON ROGAN FOR OVER 3 HOURS. HERE ARE THE 17 THINGS WORTH YOUR ATTENTION.
+
+1. AGI is already here, in his view. He says the line got crossed about 3 months ago with GPT-5.5, Claude
+  - https://x.com/cyrilXBT/status/2087435918705938513
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 256).
+- **@cointelegraph** (50 likes, score 8/10) — LATEST: China's DeepSeek launches a new "Harness Team" and is hiring to build AI agents that can rival Anthropic's Claude Code.
+  - https://x.com/Cointelegraph/status/2087751168705400840
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 84).
+- **@whaleinsider** (31 likes, score 8/10) — JUST IN:  China’s DeepSeek launches Harness team to build AI agents rivaling Anthropic’s Claude Code​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​.
+  - https://x.com/WhaleInsider/status/2087757068212044149
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 53).

@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-24T07:43:35.531290",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thomasjardel",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le patron de Coinhouse. Twitte en FR, vibe VC, z\u00e9ro formation \u00e0 999\u20ac."
-      },
-      {
-        "handle": "JulienMoinard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "La r\u00e9f\u00e9rence trading francophone. Pas de blabla, que du setup."
-      },
-      {
-        "handle": "BenjaminLortie",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "L'expert fintech qu\u00e9b\u00e9cois. Il comprend la tech mieux que ton banquier."
-      },
-      {
-        "handle": "AlexandreCoutant",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Diaspora FR \u00e0 NYC. Il cover les US cryptos avec un accent fran\u00e7ais."
-      },
-      {
-        "handle": "BenjaminLorant",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le banquier en jogg. Il parle de macro sans te endormir."
-      },
-      {
-        "handle": "ValentinDeneumez",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "SVP, le groupe de la French Tech. Du pur pipeline VC."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la cr\u00e8me : des pros qui twittent en fran\u00e7ais, avec une audience r\u00e9elle et sans pubs de cours. Le mix Mistral, Coinhouse et les traders solo est le gold standard actuel."
-  },
-  {
     "ts": "2026-07-24T09:43:41.576456",
     "raw_count": 8,
     "kept_count": 5,
@@ -9397,5 +9345,43 @@
       }
     ],
     "summary": "Une s\u00e9lection solide qui \u00e9vite les vendeurs de r\u00eave : on privil\u00e9gie les fondateurs d'infra (Mistral), les analystes data (Marc_Alexandre, LionelM) et les investisseurs convictionnels (RomainMoy). Pas de 'lambo' en photo de profil, promis."
+  },
+  {
+    "ts": "2026-08-13T00:59:17.373112",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "FrenchTech",
+        "region": "france",
+        "niche": "tech",
+        "followers": 150000,
+        "reason": "Le compte officiel de l'\u00e9cosyst\u00e8me. Moins 'insight' que les influenceurs, mais indispensable pour voir qui l\u00e8ve des sous en France avant les journaux t\u00e9l\u00e9vis\u00e9s."
+      },
+      {
+        "handle": "MickaMakossa",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "L'homme de terrain. Il teste les protocoles NFT et DeFi avant qu'ils ne crashent. Moins de chiffres, plus de 'regardez ce truc est n'importe quoi'."
+      },
+      {
+        "handle": "ValentinBriant",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Ex-journaliste techno qui a compris la hype AI avant tout le monde. Ses threads sur les startups fran\u00e7aises sont les seuls qui valent le temps d'un dimanche soir."
+      },
+      {
+        "handle": "CryptoMastah",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "La p\u00e9pite qu\u00e9b\u00e9coise. Moins connu que ses coll\u00e8gues FR mais ses analyses on-chain sont plus nettes. Il twitte en FR avec une pr\u00e9cision de trader de comptoir."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui font bouger les lignes : Mistral pour l'IA de pointe, CryptoCobain pour la crypto grand public, et Alex Dionne pour la bourse s\u00e9rieuse sans le baratin. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9, pas seulement pour le d\u00e9jeuners."
   }
 ]

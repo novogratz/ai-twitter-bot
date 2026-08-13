@@ -1731,7 +1731,11 @@
     "ThibautR",
     "Alex_Dionne_QC",
     "LionelM",
-    "Marc_Alexandre"
+    "Marc_Alexandre",
+    "FrenchTech",
+    "MickaMakossa",
+    "ValentinBriant",
+    "CryptoMastah"
   ],
   "en": [
     "Chubby",
@@ -12693,6 +12697,26 @@
       "lang": "fr",
       "handle": "Marc_Alexandre",
       "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrenchTech",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaMakossa",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinBriant",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMastah",
+      "added": "2026-08-13"
     }
   ]
 }
