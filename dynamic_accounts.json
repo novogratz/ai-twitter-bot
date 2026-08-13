@@ -1735,7 +1735,10 @@
     "FrenchTech",
     "MickaMakossa",
     "ValentinBriant",
-    "CryptoMastah"
+    "CryptoMastah",
+    "louboutin",
+    "alexismoulin",
+    "nicolasbessonet"
   ],
   "en": [
     "Chubby",
@@ -12716,6 +12719,21 @@
     {
       "lang": "fr",
       "handle": "CryptoMastah",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "louboutin",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexismoulin",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "nicolasbessonet",
       "added": "2026-08-13"
     }
   ]

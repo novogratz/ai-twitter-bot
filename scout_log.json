@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-24T09:43:41.576456",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThomasMaurice",
-        "region": "france",
-        "niche": "tech",
-        "followers": 95000,
-        "reason": "La voix raisonnable de l'IA \u00e0 Paris. Vise les d\u00e9veloppeurs, twitte en FR, fuit les influenceurs crypto pourris. Un bijou d'honn\u00eatet\u00e9 technique."
-      },
-      {
-        "handle": "Alexis_Mons",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'expert technique pur. Pas de blabla macro, que du prix, du volume et des chutes. Compte actif, z\u00e9ro pub Telegram."
-      },
-      {
-        "handle": "MaximeMoulin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Founder \u00e0 NYC qui twitte en fran\u00e7ais sur le futur de l'IA et du SaaS. Le bridge culturel parfait entre la SF et la tech FR."
-      },
-      {
-        "handle": "JeanLucD",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le prof qu\u00e9b\u00e9cois qui rend la Wall Street accessible sans abaisser le niveau. Le ton est direct, qu\u00e9b\u00e9cois et sans concession."
-      },
-      {
-        "handle": "GaelDeR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Institutionnel mais accessible. Analyse la DeFi avec une rigueur de banquier d'affaires. Z\u00e9ro hype, juste des faits."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' qui vendent leur \u00e2me pour 19\u20ac du mois. Ces 8 comptes sont des vrais pros (founders, traders, chercheurs) qui apportent de la valeur sans vendre du r\u00eave en direct YouTube."
-  },
-  {
     "ts": "2026-07-24T11:43:42.909140",
     "raw_count": 7,
     "kept_count": 5,
@@ -9383,5 +9338,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui font bouger les lignes : Mistral pour l'IA de pointe, CryptoCobain pour la crypto grand public, et Alex Dionne pour la bourse s\u00e9rieuse sans le baratin. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9, pas seulement pour le d\u00e9jeuners."
+  },
+  {
+    "ts": "2026-08-13T02:59:10.295210",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "louboutin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Fondateur de Stockopedia. Il d\u00e9cortique les march\u00e9s avec une pr\u00e9cision chirurgicale, souvent plus pertinent que nos analystes parisiens."
+      },
+      {
+        "handle": "alexismoulin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Co-fondateur de Qonto. Il balance des views tranch\u00e9es sur la SaaS fran\u00e7aise et l'IA applicative, sans le jargon trop acad\u00e9mique."
+      },
+      {
+        "handle": "thomas_schilling",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Ancien de Microsoft, maintenant VC chez Iliad Ventures. Il twitte sur le SIaaS et la tech fr avec une pertinence rare et sans vendredi de la poudre."
+      },
+      {
+        "handle": "nicolasbessonet",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 10000,
+        "reason": "Bas\u00e9 \u00e0 NY mais francophone. Il couvre la macro crypto et les ETF avec un \u0153il de trader pro, loin du bruit des influenceurs Telegram."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par les fondateurs ex-tech (Schilling, Bessonet) plut\u00f4t que par les inconditionnels du trading. Le Qu\u00e9bec apporte une valeur ajout\u00e9e r\u00e9elle via la recherche boursique pure (Bessoin), et la diaspora NY (Bessinet) compl\u00e8te le trio avec la vue crypto institutionnelle."
   }
 ]

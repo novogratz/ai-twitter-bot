@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-13T00:58:32.901707",
-  "window_7d_actions": 5193,
-  "window_24h_actions": 781,
+  "generated_at": "2026-08-13T04:58:31.725158",
+  "window_7d_actions": 5158,
+  "window_24h_actions": 803,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5192
+      "count": 5157
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5192
+      "count": 5157
     }
   ],
   "best_hours_utc": [
@@ -47,64 +47,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2352
+      "count": 2348
     },
     {
       "topic": "IA",
-      "count": 2016
+      "count": 2004
     },
     {
       "topic": "Crypto",
-      "count": 636
+      "count": 628
     },
     {
       "topic": "Bourse",
-      "count": 419
+      "count": 413
     },
     {
       "topic": "Spatial",
-      "count": 135
+      "count": 126
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2232
+      "count": 2215
     },
     {
       "pillar": "other",
-      "count": 1385
+      "count": 1380
     },
     {
       "pillar": "market_trauma",
-      "count": 1282
+      "count": 1271
     },
     {
       "pillar": "meme_reaction",
-      "count": 158
+      "count": 157
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 333
+      "count": 345
     },
     {
       "pillar": "other",
-      "count": 214
+      "count": 225
     },
     {
       "pillar": "market_trauma",
-      "count": 193
+      "count": 192
     },
     {
       "pillar": "reply_bait",
@@ -112,11 +112,11 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -129,16 +129,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 68,
-      "avg_likes": 0.21,
-      "avg_views": 47.4,
+      "posts": 70,
+      "avg_likes": 0.2,
+      "avg_views": 47.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.15,
-      "avg_views": 42.6,
+      "posts": 38,
+      "avg_likes": 0.16,
+      "avg_views": 40.7,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4617
+      "count": 4582
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 129
+      "count": 128
     },
     {
       "type": "post",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 15
+      "count": 16
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-13T00:55:20.973311",
-      "text": "[QT] @sama just told us AGI happened while Nvidia’s GPU utilization stays stuck in the single digits.\nWho’s paying the $300B bill for the party while the lights are off?",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-13T00:54:32.934622",
-      "text": "Anthropic pays six billion for a startup that isn't shipping yet.\n\nit's the vc equivalent of paying for a gym membership before you can walk.",
+      "ts": "2026-08-13T04:58:03.207136",
+      "text": "Zuck shorting AI. He bought data centers on sale in 2020 for 90% off and now owns the grid while everyone else pays retail rates for GPU cloud.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T00:54:15.553610",
-      "text": "Burry’s shorting the capex cycle while Nvidia’s datacenter margin is 70%.\n\nhe’s betting on the hardware drying up.\nnvidia’s betting on the bill arriving.\n\nthe loser buys the GPUs.",
+      "ts": "2026-08-13T04:52:41.051499",
+      "text": "Chinese labs shipping Qwen 27b? Cute. The real game is $NVDA selling shovels to kids digging for gold in their backyard. 🤏",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-13T04:52:07.645034",
+      "text": "Shivalik Bimetal reports ₹1.4B revenue. Claude generates the report in 30 seconds. The margin is in the analyst who used to read the pdf, not the AI that wrote it.",
       "type": "reply"
     }
   ]
