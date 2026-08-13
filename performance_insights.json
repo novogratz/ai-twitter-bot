@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-12T16:58:31.694229",
-  "window_7d_actions": 5183,
-  "window_24h_actions": 823,
+  "generated_at": "2026-08-12T20:58:32.711319",
+  "window_7d_actions": 5207,
+  "window_24h_actions": 824,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5182
+      "count": 5206
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5182
+      "count": 5206
     }
   ],
   "best_hours_utc": [
@@ -47,46 +47,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2354
+      "count": 2367
     },
     {
       "topic": "IA",
-      "count": 2014
+      "count": 2018
     },
     {
       "topic": "Crypto",
-      "count": 619
+      "count": 627
     },
     {
       "topic": "Bourse",
-      "count": 417
+      "count": 422
     },
     {
       "topic": "Spatial",
-      "count": 134
+      "count": 136
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2232
+      "count": 2246
     },
     {
       "pillar": "other",
-      "count": 1378
+      "count": 1383
     },
     {
       "pillar": "market_trauma",
-      "count": 1280
+      "count": 1285
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 159
     },
     {
       "pillar": "reply_bait",
-      "count": 86
+      "count": 88
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,15 +96,15 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 354
+      "count": 352
     },
     {
       "pillar": "other",
-      "count": 229
+      "count": 228
     },
     {
       "pillar": "market_trauma",
-      "count": 200
+      "count": 201
     },
     {
       "pillar": "meme_reaction",
@@ -112,11 +112,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 18
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4607
+      "count": 4632
     },
     {
       "type": "quote",
-      "count": 328
+      "count": 329
     },
     {
       "type": "quote_gif",
@@ -171,7 +171,7 @@
     },
     {
       "type": "post",
-      "count": 60
+      "count": 58
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-12T16:57:00.961128",
-      "text": "Nvidia bought 10% of $NBIS in late 2024.\n\nIt’s not a fan. It’s a landlord who’s already installed the HVAC.",
+      "ts": "2026-08-12T20:58:25.275958",
+      "text": "AGT needs a killer app. Right now, the only thing it does is sit in a wallet. utility is binary.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T16:56:44.717495",
-      "text": "KOSPI at 5x P/E. It's not a crash. It's a value trap with better liquidity.",
+      "ts": "2026-08-12T20:57:52.364702",
+      "text": "Glean is showing inference efficiency is the real moat. everyone watches training costs. the winner is the one who charges less per thought.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-12T16:55:42.618425",
-      "text": "Coinbase biz is just the tax office you can pay in dollars.",
+      "ts": "2026-08-12T20:57:36.061438",
+      "text": "Palantir's AI Platform generates 70% gross margins on government contracts that don't expire for decades. Burry's buying a bank. We're buying a toll road on the future of intelligence.",
       "type": "reply"
     }
   ]

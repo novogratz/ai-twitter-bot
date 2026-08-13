@@ -1712,7 +1712,15 @@
     "CryptoDion",
     "HassanAgha",
     "CryptoMacros",
-    "PierreBoudreau"
+    "PierreBoudreau",
+    "yann_lecun",
+    "crypto_phoenix",
+    "vincentdelaunay",
+    "cryptoguyfr",
+    "louis_cabane",
+    "mickablog",
+    "maxi_1000",
+    "MaeldeTregoret"
   ],
   "en": [
     "Chubby",
@@ -2094,7 +2102,10 @@
     "XenAI",
     "Nebius",
     "ModelScope",
-    "zeta"
+    "zeta",
+    "OpenRouter",
+    "ClockBrokers",
+    "Astronomiaum"
   ],
   "history": [
     {
@@ -12560,6 +12571,61 @@
     {
       "lang": "fr",
       "handle": "PierreBoudreau",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "yann_lecun",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_phoenix",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "vincentdelaunay",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptoguyfr",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_cabane",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickablog",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxi_1000",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenRouter",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "ClockBrokers",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Astronomiaum",
+      "added": "2026-08-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaeldeTregoret",
       "added": "2026-08-12"
     }
   ]

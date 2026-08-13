@@ -1,53 +1,5 @@
 [
   {
-    "ts": "2026-07-23T23:51:54.010858",
-    "raw_count": 7,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreLalonde",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "Ex-CEO de Wirecard (non, attendez, c'est Blaise), non c'est l'homme derri\u00e8re le design de produits tech. Qu\u00e9b\u00e9cois bas\u00e9 aux USA, il tweete sur le produit et la culture startup avec une pointe d'humour froid."
-      },
-      {
-        "handle": "NathanBoudreaux",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Founders qui parle tech et IA au Qu\u00e9bec. Il montre que Montr\u00e9al n'est pas juste un hub de gaming mais un vrai brasier cr\u00e9atif en IA g\u00e9n\u00e9rative."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux qui construisent ou analysent la tech en fran\u00e7ais. De Mistral aux traders qu\u00e9b\u00e9cois, c'est du concret, pas des blablas."
-  },
-  {
-    "ts": "2026-07-24T01:43:39.056569",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienGirard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "G\u00e9rant de fonds. Il poste ses analyses macro et sectorielles avec une honn\u00eatet\u00e9 intellectuelle rafra\u00eechissante."
-      },
-      {
-        "handle": "OlivierLeGoarnig",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 32000,
-        "reason": "Fondamentale sur Ethereum. Il explique les mises \u00e0 jour de protocol et la staking avec une clart\u00e9 d\u00e9sarmante."
-      }
-    ],
-    "summary": "Ce batch cible les grands patrons et les influenceurs de fond en France et au Qu\u00e9bec. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour ne garder que des b\u00e2tisseurs et des analystes qui nourrissent le feed avec du vrai contenu."
-  },
-  {
     "ts": "2026-07-24T03:43:49.683685",
     "raw_count": 7,
     "kept_count": 3,
@@ -9341,5 +9293,81 @@
       }
     ],
     "summary": "La sc\u00e8ne IA FR est domin\u00e9e par des ex-LinkedIn qui ont enfin trouv\u00e9 leur voix (Benmoussa, Corduneanu), tandis que le Qu\u00e9bec se distingue par une approche acad\u00e9mique appliqu\u00e9e (Boudreau, Dionne). Aux USA, Hassan Agha reste le seul francophone de talent capable de rivaliser avec les anglophones sur la s\u00e9curit\u00e9 IA."
+  },
+  {
+    "ts": "2026-08-12T16:59:19.755519",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "yann_lecun",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 500000,
+        "reason": "Le p\u00e8re de la vision par ordinateur. Il parle fran\u00e7ais de temps en temps (ou presque). C'est la reference, il suffit de suivre."
+      },
+      {
+        "handle": "crypto_phoenix",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le v\u00e9t\u00e9ran FR. Il survit aux bull runs et aux bear markets avec la m\u00eame t\u00eate de bois mort. Analyse macro solide."
+      },
+      {
+        "handle": "vincentdelaunay",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "L'\u00e9ternel bear qui a souvent raison. Sa vision de la bourse est cynique mais juste."
+      },
+      {
+        "handle": "cryptoguyfr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Ancien de Coinhouse. Il a vu passer 3 cycles et n'a jamais paniqu\u00e9. Le calme parfait."
+      },
+      {
+        "handle": "louis_cabane",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "IA Generative. Il explique la tech \u00e0 des humains, pas \u00e0 des ing\u00e9nieurs qui s'ennuient."
+      },
+      {
+        "handle": "mickablog",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Ex-Mistral, aujourd'hui solo. Il tweet la tech FR comme un patron qui sait qu'il vient de se faire virer de sa propre bo\u00eete."
+      },
+      {
+        "handle": "maxi_1000",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "C'est le qu\u00e9b\u00e9cois qui comprend le mieux LLMs et agents AI. Pas de jargon inutile, juste du concret."
+      }
+    ],
+    "summary": "5 nouveaux venus solides en IA et Crypto FR/Quebec. J'ai \u00e9cart\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent ce qu'ils disent. 100% authentique, 0% de pub Telegram."
+  },
+  {
+    "ts": "2026-08-12T18:59:05.269066",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaeldeTregoret",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Anglophone mais les tweets FR sont percutants. Expert DeFi bas\u00e9 aux US, moins pompier que les autres."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les architectes : Deneb pour le Qu\u00e9bec, JulienG pour la crypto FR, et Rochard pour l'IA US francophone. Pas de formations, juste du nerf."
   }
 ]
