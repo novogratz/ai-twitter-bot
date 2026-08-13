@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-13T04:58:31.725158",
-  "window_7d_actions": 5158,
-  "window_24h_actions": 803,
+  "generated_at": "2026-08-13T08:58:31.696811",
+  "window_7d_actions": 5141,
+  "window_24h_actions": 758,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5157
+      "count": 5140
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5157
+      "count": 5140
     }
   ],
   "best_hours_utc": [
@@ -28,11 +28,11 @@
       "actions": 273
     },
     {
-      "hour": 8,
-      "actions": 242
+      "hour": 12,
+      "actions": 241
     },
     {
-      "hour": 12,
+      "hour": 8,
       "actions": 241
     },
     {
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2348
+      "count": 2327
     },
     {
       "topic": "IA",
-      "count": 2004
+      "count": 2011
     },
     {
       "topic": "Crypto",
-      "count": 628
+      "count": 627
     },
     {
       "topic": "Bourse",
-      "count": 413
+      "count": 414
     },
     {
       "topic": "Spatial",
@@ -70,23 +70,23 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2215
+      "count": 2210
     },
     {
       "pillar": "other",
-      "count": 1380
+      "count": 1379
     },
     {
       "pillar": "market_trauma",
-      "count": 1271
+      "count": 1261
     },
     {
       "pillar": "meme_reaction",
-      "count": 157
+      "count": 158
     },
     {
       "pillar": "reply_bait",
-      "count": 87
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 345
+      "count": 325
     },
     {
       "pillar": "other",
-      "count": 225
+      "count": 214
     },
     {
       "pillar": "market_trauma",
-      "count": 192
+      "count": 185
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 15
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -135,35 +135,35 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 38,
+      "pillar": "other",
+      "posts": 82,
       "avg_likes": 0.16,
-      "avg_views": 40.7,
+      "avg_views": 49.0,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 82,
+      "pillar": "market_trauma",
+      "posts": 39,
       "avg_likes": 0.15,
-      "avg_views": 50.3,
+      "avg_views": 41.5,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 30.0,
+      "avg_views": 21.3,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4582
+      "count": 4567
     },
     {
       "type": "quote",
-      "count": 329
+      "count": 328
     },
     {
       "type": "quote_gif",
@@ -171,7 +171,7 @@
     },
     {
       "type": "post",
-      "count": 60
+      "count": 59
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-13T04:58:03.207136",
-      "text": "Zuck shorting AI. He bought data centers on sale in 2020 for 90% off and now owns the grid while everyone else pays retail rates for GPU cloud.",
+      "ts": "2026-08-13T08:58:30.106450",
+      "text": "Server cpu is the consolation prize for the GPU shortage. 210bn TAM means the market finally admits agents need a fallback. amd smiles.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T04:52:41.051499",
-      "text": "Chinese labs shipping Qwen 27b? Cute. The real game is $NVDA selling shovels to kids digging for gold in their backyard. 🤏",
-      "type": "quote"
+      "ts": "2026-08-13T08:54:03.014126",
+      "text": "Margin expansion is just jargon for \"we can charge what we want because there's no one else.\" the real story is that demand is outpacing the entire global semiconductor industry.",
+      "type": "reply"
     },
     {
-      "ts": "2026-08-13T04:52:07.645034",
-      "text": "Shivalik Bimetal reports ₹1.4B revenue. Claude generates the report in 30 seconds. The margin is in the analyst who used to read the pdf, not the AI that wrote it.",
+      "ts": "2026-08-13T08:53:20.290822",
+      "text": "KL-guided eviction saves VRAM on context windows that are 80% noise anyway. The whitepaper calls it adaptive; the balance sheet calls it margin recovery.",
       "type": "reply"
     }
   ]

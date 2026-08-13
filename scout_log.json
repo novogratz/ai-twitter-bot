@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-24T11:43:42.909140",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RenaudTornade",
-        "region": "france",
-        "niche": "ai",
-        "followers": 68000,
-        "reason": "Le baron fran\u00e7ais d'xAI, twitte en FR/EN, pas de vente de cours, juste l'actu des models et de l'compute."
-      },
-      {
-        "handle": "NakamotoSatoshi_",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Incontournable de la macro/crypto en FR, ton direct, pas de signal Telegram, pur analyse de march\u00e9."
-      },
-      {
-        "handle": "MaximeMaresca",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Cr\u00e9ateur de Crypto.fr, couvre la r\u00e9gulation et les news crypto avec un \u0153il de technophile plus que de vendeur."
-      },
-      {
-        "handle": "ThomasBouvier",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Journaliste tech \u00e0 Qu\u00e9bec, couvre la Silicon Valley en direct avec un accent distinctif, focus IA/SaaS."
-      },
-      {
-        "handle": "BenoitBoullay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'expert boursier qu\u00e9b\u00e9cois, vulgarise la finance sans \u00eatre ennuyeux, tr\u00e8s actif sur le march\u00e9 nord-am\u00e9ricain."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour ne garder que les profils techniques et les analystes actifs. Pas de vendeurs de r\u00eave, juste du concret en fran\u00e7ais de France et du Qu\u00e9bec."
-  },
-  {
-    "ts": "2026-07-24T13:43:53.662273",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximilienMars",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "Le patron de Rapyd en France. Twitte sur la finance de bout en bout, style direct."
-      },
-      {
-        "handle": "ThomasPetitFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Journaliste bourse, twitte les facts avant les m\u00e9dias. Pas de pub, que du concret."
-      },
-      {
-        "handle": "Jean-PhilippeDuclos",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Ancien fondateur, aujourd'hui investisseur. Twitte en FR, regarde ce qui se passe aux US mais pense local."
-      }
-    ],
-    "summary": "Mix de puristes (Mistral), d'analyse on-chain (Bourgeois) et de finance classique (Duclos/Petit). Z\u00e9ro vendeur de r\u00eave, que des gens qui font bouger la tech ou le prix des actifs."
-  },
-  {
     "ts": "2026-07-24T17:43:29.096766",
     "raw_count": 5,
     "kept_count": 3,
@@ -9376,5 +9300,74 @@
       }
     ],
     "summary": "Le top FR est domin\u00e9 par les fondateurs ex-tech (Schilling, Bessonet) plut\u00f4t que par les inconditionnels du trading. Le Qu\u00e9bec apporte une valeur ajout\u00e9e r\u00e9elle via la recherche boursique pure (Bessoin), et la diaspora NY (Bessinet) compl\u00e8te le trio avec la vue crypto institutionnelle."
+  },
+  {
+    "ts": "2026-08-13T04:59:11.064835",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelleBouchardeau",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence absolue FR en crypto. Journaliste, \u00e9ditrice, pas de pub pour ses propres formations. Elle est l\u00e0 depuis le d\u00e9but, twitte en FR, et son compte est un journal de bord pr\u00e9cis."
+      },
+      {
+        "handle": "BenoitCarrasco",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "CTO de Qonto. Il twitte sur le scaling, le recrutement et la tech fr. C'est technique mais digeste, loin du discours 'AI will eat the world' vague."
+      },
+      {
+        "handle": "NolwennB",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Investisseuse pro en crypto. Elle poste des threads d\u00e9taill\u00e9es sur des projets DeFi/Web3. Pas de shill quotidien, juste des analyses de valeur."
+      }
+    ],
+    "summary": "Focus sur des fondateurs et des journalistes actifs plut\u00f4t que des influenceurs. Cette liste filtre le bruit pour ne garder que des comptes qui ajoutent de la data ou du contexte solide."
+  },
+  {
+    "ts": "2026-08-13T06:59:28.432847",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoMeme",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "Meme coin king FR. Moins technique, mais capture mieux la psychologie de march\u00e9 que tout le reste."
+      },
+      {
+        "handle": "mehdi_serra",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 120000,
+        "reason": "Le roi de la tech et du trading en France. Vends pas de r\u00eave, poste des charts et des analyses froides."
+      },
+      {
+        "handle": "JulienVermard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Journaliste pro, moins de clicbait que la moyenne, plus de fond. Un des seuls fiables sur les valeurs fran\u00e7aises."
+      },
+      {
+        "handle": "LudoLebailly",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le gourou fran\u00e7ais de l'IA. Si tu veux comprendre ce qui se trame dans les labos, c'est ici."
+      }
+    ],
+    "summary": "Le lot est serr\u00e9 entre les valeurs s\u00fbres de la tech boursi\u00e8re (Serra, Vermard) et les poids lourds de l'IA. Le Qu\u00e9bec apporte une touche plus crypto/tech pure avec Dionne, tandis que l'USA reste le terrain de jeu naturel pour TheAIShrink."
   }
 ]

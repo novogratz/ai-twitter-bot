@@ -1738,7 +1738,13 @@
     "CryptoMastah",
     "louboutin",
     "alexismoulin",
-    "nicolasbessonet"
+    "nicolasbessonet",
+    "BenoitCarrasco",
+    "NolwennB",
+    "CryptoMeme",
+    "mehdi_serra",
+    "JulienVermard",
+    "LudoLebailly"
   ],
   "en": [
     "Chubby",
@@ -12734,6 +12740,36 @@
     {
       "lang": "fr",
       "handle": "nicolasbessonet",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitCarrasco",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "NolwennB",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMeme",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdi_serra",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVermard",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoLebailly",
       "added": "2026-08-13"
     }
   ]
