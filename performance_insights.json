@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-13T20:58:31.565813",
-  "window_7d_actions": 5095,
-  "window_24h_actions": 622,
+  "generated_at": "2026-08-14T00:58:33.398237",
+  "window_7d_actions": 5080,
+  "window_24h_actions": 616,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5094
+      "count": 5079
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5094
+      "count": 5079
     }
   ],
   "best_hours_utc": [
@@ -47,11 +47,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2312
+      "count": 2320
     },
     {
       "topic": "IA",
-      "count": 1985
+      "count": 1966
     },
     {
       "topic": "Crypto",
@@ -59,34 +59,34 @@
     },
     {
       "topic": "Bourse",
-      "count": 414
+      "count": 416
     },
     {
       "topic": "Spatial",
-      "count": 124
+      "count": 121
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2172
+      "count": 2148
     },
     {
       "pillar": "other",
-      "count": 1364
+      "count": 1365
     },
     {
       "pillar": "market_trauma",
-      "count": 1266
+      "count": 1275
     },
     {
       "pillar": "meme_reaction",
-      "count": 162
+      "count": 160
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 84
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,19 +96,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 259
+      "count": 241
     },
     {
       "pillar": "other",
-      "count": 167
+      "count": 171
     },
     {
       "pillar": "market_trauma",
-      "count": 164
+      "count": 170
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 22
     },
     {
       "pillar": "reply_bait",
@@ -122,30 +122,30 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 5,
-      "avg_likes": 0.4,
-      "avg_views": 58.8,
+      "posts": 6,
+      "avg_likes": 0.33,
+      "avg_views": 63.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.27,
-      "avg_views": 47.5,
+      "posts": 72,
+      "avg_likes": 0.26,
+      "avg_views": 47.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
+      "posts": 40,
       "avg_likes": 0.17,
-      "avg_views": 43.4,
+      "avg_views": 43.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
+      "posts": 80,
       "avg_likes": 0.16,
-      "avg_views": 49.0,
+      "avg_views": 49.1,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4525
+      "count": 4512
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 127
+      "count": 125
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-13T20:56:54.615574",
-      "text": "His bags were full. He just forgot to sell them. My AI stocks? I sell them weekly.",
+      "ts": "2026-08-14T00:58:20.409710",
+      "text": "Elon is going... to the moon.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T20:52:59.143202",
-      "text": "AI is eating the margin, not just the job.\n\nrobotics needs cheap inference, not just training.\n\ncapital rotates to whoever burns least per token.",
-      "type": "reply"
+      "ts": "2026-08-14T00:56:59.156686",
+      "text": "[QT] OpenAI at $40B runs at 50% margins, beating SaaS benchmarks by a landslide. @sama just turned AI into the ultimate high-margin print shop.\nAre investors paying for product or pure valuation arbitrage?",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-13T20:50:41.103394",
-      "text": "Anthropic raised $4.5b at a $35b valuation to buy 200k h100s.\n\nthe capex is public, the model quality is opaque. it's not a tech bet, it's a casino where they bought the front row seats.",
+      "ts": "2026-08-14T00:53:28.423389",
+      "text": "Claude code, codex, cursor, gemini. tes devs choisissent leur outil de couple pour les 12 prochains mois. le vrai test n'est pas le code, c'est la compatibilité à long terme.",
       "type": "reply"
     }
   ]
