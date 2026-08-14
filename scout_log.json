@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-26T09:43:32.559141",
-    "raw_count": 5,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VincentBonnin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 150000,
-        "reason": "Analyste ind\u00e9pendant 'pro' sur X. Il fait du d\u00e9corticage de rapports annuels, pas des 'moon' \u00e0 la con."
-      },
-      {
-        "handle": "GillesHappens",
-        "region": "france",
-        "niche": "tech",
-        "followers": 85000,
-        "reason": "Journaliste Tech/IA de chez ZDNet. Moins hype que les influenceurs 'finance', mais une plume plus s\u00e8che et fiable."
-      },
-      {
-        "handle": "AlexisLH",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "Expert IA canadien, cofondateur de Cofinity. Il couvre le march\u00e9 nord-am\u00e9ricain avec un\u89c6\u89d2 qu\u00e9b\u00e9cois, pas de pub Telegram."
-      },
-      {
-        "handle": "MaximeLaurance",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le patron de Mistral AI. Il twitte en FR, il est actif, et il n'a pas besoin de vendre des signaux pour exister."
-      },
-      {
-        "handle": "JulienRousseau",
-        "region": "france",
-        "niche": "finance",
-        "followers": 35000,
-        "reason": "Fintech / VC fran\u00e7ais. Il tweet la r\u00e9alit\u00e9 du terrain en startup, sans le jargon 'influencer' qui pue la poussi\u00e8re de LinkedIn."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les pubs Telegram et les vendeurs de r\u00eave pour ne garder que ceux qui ont un CV tangible (Mistral, Cofinity, ZDNet). C'est du solide, pas du bruit."
-  },
-  {
     "ts": "2026-07-26T11:43:53.141257",
     "raw_count": 8,
     "kept_count": 5,
@@ -9397,5 +9352,64 @@
       }
     ],
     "summary": "Le combo France/Qu\u00e9bec/USA est blind\u00e9. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur les b\u00e2tisseurs (Mistral/Qdrant) et les analystes qui ont vu le syst\u00e8me de l'int\u00e9rieur (Pena/Besson/Boulay)."
+  },
+  {
+    "ts": "2026-08-14T02:59:20.478608",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "m4rck",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le patron de Mistral AI. Il twitte en FR, parle IA brute, pas de buzz, juste de la tech et de la g\u00e9opolitique. C'est l'anti-Influencer."
+      },
+      {
+        "handle": "JulienThomasson",
+        "region": "france",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Research Lead chez Mistral. Il explique les paper en simple. C'est le prof d'IA qu'on voudrait avoir, pas celui qui vend un PDF \u00e0 200\u20ac."
+      },
+      {
+        "handle": "MaximeDemarquet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Dev backend, pas IA pur, mais r\u00e9f\u00e9rence tech FR. Twitte sur l'architecture et les outils. Pas de 'rejoins ma comm', juste du code et du concret."
+      },
+      {
+        "handle": "GaspardT",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ancien de Parity, maintenant ind\u00e9pendant. Twitte sur Ethereum, L2 et la tech crypto. Analyse technique, pas de signaux payants. Vieux briscard."
+      },
+      {
+        "handle": "RemyMuller",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "G\u00e9rant de fonds. Il tweete ses positions et son avis macro. Pas de 'to the moon', juste du march\u00e9 financier sec et s\u00e9rieux. Rare en FR."
+      },
+      {
+        "handle": "VincentBrie",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Couvre AI, SaaS et start-ups US en fran\u00e7ais. Il voit les tendances avant qu'elles arrivent en Europe. Tr\u00e8s pertinent."
+      },
+      {
+        "handle": "LouisCaron",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Analyste crypto au Qu\u00e9bec. Il tweete des insights on-chain et DeFi. Pas de shoutouts payants, juste de l'analyse. Rare talent au Qc."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les builders et les analystes. Mistral domine l'IA FR, Remy Muller est la r\u00e9f\u00e9rence bourse, et le Qc est sous-repr\u00e9sent\u00e9 mais ces deux handles sont des p\u00e9pites."
   }
 ]

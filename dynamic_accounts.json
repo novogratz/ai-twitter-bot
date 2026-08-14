@@ -1784,7 +1784,14 @@
     "DorianPena",
     "LilianBodon",
     "VincentPouliot",
-    "JulienDelaunay"
+    "JulienDelaunay",
+    "m4rck",
+    "JulienThomasson",
+    "MaximeDemarquet",
+    "GaspardT",
+    "RemyMuller",
+    "VincentBrie",
+    "LouisCaron"
   ],
   "en": [
     "Chubby",
@@ -13028,6 +13035,41 @@
     {
       "lang": "fr",
       "handle": "JulienDelaunay",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "m4rck",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienThomasson",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDemarquet",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardT",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyMuller",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBrie",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisCaron",
       "added": "2026-08-14"
     }
   ]
