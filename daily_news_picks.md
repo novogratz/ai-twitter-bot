@@ -16900,3 +16900,24 @@ They won’t
 - **@whaleinsider** (31 likes, score 8/10) — JUST IN:  China’s DeepSeek launches Harness team to build AI agents rivaling Anthropic’s Claude Code​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​.
   - https://x.com/WhaleInsider/status/2087757068212044149
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 53).
+
+## 2026-08-14
+- **@negligible_cap** (98 likes, score 9/10) — OpenAI ARR is like half of Anthropic’s now at $40B
+
+Is this not below expectations? Or have I been brainwashed by seeing people speculate Anthropic near $100B+
+  - https://x.com/negligible_cap/status/2088020806924161400
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 136).
+- **@truecrypto** (98 likes, score 9/10) — The S&P 500 just closed at a record high. Bitcoin is still sitting around $63,500.
+
+Everyone sees the divergence and thinks catch-up trade. Maybe. But when the backdrop improves and an asset still ref
+  - https://x.com/Truecrypto/status/2088038246919844092
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 132).
+- **@cointelegraph** (54 likes, score 9/10) — NEW: OpenAI is on track to top $40 billion in annualized revenue, roughly doubling since the end of 2025 as it gears up for a Wall Street IPO.
+  - https://x.com/Cointelegraph/status/2088093397512863945
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 110).
+- **@jun_song** (46 likes, score 9/10) — The difference between OpenAI/Anthropic and xAI/Google:
+
+1. OpenAI and Anthropic rent compute from hyperscalers. xAI and Google own their data centers.
+2. Most of OpenAI and Anthropic's equity comes f
+  - https://x.com/jun_song/status/2088103532159471672
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 64).

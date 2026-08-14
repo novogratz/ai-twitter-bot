@@ -1779,7 +1779,12 @@
     "thegreatcoder",
     "LionelDuc",
     "RaphaelLecourt",
-    "PierreMigeon"
+    "PierreMigeon",
+    "ClemSavard",
+    "DorianPena",
+    "LilianBodon",
+    "VincentPouliot",
+    "JulienDelaunay"
   ],
   "en": [
     "Chubby",
@@ -12999,6 +13004,31 @@
       "lang": "fr",
       "handle": "PierreMigeon",
       "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemSavard",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianPena",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilianBodon",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentPouliot",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelaunay",
+      "added": "2026-08-14"
     }
   ]
 }

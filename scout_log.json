@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-07-26T07:44:26.241035",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Maxime_Bo",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "L'incontournable. Ses threads sur le march\u00e9 FR sont clairs, sans blabla, et il a la r\u00e9putation de ne pas vendre de lait vert."
-      },
-      {
-        "handle": "RaphaeltG",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Le trader pro qui assume ses pertes. Moins de 'to the moon' plus de charts et de risk management concret."
-      },
-      {
-        "handle": "GauthierBretelle",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'analyste technique qui fait oublier les formations \u00e0 2000\u20ac. Un pur technicien, pas un vendeur de r\u00eaves."
-      },
-      {
-        "handle": "ThomasP92",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le roi de l'ETF Bitcoin en FR. Il explique la macro crypto sans faire dormir le lecteur, contrairement aux threads de 50 tweets."
-      },
-      {
-        "handle": "AlexisDeL",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La voix qu\u00e9b\u00e9coise la plus fiable. Il couvre DeFi et NFTs avec un ton pos\u00e9, loin du hype bruyant."
-      },
-      {
-        "handle": "VincentProulx",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "G\u00e9rant de fonds qui partage sa pens\u00e9e. Pas de signaux, juste de l'analyse fondamentale solide en bon fran\u00e7ais."
-      },
-      {
-        "handle": "ClaraM",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 11000,
-        "reason": "Journaliste fintech qui a vu passer toutes les bulles. Elle sait o\u00f9 est le vrai business et o\u00f9 est le bluff."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les pros qui font vivre leur compte avec du fond, pas des banni\u00e8res Telegram. De la macro \u00e0 la tech, il y a de quoi se nourrir sans se prendre la t\u00eate."
-  },
-  {
     "ts": "2026-07-26T09:43:32.559141",
     "raw_count": 5,
     "kept_count": 5,
@@ -9411,5 +9352,50 @@
       }
     ],
     "summary": "Un lineup qui balance l'expertise pure sans la vanit\u00e9 habituelle : des experts IA fran\u00e7ais, un trio qu\u00e9b\u00e9cois pertinent et un outsider US. Z\u00e9ro vendeur de r\u00eave, juste des profils qui savent ce qu'ils disent."
+  },
+  {
+    "ts": "2026-08-14T00:59:24.915594",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ClemSavard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le roi du 'crypto twitter' qu\u00e9b\u00e9cois. Il a d\u00e9croch\u00e9 Elon Musk en direct, donc il a le droit de tout dire."
+      },
+      {
+        "handle": "DorianPena",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Ancien de la CNIL, patron de l'IA chez Deezer. Il tweete sur la r\u00e9gulation de l'IA avec un cynisme british parfait."
+      },
+      {
+        "handle": "LilianBodon",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "CEO de Qdrant (vector DB). Il fait parler de la tech FR dans l'LLM space sans se la raconter trop."
+      },
+      {
+        "handle": "VincentPouliot",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Fondateur d'Aller Simple. Il couvre les march\u00e9s avec une honn\u00eatet\u00e9 qui fait peur aux courtiers en gros costard."
+      },
+      {
+        "handle": "JulienDelaunay",
+        "region": "france",
+        "niche": "vc",
+        "followers": 18000,
+        "reason": "Partner chez Alma Ventures. Il tweete sur la lev\u00e9e de fonds FR avec la franchise d'un type qui a refus\u00e9 un investissement de 50M."
+      }
+    ],
+    "summary": "Le combo France/Qu\u00e9bec/USA est blind\u00e9. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur les b\u00e2tisseurs (Mistral/Qdrant) et les analystes qui ont vu le syst\u00e8me de l'int\u00e9rieur (Pena/Besson/Boulay)."
   }
 ]
