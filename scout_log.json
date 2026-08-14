@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-07-26T15:44:15.660731",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MarcRoussel",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "Franco-Am\u00e9ricain qui tweet en FR. Il capture les tendances US 48h avant qu'elles n'arrivent \u00e0 Paris. Crucial."
-      },
-      {
-        "handle": "mickaelboulay",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi de la microcap fran\u00e7aise. Pas de pur\u00e9e, que des chiffres nus. S'il tweet, le march\u00e9 tremble."
-      },
-      {
-        "handle": "ThomasDucasse",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 32000,
-        "reason": "G\u00e9n\u00e9raliste technique fiable. Il tweet, on lit. Il se tait, on prie. Un classique indispensable."
-      },
-      {
-        "handle": "MaximeRoussel",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Ex-CEX, pur trader de pro. Ses setups sont plus nets que ses propos. Z\u00e9ro blabla, que du graph."
-      },
-      {
-        "handle": "RomainGrenet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Le chantre de l'IA en France. Il d\u00e9cortique les LLM avant qu'ils ne deviennent le nouveau caf\u00e9ine."
-      },
-      {
-        "handle": "CryptoGibet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Analyste on-chain rigoureux. Quand lui tweet, c'est souvent parce que la blockchain a explos\u00e9, pas l'inverse."
-      },
-      {
-        "handle": "JulienDubois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 14000,
-        "reason": "Dev et IA. Il tweet ce qu'il code, pas ce qu'il vend. Si son algo bug, son tweet est un chef-d'\u0153uvre de d\u00e9sespoir."
-      }
-    ],
-    "summary": "Le mix France/Qu\u00e9bec/USA est \u00e9quilibr\u00e9. J'ai vir\u00e9 les vendeurs de r\u00eaves pour garder ceux qui analysent le bruit du march\u00e9. C'est du solide, pas du pipi de chat."
-  },
-  {
-    "ts": "2026-07-26T17:44:12.129987",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudF",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le patron de JusteUnBlogFinance. Il parle de macro, de valeurs et de psychologie de march\u00e9. Pas de gurus, juste de l'analyse."
-      },
-      {
-        "handle": "BeeCryptofrancophone",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 75000,
-        "reason": "L'institution incontest\u00e9e de la crypto francophone. News, \u00e9ducation et depth. Aucun bruit de fond, tout du signal."
-      },
-      {
-        "handle": "ThibautG06",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "L'ancien CMO de LBC (Le Bloc). Il tweete sur le climat, l'\u00e9nergie et l'impact de la tech. C'est lucide, pas hypeux."
-      },
-      {
-        "handle": "PierreDumoulin",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Trader bas\u00e9 \u00e0 NY, il tweete en fran\u00e7ais avec un d\u00e9calage am\u00e9ricain dr\u00f4le. Il couvre le Nasdaq et les valeurs US avec un \u0153il parisien."
-      },
-      {
-        "handle": "VincentBourdeau",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "Fintech consultant et coach. Il poste des carrousels techniques sur le trading et la tech. Un peu plus 'coach' que les autres, mais qualit\u00e9 top."
-      },
-      {
-        "handle": "LuisT",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 20000,
-        "reason": "Ancien de Boursorama, puis chez N26. Il tweete sur les n\u00e9obanques, l'open banking et la UX financi\u00e8re. C'est sec et pertinent."
-      },
-      {
-        "handle": "DimitriS",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Le 'Crypto Dimitri'. Il couvre la DeFi, les narratives et le march\u00e9. Il tweete en fran\u00e7ais et anglais, tr\u00e8s actif sur les cycles."
-      }
-    ],
-    "summary": "J'ai fouill\u00e9 les profils pour \u00e9viter les vendeurs de r\u00eaves Telegram. J'ai trouv\u00e9 des analysts qui font leur boulot (Bee, Thibaud) et des traders au Qu\u00e9bec/NY qui tweetent en fran\u00e7ais sans se la raconter. C'est du solide."
-  },
-  {
     "ts": "2026-07-26T19:44:04.525830",
     "raw_count": 13,
     "kept_count": 7,
@@ -9390,5 +9272,60 @@
       }
     ],
     "summary": "Le top est domin\u00e9 par les fondateurs et engineers fran\u00e7ais qui prouvent que la France produit du r\u00e9el, pas juste des slides. Le Qu\u00e9bec se fait rare mais les perles sont solides."
+  },
+  {
+    "ts": "2026-08-14T08:59:02.763062",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TiboImbeau",
+        "region": "france",
+        "niche": "tech",
+        "followers": 120000,
+        "reason": "Inattendu mais pertinent : il couvre l'IA et la tech avec un vrai coup d'\u0153il pro, pas influencer."
+      },
+      {
+        "handle": "JorisPancake",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "Le roi du storytelling crypto FR. Twitte en FR, humour d\u00e9cal\u00e9, z\u00e9ro formation \u00e0 197\u20ac."
+      },
+      {
+        "handle": "MathieuDumas",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Analyse macro brutale et pr\u00e9cise. Si tu cherches du lyrisme boursier, tu es servi."
+      },
+      {
+        "handle": "PierreRoussel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Journaliste tech FR qui comprend vraiment le sujet. Pas de jargon vide, que du concret."
+      }
+    ],
+    "summary": "Pas de nouveaux venus explosifs cette session, mais on renforce le noyau dur avec Roussel (AI) et on confirme le duo pancake/dumas. Le Qu\u00e9bec reste sous-repr\u00e9sent\u00e9 mais qualitatif."
+  },
+  {
+    "ts": "2026-08-14T10:59:05.218169",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaurentDaher",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "VC am\u00e9ricain d'origine libanaise mais tr\u00e8s actif en FR, couvre fintech et crypto avec une vue macro solide."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide de veterans de la crypto (0xMerkle, 0xBagget) et de la nouvelle vague IA (Mistral, Alex Dionne). Z\u00e9ro influenceur formation, que des makers et des analystes qui savent ce qu'ils font."
   }
 ]

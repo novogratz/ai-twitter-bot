@@ -1799,7 +1799,12 @@
     "JeanBaptiste_Ju",
     "Gael_Falaise",
     "Ludovic_Boyer",
-    "Pierre_Thivrier"
+    "Pierre_Thivrier",
+    "TiboImbeau",
+    "JorisPancake",
+    "MathieuDumas",
+    "PierreRoussel",
+    "LaurentDaher"
   ],
   "en": [
     "Chubby",
@@ -2187,7 +2192,8 @@
     "Astronomiaum",
     "Restructuring__",
     "masoq",
-    "Cero"
+    "Cero",
+    "Emad"
   ],
   "history": [
     {
@@ -13118,6 +13124,36 @@
     {
       "lang": "fr",
       "handle": "Pierre_Thivrier",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Emad",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TiboImbeau",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JorisPancake",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDumas",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoussel",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurentDaher",
       "added": "2026-08-14"
     }
   ]
