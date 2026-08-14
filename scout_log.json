@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-07-26T11:43:53.141257",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaultDevergie",
-        "region": "france",
-        "niche": "tech",
-        "followers": 220000,
-        "reason": "V\u00e9t\u00e9ran des m\u00e9dias tech, tweete la vraie actualit\u00e9 de la deep tech sans la hype vide."
-      },
-      {
-        "handle": "JadeCapuano",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Journaliste crypto de r\u00e9f\u00e9rence, \u00e9quilibre parfait entre on-chain et macro, pas de shill permanent."
-      },
-      {
-        "handle": "RenaudDelaunay",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "VC US bas\u00e9 \u00e0 NY, tweete en FR sur la tech europ\u00e9enne et US, perspective 'investisseur' rare."
-      },
-      {
-        "handle": "LouisGagnon",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Actif sur le cycle crypto nord-am\u00e9ricain, voix francophone solide et bien inform\u00e9e."
-      },
-      {
-        "handle": "BenoitF",
-        "region": "france",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Analyste macro et actions, style sec, moins de bruit que les gros comptes g\u00e9n\u00e9ralistes."
-      }
-    ],
-    "summary": "On \u00e9vite les gourous de Telegram pour se concentrer sur des journalistes et des acteurs de l'\u00e9cosyst\u00e8me qui tweetent pour eux-m\u00eames. Le Qu\u00e9bec offre des p\u00e9pites moins bruit\u00e9es que la France, et les VC US francophones apportent un regard frais sur les march\u00e9s locaux."
-  },
-  {
-    "ts": "2026-07-26T13:44:03.424528",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickaweb",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 155000,
-        "reason": "Le patron du podcast Le Grand Lessivage. Il mixe tech, VC et crypto avec une culture web2/web3 hybride. Pas un vendeur de r\u00eave, un vrai observateur de l'\u00e9cosyst\u00e8me."
-      },
-      {
-        "handle": "MaximeAmarillo",
-        "region": "france",
-        "niche": "tech",
-        "followers": 50000,
-        "reason": "Tech Lead. Il balance des threads techniques tr\u00e8s pointus sur l'architecture et l'IA, avec un style direct. La p\u00e9pite qu'on garde pour le savoir-faire, pas juste le buzz."
-      },
-      {
-        "handle": "jloic_m",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "PDG de Le Malt. Il tweete beaucoup sur l'impact de l'IA sur le travail et le freelance. C'est le regard pragmatique de l'entrepreneur tech qui n'est pas tomb\u00e9 dans la hype pure."
-      },
-      {
-        "handle": "JulieLagathu",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "VP Product chez Doctolib. Elle couvre la tech, le produit et l'IA avec beaucoup de justesse. Moins 'bruyant' que les vendeurs de formation, mais plus dense en infos."
-      },
-      {
-        "handle": "MaximeCouture",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "D\u00e9veloppeur et cr\u00e9ateur de contenu. Il couvre le dev, le solopreneuriat et la tech avec un humour d\u00e9cal\u00e9 qu\u00e9b\u00e9cois. L'anti-guru parfait."
-      },
-      {
-        "handle": "JulienRougieux",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Chercheur et enseignant. Ses threads sur l'actualit\u00e9 de l'IA et le NLP sont solides, techniques sans \u00eatre indigestes. Un pur produit de l'\u00e9cosyst\u00e8me QC."
-      },
-      {
-        "handle": "AlexandreDuchesne",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 14000,
-        "reason": "Fondateur de Zapper. Il twitte en fran\u00e7ais depuis la Silicon Valley sur DeFi, NFTs et le build crypto. La voix directe de l'entrepreneur sur place, sans filtre."
-      },
-      {
-        "handle": "AlexisVivien",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Product Lead. Ses posts sur le produit, l'UX et la strat\u00e9gie tech sont plus pertinents que les threads '10x your growth' de tout un tas de gars en polo Ray-Ban."
-      }
-    ],
-    "summary": "Focus sur les fondateurs et ing\u00e9nieurs qui buildent vraiment, pas sur les influenceurs qui vendent du vent. On \u00e9cope les voix techniques solides (Mistral, Doctolib, Zapper) et les observateurs lucides (Le Malt, Le Grand Lessivage). Z\u00e9ro vente de r\u00eave, juste du concret."
-  },
-  {
     "ts": "2026-07-26T15:44:15.660731",
     "raw_count": 10,
     "kept_count": 7,
@@ -9411,5 +9300,95 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les builders et les analystes. Mistral domine l'IA FR, Remy Muller est la r\u00e9f\u00e9rence bourse, et le Qc est sous-repr\u00e9sent\u00e9 mais ces deux handles sont des p\u00e9pites."
+  },
+  {
+    "ts": "2026-08-14T04:59:05.416603",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoProtector",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le roi de l'altcoin en FR, tweets quotidiens, z\u00e9ro guru, pur alpha on-chain."
+      },
+      {
+        "handle": "Adrian_Bourgeois",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Ex-Mistral/Valhalla, twitte la tech AI sans le blabla VC, tr\u00e8s technique."
+      },
+      {
+        "handle": "TheoC",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Journaliste AI chez La Tribune, excellents threads sur les startups francophones du secteur."
+      },
+      {
+        "handle": "MaximeSavary",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyse fondamentale pure, pas de signaux, juste des bilans annuels qui tuent."
+      },
+      {
+        "handle": "RomainMillet",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Ex-Rocki, visionnaire fintech qu\u00e9b\u00e9cois, tweets sur la structure du march\u00e9."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs 'lambo' pour ne garder que les analystes de fond et les builders. On a du gros calibre en crypto (Lorenzo) et en AI (Adrian/Theo), avec une touche fintech qu\u00e9b\u00e9coise indispensable (Romain)."
+  },
+  {
+    "ts": "2026-08-14T06:59:16.707975",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Morgan_Hamel",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Le seul journaliste FR qui fait de la deep-dive sur la fintech sans te vendre un stage."
+      },
+      {
+        "handle": "JeanBaptiste_Ju",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais \u00e2me fran\u00e7aise. Il couvre l'IA comme un VC, pas comme un influenceur."
+      },
+      {
+        "handle": "Gael_Falaise",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "La voice du Qu\u00e9bec sur l'IA. Cher, pertinent, et \u00e7a ne dort jamais."
+      },
+      {
+        "handle": "Ludovic_Boyer",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-Mistral, puriste de la data. Moins de hype, plus de dents."
+      },
+      {
+        "handle": "Pierre_Thivrier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Founding engineer fr qui twitte sur l'infra. Pour ceux qui veulent comprendre sous le capot."
+      }
+    ],
+    "summary": "Le top est domin\u00e9 par les fondateurs et engineers fran\u00e7ais qui prouvent que la France produit du r\u00e9el, pas juste des slides. Le Qu\u00e9bec se fait rare mais les perles sont solides."
   }
 ]

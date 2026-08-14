@@ -1791,7 +1791,15 @@
     "GaspardT",
     "RemyMuller",
     "VincentBrie",
-    "LouisCaron"
+    "LouisCaron",
+    "TheoC",
+    "MaximeSavary",
+    "RomainMillet",
+    "Morgan_Hamel",
+    "JeanBaptiste_Ju",
+    "Gael_Falaise",
+    "Ludovic_Boyer",
+    "Pierre_Thivrier"
   ],
   "en": [
     "Chubby",
@@ -13070,6 +13078,46 @@
     {
       "lang": "fr",
       "handle": "LouisCaron",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheoC",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSavary",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMillet",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Morgan_Hamel",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptiste_Ju",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gael_Falaise",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludovic_Boyer",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Thivrier",
       "added": "2026-08-14"
     }
   ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-14T04:58:31.658764",
-  "window_7d_actions": 5056,
-  "window_24h_actions": 622,
+  "generated_at": "2026-08-14T08:58:31.630278",
+  "window_7d_actions": 5031,
+  "window_24h_actions": 603,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5055
+      "count": 5030
     },
     {
       "pattern": "METAPHOR",
@@ -19,17 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5055
+      "count": 5030
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
       "actions": 272
-    },
-    {
-      "hour": 8,
-      "actions": 241
     },
     {
       "hour": 16,
@@ -40,6 +36,10 @@
       "actions": 237
     },
     {
+      "hour": 8,
+      "actions": 230
+    },
+    {
       "hour": 12,
       "actions": 228
     }
@@ -47,105 +47,105 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2305
+      "count": 2296
     },
     {
       "topic": "IA",
-      "count": 1960
+      "count": 1952
     },
     {
       "topic": "Crypto",
-      "count": 628
+      "count": 618
     },
     {
       "topic": "Bourse",
-      "count": 416
+      "count": 415
     },
     {
       "topic": "Spatial",
-      "count": 119
+      "count": 120
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2135
+      "count": 2128
     },
     {
       "pillar": "other",
-      "count": 1363
+      "count": 1360
     },
     {
       "pillar": "market_trauma",
-      "count": 1269
+      "count": 1253
     },
     {
       "pillar": "meme_reaction",
-      "count": 157
+      "count": 158
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 81
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 51
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 242
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 172
+      "count": 231
     },
     {
       "pillar": "other",
-      "count": 171
+      "count": 172
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 163
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 7
+      "count": 23
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 8
+    },
+    {
+      "pillar": "reply_bait",
       "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_vs_btc",
-      "posts": 7,
-      "avg_likes": 0.29,
-      "avg_views": 57.7,
-      "low_sample": false
-    },
-    {
       "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.24,
-      "avg_views": 47.6,
+      "posts": 76,
+      "avg_likes": 0.22,
+      "avg_views": 48.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.18,
-      "avg_views": 44.0,
+      "posts": 37,
+      "avg_likes": 0.19,
+      "avg_views": 45.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 56.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.16,
-      "avg_views": 48.8,
+      "posts": 79,
+      "avg_likes": 0.14,
+      "avg_views": 49.7,
       "low_sample": false
     },
     {
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4495
+      "count": 4471
     },
     {
       "type": "quote",
-      "count": 319
+      "count": 321
     },
     {
       "type": "quote_gif",
@@ -171,11 +171,11 @@
     },
     {
       "type": "post",
-      "count": 64
+      "count": 63
     },
     {
       "type": "hotake",
-      "count": 40
+      "count": 38
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-14T04:58:02.551384",
-      "text": "Short-term holders sell at a loss. long-term holders buy at a discount. capitulation is just wealth transfer with better formatting.",
+      "ts": "2026-08-14T08:57:27.867711",
+      "text": "DeepSeek open-sourced it before the funding round closed.\nthe real story isn't the code, it's the margin compression on every closed-weight lab.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T04:53:59.264684",
-      "text": "GLM-5.3 targeting cyber. z.ai spent a decade perfecting chat apps, now selling digital seatbelts. the moat is small, the urgency is real.",
+      "ts": "2026-08-14T08:53:19.899566",
+      "text": "Base model upgrades are free labor. you’re paying for attention.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T04:52:11.546867",
-      "text": "Apple x alibaba = le duo qui fait l'amour dans l'herbe pour que le marché ne voie que des tiges.",
+      "ts": "2026-08-14T08:47:39.500581",
+      "text": "SanDisk Investor Day is where the finance bros get their annual dopamine hit of capital allocation theater.\nThe real trick isn't the slides, it's convincing them to buy when the stock is up 15%.",
       "type": "reply"
     }
   ]
