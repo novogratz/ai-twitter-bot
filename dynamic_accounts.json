@@ -1769,7 +1769,17 @@
     "JulesLeroux",
     "MarcGagnon",
     "FrCryptoTrader",
-    "ParisTechVC"
+    "ParisTechVC",
+    "thaleslefebvre",
+    "RomainCordier",
+    "gael43435042",
+    "MaximeAubert",
+    "JulienBoudot",
+    "SylvainFoucault",
+    "thegreatcoder",
+    "LionelDuc",
+    "RaphaelLecourt",
+    "PierreMigeon"
   ],
   "en": [
     "Chubby",
@@ -12938,6 +12948,56 @@
     {
       "lang": "fr",
       "handle": "ParisTechVC",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "thaleslefebvre",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainCordier",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "gael43435042",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAubert",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoudot",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainFoucault",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "thegreatcoder",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelDuc",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLecourt",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMigeon",
       "added": "2026-08-13"
     }
   ]

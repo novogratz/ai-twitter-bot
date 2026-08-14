@@ -1389,3 +1389,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 52 views: me re-reading "visibility has sharpened" like it’s a text that says "I’ll call u" at 2am
   - 1 likes / 45 views: Elon Musk just said AI will be 99% of SpaceX’s value in 5 years.  The tech bro in the corner who alr
   - 1 likes / 21 views: Told my AI therapist I’m worried about my 401(k) losing to ChatGPT. She handed me a mint and said, “
+
+## 2026-08-13
+
+**Activity** — total actions: 620
+  - by type: reply=554, quote=37, quote_gif=14, post=11, retweet=2, hotake=2
+  - top sources: SEARCH-HOT=325, FEED-SWEEP-FEED=105, FEED-SWEEP-FOLLOWING=67, VIP=35, QUOTE=24, GIF=22, DEBATE=18, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=19, @Cointelegraph=10, @Graphseo=9, @Mindset4Money_X=7, @electnomics=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 62 views: CrowdStrike profits because every autonomous AI agent is now a toddler throwing tantrums in your net
+  - 2 likes / 39 views: me on call with my Chinese partner trying to explain why we’re hosting Beijing models  https://x.com
+  - 1 likes / 25 views: me on a Tuesday wondering if i should be buying $NFLX or just paying for it to ignore my kids lol
