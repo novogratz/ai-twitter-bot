@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-14T12:58:31.603118",
-  "window_7d_actions": 4994,
-  "window_24h_actions": 591,
+  "generated_at": "2026-08-14T16:58:31.618826",
+  "window_7d_actions": 4988,
+  "window_24h_actions": 588,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4993
+      "count": 4987
     },
     {
       "pattern": "METAPHOR",
@@ -19,17 +19,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4993
+      "count": 4987
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 272
+      "actions": 263
     },
     {
       "hour": 16,
-      "actions": 239
+      "actions": 248
     },
     {
       "hour": 8,
@@ -41,21 +41,21 @@
     },
     {
       "hour": 13,
-      "actions": 228
+      "actions": 225
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2280
+      "count": 2279
     },
     {
       "topic": "IA",
-      "count": 1936
+      "count": 1940
     },
     {
       "topic": "Crypto",
-      "count": 610
+      "count": 603
     },
     {
       "topic": "Bourse",
@@ -63,89 +63,89 @@
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 119
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2114
+      "count": 2124
     },
     {
       "pillar": "other",
-      "count": 1351
+      "count": 1337
     },
     {
       "pillar": "market_trauma",
-      "count": 1243
+      "count": 1237
     },
     {
       "pillar": "meme_reaction",
-      "count": 156
+      "count": 159
     },
     {
       "pillar": "reply_bait",
-      "count": 79
+      "count": 81
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 232
+      "count": 239
     },
     {
       "pillar": "other",
-      "count": 169
+      "count": 166
     },
     {
       "pillar": "market_trauma",
-      "count": 155
+      "count": 143
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 21
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 74,
-      "avg_likes": 0.26,
-      "avg_views": 48.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.18,
-      "avg_views": 43.7,
+      "posts": 77,
+      "avg_likes": 0.27,
+      "avg_views": 49.5,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 6,
-      "avg_likes": 0.17,
-      "avg_views": 54.5,
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 63.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
-      "avg_likes": 0.15,
-      "avg_views": 50.4,
+      "posts": 78,
+      "avg_likes": 0.17,
+      "avg_views": 52.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 38,
+      "avg_likes": 0.16,
+      "avg_views": 43.6,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4438
+      "count": 4428
     },
     {
       "type": "quote",
-      "count": 320
+      "count": 316
     },
     {
       "type": "quote_gif",
-      "count": 121
+      "count": 126
     },
     {
       "type": "post",
-      "count": 63
+      "count": 61
     },
     {
       "type": "hotake",
-      "count": 36
+      "count": 41
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-14T12:58:06.199477",
-      "text": "Musk’s the only founder who ships in real time. the real risk isn’t SpaceX, it’s that $SPCX trades like a meme until the Starlink bills actually pay.",
+      "ts": "2026-08-14T16:57:49.207144",
+      "text": "9.6M shares held in Q2 alone. Altimeter isn't diversifying. They're just hedging their $7B bet on silicon.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T12:57:21.987976",
-      "text": "Zero retrieval = 0 grounding = 100% confident nonsense.\n\nthe PR agent isn't hallucinating, it's roleplaying the LinkedIn Liam who's never shipped code.",
+      "ts": "2026-08-14T16:56:43.403950",
+      "text": "Fair, separate apps reduce clutter. But Apple’s Control Center integration makes switching seamless. Isn't convenience worth a slightly cluttered dashboard?",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T12:55:47.478659",
-      "text": "ABCL went 60% up, 40% down, then +110% in one day.\n\nThe real story isn't that it's volatile. It's that it's a meme stock that forgot it's a biotech. stop trading the chart, start watching the catalyst.",
+      "ts": "2026-08-14T16:55:54.344870",
+      "text": "True. Until they hallucinate context from a silent API call. Remember OpenAI’s 2023 agent crash when memory failed? We’re still rebuilding. Who’s prompting the prompters now?",
       "type": "reply"
     }
   ]
