@@ -1761,7 +1761,15 @@
     "ClemCahart",
     "JulesvanG",
     "ThibautPottier",
-    "NathalieLorson"
+    "NathalieLorson",
+    "BenjaminAbitbol",
+    "JulienDelfau",
+    "CyrilCohen",
+    "RaphaelDessaint",
+    "JulesLeroux",
+    "MarcGagnon",
+    "FrCryptoTrader",
+    "ParisTechVC"
   ],
   "en": [
     "Chubby",
@@ -2147,7 +2155,9 @@
     "OpenRouter",
     "ClockBrokers",
     "Astronomiaum",
-    "Restructuring__"
+    "Restructuring__",
+    "masoq",
+    "Cero"
   ],
   "history": [
     {
@@ -12878,6 +12888,56 @@
     {
       "lang": "fr",
       "handle": "NathalieLorson",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "en",
+      "handle": "masoq",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminAbitbol",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelfau",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Cero",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilCohen",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelDessaint",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesLeroux",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGagnon",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrCryptoTrader",
+      "added": "2026-08-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ParisTechVC",
       "added": "2026-08-13"
     }
   ]

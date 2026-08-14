@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-25T23:43:40.544288",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "OlivierBordet",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Ex-CTO, parle de product-market fit en IA et de strat\u00e9gie tech US vue de l'int\u00e9rieur."
-      },
-      {
-        "handle": "LucFonfara",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Journaliste crypto \u00e0 Montr\u00e9al. Couvre l'industrie avec du recul, pas juste des shills."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour te donner des constructeurs et des analystes. La France domine sur l'IA (Mistral/HF), le Qu\u00e9bec est plus discret mais pointu sur la recherche, et la diaspora US apporte la vision march\u00e9. Z\u00e9ro formation \u00e0 999\u20ac dans la corbeille."
-  },
-  {
-    "ts": "2026-07-26T01:43:51.014855",
-    "raw_count": 7,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickaelm",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le prof de crypto de la Sorbonne, il twitte comme il cours : sans piti\u00e9 pour les fake Gurus et la th\u00e9orie du chaos."
-      },
-      {
-        "handle": "Rapha3lS",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Un des seuls qui explique le LLM sans vendre du r\u00eave, mais la r\u00e9alit\u00e9 brute du hardware et du code."
-      },
-      {
-        "handle": "ThomasMaillard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'analyste technique qui a surv\u00e9cu \u00e0 2008, il ne donne pas de signal, il donne des r\u00e8gles."
-      },
-      {
-        "handle": "BenjaminDebove",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "FR expat aux USA, il compare le silence des Big Tech avec le bruit des startups IA en zone de guerre."
-      },
-      {
-        "handle": "LunaSquid",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Elle tweete la volatilit\u00e9 crypto comme un match de rugby : sanglant, rapide, et sans piti\u00e9 pour les d\u00e9butants."
-      },
-      {
-        "handle": "JulesGuerard",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Le roi du fil X qu\u00e9b\u00e9cois, il transforme la complexit\u00e9 on-chain en blagues de bar \u00e0 Montr\u00e9al."
-      },
-      {
-        "handle": "AlexandreLavoie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Trader \u00e0 temps plein, il tweete le chaos du march\u00e9 avec l'humour noir d'un Qu\u00e9b\u00e9cois qui a vu le Nasdaq pleurer."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui tweetent l'envers du d\u00e9cor : des profils techniques, des traders de terrain et des chercheurs qui supportent pas le buzz vide. De la Sorbonne \u00e0 Montr\u00e9al, c'est du concret qui tape."
-  },
-  {
     "ts": "2026-07-26T03:43:35.107677",
     "raw_count": 8,
     "kept_count": 4,
@@ -9411,5 +9328,81 @@
       }
     ],
     "summary": "Un m\u00e9lange \u00e9quilibr\u00e9 entre la technique pure (AI), l'analyse financi\u00e8re brute (Bourse) et la r\u00e9gulation Crypto. Pas de vendeurs de r\u00eave, juste des profils qui font le travail."
+  },
+  {
+    "ts": "2026-08-13T16:59:07.727598",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminAbitbol",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "Install\u00e9 \u00e0 NYC, c'est la voix fran\u00e7aise sur l'\u00e9cosyst\u00e8me US. Il capture l'info crypto am\u00e9ricaine avant qu'elle n'arrive \u00e0 Paris."
+      },
+      {
+        "handle": "JulienDelfau",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Ancien VP chez Klarna, il tweet sur le fintech et la finance avec le recul de quelqu'un qui a vu la vraie guerre."
+      }
+    ],
+    "summary": "Cette session cible les pros : moins de bruit, plus de signal. On laisse tomb\u00e9 les vendeurs de r\u00eave pour les b\u00e2tisseurs et les analystes."
+  },
+  {
+    "ts": "2026-08-13T18:59:19.009868",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilCohen",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "L'architecte Mistral qui balance la tech sans blabla marketing."
+      },
+      {
+        "handle": "RaphaelDessaint",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Saufy, le VC IA par excellence qui track les startups avant qu'elles soient au march\u00e9."
+      },
+      {
+        "handle": "JulesLeroux",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Data Scientist prod, twitte code et mod\u00e8le, pas de 'rejoins mon club'."
+      },
+      {
+        "handle": "MarcGagnon",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Investisseur long terme, analyse financi\u00e8re pure, pas de day-trading frenzy."
+      },
+      {
+        "handle": "FrCryptoTrader",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Bas\u00e9 \u00e0 NY, twitte en FR pour la diaspora, analyse on-chain brute."
+      },
+      {
+        "handle": "ParisTechVC",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Le point de rencontre des VC fran\u00e7ais, deals fintech frais chaque semaine."
+      }
+    ],
+    "summary": "On a creus\u00e9 les p\u00e9pites IA parisiennes et la sc\u00e8ne crypto QC pour \u00e9viter les influenceurs en costumes. Pas de formation \u00e0 1999\u20ac, que du contenu ou de la tech."
   }
 ]

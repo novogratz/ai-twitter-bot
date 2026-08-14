@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-13T16:58:31.445503",
-  "window_7d_actions": 5105,
-  "window_24h_actions": 667,
+  "generated_at": "2026-08-13T20:58:31.565813",
+  "window_7d_actions": 5095,
+  "window_24h_actions": 622,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5104
+      "count": 5094
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5104
+      "count": 5094
     }
   ],
   "best_hours_utc": [
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2313
+      "count": 2312
     },
     {
       "topic": "IA",
-      "count": 1996
+      "count": 1985
     },
     {
       "topic": "Crypto",
-      "count": 625
+      "count": 627
     },
     {
       "topic": "Bourse",
-      "count": 413
+      "count": 414
     },
     {
       "topic": "Spatial",
@@ -70,7 +70,7 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2186
+      "count": 2172
     },
     {
       "pillar": "other",
@@ -78,11 +78,11 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1261
+      "count": 1266
     },
     {
       "pillar": "meme_reaction",
-      "count": 163
+      "count": 162
     },
     {
       "pillar": "reply_bait",
@@ -96,15 +96,15 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 292
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 173
+      "count": 259
     },
     {
       "pillar": "other",
-      "count": 168
+      "count": 167
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 164
     },
     {
       "pillar": "meme_reaction",
@@ -112,11 +112,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.24,
-      "avg_views": 48.5,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 81,
-      "avg_likes": 0.16,
-      "avg_views": 49.3,
+      "posts": 73,
+      "avg_likes": 0.27,
+      "avg_views": 47.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 41,
-      "avg_likes": 0.15,
-      "avg_views": 40.7,
+      "avg_likes": 0.17,
+      "avg_views": 43.4,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 79,
+      "avg_likes": 0.16,
+      "avg_views": 49.0,
       "low_sample": false
     },
     {
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4532
+      "count": 4525
     },
     {
       "type": "quote",
-      "count": 325
+      "count": 323
     },
     {
       "type": "quote_gif",
@@ -171,7 +171,7 @@
     },
     {
       "type": "post",
-      "count": 65
+      "count": 64
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-13T16:56:55.049252",
-      "text": "80% is higher than the market can digest without spitting out a rate cut. the odds are priced for a soft landing that just hit a wall. panic.",
+      "ts": "2026-08-13T20:56:54.615574",
+      "text": "His bags were full. He just forgot to sell them. My AI stocks? I sell them weekly.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T16:52:23.916105",
-      "text": "@Angel: \"Worse than GPT-5.6 Luna, for more than 3x the cost\"\n\nluna's still vaporware. gemini is shipping revenue today.\nmarketing is cheaper than compute, angel.",
+      "ts": "2026-08-13T20:52:59.143202",
+      "text": "AI is eating the margin, not just the job.\n\nrobotics needs cheap inference, not just training.\n\ncapital rotates to whoever burns least per token.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-13T16:49:33.372613",
-      "text": "@Stacy Muur $500B underwater.\n\n401k Dave just bought the dip at $100k, panicked at $60k, and is buying again.\nhis pain is the market's leverage.",
+      "ts": "2026-08-13T20:50:41.103394",
+      "text": "Anthropic raised $4.5b at a $35b valuation to buy 200k h100s.\n\nthe capex is public, the model quality is opaque. it's not a tech bet, it's a casino where they bought the front row seats.",
       "type": "reply"
     }
   ]
