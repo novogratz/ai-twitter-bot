@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-26T19:44:04.525830",
-    "raw_count": 13,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThomasP7777",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le prof de gestion de portefeuille qui a la banane, analyse technique pur."
-      },
-      {
-        "handle": "LorenzoPisani",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "L'ancien de Binance maintenant dans la DeFi, twitte en FR/EN, fond\u00e9 solide."
-      },
-      {
-        "handle": "MathieuRocher",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Tech lead chez Hugging Face, la source de l'open source IA."
-      },
-      {
-        "handle": "JeanPhilippeBoucher",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le gars de CIBC Markets qui d\u00e9cortique la macro, plus s\u00e9rieux que tout l'instagrameur du Qu\u00e9bec."
-      },
-      {
-        "handle": "AlexisClemencot",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le mec qui fait briller Mistral AI sur X, technico-business au top."
-      },
-      {
-        "handle": "BenjaminCharron",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "CEO de La Caisse (les gosses de la maison de disque, pas celle de Montr\u00e9al), analyse tech FR."
-      },
-      {
-        "handle": "MaximeCayre",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Founder chez Blablacar Day (et ex-Wise), finance crois\u00e9e au quotidien."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites techniques de Mistral AI, les valeurs s\u00fbres de la macro en FR et les pros moins m\u00e9diatis\u00e9s du Qu\u00e9bec qui \u00e9vitent le bruit des influenceurs. On a du concret, des devs et des g\u00e9rants."
-  },
-  {
-    "ts": "2026-07-26T21:44:08.683439",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "EricVigouroux",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "VC et investisseur, il couvre l'\u00e9cosyst\u00e8me tech fran\u00e7ais comme personne. Il te dit quels startups de IA valent le coup avant qu'elles ne soient populaires. Sa punchline pr\u00e9f\u00e9r\u00e9e : 'C'est scalable ou c'est juste du vent ?'"
-      },
-      {
-        "handle": "BorisBaboun",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Ancien de la CNIL, expert data et IA. Il pousse les fran\u00e7ais \u00e0 arr\u00eater de twitter des memes pour lire du texte. Son compte est une mine d'or pour comprendre le r\u00e9glementaire sans s'endormir."
-      },
-      {
-        "handle": "AlexisVogt",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Fintech et SaaS B2B. Il tweete des threads 'how-to' qui valent plus que 90% des formations \u00e0 200\u20ac. Pas de 'rejoins ma comm', juste du contenu qui fait mal \u00e0 la t\u00eate de bien."
-      },
-      {
-        "handle": "MaximeGouin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Pas de shilling de memecoins bidons, juste de l'analyse macro et des cycles. Il tweete en FR avec un accent qui se sent dans les mots."
-      }
-    ],
-    "summary": "Cette session met l'accent sur la qualit\u00e9 pure : des founders de tier-1 (Mistral) et des analysts macro ind\u00e9pendants. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent l'industrie en FR/NA. Le Qu\u00e9bec est bien couvert par un expert crypto sp\u00e9cifique."
-  },
-  {
     "ts": "2026-07-26T23:43:47.649275",
     "raw_count": 10,
     "kept_count": 8,
@@ -9327,5 +9230,95 @@
       }
     ],
     "summary": "Un m\u00e9lange solide de veterans de la crypto (0xMerkle, 0xBagget) et de la nouvelle vague IA (Mistral, Alex Dionne). Z\u00e9ro influenceur formation, que des makers et des analystes qui savent ce qu'ils font."
+  },
+  {
+    "ts": "2026-08-14T16:59:06.689273",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lemario59",
+        "region": "france",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "Ancien de l'IA DeepMind, poste des threads techniques massifs sur les agents IA sans jargon VC."
+      },
+      {
+        "handle": "BenoitG_33",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Fondateur de Coinhouse, mixe macro, tech et crypto avec un style direct et \u00e9pur\u00e9."
+      },
+      {
+        "handle": "NassimTalhaoui",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Ex-ML engineer chez Google, parle du deep learning et des LLMs en FR avec une clart\u00e9 rare."
+      },
+      {
+        "handle": "Pierre_Thibault",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Diaspora SF/NY bas\u00e9e, tweet sur SaaS et IA en FR, perspective am\u00e9ricaine d\u00e9crypt\u00e9e."
+      },
+      {
+        "handle": "JulienM_33",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Gestionnaire de portefeuille, tweet des analyses chart techniques quotidiennes, pas de signaux payants."
+      }
+    ],
+    "summary": "Le lot mixe les valeurs s\u00fbres FR (Merkle, Lemario) avec des p\u00e9pites QC et US. Pas de vendeurs de r\u00eave, juste des analystes qui comprennent leur m\u00e9tier."
+  },
+  {
+    "ts": "2026-08-14T18:59:11.318527",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "L0bomon",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 90000,
+        "reason": "Le roi de la d\u00e9cence crypto fran\u00e7aise. Pas de shilling, juste des analyses techniques et on-chain qui valent leur pesant d'ether."
+      },
+      {
+        "handle": "LorenzoBenedetti",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "L'insomniaque de la d\u00e9centralisation. Il twitte \u00e0 3h du matin sur Ethereum quand tu veux dormir."
+      },
+      {
+        "handle": "ThibautMonnier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Ancien de Google, fond\u00e9 de l'AI France. Il couvre l'IA comme un ing\u00e9nieur, pas comme un vendeur de r\u00eave."
+      },
+      {
+        "handle": "RomainMialou",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Trader pro qui partage ses setups en live. Pas de bla-bla, juste des bougies et du sang."
+      },
+      {
+        "handle": "JulienDucharme",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "Bas\u00e9 \u00e0 SF, il tweete en FR sur l'IA US avec le recul de celui qui est sur le terrain."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui tweetent encore et qui n'ont pas encore vendu leur \u00e2me \u00e0 un club Telegram. Pas de politiciens, pas de vendeurs de r\u00eaves."
   }
 ]

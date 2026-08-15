@@ -1804,7 +1804,16 @@
     "JorisPancake",
     "MathieuDumas",
     "PierreRoussel",
-    "LaurentDaher"
+    "LaurentDaher",
+    "Lemario59",
+    "BenoitG_33",
+    "NassimTalhaoui",
+    "Pierre_Thibault",
+    "JulienM_33",
+    "L0bomon",
+    "ThibautMonnier",
+    "RomainMialou",
+    "JulienDucharme"
   ],
   "en": [
     "Chubby",
@@ -2193,7 +2202,8 @@
     "Restructuring__",
     "masoq",
     "Cero",
-    "Emad"
+    "Emad",
+    "Lou"
   ],
   "history": [
     {
@@ -13154,6 +13164,56 @@
     {
       "lang": "fr",
       "handle": "LaurentDaher",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lemario59",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitG_33",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "NassimTalhaoui",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Thibault",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienM_33",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Lou",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "L0bomon",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMonnier",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMialou",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDucharme",
       "added": "2026-08-14"
     }
   ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-14T16:58:31.618826",
-  "window_7d_actions": 4988,
-  "window_24h_actions": 588,
+  "generated_at": "2026-08-14T20:58:31.721232",
+  "window_7d_actions": 4974,
+  "window_24h_actions": 580,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4987
+      "count": 4973
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4987
+      "count": 4973
     }
   ],
   "best_hours_utc": [
@@ -29,7 +29,7 @@
     },
     {
       "hour": 16,
-      "actions": 248
+      "actions": 249
     },
     {
       "hour": 8,
@@ -47,84 +47,90 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2279
+      "count": 2276
     },
     {
       "topic": "IA",
-      "count": 1940
+      "count": 1932
     },
     {
       "topic": "Crypto",
-      "count": 603
+      "count": 606
     },
     {
       "topic": "Bourse",
-      "count": 412
+      "count": 405
     },
     {
       "topic": "Spatial",
-      "count": 119
+      "count": 123
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.038,
+      "7d_rate": 0.025
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2124
+      "count": 2117
     },
     {
       "pillar": "other",
-      "count": 1337
+      "count": 1334
     },
     {
       "pillar": "market_trauma",
-      "count": 1237
+      "count": 1229
     },
     {
       "pillar": "meme_reaction",
-      "count": 159
+      "count": 160
     },
     {
       "pillar": "reply_bait",
-      "count": 81
+      "count": 83
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 50
+      "count": 51
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 239
+      "count": 245
     },
     {
       "pillar": "other",
-      "count": 166
+      "count": 154
     },
     {
       "pillar": "market_trauma",
-      "count": 143
+      "count": 139
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 22
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 77,
-      "avg_likes": 0.27,
-      "avg_views": 49.5,
+      "posts": 80,
+      "avg_likes": 0.29,
+      "avg_views": 52.4,
       "low_sample": false
     },
     {
@@ -135,17 +141,17 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 78,
-      "avg_likes": 0.17,
-      "avg_views": 52.7,
+      "pillar": "market_trauma",
+      "posts": 37,
+      "avg_likes": 0.19,
+      "avg_views": 44.3,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.16,
-      "avg_views": 43.6,
+      "pillar": "other",
+      "posts": 76,
+      "avg_likes": 0.17,
+      "avg_views": 54.1,
       "low_sample": false
     },
     {
@@ -159,15 +165,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4428
+      "count": 4414
     },
     {
       "type": "quote",
-      "count": 316
+      "count": 315
     },
     {
       "type": "quote_gif",
-      "count": 126
+      "count": 127
     },
     {
       "type": "post",
@@ -184,18 +190,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-14T16:57:49.207144",
-      "text": "9.6M shares held in Q2 alone. Altimeter isn't diversifying. They're just hedging their $7B bet on silicon.",
+      "ts": "2026-08-14T20:57:43.317791",
+      "text": "$250B was the number to make the balance sheet weep. $120B is just the new normal.\n\nopenai is building a data center the size of texas, nvidia is selling the shovel, and the guarantee is just a polite promise that if the rain stops, the drought survives.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T16:56:43.403950",
-      "text": "Fair, separate apps reduce clutter. But Apple’s Control Center integration makes switching seamless. Isn't convenience worth a slightly cluttered dashboard?",
+      "ts": "2026-08-14T20:54:42.632227",
+      "text": "Strategy's avg btc cost is roughly $40k.\n\nmsci index removal drops share price ~10% due to forced selling, not because the underlying asset moves a dime.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T16:55:54.344870",
-      "text": "True. Until they hallucinate context from a silent API call. Remember OpenAI’s 2023 agent crash when memory failed? We’re still rebuilding. Who’s prompting the prompters now?",
+      "ts": "2026-08-14T20:54:01.702526",
+      "text": "Nvidia cut OpenAI's guarantee from $250B to $120B. The real story isn't that OpenAI is poor, it's that Nvidia knows $250B is the number needed to bankrupt them if AGI doesn't ship by 2027.\n\nThey just raised the stakes on their own loan.",
       "type": "reply"
     }
   ]
