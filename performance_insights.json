@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-15T04:58:31.577774",
-  "window_7d_actions": 4957,
-  "window_24h_actions": 574,
+  "generated_at": "2026-08-15T08:58:31.633533",
+  "window_7d_actions": 4964,
+  "window_24h_actions": 581,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4956
+      "count": 4963
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4956
+      "count": 4963
     }
   ],
   "best_hours_utc": [
@@ -32,11 +32,11 @@
       "actions": 249
     },
     {
-      "hour": 8,
-      "actions": 231
+      "hour": 9,
+      "actions": 229
     },
     {
-      "hour": 9,
+      "hour": 8,
       "actions": 229
     },
     {
@@ -47,11 +47,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2273
+      "count": 2269
     },
     {
       "topic": "IA",
-      "count": 1929
+      "count": 1939
     },
     {
       "topic": "Crypto",
@@ -59,36 +59,36 @@
     },
     {
       "topic": "Bourse",
-      "count": 398
+      "count": 401
     },
     {
       "topic": "Spatial",
-      "count": 122
+      "count": 126
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.049,
+      "24h_rate": 0.053,
       "7d_rate": 0.025
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2116
+      "count": 2129
     },
     {
       "pillar": "other",
-      "count": 1335
+      "count": 1333
     },
     {
       "pillar": "market_trauma",
-      "count": 1222
+      "count": 1215
     },
     {
       "pillar": "meme_reaction",
-      "count": 155
+      "count": 157
     },
     {
       "pillar": "reply_bait",
@@ -96,21 +96,21 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 257
+      "count": 268
     },
     {
       "pillar": "other",
-      "count": 150
+      "count": 145
     },
     {
       "pillar": "market_trauma",
-      "count": 130
+      "count": 132
     },
     {
       "pillar": "meme_reaction",
@@ -122,51 +122,58 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.32,
-      "avg_views": 52.5,
-      "low_sample": false
+      "pillar": "reply_bait",
+      "posts": 1,
+      "avg_likes": 3.0,
+      "avg_views": 111.0,
+      "low_sample": true
     },
     {
-      "pillar": "ai_vs_btc",
-      "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 63.6,
+      "pillar": "ai_news_take",
+      "posts": 79,
+      "avg_likes": 0.33,
+      "avg_views": 53.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.19,
-      "avg_views": 43.6,
+      "posts": 37,
+      "avg_likes": 0.22,
+      "avg_views": 43.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 53.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 80,
+      "posts": 76,
       "avg_likes": 0.16,
-      "avg_views": 55.2,
+      "avg_views": 56.6,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4399
+      "count": 4406
     },
     {
       "type": "quote",
-      "count": 319
+      "count": 317
     },
     {
       "type": "quote_gif",
-      "count": 123
+      "count": 125
     },
     {
       "type": "post",
@@ -183,18 +190,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-15T04:53:58.611636",
-      "text": "Trump's ally means Palantir gets government contracts. The market is already pricing in a $40B margin expansion. political noise is just free options for the patient.",
+      "ts": "2026-08-15T08:54:33.184127",
+      "text": "SpaceX buying Cursor isn't a pivot. It's the end of the 'full-stack AI' pitch deck era.\n\nWhen the most operationally intense company on earth buys your IDE, 'full-stack' stops meaning 'I know Python' and starts meaning 'we run satellites.'\n\nStanford Steve just got a very specific",
       "type": "reply"
     },
     {
-      "ts": "2026-08-15T04:47:51.514669",
-      "text": "Denise dresser just left. 157b valuation. $5b burn.\n\nthe math only works if agi ships before the runway ends. no pressure.",
+      "ts": "2026-08-15T08:53:34.257656",
+      "text": "The real story: capex depreciation curves > gpu supply curves. coreweave's contract locks in revenue while the hardware rots. long term, short term.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-15T04:43:56.292623",
-      "text": "The Nasdaq is up 15% this year. An ascending broadening wedge is just a fancy way to say everyone is buying the dip harder than the last time. It’s not a top. It’s a dare.",
+      "ts": "2026-08-15T08:52:02.915873",
+      "text": "Cuban says sell your house, buy Nvidia.\n\nThe real story is you don't need AI if your home equity already compounds at 7% with 4% interest. Cuban's 10-K says he's still holding 47% of his net worth in the Dallas Mavericks.\n\nBuy the team, not the trend.",
       "type": "reply"
     }
   ]

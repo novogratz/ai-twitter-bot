@@ -1830,7 +1830,15 @@
     "HugoTravers",
     "SylvainLeclerc",
     "MisterAragon",
-    "NathalieMartin"
+    "NathalieMartin",
+    "DorianAboulker",
+    "JLFr",
+    "OlivierSalaun",
+    "JulesGhislain",
+    "JohanBiel",
+    "ThomasLevalet",
+    "MaximeLefebvre",
+    "MarcLefebvre"
   ],
   "en": [
     "Chubby",
@@ -13322,6 +13330,46 @@
     {
       "lang": "fr",
       "handle": "NathalieMartin",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianAboulker",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLFr",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierSalaun",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesGhislain",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanBiel",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLevalet",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLefebvre",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLefebvre",
       "added": "2026-08-15"
     }
   ]
