@@ -1844,7 +1844,13 @@
     "MathieuFrenay",
     "BenoitTassin",
     "JohannBouchard",
-    "PierreCormerais"
+    "PierreCormerais",
+    "Venteirosa",
+    "CryptoM0nkFR",
+    "LudovicMallet",
+    "th0mas",
+    "VincentBorel",
+    "EricMuller"
   ],
   "en": [
     "Chubby",
@@ -2235,7 +2241,8 @@
     "Cero",
     "Emad",
     "Lou",
-    "hamsta"
+    "hamsta",
+    "OrcaRouter"
   ],
   "history": [
     {
@@ -13406,6 +13413,41 @@
     {
       "lang": "fr",
       "handle": "PierreCormerais",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "en",
+      "handle": "OrcaRouter",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Venteirosa",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoM0nkFR",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicMallet",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "th0mas",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBorel",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricMuller",
       "added": "2026-08-15"
     }
   ]

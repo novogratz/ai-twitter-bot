@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-27T19:43:42.346731",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JeroenBoersma",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "Ex-Google, il track les jobs et les mod\u00e8les IA. Ses threads sont des p\u00e9pites data. Il twitte en anglais mais est constamment cit\u00e9 dans l'\u00e9cosyst\u00e8me FR."
-      },
-      {
-        "handle": "Gaspard0x",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Anthony Gagnaire est un trader quant qui twitte des insights que les 'gurus' de TikTok devraient payer 500\u20ac pour avoir. Pas de liens d'affiliation, juste de la logique."
-      },
-      {
-        "handle": "MaximeMaurice",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le roi de l'analyse fondamentale au Qu\u00e9bec. Il explique les bilans de fa\u00e7on \u00e0 ce que m\u00eame ta tante Jeanne comprenne pourquoi on vend le p\u00e9trole. Simple et efficace."
-      }
-    ],
-    "summary": "Un mix de puissance brute (Mistral), de profondeur analytique (Gaspard, Maxime) et de vision macro (PierreRochard). On \u00e9vite les vendeurs de r\u00eave pour ne garder que les architectes."
-  },
-  {
-    "ts": "2026-07-27T21:44:18.038483",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Hugo24404676",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'incontournable. Il couvre la macro crypto sans filtre, twitte en FR parfait et \u00e9vite le style 'vendeur de r\u00eave'."
-      },
-      {
-        "handle": "LionelDelaigue",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Expert IA reconnu, ex-Mistral. Il tweet des insights techniques pointus, pas des tutos 'deviens riche en 1 jour'."
-      },
-      {
-        "handle": "JulesLemaire",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "VC \u00e0 la French Tech, il sour\u00e7age les startups AI/DeSci FR. Ses threads sont de vraies mines d'info B2B."
-      },
-      {
-        "handle": "Baptiste_Le",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Journaliste tech/IA qui creuse les sujets techniques. Pas de blabla, du concret sur les startups et les fonds."
-      },
-      {
-        "handle": "MaximeBailly",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Fintech pur jus. Couvre le paiement, la banque, la regTech. Moins de bruit que les 'gurus' bourse."
-      },
-      {
-        "handle": "LucBouchard",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 14000,
-        "reason": "Analyste boursier qu\u00e9b\u00e9cois. Il parle march\u00e9, actions et \u00e9conomie. Pas de 'guru', juste du m\u00e9tier."
-      },
-      {
-        "handle": "MarcMallet",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Analyse on-chain et macro r\u00e9guli\u00e8re, twitte en fran\u00e7ais natif avec l'accent du coin."
-      }
-    ],
-    "summary": "Une s\u00e9lection hybride qui m\u00e9lange les poids lourds de la crypto FR (Hugo24404676, AlexisDuchemin) aux experts techniques IA (LionelDelaigue, AlexisB) et aux p\u00e9pites qu\u00e9b\u00e9coises qui font rarement le buzz US. Z\u00e9ro vendeur de formation."
-  },
-  {
     "ts": "2026-07-27T23:43:56.665904",
     "raw_count": 10,
     "kept_count": 8,
@@ -9292,5 +9202,81 @@
       }
     ],
     "summary": "6 pros au-del\u00e0 des influenceurs de 'd\u00e9gainer'. Goulven et Jules pour le cash, Tassin pour la tech, Cormerais pour le Qu\u00e9bec. Pas de formation \u00e0 97\u20ac."
+  },
+  {
+    "ts": "2026-08-15T12:59:11.314886",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Venteirosa",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Br\u00e9silien vivant aux USA qui twitte en FR/EN sur l'IA. La r\u00e9f\u00e9rence technique. Si tu le suis pas, tu es encore en train de lire des tweets de d\u00e9butants."
+      },
+      {
+        "handle": "CryptoM0nkFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'ancien bankeur qui a crash\u00e9 pour trader. Il balance des setups BTC sans attendre 3 tweets d'intro. Z\u00e9ro blabla, pur prix."
+      }
+    ],
+    "summary": "J'ai chass\u00e9 les fondateurs qui twittent (Mistral, LucasDumont) et les traders FR purs (SylvainLeRoux, CryptoM0nk). On oublie les generalistes pour garder les experts qui nourrissent le bot sans vendre de formations \u00e0 49\u20ac."
+  },
+  {
+    "ts": "2026-08-15T14:59:32.042097",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudovicMallet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 95000,
+        "reason": "Le patron de Doctolib. Il tweet en FR, couvre la tech, la bourse et l'IA appliqu\u00e9e. Son audience est massive et qualifi\u00e9e. Z\u00e9ro bruit politique."
+      },
+      {
+        "handle": "th0mas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'incontournable. Il tweet en FR, il tweet souvent, il tweet vrai. Pas de 'join my telegram', juste des analyses techniques solides et une voix unique sur le march\u00e9."
+      },
+      {
+        "handle": "Rapha\u00eblSfez",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "La diaspora francophone en SF. Il tweet en FR sur l'infrastructure AI, les LLMs et le VC US. Un pont rare entre la tech californienne et la sc\u00e8ne FR."
+      },
+      {
+        "handle": "VincentBorel",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Le roi du trading FR sur X. Pas de signaux VIP, juste du graphique brut et du sens du march\u00e9. Il tweet en fran\u00e7ais avec une pr\u00e9cision chirurgicale."
+      },
+      {
+        "handle": "AlexandreDionneQC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en analyse technique. Il tweet en fran\u00e7ais (parfois mixte), couvre la bourse am\u00e9ricaine avec un \u0153il francophone. Pas de blabla, que des charts."
+      },
+      {
+        "handle": "EricMuller",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Expert AI/Robotics bas\u00e9 \u00e0 NY. Il tweet en FR des threads techniques pointus sur la vision par ordinateur et l'IA embodied. Pas de hype, que de la tech."
+      }
+    ],
+    "summary": "Une s\u00e9lection chirurgicale : on \u00e9vite les vendeurs de r\u00eave pour aller chercher les praticiens. La France domine en crypto/trading pur, le Qu\u00e9bec est solide en analyse boursi\u00e8re, et l'USA apporte des profils IA/diaspora plus rares. Z\u00e9ro formation \u00e0 99\u20ac, uniquement des gens qui font le m\u00e9tier."
   }
 ]
