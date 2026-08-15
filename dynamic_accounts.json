@@ -1813,7 +1813,15 @@
     "L0bomon",
     "ThibautMonnier",
     "RomainMialou",
-    "JulienDucharme"
+    "JulienDucharme",
+    "LilipadLabs",
+    "VincentLefevre",
+    "ThibaultDeWitt",
+    "AlmanachFin",
+    "LuiCrypto",
+    "TheAIFund",
+    "CryptoCyril",
+    "AlexisDionneQC"
   ],
   "en": [
     "Chubby",
@@ -13214,6 +13222,46 @@
     {
       "lang": "fr",
       "handle": "JulienDucharme",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilipadLabs",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLefevre",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultDeWitt",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlmanachFin",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuiCrypto",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIFund",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCyril",
+      "added": "2026-08-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDionneQC",
       "added": "2026-08-14"
     }
   ]

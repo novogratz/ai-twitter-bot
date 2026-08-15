@@ -1403,3 +1403,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 62 views: CrowdStrike profits because every autonomous AI agent is now a toddler throwing tantrums in your net
   - 2 likes / 39 views: me on call with my Chinese partner trying to explain why we’re hosting Beijing models  https://x.com
   - 1 likes / 25 views: me on a Tuesday wondering if i should be buying $NFLX or just paying for it to ignore my kids lol
+
+## 2026-08-14
+
+**Activity** — total actions: 573
+  - by type: reply=507, quote=32, quote_gif=19, hotake=8, post=5, retweet=2
+  - top sources: SEARCH-HOT=307, FEED-SWEEP-FEED=94, FEED-SWEEP-FOLLOWING=73, GIF=20, QUOTE=19, DEBATE=18, VIP=12, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=11, @Cointelegraph=10, @DanKornas=10, @FirstSquawk=7, @unusual_whales=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 51 views: Tested the new AI customer support bot at my local dry cleaner.  It detected a $12 stain and offered
+  - 2 likes / 52 views: OpenAI’s annualized revenue just cleared $40 billion before the IPO even happens.  My patients are s
+  - 1 likes / 86 views: Musk open-sourcing X. Because nothing builds trust like open-sourcing a timeline full of bots. Meanw
