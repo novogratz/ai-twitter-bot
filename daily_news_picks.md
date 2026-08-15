@@ -16921,3 +16921,26 @@ Everyone sees the divergence and thinks catch-up trade. Maybe. But when the back
 2. Most of OpenAI and Anthropic's equity comes f
   - https://x.com/jun_song/status/2088103532159471672
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 64).
+
+## 2026-08-15
+- **@wallstreetxhq** (17 likes, score 7/10) — WSX News: Nvidia has reportedly reduced its planned OpenAI data-center commitment from $250B to below $120B , representing a potential reduction of more than $130B. 
+
+The change would significantly lo
+  - https://x.com/WallStreetXHQ/status/2088462234489938199
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 23).
+- **@rohanpaul_ai** (42 likes, score 9/10) — WSJ reports that Nvidia is cutting its proposed OpenAI data-center guarantee from $250B to below $120B, reducing its initial balance-sheet exposure.
+
+The revised backstop would cover only the first ro
+  - https://x.com/rohanpaul_ai/status/2088419423367667995
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 60).
+- **@antibearthesis** (705 likes, score 8/10) — $NVDA CEO Jensen Huang after discovering he can buy stock in every AI company and force them to buy NVIDIA chips exclusively
+  - https://x.com/antibearthesis/status/2088373635404665322
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 733).
+- **@mrmikeinvesting** (21 likes, score 8/10) — $NBIS is about to wreck every single short seller over these next 6 weeks…
+
+This is the current lineup:
+
+~ $NVDA earnings with possible Nebius AI infrastructure expansion.
+~ Microsoft signaling demand
+  - https://x.com/MrMikeInvesting/status/2088477926937223546
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 31).

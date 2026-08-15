@@ -1821,7 +1821,11 @@
     "LuiCrypto",
     "TheAIFund",
     "CryptoCyril",
-    "AlexisDionneQC"
+    "AlexisDionneQC",
+    "CyrilDeneuve",
+    "JulienMoinat",
+    "NicolasCollon",
+    "LilBitcoinQC"
   ],
   "en": [
     "Chubby",
@@ -2211,7 +2215,8 @@
     "masoq",
     "Cero",
     "Emad",
-    "Lou"
+    "Lou",
+    "hamsta"
   ],
   "history": [
     {
@@ -13263,6 +13268,31 @@
       "lang": "fr",
       "handle": "AlexisDionneQC",
       "added": "2026-08-14"
+    },
+    {
+      "lang": "en",
+      "handle": "hamsta",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDeneuve",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMoinat",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasCollon",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilBitcoinQC",
+      "added": "2026-08-15"
     }
   ]
 }

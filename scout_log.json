@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-27T05:43:40.778262",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyprienA",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "La r\u00e9f\u00e9rence macro crypto en FR, pas de formation \u00e0 99\u20ac, juste du lourd."
-      },
-      {
-        "handle": "LuisaVogel",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 65000,
-        "reason": "Ancienne de Coinbase, couvre crypto/tech en FR depuis NYC, vue globale et rare."
-      },
-      {
-        "handle": "RomainBock",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Co-fondateur de Luno, couvre VC et crypto avec des punchlines qui claque."
-      },
-      {
-        "handle": "ThomasLemaire",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Le trader retail le plus coh\u00e9rent, pas de signaux payants, juste du charabia boursier traduit."
-      },
-      {
-        "handle": "JulienHerve",
-        "region": "france",
-        "niche": "ia",
-        "followers": 15000,
-        "reason": "Deeplearning.ai, twitte l'IA pro, pas le 'prompt engineering' \u00e0 la mode."
-      },
-      {
-        "handle": "AlexisBoutin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le roi de la micro-cap au Qu\u00e9bec, twittering en FR avec une touche caustique."
-      }
-    ],
-    "summary": "Le top fran\u00e7ais crypto est mature (CyprienBock), le Qu\u00e9bec se r\u00e9v\u00e8le avec des perles boursi\u00e8res rares (Boutin/Dufour), et la diaspora US apporte un\u89c6\u89d2 institutionnel (Vogel)."
-  },
-  {
     "ts": "2026-07-27T07:44:17.223384",
     "raw_count": 8,
     "kept_count": 3,
@@ -9306,5 +9254,43 @@
       }
     ],
     "summary": "Un mix de humoristes boursiers, de fondateurs tech et de VC. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les vendeurs d'info."
+  },
+  {
+    "ts": "2026-08-15T00:59:07.806232",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDeneuve",
+        "region": "france",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Le cerveau derri\u00e8re Mistral. Ses threads IA font plus mal qu'un shooting Starbuck."
+      },
+      {
+        "handle": "JulienMoinat",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Le pro de la bourse fran\u00e7aise. Pas de blabla, que des chiffres. Si tu aimes lire des donn\u00e9es brutes, c'est ton spot."
+      },
+      {
+        "handle": "NicolasCollon",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'ancien banquier qui a tout laiss\u00e9 tomber pour le Bitcoin. Twitte moins mais chaque post est un coup de marteau."
+      },
+      {
+        "handle": "LilBitcoinQC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 38000,
+        "reason": "La voix du Qu\u00e9bec sur le sujet. Moins hype, plus fondamental. Parfait pour ne pas se faire arnaquer."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 du c\u00f4t\u00e9 des fondateurs (Mistral) et des v\u00e9t\u00e9rans crypto (Collon) pour \u00e9viter les newbies de l'IA. Le Qu\u00e9bec est bien couvert avec des profils techniques solides plut\u00f4t que des hype-men."
   }
 ]
