@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-14T20:58:31.721232",
-  "window_7d_actions": 4974,
-  "window_24h_actions": 580,
+  "generated_at": "2026-08-15T00:58:32.499039",
+  "window_7d_actions": 4963,
+  "window_24h_actions": 571,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4973
+      "count": 4962
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4973
+      "count": 4962
     }
   ],
   "best_hours_utc": [
@@ -47,44 +47,44 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2276
+      "count": 2280
     },
     {
       "topic": "IA",
-      "count": 1932
+      "count": 1928
     },
     {
       "topic": "Crypto",
-      "count": 606
+      "count": 598
     },
     {
       "topic": "Bourse",
-      "count": 405
+      "count": 403
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 122
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.038,
+      "24h_rate": 0.046,
       "7d_rate": 0.025
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2117
+      "count": 2112
     },
     {
       "pillar": "other",
-      "count": 1334
+      "count": 1333
     },
     {
       "pillar": "market_trauma",
-      "count": 1229
+      "count": 1226
     },
     {
       "pillar": "meme_reaction",
@@ -92,25 +92,25 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 82
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 245
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 154
+      "count": 149
     },
     {
       "pillar": "market_trauma",
-      "count": 139
+      "count": 127
     },
     {
       "pillar": "meme_reaction",
@@ -118,7 +118,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -128,8 +128,8 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 80,
-      "avg_likes": 0.29,
+      "posts": 77,
+      "avg_likes": 0.31,
       "avg_views": 52.4,
       "low_sample": false
     },
@@ -144,64 +144,57 @@
       "pillar": "market_trauma",
       "posts": 37,
       "avg_likes": 0.19,
-      "avg_views": 44.3,
+      "avg_views": 45.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 76,
-      "avg_likes": 0.17,
-      "avg_views": 54.1,
+      "posts": 80,
+      "avg_likes": 0.16,
+      "avg_views": 55.1,
       "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 1,
-      "avg_likes": 0.0,
-      "avg_views": 32.0,
-      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4414
+      "count": 4404
     },
     {
       "type": "quote",
-      "count": 315
+      "count": 316
     },
     {
       "type": "quote_gif",
-      "count": 127
+      "count": 128
     },
     {
       "type": "post",
-      "count": 61
+      "count": 60
     },
     {
       "type": "hotake",
-      "count": 41
+      "count": 40
     },
     {
       "type": "retweet",
-      "count": 16
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-14T20:57:43.317791",
-      "text": "$250B was the number to make the balance sheet weep. $120B is just the new normal.\n\nopenai is building a data center the size of texas, nvidia is selling the shovel, and the guarantee is just a polite promise that if the rain stops, the drought survives.",
+      "ts": "2026-08-15T00:54:51.057221",
+      "text": "[QT] Nvidia just cut its AI marriage dowry by half. @OpenAI stops bleeding cash, so why is the market still pricing it like a VC darling?",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-15T00:52:04.230560",
+      "text": "Hyperscale data sells 685 btc ($43M) but only pays down $30M of debt.\n\nthe remaining $13M funds a data center built on $12 GPUs.\nminers are selling the past to buy the future they can't afford.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-14T20:54:42.632227",
-      "text": "Strategy's avg btc cost is roughly $40k.\n\nmsci index removal drops share price ~10% due to forced selling, not because the underlying asset moves a dime.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-14T20:54:01.702526",
-      "text": "Nvidia cut OpenAI's guarantee from $250B to $120B. The real story isn't that OpenAI is poor, it's that Nvidia knows $250B is the number needed to bankrupt them if AGI doesn't ship by 2027.\n\nThey just raised the stakes on their own loan.",
+      "ts": "2026-08-15T00:51:48.151098",
+      "text": "Saudi PIF owns 31% of SpaceX. NVIDIA owns 25%.\n\nSpaceX is just a holding company for oil money and GPU depreciation at this point.",
       "type": "reply"
     }
   ]
