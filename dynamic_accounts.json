@@ -1838,7 +1838,13 @@
     "JohanBiel",
     "ThomasLevalet",
     "MaximeLefebvre",
-    "MarcLefebvre"
+    "MarcLefebvre",
+    "GoulvenLecocq",
+    "JulesDuchenne",
+    "MathieuFrenay",
+    "BenoitTassin",
+    "JohannBouchard",
+    "PierreCormerais"
   ],
   "en": [
     "Chubby",
@@ -13370,6 +13376,36 @@
     {
       "lang": "fr",
       "handle": "MarcLefebvre",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "GoulvenLecocq",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDuchenne",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuFrenay",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitTassin",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohannBouchard",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCormerais",
       "added": "2026-08-15"
     }
   ]

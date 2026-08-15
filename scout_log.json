@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-27T15:43:45.639839",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "m4704",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 42000,
-        "reason": "La r\u00e9f\u00e9rence Qu\u00e9becoise pour l'analyse de march\u00e9. Pas de bla-bla crypto \u00e0 la mode, juste des charts et du sens du rapport risque/rendu. Un classique."
-      },
-      {
-        "handle": "CyrilleKorchinski",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "L'analyste fondamental qui te rappelle que la crypto est un casino avant d'\u00eatre la r\u00e9volution. Il tweet en FR, il est pr\u00e9cis, et ses threads 'Deep Dive' sur les tokens sont de l'art."
-      },
-      {
-        "handle": "SofianeD",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Analyste macro et actions fran\u00e7aises/europ\u00e9ennes. Ses threads sur les secteurs (SaaS, Industrie, Luxe) sont clairs, concis et souvent contre-intuitifs. Un peu moins de volume que les 'gros' mais bien plus de qualit\u00e9."
-      }
-    ],
-    "summary": "Le Qu\u00e9bec a la bourse, la France a l'IA et la Crypto, l'USA a la data. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves et gard\u00e9 ceux qui ont un clavier plus solide que leurs opinions."
-  },
-  {
     "ts": "2026-07-27T19:43:42.346731",
     "raw_count": 6,
     "kept_count": 3,
@@ -9271,5 +9240,57 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit pour garder les cerveaux qui alimentent le feed. De la crypto pure en France \u00e0 la bourse sage au Qu\u00e9bec, en passant par la tech VC aux US."
+  },
+  {
+    "ts": "2026-08-15T08:59:07.949803",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GoulvenLecocq",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 185000,
+        "reason": "Le roi du trading FR. Pas de pur\u00e9e, que du b\u00e9ton. C'est le prof de maths qui t'a fait pleurer mais qui, 10 ans plus tard, s'av\u00e8re avoir raison sur tout."
+      },
+      {
+        "handle": "JulesDuchenne",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "Le trader retail qui a surv\u00e9cu aux crashs. Sa niche : transformer les KPIs en phrases qu'un humain normal peut comprendre sans caf\u00e9."
+      },
+      {
+        "handle": "MathieuFrenay",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "L'expert technique qui explique le Bitcoin comme s'il parlait \u00e0 son grand-m\u00e8re, mais avec un style qui pique aux yeux. Filtre anti-herbivores efficace."
+      },
+      {
+        "handle": "BenoitTassin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "CTO de Datadog. Il twitte sur l'IA, la tech et l'industrie avec l'humour d'un ing\u00e9nieur qui a vu passer 3 cycles \u00e9conomiques. Moins hype que Mistral, plus pertinent que la moyenne."
+      },
+      {
+        "handle": "JohannBouchard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Diaspora FR aux USA. Il couvre le march\u00e9 crypto am\u00e9ricain avec l'\u0153il critique d'un eurocentriste. Id\u00e9al pour comprendre les d\u00e9calages culturels du trading."
+      },
+      {
+        "handle": "PierreCormerais",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le prof de Poly qui rend l'IA accessible sans vendre du r\u00eave. C'est l'anti-gourou : il te dit ce que ton cerveau refuse d'accepter sur les limites de l'IA."
+      }
+    ],
+    "summary": "6 pros au-del\u00e0 des influenceurs de 'd\u00e9gainer'. Goulven et Jules pour le cash, Tassin pour la tech, Cormerais pour le Qu\u00e9bec. Pas de formation \u00e0 97\u20ac."
   }
 ]
