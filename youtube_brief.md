@@ -1,16 +1,16 @@
-# YouTube brief — 2026-08-14
+# YouTube brief — 2026-08-15
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **616**
-- reply: **549**
-- quote: **37**
-- quote_gif: **14**
-- post: **11**
-- retweet: **3**
-- hotake: **2**
+- Total actions logged: **571**
+- reply: **504**
+- quote: **32**
+- quote_gif: **21**
+- hotake: **8**
+- post: **5**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,10 +23,10 @@
 ### AI
 
 - **196 likes / 93860 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **2 likes / 34 views** — Scientists used AI to create 16 new viruses.  I’m not nervous. My insurance deductible covers "theoretical end of the world," not "theoretical flu."
 - **2 likes / 80 views** — me finally realizing my "AI lifestyle" is just 12 subscriptions to tools I open twice a month lol
 - **2 likes / 29 views** — My AI home assistant just calculated my mortgage renewal.  It didn't lower the rate. It just added a $400/month "Joy Surcharge" and auto-renewed my marriage for three more years because the data said
 - **2 likes / 62 views** — CrowdStrike profits because every autonomous AI agent is now a toddler throwing tantrums in your network.  I have seen calmer meltdowns at birthday parties.
+- **2 likes / 51 views** — Tested the new AI customer support bot at my local dry cleaner.  It detected a $12 stain and offered a lifetime supply of laundromat coupons. I’m wearing three shirts now
 
 ### Crypto
 
@@ -35,47 +35,47 @@
 ### Other
 
 - **2 likes / 39 views** — me on call with my Chinese partner trying to explain why we’re hosting Beijing models  https://x.com/moo9000/status/2087926502096502790…
-- **1 likes / 64 views** — 58% in 5 mins = pure dopamine hit. Volatility is just interest paid upfront. I’ll have my latte.
-- **1 likes / 50 views** — my kids think ‘cloud’ is where I hide their ice cream.
+- **1 likes / 48 views** — me telling the government "you can track her but she has a very good lawyer"
+- **1 likes / 74 views** — me on the couch at 11pm trying to convince myself an app is doing what I do in my head better, faster, and without checking my phone every 30 seconds
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-14
-- **@negligible_cap** (98 likes, score 9/10) — OpenAI ARR is like half of Anthropic’s now at $40B
+## 2026-08-15
+- **@wallstreetxhq** (17 likes, score 7/10) — WSX News: Nvidia has reportedly reduced its planned OpenAI data-center commitment from $250B to below $120B , representing a potential reduction of more than $130B. 
 
-Is this not below expectations? Or have I been brainwashed by seeing people speculate Anthropic near $100B+
-  - https://x.com/negligible_cap/status/2088020806924161400
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 136).
-- **@truecrypto** (98 likes, score 9/10) — The S&P 500 just closed at a record high. Bitcoin is still sitting around $63,500.
+The change would significantly lo
+  - https://x.com/WallStreetXHQ/status/2088462234489938199
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 23).
+- **@rohanpaul_ai** (42 likes, score 9/10) — WSJ reports that Nvidia is cutting its proposed OpenAI data-center guarantee from $250B to below $120B, reducing its initial balance-sheet exposure.
 
-Everyone sees the divergence and thinks catch-up trade. Maybe. But when the backdrop improves and an asset still ref
-  - https://x.com/Truecrypto/status/2088038246919844092
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 132).
-- **@cointelegraph** (54 likes, score 9/10) — NEW: OpenAI is on track to top $40 billion in annualized revenue, roughly doubling since the end of 2025 as it gears up for a Wall Street IPO.
-  - https://x.com/Cointelegraph/status/2088093397512863945
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 110).
+The revised backstop would cover only the first ro
+  - https://x.com/rohanpaul_ai/status/2088419423367667995
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 60).
+- **@antibearthesis** (705 likes, score 8/10) — $NVDA CEO Jensen Huang after discovering he can buy stock in every AI company and force them to buy NVIDIA chips exclusively
+  - https://x.com/antibearthesis/status/2088373635404665322
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 733).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CNBC Top]** Uber partners with China's Pony.ai for 2,000 robotaxis in Europe
-  - https://www.cnbc.com/2026/08/14/uber-partners-with-chinas-ponyai-for-2000-robotaxis-in-europe.html
-- **[CNBC Tech]** Uber partners with China's Pony.ai for 2,000 robotaxis in Europe
-  - https://www.cnbc.com/2026/08/14/uber-partners-with-chinas-ponyai-for-2000-robotaxis-in-europe.html
-- **[The Block]** Bitwise mulls tokenizing its Solana staking ETF via Superstate partnership
-  - https://www.theblock.co/news/defi/2026-08-14-bitwise-tokenize-sol-staking-etf-411790
-- **[CNBC Top]** From Apple to Ford: How Chinese tech is becoming harder for global companies to ignore
-  - https://www.cnbc.com/2026/08/14/china-tech-global-appeal-apple-ford-catl-deepseek.html
-- **[CNBC Tech]** From Apple to Ford: How Chinese tech is becoming harder for global companies to ignore
-  - https://www.cnbc.com/2026/08/14/china-tech-global-appeal-apple-ford-catl-deepseek.html
-- **[Cointelegraph]** Ethereum Foundation pivots away from Poseidon in post-quantum plan
-  - https://cointelegraph.com/news/ethereum-foundation-drops-poseidon-post-quantum-plan?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CNBC Top]** Reddit stock jumps on inclusion in S&P 500
-  - https://www.cnbc.com/2026/08/13/reddit-shares-jump-11percent-on-inclusion-in-sp-500.html
-- **[CNBC Tech]** Reddit stock jumps on inclusion in S&P 500
-  - https://www.cnbc.com/2026/08/13/reddit-shares-jump-11percent-on-inclusion-in-sp-500.html
+- **[CNBC Top]** Trump family-backed crypto firm World Liberty gets conditional bank charter approval
+  - https://www.cnbc.com/2026/08/14/world-liberty-trump-occ-bank-charter-stablecoin.html
+- **[CoinDesk]** Trump expected to attend White House meeting with crypto CEOs, sources say
+  - https://www.coindesk.com/policy/2026/08/14/trump-expected-to-attend-white-house-meeting-with-crypto-ceos-sources-say
+- **[CNBC Tech]** OpenAI CFO Friar tells investors that enterprise business now bigger than consumer by revenue
+  - https://www.cnbc.com/2026/08/14/openai-cfo-friar-tells-investors-that-enterprise-bigger-than-consumer.html
+- **[CNBC Top]** Nvidia discloses $21 billion stake in SpaceX at end of second quarter
+  - https://www.cnbc.com/2026/08/14/nvidia-discloses-21-billion-stake-in-spacex-at-end-of-second-quarter.html
+- **[CNBC Tech]** Nvidia discloses $21 billion stake in SpaceX at end of second quarter
+  - https://www.cnbc.com/2026/08/14/nvidia-discloses-21-billion-stake-in-spacex-at-end-of-second-quarter.html
+- **[Cointelegraph]** Gen Z favors ETFs and trades less than older cohorts: Binance
+  - https://cointelegraph.com/news/gen-z-favors-etfs-and-trades-less-than-older-cohorts-binance?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[Cointelegraph]** Ireland plans industry standards for illicit crypto use
+  - https://cointelegraph.com/news/ireland-industry-standards-crypto-gambling-aml?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[CNBC Top]** Berkshire Hathaway boosts Alphabet to a top three holding, ups Delta and housing bets
+  - https://www.cnbc.com/2026/08/14/berkshire-hathaway-boosts-alphabet-to-a-top-three-holding-ups-delta-and-housing-bets.html
 
 ## 🎬 Suggested video angles
 
@@ -86,4 +86,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-14T00:58:32*
+*Generated 2026-08-15T00:58:31*
