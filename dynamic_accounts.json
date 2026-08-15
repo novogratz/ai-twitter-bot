@@ -1825,7 +1825,12 @@
     "CyrilDeneuve",
     "JulienMoinat",
     "NicolasCollon",
-    "LilBitcoinQC"
+    "LilBitcoinQC",
+    "Rafman",
+    "HugoTravers",
+    "SylvainLeclerc",
+    "MisterAragon",
+    "NathalieMartin"
   ],
   "en": [
     "Chubby",
@@ -13292,6 +13297,31 @@
     {
       "lang": "fr",
       "handle": "LilBitcoinQC",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Rafman",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoTravers",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeclerc",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MisterAragon",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieMartin",
       "added": "2026-08-15"
     }
   ]

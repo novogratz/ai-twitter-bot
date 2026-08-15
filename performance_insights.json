@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-15T00:58:32.499039",
-  "window_7d_actions": 4963,
-  "window_24h_actions": 571,
+  "generated_at": "2026-08-15T04:58:31.577774",
+  "window_7d_actions": 4957,
+  "window_24h_actions": 574,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4962
+      "count": 4956
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4962
+      "count": 4956
     }
   ],
   "best_hours_utc": [
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2280
+      "count": 2273
     },
     {
       "topic": "IA",
-      "count": 1928
+      "count": 1929
     },
     {
       "topic": "Crypto",
-      "count": 598
+      "count": 596
     },
     {
       "topic": "Bourse",
-      "count": 403
+      "count": 398
     },
     {
       "topic": "Spatial",
@@ -69,52 +69,52 @@
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.046,
+      "24h_rate": 0.049,
       "7d_rate": 0.025
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2112
+      "count": 2116
     },
     {
       "pillar": "other",
-      "count": 1333
+      "count": 1335
     },
     {
       "pillar": "market_trauma",
-      "count": 1226
+      "count": 1222
     },
     {
       "pillar": "meme_reaction",
-      "count": 160
+      "count": 155
     },
     {
       "pillar": "reply_bait",
-      "count": 82
+      "count": 80
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 50
+      "count": 49
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 254
+      "count": 257
     },
     {
       "pillar": "other",
-      "count": 149
+      "count": 150
     },
     {
       "pillar": "market_trauma",
-      "count": 127
+      "count": 130
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 20
     },
     {
       "pillar": "reply_bait",
@@ -122,15 +122,15 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 77,
-      "avg_likes": 0.31,
-      "avg_views": 52.4,
+      "posts": 79,
+      "avg_likes": 0.32,
+      "avg_views": 52.5,
       "low_sample": false
     },
     {
@@ -142,31 +142,31 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
+      "posts": 36,
       "avg_likes": 0.19,
-      "avg_views": 45.4,
+      "avg_views": 43.6,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 80,
       "avg_likes": 0.16,
-      "avg_views": 55.1,
+      "avg_views": 55.2,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4404
+      "count": 4399
     },
     {
       "type": "quote",
-      "count": 316
+      "count": 319
     },
     {
       "type": "quote_gif",
-      "count": 128
+      "count": 123
     },
     {
       "type": "post",
@@ -178,23 +178,23 @@
     },
     {
       "type": "retweet",
-      "count": 15
+      "count": 16
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-15T00:54:51.057221",
-      "text": "[QT] Nvidia just cut its AI marriage dowry by half. @OpenAI stops bleeding cash, so why is the market still pricing it like a VC darling?",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-15T00:52:04.230560",
-      "text": "Hyperscale data sells 685 btc ($43M) but only pays down $30M of debt.\n\nthe remaining $13M funds a data center built on $12 GPUs.\nminers are selling the past to buy the future they can't afford.",
+      "ts": "2026-08-15T04:53:58.611636",
+      "text": "Trump's ally means Palantir gets government contracts. The market is already pricing in a $40B margin expansion. political noise is just free options for the patient.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-15T00:51:48.151098",
-      "text": "Saudi PIF owns 31% of SpaceX. NVIDIA owns 25%.\n\nSpaceX is just a holding company for oil money and GPU depreciation at this point.",
+      "ts": "2026-08-15T04:47:51.514669",
+      "text": "Denise dresser just left. 157b valuation. $5b burn.\n\nthe math only works if agi ships before the runway ends. no pressure.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-15T04:43:56.292623",
+      "text": "The Nasdaq is up 15% this year. An ascending broadening wedge is just a fancy way to say everyone is buying the dip harder than the last time. It’s not a top. It’s a dare.",
       "type": "reply"
     }
   ]

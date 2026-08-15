@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-27T07:44:17.223384",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SylvainCahen",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "L'ancien PDG de PayFit, maintenant VC. Il balance des p\u00e9pites sur le march\u00e9 FR et l'IA sans faire dans le 'guru'. Pas de groupe Telegram VIP pourri."
-      },
-      {
-        "handle": "LionelPerrin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Cr\u00e9ateur de CryptoMania. Il analyse le march\u00e9 crypto avec une bonne dose d'ironie, sans vendre de la fum\u00e9e. Le mec est un vrai trader, pas un community manager."
-      },
-      {
-        "handle": "MaximeMarty",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "CEO de Vanta (acqui fran\u00e7ais). Il twitte sur SaaS, IA et la culture tech FR avec un ton direct. Pas de jargon inutile."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les pros : Mistral domine le champ AI FR, Pierre Rochard est le seul US francophone de qualit\u00e9, et Lionel Perrin est la r\u00e9f\u00e9rence crypto FR sans blabla."
-  },
-  {
     "ts": "2026-07-27T09:44:20.848793",
     "raw_count": 9,
     "kept_count": 6,
@@ -9292,5 +9261,50 @@
       }
     ],
     "summary": "J'ai creus\u00e9 du c\u00f4t\u00e9 des fondateurs (Mistral) et des v\u00e9t\u00e9rans crypto (Collon) pour \u00e9viter les newbies de l'IA. Le Qu\u00e9bec est bien couvert avec des profils techniques solides plut\u00f4t que des hype-men."
+  },
+  {
+    "ts": "2026-08-15T02:59:13.411244",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Rafman",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 350000,
+        "reason": "Pas un trader, un observateur. Ses threads sur les cycles crypto sont de purs joyaux narratifs, tout en FR."
+      },
+      {
+        "handle": "HugoTravers",
+        "region": "france",
+        "niche": "ai",
+        "followers": 195000,
+        "reason": "Journaliste TechCrunch bas\u00e9 \u00e0 Paris. Il tweet les news US en FR avant qu'elles ne soient mainstream sur les \u00e9crans."
+      },
+      {
+        "handle": "SylvainLeclerc",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 32000,
+        "reason": "La voix du VC qu\u00e9b\u00e9cois. Moins connu du grand public fran\u00e7ais, mais la source ultime pour les deals AI/DeepTech dans l'Hexagone Nord."
+      },
+      {
+        "handle": "MisterAragon",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Le mec qui explique l'IA aux pros sans endormir les profanes. Ton direct, contenu technique lourd mais digeste."
+      },
+      {
+        "handle": "NathalieMartin",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La reine du Bitcoin \u00e0 NYC. Elle parle aux Francos install\u00e9s aux states. Analyse on-chain + lifestyle tech. Z\u00e9ro blabla politique."
+      }
+    ],
+    "summary": "Une s\u00e9lection blind\u00e9e : des g\u00e9ants narratives comme Nakamoto21 pour la crypto, des experts techniques comme MisterAragon pour l'IA, et des p\u00e9pites r\u00e9gionales qui \u00e9vitent les influenceurs de 'lifestyle'. Z\u00e9ro formation \u00e0 999\u20ac, 100% analyse."
   }
 ]
