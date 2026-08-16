@@ -1886,7 +1886,19 @@
     "CryptoMichi",
     "RemyRioux",
     "BenjaminRaz",
-    "AlexisDionne_QC"
+    "AlexisDionne_QC",
+    "LuccaFerre",
+    "Cryptobouddha",
+    "HerveW",
+    "BorjaLopez",
+    "QuentinB",
+    "CyrilDemarle",
+    "AdrienLeRuyet",
+    "NicolasKrief",
+    "PierreBoulanger",
+    "PierreLaRouche",
+    "MathieuDreyer",
+    "JadeAllaire"
   ],
   "en": [
     "Chubby",
@@ -2280,7 +2292,8 @@
     "hamsta",
     "OrcaRouter",
     "toly",
-    "Eleanor"
+    "Eleanor",
+    "Colander"
   ],
   "history": [
     {
@@ -13676,6 +13689,71 @@
     {
       "lang": "fr",
       "handle": "AlexisDionne_QC",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuccaFerre",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cryptobouddha",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "HerveW",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorjaLopez",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "QuentinB",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Colander",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDemarle",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLeRuyet",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasKrief",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBoulanger",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLaRouche",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDreyer",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JadeAllaire",
       "added": "2026-08-16"
     }
   ]
