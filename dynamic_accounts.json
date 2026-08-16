@@ -1865,7 +1865,9 @@
     "VivianeThibault",
     "nathan_kleiner",
     "paul_cayrel",
-    "lucas_brunet"
+    "lucas_brunet",
+    "BorisBiancotto",
+    "ThierryS"
   ],
   "en": [
     "Chubby",
@@ -2258,7 +2260,8 @@
     "Lou",
     "hamsta",
     "OrcaRouter",
-    "toly"
+    "toly",
+    "Eleanor"
   ],
   "history": [
     {
@@ -13544,6 +13547,21 @@
     {
       "lang": "fr",
       "handle": "lucas_brunet",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Eleanor",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisBiancotto",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThierryS",
       "added": "2026-08-15"
     }
   ]

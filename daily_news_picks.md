@@ -16944,3 +16944,15 @@ This is the current lineup:
 ~ Microsoft signaling demand
   - https://x.com/MrMikeInvesting/status/2088477926937223546
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 31).
+
+## 2026-08-16
+- **@blondebroker1** (293 likes, score 9/10) — I feel like $800 $SPY is a carrot being dangled in front of our faces. I like $785-790. I believe the market will hold up into $NVDA earnings on 8/26. It’s either their report or the Jackson Hole Fed
+  - https://x.com/blondebroker1/status/2088670521902956886
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 359).
+- **@kaiostephens** (223 likes, score 9/10) — Here is it, Opus at home on a $400 GPU.
+
+Qwen3.8 27b (4 bit) running at 41 tok/s decode and 413 tok/s prefill on a 9060xt 16gb
+
+A single 16gb GPU fully offloading qwen3.8 with near zero quality loss,
+  - https://x.com/kaiostephens/status/2088708413215674667
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 243).

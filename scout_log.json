@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-07-28T07:43:46.074729",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DorianFrey",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le patron de Coinhouse, twitte en FR, mixe bien crypto et macro, \u00e9vite le sale business de formations \u00e0 2k\u20ac."
-      },
-      {
-        "handle": "PierreGiraud_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "Fondateur de Mistral AI, twitte beaucoup sur l'IA, anglais/fran\u00e7ais, l'alpha tech pur."
-      },
-      {
-        "handle": "Gabinol",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Analyste bourse FR s\u00e9rieux, twitte souvent, pas de liens de parrainage partout, focus CAC40/ETF."
-      },
-      {
-        "handle": "MarcMaurin_",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Analyste macro/bourse, twitte en FR, style direct sans jargon inutile."
-      },
-      {
-        "handle": "MicheleB",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Directrice de la R&D chez Mistral, twitte technique en FR/EN, pas une influenceuse lifestyle."
-      },
-      {
-        "handle": "BenjaminLecomte",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Expert fintech/banque, twitte en FR, couvre les apps fintech et les march\u00e9s."
-      },
-      {
-        "handle": "SarahBoutin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 11000,
-        "reason": "Tech lead \u00e0 SF, fran\u00e7aise expat, twitte IA et engineering en FR, authentique."
-      }
-    ],
-    "summary": "On a fouill\u00e9 les founders de Mistral, les analystes macro fran\u00e7ais moins 'influenceurs' et la sc\u00e8ne crypto/trading qu\u00e9b\u00e9coise. L'IA fran\u00e7aise (Mistral) est une mine, il faut les suivre avant qu'ils ne deviennent trop mainstream."
-  },
-  {
     "ts": "2026-07-28T11:30:38.304349",
     "raw_count": 8,
     "kept_count": 7,
@@ -9285,5 +9226,29 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent la tech : des profils techniques ou analystes qui tweetent en fran\u00e7ais sans se prendre au s\u00e9rieux."
+  },
+  {
+    "ts": "2026-08-15T22:59:15.966465",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BorisBiancotto",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "Jours de Bourse. Le meilleur journaliste bourse FR actuellement. Il tweete en direct, couvre les march\u00e9s et l'\u00e9co avec un ton accessible."
+      },
+      {
+        "handle": "ThierryS",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'expert march\u00e9 qu\u00e9b\u00e9cois. Il tweete en fran\u00e7ais, couvre les actions am\u00e9ricaines et canadiennes avec une bonne analyse technique."
+      }
+    ],
+    "summary": "Un mix solide entre la puissance de Mistral AI en France, l'expertise boursi\u00e8re de Boris et Thierry, et la sc\u00e8ne crypto/tech francophone plus niche."
   }
 ]
