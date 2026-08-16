@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-28T03:43:34.677896",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RomainDessertine",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "CEO de Lydia, tweet sur la fintech, la data et l'\u00e9cosyst\u00e8me startup FR sans vendre de formation \u00e0 99\u20ac."
-      },
-      {
-        "handle": "JulienDucros",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Trader ind\u00e9pendant, tweet des setups et de la macro, style direct, peu de blabla politique."
-      },
-      {
-        "handle": "AntoineB01",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Journaliste AI, interview les g\u00e9ants du secteur, contenu dense et source directe pour comprendre le march\u00e9 fran\u00e7ais."
-      },
-      {
-        "handle": "PierreLannoy",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Influenceur crypto qu\u00e9b\u00e9cois, couvre Bitcoin et DeFi, tr\u00e8s actif dans la communaut\u00e9 nord-am\u00e9ricaine francophone."
-      }
-    ],
-    "summary": "Mix parfait entre la l\u00e9gende vivante Maki (USA/QC), l'expert technique Mistral (FR) et des traders/fintechers locaux qui tiennent la route sans \u00eatre des vendeurs de r\u00eaves."
-  },
-  {
     "ts": "2026-07-28T07:43:46.074729",
     "raw_count": 10,
     "kept_count": 7,
@@ -9278,5 +9240,50 @@
       }
     ],
     "summary": "Un m\u00e9lange solide de sp\u00e9cialistes crypto FR/Qu\u00e9bec et de technophiles Boursicoteurs. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour privil\u00e9gier ceux qui d\u00e9cryptent le chaos avec humour et pr\u00e9cision."
+  },
+  {
+    "ts": "2026-08-15T20:59:09.508973",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomas_dufraisse",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "L'ancien de Coinbase FR qui a la science infuse sur les cycles et ne vend que du vent technique, pas des cours \u00e0 2k\u20ac."
+      },
+      {
+        "handle": "nathan_kleiner",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Venteur de r\u00eave en SF qui parle fran\u00e7ais par hasard mais couvre l'IA g\u00e9n\u00e9rative avec la pr\u00e9cision d'un scalpel et l'humour d'un ados."
+      },
+      {
+        "handle": "paul_cayrel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Directeur de la data chez Doctolib, il tweete sur l'IA de prod et pas sur le prompt engineering pour s'envoyer en l'air."
+      },
+      {
+        "handle": "maxence_vandevelde",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Expert IA fran\u00e7ais qui couvre les papers arXiv et les applications business, twitte en FR et \u00e9vite soigneusement les 'AI will save you'."
+      },
+      {
+        "handle": "lucas_brunet",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Founder fintech fran\u00e7ais qui explique la tech sans jargon inutile, le genre de compte qu'on garde parce qu'il donne des insights r\u00e9els."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent la tech : des profils techniques ou analystes qui tweetent en fran\u00e7ais sans se prendre au s\u00e9rieux."
   }
 ]

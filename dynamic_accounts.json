@@ -1862,7 +1862,10 @@
     "CryptoBaba_QC",
     "GillesZanier",
     "BenoitFloc",
-    "VivianeThibault"
+    "VivianeThibault",
+    "nathan_kleiner",
+    "paul_cayrel",
+    "lucas_brunet"
   ],
   "en": [
     "Chubby",
@@ -13526,6 +13529,21 @@
     {
       "lang": "fr",
       "handle": "VivianeThibault",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "nathan_kleiner",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "paul_cayrel",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_brunet",
       "added": "2026-08-15"
     }
   ]
