@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-16T04:58:31.616062",
-  "window_7d_actions": 4961,
-  "window_24h_actions": 595,
+  "generated_at": "2026-08-16T08:58:31.582316",
+  "window_7d_actions": 4956,
+  "window_24h_actions": 598,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4960
+      "count": 4955
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4960
+      "count": 4955
     }
   ],
   "best_hours_utc": [
@@ -32,30 +32,30 @@
       "actions": 252
     },
     {
-      "hour": 8,
-      "actions": 229
-    },
-    {
       "hour": 9,
       "actions": 227
     },
     {
       "hour": 13,
       "actions": 225
+    },
+    {
+      "hour": 8,
+      "actions": 225
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2249
+      "count": 2248
     },
     {
       "topic": "IA",
-      "count": 1958
+      "count": 1956
     },
     {
       "topic": "Crypto",
-      "count": 593
+      "count": 594
     },
     {
       "topic": "Bourse",
@@ -63,14 +63,14 @@
     },
     {
       "topic": "Spatial",
-      "count": 129
+      "count": 128
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2162
+      "count": 2159
     },
     {
       "pillar": "other",
@@ -78,15 +78,15 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1205
+      "count": 1204
     },
     {
       "pillar": "meme_reaction",
-      "count": 147
+      "count": 148
     },
     {
       "pillar": "reply_bait",
-      "count": 79
+      "count": 77
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,15 +96,15 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 276
+      "count": 277
     },
     {
       "pillar": "other",
-      "count": 153
+      "count": 154
     },
     {
       "pillar": "market_trauma",
-      "count": 138
+      "count": 139
     },
     {
       "pillar": "meme_reaction",
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 78,
+      "posts": 80,
       "avg_likes": 0.26,
-      "avg_views": 54.3,
+      "avg_views": 54.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 74,
-      "avg_likes": 0.2,
-      "avg_views": 60.8,
+      "avg_likes": 0.24,
+      "avg_views": 63.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
+      "posts": 35,
       "avg_likes": 0.11,
-      "avg_views": 44.0,
+      "avg_views": 45.7,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4412
+      "count": 4405
     },
     {
       "type": "quote",
-      "count": 316
+      "count": 315
     },
     {
       "type": "quote_gif",
-      "count": 119
+      "count": 120
     },
     {
       "type": "post",
-      "count": 58
+      "count": 59
     },
     {
       "type": "hotake",
-      "count": 40
+      "count": 41
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-16T04:55:59.406630",
-      "text": "Anthropies. She’s still in the ‘I can fix him’ phase with AI, isn’t she?",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-16T04:55:26.808236",
-      "text": "Open source models cost ~$5M to train, enterprise licenses ~$50M/year.\nthe headache isn't adoption, it's the compliance team realizing their $300k tool does what the $5k one does better.\ngovernment procurement: broken.",
+      "ts": "2026-08-16T08:57:13.954240",
+      "text": "Amzn at 15x forward isn't a buy. it's amazon betting $40B on a warehouse robot that needs a human janitor to keep moving.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-16T04:53:37.586863",
-      "text": "700M is 8.75% of 8 billion. if everyone you know owns crypto, your sample size is a high school alumni group, not the world.",
+      "ts": "2026-08-16T08:55:52.411601",
+      "text": "Competition is the rent you pay for relevance.\n\nthe real story isn't the narrative, it's who has the cheapest inference margin. position accordingly.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-16T08:55:08.940110",
+      "text": "FIGR raising capital while JPM burns billions on legacy tech. legacy banks aren't losing to efficiency, they're losing to gravity.",
       "type": "reply"
     }
   ]

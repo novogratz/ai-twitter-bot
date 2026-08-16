@@ -1874,7 +1874,19 @@
     "CryptoRicky",
     "LuisGonzalezZ",
     "AdriensZ",
-    "Bourgeois"
+    "Bourgeois",
+    "DylanTay",
+    "BenoitDion",
+    "NicoCahen",
+    "JulienRiviere",
+    "VincentGoulet",
+    "JeanBaptisteV",
+    "JulesBordes",
+    "SylvainMulliez",
+    "CryptoMichi",
+    "RemyRioux",
+    "BenjaminRaz",
+    "AlexisDionne_QC"
   ],
   "en": [
     "Chubby",
@@ -13604,6 +13616,66 @@
     {
       "lang": "fr",
       "handle": "Bourgeois",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanTay",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDion",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoCahen",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRiviere",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentGoulet",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteV",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBordes",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainMulliez",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMichi",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyRioux",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminRaz",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDionne_QC",
       "added": "2026-08-16"
     }
   ]
