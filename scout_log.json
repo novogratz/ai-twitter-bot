@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-07-29T03:30:09.912394",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienDhombres",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Le patron de ChartMood. Il rend la\u6280\u672f\u5206\u6790 sexy pour les non-maths."
-      },
-      {
-        "handle": "OlivierD",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Vieux briscard de la tech FR, twitte l'IA sans buzzword-coma."
-      },
-      {
-        "handle": "VincentGagnon",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le roi des ETF au Qu\u00e9bec. Paresseux, lucratif, francophone."
-      }
-    ],
-    "summary": "Mix parfait entre le hype Mistral, la sagesse qu\u00e9b\u00e9coise de Duffie et Gagnon, et l'approche visuelle de Dhombres. Z\u00e9ro vendeur de r\u00eave."
-  },
-  {
-    "ts": "2026-07-29T05:30:37.714875",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LeoLarivi\u00e8re",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Ancien de Coinhouse maintenant aux US, il mixe l'analyse on-chain avec la macro US, twitte en FR pour les francos expats."
-      },
-      {
-        "handle": "AlainDumasFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "V\u00e9t\u00e9ran du secteur, ses analyses sur l'immobilier et les obligations en France sont plus solides que la plupart des 'gurus' Instagram."
-      },
-      {
-        "handle": "JulienDeLatour",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Journaliste crypto FR, il a un \u0153il sur les startups et le march\u00e9, twitte assez r\u00e9guli\u00e8rement sans \u00eatre dans la bulle des influenceurs."
-      },
-      {
-        "handle": "PatrickLavoie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 10000,
-        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois, son feed est une mine d'or sur les march\u00e9s nord-am\u00e9ricains en fran\u00e7ais, z\u00e9ro langue de bois."
-      }
-    ],
-    "summary": "J'ai fouill\u00e9 les listes 'top crypto FR' et les profils des startups IA fran\u00e7aises. Le paysage FR crypto est domin\u00e9 par des acteurs 'institutionnels' (Coinhouse, Paris Blockchain) qui sont plus fiables que les influenceurs trading. Au Qu\u00e9bec, la sc\u00e8ne est plus petite mais plus nich\u00e9e (finance pure). Aux US, la diaspora FR est invisible sur les recherches g\u00e9n\u00e9riques mais bien presente sur les profils techniques."
-  },
-  {
     "ts": "2026-07-29T09:50:23.303182",
     "raw_count": 10,
     "kept_count": 10,
@@ -9180,5 +9111,60 @@
       }
     ],
     "summary": "Une s\u00e9lection de 7 comptes qui \u00e9vitent le syndrome de l'iPhone dans la poche du CEO. Pas de formations \u00e0 999\u20ac, juste des profils qui twittent depuis leur bureau ou leur canap\u00e9 avec un cerveau branch\u00e9."
+  },
+  {
+    "ts": "2026-08-16T12:59:19.651397",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 0,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Rapha\u00eblPoirier",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Founders qu\u00e9b\u00e9cois dans la deep tech. Moins de hype, plus de vraie tech. Pour ceux qui veulent voir ce qui se passe dans les labs."
+      }
+    ],
+    "summary": "Le champ est satur\u00e9 de vendeurs de r\u00eave, ces 7 comptes sont des vendeurs de solutions ou de donn\u00e9es. On couvre la France (la plus dense), le Qu\u00e9bec (la perle rare) et un USFR (la vue globale). Pas de blabla."
+  },
+  {
+    "ts": "2026-08-16T14:59:06.691456",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainG2710",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le roi de l'\u00e9ducation bourse FR, z\u00e9ro filtre, twitte fort."
+      },
+      {
+        "handle": "ThibaudLarrieu",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Fonds PEA, style direct, analyse technique sans chichi."
+      },
+      {
+        "handle": "0xMert",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Founders de Defi Llama, tr\u00e8s actif FR, tech pure."
+      },
+      {
+        "handle": "LuisFalconC1",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Mentor crypto, twitte en FR, focus on-chain et cycle."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs formation pour ne garder que des analystes, founders et journalistes actifs qui ont du substance sans vendre du r\u00eave. Le mix IA/Crypto/Bourse est solide."
   }
 ]

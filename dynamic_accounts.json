@@ -1898,7 +1898,11 @@
     "PierreBoulanger",
     "PierreLaRouche",
     "MathieuDreyer",
-    "JadeAllaire"
+    "JadeAllaire",
+    "RomainG2710",
+    "ThibaudLarrieu",
+    "0xMert",
+    "LuisFalconC1"
   ],
   "en": [
     "Chubby",
@@ -13754,6 +13758,26 @@
     {
       "lang": "fr",
       "handle": "JadeAllaire",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainG2710",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudLarrieu",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMert",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisFalconC1",
       "added": "2026-08-16"
     }
   ]
