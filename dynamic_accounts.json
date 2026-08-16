@@ -1850,7 +1850,19 @@
     "LudovicMallet",
     "th0mas",
     "VincentBorel",
-    "EricMuller"
+    "EricMuller",
+    "0xC0D3",
+    "CecileBrossier",
+    "ThibautVion",
+    "JohanneLebel",
+    "DexertoFR",
+    "Lilithia_0x",
+    "MarcGaudry",
+    "FrenchTechAI",
+    "CryptoBaba_QC",
+    "GillesZanier",
+    "BenoitFloc",
+    "VivianeThibault"
   ],
   "en": [
     "Chubby",
@@ -2242,7 +2254,8 @@
     "Emad",
     "Lou",
     "hamsta",
-    "OrcaRouter"
+    "OrcaRouter",
+    "toly"
   ],
   "history": [
     {
@@ -13448,6 +13461,71 @@
     {
       "lang": "fr",
       "handle": "EricMuller",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xC0D3",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CecileBrossier",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautVion",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanneLebel",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "en",
+      "handle": "toly",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "DexertoFR",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lilithia_0x",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGaudry",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrenchTechAI",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBaba_QC",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesZanier",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFloc",
+      "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivianeThibault",
       "added": "2026-08-15"
     }
   ]

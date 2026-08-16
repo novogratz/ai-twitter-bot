@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-07-27T23:43:56.665904",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PhilippeChauvet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Journaliste bourse historique, acc\u00e8s aux earnings calls, tweets techniques et r\u00e9guliers."
-      },
-      {
-        "handle": "MaximeTanguay",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 40000,
-        "reason": "Founding engineer chez Anthropic, ex-OpenAI, tweets techniques IA en FR/EN, tr\u00e8s bien vu."
-      },
-      {
-        "handle": "OlivierTribouilloy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Directeur de la strat\u00e9gie IA chez Dassault Syst\u00e8mes, perspective industrielle et acad\u00e9mique."
-      },
-      {
-        "handle": "AlexandreGirard",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Fondateur de L'Usine IA, couvre tout l'\u00e9cosyst\u00e8me tech qu\u00e9b\u00e9cois, r\u00e9seau immense."
-      },
-      {
-        "handle": "LucLacroix",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Sp\u00e9cialiste crypto/DeFi francophone, threads \u00e9ducatifs, communaut\u00e9 engag\u00e9e."
-      },
-      {
-        "handle": "RemyFougerouse",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Ancien CTO Atos, focus IA et Deep Tech, discours mature, pas de hype st\u00e9rile."
-      },
-      {
-        "handle": "MathildeMougeot",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Fondatrice de Weelthy, focus sur la fintech grand public et le comportementaliste, tr\u00e8s actif."
-      },
-      {
-        "handle": "VincentBerthier",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Ing\u00e9nieur ML, focus LLM et infrastructure, tweets codes et benchmarks s\u00e9rieux."
-      }
-    ],
-    "summary": "Un mix solide entre les g\u00e9ants institutionnels fran\u00e7ais (Mistral, Dassault) et les influenceurs tech/crypto qu\u00e9b\u00e9cois et US francophones. Pas de vendeurs de r\u00eave, juste des makers et des analystes qui font bouger la ligne droite."
-  },
-  {
-    "ts": "2026-07-28T01:43:29.454892",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NicolasTrenda",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'anti-fake-news du trading. Il p\u00f4le, il cite ses sources, il n'a pas de Telegram."
-      },
-      {
-        "handle": "MathiasPerraud",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Tech lead chez Mistral. Le genre de mec qui tweete des d\u00e9tails techniques qui font mal au cr\u00e2ne mais sont g\u00e9niales."
-      },
-      {
-        "handle": "AntoineBouvier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Analyste qu\u00e9b\u00e9cois solide. Il parle cash flow et valorisation sans jargon inutil."
-      },
-      {
-        "handle": "OlivierSibille",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 11000,
-        "reason": "Expert Bitcoin/Blockchain qu\u00e9b\u00e9cois. Il explique la tech plus bien que les influenceurs TikTok."
-      }
-    ],
-    "summary": "6 comptes de guerre s\u00e9lectionn\u00e9s. On a mis\u00e9 sur les experts (Mistral, Trenda) plut\u00f4t que les bateleurs de man\u00e8ge."
-  },
-  {
     "ts": "2026-07-28T03:43:34.677896",
     "raw_count": 7,
     "kept_count": 4,
@@ -9278,5 +9174,109 @@
       }
     ],
     "summary": "Une s\u00e9lection chirurgicale : on \u00e9vite les vendeurs de r\u00eave pour aller chercher les praticiens. La France domine en crypto/trading pur, le Qu\u00e9bec est solide en analyse boursi\u00e8re, et l'USA apporte des profils IA/diaspora plus rares. Z\u00e9ro formation \u00e0 99\u20ac, uniquement des gens qui font le m\u00e9tier."
+  },
+  {
+    "ts": "2026-08-15T16:59:08.412731",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0xC0D3",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le tech journalist FR qui court apr\u00e8s les funders comme un chasseur de primes, avec des threads sur l'IA qui piquent."
+      },
+      {
+        "handle": "CecileBrossier",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "La patronne de Coinhouse, twitte la fintech FR avec l'audace d'un trader qui ne lit pas son P&L."
+      },
+      {
+        "handle": "ThibautVion",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Co-founder de Mistral, l'IA fran\u00e7aise qui se la joue humble mais dont les tweets valent plus que ta s\u00e9rie Seed."
+      },
+      {
+        "handle": "JohanneLebel",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 10000,
+        "reason": "La reine de la tech Qc, ses threads sur l'\u00e9cosyst\u00e8me local sont plus int\u00e9ressants que la m\u00e9t\u00e9o \u00e0 Ottawa."
+      }
+    ],
+    "summary": "Une s\u00e9lection de 7 comptes piliers FR/QC, mixant journalistes, founders et analystes qui tiennent le haut du panier sans vendre de r\u00eave."
+  },
+  {
+    "ts": "2026-08-15T18:59:19.466017",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DexertoFR",
+        "region": "france",
+        "niche": "tech",
+        "followers": 95000,
+        "reason": "Pas que du gaming. Leur couverture IA/Tech est pr\u00e9cise, rapide et sans le 'marketing hype' des m\u00e9dias traditionnels."
+      },
+      {
+        "handle": "Lilithia_0x",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "La r\u00e9f\u00e9rence crypto FR. Elle analyse le march\u00e9 sans en faire tout un plat et \u00e9vite le jargon superflu."
+      },
+      {
+        "handle": "MarcGaudry",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'ex-directeur financier de Free. Il donne des cours de strat\u00e9gie boursi\u00e8re avec une franchise d\u00e9capante."
+      },
+      {
+        "handle": "FrenchTechAI",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "La newsletter/compte US qui suit la French Tech. Parfait pour voir ce que nos concurrents am\u00e9ricains pensent de nous."
+      },
+      {
+        "handle": "CryptoBaba_QC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le gars qui rend la crypto accessible sans donner l'impression qu'on est dans un webinaire Zoom ennuyeux."
+      },
+      {
+        "handle": "GillesZanier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Journaliste tech pointu. Il comprend la tech mieux que les CEO qu'il interviewe, sans se prendre au s\u00e9rieux."
+      },
+      {
+        "handle": "BenoitFloc",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le fondateur du bot qui l'a s\u00e9lectionn\u00e9. Il tweet en FR depuis San Francisco, ce qui donne une perspective d\u00e9cal\u00e9e sur les deux rives."
+      },
+      {
+        "handle": "VivianeThibault",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Journaliste boursi\u00e8re de talent. Elle d\u00e9crypte les r\u00e9sultats trimestriels pour des gens qui ont la flemme de lire les rapports."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide de sp\u00e9cialistes crypto FR/Qu\u00e9bec et de technophiles Boursicoteurs. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour privil\u00e9gier ceux qui d\u00e9cryptent le chaos avec humour et pr\u00e9cision."
   }
 ]
