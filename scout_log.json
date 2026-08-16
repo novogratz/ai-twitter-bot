@@ -1,85 +1,5 @@
 [
   {
-    "ts": "2026-07-29T09:50:23.303182",
-    "raw_count": 10,
-    "kept_count": 10,
-    "accounts_added": 10,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LudoTz",
-        "region": "france",
-        "niche": "ai",
-        "followers": 110000,
-        "reason": "L'architecte de Mistral AI, il explique la tech comme personne d'autre, tweet r\u00e9gulier."
-      },
-      {
-        "handle": "ThibautDez",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le prof de la place des affaires, analyse macro solide, twitte en FR sans jargon inutile."
-      },
-      {
-        "handle": "RomainBontems",
-        "region": "france",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "Le 'French Tech' de base, mais avec la densit\u00e9 en plus, tweet sur la scale-up et l'IA."
-      },
-      {
-        "handle": "NicolasLeclercq",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Journaliste crypto de choc, couvre l'Europe et les regs, twitte en FR, z\u00e9ro hype."
-      },
-      {
-        "handle": "AntoineBouchard",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "La voix crypto du Qu\u00e9bec, coverage Solana/Web3, twitte en FR, communaut\u00e9 tr\u00e8s active."
-      },
-      {
-        "handle": "MathieuTillet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "L'expert DeepMind/Google, parle IA pure et VC, twitte en FR avec profondeur."
-      },
-      {
-        "handle": "PierreDion",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 32000,
-        "reason": "CTO de Wealthsimple, parle fintech/tech avec un angle Qu\u00e9b\u00e9cois pertinent."
-      },
-      {
-        "handle": "MaximeCathala",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Analyste actions, pas de shizau, des charts et des th\u00e8ses lisibles en FR."
-      },
-      {
-        "handle": "VincentDussault",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 25000,
-        "reason": "Trader et strat\u00e8ge, couvre march\u00e9s et macro, style direct sans blabla."
-      },
-      {
-        "handle": "OlivierTasse",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Diaspora FR aux US, ex-PM Goldman, twitte finance/francophone, niche mais dense."
-      }
-    ],
-    "summary": "Un mix de v\u00e9t\u00e9rans comme Thibaut Delez pour la macro et Ludo Tillet pour l'IA, compl\u00e9t\u00e9 par les p\u00e9pites qu\u00e9b\u00e9coises comme Antoine Bouchard qui assurent la couverture crypto hors hexagone."
-  },
-  {
     "ts": "2026-07-29T11:50:30.874650",
     "raw_count": 7,
     "kept_count": 4,
@@ -9166,5 +9086,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs formation pour ne garder que des analystes, founders et journalistes actifs qui ont du substance sans vendre du r\u00eave. Le mix IA/Crypto/Bourse est solide."
+  },
+  {
+    "ts": "2026-08-16T16:59:04.372913",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreDorsey",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Founding Engineer chez Scale AI. Sa niche : l'infrastructure data qui nourrit l'IA. Tweets en FR/EN, ton technique et sec."
+      },
+      {
+        "handle": "JulesDumoulin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Cr\u00e9ateur de la newsletter The AI Breakdown. Son feed est pur deep-tech/IA, z\u00e9ro buzz, 100% fond."
+      },
+      {
+        "handle": "LamarkM",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Fondateur de Nofrills AI. Il poste des threads techniques sur LLMs et agents, ton pragmatique, pas de hype."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que des constructeurs : les fondateurs de Mistral, Scale AI et les journalistes ind\u00e9pendants qui font le vrai travail d'analyse."
   }
 ]

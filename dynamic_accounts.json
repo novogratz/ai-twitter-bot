@@ -1902,7 +1902,10 @@
     "RomainG2710",
     "ThibaudLarrieu",
     "0xMert",
-    "LuisFalconC1"
+    "LuisFalconC1",
+    "PierreDorsey",
+    "JulesDumoulin",
+    "LamarkM"
   ],
   "en": [
     "Chubby",
@@ -13778,6 +13781,21 @@
     {
       "lang": "fr",
       "handle": "LuisFalconC1",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDorsey",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDumoulin",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LamarkM",
       "added": "2026-08-16"
     }
   ]
