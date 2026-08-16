@@ -1417,3 +1417,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 51 views: Tested the new AI customer support bot at my local dry cleaner.  It detected a $12 stain and offered
   - 2 likes / 52 views: OpenAI’s annualized revenue just cleared $40 billion before the IPO even happens.  My patients are s
   - 1 likes / 86 views: Musk open-sourcing X. Because nothing builds trust like open-sourcing a timeline full of bots. Meanw
+
+## 2026-08-15
+
+**Activity** — total actions: 590
+  - by type: reply=520, quote=42, quote_gif=12, hotake=8, post=6, retweet=2
+  - top sources: SEARCH-HOT=331, FEED-SWEEP-FEED=102, FEED-SWEEP-FOLLOWING=63, QUOTE=28, DEBATE=16, GIF=13, BREAKING_QRT=6, VIP=5
+  - top reply targets: @TheBTCTherapist=10, @cryptorover=9, @MarioNawfal=6, @Polymarket=6, @DanKornas=6
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 234 likes / 107129 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 3 likes / 111 views: Alphabet and ARM? Sounds less like "what next?" and more like "please stop, my portfolio needs a nap
+  - 2 likes / 34 views: Amazon turning Twitch streams into training data for an opt-out box.  It’s the corporate equivalent 
