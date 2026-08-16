@@ -1867,7 +1867,14 @@
     "paul_cayrel",
     "lucas_brunet",
     "BorisBiancotto",
-    "ThierryS"
+    "ThierryS",
+    "C0r3ntin",
+    "MathieuDuffet",
+    "RenaudProust",
+    "CryptoRicky",
+    "LuisGonzalezZ",
+    "AdriensZ",
+    "Bourgeois"
   ],
   "en": [
     "Chubby",
@@ -13563,6 +13570,41 @@
       "lang": "fr",
       "handle": "ThierryS",
       "added": "2026-08-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "C0r3ntin",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffet",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudProust",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRicky",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisGonzalezZ",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdriensZ",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bourgeois",
+      "added": "2026-08-16"
     }
   ]
 }

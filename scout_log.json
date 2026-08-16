@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-28T11:30:38.304349",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NathanMBB",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'analyste technique qui a du sang aux mains. Ses threads sur les cycles de march\u00e9 sont plus pr\u00e9cis que les rapports de nos analystes en costume."
-      },
-      {
-        "handle": "CryptoMireille",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "La gauloise de la c\u00f4te Ouest. Elle relie la macro US aux cycles crypto avec une vivacit\u00e9 d'esprit qui devrait embarrasser plus d'un hedge fund."
-      },
-      {
-        "handle": "DariuszBukowski",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ex-consul de l'espace crypto, il p\u00e8se des tonnes en macro et on-chain. Z\u00e9ro hype, juste des facts qui font mal aux shorters."
-      },
-      {
-        "handle": "RaphaElieM",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le barom\u00e8tre du march\u00e9 qu\u00e9b\u00e9cois. Il couvre les min\u00e9s et les tech locales avec un humour acide qui fait passer l'apoplexie \u00e0 l'envie."
-      },
-      {
-        "handle": "AlexCyr",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "La r\u00e9f\u00e9rence web3 au Qu\u00e9bec. Il balance des insights sur les infrastructures blockchain avant m\u00eame que les am\u00e9ricains ne commencent \u00e0 en parler."
-      },
-      {
-        "handle": "JohanLemieux",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Founders et tech \u00e0 Montr\u00e9al. Il d\u00e9crypte les startups IA qui font bouger les lignes sans se noyer dans le jargon VC pompeux."
-      },
-      {
-        "handle": "ParisAI",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Communaut\u00e9 de chercheurs IA francophones \u00e0 SF/Silicon Valley. Le r\u00e9seau invisible qui fait bouger les standards de l'industrie."
-      }
-    ],
-    "summary": "Une s\u00e9lection sans gras. On a filtr\u00e9 les influenceurs de stage et les vendeurs de r\u00eaves pour ne garder que ceux qui lisent les logs de production et les flux on-chain."
-  },
-  {
-    "ts": "2026-07-28T15:30:25.776364",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LaurieVilleneuve",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "CEO de Kira Systems (acquis), prof \u00e0 Polytechnique. Elle twitte l'IA appliqu\u00e9e sans le jargon VC qui pue le vieux."
-      },
-      {
-        "handle": "MaximeCassan",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Founder de Deepmap. Il balance des insights tech/conso plus frais que l'actu boursi\u00e8re de La Tribune."
-      },
-      {
-        "handle": "JmSicard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'analyste technique qui a surv\u00e9cu \u00e0 4 crises. Pas de pub de formation \u00e0 999\u20ac, juste du graph propre et du sens du rapport risque/rendement."
-      },
-      {
-        "handle": "AdrienVanderhaegen",
-        "region": "france",
-        "niche": "ai",
-        "followers": 10000,
-        "reason": "Fintech/AI, il twitte r\u00e9guli\u00e8rement sur les use-cases business de l'IA. Pas un 'thought leader' vide, mais un constructeur."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les b\u00e2tisseurs et les analystes qui comprennent leur m\u00e9tier. Le Qu\u00e9bec brille en IA appliqu\u00e9e, la France domine en tech et bourse technique."
-  },
-  {
     "ts": "2026-07-28T19:30:55.634168",
     "raw_count": 10,
     "kept_count": 9,
@@ -9250,5 +9153,74 @@
       }
     ],
     "summary": "Un mix solide entre la puissance de Mistral AI en France, l'expertise boursi\u00e8re de Boris et Thierry, et la sc\u00e8ne crypto/tech francophone plus niche."
+  },
+  {
+    "ts": "2026-08-16T00:59:10.588326",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "C0r3ntin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Le gourou des agents autonomes, 100% technique, z\u00e9ro hype produit, juste du code et du sens."
+      },
+      {
+        "handle": "MathieuDuffet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "Fondation de la value investing francophone. Contenu dense, pas de vente de r\u00eave, juste de l'analyse."
+      },
+      {
+        "handle": "RenaudProust",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Bas\u00e9 aux US, francophone. Couvre la fintech globale avec un \u0153il europ\u00e9en. Expert, pas influenceur."
+      }
+    ],
+    "summary": "5 experts silencieux qui font du bruit par la qualit\u00e9 de leur feed, pas par leurs stories Instagram."
+  },
+  {
+    "ts": "2026-08-16T02:59:13.866719",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoRicky",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "L'humoriste crypto, parfait pour ne pas prendre le march\u00e9 \u00e0 la lettre."
+      },
+      {
+        "handle": "LuisGonzalezZ",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "L'ex-Mistral qui explique l'IA sans te endormir avec du jargon de consultante."
+      },
+      {
+        "handle": "AdriensZ",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Satur\u00e9 de tech, mais ses takes sur la vie de founder valent l'abonnement juste pour l'humour."
+      },
+      {
+        "handle": "Bourgeois",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 30000,
+        "reason": "Am\u00e9ricain mais francophone, couvre la fintech avec un angle plus frais que Wall Street."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les vrais profils actifs : Mistral pour la tech pure, Dionne pour le Qu\u00e9bec et Ricky pour le fun crypto. Z\u00e9ro formation \u00e0 99\u20ac, promis."
   }
 ]

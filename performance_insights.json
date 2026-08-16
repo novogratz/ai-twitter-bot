@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-16T00:58:32.274207",
-  "window_7d_actions": 4963,
-  "window_24h_actions": 597,
+  "generated_at": "2026-08-16T04:58:31.616062",
+  "window_7d_actions": 4961,
+  "window_24h_actions": 595,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4962
+      "count": 4960
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4962
+      "count": 4960
     }
   ],
   "best_hours_utc": [
@@ -47,48 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2257
+      "count": 2249
     },
     {
       "topic": "IA",
-      "count": 1949
+      "count": 1958
     },
     {
       "topic": "Crypto",
-      "count": 594
+      "count": 593
     },
     {
       "topic": "Bourse",
-      "count": 390
+      "count": 385
     },
     {
       "topic": "Spatial",
-      "count": 128
+      "count": 129
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.035,
-      "7d_rate": 0.026
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2150
+      "count": 2162
     },
     {
       "pillar": "other",
-      "count": 1332
+      "count": 1322
     },
     {
       "pillar": "market_trauma",
-      "count": 1210
+      "count": 1205
     },
     {
       "pillar": "meme_reaction",
-      "count": 146
+      "count": 147
     },
     {
       "pillar": "reply_bait",
@@ -102,11 +96,11 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 275
+      "count": 276
     },
     {
       "pillar": "other",
-      "count": 159
+      "count": 153
     },
     {
       "pillar": "market_trauma",
@@ -114,7 +108,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 11
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
@@ -128,52 +122,52 @@
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 1,
-      "avg_likes": 3.0,
-      "avg_views": 111.0,
-      "low_sample": true
+      "posts": 2,
+      "avg_likes": 1.5,
+      "avg_views": 77.0,
+      "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 76,
-      "avg_likes": 0.28,
-      "avg_views": 55.6,
+      "posts": 78,
+      "avg_likes": 0.26,
+      "avg_views": 54.3,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 74,
-      "avg_likes": 0.22,
-      "avg_views": 60.4,
+      "avg_likes": 0.2,
+      "avg_views": 60.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.18,
-      "avg_views": 45.6,
+      "posts": 37,
+      "avg_likes": 0.11,
+      "avg_views": 44.0,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 9,
-      "avg_likes": 0.11,
-      "avg_views": 55.6,
+      "posts": 8,
+      "avg_likes": 0.0,
+      "avg_views": 51.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4411
+      "count": 4412
     },
     {
       "type": "quote",
-      "count": 320
+      "count": 316
     },
     {
       "type": "quote_gif",
-      "count": 118
+      "count": 119
     },
     {
       "type": "post",
@@ -190,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-16T00:55:36.444741",
-      "text": "16 Go de VRAM pour faire tourner un modèle de 27 milliards de paramètres. C'est le miracle d'un mois de chèque de loyer qui rentre enfin.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-16T00:53:52.089546",
-      "text": "Anthropic charges $15 per output token.\n\nQwen charges $0.10.\n\nClaude is the lawyer you hire when you have a million dollars. Qwen is the paralegal who gets the job done for a latte.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-16T00:53:34.421820",
-      "text": "me pretending I understand subagents while actually just hoping it doesn't auto-order diapers lol",
+      "ts": "2026-08-16T04:55:59.406630",
+      "text": "Anthropies. She’s still in the ‘I can fix him’ phase with AI, isn’t she?",
       "type": "quote"
+    },
+    {
+      "ts": "2026-08-16T04:55:26.808236",
+      "text": "Open source models cost ~$5M to train, enterprise licenses ~$50M/year.\nthe headache isn't adoption, it's the compliance team realizing their $300k tool does what the $5k one does better.\ngovernment procurement: broken.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-16T04:53:37.586863",
+      "text": "700M is 8.75% of 8 billion. if everyone you know owns crypto, your sample size is a high school alumni group, not the world.",
+      "type": "reply"
     }
   ]
 }
