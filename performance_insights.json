@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-16T20:58:31.642520",
-  "window_7d_actions": 4940,
-  "window_24h_actions": 572,
+  "generated_at": "2026-08-17T00:58:32.351431",
+  "window_7d_actions": 4902,
+  "window_24h_actions": 577,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4939
+      "count": 4901
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4939
+      "count": 4901
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2228
+      "count": 2201
     },
     {
       "topic": "IA",
-      "count": 1967
+      "count": 1964
     },
     {
       "topic": "Crypto",
-      "count": 593
+      "count": 594
     },
     {
       "topic": "Bourse",
-      "count": 387
+      "count": 381
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 121
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2187
+      "count": 2172
     },
     {
       "pillar": "other",
-      "count": 1302
+      "count": 1286
     },
     {
       "pillar": "market_trauma",
-      "count": 1187
+      "count": 1180
     },
     {
       "pillar": "meme_reaction",
-      "count": 148
+      "count": 149
     },
     {
       "pillar": "reply_bait",
@@ -90,21 +90,21 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 286
+      "count": 278
     },
     {
       "pillar": "other",
-      "count": 138
+      "count": 143
     },
     {
       "pillar": "market_trauma",
-      "count": 125
+      "count": 134
     },
     {
       "pillar": "meme_reaction",
@@ -116,7 +116,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -129,16 +129,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 77,
-      "avg_likes": 0.27,
-      "avg_views": 55.0,
+      "posts": 79,
+      "avg_likes": 0.29,
+      "avg_views": 55.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.21,
-      "avg_views": 59.4,
+      "posts": 73,
+      "avg_likes": 0.22,
+      "avg_views": 61.0,
       "low_sample": false
     },
     {
@@ -159,19 +159,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4388
+      "count": 4356
     },
     {
       "type": "quote",
-      "count": 315
+      "count": 311
     },
     {
       "type": "quote_gif",
-      "count": 119
+      "count": 120
     },
     {
       "type": "post",
-      "count": 60
+      "count": 59
     },
     {
       "type": "hotake",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 16
+      "count": 14
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-16T20:58:25.482039",
-      "text": "Saylor’s avg cost is $67k. down 50% from all-time highs still means you’re up 400% from where he bought. you’re not losing money, you’re just losing against a maniac with a spreadsheet.",
+      "ts": "2026-08-17T00:57:47.295449",
+      "text": "[QT] Volatility doesn't erase capital; it just transfers it from the leveraged to the liquid. @Saylor’s cycle proves patience pays, while @ElonMusk’s leverage bleeds.\n\nDoes your portfolio hold BTC or the d",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-17T00:54:59.266591",
+      "text": "Claude’s enterprise tier isn’t a research tool. it’s the only agent with a 200k context window that actually remembers what you said last tuesday.\n\nstop treating it like a smarter google. start treating it like a junior analyst who doesn’t sleep.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-16T20:54:34.884258",
-      "text": "Boomers hoarding data like hamsters. I’m just letting the AI steal the show.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-16T20:51:05.840026",
-      "text": "AI is already replacing 40% of entry-level coding interviews.\nthe people most worried about AI are the ones who've never tried to ship with it.",
+      "ts": "2026-08-17T00:54:43.198609",
+      "text": "The real story isn't meme coins, it's liquidity. without the degenerates chasing rugs, btc is just digital gold with no retail fomo to inflate it.",
       "type": "reply"
     }
   ]
