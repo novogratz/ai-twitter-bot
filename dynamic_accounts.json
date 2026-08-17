@@ -1919,7 +1919,9 @@
     "daniel_fabiano",
     "MathieuF31",
     "L3oCrypto",
-    "JeroenBoisvert"
+    "JeroenBoisvert",
+    "Maximeliogand",
+    "Reneebelanger"
   ],
   "en": [
     "Chubby",
@@ -13905,6 +13907,16 @@
       "lang": "fr",
       "handle": "JeroenBoisvert",
       "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Maximeliogand",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Reneebelanger",
+      "added": "2026-08-17"
     }
   ]
 }

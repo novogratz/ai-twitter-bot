@@ -16956,3 +16956,46 @@ Qwen3.8 27b (4 bit) running at 41 tok/s decode and 413 tok/s prefill on a 9060xt
 A single 16gb GPU fully offloading qwen3.8 with near zero quality loss,
   - https://x.com/kaiostephens/status/2088708413215674667
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 243).
+
+## 2026-08-17
+- **@md_kasif_uddin** (14 likes, score 8/10) — Which AI stack would you build with in 2026?
+
+A. OpenAI
+GPT-5.6 + GPT Image 2
+
+B. Google
+Gemini 3.6 + Nano Banana 2
+
+C. Anthropic + Open Source
+Claude Sonnet 5 + FLUX
+
+D. Full Multimodal Stack
+GPT + G
+  - https://x.com/md_kasif_uddin/status/2089193751197409622
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 44).
+- **@crypto_lens_** (520 likes, score 9/10) — THE FINAL BITCOIN CRASH STARTS NEXT WEEK.
+
+The relief rally is almost over.
+
+My 2026-2028 plan is simple:
+
+$63K → $49K → $42K (Bottom) → $100K → $126K → $150K
+
+Buy $BTC around $43K in early October, s
+  - https://x.com/crypto_lens_/status/2088836565397328012
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 572).
+- **@sujaljethwani** (27 likes, score 8/10) — I've watched Bitcoin crash from:
+
+$200 → $50
+$1,200 → $200
+$20,000 → $3,000
+$60,000 → $15,000
+$126,000 → $60,000
+
+Every time, people said Bitcoin was dead.
+
+Every time, it came back stronger.
+
+Notice
+  - https://x.com/SujalJethwani/status/2088572406856122723
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).

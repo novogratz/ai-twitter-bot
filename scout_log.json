@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-29T17:50:03.481151",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeHeintz",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "L'ex-Polytechnicien qui a fait de Crypto.fr un media incontournable. Il balance des threads tech/crypto sans jargon pourri."
-      },
-      {
-        "handle": "BenjaminPerrin",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Pote de @TheAIShrink, il couvre la fintech et la deeptech avec une pr\u00e9cision d'horloger. Twitte en FR, vit en FR."
-      },
-      {
-        "handle": "HuguesMerlet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Fondateur de Investir, le blog de r\u00e9f\u00e9rence pour les particuliers. Il balance des analyses macro et actions sans vendre de la soupe."
-      },
-      {
-        "handle": "JeanFilion",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Qu\u00e9b\u00e9cois expatri\u00e9 \u00e0 NYC. Il couvre le march\u00e9 crypto US avec un regard francophone aiguis\u00e9. Pas de formations, du pur march\u00e9."
-      }
-    ],
-    "summary": "L'IA fran\u00e7aise s'invite enfin en t\u00eate de liste avec Mistral, tandis que la crypto FR reste domin\u00e9e par des m\u00e9dias s\u00e9rieux. Le Qu\u00e9bec et la diaspora US apportent cette touche trading plus brute."
-  },
-  {
     "ts": "2026-07-29T19:50:34.835958",
     "raw_count": 10,
     "kept_count": 8,
@@ -9110,5 +9072,29 @@
       }
     ],
     "summary": "Un mix de v\u00e9t\u00e9rains (MathieuF31) et de nouveaux profils pointus (Bessac, Boisvert). Fini les vendeurs de r\u00eaves, on vise les constructeurs."
+  },
+  {
+    "ts": "2026-08-17T00:58:57.845152",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Maximeliogand",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le trader retail qui assume ses pertes, l'anti-Mastercoin qui ne vend que son ego."
+      },
+      {
+        "handle": "Reneebelanger",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'analyste technique qu\u00e9b\u00e9cois qui ne se prend pas pour un guru, juste pour un mec avec un tableau blanc."
+      }
+    ],
+    "summary": "Le nord am\u00e9ricain se fait rare en crypto FR, donc le Qu\u00e9bec compense. En France, on a \u00e9vit\u00e9 les influenceurs \u00e0 formations pour rester sur les pros qui assume."
   }
 ]
