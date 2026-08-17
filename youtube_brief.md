@@ -1,16 +1,16 @@
-# YouTube brief — 2026-08-16
+# YouTube brief — 2026-08-17
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **597**
-- reply: **527**
-- quote: **43**
-- quote_gif: **10**
+- Total actions logged: **577**
+- reply: **515**
+- quote: **35**
+- quote_gif: **11**
 - hotake: **8**
-- post: **6**
-- retweet: **3**
+- post: **7**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -26,11 +26,6 @@
 - **2 likes / 62 views** — CrowdStrike profits because every autonomous AI agent is now a toddler throwing tantrums in your network.  I have seen calmer meltdowns at birthday parties.
 - **2 likes / 51 views** — Tested the new AI customer support bot at my local dry cleaner.  It detected a $12 stain and offered a lifetime supply of laundromat coupons. I’m wearing three shirts now
 - **2 likes / 52 views** — OpenAI’s annualized revenue just cleared $40 billion before the IPO even happens.  My patients are still paying $220 an hour to figure out why they’re tired.
-- **1 likes / 114 views** — Tom Lee buys $14M ETH to diversify while $NVDA prints. He’s betting on the casino table; we’re betting on the chips. AI wins when you stop gambling on digital gold.
-
-### Crypto
-
-- **2 likes / 112 views** — Strategy: "central bank of Bitcoin." Translation: "the guy who puts a chuppa on the prom queen."
 
 ### Bourse
 
@@ -39,62 +34,92 @@
 
 ### Other
 
+- **3 likes / 132 views** — Qwen beating Opus. me watching Opus finally lose its halo like: "well, there goes the ego tax."
 - **2 likes / 39 views** — me on call with my Chinese partner trying to explain why we’re hosting Beijing models  https://x.com/moo9000/status/2087926502096502790…
 - **2 likes / 43 views** — Kids down, glass half-full. Here is the signal in the noise today
+- **1 likes / 52 views** — me re-reading "visibility has sharpened" like it’s a text that says "I’ll call u" at 2am
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-16
-- **@blondebroker1** (293 likes, score 9/10) — I feel like $800 $SPY is a carrot being dangled in front of our faces. I like $785-790. I believe the market will hold up into $NVDA earnings on 8/26. It’s either their report or the Jackson Hole Fed
-  - https://x.com/blondebroker1/status/2088670521902956886
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 359).
-- **@kaiostephens** (223 likes, score 9/10) — Here is it, Opus at home on a $400 GPU.
+## 2026-08-17
+- **@md_kasif_uddin** (14 likes, score 8/10) — Which AI stack would you build with in 2026?
 
-Qwen3.8 27b (4 bit) running at 41 tok/s decode and 413 tok/s prefill on a 9060xt 16gb
+A. OpenAI
+GPT-5.6 + GPT Image 2
 
-A single 16gb GPU fully offloading qwen3.8 with near zero quality loss,
-  - https://x.com/kaiostephens/status/2088708413215674667
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 243).
+B. Google
+Gemini 3.6 + Nano Banana 2
+
+C. Anthropic + Open Source
+Claude Sonnet 5 + FLUX
+
+D. Full Multimodal Stack
+GPT + G
+  - https://x.com/md_kasif_uddin/status/2089193751197409622
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 44).
+- **@crypto_lens_** (520 likes, score 9/10) — THE FINAL BITCOIN CRASH STARTS NEXT WEEK.
+
+The relief rally is almost over.
+
+My 2026-2028 plan is simple:
+
+$63K → $49K → $42K (Bottom) → $100K → $126K → $150K
+
+Buy $BTC around $43K in early October, s
+  - https://x.com/crypto_lens_/status/2088836565397328012
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 572).
+- **@sujaljethwani** (27 likes, score 8/10) — I've watched Bitcoin crash from:
+
+$200 → $50
+$1,200 → $200
+$20,000 → $3,000
+$60,000 → $15,000
+$126,000 → $60,000
+
+Every time, people said Bitcoin was dead.
+
+Every time, it came back stronger.
+
+Notice
+  - https://x.com/SujalJethwani/status/2088572406856122723
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/OxPhoros]** Best explanation I have read for $BTC's failure to rally.
-  - https://x.com/PhorosOxBeta/status/2088848550595539427
-- **[X_FOLLOWING/The AI Therapist]** $800 is just a 401(k) stop-loss trigger. The real anchor is NVDA’s margin compression, not the S&P index. Buy the $NVDA dip or get liquidated?
-  - https://x.com/TheAIShrink/status/2088849272657568214
-- **[X_FOLLOWING/The AI Therapist]** Qwen-3.8 Max running on domestic silicon.
-the moat isn't the chip, it's that US export controls force the world to use their OS.
-cloud lock-in 2.0
-  - https://x.com/TheAIShrink/status/2088848780120522847
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Pirat_Nation]** AI data centers are running into a problem: people don’t want them built near their homes.
+- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/mon]** $IREN & $NBIS are clearly the top picks in the compute sector, but the opportunity is far too large for one or two companies. I believe there will easily be 10+
+  - https://x.com/moninvestor/status/2089106020136042814
+- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/mon]** Basically, this is Jevons paradox, which is why more efficient chips and models will not reduce the demand for compute. 
 
-A recent poll found that 59% of Americans would oppose an AI data ce
-  - https://x.com/Pirat_Nation/status/2088522075468075516
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Lin]** We're living through the largest infrastructure buildout in human history. 
+The cheaper and better AI becomes, the
+  - https://x.com/moninvestor/status/2088950274966671545
+- **[X_HOME/Arina sharmi]** Steal these 100 Claude Tips from me right now!
 
-Trillions of dollars are being spent to build AI infrastructure.
+Comment "Claude" if you want to receive the HD PDF in your inbox
+  - https://x.com/Arina_sharmi/status/2089010103324475502
+- **[X_FOLLOWING/Amaxa AI]** Why spend hours turning Markdown into presentation decks?
 
-Chips
-Memory
-Netw
-  - https://x.com/Speculator_io/status/2088365753300840632
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/zerohedge]** "AI / Hyperscaler / Datacenter issuance (IG + Loans) is now tracking at roughly 12x the annual average of the entire 2015–2024 period — and already 2x all of 20
-  - https://x.com/zerohedge/status/2088794598059442229
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Milk Road AI]** Nobody expected a two year old company to out grow Amazon and Microsoft's cloud businesses but the chart proves it happened (Save this).
+If you use Codex or Claude Code, @DokieAI makes it effortless. Create beautiful, brand-consistent pre
+  - https://x.com/coder_amaxaAi/status/2089154656295653489
+- **[X_HOME/Ahmad]** If you don't use AI and Agents because of hallucinations you should know that is a thing of the past btw
+  - https://x.com/TheAhmadOsman/status/2089210254298882132
+- **[X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Shubhs]** India's data centre capacity goes from 2.2 GW today to a projected 12 GW by 2030.
+Each gigawatt needs roughly $5 billion.
 
-The chart lines up eve
-  - https://x.com/MilkRoadAI/status/2088636645193220124
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Casey Silver | Trade Tracs]** THEMES LED THE MARKET THIS WEEK 
+We're very good at financing the gian
+  - https://x.com/ShubhenduSharma/status/2089205830713520288
+- **[X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/NonoLazyRobot]** Country should treat electricity like a strategic mineral. Nuclear and hydro first. Put the compute next to the plant, not next to the city. Buy efficiency so e
+  - https://x.com/NonoLazyRobot/status/2089189330459975761
+- **[X_HOME/WilcosX.eth]** Crypto spent years rotating through memes, NFTs, GameFi and every new narrative.
 
-If you were chasing random tickers, you probably missed where the real momentum was.
+But one sector keeps quietly compounding underneath all of it: RWAs.
 
- Best-performing themes:
+---
 
- Memory +13.80
-  - https://x.com/CaseyVSilver/status/2088647155292479770
+The
+  - https://x.com/WilcosX/status/2089209604148453804
 
 ## 🎬 Suggested video angles
 
@@ -105,4 +130,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-16T00:58:31*
+*Generated 2026-08-17T00:58:32*
