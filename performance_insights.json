@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-17T08:58:31.809077",
-  "window_7d_actions": 4827,
-  "window_24h_actions": 590,
+  "generated_at": "2026-08-17T14:01:10.805647",
+  "window_7d_actions": 4840,
+  "window_24h_actions": 673,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4826
+      "count": 4839
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4826
+      "count": 4839
     }
   ],
   "best_hours_utc": [
@@ -28,65 +28,65 @@
       "actions": 248
     },
     {
+      "hour": 14,
+      "actions": 237
+    },
+    {
       "hour": 15,
       "actions": 237
     },
     {
-      "hour": 14,
-      "actions": 235
-    },
-    {
       "hour": 11,
-      "actions": 227
+      "actions": 231
     },
     {
       "hour": 13,
-      "actions": 227
+      "actions": 231
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2167
+      "count": 2161
     },
     {
       "topic": "IA",
-      "count": 1947
+      "count": 1963
     },
     {
       "topic": "Crypto",
-      "count": 587
+      "count": 592
     },
     {
       "topic": "Bourse",
-      "count": 368
+      "count": 370
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 114
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2154
+      "count": 2160
     },
     {
       "pillar": "other",
-      "count": 1260
+      "count": 1265
     },
     {
       "pillar": "market_trauma",
-      "count": 1158
+      "count": 1162
     },
     {
       "pillar": "meme_reaction",
-      "count": 141
+      "count": 140
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 68
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,19 +96,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 273
+      "count": 306
     },
     {
       "pillar": "other",
-      "count": 151
+      "count": 174
     },
     {
       "pillar": "market_trauma",
-      "count": 144
+      "count": 164
     },
     {
       "pillar": "meme_reaction",
-      "count": 9
+      "count": 16
     },
     {
       "pillar": "reply_bait",
@@ -129,49 +129,49 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.26,
-      "avg_views": 56.0,
+      "posts": 79,
+      "avg_likes": 0.3,
+      "avg_views": 54.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 68,
-      "avg_likes": 0.24,
-      "avg_views": 61.6,
+      "avg_likes": 0.22,
+      "avg_views": 61.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.1,
-      "avg_views": 54.2,
+      "posts": 40,
+      "avg_likes": 0.12,
+      "avg_views": 53.2,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 8,
+      "posts": 9,
       "avg_likes": 0.0,
-      "avg_views": 50.6,
+      "avg_views": 48.9,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4298
+      "count": 4308
     },
     {
       "type": "quote",
-      "count": 304
+      "count": 305
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 113
     },
     {
       "type": "post",
-      "count": 56
+      "count": 57
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-17T08:58:14.907157",
-      "text": "Le piège de « la même pour les villes en France », c’est que localement rien n’est vraiment « la même » : la SERP, la densité, la concurrence et l’intention changent d’une ville à l’autre.",
+      "ts": "2026-08-17T14:01:08.729541",
+      "text": "Btc flows into the ETF. sp500 gets propped by nvda earnings. you like it because it’s the only clean chart on your screen.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T08:57:42.654392",
-      "text": "Jensen selling shovels in a gold rush is fine. Jensen claiming he invented gold is the $5T mistake.",
+      "ts": "2026-08-17T14:00:09.575883",
+      "text": "Jensen is buying land and shells before the GPUs arrive. the real play isn't the compute. it's the rent he'll charge on power they've already secured.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T08:55:32.631163",
-      "text": "Gold flipped treasuries. the real story isn't inflation, it's that 401k Dave finally realized cash has a maturity date.",
+      "ts": "2026-08-17T13:59:51.886351",
+      "text": "Nvidia just bought $21B of its own supply chain.\n\n$SPCX is essentially a Nvidia put option with wings.",
       "type": "reply"
     }
   ]

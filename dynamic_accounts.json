@@ -1930,7 +1930,15 @@
     "mickd75",
     "Julien_Dev",
     "JF_Dumais",
-    "PierreDionneQC"
+    "PierreDionneQC",
+    "PierreCyril",
+    "Bounga",
+    "MaximeBnB",
+    "Lamaziere",
+    "RoxanaB",
+    "BourseFR",
+    "TheAICanadian",
+    "ParisVC"
   ],
   "en": [
     "Chubby",
@@ -13970,6 +13978,46 @@
     {
       "lang": "fr",
       "handle": "PierreDionneQC",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCyril",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bounga",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBnB",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lamaziere",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RoxanaB",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseFR",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAICanadian",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ParisVC",
       "added": "2026-08-17"
     }
   ]
