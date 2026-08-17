@@ -1938,7 +1938,11 @@
     "RoxanaB",
     "BourseFR",
     "TheAICanadian",
-    "ParisVC"
+    "ParisVC",
+    "HuggingFace",
+    "ThibaultDela",
+    "Ludo4764",
+    "JulienLeloup"
   ],
   "en": [
     "Chubby",
@@ -2337,7 +2341,9 @@
     "Hectoroz",
     "Gitana",
     "AG",
-    "Areeba"
+    "Areeba",
+    "Cursor",
+    "David"
   ],
   "history": [
     {
@@ -14018,6 +14024,36 @@
     {
       "lang": "fr",
       "handle": "ParisVC",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Cursor",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "en",
+      "handle": "David",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuggingFace",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultDela",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludo4764",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeloup",
       "added": "2026-08-17"
     }
   ]

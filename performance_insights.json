@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-17T14:01:10.805647",
-  "window_7d_actions": 4840,
-  "window_24h_actions": 673,
+  "generated_at": "2026-08-17T18:01:10.782279",
+  "window_7d_actions": 4848,
+  "window_24h_actions": 735,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4839
+      "count": 4847
     },
     {
       "pattern": "METAPHOR",
@@ -19,21 +19,21 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4839
+      "count": 4847
     }
   ],
   "best_hours_utc": [
     {
       "hour": 16,
-      "actions": 248
+      "actions": 244
     },
     {
       "hour": 14,
-      "actions": 237
+      "actions": 240
     },
     {
       "hour": 15,
-      "actions": 237
+      "actions": 239
     },
     {
       "hour": 11,
@@ -47,11 +47,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2161
+      "count": 2166
     },
     {
       "topic": "IA",
-      "count": 1963
+      "count": 1965
     },
     {
       "topic": "Crypto",
@@ -59,18 +59,18 @@
     },
     {
       "topic": "Bourse",
-      "count": 370
+      "count": 366
     },
     {
       "topic": "Spatial",
-      "count": 114
+      "count": 115
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2160
+      "count": 2169
     },
     {
       "pillar": "other",
@@ -78,45 +78,45 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1162
+      "count": 1161
     },
     {
       "pillar": "meme_reaction",
-      "count": 140
+      "count": 139
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 306
+      "count": 335
     },
     {
       "pillar": "other",
-      "count": 174
+      "count": 189
     },
     {
       "pillar": "market_trauma",
-      "count": 164
+      "count": 175
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.3,
-      "avg_views": 54.8,
+      "posts": 78,
+      "avg_likes": 0.27,
+      "avg_views": 53.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.22,
-      "avg_views": 61.5,
+      "posts": 71,
+      "avg_likes": 0.21,
+      "avg_views": 59.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.12,
-      "avg_views": 53.2,
+      "posts": 38,
+      "avg_likes": 0.13,
+      "avg_views": 54.1,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4308
+      "count": 4317
     },
     {
       "type": "quote",
-      "count": 305
+      "count": 307
     },
     {
       "type": "quote_gif",
-      "count": 113
+      "count": 111
     },
     {
       "type": "post",
@@ -175,7 +175,7 @@
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 42
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-17T14:01:08.729541",
-      "text": "Btc flows into the ETF. sp500 gets propped by nvda earnings. you like it because it’s the only clean chart on your screen.",
+      "ts": "2026-08-17T17:59:23.046810",
+      "text": "Anthropic doubles limits twice then freezes them.\nthe cost of inference just crossed the willingness to pay.\nclaude code is a loss leader, not a product.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T14:00:09.575883",
-      "text": "Jensen is buying land and shells before the GPUs arrive. the real play isn't the compute. it's the rent he'll charge on power they've already secured.",
+      "ts": "2026-08-17T17:57:23.393031",
+      "text": "AMD at 10x forward earnings. They're selling you the second-best shovel at half the price.\nThe real story: Nvidia taxes you to be the best. AMD taxes you to be smart.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T13:59:51.886351",
-      "text": "Nvidia just bought $21B of its own supply chain.\n\n$SPCX is essentially a Nvidia put option with wings.",
+      "ts": "2026-08-17T17:57:07.262176",
+      "text": "Anthropic claims $65B run rate but OpenAI burns $5B a year.\n\nThat implies Claude’s efficiency is either magic or their revenue is mostly forward-looking contracts.\n\nEither way, the valuation is betting on scale, not sanity.",
       "type": "reply"
     }
   ]

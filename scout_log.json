@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-30T03:49:55.697990",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RomainDartigue",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 58000,
-        "reason": "Journaliste \u00e0 CoinDesk, il couvre le march\u00e9 crypto avec rigueur. Z\u00e9ro token shitter, des news v\u00e9rifi\u00e9es et des threads bien construits."
-      },
-      {
-        "handle": "MarcBouchard",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 34000,
-        "reason": "Le roi de l'\u00e9ducation boursi\u00e8re \u00e0 Montr\u00e9al. Il poste des analyses sectorielles claires, ignore les coins obscure et garde sa communaut\u00e9 fid\u00e8le sans les vendanger."
-      },
-      {
-        "handle": "JulienPascal",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Founder bas\u00e9 \u00e0 NYC qui twitte en fran\u00e7ais sur la Silicon Valley. Il a l'angle ext\u00e9rieur, mordant et pas trop pris au s\u00e9rieux."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' crypto pour trouver des techniciens et journalistes qui pondent de la valeur. Pas de Telegram VIP, juste des cerveaux qui tweetent en fran\u00e7ais."
-  },
-  {
-    "ts": "2026-07-30T05:50:11.566391",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaxBiscain",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 155000,
-        "reason": "La r\u00e9f\u00e9rence francophone, ex-consenseus, twitte en FR, pas de formation \u00e0 2000\u20ac."
-      },
-      {
-        "handle": "JulienDeRosnay",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Fondateur de LLM Lab, d\u00e9cortique la tech IA plus finement que la plupart des gurus."
-      },
-      {
-        "handle": "ThomasLahaye",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'analyste technique qu\u00e9b\u00e9cois incontournable, charte propre et trading sans filtre."
-      },
-      {
-        "handle": "JulesCoutant",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Am\u00e9ricain bas\u00e9 NYC qui tweete en FR avec un humour sec sur la DeFi et les cycles."
-      },
-      {
-        "handle": "NathanHediger",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le Qu\u00e9b\u00e9cois qui cartonne, focus Solana/DeFi, ton direct et sans blabla corporate."
-      }
-    ],
-    "summary": "L'IA fran\u00e7aise p\u00e8se lourd (Mistral), la crypto reste domin\u00e9e par les pros historiques (Biscain/Rossel) et le Qu\u00e9bec offre la p\u00e9pite trading de Lahaye."
-  },
-  {
     "ts": "2026-07-30T07:50:10.734847",
     "raw_count": 8,
     "kept_count": 6,
@@ -9061,5 +8985,53 @@
       }
     ],
     "summary": "Le top 5 FR/QC IA/Crypto/Bourse. Des vrais nerds, pas des influenceurs qui sourient \u00e0 la cam\u00e9ra."
+  },
+  {
+    "ts": "2026-08-17T14:02:06.029936",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HuggingFace",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 150000,
+        "reason": "Bas\u00e9s \u00e0 NYC mais co-fond\u00e9s par des Fran\u00e7ais, ils diffusent la gospel open source avec une efficacit\u00e9 militaire."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rons crypto fr et les new-rules de l'IA, avec une belle couverture qu\u00e9b\u00e9coise qui manque souvent dans les listes US."
+  },
+  {
+    "ts": "2026-08-17T16:01:41.931234",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaultDela",
+        "region": "france",
+        "niche": "tech",
+        "followers": 95000,
+        "reason": "Le roi des threads tech en FR. Pas que de la finance, mais ses vues sur les GAFAM et l'IA font bouger les lignes."
+      },
+      {
+        "handle": "Ludo4764",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 70000,
+        "reason": "L'incontournable. Il couvre tout : macro, actions, tech. Le seul qui fait de l'analyse fine sans vendre du r\u00eave sur Telegram."
+      },
+      {
+        "handle": "JulienLeloup",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Ancien trader, aujourd'hui analyste ind\u00e9pendant. Ses threads sur l'\u00e9valuation des startups tech et SaaS sont les plus pertinentes du march\u00e9 FR."
+      }
+    ],
+    "summary": "Je sature pas le feed avec des vendeurs de r\u00eave. J'ai filtr\u00e9 pour ne garder que ceux qui ont du fond : Ludo pour la macro/bourse, Thibault pour la tech g\u00e9n\u00e9rale, Julien pour l'analyse fondamentale tech, et Mistral pour l'IA. Le Qu\u00e9bec est mieux couvert par un visionnaire infra (Alex) que par un trader classique."
   }
 ]
