@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-07-29T19:50:34.835958",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Pablo77777777",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 132000,
-        "reason": "Le pape de la hype crypto FR. Vends du r\u00eave depuis 2017, couvre tout de l'IA au DeFi avec une \u00e9nergie insoutenable."
-      },
-      {
-        "handle": "RomainMou",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Cr\u00e9ateur de la cha\u00eene 'Le Trading' sur YouTube. Son X est un flux continu de setups et de psychologie de march\u00e9."
-      },
-      {
-        "handle": "BenjaminLevy",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "La r\u00e9f\u00e9rence pour l'analyse fondamentale fran\u00e7aise. Moins flashy que Romain, mais plus s\u00e9rieux sur les bilans et les secteurs."
-      },
-      {
-        "handle": "MathieuVig",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Co-fondateur de Mistral AI. Le genre de mec qui tweet sur la tech pure sans avoir l'air de se vendre lui-m\u00eame."
-      },
-      {
-        "handle": "LuisFalcon",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 40000,
-        "reason": "Bien qu'install\u00e9 \u00e0 NYC, Falcon est une institution francophone dans la tech. Ses vues sur l'IA et le capital-risque sont toujours fra\u00eeches."
-      },
-      {
-        "handle": "JulesCarron",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Journaliste tech @LesEchos. Ses threads sur l'IA ne sont pas que du buzz, il creuse vraiment les mod\u00e8les et les acteurs."
-      },
-      {
-        "handle": "RomainDumais",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Product leader bas\u00e9 aux USA mais qui tweet r\u00e9guli\u00e8rement en fran\u00e7ais sur la SaaS, la croissance et l'IA dans la tech US."
-      },
-      {
-        "handle": "MaximeValliere",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Fondateur de Qora.ai. Tweet sur l'IA de A \u00e0 Z, du code aux business models, avec une touche pragmatique qu\u00e9b\u00e9coise."
-      }
-    ],
-    "summary": "Le top FR est domin\u00e9 par les poids lourds de la crypto et de l'analyse boursi\u00e8re classique, tandis que le Qu\u00e9bec et les USA offrent des p\u00e9pites plus 'builder' et tech-focused qui compl\u00e8tent bien le profil."
-  },
-  {
     "ts": "2026-07-29T21:50:03.636141",
     "raw_count": 5,
     "kept_count": 5,
@@ -9096,5 +9030,50 @@
       }
     ],
     "summary": "Le nord am\u00e9ricain se fait rare en crypto FR, donc le Qu\u00e9bec compense. En France, on a \u00e9vit\u00e9 les influenceurs \u00e0 formations pour rester sur les pros qui assume."
+  },
+  {
+    "ts": "2026-08-17T02:59:19.013905",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MorganHousel",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 400000,
+        "reason": "Bien qu'am\u00e9ricain, sa prose sur la psychologie de l'argent est traduite et adopt\u00e9e par la diaspora FR. Ses posts sont des aphorismes sur la richesse que chacun should avoir en signature."
+      },
+      {
+        "handle": "CyrilDonghi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'instituteur qui a d\u00e9croch\u00e9 sa prime pour acheter des ETH en 2013. Il twitte en fran\u00e7ais, analyse le cycle sans verser dans le 'moonboy' agressif, et reste pertinent sur les fondamentaux."
+      },
+      {
+        "handle": "PierreDuguay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le prof de finance qui a convaincu ses \u00e9tudiants de devenir riches. Ses threads sont des cours magistraux : lisibilit\u00e9 maximale, z\u00e9ro jargon inutile, 100% applicable."
+      },
+      {
+        "handle": "L3onCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Le gars qui a vendu son immeuble pour faire du full crypto. Son style est direct, ses threads sur la liquidit\u00e9 et le rendement sont des p\u00e9pites pour les traders FR s\u00e9rieux."
+      },
+      {
+        "handle": "CyrilSavard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'analyste on-chain qu\u00e9b\u00e9cois. Il voit les flux avant que le march\u00e9 ne r\u00e9agisse. Moins de buzz, plus de donn\u00e9es concr\u00e8tes sur les mouvements institutionnels."
+      }
+    ],
+    "summary": "Un mix solide entre les v\u00e9t\u00e9rans de la crypto FR (Donghi, L3on) et les poids lourds de l'analyse qu\u00e9b\u00e9coise (Dionne, Duguay) pour un \u00e9quilibre parfaite entre volatilit\u00e9 crypto et patience boursi\u00e8re. On garde un \u0153il sur Mistral et le tech scout floch pour la partie narrative."
   }
 ]

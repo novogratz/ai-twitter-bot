@@ -1921,7 +1921,12 @@
     "L3oCrypto",
     "JeroenBoisvert",
     "Maximeliogand",
-    "Reneebelanger"
+    "Reneebelanger",
+    "MorganHousel",
+    "CyrilDonghi",
+    "PierreDuguay",
+    "L3onCrypto",
+    "CyrilSavard"
   ],
   "en": [
     "Chubby",
@@ -13916,6 +13921,31 @@
     {
       "lang": "fr",
       "handle": "Reneebelanger",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganHousel",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDonghi",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDuguay",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3onCrypto",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilSavard",
       "added": "2026-08-17"
     }
   ]
