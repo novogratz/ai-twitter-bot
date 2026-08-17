@@ -20,6 +20,7 @@ import urllib.request
 from datetime import datetime
 
 from .config import _PROJECT_ROOT
+from .json_safety import sanitize_for_json
 from .logger import log
 
 SIGNAL_FILE = os.path.join(_PROJECT_ROOT, "external_signal.json")
@@ -138,7 +139,7 @@ def run_signal_cycle():
     }
     try:
         with open(SIGNAL_FILE, "w") as f:
-            json.dump(payload, f, indent=2, ensure_ascii=False)
+            json.dump(sanitize_for_json(payload), f, indent=2, ensure_ascii=False)
         log.info(f"[HN-SIGNAL] Wrote {len(unique)} items.")
     except Exception:
         log.info("[HN-SIGNAL] Failed to write signal file:")

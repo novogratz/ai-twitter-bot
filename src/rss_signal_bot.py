@@ -30,6 +30,7 @@ from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
 
 from .config import _PROJECT_ROOT
+from .json_safety import sanitize_for_json
 from .logger import log
 
 SIGNAL_FILE = os.path.join(_PROJECT_ROOT, "external_signal.json")
@@ -205,7 +206,7 @@ def _load_existing_signal() -> dict:
         return {"items": []}
     try:
         with open(SIGNAL_FILE, "r") as f:
-            return json.load(f) or {"items": []}
+            return sanitize_for_json(json.load(f) or {"items": []})
     except Exception:
         return {"items": []}
 
@@ -249,7 +250,7 @@ def run_rss_signal_cycle():
     }
     try:
         with open(SIGNAL_FILE, "w") as f:
-            json.dump(payload, f, indent=2, ensure_ascii=False)
+            json.dump(sanitize_for_json(payload), f, indent=2, ensure_ascii=False)
         log.info(f"[RSS] Wrote {len(merged)} merged items to external_signal.json.")
     except Exception:
         log.info("[RSS] Failed to write signal file:")

@@ -190,6 +190,26 @@ def test_save_tweet_idempotent(monkeypatch, tmp_path):
     assert len(history.load_history()) == 1
 
 
+# --- scraped JSON safety ------------------------------------------------------
+
+def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
+    from src.json_safety import sanitize_for_json
+
+    payload = {
+        "items": [{
+            "title": "AI math \ud835 signal",
+            "url": "https://x.com/u/status/1",
+        }]
+    }
+    safe = sanitize_for_json(payload)
+    assert "\ud835" not in safe["items"][0]["title"]
+
+    out = tmp_path / "signal.json"
+    with out.open("w", encoding="utf-8") as f:
+        json.dump(safe, f, indent=2, ensure_ascii=False)
+    assert "AI math  signal" in out.read_text(encoding="utf-8")
+
+
 # --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
 
 def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):

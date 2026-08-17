@@ -10,6 +10,7 @@ import urllib.parse
 from datetime import datetime
 import webbrowser
 from .config import BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
+from .json_safety import sanitize_for_json
 from .logger import log
 
 # Global lock: only one bot can use Safari at a time.
@@ -75,6 +76,11 @@ def _trigger_black_screen_recovery(reason_detail: str) -> None:
                 log.warning(f"[SCRAPE] Black-screen recovery crashed ({reason_detail}): {e}")
     finally:
         _blank_recovery_lock.release()
+
+
+def _record_timed_out_scrape(label: str) -> None:
+    """Treat repeated Safari JS timeouts like blank X renders."""
+    _record_blank_page(is_home_feed="home feed" in label, label=label)
 
 
 def _record_blank_page(is_home_feed: bool = False, label: str = ""):
@@ -1664,9 +1670,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
                 result = _try_once(30)
             except subprocess.TimeoutExpired:
                 log.info(f"[SCRAPE] Both attempts timed out for {label}.")
+                _record_timed_out_scrape(label)
                 return []
-
-        os.unlink(tmp.name)
 
         raw = result.stdout.strip()
         if result.returncode != 0:
@@ -1681,7 +1686,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             _record_blank_page(is_home_feed="home feed" in label, label=label)
             return []
 
-        data = _json.loads(raw)
+        data = sanitize_for_json(_json.loads(raw))
         tweets = [{
             "url": t["u"],
             "text": t["t"],
@@ -1702,11 +1707,13 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
         return tweets
     except Exception as e:
         log.info(f"[SCRAPE] Exception for {label}: {e}")
+        _record_blank_page(is_home_feed="home feed" in label, label=label)
+        return []
+    finally:
         try:
             os.unlink(tmp.name)
         except OSError:
             pass
-        return []
 
 
 def _scroll_page():

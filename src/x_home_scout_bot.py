@@ -24,6 +24,7 @@ import traceback
 from datetime import datetime
 
 from .config import _PROJECT_ROOT
+from .json_safety import sanitize_for_json
 from .logger import log
 from .twitter_client import scrape_following_feed, scrape_home_feed, scrape_x_search
 from .rss_signal_bot import NICHE_HITS, SIGNAL_FILE
@@ -46,7 +47,7 @@ def _load_existing() -> dict:
         return {"items": []}
     try:
         with open(SIGNAL_FILE, "r") as f:
-            return json.load(f) or {"items": []}
+            return sanitize_for_json(json.load(f) or {"items": []})
     except Exception:
         return {"items": []}
 
@@ -132,7 +133,7 @@ def run_home_scout_cycle():
     }
     try:
         with open(SIGNAL_FILE, "w") as f:
-            json.dump(payload, f, indent=2, ensure_ascii=False)
+            json.dump(sanitize_for_json(payload), f, indent=2, ensure_ascii=False)
         log.info(f"[X-FEED] Wrote {len(items)} feed/search items, "
                  f"{len(merged)} total in signal.")
     except Exception:
