@@ -1905,7 +1905,11 @@
     "LuisFalconC1",
     "PierreDorsey",
     "JulesDumoulin",
-    "LamarkM"
+    "LamarkM",
+    "BenjamMinich",
+    "Laurie_Ruel",
+    "TanguyMauger",
+    "JulesMansuy"
   ],
   "en": [
     "Chubby",
@@ -2300,7 +2304,9 @@
     "OrcaRouter",
     "toly",
     "Eleanor",
-    "Colander"
+    "Colander",
+    "Hectoroz",
+    "Gitana"
   ],
   "history": [
     {
@@ -13796,6 +13802,36 @@
     {
       "lang": "fr",
       "handle": "LamarkM",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Hectoroz",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Gitana",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjamMinich",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Laurie_Ruel",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyMauger",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesMansuy",
       "added": "2026-08-16"
     }
   ]

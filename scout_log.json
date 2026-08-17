@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-29T11:50:30.874650",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "R0B_Satoshi",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 205000,
-        "reason": "Le roi du franglais financier. Il explique la macro crypto comme un mec qui vous explique comment sa femme l'a quitt\u00e9e : avec trop de d\u00e9tails et un peu de cynisme."
-      },
-      {
-        "handle": "SarkisSalibian",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le mec qui a vu venir tout et son contraire. Il twitte en anglais avec des touches de fran\u00e7ais, comme un chef \u00e9toil\u00e9 qui vous dit que la sauce a rat\u00e9 mais que c'est bon quand m\u00eame."
-      },
-      {
-        "handle": "BourgeoisAdrien",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le type qui transforme 'J'ai boss\u00e9 sur un script Python' en carri\u00e8re internationale. Il prouve qu'on peut \u00eatre fran\u00e7ais et avoir un accent 'Silicon Valley' tout en restant cultiv\u00e9."
-      },
-      {
-        "handle": "LefebvreMaxime",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Le prof qu\u00e9b\u00e9cois qui rend la bourse digestible sans \u00eatre fade. Il a le don de faire croire aux n\u00e9ophytes qu'ils comprennent le march\u00e9 alors qu'ils font juste du 'feel-good investing'."
-      }
-    ],
-    "summary": "Un mix parfait entre la rigueur technique fran\u00e7aise, l'humour d\u00e9cal\u00e9 qu\u00e9b\u00e9cois et l'ambition US des francophones de l'\u00e9tranger. Pas de vendeurs de r\u00eave \u00e0 997\u20ac, juste des vrais profils qui font avancer le d\u00e9bat."
-  },
-  {
     "ts": "2026-07-29T13:50:02.542699",
     "raw_count": 10,
     "kept_count": 8,
@@ -9117,5 +9079,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que des constructeurs : les fondateurs de Mistral, Scale AI et les journalistes ind\u00e9pendants qui font le vrai travail d'analyse."
+  },
+  {
+    "ts": "2026-08-16T18:59:01.616718",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjamMinich",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le pro du d\u00e9cryptage macro qui ne se prend pas la t\u00eate. Il rend la finance accessible sans \u00eatre condescendant."
+      },
+      {
+        "handle": "Laurie_Ruel",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "La star des IA agents \u00e0 Montr\u00e9al, twitte en FR sur le framer, l'AGI et le futur du travail. Pas de pub Telegram."
+      },
+      {
+        "handle": "TanguyMauger",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Le patron de Qonto. Il tweete la fintech et le business FR avec le cynisme n\u00e9cessaire pour \u00eatre \u00e9cout\u00e9."
+      },
+      {
+        "handle": "JulesMansuy",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Tech lead \u00e0 Doctolib. Il explique la tech backend/frontend avec un humour qui fait mal aux yeux. Pas de 'growth hacking'."
+      },
+      {
+        "handle": "VincentTartaglia",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "La r\u00e9f\u00e9rence crypto FR aux USA. Analyse on-chain profonde mais lisible, sans jargon incompr\u00e9hensible."
+      }
+    ],
+    "summary": "Le march\u00e9 FR est satur\u00e9 de formateurs, ces 5 comptes apportent de la vraie expertise technique ou analytique sans vendre de r\u00eave. Le Qu\u00e9bec brille par sa densit\u00e9 de talents IA, la France par sa fintech, et les USA par nos exil\u00e9s crypto."
   }
 ]

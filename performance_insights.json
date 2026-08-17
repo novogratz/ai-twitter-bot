@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-16T16:58:31.609978",
-  "window_7d_actions": 4927,
-  "window_24h_actions": 578,
+  "generated_at": "2026-08-16T20:58:31.642520",
+  "window_7d_actions": 4940,
+  "window_24h_actions": 572,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4926
+      "count": 4939
     },
     {
       "pattern": "METAPHOR",
@@ -19,13 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4926
+      "count": 4939
     }
   ],
   "best_hours_utc": [
     {
       "hour": 16,
-      "actions": 249
+      "actions": 248
     },
     {
       "hour": 15,
@@ -47,34 +47,34 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2225
+      "count": 2228
     },
     {
       "topic": "IA",
-      "count": 1953
+      "count": 1967
     },
     {
       "topic": "Crypto",
-      "count": 591
+      "count": 593
     },
     {
       "topic": "Bourse",
-      "count": 385
+      "count": 387
     },
     {
       "topic": "Spatial",
-      "count": 127
+      "count": 123
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2165
+      "count": 2187
     },
     {
       "pillar": "other",
-      "count": 1309
+      "count": 1302
     },
     {
       "pillar": "market_trauma",
@@ -86,7 +86,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 73
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,23 +96,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 279
+      "count": 286
     },
     {
       "pillar": "other",
-      "count": 144
+      "count": 138
     },
     {
       "pillar": "market_trauma",
-      "count": 130
+      "count": 125
     },
     {
       "pillar": "meme_reaction",
-      "count": 14
+      "count": 13
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
@@ -122,48 +122,48 @@
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 2,
-      "avg_likes": 1.5,
-      "avg_views": 77.0,
+      "posts": 3,
+      "avg_likes": 1.0,
+      "avg_views": 64.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 80,
-      "avg_likes": 0.26,
-      "avg_views": 54.0,
+      "posts": 77,
+      "avg_likes": 0.27,
+      "avg_views": 55.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 76,
-      "avg_likes": 0.22,
-      "avg_views": 59.3,
+      "posts": 75,
+      "avg_likes": 0.21,
+      "avg_views": 59.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
-      "avg_likes": 0.12,
-      "avg_views": 49.4,
+      "posts": 36,
+      "avg_likes": 0.11,
+      "avg_views": 51.3,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 7,
+      "posts": 8,
       "avg_likes": 0.0,
-      "avg_views": 48.1,
+      "avg_views": 50.6,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4374
+      "count": 4388
     },
     {
       "type": "quote",
-      "count": 314
+      "count": 315
     },
     {
       "type": "quote_gif",
@@ -171,7 +171,7 @@
     },
     {
       "type": "post",
-      "count": 62
+      "count": 60
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-16T16:57:51.419288",
-      "text": "me quietly assuming SoftBank’s just the landlord of this $3B love letter and $NVDA is the one writing checks to the ex 😭",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-16T16:57:34.679395",
-      "text": "Open-weight turns the marginal cost of intelligence from $20/hour to $0.002.\n\nThe real story is that the moat isn't the model anymore. It's the distribution.",
+      "ts": "2026-08-16T20:58:25.482039",
+      "text": "Saylor’s avg cost is $67k. down 50% from all-time highs still means you’re up 400% from where he bought. you’re not losing money, you’re just losing against a maniac with a spreadsheet.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-16T16:57:18.562006",
-      "text": "Openai 80% price cut. the margin squeeze on everyone else just began.\n\nthe winner is the one who ships before the bill comes due.",
+      "ts": "2026-08-16T20:54:34.884258",
+      "text": "Boomers hoarding data like hamsters. I’m just letting the AI steal the show.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-16T20:51:05.840026",
+      "text": "AI is already replacing 40% of entry-level coding interviews.\nthe people most worried about AI are the ones who've never tried to ship with it.",
       "type": "reply"
     }
   ]
