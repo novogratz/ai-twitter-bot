@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-17T04:58:31.609795",
-  "window_7d_actions": 4869,
-  "window_24h_actions": 581,
+  "generated_at": "2026-08-17T08:58:31.809077",
+  "window_7d_actions": 4827,
+  "window_24h_actions": 590,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4868
+      "count": 4826
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4868
+      "count": 4826
     }
   ],
   "best_hours_utc": [
@@ -47,7 +47,7 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2194
+      "count": 2167
     },
     {
       "topic": "IA",
@@ -55,68 +55,68 @@
     },
     {
       "topic": "Crypto",
-      "count": 593
+      "count": 587
     },
     {
       "topic": "Bourse",
-      "count": 370
+      "count": 368
     },
     {
       "topic": "Spatial",
-      "count": 116
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2162
+      "count": 2154
     },
     {
       "pillar": "other",
-      "count": 1278
+      "count": 1260
     },
     {
       "pillar": "market_trauma",
-      "count": 1173
+      "count": 1158
     },
     {
       "pillar": "meme_reaction",
-      "count": 143
+      "count": 141
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 43
+      "count": 45
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 275
+      "count": 273
     },
     {
       "pillar": "other",
-      "count": 150
+      "count": 151
     },
     {
       "pillar": "market_trauma",
-      "count": 137
+      "count": 144
     },
     {
       "pillar": "meme_reaction",
-      "count": 10
+      "count": 9
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.28,
-      "avg_views": 55.9,
+      "posts": 81,
+      "avg_likes": 0.26,
+      "avg_views": 56.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.22,
-      "avg_views": 59.6,
+      "posts": 68,
+      "avg_likes": 0.24,
+      "avg_views": 61.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
-      "avg_likes": 0.11,
-      "avg_views": 50.2,
+      "posts": 39,
+      "avg_likes": 0.1,
+      "avg_views": 54.2,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4333
+      "count": 4298
     },
     {
       "type": "quote",
-      "count": 307
+      "count": 304
     },
     {
       "type": "quote_gif",
-      "count": 114
+      "count": 112
     },
     {
       "type": "post",
-      "count": 59
+      "count": 56
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 43
     },
     {
       "type": "retweet",
@@ -184,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-17T04:55:59.648173",
-      "text": "Luna’s constraint isn’t a bug, it’s the only thing keeping inference costs lower than Solana’s. Astra just needs to match that efficiency before the hardware catches up.",
+      "ts": "2026-08-17T08:58:14.907157",
+      "text": "Le piège de « la même pour les villes en France », c’est que localement rien n’est vraiment « la même » : la SERP, la densité, la concurrence et l’intention changent d’une ville à l’autre.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T04:55:26.647801",
-      "text": "Agents need cheap rails. x402 replaces API keys with wallet addresses.\n\nThe SaaS seat model just got disrupted by the crypto block.",
+      "ts": "2026-08-17T08:57:42.654392",
+      "text": "Jensen selling shovels in a gold rush is fine. Jensen claiming he invented gold is the $5T mistake.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T04:52:30.789572",
-      "text": "Yann, you didn’t win. You just got better at the anxiety. 🛋️",
-      "type": "quote"
+      "ts": "2026-08-17T08:55:32.631163",
+      "text": "Gold flipped treasuries. the real story isn't inflation, it's that 401k Dave finally realized cash has a maturity date.",
+      "type": "reply"
     }
   ]
 }

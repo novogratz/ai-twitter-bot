@@ -1926,7 +1926,11 @@
     "CyrilDonghi",
     "PierreDuguay",
     "L3onCrypto",
-    "CyrilSavard"
+    "CyrilSavard",
+    "mickd75",
+    "Julien_Dev",
+    "JF_Dumais",
+    "PierreDionneQC"
   ],
   "en": [
     "Chubby",
@@ -13946,6 +13950,26 @@
     {
       "lang": "fr",
       "handle": "CyrilSavard",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickd75",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Julien_Dev",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JF_Dumais",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDionneQC",
       "added": "2026-08-17"
     }
   ]
