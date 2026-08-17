@@ -1909,7 +1909,17 @@
     "BenjamMinich",
     "Laurie_Ruel",
     "TanguyMauger",
-    "JulesMansuy"
+    "JulesMansuy",
+    "mister_tamim",
+    "jchamson",
+    "thibautbailly",
+    "morgue0x",
+    "sylvain_gagnon",
+    "mickael_bour",
+    "daniel_fabiano",
+    "MathieuF31",
+    "L3oCrypto",
+    "JeroenBoisvert"
   ],
   "en": [
     "Chubby",
@@ -2306,7 +2316,9 @@
     "Eleanor",
     "Colander",
     "Hectoroz",
-    "Gitana"
+    "Gitana",
+    "AG",
+    "Areeba"
   ],
   "history": [
     {
@@ -13832,6 +13844,66 @@
     {
       "lang": "fr",
       "handle": "JulesMansuy",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "en",
+      "handle": "AG",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Areeba",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "mister_tamim",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "jchamson",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibautbailly",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "morgue0x",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "sylvain_gagnon",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_bour",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "daniel_fabiano",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuF31",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3oCrypto",
+      "added": "2026-08-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeroenBoisvert",
       "added": "2026-08-16"
     }
   ]

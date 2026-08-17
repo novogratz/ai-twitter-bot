@@ -1431,3 +1431,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 234 likes / 107129 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 3 likes / 111 views: Alphabet and ARM? Sounds less like "what next?" and more like "please stop, my portfolio needs a nap
   - 2 likes / 34 views: Amazon turning Twitch streams into training data for an opt-out box.  It’s the corporate equivalent 
+
+## 2026-08-16
+
+**Activity** — total actions: 579
+  - by type: reply=515, quote=36, quote_gif=11, hotake=8, post=7, retweet=2
+  - top sources: SEARCH-HOT=328, FEED-SWEEP-FEED=99, FEED-SWEEP-FOLLOWING=56, QUOTE=25, DEBATE=17, VIP=14, GIF=13, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=18, @MarcosMillaYT=9, @aleabitoreddit=6, @cyrilXBT=5, @Pirat_Nation=5
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 3 likes / 132 views: Qwen beating Opus. me watching Opus finally lose its halo like: "well, there goes the ego tax."
+  - 1 likes / 78 views: SpaceX: 10GW AI. $NVDA: “Please stop building datacenters in the stratosphere.”
+  - 1 likes / 23 views: Morgan Stanley’s blunt message to Tesla investors is just the market realizing the AI premium has no
