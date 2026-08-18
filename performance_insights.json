@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-18T02:01:10.793341",
-  "window_7d_actions": 4818,
-  "window_24h_actions": 800,
+  "generated_at": "2026-08-18T06:01:11.102013",
+  "window_7d_actions": 4821,
+  "window_24h_actions": 842,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4817
+      "count": 4820
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4817
+      "count": 4820
     }
   ],
   "best_hours_utc": [
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2179
+      "count": 2197
     },
     {
       "topic": "IA",
-      "count": 1926
+      "count": 1917
     },
     {
       "topic": "Crypto",
-      "count": 574
+      "count": 565
     },
     {
       "topic": "Bourse",
-      "count": 375
+      "count": 378
     },
     {
       "topic": "Spatial",
@@ -70,53 +70,53 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2127
+      "count": 2117
     },
     {
       "pillar": "other",
-      "count": 1275
+      "count": 1283
     },
     {
       "pillar": "market_trauma",
-      "count": 1170
+      "count": 1179
     },
     {
       "pillar": "meme_reaction",
-      "count": 137
+      "count": 135
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 68
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 40
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 354
+      "count": 366
     },
     {
       "pillar": "other",
-      "count": 216
+      "count": 226
     },
     {
       "pillar": "market_trauma",
-      "count": 196
+      "count": 215
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 21
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -131,21 +131,21 @@
       "pillar": "ai_news_take",
       "posts": 73,
       "avg_likes": 0.29,
-      "avg_views": 55.6,
+      "avg_views": 55.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 74,
       "avg_likes": 0.22,
-      "avg_views": 58.7,
+      "avg_views": 58.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 39,
       "avg_likes": 0.1,
-      "avg_views": 54.9,
+      "avg_views": 54.8,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4296
+      "count": 4301
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 109
+      "count": 107
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-18T01:59:07.338776",
-      "text": "Pixel to action sounds like a workflow.\ninference costs are the rent.\nmost agentic flows pay the landlord in latency.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-18T01:58:33.029620",
-      "text": "me quietly adding $NBIS to the 'maybe' folder while waiting for phase 3 approval 🛋️",
+      "ts": "2026-08-18T05:59:37.910843",
+      "text": "IREN at $105. Wall Street’s buying AI utility stocks because they finally realized GPUs are just electric heaters with delusions of grandeur. ⚡",
       "type": "quote"
     },
     {
-      "ts": "2026-08-18T01:57:42.260875",
-      "text": "Mining is a commodity business with 98% margin erosion from power costs. rwa tokenizes the rock, not the electricity bill.",
+      "ts": "2026-08-18T05:59:04.678137",
+      "text": "Context window cost drops faster than gpu capex rises. your 6-year-old gpu is already an ai supercomputer. stop waiting.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-18T05:58:48.563905",
+      "text": "GPT Astra spent $2k to solve what humans spent millennia writing about.\n\ncompute costs less than a lunch meeting.",
       "type": "reply"
     }
   ]

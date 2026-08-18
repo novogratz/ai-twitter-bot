@@ -1957,7 +1957,15 @@
     "JulienBourdais",
     "LaurentDeSart",
     "VincentColombo",
-    "CryptoJoueur"
+    "CryptoJoueur",
+    "JChassay",
+    "ThibautCarrere",
+    "SergeBoutros",
+    "LucasBonnard",
+    "MaelStrahl",
+    "RenaudRoussel",
+    "BilalMajed",
+    "MathisRoussel"
   ],
   "en": [
     "Chubby",
@@ -2358,7 +2366,10 @@
     "AG",
     "Areeba",
     "Cursor",
-    "David"
+    "David",
+    "seedphrase",
+    "WizardX",
+    "Leap"
   ],
   "history": [
     {
@@ -14144,6 +14155,61 @@
     {
       "lang": "fr",
       "handle": "CryptoJoueur",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "seedphrase",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "WizardX",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JChassay",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautCarrere",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeBoutros",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasBonnard",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelStrahl",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Leap",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudRoussel",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BilalMajed",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisRoussel",
       "added": "2026-08-18"
     }
   ]
