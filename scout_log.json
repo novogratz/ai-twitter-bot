@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-07-30T11:50:13.416994",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreRoques",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 150000,
-        "reason": "Fondateur de Luma. Il poste sur le futur de l'IA et des donn\u00e9es en anglais, mais son style est francophone et il est tr\u00e8s suivi par la diaspora tech."
-      },
-      {
-        "handle": "DorianH1993",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "L'homme qui a rendu l'IA accessible. Posts quotidiens sur les apps qui changent la vie. C'est du concret, pas du hype."
-      },
-      {
-        "handle": "LionelRozes",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "Vendeur de r\u00eave en mode s\u00e9rieux. Cover les startups FR comme US. Il a vu passer tout le succ\u00e8s tech fran\u00e7ais."
-      },
-      {
-        "handle": "ThibautMansuy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "CTO de Mistral AI. Twitte le tech directement depuis les labos. Z\u00e9ro bla, que du hardcore."
-      },
-      {
-        "handle": "AlexandreMazas",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "L'analyste On-chain roi. Ses threads sur les flux BTC/Ethereum sont la bible pour savoir o\u00f9 va l'argent."
-      },
-      {
-        "handle": "JulienG",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Gestionnaire de fonds. Il parle crypto, mais avec le filtre des fondamentaux macro. Rare en France."
-      },
-      {
-        "handle": "AlexisGhislain",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le prof qu\u00e9b\u00e9cois qui d\u00e9crypte la bourse sans jargon. Il rend la finance fun et lisible."
-      },
-      {
-        "handle": "MaximeSavard",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Journaliste crypto au QG Montr\u00e9al. Ses interviews avec les founders de la tech Web3 sont un must."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des vendeurs de r\u00eave pour te sortir les vrais cerveaux : ceux qui codent (Mistral), ceux qui analysent les flux (On-chain) et les journalistes de terrain. Pas de formations \u00e0 2000\u20ac, que du travail."
-  },
-  {
     "ts": "2026-07-30T13:50:01.992779",
     "raw_count": 8,
     "kept_count": 8,
@@ -9033,5 +8967,57 @@
       }
     ],
     "summary": "P\u00e9pite QC avec Dionne, valeur s\u00fbre avec Larcher et Santana. Z\u00e9ro influenceur formation, que des profils qui tweetent pour le fun ou la expertise."
+  },
+  {
+    "ts": "2026-08-18T00:02:00.874947",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminDewey",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "G\u00e9rant de fonds, il d\u00e9cortique les march\u00e9s en direct avec une pr\u00e9cision chirurgicale. Pas de pub Telegram, juste du trading pur."
+      },
+      {
+        "handle": "PierreRondeau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Directeur de recherche chez Thales. Il balance des insights IA profonds, moins flashy que les hype-men mais bien plus cr\u00e9dibles."
+      },
+      {
+        "handle": "JulienBourdais",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Ancien de Coinhouse, il couvre les aspects r\u00e9glementaires et institutionnels de la crypto en France. S\u00e9rieux et bien document\u00e9."
+      },
+      {
+        "handle": "LaurentDeSart",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Vieux de la vieille de la tech qu\u00e9b\u00e9coise. Il couvre l'IA et la Silicon Valley avec un regard francophone aiguis\u00e9."
+      },
+      {
+        "handle": "VincentColombo",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Ing\u00e9nieur chez Mistral. Il twitte en fran\u00e7ais sur les mod\u00e8les open source et la data, un souffle d'air frais dans le bruit."
+      },
+      {
+        "handle": "CryptoJoueur",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Un Qu\u00e9b\u00e9cois install\u00e9 \u00e0 New York qui poste en fran\u00e7ais. Couvre le march\u00e9 US avec l'accent d'en face, un angle rare."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs 'vendeur de r\u00eave' pour te laisser du concret. On a des g\u00e9ants fran\u00e7ais (BNP, Mistral), des experts qu\u00e9b\u00e9cois et un pont avec la diaspora US. C'est du s\u00e9rieux, pas du bruit."
   }
 ]

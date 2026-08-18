@@ -1951,7 +1951,13 @@
     "MaximeLarcher",
     "VincentAubert",
     "BorisRabault",
-    "JulienBoulard"
+    "JulienBoulard",
+    "BenjaminDewey",
+    "PierreRondeau",
+    "JulienBourdais",
+    "LaurentDeSart",
+    "VincentColombo",
+    "CryptoJoueur"
   ],
   "en": [
     "Chubby",
@@ -14109,6 +14115,36 @@
       "lang": "fr",
       "handle": "JulienBoulard",
       "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDewey",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRondeau",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBourdais",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurentDeSart",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentColombo",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoJoueur",
+      "added": "2026-08-18"
     }
   ]
 }

@@ -16999,3 +16999,19 @@ Every time, it came back stronger.
 Notice
   - https://x.com/SujalJethwani/status/2088572406856122723
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
+
+## 2026-08-18
+- **@amitisinvesting** (648 likes, score 9/10) — A TON OF THINGS HAPPENED IN THE STOCK MARKET TODAY.
+
+Here's a full recap:
+
+1. Nvidia $NVDA is backing OpenAI’s Ohio AI campus with a $1.5B investment in SB Energy and support for an initial 4.25GW of
+  - https://x.com/amitisinvesting/status/2089534061328875789
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 740).
+- **@zastocks** (403 likes, score 9/10) — It’s hard for some to imagine $NVDA going to $10T because it’s such a large number but not long ago $5T sounded crazy.
+
+AI is changing the math behind what was possible. 
+
+Nvidia to $10T feels inevita
+  - https://x.com/ZaStocks/status/2089408900600668594
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 517).
