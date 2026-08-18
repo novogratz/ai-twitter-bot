@@ -1965,7 +1965,10 @@
     "MaelStrahl",
     "RenaudRoussel",
     "BilalMajed",
-    "MathisRoussel"
+    "MathisRoussel",
+    "Adrien_DumasFr",
+    "Le_Boursicoteur",
+    "Crypto_Marmot"
   ],
   "en": [
     "Chubby",
@@ -14210,6 +14213,21 @@
     {
       "lang": "fr",
       "handle": "MathisRoussel",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Adrien_DumasFr",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Le_Boursicoteur",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Marmot",
       "added": "2026-08-18"
     }
   ]

@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-30T17:50:05.527045",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitG_10",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le roi de la d\u00e9contraction financi\u00e8re \u00e0 la fran\u00e7aise. Il prouve qu'on peut \u00eatre pro (ex-Immobili\u00e8re de Saint-Paul) sans avoir le syndrome du prof de maths. M\u00e8me machine, Z-score quotidien."
-      },
-      {
-        "handle": "RomainH",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 33000,
-        "reason": "Fintech VC bas\u00e9 \u00e0 NY mais qui parle le fran\u00e7ais des affaires. Il balance des insights sur la lev\u00e9e de fonds et le SaaS fr qui fait le job sans les chichis de la Valley."
-      },
-      {
-        "handle": "BenoitD",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "CTO de 100Labs. Il twitte la tech avec la candeur d\u2019un ing\u00e9nieur qui vient de d\u00e9couvrir que les prompts co\u00fbtent plus cher que l\u2019eau min\u00e9rale. Pure, sans filtre 'growth hacking'."
-      },
-      {
-        "handle": "EvanS",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 21000,
-        "reason": "Le gars qui fait parler de lui \u00e0 la t\u00eate de l'AI Lab d'Hydrow. Il twitte en anglais mais ses threads IA francophones (ou ses apparitions chez les francos) sont les seules infos 'real tech' \u00e0 Montr\u00e9al."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui construisent ou analysent vraiment. De Beno\u00eet G au top des m\u00e8mes boursiers \u00e0 Alex Clemencot sur l'IA agente, on couvre l'excellence technique avec un bon sens de l'humour. Z\u00e9ro vente de r\u00eave, 100% contenu."
-  },
-  {
     "ts": "2026-07-30T19:50:23.291226",
     "raw_count": 6,
     "kept_count": 5,
@@ -8984,5 +8946,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les ing\u00e9nieurs, traders et journalistes qui font le vrai taf. Pas de formation \u00e0 99\u20ac ici, juste du contenu technique en fran\u00e7ais."
+  },
+  {
+    "ts": "2026-08-18T08:02:21.001071",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Jean_Baptiste_Le_Pauvre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "L'anti-influenceur par excellence. Il twitte sur son bilan personnel. C'est cynique, c'est vrai, et \u00e7a fait du bien."
+      },
+      {
+        "handle": "Adrien_DumasFr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Le professeur de la rue. Il explique les paper de ML avec des exemples de croisi\u00e8res. Personne ne comprend mieux le hype cycle que lui."
+      },
+      {
+        "handle": "Le_Boursicoteur",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le roi du CAC40. Il analyse les r\u00e9sultats trimestriels comme un d\u00e9tective regarde un corps. Sec, net, pr\u00e9cis."
+      },
+      {
+        "handle": "Crypto_Marmot",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Il tweet \u00e0 3h du mat sur Ethereum. C'est pas un influenceur, c'est un insomniac passionn\u00e9. Pas de signaux payants."
+      },
+      {
+        "handle": "Marc_Aurele_Invest",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais fran\u00e7ais dans l'\u00e2me. Il mixe la tech US avec l'humour FR. Le meilleur pont entre les march\u00e9s."
+      }
+    ],
+    "summary": "J'ai \u00e9limin\u00e9 les vendeurs de r\u00eave pour garder les analystes qui analysent. On est sur du pur fond, pas du bruit."
   }
 ]
