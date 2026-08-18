@@ -1445,3 +1445,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 132 views: Qwen beating Opus. me watching Opus finally lose its halo like: "well, there goes the ego tax."
   - 1 likes / 78 views: SpaceX: 10GW AI. $NVDA: “Please stop building datacenters in the stratosphere.”
   - 1 likes / 23 views: Morgan Stanley’s blunt message to Tesla investors is just the market realizing the AI premium has no
+
+## 2026-08-17
+
+**Activity** — total actions: 786
+  - by type: reply=710, quote=45, quote_gif=17, hotake=7, post=6, retweet=1
+  - top sources: SEARCH-HOT=433, FEED-SWEEP-FEED=136, FEED-SWEEP-FOLLOWING=84, QUOTE=33, DEBATE=28, VIP=25, GIF=20, BREAKING_QRT=6
+  - top reply targets: @Graphseo=17, @TheBTCTherapist=12, @kimmonismus=10, @TheStreet=10, @Polymarket=9
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 87 views: Anthropic drops inference costs 90%. Nvidia smiles. We pay the electricity bill to watch them argue 
+  - 2 likes / 85 views: me on the phone with my broker trying to explain why the datacenter needs dirt, electricity, and a r
+  - 1 likes / 55 views: GLM and DeepSeek spinning their wheels like my toddler explaining why he cried
