@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-30T07:50:10.734847",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NathanaelB",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 90000,
-        "reason": "Co-fondateur de Lido Finance. Il twitte en anglais mais avec une \u00e2me fran\u00e7aise (ex-Inria). Ses threads sur le staking et la liquidit\u00e9 sont devenus des r\u00e9f\u00e9rences. Il passe son temps \u00e0 NY mais garde le style FR."
-      },
-      {
-        "handle": "ThomSart",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "La t\u00eate pensante de la tech FR. Il a quitt\u00e9 M6 pour \u00eatre le mec qui explique vraiment comment on va \u00eatre remplac\u00e9 par des LLMs. Pas de formations \u00e0 2000\u20ac, juste du contenu dense."
-      },
-      {
-        "handle": "MaximeBiel",
-        "region": "france",
-        "niche": "ai",
-        "followers": 38000,
-        "reason": "Cofondateur de Qdrant (vector DB). Il twitte sur l'infra derri\u00e8re l'IA avec une pr\u00e9cision chirurgicale. C'est rare de voir un founder technique qui sait vulgariser sans noyer l'audience dans le jargon."
-      },
-      {
-        "handle": "DavidPoirier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Analyste \u00e0 La Caisse. Il poutine r\u00e9guli\u00e8rement sur les march\u00e9s avec humour. C'est l'un des rares qui m\u00e9lange macro \u00e9conomique et analyse de valeur sans dormir son aud audience."
-      },
-      {
-        "handle": "BenMansfield",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Bas\u00e9 \u00e0 SF, mais fran\u00e7ais. Il poste sur la croissance, les SAAS et l'IA avec un esprit fran\u00e7ais pragmatique. Pas de 'move fast and break things', mais du 'build solid and scale'."
-      },
-      {
-        "handle": "FelixGingras",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directeur chez Kineo, mais surtout un early adopteur compulsif de l'IA pro. Il montre comment l'utiliser en entreprise sans se prendre pour un guru. Son ton est celui de la pratique, pas de la th\u00e9orie."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites techniques et les analystes s\u00e9rieux pour \u00e9viter les influenceurs 'formation 97\u20ac'. La France domine sur l'IA infrastructurelle (Mistral, Qdrant) tandis que le Qu\u00e9bec apporte une vision bourse/macro moins boursoufl\u00e9e."
-  },
-  {
-    "ts": "2026-07-30T09:50:10.066717",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TheBoussy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Ex-CEO d'Ethereum France, il parle crypto comme un patron qui a vu passer 4 cycles et n'a pas encore tout perdu."
-      },
-      {
-        "handle": "LionelGosselin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Gars de CoinRockets, twitte en FR, m\u00e9lange l'info rapide avec un humour noir qui fait mal aux dents."
-      },
-      {
-        "handle": "MaelLeCun",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Le type qui d\u00e9crypte les papiers arXiv comme d'autres lisent les horaires de RER. Sans se prendre au s\u00e9rieux."
-      }
-    ],
-    "summary": "Un m\u00e9lange serr\u00e9 d'analystes qu\u00e9b\u00e9cois qui n'ont pas peur de dire que le march\u00e9 est un casino, et de francophones continentaux qui survivent au buzz IA."
-  },
-  {
     "ts": "2026-07-30T11:50:13.416994",
     "raw_count": 8,
     "kept_count": 8,
@@ -9033,5 +8950,88 @@
       }
     ],
     "summary": "Je sature pas le feed avec des vendeurs de r\u00eave. J'ai filtr\u00e9 pour ne garder que ceux qui ont du fond : Ludo pour la macro/bourse, Thibault pour la tech g\u00e9n\u00e9rale, Julien pour l'analyse fondamentale tech, et Mistral pour l'IA. Le Qu\u00e9bec est mieux couvert par un visionnaire infra (Alex) que par un trader classique."
+  },
+  {
+    "ts": "2026-08-17T18:02:12.755402",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HervetNicolas",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 52000,
+        "reason": "L'actionnaire du dimanche. Il partage ses positions r\u00e9elles et ses erreurs avec une honn\u00eatet\u00e9 rafra\u00eechissante, loin des signaux payants."
+      },
+      {
+        "handle": "MarcLeclerc",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Anchorman de la crypto anglophone, il ponde des threads quotidiens en fran\u00e7ais. C'est l'\u00e9quivalent twittero d'un journaliste de Bloomberg."
+      },
+      {
+        "handle": "MaximeDk",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le cerveau technique derri\u00e8re l'IA de la Fnac et ex-DAIA. Il tweet la r\u00e9alit\u00e9 du d\u00e9ploiement IA, pas juste les promesses VC."
+      },
+      {
+        "handle": "MathieuMeyer",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le patron de Coinhouse. Il tweet crypto en FR avec une dose de raison suffisante pour ne pas ressembler \u00e0 un shillier compulsif."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre l'expertise technique IA fran\u00e7aise (Lanfrey, Dk) et la vision march\u00e9 crypto/bourse (Meyer, Hervet). Ajout d'une touche qu\u00e9b\u00e9coise/usa francophone pour couvrir l'Atlantic Bridge."
+  },
+  {
+    "ts": "2026-08-17T20:01:47.935785",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "EricSantana",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "V\u00e9t\u00e9ran de la tech, couvre IA et Silicon Valley en FR."
+      },
+      {
+        "handle": "MaximeLarcher",
+        "region": "france",
+        "niche": "finance",
+        "followers": 40000,
+        "reason": "Journaliste bourse FR incisif, couvre les m\u00e9ga-caps sans s'endormir."
+      },
+      {
+        "handle": "VincentAubert",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'\u0153il technique sur les startups French Tech, sans les blablas VC."
+      },
+      {
+        "handle": "BorisRabault",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien de Coinhouse, analyse on-chain solide en fran\u00e7ais."
+      },
+      {
+        "handle": "JulienBoulard",
+        "region": "france",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Macro-\u00e9conomiste, d\u00e9crypte la BCE et les taux en clair."
+      }
+    ],
+    "summary": "P\u00e9pite QC avec Dionne, valeur s\u00fbre avec Larcher et Santana. Z\u00e9ro influenceur formation, que des profils qui tweetent pour le fun ou la expertise."
   }
 ]

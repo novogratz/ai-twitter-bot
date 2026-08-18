@@ -1942,7 +1942,16 @@
     "HuggingFace",
     "ThibaultDela",
     "Ludo4764",
-    "JulienLeloup"
+    "JulienLeloup",
+    "HervetNicolas",
+    "MarcLeclerc",
+    "MaximeDk",
+    "MathieuMeyer",
+    "EricSantana",
+    "MaximeLarcher",
+    "VincentAubert",
+    "BorisRabault",
+    "JulienBoulard"
   ],
   "en": [
     "Chubby",
@@ -14054,6 +14063,51 @@
     {
       "lang": "fr",
       "handle": "JulienLeloup",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "HervetNicolas",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLeclerc",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDk",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMeyer",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricSantana",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLarcher",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentAubert",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisRabault",
+      "added": "2026-08-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoulard",
       "added": "2026-08-17"
     }
   ]

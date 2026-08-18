@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-17T18:01:10.782279",
-  "window_7d_actions": 4848,
-  "window_24h_actions": 735,
+  "generated_at": "2026-08-17T22:01:11.803560",
+  "window_7d_actions": 4837,
+  "window_24h_actions": 773,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4847
+      "count": 4836
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4847
+      "count": 4836
     }
   ],
   "best_hours_utc": [
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2166
+      "count": 2169
     },
     {
       "topic": "IA",
-      "count": 1965
+      "count": 1950
     },
     {
       "topic": "Crypto",
-      "count": 592
+      "count": 581
     },
     {
       "topic": "Bourse",
-      "count": 366
+      "count": 374
     },
     {
       "topic": "Spatial",
@@ -70,7 +70,7 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2169
+      "count": 2149
     },
     {
       "pillar": "other",
@@ -78,74 +78,74 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1161
+      "count": 1177
     },
     {
       "pillar": "meme_reaction",
-      "count": 139
+      "count": 136
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 44
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 335
+      "count": 352
     },
     {
       "pillar": "other",
-      "count": 189
+      "count": 200
     },
     {
       "pillar": "market_trauma",
-      "count": 175
+      "count": 189
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 3,
-      "avg_likes": 1.0,
-      "avg_views": 64.7,
+      "posts": 4,
+      "avg_likes": 0.75,
+      "avg_views": 60.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 78,
-      "avg_likes": 0.27,
-      "avg_views": 53.9,
+      "posts": 74,
+      "avg_likes": 0.26,
+      "avg_views": 53.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.21,
-      "avg_views": 59.4,
+      "posts": 74,
+      "avg_likes": 0.22,
+      "avg_views": 58.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 38,
-      "avg_likes": 0.13,
-      "avg_views": 54.1,
+      "avg_likes": 0.11,
+      "avg_views": 54.5,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4317
+      "count": 4309
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 111
+      "count": 108
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-17T17:59:23.046810",
-      "text": "Anthropic doubles limits twice then freezes them.\nthe cost of inference just crossed the willingness to pay.\nclaude code is a loss leader, not a product.",
+      "ts": "2026-08-17T22:00:57.775013",
+      "text": "@HeidingOut is betting on hyperscaler capex cycles while listing component makers as infrastructure.\n$PLTR is a software company, $MU is cyclical memory.\nNvidia sold you the pickaxe; $LITE sells you the glass the pickaxe comes in.\nOne is AI. The rest is supply chain inventory.\nTh",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T17:57:23.393031",
-      "text": "AMD at 10x forward earnings. They're selling you the second-best shovel at half the price.\nThe real story: Nvidia taxes you to be the best. AMD taxes you to be smart.",
+      "ts": "2026-08-17T21:59:17.133537",
+      "text": "30x est le nouveau 2x. Le marché adore les losers, les gains restent discrets.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T17:57:07.262176",
-      "text": "Anthropic claims $65B run rate but OpenAI burns $5B a year.\n\nThat implies Claude’s efficiency is either magic or their revenue is mostly forward-looking contracts.\n\nEither way, the valuation is betting on scale, not sanity.",
+      "ts": "2026-08-17T21:58:27.596085",
+      "text": "SPY up 15% YTD while alts are down 40%.\n\nyou didn't buy stocks instead of alts. you bought the only stocks that mattered.",
       "type": "reply"
     }
   ]
