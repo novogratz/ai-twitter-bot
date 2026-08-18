@@ -67,6 +67,62 @@ COLLAPSE ALERT (self-heal) ┼──▶ headless Claude Code session
 
 Every write action funnels through `twitter_client` (`post_tweet` / `quote_tweet` / `reply_to_tweet` / `follow_account` / …) so all ~35 bots obey the same policy with no per-bot rewrites. Details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
+## Main-post growth engine
+
+The account now treats replies and main posts as separate growth engines.
+
+- Replies remain the discovery/acquisition engine and are not broadly redesigned.
+- Main posts are optimized for Home Timeline reach, original account identity, and intellectual continuity.
+- `src/main_post_growth.py` reads existing logs and signals, then writes runtime reports under `growth/`.
+
+Generated runtime outputs:
+
+| File | Purpose |
+|---|---|
+| `growth/main_post_analytics.json` | Main-post-only performance baseline, winner classes, topic/hook stats |
+| `growth/reply_analytics.json` | Reply-only source/topic/style analytics for audience sensing |
+| `growth/opportunity_queue.json` | Ranked main-post opportunities from current signals |
+| `growth/account_memory.json` | Recurring theses, winners/losers, repeated patterns, reply sensor |
+| `growth/editorial_brief.md` | Compact brief injected into main-post prompts |
+| `growth/home_timeline_500k_dashboard.json` | 500k rolling objective dashboard with official-vs-estimated labeling |
+| `growth/main_post_approval_queue.json` | Human-review queue when rewards-oriented mode is enabled |
+
+Run it directly:
+
+```bash
+uv run python - <<'PY'
+from src.main_post_growth import run_growth_cycle
+print(run_growth_cycle())
+PY
+```
+
+Operating modes:
+
+```bash
+# Current behavior: automated main-post publishing, with growth brief injected.
+MAIN_POST_OPERATING_MODE=growth_automation
+
+# Rewards-oriented behavior: main-post drafts are queued for review.
+# Reply behavior is preserved.
+MAIN_POST_OPERATING_MODE=rewards_eligible
+```
+
+For the official X rewards metric, create `official_rewards_metric.json` manually when you have Creator Studio data:
+
+```json
+{
+  "official_qualified_home_impressions_90d": 123456,
+  "recorded_at": "2026-08-18T19:00:00"
+}
+```
+
+Docs:
+
+- [`docs/MAIN_POST_GROWTH_AUDIT.md`](docs/MAIN_POST_GROWTH_AUDIT.md)
+- [`docs/HISTORICAL_PERFORMANCE_ANALYSIS.md`](docs/HISTORICAL_PERFORMANCE_ANALYSIS.md)
+- [`docs/CONTENT_STRATEGY.md`](docs/CONTENT_STRATEGY.md)
+- [`docs/ORIGINAL_CONTENT_REWARDS.md`](docs/ORIGINAL_CONTENT_REWARDS.md)
+
 ## Safety model
 
 - **Hard rules** baked into every prompt (no illegal content, no US-government trolling, protected-accounts respect list) — not overridable by autonomous agents

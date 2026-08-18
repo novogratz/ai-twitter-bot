@@ -118,6 +118,18 @@ BOOST_ENGAGEMENT_POSTS = int(os.environ.get("BOOST_ENGAGEMENT_POSTS", "1"))
 MAX_RETRIES = 3
 RETRY_DELAY_SECONDS = 5
 
+# Main-post growth system. Default preserves the current automated publishing
+# behavior; set MAIN_POST_OPERATING_MODE=rewards_eligible to require human
+# review for main posts while keeping the reply engine unchanged.
+MAIN_POST_OPERATING_MODE = os.environ.get("MAIN_POST_OPERATING_MODE", "growth_automation")
+MAIN_POST_REQUIRE_HUMAN_APPROVAL = os.environ.get("MAIN_POST_REQUIRE_HUMAN_APPROVAL", "0") == "1"
+TARGET_HOME_IMPRESSIONS_90D = int(os.environ.get("TARGET_HOME_IMPRESSIONS_90D", "500000"))
+MAIN_POST_MINIMUM_QUALITY_SCORE = int(os.environ.get("MAIN_POST_MINIMUM_QUALITY_SCORE", "75"))
+MAIN_POST_MINIMUM_ORIGINALITY_SCORE = int(os.environ.get("MAIN_POST_MINIMUM_ORIGINALITY_SCORE", "75"))
+MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY = int(os.environ.get("MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY", "5"))
+REPLY_TO_POST_ENABLED = os.environ.get("REPLY_TO_POST_ENABLED", "1") == "1"
+REPLY_TO_POST_TRIGGER_MULTIPLE = float(os.environ.get("REPLY_TO_POST_TRIGGER_MULTIPLE", "2.0"))
+
 
 # ---------------------------------------------------------------------------
 # 2026-06-02 pivot tunables — French-language AI + Space + Stocks niche.

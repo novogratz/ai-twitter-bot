@@ -210,6 +210,51 @@ def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     assert "AI math  signal" in out.read_text(encoding="utf-8")
 
 
+# --- main-post growth intelligence --------------------------------------------
+
+def test_main_post_winner_classification():
+    from src.main_post_growth import classify_winner
+
+    assert classify_winner(40, 100) == "FLOP"
+    assert classify_winner(120, 100) == "NORMAL"
+    assert classify_winner(220, 100) == "GOOD"
+    assert classify_winner(350, 100) == "HIT"
+    assert classify_winner(700, 100) == "BREAKOUT"
+
+
+def test_main_post_quality_penalizes_source_paraphrase():
+    from src.main_post_growth import quality_score
+
+    source = "OpenAI launched a new agent model for enterprise workflows"
+    copied = "OpenAI launched a new agent model for enterprise workflows"
+    original = "OpenAI's agent push is not about replacing work. It is about making trust the new UI."
+
+    assert quality_score(original, source_text=source)["overall"] > quality_score(copied, source_text=source)["overall"]
+
+
+def test_main_post_approval_queue(monkeypatch, tmp_path):
+    from src import main_post_growth as mpg
+
+    approval = tmp_path / "approval.json"
+    monkeypatch.setattr(mpg, "APPROVAL_QUEUE_FILE", str(approval))
+    monkeypatch.setattr(mpg, "STATE_DIR", str(tmp_path))
+
+    item = mpg.enqueue_approval_candidate("OpenAI made trust the product.", {"surface": "test"})
+    assert item["status"] == "PENDING_REVIEW"
+    data = json.loads(approval.read_text())
+    assert data[0]["generated_draft"] == "OpenAI made trust the product."
+
+
+def test_main_post_rewards_mode_blocks_auto_publish(monkeypatch):
+    from src import main_post_growth as mpg
+
+    monkeypatch.setenv("MAIN_POST_OPERATING_MODE", "rewards_eligible")
+    assert not mpg.should_publish_main_posts()
+    monkeypatch.setenv("MAIN_POST_OPERATING_MODE", "growth_automation")
+    monkeypatch.setenv("MAIN_POST_REQUIRE_HUMAN_APPROVAL", "0")
+    assert mpg.should_publish_main_posts()
+
+
 # --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
 
 def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
