@@ -428,6 +428,13 @@ Write more like your best tweets. Avoid the patterns of your worst ones."""
         pass
     if news_pool_section:
         performance_section = (performance_section or "") + news_pool_section
+    try:
+        from . import main_post_growth
+        growth_brief = main_post_growth.editorial_context_block(max_chars=1600)
+        if growth_brief:
+            performance_section = (performance_section or "") + "\n\n" + growth_brief
+    except Exception:
+        pass
 
     log.info(f"[HOTAKE] Generating in lang={_ht_lang}")
     prompt = HOTAKE_PROMPT.format(

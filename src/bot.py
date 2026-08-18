@@ -649,6 +649,21 @@ def _run_single_bot_cycle() -> bool:
         elif tweet_source == "hotake":
             post_body = _maybe_add_curated_hashtag(post_body)
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
+        try:
+            from . import main_post_growth
+            if not main_post_growth.should_publish_main_posts():
+                main_post_growth.enqueue_approval_candidate(
+                    post_body,
+                    {
+                        "surface": tweet_source,
+                        "source_url": src_url or "",
+                        "mode": main_post_growth.operating_mode(),
+                    },
+                )
+                log.info("[NEWS] Rewards-eligible mode: queued main-post draft for human review.")
+                return False
+        except Exception as e:
+            log.info(f"[NEWS] Main-post approval gate failed open: {e}")
         # Extract GIF tag from hotakes and spicy posts — news Décodes use a
         # link card instead (attaching a GIF would break the card preview).
         gif_query = ""

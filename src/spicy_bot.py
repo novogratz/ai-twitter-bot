@@ -239,6 +239,13 @@ def run_spicy_cycle():
         perf = market_trauma_priority_block() + "\n\n" + perf
     except Exception:
         pass
+    try:
+        from . import main_post_growth
+        growth_brief = main_post_growth.editorial_context_block(max_chars=1400)
+        if growth_brief:
+            perf = growth_brief + "\n\n" + perf
+    except Exception:
+        pass
     # Own-wins bank (2026-06-07): show the model what actually SHIPPED on
     # this account so spicy takes iterate proven structures, not guesses.
     try:
@@ -282,6 +289,17 @@ def run_spicy_cycle():
 
     log.info(f"[SPICY] Posting [{mode}]: {text!r}")
     try:
+        try:
+            from . import main_post_growth
+            if not main_post_growth.should_publish_main_posts():
+                main_post_growth.enqueue_approval_candidate(
+                    text,
+                    {"surface": "spicy", "mode": mode, "operating_mode": main_post_growth.operating_mode()},
+                )
+                log.info("[SPICY] Rewards-eligible mode: queued draft for human review.")
+                return
+        except Exception as e:
+            log.info(f"[SPICY] Main-post approval gate failed open: {e}")
         post_tweet(text)
         _increment_count()
         if mode == "QUESTION":

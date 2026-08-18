@@ -93,6 +93,7 @@ from src.engine_health_bot import safe_run_engine_health_cycle
 from src.first_hour_babysitter import safe_run_babysit_cycle
 from src.conversion_attribution_bot import safe_run_conversion_attribution_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
+from src.main_post_growth import safe_run_main_post_growth_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -445,6 +446,11 @@ def main():
     from src.account_curator import safe_run_curator_cycle
     safe_run_curator_cycle()
 
+    # Main-post growth intelligence: read-only analytics + opportunity queue.
+    # It explicitly preserves the reply engine; outputs live under growth/.
+    if not args.reply_only:
+        safe_run_main_post_growth_cycle()
+
     # BTC Therapist bestie blitz (operator 2026-06-07 PM): on startup,
     # comment EVERY ≤48h post from @TheBTCTherapist (one reply per tweet,
     # ever — dedup makes re-runs free) and QRT his most impactful posts
@@ -522,6 +528,13 @@ def main():
             safe_run_thread_cycle,
             trigger=CronTrigger(hour=19, minute=30, timezone="America/New_York", jitter=1200),
             id="thread_job",
+            max_instances=1,
+        )
+
+        scheduler.add_job(
+            safe_run_main_post_growth_cycle,
+            trigger=IntervalTrigger(hours=2),
+            id="main_post_growth_job",
             max_instances=1,
         )
 
