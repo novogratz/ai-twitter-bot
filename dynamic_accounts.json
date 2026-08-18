@@ -1975,7 +1975,16 @@
     "JoffreyL",
     "RomainPerraud",
     "MarcLachance",
-    "CryptoBouffe"
+    "CryptoBouffe",
+    "Lionel31",
+    "MehdiSerraoui",
+    "BenoitMoulin",
+    "ThibautGirard",
+    "VincentFrey",
+    "MaximeJ",
+    "GustaveDeBourg",
+    "MisterSpex83",
+    "RomainVayssiere"
   ],
   "en": [
     "Chubby",
@@ -14282,6 +14291,51 @@
     {
       "lang": "fr",
       "handle": "CryptoBouffe",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lionel31",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiSerraoui",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitMoulin",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautGirard",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentFrey",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeJ",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "GustaveDeBourg",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MisterSpex83",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainVayssiere",
       "added": "2026-08-18"
     }
   ]
