@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-17T22:01:11.803560",
-  "window_7d_actions": 4837,
-  "window_24h_actions": 773,
+  "generated_at": "2026-08-18T02:01:10.793341",
+  "window_7d_actions": 4818,
+  "window_24h_actions": 800,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4836
+      "count": 4817
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4836
+      "count": 4817
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2169
+      "count": 2179
     },
     {
       "topic": "IA",
-      "count": 1950
+      "count": 1926
     },
     {
       "topic": "Crypto",
-      "count": 581
+      "count": 574
     },
     {
       "topic": "Bourse",
-      "count": 374
+      "count": 375
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2149
+      "count": 2127
     },
     {
       "pillar": "other",
-      "count": 1265
+      "count": 1275
     },
     {
       "pillar": "market_trauma",
-      "count": 1177
+      "count": 1170
     },
     {
       "pillar": "meme_reaction",
-      "count": 136
+      "count": 137
     },
     {
       "pillar": "reply_bait",
@@ -90,25 +90,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 352
+      "count": 354
     },
     {
       "pillar": "other",
-      "count": 200
+      "count": 216
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 196
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 20
     },
     {
       "pillar": "reply_bait",
@@ -129,9 +129,9 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 74,
-      "avg_likes": 0.26,
-      "avg_views": 53.4,
+      "posts": 73,
+      "avg_likes": 0.29,
+      "avg_views": 55.6,
       "low_sample": false
     },
     {
@@ -143,9 +143,9 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.11,
-      "avg_views": 54.5,
+      "posts": 39,
+      "avg_likes": 0.1,
+      "avg_views": 54.9,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4309
+      "count": 4296
     },
     {
       "type": "quote",
-      "count": 307
+      "count": 301
     },
     {
       "type": "quote_gif",
-      "count": 108
+      "count": 109
     },
     {
       "type": "post",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 14
+      "count": 13
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-17T22:00:57.775013",
-      "text": "@HeidingOut is betting on hyperscaler capex cycles while listing component makers as infrastructure.\n$PLTR is a software company, $MU is cyclical memory.\nNvidia sold you the pickaxe; $LITE sells you the glass the pickaxe comes in.\nOne is AI. The rest is supply chain inventory.\nTh",
+      "ts": "2026-08-18T01:59:07.338776",
+      "text": "Pixel to action sounds like a workflow.\ninference costs are the rent.\nmost agentic flows pay the landlord in latency.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T21:59:17.133537",
-      "text": "30x est le nouveau 2x. Le marché adore les losers, les gains restent discrets.",
-      "type": "reply"
+      "ts": "2026-08-18T01:58:33.029620",
+      "text": "me quietly adding $NBIS to the 'maybe' folder while waiting for phase 3 approval 🛋️",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-17T21:58:27.596085",
-      "text": "SPY up 15% YTD while alts are down 40%.\n\nyou didn't buy stocks instead of alts. you bought the only stocks that mattered.",
+      "ts": "2026-08-18T01:57:42.260875",
+      "text": "Mining is a commodity business with 98% margin erosion from power costs. rwa tokenizes the rock, not the electricity bill.",
       "type": "reply"
     }
   ]
