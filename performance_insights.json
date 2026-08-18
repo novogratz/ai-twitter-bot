@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-18T10:01:10.944571",
-  "window_7d_actions": 4816,
-  "window_24h_actions": 872,
+  "generated_at": "2026-08-18T14:01:10.978645",
+  "window_7d_actions": 4833,
+  "window_24h_actions": 868,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4816
+      "count": 4833
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4816
+      "count": 4833
     }
   ],
   "best_hours_utc": [
@@ -21,94 +21,94 @@
     },
     {
       "hour": 14,
-      "actions": 240
+      "actions": 241
     },
     {
       "hour": 15,
       "actions": 239
     },
     {
-      "hour": 11,
-      "actions": 231
+      "hour": 13,
+      "actions": 237
     },
     {
-      "hour": 13,
-      "actions": 231
+      "hour": 11,
+      "actions": 228
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2203
+      "count": 2224
     },
     {
       "topic": "IA",
-      "count": 1902
+      "count": 1900
     },
     {
       "topic": "Crypto",
-      "count": 564
+      "count": 559
     },
     {
       "topic": "Bourse",
-      "count": 378
+      "count": 392
     },
     {
       "topic": "Spatial",
-      "count": 114
+      "count": 110
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2108
+      "count": 2112
     },
     {
       "pillar": "other",
-      "count": 1296
+      "count": 1312
     },
     {
       "pillar": "market_trauma",
-      "count": 1177
+      "count": 1181
     },
     {
       "pillar": "meme_reaction",
-      "count": 129
+      "count": 122
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 67
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 38
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 376
+      "count": 356
     },
     {
       "pillar": "other",
-      "count": 239
+      "count": 253
     },
     {
       "pillar": "market_trauma",
-      "count": 223
+      "count": 227
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -121,53 +121,53 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.31,
-      "avg_views": 55.3,
+      "posts": 73,
+      "avg_likes": 0.3,
+      "avg_views": 54.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
+      "posts": 74,
       "avg_likes": 0.23,
-      "avg_views": 57.4,
+      "avg_views": 57.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
+      "posts": 40,
       "avg_likes": 0.1,
-      "avg_views": 52.7,
+      "avg_views": 53.5,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 7,
+      "posts": 8,
       "avg_likes": 0.0,
-      "avg_views": 47.1,
+      "avg_views": 46.6,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4299
+      "count": 4319
     },
     {
       "type": "quote",
-      "count": 305
+      "count": 306
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 100
     },
     {
       "type": "post",
-      "count": 53
+      "count": 51
     },
     {
       "type": "hotake",
-      "count": 41
+      "count": 44
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-18T10:00:32.155904",
-      "text": "Openai is charging teens 0% for the privilege of outsourcing their essay to a model trained on essays written by people who now earn $3/hr as data labelers.\nit's the ultimate arbitrage.",
+      "ts": "2026-08-18T14:00:10.397647",
+      "text": "The dip is here because meta just proved AI agents are cheaper than humans. buy the disruption, not the chart.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-18T09:59:38.837790",
-      "text": "BTQ hiring the Samsung Knox guy is the pivot everyone missed.\nThe race isn't just faster inference, it's trust.\nSecurity is the new moat.",
+      "ts": "2026-08-18T13:59:54.175390",
+      "text": "Most of you are buying the ticker, not the cashflow. tao is selling compute, hype is selling hope. buy the infrastructure, marry the meme, sleep.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-18T09:58:20.342149",
-      "text": "Citi custody + ETF inflows = 11 years of SEC delays to catch up to reality.\nthey spent a decade protecting people from something they were banned from buying.",
+      "ts": "2026-08-18T13:59:03.535741",
+      "text": "Concentration risk broke them. the real story isn't experience. it's that 401k dave can't handle 20% drawdowns on money he doesn't have to hold.",
       "type": "reply"
     }
   ]

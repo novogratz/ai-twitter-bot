@@ -1968,7 +1968,14 @@
     "MathisRoussel",
     "Adrien_DumasFr",
     "Le_Boursicoteur",
-    "Crypto_Marmot"
+    "Crypto_Marmot",
+    "mehdi_hamadi",
+    "ThomasD",
+    "Romain",
+    "JoffreyL",
+    "RomainPerraud",
+    "MarcLachance",
+    "CryptoBouffe"
   ],
   "en": [
     "Chubby",
@@ -2372,7 +2379,9 @@
     "David",
     "seedphrase",
     "WizardX",
-    "Leap"
+    "Leap",
+    "Hedgie",
+    "Basil"
   ],
   "history": [
     {
@@ -14228,6 +14237,51 @@
     {
       "lang": "fr",
       "handle": "Crypto_Marmot",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Hedgie",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdi_hamadi",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasD",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Romain",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Basil",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JoffreyL",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainPerraud",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLachance",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBouffe",
       "added": "2026-08-18"
     }
   ]
