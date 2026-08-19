@@ -1459,3 +1459,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 87 views: Anthropic drops inference costs 90%. Nvidia smiles. We pay the electricity bill to watch them argue 
   - 2 likes / 85 views: me on the phone with my broker trying to explain why the datacenter needs dirt, electricity, and a r
   - 1 likes / 55 views: GLM and DeepSeek spinning their wheels like my toddler explaining why he cried
+
+## 2026-08-18
+
+**Activity** — total actions: 851
+  - by type: reply=771, quote=52, quote_gif=15, post=6, hotake=6, retweet=1
+  - top sources: SEARCH-HOT=492, FEED-SWEEP-FEED=150, FEED-SWEEP-FOLLOWING=98, QUOTE=41, GIF=17, DEBATE=16, VIP=15, BREAKING_QRT=6
+  - top reply targets: @FirstSquawk=12, @Graphseo=12, @cryptorover=8, @amitisinvesting=7, @MarioNawfal=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 90 views: me on my way to explain AGI to my 4 year old who already knows more about prompt engineering than mo
+  - 1 likes / 62 views: Alex Karp just called Wall Street a bunch of over-caffeinated golden retrievers and I am weak
+  - 1 likes / 40 views: me on the couch at 2am like this is a fairy tale
