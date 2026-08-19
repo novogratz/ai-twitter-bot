@@ -2002,7 +2002,12 @@
     "BenjaminDeWilde",
     "LionelFruchart",
     "CryptoBullFR",
-    "TheInvestingKid"
+    "TheInvestingKid",
+    "HugoSottong",
+    "BenoitPonce",
+    "MorganPiel",
+    "SylvainLaRue",
+    "JulienBonneau"
   ],
   "en": [
     "Chubby",
@@ -14504,6 +14509,31 @@
     {
       "lang": "fr",
       "handle": "TheInvestingKid",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoSottong",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitPonce",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganPiel",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLaRue",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBonneau",
       "added": "2026-08-19"
     }
   ]

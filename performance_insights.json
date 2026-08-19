@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-19T08:39:26.992867",
-  "window_7d_actions": 4848,
-  "window_24h_actions": 854,
+  "generated_at": "2026-08-19T12:39:26.159508",
+  "window_7d_actions": 4854,
+  "window_24h_actions": 842,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4848
+      "count": 4854
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4848
+      "count": 4854
     }
   ],
   "best_hours_utc": [
@@ -32,45 +32,45 @@
       "actions": 234
     },
     {
-      "hour": 11,
-      "actions": 228
+      "hour": 12,
+      "actions": 230
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2224
+      "count": 2211
     },
     {
       "topic": "IA",
-      "count": 1895
+      "count": 1909
     },
     {
       "topic": "Crypto",
-      "count": 551
+      "count": 550
     },
     {
       "topic": "Bourse",
-      "count": 404
+      "count": 412
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 114
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2100
+      "count": 2124
     },
     {
       "pillar": "other",
-      "count": 1315
+      "count": 1302
     },
     {
       "pillar": "market_trauma",
-      "count": 1209
+      "count": 1207
     },
     {
       "pillar": "meme_reaction",
@@ -78,33 +78,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 66
+      "count": 64
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 35
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 357
-    },
-    {
-      "pillar": "other",
-      "count": 240
+      "count": 365
     },
     {
       "pillar": "market_trauma",
-      "count": 224
+      "count": 225
+    },
+    {
+      "pillar": "other",
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
@@ -120,24 +120,24 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.21,
-      "avg_views": 48.5,
+      "pillar": "other",
+      "posts": 72,
+      "avg_likes": 0.22,
+      "avg_views": 54.6,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 71,
+      "pillar": "ai_news_take",
+      "posts": 70,
       "avg_likes": 0.21,
-      "avg_views": 54.3,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.11,
-      "avg_views": 50.2,
+      "posts": 46,
+      "avg_likes": 0.13,
+      "avg_views": 49.3,
       "low_sample": false
     },
     {
@@ -151,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4336
+      "count": 4344
     },
     {
       "type": "quote",
-      "count": 303
+      "count": 300
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 102
     },
     {
       "type": "post",
-      "count": 52
+      "count": 50
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 45
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-19T08:37:29.262481",
-      "text": "OpenAI’s \"slow growth\" is just Anthropic’s marketing team having a really, really good quarter 🙂",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-19T08:37:12.477168",
-      "text": "EL is up 7%. The Mag 7 are flat.\nthe beauty sector is finally realizing everyone looks better in filters than in reality.",
+      "ts": "2026-08-19T12:39:22.914951",
+      "text": "Gemini flash ships for free. your $20/mo pro sub buys you the \"please don't fire me yet\" badge.\n\nthe real story isn't the model, it's the retention hook.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T08:35:51.544706",
-      "text": "The Fed’s July 29 hike just proved long-duration debt is the new AI capex: overpaid for.\nwe are buying the same narrative at a double-digit yield.",
+      "ts": "2026-08-19T12:38:54.293387",
+      "text": "Polymarket odds are just betting slips. Spot ETF demand is an inventory constraint.\n\n$70k isn't a probability. It's the only price where the float gets tight enough to snap.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-19T12:38:37.990392",
+      "text": "9,999 is the exact number 401k Dave forgot he paid to exit at the last top. he’s not early, he’s just repeating history at a premium.",
       "type": "reply"
     }
   ]

@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-31T17:50:00.289257",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SofianeM",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L\u2019ancien hedge manager qui ose dire que la plupart des conseils d\u2019administration sont des comit\u00e9s d\u2019entraide."
-      },
-      {
-        "handle": "MaximeDor",
-        "region": "france",
-        "niche": "trading",
-        "followers": 32000,
-        "reason": "Pas de signaux VIP, juste du risk management pur et dur. Il tweete ce que les autres cachent dans leur newsletter."
-      },
-      {
-        "handle": "AntoineDarras",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Founders VC \u00e0 SF, il tweete en FR quand il a une opinion piquante sur les startups fran\u00e7aises \u00e0 l\u2019\u00e9tranger."
-      },
-      {
-        "handle": "MathieuDuchemin",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "L\u2019architecte de PlaidFR au Qu\u00e9bec. Il balance du concret sur l\u2019infra bancaire sans vendre du r\u00eave."
-      },
-      {
-        "handle": "JulienCoyne",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Journaliste tech FR qui a compris que l\u2019IA n\u2019est pas juste du code, c\u2019est du business model qui explose."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font le travail : des analystes et fondateurs qui tweetent la v\u00e9rit\u00e9 sur leur secteur, pas les influenceurs \u00e0 la recherche de likes."
-  },
-  {
-    "ts": "2026-07-31T19:50:08.595196",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickaeldietrich",
-        "region": "france",
-        "niche": "ai",
-        "followers": 135000,
-        "reason": "Le Vieux Con de la Tech. Si il tweet en FR, c'est que l'IA a un avenir."
-      },
-      {
-        "handle": "PierreVannier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Journaliste BFM Business. Il a le fil des CEOs. Mordant quand il faut."
-      },
-      {
-        "handle": "AdrienMauger",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 32000,
-        "reason": "Ex-Crypto de Boursorama. Il tweet ce que les autres ne voient pas dans la fintech."
-      },
-      {
-        "handle": "JulienCahen",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le gars le plus malin de l'\u00e9cosyst\u00e8me crypto fr. Il twitte, le march\u00e9 bouge."
-      },
-      {
-        "handle": "SylvainLaforge",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le pape de l'IA au Qu\u00e9bec. Il tweet en FR, il comprend l'US. Un pont vital."
-      },
-      {
-        "handle": "MariusLemay",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste DeFi qu\u00e9b\u00e9cois. Ses threads sur les tokenomics valent plus cher que ma vie."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font bouger les lignes ou les prix. La France domine sur la fintech/crypto, le Qu\u00e9bec sur l'IA pure. L'Am\u00e9rique francophone, c'est du gold pur."
-  },
-  {
     "ts": "2026-08-01T10:41:53.733759",
     "raw_count": 8,
     "kept_count": 1,
@@ -8900,5 +8803,60 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les p\u00e9pites qui font vraiment bouger l'aiguille : Mistral pour la tech pure, J\u00e9gou pour l'infra, et Baudoin pour le pont Montr\u00e9al-Cali. Oubli\u00e9s les influenceurs formations, on garde ceux qui codent et analysent."
+  },
+  {
+    "ts": "2026-08-19T08:40:30.327938",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoSottong",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 110000,
+        "reason": "L'indispen(sable) pour comprendre la bourse sans s'endormir. Pile entre pro et accessible."
+      },
+      {
+        "handle": "BenoitPonce",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "L'ancien dirigeant de La French Tech. Twitte tech/startup avec le recul du terrain."
+      },
+      {
+        "handle": "MorganPiel",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Journaliste bourse qui fout le feu sur les r\u00e9sultats d'entreprises. Actif et mordant."
+      }
+    ],
+    "summary": "Pack \u00e9quilibr\u00e9 : le s\u00e9rieux de Sottong, la puret\u00e9 de Mistral, et le terroir de Dionne. Z\u00e9ro vendangier de formation \u00e0 2000\u20ac dans le lot."
+  },
+  {
+    "ts": "2026-08-19T10:40:06.314970",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainLaRue",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Un des grands noms du trading action qu\u00e9b\u00e9cois. Il est l\u00e0 depuis longtemps, a surv\u00e9cu aux krachs, et ses posts restent ancr\u00e9s dans la r\u00e9alit\u00e9 des march\u00e9s."
+      },
+      {
+        "handle": "JulienBonneau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Expert RAG et infra LLM. Il twitte pour les buildeurs, pas pour les poseurs. Si tu aimes le code qui marche plut\u00f4t que les pitchs en mode startup week-end, c'est ta cible."
+      }
+    ],
+    "summary": "Un mix solide entre les g\u00e9ants institutionnels (Mistral, PowerHasheur) et les analystes terrain qui ne vendent pas de r\u00eave. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 via l'IA et la bourse pure."
   }
 ]
