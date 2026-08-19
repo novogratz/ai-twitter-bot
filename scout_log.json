@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-01T10:41:53.733759",
-    "raw_count": 8,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulesDormoy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directeur de recherche chez Deepmind France. Il rend l'IA accessible sans te faire croire que tu peux juste 'copier-coller' Python pour gagner un million."
-      }
-    ],
-    "summary": "Une s\u00e9lection chirurgicale : des experts fran\u00e7ais qui font parler (Bourgeois, Dormoy), un crack qu\u00e9b\u00e9cois (MaximeG) et deux valeurs s\u00fbres de la fintech/trading. Z\u00e9ro vendeur de r\u00eaves, juste du gras."
-  },
-  {
-    "ts": "2026-08-01T12:41:20.510753",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mehdi_ayari",
-        "region": "france",
-        "niche": "tech",
-        "followers": 145000,
-        "reason": "L'oracle des startups. Moins 'IA pure', plus 'ecosyst\u00e8me'. Il tweet des infos tech/finance avant les march\u00e9s, indispensable pour voir venir les deals avant le crowd."
-      },
-      {
-        "handle": "cyrilmagnin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "La r\u00e9f\u00e9rence absolue sur X pour l'IA. Bas\u00e9 \u00e0 SF mais FR de c\u0153ur. Il compile les papers et les news tech en 140 caract\u00e8res. Si tu ne le suis pas, tu es en retard de 48h."
-      },
-      {
-        "handle": "joshuam13",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "Ex-VC, maintenant solo degen. Il tweet des threads de deepe-diving sur les tokens et les infra. C'est l'\u00e9quivalent d'un Morning Brew mais \u00e9crit par un trader qui a vu des crashs."
-      },
-      {
-        "handle": "joffrey_sclafani",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 38000,
-        "reason": "Le roi de l'analyse on-chain \u00e0 la fran\u00e7aise. Il balance des gems techniques sur Solana/Base sans le jargon pompeux de la finance US. Direct et factuel."
-      },
-      {
-        "handle": "maximebeauchesne",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 30000,
-        "reason": "Ex-associ\u00e9 chez VC, il tweet des analyses macro et des le\u00e7ons d'investissement. Sa prose est claire et sans gras. C'est le 'finance twitter' propre, sans les influenceurs de trading en Yatch."
-      },
-      {
-        "handle": "dorianmasse",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le CTO de Mistral AI. Tweet code et architecture. C'est pas du marketing, c'est le mec qui fait la sauce. Si tu veux savoir o\u00f9 va l'IA en France, suis sa feed."
-      },
-      {
-        "handle": "alexander_duval",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le gars qui couvre les mini-caps et le growth au Qu\u00e9bec. Pas de blabla politique, juste du P/E, des bilans et des opportunites sous-estim\u00e9es. Le plus utile pour un portefeuille CA."
-      },
-      {
-        "handle": "alexandre_delvaux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Fondateur de Sift AI. Il documente sa croissance ('build in public') avec des m\u00e9triques concr\u00e8tes. Mieux qu'un analyste qui pr\u00e9dit, c'est un fondateur qui montre les chiffres."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre les geeks de Mistral, les degen on-chain et les value investors qu\u00e9b\u00e9cois. J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont un produit ou un tableau de bord \u00e0 montrer."
-  },
-  {
     "ts": "2026-08-01T14:41:38.293661",
     "raw_count": 10,
     "kept_count": 10,
@@ -8858,5 +8775,67 @@
       }
     ],
     "summary": "Un mix solide entre les g\u00e9ants institutionnels (Mistral, PowerHasheur) et les analystes terrain qui ne vendent pas de r\u00eave. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 via l'IA et la bourse pure."
+  },
+  {
+    "ts": "2026-08-19T12:40:25.152833",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoMelo",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone, il fait le pont entre la Valley et la francophonie. Ses threads sur les startups IA seed-stage sont plus pr\u00e9cieux que la majorit\u00e9 des newsletters payantes du secteur."
+      },
+      {
+        "handle": "LemuelFavre",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien de l'\u00e9cosyst\u00e8me Crypto Francophone, il apporte une analyse macro-r\u00e9gulari\u00e8re rare. Pas de sh*tcoins obscurs, juste du Bitcoin, de l'\u00e9thique et une lecture fine des cycles. Il \u00e9vite le pi\u00e8ge des signaux payants."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre le Qu\u00e9bec (le nerf de la guerre acad\u00e9mique), la France (la tech et la finance classique) et la diaspora US (le vent du nord silicon valley). On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur des analystes qui ont une grille de lecture."
+  },
+  {
+    "ts": "2026-08-19T14:40:36.153640",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaultB",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 90000,
+        "reason": "Le patron de The Market Maven. Il d\u00e9cortique les bilans trimestriels avec une pr\u00e9cision chirurgicale et un ton sec qui tue. Pas de blabla, que du concret."
+      },
+      {
+        "handle": "SarkoCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Ancien banquier, actuel crypto-d\u00e9g\u00e9n\u00e9r\u00e9. Il couvre BTC, ETH et les narrative AI/DePIN avec une rigueur rare sur Twitter FR."
+      },
+      {
+        "handle": "CryptoNantes",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Un compte pur produit, z\u00e9ro influenceur. Il poste des threads \u00e9ducatifs profonds sur la tech sous-jacente. C'est du lourd technique."
+      },
+      {
+        "handle": "CryptoPoutine",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Le roi de l'analyse on-chain d\u00e9guis\u00e9e en meme. Il trouve les gems avant qu'elles ne soient dans le top 100 de CoinGecko."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les pros : des analystes qui comprennent la tech et le march\u00e9, pas des vendeurs de r\u00eaves. De SarkoCrypto \u00e0 Alexis Dionne, ce sont des mines d'infos sans le filtre des influenceurs g\u00e9n\u00e9ralistes."
   }
 ]

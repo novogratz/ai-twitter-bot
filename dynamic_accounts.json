@@ -2007,7 +2007,13 @@
     "BenoitPonce",
     "MorganPiel",
     "SylvainLaRue",
-    "JulienBonneau"
+    "JulienBonneau",
+    "HugoMelo",
+    "LemuelFavre",
+    "ThibaultB",
+    "SarkoCrypto",
+    "CryptoNantes",
+    "CryptoPoutine"
   ],
   "en": [
     "Chubby",
@@ -14534,6 +14540,36 @@
     {
       "lang": "fr",
       "handle": "JulienBonneau",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoMelo",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "LemuelFavre",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultB",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SarkoCrypto",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNantes",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPoutine",
       "added": "2026-08-19"
     }
   ]

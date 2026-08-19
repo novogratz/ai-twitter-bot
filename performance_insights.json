@@ -1,57 +1,57 @@
 {
-  "generated_at": "2026-08-19T12:39:26.159508",
-  "window_7d_actions": 4854,
-  "window_24h_actions": 842,
+  "generated_at": "2026-08-19T16:39:26.200796",
+  "window_7d_actions": 4840,
+  "window_24h_actions": 843,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4854
+      "count": 4840
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4854
+      "count": 4840
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 14,
-      "actions": 241
-    },
-    {
-      "hour": 16,
-      "actions": 240
-    },
-    {
-      "hour": 13,
+      "hour": 15,
       "actions": 237
     },
     {
-      "hour": 15,
+      "hour": 14,
+      "actions": 236
+    },
+    {
+      "hour": 16,
       "actions": 234
     },
     {
-      "hour": 12,
+      "hour": 13,
+      "actions": 233
+    },
+    {
+      "hour": 10,
       "actions": 230
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2211
+      "count": 2188
     },
     {
       "topic": "IA",
-      "count": 1909
+      "count": 1902
     },
     {
       "topic": "Crypto",
-      "count": 550
+      "count": 561
     },
     {
       "topic": "Bourse",
-      "count": 412
+      "count": 409
     },
     {
       "topic": "Spatial",
@@ -62,53 +62,53 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2124
+      "count": 2119
     },
     {
       "pillar": "other",
-      "count": 1302
+      "count": 1288
     },
     {
       "pillar": "market_trauma",
-      "count": 1207
+      "count": 1210
     },
     {
       "pillar": "meme_reaction",
-      "count": 122
+      "count": 119
     },
     {
       "pillar": "reply_bait",
-      "count": 64
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 365
+      "count": 373
     },
     {
       "pillar": "market_trauma",
-      "count": 225
+      "count": 218
     },
     {
       "pillar": "other",
-      "count": 222
+      "count": 217
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -121,41 +121,41 @@
     },
     {
       "pillar": "other",
-      "posts": 72,
+      "posts": 68,
       "avg_likes": 0.22,
-      "avg_views": 54.6,
+      "avg_views": 53.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 70,
-      "avg_likes": 0.21,
-      "avg_views": 48.4,
+      "avg_likes": 0.2,
+      "avg_views": 47.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.13,
+      "posts": 51,
+      "avg_likes": 0.1,
       "avg_views": 49.3,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 7,
+      "posts": 6,
       "avg_likes": 0.0,
-      "avg_views": 46.9,
+      "avg_views": 54.2,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4344
+      "count": 4334
     },
     {
       "type": "quote",
-      "count": 300
+      "count": 299
     },
     {
       "type": "quote_gif",
@@ -163,11 +163,11 @@
     },
     {
       "type": "post",
-      "count": 50
+      "count": 46
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 46
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-19T12:39:22.914951",
-      "text": "Gemini flash ships for free. your $20/mo pro sub buys you the \"please don't fire me yet\" badge.\n\nthe real story isn't the model, it's the retention hook.",
+      "ts": "2026-08-19T16:39:00.569325",
+      "text": "Trump to Bitcoin reserve: the same guy who calls himself a crypto expert but once tweeted \"bitcoin is a fraud.\"\n\nif the treasury buys at $150k, 401k dave finally stops panic selling.\npolitical cover for the ETF bull run.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T12:38:54.293387",
-      "text": "Polymarket odds are just betting slips. Spot ETF demand is an inventory constraint.\n\n$70k isn't a probability. It's the only price where the float gets tight enough to snap.",
+      "ts": "2026-08-19T16:37:17.245124",
+      "text": "The real story isn’t the open source part. it’s that grok is now a commodity API wrapper and the moat just evaporated.\nyou’re selling access to the plumbing.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T12:38:37.990392",
-      "text": "9,999 is the exact number 401k Dave forgot he paid to exit at the last top. he’s not early, he’s just repeating history at a premium.",
+      "ts": "2026-08-19T16:36:32.063542",
+      "text": "US Treasuries are buying their own debt to pay the interest on the debt.\n\nit's a ponzi scheme with better paperwork.",
       "type": "reply"
     }
   ]
