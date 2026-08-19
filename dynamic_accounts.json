@@ -1984,7 +1984,13 @@
     "MaximeJ",
     "GustaveDeBourg",
     "MisterSpex83",
-    "RomainVayssiere"
+    "RomainVayssiere",
+    "PierreLevy",
+    "SergeRenaud",
+    "CathieDIP",
+    "ThierryGuegan",
+    "VincentLeclerc",
+    "LorisD"
   ],
   "en": [
     "Chubby",
@@ -2390,7 +2396,13 @@
     "WizardX",
     "Leap",
     "Hedgie",
-    "Basil"
+    "Basil",
+    "precis0x",
+    "Braelyn",
+    "RadixArk",
+    "ocean",
+    "Cline",
+    "Cerebras"
   ],
   "history": [
     {
@@ -14336,6 +14348,66 @@
     {
       "lang": "fr",
       "handle": "RomainVayssiere",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "precis0x",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Braelyn",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLevy",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeRenaud",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "RadixArk",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "ocean",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Cline",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Cerebras",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CathieDIP",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThierryGuegan",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLeclerc",
+      "added": "2026-08-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorisD",
       "added": "2026-08-18"
     }
   ]

@@ -17015,3 +17015,10 @@ AI is changing the math behind what was possible.
 Nvidia to $10T feels inevita
   - https://x.com/ZaStocks/status/2089408900600668594
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 517).
+
+## 2026-08-19
+- **@mr_derivatives** (310 likes, score 9/10) — The last time Japan’s 10yr yield hit current levels, Nvidia didn’t even have a commercialized mainstream product yet and Apple was on the verge of bankruptcy. Lol
+
+Yes, it’s been THAT long…
+  - https://x.com/Mr_Derivatives/status/2089638906996383840
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 358).
