@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-19T00:39:27.080087",
-  "window_7d_actions": 4793,
-  "window_24h_actions": 856,
+  "generated_at": "2026-08-19T04:39:26.188151",
+  "window_7d_actions": 4848,
+  "window_24h_actions": 859,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4793
+      "count": 4848
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4793
+      "count": 4848
     }
   ],
   "best_hours_utc": [
@@ -39,82 +39,76 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2202
+      "count": 2215
     },
     {
       "topic": "IA",
-      "count": 1879
+      "count": 1901
     },
     {
       "topic": "Crypto",
-      "count": 549
+      "count": 558
     },
     {
       "topic": "Bourse",
-      "count": 397
+      "count": 406
     },
     {
       "topic": "Spatial",
-      "count": 110
+      "count": 113
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.111,
-      "7d_rate": 0.083
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2094
+      "count": 2116
     },
     {
       "pillar": "other",
-      "count": 1294
+      "count": 1309
     },
     {
       "pillar": "market_trauma",
-      "count": 1178
+      "count": 1193
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 124
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 355
+      "count": 367
     },
     {
       "pillar": "other",
-      "count": 251
+      "count": 244
     },
     {
       "pillar": "market_trauma",
-      "count": 220
+      "count": 216
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -127,23 +121,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.24,
-      "avg_views": 51.8,
+      "posts": 73,
+      "avg_likes": 0.23,
+      "avg_views": 49.4,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 74,
-      "avg_likes": 0.22,
-      "avg_views": 55.9,
+      "avg_likes": 0.2,
+      "avg_views": 54.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.12,
-      "avg_views": 53.6,
+      "posts": 41,
+      "avg_likes": 0.1,
+      "avg_views": 52.9,
       "low_sample": false
     },
     {
@@ -157,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4284
+      "count": 4336
     },
     {
       "type": "quote",
-      "count": 300
+      "count": 302
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 101
     },
     {
       "type": "post",
@@ -182,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-19T00:37:31.866846",
-      "text": "Claude Opus 5 is closed-source, so this benchmark is either on held-out test data or the local model guessed the prompt.\n\nReal story: local 22B is fast on known tasks. it will choke on unseen edge cases.",
+      "ts": "2026-08-19T04:38:51.066643",
+      "text": "L'IRS te rembourse avec des chiffres réels. ton portefeuille, lui, est toujours en train de se reconstruire.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T00:36:59.428438",
-      "text": "India's \"AI trade reversal\" is just S&P 3000 calls selling. The index needs 7 names to breathe, not Mumbai.\n\nIndia is a market. S&P is a group chat.\n\nNifty is down 4% YTD while Nasdaq eats its own tail.\n\nIndia isn't waiting for AI. It's waiting for the US to stop buying itself.",
-      "type": "reply"
+      "ts": "2026-08-19T04:37:08.071741",
+      "text": "Opus 5 is just Claude 4 having a midlife crisis with a bigger budget.",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-19T00:36:43.294786",
-      "text": "BTC needs to hold 110k to keep miners solvent at this hashrate. ETH needs 4k to flip BTC's dominance. altseason is just liquidity overflow. buy the dip, sell the rip, cry on the way up.",
+      "ts": "2026-08-19T04:36:49.933634",
+      "text": "ETH/BTC at 0.032 is just the market waiting for BTC to catch up to ETH's valuation.",
       "type": "reply"
     }
   ]

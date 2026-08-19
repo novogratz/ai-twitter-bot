@@ -1990,7 +1990,12 @@
     "CathieDIP",
     "ThierryGuegan",
     "VincentLeclerc",
-    "LorisD"
+    "LorisD",
+    "MonaElhassid",
+    "ThomasGosselin",
+    "JulesVanBelle",
+    "mehdi_bouazizi",
+    "thomas_courtois"
   ],
   "en": [
     "Chubby",
@@ -2402,7 +2407,10 @@
     "RadixArk",
     "ocean",
     "Cline",
-    "Cerebras"
+    "Cerebras",
+    "ThePersistence",
+    "Radley",
+    "Elena"
   ],
   "history": [
     {
@@ -14409,6 +14417,46 @@
       "lang": "fr",
       "handle": "LorisD",
       "added": "2026-08-18"
+    },
+    {
+      "lang": "en",
+      "handle": "ThePersistence",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Radley",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Elena",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MonaElhassid",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasGosselin",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesVanBelle",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdi_bouazizi",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_courtois",
+      "added": "2026-08-19"
     }
   ]
 }

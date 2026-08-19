@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-31T07:49:58.820251",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LoupMakdessi",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 78000,
-        "reason": "L'incontournable. Ex-consensus, il balance des threads macro/crypto denses sans jamais vendouiller son coaching."
-      },
-      {
-        "handle": "MathieuDuffaut",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Fondateur de Mindverse, il twitte l'IA g\u00e9n\u00e9rative comme personne. Moins hype, plus fondamental."
-      },
-      {
-        "handle": "JohanMazenc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Co-founder de Mistral AI. Il partage les coulisses du LLM fran\u00e7ais avec humeur et tech."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la flotte pour garder les pros qui twittent encore (pas les influenceurs TikTok). Le top FR est dominated par les v\u00e9t\u00e9rans crypto (Makdessi, Bailly) qui ont surv\u00e9cu aux bears. Le Qu\u00e9bec est moins peupl\u00e9 mais Mazenc est une mine d'or."
-  },
-  {
-    "ts": "2026-07-31T11:50:02.822043",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeCorry",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "L'ing\u00e9nieur chez Mistral qui d\u00e9code le chaos de l'open source sans se la raconter. Plus utile qu'un gourou."
-      },
-      {
-        "handle": "RaphB",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le fondateur de Mistral qui parle business et tech. C'est rare de voir un CEO FR qui ne vend pas que du vent."
-      },
-      {
-        "handle": "AlexisPigeon",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Analyste technique au Havre. Moins hype que les parisiens, mais ses setups valent plus que 90% des tweets."
-      },
-      {
-        "handle": "CryptoBoulot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La seule newsletter FR qui parle de crypto sans faire peur. Du concret pour ceux qui veulent bosser dans le secteur."
-      },
-      {
-        "handle": "MarcGirard",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'\u00e9ducatif qu\u00e9b\u00e9cois qui \u00e9vite le charabia financier. Le gars qui explique la bourse comme \u00e0 son neveu."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour te donner des cerveaux : deux g\u00e9ants de l'IA fran\u00e7aise qui ont enfin de la substance, un technicien bourse qui fait du vrai travail, et du Qu\u00e9bec qui d\u00e9montre que l'IA francophone d\u00e9passe Paris."
-  },
-  {
     "ts": "2026-07-31T13:50:25.500300",
     "raw_count": 6,
     "kept_count": 3,
@@ -8914,5 +8838,74 @@
       }
     ],
     "summary": "Focus sur les profils hybrides (US en FR, QC pur) pour \u00e9viter le bruit des vendeurs de r\u00eaves, on cherche du fond dans le bruit."
+  },
+  {
+    "ts": "2026-08-19T00:39:54.300386",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MonaElhassid",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Journaliste tech US (WSJ/Forbes) qui tweete en fran\u00e7ais, elle est la passerelle indispensable entre l'IA SF et la sc\u00e8ne FR."
+      },
+      {
+        "handle": "ThomasGosselin",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Expert IA qu\u00e9b\u00e9cois, il d\u00e9montre que le Qu\u00e9bec n'est pas juste du fromage : analyse tech pointue et humour d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "JulesVanBelle",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Founder de Sana, il twitte ses le\u00e7ons de startup/tech en FR sans se prendre la t\u00eate, un classique du 'deep work' francophone."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour te sortir des analystes et founders qui ont du sang dans les yeux (et pas juste des formations \u00e0 99\u20ac). C'est du 100% FR, sans les influenceurs crypto qui vendent du r\u00eave."
+  },
+  {
+    "ts": "2026-08-19T02:39:54.683453",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mehdi_bouazizi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le patron de Bitmama. Il tweet en FR, analyse crypto et finance, et a surv\u00e9cu au banquisme. Vaut le d\u00e9tour."
+      },
+      {
+        "handle": "thomas_courtois",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Gars de la Tech, couvre l'IA et les startups FR. Pas un gourou, un observateur clair. Z\u00e9ro formation \u00e0 vendre."
+      },
+      {
+        "handle": "sylvain_dewandre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Ex-analyste, pur joueur. Il tweet des setups, pas des 'cours pour d\u00e9butant'. Son style est sec, sans blabla."
+      },
+      {
+        "handle": "jeanpierre_rousseau",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Sp\u00e9cialiste paiement/fintech. Un peu niche, mais son analyse du secteur fintech FR est la r\u00e9f\u00e9rence silencieuse."
+      }
+    ],
+    "summary": "On \u00e9vite les influenceurs formation, on va vers les praticiens. Cette liste est un m\u00e9lange d'anciens banquiers qui ont tenu, de build-en-public qui ne vendent que du caf\u00e9, et d'un Qu\u00e9b\u00e9cois s\u00e9rieux."
   }
 ]
