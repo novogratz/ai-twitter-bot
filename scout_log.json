@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-31T13:50:25.500300",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MathieuLecocq",
-        "region": "france",
-        "niche": "tech/ai",
-        "followers": 25000,
-        "reason": "PDG de Marmot Invest, il mixe tech et finance avec une honn\u00eatet\u00e9 rare sur le march\u00e9."
-      },
-      {
-        "handle": "RoxanneMaurice",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Journaliste crypto qui ose dire du mal d'Ethereum et du NFT, pas dans le 'to the moon' syst\u00e9matique."
-      },
-      {
-        "handle": "BenjaminLemay",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Co-fondateur de Coinhouse, il couvre le march\u00e9 crypto qu\u00e9b\u00e9cois avec un regard pragmatique."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour ne garder que des pros qui tweetent sur leur boulot. La France a ses gourous de la bourse, le Qu\u00e9bec ses fondateurs IA, et la diaspora US fait le lien entre les deux mondes crypto."
-  },
-  {
-    "ts": "2026-07-31T15:50:13.561752",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JeanBaptisteJB",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le fran\u00e7ais de SF qui fait le pont. Il couvre l'IA et les VC am\u00e9ricains depuis l'int\u00e9rieur du pays."
-      },
-      {
-        "handle": "AlexisBernardFr",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le roi du micro-writing boursier. Moins de blabla, plus de charts. Vaudouiste de la tech."
-      },
-      {
-        "handle": "Marc-AntoineParent",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le trader Qu\u00e9b\u00e9cois. Il parle march\u00e9, options et macro. Vibe Montr\u00e9al cool, analyse s\u00e9rieuse."
-      },
-      {
-        "handle": "CryptoKikoo",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le 'Kikoo' de la crypto FR. Anecdotique sur le short term, s\u00e9rieux sur le cycle Bitcoin. Vrai trader."
-      },
-      {
-        "handle": "DarioPellegrini_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Ex-Mistral. Il balance des threads IA ultra-techniques avec une pointe d'humour sec. Le bon coin."
-      }
-    ],
-    "summary": "Je t'ai filtr\u00e9 la cr\u00e8me : des analystes qui taillent dans le vif (Bernard, Pellegrini), les g\u00e9ants locaux (Mistral), et le Qu\u00e9bec qui p\u00e8se sur la tech (Dionne, Parent). Pas de vendeurs de r\u00eave, que du concret."
-  },
-  {
     "ts": "2026-07-31T17:50:00.289257",
     "raw_count": 6,
     "kept_count": 5,
@@ -8907,5 +8831,74 @@
       }
     ],
     "summary": "On \u00e9vite les influenceurs formation, on va vers les praticiens. Cette liste est un m\u00e9lange d'anciens banquiers qui ont tenu, de build-en-public qui ne vendent que du caf\u00e9, et d'un Qu\u00e9b\u00e9cois s\u00e9rieux."
+  },
+  {
+    "ts": "2026-08-19T04:40:07.829917",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DorianMazuy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'analyste macro qui comprend les ondes. Twitte en FR, analyse pro, z\u00e9ro pub Telegram \u00e0 la con."
+      },
+      {
+        "handle": "SimonLachance",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Fondateur/CTO qui tweete sur l'IA appliqu\u00e9e. Pas de jargon inutile, juste du technique en FR pour les devs/curieux."
+      },
+      {
+        "handle": "RaphaelMazuy",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Fr\u00e8re de Dorian, mais plus focalis\u00e9 sur les actions FR/EU. C'est du concret, pas du storytelling de startup."
+      },
+      {
+        "handle": "BenjaminDeWilde",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Fondateur de Hugging Face. Il tweete en FR quand il veut, c'est l'open source pur. Audience pro massive."
+      },
+      {
+        "handle": "LionelFruchart",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Journaliste tech fr qui couvrage la SaaS et l'IA. Moins connu que les influenceurs 'lambo', mais plus pertinent."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lambo' pour te donner des vrais acteurs : Mazuy pour la macro/crypto, Rossi pour l'IA pure, et les Qu\u00e9b\u00e9cois Dionne/Lachance pour la niche locale. Tous actifs, tous tweetent en FR, aucun n'a besoin de vendre un groupe Telegram pour exister."
+  },
+  {
+    "ts": "2026-08-19T06:39:55.609930",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoBullFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 125000,
+        "reason": "Le roi du trading technique FR. Il ne vend pas de r\u00eave, il montre les chandeliers. Le plus fiable du secteur."
+      },
+      {
+        "handle": "TheInvestingKid",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Am\u00e9ricain francophone qui couvre Nasdaq avec du sens. Moins 'bro' que ses coll\u00e8gues, plus fondamental."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites qui font vraiment bouger l'aiguille : Mistral pour la tech pure, J\u00e9gou pour l'infra, et Baudoin pour le pont Montr\u00e9al-Cali. Oubli\u00e9s les influenceurs formations, on garde ceux qui codent et analysent."
   }
 ]

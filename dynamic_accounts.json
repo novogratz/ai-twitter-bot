@@ -1995,7 +1995,14 @@
     "ThomasGosselin",
     "JulesVanBelle",
     "mehdi_bouazizi",
-    "thomas_courtois"
+    "thomas_courtois",
+    "DorianMazuy",
+    "SimonLachance",
+    "RaphaelMazuy",
+    "BenjaminDeWilde",
+    "LionelFruchart",
+    "CryptoBullFR",
+    "TheInvestingKid"
   ],
   "en": [
     "Chubby",
@@ -2410,7 +2417,8 @@
     "Cerebras",
     "ThePersistence",
     "Radley",
-    "Elena"
+    "Elena",
+    "Wost"
   ],
   "history": [
     {
@@ -14456,6 +14464,46 @@
     {
       "lang": "fr",
       "handle": "thomas_courtois",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianMazuy",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimonLachance",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelMazuy",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDeWilde",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelFruchart",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Wost",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBullFR",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheInvestingKid",
       "added": "2026-08-19"
     }
   ]

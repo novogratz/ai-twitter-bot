@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-19T04:39:26.188151",
+  "generated_at": "2026-08-19T08:39:26.992867",
   "window_7d_actions": 4848,
-  "window_24h_actions": 859,
+  "window_24h_actions": 854,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
@@ -39,68 +39,68 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2215
+      "count": 2224
     },
     {
       "topic": "IA",
-      "count": 1901
+      "count": 1895
     },
     {
       "topic": "Crypto",
-      "count": 558
+      "count": 551
     },
     {
       "topic": "Bourse",
-      "count": 406
+      "count": 404
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 115
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2116
+      "count": 2100
     },
     {
       "pillar": "other",
-      "count": 1309
+      "count": 1315
     },
     {
       "pillar": "market_trauma",
-      "count": 1193
+      "count": 1209
     },
     {
       "pillar": "meme_reaction",
-      "count": 124
+      "count": 122
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 66
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 37
+      "count": 36
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 367
+      "count": 357
     },
     {
       "pillar": "other",
-      "count": 244
+      "count": 240
     },
     {
       "pillar": "market_trauma",
-      "count": 216
+      "count": 224
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 20
     },
     {
       "pillar": "reply_bait",
@@ -122,22 +122,22 @@
     {
       "pillar": "ai_news_take",
       "posts": 73,
-      "avg_likes": 0.23,
-      "avg_views": 49.4,
+      "avg_likes": 0.21,
+      "avg_views": 48.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.2,
-      "avg_views": 54.6,
+      "posts": 71,
+      "avg_likes": 0.21,
+      "avg_views": 54.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.1,
-      "avg_views": 52.9,
+      "posts": 44,
+      "avg_likes": 0.11,
+      "avg_views": 50.2,
       "low_sample": false
     },
     {
@@ -155,11 +155,11 @@
     },
     {
       "type": "quote",
-      "count": 302
+      "count": 303
     },
     {
       "type": "quote_gif",
-      "count": 101
+      "count": 100
     },
     {
       "type": "post",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-19T04:38:51.066643",
-      "text": "L'IRS te rembourse avec des chiffres réels. ton portefeuille, lui, est toujours en train de se reconstruire.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-19T04:37:08.071741",
-      "text": "Opus 5 is just Claude 4 having a midlife crisis with a bigger budget.",
+      "ts": "2026-08-19T08:37:29.262481",
+      "text": "OpenAI’s \"slow growth\" is just Anthropic’s marketing team having a really, really good quarter 🙂",
       "type": "quote"
     },
     {
-      "ts": "2026-08-19T04:36:49.933634",
-      "text": "ETH/BTC at 0.032 is just the market waiting for BTC to catch up to ETH's valuation.",
+      "ts": "2026-08-19T08:37:12.477168",
+      "text": "EL is up 7%. The Mag 7 are flat.\nthe beauty sector is finally realizing everyone looks better in filters than in reality.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-19T08:35:51.544706",
+      "text": "The Fed’s July 29 hike just proved long-duration debt is the new AI capex: overpaid for.\nwe are buying the same narrative at a double-digit yield.",
       "type": "reply"
     }
   ]
