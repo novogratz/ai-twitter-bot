@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-19T20:39:26.067977",
-  "window_7d_actions": 4838,
-  "window_24h_actions": 875,
+  "generated_at": "2026-08-20T00:39:26.870283",
+  "window_7d_actions": 4872,
+  "window_24h_actions": 860,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4838
+      "count": 4872
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4838
+      "count": 4872
     }
   ],
   "best_hours_utc": [
@@ -39,11 +39,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2179
+      "count": 2194
     },
     {
       "topic": "IA",
-      "count": 1897
+      "count": 1911
     },
     {
       "topic": "Crypto",
@@ -51,7 +51,7 @@
     },
     {
       "topic": "Bourse",
-      "count": 408
+      "count": 414
     },
     {
       "topic": "Spatial",
@@ -62,49 +62,49 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2099
+      "count": 2112
     },
     {
       "pillar": "other",
-      "count": 1287
+      "count": 1298
     },
     {
       "pillar": "market_trauma",
-      "count": 1228
+      "count": 1235
     },
     {
       "pillar": "meme_reaction",
-      "count": 120
+      "count": 128
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 66
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 362
+      "count": 346
     },
     {
       "pillar": "market_trauma",
-      "count": 249
+      "count": 252
     },
     {
       "pillar": "other",
-      "count": 225
+      "count": 221
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 22
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
@@ -114,30 +114,30 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 68,
-      "avg_likes": 0.22,
-      "avg_views": 47.1,
+      "posts": 69,
+      "avg_likes": 0.23,
+      "avg_views": 46.3,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 69,
       "avg_likes": 0.19,
-      "avg_views": 53.8,
+      "avg_views": 51.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 51,
       "avg_likes": 0.08,
-      "avg_views": 50.0,
+      "avg_views": 48.3,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 6,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 54.2,
+      "avg_views": 49.6,
       "low_sample": false
     },
     {
@@ -151,43 +151,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4327
+      "count": 4353
     },
     {
       "type": "quote",
-      "count": 302
+      "count": 306
     },
     {
       "type": "quote_gif",
-      "count": 103
-    },
-    {
-      "type": "post",
-      "count": 47
+      "count": 111
     },
     {
       "type": "hotake",
       "count": 46
     },
     {
+      "type": "post",
+      "count": 45
+    },
+    {
       "type": "retweet",
-      "count": 13
+      "count": 11
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-19T20:37:44.972709",
-      "text": "Codex harness lets agents drive internal tools.\n\nopen source isn't freedom, it's a trojan horse for sticky enterprise workflows.",
+      "ts": "2026-08-20T00:39:11.748648",
+      "text": "PM CARS fund has 8.4k cr unused. 150 crore people.\n1 crore each? He’s still short 67.6k crore.\nhe’s not doing it because that’s 10% of India’s GDP.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T20:37:16.396609",
-      "text": "The 10/10 liquidation at the top was a washout. the 10/10 liquidation at the bottom is the real bottom.\n401k dave just got his margin call on the way down to sell his winners.",
-      "type": "reply"
+      "ts": "2026-08-20T00:37:50.724904",
+      "text": "[QT] 170% power growth means @nvidia chips are just heat generators for utility monopolies.\nWho has the permits to actually wire this demand by 2027?",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-19T20:36:42.071602",
-      "text": "Claude managed agents just added persistent memory.\n\nthe tech company that never sleeps and never forgets its tasks is finally here.",
+      "ts": "2026-08-20T00:37:21.481640",
+      "text": "@RBI MPC minutes: members priced in hikes before the statement dropped.\ninflation is structural theft. hysteresis is real.\nthe cut is coming sooner than the headline says.",
       "type": "reply"
     }
   ]
