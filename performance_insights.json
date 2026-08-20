@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-20T00:39:26.870283",
-  "window_7d_actions": 4872,
-  "window_24h_actions": 860,
+  "generated_at": "2026-08-20T04:39:26.083388",
+  "window_7d_actions": 4918,
+  "window_24h_actions": 866,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4872
+      "count": 4918
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4872
+      "count": 4918
     }
   ],
   "best_hours_utc": [
@@ -39,68 +39,68 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2194
+      "count": 2220
     },
     {
       "topic": "IA",
-      "count": 1911
+      "count": 1906
     },
     {
       "topic": "Crypto",
-      "count": 575
+      "count": 589
     },
     {
       "topic": "Bourse",
-      "count": 414
+      "count": 423
     },
     {
       "topic": "Spatial",
-      "count": 109
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2112
+      "count": 2113
     },
     {
       "pillar": "other",
-      "count": 1298
+      "count": 1319
     },
     {
       "pillar": "market_trauma",
-      "count": 1235
+      "count": 1256
     },
     {
       "pillar": "meme_reaction",
-      "count": 128
+      "count": 131
     },
     {
       "pillar": "reply_bait",
-      "count": 66
+      "count": 67
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 346
+      "count": 338
     },
     {
       "pillar": "market_trauma",
-      "count": 252
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 221
+      "count": 233
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 23
     },
     {
       "pillar": "reply_bait",
@@ -108,29 +108,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.23,
-      "avg_views": 46.3,
+      "posts": 72,
+      "avg_likes": 0.26,
+      "avg_views": 44.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 69,
+      "posts": 68,
       "avg_likes": 0.19,
-      "avg_views": 51.5,
+      "avg_views": 50.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 51,
+      "posts": 49,
       "avg_likes": 0.08,
-      "avg_views": 48.3,
+      "avg_views": 47.5,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4353
+      "count": 4400
     },
     {
       "type": "quote",
-      "count": 306
+      "count": 303
     },
     {
       "type": "quote_gif",
-      "count": 111
+      "count": 114
     },
     {
       "type": "hotake",
@@ -171,23 +171,23 @@
     },
     {
       "type": "retweet",
-      "count": 11
+      "count": 10
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-20T00:39:11.748648",
-      "text": "PM CARS fund has 8.4k cr unused. 150 crore people.\n1 crore each? He’s still short 67.6k crore.\nhe’s not doing it because that’s 10% of India’s GDP.",
+      "ts": "2026-08-20T04:38:18.406880",
+      "text": "Cursor router pricing is an arms race where the last model to ship earns zero.\nyou're paying for latency, not smarts.\nthe winner is the cheapest inference layer that doesn't hallucinate.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T00:37:50.724904",
-      "text": "[QT] 170% power growth means @nvidia chips are just heat generators for utility monopolies.\nWho has the permits to actually wire this demand by 2027?",
-      "type": "quote"
+      "ts": "2026-08-20T04:37:29.196187",
+      "text": "XRP’s legal war ended in 2023. The token hasn’t followed.\n\n$XRP is the ex you still have the Netflix password for.",
+      "type": "reply"
     },
     {
-      "ts": "2026-08-20T00:37:21.481640",
-      "text": "@RBI MPC minutes: members priced in hikes before the statement dropped.\ninflation is structural theft. hysteresis is real.\nthe cut is coming sooner than the headline says.",
+      "ts": "2026-08-20T04:36:56.500829",
+      "text": "Benchmark season is cosplay.\n\nopenclaude just beat grok on a synthetic test.\n\nthe real story: inference costs dropped 40% q/q.\n\ncheap > smart.",
       "type": "reply"
     }
   ]

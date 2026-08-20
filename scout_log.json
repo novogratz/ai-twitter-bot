@@ -1,67 +1,5 @@
 [
   {
-    "ts": "2026-08-01T23:36:52.914285",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VincentLemercier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'analyste macro qui parle comme un trader. Pas de charts illisibles, juste des th\u00e8ses claires sur la dette et l'inflation."
-      },
-      {
-        "handle": "PierreLachance",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Bas\u00e9 \u00e0 NYC, twitte en FR sur les march\u00e9s US. L'angora qui comprend Wall Street sans le jargon bancal."
-      },
-      {
-        "handle": "MaximeM",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Trading crypto Qu\u00e9bec, focus Bitcoin/Ethereum. Pas de leverage fou, des analyses techniques solides en fran\u00e7ais pur."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui produisent de l'intelligence brute : Mistral pour l'IA hype, Bessac pour la crypto technique, et les qu\u00e9b\u00e9cois pour l'angle francophone rare. Z\u00e9ro vendeur de r\u00eave, que des artisans du market."
-  },
-  {
-    "ts": "2026-08-02T01:36:19.651664",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MarcSassier",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 80000,
-        "reason": "Le Qu\u00e9b\u00e9cois de NY qui a compris que Bitcoin est le seul truc s\u00e9rieux dans le vide num\u00e9rique."
-      },
-      {
-        "handle": "OlivierPierlot",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Le CTO qui d\u00e9monte les buzzwords comme un chirurgien au scalpel."
-      },
-      {
-        "handle": "JulienTalon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "L'anti-influenceur qui pr\u00e9f\u00e8re coder plut\u00f4t que vendre des pelles. Rare et pr\u00e9cieux."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le gras pour te donner des cerveaux, pas des m\u00e9gaphones. De Mistral aux traders de NY, c'est du concret."
-  },
-  {
     "ts": "2026-08-02T03:36:46.939763",
     "raw_count": 10,
     "kept_count": 7,
@@ -8732,5 +8670,74 @@
       }
     ],
     "summary": "Mix de heavy hitters IA (TheAIShrink, Mistral) et de l'\u00e9lite crypto FR (0xMaki, BeeDvader). Pas de vendeurs de r\u00eaves, juste des makers et des analystes."
+  },
+  {
+    "ts": "2026-08-20T00:40:06.007266",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuDuchastel",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise sur Solana. Il twitte souvent en FR, analyse les on-chain data sans se prendre la t\u00eate, et a \u00e9vit\u00e9 la plupart des crashs."
+      },
+      {
+        "handle": "Jules_Boffo",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "Le roi du thread p\u00e9dagogique sur XFR. Il d\u00e9crypte les r\u00e9sultats trimestriels et les m\u00e9caniques de march\u00e9 pour les nuls qui veulent comprendre sans devenir trader day."
+      },
+      {
+        "handle": "PierreRossi_",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Journaliste tech de rue, il couvre l'IA application et le SaaS avec un \u0153il critique. Moins hype, plus fond."
+      }
+    ],
+    "summary": "Un m\u00e9lange \u00e9quilibr\u00e9 entre les poids lourds institutionnels (Mistral, Boffo) et les analysts crypto plus agiles (Duchastel). Z\u00e9ro vendeur de r\u00eave, juste du concret technique et financier."
+  },
+  {
+    "ts": "2026-08-20T02:39:56.639926",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Bercy_92",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Compte officiel de la Direction G\u00e9n\u00e9rale des Finances Publiques, veille macro et bourse FR, tr\u00e8s influent."
+      },
+      {
+        "handle": "QuantMagazine",
+        "region": "usa",
+        "niche": "trading",
+        "followers": 30000,
+        "reason": "Quant Journal (FR), couvre algo trading et quant finance, audience internationale francophone."
+      },
+      {
+        "handle": "CryptoBasile",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Analyste crypto FR classique, pas de formation \u00e0 199\u20ac, twitte en FR, focus on-chain et macro."
+      },
+      {
+        "handle": "Ventes_Publiques",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Sp\u00e9cialiste des IPO et march\u00e9s FR, ton direct, twitte en FR, tr\u00e8s pertinent pour la bourse fran\u00e7aise."
+      }
+    ],
+    "summary": "Mix de poids lourds (Mistral, Bercy) et de niches pointues (CryptoBasile, Quant Magazine) pour \u00e9viter les generalistes. Aucun vendeur de r\u00eave."
   }
 ]

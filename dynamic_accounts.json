@@ -2026,7 +2026,12 @@
     "CryptoCaster",
     "BeeDvader",
     "BourgeoisV",
-    "DenebCrypto"
+    "DenebCrypto",
+    "Jules_Boffo",
+    "PierreRossi_",
+    "Bercy_92",
+    "QuantMagazine",
+    "CryptoBasile"
   ],
   "en": [
     "Chubby",
@@ -2443,7 +2448,9 @@
     "Radley",
     "Elena",
     "Wost",
-    "s"
+    "s",
+    "Abu",
+    "HYPEconomist"
   ],
   "history": [
     {
@@ -14655,6 +14662,41 @@
       "lang": "fr",
       "handle": "DenebCrypto",
       "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jules_Boffo",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRossi_",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Abu",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "HYPEconomist",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bercy_92",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "QuantMagazine",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBasile",
+      "added": "2026-08-20"
     }
   ]
 }
