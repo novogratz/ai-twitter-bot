@@ -17022,3 +17022,20 @@ Nvidia to $10T feels inevita
 Yes, it’s been THAT long…
   - https://x.com/Mr_Derivatives/status/2089638906996383840
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 358).
+
+## 2026-08-20
+- **@smallcapsnipa** (0 likes, score 7/10) — Goldman Sachs sees 170% global data center power demand growth in 2030 vs. 2025 (up from 117%)
+
+As hyperscaler capex and data center buildout rises, so too will power demand estimates
+
+$MU $NBIS $IREN
+  - https://x.com/SmallCapSnipa/status/2090264170503565757
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 22).
+- **@nomiprins** (33 likes, score 8/10) — Data center power demand is heading toward nearly 600 terawatt-hours by 2035, and the AI giants are signing power deals straight with nuclear operators to feed it. But just 7 percent of US nuclear fue
+  - https://x.com/nomiprins/status/2090125570994749469
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
+- **@zeektyt** (21 likes, score 7/10) — Goldman just moved their 2030 global data center power demand forecast to 170% growth vs. 2025, up from 117% previously. 
+
+Demand will only increase from here and the ones with secured power will bene
+  - https://x.com/ZeekTyt/status/2090271297569763635
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 21).
