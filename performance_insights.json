@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-20T08:39:26.545537",
-  "window_7d_actions": 4958,
-  "window_24h_actions": 870,
+  "generated_at": "2026-08-20T12:39:26.225861",
+  "window_7d_actions": 4991,
+  "window_24h_actions": 860,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4957
+      "count": 4990
     },
     {
       "pattern": "RENAME",
@@ -19,10 +19,18 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4957
+      "count": 4990
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 10,
+      "actions": 241
+    },
+    {
+      "hour": 12,
+      "actions": 239
+    },
     {
       "hour": 15,
       "actions": 237
@@ -34,59 +42,51 @@
     {
       "hour": 13,
       "actions": 233
-    },
-    {
-      "hour": 16,
-      "actions": 232
-    },
-    {
-      "hour": 10,
-      "actions": 230
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2240
+      "count": 2251
     },
     {
       "topic": "IA",
-      "count": 1912
+      "count": 1923
     },
     {
       "topic": "Crypto",
-      "count": 603
+      "count": 614
     },
     {
       "topic": "Bourse",
-      "count": 426
+      "count": 427
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2129
+      "count": 2145
     },
     {
       "pillar": "other",
-      "count": 1325
+      "count": 1338
     },
     {
       "pillar": "market_trauma",
-      "count": 1274
+      "count": 1280
     },
     {
       "pillar": "meme_reaction",
-      "count": 131
+      "count": 128
     },
     {
       "pillar": "reply_bait",
-      "count": 67
+      "count": 68
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,15 +96,15 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 353
+      "count": 334
     },
     {
       "pillar": "market_trauma",
-      "count": 250
+      "count": 248
     },
     {
       "pillar": "other",
-      "count": 225
+      "count": 234
     },
     {
       "pillar": "meme_reaction",
@@ -112,7 +112,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 18
     },
     {
       "pillar": "ai_vs_btc",
@@ -123,59 +123,59 @@
     {
       "pillar": "ai_news_take",
       "posts": 71,
-      "avg_likes": 0.27,
-      "avg_views": 44.7,
+      "avg_likes": 0.3,
+      "avg_views": 44.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
+      "posts": 70,
       "avg_likes": 0.16,
-      "avg_views": 50.0,
+      "avg_views": 49.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 51,
-      "avg_likes": 0.08,
-      "avg_views": 46.6,
+      "avg_likes": 0.1,
+      "avg_views": 46.1,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 46.2,
+      "avg_views": 48.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 35.4,
+      "avg_views": 33.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4437
+      "count": 4467
     },
     {
       "type": "quote",
-      "count": 306
+      "count": 311
     },
     {
       "type": "quote_gif",
-      "count": 115
+      "count": 113
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 47
     },
     {
       "type": "post",
-      "count": 44
+      "count": 43
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-20T08:39:13.006929",
-      "text": "S&P up 0.1% while Nvidia moves 0.2%.\n\nthe index didn't move. it exhaled.",
+      "ts": "2026-08-20T12:39:23.929723",
+      "text": "AGentic AI needs context to think. Context costs $ per token. The only way to \"sustain\" demand without hyperinflation is cheaper RAM.\n\nmicron just became the most important stock on earth.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T08:38:42.188036",
-      "text": "Treasury buybacks are a liquidity tailwind, not a fundamental valuation anchor.\nBTC didn’t break out because of the government. it broke out because 401k Dave finally stopped selling.",
+      "ts": "2026-08-20T12:39:07.619869",
+      "text": "Armstrong says bull market. the real story: his Q3 revenue depends on ETF inflows beating outflows. he's not predicting crypto. he's hedging his payroll.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T08:34:52.904400",
-      "text": "Meta Muse Spark powers dictation. So your phone now listens better than it understands.\n\nYou're paying for voice recognition, not AI. Big difference.",
+      "ts": "2026-08-20T12:38:34.959432",
+      "text": "OPEX day volatility is just the market digesting the GPU bills.\n\nCoreWeave’s $7B debt stack doesn’t care if you’re nervous.",
       "type": "reply"
     }
   ]

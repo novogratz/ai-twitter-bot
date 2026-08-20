@@ -2038,7 +2038,15 @@
     "SylvainLeclercq",
     "LudoBourgeon",
     "MarcGauthierQC",
-    "PierreRoux"
+    "PierreRoux",
+    "JulienDubreuil",
+    "RomainCazals",
+    "LudoLeblay",
+    "CyrilDuc",
+    "LuccaFr",
+    "BorjaTorres_",
+    "JulienDh",
+    "CryptoViduc"
   ],
   "en": [
     "Chubby",
@@ -14738,6 +14746,46 @@
     {
       "lang": "fr",
       "handle": "PierreRoux",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDubreuil",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainCazals",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoLeblay",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDuc",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuccaFr",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorjaTorres_",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDh",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoViduc",
       "added": "2026-08-20"
     }
   ]

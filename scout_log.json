@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-02T07:36:29.680367",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Beeple",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 750000,
-        "reason": "L'ancien artiste NFT qui a prouv\u00e9 qu'il savait twittre en fran\u00e7ais quand il faut, reste la r\u00e9f\u00e9rence culturelle 'art/crypto' au-dessus de la m\u00eal\u00e9e des signaleurs de merde."
-      },
-      {
-        "handle": "LucasDuponcheel",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Le gars de DataScince.fr qui a su pivoter vers l'IA g\u00e9n\u00e9rative avec un ton d\u00e9complex\u00e9, couvre l'aspect technique et business sans se prendre au s\u00e9rieux."
-      },
-      {
-        "handle": "BenjaminDumont",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Ancien de Coinhouse, il tweete comme il parle : direct, parfois brutal sur les coins qui p\u00e8tent, mais toujours avec une analyse technique derri\u00e8re."
-      },
-      {
-        "handle": "ThomasHaine",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Journaliste \u00e0 la fran\u00e7aise qui ose dire 'Apple c'est fini' ou 'L'IA n'est pas un bubble'. Il a la carrure pour tenir un thread de 50 tweets sans ennuyer."
-      },
-      {
-        "handle": "ThibautDeBey",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Cofondateur de Koyfin, il balance de la vraie data viz et des insights AI/Bourse sans \u00eatre un influenceur qui vend du coaching \u00e0 199\u20ac."
-      },
-      {
-        "handle": "MaximeWillemin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Ex-BNP, il balance des perles on-chain et macro frustes. Pas de 'community manager speak', juste un trader qui a vu passer des cycles et enrage calmement."
-      }
-    ],
-    "summary": "Un mix de founders techniques, de journalistes ind\u00e9pendants et de traders seniors qui ont surv\u00e9cu au crash de 2022. Pas de formateurs, juste des gens qui bossent ou analysent."
-  },
-  {
-    "ts": "2026-08-02T09:37:19.458048",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SylvainDollat",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "L'humoriste technique de France. Il mixe IA et code sans se prendre la t\u00eate, parfait pour d\u00e9tendre l'ambiance apr\u00e8s la bouffe."
-      },
-      {
-        "handle": "DimitriPerrin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le grand m\u00e9chant loup de la DeFi FR. Il tweete malin, pas de pubs de 99\u20ac dans la ligne de temps, rare et pr\u00e9cieux."
-      },
-      {
-        "handle": "CyrilleMuller",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "L'ancien de Coinhouse. Il a vu les cycles venir. Il tweete moins souvent, mais quand il tweete, \u00e7a vaut de l'or ou du vent (pas les deux)."
-      },
-      {
-        "handle": "BenjaminPoncelet",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "L'Am\u00e9ricain qui a adopt\u00e9 le FR. Il est bas\u00e9 aux US mais tweete en fran\u00e7ais avec un humour sec. Le meilleur pont transatlantique."
-      },
-      {
-        "handle": "MarcLambert",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Le journaliste tech de Montr\u00e9al. Il couvre la fintech et l'IA avec du recul. Moins de hype, plus de terrain."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des vendeurs de r\u00eave pour ne garder que ceux qui ont du contenu. Les qu\u00e9b\u00e9cois sont en retard sur la France en nombre de cr\u00e9ateurs, donc j'ai choisi les deux plus pertinents. Pour les USA, Benjamin Poncelet est le seul hybride francophone fiable."
-  },
-  {
     "ts": "2026-08-02T11:36:36.092004",
     "raw_count": 10,
     "kept_count": 9,
@@ -8704,5 +8607,88 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des 'gourous' en formations pour ne garder que les vrais experts qui postent du contenu technique ou des insights march\u00e9 sans vendre la lune. L'\u00e9quilibre France/Qu\u00e9bec/USA est respect\u00e9."
+  },
+  {
+    "ts": "2026-08-20T08:40:06.614989",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienDubreuil",
+        "region": "france",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "L'homme qui fait parler l'IA en 280 caract\u00e8res. Moins technique, plus narratif, mais la gueule du type passe partout."
+      },
+      {
+        "handle": "RomainCazals",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le prince du prompt engineering. Son feed est le genre de truc qu'on retweet \u00e0 3h du mat pour impressionner."
+      },
+      {
+        "handle": "LudoLeblay",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Le roi du storytelling fintech. Si tu veux comprendre comment l'argent rencontre la tech sans s'endormir, c'est l\u00e0."
+      },
+      {
+        "handle": "CyrilDuc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "L'anti-signal. Il twitte moins qu'un moine mais sa frappe est plus tranchante qu'un scalpel chirurgical."
+      },
+      {
+        "handle": "RenaudLanfranchi",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Founders fran\u00e7ais \u00e0 SF qui ont fait le saut. Son Twitter est un journal de bord tech plus qu'un blog de vanity."
+      }
+    ],
+    "summary": "Le panier est propre : des valeurs s\u00fbres (Mistral) et des perles rares (Dionne QC) qui \u00e9vitent le 'LinkedIn posture'. C'est du solide."
+  },
+  {
+    "ts": "2026-08-20T10:40:05.793583",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuccaFr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Ex-Mistral, le gars qui parle d'IA sans avoir l'air de se prendre au s\u00e9rieux. C'est la raret\u00e9 du bon sens dans le hype."
+      },
+      {
+        "handle": "BorjaTorres_",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Founders fran\u00e7ais \u00e0 SF qui tapent fort en FR. C'est la diaspora qui fait le boulot l\u00e0-bas, pas juste les localos."
+      },
+      {
+        "handle": "JulienDh",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le gars qui d\u00e9monte les actions tech avec des chiffres, pas des feelings. C'est rare au Qu\u00e9bec ce genre de rigueur."
+      },
+      {
+        "handle": "CryptoViduc",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'analyse on-chain qu\u00e9b\u00e9coise. Il comprend le blockchain, pas juste le prix. C'est l'exception qui confirme la r\u00e8gle."
+      }
+    ],
+    "summary": "Du lourd en IA fran\u00e7aise avec la team Mistral, et une bonne dose de s\u00e9rieux crypto/tech au Qu\u00e9bec qui \u00e9vite les vendeurs de r\u00eave."
   }
 ]
