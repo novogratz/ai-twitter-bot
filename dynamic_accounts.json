@@ -2013,7 +2013,13 @@
     "ThibaultB",
     "SarkoCrypto",
     "CryptoNantes",
-    "CryptoPoutine"
+    "CryptoPoutine",
+    "EricTanghi",
+    "JulienHuchet",
+    "RenaudPlanchet",
+    "JulesDeMauriac",
+    "OlivierBonnaud",
+    "CryptoPepit"
   ],
   "en": [
     "Chubby",
@@ -14570,6 +14576,36 @@
     {
       "lang": "fr",
       "handle": "CryptoPoutine",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricTanghi",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHuchet",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudPlanchet",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDeMauriac",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierBonnaud",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPepit",
       "added": "2026-08-19"
     }
   ]

@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-19T16:39:26.200796",
-  "window_7d_actions": 4840,
-  "window_24h_actions": 843,
+  "generated_at": "2026-08-19T20:39:26.067977",
+  "window_7d_actions": 4838,
+  "window_24h_actions": 875,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4840
+      "count": 4838
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4840
+      "count": 4838
     }
   ],
   "best_hours_utc": [
@@ -24,12 +24,12 @@
       "actions": 236
     },
     {
-      "hour": 16,
-      "actions": 234
-    },
-    {
       "hour": 13,
       "actions": 233
+    },
+    {
+      "hour": 16,
+      "actions": 232
     },
     {
       "hour": 10,
@@ -39,105 +39,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2188
+      "count": 2179
     },
     {
       "topic": "IA",
-      "count": 1902
+      "count": 1897
     },
     {
       "topic": "Crypto",
-      "count": 561
+      "count": 575
     },
     {
       "topic": "Bourse",
-      "count": 409
+      "count": 408
     },
     {
       "topic": "Spatial",
-      "count": 114
+      "count": 109
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2119
+      "count": 2099
     },
     {
       "pillar": "other",
-      "count": 1288
+      "count": 1287
     },
     {
       "pillar": "market_trauma",
-      "count": 1210
+      "count": 1228
     },
     {
       "pillar": "meme_reaction",
-      "count": 119
+      "count": 120
     },
     {
       "pillar": "reply_bait",
-      "count": 71
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 373
+      "count": 362
     },
     {
       "pillar": "market_trauma",
-      "count": 218
+      "count": 249
     },
     {
       "pillar": "other",
-      "count": 217
+      "count": 225
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 18
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.75,
-      "avg_views": 60.5,
+      "pillar": "ai_news_take",
+      "posts": 68,
+      "avg_likes": 0.22,
+      "avg_views": 47.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.22,
-      "avg_views": 53.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.2,
-      "avg_views": 47.4,
+      "posts": 69,
+      "avg_likes": 0.19,
+      "avg_views": 53.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 51,
-      "avg_likes": 0.1,
-      "avg_views": 49.3,
+      "avg_likes": 0.08,
+      "avg_views": 50.0,
       "low_sample": false
     },
     {
@@ -146,24 +139,31 @@
       "avg_likes": 0.0,
       "avg_views": 54.2,
       "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 5,
+      "avg_likes": 0.0,
+      "avg_views": 35.4,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4334
+      "count": 4327
     },
     {
       "type": "quote",
-      "count": 299
+      "count": 302
     },
     {
       "type": "quote_gif",
-      "count": 102
+      "count": 103
     },
     {
       "type": "post",
-      "count": 46
+      "count": 47
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-19T16:39:00.569325",
-      "text": "Trump to Bitcoin reserve: the same guy who calls himself a crypto expert but once tweeted \"bitcoin is a fraud.\"\n\nif the treasury buys at $150k, 401k dave finally stops panic selling.\npolitical cover for the ETF bull run.",
+      "ts": "2026-08-19T20:37:44.972709",
+      "text": "Codex harness lets agents drive internal tools.\n\nopen source isn't freedom, it's a trojan horse for sticky enterprise workflows.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T16:37:17.245124",
-      "text": "The real story isn’t the open source part. it’s that grok is now a commodity API wrapper and the moat just evaporated.\nyou’re selling access to the plumbing.",
+      "ts": "2026-08-19T20:37:16.396609",
+      "text": "The 10/10 liquidation at the top was a washout. the 10/10 liquidation at the bottom is the real bottom.\n401k dave just got his margin call on the way down to sell his winners.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-19T16:36:32.063542",
-      "text": "US Treasuries are buying their own debt to pay the interest on the debt.\n\nit's a ponzi scheme with better paperwork.",
+      "ts": "2026-08-19T20:36:42.071602",
+      "text": "Claude managed agents just added persistent memory.\n\nthe tech company that never sleeps and never forgets its tasks is finally here.",
       "type": "reply"
     }
   ]
