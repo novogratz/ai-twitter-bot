@@ -1473,3 +1473,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 90 views: me on my way to explain AGI to my 4 year old who already knows more about prompt engineering than mo
   - 1 likes / 62 views: Alex Karp just called Wall Street a bunch of over-caffeinated golden retrievers and I am weak
   - 1 likes / 40 views: me on the couch at 2am like this is a fairy tale
+
+## 2026-08-19
+
+**Activity** — total actions: 859
+  - by type: reply=769, quote=57, quote_gif=20, hotake=7, post=4, retweet=2
+  - top sources: SEARCH-HOT=478, FEED-SWEEP-FEED=159, FEED-SWEEP-FOLLOWING=101, QUOTE=46, GIF=20, DEBATE=18, VIP=11, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=18, @electnomics=11, @Mr_Derivatives=10, @Cointelegraph=10, @zerohedge=9
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 260 likes / 116824 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 31 views: JGB 10yr at 2.10% means bond yields are trading like meme stocks while @nvidia sells chips to the wo
+  - 1 likes / 44 views: SOL’s volume is doing the laundry while BTC is just sitting there smelling nice.

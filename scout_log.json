@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-08-01T18:41:21.184142",
-    "raw_count": 10,
-    "kept_count": 9,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LorenzoCesana",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence absolue pour le prompt engineering en France, twitte souvent et avec humour sur l'impact IA."
-      },
-      {
-        "handle": "MaximeRenaux",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Cr\u00e9ateur de L'Investisseur, ses analyses macro sont percutantes et ses charts sont limpides."
-      },
-      {
-        "handle": "ThibautMieusement",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Ex-BNP, il d\u00e9crypte la DeFi avec une logique de bankeur qui fait mal, sans jargon incompr\u00e9hensible."
-      },
-      {
-        "handle": "ThomasVillemain",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ex-CTO, il parle de tech et d'IA avec une vision terrain qui manque cruellement aux comptes corporate."
-      },
-      {
-        "handle": "RomainLacombe",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Francophone bas\u00e9 \u00e0 SF, il mixe le regard europ\u00e9en sur les US AI stocks avec des insights internes solides."
-      },
-      {
-        "handle": "AlexisLefebvre",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Gros acteur du crypto FR au Qu\u00e9bec, ses analyses de march\u00e9 sont directes et sans filtre."
-      },
-      {
-        "handle": "BenjaminDewaele",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Co-fondateur de Qonto, il parle business et fintech avec un pragmatisme d\u00e9capant qui \u00e9vite le buzzword."
-      },
-      {
-        "handle": "NathanBoutry",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Fondateur de Aily, il poste des threads techniques de qualit\u00e9 sur l'IA g\u00e9n\u00e9rative sans vendre du vent."
-      },
-      {
-        "handle": "JulesFayolle",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Journaliste IA chez Les Echos, ses threads sont des mines d'info sourc\u00e9es avant que le reste du march\u00e9 ne r\u00e9agisse."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui nourrissent le r\u00e9seau sans vendre de formation. La s\u00e9lection m\u00e9lange la rigueur des journalistes sp\u00e9cialis\u00e9s (Lecomte, Poussier) et l'exp\u00e9rience terrain des founders (Boutry, Dewaele)."
-  },
-  {
-    "ts": "2026-08-01T20:41:11.161943",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Pierre-Rochard",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 250000,
-        "reason": "Parisien \u00e0 NY, il fait le pont parfait. C'est le gars qui explique la Lightning Network sans endormir les profs de fac."
-      },
-      {
-        "handle": "EvanCarmichael",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 80000,
-        "reason": "Canadien (diaspora FR/EN), il interview les founders. C'est de l'info brute, pas de la pub d\u00e9guis\u00e9e."
-      },
-      {
-        "handle": "JulienBocquet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "Fondateur de Bitpanda France, il tweet des insights macro/crypto en fran\u00e7ais. Pas un 'gourou', un vrai pro qui assume ses trades."
-      },
-      {
-        "handle": "ThibautMazurier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Ex-Coinhouse, le mec qui a su vendre le Bitcoin aux Fran\u00e7ais sans leur soutirer une fortune en frais de garde. Actif et pertinent."
-      },
-      {
-        "handle": "MarcAmand",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le 'M. Bourse' de Twitter FR. Il d\u00e9cortique la paperasse des entreprises fran\u00e7aises avec une pr\u00e9cision de chirurgien et un humour sec."
-      }
-    ],
-    "summary": "Un focus sur la 'French Tech' qui a enfin des cred IA (Mistral), le pont Francophone/US (Pierre-Rochard), et la p\u00e9pite qu\u00e9b\u00e9coise tech (Dionne)."
-  },
-  {
     "ts": "2026-08-01T23:36:52.914285",
     "raw_count": 8,
     "kept_count": 3,
@@ -8781,5 +8663,74 @@
       }
     ],
     "summary": "On a filtr\u00e9 le gras pour ne garder que ceux qui font travailler les neurones ou suivent les flux d'argent. De Mistral aux vieux loups crypto QC, c'est du solide, pas du marketing."
+  },
+  {
+    "ts": "2026-08-19T20:40:34.245768",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "J0s",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'analyste fondamental par excellence. Ses threads sur les bilans valent de l'or, style direct."
+      },
+      {
+        "handle": "0xParas0t",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Devinette du jour. L'ancien de Coinhouse/ConsenSys qui reste une r\u00e9f\u00e9rence sur la microstructure."
+      },
+      {
+        "handle": "NathanaelR",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Journaliste tech qui a bascul\u00e9 dans l'IA. Interroge les GAFAM avec une plume fine et mordante."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise est port\u00e9e par les fondateurs eux-m\u00eames (Mistral) et les curateurs techniques, tandis que la crypto bascule vers des analystes de fond (0xMerkle) plut\u00f4t que des influenceurs shillers. Le Qu\u00e9bec offre une niche pr\u00e9cieuse avec des pros de la bourse francophones bas\u00e9s \u00e0 l'\u00e9tranger ou sur place."
+  },
+  {
+    "ts": "2026-08-19T22:40:41.306644",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoCaster",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le 'Caster' de la crypto, analyse les flux de capitaux et les narratives Web3."
+      },
+      {
+        "handle": "BeeDvader",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Ex-militaire, vulgarise l'IA avec un ton direct, tr\u00e8s actif sur les outils et les prompts."
+      },
+      {
+        "handle": "BourgeoisV",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Analyste macro/bourse, tweete en FR, focus valorisation et march\u00e9s actions."
+      },
+      {
+        "handle": "DenebCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Focus DeFi/Infra, analyse technique solide, communaut\u00e9 engag\u00e9e."
+      }
+    ],
+    "summary": "Mix de heavy hitters IA (TheAIShrink, Mistral) et de l'\u00e9lite crypto FR (0xMaki, BeeDvader). Pas de vendeurs de r\u00eaves, juste des makers et des analystes."
   }
 ]

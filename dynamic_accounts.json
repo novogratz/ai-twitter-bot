@@ -2019,7 +2019,14 @@
     "RenaudPlanchet",
     "JulesDeMauriac",
     "OlivierBonnaud",
-    "CryptoPepit"
+    "CryptoPepit",
+    "J0s",
+    "0xParas0t",
+    "NathanaelR",
+    "CryptoCaster",
+    "BeeDvader",
+    "BourgeoisV",
+    "DenebCrypto"
   ],
   "en": [
     "Chubby",
@@ -2435,7 +2442,8 @@
     "ThePersistence",
     "Radley",
     "Elena",
-    "Wost"
+    "Wost",
+    "s"
   ],
   "history": [
     {
@@ -14606,6 +14614,46 @@
     {
       "lang": "fr",
       "handle": "CryptoPepit",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "J0s",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xParas0t",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanaelR",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "en",
+      "handle": "s",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCaster",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BeeDvader",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourgeoisV",
+      "added": "2026-08-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "DenebCrypto",
       "added": "2026-08-19"
     }
   ]
