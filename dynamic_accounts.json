@@ -2046,7 +2046,14 @@
     "LuccaFr",
     "BorjaTorres_",
     "JulienDh",
-    "CryptoViduc"
+    "CryptoViduc",
+    "Maelle_Brion",
+    "ThomasFauvel",
+    "VincentBerthou",
+    "JulienDelfond",
+    "RaphaelDumay",
+    "AdrienMougel",
+    "JulienLeBihan"
   ],
   "en": [
     "Chubby",
@@ -14786,6 +14793,41 @@
     {
       "lang": "fr",
       "handle": "CryptoViduc",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "Maelle_Brion",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasFauvel",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBerthou",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelfond",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelDumay",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienMougel",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeBihan",
       "added": "2026-08-20"
     }
   ]

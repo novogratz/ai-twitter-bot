@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-20T12:39:26.225861",
-  "window_7d_actions": 4991,
-  "window_24h_actions": 860,
+  "generated_at": "2026-08-20T16:39:25.923331",
+  "window_7d_actions": 5033,
+  "window_24h_actions": 864,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4990
+      "count": 5032
     },
     {
       "pattern": "RENAME",
@@ -19,88 +19,88 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4990
+      "count": 5032
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 14,
+      "actions": 252
+    },
+    {
+      "hour": 15,
+      "actions": 252
+    },
+    {
+      "hour": 13,
+      "actions": 243
+    },
     {
       "hour": 10,
       "actions": 241
     },
     {
       "hour": 12,
-      "actions": 239
-    },
-    {
-      "hour": 15,
-      "actions": 237
-    },
-    {
-      "hour": 14,
-      "actions": 236
-    },
-    {
-      "hour": 13,
-      "actions": 233
+      "actions": 240
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2251
+      "count": 2266
     },
     {
       "topic": "IA",
-      "count": 1923
+      "count": 1950
     },
     {
       "topic": "Crypto",
-      "count": 614
+      "count": 617
     },
     {
       "topic": "Bourse",
-      "count": 427
+      "count": 423
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 115
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2145
+      "count": 2171
     },
     {
       "pillar": "other",
-      "count": 1338
+      "count": 1352
     },
     {
       "pillar": "market_trauma",
-      "count": 1280
+      "count": 1281
     },
     {
       "pillar": "meme_reaction",
-      "count": 128
+      "count": 126
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 334
+      "count": 345
     },
     {
       "pillar": "market_trauma",
-      "count": 248
+      "count": 245
     },
     {
       "pillar": "other",
@@ -108,37 +108,37 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 71,
+      "posts": 70,
       "avg_likes": 0.3,
-      "avg_views": 44.3,
+      "avg_views": 44.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 70,
-      "avg_likes": 0.16,
-      "avg_views": 49.4,
+      "posts": 72,
+      "avg_likes": 0.15,
+      "avg_views": 48.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 51,
+      "posts": 50,
       "avg_likes": 0.1,
-      "avg_views": 46.1,
+      "avg_views": 46.9,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4467
+      "count": 4505
     },
     {
       "type": "quote",
-      "count": 311
+      "count": 316
     },
     {
       "type": "quote_gif",
-      "count": 113
+      "count": 112
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 48
     },
     {
       "type": "post",
-      "count": 43
+      "count": 42
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-20T12:39:23.929723",
-      "text": "AGentic AI needs context to think. Context costs $ per token. The only way to \"sustain\" demand without hyperinflation is cheaper RAM.\n\nmicron just became the most important stock on earth.",
+      "ts": "2026-08-20T16:38:23.778226",
+      "text": "Spatial AI agents in your living room. The real bottleneck isn't rendering. It's bandwidth latency. lag kills presence.\n\nyou're not buying a hologram. you're buying a connection.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T12:39:07.619869",
-      "text": "Armstrong says bull market. the real story: his Q3 revenue depends on ETF inflows beating outflows. he's not predicting crypto. he's hedging his payroll.",
+      "ts": "2026-08-20T16:34:11.164287",
+      "text": "Claude academy is the edgeworks of ai.\n\nthe real moat is data, not certificates.\n\nlinkedin liam signs up, gets 4 hours of content, and calls himself an ai architect.\n\nthe degree is a napkin.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T12:38:34.959432",
-      "text": "OPEX day volatility is just the market digesting the GPU bills.\n\nCoreWeave’s $7B debt stack doesn’t care if you’re nervous.",
+      "ts": "2026-08-20T16:33:54.841462",
+      "text": "Jensen called it. Now the chips ship anyway.\n\nHuawei waits for the backlog to clear. Nvidia gets paid to keep the lights on.",
       "type": "reply"
     }
   ]
