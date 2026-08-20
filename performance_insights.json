@@ -1,17 +1,25 @@
 {
-  "generated_at": "2026-08-20T04:39:26.083388",
-  "window_7d_actions": 4918,
-  "window_24h_actions": 866,
+  "generated_at": "2026-08-20T08:39:26.545537",
+  "window_7d_actions": 4958,
+  "window_24h_actions": 870,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4918
+      "count": 4957
+    },
+    {
+      "pattern": "RENAME",
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
+      "pattern": "RENAME",
+      "count": 1
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 4918
+      "count": 4957
     }
   ],
   "best_hours_utc": [
@@ -39,38 +47,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2220
+      "count": 2240
     },
     {
       "topic": "IA",
-      "count": 1906
+      "count": 1912
     },
     {
       "topic": "Crypto",
-      "count": 589
+      "count": 603
     },
     {
       "topic": "Bourse",
-      "count": 423
+      "count": 426
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 112
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2113
+      "count": 2129
     },
     {
       "pillar": "other",
-      "count": 1319
+      "count": 1325
     },
     {
       "pillar": "market_trauma",
-      "count": 1256
+      "count": 1274
     },
     {
       "pillar": "meme_reaction",
@@ -88,19 +96,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 338
+      "count": 353
     },
     {
       "pillar": "market_trauma",
-      "count": 254
+      "count": 250
     },
     {
       "pillar": "other",
-      "count": 233
+      "count": 225
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 24
     },
     {
       "pillar": "reply_bait",
@@ -114,30 +122,30 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.26,
-      "avg_views": 44.6,
+      "posts": 71,
+      "avg_likes": 0.27,
+      "avg_views": 44.7,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 68,
-      "avg_likes": 0.19,
-      "avg_views": 50.5,
+      "avg_likes": 0.16,
+      "avg_views": 50.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 49,
+      "posts": 51,
       "avg_likes": 0.08,
-      "avg_views": 47.5,
+      "avg_views": 46.6,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 5,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 49.6,
+      "avg_views": 46.2,
       "low_sample": false
     },
     {
@@ -151,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4400
+      "count": 4437
     },
     {
       "type": "quote",
-      "count": 303
+      "count": 306
     },
     {
       "type": "quote_gif",
-      "count": 114
+      "count": 115
     },
     {
       "type": "hotake",
@@ -167,7 +175,7 @@
     },
     {
       "type": "post",
-      "count": 45
+      "count": 44
     },
     {
       "type": "retweet",
@@ -176,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-20T04:38:18.406880",
-      "text": "Cursor router pricing is an arms race where the last model to ship earns zero.\nyou're paying for latency, not smarts.\nthe winner is the cheapest inference layer that doesn't hallucinate.",
+      "ts": "2026-08-20T08:39:13.006929",
+      "text": "S&P up 0.1% while Nvidia moves 0.2%.\n\nthe index didn't move. it exhaled.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T04:37:29.196187",
-      "text": "XRP’s legal war ended in 2023. The token hasn’t followed.\n\n$XRP is the ex you still have the Netflix password for.",
+      "ts": "2026-08-20T08:38:42.188036",
+      "text": "Treasury buybacks are a liquidity tailwind, not a fundamental valuation anchor.\nBTC didn’t break out because of the government. it broke out because 401k Dave finally stopped selling.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T04:36:56.500829",
-      "text": "Benchmark season is cosplay.\n\nopenclaude just beat grok on a synthetic test.\n\nthe real story: inference costs dropped 40% q/q.\n\ncheap > smart.",
+      "ts": "2026-08-20T08:34:52.904400",
+      "text": "Meta Muse Spark powers dictation. So your phone now listens better than it understands.\n\nYou're paying for voice recognition, not AI. Big difference.",
       "type": "reply"
     }
   ]

@@ -2031,7 +2031,14 @@
     "PierreRossi_",
     "Bercy_92",
     "QuantMagazine",
-    "CryptoBasile"
+    "CryptoBasile",
+    "LudovicGouillon",
+    "MaximeManceau",
+    "MathDelfino",
+    "SylvainLeclercq",
+    "LudoBourgeon",
+    "MarcGauthierQC",
+    "PierreRoux"
   ],
   "en": [
     "Chubby",
@@ -14696,6 +14703,41 @@
     {
       "lang": "fr",
       "handle": "CryptoBasile",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicGouillon",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeManceau",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathDelfino",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeclercq",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoBourgeon",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGauthierQC",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoux",
       "added": "2026-08-20"
     }
   ]
