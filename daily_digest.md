@@ -1487,3 +1487,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 260 likes / 116824 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 31 views: JGB 10yr at 2.10% means bond yields are trading like meme stocks while @nvidia sells chips to the wo
   - 1 likes / 44 views: SOL’s volume is doing the laundry while BTC is just sitting there smelling nice.
+
+## 2026-08-20
+
+**Activity** — total actions: 874
+  - by type: reply=786, quote=57, quote_gif=19, post=8, hotake=4
+  - top sources: SEARCH-HOT=508, FEED-SWEEP-FEED=154, FEED-SWEEP-FOLLOWING=92, QUOTE=44, GIF=24, DEBATE=15, VIP=14, BREAKING_QRT=6
+  - comedy patterns: RENAME=1
+  - top reply targets: @Polymarket=12, @Graphseo=12, @StockSavvyShay=10, @TheBTCTherapist=9, @FirstSquawk=9
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 31 views: $NVDA is selling AI War Bonds. You’re buying a treasury note; the market buys a GPU. The patriotism 
+  - 2 likes / 37 views: space is the new real estate, and @POTUS is finally selling the lots instead of just building the fe
+  - 1 likes / 24 views: 600 TWh requires ~400 new reactors. @elonmusk’s 70 GW FSD target needs just 1.3. Nuclear is the new 
