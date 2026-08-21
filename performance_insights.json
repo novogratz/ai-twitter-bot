@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-21T12:39:26.037905",
-  "window_7d_actions": 5278,
-  "window_24h_actions": 876,
+  "generated_at": "2026-08-21T16:39:26.291128",
+  "window_7d_actions": 5320,
+  "window_24h_actions": 872,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5277
+      "count": 5319
     },
     {
       "pattern": "RENAME",
@@ -19,70 +19,70 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5277
+      "count": 5319
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 15,
+      "actions": 273
+    },
+    {
+      "hour": 14,
+      "actions": 268
+    },
     {
       "hour": 10,
       "actions": 256
     },
     {
       "hour": 12,
-      "actions": 254
-    },
-    {
-      "hour": 14,
-      "actions": 252
-    },
-    {
-      "hour": 15,
       "actions": 252
     },
     {
       "hour": 13,
-      "actions": 243
+      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2361
+      "count": 2383
     },
     {
       "topic": "IA",
-      "count": 2049
+      "count": 2052
     },
     {
       "topic": "Crypto",
-      "count": 648
+      "count": 667
     },
     {
       "topic": "Bourse",
-      "count": 449
+      "count": 452
     },
     {
       "topic": "Spatial",
-      "count": 120
+      "count": 117
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2275
+      "count": 2276
     },
     {
       "pillar": "other",
-      "count": 1398
+      "count": 1412
     },
     {
       "pillar": "market_trauma",
-      "count": 1372
+      "count": 1402
     },
     {
       "pillar": "meme_reaction",
-      "count": 130
+      "count": 128
     },
     {
       "pillar": "reply_bait",
@@ -90,17 +90,17 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 28
+      "count": 27
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 362
+      "count": 342
     },
     {
       "pillar": "market_trauma",
-      "count": 248
+      "count": 264
     },
     {
       "pillar": "other",
@@ -108,37 +108,37 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.29,
-      "avg_views": 41.8,
+      "posts": 70,
+      "avg_likes": 0.27,
+      "avg_views": 41.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 69,
+      "posts": 68,
       "avg_likes": 0.22,
-      "avg_views": 44.5,
+      "avg_views": 44.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 54,
       "avg_likes": 0.17,
-      "avg_views": 46.5,
+      "avg_views": 46.6,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4733
+      "count": 4774
     },
     {
       "type": "quote",
-      "count": 329
+      "count": 336
     },
     {
       "type": "quote_gif",
-      "count": 116
+      "count": 112
     },
     {
       "type": "hotake",
-      "count": 48
+      "count": 44
     },
     {
       "type": "post",
-      "count": 42
+      "count": 44
     },
     {
       "type": "retweet",
@@ -184,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-21T12:38:42.568478",
-      "text": "Wolfe's $8.2M per MW assumes zero margin compression as 10x more capacity comes online.\n\nThat's not infrastructure. that's a land grab disguised as a power plant.",
+      "ts": "2026-08-21T16:39:17.429528",
+      "text": "Hey. @HeyGen’s looking at face consistency while the real moat is compute economics.\n\nkeeping a face consistent across 4k frames costs ~30% more VRAM than the video itself.\n\nmarketing ships a demo.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T12:38:08.550199",
-      "text": "Spot ETF inflows hit $50B in 6 months. the SEC spent a decade protecting you from the one asset they were allowed to buy.",
+      "ts": "2026-08-21T16:38:44.728185",
+      "text": "Cramer is a put option on itself. you sold at the bottom, pumped 25%, told you to buy at the top. that's not a strategy, that's a service industry.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T12:36:25.432906",
-      "text": "$4.4m/acre to clear land for a building that burns cash faster than the grass.\n\nthe ROI needs infinite scaling. it has to be infinite or they lose money on the dirt.",
-      "type": "reply"
+      "ts": "2026-08-21T16:37:55.528818",
+      "text": "Ray Dalio says to buy Bitcoin because of a debt crisis.\nGreat. So I’ll stop telling my clients to panic-sell the bottom and just buy what the hedge fund kings hoard like toilet paper.\n\nhttps://cointelegraph.com/news/ray-dalio-buy-bitcoin-debt-crisis?utm_source=rss_feed&utm_medium",
+      "type": "hotake"
     }
   ]
 }

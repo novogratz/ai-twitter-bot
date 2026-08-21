@@ -2093,7 +2093,14 @@
     "MaximeRavache",
     "Boriss1981",
     "HugoDeniss",
-    "ThibaudDe"
+    "ThibaudDe",
+    "GuerinCrypto",
+    "JFDebot",
+    "VincentDemeur",
+    "MarcAndreMilot",
+    "MaxMounier",
+    "LuisVong",
+    "JulienM_42"
   ],
   "en": [
     "Chubby",
@@ -2522,7 +2529,8 @@
     "Nicolas",
     "rynex",
     "Pingu",
-    "EKO"
+    "EKO",
+    "IGN"
   ],
   "history": [
     {
@@ -15128,6 +15136,46 @@
     {
       "lang": "fr",
       "handle": "ThibaudDe",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "GuerinCrypto",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFDebot",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDemeur",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcAndreMilot",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxMounier",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "IGN",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisVong",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienM_42",
       "added": "2026-08-21"
     }
   ]
