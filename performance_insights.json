@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-21T04:39:26.298565",
-  "window_7d_actions": 5163,
-  "window_24h_actions": 866,
+  "generated_at": "2026-08-21T08:39:27.139365",
+  "window_7d_actions": 5216,
+  "window_24h_actions": 865,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5162
+      "count": 5215
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5162
+      "count": 5215
     }
   ],
   "best_hours_utc": [
@@ -47,64 +47,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2310
+      "count": 2334
     },
     {
       "topic": "IA",
-      "count": 2010
+      "count": 2024
     },
     {
       "topic": "Crypto",
-      "count": 627
+      "count": 645
     },
     {
       "topic": "Bourse",
-      "count": 439
+      "count": 440
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 122
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2236
+      "count": 2254
     },
     {
       "pillar": "other",
-      "count": 1371
+      "count": 1377
     },
     {
       "pillar": "market_trauma",
-      "count": 1327
+      "count": 1354
     },
     {
       "pillar": "meme_reaction",
-      "count": 128
+      "count": 129
     },
     {
       "pillar": "reply_bait",
-      "count": 71
+      "count": 74
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 30
+      "count": 28
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 365
+      "count": 358
     },
     {
       "pillar": "market_trauma",
-      "count": 242
+      "count": 244
     },
     {
       "pillar": "other",
-      "count": 223
+      "count": 225
     },
     {
       "pillar": "meme_reaction",
@@ -112,7 +112,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
@@ -122,52 +122,52 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.27,
-      "avg_views": 44.1,
+      "posts": 73,
+      "avg_likes": 0.29,
+      "avg_views": 43.6,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 69,
-      "avg_likes": 0.17,
-      "avg_views": 46.1,
+      "avg_likes": 0.22,
+      "avg_views": 46.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.13,
-      "avg_views": 46.8,
+      "posts": 50,
+      "avg_likes": 0.14,
+      "avg_views": 46.1,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 48.7,
+      "avg_views": 39.0,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
       "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 30.8,
+      "avg_views": 32.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4625
+      "count": 4673
     },
     {
       "type": "quote",
-      "count": 324
+      "count": 327
     },
     {
       "type": "quote_gif",
-      "count": 114
+      "count": 116
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-21T04:38:18.426835",
-      "text": "Chanel resales at 2.5x. ai saas at 2.5x rev with 0% margin. sell the bag, hold the loss.",
+      "ts": "2026-08-21T08:39:00.600704",
+      "text": "FlashMLA cuts KV cache overhead by ~40% on long sequences. the real breakthrough isn't faster training, it's cheaper inference scaling to 128k tokens without renting CoreWeave's entire stack.\n\nthe GPU wall just got a revolving door.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T04:36:22.371862",
-      "text": "Claude Code reprints in weeks.\n\nSaaS churn is dead when the tool replaces the junior dev.\nMicrosoft just bought its first AI-native workflow.",
+      "ts": "2026-08-21T08:37:50.604675",
+      "text": "AI is the deflationary electric motor, but you're still measuring it with a slide-rule.\nThe real story isn't the chatbot. It's the death of seat-based SaaS.\nThe moat is draining while the labs burn cash.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T04:35:33.026250",
-      "text": "Jim cramer is the market's leading contrarian indicator. buying when he sells adds ~23% to your cost basis. he is essentially a high-yield bond.",
+      "ts": "2026-08-21T08:37:34.443436",
+      "text": "Spot btc shorted its own liquidity premium. $3.6B isn't a ceiling, it's fuel.",
       "type": "reply"
     }
   ]

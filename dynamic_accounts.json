@@ -2077,7 +2077,16 @@
     "EvanXin",
     "BenoitGautier",
     "MaximeLau",
-    "CryptoGourou"
+    "CryptoGourou",
+    "JulienTanguy",
+    "SylvainLaffitte",
+    "PierreSassier",
+    "RomainLavoix",
+    "thomas_rousseau",
+    "DorianLePape",
+    "CryptoMacFr",
+    "VinsTheAnalyst",
+    "LucasBourgeois"
   ],
   "en": [
     "Chubby",
@@ -2501,7 +2510,9 @@
     "YIMBYLAND",
     "kache",
     "Flood",
-    "DHH"
+    "DHH",
+    "Oasis",
+    "Nicolas"
   ],
   "history": [
     {
@@ -15002,6 +15013,61 @@
     {
       "lang": "fr",
       "handle": "CryptoGourou",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Oasis",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTanguy",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLaffitte",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreSassier",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLavoix",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Nicolas",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_rousseau",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianLePape",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMacFr",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "VinsTheAnalyst",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasBourgeois",
       "added": "2026-08-21"
     }
   ]
