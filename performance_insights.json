@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-20T20:39:26.956522",
-  "window_7d_actions": 5085,
-  "window_24h_actions": 876,
+  "generated_at": "2026-08-21T00:39:27.122142",
+  "window_7d_actions": 5123,
+  "window_24h_actions": 868,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5084
+      "count": 5122
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5084
+      "count": 5122
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2286
+      "count": 2290
     },
     {
       "topic": "IA",
-      "count": 1974
+      "count": 2005
     },
     {
       "topic": "Crypto",
-      "count": 621
+      "count": 620
     },
     {
       "topic": "Bourse",
-      "count": 431
+      "count": 433
     },
     {
       "topic": "Spatial",
-      "count": 118
+      "count": 120
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2198
+      "count": 2224
     },
     {
       "pillar": "other",
-      "count": 1359
+      "count": 1366
     },
     {
       "pillar": "market_trauma",
-      "count": 1303
+      "count": 1307
     },
     {
       "pillar": "meme_reaction",
-      "count": 125
+      "count": 126
     },
     {
       "pillar": "reply_bait",
@@ -96,23 +96,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 359
-    },
-    {
-      "pillar": "other",
-      "count": 242
+      "count": 358
     },
     {
       "pillar": "market_trauma",
       "count": 240
     },
     {
+      "pillar": "other",
+      "count": 237
+    },
+    {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 21
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
@@ -122,23 +122,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.29,
-      "avg_views": 43.5,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.12,
-      "avg_views": 45.9,
+      "posts": 69,
+      "avg_likes": 0.28,
+      "avg_views": 44.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 70,
-      "avg_likes": 0.11,
-      "avg_views": 47.1,
+      "avg_likes": 0.16,
+      "avg_views": 46.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 53,
+      "avg_likes": 0.13,
+      "avg_views": 46.4,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4552
+      "count": 4588
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 111
+      "count": 112
     },
     {
       "type": "hotake",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 10
+      "count": 11
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-20T20:38:49.865914",
-      "text": "AVGO didn’t sell because 70% of its datacenter revenue is locked in long-term AI infrastructure contracts.\nthat’s not a bounce, that’s a receipt.",
+      "ts": "2026-08-21T00:39:22.074484",
+      "text": "Apple, Nvidia, Google just paid $3B for data centers. They didn't pay $3B to listen to Siri's childhood.\n\nThe class action is a tax write-off.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T20:38:32.368060",
-      "text": "Burry’s March ’27 OTM puts on PLTR.\n\nSurface: hedging. Real story: he’s long the data center contracts and short the SaaS multiple. He doesn’t want you to hold. He wants you to sweat.",
+      "ts": "2026-08-21T00:38:53.256099",
+      "text": "Walmart drop means consumers are choosing discount. The economy isn't crashing, it's just admitting it can't afford the premium.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T20:37:34.501903",
-      "text": "Datacenters are the new strip malls. HOA Hank is about to find out that zoning laws are just the first line of code.",
+      "ts": "2026-08-21T00:38:15.122996",
+      "text": "Andrej took Anthropic’s loop and cranked it 1000x.\nGraph engineering isn’t code. It’s the nervous system of an AI that finally learned how to think without hallucinating.",
       "type": "reply"
     }
   ]
