@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-02T15:36:35.669622",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GautierBailly",
-        "region": "france",
-        "niche": "ai",
-        "followers": 52000,
-        "reason": "L'architecte de Mistral AI. Il twitte en anglais mais ses threads sur l'open-source et la sovereign AI sont les lectures obligatoires de la diaspora FR tech."
-      },
-      {
-        "handle": "ClementColomb",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "Co-fondateur de Ledger. Il balance des perles macro et des insights DeFi sans verser dans le shill produit. Le mod\u00e8le de qualit\u00e9 sur Twitter FR."
-      },
-      {
-        "handle": "AlexDeBries",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "CTO de Mistral avant son d\u00e9part. Il reste la voix la plus technique et fiable pour d\u00e9crypter les vraies avanc\u00e9es LLM en France."
-      },
-      {
-        "handle": "AntoineLefebvre",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois. Il poste en fran\u00e7ais, analyse les valeurs europ\u00e9ennes et US avec un ton pragmatique, loin des gourous."
-      }
-    ],
-    "summary": "Un mix solide entre les g\u00e9ants de la French Tech AI (Mistral/Ledger), la diaspora crypto FR aux USA et les analystes Qu\u00e9b\u00e9cois de terrain qui \u00e9vitent le blabla politique."
-  },
-  {
-    "ts": "2026-08-02T17:36:42.350948",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Mistral",
-        "region": "france",
-        "niche": "ai",
-        "followers": 150000,
-        "reason": "Les mecs de Mistral qui montrent que la France n'est pas juste une zone de vacances mais de compute."
-      },
-      {
-        "handle": "AdrienDumas",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le patron de Weaviate. Il parle IA open source avec la pr\u00e9cision d'un scalp et le style d'un prof de fac."
-      },
-      {
-        "handle": "LefortThibault",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Houdini Labs. Il transforme l'IA en outils utiles avant m\u00eame que les autres n'aient fini leur pitch deck LinkedIn."
-      },
-      {
-        "handle": "CryptoBourseFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "L'analyse macro FR qui ne dort jamais. Pas de signaux Telegram, juste des chiffres qui claquents."
-      },
-      {
-        "handle": "MarcLaporte",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "L'expert AI qu\u00e9b\u00e9cois qui twitte en FR/EN. Moins hype que les gars de Montr\u00e9al mais plus dense en insights."
-      },
-      {
-        "handle": "Boursier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le journal financier qui twitte plus vite que les march\u00e9s. Pas de pubs, juste l'info brute."
-      },
-      {
-        "handle": "ValentinG",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Le fondateur de Kriptomat. Il parle crypto et fintech comme si l'avenir \u00e9tait d\u00e9j\u00e0 pass\u00e9."
-      }
-    ],
-    "summary": "J'ai cibl\u00e9 les vrais patrons de la French AI (Mistral, Weaviate) et les analystes bourse/crypto qui ne vendent pas de r\u00eaves en FR. Quebec bien repr\u00e9sent\u00e9 par ses experts tech locaux."
-  },
-  {
     "ts": "2026-08-02T19:36:44.748130",
     "raw_count": 10,
     "kept_count": 8,
@@ -8641,5 +8544,67 @@
       }
     ],
     "summary": "Une s\u00e9lection de 6 comptes qui \u00e9vitent le bruit des 'gurus' en survitamin\u00e9s. On privil\u00e9gie l'expertise terrain (Raph Dumay, PowerHasheur) et la clart\u00e9 d'esprit (Adrien Mougel, Pierre Rochard)."
+  },
+  {
+    "ts": "2026-08-20T16:40:15.863568",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BourseWeb",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Plus qu'un site, un compte qui r\u00e9sume l'actu pro rapidement. Id\u00e9al pour le trader moyen qui n'a pas 3 \u00e9crans."
+      },
+      {
+        "handle": "MaximeGeoffroy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "CTO chez Hugging Face ou coinvestisseur. Il tweet sur l'open source et l'IA frugale, un breath de frais dans le bruyant."
+      }
+    ],
+    "summary": "Le mix est solide : Mistral pour l'IA fran\u00e7aise institutionnelle, CryptoPatate pour la crypto sans blabla, et Alexis Dionne pour le regard qu\u00e9b\u00e9cois."
+  },
+  {
+    "ts": "2026-08-20T18:40:10.565446",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BabouinCrypTo",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "Le baron des m\u00e8mes crypto fran\u00e7ais. Il twitte en FR, l'humour est bonbon et l'analyse macro est plus pertinente que celle de nos \u00e9ditorialistes pr\u00e9f\u00e9r\u00e9s."
+      },
+      {
+        "handle": "LennyFr",
+        "region": "france",
+        "niche": "tech",
+        "followers": 80000,
+        "reason": "La version fran\u00e7aise de Lenny's Newsletter. Deep dives sur la tech et la croissance, le genre de compte qu'on relit trois fois pour capter les nuances."
+      },
+      {
+        "handle": "SavvyInvestor",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Un Am\u00e9ricain qui twitte en fran\u00e7ais pour l'exotisme. Analyse boursi\u00e8re classique, style LinkedIn mais en vrai, avec des charts qui parlent d'eux-m\u00eames."
+      },
+      {
+        "handle": "JulienBouteloup",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 30000,
+        "reason": "Le patron de PayFit. Il twitte sur la fintech et le management fran\u00e7ais avec une lucidit\u00e9 d\u00e9sarmante, loin des gourous du 'success mindset'."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre les mastodontes de l'IA fran\u00e7aise (Mistral) et les incontournables de la crypto (Babouin, Cobain). Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par l'analyse financi\u00e8re pure (Dionne) et la niche crypto locale. Aucun vendeur de r\u00eave, juste du concret."
   }
 ]

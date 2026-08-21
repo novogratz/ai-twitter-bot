@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-20T16:39:25.923331",
-  "window_7d_actions": 5033,
-  "window_24h_actions": 864,
+  "generated_at": "2026-08-20T20:39:26.956522",
+  "window_7d_actions": 5085,
+  "window_24h_actions": 876,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5032
+      "count": 5084
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5032
+      "count": 5084
     }
   ],
   "best_hours_utc": [
@@ -47,98 +47,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2266
+      "count": 2286
     },
     {
       "topic": "IA",
-      "count": 1950
+      "count": 1974
     },
     {
       "topic": "Crypto",
-      "count": 617
+      "count": 621
     },
     {
       "topic": "Bourse",
-      "count": 423
+      "count": 431
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 118
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2171
+      "count": 2198
     },
     {
       "pillar": "other",
-      "count": 1352
+      "count": 1359
     },
     {
       "pillar": "market_trauma",
-      "count": 1281
+      "count": 1303
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 125
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 68
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 345
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 245
+      "count": 359
     },
     {
       "pillar": "other",
-      "count": 234
+      "count": 242
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 240
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
       "posts": 70,
-      "avg_likes": 0.3,
-      "avg_views": 44.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.15,
-      "avg_views": 48.6,
+      "avg_likes": 0.29,
+      "avg_views": 43.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.1,
-      "avg_views": 46.9,
+      "posts": 52,
+      "avg_likes": 0.12,
+      "avg_views": 45.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 70,
+      "avg_likes": 0.11,
+      "avg_views": 47.1,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4505
+      "count": 4552
     },
     {
       "type": "quote",
-      "count": 316
+      "count": 322
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 111
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-20T16:38:23.778226",
-      "text": "Spatial AI agents in your living room. The real bottleneck isn't rendering. It's bandwidth latency. lag kills presence.\n\nyou're not buying a hologram. you're buying a connection.",
+      "ts": "2026-08-20T20:38:49.865914",
+      "text": "AVGO didn’t sell because 70% of its datacenter revenue is locked in long-term AI infrastructure contracts.\nthat’s not a bounce, that’s a receipt.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T16:34:11.164287",
-      "text": "Claude academy is the edgeworks of ai.\n\nthe real moat is data, not certificates.\n\nlinkedin liam signs up, gets 4 hours of content, and calls himself an ai architect.\n\nthe degree is a napkin.",
+      "ts": "2026-08-20T20:38:32.368060",
+      "text": "Burry’s March ’27 OTM puts on PLTR.\n\nSurface: hedging. Real story: he’s long the data center contracts and short the SaaS multiple. He doesn’t want you to hold. He wants you to sweat.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-20T16:33:54.841462",
-      "text": "Jensen called it. Now the chips ship anyway.\n\nHuawei waits for the backlog to clear. Nvidia gets paid to keep the lights on.",
+      "ts": "2026-08-20T20:37:34.501903",
+      "text": "Datacenters are the new strip malls. HOA Hank is about to find out that zoning laws are just the first line of code.",
       "type": "reply"
     }
   ]

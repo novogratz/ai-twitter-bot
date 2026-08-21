@@ -2053,7 +2053,13 @@
     "JulienDelfond",
     "RaphaelDumay",
     "AdrienMougel",
-    "JulienLeBihan"
+    "JulienLeBihan",
+    "BourseWeb",
+    "MaximeGeoffroy",
+    "BabouinCrypTo",
+    "LennyFr",
+    "SavvyInvestor",
+    "JulienBouteloup"
   ],
   "en": [
     "Chubby",
@@ -2472,7 +2478,9 @@
     "Wost",
     "s",
     "Abu",
-    "HYPEconomist"
+    "HYPEconomist",
+    "ThePrimeagen",
+    "YIMBYLAND"
   ],
   "history": [
     {
@@ -14828,6 +14836,46 @@
     {
       "lang": "fr",
       "handle": "JulienLeBihan",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseWeb",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGeoffroy",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "ThePrimeagen",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "YIMBYLAND",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BabouinCrypTo",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LennyFr",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "SavvyInvestor",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouteloup",
       "added": "2026-08-20"
     }
   ]
