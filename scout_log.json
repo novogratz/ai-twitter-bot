@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-03T07:36:28.631880",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "L0bomy",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "L'IA qui rend l'informatique accessible sans vendre du r\u00eave \u00e0 2000 balles."
-      },
-      {
-        "handle": "CryptoCub",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le prof de crypto qui explique les cycles sans te donner envie de vendre \u00e0 tout va."
-      },
-      {
-        "handle": "BourdinAI",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Ex-WSJ, il d\u00e9cortique l'IA en FR avec la pr\u00e9cision d'un scalpel et le ton d'un \u00e9ditorialiste."
-      },
-      {
-        "handle": "PhilippeTanguay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'\u00e9conomiste qu\u00e9b\u00e9cois qui rend les march\u00e9s compr\u00e9hensibles sans \u00eatre ennuyeux."
-      },
-      {
-        "handle": "CyrilBailly",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "S\u00e9rieux, chiffr\u00e9, z\u00e9ro buzzword. Il tweete ce que les autres tweetent dans deux semaines."
-      }
-    ],
-    "summary": "Un mix solide entre les grands noms fran\u00e7ais bienveillants (L0bomy, BourdinAI) et les profils plus pointus comme Philippe Tanguay pour le Qu\u00e9bec. Z\u00e9ro vendeur de r\u00eave, 100% contenu."
-  },
-  {
-    "ts": "2026-08-03T09:36:41.406932",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CathieWood_fr",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 250000,
-        "reason": "Adaptation FR des th\u00e8ses ARK Invest, parfaite pour le crowd bull market, twitte en FR sporadiquement mais avec impact."
-      },
-      {
-        "handle": "CryptoCobain",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 120000,
-        "reason": "Le mec qui a tout vu, analyse on-chain et macro, twitte en FR, communaut\u00e9 engag\u00e9e mais pas de vault VIP toxique."
-      },
-      {
-        "handle": "mickael_bzh",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'analyste technique francophone de r\u00e9f\u00e9rence, style direct, z\u00e9ro blabla formation, charts propres et signaux clairs."
-      },
-      {
-        "handle": "Pierre_Laval",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ex-consensus now chez ConsenSys, twitte en FR, \u00e9quilibre tech et business crypto, audience qualifi\u00e9e mais pas vendue."
-      },
-      {
-        "handle": "J\u00e9r\u00e9my_B",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Founders qu\u00e9b\u00e9cois de startups AI, poste en FR, regard frais sur l'IA g\u00e9n\u00e9rative et l'infrastructure, pas de jargon VC creux."
-      },
-      {
-        "handle": "Marc_Boulay",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Sp\u00e9cialiste fintech qu\u00e9b\u00e9cois, couvre les n\u00e9o-banques et le paiement en FR, contenu utile pour traders et devs."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse pure (Bourse/IA) et le cycle crypto, avec une pinc\u00e9e de fintech qu\u00e9b\u00e9coise pour diversifier la g\u00e9o. Tout le monde twitte en FR, aucun vendeur de r\u00eave."
-  },
-  {
     "ts": "2026-08-03T11:36:44.857186",
     "raw_count": 9,
     "kept_count": 6,
@@ -8557,5 +8460,74 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des vendeurs de r\u00eaves pour ne garder que les architectes de l'info : Thomas Rousseau et Dorian Le Pape pour la France, Alexis Dionne pour le Qu\u00e9bec, et VinsTheAnalyst pour la diaspora US. Z\u00e9ro signal, 100% analyse."
+  },
+  {
+    "ts": "2026-08-21T08:39:59.862097",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickabou",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le gars qui rend l'IA compr\u00e9hensible sans te vendre du r\u00eave. Twitte en fran\u00e7ais, ton d\u00e9cal\u00e9, z\u00e9ro hype vide."
+      },
+      {
+        "handle": "LucBaudoin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "VCS de la premi\u00e8re heure. Tu veux voir qui finance la prochaine g\u00e9n\u00e9ration de FrenchTech avant qu'elle n'ait un produit ? Suivi obligatoire."
+      },
+      {
+        "handle": "ThibaudMrgn",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Co-founder de Mistral AI. Twitte tech pure, angle fondamental, moins de bruit, plus de dents."
+      },
+      {
+        "handle": "MaximeRavache",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Fundamentaliste pur. Pas de chartiste qui crie sur la t\u00eate. Si tu aimes la lecture de bilans et la valorisation, c'est ici."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la soupe \u00e0 l'oignon des influenceurs crypto FR pour ne garder que ceux qui ajoutent du contexte (Mistral, macro) ou de la valeur fondamentale. Le Qu\u00e9bec est moins peupl\u00e9 en niche pure, donc on se concentre sur les profils Tech/VC solides."
+  },
+  {
+    "ts": "2026-08-21T10:40:00.756211",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Boriss1981",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "Journaliste pro, pas de pub, analyse macro s\u00e9rieuse mais accessible, le genre de compte qu'un PM suit sans blazer."
+      },
+      {
+        "handle": "HugoDeniss",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Le Qu\u00e9b\u00e9cois le plus influent, focus tech/crypto, ton direct sans jargon pesant, 100% actif."
+      },
+      {
+        "handle": "ThibaudDe",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Expert IA pur jus, ex-Darktrace, twitte des insights deep tech sans vendre de formation \u00e0 99\u20ac."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui ont du gras technique. Bagget pour le volume/rire, Deniss pour la tech pure, Dionne pour l'angle international."
   }
 ]

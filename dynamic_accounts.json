@@ -2086,7 +2086,14 @@
     "DorianLePape",
     "CryptoMacFr",
     "VinsTheAnalyst",
-    "LucasBourgeois"
+    "LucasBourgeois",
+    "mickabou",
+    "LucBaudoin",
+    "ThibaudMrgn",
+    "MaximeRavache",
+    "Boriss1981",
+    "HugoDeniss",
+    "ThibaudDe"
   ],
   "en": [
     "Chubby",
@@ -2512,7 +2519,10 @@
     "Flood",
     "DHH",
     "Oasis",
-    "Nicolas"
+    "Nicolas",
+    "rynex",
+    "Pingu",
+    "EKO"
   ],
   "history": [
     {
@@ -15068,6 +15078,56 @@
     {
       "lang": "fr",
       "handle": "LucasBourgeois",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "rynex",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Pingu",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "EKO",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickabou",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucBaudoin",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudMrgn",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRavache",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "Boriss1981",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDeniss",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudDe",
       "added": "2026-08-21"
     }
   ]
