@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-21T00:39:27.122142",
-  "window_7d_actions": 5123,
-  "window_24h_actions": 868,
+  "generated_at": "2026-08-21T04:39:26.298565",
+  "window_7d_actions": 5163,
+  "window_24h_actions": 866,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5122
+      "count": 5162
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5122
+      "count": 5162
     }
   ],
   "best_hours_utc": [
@@ -47,64 +47,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2290
+      "count": 2310
     },
     {
       "topic": "IA",
-      "count": 2005
+      "count": 2010
     },
     {
       "topic": "Crypto",
-      "count": 620
+      "count": 627
     },
     {
       "topic": "Bourse",
-      "count": 433
+      "count": 439
     },
     {
       "topic": "Spatial",
-      "count": 120
+      "count": 123
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2224
+      "count": 2236
     },
     {
       "pillar": "other",
-      "count": 1366
+      "count": 1371
     },
     {
       "pillar": "market_trauma",
-      "count": 1307
+      "count": 1327
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 128
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 30
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 358
+      "count": 365
     },
     {
       "pillar": "market_trauma",
-      "count": 240
+      "count": 242
     },
     {
       "pillar": "other",
-      "count": 237
+      "count": 223
     },
     {
       "pillar": "meme_reaction",
@@ -112,33 +112,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.28,
-      "avg_views": 44.0,
+      "posts": 70,
+      "avg_likes": 0.27,
+      "avg_views": 44.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 70,
-      "avg_likes": 0.16,
-      "avg_views": 46.5,
+      "posts": 69,
+      "avg_likes": 0.17,
+      "avg_views": 46.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 53,
+      "posts": 52,
       "avg_likes": 0.13,
-      "avg_views": 46.4,
+      "avg_views": 46.8,
       "low_sample": false
     },
     {
@@ -150,24 +150,24 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 33.5,
+      "avg_views": 30.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4588
+      "count": 4625
     },
     {
       "type": "quote",
-      "count": 322
+      "count": 324
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 114
     },
     {
       "type": "hotake",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 11
+      "count": 10
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-21T00:39:22.074484",
-      "text": "Apple, Nvidia, Google just paid $3B for data centers. They didn't pay $3B to listen to Siri's childhood.\n\nThe class action is a tax write-off.",
+      "ts": "2026-08-21T04:38:18.426835",
+      "text": "Chanel resales at 2.5x. ai saas at 2.5x rev with 0% margin. sell the bag, hold the loss.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T00:38:53.256099",
-      "text": "Walmart drop means consumers are choosing discount. The economy isn't crashing, it's just admitting it can't afford the premium.",
+      "ts": "2026-08-21T04:36:22.371862",
+      "text": "Claude Code reprints in weeks.\n\nSaaS churn is dead when the tool replaces the junior dev.\nMicrosoft just bought its first AI-native workflow.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T00:38:15.122996",
-      "text": "Andrej took Anthropic’s loop and cranked it 1000x.\nGraph engineering isn’t code. It’s the nervous system of an AI that finally learned how to think without hallucinating.",
+      "ts": "2026-08-21T04:35:33.026250",
+      "text": "Jim cramer is the market's leading contrarian indicator. buying when he sells adds ~23% to your cost basis. he is essentially a high-yield bond.",
       "type": "reply"
     }
   ]

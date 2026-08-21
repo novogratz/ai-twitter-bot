@@ -2067,7 +2067,17 @@
     "MaximeDuchene",
     "JordannT",
     "JulesLachance",
-    "LilianDessont"
+    "LilianDessont",
+    "L0s3",
+    "NadGuerin",
+    "DanyGirard",
+    "BenoitDutheil",
+    "OlivierChastel",
+    "HugoGiron",
+    "EvanXin",
+    "BenoitGautier",
+    "MaximeLau",
+    "CryptoGourou"
   ],
   "en": [
     "Chubby",
@@ -2490,7 +2500,8 @@
     "ThePrimeagen",
     "YIMBYLAND",
     "kache",
-    "Flood"
+    "Flood",
+    "DHH"
   ],
   "history": [
     {
@@ -14937,6 +14948,61 @@
       "lang": "fr",
       "handle": "LilianDessont",
       "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "DHH",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "L0s3",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "NadGuerin",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "DanyGirard",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDutheil",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierChastel",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoGiron",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "EvanXin",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGautier",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLau",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGourou",
+      "added": "2026-08-21"
     }
   ]
 }
