@@ -2059,7 +2059,15 @@
     "BabouinCrypTo",
     "LennyFr",
     "SavvyInvestor",
-    "JulienBouteloup"
+    "JulienBouteloup",
+    "NathMoulin",
+    "TiboM",
+    "DorianGuegan",
+    "JulesG23",
+    "MaximeDuchene",
+    "JordannT",
+    "JulesLachance",
+    "LilianDessont"
   ],
   "en": [
     "Chubby",
@@ -2480,7 +2488,9 @@
     "Abu",
     "HYPEconomist",
     "ThePrimeagen",
-    "YIMBYLAND"
+    "YIMBYLAND",
+    "kache",
+    "Flood"
   ],
   "history": [
     {
@@ -14876,6 +14886,56 @@
     {
       "lang": "fr",
       "handle": "JulienBouteloup",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "kache",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathMoulin",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "TiboM",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianGuegan",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Flood",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesG23",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDuchene",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JordannT",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesLachance",
+      "added": "2026-08-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilianDessont",
       "added": "2026-08-20"
     }
   ]

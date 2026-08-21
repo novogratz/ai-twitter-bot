@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-02T19:36:44.748130",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoBernie",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 115000,
-        "reason": "Bernard Marr est am\u00e9ricain mais sa version FR est solide. Il mixe IA, Data et Crypto avec des donn\u00e9es chiffr\u00e9es, parfait pour celui qui veut impressionner son boss LinkedIn."
-      },
-      {
-        "handle": "m_arnautu",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 75000,
-        "reason": "Le patron de Trade Republic FR. Il balance des threads bourse/actionnaires sans vendre de la poudre aux yeux, contrairement aux 'gourous' qui font des lives avec un \u00e9cran vert."
-      },
-      {
-        "handle": "SvenM",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Cr\u00e9ateur de 'The Daily Gwei' (version FR active). Il d\u00e9crypte les mises \u00e0 jour Ethereum et DeFi, indispensable pour ceux qui veulent comprendre la techno derri\u00e8re les charts."
-      },
-      {
-        "handle": "ThibaultD",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Fondateur de la newsletter Les Eclaireurs. Son thread sur les march\u00e9s est technique mais accessible, il \u00e9vite le buzz 'IA va tuer tout' pour se concentrer sur la rentabilit\u00e9 r\u00e9elle."
-      },
-      {
-        "handle": "BenoitGouin",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "L'expert tech qu\u00e9b\u00e9cois. Il couvre l'impact de l'IA sur les jobs et les march\u00e9s, avec une touche francophone qui fait d\u00e9faut aux tweets traduits de Silicon Valley."
-      },
-      {
-        "handle": "AntoineBoudet",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "CTO de Lyra Health. Il parle sant\u00e9, tech et finance de mani\u00e8re pragmatique, \u00e9vitant les pol\u00e9miques inutiles sur les likes pour se concentrer sur l'execution."
-      },
-      {
-        "handle": "PierreRosental",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Analyste et investisseur (ex-Bloomberg). Il tweete en FR sur l'IA et la tech, avec un style direct et sans jargon inutile, un rare m\u00e9lange de fond et de forme."
-      },
-      {
-        "handle": "JohanneMasse",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Chercheuse en IA \u00e0 l'UdeM. Elle explique les m\u00e9canismes de l'IA (GPT, LLM) pour les humains, sans la haine anti-tech ni l'enthousiasme b\u00e9at des early adopters."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la flotte des 'gourous' en cherchant des fondateurs, des chercheurs et des analystes de fond. Le r\u00e9sultat est moins 'pumping' et plus 'building'. Tu auras moins de likes explosifs, mais un feed qui vieillit mieux que ton portefeuille."
-  },
-  {
-    "ts": "2026-08-02T21:36:21.856299",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HugoDeligne",
-        "region": "france",
-        "niche": "tech/ai",
-        "followers": 45000,
-        "reason": "Le gars qui a fait exploser les perfs IA sur X, il explique le LLM comme un mec qui boit un caf\u00e9."
-      },
-      {
-        "handle": "BenFradet",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Le roi du French Twitter Crypto, il vit \u00e0 NYC mais sa timeline est un masterclass en FR."
-      },
-      {
-        "handle": "RaphaelMun",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Ex-CTO Coinbase, il twitte en fran\u00e7ais et casse les mythes crypto sans prendre de gants."
-      },
-      {
-        "handle": "MarcLemay",
-        "region": "quebec",
-        "niche": "tech/ia",
-        "followers": 12000,
-        "reason": "Journaliste tech \u00e0 la fine pointe, il couvre l'IA avec un regard lucide et francophone."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour te garder les vrais cerveaux. Tu as ici les leaders d'opinion qui ont du contenu, pas juste des signaux Telegram. C'est du brut, du qualitatif."
-  },
-  {
     "ts": "2026-08-02T23:36:21.749544",
     "raw_count": 6,
     "kept_count": 6,
@@ -8606,5 +8502,81 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les mastodontes de l'IA fran\u00e7aise (Mistral) et les incontournables de la crypto (Babouin, Cobain). Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par l'analyse financi\u00e8re pure (Dionne) et la niche crypto locale. Aucun vendeur de r\u00eave, juste du concret."
+  },
+  {
+    "ts": "2026-08-20T20:40:19.476705",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathMoulin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 105000,
+        "reason": "CTO de Mistral. C'est le seul \u00e0 pouvoir twittyer que son mod\u00e8le a bugu\u00e9 sans passer pour un ignare. Le guru francophone de l'IA g\u00e9n\u00e9rique."
+      },
+      {
+        "handle": "TiboM",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Moins 'whale' que les autres, plus 'pro'. Twitte sur la liquidit\u00e9 et les march\u00e9s. Pas de 'moon' dans ses tweets, ce qui est rare."
+      },
+      {
+        "handle": "DorianGuegan",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "CEO de Doximity. Twitte sur le business de l'IA plus que sur le code. Le parfait anti-developpeur."
+      }
+    ],
+    "summary": "Mix classique : le leader incontest\u00e9 (Moulin), le pro pragmatique (Dorian), le pont Qu\u00e9b\u00e9cois (Dionne) et l'expatri\u00e9 qui vend du r\u00eave en dollars (Dillet). Z\u00e9ro formation \u00e0 200\u20ac."
+  },
+  {
+    "ts": "2026-08-20T22:40:23.949829",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulesG23",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence absolute IA g\u00e9n\u00e9rative en FR. Il tweet tout ce qui sort de Mistral, Meta et OpenAI avant que les media grand public ne commencent \u00e0 comprendre ce qu'est un LLM."
+      },
+      {
+        "handle": "MaximeDuchene",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "G\u00e9rant de fonds. Pas de 'signaux', juste de l'analyse fondamentale et des insights sectoriels (tech/m\u00e9dias) qui font moins mal aux yeux que les gogos twitter."
+      },
+      {
+        "handle": "JordannT",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Journaliste crypto hardcore. Il ne vend pas de r\u00eaves, il couvre l'infra (L2s, ZKs) avec une rigueur qui force le respect. Le genre de mec qui sait ce qu'est une zk-proof en buvant son caf\u00e9."
+      },
+      {
+        "handle": "JulesLachance",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 14000,
+        "reason": "Ex-Mistral, aujourd'hui dans la VC AI US. Il twitte en FR quand il peut et balance des insights 'inside track' sur les rounds Series A-B qui valent de l'or."
+      },
+      {
+        "handle": "LilianDessont",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "L'expert technique de la fintech fran\u00e7aise. Il explique la tech bancaire sans dormir le public. Id\u00e9al pour comprendre comment les banques fran\u00e7aises (ou pas) utilisent l'IA."
+      }
+    ],
+    "summary": "Un m\u00e9lange de journalistes techniques (JordannT, JulesG23) qui filtrent le bruit IA/crypto et de g\u00e9rants/VC (Dubreuil, Lachance) qui ont la vue sur l'argent. Z\u00e9ro vendeuse de r\u00eaves, juste des profils qui comprennent la tech ou la finance."
   }
 ]

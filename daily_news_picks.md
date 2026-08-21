@@ -17039,3 +17039,12 @@ $MU $NBIS $IREN
 Demand will only increase from here and the ones with secured power will bene
   - https://x.com/ZeekTyt/status/2090271297569763635
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 21).
+
+## 2026-08-21
+- **@bearbulltraders** (224 likes, score 9/10) — Fed Chairman Kevin Warsh will speak at 10AM next Friday, August 28th in Jackson Hole.
+
+19 days before the September 16th FOMC. Policy is at 3.50 to 3.75%. 
+
+$NVDA  earnings reports will be evening of
+  - https://x.com/BearBullTraders/status/2090544911636734022
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 274).
