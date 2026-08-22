@@ -2110,7 +2110,11 @@
     "PierreDard",
     "NaderDaboub",
     "JulienVernier",
-    "VincentBoulay"
+    "VincentBoulay",
+    "CyrilTheBear",
+    "VladTaran",
+    "GaelLeclercq",
+    "BenoitFayolle"
   ],
   "en": [
     "Chubby",
@@ -15248,6 +15252,26 @@
     {
       "lang": "fr",
       "handle": "VincentBoulay",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTheBear",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "VladTaran",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeclercq",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFayolle",
       "added": "2026-08-21"
     }
   ]

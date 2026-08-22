@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-03T21:36:47.897824",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Cryptobubbles",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "Le visualisateur de crypto le plus utilis\u00e9, twitte en FR."
-      },
-      {
-        "handle": "TheAIShrinkAI",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le roi du thread tech FR, twitte en FR, zero blabla formation."
-      },
-      {
-        "handle": "NicolasBourbaki",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "L'expert IA montr\u00e9alais, rigolo, pas un guru format\u00e9."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les pros qui ont un vrai r\u00e9seau et qui twittent en fran\u00e7ais."
-  },
-  {
     "ts": "2026-08-03T23:36:36.331199",
     "raw_count": 6,
     "kept_count": 5,
@@ -8487,5 +8456,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la cr\u00e8me des comptes IA et crypto francophones : Mistral domine le panier, Dumas prouve le pouvoir viral de la niche, et les comptes Qu\u00e9b\u00e9cois/Fintech apportent une diversit\u00e9 g\u00e9ographique rare."
+  },
+  {
+    "ts": "2026-08-21T22:40:00.634620",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilTheBear",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le roi du short FR aux US, tweets quotidiens, mordant, pas de formation \u00e0 vendre."
+      },
+      {
+        "handle": "VladTaran",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Vlad Taran, ex-CTO Coinbase, vit aux US mais twitte en FR sur la structure du march\u00e9 crypto."
+      },
+      {
+        "handle": "GaelLeclercq",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Co-fondateur Mistral, le genre de tweet qui fait mal aux yeux des gros capitaux US mais adore FR."
+      },
+      {
+        "handle": "BenoitFayolle",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 14000,
+        "reason": "G\u00e9rant de ETF, analyse macro FR pr\u00e9cise, pas de 'signaux', juste du fond."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre la rigueur de Mistral/Mistralians en IA FR, l'analyse boursi\u00e8re solide de Fayolle et Dionne, et la touche US francophone de Taran/TheBear qui apportent du vent contre le vent."
   }
 ]
