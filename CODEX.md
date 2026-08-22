@@ -12,7 +12,8 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > now also calls `first_comment.post_first_comment()` best-effort to seed
 > early thread replies. Replies remain the discovery engine. Local Ollama now uses
 > `orcarouter/Qwen3.8-27B-Uncensored` only; `bin/run.sh` refuses to start
-> with any other model if the current Ollama runtime returns a loader 500.
+> with any other model. Requires local Ollama `0.32.15+`; older runtimes
+> returned loader 500s for this split vision / Qwen3.8 GGUF.
 > Guards:
 > `test_original_engine_*`, `test_ollama_http_tries_configured_fallback_model`.
 
