@@ -2123,7 +2123,19 @@
     "NicolasVas",
     "RaphaelLemal",
     "JulienMougeot",
-    "VincentMoulton"
+    "VincentMoulton",
+    "JoffreyB",
+    "DariaMak",
+    "LilianaMares",
+    "BenjaminMeynet",
+    "ThibaudDuchene",
+    "SimonSismondi",
+    "CryptoRabbi",
+    "TheAIFlow",
+    "MintPanda",
+    "MaximeDutriaux",
+    "BenoitGautier_",
+    "LudovicBouchard"
   ],
   "en": [
     "Chubby",
@@ -15332,6 +15344,66 @@
     {
       "lang": "fr",
       "handle": "VincentMoulton",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "JoffreyB",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariaMak",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilianaMares",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMeynet",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudDuchene",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimonSismondi",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRabbi",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIFlow",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MintPanda",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDutriaux",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGautier_",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBouchard",
       "added": "2026-08-22"
     }
   ]

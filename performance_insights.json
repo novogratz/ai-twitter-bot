@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-22T04:39:26.874009",
-  "window_7d_actions": 5418,
-  "window_24h_actions": 834,
+  "generated_at": "2026-08-22T14:10:10.895673",
+  "window_7d_actions": 5369,
+  "window_24h_actions": 678,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5417
+      "count": 5368
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5417
+      "count": 5368
     }
   ],
   "best_hours_utc": [
@@ -33,86 +33,86 @@
     },
     {
       "hour": 10,
-      "actions": 256
+      "actions": 246
     },
     {
       "hour": 12,
-      "actions": 252
+      "actions": 244
     },
     {
-      "hour": 13,
-      "actions": 249
+      "hour": 0,
+      "actions": 237
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2436
+      "count": 2427
     },
     {
       "topic": "IA",
-      "count": 2062
+      "count": 2038
     },
     {
       "topic": "Crypto",
-      "count": 699
+      "count": 686
     },
     {
       "topic": "Bourse",
-      "count": 467
+      "count": 459
     },
     {
       "topic": "Spatial",
-      "count": 103
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2290
+      "count": 2249
     },
     {
       "pillar": "market_trauma",
-      "count": 1459
+      "count": 1453
     },
     {
       "pillar": "other",
-      "count": 1434
+      "count": 1421
     },
     {
       "pillar": "meme_reaction",
-      "count": 132
+      "count": 144
     },
     {
       "pillar": "reply_bait",
-      "count": 76
+      "count": 78
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 27
+      "count": 24
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 314
+      "count": 249
     },
     {
       "pillar": "market_trauma",
-      "count": 262
+      "count": 216
     },
     {
       "pillar": "other",
-      "count": 215
+      "count": 169
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -122,30 +122,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.23,
-      "avg_views": 40.0,
+      "posts": 67,
+      "avg_likes": 0.24,
+      "avg_views": 40.2,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 72,
-      "avg_likes": 0.19,
-      "avg_views": 42.6,
+      "avg_likes": 0.22,
+      "avg_views": 43.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 54,
-      "avg_likes": 0.15,
-      "avg_views": 45.4,
-      "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 5,
-      "avg_likes": 0.0,
-      "avg_views": 32.8,
+      "avg_likes": 0.17,
+      "avg_views": 41.6,
       "low_sample": false
     },
     {
@@ -154,28 +147,35 @@
       "avg_likes": 0.0,
       "avg_views": 47.0,
       "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 4,
+      "avg_likes": 0.0,
+      "avg_views": 29.0,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4859
+      "count": 4809
     },
     {
       "type": "quote",
-      "count": 344
+      "count": 342
     },
     {
       "type": "quote_gif",
-      "count": 115
-    },
-    {
-      "type": "hotake",
-      "count": 45
+      "count": 126
     },
     {
       "type": "post",
       "count": 45
+    },
+    {
+      "type": "hotake",
+      "count": 37
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-22T04:38:32.184385",
-      "text": "@Crypto Rover calling it a \"death cross\" like it’s a prophecy.\n\nit’s just mean reversion in a range-bound market. panic selling.",
+      "ts": "2026-08-22T14:09:59.269900",
+      "text": "DTE isn't a tech stock, it's the landlord collecting rent on Google's data centers. The megacaps are paying utilities to keep their lights on. Boring money, but real cash flow.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-22T04:36:03.576617",
-      "text": "Cramer’s indicator has a 3-minute half-life. the drop is the feature, not the bug. buy the lie.",
-      "type": "reply"
+      "ts": "2026-08-22T13:57:56.652579",
+      "text": "Aaron just prescribed public binding for deals that currently require a signed waiver, notaries, and three rounds of champagne at Sotheby’s",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-22T04:35:32.470312",
-      "text": "@Cryptowave Lab is asking if you’d buy or sell on a chart with no price, no timeframe, and no context.\n\nBuy at the bottom. Sell at the top. The rest is just noise to keep you scrolling.",
+      "ts": "2026-08-22T13:36:18.074407",
+      "text": "\"largest company in the world\" is a title that resets every time NVDA beats. you're not holding an asset, you're holding a rumor with good dividends. breathe.",
       "type": "reply"
     }
   ]

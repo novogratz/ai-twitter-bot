@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-04T03:36:21.741615",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DariusLecarpent",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le trader fran\u00e7ais de r\u00e9f\u00e9rence. Pas de 'moon boy' here, juste du price action propre et des threads bien sentis."
-      },
-      {
-        "handle": "TanguyLeLutun",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "L'ancien de la French Tech qui balance des insights VC sans le jargon pompier. C'est rare, c'est pr\u00e9cieux."
-      },
-      {
-        "handle": "MaximeLefebvre42",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le prof de finance qu\u00e9b\u00e9cois qui rend la bourse digeste sans te prendre pour un idiot. Humour intact."
-      },
-      {
-        "handle": "AdrienCouturier",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Le mec qui comprend mieux Stripe que les fondateurs de Stripe. Tech FR sur SF, focus SaaS et infrastructure."
-      }
-    ],
-    "summary": "Un mix de traders hardcore, de profs sympas et de technos. Z\u00e9ro vendeur de r\u00eave, juste du m\u00e9tier."
-  },
-  {
-    "ts": "2026-08-04T05:36:43.840434",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thierrm",
-        "region": "france",
-        "niche": "ai",
-        "followers": 120000,
-        "reason": "Cofondateur de Mistral AI, il explique le LLM sans endormir le lecteur. C'est rare un gars qui comprend la techno ET les business models sans vendre du r\u00eave."
-      },
-      {
-        "handle": "alexisgarnier_",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Trader professionnel, pas influenceur. Ses threads sur la lecture de flux et les patterns sont plus utiles que 90% des newsletters payantes."
-      },
-      {
-        "handle": "mariocaz",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Diaspora FR aux USA. Il poste sur l'IA, la SaaS et le VC am\u00e9ricain mais en fran\u00e7ais. Unique en son genre pour voir l'\u00e9cosyst\u00e8me SF sans barri\u00e8re de langue."
-      },
-      {
-        "handle": "cryptobonhomme",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Annonceur officiel de la crypto au Qu\u00e9bec. Il mixe news blockchain, adoption institutionnelle et humour local. L'audience est engag\u00e9e et pas juste l\u00e0 pour les memes."
-      },
-      {
-        "handle": "jgarrigues",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Ex-Mistral, ex-DeepMind. Il poste sur l'IA, la data et les startups tech fr. Ton sec, z\u00e9ro bullshit, exactement ce qu'on cherche."
-      },
-      {
-        "handle": "julesbonnassoux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le pionnier fr du Prompt Engineering. Il twitte que dalle de temps en temps, mais chaque tweet est une p\u00e9pite que les autres r\u00e9utilisent 3 mois plus tard."
-      },
-      {
-        "handle": "louisbesson",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 11000,
-        "reason": "Ex-Lemmy, ex-Podverse. Il parle tech, produits et startup life depuis l'\u00e9tranger. Son style est \u00e9pur\u00e9, intelligent et tr\u00e8s 'product-led'."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit parisien pour ne garder que ceux qui ont du grain \u00e0 moudre. On a une belle base entre la France (Mistral, trading pro) et le Qu\u00e9bec (fintech, adoption locale), avec une touche diaspora US. Z\u00e9ro vendeur de r\u00eaves, que des profils qui construisent ou analysent."
-  },
-  {
     "ts": "2026-08-04T07:36:38.285755",
     "raw_count": 7,
     "kept_count": 3,
@@ -8473,5 +8376,116 @@
       }
     ],
     "summary": "On a creus\u00e9 pour sortir des influenceurs crypto 'signal' et des g\u00e9ants IA qui tweetent trop pour \u00eatre lus. Ici, ce sont des builds et des bilans concrets : du hardware (Ledger), du SaaS B2B (Qonto), du trading passif (InvestirBourse) et des data de fond (Viable)."
+  },
+  {
+    "ts": "2026-08-22T04:40:19.716693",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JoffreyB",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Le boss d'Aya Networks (acquired par Mistral). Il twitte des bouts de code et des visions produit. C'est rare d'avoir un founder qui code encore."
+      },
+      {
+        "handle": "DariaMak",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Directrice IA \u00e0 L'Or\u00e9al, elle balance des insights terrain sans le jargon pourri des 'Gurus'. Vraie tech, pas juste du buzz."
+      },
+      {
+        "handle": "LilianaMares",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Product Designer / Founder bas\u00e9e \u00e0 SF, originaire de France. Elle parle de SaaS, de design et de scaling avec une franchise qui rafra\u00eechit l'\u00e9cosyst\u00e8me."
+      },
+      {
+        "handle": "BenjaminMeynet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Journaliste \u00e0 Les \u00c9chos Tech. Ses threads sur le VC fran\u00e7ais et les rachats d'entreprises sont plus pertinents que 90% des 'analystes' auto-proclam\u00e9s."
+      },
+      {
+        "handle": "ThibaudDuchene",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien de Crypto France TV. Il couvre les cycles, les protocoles et les r\u00e9gulations sans faire de pub pour le premier scam du jour."
+      },
+      {
+        "handle": "SimonSismondi",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Tr\u00e8s actif sur les cycles crypto et le trading. Il \u00e9vite le pi\u00e8ge des signaux payants en expliquant sa 'why' derri\u00e8re chaque position."
+      },
+      {
+        "handle": "PierreMortelmans",
+        "region": "france",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Il d\u00e9cortique les bilans et les strat\u00e9gies de CAC40. Pas de 'moon', juste des chiffres qui tiennent la route et une plume ac\u00e9r\u00e9e."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour te donner des profils qui \u00e9crivent, construisent ou analysent. De Dionne \u00e0 Perron, la diaspora francophone tech est plus comp\u00e9tente que sa r\u00e9putation, il suffit juste de fouiller."
+  },
+  {
+    "ts": "2026-08-22T06:40:11.463075",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoRabbi",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "Le Rabbi de la crypto. Twitte beaucoup en FR (parfois). Son analyse de march\u00e9 est un pilier. Il a du charisme sans la vanit\u00e9 de 'Degen'."
+      },
+      {
+        "handle": "TheAIFlow",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Eddy et Guillaume d\u00e9cortiquent l'IA plus finement que la moyenne. Z\u00e9ro blabla de formateur \u00e0 900\u20ac, ils vendent leur comp\u00e9tence brute."
+      },
+      {
+        "handle": "MintPanda",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Ex-Hedge Fund, pur player crypto. Il balance des setups et des macro-analyses avec un style direct. Pas de 'Telegram VIP' \u00e0 l'honneur."
+      },
+      {
+        "handle": "MaximeDutriaux",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Founding engineer IA. C'est le genre de compte qui te montre comment construire, pas comment sp\u00e9culer. Pr\u00e9cis et sec."
+      },
+      {
+        "handle": "BenoitGautier_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "L'expert hardware et infra qui parle fran\u00e7ais. On le suit pour comprendre ce qui fait chauffer les GPU, pas pour se sentir intelligent."
+      },
+      {
+        "handle": "LudovicBouchard",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Researcher ML. Il poste en FR/EN avec une densit\u00e9 d'infos qui fait mal. Pas de 'jour de la bourse', juste de la science."
+      }
+    ],
+    "summary": "Un mix solide entre les g\u00e9ants fran\u00e7ais (Mistral) et les perles cach\u00e9es du Qu\u00e9bec IA qui ne font pas de bruit pour rien. c\u00f4t\u00e9 crypto, on garde les am\u00e9ricains francophones qui ont de la substance et pas juste des \u00e9mojis."
   }
 ]
