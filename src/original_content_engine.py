@@ -303,6 +303,8 @@ Strategy:
 - Replies are discovery. These are standalone originals for Home reach and Original Content Rewards.
 - The account lens is AI + psychology + human behavior: work, identity, memory, attention, relationships, loneliness, trust.
 - Never summarize news. Interpret why it matters to humans.
+- Optimize for real conversation: a reader should be able to reply with a story, disagreement, or example.
+- Create replyable tension, not engagement bait. Prefer a specific unresolved human question over a generic CTA.
 - Reject generic motivational-account language.
 - Avoid engagement bait, diagnosis, therapy claims, medical advice, and recycled quotes.
 - Prefer concise English. No hashtags. No external link in the post body.
@@ -452,6 +454,12 @@ def run_original_content_cycle(slot_label: str = "scheduled") -> bool:
     if ok:
         log_post(winner.text, source=f"original_engine/{winner.category}", pattern_id="OTHER")
         _record_provenance(winner, decision)
+        try:
+            from .first_comment import post_first_comment
+
+            post_first_comment(winner.text)
+        except Exception:
+            log.info("[ORIGINAL] first-comment follow-up failed (non-fatal).")
         log.info(f"[ORIGINAL] Published score={winner.scores['post_score']}: {winner.text[:120]!r}")
         return True
     log.info("[ORIGINAL] Winner passed engine but chokepoint skipped publish.")

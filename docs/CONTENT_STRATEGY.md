@@ -56,10 +56,17 @@ quality / originality / genericness / clickbait / repetition / factuality scorin
         |
         v
 publish one winner, queue for review, or skip the slot
+        |
+        v
+best-effort first comment to create an early reply surface
 ```
 
 The engine is intentionally allowed to skip. A blank slot is better than a
 generic post that trains the audience to ignore the profile.
+
+Standalone posts should be written for discussion, not applause. The best
+version leaves a specific human tension open enough that readers can answer
+with a story, disagreement, or example.
 
 ## Reply-To-Post Flywheel
 

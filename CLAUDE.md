@@ -8,8 +8,9 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > slots now try `src/original_content_engine.py` before legacy news/hotake
 > surfaces. It generates 15-30 concepts, semantically dedups them, scores
 > quality/originality/genericness/clickbait/repetition/factuality, and
-> publishes or queues only one winner above threshold. Replies remain the
-> discovery engine. Local Ollama now tries
+> publishes or queues only one winner above threshold. A shipped original
+> now also calls `first_comment.post_first_comment()` best-effort to seed
+> early thread replies. Replies remain the discovery engine. Local Ollama now tries
 > `orcarouter/Qwen3.8-27B-Uncensored` first, with
 > `OLLAMA_FALLBACK_MODELS=qwen3:8b` because the current Ollama runtime
 > returns a loader 500 for that split vision / Qwen3.8 GGUF. Guards:

@@ -73,7 +73,7 @@ The account now treats replies and main posts as separate growth engines.
 
 - Replies remain the discovery/acquisition engine and are not broadly redesigned.
 - Main posts are optimized for Home Timeline reach, original account identity, AI + psychology authority, and intellectual continuity.
-- `src/original_content_engine.py` is the first surface in each post slot. It generates many standalone candidates, rejects generic or repetitive drafts, ranks the strongest ideas, and only publishes or queues a post when it clears the configured quality floor.
+- `src/original_content_engine.py` is the first surface in each post slot. It generates many standalone candidates, rejects generic or repetitive drafts, ranks the strongest ideas, publishes or queues only when it clears the configured quality floor, then drops a best-effort first comment to start the thread.
 - `src/main_post_growth.py` reads existing logs and signals, then writes runtime reports under `growth/`.
 
 Generated runtime outputs:
