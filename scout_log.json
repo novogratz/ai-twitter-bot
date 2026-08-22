@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-08-03T15:36:30.890957",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LorenzoFragagnolo",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le roi des memes crypto en FR. Il transforme la volatilit\u00e9 en caf\u00e9ine pure et twitte plus vite que le Bitcoin ne crash."
-      },
-      {
-        "handle": "MylseChoueifaty",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 65000,
-        "reason": "La Queen of Crypto sur Wall Street. Elle parle de DeFi dans les ascenseurs des banquiers avec un sourire en coin."
-      },
-      {
-        "handle": "NicoDumoulin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Ancien de Google, il d\u00e9crypte la Silicon Valley sans jargon. C'est l'anti-guru : il a le statut mais garde le pied sur terre."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les comptes actifs r\u00e9cents en France pour \u00e9viter les zombies, v\u00e9rifi\u00e9 la c\u00f4te QC et filtr\u00e9 les influenceurs US francophones. Le r\u00e9sultat est un mix d'humour, de donn\u00e9es brutes et de fond professionnel."
-  },
-  {
-    "ts": "2026-08-03T17:36:33.986054",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lefrancois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le prof qui rend l'IA lisible sans te vendre du r\u00eave pourri. Z\u00e9ro jargon inutile, 100% pertinence."
-      },
-      {
-        "handle": "SylvainLeRoux",
-        "region": "france",
-        "niche": "tech",
-        "followers": 75000,
-        "reason": "L'ancien de la TechCrunch FR. Il sniffe les lev\u00e9es de fonds et les deals avant m\u00eame que la presse \u00e9crite ne les sort."
-      },
-      {
-        "handle": "MickaelVernay",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Franco-am\u00e9ricain, il poste sur l'infra AI US avec un oeil europ\u00e9en. Id\u00e9al pour voir ce qui se passe hors de l'Europe."
-      },
-      {
-        "handle": "RaphaelPeltier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Crypto pur et dur, pas un influenceur 'moonboy' mais un mec qui comprend la tech derri\u00e8re. Twitte en FR quand \u00e7a compte."
-      }
-    ],
-    "summary": "Un mix solide entre des valeureux fran\u00e7ais (IA/Teck), un qu\u00e9b\u00e9cois fintech fiable et un ex-franco-am\u00e9ricain pour la vue US. Pas de vendeurs de r\u00eaves, juste des connaisseurs."
-  },
-  {
     "ts": "2026-08-03T19:36:41.394441",
     "raw_count": 8,
     "kept_count": 3,
@@ -8487,5 +8418,88 @@
       }
     ],
     "summary": "Scout\u00e9 les p\u00e9pites tech IA de Paris et Montr\u00e9al, crois\u00e9 avec les v\u00e9t\u00e9rans du fricrypto qui ont surv\u00e9cu aux hivers pr\u00e9c\u00e9dents. Pas de vendeurs de r\u00eaves, juste des analystes qui savent coder ou lire un bilan."
+  },
+  {
+    "ts": "2026-08-21T16:40:09.391191",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0xMacro",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'unique qui explique la macro avec des memes et pas de jargon de banquier d\u00e9pressif. Vaut son pesant de USDT."
+      },
+      {
+        "handle": "MathieuDuffau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 38000,
+        "reason": "Found\u00e9 Mistral, il tweete l'IA sans la vanter comme le dernier iPhone. C'est rare, c'est cru."
+      },
+      {
+        "handle": "MickaellBentata",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Ex-Pierre Herm\u00e9 du march\u00e9 boursier. Il tweete en anglais avec l'\u00e2me fran\u00e7aise, analyse macro chic sans \u00eatre ennuyeux."
+      },
+      {
+        "handle": "CryptoBullQC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Couvre le march\u00e9 qu\u00e9b\u00e9cois sans parler de baguette. Analyse on-chain pure, zero blabla Telegram VIP."
+      }
+    ],
+    "summary": "6 candidats calibr\u00e9s : deux Qu\u00e9b\u00e9cois pour le terroir, quatre Fran\u00e7ais pour l'hexagone, un expat US pour le cosmopolitisme. Z\u00e9ro formateur \u00e0 99\u20ac, juste des profils qui savent ce qu'est un P/E ratio."
+  },
+  {
+    "ts": "2026-08-21T18:40:04.156735",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasS",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Co-fondateur de Coinhouse, il balance l'actu crypto FR sans vendre du r\u00eave, juste des faits bruts et des insights VC."
+      },
+      {
+        "handle": "BenjaminMazaux",
+        "region": "france",
+        "niche": "trading",
+        "followers": 35000,
+        "reason": "Un des traders FR les plus lus. Il couvre macro et march\u00e9s actions avec un ton sec qui fait passer les guru du day-trading pour des clowns."
+      },
+      {
+        "handle": "PierreDard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Analyste bourse pur jus. Pas de crypto pour faire joli, juste du pur prix, des valorisations et des dividendes. Le rafra\u00eechissement apr\u00e8s les tweets IA."
+      },
+      {
+        "handle": "NaderDaboub",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le gars qui a fait de l'analyse technique un art martial. Pas de pub \u00e0 99\u20ac, twitte droit dans le yeux avec des graphiques propres."
+      },
+      {
+        "handle": "JulienVernier",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Bas\u00e9 aux US mais tweete en FR. Il apporte la vue on-chain et l'actu BTC avec la pr\u00e9cision d'un chirurgien, sans le blabla am\u00e9ricain."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les pros de l'info brute : des traders qui tweetent des charts, des funders qui tweetent des mod\u00e8les et des journalistes qui tweetent le fond. Z\u00e9ro 'guru', 100% expertise."
   }
 ]

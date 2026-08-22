@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-21T16:39:26.291128",
-  "window_7d_actions": 5320,
-  "window_24h_actions": 872,
+  "generated_at": "2026-08-21T20:39:28.224234",
+  "window_7d_actions": 5358,
+  "window_24h_actions": 850,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5319
+      "count": 5357
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5319
+      "count": 5357
     }
   ],
   "best_hours_utc": [
@@ -47,46 +47,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2383
+      "count": 2395
     },
     {
       "topic": "IA",
-      "count": 2052
+      "count": 2067
     },
     {
       "topic": "Crypto",
-      "count": 667
+      "count": 677
     },
     {
       "topic": "Bourse",
-      "count": 452
+      "count": 460
     },
     {
       "topic": "Spatial",
-      "count": 117
+      "count": 109
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2276
+      "count": 2288
     },
     {
       "pillar": "other",
-      "count": 1412
+      "count": 1422
     },
     {
       "pillar": "market_trauma",
-      "count": 1402
+      "count": 1419
     },
     {
       "pillar": "meme_reaction",
-      "count": 128
+      "count": 129
     },
     {
       "pillar": "reply_bait",
-      "count": 75
+      "count": 73
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,56 +96,56 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 342
+      "count": 334
     },
     {
       "pillar": "market_trauma",
-      "count": 264
+      "count": 255
     },
     {
       "pillar": "other",
-      "count": 226
+      "count": 217
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 67,
       "avg_likes": 0.27,
-      "avg_views": 41.1,
+      "avg_views": 40.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.22,
-      "avg_views": 44.1,
+      "posts": 67,
+      "avg_likes": 0.21,
+      "avg_views": 42.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 54,
-      "avg_likes": 0.17,
-      "avg_views": 46.6,
+      "posts": 57,
+      "avg_likes": 0.16,
+      "avg_views": 46.7,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 39.0,
+      "avg_views": 43.0,
       "low_sample": false
     },
     {
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4774
+      "count": 4806
     },
     {
       "type": "quote",
-      "count": 336
+      "count": 340
     },
     {
       "type": "quote_gif",
@@ -171,11 +171,11 @@
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 45
     },
     {
       "type": "post",
-      "count": 44
+      "count": 45
     },
     {
       "type": "retweet",
@@ -184,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-21T16:39:17.429528",
-      "text": "Hey. @HeyGen’s looking at face consistency while the real moat is compute economics.\n\nkeeping a face consistent across 4k frames costs ~30% more VRAM than the video itself.\n\nmarketing ships a demo.",
+      "ts": "2026-08-21T20:38:03.144185",
+      "text": "8 million homes need power. AI needs it now.\nGrid operators are realizing the future doesn't wait for their permits.\nGridlock = exit liquidity.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T16:38:44.728185",
-      "text": "Cramer is a put option on itself. you sold at the bottom, pumped 25%, told you to buy at the top. that's not a strategy, that's a service industry.",
+      "ts": "2026-08-21T20:36:06.146309",
+      "text": "Meta’s 30MW to 100MW jump. The grid is the bottleneck no one priced in. we’re building data centers in the dark.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T16:37:55.528818",
-      "text": "Ray Dalio says to buy Bitcoin because of a debt crisis.\nGreat. So I’ll stop telling my clients to panic-sell the bottom and just buy what the hedge fund kings hoard like toilet paper.\n\nhttps://cointelegraph.com/news/ray-dalio-buy-bitcoin-debt-crisis?utm_source=rss_feed&utm_medium",
-      "type": "hotake"
+      "ts": "2026-08-21T20:35:49.852159",
+      "text": "Anthropic raised $4.7B at a $100B valuation to build a better middle manager. deathclaude won't enslave humanity, it'll just bill by the minute.",
+      "type": "reply"
     }
   ]
 }

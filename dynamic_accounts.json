@@ -2100,7 +2100,16 @@
     "MarcAndreMilot",
     "MaxMounier",
     "LuisVong",
-    "JulienM_42"
+    "JulienM_42",
+    "0xMacro",
+    "MathieuDuffau",
+    "MickaellBentata",
+    "CryptoBullQC",
+    "ThomasS",
+    "BenjaminMazaux",
+    "PierreDard",
+    "NaderDaboub",
+    "JulienVernier"
   ],
   "en": [
     "Chubby",
@@ -2530,7 +2539,8 @@
     "rynex",
     "Pingu",
     "EKO",
-    "IGN"
+    "IGN",
+    "DCinvestor"
   ],
   "history": [
     {
@@ -15176,6 +15186,56 @@
     {
       "lang": "fr",
       "handle": "JulienM_42",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMacro",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffau",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaellBentata",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBullQC",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "DCinvestor",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasS",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMazaux",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDard",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "NaderDaboub",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVernier",
       "added": "2026-08-21"
     }
   ]
