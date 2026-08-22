@@ -17,6 +17,8 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | Variable | Default | Purpose |
 |---|---|---|
 | `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. |
+| `OLLAMA_MODEL` | `orcarouter/Qwen3.8-27B-Uncensored` | Primary local model attempted by the direct Ollama HTTP client. |
+| `OLLAMA_FALLBACK_MODELS` | `qwen3:8b` | Comma-separated local fallback models tried only when the primary Ollama model fails or returns unusable output. |
 | `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
@@ -27,6 +29,7 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
 | `QUOTE_MODEL` | `gpt-5.4-mini` | Model for FR quote-post commentary on external tweets. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
+| `ORIGINAL_CONTENT_MODEL` | `HOTAKE_MODEL` | Model for the standalone candidate engine. Uses the profile provider path. |
 | `NEWS_POSTS_PER_CYCLE` | `3` | Number of separate news posts to publish per post cycle. |
 | `NEWS_POST_SPACING_SECONDS` | `120` | Delay between burst news posts. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
@@ -43,6 +46,14 @@ Original content uses LLM cycles + appears on the profile feed; the cap balances
 | `MAX_HOTAKES_PER_DAY` | `3` | Quick takes on AI / crypto / macro stories. |
 | `MAX_BREAKOUTS_PER_DAY` | `4` | Breakout reactions to viral stories. |
 | `MAX_SPICY_PER_DAY` | `4` | Polarizing takes / questions. |
+| `ORIGINAL_CONTENT_ENGINE_ENABLED` | `1` | Enable the rewards-aware standalone engine tried first in each post slot. |
+| `ORIGINAL_CONTENT_CANDIDATES_PER_SLOT` | `20` | Number of candidate standalone posts to generate and rank per slot. Clamped by the engine to 15-30. |
+| `ORIGINAL_CONTENT_TOP_CONCEPTS` | `8` | Number of top scored candidates retained in `growth/original_post_decisions.json`. |
+| `MAIN_POST_MINIMUM_QUALITY_SCORE` | `75` | Minimum `post_score` required before the original engine can publish. |
+| `MAIN_POST_MINIMUM_ORIGINALITY_SCORE` | `75` | Minimum originality score required before the original engine can publish. |
+| `MAIN_POST_OPERATING_MODE` | `growth_automation` | Set to `rewards_eligible` to queue standalone drafts for review instead of auto-posting. |
+| `MAIN_POST_REQUIRE_HUMAN_APPROVAL` | `0` | Force review queue for standalone drafts regardless of operating mode. |
+| `TARGET_HOME_IMPRESSIONS_90D` | `500000` | Dashboard target for Original Content Rewards progress tracking. |
 
 Threads are 1/day each (`thread_bot` and `digest_thread_bot`) — non-overridable, idempotent state file.
 
@@ -152,12 +163,15 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 BOT_HANDLE=TheAIShrink
 AI_CLI=ollama
 LLM_FALLBACK_CLI=codex
+OLLAMA_MODEL=orcarouter/Qwen3.8-27B-Uncensored
+OLLAMA_FALLBACK_MODELS=qwen3:8b
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini
 PRIORITY_REPLY_MODEL=gpt-5.4-mini
 QUOTE_MODEL=gpt-5.4-mini
 ROAST_MODEL=gpt-5.4-mini
+ORIGINAL_CONTENT_MODEL=gpt-5.4-mini
 NEWS_POSTS_PER_CYCLE=3
 NEWS_POST_SPACING_SECONDS=120
 
@@ -165,6 +179,14 @@ MAX_NEWS_PER_DAY=10
 MAX_HOTAKES_PER_DAY=0
 MAX_BREAKOUTS_PER_DAY=4
 MAX_SPICY_PER_DAY=4
+ORIGINAL_CONTENT_ENGINE_ENABLED=1
+ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=20
+ORIGINAL_CONTENT_TOP_CONCEPTS=8
+MAIN_POST_MINIMUM_QUALITY_SCORE=75
+MAIN_POST_MINIMUM_ORIGINALITY_SCORE=75
+MAIN_POST_OPERATING_MODE=growth_automation
+MAIN_POST_REQUIRE_HUMAN_APPROVAL=0
+TARGET_HOME_IMPRESSIONS_90D=500000
 MAX_QUOTES_PER_DAY=80
 MAX_RETWEETS_PER_DAY=30
 RETWEETS_PER_CYCLE=3

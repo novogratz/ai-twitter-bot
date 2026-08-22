@@ -39,6 +39,28 @@ Learn
 
 Sources provide facts. The AI Therapist provides the insight.
 
+The current Phase 1 implementation lives in `src/original_content_engine.py`.
+Every scheduled standalone slot now tries this engine first:
+
+```text
+editorial brief + opportunity queue
+        |
+        v
+15-30 candidate posts
+        |
+        v
+semantic deduplication
+        |
+        v
+quality / originality / genericness / clickbait / repetition / factuality scoring
+        |
+        v
+publish one winner, queue for review, or skip the slot
+```
+
+The engine is intentionally allowed to skip. A blank slot is better than a
+generic post that trains the audience to ignore the profile.
+
 ## Reply-To-Post Flywheel
 
 ```text
@@ -98,3 +120,17 @@ Supported main-post formats:
 - open question
 
 Standalone should generally be the default. Quote posts remain useful when the source context is essential and the commentary adds substantial new value.
+
+## Phase Roadmap
+
+Phase 1 is implemented: preserve replies, strengthen standalone generation,
+rank many candidates, add genericness/repetition checks, and separate original
+analytics from reply analytics.
+
+Phase 2 should deepen the existing external-signal layer into a formal source
+registry, primary-source resolver, news scorer, breaking-news scheduler, and AI
+Therapist news-angle generator.
+
+Phase 3 should mine successful replies into trend models, expand experiments,
+and produce weekly strategy recommendations without automatically rewriting the
+account strategy from tiny samples.

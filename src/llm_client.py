@@ -152,6 +152,11 @@ def contains_post_unsafe_leak(text: str) -> bool:
     return False
 
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
+OLLAMA_FALLBACK_MODELS = [
+    m.strip()
+    for m in os.environ.get("OLLAMA_FALLBACK_MODELS", "").split(",")
+    if m.strip() and m.strip() != OLLAMA_MODEL
+]
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
@@ -242,65 +247,76 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     import urllib.request
     import urllib.error
     full_prompt = _FUNNY_FORCER + "/no_think\n\n" + prompt
-    payload = json.dumps({
-        "model": OLLAMA_MODEL,
-        "prompt": full_prompt,
-        "stream": False,
-        "keep_alive": "24h",
-        # Disable thinking-mode (qwen3.6 uncensored variants stream their
-        # chain-of-thought into a separate `thinking` field while leaving
-        # `response` empty; with think:false ollama runs in standard
-        # generation mode and the answer lands in `response`).
-        "think": False,
-        "options": {
-            "temperature": 1.0,
-            "top_p": 0.95,
-            "repeat_penalty": 1.15,
-            # The long Décode prompts are regularly 16k-24k chars before
-            # generation. Ollama's default context is too small for that on
-            # many models, which can produce empty responses after a long
-            # wait. Keep the window explicit and overrideable.
-            "num_ctx": int(os.environ.get("OLLAMA_NUM_CTX", "32768")),
-            # 2026-05-22: 256 → 1024 → 1800. Friday Top-5 Décode format
-            # (5 numbered bullets with bold chiffre + acteur + insight +
-            # chute + URL) needs more room. 1800 covers the long-form
-            # path plus URL margin. SKIPs caused by mid-output truncation
-            # were Décode #62 today.
-            "num_predict": int(os.environ.get("OLLAMA_NUM_PREDICT", "1800")),
-        },
-    }).encode("utf-8")
-    req = urllib.request.Request(
-        f"{OLLAMA_BASE_URL}/api/generate",
-        data=payload,
-        headers={"Content-Type": "application/json"},
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            raw = resp.read().decode("utf-8")
-        data = json.loads(raw)
-    except urllib.error.URLError as e:
-        return LLMResult(1, "", f"{label}: ollama HTTP error: {e}")
-    except (json.JSONDecodeError, ValueError) as e:
-        return LLMResult(1, "", f"{label}: ollama returned non-JSON: {e}")
-    except TimeoutError:
-        return LLMResult(124, "", f"{label}: ollama HTTP timed out after {timeout}s")
-    except Exception as e:
-        return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
-    # /api/generate returns {"response": "..."}
-    text = (data.get("response") or "").strip()
-    if not text:
-        meta = {
-            "done": data.get("done"),
-            "done_reason": data.get("done_reason"),
-            "prompt_eval_count": data.get("prompt_eval_count"),
-            "eval_count": data.get("eval_count"),
-            "thinking_chars": len(str(data.get("thinking") or "")),
-            "error": data.get("error"),
-        }
-        msg = f"{label}: ollama returned empty response; meta={meta}"
-        log.info(f"[LLM] {msg}")
-        return LLMResult(1, "", msg)
-    return LLMResult(0, text, "")
+    errors: list[str] = []
+    models = [OLLAMA_MODEL] + OLLAMA_FALLBACK_MODELS
+    for model_name in models:
+        payload = json.dumps({
+            "model": model_name,
+            "prompt": full_prompt,
+            "stream": False,
+            "keep_alive": "24h",
+            # Disable thinking-mode (qwen3.6 uncensored variants stream their
+            # chain-of-thought into a separate `thinking` field while leaving
+            # `response` empty; with think:false ollama runs in standard
+            # generation mode and the answer lands in `response`).
+            "think": False,
+            "options": {
+                "temperature": 1.0,
+                "top_p": 0.95,
+                "repeat_penalty": 1.15,
+                # The long Décode prompts are regularly 16k-24k chars before
+                # generation. Ollama's default context is too small for that on
+                # many models, which can produce empty responses after a long
+                # wait. Keep the window explicit and overrideable.
+                "num_ctx": int(os.environ.get("OLLAMA_NUM_CTX", "32768")),
+                # 2026-05-22: 256 → 1024 → 1800. Friday Top-5 Décode format
+                # (5 numbered bullets with bold chiffre + acteur + insight +
+                # chute + URL) needs more room. 1800 covers the long-form
+                # path plus URL margin. SKIPs caused by mid-output truncation
+                # were Décode #62 today.
+                "num_predict": int(os.environ.get("OLLAMA_NUM_PREDICT", "1800")),
+            },
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            f"{OLLAMA_BASE_URL}/api/generate",
+            data=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                raw = resp.read().decode("utf-8")
+            data = json.loads(raw)
+        except urllib.error.URLError as e:
+            errors.append(f"{model_name}: HTTP error: {e}")
+            continue
+        except (json.JSONDecodeError, ValueError) as e:
+            errors.append(f"{model_name}: non-JSON response: {e}")
+            continue
+        except TimeoutError:
+            errors.append(f"{model_name}: timed out after {timeout}s")
+            continue
+        except Exception as e:
+            errors.append(f"{model_name}: unexpected error: {e}")
+            continue
+        # /api/generate returns {"response": "..."}
+        text = (data.get("response") or "").strip()
+        if not text:
+            meta = {
+                "done": data.get("done"),
+                "done_reason": data.get("done_reason"),
+                "prompt_eval_count": data.get("prompt_eval_count"),
+                "eval_count": data.get("eval_count"),
+                "thinking_chars": len(str(data.get("thinking") or "")),
+                "error": data.get("error"),
+            }
+            errors.append(f"{model_name}: empty response; meta={meta}")
+            continue
+        if model_name != OLLAMA_MODEL:
+            log.info(f"[LLM] {label}: ollama primary failed; using fallback model {model_name}.")
+        return LLMResult(0, text, "")
+    msg = f"{label}: all ollama models failed: {' | '.join(errors)}"
+    log.info(f"[LLM] {msg}")
+    return LLMResult(1, "", msg)
 
 
 @dataclass
