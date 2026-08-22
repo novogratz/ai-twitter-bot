@@ -2114,7 +2114,16 @@
     "CyrilTheBear",
     "VladTaran",
     "GaelLeclercq",
-    "BenoitFayolle"
+    "BenoitFayolle",
+    "DimitriG",
+    "TheLionCrypto",
+    "GaelFouchard",
+    "michaeleden",
+    "ThomasAumaitre",
+    "NicolasVas",
+    "RaphaelLemal",
+    "JulienMougeot",
+    "VincentMoulton"
   ],
   "en": [
     "Chubby",
@@ -2546,7 +2555,8 @@
     "EKO",
     "IGN",
     "DCinvestor",
-    "Wealthmatica"
+    "Wealthmatica",
+    "Jaxon"
   ],
   "history": [
     {
@@ -15273,6 +15283,56 @@
       "lang": "fr",
       "handle": "BenoitFayolle",
       "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitriG",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheLionCrypto",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelFouchard",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "en",
+      "handle": "Jaxon",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "michaeleden",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasAumaitre",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasVas",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLemal",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMougeot",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentMoulton",
+      "added": "2026-08-22"
     }
   ]
 }

@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-03T23:36:36.331199",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautCarr\u00e9",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence absolue de l'on-chain analysis en FR. Pas de blabla, que des donn\u00e9es. Son style 'data-driven' contraste agr\u00e9ablement avec le 'zozoteur' crypto standard."
-      },
-      {
-        "handle": "SergioLuchessi",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Bas\u00e9 \u00e0 NYC mais le mec est 100% FR (et qu\u00e9b\u00e9cois de c\u0153ur). Il cover le march\u00e9 US avec un regard fran\u00e7ais lucide. Moins de noise, plus de substance."
-      },
-      {
-        "handle": "NathanaelTeboul",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "CEO de Valtix mais sa vision sur la s\u00e9curit\u00e9 cloud et la tech infrastructure est une mine d'or. Il tweete moins que les influenceurs 'growth', donc chaque post compte."
-      },
-      {
-        "handle": "DarioCrea",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'expert macro qui explique l'inflation comme \u00e0 un ado en cours de maths. Ses threads sur les cycles de taux sont des classiques \u00e0 sauvegarder."
-      },
-      {
-        "handle": "AlexisLarcher",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "La plume du Quebec qui d\u00e9mine les bullshit de Wall Street sans complexe. Il parle aussi bien de DeFi que de la r\u00e9alit\u00e9 de l'\u00e9conomie qu\u00e9b\u00e9coise."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour te donner des cerveaux qui font leur propre recherche, pas juste du copier-coller de news. De la France au Quebec en passant par la diaspora NY, voici le top niveau."
-  },
-  {
-    "ts": "2026-08-04T01:36:44.566466",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HassanBoukhari",
-        "region": "france",
-        "niche": "ai",
-        "followers": 145000,
-        "reason": "La r\u00e9f\u00e9rence absolue en IA en France. Il couvre la tech, l'IA et la VC avec un ton clair, sans jargon incompr\u00e9hensible. Twitte en FR/EN mixte mais la valeur est dans le FR."
-      },
-      {
-        "handle": "NicoTremblay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'incontournable du Qu\u00e9bec en bourse. Il parle de la Fed, des techs et des valeurs canadiennes. Son ton est accessible, pas scolaire, et il twitte souvent sur les actualit\u00e9s chaudes."
-      },
-      {
-        "handle": "BenjaminGarrigues",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 42000,
-        "reason": "G\u00e9rant et analyste actions (BoursoBank/Amundi). Il d\u00e9cortique les r\u00e9sultats trimestriels et la macro. Son style est direct, un peu cynique, id\u00e9al pour ne pas s'endormir devant des graphiques."
-      },
-      {
-        "handle": "ThibautMansion",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Journaliste crypto fr (ex-Medium, ex-Cointelegraph FR). Il est partout, il interviewe les grands patrons. Vrai analyste, pas un hype man qui vend des signaux."
-      },
-      {
-        "handle": "RomainLefrancois",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Investisseur crypto et crypto-NFT. Il couvre la DeFi, les tokens et les march\u00e9s d\u00e9riv\u00e9s avec une analyse on-chain solide. Moins 'buzz' que les autres, mais plus technique."
-      },
-      {
-        "handle": "VincentBourget",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Fondateur de Bitbuy (et ancien CEO de BitPay Canada). Il est sur le terrain, il voit les deals avant les autres. Moins de volume que les influenceurs 'moon boys', mais une vraie cr\u00e9dibilit\u00e9 institutionnelle."
-      },
-      {
-        "handle": "LucRochon",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "VC \u00e0 Venture Lab. Il rep\u00e8re les startups fintech et insurtech \u00e9mergentes avant qu'elles ne soient connues. Son r\u00e9seau est son produit, et il le partage en thread."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la merde des formateurs de 999\u20ac pour ne garder que ceux qui manipulent les vrais march\u00e9s (gestionnaires, VCs, founders de scaleups). C'est du concret, pas du blabla."
-  },
-  {
     "ts": "2026-08-04T03:36:21.741615",
     "raw_count": 5,
     "kept_count": 4,
@@ -8494,5 +8390,88 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre la rigueur de Mistral/Mistralians en IA FR, l'analyse boursi\u00e8re solide de Fayolle et Dionne, et la touche US francophone de Taran/TheBear qui apportent du vent contre le vent."
+  },
+  {
+    "ts": "2026-08-22T00:39:57.563143",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DimitriG",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 150000,
+        "reason": "L'anti-Blair. Il couvre les march\u00e9s, la macro et les cracks de la City. Son style est direct, ses analyses sur la liquidit\u00e9 sont pr\u00e9cises. Pas de formation \u00e0 vendre, juste du fond."
+      },
+      {
+        "handle": "TheLionCrypto",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le roi du crypto au Qu\u00e9bec. Il fait des threads profonds sur le Bitcoin et la DeFi. Il parle fran\u00e7ais, il est actif, et il tweete sans \u00eatre un 'influencer' qui vend des sacs."
+      },
+      {
+        "handle": "GaelFouchard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "VC chez Alven Capital. Il tweete sur les starts-up tech, le SaaS et l'IA. C'est du business pur, pas de la finance sp\u00e9culative. Un classique."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 pour \u00e9viter les vendeurs de r\u00eaves. Ici, on a les fondations solides : la Tech fran\u00e7aise (Mistral, Fouchard) et la Crypto s\u00e9rieuse (Gael, Dimitri). Pas de noise, juste du signal."
+  },
+  {
+    "ts": "2026-08-22T02:40:28.349752",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "michaeleden",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Directeur de l'innovation chez Atos, twitte sur l'IA frugale et l'impact environnemental. Pas un infocastreur, un vrai technocrate qui comprend les contraintes."
+      },
+      {
+        "handle": "ThomasAumaitre",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Co-fondateur de Ledger, balance de l'hardware et la tech sans vendre du r\u00eave. Sa niche ? L'adoption r\u00e9elle via la s\u00e9curit\u00e9."
+      },
+      {
+        "handle": "NicolasVas",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Fondateur de InvestirBourse. Son style est sec, orient\u00e9 dividendes et croissance. Pas de 'moon', pas de 'FOMO', juste des bilans annuels."
+      },
+      {
+        "handle": "RaphaelLemal",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 16000,
+        "reason": "Cofondateur de Qonto. Il parle SaaS B2B, fintech et comment on scale en France. Un peu moins hype que les unicornes US, beaucoup plus pertinent."
+      },
+      {
+        "handle": "JulienMougeot",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "CTO de la Fintech canadienne MoneyMobiles. Parle tech, scaling et gestion d'\u00e9quipe. Un rareQC dans le corner des fondateurs techniques."
+      },
+      {
+        "handle": "VincentMoulton",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Fondateur de Viable. Il teste et partage en temps r\u00e9el l'impact de l'IA sur les startups SaaS. Des donn\u00e9es brutes, pas du ressenti."
+      }
+    ],
+    "summary": "On a creus\u00e9 pour sortir des influenceurs crypto 'signal' et des g\u00e9ants IA qui tweetent trop pour \u00eatre lus. Ici, ce sont des builds et des bilans concrets : du hardware (Ledger), du SaaS B2B (Qonto), du trading passif (InvestirBourse) et des data de fond (Viable)."
   }
 ]

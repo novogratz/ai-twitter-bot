@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-22T00:39:27.133528",
-  "window_7d_actions": 5396,
-  "window_24h_actions": 847,
+  "generated_at": "2026-08-22T04:39:26.874009",
+  "window_7d_actions": 5418,
+  "window_24h_actions": 834,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5395
+      "count": 5417
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5395
+      "count": 5417
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2423
+      "count": 2436
     },
     {
       "topic": "IA",
-      "count": 2063
+      "count": 2062
     },
     {
       "topic": "Crypto",
-      "count": 690
+      "count": 699
     },
     {
       "topic": "Bourse",
-      "count": 465
+      "count": 467
     },
     {
       "topic": "Spatial",
-      "count": 106
+      "count": 103
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2293
-    },
-    {
-      "pillar": "other",
-      "count": 1437
+      "count": 2290
     },
     {
       "pillar": "market_trauma",
+      "count": 1459
+    },
+    {
+      "pillar": "other",
       "count": 1434
     },
     {
       "pillar": "meme_reaction",
-      "count": 129
+      "count": 132
     },
     {
       "pillar": "reply_bait",
@@ -96,23 +96,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 324
+      "count": 314
     },
     {
       "pillar": "market_trauma",
-      "count": 257
+      "count": 262
     },
     {
       "pillar": "other",
-      "count": 221
+      "count": 215
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
@@ -123,8 +123,8 @@
     {
       "pillar": "ai_news_take",
       "posts": 66,
-      "avg_likes": 0.24,
-      "avg_views": 39.7,
+      "avg_likes": 0.23,
+      "avg_views": 40.0,
       "low_sample": false
     },
     {
@@ -137,8 +137,8 @@
     {
       "pillar": "market_trauma",
       "posts": 54,
-      "avg_likes": 0.17,
-      "avg_views": 44.2,
+      "avg_likes": 0.15,
+      "avg_views": 45.4,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4839
+      "count": 4859
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 115
     },
     {
       "type": "hotake",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 11
+      "count": 10
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-22T00:38:21.881240",
-      "text": "Tesla’s margins beat Uber’s because the driver doesn’t take 30% and doesn’t sleep.\nThe marketers are pricing for the service. The engineers are pricing for the physics.",
+      "ts": "2026-08-22T04:38:32.184385",
+      "text": "@Crypto Rover calling it a \"death cross\" like it’s a prophecy.\n\nit’s just mean reversion in a range-bound market. panic selling.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-22T00:38:05.731654",
-      "text": "Saylor’s avg cost basis is $67k. you bought at $69k? that’s not a cycle setup, that’s a donation to the apostle",
+      "ts": "2026-08-22T04:36:03.576617",
+      "text": "Cramer’s indicator has a 3-minute half-life. the drop is the feature, not the bug. buy the lie.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-22T00:36:51.723236",
-      "text": "Bitwise clients bought $16.89m of $xrp. the market cap is $30b. that’s 0.05%. a rounding error in a casino.",
+      "ts": "2026-08-22T04:35:32.470312",
+      "text": "@Cryptowave Lab is asking if you’d buy or sell on a chart with no price, no timeframe, and no context.\n\nBuy at the bottom. Sell at the top. The rest is just noise to keep you scrolling.",
       "type": "reply"
     }
   ]
