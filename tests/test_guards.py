@@ -3686,3 +3686,12 @@ def test_ollama_http_tries_configured_fallback_model(monkeypatch):
     assert result.returncode == 0
     assert result.stdout == "fallback-ok"
     assert calls == ["broken-primary", "working-fallback"]
+
+
+def test_run_script_uses_env_ollama_model_for_prewarm():
+    run_sh = open("bin/run.sh").read()
+
+    assert 'source "$REPO_DIR/.env"' in run_sh
+    assert "orcarouter/Qwen3.8-27B-Uncensored" in run_sh
+    assert "OLLAMA_FALLBACK_MODELS" in run_sh
+    assert "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive" not in run_sh
