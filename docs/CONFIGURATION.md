@@ -42,15 +42,18 @@ Original content uses LLM cycles + appears on the profile feed; the cap balances
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `MAX_NEWS_PER_DAY` | `5` | Real sourced Décode insight posts. |
-| `MAX_HOTAKES_PER_DAY` | `3` | Quick takes on AI / crypto / macro stories. |
-| `MAX_BREAKOUTS_PER_DAY` | `4` | Breakout reactions to viral stories. |
-| `MAX_SPICY_PER_DAY` | `4` | Polarizing takes / questions. |
+| `MAX_ORIGINALS_PER_DAY` | `5` | Strict cap for standalone originals. Replies are unchanged. |
+| `MIN_SECONDS_BETWEEN_POSTS` | `10800` | Three-hour spacing so originals do not cannibalize each other. |
+| `MAX_NEWS_PER_DAY` | `3` | Real sourced AI-news insight posts. |
+| `MAX_HOTAKES_PER_DAY` | `2` | Higher-bar AI / human-behavior observations. |
+| `MAX_BREAKOUTS_PER_DAY` | `2` | Breakout reactions to major AI stories. |
+| `MAX_SPICY_PER_DAY` | `1` | Rationed contrarian post/question. |
 | `ORIGINAL_CONTENT_ENGINE_ENABLED` | `1` | Enable the rewards-aware standalone engine tried first in each post slot. |
-| `ORIGINAL_CONTENT_CANDIDATES_PER_SLOT` | `20` | Number of candidate standalone posts to generate and rank per slot. Clamped by the engine to 15-30. |
+| `ORIGINAL_CONTENT_CANDIDATES_PER_SLOT` | `30` | Number of candidate standalone posts to generate and rank per slot. Clamped by the engine to 15-30. |
 | `ORIGINAL_CONTENT_TOP_CONCEPTS` | `8` | Number of top scored candidates retained in `growth/original_post_decisions.json`. |
-| `MAIN_POST_MINIMUM_QUALITY_SCORE` | `75` | Minimum `post_score` required before the original engine can publish. |
-| `MAIN_POST_MINIMUM_ORIGINALITY_SCORE` | `75` | Minimum originality score required before the original engine can publish. |
+| `MAIN_POST_MINIMUM_QUALITY_SCORE` | `84` | Minimum `post_score` required before the original engine can publish. |
+| `MAIN_POST_MINIMUM_ORIGINALITY_SCORE` | `82` | Minimum originality score required before the original engine can publish. |
+| `ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE` | `1` | Reject standalone candidates that are not clearly AI-relevant. |
 | `MAIN_POST_OPERATING_MODE` | `growth_automation` | Set to `rewards_eligible` to queue standalone drafts for review instead of auto-posting. |
 | `MAIN_POST_REQUIRE_HUMAN_APPROVAL` | `0` | Force review queue for standalone drafts regardless of operating mode. |
 | `TARGET_HOME_IMPRESSIONS_90D` | `500000` | Dashboard target for Original Content Rewards progress tracking. |
@@ -177,15 +180,18 @@ ORIGINAL_CONTENT_MODEL=gpt-5.4-mini
 NEWS_POSTS_PER_CYCLE=3
 NEWS_POST_SPACING_SECONDS=120
 
-MAX_NEWS_PER_DAY=10
-MAX_HOTAKES_PER_DAY=0
-MAX_BREAKOUTS_PER_DAY=4
-MAX_SPICY_PER_DAY=4
+MAX_ORIGINALS_PER_DAY=5
+MIN_SECONDS_BETWEEN_POSTS=10800
+MAX_NEWS_PER_DAY=3
+MAX_HOTAKES_PER_DAY=2
+MAX_BREAKOUTS_PER_DAY=2
+MAX_SPICY_PER_DAY=1
 ORIGINAL_CONTENT_ENGINE_ENABLED=1
-ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=20
+ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=30
 ORIGINAL_CONTENT_TOP_CONCEPTS=8
-MAIN_POST_MINIMUM_QUALITY_SCORE=75
-MAIN_POST_MINIMUM_ORIGINALITY_SCORE=75
+MAIN_POST_MINIMUM_QUALITY_SCORE=84
+MAIN_POST_MINIMUM_ORIGINALITY_SCORE=82
+ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE=1
 MAIN_POST_OPERATING_MODE=growth_automation
 MAIN_POST_REQUIRE_HUMAN_APPROVAL=0
 TARGET_HOME_IMPRESSIONS_90D=500000
@@ -224,7 +230,7 @@ older tables on this page as historical defaults).
 | `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
 | `QUOTE_MIN_LIKES` / `FEED_SWEEP_QUOTE_MIN_LIKES` | `50` / `100` | Mid-size analytical posts are the measured winners (not mega-virals). |
 | `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
-| `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |
+| `MAX_ORIGINALS_PER_DAY` | `5` | Five original slot attempts across US hours; quality gates may publish fewer. |
 | `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
 | `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
 | `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |

@@ -68,6 +68,21 @@ Standalone posts should be written for discussion, not applause. The best
 version leaves a specific human tension open enough that readers can answer
 with a story, disagreement, or example.
 
+## Impact Mode
+
+Standalone originals now run in a lower-volume, higher-impact mode:
+
+- 5 original slot attempts per day, not an all-day posting grid.
+- 3-hour minimum spacing between standalone posts.
+- 30 candidates per slot with stricter 84/82 quality and originality floors.
+- AI relevance is mandatory for original-engine candidates.
+- Fresh source material is preferred from primary AI sources and high-quality AI reporting.
+- Replies are not reduced; they remain the discovery engine.
+
+The source registry scores stories by AI relevance, source reliability, human
+impact, novelty, urgency, and saturation. Crypto/market stories without a clear
+AI-human angle are filtered out of the original-engine opportunity feed.
+
 ## Reply-To-Post Flywheel
 
 ```text

@@ -22,6 +22,7 @@ from .config import (
     ORIGINAL_CONTENT_CANDIDATES_PER_SLOT,
     ORIGINAL_CONTENT_ENGINE_ENABLED,
     ORIGINAL_CONTENT_MODEL,
+    ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE,
     ORIGINAL_CONTENT_TOP_CONCEPTS,
     PROFILE_LLM_PROVIDER,
     _PROJECT_ROOT,
@@ -36,6 +37,14 @@ from .main_post_growth import (
     enqueue_approval_candidate,
     quality_score,
     require_human_approval,
+)
+from .source_registry import (
+    AI_TOPIC_RE,
+    human_impact_score,
+    is_ai_relevant_story,
+    news_relevance_score,
+    source_reliability,
+    source_tier,
 )
 from .twitter_client import post_tweet
 
@@ -215,10 +224,17 @@ def post_quality_score(candidate: PostCandidate, *, recent_posts: list[str] | No
     clickbait = clickbait_penalty(candidate.text)
     repetition = repetition_penalty(candidate.text, recent_posts)
     factuality = factuality_penalty(candidate)
+    source_reliability_score = source_reliability(candidate.source_url, candidate.source_title) if candidate.source_url else 50
+    human_impact = human_impact_score(" ".join([candidate.text, candidate.topic, candidate.original_angle]))
+    source_bonus = 8.0 if candidate.source_url and source_tier(candidate.source_url, candidate.source_title) <= 2 else 0.0
+    ai_news_bonus = 7.0 if candidate.source_url and is_ai_relevant_story(candidate.topic or candidate.text, candidate.source_title) else 0.0
     originality = max(0, float(base.get("originality", 0)) - generic * 0.35 - repetition * 0.45)
     insight_density = float(base.get("insight_depth", 0))
     hook_strength = float(base.get("hook", 0))
-    emotional = 85.0 if re.search(r"\b(feel|lonely|trust|relationship|attention|identity|work|worry|remember)\b", candidate.text, re.I) else 62.0
+    emotional = max(
+        float(human_impact),
+        85.0 if re.search(r"\b(feel|lonely|trust|relationship|attention|identity|work|worry|remember)\b", candidate.text, re.I) else 62.0,
+    )
     reply_potential = float(base.get("conversation_potential", 0))
     repost_potential = float(base.get("home_feed_potential", 0))
     bookmark_potential = 75.0 if insight_density >= 70 and originality >= 70 else 50.0
@@ -234,6 +250,9 @@ def post_quality_score(candidate: PostCandidate, *, recent_posts: list[str] | No
         + bookmark_potential * 0.06
         + brand_fit * 0.08
         + timeliness * 0.07
+        + source_reliability_score * 0.04
+        + source_bonus
+        + ai_news_bonus
         - generic * 0.35
         - clickbait * 0.45
         - repetition * 0.55
@@ -250,6 +269,10 @@ def post_quality_score(candidate: PostCandidate, *, recent_posts: list[str] | No
         "bookmark_potential": bookmark_potential,
         "brand_fit": brand_fit,
         "timeliness": timeliness,
+        "source_reliability": source_reliability_score,
+        "source_bonus": source_bonus,
+        "ai_news_bonus": ai_news_bonus,
+        "human_impact_score": human_impact,
         "genericness_penalty": generic,
         "clickbait_penalty": clickbait,
         "engagement_bait_penalty": 60 if _ENGAGEMENT_BAIT_RE.search(candidate.text or "") else 0,
@@ -278,6 +301,12 @@ def evaluate_candidate(candidate: PostCandidate, *, recent_posts: list[str] | No
         candidate.rejection_reasons.append("repetition")
     if candidate.scores["factuality_penalty"] >= 40:
         candidate.rejection_reasons.append("unsupported_factual_claim")
+    if ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE and not AI_TOPIC_RE.search(" ".join([text, candidate.topic, candidate.source_title])):
+        candidate.rejection_reasons.append("not_ai_relevant")
+    if candidate.source_url and not is_ai_relevant_story(candidate.topic or text, candidate.source_title):
+        candidate.rejection_reasons.append("source_not_ai_relevant")
+    if candidate.source_url and candidate.scores["source_reliability"] < 70:
+        candidate.rejection_reasons.append("low_source_reliability")
     if candidate.scores["originality"] < MAIN_POST_MINIMUM_ORIGINALITY_SCORE:
         candidate.rejection_reasons.append("low_originality")
     if candidate.scores["post_score"] < MAIN_POST_MINIMUM_QUALITY_SCORE:
@@ -287,7 +316,20 @@ def evaluate_candidate(candidate: PostCandidate, *, recent_posts: list[str] | No
 
 def _load_opportunities(limit: int = 6) -> list[dict]:
     data = _read_json(OPPORTUNITY_QUEUE_FILE, [])
-    return data[:limit] if isinstance(data, list) else []
+    if not isinstance(data, list):
+        return []
+    ranked = []
+    for item in data:
+        if not isinstance(item, dict):
+            continue
+        score = news_relevance_score(item)
+        if score <= 0:
+            continue
+        enriched = dict(item)
+        enriched["ai_therapist_news_score"] = score
+        ranked.append(enriched)
+    ranked.sort(key=lambda item: item.get("ai_therapist_news_score", 0), reverse=True)
+    return ranked[:limit]
 
 
 def _prompt_for_candidates(slot_label: str, count: int) -> str:
@@ -303,6 +345,9 @@ Strategy:
 - Replies are discovery. These are standalone originals for Home reach and Original Content Rewards.
 - The account lens is AI + psychology + human behavior: work, identity, memory, attention, relationships, loneliness, trust.
 - Never summarize news. Interpret why it matters to humans.
+- Prefer fresh AI source material from the opportunity queue. Primary sources and high-quality AI reporting beat evergreen filler.
+- At least 12 candidates should be sourced AI-news interpretations with source_url populated.
+- Every candidate must be about AI, AI products, AI infrastructure, AI companions, agents, robots, memory, work, identity, trust, or human behavior around AI.
 - Optimize for real conversation: a reader should be able to reply with a story, disagreement, or example.
 - Create replyable tension, not engagement bait. Prefer a specific unresolved human question over a generic CTA.
 - Reject generic motivational-account language.

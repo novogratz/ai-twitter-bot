@@ -540,9 +540,10 @@ def main():
         )
 
         # ============================================================
-        # POSTING SLOTS (2026-06-07 agent spec, Part 2 — Timing):
-        # one original per US-market slot — ~9:30a open, ~12:30p midday,
-        # ~4:30p close/after-hours, ~8p evening (America/New_York).
+        # POSTING SLOTS:
+        # fewer, higher-impact originals for Home timeline reach. Replies
+        # remain the high-volume discovery engine; standalone posts should be
+        # scarce enough to feel intentional.
         # Each slot tries the original surfaces in priority order and
         # stops as soon as ONE of them lands a post (chokepoint count
         # increments). The 12:30 slot tries the stunt bot FIRST so >=1
@@ -576,26 +577,14 @@ def main():
             log.info(f"[SLOT {slot_label}] No surface produced a post "
                      f"(all skipped — slot forfeited, next slot unaffected).")
 
-        log.info("Posting slots: originals ~10 tries/day across US hours "
-                 "(HUMANIZE mandate 2026-06-10: 'you got spotted as a bot' — "
-                 "24/day at machine cadence was the tell; supersedes the "
-                 "06-09 'DO MORE' grid). 12:30 leads with the GIF stunt. Cap "
-                 "MAX_ORIGINALS_PER_DAY + spacing bound the actual total.")
+        log.info("Posting slots: originals 5 tries/day across US hours. "
+                 "Quality > quota; replies remain unchanged.")
         for _slot_hour, _slot_min, _stunt_first in (
-            # DO MORE (operator 2026-06-17): ~30 slots across US hours →
-            # MAX_ORIGINALS_PER_DAY=32. V2 content quality stays; volume only
-            # (the flag was about LIKES, cooled separately). 12:30 = GIF stunt.
-            (7, 30, False), (8, 0, False), (8, 30, False), (9, 0, False),
-            (9, 30, False), (10, 0, False), (10, 30, False), (11, 0, False),
-            (11, 30, False), (12, 0, False), (12, 30, True), (13, 0, False),
-            (13, 30, False), (14, 0, False), (14, 30, False), (15, 0, False),
-            (15, 30, False), (16, 0, False), (16, 30, False), (17, 0, False),
-            (17, 30, False), (18, 0, False), (18, 30, False), (19, 0, False),
-            (19, 30, False), (20, 0, False), (20, 30, False), (21, 0, False),
-            (21, 30, False), (22, 0, False),
-            # 2026-07-19: analyzer's measured best hours are 20:00-23:00 ET
-            # — densify the proven window instead of spreading evenly.
-            (20, 15, False), (21, 15, False), (22, 30, False), (23, 0, False),
+            (8, 30, False),
+            (11, 30, False),
+            (14, 30, False),
+            (17, 30, False),
+            (20, 30, False),
         ):
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(
