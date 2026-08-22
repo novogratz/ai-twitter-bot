@@ -14,6 +14,13 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
+if [[ -f "$REPO_DIR/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$REPO_DIR/.env"
+  set +a
+fi
+
 # Make sure no other instance is already running (would race on Safari).
 if pgrep -f "python.*main.py" >/dev/null; then
   echo "[run] Another bot is already running. Stopping it first..."
@@ -29,11 +36,24 @@ fi
 # ~23GB model takes ~170s — longer than the bot's per-call timeout. Use
 # OLLAMA_MODEL from .env so a model swap auto-warms the right one.
 if command -v curl >/dev/null 2>&1; then
-  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive}"
-  echo "[run] Pre-warming $OLLAMA_MODEL_NAME (keep_alive=24h)..."
-  curl -fsS --max-time 300 http://localhost:11434/api/generate \
-    -d "{\"model\":\"$OLLAMA_MODEL_NAME\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
-    >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (model not pulled yet? ollama not running?). Bot will warm on first call."
+  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-orcarouter/Qwen3.8-27B-Uncensored}"
+  OLLAMA_PREWARM_MODELS="$OLLAMA_MODEL_NAME"
+  if [[ -n "${OLLAMA_FALLBACK_MODELS:-}" ]]; then
+    OLLAMA_PREWARM_MODELS="$OLLAMA_PREWARM_MODELS,$OLLAMA_FALLBACK_MODELS"
+  fi
+  IFS=',' read -r -a _ollama_prewarm_models <<< "$OLLAMA_PREWARM_MODELS"
+  for model_name in "${_ollama_prewarm_models[@]}"; do
+    model_name="$(echo "$model_name" | xargs)"
+    [[ -z "$model_name" ]] && continue
+    echo "[run] Pre-warming $model_name (keep_alive=24h)..."
+    if curl -fsS --max-time 300 http://localhost:11434/api/generate \
+      -d "{\"model\":\"$model_name\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
+      >/dev/null 2>&1; then
+      echo "[run] Model warm: $model_name"
+      break
+    fi
+    echo "[run] Pre-warm failed for $model_name."
+  done
 fi
 
 # Clear stale bytecode so code changes take effect immediately.
