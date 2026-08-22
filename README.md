@@ -145,7 +145,7 @@ Docs:
 
 Requirements: macOS (Safari + AppleScript), Python 3.12+, [uv](https://docs.astral.sh/uv/), [Ollama](https://ollama.com) for local generation, [Claude Code](https://claude.com/claude-code) + [gh](https://cli.github.com) for the autonomous improvement loop.
 
-Local generation is configured to try `orcarouter/Qwen3.8-27B-Uncensored` first. The current Ollama runtime can return a loader-level 500 for that split vision / Qwen3.8 GGUF, so `OLLAMA_FALLBACK_MODELS=qwen3:8b` keeps posting and replying alive while still attempting the requested model before any fallback.
+Local generation is configured to use `orcarouter/Qwen3.8-27B-Uncensored` only. If the current Ollama runtime returns a loader-level 500 for that split vision / Qwen3.8 GGUF, `bin/run.sh` refuses to start instead of silently running another model.
 
 ```bash
 git clone https://github.com/novogratz/ai-twitter-bot && cd ai-twitter-bot

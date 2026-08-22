@@ -18,7 +18,7 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 |---|---|---|
 | `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. |
 | `OLLAMA_MODEL` | `orcarouter/Qwen3.8-27B-Uncensored` | Primary local model attempted by the direct Ollama HTTP client. |
-| `OLLAMA_FALLBACK_MODELS` | `qwen3:8b` | Comma-separated local fallback models tried only when the primary Ollama model fails or returns unusable output. |
+| `OLLAMA_FALLBACK_MODELS` | empty | Comma-separated local fallback models. Keep empty for strict Qwen3.8-only operation. |
 | `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
@@ -162,9 +162,10 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 ```env
 BOT_HANDLE=TheAIShrink
 AI_CLI=ollama
-LLM_FALLBACK_CLI=codex
+LLM_FALLBACK_CLI=
+LLM_DISABLE_FALLBACK=1
 OLLAMA_MODEL=orcarouter/Qwen3.8-27B-Uncensored
-OLLAMA_FALLBACK_MODELS=qwen3:8b
+OLLAMA_FALLBACK_MODELS=
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini
