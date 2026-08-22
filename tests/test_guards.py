@@ -291,7 +291,13 @@ def test_original_engine_ranks_specific_ai_human_post_above_cliche(monkeypatch):
     monkeypatch.setattr(oce.content_guard, "is_duplicate", lambda text: False)
     ranked = oce.rank_candidates([
         PostCandidate("AI is the future. Like if you agree."),
-        PostCandidate("AI memory changes the relationship with software because it turns scattered chats into emotional continuity. The product is no longer the answer; it is being remembered."),
+        PostCandidate(
+            "AI memory changes the relationship with software because it turns scattered chats into emotional continuity. The product is no longer the answer; it is being remembered.",
+            topic="OpenAI memory and emotional attachment",
+            source_url="https://openai.com/index/memory",
+            source_title="OpenAI Blog",
+            factual_claims=["OpenAI memory"],
+        ),
     ], recent_posts=[])
 
     assert ranked[0].text.startswith("AI memory")
@@ -340,6 +346,49 @@ def test_original_engine_drops_first_comment_after_success(monkeypatch, tmp_path
 
     assert oce.run_original_content_cycle("test-slot") is True
     assert first_comments == [winner.text]
+
+
+def test_source_registry_scores_primary_ai_human_impact():
+    from src import source_registry as sr
+
+    item = {
+        "topic": "OpenAI launches memory controls for ChatGPT relationships",
+        "source": "OpenAI Blog",
+        "source_url": "https://openai.com/index/memory-controls",
+        "novelty": 90,
+        "insight_potential": 90,
+        "urgency": 90,
+        "saturation": 15,
+    }
+    assert sr.source_tier(item["source_url"], item["source"]) == 1
+    assert sr.news_relevance_score(item) >= 85
+    assert sr.news_relevance_score({"topic": "Bitcoin ETF flows jump", "source": "CoinDesk"}) == 0
+
+
+def test_original_engine_filters_opportunities_to_ai_sources(monkeypatch):
+    from src import original_content_engine as oce
+
+    monkeypatch.setattr(oce, "_read_json", lambda path, default: [
+        {"topic": "Bitcoin ETF flows jump", "source": "CoinDesk", "source_url": "https://www.coindesk.com/x"},
+        {"topic": "Anthropic updates Claude memory for teams", "source": "Anthropic", "source_url": "https://www.anthropic.com/news/memory"},
+    ])
+
+    opportunities = oce._load_opportunities(limit=5)
+
+    assert len(opportunities) == 1
+    assert "Claude memory" in opportunities[0]["topic"]
+    assert opportunities[0]["ai_therapist_news_score"] > 0
+
+
+def test_original_slots_are_fewer_and_reply_engine_unchanged():
+    src = open("main.py").read()
+    slot_block = src.split("Posting slots: originals 5 tries/day", 1)[1].split("if not args.post_only", 1)[0]
+
+    assert slot_block.count("scheduler.add_job(") == 1
+    assert slot_block.count("(8, 30") == 1
+    assert slot_block.count("(20, 30") == 1
+    assert "safe_run_direct_reply_cycle" in src
+    assert "direct_reply_job" in src
 
 
 # --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
@@ -3437,20 +3486,21 @@ def test_self_quote_recycles_own_winner_ship_gated(monkeypatch, tmp_path):
     assert len([s for s in shipped if s[0] == "ok"]) == 1, "max 1/day"
 
 
-def test_winner_format_in_prompts_and_evening_slots():
+def test_winner_format_in_prompts_and_impact_slots():
     """2026-07-19: (1) the measured 'me [verb]' winner format (92 likes /
     49K views vs 0-3 baseline) is productized into the hotake + quote
     prompts WITH rationing language (a stamped-on winner is the next bot
-    tell); (2) the post-slot grid covers the analyzer's measured best
-    hours through 23:00 ET."""
+    tell); (2) the original slot grid is now lower-volume but keeps one
+    evening Home-timeline attempt."""
     from src import hotake_agent, quote_tweet_bot
     for prompt in (hotake_agent.HOTAKE_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
         low = prompt.lower()
         assert 'me [verb]' in low, "measured winner format must be in the prompt"
         assert "1 in 5" in low, "winner format must be rationed"
     src = open("main.py").read()
-    assert "(23, 0, False)" in src and "(22, 30, False)" in src, \
-        "slot grid must cover the measured 20:00-23:00 ET window"
+    slot_block = src.split("Posting slots: originals 5 tries/day", 1)[1].split("if not args.post_only", 1)[0]
+    assert "(20, 30, False)" in slot_block
+    assert "(23, 0, False)" not in slot_block and "(22, 30, False)" not in slot_block
 
 
 def test_spicy_dial_suggestive_never_explicit():
