@@ -4,6 +4,17 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-08-22 — ORIGINAL CONTENT ENGINE + QWEN3.8 FALLBACK:** standalone
+> slots now try `src/original_content_engine.py` before legacy news/hotake
+> surfaces. It generates 15-30 concepts, semantically dedups them, scores
+> quality/originality/genericness/clickbait/repetition/factuality, and
+> publishes or queues only one winner above threshold. Replies remain the
+> discovery engine. Local Ollama now tries
+> `orcarouter/Qwen3.8-27B-Uncensored` first, with
+> `OLLAMA_FALLBACK_MODELS=qwen3:8b` because the current Ollama runtime
+> returns a loader 500 for that split vision / Qwen3.8 GGUF. Guards:
+> `test_original_engine_*`, `test_ollama_http_tries_configured_fallback_model`.
+
 > **2026-07-29 — VIOLENCE/CRUELTY GATE (operator pasted a live reply:
 > "Killing the right terrorist = higher ROI on every contract" on a PLTR
 > parent, shipped 2026-07-28 15:29):** the persona's "never cruel" rule is

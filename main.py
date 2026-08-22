@@ -94,6 +94,7 @@ from src.first_hour_babysitter import safe_run_babysit_cycle
 from src.conversion_attribution_bot import safe_run_conversion_attribution_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
 from src.main_post_growth import safe_run_main_post_growth_cycle
+from src.original_content_engine import safe_run_original_content_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -553,6 +554,7 @@ def main():
             from src import action_guard
             before = action_guard.count_today(action_guard.POST)
             surfaces = [
+                ("original-engine", lambda: safe_run_original_content_cycle(slot_label)),
                 ("news/hotake", safe_run_bot_cycle),
                 ("breakout", safe_run_breakout_cycle),
                 ("spicy", safe_run_spicy_cycle),

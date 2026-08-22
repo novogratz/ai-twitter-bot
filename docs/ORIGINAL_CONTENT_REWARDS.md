@@ -43,6 +43,37 @@ The dashboard tracks:
 - required daily and weekly average
 - scenario analysis for 2k, 5k, 10k, 20k, and 50k average impressions/post
 
+## Original Engine
+
+The standalone posting path is intentionally separate from replies.
+
+Replies remain the discovery engine. Original standalone posts are the rewards and brand engine because the Home Timeline eligibility target depends on original posts, not reply volume.
+
+Each original slot now runs this sequence before any legacy fallback:
+
+1. Generate 15-30 AI Therapist concepts.
+2. Remove semantic duplicates.
+3. Score candidates for hook strength, originality, insight density, resonance, reply/repost/bookmark potential, clarity, brand fit, and timeliness.
+4. Apply genericness, clickbait, engagement-bait, factuality, and repetition penalties.
+5. Publish or queue only the best candidate when it clears the configured quality and originality floors.
+
+Decision and provenance logs:
+
+```text
+growth/original_post_decisions.json
+growth/original_post_provenance.json
+```
+
+Important knobs:
+
+```text
+ORIGINAL_CONTENT_ENGINE_ENABLED=1
+ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=20
+ORIGINAL_CONTENT_TOP_CONCEPTS=8
+MAIN_POST_MINIMUM_QUALITY_SCORE=75
+MAIN_POST_MINIMUM_ORIGINALITY_SCORE=75
+```
+
 ## Operating Modes
 
 `MAIN_POST_OPERATING_MODE=growth_automation`

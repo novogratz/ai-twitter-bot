@@ -17,7 +17,7 @@ No X API. The entire surface is driven through **Safari + AppleScript** browser 
 
 | Layer | Bots | Role |
 |---|---|---|
-| **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Originals fire in four US-market slots (9:30a/12:30p/4:30p/8p ET, one per slot, 12:30 leads with the GIF meme); thread bots disabled per the 2026-06-07 spec |
+| **Content** | `original_content_engine`, `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Original slots now try the AI Therapist standalone engine first: 15-30 concepts, semantic dedup, quality/originality/genericness/factuality/repetition critics, then legacy news/hot-take/breakout/spicy/stunt fallbacks; thread bots disabled per the 2026-06-07 spec |
 | **Amplification** | `retweet_bot`, `quote_tweet_bot`, `hot_quote_bot`, `feed_sweeper_bot`, `boost_recycler_bot` | QRT quality lane (≤100/day, 50-like floor, screenshot-worthy or SKIP) — number-reframe + metaphor + closing question on mid-size finance/AI posts; AI-vs-Bitcoin feud bit; own winners recycled via un-RT→re-RT (4h gaps, max 4); plain RTs 0-2/day |
 | **Replies** | `direct_reply`, `reply_bot` (LLM-search, off by default since 2026-07-19 — `ENABLE_REPLY_SEARCH`), `engagement_targeting`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `debate_bot` (mentions-driven debates, 2026-07-19), `follow_engagers_bot` (follow-back farming from repliers), `self_quote_bot` (1/day self-QRT of a winner), `reply_promoter_bot` (1/day best reply becomes a post), `btc_blitz` | The core engine — unlimited throughput, freshest-first; discovery is home/search-only since 2026-06-07 (profile visits gated to own profile + `PROFILE_VISIT_ALLOWLIST`, default TheBTCTherapist); bestie blitz covers every ≤48h BTCTherapist post |
 | **Network** | `engage_bot`, `discover_bot`, `followback_bot`, `smart_unfollow_bot`, `marquee_follow_bot` | Seed-priority follows from the tiered whitelist (300 hard cap, 20/day, ≥10-min gaps, 30-day anti-churn both ways) |
@@ -72,7 +72,8 @@ Every write action funnels through `twitter_client` (`post_tweet` / `quote_tweet
 The account now treats replies and main posts as separate growth engines.
 
 - Replies remain the discovery/acquisition engine and are not broadly redesigned.
-- Main posts are optimized for Home Timeline reach, original account identity, and intellectual continuity.
+- Main posts are optimized for Home Timeline reach, original account identity, AI + psychology authority, and intellectual continuity.
+- `src/original_content_engine.py` is the first surface in each post slot. It generates many standalone candidates, rejects generic or repetitive drafts, ranks the strongest ideas, and only publishes or queues a post when it clears the configured quality floor.
 - `src/main_post_growth.py` reads existing logs and signals, then writes runtime reports under `growth/`.
 
 Generated runtime outputs:
@@ -86,6 +87,8 @@ Generated runtime outputs:
 | `growth/editorial_brief.md` | Compact brief injected into main-post prompts |
 | `growth/home_timeline_500k_dashboard.json` | 500k rolling objective dashboard with official-vs-estimated labeling |
 | `growth/main_post_approval_queue.json` | Human-review queue when rewards-oriented mode is enabled |
+| `growth/original_post_decisions.json` | Candidate-level accept/reject logs with critic reasons |
+| `growth/original_post_provenance.json` | Published original-post provenance, source URLs, angles, and candidate hashes |
 
 Run it directly:
 
@@ -101,6 +104,12 @@ Operating modes:
 ```bash
 # Current behavior: automated main-post publishing, with growth brief injected.
 MAIN_POST_OPERATING_MODE=growth_automation
+
+# Enable the multi-candidate standalone engine.
+ORIGINAL_CONTENT_ENGINE_ENABLED=1
+ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=20
+MAIN_POST_MINIMUM_QUALITY_SCORE=75
+MAIN_POST_MINIMUM_ORIGINALITY_SCORE=75
 
 # Rewards-oriented behavior: main-post drafts are queued for review.
 # Reply behavior is preserved.
@@ -135,6 +144,8 @@ Docs:
 ## Quickstart
 
 Requirements: macOS (Safari + AppleScript), Python 3.12+, [uv](https://docs.astral.sh/uv/), [Ollama](https://ollama.com) for local generation, [Claude Code](https://claude.com/claude-code) + [gh](https://cli.github.com) for the autonomous improvement loop.
+
+Local generation is configured to try `orcarouter/Qwen3.8-27B-Uncensored` first. The current Ollama runtime can return a loader-level 500 for that split vision / Qwen3.8 GGUF, so `OLLAMA_FALLBACK_MODELS=qwen3:8b` keeps posting and replying alive while still attempting the requested model before any fallback.
 
 ```bash
 git clone https://github.com/novogratz/ai-twitter-bot && cd ai-twitter-bot

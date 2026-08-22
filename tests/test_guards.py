@@ -255,6 +255,68 @@ def test_main_post_rewards_mode_blocks_auto_publish(monkeypatch):
     assert mpg.should_publish_main_posts()
 
 
+def test_original_engine_parses_json_candidates():
+    from src.original_content_engine import parse_candidate_payload
+
+    raw = json.dumps([
+        {
+            "text": "AI memory is not a feature. It is the moment software starts feeling like a relationship.",
+            "concept": "memory shift",
+            "category": "ai_human_behavior",
+            "source_url": "https://openai.com/index/example",
+        }
+    ])
+    candidates = parse_candidate_payload(raw)
+    assert len(candidates) == 1
+    assert candidates[0].category == "ai_human_behavior"
+    assert candidates[0].source_url.startswith("https://")
+
+
+def test_original_engine_penalizes_generic_motivation():
+    from src.original_content_engine import PostCandidate, evaluate_candidate
+
+    generic = evaluate_candidate(PostCandidate("This is your reminder that you are enough. Read that again."))
+    specific = evaluate_candidate(PostCandidate(
+        "AI memory will not feel strange because it remembers facts. It will feel strange because it remembers what scared you in March."
+    ))
+
+    assert generic.scores["genericness_penalty"] > specific.scores["genericness_penalty"]
+    assert "genericness" in generic.rejection_reasons
+
+
+def test_original_engine_ranks_specific_ai_human_post_above_cliche(monkeypatch):
+    from src import original_content_engine as oce
+    from src.original_content_engine import PostCandidate
+
+    monkeypatch.setattr(oce.content_guard, "is_duplicate", lambda text: False)
+    ranked = oce.rank_candidates([
+        PostCandidate("AI is the future. Like if you agree."),
+        PostCandidate("AI memory changes the relationship with software because it turns scattered chats into emotional continuity. The product is no longer the answer; it is being remembered."),
+    ], recent_posts=[])
+
+    assert ranked[0].text.startswith("AI memory")
+    assert ranked[0].accepted
+    assert not ranked[1].accepted
+
+
+def test_original_engine_does_not_publish_when_no_candidate_clears(monkeypatch, tmp_path):
+    from src import original_content_engine as oce
+
+    monkeypatch.setattr(oce, "DECISION_LOG_FILE", str(tmp_path / "decisions.json"))
+    monkeypatch.setattr(oce, "STATE_DIR", str(tmp_path))
+    monkeypatch.setattr(oce, "generate_candidates", lambda slot_label: [
+        oce.PostCandidate("Like if AI is the future."),
+        oce.PostCandidate("Read that again."),
+    ])
+    monkeypatch.setattr(oce, "get_recent_tweets", lambda hours=168: [])
+    monkeypatch.setattr(oce, "post_tweet", lambda text: (_ for _ in ()).throw(AssertionError("must not publish")))
+
+    assert oce.run_original_content_cycle("test-slot") is False
+    data = json.loads((tmp_path / "decisions.json").read_text())
+    assert data[0]["published"] is False
+    assert data[0]["winner_text"] == ""
+
+
 # --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
 
 def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
@@ -3560,3 +3622,42 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
                    "this is the killer app for AI agents"):
         ok, why = validate(benign, kind="reply")
         assert ok, f"idiom must pass: {benign!r} ({why})"
+
+
+def test_ollama_http_tries_configured_fallback_model(monkeypatch):
+    """If the requested local model fails to load, keep the cycle alive by
+    trying the configured local fallback model before escalating to provider
+    fallback or dropping the post/reply."""
+    import json
+    import urllib.error
+    import urllib.request
+    from src import llm_client
+
+    calls = []
+
+    class _Resp:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self):
+            return json.dumps({"response": "fallback-ok"}).encode("utf-8")
+
+    def _fake_urlopen(req, timeout):
+        payload = json.loads(req.data.decode("utf-8"))
+        calls.append(payload["model"])
+        if len(calls) == 1:
+            raise urllib.error.URLError("primary loader failed")
+        return _Resp()
+
+    monkeypatch.setattr(llm_client, "OLLAMA_MODEL", "broken-primary")
+    monkeypatch.setattr(llm_client, "OLLAMA_FALLBACK_MODELS", ["working-fallback"])
+    monkeypatch.setattr(urllib.request, "urlopen", _fake_urlopen)
+
+    result = llm_client._run_ollama_http("hello", label="OLLAMA_TEST", timeout=1)
+
+    assert result.returncode == 0
+    assert result.stdout == "fallback-ok"
+    assert calls == ["broken-primary", "working-fallback"]

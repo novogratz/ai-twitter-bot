@@ -33,7 +33,7 @@ main.py
         Reddit ───┘  └────────────┬────────────┘
         X /home  ────────────────┘
                                   ▼
-        ┌─── prompt assembly (agent.py / hotake_agent.py / etc.) ───┐
+        ┌─── prompt assembly (original_content_engine.py / agents) ──┐
         │                                                           │
         │   1. lang_directive (en|fr) ── from lang_mode.py           │
         │   2. core_identity ── from core_identity.md                │
@@ -50,7 +50,7 @@ main.py
                      ▼
               run_llm() → configured CLI provider
                      ▼
-              humanizer + strip_agent_preamble + scrub_metadata_leaks
+              multi-candidate ranking + critics + humanizer/scrubbers
                      ▼
               twitter_client.post_tweet
                      ▼
@@ -71,11 +71,13 @@ main.py
 
 63 modules. Grouped by responsibility.
 
-### Content generation (2026-06-07: slot model — originals are the conversion layer)
+### Content generation (standalone originals are the monetization layer)
 
 | Module | Cadence | Output |
 |---|---|---|
-| `run_post_slot` (main.py) | cron 09:30 / 12:30 / 16:30 / 20:00 NY ±15min jitter | ONE original per US-market slot — tries news/hotake → breakout → spicy → stunt, stops on the first landed post; 12:30 leads with the GIF stunt |
+| `run_post_slot` (main.py) | cron slots across US hours ±15min jitter | ONE original per slot — tries `original_content_engine` first, then news/hotake → breakout → spicy → stunt, stops on the first landed post |
+| `original_content_engine.py` | inside slots | Generates 15-30 standalone candidates, removes semantic duplicates, scores quality/originality/genericness/repetition/factuality, publishes only one winner above threshold |
+| `main_post_growth.py` | startup + every 2h | Builds separate original/reply analytics, opportunity queue, rewards dashboard, editorial brief, approval queue, experiments |
 | `agent.py` / `hotake_agent.py` | inside slots | News post / hot take (therapist-framed, no URL in body) |
 | `breakout_bot.py` | inside slots | Fast-trend reaction post |
 | `spicy_bot.py` | inside slots | Polarising take; QUESTION reply-bait capped 4/week |
@@ -150,6 +152,8 @@ main.py
 
 | Module | Cadence | Behavior |
 |---|---|---|
+| `original_content_engine.py` | every post slot attempt | Writes candidate decisions to `growth/original_post_decisions.json` and provenance to `growth/original_post_provenance.json` |
+| `main_post_growth.py` | startup + every 2h | Writes `growth/main_post_analytics.json`, `growth/reply_analytics.json`, `growth/opportunity_queue.json`, `growth/home_timeline_500k_dashboard.json` |
 | `performance.py` | every 2h | Scrape own profile metrics, write `performance_log.json` + `learnings.json`, compute pattern bandit |
 | `daily_digest.py` | hourly (idempotent) | Append yesterday's rollup to `daily_digest.md` |
 | `follower_tracker_bot.py` | every 30 min | Scrape /CryptoAIDecode header, log `follower_history.json` |
