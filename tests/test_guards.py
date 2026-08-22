@@ -3693,5 +3693,7 @@ def test_run_script_uses_env_ollama_model_for_prewarm():
 
     assert 'source "$REPO_DIR/.env"' in run_sh
     assert "orcarouter/Qwen3.8-27B-Uncensored" in run_sh
-    assert "OLLAMA_FALLBACK_MODELS" in run_sh
+    assert "Refusing to start with any other model" in run_sh
+    assert "OLLAMA_FALLBACK_MODELS" not in run_sh
+    assert "qwen3:8b" not in run_sh
     assert "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive" not in run_sh

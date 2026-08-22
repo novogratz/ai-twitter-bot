@@ -37,23 +37,14 @@ fi
 # OLLAMA_MODEL from .env so a model swap auto-warms the right one.
 if command -v curl >/dev/null 2>&1; then
   OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-orcarouter/Qwen3.8-27B-Uncensored}"
-  OLLAMA_PREWARM_MODELS="$OLLAMA_MODEL_NAME"
-  if [[ -n "${OLLAMA_FALLBACK_MODELS:-}" ]]; then
-    OLLAMA_PREWARM_MODELS="$OLLAMA_PREWARM_MODELS,$OLLAMA_FALLBACK_MODELS"
+  echo "[run] Pre-warming $OLLAMA_MODEL_NAME (keep_alive=24h)..."
+  if ! curl -fsS --max-time 300 http://localhost:11434/api/generate \
+    -d "{\"model\":\"$OLLAMA_MODEL_NAME\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
+    >/dev/null 2>&1; then
+    echo "[run] Pre-warm failed for $OLLAMA_MODEL_NAME. Refusing to start with any other model."
+    exit 1
   fi
-  IFS=',' read -r -a _ollama_prewarm_models <<< "$OLLAMA_PREWARM_MODELS"
-  for model_name in "${_ollama_prewarm_models[@]}"; do
-    model_name="$(echo "$model_name" | xargs)"
-    [[ -z "$model_name" ]] && continue
-    echo "[run] Pre-warming $model_name (keep_alive=24h)..."
-    if curl -fsS --max-time 300 http://localhost:11434/api/generate \
-      -d "{\"model\":\"$model_name\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
-      >/dev/null 2>&1; then
-      echo "[run] Model warm: $model_name"
-      break
-    fi
-    echo "[run] Pre-warm failed for $model_name."
-  done
+  echo "[run] Model warm: $OLLAMA_MODEL_NAME"
 fi
 
 # Clear stale bytecode so code changes take effect immediately.
