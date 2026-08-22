@@ -317,6 +317,31 @@ def test_original_engine_does_not_publish_when_no_candidate_clears(monkeypatch, 
     assert data[0]["winner_text"] == ""
 
 
+def test_original_engine_drops_first_comment_after_success(monkeypatch, tmp_path):
+    from src import first_comment
+    from src import original_content_engine as oce
+
+    winner = oce.PostCandidate(
+        "AI memory changes software because it turns scattered chats into emotional continuity.",
+        category="ai_human_behavior",
+    )
+    winner.scores = {"post_score": 91, "originality": 88}
+
+    first_comments = []
+    monkeypatch.setattr(oce, "DECISION_LOG_FILE", str(tmp_path / "decisions.json"))
+    monkeypatch.setattr(oce, "PROVENANCE_FILE", str(tmp_path / "provenance.json"))
+    monkeypatch.setattr(oce, "generate_candidates", lambda slot_label: [winner])
+    monkeypatch.setattr(oce, "rank_candidates", lambda candidates, recent_posts=None: [winner])
+    monkeypatch.setattr(oce, "get_recent_tweets", lambda hours=168: [])
+    monkeypatch.setattr(oce, "require_human_approval", lambda: False)
+    monkeypatch.setattr(oce, "post_tweet", lambda text: True)
+    monkeypatch.setattr(oce, "log_post", lambda *a, **k: None)
+    monkeypatch.setattr(first_comment, "post_first_comment", lambda text: first_comments.append(text) or True)
+
+    assert oce.run_original_content_cycle("test-slot") is True
+    assert first_comments == [winner.text]
+
+
 # --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
 
 def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
