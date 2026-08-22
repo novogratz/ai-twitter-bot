@@ -2135,7 +2135,9 @@
     "MintPanda",
     "MaximeDutriaux",
     "BenoitGautier_",
-    "LudovicBouchard"
+    "LudovicBouchard",
+    "Borodale",
+    "Oussama_B"
   ],
   "en": [
     "Chubby",
@@ -15404,6 +15406,16 @@
     {
       "lang": "fr",
       "handle": "LudovicBouchard",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Borodale",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Oussama_B",
       "added": "2026-08-22"
     }
   ]

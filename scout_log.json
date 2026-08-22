@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-04T07:36:38.285755",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Gorlice",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'anti-LinkedIn par excellence, d\u00e9crypte la finance sans jargon, followers engag\u00e9s mais pas hypnotis\u00e9s."
-      },
-      {
-        "handle": "Lililililil",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Le roi du Qu\u00e9bec pour les actions US, style direct, communaut\u00e9 loyale."
-      },
-      {
-        "handle": "PierreBoujut",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Expert CBDC et monnaie, tweets rares mais incisifs, z\u00e9ro 'buy now'."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse boursi\u00e8re fran\u00e7aise 'anti-fluff', l'IA tech locale et les traders qu\u00e9b\u00e9cois qui savent parler."
-  },
-  {
     "ts": "2026-08-04T09:36:44.081412",
     "raw_count": 10,
     "kept_count": 8,
@@ -8487,5 +8456,29 @@
       }
     ],
     "summary": "Un mix solide entre les g\u00e9ants fran\u00e7ais (Mistral) et les perles cach\u00e9es du Qu\u00e9bec IA qui ne font pas de bruit pour rien. c\u00f4t\u00e9 crypto, on garde les am\u00e9ricains francophones qui ont de la substance et pas juste des \u00e9mojis."
+  },
+  {
+    "ts": "2026-08-22T16:13:34.699247",
+    "raw_count": 3,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Borodale",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'un des rares analystes crypto FR qui a l'audace de twitter sans \u00eatre un vendeur de r\u00eave. Sa prose est s\u00e8che, ses analyses sont pertinentes (quand il ne se planter pas compl\u00e8tement), et son engagement d\u00e9passe largement la moyenne des comptes 'VIP'. Il vit dans sa bulle de donn\u00e9es comme on respire dans l'eau."
+      },
+      {
+        "handle": "Oussama_B",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le pont entre le chaos am\u00e9ricain et la r\u00e9alit\u00e9 fran\u00e7aise. Ses posts sur l'IA sont souvent percutants (il a cette piquante ironie qui fait rire), ses observations sont pointues et il \u00e9vite (presque) toujours de tomber dans le pi\u00e8ge du 'l'IA va manger notre d\u00eener'. C'est un observateur aguerri, pas une victime."
+      }
+    ],
+    "summary": "J'ai gratt\u00e9 la surface pour \u00e9viter les escrocs en tailleur et trouv\u00e9 trois mecs qui twittent avec de la substance. Borodale a le flow crypto (quand il ne se noie pas dans son propre hype), Ait Kaci a l'\u00e9l\u00e9gance fintech qu\u00e9b\u00e9coise, Oussama_B apporte l'\u00e9lectricit\u00e9 IA depuis les USA sans \u00eatre compl\u00e8tement d\u00e9cal\u00e9."
   }
 ]
