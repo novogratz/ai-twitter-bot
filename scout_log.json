@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-03T19:36:41.394441",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TradingViewFR",
-        "region": "usa",
-        "niche": "trading",
-        "followers": 150000,
-        "reason": "L'outil qui devient un m\u00e9dia. Des setups techniques clairs et des webinaires en fran\u00e7ais pour les traders francophones \u00e0 l'\u00e9tranger."
-      },
-      {
-        "handle": "CryptoFrancais",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Pour ceux qui veulent comprendre le Bitcoin sans avoir l'impression de regarder un manuel de finance."
-      },
-      {
-        "handle": "CryptoFRance",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "La diaspora francophone aux USA qui garde le contact. Analyses r\u00e9guli\u00e8res sans le jargon incompr\u00e9hensible."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui font du bruit pour de vrai. Mistral domine l'IA, Boursier tient le haut de la bourse, et le Qu\u00e9bec a une sc\u00e8ne crypto francophone plus vivante qu'on ne le pense."
-  },
-  {
     "ts": "2026-08-03T21:36:47.897824",
     "raw_count": 5,
     "kept_count": 3,
@@ -8501,5 +8470,22 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur les pros de l'info brute : des traders qui tweetent des charts, des funders qui tweetent des mod\u00e8les et des journalistes qui tweetent le fond. Z\u00e9ro 'guru', 100% expertise."
+  },
+  {
+    "ts": "2026-08-21T20:39:56.556045",
+    "raw_count": 5,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentBoulay",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fintech et n\u00e9o-banques, il tweete sans les clich\u00e9s des infographiques boursiers sur Instagram."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la cr\u00e8me des comptes IA et crypto francophones : Mistral domine le panier, Dumas prouve le pouvoir viral de la niche, et les comptes Qu\u00e9b\u00e9cois/Fintech apportent une diversit\u00e9 g\u00e9ographique rare."
   }
 ]

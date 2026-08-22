@@ -2109,7 +2109,8 @@
     "BenjaminMazaux",
     "PierreDard",
     "NaderDaboub",
-    "JulienVernier"
+    "JulienVernier",
+    "VincentBoulay"
   ],
   "en": [
     "Chubby",
@@ -2540,7 +2541,8 @@
     "Pingu",
     "EKO",
     "IGN",
-    "DCinvestor"
+    "DCinvestor",
+    "Wealthmatica"
   ],
   "history": [
     {
@@ -15236,6 +15238,16 @@
     {
       "lang": "fr",
       "handle": "JulienVernier",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Wealthmatica",
+      "added": "2026-08-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoulay",
       "added": "2026-08-21"
     }
   ]
