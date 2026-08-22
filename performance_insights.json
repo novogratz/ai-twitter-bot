@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-21T20:39:28.224234",
-  "window_7d_actions": 5358,
-  "window_24h_actions": 850,
+  "generated_at": "2026-08-22T00:39:27.133528",
+  "window_7d_actions": 5396,
+  "window_24h_actions": 847,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5357
+      "count": 5395
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5357
+      "count": 5395
     }
   ],
   "best_hours_utc": [
@@ -47,38 +47,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2395
+      "count": 2423
     },
     {
       "topic": "IA",
-      "count": 2067
+      "count": 2063
     },
     {
       "topic": "Crypto",
-      "count": 677
+      "count": 690
     },
     {
       "topic": "Bourse",
-      "count": 460
+      "count": 465
     },
     {
       "topic": "Spatial",
-      "count": 109
+      "count": 106
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2288
+      "count": 2293
     },
     {
       "pillar": "other",
-      "count": 1422
+      "count": 1437
     },
     {
       "pillar": "market_trauma",
-      "count": 1419
+      "count": 1434
     },
     {
       "pillar": "meme_reaction",
@@ -86,7 +86,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 73
+      "count": 76
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,23 +96,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 334
+      "count": 324
     },
     {
       "pillar": "market_trauma",
-      "count": 255
+      "count": 257
     },
     {
       "pillar": "other",
-      "count": 217
+      "count": 221
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
@@ -122,30 +122,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 67,
-      "avg_likes": 0.27,
-      "avg_views": 40.5,
+      "posts": 66,
+      "avg_likes": 0.24,
+      "avg_views": 39.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.21,
-      "avg_views": 42.9,
+      "posts": 72,
+      "avg_likes": 0.19,
+      "avg_views": 42.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 57,
-      "avg_likes": 0.16,
-      "avg_views": 46.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 43.0,
+      "posts": 54,
+      "avg_likes": 0.17,
+      "avg_views": 44.2,
       "low_sample": false
     },
     {
@@ -154,16 +147,23 @@
       "avg_likes": 0.0,
       "avg_views": 32.8,
       "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 2,
+      "avg_likes": 0.0,
+      "avg_views": 47.0,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4806
+      "count": 4839
     },
     {
       "type": "quote",
-      "count": 340
+      "count": 344
     },
     {
       "type": "quote_gif",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 10
+      "count": 11
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-21T20:38:03.144185",
-      "text": "8 million homes need power. AI needs it now.\nGrid operators are realizing the future doesn't wait for their permits.\nGridlock = exit liquidity.",
+      "ts": "2026-08-22T00:38:21.881240",
+      "text": "Tesla’s margins beat Uber’s because the driver doesn’t take 30% and doesn’t sleep.\nThe marketers are pricing for the service. The engineers are pricing for the physics.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T20:36:06.146309",
-      "text": "Meta’s 30MW to 100MW jump. The grid is the bottleneck no one priced in. we’re building data centers in the dark.",
+      "ts": "2026-08-22T00:38:05.731654",
+      "text": "Saylor’s avg cost basis is $67k. you bought at $69k? that’s not a cycle setup, that’s a donation to the apostle",
       "type": "reply"
     },
     {
-      "ts": "2026-08-21T20:35:49.852159",
-      "text": "Anthropic raised $4.7B at a $100B valuation to build a better middle manager. deathclaude won't enslave humanity, it'll just bill by the minute.",
+      "ts": "2026-08-22T00:36:51.723236",
+      "text": "Bitwise clients bought $16.89m of $xrp. the market cap is $30b. that’s 0.05%. a rounding error in a casino.",
       "type": "reply"
     }
   ]
