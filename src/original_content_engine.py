@@ -314,7 +314,7 @@ def evaluate_candidate(candidate: PostCandidate, *, recent_posts: list[str] | No
     return candidate
 
 
-def _load_opportunities(limit: int = 6) -> list[dict]:
+def _load_opportunities(limit: int = 10) -> list[dict]:
     data = _read_json(OPPORTUNITY_QUEUE_FILE, [])
     if not isinstance(data, list):
         return []
@@ -334,6 +334,7 @@ def _load_opportunities(limit: int = 6) -> list[dict]:
 
 def _prompt_for_candidates(slot_label: str, count: int) -> str:
     opportunities = _load_opportunities()
+    startup_priority = "STARTUP IMPACT SLOT: pick the hottest sourced AI development available and make the post feel immediate." if "startup" in slot_label.lower() else ""
     return f"""
 You are writing standalone Home-timeline posts for @TheAIShrink, the AI Therapist.
 
@@ -343,12 +344,14 @@ text, concept, category, topic, source_url, source_title, original_angle, factua
 
 Strategy:
 - Replies are discovery. These are standalone originals for Home reach and Original Content Rewards.
+- {startup_priority}
 - The account lens is AI + psychology + human behavior: work, identity, memory, attention, relationships, loneliness, trust.
 - Never summarize news. Interpret why it matters to humans.
-- Prefer fresh AI source material from the opportunity queue. Primary sources and high-quality AI reporting beat evergreen filler.
-- At least 12 candidates should be sourced AI-news interpretations with source_url populated.
+- Prefer the hottest fresh AI source material from the opportunity queue. Primary sources and high-quality AI reporting beat evergreen filler.
+- At least 20 candidates should be sourced AI-news interpretations with source_url populated when enough opportunities exist.
 - Every candidate must be about AI, AI products, AI infrastructure, AI companions, agents, robots, memory, work, identity, trust, or human behavior around AI.
 - Optimize for real conversation: a reader should be able to reply with a story, disagreement, or example.
+- Favor hot-topic AI posts that could plausibly make a verified user stop scrolling: model launches, agents, memory, AI companions, robots, deepfakes, education, jobs, identity, trust, regulation that hits normal people.
 - Create replyable tension, not engagement bait. Prefer a specific unresolved human question over a generic CTA.
 - Reject generic motivational-account language.
 - Avoid engagement bait, diagnosis, therapy claims, medical advice, and recycled quotes.
