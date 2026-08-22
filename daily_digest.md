@@ -1502,3 +1502,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 31 views: $NVDA is selling AI War Bonds. You’re buying a treasury note; the market buys a GPU. The patriotism 
   - 2 likes / 37 views: space is the new real estate, and @POTUS is finally selling the lots instead of just building the fe
   - 1 likes / 24 views: 600 TWh requires ~400 new reactors. @elonmusk’s 70 GW FSD target needs just 1.3. Nuclear is the new 
+
+## 2026-08-21
+
+**Activity** — total actions: 842
+  - by type: reply=756, quote=54, quote_gif=17, post=8, hotake=5, retweet=2
+  - top sources: SEARCH-HOT=480, FEED-SWEEP-FEED=137, FEED-SWEEP-FOLLOWING=97, QUOTE=43, GIF=21, VIP=21, DEBATE=17, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=19, @Graphseo=15, @Polymarket=12, @electnomics=10, @FirstSquawk=8
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 3 likes / 73 views: $KAITO $MEXC me refreshing my wallet like it’s a slot machine that just dropped my student loans
+  - 1 likes / 31 views: me at 3am refreshing $NVDA charts like it’s my bedtime story
+  - 1 likes / 31 views: Chinese labs looking at the compute cap like it’s a strict bedtime. Turns out, forcing them to read 
