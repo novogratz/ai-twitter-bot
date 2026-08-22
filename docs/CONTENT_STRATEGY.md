@@ -70,13 +70,15 @@ with a story, disagreement, or example.
 
 ## Impact Mode
 
-Standalone originals now run in a lower-volume, higher-impact mode:
+Standalone originals now run in hot-AI impact mode:
 
-- 5 original slot attempts per day, not an all-day posting grid.
-- 3-hour minimum spacing between standalone posts.
+- One startup impact-original attempt after the source/opportunity queue is refreshed.
+- 10 original slot attempts per day across US waking hours, with quality gates expected to publish roughly 7-10 strong posts.
+- 80-minute minimum spacing between standalone posts.
 - 30 candidates per slot with stricter 84/82 quality and originality floors.
 - AI relevance is mandatory for original-engine candidates.
 - Fresh source material is preferred from primary AI sources and high-quality AI reporting.
+- Legacy hot-take, breakout, spicy, and stunt surfaces no longer fill standalone post slots; the original engine owns that inventory.
 - Replies are not reduced; they remain the discovery engine.
 
 The source registry scores stories by AI relevance, source reliability, human

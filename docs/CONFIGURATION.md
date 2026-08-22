@@ -42,13 +42,14 @@ Original content uses LLM cycles + appears on the profile feed; the cap balances
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `MAX_ORIGINALS_PER_DAY` | `5` | Strict cap for standalone originals. Replies are unchanged. |
-| `MIN_SECONDS_BETWEEN_POSTS` | `10800` | Three-hour spacing so originals do not cannibalize each other. |
+| `MAX_ORIGINALS_PER_DAY` | `10` | Strict cap for standalone originals. Scheduled slots target 7-10 strong AI posts/day; replies are unchanged. |
+| `MIN_SECONDS_BETWEEN_POSTS` | `4800` | 80-minute spacing so originals do not burst or cannibalize each other. |
 | `MAX_NEWS_PER_DAY` | `3` | Real sourced AI-news insight posts. |
 | `MAX_HOTAKES_PER_DAY` | `2` | Higher-bar AI / human-behavior observations. |
 | `MAX_BREAKOUTS_PER_DAY` | `2` | Breakout reactions to major AI stories. |
 | `MAX_SPICY_PER_DAY` | `1` | Rationed contrarian post/question. |
 | `ORIGINAL_CONTENT_ENGINE_ENABLED` | `1` | Enable the rewards-aware standalone engine tried first in each post slot. |
+| `STARTUP_IMPACT_ORIGINAL_ENABLED` | `1` | Try one source-aware hot-AI original during startup instead of waiting for the next slot. |
 | `ORIGINAL_CONTENT_CANDIDATES_PER_SLOT` | `30` | Number of candidate standalone posts to generate and rank per slot. Clamped by the engine to 15-30. |
 | `ORIGINAL_CONTENT_TOP_CONCEPTS` | `8` | Number of top scored candidates retained in `growth/original_post_decisions.json`. |
 | `MAIN_POST_MINIMUM_QUALITY_SCORE` | `84` | Minimum `post_score` required before the original engine can publish. |
@@ -180,13 +181,14 @@ ORIGINAL_CONTENT_MODEL=gpt-5.4-mini
 NEWS_POSTS_PER_CYCLE=3
 NEWS_POST_SPACING_SECONDS=120
 
-MAX_ORIGINALS_PER_DAY=5
-MIN_SECONDS_BETWEEN_POSTS=10800
+MAX_ORIGINALS_PER_DAY=10
+MIN_SECONDS_BETWEEN_POSTS=4800
 MAX_NEWS_PER_DAY=3
 MAX_HOTAKES_PER_DAY=2
 MAX_BREAKOUTS_PER_DAY=2
 MAX_SPICY_PER_DAY=1
 ORIGINAL_CONTENT_ENGINE_ENABLED=1
+STARTUP_IMPACT_ORIGINAL_ENABLED=1
 ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=30
 ORIGINAL_CONTENT_TOP_CONCEPTS=8
 MAIN_POST_MINIMUM_QUALITY_SCORE=84
@@ -230,7 +232,7 @@ older tables on this page as historical defaults).
 | `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
 | `QUOTE_MIN_LIKES` / `FEED_SWEEP_QUOTE_MIN_LIKES` | `50` / `100` | Mid-size analytical posts are the measured winners (not mega-virals). |
 | `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
-| `MAX_ORIGINALS_PER_DAY` | `5` | Five original slot attempts across US hours; quality gates may publish fewer. |
+| `MAX_ORIGINALS_PER_DAY` | `10` | Ten hot-AI original attempts across US hours; quality gates may publish fewer. |
 | `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
 | `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
 | `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |

@@ -126,14 +126,15 @@ MAIN_POST_REQUIRE_HUMAN_APPROVAL = os.environ.get("MAIN_POST_REQUIRE_HUMAN_APPRO
 TARGET_HOME_IMPRESSIONS_90D = int(os.environ.get("TARGET_HOME_IMPRESSIONS_90D", "500000"))
 MAIN_POST_MINIMUM_QUALITY_SCORE = int(os.environ.get("MAIN_POST_MINIMUM_QUALITY_SCORE", "84"))
 MAIN_POST_MINIMUM_ORIGINALITY_SCORE = int(os.environ.get("MAIN_POST_MINIMUM_ORIGINALITY_SCORE", "82"))
-MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY = int(os.environ.get("MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY", "5"))
+MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY = int(os.environ.get("MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY", "10"))
 REPLY_TO_POST_ENABLED = os.environ.get("REPLY_TO_POST_ENABLED", "1") == "1"
 REPLY_TO_POST_TRIGGER_MULTIPLE = float(os.environ.get("REPLY_TO_POST_TRIGGER_MULTIPLE", "2.0"))
 ORIGINAL_CONTENT_ENGINE_ENABLED = os.environ.get("ORIGINAL_CONTENT_ENGINE_ENABLED", "1") == "1"
-ORIGINAL_CONTENT_CANDIDATES_PER_SLOT = int(os.environ.get("ORIGINAL_CONTENT_CANDIDATES_PER_SLOT", "20"))
+ORIGINAL_CONTENT_CANDIDATES_PER_SLOT = int(os.environ.get("ORIGINAL_CONTENT_CANDIDATES_PER_SLOT", "30"))
 ORIGINAL_CONTENT_TOP_CONCEPTS = int(os.environ.get("ORIGINAL_CONTENT_TOP_CONCEPTS", "8"))
 ORIGINAL_CONTENT_MODEL = os.environ.get("ORIGINAL_CONTENT_MODEL", HOTAKE_MODEL)
 ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE = os.environ.get("ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE", "1") == "1"
+STARTUP_IMPACT_ORIGINAL_ENABLED = os.environ.get("STARTUP_IMPACT_ORIGINAL_ENABLED", "1") == "1"
 
 
 # ---------------------------------------------------------------------------
@@ -160,8 +161,8 @@ DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 # 2026-06-09 (operator: "I don't see enough posts being created"): originals
 # 4→10/day across 8 slots (was 4). More shots on the profile = more chances
 # to land a like-winning post. Spacing dropped to ~75 min so 8 slots fit.
-MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "5"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(3 * 60 * 60)))
+MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "10"))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(80 * 60)))
 POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 
 # Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed

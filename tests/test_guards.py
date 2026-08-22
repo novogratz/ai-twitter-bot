@@ -380,13 +380,23 @@ def test_original_engine_filters_opportunities_to_ai_sources(monkeypatch):
     assert opportunities[0]["ai_therapist_news_score"] > 0
 
 
-def test_original_slots_are_fewer_and_reply_engine_unchanged():
+def test_original_slots_are_hot_ai_only_and_reply_engine_unchanged():
     src = open("main.py").read()
-    slot_block = src.split("Posting slots: originals 5 tries/day", 1)[1].split("if not args.post_only", 1)[0]
+    slot_block = src.split("Posting slots: 10 AI-impact original attempts/day", 1)[1].split("if not args.post_only", 1)[0]
+    startup_original_block = src.split("Startup impact original", 1)[1].split("# Curator first", 1)[0]
 
     assert slot_block.count("scheduler.add_job(") == 1
-    assert slot_block.count("(8, 30") == 1
-    assert slot_block.count("(20, 30") == 1
+    for scheduled in ("(8, 5)", "(9, 30)", "(11, 0)", "(12, 30)", "(14, 0)", "(15, 30)", "(17, 0)", "(18, 30)", "(20, 0)", "(21, 30)"):
+        assert scheduled in slot_block
+    assert "safe_run_bot_cycle" not in slot_block
+    assert "safe_run_breakout_cycle" not in slot_block
+    assert "safe_run_spicy_cycle" not in slot_block
+    assert "safe_run_viral_stunt_cycle" not in slot_block
+    assert "run_original_content_cycle(\"startup-impact-ai\")" in src
+    assert "safe_run_rss_signal_cycle()" in startup_original_block
+    assert "safe_run_signal_cycle()" in startup_original_block
+    assert "safe_run_main_post_growth_cycle()" in startup_original_block
+    assert "safe_run_bot_cycle" not in startup_original_block
     assert "safe_run_direct_reply_cycle" in src
     assert "direct_reply_job" in src
 
@@ -2941,13 +2951,14 @@ def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
 def test_engine_health_slots_elapsed_clamp():
     """2026-06-10 12:34 false alarm: 'hotake collapsed: 4 today vs ~14 by
     this hour' — the ~14 came from interval-era days; under the slot regime
-    only ~6.5 slot tries had been offered by 12:34, so 4 originals was
-    HEALTHY. The originals baseline must clamp to slots elapsed today."""
+    only the scheduled slot tries had been offered by 12:34, so originals
+    should be judged against the active grid rather than old interval-era
+    days. The originals baseline must clamp to slots elapsed today."""
     from src import engine_health_bot as ehb
 
-    assert ehb._slots_elapsed(8.5) == 0.0, "no slots before the window opens"
+    assert ehb._slots_elapsed(8.0) == 0.0, "no slots before the window opens"
     mid = ehb._slots_elapsed(12.5)
-    assert 5.5 <= mid <= 7.5, f"~6.5 tries by 12:30, got {mid}"
+    assert 3.0 <= mid <= 4.0, f"~3.4 tries by 12:30, got {mid}"
     assert ehb._slots_elapsed(23) == ehb.SLOT_TRIES_PER_DAY, "full grid after close"
     # And originals is the watched surface (post+hotake folded together —
     # the slot machinery decides which fills a slot, per-surface is noise).
@@ -3490,17 +3501,17 @@ def test_winner_format_in_prompts_and_impact_slots():
     """2026-07-19: (1) the measured 'me [verb]' winner format (92 likes /
     49K views vs 0-3 baseline) is productized into the hotake + quote
     prompts WITH rationing language (a stamped-on winner is the next bot
-    tell); (2) the original slot grid is now lower-volume but keeps one
-    evening Home-timeline attempt."""
+    tell); (2) the original slot grid now targets 7-10 hot-AI Home-timeline
+    attempts/day and keeps evening attempts."""
     from src import hotake_agent, quote_tweet_bot
     for prompt in (hotake_agent.HOTAKE_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
         low = prompt.lower()
         assert 'me [verb]' in low, "measured winner format must be in the prompt"
         assert "1 in 5" in low, "winner format must be rationed"
     src = open("main.py").read()
-    slot_block = src.split("Posting slots: originals 5 tries/day", 1)[1].split("if not args.post_only", 1)[0]
-    assert "(20, 30, False)" in slot_block
-    assert "(23, 0, False)" not in slot_block and "(22, 30, False)" not in slot_block
+    slot_block = src.split("Posting slots: 10 AI-impact original attempts/day", 1)[1].split("if not args.post_only", 1)[0]
+    assert "(20, 0)" in slot_block and "(21, 30)" in slot_block
+    assert "(23, 0)" not in slot_block and "(22, 30)" not in slot_block
 
 
 def test_spicy_dial_suggestive_never_explicit():

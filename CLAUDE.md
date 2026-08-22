@@ -17,12 +17,12 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > Guards:
 > `test_original_engine_*`, `test_ollama_http_tries_configured_fallback_model`.
 
-> **2026-08-22 — ORIGINAL IMPACT MODE:** standalone posts are now
-> lower-volume and higher-impact: 5 original slot attempts/day, 3-hour
-> spacing, 30 candidates/slot, 84 quality floor, 82 originality floor,
-> mandatory AI relevance, and source registry scoring for primary AI sources
-> plus high-quality AI reporting. Replies are unchanged and remain the
-> discovery engine. Guard: `test_original_slots_are_fewer_and_reply_engine_unchanged`.
+> **2026-08-22 — HOT AI ORIGINALS MODE:** standalone posts are now
+> source-aware AI impact posts only: one startup impact attempt, 10 scheduled
+> slot attempts/day, 80-minute spacing, 30 candidates/slot, 84 quality floor,
+> 82 originality floor, mandatory AI relevance, and source registry scoring for
+> primary AI sources plus high-quality AI reporting. Replies are unchanged and
+> remain the discovery engine. Guard: `test_original_slots_are_hot_ai_only_and_reply_engine_unchanged`.
 
 > **2026-07-29 — VIOLENCE/CRUELTY GATE (operator pasted a live reply:
 > "Killing the right terrorist = higher ROI on every contract" on a PLTR
