@@ -2153,7 +2153,8 @@
     "CryptoQueenFR",
     "CryptoNick",
     "KryptosQuebec",
-    "IA_Sybil"
+    "IA_Sybil",
+    "Lambert_Lacroix"
   ],
   "en": [
     "Chubby",
@@ -2589,7 +2590,8 @@
     "Jaxon",
     "TECA",
     "InfoGram",
-    "Ayzaa"
+    "Ayzaa",
+    "mert"
   ],
   "history": [
     {
@@ -15530,6 +15532,16 @@
     {
       "lang": "fr",
       "handle": "IA_Sybil",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "mert",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lambert_Lacroix",
       "added": "2026-08-23"
     }
   ]

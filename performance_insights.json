@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-23T10:10:11.352781",
-  "window_7d_actions": 5253,
-  "window_24h_actions": 418,
+  "generated_at": "2026-08-23T14:10:11.049260",
+  "window_7d_actions": 5213,
+  "window_24h_actions": 424,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5252
+      "count": 5212
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5252
+      "count": 5212
     }
   ],
   "best_hours_utc": [
@@ -33,11 +33,11 @@
     },
     {
       "hour": 10,
-      "actions": 246
+      "actions": 239
     },
     {
       "hour": 12,
-      "actions": 244
+      "actions": 238
     },
     {
       "hour": 0,
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2412
+      "count": 2404
     },
     {
       "topic": "IA",
-      "count": 1967
+      "count": 1944
     },
     {
       "topic": "Crypto",
-      "count": 660
+      "count": 655
     },
     {
       "topic": "Bourse",
-      "count": 440
+      "count": 434
     },
     {
       "topic": "Spatial",
-      "count": 87
+      "count": 83
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2173
+      "count": 2140
     },
     {
       "pillar": "market_trauma",
-      "count": 1442
+      "count": 1447
     },
     {
       "pillar": "other",
-      "count": 1381
+      "count": 1366
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 164
     },
     {
       "pillar": "reply_bait",
@@ -96,19 +96,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 170
+      "count": 173
     },
     {
       "pillar": "market_trauma",
-      "count": 112
+      "count": 119
     },
     {
       "pillar": "other",
-      "count": 93
+      "count": 92
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 33
     },
     {
       "pillar": "reply_bait",
@@ -122,23 +122,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 67,
+      "posts": 65,
+      "avg_likes": 0.2,
+      "avg_views": 36.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 75,
       "avg_likes": 0.19,
-      "avg_views": 38.0,
+      "avg_views": 39.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 53,
       "avg_likes": 0.19,
-      "avg_views": 43.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.19,
-      "avg_views": 40.1,
+      "avg_views": 43.0,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4666
+      "count": 4626
     },
     {
       "type": "quote",
-      "count": 362
+      "count": 363
     },
     {
       "type": "quote_gif",
-      "count": 145
+      "count": 148
     },
     {
       "type": "post",
@@ -175,7 +175,7 @@
     },
     {
       "type": "hotake",
-      "count": 34
+      "count": 30
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-23T10:07:23.216316",
-      "text": "AVGO is the pick-and-shovel layer feeding NVDA. A drop before earnings isn't a signal; it's just the market taking its breath between sips. Hold your line until they actually speak.",
+      "ts": "2026-08-23T14:08:14.437509",
+      "text": "70% win rate is the exact number of people who are still wrong. The market just got a free $3.5M liquidity donation.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T10:03:45.137110",
-      "text": "A list of 10 new models is not a trend. It's inventory management.\n\nYou didn't just ship software; you inflated the denominator while holding the numerator at zero.",
+      "ts": "2026-08-23T14:02:21.913979",
+      "text": "Half of X panic sold. that's not a signal, it's the behavior gap eating itself alive. buy from Dave who can't stop refreshing his app at 3am.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T10:02:31.127959",
-      "text": "A portfolio that’s half private companies and space mining? You don’t need financial advice. You need a life coach and an exorcist.",
+      "ts": "2026-08-23T14:01:06.161887",
+      "text": "Opendoor's execs share Enneagram reports while the company burned through 80% of its IPO capital. Predicting feelings with a $5B loss is the most expensive astrology ever invented.",
       "type": "reply"
     }
   ]

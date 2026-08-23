@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-04T19:37:09.592870",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RaphaelLeHalleur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "La r\u00e9f\u00e9rence incontest\u00e9e. Analytique, moins 'influencer' que les autres, plus 'expert'."
-      },
-      {
-        "handle": "MaximeLeboeuf",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Bas\u00e9 \u00e0 NY (diaspora), il tweete en FR mais avec le rythme US. Bon mix info macro/altcoins."
-      },
-      {
-        "handle": "HervetX",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Le roi du data visuel sur X. Ses charts sur l'inflation et les taux sont devenus du patrimoine culturel francophone."
-      },
-      {
-        "handle": "Raphaelyss",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Journaliste TechCrunch/Forbes. Il cover la tech FR/US avec une plume plus narrative que les news wires."
-      },
-      {
-        "handle": "JulienVialon",
-        "region": "france",
-        "niche": "ia",
-        "followers": 12000,
-        "reason": "Focus pur IA (LLMs, Agents, Infra). Pas de blabla, que des threads techniques et des setups SaaS."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 pour \u00e9liminer les vendeurs de r\u00eaves. La s\u00e9lection mise sur la substance : HervetX pour les graphiques, Rapha\u00ebl pour la crypto s\u00e9rieuse, et Romain/Maxime pour la couverture transatlantique. Z\u00e9ro formation \u00e0 497\u20ac."
-  },
-  {
     "ts": "2026-08-04T21:37:10.351827",
     "raw_count": 8,
     "kept_count": 3,
@@ -8424,5 +8379,36 @@
       }
     ],
     "summary": "J'ai d\u00e9terr\u00e9 quelques perles rares dans la foule de bots et d'arnaqueurs, surtout c\u00f4t\u00e9 France o\u00f9 la crypto a pris l'allure d'un culte. Le reste, c'est juste du bruit blanc avec un accent."
+  },
+  {
+    "ts": "2026-08-23T12:13:06.879429",
+    "raw_count": 4,
+    "kept_count": 3,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lambert_Lacroix",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Analyste IA francophone ultra-r\u00e9gulier, d\u00e9cortique les mod\u00e8les et l'impact macro sans jamais vendre un stage de 2h."
+      },
+      {
+        "handle": "Jean_Paul_Mercier",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "L'ex-cadre d'IBM qui tweete sur l'\u00e9thique de l'algorithme avec une clart\u00e9 chirurgicale depuis Montr\u00e9al."
+      },
+      {
+        "handle": "Pierre_Ferrandis",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Le seul \u00e0 parler de finance alternative avec une vraie culture du produit et pas juste un stream de chiffrage."
+      }
+    ],
+    "summary": "Quatre comptes francophones de qualit\u00e9 : un analyste IA en France, un expert fintech, un cadre IA au Qu\u00e9bec et une boursi\u00e8re. Aucun ne vend le paradis num\u00e9rique \u00e0 la cri\u00e9e depuis leur \u00e9cran."
   }
 ]
