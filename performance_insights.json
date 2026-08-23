@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-23T14:10:11.049260",
-  "window_7d_actions": 5213,
-  "window_24h_actions": 424,
+  "generated_at": "2026-08-23T18:10:11.036506",
+  "window_7d_actions": 5192,
+  "window_24h_actions": 437,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5212
+      "count": 5191
     },
     {
       "pattern": "RENAME",
@@ -19,17 +19,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5212
+      "count": 5191
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 272
+      "actions": 268
     },
     {
       "hour": 14,
-      "actions": 259
+      "actions": 245
     },
     {
       "hour": 10,
@@ -47,7 +47,7 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2404
+      "count": 2392
     },
     {
       "topic": "IA",
@@ -55,68 +55,68 @@
     },
     {
       "topic": "Crypto",
-      "count": 655
+      "count": 649
     },
     {
       "topic": "Bourse",
-      "count": 434
+      "count": 424
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 85
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2140
+      "count": 2133
     },
     {
       "pillar": "market_trauma",
-      "count": 1447
+      "count": 1435
     },
     {
       "pillar": "other",
-      "count": 1366
+      "count": 1354
     },
     {
       "pillar": "meme_reaction",
-      "count": 164
+      "count": 172
     },
     {
       "pillar": "reply_bait",
-      "count": 76
+      "count": 77
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 20
+      "count": 21
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 173
+      "count": 183
     },
     {
       "pillar": "market_trauma",
-      "count": 119
+      "count": 121
     },
     {
       "pillar": "other",
-      "count": 92
+      "count": 88
     },
     {
       "pillar": "meme_reaction",
-      "count": 33
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -124,21 +124,21 @@
       "pillar": "ai_news_take",
       "posts": 65,
       "avg_likes": 0.2,
-      "avg_views": 36.8,
+      "avg_views": 37.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.19,
-      "avg_views": 39.5,
+      "posts": 76,
+      "avg_likes": 0.18,
+      "avg_views": 38.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 53,
-      "avg_likes": 0.19,
-      "avg_views": 43.0,
+      "posts": 52,
+      "avg_likes": 0.17,
+      "avg_views": 43.4,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4626
+      "count": 4596
     },
     {
       "type": "quote",
-      "count": 363
+      "count": 367
     },
     {
       "type": "quote_gif",
-      "count": 148
+      "count": 157
     },
     {
       "type": "post",
-      "count": 37
+      "count": 34
     },
     {
       "type": "hotake",
-      "count": 30
+      "count": 29
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-23T14:08:14.437509",
-      "text": "70% win rate is the exact number of people who are still wrong. The market just got a free $3.5M liquidity donation.",
+      "ts": "2026-08-23T18:08:51.580979",
+      "text": "Broadcom’s $100B AI guide is a floor. Wells Fargo seeing $205B by FY28 means we’re not buying chips anymore. We’re prepaying for the future of thought itself. The math has officially outpaced the physics.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T14:02:21.913979",
-      "text": "Half of X panic sold. that's not a signal, it's the behavior gap eating itself alive. buy from Dave who can't stop refreshing his app at 3am.",
+      "ts": "2026-08-23T18:04:42.786461",
+      "text": "Micron is now selling the RAM that keeps AI's ego intact.\n\nThe \"memory wall\" isn't a bottleneck anymore; it's a toll booth they finally figured out how to charge for everything else.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T14:01:06.161887",
-      "text": "Opendoor's execs share Enneagram reports while the company burned through 80% of its IPO capital. Predicting feelings with a $5B loss is the most expensive astrology ever invented.",
+      "ts": "2026-08-23T17:59:22.654669",
+      "text": "TA / LCA / Psychological Breakdown: that’s the chart equivalent of \"I just woke up.\"\n\nThe market doesn’t care about your feelings. It only cares about who else is still scared enough to sell you a bag.",
       "type": "reply"
     }
   ]
