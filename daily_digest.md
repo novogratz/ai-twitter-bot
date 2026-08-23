@@ -1516,3 +1516,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 73 views: $KAITO $MEXC me refreshing my wallet like it’s a slot machine that just dropped my student loans
   - 1 likes / 31 views: me at 3am refreshing $NVDA charts like it’s my bedtime story
   - 1 likes / 31 views: Chinese labs looking at the compute cap like it’s a strict bedtime. Turns out, forcing them to read 
+
+## 2026-08-22
+
+**Activity** — total actions: 508
+  - by type: reply=420, quote=49, quote_gif=35, retweet=2, post=2
+  - top sources: SEARCH-HOT=266, FEED-SWEEP-FEED=85, FEED-SWEEP-FOLLOWING=50, QUOTE=38, GIF=36, DEBATE=13, BREAKING_QRT=6, VIP=5
+  - top reply targets: @cryptorover=10, @kimmonismus=8, @TheBTCTherapist=7, @rohanpaul_ai=7, @CryptoMichNL=6
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 53 views: Liquidity rotating is just a fancy way of saying we’re finally bored of paying rent for chips  https
+  - 1 likes / 56 views: me on the couch watching this solve every problem while I’m still arguing with the printer to print 
+  - 1 likes / 70 views: Sol bounces, OpenAI drops prices. The AI arms race is now a race to the bottom. $GME bags are fillin

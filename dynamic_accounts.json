@@ -2142,7 +2142,9 @@
     "Ghislain_Maheut",
     "Maxime_Lemieux",
     "Jean_Segura_MQ",
-    "Pierre_Dubuc_QC"
+    "Pierre_Dubuc_QC",
+    "CryptoBenoit",
+    "MacroJade"
   ],
   "en": [
     "Chubby",
@@ -15452,6 +15454,16 @@
     {
       "lang": "en",
       "handle": "TECA",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBenoit",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MacroJade",
       "added": "2026-08-22"
     }
   ]

@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-04T11:36:18.275593",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeSteinberg",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "CEO de Mistral AI, twitte la tech FR en direct. Moins hype que l'IA pure, plus 'insider' que les influenceurs."
-      },
-      {
-        "handle": "JFDelebecque",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Journaliste Bloomberg Paris. Il est l\u00e0 avant que \u00e7a arrive dans le journal. Franchement utile."
-      },
-      {
-        "handle": "CyrilGhysels",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Investisseur VC qui parle bourse fran\u00e7aise avec la science des donn\u00e9es. Anti-guru, pro-data."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites op\u00e9rationnelles (Mistral, ex-CEOs Coinhouse) plut\u00f4t que les gros comptes g\u00e9n\u00e9ralistes. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent vraiment."
-  },
-  {
     "ts": "2026-08-04T13:37:26.649242",
     "raw_count": 8,
     "kept_count": 6,
@@ -8473,5 +8442,29 @@
       }
     ],
     "summary": "J'ai sorti les vrais : PowerHasheur pour la crypto FR, des pointus IA en France (Maheut, Jouve), un top trader qu\u00e9b\u00e9cois (Lemieux), et quelques francophones bien implant\u00e9s aux USA. Pas de vendeurs de r\u00eave, que du concret."
+  },
+  {
+    "ts": "2026-08-22T22:11:47.344624",
+    "raw_count": 3,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoBenoit",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Analyse on-chain s\u00e9rieuse, z\u00e9ro hype gratuite."
+      },
+      {
+        "handle": "MacroJade",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Vue macro qu\u00e9b\u00e9coise, sans le fluff montr\u00e9alais."
+      }
+    ],
+    "summary": "Des analystes qui n'ont pas honte de dire qu'ils ne savent pas encore. C'est rare dans la finance FR."
   }
 ]
