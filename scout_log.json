@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-04T13:37:26.649242",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DinoB01",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Ancien de Coinhouse, il balance des perles on-chain avec un style d\u00e9sinvolte. Si Dino tweet, c'est soit un alpha, soit une blague tr\u00e8s ch\u00e8re."
-      },
-      {
-        "handle": "AlexisBachety",
-        "region": "france",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "L'ex-Airbnb France. Il parle tech, startups et IA avec la franchise d'un gars qui a vu passer des milliards. Moins hype que le reste, mais plus pertinent."
-      },
-      {
-        "handle": "MaximeSylvain",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 40000,
-        "reason": "Journaliste tech bas\u00e9 \u00e0 SF qui couvre l'IA francophone. Il a les sources \u00e0 l'interne chez les g\u00e9ants US. Son feed est le filtre entre le bruit et l'info vraie."
-      },
-      {
-        "handle": "JeanDeneuve1",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "L'incontournable qu\u00e9b\u00e9cois. Il couvre la bourse US avec un accent francophone qui change. Pas de 'but', juste des constats sur le prix des actions."
-      },
-      {
-        "handle": "SylvainLeCorre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Founders Lab. Il courtise les startups IA comme un cerf-volant dans une temp\u00eate. Son feed est la seule carte fiable pour savoir qui a lev\u00e9 du cash en France sans se cacher."
-      },
-      {
-        "handle": "GuillaumePlewmans",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le gars derri\u00e8re L'Etudiant/Universit\u00e9s qui a bascul\u00e9 dans la Deep Tech. Il traque les labos et les founders fran\u00e7ais plus vite que Twitter lui-m\u00eame."
-      }
-    ],
-    "summary": "Une s\u00e9lection sans gras pour les comptes qui font parler sans vendre du vent. On \u00e9vite les vendeurs de r\u00eaves \u00e0 2000\u20ac pour se concentrer sur ceux qui ont vu le code ou le prix des actions en direct. La France p\u00e8se lourd sur l'IA, le Qu\u00e9bec sur la bourse, et SF a son correspondant francophone."
-  },
-  {
     "ts": "2026-08-04T15:38:16.139689",
     "raw_count": 10,
     "kept_count": 6,
@@ -8466,5 +8414,29 @@
       }
     ],
     "summary": "Des analystes qui n'ont pas honte de dire qu'ils ne savent pas encore. C'est rare dans la finance FR."
+  },
+  {
+    "ts": "2026-08-23T00:12:27.242732",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasVidal_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le pape de l'investissement au Qu\u00e9bec. On y apprend que la patience est une vertu et que les sigles 'RSI' n'existent pas."
+      },
+      {
+        "handle": "CryptoCyrill",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Le seul crypto-fran\u00e7ais qui semble comprendre les maths \u00e0 part qu'il faut diviser par deux pour ne pas se tromper."
+      }
+    ],
+    "summary": "J'ai d\u00e9nich\u00e9 des perles rares dans la boue num\u00e9rique. Foncez-y avant qu'ils changent de nom pour vendre du MLM."
   }
 ]

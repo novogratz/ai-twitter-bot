@@ -17060,3 +17060,17 @@ $NVDA  earnings reports will be evening of
 6. DeepSee
   - https://x.com/md_kasif_uddin/status/2091008616312734060
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+
+## 2026-08-23
+- **@coinbureau** (32 likes, score 8/10) — HUGE: Nvidia is reportedly using a $6 BILLION deal with Poolside to build one of the world’s most powerful open-weight AI models.
+
+The chip giant is preparing to challenge DeepSeek, Kimi K3, OpenAI an
+  - https://x.com/coinbureau/status/2091371098172768333
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 44).
+- **@cryptorover** (31 likes, score 8/10) — THIS WAS THE CRAZIEST BITCOIN WEEK IN CRYPTO HISTORY.
+
+Bitcoin surged 26%, liquidating over $5 billion worth of shorts in the largest short liquidation event ever.
+
+Over $500 billion was added to the
+  - https://x.com/cryptorover/status/2091375627949761000
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).

@@ -2144,7 +2144,9 @@
     "Jean_Segura_MQ",
     "Pierre_Dubuc_QC",
     "CryptoBenoit",
-    "MacroJade"
+    "MacroJade",
+    "NicolasVidal_",
+    "CryptoCyrill"
   ],
   "en": [
     "Chubby",
@@ -2578,7 +2580,8 @@
     "DCinvestor",
     "Wealthmatica",
     "Jaxon",
-    "TECA"
+    "TECA",
+    "InfoGram"
   ],
   "history": [
     {
@@ -15465,6 +15468,21 @@
       "lang": "fr",
       "handle": "MacroJade",
       "added": "2026-08-22"
+    },
+    {
+      "lang": "en",
+      "handle": "InfoGram",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasVidal_",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCyrill",
+      "added": "2026-08-23"
     }
   ]
 }
