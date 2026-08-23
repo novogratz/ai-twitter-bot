@@ -2146,7 +2146,11 @@
     "CryptoBenoit",
     "MacroJade",
     "NicolasVidal_",
-    "CryptoCyrill"
+    "CryptoCyrill",
+    "AIWhispererFR",
+    "PerezHiltonFR",
+    "FintechNerdFR",
+    "CryptoQueenFR"
   ],
   "en": [
     "Chubby",
@@ -2581,7 +2585,8 @@
     "Wealthmatica",
     "Jaxon",
     "TECA",
-    "InfoGram"
+    "InfoGram",
+    "Ayzaa"
   ],
   "history": [
     {
@@ -15482,6 +15487,31 @@
     {
       "lang": "fr",
       "handle": "CryptoCyrill",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Ayzaa",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "AIWhispererFR",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PerezHiltonFR",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "FintechNerdFR",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoQueenFR",
       "added": "2026-08-23"
     }
   ]
