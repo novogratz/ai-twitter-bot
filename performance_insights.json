@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-22T22:10:11.442637",
-  "window_7d_actions": 5305,
-  "window_24h_actions": 535,
+  "generated_at": "2026-08-23T02:10:11.031546",
+  "window_7d_actions": 5290,
+  "window_24h_actions": 479,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5304
+      "count": 5289
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5304
+      "count": 5289
     }
   ],
   "best_hours_utc": [
@@ -40,83 +40,83 @@
       "actions": 244
     },
     {
-      "hour": 0,
-      "actions": 237
+      "hour": 7,
+      "actions": 236
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2413
+      "count": 2416
     },
     {
       "topic": "IA",
-      "count": 2007
+      "count": 1993
     },
     {
       "topic": "Crypto",
-      "count": 672
+      "count": 667
     },
     {
       "topic": "Bourse",
-      "count": 449
+      "count": 442
     },
     {
       "topic": "Spatial",
-      "count": 92
+      "count": 91
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2220
+      "count": 2204
     },
     {
       "pillar": "market_trauma",
-      "count": 1437
+      "count": 1443
     },
     {
       "pillar": "other",
-      "count": 1398
+      "count": 1395
     },
     {
       "pillar": "meme_reaction",
-      "count": 152
+      "count": 153
     },
     {
       "pillar": "reply_bait",
-      "count": 76
+      "count": 75
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 22
+      "count": 20
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 202
+      "count": 193
     },
     {
       "pillar": "market_trauma",
-      "count": 155
+      "count": 132
     },
     {
       "pillar": "other",
-      "count": 131
+      "count": 111
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 37
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 5
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
@@ -124,21 +124,21 @@
       "pillar": "other",
       "posts": 73,
       "avg_likes": 0.21,
-      "avg_views": 43.2,
+      "avg_views": 43.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 67,
       "avg_likes": 0.19,
-      "avg_views": 38.2,
+      "avg_views": 37.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 52,
       "avg_likes": 0.19,
-      "avg_views": 43.0,
+      "avg_views": 42.9,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4734
+      "count": 4714
     },
     {
       "type": "quote",
-      "count": 348
+      "count": 353
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 136
     },
     {
       "type": "post",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 10
+      "count": 9
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-22T22:08:37.017316",
-      "text": "$6B to license a model is an R&D check. DeepSeek didn't pay Nvidia; it just made the GPUs mandatory.\n\nThe \"challenger\" story isn't breaking news. It's a receipt.",
+      "ts": "2026-08-23T02:08:44.008675",
+      "text": "Thiel’s 13F is just a cover story for his hedge against $NVDA’s heat death. He doesn't fear the tech, he fears the electric bill when OpenAI hits the next power spike ⚡📉",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-23T02:08:09.127046",
+      "text": "Crypto teams don't build products. they assemble leftovers with a 40-page whitepaper called \"vision.\" the moat is a Jira board.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-22T22:08:19.133140",
-      "text": "Best-of-n is just brute-force sampling. they hid the math because it makes their single-shot pricing look like a premium markup on your patience.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-22T21:57:25.189401",
-      "text": "15% isn't a hike. It's Nvidia quietly taxing the people funding its own moat while DRAM margins hit record highs.\n\nThe supplier is eating the demand.",
+      "ts": "2026-08-23T02:06:33.801314",
+      "text": "AI capex adding 0.6pp to growth means the whole economy is now a side effect of GPU depreciation schedules.\n\nWe aren't building infrastructure anymore, we're just buying our own future on credit card debt that never clears.",
       "type": "reply"
     }
   ]
