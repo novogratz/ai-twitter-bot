@@ -2154,7 +2154,15 @@
     "CryptoNick",
     "KryptosQuebec",
     "IA_Sybil",
-    "Lambert_Lacroix"
+    "Lambert_Lacroix",
+    "gillesbabinet",
+    "julienbailly",
+    "francois_breton",
+    "yann_lechelle",
+    "thomaslefeuvre",
+    "daniellassalle",
+    "maxencebarnier",
+    "PascalQuidem"
   ],
   "en": [
     "Chubby",
@@ -2591,7 +2599,9 @@
     "TECA",
     "InfoGram",
     "Ayzaa",
-    "mert"
+    "mert",
+    "OddStats",
+    "Variety"
   ],
   "history": [
     {
@@ -15542,6 +15552,56 @@
     {
       "lang": "fr",
       "handle": "Lambert_Lacroix",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "OddStats",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "gillesbabinet",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "julienbailly",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "francois_breton",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "yann_lechelle",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomaslefeuvre",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "daniellassalle",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxencebarnier",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Variety",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PascalQuidem",
       "added": "2026-08-23"
     }
   ]
