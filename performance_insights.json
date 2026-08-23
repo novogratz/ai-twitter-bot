@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-23T06:10:11.288535",
-  "window_7d_actions": 5264,
-  "window_24h_actions": 429,
+  "generated_at": "2026-08-23T10:10:11.352781",
+  "window_7d_actions": 5253,
+  "window_24h_actions": 418,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5263
+      "count": 5252
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5263
+      "count": 5252
     }
   ],
   "best_hours_utc": [
@@ -40,41 +40,41 @@
       "actions": 244
     },
     {
-      "hour": 7,
-      "actions": 236
+      "hour": 0,
+      "actions": 235
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2395
+      "count": 2412
     },
     {
       "topic": "IA",
-      "count": 1989
+      "count": 1967
     },
     {
       "topic": "Crypto",
-      "count": 668
+      "count": 660
     },
     {
       "topic": "Bourse",
-      "count": 441
+      "count": 440
     },
     {
       "topic": "Spatial",
-      "count": 89
+      "count": 87
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2192
+      "count": 2173
     },
     {
       "pillar": "market_trauma",
-      "count": 1439
+      "count": 1442
     },
     {
       "pillar": "other",
@@ -82,21 +82,21 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 156
+      "count": 161
     },
     {
       "pillar": "reply_bait",
-      "count": 75
+      "count": 76
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 21
+      "count": 20
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 177
+      "count": 170
     },
     {
       "pillar": "market_trauma",
@@ -104,7 +104,7 @@
     },
     {
       "pillar": "other",
-      "count": 97
+      "count": 93
     },
     {
       "pillar": "meme_reaction",
@@ -122,23 +122,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.2,
-      "avg_views": 37.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.2,
-      "avg_views": 40.6,
+      "posts": 67,
+      "avg_likes": 0.19,
+      "avg_views": 38.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 53,
       "avg_likes": 0.19,
-      "avg_views": 42.3,
+      "avg_views": 43.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 73,
+      "avg_likes": 0.19,
+      "avg_views": 40.1,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4679
+      "count": 4666
     },
     {
       "type": "quote",
-      "count": 359
+      "count": 362
     },
     {
       "type": "quote_gif",
-      "count": 139
+      "count": 145
     },
     {
       "type": "post",
-      "count": 41
+      "count": 37
     },
     {
       "type": "hotake",
-      "count": 37
+      "count": 34
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-23T06:09:55.161770",
-      "text": "That's the \"lucky\" part of your post doing all the work.\n\nBTC doesn't have a plan. You do.",
+      "ts": "2026-08-23T10:07:23.216316",
+      "text": "AVGO is the pick-and-shovel layer feeding NVDA. A drop before earnings isn't a signal; it's just the market taking its breath between sips. Hold your line until they actually speak.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T06:04:36.663913",
-      "text": "Pour que Burry gagne sur ces deux lignes à la fois en même temps et aussi vite qu'il veut, ce n'est pas un pari de valeur. C'est juste le marché qui fait une crise d'identité collective.",
+      "ts": "2026-08-23T10:03:45.137110",
+      "text": "A list of 10 new models is not a trend. It's inventory management.\n\nYou didn't just ship software; you inflated the denominator while holding the numerator at zero.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T05:57:43.027979",
-      "text": "One prompt building a \"team\" of agents is just another word for latency.\n\nYou're not hiring staff, you're paying per token to wait longer than before.",
+      "ts": "2026-08-23T10:02:31.127959",
+      "text": "A portfolio that’s half private companies and space mining? You don’t need financial advice. You need a life coach and an exorcist.",
       "type": "reply"
     }
   ]

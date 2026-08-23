@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-04T17:36:24.280053",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelKoenig",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le patron de Coinhouse, twitte en FR, z\u00e9ro formation \u00e0 2000\u20ac \u00e0 vendre, que du fond."
-      },
-      {
-        "handle": "JulienR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Journaliste crypto FR ultra fiable, twitte la vrai news pas les shitsponsoris\u00e9s."
-      },
-      {
-        "handle": "MarcGagnon_",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Analyste Qu\u00e9b\u00e9cois, focus bourse/tech, style direct sans le blabla LinkedIn."
-      },
-      {
-        "handle": "CamilleD",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 14000,
-        "reason": "Sp\u00e9cialiste fintech/france, analyse les lev\u00e9es de fonds tech avec du recul."
-      },
-      {
-        "handle": "VincentR",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Ex-Google maintenant ind\u00e9pendant, IA et tech en fran\u00e7ais depuis NYC, regard ext\u00e9rieur pertinent."
-      }
-    ],
-    "summary": "Focus sur des insiders (Hugging Face, Coinhouse) et des journalistes FR solides. Z\u00e9ro vendeur de r\u00eave, juste des profils qui construisent ou analysent. Le Qu\u00e9bec est mieux repr\u00e9sent\u00e9 que d'habitude avec des profils actifs."
-  },
-  {
     "ts": "2026-08-04T19:37:09.592870",
     "raw_count": 10,
     "kept_count": 5,
@@ -8431,5 +8386,43 @@
       }
     ],
     "summary": "J'ai trouv\u00e9 des comptes francophones de qualit\u00e9 dans IA, crypto et bourse. Ils sont actifs et n'ont rien \u00e0 voir avec les vendeurs de formation \u00e0 200\u20ac."
+  },
+  {
+    "ts": "2026-08-23T08:13:43.344696",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoNick",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 80000,
+        "reason": "La seule voix sur\u00e9active du march\u00e9. S'il dit 'on va se faire', c'est que \u00e7a a d\u00e9j\u00e0 fait -5%."
+      },
+      {
+        "handle": "CoinhouseOfficiel",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 50000,
+        "reason": "Les seuls \u00e0 vendre de la crypto sans avoir l'air de vendre des actions pour un yacht. Enfin... presque."
+      },
+      {
+        "handle": "KryptosQuebec",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Le seul qui te parle des ondes de s\u00e9curit\u00e9 de la blockchain avec un accent qu'on comprend pas."
+      },
+      {
+        "handle": "IA_Sybil",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Diaspora FR aux USA qui twitte en fran\u00e7ais mais avec le jargon des californiens. La synth\u00e8se parfaite du chaos."
+      }
+    ],
+    "summary": "J'ai d\u00e9terr\u00e9 quelques perles rares dans la foule de bots et d'arnaqueurs, surtout c\u00f4t\u00e9 France o\u00f9 la crypto a pris l'allure d'un culte. Le reste, c'est juste du bruit blanc avec un accent."
   }
 ]

@@ -2150,7 +2150,10 @@
     "AIWhispererFR",
     "PerezHiltonFR",
     "FintechNerdFR",
-    "CryptoQueenFR"
+    "CryptoQueenFR",
+    "CryptoNick",
+    "KryptosQuebec",
+    "IA_Sybil"
   ],
   "en": [
     "Chubby",
@@ -15512,6 +15515,21 @@
     {
       "lang": "fr",
       "handle": "CryptoQueenFR",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNick",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "KryptosQuebec",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "IA_Sybil",
       "added": "2026-08-23"
     }
   ]
