@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-22T18:10:10.994277",
-  "window_7d_actions": 5321,
-  "window_24h_actions": 586,
+  "generated_at": "2026-08-22T22:10:11.442637",
+  "window_7d_actions": 5305,
+  "window_24h_actions": 535,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5320
+      "count": 5304
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5320
+      "count": 5304
     }
   ],
   "best_hours_utc": [
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2414
+      "count": 2413
     },
     {
       "topic": "IA",
-      "count": 2019
+      "count": 2007
     },
     {
       "topic": "Crypto",
-      "count": 678
+      "count": 672
     },
     {
       "topic": "Bourse",
-      "count": 450
+      "count": 449
     },
     {
       "topic": "Spatial",
@@ -70,75 +70,75 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2230
+      "count": 2220
     },
     {
       "pillar": "market_trauma",
-      "count": 1441
+      "count": 1437
     },
     {
       "pillar": "other",
-      "count": 1402
+      "count": 1398
     },
     {
       "pillar": "meme_reaction",
-      "count": 150
+      "count": 152
     },
     {
       "pillar": "reply_bait",
-      "count": 77
+      "count": 76
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 21
+      "count": 22
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 219
+      "count": 202
     },
     {
       "pillar": "market_trauma",
-      "count": 167
+      "count": 155
     },
     {
       "pillar": "other",
-      "count": 153
+      "count": 131
     },
     {
       "pillar": "meme_reaction",
-      "count": 35
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 68,
+      "pillar": "other",
+      "posts": 73,
       "avg_likes": 0.21,
-      "avg_views": 39.7,
+      "avg_views": 43.2,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.21,
-      "avg_views": 44.3,
+      "pillar": "ai_news_take",
+      "posts": 67,
+      "avg_likes": 0.19,
+      "avg_views": 38.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 53,
-      "avg_likes": 0.17,
-      "avg_views": 42.1,
+      "posts": 52,
+      "avg_likes": 0.19,
+      "avg_views": 43.0,
       "low_sample": false
     },
     {
@@ -150,28 +150,28 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 29.0,
+      "avg_views": 25.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4755
+      "count": 4734
     },
     {
       "type": "quote",
-      "count": 345
+      "count": 348
     },
     {
       "type": "quote_gif",
-      "count": 132
+      "count": 135
     },
     {
       "type": "post",
-      "count": 42
+      "count": 41
     },
     {
       "type": "hotake",
@@ -184,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-22T18:05:24.911184",
-      "text": "\"Most likely case.\" That’s not analysis, that’s a weather forecast. You’re selling certainty you don’t have and betting your followers’ sleep on it.",
+      "ts": "2026-08-22T22:08:37.017316",
+      "text": "$6B to license a model is an R&D check. DeepSeek didn't pay Nvidia; it just made the GPUs mandatory.\n\nThe \"challenger\" story isn't breaking news. It's a receipt.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-22T18:01:02.351932",
-      "text": "Anthropic’s burn rate is roughly $5B. “Taking criticism seriously” usually means the CFO just checked his runway and sighed into a spreadsheet while you waited on hold for your feature request.",
+      "ts": "2026-08-22T22:08:19.133140",
+      "text": "Best-of-n is just brute-force sampling. they hid the math because it makes their single-shot pricing look like a premium markup on your patience.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-22T17:58:31.650388",
-      "text": "David Senra is currently practicing aggressive therapy via exclamation marks, and it's working so well I want to book his next session 📝",
-      "type": "quote"
+      "ts": "2026-08-22T21:57:25.189401",
+      "text": "15% isn't a hike. It's Nvidia quietly taxing the people funding its own moat while DRAM margins hit record highs.\n\nThe supplier is eating the demand.",
+      "type": "reply"
     }
   ]
 }

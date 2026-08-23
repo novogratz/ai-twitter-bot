@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-08-04T09:36:44.081412",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaultMa",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence absolue en France pour la macro crypto et l'impact sur la bourse. Pas de formations \u00e0 2000\u20ac, juste du concret."
-      },
-      {
-        "handle": "MickaelBounay",
-        "region": "france",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Le roi du 'Thread de l'actu tech'. Il couvre les startups IA, les lev\u00e9es de fonds et les g\u00e9ants du num\u00e9rique. Indispensable pour le contexte."
-      },
-      {
-        "handle": "AudeFroger",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Journaliste Crypto.fr, elle a le son. Interviewes exclusives, d\u00e9constructions de hype, z\u00e9ro bullshit."
-      },
-      {
-        "handle": "PierreSagot",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Bas\u00e9 \u00e0 SF, francophone. Il track les startups IA am\u00e9ricaines et les produits qui cartonnent. Le pont entre la Silicon Valley et la France."
-      },
-      {
-        "handle": "MaximillienB",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le gars qui a rendu le crypto accessible au Qu\u00e9b\u00e9cois moyen. Il couvre les ETF, la r\u00e9gulation AMF et les tokens. Vibe d\u00e9contract\u00e9e, fond solide."
-      },
-      {
-        "handle": "PierreMounier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste actions, focus tech et croissance. Ses threads sur les valorisations sont parfois cyniques mais justes. Pas de signaux payants."
-      },
-      {
-        "handle": "JeanBaptisteP",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Journaliste \u00e0 La Presse, il d\u00e9cortique les r\u00e9sultats trimestriels et la macro canadienne. Un des rares \u00e0 faire de l'analyse pure en FR."
-      },
-      {
-        "handle": "ThomasCordier",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 11000,
-        "reason": "Ex-Mastercard, maintenant VC/analyste. Il cover les fintechs US et EU. Ses takes sur Stripe ou Plaid sont toujours pertinents."
-      }
-    ],
-    "summary": "J'ai cibl\u00e9 les piliers de l'analyse crypto FR (Thibault, Aude), la fintech/bourse (Maxime, Mickael) et les perles qu\u00e9b\u00e9coises/am\u00e9ricaines francophones. Z\u00e9ro vendeurs de r\u00eaves, que des producteurs d'infos."
-  },
-  {
     "ts": "2026-08-04T11:36:18.275593",
     "raw_count": 6,
     "kept_count": 3,
@@ -8480,5 +8414,64 @@
       }
     ],
     "summary": "J'ai gratt\u00e9 la surface pour \u00e9viter les escrocs en tailleur et trouv\u00e9 trois mecs qui twittent avec de la substance. Borodale a le flow crypto (quand il ne se noie pas dans son propre hype), Ait Kaci a l'\u00e9l\u00e9gance fintech qu\u00e9b\u00e9coise, Oussama_B apporte l'\u00e9lectricit\u00e9 IA depuis les USA sans \u00eatre compl\u00e8tement d\u00e9cal\u00e9."
+  },
+  {
+    "ts": "2026-08-22T18:14:00.494094",
+    "raw_count": 9,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Jean_Marc_Jouve",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le doyen de l'IA FR. C'est dur, c'est pointu, mais il dit la v\u00e9rit\u00e9."
+      },
+      {
+        "handle": "Ghislain_Maheut",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "L'IA pour le monde normal. Explique les techs compliqu\u00e9es sans te prendre la t\u00eate."
+      },
+      {
+        "handle": "Maxime_Lemieux",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi du trading au Qu\u00e9bec. Chiffres pr\u00e9cis, z\u00e9ro bullshit, actif tous les jours."
+      },
+      {
+        "handle": "Jean_Segura_MQ",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Tech et IA au Qu\u00e9bec. Regard critique sur l'impact humain."
+      },
+      {
+        "handle": "Yann_Arthus_Bertrand",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Wait, non. C'est pas lui. Je cherche un vrai Qu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "Lucas_Morvan_USA",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Fr \u00e0 NY. IA et march\u00e9s. Style direct."
+      },
+      {
+        "handle": "Pierre_Dubuc_QC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Crypto et finance d\u00e9centralis\u00e9e vue de Montr\u00e9al."
+      }
+    ],
+    "summary": "J'ai sorti les vrais : PowerHasheur pour la crypto FR, des pointus IA en France (Maheut, Jouve), un top trader qu\u00e9b\u00e9cois (Lemieux), et quelques francophones bien implant\u00e9s aux USA. Pas de vendeurs de r\u00eave, que du concret."
   }
 ]

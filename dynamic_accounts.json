@@ -2137,7 +2137,12 @@
     "BenoitGautier_",
     "LudovicBouchard",
     "Borodale",
-    "Oussama_B"
+    "Oussama_B",
+    "Jean_Marc_Jouve",
+    "Ghislain_Maheut",
+    "Maxime_Lemieux",
+    "Jean_Segura_MQ",
+    "Pierre_Dubuc_QC"
   ],
   "en": [
     "Chubby",
@@ -2570,7 +2575,8 @@
     "IGN",
     "DCinvestor",
     "Wealthmatica",
-    "Jaxon"
+    "Jaxon",
+    "TECA"
   ],
   "history": [
     {
@@ -15416,6 +15422,36 @@
     {
       "lang": "fr",
       "handle": "Oussama_B",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jean_Marc_Jouve",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ghislain_Maheut",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Maxime_Lemieux",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jean_Segura_MQ",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Dubuc_QC",
+      "added": "2026-08-22"
+    },
+    {
+      "lang": "en",
+      "handle": "TECA",
       "added": "2026-08-22"
     }
   ]
