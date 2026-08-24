@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-05T01:36:25.580637",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BorjaLizarralde",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Franco-am\u00e9ricain (NYC). Vendeur de r\u00eaves SaaS mais avec du style. Twitte en FR souvent."
-      },
-      {
-        "handle": "DorianMazaux",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Ancien fondateur PayFit, maintenant VC. Twitte sur la tech FR sans vendre du r\u00eave \u00e0 99\u20ac."
-      },
-      {
-        "handle": "Alexis_Ba",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le mec qui d\u00e9crypte l'IA au Qu\u00e9bec. Ton direct, z\u00e9ro jargon pompeux, pur contenu."
-      },
-      {
-        "handle": "SylvainMalka",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Founder d'Albedo. L'IA frugale. Son thread sur la R&D est une mine d'or sans pub."
-      }
-    ],
-    "summary": "Mix entre les p\u00e9pites pures comme Mistral et les pros de la finance qui twittent encore. J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour garder ceux qui ont un cerveau."
-  },
-  {
-    "ts": "2026-08-05T03:36:37.723910",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JohanSedoy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence 'Deep Dive' francophone. Pas de shill, juste du fond. Si tu veux comprendre la tech derri\u00e8re le token, c'est lui."
-      },
-      {
-        "handle": "GhislainAI",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Journaliste IA chez BFMTV/Le Monde. Il balance les news tech avant qu'elles ne soient mainstream. Pr\u00e9cision + Accessibilit\u00e9."
-      },
-      {
-        "handle": "MathisR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 32000,
-        "reason": "L'anti-Linda Lemaire. Pas de blabla, que des graphiques et du sens. Il tweete moins souvent, mais chaque post est une le\u00e7on."
-      },
-      {
-        "handle": "MaximeCollard",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Fondateur de Hugging Face (avant Clement). Il tweete sur le ML et les startups AI depuis San Francisco. Visionnaire tech pur."
-      },
-      {
-        "handle": "AlexisBoulayFR",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Ancien Stripe/Revolut. Il d\u00e9cortique les startups fintech FR avec humour et pique. Pas de formation \u00e0 199\u20ac vendue ici."
-      },
-      {
-        "handle": "MarcLapointe",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directeur de recherche \u00e0 l'UdeM. Il rend l'IA accessible sans la vulgariser \u00e0 l'extr\u00eame. Le 'prof' cool que tu veux suivre."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' pour garder les ing\u00e9nieurs et les journalistes qui comprennent la tech. La s\u00e9lection mixe les fondateurs de Hugging Face aux traders qu\u00e9b\u00e9cois discrets. Z\u00e9ro 'signaux VIP', que du contenu qui tient la route."
-  },
-  {
     "ts": "2026-08-05T05:36:41.155554",
     "raw_count": 10,
     "kept_count": 7,
@@ -8417,5 +8327,95 @@
       }
     ],
     "summary": "J'ai \u00e9lagu\u00e9 le blabla LinkedIn pour garder les vrais pontes : un boursier sans cravate, deux IA qu\u00e9b\u00e9coises qui parlent vrai, et un financer US qui twitte comme il boit son caf\u00e9 \u2014 noir."
+  },
+  {
+    "ts": "2026-08-23T18:13:29.613204",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitMoisan",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "Le 'Dowd' de l'IA qu\u00e9b\u00e9coise. Explique les mod\u00e8les g\u00e9ants mieux que la doc officielle."
+      },
+      {
+        "handle": "YannGalliker",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "CEO de Hugging Face. Le nerf du open source AI en Europe."
+      },
+      {
+        "handle": "PierreDudouit",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Journaliste sp\u00e9cialis\u00e9 crypto. Le seul qui cite ses sources sans vendre du r\u00eave."
+      },
+      {
+        "handle": "MarcLantieri",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Cofond. Mistral/Ai. Francophone \u00e0 NYC. Vue directe sur la tech FR."
+      },
+      {
+        "handle": "ThomasRemyFR",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Tech & IA. Contenu dense sans jargon de bar \u00e0 vin."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le bl\u00e9 du foutage de gueule sur X. Ces six-l\u00e0 savent vraiment de quoi ils parlent, contrairement aux gourous Instagram qui t'expliquent l'on-chain analytics en mode selfie filtre."
+  },
+  {
+    "ts": "2026-08-23T20:13:33.616310",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Jean_Simon_1957",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Le grand chef de la tech FR-Qu\u00e9b\u00e9coise (ex-Bell). Tweets en fran\u00e7ais avec une pointe d'humour d\u00e9senchant\u00e9 sur les startups. C'est le LinkedIn qu'on d\u00e9teste parce qu'il dit la v\u00e9rit\u00e9."
+      },
+      {
+        "handle": "ThibaultLapeyre",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Le PDG de Mistral AI. Il twitte en FR avec la m\u00eame assurance qu'un mec qui sait que le train est d\u00e9j\u00e0 parti mais il a encore un ticket premium. Z\u00e9ro blabla, juste du 'on va sauver l'IA fran\u00e7aise'."
+      },
+      {
+        "handle": "Mounir_Souilah",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 28000,
+        "reason": "Le fondateur de Ledger. Il parle crypto comme un mec qui a vendu ses reins pour acheter des NFT en 2017 et s'en remet encore. Tr\u00e8s actif, tr\u00e8s technique, z\u00e9ro bullshit."
+      },
+      {
+        "handle": "OlivierBastide",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le CTO de Mistral. Il code en Python et twitte en fran\u00e7ais avec l'\u00e9nergie d'un d\u00e9veloppeur qui a oubli\u00e9 qu'il devait manger ce midi. Pr\u00e9cis, technique, un peu trop s\u00fbr de lui."
+      },
+      {
+        "handle": "Marie_Popineau",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Journaliste sp\u00e9cialis\u00e9e crypto/tech. Elle twitte en FR avec la fureur de celle qui a d\u00fb expliquer le Bitcoin \u00e0 son p\u00e8re pour la quinzi\u00e8me fois cette semaine."
+      }
+    ],
+    "summary": "Ils tweetent enfin dans une langue que mes grands-parents comprendraient, au lieu d'inonder X de 'Alpha' et de 'WAGMI'. C'est l'IA fran\u00e7aise qui essaie de respirer entre deux lev\u00e9es de fonds."
   }
 ]

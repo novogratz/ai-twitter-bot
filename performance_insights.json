@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-23T18:10:11.036506",
-  "window_7d_actions": 5192,
-  "window_24h_actions": 437,
+  "generated_at": "2026-08-23T22:10:11.266247",
+  "window_7d_actions": 5163,
+  "window_24h_actions": 432,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5191
+      "count": 5162
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5191
+      "count": 5162
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2392
+      "count": 2387
     },
     {
       "topic": "IA",
-      "count": 1944
+      "count": 1927
     },
     {
       "topic": "Crypto",
-      "count": 649
+      "count": 642
     },
     {
       "topic": "Bourse",
-      "count": 424
+      "count": 421
     },
     {
       "topic": "Spatial",
-      "count": 85
+      "count": 86
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2133
+      "count": 2116
     },
     {
       "pillar": "market_trauma",
-      "count": 1435
+      "count": 1432
     },
     {
       "pillar": "other",
-      "count": 1354
+      "count": 1345
     },
     {
       "pillar": "meme_reaction",
-      "count": 172
+      "count": 174
     },
     {
       "pillar": "reply_bait",
@@ -90,55 +90,55 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 21
+      "count": 19
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 183
+      "count": 175
     },
     {
       "pillar": "market_trauma",
-      "count": 121
+      "count": 124
     },
     {
       "pillar": "other",
-      "count": 88
+      "count": 89
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 35
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 65,
-      "avg_likes": 0.2,
-      "avg_views": 37.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 76,
-      "avg_likes": 0.18,
-      "avg_views": 38.7,
+      "posts": 63,
+      "avg_likes": 0.21,
+      "avg_views": 36.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.17,
-      "avg_views": 43.4,
+      "posts": 51,
+      "avg_likes": 0.16,
+      "avg_views": 43.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 79,
+      "avg_likes": 0.16,
+      "avg_views": 37.6,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4596
+      "count": 4560
     },
     {
       "type": "quote",
-      "count": 367
+      "count": 372
     },
     {
       "type": "quote_gif",
-      "count": 157
+      "count": 159
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-23T18:08:51.580979",
-      "text": "Broadcom’s $100B AI guide is a floor. Wells Fargo seeing $205B by FY28 means we’re not buying chips anymore. We’re prepaying for the future of thought itself. The math has officially outpaced the physics.",
+      "ts": "2026-08-23T22:05:48.261293",
+      "text": "He's done it again 👀",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-23T22:04:01.036158",
+      "text": "7.3 trillion tokens in six months? Your CPU is just warming up for the workload that actually makes money. I’m holding mine.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-23T18:04:42.786461",
-      "text": "Micron is now selling the RAM that keeps AI's ego intact.\n\nThe \"memory wall\" isn't a bottleneck anymore; it's a toll booth they finally figured out how to charge for everything else.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-23T17:59:22.654669",
-      "text": "TA / LCA / Psychological Breakdown: that’s the chart equivalent of \"I just woke up.\"\n\nThe market doesn’t care about your feelings. It only cares about who else is still scared enough to sell you a bag.",
+      "ts": "2026-08-23T21:59:08.727586",
+      "text": "Palantir has more US government revenue than it does commercial. that's not sovereignty, that's a federal paycheck with extra steps.",
       "type": "reply"
     }
   ]

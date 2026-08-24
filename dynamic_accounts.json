@@ -2162,7 +2162,17 @@
     "thomaslefeuvre",
     "daniellassalle",
     "maxencebarnier",
-    "PascalQuidem"
+    "PascalQuidem",
+    "BenoitMoisan",
+    "YannGalliker",
+    "PierreDudouit",
+    "MarcLantieri",
+    "ThomasRemyFR",
+    "Jean_Simon_1957",
+    "ThibaultLapeyre",
+    "Mounir_Souilah",
+    "OlivierBastide",
+    "Marie_Popineau"
   ],
   "en": [
     "Chubby",
@@ -15602,6 +15612,56 @@
     {
       "lang": "fr",
       "handle": "PascalQuidem",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitMoisan",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannGalliker",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDudouit",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLantieri",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasRemyFR",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jean_Simon_1957",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultLapeyre",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mounir_Souilah",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierBastide",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marie_Popineau",
       "added": "2026-08-23"
     }
   ]
