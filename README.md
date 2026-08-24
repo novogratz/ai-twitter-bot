@@ -3,11 +3,12 @@
 [![guard-tests](https://github.com/novogratz/ai-twitter-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/novogratz/ai-twitter-bot/actions/workflows/ci.yml)
 [![release](https://img.shields.io/github/v/release/novogratz/ai-twitter-bot)](https://github.com/novogratz/ai-twitter-bot/releases)
 
-> **Treating market trauma. AI-powered portfolio therapy. Follow the signal. Heal the fear.** ⚡
+> **Sharp AI analysis with human taste. Follow the signal, not the noise.** ⚡
 
-A fully autonomous X/Twitter influencer agent that runs, grows, and **improves its own codebase** without human intervention. It operates [@TheAIShrink](https://x.com/TheAIShrink) — a warm, data-sharp woman therapist for the AI era (35-40, practicing therapist, mom, and the sharpest AI mind on the timeline): name the fear, validate it, heal it with the precise fact.
+A fully autonomous X/Twitter influencer agent that runs, grows, and **improves its own codebase** without human intervention. It operates [@TheAIShrink](https://x.com/TheAIShrink) — a magnetic, data-sharp woman AI expert with a spicy edge: explain what actually changed in AI, why it matters, and what everyone else is missing.
 
 No X API. The entire surface is driven through **Safari + AppleScript** browser automation on macOS, with local-first LLM generation (Ollama) and cloud fallback.
+Profile/original generation uses `OLLAMA_MODEL`; replies can be pinned separately with `OLLAMA_REPLY_MODEL` so the high-performing reply engine can stay on the older Qwen3.6 model while originals use Qwen3.8.
 
 ---
 
@@ -17,7 +18,7 @@ No X API. The entire surface is driven through **Safari + AppleScript** browser 
 
 | Layer | Bots | Role |
 |---|---|---|
-| **Content** | `original_content_engine`, `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Original slots now try the AI Therapist standalone engine first: 15-30 concepts, semantic dedup, quality/originality/genericness/factuality/repetition critics, then legacy news/hot-take/breakout/spicy/stunt fallbacks; thread bots disabled per the 2026-06-07 spec |
+| **Content** | `original_content_engine`, `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Original slots are owned by the source-aware AI expert engine: 30 concepts, semantic dedup, quality/originality/genericness/factuality/repetition critics, mandatory AI relevance, and no legacy post-slot fallbacks |
 | **Amplification** | `retweet_bot`, `quote_tweet_bot`, `hot_quote_bot`, `feed_sweeper_bot`, `boost_recycler_bot` | QRT quality lane (≤100/day, 50-like floor, screenshot-worthy or SKIP) — number-reframe + metaphor + closing question on mid-size finance/AI posts; AI-vs-Bitcoin feud bit; own winners recycled via un-RT→re-RT (4h gaps, max 4); plain RTs 0-2/day |
 | **Replies** | `direct_reply`, `reply_bot` (LLM-search, off by default since 2026-07-19 — `ENABLE_REPLY_SEARCH`), `engagement_targeting`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `debate_bot` (mentions-driven debates, 2026-07-19), `follow_engagers_bot` (follow-back farming from repliers), `self_quote_bot` (1/day self-QRT of a winner), `reply_promoter_bot` (1/day best reply becomes a post), `btc_blitz` | The core engine — unlimited throughput, freshest-first; discovery is home/search-only since 2026-06-07 (profile visits gated to own profile + `PROFILE_VISIT_ALLOWLIST`, default TheBTCTherapist); bestie blitz covers every ≤48h BTCTherapist post |
 | **Network** | `engage_bot`, `discover_bot`, `followback_bot`, `smart_unfollow_bot`, `marquee_follow_bot` | Seed-priority follows from the tiered whitelist (300 hard cap, 20/day, ≥10-min gaps, 30-day anti-churn both ways) |

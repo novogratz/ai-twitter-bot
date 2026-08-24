@@ -4,15 +4,21 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
-> **2026-08-22 — ORIGINAL CONTENT ENGINE + QWEN3.8 FALLBACK:** standalone
+> **2026-08-24 — REPLY MODEL ROLLBACK:** reply-labeled Ollama calls now use
+> `OLLAMA_REPLY_MODEL=fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive`
+> when configured. `OLLAMA_MODEL=orcarouter/Qwen3.8-27B-Uncensored` remains
+> the profile/original model. `bin/run.sh` prewarms both and refuses startup if
+> either configured model fails. Guard:
+> `test_ollama_reply_model_override_only_affects_reply_labels`.
+
+> **2026-08-22 — ORIGINAL CONTENT ENGINE + QWEN3.8 PROFILE MODEL:** standalone
 > slots now try `src/original_content_engine.py` before legacy news/hotake
 > surfaces. It generates 15-30 concepts, semantically dedups them, scores
 > quality/originality/genericness/clickbait/repetition/factuality, and
 > publishes or queues only one winner above threshold. A shipped original
 > now also calls `first_comment.post_first_comment()` best-effort to seed
-> early thread replies. Replies remain the discovery engine. Local Ollama now uses
-> `orcarouter/Qwen3.8-27B-Uncensored` only; `bin/run.sh` refuses to start
-> with any other model. Requires local Ollama `0.32.15+`; older runtimes
+> early thread replies. Replies remain the discovery engine. Profile/original
+> Ollama uses `orcarouter/Qwen3.8-27B-Uncensored`. Requires local Ollama `0.32.15+`; older runtimes
 > returned loader 500s for this split vision / Qwen3.8 GGUF.
 > Guards:
 > `test_original_engine_*`, `test_ollama_http_tries_configured_fallback_model`.
@@ -2267,7 +2273,7 @@ obeys the same rules without per-bot rewrites:
 
 Autonomous Twitter/X influencer bot. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Ollama** (`AI_CLI=ollama`, since 2026-06-11 — operator: "go back on ollama by default for now"; local HTTP path with `OLLAMA_MODEL`). **Claude CLI is the fallback** (`LLM_FALLBACK_CLI=claude`, `LLM_FALLBACK_MODEL=claude-sonnet-4-6`) when ollama fails. Note: with ollama primary, the per-surface NEWS/HOTAKE/QUOTE_MODEL claude names only apply on fallback or force-provider paths (e.g. the Graphseo VIP generator still forces claude).
+**Default AI provider: Ollama** (`AI_CLI=ollama`, since 2026-06-11 — operator: "go back on ollama by default for now"). Profile/original calls use `OLLAMA_MODEL`; reply-labeled calls use `OLLAMA_REPLY_MODEL` when set. **Claude CLI is the fallback** (`LLM_FALLBACK_CLI=claude`, `LLM_FALLBACK_MODEL=claude-sonnet-4-6`) when ollama fails. Note: with ollama primary, the per-surface NEWS/HOTAKE/QUOTE_MODEL claude names only apply on fallback or force-provider paths.
 
 To switch providers:
 
