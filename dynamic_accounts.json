@@ -2183,7 +2183,8 @@
     "julienbap",
     "yannic_g",
     "pascal_dubois",
-    "alexgarcia_92"
+    "alexgarcia_92",
+    "QuebecTech"
   ],
   "en": [
     "Chubby",
@@ -15752,6 +15753,11 @@
     {
       "lang": "en",
       "handle": "Francesco",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "QuebecTech",
       "added": "2026-08-24"
     }
   ]

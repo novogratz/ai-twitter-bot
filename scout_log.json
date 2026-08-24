@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-05T13:36:45.827463",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Adrian_Bourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "L'ancien de Mistral qui transforme le LLM en blague de caf\u00e9. Il twitte l'IA comme un patron de bar qui conna\u00eet tout le monde."
-      },
-      {
-        "handle": "AlexisBa",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "L'humoriste geek qui explique la tech sans dormir. Ses threads sur les startups sont aussi pointus que ses punchlines sont acides."
-      },
-      {
-        "handle": "AntoineBourgeois",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Le sp\u00e9cialiste du SaaS qui donne des conseils actionnables sans vendre du r\u00eave. Moins de 'toxic hustle', plus de r\u00e9sultats concrets."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui ont du sel en plus de leurs followers. Une s\u00e9lection mixant l'humour fran\u00e7ais et la rigueur qu\u00e9b\u00e9coise."
-  },
-  {
     "ts": "2026-08-05T15:36:23.888955",
     "raw_count": 8,
     "kept_count": 2,
@@ -8389,5 +8358,29 @@
       }
     ],
     "summary": "J'ai d\u00e9capit\u00e9 les vendeurs de formations \u00e0 99\u20ac pour te garder ceux qui ont des tripes (et un peu de flair). Des analystes qui twittent en FR, pas des bots \u00e0 la con."
+  },
+  {
+    "ts": "2026-08-24T16:37:33.790671",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "QuebecTech",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Le pouls de l'\u00e9cosyst\u00e8me tech qu\u00e9b\u00e9cois. Parfait pour rep\u00e9rer les startups montrealaises avant qu'elles n'aient des bureaux \u00e0 Paris."
+      },
+      {
+        "handle": "JeanPierreLecourt",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Analyste FR bas\u00e9 aux USA. La seule personne qui te explique pourquoi Wall Street ignore tout du francophone moyen avec une pr\u00e9cision chirurgicale."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des gourous et les bots inactifs pour ne garder que ceux qui tweetent du vrai signal : l'IA fran\u00e7aise, la crypto s\u00e9rieuse et la finance US vue par un \u0153il hexagonal. C'est le minimum vital pour ne pas finir en rade dans son propre portefeuille."
   }
 ]

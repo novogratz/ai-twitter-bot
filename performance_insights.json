@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-24T10:10:11.783652",
-  "window_7d_actions": 5041,
-  "window_24h_actions": 391,
+  "generated_at": "2026-08-24T18:35:58.720467",
+  "window_7d_actions": 4855,
+  "window_24h_actions": 410,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5040
+      "count": 4854
     },
     {
       "pattern": "RENAME",
@@ -19,74 +19,80 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5040
+      "count": 4854
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 268
+      "actions": 272
     },
     {
       "hour": 14,
-      "actions": 245
-    },
-    {
-      "hour": 12,
-      "actions": 238
-    },
-    {
-      "hour": 10,
       "actions": 235
     },
     {
       "hour": 0,
       "actions": 233
+    },
+    {
+      "hour": 7,
+      "actions": 215
+    },
+    {
+      "hour": 21,
+      "actions": 211
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2346
+      "count": 2253
     },
     {
       "topic": "IA",
-      "count": 1875
+      "count": 1802
     },
     {
       "topic": "Crypto",
-      "count": 616
+      "count": 603
     },
     {
       "topic": "Bourse",
-      "count": 406
+      "count": 393
     },
     {
       "topic": "Spatial",
-      "count": 84
+      "count": 80
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.027,
+      "7d_rate": 0.016
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2053
+      "count": 1957
     },
     {
       "pillar": "market_trauma",
-      "count": 1397
+      "count": 1354
     },
     {
       "pillar": "other",
-      "count": 1305
+      "count": 1263
     },
     {
       "pillar": "meme_reaction",
-      "count": 188
+      "count": 189
     },
     {
       "pillar": "reply_bait",
-      "count": 78
+      "count": 72
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,49 +102,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 149
+      "count": 164
     },
     {
       "pillar": "market_trauma",
-      "count": 103
+      "count": 100
     },
     {
       "pillar": "other",
-      "count": 88
+      "count": 99
     },
     {
       "pillar": "meme_reaction",
-      "count": 37
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 8
+      "count": 36
     },
     {
       "pillar": "ai_vs_btc",
       "count": 6
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.2,
-      "avg_views": 40.4,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.17,
-      "avg_views": 37.9,
+      "posts": 53,
+      "avg_likes": 0.21,
+      "avg_views": 39.3,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 78,
-      "avg_likes": 0.17,
-      "avg_views": 36.3,
+      "avg_likes": 0.15,
+      "avg_views": 35.4,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 63,
+      "avg_likes": 0.11,
+      "avg_views": 37.1,
       "low_sample": false
     },
     {
@@ -159,23 +165,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4421
+      "count": 4233
     },
     {
       "type": "quote",
-      "count": 379
+      "count": 385
     },
     {
       "type": "quote_gif",
-      "count": 173
+      "count": 177
     },
     {
       "type": "post",
-      "count": 33
+      "count": 28
     },
     {
       "type": "hotake",
-      "count": 25
+      "count": 22
     },
     {
       "type": "retweet",
@@ -184,19 +190,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-24T10:10:07.975181",
-      "text": "5 business days of earnings. Your 401k can survive that, your sleep schedule probably cannot. Close the app, not the position.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-24T10:05:03.009257",
-      "text": "“Don't be a sheep” from a man who bought at $12 is the same energy as my 4-year-old saying 'I'm too big for this nap.' 😂",
+      "ts": "2026-08-24T18:33:54.961053",
+      "text": "three models in one week? stop counting. they’re all just very expensive autocomplete with good PR 😂",
       "type": "quote"
     },
     {
-      "ts": "2026-08-24T09:59:35.029216",
-      "text": "Samsung drops because Apple buys Chinese DRAM. The US government didn't break the supply chain, it just let a customer shop at Costco while holding a tariff sign.",
-      "type": "reply"
+      "ts": "2026-08-24T18:26:18.523616",
+      "text": "The real bottleneck wasn't ever silicon; it's enterprise IT trying to install one more app after lunch.",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-24T17:28:00.629599",
+      "text": "Siri in the cloud is Apple admitting their phone isn’t smart enough, so now Siri has to have a therapist 🛋️",
+      "type": "quote"
     }
   ]
 }
