@@ -2180,7 +2180,10 @@
     "guitrou",
     "maxime_klein_fr",
     "theiafrance",
-    "julienbap"
+    "julienbap",
+    "yannic_g",
+    "pascal_dubois",
+    "alexgarcia_92"
   ],
   "en": [
     "Chubby",
@@ -15728,6 +15731,21 @@
     {
       "lang": "fr",
       "handle": "julienbap",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "yannic_g",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "pascal_dubois",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexgarcia_92",
       "added": "2026-08-24"
     }
   ]

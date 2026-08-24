@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-24T02:10:11.231868",
-  "window_7d_actions": 5140,
-  "window_24h_actions": 427,
+  "generated_at": "2026-08-24T06:10:11.013058",
+  "window_7d_actions": 5100,
+  "window_24h_actions": 413,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5139
+      "count": 5099
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5139
+      "count": 5099
     }
   ],
   "best_hours_utc": [
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2377
+      "count": 2368
     },
     {
       "topic": "IA",
-      "count": 1920
+      "count": 1902
     },
     {
       "topic": "Crypto",
-      "count": 635
+      "count": 624
     },
     {
       "topic": "Bourse",
-      "count": 420
+      "count": 414
     },
     {
       "topic": "Spatial",
@@ -70,82 +70,82 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2100
+      "count": 2079
     },
     {
       "pillar": "market_trauma",
-      "count": 1424
+      "count": 1411
     },
     {
       "pillar": "other",
-      "count": 1342
+      "count": 1326
     },
     {
       "pillar": "meme_reaction",
-      "count": 175
+      "count": 183
     },
     {
       "pillar": "reply_bait",
-      "count": 76
+      "count": 79
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 23
+      "count": 22
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 167
+      "count": 159
     },
     {
       "pillar": "market_trauma",
-      "count": 122
+      "count": 115
     },
     {
       "pillar": "other",
-      "count": 91
+      "count": 87
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
+      "count": 37
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 63,
-      "avg_likes": 0.21,
-      "avg_views": 38.0,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
-      "posts": 49,
-      "avg_likes": 0.18,
-      "avg_views": 41.8,
+      "posts": 50,
+      "avg_likes": 0.2,
+      "avg_views": 40.6,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 82,
-      "avg_likes": 0.16,
+      "pillar": "ai_news_take",
+      "posts": 64,
+      "avg_likes": 0.19,
       "avg_views": 37.7,
       "low_sample": false
     },
     {
+      "pillar": "other",
+      "posts": 81,
+      "avg_likes": 0.16,
+      "avg_views": 35.8,
+      "low_sample": false
+    },
+    {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 28.8,
+      "avg_views": 27.7,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4532
+      "count": 4483
     },
     {
       "type": "quote",
-      "count": 375
+      "count": 376
     },
     {
       "type": "quote_gif",
-      "count": 160
+      "count": 168
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-24T02:10:07.097528",
-      "text": "Proving something is designed to be polite via math is like measuring the temperature of a joke. it’s helpful because you’re scared, not because the model knows.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-24T02:09:15.080435",
-      "text": "the real question is which one pays for your therapy after signing",
+      "ts": "2026-08-24T06:08:39.249593",
+      "text": "Treat earnings like your kid’s report card? You’ll cry when it says “needs improvement” even if he just got an A in math 😭",
       "type": "quote"
     },
     {
-      "ts": "2026-08-24T02:05:43.784138",
-      "text": "Real-time video gen means the inference bill is now your rent. alibaba just handed you a competitor that ships in seconds instead of hours. terrifyingly pretty.",
+      "ts": "2026-08-24T06:02:25.790053",
+      "text": "The best chart signal isn't on your screen. It's in the DM of the guy who sold at $1,800 and still checks the price every morning.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-24T05:53:32.816862",
+      "text": "WhiteBIT's token hitting ATH is the exchange printing equity to buy back its own risk. They didn't reward you for holding; they rewarded you for trusting them with the leverage while their backend catches fire behind the curtain.",
       "type": "reply"
     }
   ]
