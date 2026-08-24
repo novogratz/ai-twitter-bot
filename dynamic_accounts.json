@@ -2625,7 +2625,8 @@
     "Variety",
     "theficouple",
     "Murad",
-    "Iqra"
+    "Iqra",
+    "Francesco"
   ],
   "history": [
     {
@@ -15746,6 +15747,11 @@
     {
       "lang": "fr",
       "handle": "alexgarcia_92",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Francesco",
       "added": "2026-08-24"
     }
   ]

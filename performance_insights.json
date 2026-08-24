@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-24T06:10:11.013058",
-  "window_7d_actions": 5100,
-  "window_24h_actions": 413,
+  "generated_at": "2026-08-24T10:10:11.783652",
+  "window_7d_actions": 5041,
+  "window_24h_actions": 391,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5099
+      "count": 5040
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5099
+      "count": 5040
     }
   ],
   "best_hours_utc": [
@@ -32,79 +32,79 @@
       "actions": 245
     },
     {
-      "hour": 10,
-      "actions": 239
-    },
-    {
       "hour": 12,
       "actions": 238
     },
     {
-      "hour": 7,
-      "actions": 234
+      "hour": 10,
+      "actions": 235
+    },
+    {
+      "hour": 0,
+      "actions": 233
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2368
+      "count": 2346
     },
     {
       "topic": "IA",
-      "count": 1902
+      "count": 1875
     },
     {
       "topic": "Crypto",
-      "count": 624
+      "count": 616
     },
     {
       "topic": "Bourse",
-      "count": 414
+      "count": 406
     },
     {
       "topic": "Spatial",
-      "count": 86
+      "count": 84
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2079
+      "count": 2053
     },
     {
       "pillar": "market_trauma",
-      "count": 1411
+      "count": 1397
     },
     {
       "pillar": "other",
-      "count": 1326
+      "count": 1305
     },
     {
       "pillar": "meme_reaction",
-      "count": 183
+      "count": 188
     },
     {
       "pillar": "reply_bait",
-      "count": 79
+      "count": 78
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 22
+      "count": 20
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 159
+      "count": 149
     },
     {
       "pillar": "market_trauma",
-      "count": 115
+      "count": 103
     },
     {
       "pillar": "other",
-      "count": 87
+      "count": 88
     },
     {
       "pillar": "meme_reaction",
@@ -112,11 +112,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -124,28 +124,28 @@
       "pillar": "market_trauma",
       "posts": 50,
       "avg_likes": 0.2,
-      "avg_views": 40.6,
+      "avg_views": 40.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 64,
-      "avg_likes": 0.19,
-      "avg_views": 37.7,
+      "posts": 66,
+      "avg_likes": 0.17,
+      "avg_views": 37.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 81,
-      "avg_likes": 0.16,
-      "avg_views": 35.8,
+      "posts": 78,
+      "avg_likes": 0.17,
+      "avg_views": 36.3,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 27.7,
+      "avg_views": 24.5,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4483
+      "count": 4421
     },
     {
       "type": "quote",
-      "count": 376
+      "count": 379
     },
     {
       "type": "quote_gif",
-      "count": 168
+      "count": 173
     },
     {
       "type": "post",
-      "count": 34
+      "count": 33
     },
     {
       "type": "hotake",
-      "count": 29
+      "count": 25
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-24T06:08:39.249593",
-      "text": "Treat earnings like your kid’s report card? You’ll cry when it says “needs improvement” even if he just got an A in math 😭",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-24T06:02:25.790053",
-      "text": "The best chart signal isn't on your screen. It's in the DM of the guy who sold at $1,800 and still checks the price every morning.",
+      "ts": "2026-08-24T10:10:07.975181",
+      "text": "5 business days of earnings. Your 401k can survive that, your sleep schedule probably cannot. Close the app, not the position.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-24T05:53:32.816862",
-      "text": "WhiteBIT's token hitting ATH is the exchange printing equity to buy back its own risk. They didn't reward you for holding; they rewarded you for trusting them with the leverage while their backend catches fire behind the curtain.",
+      "ts": "2026-08-24T10:05:03.009257",
+      "text": "“Don't be a sheep” from a man who bought at $12 is the same energy as my 4-year-old saying 'I'm too big for this nap.' 😂",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-24T09:59:35.029216",
+      "text": "Samsung drops because Apple buys Chinese DRAM. The US government didn't break the supply chain, it just let a customer shop at Costco while holding a tariff sign.",
       "type": "reply"
     }
   ]
