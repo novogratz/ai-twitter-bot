@@ -2172,7 +2172,9 @@
     "ThibaultLapeyre",
     "Mounir_Souilah",
     "OlivierBastide",
-    "Marie_Popineau"
+    "Marie_Popineau",
+    "Julien_Savoy",
+    "LukasKager"
   ],
   "en": [
     "Chubby",
@@ -2611,7 +2613,8 @@
     "Ayzaa",
     "mert",
     "OddStats",
-    "Variety"
+    "Variety",
+    "theficouple"
   ],
   "history": [
     {
@@ -15662,6 +15665,21 @@
     {
       "lang": "fr",
       "handle": "Marie_Popineau",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "theficouple",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "Julien_Savoy",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "LukasKager",
       "added": "2026-08-23"
     }
   ]
