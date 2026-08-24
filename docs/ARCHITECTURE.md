@@ -75,8 +75,8 @@ main.py
 
 | Module | Cadence | Output |
 |---|---|---|
-| `run_post_slot` (main.py) | cron slots across US hours ±15min jitter | ONE original per slot — tries `original_content_engine` first, then news/hotake → breakout → spicy → stunt, stops on the first landed post |
-| `original_content_engine.py` | inside slots | Generates 15-30 standalone candidates, removes semantic duplicates, scores quality/originality/genericness/repetition/factuality, publishes only one winner above threshold |
+| `run_post_slot` (main.py) | cron slots across US hours ±15min jitter | ONE original per slot — source-aware AI impact engine only; weak slots are skipped instead of falling back to generic posts |
+| `original_content_engine.py` | inside slots | Generates 30 standalone candidates, removes semantic duplicates, scores quality/originality/genericness/repetition/factuality, and publishes only a sourced or AI-mechanism-rich winner above threshold |
 | `main_post_growth.py` | startup + every 2h | Builds separate original/reply analytics, opportunity queue, rewards dashboard, editorial brief, approval queue, experiments |
 | `agent.py` / `hotake_agent.py` | inside slots | News post / hot take (therapist-framed, no URL in body) |
 | `breakout_bot.py` | inside slots | Fast-trend reaction post |

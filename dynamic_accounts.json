@@ -2183,7 +2183,11 @@
     "julienbap",
     "yannic_g",
     "pascal_dubois",
-    "alexgarcia_92"
+    "alexgarcia_92",
+    "Yannic_Keller",
+    "NicolasCanoFR",
+    "Lemaitre_Paul",
+    "Sarah_FinTechFR"
   ],
   "en": [
     "Chubby",
@@ -2626,7 +2630,9 @@
     "theficouple",
     "Murad",
     "Iqra",
-    "Francesco"
+    "Francesco",
+    "TCC",
+    "effectfully"
   ],
   "history": [
     {
@@ -15752,6 +15758,36 @@
     {
       "lang": "en",
       "handle": "Francesco",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "en",
+      "handle": "TCC",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "en",
+      "handle": "effectfully",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "Yannic_Keller",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasCanoFR",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lemaitre_Paul",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "Sarah_FinTechFR",
       "added": "2026-08-24"
     }
   ]

@@ -17,8 +17,9 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | Variable | Default | Purpose |
 |---|---|---|
 | `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. |
-| `OLLAMA_MODEL` | `orcarouter/Qwen3.8-27B-Uncensored` | Primary local model attempted by the direct Ollama HTTP client. Requires local Ollama `0.32.15+`. |
-| `OLLAMA_FALLBACK_MODELS` | empty | Comma-separated local fallback models. Keep empty for strict Qwen3.8-only operation. |
+| `OLLAMA_MODEL` | `orcarouter/Qwen3.8-27B-Uncensored` | Primary local model for profile/original content. Requires local Ollama `0.32.15+`. |
+| `OLLAMA_REPLY_MODEL` | `fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive` | Reply-only local Ollama override. When set, reply-labeled calls use this model while original posts keep `OLLAMA_MODEL`. |
+| `OLLAMA_FALLBACK_MODELS` | empty | Comma-separated local fallback models. Keep empty for strict configured-model operation. |
 | `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
@@ -169,6 +170,7 @@ AI_CLI=ollama
 LLM_FALLBACK_CLI=
 LLM_DISABLE_FALLBACK=1
 OLLAMA_MODEL=orcarouter/Qwen3.8-27B-Uncensored
+OLLAMA_REPLY_MODEL=fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive
 # Requires Ollama 0.32.15+ locally.
 OLLAMA_FALLBACK_MODELS=
 NEWS_MODEL=gpt-5.4-mini

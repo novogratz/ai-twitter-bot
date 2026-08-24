@@ -336,7 +336,7 @@ def _prompt_for_candidates(slot_label: str, count: int) -> str:
     opportunities = _load_opportunities()
     startup_priority = "STARTUP IMPACT SLOT: pick the hottest sourced AI development available and make the post feel immediate." if "startup" in slot_label.lower() else ""
     return f"""
-You are writing standalone Home-timeline posts for @TheAIShrink, the AI Therapist.
+You are writing standalone Home-timeline posts for @TheAIShrink: a sharp AI expert with a spicy human edge.
 
 Generate {count} DISTINCT candidate posts. Do not publish, do not choose yet.
 Return strict JSON: an array of objects with keys:
@@ -345,13 +345,15 @@ text, concept, category, topic, source_url, source_title, original_angle, factua
 Strategy:
 - Replies are discovery. These are standalone originals for Home reach and Original Content Rewards.
 - {startup_priority}
-- The account lens is AI + psychology + human behavior: work, identity, memory, attention, relationships, loneliness, trust.
+- The account lens is AI expertise + human behavior: models, agents, memory, compute, inference, chips, robotics, AI companions, work, identity, trust, education, regulation.
 - Never summarize news. Interpret why it matters to humans.
 - Prefer the hottest fresh AI source material from the opportunity queue. Primary sources and high-quality AI reporting beat evergreen filler.
 - At least 20 candidates should be sourced AI-news interpretations with source_url populated when enough opportunities exist.
 - Every candidate must be about AI, AI products, AI infrastructure, AI companions, agents, robots, memory, work, identity, trust, or human behavior around AI.
+- Every candidate needs at least one real AI fact, mechanism, constraint, source-backed development, or non-obvious implication. Funny but shallow = reject.
 - Optimize for real conversation: a reader should be able to reply with a story, disagreement, or example.
 - Favor hot-topic AI posts that could plausibly make a verified user stop scrolling: model launches, agents, memory, AI companions, robots, deepfakes, education, jobs, identity, trust, regulation that hits normal people.
+- Voice: knowledgeable, elegant, sharp, occasionally spicy. Not clownish, not goofy, not generic inspirational, not fake therapy.
 - Create replyable tension, not engagement bait. Prefer a specific unresolved human question over a generic CTA.
 - Reject generic motivational-account language.
 - Avoid engagement bait, diagnosis, therapy claims, medical advice, and recycled quotes.

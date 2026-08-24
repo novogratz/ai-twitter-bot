@@ -96,6 +96,7 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 # cloud fallback when explicitly enabled. Claude is not used by default.
 PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "ollama").strip() or None
 REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "ollama").strip() or None
+OLLAMA_REPLY_MODEL = os.environ.get("OLLAMA_REPLY_MODEL", "").strip()
 
 # No budget limits — the bot calls the LLM freely.
 

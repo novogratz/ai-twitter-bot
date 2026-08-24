@@ -2190,17 +2190,17 @@ def test_core_identity_has_likes_principle():
     assert "relatable" in txt and "view" in txt
 
 
-def test_core_identity_positive_obsessed_energy():
-    """Operator 2026-06-09: relentlessly positive, AI-obsessed, feel-good
-    enthusiast about life + AI; make people feel good (real therapist).
-    The voice anchor must carry this energy so it drives every surface."""
+def test_core_identity_ai_expert_energy():
+    """2026-08-24: profile/quote posts must stop sounding like clown therapy.
+    The spine should optimize for useful AI expertise first, with optimism and
+    spice as controlled tone, not the substance."""
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     txt = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "relentlessly positive" in txt
-    assert "obsessed with ai" in txt
-    assert "feel good" in txt or "feel good." in txt
-    assert "never doom" in txt  # positivity must exclude doom/cynicism
+    assert "ai expert first" in txt
+    assert "real news, real mechanisms" in txt
+    assert "make people smarter" in txt
+    assert "never doom, never clown, never cruel" in txt
 
 
 def test_post_tweet_returns_bool_for_skip_vs_ship():
@@ -3157,28 +3157,26 @@ def test_reply_search_surface_disabled_by_default(monkeypatch):
     assert calls == ["safari", "llm"], "ENABLE_REPLY_SEARCH=1 must re-arm the surface"
 
 
-def test_persona_is_woman_mom_therapist_across_surfaces():
-    """Operator 2026-07-19: 'she is a mom, a 35-40yo therapist... make her
-    sound like a woman' + 'the sharpest AI therapist that knows AI more than
-    anyone else'. The persona must be pinned in the spine (core_identity,
-    injected into every prompt) AND in the per-surface prompt openers that
-    define their own identity — so no surface drifts back to the neutral/
-    male voice. Also pins that the bestie bit moved big brother -> sister."""
+def test_persona_is_woman_ai_expert_across_surfaces():
+    """2026-08-24: preserve the magnetic woman voice, but make AI expertise
+    the default public identity. The therapist/mom bit is no longer the core
+    mechanic for main posts and quote posts."""
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "woman" in spine and "mom" in spine and "35-40" in spine
-    assert "sharpest ai mind" in spine
+    assert "woman" in spine and "35-40" in spine
+    assert "sharpest ai operators" in spine or "sharpest ai minds" in spine
+    assert "therapist wink is secondary" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
     from src import direct_reply, quote_tweet_bot, hotake_agent, agent, btc_blitz
     assert "a woman, 35-40" in direct_reply.REPLY_PROMPT.lower()
-    assert "mom" in direct_reply.REPLY_PROMPT.lower()
     assert "a woman, 35-40" in quote_tweet_bot.QUOTE_PROMPT.lower()
-    assert "therapist mom" in hotake_agent.HOTAKE_PROMPT.lower()
+    assert "sharp, magnetic woman" in hotake_agent.HOTAKE_PROMPT.lower()
+    assert "clown account" in hotake_agent.HOTAKE_PROMPT.lower()
     import inspect
     agent_src = inspect.getsource(agent)
-    assert "practicing\ntherapist and mom" in agent_src or "therapist and mom" in agent_src
+    assert "sharpest ai mind" in agent_src.lower() or "ai expert" in spine
     blitz_src = inspect.getsource(btc_blitz).lower()
     assert "big sister" in blitz_src and "big brother" not in blitz_src
 
@@ -3527,6 +3525,26 @@ def test_spicy_dial_suggestive_never_explicit():
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
     assert "spicy dial" in spine and ("flirty" in spine or "flirt" in spine)
     assert "never explicit" in spine and "the wink, not the wardrobe" in spine
+
+
+def test_ai_expert_voice_replaces_clown_therapist_default():
+    spine = open("core_identity.md").read().lower()
+    quote = open("src/quote_tweet_bot.py").read().lower()
+    original = open("src/original_content_engine.py").read().lower()
+    hotake = open("src/hotake_agent.py").read().lower()
+
+    assert "ai expert first" in spine
+    assert "real news, real mechanisms" in spine
+    assert "the therapist wink is secondary" in spine
+    assert "no clown reactions" in spine
+    assert "humor cannot replace it" in spine
+
+    for prompt in (quote, original, hotake):
+        assert "mechanism" in prompt
+        assert "funny but shallow" in prompt or "humor is seasoning" in prompt
+
+    assert "not here to clown-react" in quote
+    assert "clown account" in hotake
     assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
     assert "smart is the sexy" in spine, "authority must ride with the heat"
 
@@ -3749,12 +3767,30 @@ def test_ollama_http_tries_configured_fallback_model(monkeypatch):
     assert calls == ["broken-primary", "working-fallback"]
 
 
-def test_run_script_uses_env_ollama_model_for_prewarm():
+def test_ollama_reply_model_override_only_affects_reply_labels(monkeypatch):
+    from src import llm_client
+
+    monkeypatch.setattr(llm_client, "OLLAMA_MODEL", "orcarouter/Qwen3.8-27B-Uncensored")
+    monkeypatch.setattr(
+        llm_client,
+        "OLLAMA_REPLY_MODEL",
+        "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive",
+    )
+
+    assert llm_client._ollama_primary_model_for_label("DIRECT_REPLY") == \
+        "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive"
+    assert llm_client._ollama_primary_model_for_label("REPLYBACK") == \
+        "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive"
+    assert llm_client._ollama_primary_model_for_label("ORIGINAL_CONTENT_CANDIDATES") == \
+        "orcarouter/Qwen3.8-27B-Uncensored"
+
+
+def test_run_script_prewarms_profile_and_reply_ollama_models():
     run_sh = open("bin/run.sh").read()
 
     assert 'source "$REPO_DIR/.env"' in run_sh
     assert "orcarouter/Qwen3.8-27B-Uncensored" in run_sh
+    assert "OLLAMA_REPLY_MODEL" in run_sh
     assert "Refusing to start with any other model" in run_sh
     assert "OLLAMA_FALLBACK_MODELS" not in run_sh
     assert "qwen3:8b" not in run_sh
-    assert "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive" not in run_sh

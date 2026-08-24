@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-05T13:36:45.827463",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Adrian_Bourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "L'ancien de Mistral qui transforme le LLM en blague de caf\u00e9. Il twitte l'IA comme un patron de bar qui conna\u00eet tout le monde."
-      },
-      {
-        "handle": "AlexisBa",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "L'humoriste geek qui explique la tech sans dormir. Ses threads sur les startups sont aussi pointus que ses punchlines sont acides."
-      },
-      {
-        "handle": "AntoineBourgeois",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Le sp\u00e9cialiste du SaaS qui donne des conseils actionnables sans vendre du r\u00eave. Moins de 'toxic hustle', plus de r\u00e9sultats concrets."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui ont du sel en plus de leurs followers. Une s\u00e9lection mixant l'humour fran\u00e7ais et la rigueur qu\u00e9b\u00e9coise."
-  },
-  {
     "ts": "2026-08-05T15:36:23.888955",
     "raw_count": 8,
     "kept_count": 2,
@@ -8389,5 +8358,43 @@
       }
     ],
     "summary": "J'ai d\u00e9capit\u00e9 les vendeurs de formations \u00e0 99\u20ac pour te garder ceux qui ont des tripes (et un peu de flair). Des analystes qui twittent en FR, pas des bots \u00e0 la con."
+  },
+  {
+    "ts": "2026-08-24T12:13:19.471474",
+    "raw_count": 4,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Yannic_Keller",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 80000,
+        "reason": "Journaliste crypto qui explique les m\u00e9ga-caps mieux que ton banquier."
+      },
+      {
+        "handle": "NicolasCanoFR",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Fondateur de Mistral AI qui twitte comme si le GPU \u00e9tait son animal de compagnie."
+      },
+      {
+        "handle": "Lemaitre_Paul",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Traders montr\u00e9alais qui savent qu'un stop-loss, c'est juste l'art de savoir perdre."
+      },
+      {
+        "handle": "Sarah_FinTechFR",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Analyste \u00e0 NYC qui twitte en FR pour se donner des airs d'intellectuelle."
+      }
+    ],
+    "summary": "Quatre noms propres qui valent mieux qu'une liste de botnets : un fondateur IA brillant, deux analystes solides et une fintech qui s'\u00e9gare dans la diaspora. Rien que du vrai pour ton feed h\u00e9t\u00e9rozygote."
   }
 ]
