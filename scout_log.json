@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-05T07:37:05.143865",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SachaVH",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'ancien de Coinhouse. Il tweet en FR/EN selon l'humeur du BTC. Moins 'influencer lifestyle', plus 'trader qui a vu des crashs et qui s'en branle'. Pas de formation \u00e0 vendre, juste de la logique."
-      },
-      {
-        "handle": "GaspardG",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'ex-Hedge Funder qui a tout quitt\u00e9 pour twitt\u00e9rer. Il ne vend pas de r\u00eaves, il montre les cicatrices. Le meilleur compte 'valeurs frugales' qui ne te demande pas de rejoindre son canal Telegram \u00e0 19\u20ac/mois."
-      },
-      {
-        "handle": "JulienDeWaele",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le prof en costard qui explique l'IA aux non-codes. Il tweet en FR avec une rigueur d'ing\u00e9nieur et l'humour sec d'un qu\u00e9b\u00e9cois qui voit venir la bulle \u00e0 5km."
-      },
-      {
-        "handle": "EricYLegare",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le vieux loup de la Plati\u00e8re. Il tweet en FR avec des vues contraires qui font peur aux algorithmes. Pas de gadgets, juste des cashflows et des dividendes."
-      }
-    ],
-    "summary": "Cinq profils solides, z\u00e9ro formateur \u00e0 la s\u00e9rieuse, tous actifs dans leur niche. On a mix\u00e9 les v\u00e9t\u00e9rans du trading et les nouveaux acteurs de l'IA pour \u00e9viter l'effet 'groupe WhatsApp qui se like tout seul'."
-  },
-  {
     "ts": "2026-08-05T09:36:37.825823",
     "raw_count": 10,
     "kept_count": 7,
@@ -8382,5 +8344,57 @@
       }
     ],
     "summary": "J'ai \u00e9pluch\u00e9 les r\u00e9seaux sans m'avoir \u00e0 la merde : voici trois comptes qui parlent vrai (en FR) au lieu de vendre leur dernier tee-shirt NFT."
+  },
+  {
+    "ts": "2026-08-24T00:12:52.527732",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "cryptobruno",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 80000,
+        "reason": "Onboarding crypto FR accessible. Il explique les on-chain sans faire semblant de pr\u00e9dire le futur du bitcoin \u00e0 chaque post."
+      },
+      {
+        "handle": "mister_benoit",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Boursier en France qui ne dort pas. Analyse technique r\u00e9elle, pas des 'signaux d'achat' color\u00e9s rose n\u00e9on."
+      },
+      {
+        "handle": "guitrou",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Macro et actions US/FR avec une vulgarisation s\u00e8che qui \u00e9vite le jargon de banquier. Le contraire du 'guru' Telegram."
+      },
+      {
+        "handle": "maxime_klein_fr",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "VC et startup. Il spotte les trends IA avant qu'elles ne deviennent des m\u00e8mes LinkedIn."
+      },
+      {
+        "handle": "theiafrance",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Diaspora ou expats FR couvrant l'IA. Contenu bilingue utile pour ceux qui veulent lire le tech stack US sans traduire tout le tweet."
+      },
+      {
+        "handle": "julienbap",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Tech et IA au Qu\u00e9bec sans le blabla marketing. Il twitte comme un dev qui a fini sa bi\u00e8re : direct, pertinent, jamais ennuyeux."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour garder que ceux qui postent du signal : macro FR, tech QC et quelques expats US capables de faire le pont entre les deux mondes sans se prendre au s\u00e9rieux."
   }
 ]

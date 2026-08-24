@@ -17074,3 +17074,11 @@ Bitcoin surged 26%, liquidating over $5 billion worth of shorts in the largest s
 Over $500 billion was added to the
   - https://x.com/cryptorover/status/2091375627949761000
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).
+
+## 2026-08-24
+- **@polymarketmoney** (92 likes, score 9/10) — BREAKING: Breaking: Nvidia is reportedly in talks to invest “multiple billions of dollars” in Perplexity at a valuation above $30,000,000,000.00.
+  - https://x.com/PolymarketMoney/status/2091728669723238845
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 102).
+- **@mtslive** (168 likes, score 9/10) — SITUATION BREWING: Nvidia is in talks to invest in Perplexity AI at a $30 billion valuation, per The Information.
+  - https://x.com/MTSlive/status/2091728273307009442
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 192).

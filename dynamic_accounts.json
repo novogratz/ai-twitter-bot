@@ -2174,7 +2174,13 @@
     "OlivierBastide",
     "Marie_Popineau",
     "Julien_Savoy",
-    "LukasKager"
+    "LukasKager",
+    "cryptobruno",
+    "mister_benoit",
+    "guitrou",
+    "maxime_klein_fr",
+    "theiafrance",
+    "julienbap"
   ],
   "en": [
     "Chubby",
@@ -2614,7 +2620,9 @@
     "mert",
     "OddStats",
     "Variety",
-    "theficouple"
+    "theficouple",
+    "Murad",
+    "Iqra"
   ],
   "history": [
     {
@@ -15681,6 +15689,46 @@
       "lang": "fr",
       "handle": "LukasKager",
       "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Murad",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Iqra",
+      "added": "2026-08-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptobruno",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "mister_benoit",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "guitrou",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_klein_fr",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "theiafrance",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "julienbap",
+      "added": "2026-08-24"
     }
   ]
 }
