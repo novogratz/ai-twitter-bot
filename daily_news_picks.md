@@ -16999,3 +16999,15 @@ Every time, it came back stronger.
 Notice
   - https://x.com/SujalJethwani/status/2088572406856122723
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
+
+## 2026-08-24
+- **@vaibhavsisinty** (189 likes, score 9/10) — Xiaomi went from buying Qualcomm chips to designing its own 3nm silicon in a year. And they didn't stop at one chip they announced three. 
+
+The Xring O3 phone chip:
+
+→ TSMC 3nm. 24 billion transistors
+  - https://x.com/VaibhavSisinty/status/2091854924799971824
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 209).
+- **@vllm_project** (58 likes, score 9/10) — Congratulations to @SemiAnalysis_ on the release of AgentX 1.0 , an open-source multi-turn agentic coding benchmark collected from ~$3M of real traces, running on 1000+ chips and ~2MW of continuously
+  - https://x.com/vllm_project/status/2092040745842774377
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 66).
