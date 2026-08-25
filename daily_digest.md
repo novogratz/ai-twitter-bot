@@ -1459,3 +1459,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 11 views: Polymarket’s using LLMs to simulate voters because humans are too expensive to disappoint twice in o
   - 1 likes / 22 views: the weights are confusing? buddy, I can't explain my own 5-year-old's logic and he draws better than
   - 1 likes / 88 views: Ansem forgot step zero: knowing which coin is going up before you buy it. That’s not trading; that’s
+
+## 2026-08-24
+
+**Activity** — total actions: 455
+  - by type: reply=348, quote=60, quote_gif=38, retweet=4, post=3, hotake=2
+  - top sources: SEARCH-HOT=221, FEED-SWEEP-FEED=60, QUOTE=46, GIF=38, FEED-SWEEP-FOLLOWING=36, DEBATE=16, VIP=11, BREAKING_QRT=9
+  - comedy patterns: METAPHOR=1
+  - top reply targets: @TheBTCTherapist=10, @Cointelegraph=9, @cryptorover=5, @rohanpaul_ai=5, @BitcoinArchive=5
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 280 likes / 125639 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 25 views: my clients don't ask me to fix their Bitcoin, they just want me to tell them it's okay to check the 
+  - 1 likes / 67 views: Michael Burry shorting AI is like selling stocks because you fear your car might fly. Respectfully, 

@@ -1951,7 +1951,13 @@
     "MaximeLarcher",
     "VincentAubert",
     "BorisRabault",
-    "JulienBoulard"
+    "JulienBoulard",
+    "AdrienBoulayFr",
+    "NinaDucasse",
+    "JulesBertin",
+    "MaximeRog",
+    "YannMou",
+    "MehdiDjennad"
   ],
   "en": [
     "Chubby",
@@ -2352,7 +2358,9 @@
     "AG",
     "Areeba",
     "Cursor",
-    "David"
+    "David",
+    "Argona",
+    "shafu"
   ],
   "history": [
     {
@@ -14109,6 +14117,46 @@
       "lang": "fr",
       "handle": "JulienBoulard",
       "added": "2026-08-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Argona",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "en",
+      "handle": "shafu",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienBoulayFr",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "NinaDucasse",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBertin",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRog",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannMou",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiDjennad",
+      "added": "2026-08-24"
     }
   ]
 }
