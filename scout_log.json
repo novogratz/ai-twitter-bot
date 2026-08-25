@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-30T21:50:10.221883",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BourseRapide",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Scrap les carnets d'ordres en temps r\u00e9el. Si tu veux voir la bourse saigner en live, c'est ici. Z\u00e9ro blabla."
-      },
-      {
-        "handle": "The_AI_Shark",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Ex-Hedge Fund, poste des threads 'boring' sur les data centers qui explosent les rentabilit\u00e9s. Pas de pepsi, que du b\u00e9ton."
-      },
-      {
-        "handle": "SiliconCite",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Un Qu\u00e9b\u00e9cois \u00e0 SF qui mixe IA et geopolitique. Le genre de thread qui te fait comprendre pourquoi ton action tombe."
-      },
-      {
-        "handle": "AI_Brunch",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Diaspora parisienne \u00e0 SF. D\u00e9cortique les papers arXiv et les rend digestes pour les VC qui ont peur des maths."
-      },
-      {
-        "handle": "CryptoCoyote",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Le roi des memes techniques au Qu\u00e9bec. Si il twitte en fran\u00e7ais, c'est que la blockchain va mal."
-      },
-      {
-        "handle": "LemieuxCrypto",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Jorn Lundin style qu\u00e9b\u00e9cois. Analyse on-chain froide qui pique les boules des shillers de solana."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse brute de la Bourse Parisienne et la tech de SF. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder des pros qui twittent pour eux-m\u00eames."
-  },
-  {
     "ts": "2026-07-30T23:50:07.923500",
     "raw_count": 9,
     "kept_count": 5,
@@ -8977,5 +8925,29 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 pour ne garder que des profils 'analyse r\u00e9elle'. On \u00e9vite les vendeurs de r\u00eaves Telegram et on privil\u00e9gie ceux qui expliquent pourquoi un truc est nul ou g\u00e9nial sans se prendrer la t\u00eate. Le mix FR/QC/USA diaspora permet d'avoir une vue triangulaire intelligente."
+  },
+  {
+    "ts": "2026-08-25T13:03:07.194308",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_david_dubois_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'analyste on-chain qui ne vend que des donn\u00e9es brutes. Z\u00e9ro hype, z\u00e9ro Telegram VIP."
+      },
+      {
+        "handle": "MaxMauriceGagnon",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le trader qc qui d\u00e9construit les bougies comme un chef cuisinier d\u00e9poussi\u00e8re une courge."
+      }
+    ],
+    "summary": "Le scout a filtr\u00e9 les influenceurs formations pour ne garder que des profils techniques ou journalistiques solides sur chaque territoire."
   }
 ]

@@ -1967,7 +1967,8 @@
     "BenjaminBelin",
     "CryptoKlepto",
     "MaximeDehaeze",
-    "Alexis_Ba_"
+    "Alexis_Ba_",
+    "_david_dubois_"
   ],
   "en": [
     "Chubby",
@@ -2374,7 +2375,9 @@
     "Lookonchain",
     "lynk",
     "DonAlt",
-    "EKO"
+    "EKO",
+    "Self",
+    "Perplexity"
   ],
   "history": [
     {
@@ -14240,6 +14243,21 @@
     {
       "lang": "fr",
       "handle": "Alexis_Ba_",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Self",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "_david_dubois_",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Perplexity",
       "added": "2026-08-25"
     }
   ]
