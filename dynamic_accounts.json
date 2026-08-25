@@ -1957,7 +1957,10 @@
     "JulesBertin",
     "MaximeRog",
     "YannMou",
-    "MehdiDjennad"
+    "MehdiDjennad",
+    "Lefila",
+    "BenoitCayla",
+    "_HuguesG_"
   ],
   "en": [
     "Chubby",
@@ -2360,7 +2363,9 @@
     "Cursor",
     "David",
     "Argona",
-    "shafu"
+    "shafu",
+    "Lookonchain",
+    "lynk"
   ],
   "history": [
     {
@@ -14157,6 +14162,31 @@
       "lang": "fr",
       "handle": "MehdiDjennad",
       "added": "2026-08-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Lookonchain",
+      "added": "2026-08-24"
+    },
+    {
+      "lang": "en",
+      "handle": "lynk",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lefila",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitCayla",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "_HuguesG_",
+      "added": "2026-08-25"
     }
   ]
 }
