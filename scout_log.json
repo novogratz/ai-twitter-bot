@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-30T17:50:05.527045",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitG_10",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le roi de la d\u00e9contraction financi\u00e8re \u00e0 la fran\u00e7aise. Il prouve qu'on peut \u00eatre pro (ex-Immobili\u00e8re de Saint-Paul) sans avoir le syndrome du prof de maths. M\u00e8me machine, Z-score quotidien."
-      },
-      {
-        "handle": "RomainH",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 33000,
-        "reason": "Fintech VC bas\u00e9 \u00e0 NY mais qui parle le fran\u00e7ais des affaires. Il balance des insights sur la lev\u00e9e de fonds et le SaaS fr qui fait le job sans les chichis de la Valley."
-      },
-      {
-        "handle": "BenoitD",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "CTO de 100Labs. Il twitte la tech avec la candeur d\u2019un ing\u00e9nieur qui vient de d\u00e9couvrir que les prompts co\u00fbtent plus cher que l\u2019eau min\u00e9rale. Pure, sans filtre 'growth hacking'."
-      },
-      {
-        "handle": "EvanS",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 21000,
-        "reason": "Le gars qui fait parler de lui \u00e0 la t\u00eate de l'AI Lab d'Hydrow. Il twitte en anglais mais ses threads IA francophones (ou ses apparitions chez les francos) sont les seules infos 'real tech' \u00e0 Montr\u00e9al."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui construisent ou analysent vraiment. De Beno\u00eet G au top des m\u00e8mes boursiers \u00e0 Alex Clemencot sur l'IA agente, on couvre l'excellence technique avec un bon sens de l'humour. Z\u00e9ro vente de r\u00eave, 100% contenu."
-  },
-  {
-    "ts": "2026-07-30T19:50:23.291226",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HugoMounier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "CTO de Doctolib, il fait parler d'IA, de scale-up et de tech fran\u00e7aise sans vendre de la poudre aux yeux. Le profil 'founder' s\u00e9rieux qui \u00e9vite le buzzword-coma."
-      },
-      {
-        "handle": "JulesDh",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "L'analyste bourse FR qui explique la macro-\u00e9co sans endormir. Il d\u00e9cortique les r\u00e9sultats des entreprises sans se gargariser sur la performance short-term."
-      },
-      {
-        "handle": "0xMerlin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour les cycles BTC/ETH. Pas de shill gratuit, juste du On-Chain data brut et des analyses de cycle qui font mal au c\u0153ur quand \u00e7a baisse."
-      },
-      {
-        "handle": "MaelleRivet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Journaliste IA (ex-ArbasTech). Elle interview les fondus du coin et traduit le jargon technique en choses compr\u00e9hensibles. Pas de hype, du concret."
-      },
-      {
-        "handle": "AdrianGirardFR",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 10000,
-        "reason": "Le roi du 'thread' sur la fintech et la tech financi\u00e8re. Ses analyses sur les business models des startups sont plus utiles que 10 formations \u00e0 999\u20ac."
-      }
-    ],
-    "summary": "Un mix de data-crunchers crypto, d'analystes bourse qui lisent les bilans et de fondateurs tech qui parlent de l'IA sans la vendre comme un cure-dent magique."
-  },
-  {
     "ts": "2026-07-30T21:50:10.221883",
     "raw_count": 10,
     "kept_count": 6,
@@ -8977,5 +8894,88 @@
       }
     ],
     "summary": "La France domine par sa densit\u00e9 de founders tech (Blablacar, Bitpanda), le Qu\u00e9bec est une mine d'or cach\u00e9e en recherche/DeFi, et la diaspora US apporte des liens directs avec SF/NYC. Z\u00e9ro influenceur crypto 'moonboy', ici on reste dans l'intelligence."
+  },
+  {
+    "ts": "2026-08-25T09:03:51.960214",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasLevenezLCAI",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "VC prolixe. Il twitte sur la tech comme il respire : sans filtre, avec un oeil pour les fondamentaux."
+      },
+      {
+        "handle": "CryptoCameleonFr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 50000,
+        "reason": "Ancien trader pro. Ses threads sur le trading sont moins chiantes que la TV aux heures de grande \u00e9coute."
+      },
+      {
+        "handle": "NabilChraibiMBA",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Diaspora FR aux US. Il couvre la Fintec et l'IA avec le cynisme amer des VC de Palo Alto."
+      },
+      {
+        "handle": "BenjaminBelin",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Fondateur de Lendix. Il parle fintec comme un trader qui vient juste de perdre son slip sur Reddit."
+      },
+      {
+        "handle": "Rapha\u00eblDucheminQC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois. Il explique la macro-\u00e9co sans te donner envie de pleurer dans ta benne."
+      }
+    ],
+    "summary": "Le mix parfait : Mistral pour le hard tech FR, les QC pour l'agent AI et une bonne dose de VC/Trading cynique qui \u00e9vitera que ton bot ne devienne un journal t\u00e9l\u00e9vis\u00e9 ennuyeux."
+  },
+  {
+    "ts": "2026-08-25T11:03:11.927317",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoKlepto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 58000,
+        "reason": "L'anti-PowerHasheur. Moins institutionnel, plus de vibes 'moonboy'. Parfait pour varier les plaisirs."
+      },
+      {
+        "handle": "MaximeDehaeze",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 48000,
+        "reason": "L'analyseur de bourse qui comprend enfin le fran\u00e7ais sans passer par un traducteur LinkedIn. C'est rare."
+      },
+      {
+        "handle": "Alexis_Ba_",
+        "region": "france",
+        "niche": "ai/crypto",
+        "followers": 32000,
+        "reason": "Il mixe crypto et IA comme on m\u00e9lange l'huile et le vinaigre : avec conviction. Parfois \u00e7a coince."
+      },
+      {
+        "handle": "Nad\u00e8geLachaux",
+        "region": "france/usa_diaspora",
+        "niche": "ai/tech finance",
+        "followers": 25000,
+        "reason": "Journaliste tech qui couvre la finance de l'IA. Elle a le style \u00e9pur\u00e9 d'une start-up SaaS r\u00e9ussie."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 pour ne garder que des profils 'analyse r\u00e9elle'. On \u00e9vite les vendeurs de r\u00eaves Telegram et on privil\u00e9gie ceux qui expliquent pourquoi un truc est nul ou g\u00e9nial sans se prendrer la t\u00eate. Le mix FR/QC/USA diaspora permet d'avoir une vue triangulaire intelligente."
   }
 ]

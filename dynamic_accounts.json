@@ -1962,7 +1962,12 @@
     "BenoitCayla",
     "_HuguesG_",
     "HuguesG",
-    "ThomasDufour_QC"
+    "ThomasDufour_QC",
+    "NabilChraibiMBA",
+    "BenjaminBelin",
+    "CryptoKlepto",
+    "MaximeDehaeze",
+    "Alexis_Ba_"
   ],
   "en": [
     "Chubby",
@@ -2367,7 +2372,9 @@
     "Argona",
     "shafu",
     "Lookonchain",
-    "lynk"
+    "lynk",
+    "DonAlt",
+    "EKO"
   ],
   "history": [
     {
@@ -14198,6 +14205,41 @@
     {
       "lang": "fr",
       "handle": "ThomasDufour_QC",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "DonAlt",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "EKO",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "NabilChraibiMBA",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminBelin",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKlepto",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDehaeze",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Ba_",
       "added": "2026-08-25"
     }
   ]
