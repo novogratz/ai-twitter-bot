@@ -1445,3 +1445,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 132 views: Qwen beating Opus. me watching Opus finally lose its halo like: "well, there goes the ego tax."
   - 1 likes / 78 views: SpaceX: 10GW AI. $NVDA: “Please stop building datacenters in the stratosphere.”
   - 1 likes / 23 views: Morgan Stanley’s blunt message to Tesla investors is just the market realizing the AI premium has no
+
+## 2026-08-23
+
+**Activity** — total actions: 427
+  - by type: reply=330, quote=59, quote_gif=37, retweet=1
+  - top sources: SEARCH-HOT=234, FEED-SWEEP-FEED=49, QUOTE=47, GIF=37, FEED-SWEEP-FOLLOWING=31, DEBATE=15, BREAKING_QRT=6, HOT_QUOTE=4
+  - top reply targets: @coinbureau=7, @jun_song=6, @DanKornas=6, @rohanpaul_ai=6, @kimmonismus=5
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 11 views: Polymarket’s using LLMs to simulate voters because humans are too expensive to disappoint twice in o
+  - 1 likes / 22 views: the weights are confusing? buddy, I can't explain my own 5-year-old's logic and he draws better than
+  - 1 likes / 88 views: Ansem forgot step zero: knowing which coin is going up before you buy it. That’s not trading; that’s
