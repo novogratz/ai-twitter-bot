@@ -152,25 +152,7 @@ def contains_post_unsafe_leak(text: str) -> bool:
     return False
 
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
-OLLAMA_REPLY_MODEL = os.environ.get("OLLAMA_REPLY_MODEL", "").strip()
-OLLAMA_FALLBACK_MODELS = [
-    m.strip()
-    for m in os.environ.get("OLLAMA_FALLBACK_MODELS", "").split(",")
-    if m.strip() and m.strip() != OLLAMA_MODEL
-]
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-
-_REPLY_LABEL_RE = re.compile(
-    r"(REPLY|REPLYBACK|FOLLOWUP|DEBATE|GRAPHSEO_VIP|MEGA|BTC_BLITZ_REPLY|"
-    r"MANU_BERCY|RECAP_THREAD)",
-    re.IGNORECASE,
-)
-
-
-def _ollama_primary_model_for_label(label: str) -> str:
-    if OLLAMA_REPLY_MODEL and _REPLY_LABEL_RE.search(label or ""):
-        return OLLAMA_REPLY_MODEL
-    return OLLAMA_MODEL
 
 
 _FUNNY_FORCER = (
@@ -245,7 +227,7 @@ def _split_for_chat(prompt: str) -> tuple[str, str]:
     return prompt[:earliest].rstrip(), prompt[earliest:].lstrip()
 
 
-def _run_ollama_http(prompt: str, label: str, timeout: int, primary_model: str | None = None) -> "LLMResult":
+def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     """Hit ollama's /api/generate directly — simple stateless single-shot.
 
     Previously used /api/chat with system+user split for KV cache reuse,
@@ -260,77 +242,65 @@ def _run_ollama_http(prompt: str, label: str, timeout: int, primary_model: str |
     import urllib.request
     import urllib.error
     full_prompt = _FUNNY_FORCER + "/no_think\n\n" + prompt
-    errors: list[str] = []
-    primary = primary_model or _ollama_primary_model_for_label(label)
-    models = [primary] + [m for m in OLLAMA_FALLBACK_MODELS if m != primary]
-    for model_name in models:
-        payload = json.dumps({
-            "model": model_name,
-            "prompt": full_prompt,
-            "stream": False,
-            "keep_alive": "24h",
-            # Disable thinking-mode (qwen3.6 uncensored variants stream their
-            # chain-of-thought into a separate `thinking` field while leaving
-            # `response` empty; with think:false ollama runs in standard
-            # generation mode and the answer lands in `response`).
-            "think": False,
-            "options": {
-                "temperature": 1.0,
-                "top_p": 0.95,
-                "repeat_penalty": 1.15,
-                # The long Décode prompts are regularly 16k-24k chars before
-                # generation. Ollama's default context is too small for that on
-                # many models, which can produce empty responses after a long
-                # wait. Keep the window explicit and overrideable.
-                "num_ctx": int(os.environ.get("OLLAMA_NUM_CTX", "32768")),
-                # 2026-05-22: 256 → 1024 → 1800. Friday Top-5 Décode format
-                # (5 numbered bullets with bold chiffre + acteur + insight +
-                # chute + URL) needs more room. 1800 covers the long-form
-                # path plus URL margin. SKIPs caused by mid-output truncation
-                # were Décode #62 today.
-                "num_predict": int(os.environ.get("OLLAMA_NUM_PREDICT", "1800")),
-            },
-        }).encode("utf-8")
-        req = urllib.request.Request(
-            f"{OLLAMA_BASE_URL}/api/generate",
-            data=payload,
-            headers={"Content-Type": "application/json"},
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                raw = resp.read().decode("utf-8")
-            data = json.loads(raw)
-        except urllib.error.URLError as e:
-            errors.append(f"{model_name}: HTTP error: {e}")
-            continue
-        except (json.JSONDecodeError, ValueError) as e:
-            errors.append(f"{model_name}: non-JSON response: {e}")
-            continue
-        except TimeoutError:
-            errors.append(f"{model_name}: timed out after {timeout}s")
-            continue
-        except Exception as e:
-            errors.append(f"{model_name}: unexpected error: {e}")
-            continue
-        # /api/generate returns {"response": "..."}
-        text = (data.get("response") or "").strip()
-        if not text:
-            meta = {
-                "done": data.get("done"),
-                "done_reason": data.get("done_reason"),
-                "prompt_eval_count": data.get("prompt_eval_count"),
-                "eval_count": data.get("eval_count"),
-                "thinking_chars": len(str(data.get("thinking") or "")),
-                "error": data.get("error"),
-            }
-            errors.append(f"{model_name}: empty response; meta={meta}")
-            continue
-        if model_name != primary:
-            log.info(f"[LLM] {label}: ollama primary failed; using fallback model {model_name}.")
-        return LLMResult(0, text, "")
-    msg = f"{label}: all ollama models failed: {' | '.join(errors)}"
-    log.info(f"[LLM] {msg}")
-    return LLMResult(1, "", msg)
+    payload = json.dumps({
+        "model": OLLAMA_MODEL,
+        "prompt": full_prompt,
+        "stream": False,
+        "keep_alive": "24h",
+        # Disable thinking-mode (qwen3.6 uncensored variants stream their
+        # chain-of-thought into a separate `thinking` field while leaving
+        # `response` empty; with think:false ollama runs in standard
+        # generation mode and the answer lands in `response`).
+        "think": False,
+        "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "repeat_penalty": 1.15,
+            # The long Décode prompts are regularly 16k-24k chars before
+            # generation. Ollama's default context is too small for that on
+            # many models, which can produce empty responses after a long
+            # wait. Keep the window explicit and overrideable.
+            "num_ctx": int(os.environ.get("OLLAMA_NUM_CTX", "32768")),
+            # 2026-05-22: 256 → 1024 → 1800. Friday Top-5 Décode format
+            # (5 numbered bullets with bold chiffre + acteur + insight +
+            # chute + URL) needs more room. 1800 covers the long-form
+            # path plus URL margin. SKIPs caused by mid-output truncation
+            # were Décode #62 today.
+            "num_predict": int(os.environ.get("OLLAMA_NUM_PREDICT", "1800")),
+        },
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        f"{OLLAMA_BASE_URL}/api/generate",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read().decode("utf-8")
+        data = json.loads(raw)
+    except urllib.error.URLError as e:
+        return LLMResult(1, "", f"{label}: ollama HTTP error: {e}")
+    except (json.JSONDecodeError, ValueError) as e:
+        return LLMResult(1, "", f"{label}: ollama returned non-JSON: {e}")
+    except TimeoutError:
+        return LLMResult(124, "", f"{label}: ollama HTTP timed out after {timeout}s")
+    except Exception as e:
+        return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
+    # /api/generate returns {"response": "..."}
+    text = (data.get("response") or "").strip()
+    if not text:
+        meta = {
+            "done": data.get("done"),
+            "done_reason": data.get("done_reason"),
+            "prompt_eval_count": data.get("prompt_eval_count"),
+            "eval_count": data.get("eval_count"),
+            "thinking_chars": len(str(data.get("thinking") or "")),
+            "error": data.get("error"),
+        }
+        msg = f"{label}: ollama returned empty response; meta={meta}"
+        log.info(f"[LLM] {msg}")
+        return LLMResult(1, "", msg)
+    return LLMResult(0, text, "")
 
 
 @dataclass
@@ -726,12 +696,11 @@ def run_llm(
         # enough room to actually finish. 2026-05-15: 26 replies generated,
         # 0 posted in one hour because every call hit the 45s wall.
         effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-        ollama_model = _ollama_primary_model_for_label(label)
         log.info(
             f"[LLM] {label}: ollama primary → ollama HTTP / "
-            f"{ollama_model} (timeout {effective_timeout}s)."
+            f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
         )
-        ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout, primary_model=ollama_model)
+        ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
         if not _should_fallback(ollama_result):
             usable = unwrap_text(ollama_result.stdout, structured_output=structured_output)
             if usable.strip():
@@ -775,13 +744,12 @@ def run_llm(
         if lockout is not None:
             # Floor at DEFAULT — same reason as the opencode branch above.
             effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-            ollama_model = _ollama_primary_model_for_label(label)
             log.info(
                 f"[LLM] {label}: codex locked until "
                 f"{lockout.isoformat(timespec='minutes')} — "
-                f"using ollama HTTP / {ollama_model} (timeout {effective_timeout}s)."
+                f"using ollama HTTP / {OLLAMA_MODEL} (timeout {effective_timeout}s)."
             )
-            return _run_ollama_http(prompt, label=label, timeout=effective_timeout, primary_model=ollama_model)
+            return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
     # Claude lockout REMOVED (operator 2026-06-06: "WE ARE UNLIMITED TOKEN —
     # remove this completely"). Claude is tried on EVERY call; if a single
@@ -813,13 +781,7 @@ def run_llm(
             fb = _fallback_provider(provider)
             if fb in {"ollama", "opencode"}:
                 effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-                fallback_label = f"{label} (codex locked)"
-                return _run_ollama_http(
-                    prompt,
-                    label=fallback_label,
-                    timeout=effective_timeout,
-                    primary_model=_ollama_primary_model_for_label(fallback_label),
-                )
+                return _run_ollama_http(prompt, label=f"{label} (codex locked)", timeout=effective_timeout)
             if fb:
                 fb_model = _fallback_model(model, fb)
                 fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
@@ -838,14 +800,12 @@ def run_llm(
     # Ollama fallback uses the direct local HTTP path.
     if fallback_provider in {"ollama", "opencode"}:
         effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-        fallback_label = f"{label} (fallback)"
-        ollama_model = _ollama_primary_model_for_label(fallback_label)
         log.info(
             f"[LLM] {label}: primary {provider}/{model} failed "
             f"(exit {result.returncode}) — falling back to ollama HTTP / "
-            f"{ollama_model} (timeout {effective_timeout}s)."
+            f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
         )
-        return _run_ollama_http(prompt, label=fallback_label, timeout=effective_timeout, primary_model=ollama_model)
+        return _run_ollama_http(prompt, label=f"{label} (fallback)", timeout=effective_timeout)
 
     fallback_model = _fallback_model(model, fallback_provider)
     fallback_cmd = _build_cmd(

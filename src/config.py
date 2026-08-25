@@ -37,7 +37,7 @@ DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 # 3-5+ original posts/day minimum, led by "Le Décode" insight posts, with
 # quick news takes as the secondary original surface.
 MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "6"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "3"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "8"))
 MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "10"))
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
 
@@ -96,7 +96,6 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 # cloud fallback when explicitly enabled. Claude is not used by default.
 PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "ollama").strip() or None
 REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "ollama").strip() or None
-OLLAMA_REPLY_MODEL = os.environ.get("OLLAMA_REPLY_MODEL", "").strip()
 
 # No budget limits — the bot calls the LLM freely.
 
@@ -118,24 +117,6 @@ BOOST_ENGAGEMENT_POSTS = int(os.environ.get("BOOST_ENGAGEMENT_POSTS", "1"))
 # Retry settings
 MAX_RETRIES = 3
 RETRY_DELAY_SECONDS = 5
-
-# Main-post growth system. Default preserves the current automated publishing
-# behavior; set MAIN_POST_OPERATING_MODE=rewards_eligible to require human
-# review for main posts while keeping the reply engine unchanged.
-MAIN_POST_OPERATING_MODE = os.environ.get("MAIN_POST_OPERATING_MODE", "growth_automation")
-MAIN_POST_REQUIRE_HUMAN_APPROVAL = os.environ.get("MAIN_POST_REQUIRE_HUMAN_APPROVAL", "0") == "1"
-TARGET_HOME_IMPRESSIONS_90D = int(os.environ.get("TARGET_HOME_IMPRESSIONS_90D", "500000"))
-MAIN_POST_MINIMUM_QUALITY_SCORE = int(os.environ.get("MAIN_POST_MINIMUM_QUALITY_SCORE", "84"))
-MAIN_POST_MINIMUM_ORIGINALITY_SCORE = int(os.environ.get("MAIN_POST_MINIMUM_ORIGINALITY_SCORE", "82"))
-MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY = int(os.environ.get("MAIN_POST_DESIRED_OPPORTUNITIES_PER_DAY", "10"))
-REPLY_TO_POST_ENABLED = os.environ.get("REPLY_TO_POST_ENABLED", "1") == "1"
-REPLY_TO_POST_TRIGGER_MULTIPLE = float(os.environ.get("REPLY_TO_POST_TRIGGER_MULTIPLE", "2.0"))
-ORIGINAL_CONTENT_ENGINE_ENABLED = os.environ.get("ORIGINAL_CONTENT_ENGINE_ENABLED", "1") == "1"
-ORIGINAL_CONTENT_CANDIDATES_PER_SLOT = int(os.environ.get("ORIGINAL_CONTENT_CANDIDATES_PER_SLOT", "30"))
-ORIGINAL_CONTENT_TOP_CONCEPTS = int(os.environ.get("ORIGINAL_CONTENT_TOP_CONCEPTS", "8"))
-ORIGINAL_CONTENT_MODEL = os.environ.get("ORIGINAL_CONTENT_MODEL", HOTAKE_MODEL)
-ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE = os.environ.get("ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE", "1") == "1"
-STARTUP_IMPACT_ORIGINAL_ENABLED = os.environ.get("STARTUP_IMPACT_ORIGINAL_ENABLED", "1") == "1"
 
 
 # ---------------------------------------------------------------------------
@@ -163,7 +144,7 @@ DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 # 4→10/day across 8 slots (was 4). More shots on the profile = more chances
 # to land a like-winning post. Spacing dropped to ~75 min so 8 slots fit.
 MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "10"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(80 * 60)))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(75 * 60)))
 POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 
 # Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed

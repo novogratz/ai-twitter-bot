@@ -1417,14 +1417,6 @@ take you've already written."""
     globals()["_last_injected_url_titles"] = injected_url_titles
     log.info(f"[NEWS] Final injected pool: {len(injected_urls)} URLs (topic={decode_topic}).")
 
-    try:
-        from . import main_post_growth
-        growth_brief = main_post_growth.editorial_context_block(max_chars=1400)
-        if growth_brief:
-            performance_section = (performance_section or "") + "\n\n" + growth_brief
-    except Exception:
-        pass
-
     # 2026-05-22 PM (durable): use a SLIM news prompt (~5k chars instead
     # of the 25-30k PROMPT_TEMPLATE) so Claude can actually finish.
     # Diagnostic showed 25k → >5min hang, 3k → 6.8s, 50 → 4s. Smaller

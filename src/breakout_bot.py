@@ -215,13 +215,6 @@ def run_breakout_cycle():
             performance_section = ext + "\n\n" + performance_section
     except Exception:
         pass
-    try:
-        from . import main_post_growth
-        growth_brief = main_post_growth.editorial_context_block(max_chars=1400)
-        if growth_brief:
-            performance_section = growth_brief + "\n\n" + performance_section
-    except Exception:
-        pass
     prompt = BREAKOUT_PROMPT.format(
         trend_context=trend_context[:1500],
         today_date=datetime.now().strftime("%Y-%m-%d"),
@@ -262,23 +255,6 @@ def run_breakout_cycle():
     if respect_list.is_protected(topic.get("author", "")):
         log.info(f"[BREAKOUT] Topic author @{topic.get('author')!r} is on respect list; skipping breakout post.")
         return
-
-    try:
-        from . import main_post_growth
-        if not main_post_growth.should_publish_main_posts():
-            main_post_growth.enqueue_approval_candidate(
-                text,
-                {
-                    "surface": "breakout",
-                    "source_url": topic.get("url", ""),
-                    "source_author": topic.get("author", ""),
-                    "operating_mode": main_post_growth.operating_mode(),
-                },
-            )
-            log.info("[BREAKOUT] Rewards-eligible mode: queued draft for human review.")
-            return
-    except Exception as e:
-        log.info(f"[BREAKOUT] Main-post approval gate failed open: {e}")
 
     # Lock URL in BEFORE posting so a crash can't double-fire.
     history.add(topic["url"])

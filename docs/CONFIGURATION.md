@@ -17,9 +17,6 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | Variable | Default | Purpose |
 |---|---|---|
 | `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. |
-| `OLLAMA_MODEL` | `orcarouter/Qwen3.8-27B-Uncensored` | Primary local model for profile/original content. Requires local Ollama `0.32.15+`. |
-| `OLLAMA_REPLY_MODEL` | `fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive` | Reply-only local Ollama override. When set, reply-labeled calls use this model while original posts keep `OLLAMA_MODEL`. |
-| `OLLAMA_FALLBACK_MODELS` | empty | Comma-separated local fallback models. Keep empty for strict configured-model operation. |
 | `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
@@ -30,7 +27,6 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
 | `QUOTE_MODEL` | `gpt-5.4-mini` | Model for FR quote-post commentary on external tweets. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
-| `ORIGINAL_CONTENT_MODEL` | `HOTAKE_MODEL` | Model for the standalone candidate engine. Uses the profile provider path. |
 | `NEWS_POSTS_PER_CYCLE` | `3` | Number of separate news posts to publish per post cycle. |
 | `NEWS_POST_SPACING_SECONDS` | `120` | Delay between burst news posts. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
@@ -43,22 +39,10 @@ Original content uses LLM cycles + appears on the profile feed; the cap balances
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `MAX_ORIGINALS_PER_DAY` | `10` | Strict cap for standalone originals. Scheduled slots target 7-10 strong AI posts/day; replies are unchanged. |
-| `MIN_SECONDS_BETWEEN_POSTS` | `4800` | 80-minute spacing so originals do not burst or cannibalize each other. |
-| `MAX_NEWS_PER_DAY` | `3` | Real sourced AI-news insight posts. |
-| `MAX_HOTAKES_PER_DAY` | `2` | Higher-bar AI / human-behavior observations. |
-| `MAX_BREAKOUTS_PER_DAY` | `2` | Breakout reactions to major AI stories. |
-| `MAX_SPICY_PER_DAY` | `1` | Rationed contrarian post/question. |
-| `ORIGINAL_CONTENT_ENGINE_ENABLED` | `1` | Enable the rewards-aware standalone engine tried first in each post slot. |
-| `STARTUP_IMPACT_ORIGINAL_ENABLED` | `1` | Try one source-aware hot-AI original during startup instead of waiting for the next slot. |
-| `ORIGINAL_CONTENT_CANDIDATES_PER_SLOT` | `30` | Number of candidate standalone posts to generate and rank per slot. Clamped by the engine to 15-30. |
-| `ORIGINAL_CONTENT_TOP_CONCEPTS` | `8` | Number of top scored candidates retained in `growth/original_post_decisions.json`. |
-| `MAIN_POST_MINIMUM_QUALITY_SCORE` | `84` | Minimum `post_score` required before the original engine can publish. |
-| `MAIN_POST_MINIMUM_ORIGINALITY_SCORE` | `82` | Minimum originality score required before the original engine can publish. |
-| `ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE` | `1` | Reject standalone candidates that are not clearly AI-relevant. |
-| `MAIN_POST_OPERATING_MODE` | `growth_automation` | Set to `rewards_eligible` to queue standalone drafts for review instead of auto-posting. |
-| `MAIN_POST_REQUIRE_HUMAN_APPROVAL` | `0` | Force review queue for standalone drafts regardless of operating mode. |
-| `TARGET_HOME_IMPRESSIONS_90D` | `500000` | Dashboard target for Original Content Rewards progress tracking. |
+| `MAX_NEWS_PER_DAY` | `5` | Real sourced Décode insight posts. |
+| `MAX_HOTAKES_PER_DAY` | `3` | Quick takes on AI / crypto / macro stories. |
+| `MAX_BREAKOUTS_PER_DAY` | `4` | Breakout reactions to viral stories. |
+| `MAX_SPICY_PER_DAY` | `4` | Polarizing takes / questions. |
 
 Threads are 1/day each (`thread_bot` and `digest_thread_bot`) — non-overridable, idempotent state file.
 
@@ -167,38 +151,20 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 ```env
 BOT_HANDLE=TheAIShrink
 AI_CLI=ollama
-LLM_FALLBACK_CLI=
-LLM_DISABLE_FALLBACK=1
-OLLAMA_MODEL=orcarouter/Qwen3.8-27B-Uncensored
-OLLAMA_REPLY_MODEL=fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive
-# Requires Ollama 0.32.15+ locally.
-OLLAMA_FALLBACK_MODELS=
+LLM_FALLBACK_CLI=codex
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini
 PRIORITY_REPLY_MODEL=gpt-5.4-mini
 QUOTE_MODEL=gpt-5.4-mini
 ROAST_MODEL=gpt-5.4-mini
-ORIGINAL_CONTENT_MODEL=gpt-5.4-mini
 NEWS_POSTS_PER_CYCLE=3
 NEWS_POST_SPACING_SECONDS=120
 
-MAX_ORIGINALS_PER_DAY=10
-MIN_SECONDS_BETWEEN_POSTS=4800
-MAX_NEWS_PER_DAY=3
-MAX_HOTAKES_PER_DAY=2
-MAX_BREAKOUTS_PER_DAY=2
-MAX_SPICY_PER_DAY=1
-ORIGINAL_CONTENT_ENGINE_ENABLED=1
-STARTUP_IMPACT_ORIGINAL_ENABLED=1
-ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=30
-ORIGINAL_CONTENT_TOP_CONCEPTS=8
-MAIN_POST_MINIMUM_QUALITY_SCORE=84
-MAIN_POST_MINIMUM_ORIGINALITY_SCORE=82
-ORIGINAL_CONTENT_REQUIRE_AI_RELEVANCE=1
-MAIN_POST_OPERATING_MODE=growth_automation
-MAIN_POST_REQUIRE_HUMAN_APPROVAL=0
-TARGET_HOME_IMPRESSIONS_90D=500000
+MAX_NEWS_PER_DAY=10
+MAX_HOTAKES_PER_DAY=0
+MAX_BREAKOUTS_PER_DAY=4
+MAX_SPICY_PER_DAY=4
 MAX_QUOTES_PER_DAY=80
 MAX_RETWEETS_PER_DAY=30
 RETWEETS_PER_CYCLE=3
@@ -234,7 +200,7 @@ older tables on this page as historical defaults).
 | `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
 | `QUOTE_MIN_LIKES` / `FEED_SWEEP_QUOTE_MIN_LIKES` | `50` / `100` | Mid-size analytical posts are the measured winners (not mega-virals). |
 | `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
-| `MAX_ORIGINALS_PER_DAY` | `10` | Ten hot-AI original attempts across US hours; quality gates may publish fewer. |
+| `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |
 | `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
 | `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
 | `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |

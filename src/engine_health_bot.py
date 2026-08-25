@@ -164,9 +164,9 @@ _SLOT_SURFACES = ("originals",)
 SLOT_EVAL_FROM_HOUR = int(os.environ.get("ENGINE_HEALTH_SLOT_EVAL_FROM", "11"))
 SLOT_EVAL_UNTIL_HOUR = int(os.environ.get("ENGINE_HEALTH_SLOT_EVAL_UNTIL", "22"))
 # Slot window + tries/day for the slots-elapsed baseline clamp (matches the
-# main.py hot-AI original grid: 10 tries 08:05→21:30 NY).
-SLOT_TRIES_PER_DAY = int(os.environ.get("ENGINE_HEALTH_SLOT_TRIES", "10"))
-SLOT_WINDOW_START = 8.08
+# main.py slot grid: ~21 tries 08:30→21:30 NY).
+SLOT_TRIES_PER_DAY = int(os.environ.get("ENGINE_HEALTH_SLOT_TRIES", "21"))
+SLOT_WINDOW_START = 8.5
 SLOT_WINDOW_END = 21.5
 
 

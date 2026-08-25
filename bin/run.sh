@@ -14,13 +14,6 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
-if [[ -f "$REPO_DIR/.env" ]]; then
-  set -a
-  # shellcheck disable=SC1091
-  source "$REPO_DIR/.env"
-  set +a
-fi
-
 # Make sure no other instance is already running (would race on Safari).
 if pgrep -f "python.*main.py" >/dev/null; then
   echo "[run] Another bot is already running. Stopping it first..."
@@ -32,26 +25,15 @@ if pgrep -f "python.*main.py" >/dev/null; then
   fi
 fi
 
-# Pre-warm the local LLMs and pin them in memory for 24h. Cold-loading these
-# models can exceed per-call timeouts. OLLAMA_MODEL drives profile/original
-# posts; OLLAMA_REPLY_MODEL optionally overrides replies only.
+# Pre-warm the local LLM and pin it in memory for 24h. Cold-loading the
+# ~23GB model takes ~170s — longer than the bot's per-call timeout. Use
+# OLLAMA_MODEL from .env so a model swap auto-warms the right one.
 if command -v curl >/dev/null 2>&1; then
-  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-orcarouter/Qwen3.8-27B-Uncensored}"
-  OLLAMA_REPLY_MODEL_NAME="${OLLAMA_REPLY_MODEL:-}"
-  _models=("$OLLAMA_MODEL_NAME")
-  if [[ -n "$OLLAMA_REPLY_MODEL_NAME" && "$OLLAMA_REPLY_MODEL_NAME" != "$OLLAMA_MODEL_NAME" ]]; then
-    _models+=("$OLLAMA_REPLY_MODEL_NAME")
-  fi
-  for _model in "${_models[@]}"; do
-    echo "[run] Pre-warming $_model (keep_alive=24h)..."
-    if ! curl -fsS --max-time 300 http://localhost:11434/api/generate \
-      -d "{\"model\":\"$_model\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
-      >/dev/null 2>&1; then
-      echo "[run] Pre-warm failed for $_model. Refusing to start with any other model."
-      exit 1
-    fi
-    echo "[run] Model warm: $_model"
-  done
+  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive}"
+  echo "[run] Pre-warming $OLLAMA_MODEL_NAME (keep_alive=24h)..."
+  curl -fsS --max-time 300 http://localhost:11434/api/generate \
+    -d "{\"model\":\"$OLLAMA_MODEL_NAME\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
+    >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (model not pulled yet? ollama not running?). Bot will warm on first call."
 fi
 
 # Clear stale bytecode so code changes take effect immediately.
