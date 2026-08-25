@@ -93,10 +93,8 @@ from src.engine_health_bot import safe_run_engine_health_cycle
 from src.first_hour_babysitter import safe_run_babysit_cycle
 from src.conversion_attribution_bot import safe_run_conversion_attribution_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
-from src.main_post_growth import safe_run_main_post_growth_cycle
-from src.original_content_engine import run_original_content_cycle, safe_run_original_content_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
-from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, STARTUP_IMPACT_ORIGINAL_ENABLED, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
+from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
 MONTHLY_STARTUP_STATE_FILE = "monthly_startup_state.json"
 MONTHLY_STARTUP_DAY_UTC = 23
@@ -417,31 +415,35 @@ def main():
         if not _warmup_over_budget():
             log.info("Startup hot-quote burst...")
             safe_run_hot_quote_cycle()
-        # Startup impact original — one source-aware, AI-only standalone post
-        # attempt so a fresh boot does not wait for the next scheduled slot.
-        # Legacy hot-take/breakout/spicy fallbacks stay out of standalone post
-        # inventory; the original engine owns Home-feed posts.
-        if STARTUP_IMPACT_ORIGINAL_ENABLED and not _warmup_over_budget():
-            log.info("Startup impact original: refreshing website signals and trying one hot AI Home-feed post...")
-            try:
-                safe_run_rss_signal_cycle()
-                safe_run_signal_cycle()
-                safe_run_main_post_growth_cycle()
-                run_original_content_cycle("startup-impact-ai")
-            except Exception:
-                log.info("[STARTUP][ORIGINAL] impact post crashed:")
-                traceback.print_exc()
+        # ORIGINALS burst — land a few fresh posts on boot instead of waiting
+        # up to ~2h for the next cron slot (operator: "do more posts", booting
+        # mid-slot must not leave the profile idle). Tries each surface; the
+        # MAX_ORIGINALS_PER_DAY cap + spacing bound the total.
+        from src import action_guard as _ag
+        _orig_target = int(os.environ.get("STARTUP_ORIGINALS", "3"))
+        for _i in range(_orig_target):
+            if _warmup_over_budget():
+                break
+            _before = _ag.count_today(_ag.POST)
+            log.info(f"Startup originals burst {_i+1}/{_orig_target} "
+                     f"(today={_before})...")
+            for _name, _fn in (("hot-take", safe_run_bot_cycle),
+                               ("breakout", safe_run_breakout_cycle),
+                               ("spicy", safe_run_spicy_cycle)):
+                try:
+                    _fn()
+                except Exception:
+                    traceback.print_exc()
+                if _ag.count_today(_ag.POST) > _before:
+                    break  # one original landed this round; next round
+            if _ag.count_today(_ag.POST) <= _before:
+                break  # nothing landed (cap/spacing/no material) — stop trying
 
     # Curator first — builds tracked_accounts.json so the early-reply bots
     # have the bot's own earned scan list from the first cycle (operator
     # 2026-06-07: no more static lists; pinned: TheBTCTherapist + Graphseo).
     from src.account_curator import safe_run_curator_cycle
     safe_run_curator_cycle()
-
-    # Main-post growth intelligence: read-only analytics + opportunity queue.
-    # It explicitly preserves the reply engine; outputs live under growth/.
-    if not args.reply_only:
-        safe_run_main_post_growth_cycle()
 
     # BTC Therapist bestie blitz (operator 2026-06-07 PM): on startup,
     # comment EVERY ≤48h post from @TheBTCTherapist (one reply per tweet,
@@ -523,51 +525,62 @@ def main():
             max_instances=1,
         )
 
-        scheduler.add_job(
-            safe_run_main_post_growth_cycle,
-            trigger=IntervalTrigger(hours=2),
-            id="main_post_growth_job",
-            max_instances=1,
-        )
-
         # ============================================================
-        # POSTING SLOTS:
-        # 7-10 high-impact AI originals/day for Home timeline reach. Replies
-        # remain the high-volume discovery engine; standalone post inventory is
-        # owned by the source-aware original engine so the profile does not
-        # drift into generic hot takes.
-        # Each slot tries exactly one standalone surface. The chokepoint caps
-        # MAX_ORIGINALS_PER_DAY=10 and MIN_SECONDS_BETWEEN_POSTS=80m still
-        # prevent bursts, while quality gates can forfeit weak slots.
+        # POSTING SLOTS (2026-06-07 agent spec, Part 2 — Timing):
+        # one original per US-market slot — ~9:30a open, ~12:30p midday,
+        # ~4:30p close/after-hours, ~8p evening (America/New_York).
+        # Each slot tries the original surfaces in priority order and
+        # stops as soon as ONE of them lands a post (chokepoint count
+        # increments). The 12:30 slot tries the stunt bot FIRST so >=1
+        # daily original tends to carry native media (GIF meme). The
+        # MAX_ORIGINALS_PER_DAY=4 cap + 2.5h spacing keep any stray
+        # surface from double-posting inside a slot.
         # ============================================================
-        def run_post_slot(slot_label: str):
+        def run_post_slot(slot_label: str, stunt_first: bool = False):
             from src import action_guard
             before = action_guard.count_today(action_guard.POST)
-            log.info(f"[SLOT {slot_label}] Trying source-aware AI impact original.")
-            try:
-                safe_run_original_content_cycle(slot_label)
-            except Exception:
-                log.info(f"[SLOT {slot_label}] original-engine crashed:")
-                traceback.print_exc()
-            if action_guard.count_today(action_guard.POST) > before:
-                log.info(f"[SLOT {slot_label}] Filled by original-engine.")
-                return
-            log.info(f"[SLOT {slot_label}] No AI impact original cleared the bar "
-                     f"(slot forfeited, replies unaffected).")
+            surfaces = [
+                ("news/hotake", safe_run_bot_cycle),
+                ("breakout", safe_run_breakout_cycle),
+                ("spicy", safe_run_spicy_cycle),
+                ("stunt", safe_run_viral_stunt_cycle),
+            ]
+            if stunt_first:
+                surfaces.insert(0, surfaces.pop())
+            log.info(f"[SLOT {slot_label}] Trying original surfaces in order: "
+                     f"{[n for n, _ in surfaces]}")
+            for name, fn in surfaces:
+                try:
+                    fn()
+                except Exception:
+                    log.info(f"[SLOT {slot_label}] {name} crashed:")
+                    traceback.print_exc()
+                if action_guard.count_today(action_guard.POST) > before:
+                    log.info(f"[SLOT {slot_label}] Filled by {name}.")
+                    return
+            log.info(f"[SLOT {slot_label}] No surface produced a post "
+                     f"(all skipped — slot forfeited, next slot unaffected).")
 
-        log.info("Posting slots: 10 AI-impact original attempts/day. "
-                 "Goal 7-10 strong posts; replies remain unchanged.")
-        for _slot_hour, _slot_min in (
-            (8, 5),
-            (9, 30),
-            (11, 0),
-            (12, 30),
-            (14, 0),
-            (15, 30),
-            (17, 0),
-            (18, 30),
-            (20, 0),
-            (21, 30),
+        log.info("Posting slots: originals ~10 tries/day across US hours "
+                 "(HUMANIZE mandate 2026-06-10: 'you got spotted as a bot' — "
+                 "24/day at machine cadence was the tell; supersedes the "
+                 "06-09 'DO MORE' grid). 12:30 leads with the GIF stunt. Cap "
+                 "MAX_ORIGINALS_PER_DAY + spacing bound the actual total.")
+        for _slot_hour, _slot_min, _stunt_first in (
+            # DO MORE (operator 2026-06-17): ~30 slots across US hours →
+            # MAX_ORIGINALS_PER_DAY=32. V2 content quality stays; volume only
+            # (the flag was about LIKES, cooled separately). 12:30 = GIF stunt.
+            (7, 30, False), (8, 0, False), (8, 30, False), (9, 0, False),
+            (9, 30, False), (10, 0, False), (10, 30, False), (11, 0, False),
+            (11, 30, False), (12, 0, False), (12, 30, True), (13, 0, False),
+            (13, 30, False), (14, 0, False), (14, 30, False), (15, 0, False),
+            (15, 30, False), (16, 0, False), (16, 30, False), (17, 0, False),
+            (17, 30, False), (18, 0, False), (18, 30, False), (19, 0, False),
+            (19, 30, False), (20, 0, False), (20, 30, False), (21, 0, False),
+            (21, 30, False), (22, 0, False),
+            # 2026-07-19: analyzer's measured best hours are 20:00-23:00 ET
+            # — densify the proven window instead of spreading evenly.
+            (20, 15, False), (21, 15, False), (22, 30, False), (23, 0, False),
         ):
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(
@@ -578,7 +591,7 @@ def main():
                 trigger=CronTrigger(hour=_slot_hour, minute=_slot_min,
                                     timezone="America/New_York", jitter=900),
                 id=f"post_slot_{_slot_hour}h{_slot_min}",
-                kwargs={"slot_label": _label},
+                kwargs={"slot_label": _label, "stunt_first": _stunt_first},
                 max_instances=1,
             )
     if not args.post_only:

@@ -3,12 +3,11 @@
 [![guard-tests](https://github.com/novogratz/ai-twitter-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/novogratz/ai-twitter-bot/actions/workflows/ci.yml)
 [![release](https://img.shields.io/github/v/release/novogratz/ai-twitter-bot)](https://github.com/novogratz/ai-twitter-bot/releases)
 
-> **Sharp AI analysis with human taste. Follow the signal, not the noise.** ⚡
+> **Treating market trauma. AI-powered portfolio therapy. Follow the signal. Heal the fear.** ⚡
 
-A fully autonomous X/Twitter influencer agent that runs, grows, and **improves its own codebase** without human intervention. It operates [@TheAIShrink](https://x.com/TheAIShrink) — a magnetic, data-sharp woman AI expert with a spicy edge: explain what actually changed in AI, why it matters, and what everyone else is missing.
+A fully autonomous X/Twitter influencer agent that runs, grows, and **improves its own codebase** without human intervention. It operates [@TheAIShrink](https://x.com/TheAIShrink) — a warm, data-sharp woman therapist for the AI era (35-40, practicing therapist, mom, and the sharpest AI mind on the timeline): name the fear, validate it, heal it with the precise fact.
 
 No X API. The entire surface is driven through **Safari + AppleScript** browser automation on macOS, with local-first LLM generation (Ollama) and cloud fallback.
-Profile/original generation uses `OLLAMA_MODEL`; replies can be pinned separately with `OLLAMA_REPLY_MODEL` so the high-performing reply engine can stay on the older Qwen3.6 model while originals use Qwen3.8.
 
 ---
 
@@ -18,7 +17,7 @@ Profile/original generation uses `OLLAMA_MODEL`; replies can be pinned separatel
 
 | Layer | Bots | Role |
 |---|---|---|
-| **Content** | `original_content_engine`, `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Original slots are owned by the source-aware AI expert engine: 30 concepts, semantic dedup, quality/originality/genericness/factuality/repetition critics, mandatory AI relevance, and no legacy post-slot fallbacks |
+| **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Originals fire in four US-market slots (9:30a/12:30p/4:30p/8p ET, one per slot, 12:30 leads with the GIF meme); thread bots disabled per the 2026-06-07 spec |
 | **Amplification** | `retweet_bot`, `quote_tweet_bot`, `hot_quote_bot`, `feed_sweeper_bot`, `boost_recycler_bot` | QRT quality lane (≤100/day, 50-like floor, screenshot-worthy or SKIP) — number-reframe + metaphor + closing question on mid-size finance/AI posts; AI-vs-Bitcoin feud bit; own winners recycled via un-RT→re-RT (4h gaps, max 4); plain RTs 0-2/day |
 | **Replies** | `direct_reply`, `reply_bot` (LLM-search, off by default since 2026-07-19 — `ENABLE_REPLY_SEARCH`), `engagement_targeting`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `debate_bot` (mentions-driven debates, 2026-07-19), `follow_engagers_bot` (follow-back farming from repliers), `self_quote_bot` (1/day self-QRT of a winner), `reply_promoter_bot` (1/day best reply becomes a post), `btc_blitz` | The core engine — unlimited throughput, freshest-first; discovery is home/search-only since 2026-06-07 (profile visits gated to own profile + `PROFILE_VISIT_ALLOWLIST`, default TheBTCTherapist); bestie blitz covers every ≤48h BTCTherapist post |
 | **Network** | `engage_bot`, `discover_bot`, `followback_bot`, `smart_unfollow_bot`, `marquee_follow_bot` | Seed-priority follows from the tiered whitelist (300 hard cap, 20/day, ≥10-min gaps, 30-day anti-churn both ways) |
@@ -68,72 +67,6 @@ COLLAPSE ALERT (self-heal) ┼──▶ headless Claude Code session
 
 Every write action funnels through `twitter_client` (`post_tweet` / `quote_tweet` / `reply_to_tweet` / `follow_account` / …) so all ~35 bots obey the same policy with no per-bot rewrites. Details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
-## Main-post growth engine
-
-The account now treats replies and main posts as separate growth engines.
-
-- Replies remain the discovery/acquisition engine and are not broadly redesigned.
-- Main posts are optimized for Home Timeline reach, original account identity, AI + psychology authority, and intellectual continuity.
-- `src/original_content_engine.py` is the first surface in each post slot. It generates many source-aware AI candidates, rejects generic or repetitive drafts, ranks the strongest ideas, publishes or queues only when it clears the stricter quality floor, then drops a best-effort first comment to start the thread.
-- Standalone originals now run as hot-AI impact posts: startup attempts one fresh sourced AI take, then 10 scheduled attempts/day with 80-minute spacing, mandatory AI relevance, and fresh source material preferred. Replies are unchanged.
-- `src/main_post_growth.py` reads existing logs and signals, then writes runtime reports under `growth/`.
-
-Generated runtime outputs:
-
-| File | Purpose |
-|---|---|
-| `growth/main_post_analytics.json` | Main-post-only performance baseline, winner classes, topic/hook stats |
-| `growth/reply_analytics.json` | Reply-only source/topic/style analytics for audience sensing |
-| `growth/opportunity_queue.json` | Ranked main-post opportunities from current signals |
-| `growth/account_memory.json` | Recurring theses, winners/losers, repeated patterns, reply sensor |
-| `growth/editorial_brief.md` | Compact brief injected into main-post prompts |
-| `growth/home_timeline_500k_dashboard.json` | 500k rolling objective dashboard with official-vs-estimated labeling |
-| `growth/main_post_approval_queue.json` | Human-review queue when rewards-oriented mode is enabled |
-| `growth/original_post_decisions.json` | Candidate-level accept/reject logs with critic reasons |
-| `growth/original_post_provenance.json` | Published original-post provenance, source URLs, angles, and candidate hashes |
-
-Run it directly:
-
-```bash
-uv run python - <<'PY'
-from src.main_post_growth import run_growth_cycle
-print(run_growth_cycle())
-PY
-```
-
-Operating modes:
-
-```bash
-# Current behavior: automated main-post publishing, with growth brief injected.
-MAIN_POST_OPERATING_MODE=growth_automation
-
-# Enable the multi-candidate standalone engine.
-ORIGINAL_CONTENT_ENGINE_ENABLED=1
-ORIGINAL_CONTENT_CANDIDATES_PER_SLOT=20
-MAIN_POST_MINIMUM_QUALITY_SCORE=75
-MAIN_POST_MINIMUM_ORIGINALITY_SCORE=75
-
-# Rewards-oriented behavior: main-post drafts are queued for review.
-# Reply behavior is preserved.
-MAIN_POST_OPERATING_MODE=rewards_eligible
-```
-
-For the official X rewards metric, create `official_rewards_metric.json` manually when you have Creator Studio data:
-
-```json
-{
-  "official_qualified_home_impressions_90d": 123456,
-  "recorded_at": "2026-08-18T19:00:00"
-}
-```
-
-Docs:
-
-- [`docs/MAIN_POST_GROWTH_AUDIT.md`](docs/MAIN_POST_GROWTH_AUDIT.md)
-- [`docs/HISTORICAL_PERFORMANCE_ANALYSIS.md`](docs/HISTORICAL_PERFORMANCE_ANALYSIS.md)
-- [`docs/CONTENT_STRATEGY.md`](docs/CONTENT_STRATEGY.md)
-- [`docs/ORIGINAL_CONTENT_REWARDS.md`](docs/ORIGINAL_CONTENT_REWARDS.md)
-
 ## Safety model
 
 - **Hard rules** baked into every prompt (no illegal content, no US-government trolling, protected-accounts respect list) — not overridable by autonomous agents
@@ -146,8 +79,6 @@ Docs:
 ## Quickstart
 
 Requirements: macOS (Safari + AppleScript), Python 3.12+, [uv](https://docs.astral.sh/uv/), [Ollama](https://ollama.com) for local generation, [Claude Code](https://claude.com/claude-code) + [gh](https://cli.github.com) for the autonomous improvement loop.
-
-Local generation is configured to use `orcarouter/Qwen3.8-27B-Uncensored` only. Use Ollama `0.32.15+`; older local runtimes returned loader-level 500s for this split vision / Qwen3.8 GGUF. `bin/run.sh` refuses to start instead of silently running another model.
 
 ```bash
 git clone https://github.com/novogratz/ai-twitter-bot && cd ai-twitter-bot

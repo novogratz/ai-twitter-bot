@@ -48,8 +48,6 @@ You will QUOTE-TWEET this tweet about a hot topic in AI / Space / Investment:
 
 TOPIC CONTEXT: {topic_hint}
 
-{growth_brief}
-
 Write ONE punchy quote in ENGLISH. The goal: make people screenshot it,
 retweet it, and think "this account sees what others don't."
 
@@ -182,17 +180,10 @@ def _search_best_tweet(topic: str) -> Optional[dict]:
 
 
 def _generate_quote(author: str, tweet_text: str, topic_hint: str) -> Optional[str]:
-    growth_brief = ""
-    try:
-        from . import main_post_growth
-        growth_brief = main_post_growth.editorial_context_block(max_chars=1200)
-    except Exception:
-        growth_brief = ""
     prompt = HOT_QUOTE_PROMPT.format(
         author=author,
         tweet_text=tweet_text[:220],
         topic_hint=topic_hint,
-        growth_brief=growth_brief,
     )
     result = run_llm(prompt, QUOTE_MODEL, label="HOT_QUOTE", output_json=False, timeout=90)
     if result.returncode != 0 or not result.stdout:
@@ -285,23 +276,6 @@ def run_hot_quote_cycle() -> None:
             continue
 
         log.info(f"[HOT_QUOTE] Quote: {quote}")
-        try:
-            from . import main_post_growth
-            if not main_post_growth.should_publish_main_posts():
-                main_post_growth.enqueue_approval_candidate(
-                    quote,
-                    {
-                        "surface": "hot_quote",
-                        "source_url": url,
-                        "source_author": author,
-                        "topic": topic[:160],
-                        "operating_mode": main_post_growth.operating_mode(),
-                    },
-                )
-                log.info("[HOT_QUOTE] Rewards-eligible mode: queued quote draft for human review.")
-                return
-        except Exception as e:
-            log.info(f"[HOT_QUOTE] Main-post approval gate failed open: {e}")
 
         try:
             posted = quote_tweet(url, quote)

@@ -1,43 +1,43 @@
-# Weekly review — 2026-W34
+# Weekly review — 2026-W33
 
-Generated 2026-08-23T17:10 (deterministic, from engagement_log + follower_history).
+Generated 2026-08-16T17:58 (deterministic, from engagement_log + follower_history).
 
 ## Account
-- Followers: **3870** (+288 this week)
+- Followers: **3579** (+286 this week)
 - Following: **3500** ⚠️ OVER the 300 cap by 3200
 
 ## Action mix (7 days)
-- reply: 4595 (88%)
-- quote: 366 (7%)
-- quote_gif: 153 (2%)
-- post: 34 (0%)
-- hotake: 29 (0%)
-- retweet: 9 (0%)
+- reply: 4366 (88%)
+- quote: 312 (6%)
+- quote_gif: 119 (2%)
+- post: 61 (1%)
+- hotake: 42 (0%)
+- retweet: 16 (0%)
 
 ## Pillar mix (7 days) — shift toward winners
-- ai_news_take: 2134 (41%)
-- market_trauma: 1431 (27%)
-- other: 1355 (26%)
-- meme_reaction: 168 (3%)
-- reply_bait: 77 (1%)
-- ai_vs_btc: 21 (0%)
+- ai_news_take: 2167 (44%)
+- other: 1304 (26%)
+- market_trauma: 1180 (24%)
+- meme_reaction: 148 (3%)
+- reply_bait: 72 (1%)
+- ai_vs_btc: 45 (0%)
 
 ## Volume by day
-- 2026-08-16: 154 actions
-- 2026-08-17: 786 actions
-- 2026-08-18: 851 actions
-- 2026-08-19: 859 actions
-- 2026-08-20: 874 actions
-- 2026-08-21: 842 actions
-- 2026-08-22: 508 actions
-- 2026-08-23: 312 actions
+- 2026-08-09: 151 actions
+- 2026-08-10: 869 actions
+- 2026-08-11: 881 actions
+- 2026-08-12: 793 actions
+- 2026-08-13: 620 actions
+- 2026-08-14: 573 actions
+- 2026-08-15: 590 actions
+- 2026-08-16: 439 actions
 
 ## Top posts (7 days, by likes — scraped metrics)
-- ❤️3 👁73, 4.1% eng [other] $KAITO $MEXC me refreshing my wallet like it’s a slot machine that just dropped my student loans
-- ❤️2 👁37, 5.4% eng [other] space is the new real estate, and @POTUS is finally selling the lots instead of just building the fences
-- ❤️2 👁31, 6.5% eng [ai_news_take] $NVDA is selling AI War Bonds. You’re buying a treasury note; the market buys a GPU. The patriotism premium is
-- ❤️1 👁88, 1.1% eng [market_trauma] Ansem forgot step zero: knowing which coin is going up before you buy it. That’s not trading; that’s a séance.
-- ❤️1 👁77, 1.3% eng [market_trauma] The only consistent thing on this timeline is how fast we turn every tech launch into a group therapy session 
+- ❤️3 👁132, 2.3% eng [other] Qwen beating Opus. me watching Opus finally lose its halo like: "well, there goes the ego tax."
+- ❤️3 👁111, 2.7% eng [reply_bait] Alphabet and ARM? Sounds less like "what next?" and more like "please stop, my portfolio needs a nap."
+- ❤️2 👁62, 3.2% eng [ai_news_take] CrowdStrike profits because every autonomous AI agent is now a toddler throwing tantrums in your network.  I h
+- ❤️2 👁52, 3.8% eng [ai_news_take] OpenAI’s annualized revenue just cleared $40 billion before the IPO even happens.  My patients are still payin
+- ❤️2 👁51, 3.9% eng [ai_news_take] Tested the new AI customer support bot at my local dry cleaner.  It detected a $12 stain and offered a lifetim
 
 ## Spec targets (2026-06-07 quality barbell)
 - QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week

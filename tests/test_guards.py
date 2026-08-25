@@ -210,197 +210,6 @@ def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     assert "AI math  signal" in out.read_text(encoding="utf-8")
 
 
-# --- main-post growth intelligence --------------------------------------------
-
-def test_main_post_winner_classification():
-    from src.main_post_growth import classify_winner
-
-    assert classify_winner(40, 100) == "FLOP"
-    assert classify_winner(120, 100) == "NORMAL"
-    assert classify_winner(220, 100) == "GOOD"
-    assert classify_winner(350, 100) == "HIT"
-    assert classify_winner(700, 100) == "BREAKOUT"
-
-
-def test_main_post_quality_penalizes_source_paraphrase():
-    from src.main_post_growth import quality_score
-
-    source = "OpenAI launched a new agent model for enterprise workflows"
-    copied = "OpenAI launched a new agent model for enterprise workflows"
-    original = "OpenAI's agent push is not about replacing work. It is about making trust the new UI."
-
-    assert quality_score(original, source_text=source)["overall"] > quality_score(copied, source_text=source)["overall"]
-
-
-def test_main_post_approval_queue(monkeypatch, tmp_path):
-    from src import main_post_growth as mpg
-
-    approval = tmp_path / "approval.json"
-    monkeypatch.setattr(mpg, "APPROVAL_QUEUE_FILE", str(approval))
-    monkeypatch.setattr(mpg, "STATE_DIR", str(tmp_path))
-
-    item = mpg.enqueue_approval_candidate("OpenAI made trust the product.", {"surface": "test"})
-    assert item["status"] == "PENDING_REVIEW"
-    data = json.loads(approval.read_text())
-    assert data[0]["generated_draft"] == "OpenAI made trust the product."
-
-
-def test_main_post_rewards_mode_blocks_auto_publish(monkeypatch):
-    from src import main_post_growth as mpg
-
-    monkeypatch.setenv("MAIN_POST_OPERATING_MODE", "rewards_eligible")
-    assert not mpg.should_publish_main_posts()
-    monkeypatch.setenv("MAIN_POST_OPERATING_MODE", "growth_automation")
-    monkeypatch.setenv("MAIN_POST_REQUIRE_HUMAN_APPROVAL", "0")
-    assert mpg.should_publish_main_posts()
-
-
-def test_original_engine_parses_json_candidates():
-    from src.original_content_engine import parse_candidate_payload
-
-    raw = json.dumps([
-        {
-            "text": "AI memory is not a feature. It is the moment software starts feeling like a relationship.",
-            "concept": "memory shift",
-            "category": "ai_human_behavior",
-            "source_url": "https://openai.com/index/example",
-        }
-    ])
-    candidates = parse_candidate_payload(raw)
-    assert len(candidates) == 1
-    assert candidates[0].category == "ai_human_behavior"
-    assert candidates[0].source_url.startswith("https://")
-
-
-def test_original_engine_penalizes_generic_motivation():
-    from src.original_content_engine import PostCandidate, evaluate_candidate
-
-    generic = evaluate_candidate(PostCandidate("This is your reminder that you are enough. Read that again."))
-    specific = evaluate_candidate(PostCandidate(
-        "AI memory will not feel strange because it remembers facts. It will feel strange because it remembers what scared you in March."
-    ))
-
-    assert generic.scores["genericness_penalty"] > specific.scores["genericness_penalty"]
-    assert "genericness" in generic.rejection_reasons
-
-
-def test_original_engine_ranks_specific_ai_human_post_above_cliche(monkeypatch):
-    from src import original_content_engine as oce
-    from src.original_content_engine import PostCandidate
-
-    monkeypatch.setattr(oce.content_guard, "is_duplicate", lambda text: False)
-    ranked = oce.rank_candidates([
-        PostCandidate("AI is the future. Like if you agree."),
-        PostCandidate(
-            "AI memory changes the relationship with software because it turns scattered chats into emotional continuity. The product is no longer the answer; it is being remembered.",
-            topic="OpenAI memory and emotional attachment",
-            source_url="https://openai.com/index/memory",
-            source_title="OpenAI Blog",
-            factual_claims=["OpenAI memory"],
-        ),
-    ], recent_posts=[])
-
-    assert ranked[0].text.startswith("AI memory")
-    assert ranked[0].accepted
-    assert not ranked[1].accepted
-
-
-def test_original_engine_does_not_publish_when_no_candidate_clears(monkeypatch, tmp_path):
-    from src import original_content_engine as oce
-
-    monkeypatch.setattr(oce, "DECISION_LOG_FILE", str(tmp_path / "decisions.json"))
-    monkeypatch.setattr(oce, "STATE_DIR", str(tmp_path))
-    monkeypatch.setattr(oce, "generate_candidates", lambda slot_label: [
-        oce.PostCandidate("Like if AI is the future."),
-        oce.PostCandidate("Read that again."),
-    ])
-    monkeypatch.setattr(oce, "get_recent_tweets", lambda hours=168: [])
-    monkeypatch.setattr(oce, "post_tweet", lambda text: (_ for _ in ()).throw(AssertionError("must not publish")))
-
-    assert oce.run_original_content_cycle("test-slot") is False
-    data = json.loads((tmp_path / "decisions.json").read_text())
-    assert data[0]["published"] is False
-    assert data[0]["winner_text"] == ""
-
-
-def test_original_engine_drops_first_comment_after_success(monkeypatch, tmp_path):
-    from src import first_comment
-    from src import original_content_engine as oce
-
-    winner = oce.PostCandidate(
-        "AI memory changes software because it turns scattered chats into emotional continuity.",
-        category="ai_human_behavior",
-    )
-    winner.scores = {"post_score": 91, "originality": 88}
-
-    first_comments = []
-    monkeypatch.setattr(oce, "DECISION_LOG_FILE", str(tmp_path / "decisions.json"))
-    monkeypatch.setattr(oce, "PROVENANCE_FILE", str(tmp_path / "provenance.json"))
-    monkeypatch.setattr(oce, "generate_candidates", lambda slot_label: [winner])
-    monkeypatch.setattr(oce, "rank_candidates", lambda candidates, recent_posts=None: [winner])
-    monkeypatch.setattr(oce, "get_recent_tweets", lambda hours=168: [])
-    monkeypatch.setattr(oce, "require_human_approval", lambda: False)
-    monkeypatch.setattr(oce, "post_tweet", lambda text: True)
-    monkeypatch.setattr(oce, "log_post", lambda *a, **k: None)
-    monkeypatch.setattr(first_comment, "post_first_comment", lambda text: first_comments.append(text) or True)
-
-    assert oce.run_original_content_cycle("test-slot") is True
-    assert first_comments == [winner.text]
-
-
-def test_source_registry_scores_primary_ai_human_impact():
-    from src import source_registry as sr
-
-    item = {
-        "topic": "OpenAI launches memory controls for ChatGPT relationships",
-        "source": "OpenAI Blog",
-        "source_url": "https://openai.com/index/memory-controls",
-        "novelty": 90,
-        "insight_potential": 90,
-        "urgency": 90,
-        "saturation": 15,
-    }
-    assert sr.source_tier(item["source_url"], item["source"]) == 1
-    assert sr.news_relevance_score(item) >= 85
-    assert sr.news_relevance_score({"topic": "Bitcoin ETF flows jump", "source": "CoinDesk"}) == 0
-
-
-def test_original_engine_filters_opportunities_to_ai_sources(monkeypatch):
-    from src import original_content_engine as oce
-
-    monkeypatch.setattr(oce, "_read_json", lambda path, default: [
-        {"topic": "Bitcoin ETF flows jump", "source": "CoinDesk", "source_url": "https://www.coindesk.com/x"},
-        {"topic": "Anthropic updates Claude memory for teams", "source": "Anthropic", "source_url": "https://www.anthropic.com/news/memory"},
-    ])
-
-    opportunities = oce._load_opportunities(limit=5)
-
-    assert len(opportunities) == 1
-    assert "Claude memory" in opportunities[0]["topic"]
-    assert opportunities[0]["ai_therapist_news_score"] > 0
-
-
-def test_original_slots_are_hot_ai_only_and_reply_engine_unchanged():
-    src = open("main.py").read()
-    slot_block = src.split("Posting slots: 10 AI-impact original attempts/day", 1)[1].split("if not args.post_only", 1)[0]
-    startup_original_block = src.split("Startup impact original", 1)[1].split("# Curator first", 1)[0]
-
-    assert slot_block.count("scheduler.add_job(") == 1
-    for scheduled in ("(8, 5)", "(9, 30)", "(11, 0)", "(12, 30)", "(14, 0)", "(15, 30)", "(17, 0)", "(18, 30)", "(20, 0)", "(21, 30)"):
-        assert scheduled in slot_block
-    assert "safe_run_bot_cycle" not in slot_block
-    assert "safe_run_breakout_cycle" not in slot_block
-    assert "safe_run_spicy_cycle" not in slot_block
-    assert "safe_run_viral_stunt_cycle" not in slot_block
-    assert "run_original_content_cycle(\"startup-impact-ai\")" in src
-    assert "safe_run_rss_signal_cycle()" in startup_original_block
-    assert "safe_run_signal_cycle()" in startup_original_block
-    assert "safe_run_main_post_growth_cycle()" in startup_original_block
-    assert "safe_run_bot_cycle" not in startup_original_block
-    assert "safe_run_direct_reply_cycle" in src
-    assert "direct_reply_job" in src
-
-
 # --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
 
 def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
@@ -2190,17 +1999,17 @@ def test_core_identity_has_likes_principle():
     assert "relatable" in txt and "view" in txt
 
 
-def test_core_identity_ai_expert_energy():
-    """2026-08-24: profile/quote posts must stop sounding like clown therapy.
-    The spine should optimize for useful AI expertise first, with optimism and
-    spice as controlled tone, not the substance."""
+def test_core_identity_positive_obsessed_energy():
+    """Operator 2026-06-09: relentlessly positive, AI-obsessed, feel-good
+    enthusiast about life + AI; make people feel good (real therapist).
+    The voice anchor must carry this energy so it drives every surface."""
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     txt = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "ai expert first" in txt
-    assert "real news, real mechanisms" in txt
-    assert "make people smarter" in txt
-    assert "never doom, never clown, never cruel" in txt
+    assert "relentlessly positive" in txt
+    assert "obsessed with ai" in txt
+    assert "feel good" in txt or "feel good." in txt
+    assert "never doom" in txt  # positivity must exclude doom/cynicism
 
 
 def test_post_tweet_returns_bool_for_skip_vs_ship():
@@ -2951,14 +2760,13 @@ def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
 def test_engine_health_slots_elapsed_clamp():
     """2026-06-10 12:34 false alarm: 'hotake collapsed: 4 today vs ~14 by
     this hour' — the ~14 came from interval-era days; under the slot regime
-    only the scheduled slot tries had been offered by 12:34, so originals
-    should be judged against the active grid rather than old interval-era
-    days. The originals baseline must clamp to slots elapsed today."""
+    only ~6.5 slot tries had been offered by 12:34, so 4 originals was
+    HEALTHY. The originals baseline must clamp to slots elapsed today."""
     from src import engine_health_bot as ehb
 
-    assert ehb._slots_elapsed(8.0) == 0.0, "no slots before the window opens"
+    assert ehb._slots_elapsed(8.5) == 0.0, "no slots before the window opens"
     mid = ehb._slots_elapsed(12.5)
-    assert 3.0 <= mid <= 4.0, f"~3.4 tries by 12:30, got {mid}"
+    assert 5.5 <= mid <= 7.5, f"~6.5 tries by 12:30, got {mid}"
     assert ehb._slots_elapsed(23) == ehb.SLOT_TRIES_PER_DAY, "full grid after close"
     # And originals is the watched surface (post+hotake folded together —
     # the slot machinery decides which fills a slot, per-surface is noise).
@@ -3157,26 +2965,28 @@ def test_reply_search_surface_disabled_by_default(monkeypatch):
     assert calls == ["safari", "llm"], "ENABLE_REPLY_SEARCH=1 must re-arm the surface"
 
 
-def test_persona_is_woman_ai_expert_across_surfaces():
-    """2026-08-24: preserve the magnetic woman voice, but make AI expertise
-    the default public identity. The therapist/mom bit is no longer the core
-    mechanic for main posts and quote posts."""
+def test_persona_is_woman_mom_therapist_across_surfaces():
+    """Operator 2026-07-19: 'she is a mom, a 35-40yo therapist... make her
+    sound like a woman' + 'the sharpest AI therapist that knows AI more than
+    anyone else'. The persona must be pinned in the spine (core_identity,
+    injected into every prompt) AND in the per-surface prompt openers that
+    define their own identity — so no surface drifts back to the neutral/
+    male voice. Also pins that the bestie bit moved big brother -> sister."""
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "woman" in spine and "35-40" in spine
-    assert "sharpest ai operators" in spine or "sharpest ai minds" in spine
-    assert "therapist wink is secondary" in spine
+    assert "woman" in spine and "mom" in spine and "35-40" in spine
+    assert "sharpest ai mind" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
     from src import direct_reply, quote_tweet_bot, hotake_agent, agent, btc_blitz
     assert "a woman, 35-40" in direct_reply.REPLY_PROMPT.lower()
+    assert "mom" in direct_reply.REPLY_PROMPT.lower()
     assert "a woman, 35-40" in quote_tweet_bot.QUOTE_PROMPT.lower()
-    assert "sharp, magnetic woman" in hotake_agent.HOTAKE_PROMPT.lower()
-    assert "clown account" in hotake_agent.HOTAKE_PROMPT.lower()
+    assert "therapist mom" in hotake_agent.HOTAKE_PROMPT.lower()
     import inspect
     agent_src = inspect.getsource(agent)
-    assert "sharpest ai mind" in agent_src.lower() or "ai expert" in spine
+    assert "practicing\ntherapist and mom" in agent_src or "therapist and mom" in agent_src
     blitz_src = inspect.getsource(btc_blitz).lower()
     assert "big sister" in blitz_src and "big brother" not in blitz_src
 
@@ -3495,21 +3305,20 @@ def test_self_quote_recycles_own_winner_ship_gated(monkeypatch, tmp_path):
     assert len([s for s in shipped if s[0] == "ok"]) == 1, "max 1/day"
 
 
-def test_winner_format_in_prompts_and_impact_slots():
+def test_winner_format_in_prompts_and_evening_slots():
     """2026-07-19: (1) the measured 'me [verb]' winner format (92 likes /
     49K views vs 0-3 baseline) is productized into the hotake + quote
     prompts WITH rationing language (a stamped-on winner is the next bot
-    tell); (2) the original slot grid now targets 7-10 hot-AI Home-timeline
-    attempts/day and keeps evening attempts."""
+    tell); (2) the post-slot grid covers the analyzer's measured best
+    hours through 23:00 ET."""
     from src import hotake_agent, quote_tweet_bot
     for prompt in (hotake_agent.HOTAKE_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
         low = prompt.lower()
         assert 'me [verb]' in low, "measured winner format must be in the prompt"
         assert "1 in 5" in low, "winner format must be rationed"
     src = open("main.py").read()
-    slot_block = src.split("Posting slots: 10 AI-impact original attempts/day", 1)[1].split("if not args.post_only", 1)[0]
-    assert "(20, 0)" in slot_block and "(21, 30)" in slot_block
-    assert "(23, 0)" not in slot_block and "(22, 30)" not in slot_block
+    assert "(23, 0, False)" in src and "(22, 30, False)" in src, \
+        "slot grid must cover the measured 20:00-23:00 ET window"
 
 
 def test_spicy_dial_suggestive_never_explicit():
@@ -3525,26 +3334,6 @@ def test_spicy_dial_suggestive_never_explicit():
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
     assert "spicy dial" in spine and ("flirty" in spine or "flirt" in spine)
     assert "never explicit" in spine and "the wink, not the wardrobe" in spine
-
-
-def test_ai_expert_voice_replaces_clown_therapist_default():
-    spine = open("core_identity.md").read().lower()
-    quote = open("src/quote_tweet_bot.py").read().lower()
-    original = open("src/original_content_engine.py").read().lower()
-    hotake = open("src/hotake_agent.py").read().lower()
-
-    assert "ai expert first" in spine
-    assert "real news, real mechanisms" in spine
-    assert "the therapist wink is secondary" in spine
-    assert "no clown reactions" in spine
-    assert "humor cannot replace it" in spine
-
-    for prompt in (quote, original, hotake):
-        assert "mechanism" in prompt
-        assert "funny but shallow" in prompt or "humor is seasoning" in prompt
-
-    assert "not here to clown-react" in quote
-    assert "clown account" in hotake
     assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
     assert "smart is the sexy" in spine, "authority must ride with the heat"
 
@@ -3726,71 +3515,3 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
                    "this is the killer app for AI agents"):
         ok, why = validate(benign, kind="reply")
         assert ok, f"idiom must pass: {benign!r} ({why})"
-
-
-def test_ollama_http_tries_configured_fallback_model(monkeypatch):
-    """If the requested local model fails to load, keep the cycle alive by
-    trying the configured local fallback model before escalating to provider
-    fallback or dropping the post/reply."""
-    import json
-    import urllib.error
-    import urllib.request
-    from src import llm_client
-
-    calls = []
-
-    class _Resp:
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *_args):
-            return False
-
-        def read(self):
-            return json.dumps({"response": "fallback-ok"}).encode("utf-8")
-
-    def _fake_urlopen(req, timeout):
-        payload = json.loads(req.data.decode("utf-8"))
-        calls.append(payload["model"])
-        if len(calls) == 1:
-            raise urllib.error.URLError("primary loader failed")
-        return _Resp()
-
-    monkeypatch.setattr(llm_client, "OLLAMA_MODEL", "broken-primary")
-    monkeypatch.setattr(llm_client, "OLLAMA_FALLBACK_MODELS", ["working-fallback"])
-    monkeypatch.setattr(urllib.request, "urlopen", _fake_urlopen)
-
-    result = llm_client._run_ollama_http("hello", label="OLLAMA_TEST", timeout=1)
-
-    assert result.returncode == 0
-    assert result.stdout == "fallback-ok"
-    assert calls == ["broken-primary", "working-fallback"]
-
-
-def test_ollama_reply_model_override_only_affects_reply_labels(monkeypatch):
-    from src import llm_client
-
-    monkeypatch.setattr(llm_client, "OLLAMA_MODEL", "orcarouter/Qwen3.8-27B-Uncensored")
-    monkeypatch.setattr(
-        llm_client,
-        "OLLAMA_REPLY_MODEL",
-        "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive",
-    )
-
-    assert llm_client._ollama_primary_model_for_label("DIRECT_REPLY") == \
-        "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive"
-    assert llm_client._ollama_primary_model_for_label("REPLYBACK") == \
-        "fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive"
-    assert llm_client._ollama_primary_model_for_label("ORIGINAL_CONTENT_CANDIDATES") == \
-        "orcarouter/Qwen3.8-27B-Uncensored"
-
-
-def test_run_script_prewarms_profile_and_reply_ollama_models():
-    run_sh = open("bin/run.sh").read()
-
-    assert 'source "$REPO_DIR/.env"' in run_sh
-    assert "orcarouter/Qwen3.8-27B-Uncensored" in run_sh
-    assert "OLLAMA_REPLY_MODEL" in run_sh
-    assert "Refusing to start with any other model" in run_sh
-    assert "OLLAMA_FALLBACK_MODELS" not in run_sh
-    assert "qwen3:8b" not in run_sh

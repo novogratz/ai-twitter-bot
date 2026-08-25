@@ -204,26 +204,5 @@
     ],
     "cadence_factor": 1.0,
     "rationale": "La suppression est active jusqu'à 13h, on coupe le gras (news/spicy) pour laisser le volume des quotes respirer sans saturer. On vise les losers identifiés (AI agents/coding) en les remplaçant par des thèmes plus chauds (NVDA/BTC) pour piquer l'attention."
-  },
-  {
-    "ts": "2026-08-21T20:39:25.906839",
-    "caps": {
-      "MAX_NEWS_PER_DAY": 12,
-      "MAX_HOTAKES_PER_DAY": 12,
-      "MAX_QUOTES_PER_DAY": 180,
-      "MAX_RETWEETS_PER_DAY": 3,
-      "MAX_BREAKOUTS_PER_DAY": 1,
-      "MAX_SPICY_PER_DAY": 1,
-      "MAX_REPLIES_PER_CYCLE": 35,
-      "FOLLOW_BLAST_PER_CYCLE": 4,
-      "LIKE_BOT_PER_CYCLE": 50
-    },
-    "topic_focus": [
-      "NVIDIA: Le casino qui a oublié de payer ",
-      "Mistral: Le gosse de la classe moyenne e",
-      "BTC ETF: La poche de Mamie crypto"
-    ],
-    "cadence_factor": 1.0,
-    "rationale": "On maintient le volume de quotes car c'est le seul truc qui fonctionne (losers: Ed Zitron, winners: Feed-Sweep). Les caps sont calés sur la moyenne de l'historique 168h, sans surchauffe agressive puisque la suppression a été récente."
   }
 ]
