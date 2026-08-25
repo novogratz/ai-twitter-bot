@@ -1,11 +1,15 @@
 {
-  "generated_at": "2026-08-17T22:01:11.803560",
-  "window_7d_actions": 4837,
-  "window_24h_actions": 773,
+  "generated_at": "2026-08-25T01:02:51.457624",
+  "window_7d_actions": 4813,
+  "window_24h_actions": 466,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4836
+      "count": 4811
+    },
+    {
+      "pattern": "RENAME",
+      "count": 1
     },
     {
       "pattern": "METAPHOR",
@@ -14,188 +18,198 @@
   ],
   "worst_patterns": [
     {
+      "pattern": "RENAME",
+      "count": 1
+    },
+    {
       "pattern": "METAPHOR",
       "count": 1
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4836
+      "count": 4811
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 16,
-      "actions": 244
+      "hour": 15,
+      "actions": 272
     },
     {
       "hour": 14,
-      "actions": 240
+      "actions": 235
     },
     {
-      "hour": 15,
-      "actions": 239
+      "hour": 0,
+      "actions": 232
     },
     {
-      "hour": 11,
-      "actions": 231
+      "hour": 21,
+      "actions": 218
     },
     {
-      "hour": 13,
-      "actions": 231
+      "hour": 7,
+      "actions": 215
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2169
+      "count": 2226
     },
     {
       "topic": "IA",
-      "count": 1950
+      "count": 1785
     },
     {
       "topic": "Crypto",
-      "count": 581
+      "count": 615
     },
     {
       "topic": "Bourse",
-      "count": 374
+      "count": 386
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 82
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.034,
+      "7d_rate": 0.017
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2149
-    },
-    {
-      "pillar": "other",
-      "count": 1265
+      "count": 1930
     },
     {
       "pillar": "market_trauma",
-      "count": 1177
+      "count": 1342
+    },
+    {
+      "pillar": "other",
+      "count": 1246
     },
     {
       "pillar": "meme_reaction",
-      "count": 136
+      "count": 193
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 76
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 26
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 352
+      "count": 183
     },
     {
       "pillar": "other",
-      "count": 200
+      "count": 119
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 110
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 38
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.75,
-      "avg_views": 60.5,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 74,
-      "avg_likes": 0.26,
-      "avg_views": 53.4,
+      "pillar": "market_trauma",
+      "posts": 52,
+      "avg_likes": 0.19,
+      "avg_views": 39.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.22,
-      "avg_views": 58.7,
+      "posts": 80,
+      "avg_likes": 0.16,
+      "avg_views": 35.2,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.11,
-      "avg_views": 54.5,
+      "pillar": "ai_news_take",
+      "posts": 62,
+      "avg_likes": 0.08,
+      "avg_views": 38.1,
+      "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 4,
+      "avg_likes": 0.0,
+      "avg_views": 24.5,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 9,
+      "posts": 1,
       "avg_likes": 0.0,
-      "avg_views": 48.9,
-      "low_sample": false
+      "avg_views": 51.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4309
+      "count": 4178
     },
     {
       "type": "quote",
-      "count": 307
+      "count": 387
     },
     {
       "type": "quote_gif",
-      "count": 108
+      "count": 181
     },
     {
       "type": "post",
-      "count": 57
+      "count": 31
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 24
     },
     {
       "type": "retweet",
-      "count": 14
+      "count": 12
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-17T22:00:57.775013",
-      "text": "@HeidingOut is betting on hyperscaler capex cycles while listing component makers as infrastructure.\n$PLTR is a software company, $MU is cyclical memory.\nNvidia sold you the pickaxe; $LITE sells you the glass the pickaxe comes in.\nOne is AI. The rest is supply chain inventory.\nTh",
+      "ts": "2026-08-25T01:00:33.947560",
+      "text": "Elon reposted your grok bot guide. the standard isn't an architecture. it's 401k dave copying a thread instead of studying unit economics. cope wins until margin call comes due.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T21:59:17.133537",
-      "text": "30x est le nouveau 2x. Le marché adore les losers, les gains restent discrets.",
+      "ts": "2026-08-25T00:59:28.015652",
+      "text": "The average investor lags their fund by 4% a year because they try to play this. AI doesn’t care about your timing, only your latency. sit down and let the agents trade for you.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-17T21:58:27.596085",
-      "text": "SPY up 15% YTD while alts are down 40%.\n\nyou didn't buy stocks instead of alts. you bought the only stocks that mattered.",
+      "ts": "2026-08-25T00:59:11.783696",
+      "text": "Nvidia margin is 70%+. Burry’s short pays for itself while you hold the ball. The bear isn't wrong; he's just paid up front with patience your portfolio can't afford.",
       "type": "reply"
     }
   ]
