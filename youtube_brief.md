@@ -1,15 +1,15 @@
-# YouTube brief — 2026-08-24
+# YouTube brief — 2026-08-25
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **411**
-- reply: **307**
-- quote: **58**
+- Total actions logged: **457**
+- reply: **350**
+- quote: **60**
 - quote_gif: **38**
 - retweet: **4**
-- post: **2**
+- post: **3**
 - hotake: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -23,13 +23,13 @@
 ### AI
 
 - **280 likes / 125639 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 74 views** — Walmart crashing 8% because a robot ate their lunch money? Me watching $WMT dip like it’s just my student loans
 - **1 likes / 31 views** — me at 3am refreshing $NVDA charts like it’s my bedtime story
 - **1 likes / 55 views** — Anthropic’s IPO date: October 31, 2026. Because nothing says "we’re ready" like a Halloween scare tactic for retail investors
 
 ### Crypto
 
 - **1 likes / 49 views** — Bitcoin watching the debt buyback like it’s a diet soda ad after keto
+- **1 likes / 53 views** — Jim Cramer dumping BTC to let us rally. The market's toxic ex who leaves just to prove he still cares.
 
 ### Other
 
@@ -58,44 +58,46 @@ The Xring O3 phone chip:
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Shay Boloor]** President Trump disclosed investing up to $50K in $SPCX in June.
+- **[X_FOLLOWING/Doctor Profit]** Bitcoin is now closer to 100k than to 60k
 
-Turns out I bought more SpaceX than the President.
-  - https://x.com/StockSavvyShay/status/2091998784964460547
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Esther & Michael]** 3 years ago, Nancy Pelosi bought 50 $NVDA calls $120 strike with 1 year expiry.
+Best regards
+  - https://x.com/DrProfitCrypto/status/2092076728969474159
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/WitchDoctorDB]** So instead of just naval invading and ending the game, because of the amount of naval invasions and bullshit the UK has done to me in past games, I basically to
+  - https://x.com/db_witch/status/2091959121813680247
+- **[X_FOLLOWING/Andrew Curran]** Alabama Attorney General Steve Marshall has issued a subpoena demanding that OpenAI, led by Sam Altman, respond to an investigation into the company's - I will 
+  - https://x.com/AndrewCurran_/status/2092076635545801137
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/dylan ツ]** I’ve talked about MW activated and the AI factories of the future for a while.
 
-She made $4,000,000+
+Today feels like watching one come online from the inside at Nebius.
 
-45 days ago, she buys 15,000 shares $BE and $5M $BE call 
-  - https://x.com/SuperLuckeee/status/2092009780617560443
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Timothy  | Panic Drop]** NEVER SELL YOUR WINNERS 
+An AI fact
+  - https://x.com/demian_ai/status/2091953342213755359
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Robotbeat ➐]** You could probably make a Gigawatt datacenter the size of an SUV. Cooled like a rocket engine. In fact, this is probably inevitable in the long term as it minim
+  - https://x.com/Robotbeat/status/2091909493667868889
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/LongGameEquity]** DATA CENTER STOCKS ARE GETTING DESTROYED
 
-Here are 6 stocks built to be held for the next 20+ years 
+$AAOI -17%
+$SNDK -11%
+$AEHR -8%
+$NBIS -8%
+$BE -7%
+$MU -7%
+$MRVL -6%
+$CRWV -5%
+$AMKR -5%
+$AMD -4%
+$IREN -4%
+$ORCL -3%
+$
+  - https://x.com/LongGameEquity/status/2091886896234287107
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/NightHawk Capital]** It can’t be this easy…right??
 
-1/6 NVIDIA Corporation $NVDA
-  - https://x.com/timoassi/status/2091881964940808527
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/vincent]** SpaceX $SPCX Louisiana Spaceport Announcement
+ $IREN $CIFR $CRWV $NBIS $KEEL
+  - https://x.com/NighthawkTradez/status/2092064168908136555
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Evan Wilburn]** What happens when bitcoin rips right after the miners sold their coins AND their hashrate?
 
-Gov. Jeff Landry’s office has invited hundreds of elected officials and business leaders to a formal announcement
-  - https://x.com/SPCX100T/status/2092021710354821457
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Nick Dorsey]** NVIDIA Spectrum-X CPO Switch Tray at Hot Chips
-  - https://x.com/Midnight_Captl/status/2091936298600993061
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/zerohedge]** The CDS eruption continues: Broadcom CDS up 5bps to a new all time high, NVDA also at record wide every single day now. 
-
-Maybe that $100BN off-balance sheet SP
-  - https://x.com/zerohedge/status/2092053833660662255
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/amit]** A TON OF THINGS HAPPENED IN THE STOCK MARKET TODAY.
-
-Here's a full recap:
-
-1. Treasury Secretary Scott Bessent said the U.S. will pursue a “zero leakage” strate
-  - https://x.com/amitisinvesting/status/2092064805033062651
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/amit]** A TON OF THINGS HAPPENED IN THE STOCK MARKET TODAY.
-
-Here's a full recap:
-
-1. Treasury Secretary Scott Bessent said the U.S. will pursue a “zero leakage” strate
-  - https://x.com/amitisinvesting/status/2092064805033062651
+Much of the bitcoin mining industry made two exits at once. They sol
+  - https://x.com/bobleewaggeris/status/2092063326616391833
 
 ## 🎬 Suggested video angles
 
@@ -106,4 +108,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-24T22:02:51*
+*Generated 2026-08-25T00:02:51*
