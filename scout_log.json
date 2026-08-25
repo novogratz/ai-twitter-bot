@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-30T15:50:00.210678",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NicolasColin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 150000,
-        "reason": "L'historien de la tech qui comprend la finance. Il explique la disruption comme un patron de VC, pas comme un prof en fac."
-      },
-      {
-        "handle": "Arnaud_Mouquet",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Le baron du capital-risque fran\u00e7ais qui tweete des perles sur les startups. Il est l\u00e0 depuis que Twitter existe, il a vu passer toutes les bulles."
-      },
-      {
-        "handle": "MaximeCordray",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Le roi des tweets techniques qu\u00e9b\u00e9cois. Il d\u00e9monte les IA hype avec des math\u00e9matiques simples. Si il tweete dessus, c'est que c'est bon."
-      },
-      {
-        "handle": "OlivierVandenberghe",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Le gars derri\u00e8re AI News qui couvre l'US depuis la diaspora FR. Il a l'info avant les m\u00e9dias, son feed est une mine d'or sur les mod\u00e8les open source."
-      },
-      {
-        "handle": "JulienDutrisac",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "L'analyste crypto QC qui survit aux bear markets. Il balance des setups sans se la raconter, c'est rare au Qu\u00e9bec."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des vendeurs de r\u00eaves pour ne garder que les cerveaux qui font bouger les lignes. De Mistral \u00e0 Colin, ce sont des comptes qu'on lit pour apprendre, pas pour dormir."
-  },
-  {
     "ts": "2026-07-30T17:50:05.527045",
     "raw_count": 7,
     "kept_count": 4,
@@ -8991,5 +8946,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la poussi\u00e8re des formateurs pour te garder ceux qui font parler ou penser : Cayla pour le storytelling, Lefila pour l'\u00e9ducation boursi\u00e8re, et une s\u00e9lection de niches (Mistral/QC) moins satur\u00e9es."
+  },
+  {
+    "ts": "2026-08-25T07:09:06.818153",
+    "raw_count": 14,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HuguesG",
+        "region": "france",
+        "niche": "tech_ai",
+        "followers": 65000,
+        "reason": "L'architecte de Blablacar. Il parle tech avec les mains et la t\u00eate. Z\u00e9ro hype gratuite."
+      },
+      {
+        "handle": "AlexisBouchetArias",
+        "region": "france",
+        "niche": "crypto_web3",
+        "followers": 25000,
+        "reason": "Ex-Kucoin. Il balance des insights crypto solides sans avoir l'air d'un blogueur TikTok."
+      },
+      {
+        "handle": "ThomasDufour_QC",
+        "region": "quebec",
+        "niche": "tech_ai",
+        "followers": 12000,
+        "reason": "Directeur IA chez Unum. Le Qu\u00e9bec n'a pas beaucoup de stars X tech, lui est une p\u00e9pite."
+      }
+    ],
+    "summary": "La France domine par sa densit\u00e9 de founders tech (Blablacar, Bitpanda), le Qu\u00e9bec est une mine d'or cach\u00e9e en recherche/DeFi, et la diaspora US apporte des liens directs avec SF/NYC. Z\u00e9ro influenceur crypto 'moonboy', ici on reste dans l'intelligence."
   }
 ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-25T05:02:51.402280",
-  "window_7d_actions": 4826,
-  "window_24h_actions": 547,
+  "generated_at": "2026-08-25T09:02:51.415313",
+  "window_7d_actions": 4830,
+  "window_24h_actions": 640,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4824
+      "count": 4828
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4824
+      "count": 4828
     }
   ],
   "best_hours_utc": [
@@ -49,84 +49,84 @@
     },
     {
       "hour": 7,
-      "actions": 215
+      "actions": 217
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2214
+      "count": 2207
     },
     {
       "topic": "IA",
-      "count": 1803
+      "count": 1811
     },
     {
       "topic": "Crypto",
-      "count": 630
+      "count": 632
     },
     {
       "topic": "Bourse",
-      "count": 379
+      "count": 385
     },
     {
       "topic": "Spatial",
-      "count": 86
+      "count": 85
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.038,
+      "24h_rate": 0.034,
       "7d_rate": 0.018
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1948
+      "count": 1955
     },
     {
       "pillar": "market_trauma",
-      "count": 1334
+      "count": 1339
     },
     {
       "pillar": "other",
-      "count": 1234
+      "count": 1222
     },
     {
       "pillar": "meme_reaction",
-      "count": 199
+      "count": 200
     },
     {
       "pillar": "reply_bait",
-      "count": 81
+      "count": 83
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 30
+      "count": 31
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 223
+      "count": 272
     },
     {
       "pillar": "market_trauma",
-      "count": 129
+      "count": 162
     },
     {
       "pillar": "other",
-      "count": 129
+      "count": 145
     },
     {
       "pillar": "meme_reaction",
-      "count": 41
+      "count": 34
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
@@ -135,24 +135,24 @@
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "other",
-      "posts": 81,
-      "avg_likes": 0.19,
-      "avg_views": 35.4,
+      "pillar": "market_trauma",
+      "posts": 50,
+      "avg_likes": 0.16,
+      "avg_views": 40.0,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.18,
-      "avg_views": 39.9,
+      "pillar": "other",
+      "posts": 83,
+      "avg_likes": 0.14,
+      "avg_views": 35.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 60,
-      "avg_likes": 0.08,
-      "avg_views": 38.8,
+      "posts": 58,
+      "avg_likes": 0.09,
+      "avg_views": 38.6,
       "low_sample": false
     },
     {
@@ -173,19 +173,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4185
+      "count": 4193
     },
     {
       "type": "quote",
-      "count": 387
+      "count": 384
     },
     {
       "type": "quote_gif",
-      "count": 187
+      "count": 188
     },
     {
       "type": "post",
-      "count": 31
+      "count": 29
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-25T05:01:47.235483",
-      "text": "Glider is the new LinkedIn Liam of tokenization: tracking what exists before building who wants it. 0 users yet. pure narrative equity",
+      "ts": "2026-08-25T09:02:24.340472",
+      "text": "Spy holds 80% of the s&p's beta in seven names. one cough and we're all back to buying toilet paper with our pensions.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-25T05:00:56.734528",
-      "text": "Poly will dominate the ai-crypto meta because it has no distribution to dilute and zero analysts covering it. you’re buying a silent bid for attention while kols cash out their noise. real alpha lives in blind spots like this one.",
-      "type": "reply"
+      "ts": "2026-08-25T09:01:47.590693",
+      "text": "the only benchmark that matters is how many times we check it before breakfast 🍳👀",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-25T04:59:46.484102",
-      "text": "Openai is valued at $157bn on a 3.4 billion dollar ARR with a five billion dollar burn rate. \n\nthe math only works if agi ships before the runway ends. no pressure.",
+      "ts": "2026-08-25T09:01:29.625553",
+      "text": "NVDA Q1 inference revenue is 30% of datacenter sales. beat & sell-off happens when margins disappoint at $5T valuations not because they miss earnings but everyone bought the narrative before reading page 47 of the S-1 FOMO isn't dying just getting disciplined",
       "type": "reply"
     }
   ]

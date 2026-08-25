@@ -1960,7 +1960,9 @@
     "MehdiDjennad",
     "Lefila",
     "BenoitCayla",
-    "_HuguesG_"
+    "_HuguesG_",
+    "HuguesG",
+    "ThomasDufour_QC"
   ],
   "en": [
     "Chubby",
@@ -14186,6 +14188,16 @@
     {
       "lang": "fr",
       "handle": "_HuguesG_",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesG",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDufour_QC",
       "added": "2026-08-25"
     }
   ]
