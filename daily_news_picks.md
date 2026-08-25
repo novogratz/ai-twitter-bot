@@ -17011,3 +17011,15 @@ The Xring O3 phone chip:
 - **@vllm_project** (58 likes, score 9/10) — Congratulations to @SemiAnalysis_ on the release of AgentX 1.0 , an open-source multi-turn agentic coding benchmark collected from ~$3M of real traces, running on 1000+ chips and ~2MW of continuously
   - https://x.com/vllm_project/status/2092040745842774377
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 66).
+
+## 2026-08-25
+- **@ayzacoder** (7003 likes, score 9/10) — BREAKING: France wiped Google and Microsoft off 2.5 million government computers.
+
+Germany moved 30,000 PCs off Windows. Denmark dropped Microsoft Office.
+
+Here's exactly what they switched to and how
+  - https://x.com/Ayzacoder/status/2091892492073668848
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 7261).
+- **@ashcrypto** (14 likes, score 7/10) — BREAKING :  BlackRock ETFs buy $208.9 million worth of Bitcoin and $90.9 million worth of Ethereum.
+  - https://x.com/AshCrypto/status/2092103024936472993
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 18).
