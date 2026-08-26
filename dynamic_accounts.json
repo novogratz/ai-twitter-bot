@@ -1982,7 +1982,14 @@
     "_AlexandreD",
     "RomainDutailly",
     "JoffreyB_91",
-    "BulwarkAI"
+    "BulwarkAI",
+    "BorisRougerie",
+    "CryptoCredHDXFR",
+    "ValentinMeyerFR",
+    "CedBailly",
+    "MaxMulliez",
+    "FrenchyCrypto",
+    "BenjaminBrouard"
   ],
   "en": [
     "Chubby",
@@ -2397,7 +2404,8 @@
     "ThePersistence",
     "Gota",
     "Powdur",
-    "Revolut"
+    "Revolut",
+    "atik"
   ],
   "history": [
     {
@@ -14378,6 +14386,46 @@
     {
       "lang": "en",
       "handle": "Revolut",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisRougerie",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCredHDXFR",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinMeyerFR",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "en",
+      "handle": "atik",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedBailly",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxMulliez",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrenchyCrypto",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminBrouard",
       "added": "2026-08-26"
     }
   ]

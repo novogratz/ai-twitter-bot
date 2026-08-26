@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-26T09:02:51.501059",
-  "window_7d_actions": 4667,
-  "window_24h_actions": 683,
+  "generated_at": "2026-08-26T13:02:51.541592",
+  "window_7d_actions": 4583,
+  "window_24h_actions": 598,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4665
+      "count": 4581
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4665
+      "count": 4581
     }
   ],
   "best_hours_utc": [
@@ -40,63 +40,63 @@
       "actions": 238
     },
     {
-      "hour": 10,
-      "actions": 210
-    },
-    {
       "hour": 21,
       "actions": 208
     },
     {
       "hour": 0,
       "actions": 206
+    },
+    {
+      "hour": 22,
+      "actions": 200
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2079
+      "count": 2046
     },
     {
       "topic": "IA",
-      "count": 1814
+      "count": 1778
     },
     {
       "topic": "Crypto",
-      "count": 623
+      "count": 619
     },
     {
       "topic": "Bourse",
-      "count": 360
+      "count": 348
     },
     {
       "topic": "Spatial",
-      "count": 92
+      "count": 90
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.031,
+      "24h_rate": 0.03,
       "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1935
+      "count": 1891
     },
     {
       "pillar": "market_trauma",
-      "count": 1277
+      "count": 1258
     },
     {
       "pillar": "other",
-      "count": 1124
+      "count": 1103
     },
     {
       "pillar": "meme_reaction",
-      "count": 204
+      "count": 205
     },
     {
       "pillar": "reply_bait",
@@ -104,55 +104,55 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 35
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 331
+      "count": 283
     },
     {
       "pillar": "market_trauma",
-      "count": 161
+      "count": 145
     },
     {
       "pillar": "other",
-      "count": 141
+      "count": 125
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.16,
-      "avg_views": 37.2,
+      "posts": 45,
+      "avg_likes": 0.18,
+      "avg_views": 37.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 84,
-      "avg_likes": 0.1,
-      "avg_views": 34.7,
+      "posts": 83,
+      "avg_likes": 0.12,
+      "avg_views": 34.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 63,
-      "avg_likes": 0.05,
-      "avg_views": 39.1,
+      "avg_likes": 0.06,
+      "avg_views": 40.0,
       "low_sample": false
     },
     {
@@ -173,19 +173,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4033
+      "count": 3955
     },
     {
       "type": "quote",
-      "count": 380
+      "count": 374
     },
     {
       "type": "quote_gif",
-      "count": 189
+      "count": 188
     },
     {
       "type": "post",
-      "count": 32
+      "count": 33
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-26T08:59:01.843764",
-      "text": "Tokenization isn't a trend. it's the yield on boring assets finally meeting DeFi rails without friction like stablecoins did in '19. fasten your seatbelts.",
+      "ts": "2026-08-26T13:02:01.884481",
+      "text": "Meta ad library is $0 CPM for lazy marketers. helena just undercuts the subscription model with a directory of winners instead. now we all get free data at scale and they keep your attention on their platform.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-26T08:56:19.954951",
-      "text": "3% d'inflation stable. C'est le rythme cardiaque du marché : lent, régulier, et assez plat pour endormir les traders jusqu'à leur prochain café.",
+      "ts": "2026-08-26T12:56:48.669717",
+      "text": "Us equities are a crowded room trading at 30x forward earnings. crypto is an empty parking lot offering free valet and a chance to park before the real cars show up. liquidity moves like water: it flows where the slope isn’t already frozen in concrete valuation expectations",
       "type": "reply"
     },
     {
-      "ts": "2026-08-26T08:53:18.194430",
-      "text": "6B params beat Opus on 8 of 9 benchmarks. The hidden metric: inference cost per query is likely 1/50th of the dense rivals while latency stays competitive. You're not losing to a smarter model; you're out-competed by an accountant who works for lunch money and sleep",
+      "ts": "2026-08-26T12:47:07.359383",
+      "text": "90% de cette audience achète l'idée que \"autocustody\" est un super-pouvoir. La vraie clé ? C'est juste savoir où on range les clés sans se faire piquer la maison. 🔑",
       "type": "reply"
     }
   ]

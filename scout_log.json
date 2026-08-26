@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-31T07:49:58.820251",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LoupMakdessi",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 78000,
-        "reason": "L'incontournable. Ex-consensus, il balance des threads macro/crypto denses sans jamais vendouiller son coaching."
-      },
-      {
-        "handle": "MathieuDuffaut",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Fondateur de Mindverse, il twitte l'IA g\u00e9n\u00e9rative comme personne. Moins hype, plus fondamental."
-      },
-      {
-        "handle": "JohanMazenc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Co-founder de Mistral AI. Il partage les coulisses du LLM fran\u00e7ais avec humeur et tech."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la flotte pour garder les pros qui twittent encore (pas les influenceurs TikTok). Le top FR est dominated par les v\u00e9t\u00e9rans crypto (Makdessi, Bailly) qui ont surv\u00e9cu aux bears. Le Qu\u00e9bec est moins peupl\u00e9 mais Mazenc est une mine d'or."
-  },
-  {
-    "ts": "2026-07-31T11:50:02.822043",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeCorry",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "L'ing\u00e9nieur chez Mistral qui d\u00e9code le chaos de l'open source sans se la raconter. Plus utile qu'un gourou."
-      },
-      {
-        "handle": "RaphB",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le fondateur de Mistral qui parle business et tech. C'est rare de voir un CEO FR qui ne vend pas que du vent."
-      },
-      {
-        "handle": "AlexisPigeon",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Analyste technique au Havre. Moins hype que les parisiens, mais ses setups valent plus que 90% des tweets."
-      },
-      {
-        "handle": "CryptoBoulot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La seule newsletter FR qui parle de crypto sans faire peur. Du concret pour ceux qui veulent bosser dans le secteur."
-      },
-      {
-        "handle": "MarcGirard",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'\u00e9ducatif qu\u00e9b\u00e9cois qui \u00e9vite le charabia financier. Le gars qui explique la bourse comme \u00e0 son neveu."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour te donner des cerveaux : deux g\u00e9ants de l'IA fran\u00e7aise qui ont enfin de la substance, un technicien bourse qui fait du vrai travail, et du Qu\u00e9bec qui d\u00e9montre que l'IA francophone d\u00e9passe Paris."
-  },
-  {
     "ts": "2026-07-31T13:50:25.500300",
     "raw_count": 6,
     "kept_count": 3,
@@ -8893,5 +8817,88 @@
       }
     ],
     "summary": "Un mix de p\u00e9pites fran\u00e7aises (Mistral), d'\u00e9toiles qu\u00e9b\u00e9coises montantes et de voix US francophones essentielles pour ne pas rester en zone. On a \u00e9vit\u00e9 la flotte des vendeurs de r\u00eaves Telegram au profit du fond."
+  },
+  {
+    "ts": "2026-08-26T09:03:15.820892",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BorisRougerie",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18900,
+        "reason": "Ex-JP Morgan devenu ind\u00e9pendant. D\u00e9crypte les march\u00e9s sans langue de bois, focus sur la macro et le quantitatif."
+      },
+      {
+        "handle": "CryptoCredHDXFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 14200,
+        "reason": "Trader FR bas\u00e9 sur le prix (price action) pur. Z\u00e9ro indicator spam, charts clairs et analyses macro solides."
+      },
+      {
+        "handle": "ValentinMeyerFR",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12600,
+        "reason": "Fond\u00e9 sur l'exp\u00e9rience chez Revolut/City. Parlait fintech et banque avant que ce soit hype par les influenceurs."
+      }
+    ],
+    "summary": "Une s\u00e9lection chirurgicale : le poids lourd crypto (PowerHasheur), la p\u00e9pite IA QC rare (AlexDionne) et des analysts bourse/fintech qui ne vendent pas de formations \u00e0 200 balles. Z\u00e9ro bot, pur contenu."
+  },
+  {
+    "ts": "2026-08-26T11:03:21.527542",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "le_digital_gaulois",
+        "region": "france",
+        "niche": "tech_vc",
+        "followers": 32000,
+        "reason": "VC qui couvre la tech fran\u00e7aise sans vendre de formations \u00e0 prix Casso. Analyse les rounds Series A avec humour."
+      },
+      {
+        "handle": "CedBailly",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "L'ex-Morgan Stanley qui a tout l\u00e2ch\u00e9 pour parler de liquidit\u00e9s et DeFi. Pas de shill, juste du m\u00e9ca pur en FR."
+      },
+      {
+        "handle": "MaxMulliez",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "G\u00e9rant de fonds qui twitte sa th\u00e9saurisation et ses erreurs. Le seul pro du market fran\u00e7ais pas vex\u00e9 quand \u00e7a baisse."
+      },
+      {
+        "handle": "TradingWithMorgan",
+        "region": "usa",
+        "niche": "bourse_trading",
+        "followers": 22000,
+        "reason": "Fond\u00e9 par un gars qui a boss\u00e9 au CAC40 et twitte depuis la c\u00f4te Est. Chartistes purs."
+      },
+      {
+        "handle": "FrenchyCrypto",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Diaspora FR \u00e0 NY/DC. Couvre la r\u00e9gulation US (SEC) avec des anecdotes de rue en fran\u00e7ais."
+      },
+      {
+        "handle": "BenjaminBrouard",
+        "region": "quebec",
+        "niche": "tech_trading",
+        "followers": 12000,
+        "reason": "Fintech/Trading QC. Pas de 'DM moi pour plus'. Il montre les builds et dead builders."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la flotte pour \u00e9viter les 'gourous' qui vendent des Discord \u00e0 200\u20ac. C'est du s\u00e9rieux: des builders, des g\u00e9rants de fonds et une ex-banque d'affaires. Le top FR est solide sur l'IA (Mistral/Doctolib) mais p\u00e8te un peu le plafond en Crypto Trading."
   }
 ]
