@@ -2405,7 +2405,9 @@
     "Gota",
     "Powdur",
     "Revolut",
-    "atik"
+    "atik",
+    "SKYLINE",
+    "spearrz"
   ],
   "history": [
     {
@@ -14426,6 +14428,16 @@
     {
       "lang": "fr",
       "handle": "BenjaminBrouard",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "en",
+      "handle": "SKYLINE",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "en",
+      "handle": "spearrz",
       "added": "2026-08-26"
     }
   ]
