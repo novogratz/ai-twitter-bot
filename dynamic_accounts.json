@@ -1968,7 +1968,13 @@
     "CryptoKlepto",
     "MaximeDehaeze",
     "Alexis_Ba_",
-    "_david_dubois_"
+    "_david_dubois_",
+    "thomasdavid_",
+    "ludovicedou",
+    "maxime_guyon",
+    "mathieucaron_",
+    "nicolashenry_",
+    "sven_hoffet"
   ],
   "en": [
     "Chubby",
@@ -2377,7 +2383,10 @@
     "DonAlt",
     "EKO",
     "Self",
-    "Perplexity"
+    "Perplexity",
+    "PGL",
+    "ApoStructura",
+    "ThePersistence"
   ],
   "history": [
     {
@@ -14258,6 +14267,51 @@
     {
       "lang": "en",
       "handle": "Perplexity",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasdavid_",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ludovicedou",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_guyon",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "mathieucaron_",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "nicolashenry_",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "sven_hoffet",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "PGL",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "ApoStructura",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "ThePersistence",
       "added": "2026-08-25"
     }
   ]

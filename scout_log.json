@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-30T23:50:07.923500",
-    "raw_count": 9,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NathanaelS",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "CTO de Mistral, il tweet en FR/EN et donne un aper\u00e7u royal de l'IA g\u00e9n\u00e9rative sans la pub de formation \u00e0 99\u20ac."
-      },
-      {
-        "handle": "LorenzoFrasca1",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Founding Engineer chez Mistral, ses threads sur l'infrastructure et le RAG sont de l'or pur, moins hype que les CEOs mais plus technique."
-      },
-      {
-        "handle": "BorisFrost",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18500,
-        "reason": "Journaliste infosec/IA, couvertures percutantes, pas de biais vendeur, juste du concret sur les vuln\u00e9rabilit\u00e9s LLM."
-      },
-      {
-        "handle": "AlexisDenis1",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 14000,
-        "reason": "Expert IA au Qu\u00e9bec, couvre les usages business et tech, twitte en FR avec des insights moins satur\u00e9s que la c\u00f4te Est."
-      },
-      {
-        "handle": "CedricGagnon",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Tech leader, couvre l'\u00e9cosyst\u00e8me startup qu\u00e9b\u00e9cois et les lev\u00e9es de fonds IA, ton pragmatique sans jargon vain."
-      }
-    ],
-    "summary": "La sc\u00e8ne IA fran\u00e7aise est domin\u00e9e par les fondateurs de Mistral, plus techniques que les influenceurs g\u00e9n\u00e9ralistes. Au Qu\u00e9bec, on creuse les profils fintech/tech locaux moins expos\u00e9s aux hype cycles de la c\u00f4te Est."
-  },
-  {
     "ts": "2026-07-31T01:50:15.498752",
     "raw_count": 10,
     "kept_count": 5,
@@ -8949,5 +8904,57 @@
       }
     ],
     "summary": "Le scout a filtr\u00e9 les influenceurs formations pour ne garder que des profils techniques ou journalistiques solides sur chaque territoire."
+  },
+  {
+    "ts": "2026-08-25T17:09:47.955127",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomasdavid_",
+        "region": "france",
+        "niche": "tech / ai",
+        "followers": 35000,
+        "reason": "Le roi du 'thread' tech en FR. Couvre l'\u00e9cosyst\u00e8me startup/AI avec un ton accessible mais pointu."
+      },
+      {
+        "handle": "ludovicedou",
+        "region": "france",
+        "niche": "ai / data science",
+        "followers": 28000,
+        "reason": "Data Scientist pro qui explique l'IA sans jargon excessif. Contenu constant et tr\u00e8s qualitatif."
+      },
+      {
+        "handle": "maxime_guyon",
+        "region": "france",
+        "niche": "fintech / bourse",
+        "followers": 25000,
+        "reason": "Ancien de la City, aujourd'hui dans le fintech/VC. Analyse macro et march\u00e9s avec une vraie vision fondamental."
+      },
+      {
+        "handle": "mathieucaron_",
+        "region": "usa",
+        "niche": "crypto / defi",
+        "followers": 20000,
+        "reason": "Deuxi\u00e8me t\u00eate pensante derri\u00e8re 'The Crypto Canadien'. Analyse DeFi et liquid staking avec profondeur."
+      },
+      {
+        "handle": "nicolashenry_",
+        "region": "quebec",
+        "niche": "crypto / web3",
+        "followers": 18000,
+        "reason": "Figure montante du crypto-Qu\u00e9b\u00e9cois. Twitte en FR/EN sur le march\u00e9 on-chain et les narratives DeFi."
+      },
+      {
+        "handle": "sven_hoffet",
+        "region": "france",
+        "niche": "vc / ai",
+        "followers": 15000,
+        "reason": "Partner chez EIT Digital. Fait le pont entre innovation IA europ\u00e9enne et investissement. Tr\u00e8s bien connect\u00e9."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par des ex-institutionnels (Maxime Guyon) et des storytellers tech pointus (Thomas David). Le Qu\u00e9bec brille avec une niche crypto/DeFi technique forte, tandis que les USA apportent un angle 'Canadien diaspora' tr\u00e8s analytique."
   }
 ]
