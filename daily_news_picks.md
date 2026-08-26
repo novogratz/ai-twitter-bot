@@ -17023,3 +17023,18 @@ Here's exactly what they switched to and how
 - **@ashcrypto** (14 likes, score 7/10) — BREAKING :  BlackRock ETFs buy $208.9 million worth of Bitcoin and $90.9 million worth of Ethereum.
   - https://x.com/AshCrypto/status/2092103024936472993
   - **WHY**: Source fiable + impact concret (score signal 11, engagement 18).
+
+## 2026-08-26
+- **@coder_amaxaai** (11 likes, score 7/10) — Claude + laptop + internet + 1 hour/day.
+
+That’s the entire setup.
+
+The result? $8,400/month. 
+
+I usually charge $99 for this guide.
+
+But for the next 48 hours, it’s FREE.
+
+Like + comment “GUIDE” and
+  - https://x.com/coder_amaxaAi/status/2092453463666143338
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 17).
