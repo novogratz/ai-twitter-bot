@@ -2396,7 +2396,8 @@
     "ApoStructura",
     "ThePersistence",
     "Gota",
-    "Powdur"
+    "Powdur",
+    "Revolut"
   ],
   "history": [
     {
@@ -14372,6 +14373,11 @@
     {
       "lang": "fr",
       "handle": "BulwarkAI",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Revolut",
       "added": "2026-08-26"
     }
   ]
