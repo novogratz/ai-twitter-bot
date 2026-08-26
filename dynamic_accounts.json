@@ -1981,7 +1981,8 @@
     "LorenzoPierini",
     "_AlexandreD",
     "RomainDutailly",
-    "JoffreyB_91"
+    "JoffreyB_91",
+    "BulwarkAI"
   ],
   "en": [
     "Chubby",
@@ -2394,7 +2395,8 @@
     "PGL",
     "ApoStructura",
     "ThePersistence",
-    "Gota"
+    "Gota",
+    "Powdur"
   ],
   "history": [
     {
@@ -14361,6 +14363,16 @@
       "lang": "fr",
       "handle": "JoffreyB_91",
       "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Powdur",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BulwarkAI",
+      "added": "2026-08-26"
     }
   ]
 }

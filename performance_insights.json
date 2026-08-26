@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-26T01:02:51.586363",
-  "window_7d_actions": 4803,
-  "window_24h_actions": 844,
+  "generated_at": "2026-08-26T05:02:51.493123",
+  "window_7d_actions": 4740,
+  "window_24h_actions": 765,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4801
+      "count": 4738
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4801
+      "count": 4738
     }
   ],
   "best_hours_utc": [
@@ -55,46 +55,52 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2153
+      "count": 2118
     },
     {
       "topic": "IA",
-      "count": 1857
+      "count": 1842
     },
     {
       "topic": "Crypto",
-      "count": 630
+      "count": 627
     },
     {
       "topic": "Bourse",
-      "count": 363
+      "count": 360
     },
     {
       "topic": "Spatial",
       "count": 93
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.026,
+      "7d_rate": 0.02
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1987
+      "count": 1962
     },
     {
       "pillar": "market_trauma",
-      "count": 1317
+      "count": 1298
     },
     {
       "pillar": "other",
-      "count": 1168
+      "count": 1149
     },
     {
       "pillar": "meme_reaction",
-      "count": 206
+      "count": 204
     },
     {
       "pillar": "reply_bait",
-      "count": 90
+      "count": 92
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,56 +110,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 415
+      "count": 378
     },
     {
       "pillar": "market_trauma",
-      "count": 195
+      "count": 180
     },
     {
       "pillar": "other",
-      "count": 168
+      "count": 155
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 25
+      "count": 21
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.13,
-      "avg_views": 37.7,
+      "posts": 44,
+      "avg_likes": 0.14,
+      "avg_views": 38.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 86,
+      "posts": 85,
       "avg_likes": 0.09,
-      "avg_views": 33.5,
+      "avg_views": 34.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 60,
+      "posts": 62,
       "avg_likes": 0.05,
-      "avg_views": 38.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.0,
-      "avg_views": 57.0,
+      "avg_views": 38.7,
       "low_sample": false
     },
     {
@@ -162,20 +161,27 @@
       "avg_likes": 0.0,
       "avg_views": 38.2,
       "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 4,
+      "avg_likes": 0.0,
+      "avg_views": 52.8,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4159
+      "count": 4102
     },
     {
       "type": "quote",
-      "count": 389
+      "count": 385
     },
     {
       "type": "quote_gif",
-      "count": 191
+      "count": 189
     },
     {
       "type": "post",
@@ -192,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-26T01:02:35.536050",
-      "text": "70% de marge sur les H100. Jalapeño coupe dans le vif : on passe des ventes à la rentabilité nette. Nvidia doit travailler pour rester reine.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-26T01:00:47.059345",
-      "text": "GPT-5 is just a subscription fee for hallucination-as-a-service. We’re paying $20/mo to outsource our brains so we don’t have to remember anything. 🤖⚡",
+      "ts": "2026-08-26T04:59:43.401906",
+      "text": "RTX 5080 for gamers? For $PLTR it’s just another GPU in CoreWeave’s server farm. You win a toy; OpenAI wins your electricity bill ⚡📉",
       "type": "quote"
     },
     {
-      "ts": "2026-08-26T01:00:29.091628",
-      "text": "@Barchart says $GLD is overbought. The real story isn't the RSI, it's that everyone bought gold to hide from their bad tech bets and forgot how to use a stop-loss. panic selling incoming in 3... 2...",
+      "ts": "2026-08-26T04:58:48.068004",
+      "text": "Isabel net’s charts update. the market reads them every week and still loses money. that's not a signal, it's a tax on your hope.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-26T04:58:31.837469",
+      "text": "World humanoid robot games token = real world assets meets degens. the robots will walk in 6 months, you'll sell this rug at $40k a share before they fall over",
       "type": "reply"
     }
   ]

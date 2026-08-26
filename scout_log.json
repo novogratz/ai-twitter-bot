@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-31T05:50:06.389036",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MickaelCordon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 125000,
-        "reason": "La r\u00e9f\u00e9rence incontest\u00e9e du trading FR. Pas de formation \u00e0 1000\u20ac dans la bio, juste du concret sur l'analyse technique et le mental."
-      },
-      {
-        "handle": "RomainDrouet",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 65000,
-        "reason": "CEO de Payzen. Il twitte sur la Fintech, le SaaS et les lev\u00e9es de fonds. Le genre de founder qui donne plus de valeur que les 'gurus'."
-      },
-      {
-        "handle": "AdrienChauvenne",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Vice-Pr\u00e9sident chez Datadog. Il couvre la stack tech, le Cloud et les p\u00e9pins de prod. Vibe dev/sysadmin authentique."
-      },
-      {
-        "handle": "ThomasGuerin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Analyste \u00e0 la Banque de France. Il explique la politique mon\u00e9taire et l'\u00e9conomie r\u00e9elle. Le rem\u00e8de contre les charts \u00e0 tout va."
-      },
-      {
-        "handle": "JeanMauriceCotnoir",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "JMC. Il vit aux USA mais twitte en FR avec une pointe d'humour noir. C'est un trader crypto qui couvre aussi la macro. Pas de liens Telegram."
-      },
-      {
-        "handle": "MathisLacroix",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Data Scientist \u00e0 Montr\u00e9al. Il d\u00e9crypte les papiers arXiv et l'IA generative sans jargon bullshit. Pur contenu technique."
-      }
-    ],
-    "summary": "Un mix de traders de rue s\u00e9rieux (MickaelCordon), de founders fintech (RomainDrouet, NicolasColin) et de techniciens IA/Cloud (AdrienChauvenne, AlexisDuchemin). Z\u00e9ro influenceur lifestyle, que des gens qui construisent ou analysent."
-  },
-  {
     "ts": "2026-07-31T07:49:58.820251",
     "raw_count": 7,
     "kept_count": 3,
@@ -8914,5 +8862,36 @@
       }
     ],
     "summary": "J'ai cern\u00e9 le paysage : Mistral domine pour les news pures IA FR, tandis que JoffreyB_91 porte le flambeau crypto s\u00e9rieux \u00e0 Paris. Pour Montr\u00e9al, Alex Dionne est seul dans son camp sur la niche large."
+  },
+  {
+    "ts": "2026-08-26T01:09:28.625065",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoChangements",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Du s\u00e9rieux qui ne dort jamais. Pas de gurus ici, juste du data et des cycles qu'on peut suivre \u00e0 l'\u0153il nu."
+      },
+      {
+        "handle": "BulwarkAI",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "L'anti-bulle par excellence. Un analyste technique qui pique les egos des bullshitters crypto \u00e0 chaque tweet."
+      },
+      {
+        "handle": "BenjaminZaborsky",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Journaliste tech FR qui d\u00e9crypte les start-ups avec plus de malice que la plupart des VC."
+      }
+    ],
+    "summary": "Un mix de p\u00e9pites fran\u00e7aises (Mistral), d'\u00e9toiles qu\u00e9b\u00e9coises montantes et de voix US francophones essentielles pour ne pas rester en zone. On a \u00e9vit\u00e9 la flotte des vendeurs de r\u00eaves Telegram au profit du fond."
   }
 ]
