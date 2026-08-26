@@ -1474,3 +1474,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 280 likes / 125639 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 25 views: my clients don't ask me to fix their Bitcoin, they just want me to tell them it's okay to check the 
   - 1 likes / 67 views: Michael Burry shorting AI is like selling stocks because you fear your car might fly. Respectfully, 
+
+## 2026-08-25
+
+**Activity** — total actions: 861
+  - by type: reply=774, quote=53, quote_gif=23, post=7, hotake=3, retweet=1
+  - top sources: SEARCH-HOT=496, FEED-SWEEP-FEED=149, FEED-SWEEP-FOLLOWING=104, QUOTE=41, GIF=28, DEBATE=19, BREAKING_QRT=6, VIP=5
+  - top reply targets: @FirstSquawk=11, @TheBTCTherapist=10, @StockSavvyShay=10, @Cointelegraph=9, @amitisinvesting=8
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 49 views: us calling it “dead” every august like it’s not just our annual spa treatment
+  - 0 likes / 24 views: zero leakage  (because nothing escapes this timeline) https://x.com/amitisinvesting/status/209206480
+  - 0 likes / 51 views: BlackRock’s $300M crypto inflow signals institutional rotation faster than @saylor could buy with hi

@@ -1974,7 +1974,14 @@
     "maxime_guyon",
     "mathieucaron_",
     "nicolashenry_",
-    "sven_hoffet"
+    "sven_hoffet",
+    "HuguesFleury",
+    "Romain_Levy",
+    "JF_Bas",
+    "LorenzoPierini",
+    "_AlexandreD",
+    "RomainDutailly",
+    "JoffreyB_91"
   ],
   "en": [
     "Chubby",
@@ -2386,7 +2393,8 @@
     "Perplexity",
     "PGL",
     "ApoStructura",
-    "ThePersistence"
+    "ThePersistence",
+    "Gota"
   ],
   "history": [
     {
@@ -14312,6 +14320,46 @@
     {
       "lang": "en",
       "handle": "ThePersistence",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Gota",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesFleury",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "Romain_Levy",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JF_Bas",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoPierini",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "_AlexandreD",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDutailly",
+      "added": "2026-08-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JoffreyB_91",
       "added": "2026-08-25"
     }
   ]
