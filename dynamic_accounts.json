@@ -2006,7 +2006,11 @@
     "ThomasTremel",
     "cryptosaurus",
     "lucaspeluso",
-    "_JulienLemaitre"
+    "_JulienLemaitre",
+    "ThibautVillain",
+    "RaphaelLecocq",
+    "BorisDorbes",
+    "ThomasBouyge"
   ],
   "en": [
     "Chubby",
@@ -2426,7 +2430,9 @@
     "SKYLINE",
     "spearrz",
     "Obito",
-    "Neuralink"
+    "Neuralink",
+    "Serg",
+    "BaronVonHustle"
   ],
   "history": [
     {
@@ -14552,6 +14558,36 @@
     {
       "lang": "fr",
       "handle": "_JulienLemaitre",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Serg",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "BaronVonHustle",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautVillain",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLecocq",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisDorbes",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouyge",
       "added": "2026-08-27"
     }
   ]

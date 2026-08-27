@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-01T10:41:53.733759",
-    "raw_count": 8,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulesDormoy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directeur de recherche chez Deepmind France. Il rend l'IA accessible sans te faire croire que tu peux juste 'copier-coller' Python pour gagner un million."
-      }
-    ],
-    "summary": "Une s\u00e9lection chirurgicale : des experts fran\u00e7ais qui font parler (Bourgeois, Dormoy), un crack qu\u00e9b\u00e9cois (MaximeG) et deux valeurs s\u00fbres de la fintech/trading. Z\u00e9ro vendeur de r\u00eaves, juste du gras."
-  },
-  {
-    "ts": "2026-08-01T12:41:20.510753",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mehdi_ayari",
-        "region": "france",
-        "niche": "tech",
-        "followers": 145000,
-        "reason": "L'oracle des startups. Moins 'IA pure', plus 'ecosyst\u00e8me'. Il tweet des infos tech/finance avant les march\u00e9s, indispensable pour voir venir les deals avant le crowd."
-      },
-      {
-        "handle": "cyrilmagnin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "La r\u00e9f\u00e9rence absolue sur X pour l'IA. Bas\u00e9 \u00e0 SF mais FR de c\u0153ur. Il compile les papers et les news tech en 140 caract\u00e8res. Si tu ne le suis pas, tu es en retard de 48h."
-      },
-      {
-        "handle": "joshuam13",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "Ex-VC, maintenant solo degen. Il tweet des threads de deepe-diving sur les tokens et les infra. C'est l'\u00e9quivalent d'un Morning Brew mais \u00e9crit par un trader qui a vu des crashs."
-      },
-      {
-        "handle": "joffrey_sclafani",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 38000,
-        "reason": "Le roi de l'analyse on-chain \u00e0 la fran\u00e7aise. Il balance des gems techniques sur Solana/Base sans le jargon pompeux de la finance US. Direct et factuel."
-      },
-      {
-        "handle": "maximebeauchesne",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 30000,
-        "reason": "Ex-associ\u00e9 chez VC, il tweet des analyses macro et des le\u00e7ons d'investissement. Sa prose est claire et sans gras. C'est le 'finance twitter' propre, sans les influenceurs de trading en Yatch."
-      },
-      {
-        "handle": "dorianmasse",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le CTO de Mistral AI. Tweet code et architecture. C'est pas du marketing, c'est le mec qui fait la sauce. Si tu veux savoir o\u00f9 va l'IA en France, suis sa feed."
-      },
-      {
-        "handle": "alexander_duval",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le gars qui couvre les mini-caps et le growth au Qu\u00e9bec. Pas de blabla politique, juste du P/E, des bilans et des opportunites sous-estim\u00e9es. Le plus utile pour un portefeuille CA."
-      },
-      {
-        "handle": "alexandre_delvaux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Fondateur de Sift AI. Il documente sa croissance ('build in public') avec des m\u00e9triques concr\u00e8tes. Mieux qu'un analyste qui pr\u00e9dit, c'est un fondateur qui montre les chiffres."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre les geeks de Mistral, les degen on-chain et les value investors qu\u00e9b\u00e9cois. J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont un produit ou un tableau de bord \u00e0 montrer."
-  },
-  {
     "ts": "2026-08-01T14:41:38.293661",
     "raw_count": 10,
     "kept_count": 10,
@@ -8907,5 +8824,53 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 des analystes qui tweetent leur travail r\u00e9el plut\u00f4t que du contenu g\u00e9n\u00e9r\u00e9 pour l'engagement. Le mix France/Qu\u00e9bec assure une diversit\u00e9 de perspectives macro-\u00e9conomiques (EUR vs USD) tout en gardant la langue comme seul filtre commun."
+  },
+  {
+    "ts": "2026-08-27T05:08:40.923277",
+    "raw_count": 5,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautVillain",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le patron de Coinhouse. Il balance plus de p\u00e9pites tech/VC crypto FR que tous les influenceurs signaux confondus."
+      }
+    ],
+    "summary": "Un mix de leaders institutionnels (Coinhouse/Mistral) qui font le job s\u00e9rieux, plus quelques p\u00e9pites individuelles (<10k followers) pour \u00e9viter les comptes 'influenceurs \u00e0 la cha\u00eene' qui vendent du r\u00eave. La France domine par ses acteurs tech mondiaux."
+  },
+  {
+    "ts": "2026-08-27T07:03:12.785588",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RaphaelLecocq",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le patron de Coinhouse. Twitte la macro crypto avec plus d'\u00e9l\u00e9gance qu'un prof de pr\u00e9pa qui a abus\u00e9 du caf\u00e9."
+      },
+      {
+        "handle": "BorisDorbes",
+        "region": "france",
+        "niche": "ai+tech",
+        "followers": 35000,
+        "reason": "Gars qui vit \u00e0 la vitesse de l'IA. Pas de pubs 'rejoins mon club secret', juste du tech brut et des setups."
+      },
+      {
+        "handle": "ThomasBouyge",
+        "region": "france",
+        "niche": "tech+vc",
+        "followers": 20000,
+        "reason": "Investisseur qui twitte. Pas un 'infopreneur'. Cover la tech fran\u00e7aise avec une analyse plus pointue que les m\u00e9dias."
+      }
+    ],
+    "summary": "6 comptes blind\u00e9s sans pubs Telegram ni formations \u00e0 97\u20ac. C'est l'\u00e9chantillon qu'on garde pour ne pas se retrouver suivi par des vendeurs de r\u00eave en surv\u00eatement jaune."
   }
 ]

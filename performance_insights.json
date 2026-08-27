@@ -1,15 +1,11 @@
 {
-  "generated_at": "2026-08-27T05:02:51.521064",
-  "window_7d_actions": 4593,
-  "window_24h_actions": 718,
+  "generated_at": "2026-08-27T09:04:28.746645",
+  "window_7d_actions": 4611,
+  "window_24h_actions": 814,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4591
-    },
-    {
-      "pattern": "RENAME",
-      "count": 1
+      "count": 4610
     },
     {
       "pattern": "METAPHOR",
@@ -18,16 +14,12 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "RENAME",
-      "count": 1
-    },
-    {
       "pattern": "METAPHOR",
       "count": 1
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4591
+      "count": 4610
     }
   ],
   "best_hours_utc": [
@@ -48,22 +40,22 @@
       "actions": 205
     },
     {
-      "hour": 0,
-      "actions": 202
+      "hour": 7,
+      "actions": 205
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2014
+      "count": 2009
     },
     {
       "topic": "IA",
-      "count": 1862
+      "count": 1884
     },
     {
       "topic": "Crypto",
-      "count": 583
+      "count": 584
     },
     {
       "topic": "Bourse",
@@ -78,11 +70,11 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1977
+      "count": 1990
     },
     {
       "pillar": "market_trauma",
-      "count": 1231
+      "count": 1229
     },
     {
       "pillar": "other",
@@ -90,37 +82,37 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 197
+      "count": 199
     },
     {
       "pillar": "reply_bait",
-      "count": 86
+      "count": 90
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 36
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 350
+      "count": 404
     },
     {
       "pillar": "market_trauma",
-      "count": 187
+      "count": 204
     },
     {
       "pillar": "other",
-      "count": 152
+      "count": 170
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
@@ -130,23 +122,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.14,
-      "avg_views": 39.6,
+      "posts": 43,
+      "avg_likes": 0.16,
+      "avg_views": 42.5,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 80,
       "avg_likes": 0.1,
-      "avg_views": 34.1,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 68,
-      "avg_likes": 0.07,
-      "avg_views": 44.6,
+      "posts": 67,
+      "avg_likes": 0.06,
+      "avg_views": 46.1,
       "low_sample": false
     },
     {
@@ -167,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3976
+      "count": 3991
     },
     {
       "type": "quote",
-      "count": 368
+      "count": 367
     },
     {
       "type": "quote_gif",
-      "count": 180
+      "count": 183
     },
     {
       "type": "post",
-      "count": 34
+      "count": 32
     },
     {
       "type": "hotake",
-      "count": 21
+      "count": 24
     },
     {
       "type": "retweet",
@@ -192,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-27T05:02:47.694354",
-      "text": "@Geiger Capital literally has separation anxiety with $NVDA earnings 🙂 it’s fine, we’re all just trying to get some sleep this week",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-27T05:02:31.026848",
-      "text": "$80 of free AI for students. openai just bought the next generation of prompt engineers to do their RLHF data labeling before they’re even old enough to vote on it. smart customer acquisition cost.",
+      "ts": "2026-08-27T09:03:42.503733",
+      "text": "Bloomberg calls it a PR miss. The P&L says \"goodbye to every VC who thought speed was optional.\" \n\nIt’s not about approval. It’s about deploying capital before the GPUs appreciate. Speed IS the product; press is just metadata. You can blog while you build, but you can't bill for ",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T05:00:27.568050",
-      "text": "$55-80M monthly buyback on a $1.2B unlock is 4%-7% of the float per quarter. that’s not price support, it’s liquidity suction masking volume decline. cute try though.",
+      "ts": "2026-08-27T09:03:09.613752",
+      "text": "Claude Code just became the default financial advisor for Gen Z. because reading a balance sheet is still harder than debugging python in their head at 3am. no competition yet.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-27T09:01:14.703102",
+      "text": "Cursor is the new default password manager. russian hackers aren’t hacking ai, they’re just using autocomplete to guess your api keys faster than you can read them. stop trusting tools that haven’t earned their trust yet.",
       "type": "reply"
     }
   ]
