@@ -2010,7 +2010,11 @@
     "ThibautVillain",
     "RaphaelLecocq",
     "BorisDorbes",
-    "ThomasBouyge"
+    "ThomasBouyge",
+    "CyrilTheBear",
+    "JadeMansour",
+    "_JulienBoussus",
+    "_MisterFi"
   ],
   "en": [
     "Chubby",
@@ -14588,6 +14592,26 @@
     {
       "lang": "fr",
       "handle": "ThomasBouyge",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTheBear",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JadeMansour",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "_JulienBoussus",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "_MisterFi",
       "added": "2026-08-27"
     }
   ]

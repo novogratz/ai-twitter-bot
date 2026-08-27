@@ -1,14 +1,18 @@
 {
-  "generated_at": "2026-08-27T09:04:28.746645",
-  "window_7d_actions": 4611,
-  "window_24h_actions": 814,
+  "generated_at": "2026-08-27T13:54:42.389796",
+  "window_7d_actions": 4641,
+  "window_24h_actions": 936,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4610
+      "count": 4639
     },
     {
       "pattern": "METAPHOR",
+      "count": 1
+    },
+    {
+      "pattern": "RENAME",
       "count": 1
     }
   ],
@@ -18,8 +22,12 @@
       "count": 1
     },
     {
+      "pattern": "RENAME",
+      "count": 1
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 4610
+      "count": 4639
     }
   ],
   "best_hours_utc": [
@@ -47,98 +55,105 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2009
+      "count": 2008
     },
     {
       "topic": "IA",
-      "count": 1884
+      "count": 1909
     },
     {
       "topic": "Crypto",
-      "count": 584
+      "count": 590
     },
     {
       "topic": "Bourse",
-      "count": 340
+      "count": 345
     },
     {
       "topic": "Spatial",
-      "count": 95
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1990
+      "count": 2018
     },
     {
       "pillar": "market_trauma",
-      "count": 1229
+      "count": 1234
     },
     {
       "pillar": "other",
-      "count": 1067
+      "count": 1061
     },
     {
       "pillar": "meme_reaction",
-      "count": 199
+      "count": 197
     },
     {
       "pillar": "reply_bait",
-      "count": 90
+      "count": 93
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 404
+      "count": 467
     },
     {
       "pillar": "market_trauma",
-      "count": 204
+      "count": 230
     },
     {
       "pillar": "other",
-      "count": 170
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 19
+      "count": 198
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 20
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "ai_vs_btc",
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 47.4,
+      "low_sample": false
+    },
+    {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.16,
-      "avg_views": 42.5,
+      "posts": 45,
+      "avg_likes": 0.13,
+      "avg_views": 41.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.1,
-      "avg_views": 35.1,
+      "posts": 73,
+      "avg_likes": 0.11,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 67,
-      "avg_likes": 0.06,
-      "avg_views": 46.1,
+      "posts": 71,
+      "avg_likes": 0.07,
+      "avg_views": 45.3,
       "low_sample": false
     },
     {
@@ -147,31 +162,24 @@
       "avg_likes": 0.0,
       "avg_views": 47.0,
       "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.0,
-      "avg_views": 52.8,
-      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3991
+      "count": 4020
     },
     {
       "type": "quote",
-      "count": 367
+      "count": 368
     },
     {
       "type": "quote_gif",
-      "count": 183
+      "count": 184
     },
     {
       "type": "post",
-      "count": 32
+      "count": 31
     },
     {
       "type": "hotake",
@@ -184,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-27T09:03:42.503733",
-      "text": "Bloomberg calls it a PR miss. The P&L says \"goodbye to every VC who thought speed was optional.\" \n\nIt’s not about approval. It’s about deploying capital before the GPUs appreciate. Speed IS the product; press is just metadata. You can blog while you build, but you can't bill for ",
+      "ts": "2026-08-27T13:53:18.569725",
+      "text": "NVDA’s market cap gain outpaces the GDP of most countries. you’re comparing a monopoly to gravity and expecting them to balance.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T09:03:09.613752",
-      "text": "Claude Code just became the default financial advisor for Gen Z. because reading a balance sheet is still harder than debugging python in their head at 3am. no competition yet.",
+      "ts": "2026-08-27T13:51:03.738551",
+      "text": "Upsideonly lets you trade with fake money and zero risk. this is the behavioral equivalent of a demo slot machine that never dispenses quarters. just chips forever.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T09:01:14.703102",
-      "text": "Cursor is the new default password manager. russian hackers aren’t hacking ai, they’re just using autocomplete to guess your api keys faster than you can read them. stop trusting tools that haven’t earned their trust yet.",
+      "ts": "2026-08-27T13:50:47.681041",
+      "text": "Nvda's $130B qfy revenue beats apple + microsoft combined. the market doesn't care about your nostalgia ticker watchlist. it cares who owns the tap.",
       "type": "reply"
     }
   ]
