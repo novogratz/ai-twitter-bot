@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-27T01:02:51.438533",
-  "window_7d_actions": 4587,
-  "window_24h_actions": 644,
+  "generated_at": "2026-08-27T05:02:51.521064",
+  "window_7d_actions": 4593,
+  "window_24h_actions": 718,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4585
+      "count": 4591
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4585
+      "count": 4591
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2033
+      "count": 2014
     },
     {
       "topic": "IA",
-      "count": 1828
+      "count": 1862
     },
     {
       "topic": "Crypto",
-      "count": 590
+      "count": 583
     },
     {
       "topic": "Bourse",
-      "count": 342
+      "count": 340
     },
     {
       "topic": "Spatial",
-      "count": 94
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1954
+      "count": 1977
     },
     {
       "pillar": "market_trauma",
-      "count": 1234
+      "count": 1231
     },
     {
       "pillar": "other",
-      "count": 1081
+      "count": 1067
     },
     {
       "pillar": "meme_reaction",
-      "count": 198
+      "count": 197
     },
     {
       "pillar": "reply_bait",
@@ -98,29 +98,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 35
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 311
+      "count": 350
     },
     {
       "pillar": "market_trauma",
-      "count": 170
+      "count": 187
     },
     {
       "pillar": "other",
-      "count": 134
+      "count": 152
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
@@ -131,29 +131,29 @@
     {
       "pillar": "market_trauma",
       "posts": 42,
-      "avg_likes": 0.17,
-      "avg_views": 37.7,
+      "avg_likes": 0.14,
+      "avg_views": 39.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 81,
+      "posts": 80,
       "avg_likes": 0.1,
-      "avg_views": 32.4,
+      "avg_views": 34.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.05,
-      "avg_views": 42.7,
+      "posts": 68,
+      "avg_likes": 0.07,
+      "avg_views": 44.6,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 6,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 41.3,
+      "avg_views": 47.0,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3969
+      "count": 3976
     },
     {
       "type": "quote",
@@ -175,7 +175,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 181
+      "count": 180
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-27T00:58:51.559467",
-      "text": "The invisible tax on open models is memory bandwidth. hugging face gives you the car; nvidia charges for every mile to keep the engine from melting down. monopoly play.",
+      "ts": "2026-08-27T05:02:47.694354",
+      "text": "@Geiger Capital literally has separation anxiety with $NVDA earnings 🙂 it’s fine, we’re all just trying to get some sleep this week",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-27T05:02:31.026848",
+      "text": "$80 of free AI for students. openai just bought the next generation of prompt engineers to do their RLHF data labeling before they’re even old enough to vote on it. smart customer acquisition cost.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T00:58:34.046724",
-      "text": "Nvidia buying Hugging Face for $13B. The real story? They’re acquiring the training data labelers so they don’t have to pay humans anymore. Open source just got a monopoly tax on its own shoulders.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-27T00:57:03.536613",
-      "text": "Tesla is the most hated stock in 401k Dave’s portfolio. down 85% from ATH but trading on robotaxi option value while margins normalize to 9%. buying when everyone else is looking away pays better than feeling right.",
+      "ts": "2026-08-27T05:00:27.568050",
+      "text": "$55-80M monthly buyback on a $1.2B unlock is 4%-7% of the float per quarter. that’s not price support, it’s liquidity suction masking volume decline. cute try though.",
       "type": "reply"
     }
   ]

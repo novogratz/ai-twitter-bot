@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-31T19:50:08.595196",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickaeldietrich",
-        "region": "france",
-        "niche": "ai",
-        "followers": 135000,
-        "reason": "Le Vieux Con de la Tech. Si il tweet en FR, c'est que l'IA a un avenir."
-      },
-      {
-        "handle": "PierreVannier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Journaliste BFM Business. Il a le fil des CEOs. Mordant quand il faut."
-      },
-      {
-        "handle": "AdrienMauger",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 32000,
-        "reason": "Ex-Crypto de Boursorama. Il tweet ce que les autres ne voient pas dans la fintech."
-      },
-      {
-        "handle": "JulienCahen",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le gars le plus malin de l'\u00e9cosyst\u00e8me crypto fr. Il twitte, le march\u00e9 bouge."
-      },
-      {
-        "handle": "SylvainLaforge",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le pape de l'IA au Qu\u00e9bec. Il tweet en FR, il comprend l'US. Un pont vital."
-      },
-      {
-        "handle": "MariusLemay",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste DeFi qu\u00e9b\u00e9cois. Ses threads sur les tokenomics valent plus cher que ma vie."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font bouger les lignes ou les prix. La France domine sur la fintech/crypto, le Qu\u00e9bec sur l'IA pure. L'Am\u00e9rique francophone, c'est du gold pur."
-  },
-  {
     "ts": "2026-08-01T10:41:53.733759",
     "raw_count": 8,
     "kept_count": 1,
@@ -8907,5 +8855,57 @@
       }
     ],
     "summary": "Focus IA fran\u00e7aise (Mistral ecosystem) et Qu\u00e9bec tech pour varier du classique Paris-Crypto-Paris."
+  },
+  {
+    "ts": "2026-08-27T03:17:12.824669",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MisterAI",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le pope de l'IA francophone. Il tweet en FR, il est pro-techno mais pas dogmatique et son audience cro\u00eet plus vite que le march\u00e9 du travail des data scientists."
+      },
+      {
+        "handle": "_jasonbnt",
+        "region": "france",
+        "niche": "tech/vc",
+        "followers": 35000,
+        "reason": "Fondateur de M2X. Il transforme son portfolio tech en fil d'actualit\u00e9 plus pertinent que les newsletters \u00e0 abonnement payant."
+      },
+      {
+        "handle": "ThomasTremel",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 25000,
+        "reason": "Directeur Tech. Il mixe l'IA g\u00e9n\u00e9rative avec la r\u00e9alit\u00e9 du d\u00e9ploiement cloud en France : moins de hype, plus d'ex\u00e9cution."
+      },
+      {
+        "handle": "cryptosaurus",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Un Qu\u00e9b\u00e9cois dans la tech. Il couvre Bitcoin avec une rigueur rare pour un compte 'solo' et tweet en fran\u00e7ais naturel sans parler comme un robot."
+      },
+      {
+        "handle": "lucaspeluso",
+        "region": "france",
+        "niche": "finance/tech",
+        "followers": 18000,
+        "reason": "Ancien banquier devenu investisseur tech. Son feed est le m\u00e9lange parfait entre cynisme financier et opportunisme IA."
+      },
+      {
+        "handle": "_JulienLemaitre",
+        "region": "quebec",
+        "niche": "finance/trading",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la bourse. Pas de signaux VIP \u00e0 vendre, juste des analyses chiffr\u00e9es et un ton direct qui coupe le gras."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 des analystes qui tweetent leur travail r\u00e9el plut\u00f4t que du contenu g\u00e9n\u00e9r\u00e9 pour l'engagement. Le mix France/Qu\u00e9bec assure une diversit\u00e9 de perspectives macro-\u00e9conomiques (EUR vs USD) tout en gardant la langue comme seul filtre commun."
   }
 ]

@@ -2000,7 +2000,13 @@
     "BenBouaziz_",
     "CryptoRando",
     "MistralAI_fr",
-    "SylvainLafont_"
+    "SylvainLafont_",
+    "MisterAI",
+    "_jasonbnt",
+    "ThomasTremel",
+    "cryptosaurus",
+    "lucaspeluso",
+    "_JulienLemaitre"
   ],
   "en": [
     "Chubby",
@@ -14517,6 +14523,36 @@
       "lang": "fr",
       "handle": "SylvainLafont_",
       "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MisterAI",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "_jasonbnt",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasTremel",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptosaurus",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucaspeluso",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "_JulienLemaitre",
+      "added": "2026-08-27"
     }
   ]
 }
