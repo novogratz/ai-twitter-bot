@@ -1989,7 +1989,11 @@
     "CedBailly",
     "MaxMulliez",
     "FrenchyCrypto",
-    "BenjaminBrouard"
+    "BenjaminBrouard",
+    "L3ave1",
+    "RoxaneCohen",
+    "JulienMounier",
+    "AntoineArlot"
   ],
   "en": [
     "Chubby",
@@ -2407,7 +2411,8 @@
     "Revolut",
     "atik",
     "SKYLINE",
-    "spearrz"
+    "spearrz",
+    "Obito"
   ],
   "history": [
     {
@@ -14438,6 +14443,31 @@
     {
       "lang": "en",
       "handle": "spearrz",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3ave1",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RoxaneCohen",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMounier",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineArlot",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Obito",
       "added": "2026-08-26"
     }
   ]

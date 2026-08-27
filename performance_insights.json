@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-26T17:02:51.425582",
-  "window_7d_actions": 4543,
-  "window_24h_actions": 551,
+  "generated_at": "2026-08-26T21:02:52.553501",
+  "window_7d_actions": 4577,
+  "window_24h_actions": 584,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4541
+      "count": 4575
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4541
+      "count": 4575
     }
   ],
   "best_hours_utc": [
@@ -41,7 +41,7 @@
     },
     {
       "hour": 21,
-      "actions": 208
+      "actions": 210
     },
     {
       "hour": 0,
@@ -55,78 +55,78 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2031
+      "count": 2041
     },
     {
       "topic": "IA",
-      "count": 1765
+      "count": 1804
     },
     {
       "topic": "Crypto",
-      "count": 606
+      "count": 591
     },
     {
       "topic": "Bourse",
-      "count": 351
+      "count": 350
     },
     {
       "topic": "Spatial",
-      "count": 90
+      "count": 92
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.036,
+      "24h_rate": 0.029,
       "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1882
+      "count": 1934
     },
     {
       "pillar": "market_trauma",
-      "count": 1248
+      "count": 1238
     },
     {
       "pillar": "other",
-      "count": 1089
+      "count": 1082
     },
     {
       "pillar": "meme_reaction",
-      "count": 206
+      "count": 204
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 244
+      "count": 273
     },
     {
       "pillar": "market_trauma",
-      "count": 147
+      "count": 160
     },
     {
       "pillar": "other",
-      "count": 127
+      "count": 117
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -136,30 +136,30 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.18,
-      "avg_views": 36.0,
+      "posts": 43,
+      "avg_likes": 0.16,
+      "avg_views": 37.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 84,
       "avg_likes": 0.1,
-      "avg_views": 34.4,
+      "avg_views": 33.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 62,
+      "posts": 63,
       "avg_likes": 0.05,
-      "avg_views": 41.0,
+      "avg_views": 42.2,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 38.2,
+      "avg_views": 42.2,
       "low_sample": false
     },
     {
@@ -173,19 +173,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3917
+      "count": 3954
     },
     {
       "type": "quote",
-      "count": 372
+      "count": 370
     },
     {
       "type": "quote_gif",
-      "count": 189
+      "count": 187
     },
     {
       "type": "post",
-      "count": 33
+      "count": 34
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-26T17:02:22.494223",
-      "text": "Bitwise says midterms won’t slow BTC. The real story? Politics is the volatility source; stablecoins are the product. Democrats need 60M votes from crypto natives by ‘28 to pass MiCA-style rules here and now. Election day closes news cycles forever but never stops USDC settlement",
+      "ts": "2026-08-26T21:02:20.805767",
+      "text": "Google just dropped gemini 3.5 transcribe with batch and streaming on the same day. \n\nanthropic is still debugging api latency while google charges $0 for inference to lock in the enterprise stack. ship or die darlings.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-26T17:02:06.290858",
-      "text": "Hyperscale is 49b of a company burning $5b/yr. the moat isn't chips anymore it's scale velocity and hyperscalers are trapped in it with you",
+      "ts": "2026-08-26T21:00:50.078360",
+      "text": "Collab before coding = prompt engineering with skin in the game. stops you from shipping a $5k solution for a problem that was solvable for free since 2023. smart play.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-26T17:01:15.573366",
-      "text": "Ox Alpha on Chinese chips? The lab wanted bragging rights. China needs a usable model to justify the capex.",
+      "ts": "2026-08-26T21:00:15.911833",
+      "text": "13B for an API wrapper that exists to make H100 sales easier. nvidia doesn't buy moats. it buys leverage. boring as hell and exactly right.",
       "type": "reply"
     }
   ]

@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-31T13:50:25.500300",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MathieuLecocq",
-        "region": "france",
-        "niche": "tech/ai",
-        "followers": 25000,
-        "reason": "PDG de Marmot Invest, il mixe tech et finance avec une honn\u00eatet\u00e9 rare sur le march\u00e9."
-      },
-      {
-        "handle": "RoxanneMaurice",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Journaliste crypto qui ose dire du mal d'Ethereum et du NFT, pas dans le 'to the moon' syst\u00e9matique."
-      },
-      {
-        "handle": "BenjaminLemay",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Co-fondateur de Coinhouse, il couvre le march\u00e9 crypto qu\u00e9b\u00e9cois avec un regard pragmatique."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour ne garder que des pros qui tweetent sur leur boulot. La France a ses gourous de la bourse, le Qu\u00e9bec ses fondateurs IA, et la diaspora US fait le lien entre les deux mondes crypto."
-  },
-  {
     "ts": "2026-07-31T15:50:13.561752",
     "raw_count": 8,
     "kept_count": 5,
@@ -8900,5 +8869,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la flotte pour \u00e9viter les 'gourous' qui vendent des Discord \u00e0 200\u20ac. C'est du s\u00e9rieux: des builders, des g\u00e9rants de fonds et une ex-banque d'affaires. Le top FR est solide sur l'IA (Mistral/Doctolib) mais p\u00e8te un peu le plafond en Crypto Trading."
+  },
+  {
+    "ts": "2026-08-26T17:03:18.697406",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "L3ave1",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le prince de la crypto FR qui m\u00e9lange micro-structure et punchlines. Moins 'influencer' que ses pairs."
+      },
+      {
+        "handle": "RoxaneCohen",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 25000,
+        "reason": "Journaliste TechCrunch France mais avec une patte finance. Elle d\u00e9crypte la tech sans se noyer dans le jargon."
+      },
+      {
+        "handle": "BenjaminLamandau",
+        "region": "usa",
+        "niche": "crypto/tech",
+        "followers": 20000,
+        "reason": "Francophone bas\u00e9 aux US. Couvre la convergence Tech/Crypto avec un angle souvent plus 's\u00e9rieux' que les shillers NY."
+      },
+      {
+        "handle": "JulienMounier",
+        "region": "france",
+        "niche": "bourse/vc",
+        "followers": 18000,
+        "reason": "V\u00e9t\u00e9ran des march\u00e9s. Pas de formation \u00e0 vendre que dalle. juste du gras sur les OS et l'\u00e9co."
+      },
+      {
+        "handle": "AntoineArlot",
+        "region": "france",
+        "niche": "tech/ia",
+        "followers": 15000,
+        "reason": "Fondateur de Neeva (rachet\u00e9) et chercheur IA. Il twitte sur la tech avec plus de recul que les vendeurs de r\u00eaves."
+      }
+    ],
+    "summary": "On laisse tomber les influenceurs Telegram qui vendent du vent pour se concentrer sur ceux qui ont vraiment sign\u00e9 un livre de code ou g\u00e9r\u00e9 des fonds. De Rochard \u00e0 Dionne : c'est technique, \u00e7a twitte en FR et on ne s'ennuie pas."
   }
 ]
