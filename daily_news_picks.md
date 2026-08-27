@@ -17038,3 +17038,12 @@ But for the next 48 hours, it’s FREE.
 Like + comment “GUIDE” and
   - https://x.com/coder_amaxaAi/status/2092453463666143338
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 17).
+
+## 2026-08-27
+- **@einsteinbtc1** (243 likes, score 9/10) — GM 
+
+BITCOIN $75.9K LEVEL COULD DECIDE THE NEXT MOVE
+
+$BTC Is Trading Around $78K-$80K, Just 3.4% Above The Newest Short-Term Cost Basis At $75.9K. As Long As BTC Holds Above $75.9K, The On-Chain Stru
+  - https://x.com/EinsteinBTC1/status/2092821853522030930
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 299).
