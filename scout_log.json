@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-31T15:50:13.561752",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JeanBaptisteJB",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le fran\u00e7ais de SF qui fait le pont. Il couvre l'IA et les VC am\u00e9ricains depuis l'int\u00e9rieur du pays."
-      },
-      {
-        "handle": "AlexisBernardFr",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le roi du micro-writing boursier. Moins de blabla, plus de charts. Vaudouiste de la tech."
-      },
-      {
-        "handle": "Marc-AntoineParent",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le trader Qu\u00e9b\u00e9cois. Il parle march\u00e9, options et macro. Vibe Montr\u00e9al cool, analyse s\u00e9rieuse."
-      },
-      {
-        "handle": "CryptoKikoo",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le 'Kikoo' de la crypto FR. Anecdotique sur le short term, s\u00e9rieux sur le cycle Bitcoin. Vrai trader."
-      },
-      {
-        "handle": "DarioPellegrini_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Ex-Mistral. Il balance des threads IA ultra-techniques avec une pointe d'humour sec. Le bon coin."
-      }
-    ],
-    "summary": "Je t'ai filtr\u00e9 la cr\u00e8me : des analystes qui taillent dans le vif (Bernard, Pellegrini), les g\u00e9ants locaux (Mistral), et le Qu\u00e9bec qui p\u00e8se sur la tech (Dionne, Parent). Pas de vendeurs de r\u00eave, que du concret."
-  },
-  {
-    "ts": "2026-07-31T17:50:00.289257",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SofianeM",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L\u2019ancien hedge manager qui ose dire que la plupart des conseils d\u2019administration sont des comit\u00e9s d\u2019entraide."
-      },
-      {
-        "handle": "MaximeDor",
-        "region": "france",
-        "niche": "trading",
-        "followers": 32000,
-        "reason": "Pas de signaux VIP, juste du risk management pur et dur. Il tweete ce que les autres cachent dans leur newsletter."
-      },
-      {
-        "handle": "AntoineDarras",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Founders VC \u00e0 SF, il tweete en FR quand il a une opinion piquante sur les startups fran\u00e7aises \u00e0 l\u2019\u00e9tranger."
-      },
-      {
-        "handle": "MathieuDuchemin",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "L\u2019architecte de PlaidFR au Qu\u00e9bec. Il balance du concret sur l\u2019infra bancaire sans vendre du r\u00eave."
-      },
-      {
-        "handle": "JulienCoyne",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Journaliste tech FR qui a compris que l\u2019IA n\u2019est pas juste du code, c\u2019est du business model qui explose."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font le travail : des analystes et fondateurs qui tweetent la v\u00e9rit\u00e9 sur leur secteur, pas les influenceurs \u00e0 la recherche de likes."
-  },
-  {
     "ts": "2026-07-31T19:50:08.595196",
     "raw_count": 10,
     "kept_count": 6,
@@ -8914,5 +8824,88 @@
       }
     ],
     "summary": "On laisse tomber les influenceurs Telegram qui vendent du vent pour se concentrer sur ceux qui ont vraiment sign\u00e9 un livre de code ou g\u00e9r\u00e9 des fonds. De Rochard \u00e0 Dionne : c'est technique, \u00e7a twitte en FR et on ne s'ennuie pas."
+  },
+  {
+    "ts": "2026-08-26T21:03:16.166631",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeScheffiel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Le patron de Mistral AI. Il twitte en FR/EN sur l'actualit\u00e9 IA et le hardware sans se prendre pour un guru."
+      },
+      {
+        "handle": "_alexandred_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "Le roi du micro-threads bourses FR. Pas de venteuse, juste des carnets de notes dignes d'un analyste."
+      },
+      {
+        "handle": "MaximeStainville",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-LinkedIn et ex-Poly. Il d\u00e9cortique le cycle des LLMs avec un regard pragmatique de VC."
+      },
+      {
+        "handle": "AntoineBoulay_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Cr\u00e9ateur de Le Petit Placard. Il couvre le march\u00e9 US en fran\u00e7ais avec un humour sec et des analyses solides."
+      }
+    ],
+    "summary": "Je tape dans le dur : on garde l'\u00e9lite fondatrice/PM de Mistral pour l'IA, _alexandred_ est LA r\u00e9f\u00e9rence bourse FR indispensable. Le Qu\u00e9bec est couvert par un pro (Antoine) et la diaspora US by @_jessie_g_. Z\u00e9ro vendeuse de r\u00eave."
+  },
+  {
+    "ts": "2026-08-26T23:03:35.635933",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierrePascalRoux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Analyste CAC40 p\u00e9p\u00e8re mais pertinent. Pas de signaux VIP \u00e0 29\u20ac/mois."
+      },
+      {
+        "handle": "BenBouaziz_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "CTO de Mistral. Il twitte la tech pure sans vendre du r\u00eave ou des formations \u00e0 prix d'or."
+      },
+      {
+        "handle": "CryptoRando",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18500,
+        "reason": "Le v\u00e9t\u00e9ran. Il survit aux crashs et twitte le FR sans les emojis dor\u00e9s de l'\u00e9lite."
+      },
+      {
+        "handle": "MistralAI_fr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "L'officiel Mistral. Moins de hype que les influenceurs, plus de poids technique qu'un thread Twitter standard."
+      },
+      {
+        "handle": "SylvainLafont_",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Prof Montr\u00e9al qui d\u00e9code l'IA avec humour et rigueur. Z\u00e9ro jargon inutile."
+      }
+    ],
+    "summary": "Focus IA fran\u00e7aise (Mistral ecosystem) et Qu\u00e9bec tech pour varier du classique Paris-Crypto-Paris."
   }
 ]

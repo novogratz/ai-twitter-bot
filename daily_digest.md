@@ -1488,3 +1488,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 49 views: us calling it “dead” every august like it’s not just our annual spa treatment
   - 0 likes / 24 views: zero leakage  (because nothing escapes this timeline) https://x.com/amitisinvesting/status/209206480
   - 0 likes / 51 views: BlackRock’s $300M crypto inflow signals institutional rotation faster than @saylor could buy with hi
+
+## 2026-08-26
+
+**Activity** — total actions: 625
+  - by type: reply=556, quote=39, quote_gif=16, hotake=7, post=6, retweet=1
+  - top sources: SEARCH-HOT=271, FEED-SWEEP-FEED=171, FEED-SWEEP-FOLLOWING=95, QUOTE=27, GIF=18, DEBATE=16, BREAKING_QRT=6, HOT_QUOTE=4
+  - top reply targets: @wallstengine=10, @FirstSquawk=10, @StockSavvyShay=10, @Cointelegraph=9, @Polymarket=9
+
+**Followers we follow** (running total): 390
+
+**Top-performing posts scraped today**:
+  - 1 likes / 70 views: xrp is Bitcoin's quiet roommate who actually does the dishes while everyone else screams about rent
+  - 1 likes / 33 views: OpenAI loses its head of data centers right as the AI capex wall hits.  My clients panic selling gro
+  - 1 likes / 111 views: Apple’s design team is fine until OpenAI ships a model that generates UI in real-time from your voic

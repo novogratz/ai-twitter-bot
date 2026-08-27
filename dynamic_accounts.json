@@ -1993,7 +1993,14 @@
     "L3ave1",
     "RoxaneCohen",
     "JulienMounier",
-    "AntoineArlot"
+    "AntoineArlot",
+    "MaximeScheffiel",
+    "_alexandred_",
+    "AntoineBoulay_",
+    "BenBouaziz_",
+    "CryptoRando",
+    "MistralAI_fr",
+    "SylvainLafont_"
   ],
   "en": [
     "Chubby",
@@ -2412,7 +2419,8 @@
     "atik",
     "SKYLINE",
     "spearrz",
-    "Obito"
+    "Obito",
+    "Neuralink"
   ],
   "history": [
     {
@@ -14468,6 +14476,46 @@
     {
       "lang": "en",
       "handle": "Obito",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Neuralink",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeScheffiel",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "_alexandred_",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineBoulay_",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenBouaziz_",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRando",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MistralAI_fr",
+      "added": "2026-08-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLafont_",
       "added": "2026-08-26"
     }
   ]
