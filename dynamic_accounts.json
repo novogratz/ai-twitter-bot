@@ -2014,7 +2014,14 @@
     "CyrilTheBear",
     "JadeMansour",
     "_JulienBoussus",
-    "_MisterFi"
+    "_MisterFi",
+    "Tibo_inshape",
+    "LuisPerez",
+    "MarcFerreira",
+    "RaphaPoussin",
+    "BoursierCom",
+    "thibaultg_5",
+    "VincentDrouin"
   ],
   "en": [
     "Chubby",
@@ -2436,7 +2443,10 @@
     "Obito",
     "Neuralink",
     "Serg",
-    "BaronVonHustle"
+    "BaronVonHustle",
+    "darrennn",
+    "dudu",
+    "Paradis"
   ],
   "history": [
     {
@@ -14612,6 +14622,56 @@
     {
       "lang": "fr",
       "handle": "_MisterFi",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "darrennn",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "dudu",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Tibo_inshape",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisPerez",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFerreira",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaPoussin",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Paradis",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BoursierCom",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaultg_5",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDrouin",
       "added": "2026-08-27"
     }
   ]

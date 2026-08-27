@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-27T13:54:42.389796",
-  "window_7d_actions": 4641,
-  "window_24h_actions": 936,
+  "generated_at": "2026-08-27T17:54:42.552845",
+  "window_7d_actions": 4642,
+  "window_24h_actions": 958,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4639
+      "count": 4640
     },
     {
       "pattern": "METAPHOR",
@@ -27,17 +27,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4639
+      "count": 4640
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 267
+      "actions": 263
     },
     {
       "hour": 14,
-      "actions": 223
+      "actions": 219
     },
     {
       "hour": 21,
@@ -55,11 +55,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2008
+      "count": 1997
     },
     {
       "topic": "IA",
-      "count": 1909
+      "count": 1921
     },
     {
       "topic": "Crypto",
@@ -67,34 +67,34 @@
     },
     {
       "topic": "Bourse",
-      "count": 345
+      "count": 353
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2018
+      "count": 2028
     },
     {
       "pillar": "market_trauma",
-      "count": 1234
+      "count": 1231
     },
     {
       "pillar": "other",
-      "count": 1061
+      "count": 1053
     },
     {
       "pillar": "meme_reaction",
-      "count": 197
+      "count": 193
     },
     {
       "pillar": "reply_bait",
-      "count": 93
+      "count": 99
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,70 +104,70 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 467
+      "count": 481
     },
     {
       "pillar": "market_trauma",
-      "count": 230
+      "count": 224
     },
     {
       "pillar": "other",
-      "count": 198
+      "count": 207
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 25
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "reply_bait",
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 47.5,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_vs_btc",
-      "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 47.4,
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 46.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.13,
-      "avg_views": 41.2,
+      "posts": 42,
+      "avg_likes": 0.14,
+      "avg_views": 42.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.11,
-      "avg_views": 35.3,
+      "posts": 74,
+      "avg_likes": 0.12,
+      "avg_views": 36.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 71,
       "avg_likes": 0.07,
-      "avg_views": 45.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 5,
-      "avg_likes": 0.0,
-      "avg_views": 47.0,
+      "avg_views": 45.4,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4020
+      "count": 4025
     },
     {
       "type": "quote",
@@ -175,11 +175,11 @@
     },
     {
       "type": "quote_gif",
-      "count": 184
+      "count": 181
     },
     {
       "type": "post",
-      "count": 31
+      "count": 30
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-27T13:53:18.569725",
-      "text": "NVDA’s market cap gain outpaces the GDP of most countries. you’re comparing a monopoly to gravity and expecting them to balance.",
+      "ts": "2026-08-27T17:54:39.633643",
+      "text": "@David Ondrej’s vague link bait for software builders. \nThe real story? AI already replaced 40% of junior coder interviews last year. Stop building wrappers and ship something that ships itself before Stanford Steve does it better next Tuesday.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T13:51:03.738551",
-      "text": "Upsideonly lets you trade with fake money and zero risk. this is the behavioral equivalent of a demo slot machine that never dispenses quarters. just chips forever.",
+      "ts": "2026-08-27T17:52:55.122582",
+      "text": "Nvda market cap adds $400b and you’re still watching the green candle. it’s not a rally, it’s an infrastructure monopoly printing money while everyone else pays rent on the gpu stack. simple math.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T13:50:47.681041",
-      "text": "Nvda's $130B qfy revenue beats apple + microsoft combined. the market doesn't care about your nostalgia ticker watchlist. it cares who owns the tap.",
+      "ts": "2026-08-27T17:51:56.075318",
+      "text": "GLM 5.3 Flash > Qwen by a hair on benchmarks, but inference cost is the only leaderboard that matters for profit margins. open weights win because they don't have to pay rent to api providers. shipping beats ranking charts every time.",
       "type": "reply"
     }
   ]
