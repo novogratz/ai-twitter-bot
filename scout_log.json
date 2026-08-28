@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-02T03:36:46.939763",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JeanBaptisteB",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 120000,
-        "reason": "L'expert macro francophone de r\u00e9f\u00e9rence. Ses tweets sur la dette et les taux font mouche. Pas de formation \u00e0 2k\u20ac, juste son job."
-      },
-      {
-        "handle": "SylvainLeFloch",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Ex-Polymath. Il parle macro, BTC et ETH sans crier gare. Pas de 'signal du jour', juste de l'opinion tranch\u00e9e."
-      },
-      {
-        "handle": "CryptoKera",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Kera est une figure incontournable de la DeFi en FR. Elle twitte depuis SF. Contenu technique accessible et punchy."
-      },
-      {
-        "handle": "MathieuBouchard",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Influenceur tech/QC tr\u00e8s actif. Parle d'IA et de SaaS avec humour. Audience engag\u00e9e, pas de bots."
-      },
-      {
-        "handle": "AdilBenmoussa",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "CTO de Linn\u00e9. Le genre de mec qui montre comment \u00e7a marche sous le capot. Moins de vues que les influenceurs, plus de substance."
-      },
-      {
-        "handle": "PierreDagenais",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste ind\u00e9pendant bas\u00e9 \u00e0 New York mais qui twitte en FR pour le public qu\u00e9b\u00e9cois/francophone. Perspectifs march\u00e9 US via des yeux francophones."
-      },
-      {
-        "handle": "VincentDubreuil",
-        "region": "france",
-        "niche": "vc",
-        "followers": 14000,
-        "reason": "Partner chez Partech. Il tweete sur l'IA et les startups tech. Moins 'influencer', plus 'insider'. Tr\u00e8s bon filtre."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui twittent pour eux-m\u00eames, pas pour leur funnel de vente. L'IA fran\u00e7aise se porte bien (Mistral, Linn\u00e9), la crypto qu\u00e9b\u00e9coise est solide (Coinhouse, Kera) et les macros-francos sont rarement aussi bons ailleurs."
-  },
-  {
     "ts": "2026-08-02T05:37:26.287661",
     "raw_count": 10,
     "kept_count": 5,
@@ -8774,5 +8715,22 @@
       }
     ],
     "summary": "6 profils solides sans blabla VC. Le mix IA/Bourse/Crypto est couvert avec des voix francophones actives et non-vendeuses."
+  },
+  {
+    "ts": "2026-08-27T23:55:02.512711",
+    "raw_count": 3,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoMac",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Il tweete en FR quand il a bu un coup de trop. Le meilleur ratio punchline/analyse du bitcointube francophone."
+      }
+    ],
+    "summary": "Trois comptes qui twittent assez pour rester vivants et avec la bite assez grosse (ou petite) pour s'en moquer."
   }
 ]

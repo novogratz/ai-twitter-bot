@@ -2030,7 +2030,8 @@
     "CryptoGaston",
     "Romain140",
     "CassiusDion",
-    "LudovicBosch"
+    "LudovicBosch",
+    "CryptoMac"
   ],
   "en": [
     "Chubby",
@@ -2457,7 +2458,9 @@
     "dudu",
     "Paradis",
     "FactPost",
-    "TheWizard"
+    "TheWizard",
+    "alphaXiv",
+    "Francis"
   ],
   "history": [
     {
@@ -14738,6 +14741,21 @@
     {
       "lang": "fr",
       "handle": "LudovicBosch",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "alphaXiv",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Francis",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMac",
       "added": "2026-08-27"
     }
   ]
