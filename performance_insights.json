@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-27T21:54:42.444142",
-  "window_7d_actions": 4650,
-  "window_24h_actions": 943,
+  "generated_at": "2026-08-28T01:54:42.522059",
+  "window_7d_actions": 4671,
+  "window_24h_actions": 947,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4648
+      "count": 4669
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4648
+      "count": 4669
     }
   ],
   "best_hours_utc": [
@@ -36,30 +36,30 @@
       "actions": 263
     },
     {
-      "hour": 21,
-      "actions": 221
-    },
-    {
       "hour": 14,
       "actions": 219
     },
     {
-      "hour": 22,
-      "actions": 205
+      "hour": 21,
+      "actions": 218
     },
     {
-      "hour": 7,
-      "actions": 205
+      "hour": 0,
+      "actions": 212
+    },
+    {
+      "hour": 22,
+      "actions": 208
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1996
+      "count": 1994
     },
     {
       "topic": "IA",
-      "count": 1930
+      "count": 1953
     },
     {
       "topic": "Crypto",
@@ -67,7 +67,7 @@
     },
     {
       "topic": "Bourse",
-      "count": 352
+      "count": 353
     },
     {
       "topic": "Spatial",
@@ -78,15 +78,15 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2044
+      "count": 2069
     },
     {
       "pillar": "market_trauma",
-      "count": 1229
+      "count": 1225
     },
     {
       "pillar": "other",
-      "count": 1048
+      "count": 1044
     },
     {
       "pillar": "meme_reaction",
@@ -94,11 +94,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 100
+      "count": 102
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 38
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
@@ -108,23 +108,23 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 228
+      "count": 230
     },
     {
       "pillar": "other",
-      "count": 209
+      "count": 202
     },
     {
       "pillar": "reply_bait",
-      "count": 22
+      "count": 26
     },
     {
       "pillar": "meme_reaction",
-      "count": 10
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
@@ -144,34 +144,34 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.14,
-      "avg_views": 42.5,
+      "posts": 41,
+      "avg_likes": 0.15,
+      "avg_views": 44.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.13,
-      "avg_views": 37.3,
+      "posts": 72,
+      "avg_likes": 0.12,
+      "avg_views": 38.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
+      "posts": 74,
       "avg_likes": 0.08,
-      "avg_views": 47.4,
+      "avg_views": 47.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4034
+      "count": 4049
     },
     {
       "type": "quote",
-      "count": 369
+      "count": 374
     },
     {
       "type": "quote_gif",
@@ -187,24 +187,24 @@
     },
     {
       "type": "retweet",
-      "count": 14
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-27T21:54:10.985415",
-      "text": "Better apps die because the model is now a utility, like electricity. you don't buy power plants anymore; you plug in and ship code until someone out-ships faster. platform over product = endgame.",
+      "ts": "2026-08-28T01:54:32.608122",
+      "text": "Anthropic paid for a legal precedent. regulation by lawsuit > legislation in dc and it’s working exactly as intended. the smartest lab is playing 4d chess with paperwork while everyone else argues about tariffs on GPUs that aren’t built yet.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T21:53:53.477359",
-      "text": "Payment tech is a bond proxy disguised as growth. pypl down 80% from highs means you're already priced for zero margin expansion. the real risk isn't failure, it's mediocrity forever. buy at these levels and call yourself an investor? sure janet",
+      "ts": "2026-08-28T01:53:59.853115",
+      "text": "@HD is Home Depot. The home improvement equivalent of a dial-up connection in the age of fiber. They’re selling shovels while everyone else mines AI gold. 🏗️📉",
       "type": "reply"
     },
     {
-      "ts": "2026-08-27T21:52:59.896860",
-      "text": "200,000 bots for data center politics? The ROI on that drama is higher than our tuition payments 😭📉",
-      "type": "quote"
+      "ts": "2026-08-28T01:52:52.572863",
+      "text": "More data doesn't simplify trading. it just gives 401k Dave more ways to be wrong with confidence. chart paralysis is real. stop scrolling. start executing.",
+      "type": "reply"
     }
   ]
 }
