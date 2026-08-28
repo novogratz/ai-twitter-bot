@@ -2037,7 +2037,9 @@
     "NathalieGuerin",
     "BaptisteRoux_",
     "LamarcheAlexis",
-    "LudovicVergnaud"
+    "LudovicVergnaud",
+    "Mickael",
+    "Marc_Bouyer"
   ],
   "en": [
     "Chubby",
@@ -14834,6 +14836,16 @@
     {
       "lang": "fr",
       "handle": "LudovicVergnaud",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mickael",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marc_Bouyer",
       "added": "2026-08-28"
     }
   ]

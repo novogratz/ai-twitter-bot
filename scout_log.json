@@ -1,78 +1,5 @@
 [
   {
-    "ts": "2026-08-02T11:36:36.092004",
-    "raw_count": 10,
-    "kept_count": 9,
-    "accounts_added": 9,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenjaminAB",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "GTM chez Mistral (bas\u00e9 SF/NY), parle aux deux march\u00e9s, vibe frangine tr\u00e8s pr\u00e9sente."
-      },
-      {
-        "handle": "JulesDelaune",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Data scientist talentueux, thread IA clairs, vibe pas 'guru bourse'."
-      },
-      {
-        "handle": "AntoineLeMeur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "G\u00e9rant d'Althea Capital, perspective institutionnelle, twitte en FR et EN mais la FR est bien pr\u00e9sente."
-      },
-      {
-        "handle": "RaphaelArdois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Fondateur d'Ellipsis AI, twitteraite pur, pas de pub pour son bootcamp ici ou l\u00e0."
-      },
-      {
-        "handle": "MathieuSenechal",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Drone AI / Computer Vision, tr\u00e8s actif sur la tech scene Montreal, contenu technique de pointe."
-      },
-      {
-        "handle": "MaximePigeon",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 20000,
-        "reason": "Fondateur de Pigeon AI (avant acquisition) puis investisseur, pur player tech Quebec."
-      },
-      {
-        "handle": "OlivierPerron",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Prof \u00e0 HEC Montr\u00e9al, expert LLMs, twitteraite acad\u00e9mique mais accessible, pas de formation \u00e0 999\u20ac."
-      },
-      {
-        "handle": "AlexisDenis",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "CTO de Lido (ex-Frax), twitte en FR sur DeFi et scaling, audience crypto hardcore."
-      },
-      {
-        "handle": "LorisMarty",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Journaliste CoinDesk FR, couvre le march\u00e9 spot/d\u00e9riv\u00e9s sans vendre de r\u00eave."
-      }
-    ],
-    "summary": "J'ai \u00e9pluch\u00e9 la sc\u00e8ne IA/VC fran\u00e7aise (Mistral, Ellipsis) et la crypto Quebec (HEC, Montreal tech). J'ai \u00e9vit\u00e9 les vendeurs de r\u00eave pour viser les vrais builders et les journalistes de terrain. La sc\u00e8ne US francophone est rare mais BenjaminAB est la perle rare."
-  },
-  {
     "ts": "2026-08-02T13:36:29.475686",
     "raw_count": 7,
     "kept_count": 6,
@@ -8662,5 +8589,29 @@
       }
     ],
     "summary": "J'ai fouill\u00e9 les p\u00e9pites 'pas des influenceurs' : Cyril Donguy pour l'\u00e9ducation bourse pure, Mistral AI comme valeur s\u00fbre fran\u00e7aise IA. Pour Qu\u00e9bec/USA mixte on se base sur nos r\u00e9seaux directs (Alex Dionne & Benoit FlocH) qui tweetent en FR tech."
+  },
+  {
+    "ts": "2026-08-28T09:55:06.933270",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Mickael",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 45000,
+        "reason": "Le 'mouton noir' qui ose dire ce que les autres pensent en silence. Ses threads sur le S&P sont aussi tranchants qu'un rasoir de s\u00e9curit\u00e9."
+      },
+      {
+        "handle": "Marc_Bouyer",
+        "region": "quebec",
+        "niche": "crypto/ai",
+        "followers": 18000,
+        "reason": "Le Qu\u00e9b\u00e9cois de r\u00e9f\u00e9rence. Il m\u00e9lange analyse technique pure et culture tech sans se prendre au s\u00e9rieux."
+      }
+    ],
+    "summary": "Du heavy crypto \u00e0 la tech VC en passant par le march\u00e9 US vu de Paris et Montr\u00e9al. Des comptes qui ont du fond, pas juste des \u00e9mojis fus\u00e9es."
   }
 ]
