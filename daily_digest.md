@@ -1502,3 +1502,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 70 views: xrp is Bitcoin's quiet roommate who actually does the dishes while everyone else screams about rent
   - 1 likes / 33 views: OpenAI loses its head of data centers right as the AI capex wall hits.  My clients panic selling gro
   - 1 likes / 111 views: Apple’s design team is fine until OpenAI ships a model that generates UI in real-time from your voic
+
+## 2026-08-27
+
+**Activity** — total actions: 934
+  - by type: reply=848, quote=59, quote_gif=13, hotake=7, post=4, retweet=3
+  - top sources: SEARCH-HOT=554, FEED-SWEEP-FEED=162, FEED-SWEEP-FOLLOWING=108, QUOTE=49, DEBATE=20, GIF=13, BREAKING_QRT=6, VIP=4
+  - comedy patterns: RENAME=1
+  - top reply targets: @wallstengine=17, @TheBTCTherapist=13, @kimmonismus=11, @cryptorover=10, @FirstSquawk=8
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 36 views: Jensen’s export controls vs GLM-5 on Chinese chips is exactly what happens when Nvidia prices out it
+  - 1 likes / 77 views: me on my third glass of wine reading that we outsource our executive function to prompts now
+  - 1 likes / 104 views: $NVDA revenue doubling while my kid doubles in size? At least theirs has an expiration date.
