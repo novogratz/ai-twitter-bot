@@ -2031,7 +2031,9 @@
     "Romain140",
     "CassiusDion",
     "LudovicBosch",
-    "CryptoMac"
+    "CryptoMac",
+    "Jeroen135",
+    "_ThomasBorini_"
   ],
   "en": [
     "Chubby",
@@ -2460,7 +2462,9 @@
     "FactPost",
     "TheWizard",
     "alphaXiv",
-    "Francis"
+    "Francis",
+    "Bayobets",
+    "evernorthxrp"
   ],
   "history": [
     {
@@ -14757,6 +14761,26 @@
       "lang": "fr",
       "handle": "CryptoMac",
       "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Bayobets",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "evernorthxrp",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jeroen135",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "_ThomasBorini_",
+      "added": "2026-08-28"
     }
   ]
 }

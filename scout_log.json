@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-02T05:37:26.287661",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Bourgeon",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le gars qui a fait d\u00e9coller Mistral et qui twitte comme si il d\u00e9jeunait avec Sam Altman tout en restant humble. La r\u00e9f\u00e9rence absolue tech FR."
-      },
-      {
-        "handle": "CryptoKana",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "La cha\u00eene YouTube qui a fait sa\u6c5f\u6e56. Sur X, il partage ses insights trading sans les filtres Instagram des influenceurs parisiens."
-      },
-      {
-        "handle": "RomainBoulay",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Product Manager \u00e0 la French Tech. Il d\u00e9cortique les produits avec une lucidit\u00e9 chirurgicale. On le suit pour savoir quel outil va bient\u00f4t rendre le n\u00f4tre obsol\u00e8te."
-      },
-      {
-        "handle": "JulienBosc",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Fintech VC qui a vu venir l'avenir de la banque. Il tweet sur les fondamentaux sans vendre de r\u00eave, ce qui est plus rare qu'un client Square qui paie."
-      },
-      {
-        "handle": "BastienRiviere",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 16000,
-        "reason": "L'analyste technique qui ne dort jamais. Il identifie les support et resistance avant que les algos ne se r\u00e9veillent. C'est son cauchemar ou ton r\u00eave."
-      }
-    ],
-    "summary": "Un m\u00e9lange de b\u00e2tisseurs fran\u00e7ais (Mistral/VC), de la sc\u00e8ne crypto qu\u00e9b\u00e9coise qui n'est pas morte, et de la diaspora SF qui parle notre langue. Z\u00e9ro vendeur de r\u00eave, uniquement des constructeurs et des analystes qui ont encore les yeux grands ouverts."
-  },
-  {
     "ts": "2026-08-02T07:36:29.680367",
     "raw_count": 7,
     "kept_count": 6,
@@ -8732,5 +8687,29 @@
       }
     ],
     "summary": "Trois comptes qui twittent assez pour rester vivants et avec la bite assez grosse (ou petite) pour s'en moquer."
+  },
+  {
+    "ts": "2026-08-28T01:55:17.546832",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Jeroen135",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 87000,
+        "reason": "L'expert en tokenomics qui rend la finance classique b\u00eate de drogue."
+      },
+      {
+        "handle": "_ThomasBorini_",
+        "region": "france",
+        "niche": "bourse/fintech",
+        "followers": 12000,
+        "reason": "Analyste solo qui d\u00e9cortique les bilans avec la pr\u00e9cision d'un chirurgien et l'humour d'un pote bourr\u00e9."
+      }
+    ],
+    "summary": "Le mix parfait entre la maturit\u00e9 analytique fran\u00e7aise (Jeroen) et l'audace tech qu\u00e9b\u00e9coise/US. Z\u00e9ro vendeur de r\u00eave, juste du gras dans le feed."
   }
 ]

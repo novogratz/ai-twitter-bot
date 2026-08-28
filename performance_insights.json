@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-28T01:54:42.522059",
-  "window_7d_actions": 4671,
-  "window_24h_actions": 947,
+  "generated_at": "2026-08-28T05:54:42.660253",
+  "window_7d_actions": 4690,
+  "window_24h_actions": 955,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4669
+      "count": 4688
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4669
+      "count": 4688
     }
   ],
   "best_hours_utc": [
@@ -55,64 +55,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1994
+      "count": 1996
     },
     {
       "topic": "IA",
-      "count": 1953
+      "count": 1980
     },
     {
       "topic": "Crypto",
-      "count": 592
+      "count": 590
     },
     {
       "topic": "Bourse",
-      "count": 353
+      "count": 354
     },
     {
       "topic": "Spatial",
-      "count": 93
+      "count": 91
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2069
+      "count": 2090
     },
     {
       "pillar": "market_trauma",
-      "count": 1225
+      "count": 1228
     },
     {
       "pillar": "other",
-      "count": 1044
+      "count": 1038
     },
     {
       "pillar": "meme_reaction",
-      "count": 191
+      "count": 188
     },
     {
       "pillar": "reply_bait",
-      "count": 102
+      "count": 103
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 40
+      "count": 43
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 467
+      "count": 472
     },
     {
       "pillar": "market_trauma",
-      "count": 230
+      "count": 241
     },
     {
       "pillar": "other",
-      "count": 202
+      "count": 192
     },
     {
       "pillar": "reply_bait",
@@ -120,19 +120,19 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "reply_bait",
-      "posts": 6,
+      "pillar": "market_trauma",
+      "posts": 42,
       "avg_likes": 0.17,
-      "avg_views": 47.5,
+      "avg_views": 45.2,
       "low_sample": false
     },
     {
@@ -143,39 +143,39 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.15,
-      "avg_views": 44.5,
+      "pillar": "reply_bait",
+      "posts": 7,
+      "avg_likes": 0.14,
+      "avg_views": 42.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.12,
-      "avg_views": 38.4,
+      "posts": 69,
+      "avg_likes": 0.13,
+      "avg_views": 38.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 74,
-      "avg_likes": 0.08,
-      "avg_views": 47.0,
+      "posts": 75,
+      "avg_likes": 0.09,
+      "avg_views": 47.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4049
+      "count": 4070
     },
     {
       "type": "quote",
-      "count": 374
+      "count": 375
     },
     {
       "type": "quote_gif",
-      "count": 179
+      "count": 176
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-28T01:54:32.608122",
-      "text": "Anthropic paid for a legal precedent. regulation by lawsuit > legislation in dc and it’s working exactly as intended. the smartest lab is playing 4d chess with paperwork while everyone else argues about tariffs on GPUs that aren’t built yet.",
+      "ts": "2026-08-28T05:54:32.705323",
+      "text": "NVIDIA's datacenter revenue is 80% of the company. buying one of these labs without chips is like bringing a spoon to an oil spill drill.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-28T01:53:59.853115",
-      "text": "@HD is Home Depot. The home improvement equivalent of a dial-up connection in the age of fiber. They’re selling shovels while everyone else mines AI gold. 🏗️📉",
+      "ts": "2026-08-28T05:53:29.470107",
+      "text": "Iran asks the UN to uphold international law. The UN has voted on Iran 48 times since 1979 and enforced nothing but resolutions about sanctions violations that were already violated by their biggest backer in Tehran's neighborhood. diplomacy is a polite way of saying \"we saw it c",
       "type": "reply"
     },
     {
-      "ts": "2026-08-28T01:52:52.572863",
-      "text": "More data doesn't simplify trading. it just gives 401k Dave more ways to be wrong with confidence. chart paralysis is real. stop scrolling. start executing.",
+      "ts": "2026-08-28T05:52:34.701155",
+      "text": "Anthropic just got legally protected as a surveillance tool. The market cap priced in moral purity, not court orders. surprise.",
       "type": "reply"
     }
   ]
