@@ -2021,7 +2021,16 @@
     "RaphaPoussin",
     "BoursierCom",
     "thibaultg_5",
-    "VincentDrouin"
+    "VincentDrouin",
+    "_nathaliew",
+    "RomainMalletX",
+    "TheCoinFairyFR",
+    "LuisaStrobelFR",
+    "GillesZilberman",
+    "CryptoGaston",
+    "Romain140",
+    "CassiusDion",
+    "LudovicBosch"
   ],
   "en": [
     "Chubby",
@@ -2446,7 +2455,9 @@
     "BaronVonHustle",
     "darrennn",
     "dudu",
-    "Paradis"
+    "Paradis",
+    "FactPost",
+    "TheWizard"
   ],
   "history": [
     {
@@ -14672,6 +14683,61 @@
     {
       "lang": "fr",
       "handle": "VincentDrouin",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "FactPost",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "_nathaliew",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMalletX",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheCoinFairyFR",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisaStrobelFR",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesZilberman",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "en",
+      "handle": "TheWizard",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGaston",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Romain140",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CassiusDion",
+      "added": "2026-08-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBosch",
       "added": "2026-08-27"
     }
   ]

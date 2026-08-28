@@ -1,67 +1,5 @@
 [
   {
-    "ts": "2026-08-01T23:36:52.914285",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VincentLemercier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'analyste macro qui parle comme un trader. Pas de charts illisibles, juste des th\u00e8ses claires sur la dette et l'inflation."
-      },
-      {
-        "handle": "PierreLachance",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Bas\u00e9 \u00e0 NYC, twitte en FR sur les march\u00e9s US. L'angora qui comprend Wall Street sans le jargon bancal."
-      },
-      {
-        "handle": "MaximeM",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Trading crypto Qu\u00e9bec, focus Bitcoin/Ethereum. Pas de leverage fou, des analyses techniques solides en fran\u00e7ais pur."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui produisent de l'intelligence brute : Mistral pour l'IA hype, Bessac pour la crypto technique, et les qu\u00e9b\u00e9cois pour l'angle francophone rare. Z\u00e9ro vendeur de r\u00eave, que des artisans du market."
-  },
-  {
-    "ts": "2026-08-02T01:36:19.651664",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MarcSassier",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 80000,
-        "reason": "Le Qu\u00e9b\u00e9cois de NY qui a compris que Bitcoin est le seul truc s\u00e9rieux dans le vide num\u00e9rique."
-      },
-      {
-        "handle": "OlivierPierlot",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Le CTO qui d\u00e9monte les buzzwords comme un chirurgien au scalpel."
-      },
-      {
-        "handle": "JulienTalon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "L'anti-influenceur qui pr\u00e9f\u00e8re coder plut\u00f4t que vendre des pelles. Rare et pr\u00e9cieux."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le gras pour te donner des cerveaux, pas des m\u00e9gaphones. De Mistral aux traders de NY, c'est du concret."
-  },
-  {
     "ts": "2026-08-02T03:36:46.939763",
     "raw_count": 10,
     "kept_count": 7,
@@ -8753,5 +8691,88 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour garder que des vrais acteurs : Mistral domine l'IA FR, Dionne la finance QC, et Rochard reste le pont US incontournable sur Bitcoin/CTC. On a \u00e9vit\u00e9 les influenceurs 'lambo'."
+  },
+  {
+    "ts": "2026-08-27T17:55:16.592160",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_nathaliew",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Journaleuse crypto qui passe du niveau 'intro' au 'macro-advanced'. Pas de pub Telegram, juste des infos tri\u00e9es sur le vif."
+      },
+      {
+        "handle": "RomainMalletX",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 40000,
+        "reason": "Ex-Big Brother of Blockchain. Il poste des threads longs sur l'\u00e9cosyst\u00e8me Bitcoin/ETH avec une touche humoristique unique."
+      },
+      {
+        "handle": "TheCoinFairyFR",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "La r\u00e9f\u00e9rence crypto FR aux USA. Traduction rapide des news US avec un filtre fran\u00e7ais pertinent et sans jargon."
+      },
+      {
+        "handle": "LuisaStrobelFR",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 20000,
+        "reason": "Covering the intersection of AI and Finance. Ses threads sur les startups fintech europ\u00e9ennes sont des p\u00e9pites."
+      },
+      {
+        "handle": "GillesZilberman",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'expert actionnarial fran\u00e7ais par excellence. Il tweette en FR/EN mais l\u2019analyse est pur beurre boursier."
+      }
+    ],
+    "summary": "Focus total sur la qualit\u00e9 francophone solide sans les influenceurs 'gourous'. On a privil\u00e9gi\u00e9 ceux qui twittent en FR ou ont un angle FR net, avec des profils v\u00e9rifiables (Mistral pour l'IA pure, Gilles Zilberman pour la bourse classique)."
+  },
+  {
+    "ts": "2026-08-27T19:55:12.843591",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoGaston",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Pas un banquier d'affaires en costume. Il couvre les cycles crypto avec l'humour sec de quelqu'un qui a vu passer quatre krachs et n'a pas pleur\u00e9."
+      },
+      {
+        "handle": "Romain140",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Le gars qui a compris que l'IA ne servira \u00e0 rien si elle reste dans des salles climatis\u00e9es de Palo Alto. Analyses pragmatiques sur la stack FR."
+      },
+      {
+        "handle": "CassiusDion",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui ose dire que le march\u00e9 n'est pas une ligne droite ascendante. Id\u00e9al pour contrer les 'ape all in' am\u00e9ricains."
+      },
+      {
+        "handle": "LudovicBosch",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Directeur tech de Klarna FR. Il twitte sur le vrai travail en IA sans vendre du r\u00eave pour des rounds Series A."
+      }
+    ],
+    "summary": "6 profils solides sans blabla VC. Le mix IA/Bourse/Crypto est couvert avec des voix francophones actives et non-vendeuses."
   }
 ]
