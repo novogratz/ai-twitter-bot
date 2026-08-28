@@ -2039,7 +2039,14 @@
     "LamarcheAlexis",
     "LudovicVergnaud",
     "Mickael",
-    "Marc_Bouyer"
+    "Marc_Bouyer",
+    "BastienGervais",
+    "ThomasDrouet",
+    "RomainBouvier_",
+    "LennyB1972",
+    "MaximeW",
+    "SachaCohenFr",
+    "MehdiDhifallah"
   ],
   "en": [
     "Chubby",
@@ -14846,6 +14853,41 @@
     {
       "lang": "fr",
       "handle": "Marc_Bouyer",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "BastienGervais",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDrouet",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBouvier_",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LennyB1972",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeW",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaCohenFr",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiDhifallah",
       "added": "2026-08-28"
     }
   ]
