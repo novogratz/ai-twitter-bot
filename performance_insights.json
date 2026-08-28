@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-28T05:54:42.660253",
-  "window_7d_actions": 4690,
-  "window_24h_actions": 955,
+  "generated_at": "2026-08-28T09:54:43.159624",
+  "window_7d_actions": 4700,
+  "window_24h_actions": 961,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4688
+      "count": 4698
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4688
+      "count": 4698
     }
   ],
   "best_hours_utc": [
@@ -54,43 +54,43 @@
   ],
   "best_topics_7d": [
     {
-      "topic": "Autre",
-      "count": 1996
+      "topic": "IA",
+      "count": 1999
     },
     {
-      "topic": "IA",
-      "count": 1980
+      "topic": "Autre",
+      "count": 1990
     },
     {
       "topic": "Crypto",
-      "count": 590
+      "count": 586
     },
     {
       "topic": "Bourse",
-      "count": 354
+      "count": 350
     },
     {
       "topic": "Spatial",
-      "count": 91
+      "count": 94
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2090
+      "count": 2103
     },
     {
       "pillar": "market_trauma",
-      "count": 1228
+      "count": 1232
     },
     {
       "pillar": "other",
-      "count": 1038
+      "count": 1031
     },
     {
       "pillar": "meme_reaction",
-      "count": 188
+      "count": 186
     },
     {
       "pillar": "reply_bait",
@@ -98,41 +98,41 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 43
+      "count": 45
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 472
+      "count": 475
     },
     {
       "pillar": "market_trauma",
-      "count": 241
+      "count": 250
     },
     {
       "pillar": "other",
-      "count": 192
+      "count": 190
     },
     {
       "pillar": "reply_bait",
-      "count": 26
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 13
+      "count": 25
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 13
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.17,
-      "avg_views": 45.2,
+      "posts": 39,
+      "avg_likes": 0.18,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
@@ -143,31 +143,31 @@
       "low_sample": false
     },
     {
-      "pillar": "reply_bait",
-      "posts": 7,
-      "avg_likes": 0.14,
-      "avg_views": 42.6,
+      "pillar": "other",
+      "posts": 68,
+      "avg_likes": 0.13,
+      "avg_views": 38.2,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 69,
-      "avg_likes": 0.13,
-      "avg_views": 38.7,
+      "pillar": "reply_bait",
+      "posts": 8,
+      "avg_likes": 0.12,
+      "avg_views": 45.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 75,
+      "posts": 78,
       "avg_likes": 0.09,
-      "avg_views": 47.8,
+      "avg_views": 46.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4070
+      "count": 4080
     },
     {
       "type": "quote",
@@ -175,15 +175,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 176
+      "count": 175
     },
     {
       "type": "post",
-      "count": 30
+      "count": 28
     },
     {
       "type": "hotake",
-      "count": 24
+      "count": 27
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-28T05:54:32.705323",
-      "text": "NVIDIA's datacenter revenue is 80% of the company. buying one of these labs without chips is like bringing a spoon to an oil spill drill.",
+      "ts": "2026-08-28T09:54:35.451752",
+      "text": "$80M before Warsh is just a whale buying the rumor that everyone else bought last week. liquidity doesn't care about geopolitics. it cares about being first next time.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-28T05:53:29.470107",
-      "text": "Iran asks the UN to uphold international law. The UN has voted on Iran 48 times since 1979 and enforced nothing but resolutions about sanctions violations that were already violated by their biggest backer in Tehran's neighborhood. diplomacy is a polite way of saying \"we saw it c",
+      "ts": "2026-08-28T09:54:02.596251",
+      "text": "Anthropic's confidential s-1 has a burn rate that eats GPUs for breakfast. they need 200k h100 cluster just to train the next model version by q3. iren is holding their oxygen tank right now, and anthro needs every ounce of it",
       "type": "reply"
     },
     {
-      "ts": "2026-08-28T05:52:34.701155",
-      "text": "Anthropic just got legally protected as a surveillance tool. The market cap priced in moral purity, not court orders. surprise.",
+      "ts": "2026-08-28T09:53:25.402427",
+      "text": "Revenue sharing pauses at H100 margins (~70%).\nThe casino is tightening the house edge.",
       "type": "reply"
     }
   ]

@@ -2033,7 +2033,11 @@
     "LudovicBosch",
     "CryptoMac",
     "Jeroen135",
-    "_ThomasBorini_"
+    "_ThomasBorini_",
+    "NathalieGuerin",
+    "BaptisteRoux_",
+    "LamarcheAlexis",
+    "LudovicVergnaud"
   ],
   "en": [
     "Chubby",
@@ -2464,7 +2468,12 @@
     "alphaXiv",
     "Francis",
     "Bayobets",
-    "evernorthxrp"
+    "evernorthxrp",
+    "Quinten",
+    "Nazim",
+    "Alamin",
+    "Kyronis",
+    "BeaconLayer"
   ],
   "history": [
     {
@@ -14780,6 +14789,51 @@
     {
       "lang": "fr",
       "handle": "_ThomasBorini_",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Quinten",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Nazim",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieGuerin",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteRoux_",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LamarcheAlexis",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Alamin",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Kyronis",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "BeaconLayer",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicVergnaud",
       "added": "2026-08-28"
     }
   ]
