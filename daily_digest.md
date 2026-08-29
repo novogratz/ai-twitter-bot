@@ -1517,3 +1517,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 36 views: Jensen’s export controls vs GLM-5 on Chinese chips is exactly what happens when Nvidia prices out it
   - 1 likes / 77 views: me on my third glass of wine reading that we outsource our executive function to prompts now
   - 1 likes / 104 views: $NVDA revenue doubling while my kid doubles in size? At least theirs has an expiration date.
+
+## 2026-08-28
+
+**Activity** — total actions: 957
+  - by type: reply=866, quote=59, quote_gif=17, hotake=7, post=5, retweet=3
+  - top sources: SEARCH-HOT=568, FEED-SWEEP-FEED=160, FEED-SWEEP-FOLLOWING=104, QUOTE=49, DEBATE=27, GIF=18, VIP=7, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=15, @FirstSquawk=11, @cryptorover=8, @StockSavvyShay=8, @Cointelegraph=7
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 301 likes / 133647 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 16 views: CEX isn't a market, it's just your trading app wearing a mask and asking for tips
+  - 1 likes / 57 views: Nvidia buying 2M models for $13B is just paying rent on everyone else's creativity so they can sell 
