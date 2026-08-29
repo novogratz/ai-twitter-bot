@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-02T23:36:21.749544",
-    "raw_count": 6,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HaseebQureshi",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 185000,
-        "reason": "Le gars de Coinfund qui a compris la game avant tout le monde. Analyse macro/crypto pointue, anglais impeccable mais se glisse en FR quand il faut."
-      },
-      {
-        "handle": "ThibaudPoyet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "L'expert NFT qui balance de la value pure. Pas de sh*tposting, juste des threads techniques et des insights march\u00e9 que les influenceurs 'lambo' n'ont pas."
-      },
-      {
-        "handle": "JesseSokolov",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Ex-Mistral, il twitte sur l'infrastructure IA avec une clart\u00e9 d\u00e9sarmante. C'est le genre de compte o\u00f9 tu apprends deux trucs en 5 minutes sans t'endormir."
-      },
-      {
-        "handle": "AlexisRozes",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Founders, VC et fintech FR. Il cover l'\u00e9cosyst\u00e8me startup avec un \u0153il critique. Ses threads sur les lev\u00e9es de fonds sont des mines d'or."
-      },
-      {
-        "handle": "JulienDahon",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste bourse FR s\u00e9rieux. Il balance ses charts et ses th\u00e8ses macro avant les pros de la t\u00e9l\u00e9. Pas de 'Buy & Hold' b\u00e9ate, il aime le contexte."
-      },
-      {
-        "handle": "MarcFavreau",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le grand patron de la bourse qu\u00e9b\u00e9coise sur les r\u00e9seaux. Ses posts sur les cycles \u00e9conomiques sont des classiques, toujours pertinents et bien \u00e9crits."
-      }
-    ],
-    "summary": "J'ai tri\u00e9 le sable pour trouver des vrais analystes pas des vendeurs de r\u00eaves. Le mix USA/FR/Qu\u00e9bec est solide, sans le traditionnel bloat des influenceurs crypto g\u00e9n\u00e9ralistes."
-  },
-  {
-    "ts": "2026-08-03T01:36:27.690384",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thibaultmrg",
-        "region": "france",
-        "niche": "ai",
-        "followers": 95000,
-        "reason": "Thibault Margerie. La r\u00e9f\u00e9rence 'French AI'. Il ne vend pas de cours, il poste des threads techniques et du hardware. Pure substance."
-      },
-      {
-        "handle": "MaximeVandenberghe",
-        "region": "france",
-        "niche": "ai",
-        "followers": 72000,
-        "reason": "CEO de Mistral. Pas besoin de se pr\u00e9senter. Son compte est une mine d'or sur l'\u00e9cosyst\u00e8me fran\u00e7ais et la souverainet\u00e9 IA. Moins hype que certains, plus pertinent."
-      },
-      {
-        "handle": "RaphaelMoulin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Cofondateur de Dymension. Le roi du ZK-rollups en France. Twitte des insights deep-tech, pas des shillings. Respect\u00e9 par les devs."
-      },
-      {
-        "handle": "RomainLeduc_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "L'expert qu\u00e9b\u00e9cois incontest\u00e9 sur l'adoption des crypto-actifs et la fintech. Vibe calme, contenu dense. La paix au Qu\u00e9bec (et ailleurs)."
-      },
-      {
-        "handle": "julien_grenier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'anti-Blablaresearch. Journaliste fond, analyse les r\u00e9sultats trimestriels avec un humour noir corrosif. Le 'merci Maxime' permanent."
-      },
-      {
-        "handle": "AmineSahbani",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Hype-free AI. Il d\u00e9cortique les LLMs avec une pr\u00e9cision chirurgicale. Le genre de thread qui te fait dire 'waouh' en lisant le feed de tes potes tech."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux qui font avancer la nasse, pas juste les influenceurs qui vendent des webinaires de 49\u20ac. Mistral et Dymension montrent que la France sort des IA d'\u00e9lite, pas juste des consultants."
-  },
-  {
     "ts": "2026-08-03T03:36:25.729229",
     "raw_count": 8,
     "kept_count": 5,
@@ -8557,5 +8453,53 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rans de la crypto FR (PowerHasheur) et l'\u00e9cosyst\u00e8me tech \u00e9mergent (#IA, VC). Le Qu\u00e9bec reste petit mais qualitatif avec Dionne/Dubois. Z\u00e9ro vendeur de r\u00eave, que des experts."
+  },
+  {
+    "ts": "2026-08-29T01:55:06.673168",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenInBits",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Le ma\u00eetre du 'degiiz' en crypto. Il rend la complexit\u00e9 DeFi compr\u00e9hensible sans te vendre son cours de $297."
+      }
+    ],
+    "summary": "M\u00e9lange de grands noms institutionnels (Mistral) et d'experts techniques nich\u00e9s qui \u00e9vitent le cirque des influenceurs 'lamborghinis'. La s\u00e9lection couvre les trois r\u00e9gions avec une emphase sur la qualit\u00e9 technique plut\u00f4t que le volume."
+  },
+  {
+    "ts": "2026-08-29T03:55:05.983789",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Sylvesternicolas",
+        "region": "france",
+        "niche": "ai",
+        "followers": 75000,
+        "reason": "Le prof de l'HEC qui explique pourquoi on aura tous un agent IA sous son lit d'ici deux ans."
+      },
+      {
+        "handle": "LudovicSartor1",
+        "region": "france",
+        "niche": "tech_vc",
+        "followers": 45000,
+        "reason": "Partner chez Aleph. Il a l'\u0153il plus fin qu'une montre Patek et twitte sans le langage corporate emmerdant."
+      },
+      {
+        "handle": "Cointelegraph_fr",
+        "region": "france_usa",
+        "niche": "crypto_news",
+        "followers": 25000,
+        "reason": "La version FR de l'organe officiel. Moins de merdes que la page EN, plus vite sur les hacks Ethereum."
+      }
+    ],
+    "summary": "Un mix solide entre le capital-risque parisien qui ne ment pas trop (@LudovicSartor1), le prof HEC p\u00e9dagogique \u00e0 fond dans l'IA (@Sylvesternicolas) et la truffe qu\u00e9b\u00e9coise sur les cycles crypto (@AlexDionne_qc)."
   }
 ]

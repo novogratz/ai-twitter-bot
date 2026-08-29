@@ -2056,7 +2056,9 @@
     "_n4xtr_",
     "_julienboussus_",
     "_NathalieW_",
-    "_misterfi_"
+    "_misterfi_",
+    "BenInBits",
+    "LudovicSartor1"
   ],
   "en": [
     "Chubby",
@@ -14991,6 +14993,16 @@
       "lang": "fr",
       "handle": "_misterfi_",
       "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenInBits",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicSartor1",
+      "added": "2026-08-29"
     }
   ]
 }

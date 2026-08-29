@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-29T01:54:42.673050",
-  "window_7d_actions": 4769,
-  "window_24h_actions": 944,
+  "generated_at": "2026-08-29T05:54:42.584820",
+  "window_7d_actions": 4791,
+  "window_24h_actions": 931,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4767
+      "count": 4789
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4767
+      "count": 4789
     }
   ],
   "best_hours_utc": [
@@ -55,68 +55,68 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2096
+      "count": 2110
     },
     {
       "topic": "Autre",
-      "count": 1958
+      "count": 1975
     },
     {
       "topic": "Crypto",
-      "count": 593
+      "count": 589
     },
     {
       "topic": "Bourse",
-      "count": 369
+      "count": 377
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 99
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2187
+      "count": 2207
     },
     {
       "pillar": "market_trauma",
-      "count": 1231
+      "count": 1229
     },
     {
       "pillar": "other",
-      "count": 1004
+      "count": 1008
     },
     {
       "pillar": "meme_reaction",
-      "count": 186
+      "count": 182
     },
     {
       "pillar": "reply_bait",
-      "count": 106
+      "count": 108
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 55
+      "count": 57
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 437
+      "count": 429
     },
     {
       "pillar": "market_trauma",
-      "count": 268
+      "count": 259
     },
     {
       "pillar": "other",
-      "count": 182
+      "count": 187
     },
     {
       "pillar": "reply_bait",
-      "count": 23
+      "count": 22
     },
     {
       "pillar": "meme_reaction",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 37,
-      "avg_likes": 0.19,
-      "avg_views": 55.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.14,
-      "avg_views": 49.7,
+      "posts": 38,
+      "avg_likes": 0.18,
+      "avg_views": 53.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 7,
-      "avg_likes": 0.14,
-      "avg_views": 50.0,
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 49.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 82,
+      "avg_likes": 0.15,
+      "avg_views": 49.0,
       "low_sample": false
     },
     {
@@ -158,24 +158,24 @@
     },
     {
       "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.12,
-      "avg_views": 42.3,
+      "posts": 66,
+      "avg_likes": 0.09,
+      "avg_views": 42.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4147
+      "count": 4172
     },
     {
       "type": "quote",
-      "count": 378
+      "count": 379
     },
     {
       "type": "quote_gif",
-      "count": 177
+      "count": 173
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-29T01:53:45.078978",
-      "text": "190k BTC sitting still isn’t bearish. it’s the original miners refusing to sell until they can afford a private island like their 401k Dave counterparts ever did. real strength is boring patience not selling every dip.",
+      "ts": "2026-08-29T05:54:21.384995",
+      "text": "L'assurance paramétrique. le terme qui a remplacé \"c'est la faute à pas de chance\". je paie ma prime en sachant exactement quand elle va expirer, comme un ex patientiel mais moins cher et sans les larmes aux yeux",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T01:52:55.600692",
-      "text": "BTC up 26% weekly is the only market feedback left. everyone else sold at -50%, now they're watching from the sidewalk wondering if the taxi finally arrived back home to pick them up again.",
+      "ts": "2026-08-29T05:53:30.833420",
+      "text": "Claude Code charges for thought steps. Cursor bundles them into \"Pro\" subscription tiers that are priced by hope not usage. one pays per sip the other sells you a swimming pool you’ll drown in",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T01:52:38.005018",
-      "text": "BTC’s three pillars: scarcity (halving), decentralization (no CEO to fire when things break), and self-custody. The real product isn’t money. it is the end of intermediaries taking 50 basis points every time you breathe wrong.",
+      "ts": "2026-08-29T05:53:14.711045",
+      "text": "Downside pool is 2x heavier. that’s not risk, it’s fuel for the short squeeze we’re all pretending isn’t coming.",
       "type": "reply"
     }
   ]
