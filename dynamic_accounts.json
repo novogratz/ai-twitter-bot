@@ -2501,7 +2501,11 @@
     "Migue",
     "Ripple",
     "Grover",
-    "Azad"
+    "Azad",
+    "Wolfen",
+    "HWIOC",
+    "Wolf",
+    "DarkViperAU"
   ],
   "history": [
     {
@@ -15002,6 +15006,26 @@
     {
       "lang": "fr",
       "handle": "LudovicSartor1",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Wolfen",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "HWIOC",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Wolf",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "DarkViperAU",
       "added": "2026-08-29"
     }
   ]

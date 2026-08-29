@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-29T05:54:42.584820",
-  "window_7d_actions": 4791,
-  "window_24h_actions": 931,
+  "generated_at": "2026-08-29T09:54:46.770253",
+  "window_7d_actions": 4841,
+  "window_24h_actions": 914,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4789
+      "count": 4839
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4789
+      "count": 4839
     }
   ],
   "best_hours_utc": [
@@ -44,75 +44,81 @@
       "actions": 220
     },
     {
-      "hour": 22,
-      "actions": 212
+      "hour": 9,
+      "actions": 217
     },
     {
-      "hour": 16,
-      "actions": 211
+      "hour": 22,
+      "actions": 212
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2110
+      "count": 2133
     },
     {
       "topic": "Autre",
-      "count": 1975
+      "count": 1998
     },
     {
       "topic": "Crypto",
-      "count": 589
+      "count": 596
     },
     {
       "topic": "Bourse",
-      "count": 377
+      "count": 382
     },
     {
       "topic": "Spatial",
-      "count": 99
+      "count": 97
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.104,
+      "7d_rate": 0.079
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2207
+      "count": 2237
     },
     {
       "pillar": "market_trauma",
-      "count": 1229
+      "count": 1236
     },
     {
       "pillar": "other",
-      "count": 1008
+      "count": 1023
     },
     {
       "pillar": "meme_reaction",
-      "count": 182
+      "count": 175
     },
     {
       "pillar": "reply_bait",
-      "count": 108
+      "count": 110
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 57
+      "count": 60
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 429
+      "count": 428
     },
     {
       "pillar": "market_trauma",
-      "count": 259
+      "count": 238
     },
     {
       "pillar": "other",
-      "count": 187
+      "count": 191
     },
     {
       "pillar": "reply_bait",
@@ -124,15 +130,22 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 16
+      "count": 17
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "ai_vs_btc",
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 88.6,
+      "low_sample": false
+    },
+    {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.18,
-      "avg_views": 53.7,
+      "posts": 42,
+      "avg_likes": 0.19,
+      "avg_views": 51.5,
       "low_sample": false
     },
     {
@@ -144,46 +157,39 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 82,
-      "avg_likes": 0.15,
-      "avg_views": 49.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 7,
+      "posts": 83,
       "avg_likes": 0.14,
-      "avg_views": 78.7,
+      "avg_views": 49.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 66,
-      "avg_likes": 0.09,
-      "avg_views": 42.5,
+      "posts": 63,
+      "avg_likes": 0.1,
+      "avg_views": 43.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4172
+      "count": 4220
     },
     {
       "type": "quote",
-      "count": 379
+      "count": 385
     },
     {
       "type": "quote_gif",
-      "count": 173
+      "count": 167
+    },
+    {
+      "type": "hotake",
+      "count": 28
     },
     {
       "type": "post",
       "count": 27
-    },
-    {
-      "type": "hotake",
-      "count": 26
     },
     {
       "type": "retweet",
@@ -192,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-29T05:54:21.384995",
-      "text": "L'assurance paramétrique. le terme qui a remplacé \"c'est la faute à pas de chance\". je paie ma prime en sachant exactement quand elle va expirer, comme un ex patientiel mais moins cher et sans les larmes aux yeux",
+      "ts": "2026-08-29T09:51:34.245575",
+      "text": "The inventory rose 47% because they're sitting on $3B in H100 and B100 parts ready to ship. Finished goods down? The supply chain isn't broken. it's just holding its breath waiting for you to blink. Supply shock is a feature, not a bug",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T05:53:30.833420",
-      "text": "Claude Code charges for thought steps. Cursor bundles them into \"Pro\" subscription tiers that are priced by hope not usage. one pays per sip the other sells you a swimming pool you’ll drown in",
+      "ts": "2026-08-29T09:51:17.975775",
+      "text": "Evernorth IPOed with an $18.3B valuation on zero revenue and a \"platform\" story the SEC is finally allowing to trade. XRPN isn't tech; it's speculative fiction listed by committee approval rather than unit economics.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T05:53:14.711045",
-      "text": "Downside pool is 2x heavier. that’s not risk, it’s fuel for the short squeeze we’re all pretending isn’t coming.",
+      "ts": "2026-08-29T09:51:01.695264",
+      "text": "Silicon valley needs 10x power just to train the next wrapper. unions need stability because their pension fund doesn't run on hype money. build it or go home.",
       "type": "reply"
     }
   ]
