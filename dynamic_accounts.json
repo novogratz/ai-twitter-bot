@@ -2050,7 +2050,13 @@
     "CryptoMich",
     "JulienLemoine",
     "MaximeJegou",
-    "LefebvreAlex"
+    "LefebvreAlex",
+    "MaxRive",
+    "CyrilTouffait",
+    "_n4xtr_",
+    "_julienboussus_",
+    "_NathalieW_",
+    "_misterfi_"
   ],
   "en": [
     "Chubby",
@@ -2492,7 +2498,8 @@
     "Cerfia",
     "Migue",
     "Ripple",
-    "Grover"
+    "Grover",
+    "Azad"
   ],
   "history": [
     {
@@ -14948,6 +14955,41 @@
     {
       "lang": "en",
       "handle": "Grover",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Azad",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxRive",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTouffait",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "_n4xtr_",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "_julienboussus_",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "_NathalieW_",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "_misterfi_",
       "added": "2026-08-28"
     }
   ]

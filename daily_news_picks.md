@@ -17047,3 +17047,19 @@ BITCOIN $75.9K LEVEL COULD DECIDE THE NEXT MOVE
 $BTC Is Trading Around $78K-$80K, Just 3.4% Above The Newest Short-Term Cost Basis At $75.9K. As Long As BTC Holds Above $75.9K, The On-Chain Stru
   - https://x.com/EinsteinBTC1/status/2092821853522030930
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 299).
+
+## 2026-08-29
+- **@danielisdizzy** (0 likes, score 8/10) — $CRWV growth is absolutely insane.
+
+In just the first 5 weeks of Q3, CoreWeave contracted more than $25B in new deals, bringing its total backlog to $130B.
+
+One year ago, $25B was CoreWeave’s ENTIRE b
+  - https://x.com/danielisdizzy/status/2093409472274170326
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 26).
+- **@codewithimanshu** (16 likes, score 8/10) — A $6/month AI graph caught failures a $300,000 eval stack missed.
+
+A former Anthropic engineer built it around one simple idea:
+
+AI agents shouldn't just remember what they did. They should remember w
+  - https://x.com/codewithimanshu/status/2093518295047741721
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 42).
