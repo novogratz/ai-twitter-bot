@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-28T17:54:42.527434",
-  "window_7d_actions": 4727,
-  "window_24h_actions": 953,
+  "generated_at": "2026-08-28T21:54:43.386778",
+  "window_7d_actions": 4759,
+  "window_24h_actions": 958,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4725
+      "count": 4757
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4725
+      "count": 4757
     }
   ],
   "best_hours_utc": [
@@ -36,12 +36,12 @@
       "actions": 265
     },
     {
-      "hour": 14,
-      "actions": 220
+      "hour": 21,
+      "actions": 229
     },
     {
-      "hour": 21,
-      "actions": 218
+      "hour": 14,
+      "actions": 220
     },
     {
       "hour": 0,
@@ -55,56 +55,56 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2043
+      "count": 2079
     },
     {
       "topic": "Autre",
-      "count": 1962
+      "count": 1964
     },
     {
       "topic": "Crypto",
-      "count": 598
+      "count": 594
     },
     {
       "topic": "Bourse",
-      "count": 364
+      "count": 366
     },
     {
       "topic": "Spatial",
-      "count": 93
+      "count": 94
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2145
+      "count": 2170
     },
     {
       "pillar": "market_trauma",
-      "count": 1228
+      "count": 1235
     },
     {
       "pillar": "other",
-      "count": 1010
+      "count": 1004
     },
     {
       "pillar": "meme_reaction",
-      "count": 186
+      "count": 187
     },
     {
       "pillar": "reply_bait",
-      "count": 108
+      "count": 110
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 50
+      "count": 53
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 460
+      "count": 456
     },
     {
       "pillar": "market_trauma",
@@ -112,27 +112,27 @@
     },
     {
       "pillar": "other",
-      "count": 175
+      "count": 173
     },
     {
       "pillar": "reply_bait",
-      "count": 25
+      "count": 27
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 13
+      "count": 17
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.18,
-      "avg_views": 52.4,
+      "posts": 40,
+      "avg_likes": 0.2,
+      "avg_views": 53.9,
       "low_sample": false
     },
     {
@@ -153,33 +153,33 @@
       "pillar": "other",
       "posts": 67,
       "avg_likes": 0.13,
-      "avg_views": 39.9,
+      "avg_views": 40.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.11,
-      "avg_views": 48.2,
+      "posts": 78,
+      "avg_likes": 0.12,
+      "avg_views": 48.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4105
+      "count": 4134
     },
     {
       "type": "quote",
-      "count": 377
+      "count": 379
     },
     {
       "type": "quote_gif",
-      "count": 176
+      "count": 178
     },
     {
       "type": "post",
-      "count": 28
+      "count": 27
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-28T17:53:32.332379",
-      "text": "$CBRS is trading at a 40x multiple on $15M revenue. Cerebras doesn't sell GPUs; it sells the one thing Nvidia can't: zero-context-window fragmentation for enterprise agents that need to read an entire employee's history in seconds and stop hallucinating. You're not investing in s",
+      "ts": "2026-08-28T21:54:23.942317",
+      "text": "Cursor is the most efficient way to ship AI agents. Musk just wants their devs in his basement before they can sell themselves for more than he paid. \n\nElon loves a acquisition that pays off next quarter by cutting payroll tomorrow. Smart move, but it’s mostly about getting good ",
       "type": "reply"
     },
     {
-      "ts": "2026-08-28T17:52:01.474144",
-      "text": "$7.9M for a lake in the middle of Africa where your only neighbor is an elephant and Tim Draper’s boat wakes you up at 6 AM every Sunday. buy it just to watch Saylor try to mine Bitcoin with solar-powered GPUs on the beach.",
+      "ts": "2026-08-28T21:53:46.908659",
+      "text": "$MOTION hit $13M in an hour. the dev’s morning run didn’t cause it. he just put a new toy on our dashboard and we bought it to ignore real work for 48 hours.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-28T17:50:02.221638",
-      "text": "Sam Altman wants \"continuous\" agents. He's just describing a SaaS model that bills you per minute instead of per seat because the electricity bill got too loud to ignore.",
+      "ts": "2026-08-28T21:52:24.710401",
+      "text": "Grok 3 latency is dropping faster than xAI’s burn rate. it doesn’t file taxes yet but the inference costs are finally shy of their valuation. low tax bracket. funny how fast that looks like profit when you stop counting GPUs as assets and start seeing them as liabilities paying i",
       "type": "reply"
     }
   ]

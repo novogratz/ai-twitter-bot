@@ -2046,7 +2046,11 @@
     "LennyB1972",
     "MaximeW",
     "SachaCohenFr",
-    "MehdiDhifallah"
+    "MehdiDhifallah",
+    "CryptoMich",
+    "JulienLemoine",
+    "MaximeJegou",
+    "LefebvreAlex"
   ],
   "en": [
     "Chubby",
@@ -2482,7 +2486,13 @@
     "Nazim",
     "Alamin",
     "Kyronis",
-    "BeaconLayer"
+    "BeaconLayer",
+    "Runway",
+    "jdse",
+    "Cerfia",
+    "Migue",
+    "Ripple",
+    "Grover"
   ],
   "history": [
     {
@@ -14888,6 +14898,56 @@
     {
       "lang": "fr",
       "handle": "MehdiDhifallah",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Runway",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "jdse",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Cerfia",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Migue",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMich",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLemoine",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeJegou",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefebvreAlex",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Ripple",
+      "added": "2026-08-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Grover",
       "added": "2026-08-28"
     }
   ]
