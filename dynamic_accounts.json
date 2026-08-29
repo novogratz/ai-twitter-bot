@@ -2058,7 +2058,12 @@
     "_NathalieW_",
     "_misterfi_",
     "BenInBits",
-    "LudovicSartor1"
+    "LudovicSartor1",
+    "SylvainBoscher",
+    "JulesDhainaut",
+    "OlivierMarty",
+    "LuisDelgado",
+    "RenaudPlanchet"
   ],
   "en": [
     "Chubby",
@@ -2505,7 +2510,8 @@
     "Wolfen",
     "HWIOC",
     "Wolf",
-    "DarkViperAU"
+    "DarkViperAU",
+    "SimpleFarmer"
   ],
   "history": [
     {
@@ -15026,6 +15032,36 @@
     {
       "lang": "en",
       "handle": "DarkViperAU",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "SimpleFarmer",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainBoscher",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDhainaut",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierMarty",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisDelgado",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudPlanchet",
       "added": "2026-08-29"
     }
   ]

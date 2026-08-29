@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-29T09:54:46.770253",
-  "window_7d_actions": 4841,
-  "window_24h_actions": 914,
+  "generated_at": "2026-08-29T13:54:42.535606",
+  "window_7d_actions": 4933,
+  "window_24h_actions": 904,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4839
+      "count": 4931
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4839
+      "count": 4931
     }
   ],
   "best_hours_utc": [
@@ -44,81 +44,75 @@
       "actions": 220
     },
     {
-      "hour": 9,
-      "actions": 217
+      "hour": 11,
+      "actions": 220
     },
     {
-      "hour": 22,
-      "actions": 212
+      "hour": 9,
+      "actions": 217
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2133
+      "count": 2185
     },
     {
       "topic": "Autre",
-      "count": 1998
+      "count": 2015
     },
     {
       "topic": "Crypto",
-      "count": 596
+      "count": 618
     },
     {
       "topic": "Bourse",
-      "count": 382
+      "count": 394
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 100
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.104,
-      "7d_rate": 0.079
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2237
+      "count": 2283
     },
     {
       "pillar": "market_trauma",
-      "count": 1236
+      "count": 1262
     },
     {
       "pillar": "other",
-      "count": 1023
+      "count": 1039
     },
     {
       "pillar": "meme_reaction",
-      "count": 175
+      "count": 174
     },
     {
       "pillar": "reply_bait",
-      "count": 110
+      "count": 114
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 60
+      "count": 61
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 428
+      "count": 410
     },
     {
       "pillar": "market_trauma",
-      "count": 238
+      "count": 241
     },
     {
       "pillar": "other",
-      "count": 191
+      "count": 193
     },
     {
       "pillar": "reply_bait",
@@ -126,7 +120,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 21
     },
     {
       "pillar": "ai_vs_btc",
@@ -135,17 +129,17 @@
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "market_trauma",
+      "posts": 44,
+      "avg_likes": 0.23,
+      "avg_views": 50.9,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_vs_btc",
       "posts": 5,
       "avg_likes": 0.2,
       "avg_views": 88.6,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.19,
-      "avg_views": 51.5,
       "low_sample": false
     },
     {
@@ -157,39 +151,39 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 83,
-      "avg_likes": 0.14,
-      "avg_views": 49.3,
+      "posts": 81,
+      "avg_likes": 0.15,
+      "avg_views": 49.4,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 63,
-      "avg_likes": 0.1,
-      "avg_views": 43.0,
+      "avg_likes": 0.11,
+      "avg_views": 43.4,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4220
+      "count": 4305
     },
     {
       "type": "quote",
-      "count": 385
+      "count": 389
     },
     {
       "type": "quote_gif",
-      "count": 167
+      "count": 165
     },
     {
       "type": "hotake",
-      "count": 28
+      "count": 32
     },
     {
       "type": "post",
-      "count": 27
+      "count": 28
     },
     {
       "type": "retweet",
@@ -198,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-29T09:51:34.245575",
-      "text": "The inventory rose 47% because they're sitting on $3B in H100 and B100 parts ready to ship. Finished goods down? The supply chain isn't broken. it's just holding its breath waiting for you to blink. Supply shock is a feature, not a bug",
+      "ts": "2026-08-29T13:54:29.603817",
+      "text": "AI agents talking to wallets without a human in the loop is just smart contracts finally doing what lawyers do: executing exactly what you said, not what you meant.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T09:51:17.975775",
-      "text": "Evernorth IPOed with an $18.3B valuation on zero revenue and a \"platform\" story the SEC is finally allowing to trade. XRPN isn't tech; it's speculative fiction listed by committee approval rather than unit economics.",
+      "ts": "2026-08-29T13:53:07.227406",
+      "text": "Warsh said hawkish so db hikes. the fed funds market prices zero chance of either september or december hike at 7pm tonight. you're trading a blog post against real money that knows better.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T09:51:01.695264",
-      "text": "Silicon valley needs 10x power just to train the next wrapper. unions need stability because their pension fund doesn't run on hype money. build it or go home.",
+      "ts": "2026-08-29T13:52:20.347249",
+      "text": "$1538 for 4.6% yield in December on a stock with negative forward OPM? that’s not selling puts, it’s buying lottery tickets and calling them value investing.",
       "type": "reply"
     }
   ]
