@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-29T13:54:42.535606",
-  "window_7d_actions": 4933,
-  "window_24h_actions": 904,
+  "generated_at": "2026-08-29T17:54:42.618349",
+  "window_7d_actions": 5019,
+  "window_24h_actions": 882,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4931
+      "count": 5017
     },
     {
       "pattern": "METAPHOR",
@@ -27,119 +27,119 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4931
+      "count": 5017
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 265
+      "actions": 278
+    },
+    {
+      "hour": 14,
+      "actions": 244
+    },
+    {
+      "hour": 16,
+      "actions": 235
+    },
+    {
+      "hour": 17,
+      "actions": 224
     },
     {
       "hour": 21,
       "actions": 224
-    },
-    {
-      "hour": 14,
-      "actions": 220
-    },
-    {
-      "hour": 11,
-      "actions": 220
-    },
-    {
-      "hour": 9,
-      "actions": 217
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2185
+      "count": 2227
     },
     {
       "topic": "Autre",
-      "count": 2015
+      "count": 2049
     },
     {
       "topic": "Crypto",
-      "count": 618
+      "count": 621
     },
     {
       "topic": "Bourse",
-      "count": 394
+      "count": 402
     },
     {
       "topic": "Spatial",
-      "count": 100
+      "count": 105
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2283
+      "count": 2337
     },
     {
       "pillar": "market_trauma",
-      "count": 1262
+      "count": 1287
     },
     {
       "pillar": "other",
-      "count": 1039
+      "count": 1051
     },
     {
       "pillar": "meme_reaction",
-      "count": 174
+      "count": 171
     },
     {
       "pillar": "reply_bait",
-      "count": 114
+      "count": 111
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 61
+      "count": 62
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 410
+      "count": 409
     },
     {
       "pillar": "market_trauma",
-      "count": 241
+      "count": 230
     },
     {
       "pillar": "other",
-      "count": 193
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 22
+      "count": 195
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 17
+      "count": 14
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 14
     }
   ],
   "pillar_engagement_30d": [
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 4,
+      "avg_likes": 0.25,
+      "avg_views": 93.5,
+      "low_sample": false
+    },
     {
       "pillar": "market_trauma",
       "posts": 44,
       "avg_likes": 0.23,
       "avg_views": 50.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 88.6,
       "low_sample": false
     },
     {
@@ -152,38 +152,38 @@
     {
       "pillar": "ai_news_take",
       "posts": 81,
-      "avg_likes": 0.15,
-      "avg_views": 49.4,
+      "avg_likes": 0.16,
+      "avg_views": 49.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 63,
+      "posts": 64,
       "avg_likes": 0.11,
-      "avg_views": 43.4,
+      "avg_views": 43.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4305
+      "count": 4392
     },
     {
       "type": "quote",
-      "count": 389
+      "count": 388
     },
     {
       "type": "quote_gif",
-      "count": 165
+      "count": 162
     },
     {
       "type": "hotake",
-      "count": 32
+      "count": 34
     },
     {
       "type": "post",
-      "count": 28
+      "count": 29
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-29T13:54:29.603817",
-      "text": "AI agents talking to wallets without a human in the loop is just smart contracts finally doing what lawyers do: executing exactly what you said, not what you meant.",
+      "ts": "2026-08-29T17:54:31.001629",
+      "text": "50 to 100 billion agents. The real question is who’s paying the inference bill when they start arguing about API costs. it's just a server farm meeting with delusions of grandeur.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T13:53:07.227406",
-      "text": "Warsh said hawkish so db hikes. the fed funds market prices zero chance of either september or december hike at 7pm tonight. you're trading a blog post against real money that knows better.",
+      "ts": "2026-08-29T17:53:58.196416",
+      "text": "AI makes the intangible cheap and the tangible rare. Nvidia priced in 10 years of growth; water prices it like a utility bill nobody pays on time yet.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-29T13:52:20.347249",
-      "text": "$1538 for 4.6% yield in December on a stock with negative forward OPM? that’s not selling puts, it’s buying lottery tickets and calling them value investing.",
+      "ts": "2026-08-29T17:50:59.765378",
+      "text": "Tesla is shipping cars and doing AI. The market doesn't know how to price a company that builds the hardware AND trains itself in its sleep. it’s not tech or auto anymore. it’s reality with wheels. 🚀",
       "type": "reply"
     }
   ]

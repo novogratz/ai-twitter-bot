@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-03T07:36:28.631880",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "L0bomy",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "L'IA qui rend l'informatique accessible sans vendre du r\u00eave \u00e0 2000 balles."
-      },
-      {
-        "handle": "CryptoCub",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le prof de crypto qui explique les cycles sans te donner envie de vendre \u00e0 tout va."
-      },
-      {
-        "handle": "BourdinAI",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Ex-WSJ, il d\u00e9cortique l'IA en FR avec la pr\u00e9cision d'un scalpel et le ton d'un \u00e9ditorialiste."
-      },
-      {
-        "handle": "PhilippeTanguay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'\u00e9conomiste qu\u00e9b\u00e9cois qui rend les march\u00e9s compr\u00e9hensibles sans \u00eatre ennuyeux."
-      },
-      {
-        "handle": "CyrilBailly",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "S\u00e9rieux, chiffr\u00e9, z\u00e9ro buzzword. Il tweete ce que les autres tweetent dans deux semaines."
-      }
-    ],
-    "summary": "Un mix solide entre les grands noms fran\u00e7ais bienveillants (L0bomy, BourdinAI) et les profils plus pointus comme Philippe Tanguay pour le Qu\u00e9bec. Z\u00e9ro vendeur de r\u00eave, 100% contenu."
-  },
-  {
     "ts": "2026-08-03T09:36:41.406932",
     "raw_count": 7,
     "kept_count": 6,
@@ -8466,5 +8421,57 @@
       }
     ],
     "summary": "On \u00e9vite le gras des influenceurs 'lambo pour demain'. Ici : des pros de la data, du VC et de la macro qui tweetent encore comme si \u00e7a pouvait impacter leurs P&L. Du concret sans le bruit marketing."
+  },
+  {
+    "ts": "2026-08-29T13:55:03.422799",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautG24",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "La voix de la boursicote FR. Analytique mais accessible, il survit aux krachs en se moquant des perdants."
+      },
+      {
+        "handle": "_JulesD_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 56000,
+        "reason": "L'architecte de Mistral AI. Il tweet technique et vision sans le blabla commercial habituel."
+      },
+      {
+        "handle": "BenKsCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Pas de signal VIP, pas de cours \u00e0 \u20ac97. Juste des cycles propres et un humour sarcastique sur les altcoins."
+      },
+      {
+        "handle": "MarcRocher_",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 35000,
+        "reason": "Foundeur de DeepTech Capital. Il tweet sur l'IA applicative avant qu'elle ne devienne mainstream."
+      },
+      {
+        "handle": "LudovicGuerthier",
+        "region": "quebec",
+        "niche": "fintech/bourse",
+        "followers": 28000,
+        "reason": "Expert macro qu\u00e9b\u00e9cois. Il explique la FED comme si on \u00e9tait au comptoir du bar."
+      },
+      {
+        "handle": "PhilippeGirard_",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 25000,
+        "reason": "Analyste long terme. Il tweet les p\u00e9pites tech fran\u00e7aises avec un cynisme rafra\u00eechissant."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eaves ici : on a s\u00e9lectionn\u00e9 des architectes (Mistral), des observateurs sto\u00efques (Bourse) et des cycliers honn\u00eates (Crypto)."
   }
 ]

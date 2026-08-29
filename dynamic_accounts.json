@@ -2063,7 +2063,12 @@
     "JulesDhainaut",
     "OlivierMarty",
     "LuisDelgado",
-    "RenaudPlanchet"
+    "RenaudPlanchet",
+    "ThibautG24",
+    "_JulesD_",
+    "BenKsCrypto",
+    "MarcRocher_",
+    "PhilippeGirard_"
   ],
   "en": [
     "Chubby",
@@ -2511,7 +2516,8 @@
     "HWIOC",
     "Wolf",
     "DarkViperAU",
-    "SimpleFarmer"
+    "SimpleFarmer",
+    "Prof"
   ],
   "history": [
     {
@@ -15062,6 +15068,36 @@
     {
       "lang": "fr",
       "handle": "RenaudPlanchet",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Prof",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautG24",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "_JulesD_",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenKsCrypto",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcRocher_",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeGirard_",
       "added": "2026-08-29"
     }
   ]
