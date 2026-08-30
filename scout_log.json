@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-04T01:36:44.566466",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HassanBoukhari",
-        "region": "france",
-        "niche": "ai",
-        "followers": 145000,
-        "reason": "La r\u00e9f\u00e9rence absolue en IA en France. Il couvre la tech, l'IA et la VC avec un ton clair, sans jargon incompr\u00e9hensible. Twitte en FR/EN mixte mais la valeur est dans le FR."
-      },
-      {
-        "handle": "NicoTremblay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'incontournable du Qu\u00e9bec en bourse. Il parle de la Fed, des techs et des valeurs canadiennes. Son ton est accessible, pas scolaire, et il twitte souvent sur les actualit\u00e9s chaudes."
-      },
-      {
-        "handle": "BenjaminGarrigues",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 42000,
-        "reason": "G\u00e9rant et analyste actions (BoursoBank/Amundi). Il d\u00e9cortique les r\u00e9sultats trimestriels et la macro. Son style est direct, un peu cynique, id\u00e9al pour ne pas s'endormir devant des graphiques."
-      },
-      {
-        "handle": "ThibautMansion",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Journaliste crypto fr (ex-Medium, ex-Cointelegraph FR). Il est partout, il interviewe les grands patrons. Vrai analyste, pas un hype man qui vend des signaux."
-      },
-      {
-        "handle": "RomainLefrancois",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Investisseur crypto et crypto-NFT. Il couvre la DeFi, les tokens et les march\u00e9s d\u00e9riv\u00e9s avec une analyse on-chain solide. Moins 'buzz' que les autres, mais plus technique."
-      },
-      {
-        "handle": "VincentBourget",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Fondateur de Bitbuy (et ancien CEO de BitPay Canada). Il est sur le terrain, il voit les deals avant les autres. Moins de volume que les influenceurs 'moon boys', mais une vraie cr\u00e9dibilit\u00e9 institutionnelle."
-      },
-      {
-        "handle": "LucRochon",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "VC \u00e0 Venture Lab. Il rep\u00e8re les startups fintech et insurtech \u00e9mergentes avant qu'elles ne soient connues. Son r\u00e9seau est son produit, et il le partage en thread."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la merde des formateurs de 999\u20ac pour ne garder que ceux qui manipulent les vrais march\u00e9s (gestionnaires, VCs, founders de scaleups). C'est du concret, pas du blabla."
-  },
-  {
-    "ts": "2026-08-04T03:36:21.741615",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DariusLecarpent",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le trader fran\u00e7ais de r\u00e9f\u00e9rence. Pas de 'moon boy' here, juste du price action propre et des threads bien sentis."
-      },
-      {
-        "handle": "TanguyLeLutun",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "L'ancien de la French Tech qui balance des insights VC sans le jargon pompier. C'est rare, c'est pr\u00e9cieux."
-      },
-      {
-        "handle": "MaximeLefebvre42",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le prof de finance qu\u00e9b\u00e9cois qui rend la bourse digeste sans te prendre pour un idiot. Humour intact."
-      },
-      {
-        "handle": "AdrienCouturier",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Le mec qui comprend mieux Stripe que les fondateurs de Stripe. Tech FR sur SF, focus SaaS et infrastructure."
-      }
-    ],
-    "summary": "Un mix de traders hardcore, de profs sympas et de technos. Z\u00e9ro vendeur de r\u00eave, juste du m\u00e9tier."
-  },
-  {
     "ts": "2026-08-04T05:36:43.840434",
     "raw_count": 10,
     "kept_count": 7,
@@ -8382,5 +8285,81 @@
       }
     ],
     "summary": "Je p\u00e8se le jeu : j'ai vir\u00e9 les vendeurs d'espoir \u00e0 -90% pour ne garder que ceux qui analysent, construisent ou investissent vraiment. Le Qu\u00e9bec offre une perspective moins satur\u00e9e que Paris sur la bourse US."
+  },
+  {
+    "ts": "2026-08-30T13:55:27.459334",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Babevanier",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 85000,
+        "reason": "Ex-Mistral AI. Il tweet sur la tech avec une r\u00e9partie de comptard qui fait mal aux yeux. Le mec a le niveau technique et l'audience pour dire des trucs que les VC lisent."
+      },
+      {
+        "handle": "GonzaloLlosa",
+        "region": "france",
+        "niche": "ai/trading",
+        "followers": 45000,
+        "reason": "Quant et passionn\u00e9 d'IA. Il explique les mod\u00e8les complexes comme s'il te sortait un tesson au bar apr\u00e8s deux Vodka-Martini."
+      },
+      {
+        "handle": "PierreLassous",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 35000,
+        "reason": "Journaliste tech boursier qui sait o\u00f9 sont les p\u00e9pites. Il suit le secteur comme un limier et tweet des infos avant que Bloomberg ne se r\u00e9veille."
+      },
+      {
+        "handle": "JulienPerrin",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 30000,
+        "reason": "Ancien de BlaBlaCar. Il mixe analyse SaaS et IA avec un ton direct qui fait fuir les influenceurs \u00e0 la peau dure."
+      }
+    ],
+    "summary": "Un pickage chirurgical pour \u00e9viter le bruit des gourous crypto frileux en France, misant sur la tech pure (Mistral/Alma) et l'IA quant au Qu\u00e9bec. Pas de vendeurs d'eau b\u00e9nite ici."
+  },
+  {
+    "ts": "2026-08-30T15:55:13.483477",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautBertin_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Tech Lead chez Mistral. Il twitte des insights IA que m\u00eame les GPT-4 n'ont pas encore vus."
+      },
+      {
+        "handle": "TheCryptoLarkCA",
+        "region": "usa",
+        "niche": "crypto/trading",
+        "followers": 20000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais qu\u00e9b\u00e9cois. Son analyse technique en FR est la seule qui ne te demande pas de souscrire au Telegram."
+      },
+      {
+        "handle": "Bisnode",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le roi de la data crypto en FR. Pas le genre \u00e0 crier au loup pour vendre des formations."
+      },
+      {
+        "handle": "JohanBertaut_",
+        "region": "france",
+        "niche": "ai/finance",
+        "followers": 12000,
+        "reason": "Fondateur de DeepFinance. Il connecte l'IA au march\u00e9 r\u00e9el avant que le reste du monde ne comprenne."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le gras pour garder les cerveaux : des fondateurs qui codent encore et des traders qui perdent leur argent en direct \u00e0 c\u00f4t\u00e9 du tien. Z\u00e9ro vendeur de r\u00eave, que du concret technico-financeux."
   }
 ]

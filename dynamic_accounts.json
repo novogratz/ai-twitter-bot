@@ -2089,7 +2089,15 @@
     "JulienBoussus_",
     "DorianSavalle",
     "BenoitDionnet1",
-    "MathieuDrouinQC"
+    "MathieuDrouinQC",
+    "Babevanier",
+    "GonzaloLlosa",
+    "PierreLassous",
+    "JulienPerrin",
+    "ThibautBertin_",
+    "TheCryptoLarkCA",
+    "Bisnode",
+    "JohanBertaut_"
   ],
   "en": [
     "Chubby",
@@ -15278,6 +15286,46 @@
     {
       "lang": "fr",
       "handle": "MathieuDrouinQC",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Babevanier",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "GonzaloLlosa",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLassous",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienPerrin",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautBertin_",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheCryptoLarkCA",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bisnode",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanBertaut_",
       "added": "2026-08-30"
     }
   ]
