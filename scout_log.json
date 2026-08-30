@@ -1,67 +1,5 @@
 [
   {
-    "ts": "2026-08-03T19:36:41.394441",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TradingViewFR",
-        "region": "usa",
-        "niche": "trading",
-        "followers": 150000,
-        "reason": "L'outil qui devient un m\u00e9dia. Des setups techniques clairs et des webinaires en fran\u00e7ais pour les traders francophones \u00e0 l'\u00e9tranger."
-      },
-      {
-        "handle": "CryptoFrancais",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Pour ceux qui veulent comprendre le Bitcoin sans avoir l'impression de regarder un manuel de finance."
-      },
-      {
-        "handle": "CryptoFRance",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "La diaspora francophone aux USA qui garde le contact. Analyses r\u00e9guli\u00e8res sans le jargon incompr\u00e9hensible."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui font du bruit pour de vrai. Mistral domine l'IA, Boursier tient le haut de la bourse, et le Qu\u00e9bec a une sc\u00e8ne crypto francophone plus vivante qu'on ne le pense."
-  },
-  {
-    "ts": "2026-08-03T21:36:47.897824",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Cryptobubbles",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "Le visualisateur de crypto le plus utilis\u00e9, twitte en FR."
-      },
-      {
-        "handle": "TheAIShrinkAI",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le roi du thread tech FR, twitte en FR, zero blabla formation."
-      },
-      {
-        "handle": "NicolasBourbaki",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "L'expert IA montr\u00e9alais, rigolo, pas un guru format\u00e9."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les pros qui ont un vrai r\u00e9seau et qui twittent en fran\u00e7ais."
-  },
-  {
     "ts": "2026-08-03T23:36:36.331199",
     "raw_count": 6,
     "kept_count": 5,
@@ -8410,5 +8348,67 @@
       }
     ],
     "summary": "Le lot est propre : z\u00e9ro vendeur de r\u00eave \u00e0 29\u20ac/mois, focus IA/Crypto/Bourse FR/QC. Des profils qui twittent encore pour le plaisir (et l'argent) du march\u00e9."
+  },
+  {
+    "ts": "2026-08-30T05:55:13.600093",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomascorson",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Ex-ING qui a su\u00e9 sang et eau pour sa communaut\u00e9 retail. Twitte en FR, analyse technique propre."
+      },
+      {
+        "handle": "poupee_nuque",
+        "region": "france",
+        "niche": "crypto/tech",
+        "followers": 18000,
+        "reason": "Humeur du march\u00e9 crypto en FR. Cynique mais juste."
+      },
+      {
+        "handle": "maxime_germainqcmkt",
+        "region": "quebec",
+        "niche": "bourse/vc",
+        "followers": 15000,
+        "reason": "Gars de Montreal qui mixe tech et markets. Vibe startupper cool."
+      }
+    ],
+    "summary": "Un mix solide entre les v\u00e9t\u00e9rans de la crypto (Dionne), des boursicoteurs techniques et quelques perles tech/VC. On \u00e9vite les vendeuses de r\u00eave du moment pour garder le niveau 'analyste qui connait ses choux'."
+  },
+  {
+    "ts": "2026-08-30T07:55:02.231245",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienBoussus_",
+        "region": "france",
+        "niche": "ai_tech",
+        "followers": 65000,
+        "reason": "Le pionnier de l'IA \u00e0 Paris. Il mixe tech et business avec une clart\u00e9 d\u00e9sarmante."
+      },
+      {
+        "handle": "DorianSavalle",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le patron de Koinos. Il balance des perles sur le trading et la macro crypto sans se prendre au s\u00e9rieux."
+      },
+      {
+        "handle": "BenoitDionnet1",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'expert HFT fran\u00e7ais. Ses threads sur la microstructure du march\u00e9 font mal aux amateurs."
+      }
+    ],
+    "summary": "Focus sur les experts techniques (Benoit Dionnet) et les fondateurs IA/Tech reconnus pour \u00e9viter le bruit g\u00e9n\u00e9raliste. La s\u00e9lection est chirurgicale : z\u00e9ro vendeur d'air, que des cerveaux actifs dans la niche."
   }
 ]

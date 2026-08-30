@@ -2083,7 +2083,12 @@
     "LionelTessier_",
     "RomainBailly_",
     "_AlexDionne_QC",
-    "RaphPerrin_"
+    "RaphPerrin_",
+    "thomascorson",
+    "poupee_nuque",
+    "JulienBoussus_",
+    "DorianSavalle",
+    "BenoitDionnet1"
   ],
   "en": [
     "Chubby",
@@ -2539,7 +2544,9 @@
     "Prakash",
     "gabe",
     "Raq",
-    "Framework"
+    "Framework",
+    "dejanira",
+    "Nicolas"
   ],
   "history": [
     {
@@ -15230,6 +15237,41 @@
     {
       "lang": "en",
       "handle": "Framework",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomascorson",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "poupee_nuque",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoussus_",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianSavalle",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDionnet1",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "en",
+      "handle": "dejanira",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Nicolas",
       "added": "2026-08-30"
     }
   ]

@@ -1,21 +1,21 @@
 {
-  "ts": "2026-08-15T20:58:31.379629",
+  "ts": "2026-08-30T09:54:42.050739",
   "caps": {
-    "MAX_NEWS_PER_DAY": 12,
-    "MAX_HOTAKES_PER_DAY": 15,
-    "MAX_QUOTES_PER_DAY": 150,
-    "MAX_RETWEETS_PER_DAY": 3,
+    "MAX_NEWS_PER_DAY": 15,
+    "MAX_HOTAKES_PER_DAY": 20,
+    "MAX_QUOTES_PER_DAY": 160,
+    "MAX_RETWEETS_PER_DAY": 8,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
-    "MAX_REPLIES_PER_CYCLE": 40,
+    "MAX_REPLIES_PER_CYCLE": 45,
     "FOLLOW_BLAST_PER_CYCLE": 4,
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Nvidia Earnings: Le parieur en costume-c",
-    "Mistral AI: L'enfant pauvre de la tech q",
-    "BTC ETF: La classe moyenne qui achète le"
+    "AGI Bubble: Quand l'IA commence à génére",
+    "Nvidia vs Palantir: Le duel des rentiers",
+    "BTC ETF Flows: La classe moyenne qui cro"
   ],
-  "cadence_factor": 1.0,
-  "rationale": "La suppression est active jusqu'à 13h, on coupe le gras (news/spicy) pour laisser le volume des quotes respirer sans saturer. On vise les losers identifiés (AI agents/coding) en les remplaçant par des thèmes plus chauds (NVDA/BTC) pour piquer l'attention."
+  "cadence_factor": 1.05,
+  "rationale": "L'activité est saine (38 actions récentes) avec une forte appétence pour les quotes et hotakes sur l'IA coding/valuation. On monte légèrement le volume de replies pour capitaliser sur la 'mood féroce'. On pivote vers des thèmes plus cyniques sur les fondamentaux financiers derrière le Hype IA."
 }
