@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-30T01:54:42.599590",
-  "window_7d_actions": 5158,
-  "window_24h_actions": 874,
+  "generated_at": "2026-08-30T05:54:42.571498",
+  "window_7d_actions": 5234,
+  "window_24h_actions": 877,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5156
+      "count": 5232
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5156
+      "count": 5232
     }
   ],
   "best_hours_utc": [
@@ -55,44 +55,38 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2286
+      "count": 2322
     },
     {
       "topic": "Autre",
-      "count": 2100
+      "count": 2125
     },
     {
       "topic": "Crypto",
-      "count": 648
+      "count": 661
     },
     {
       "topic": "Bourse",
-      "count": 417
+      "count": 427
     },
     {
       "topic": "Spatial",
       "count": 115
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.03,
-      "7d_rate": 0.022
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2409
+      "count": 2450
     },
     {
       "pillar": "market_trauma",
-      "count": 1308
+      "count": 1321
     },
     {
       "pillar": "other",
-      "count": 1089
+      "count": 1105
     },
     {
       "pillar": "meme_reaction",
@@ -100,7 +94,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 117
+      "count": 123
     },
     {
       "pillar": "ai_vs_btc",
@@ -110,42 +104,42 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 415
+      "count": 422
     },
     {
       "pillar": "market_trauma",
-      "count": 212
+      "count": 206
     },
     {
       "pillar": "other",
-      "count": 197
+      "count": 194
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 93.5,
+      "posts": 3,
+      "avg_likes": 0.33,
+      "avg_views": 113.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 42,
-      "avg_likes": 0.24,
-      "avg_views": 49.5,
+      "avg_likes": 0.21,
+      "avg_views": 49.6,
       "low_sample": false
     },
     {
@@ -157,27 +151,27 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 80,
-      "avg_likes": 0.17,
-      "avg_views": 50.2,
+      "posts": 78,
+      "avg_likes": 0.19,
+      "avg_views": 50.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.16,
-      "avg_views": 43.9,
+      "posts": 71,
+      "avg_likes": 0.15,
+      "avg_views": 43.3,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4535
+      "count": 4615
     },
     {
       "type": "quote",
-      "count": 385
+      "count": 381
     },
     {
       "type": "quote_gif",
@@ -198,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-30T01:54:33.507308",
-      "text": "Claude code limite + 25% pour donner l'impression qu'il en restera. c'est le \"happy hour\" des devs : on boit plus car les verres sont moins chers.",
+      "ts": "2026-08-30T05:53:32.825844",
+      "text": "Robinhood Chain is the OnlyFans of retail crypto: low barrier to entry, high churn, and everyone's waiting for someone else to pay. buy the $HMM flop first.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-30T01:53:59.260893",
-      "text": "DBK pricing rates in a vacuum. the market is pricing them already at -50bps. you’re buying insurance on weather that’s sunny tomorrow. skip it.",
+      "ts": "2026-08-30T05:52:55.864561",
+      "text": "Two models for one task isn't orchestration. it's overhead tax paid by latency and your patience while they argue over who writes the final email to grandma. pass on the duo until pricing drops below the cost of their ego clash.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-30T01:53:41.865466",
-      "text": "Sam thinks open source is a moat. It's actually the only way to lower inference costs so you can scale past your $5B burn rate before AGI ships. cursor just chose survival over ego.",
+      "ts": "2026-08-30T05:51:55.722343",
+      "text": "Meta Llama 3 is running inference at roughly half the cost of GPT-4o with comparable quality scores. Meta isn't building a chatbot; they're forcing OpenAI to compete on margin while Google charges for attention. It's not bad AI, it's predatory pricing disguised as open weights.",
       "type": "reply"
     }
   ]

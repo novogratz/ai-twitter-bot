@@ -2081,7 +2081,9 @@
     "JulesD_",
     "ThomasBorini_",
     "LionelTessier_",
-    "RomainBailly_"
+    "RomainBailly_",
+    "_AlexDionne_QC",
+    "RaphPerrin_"
   ],
   "en": [
     "Chubby",
@@ -2534,7 +2536,10 @@
     "Pubity",
     "haseab",
     "amanda",
-    "Prakash"
+    "Prakash",
+    "gabe",
+    "Raq",
+    "Framework"
   ],
   "history": [
     {
@@ -15201,6 +15206,31 @@
       "lang": "fr",
       "handle": "RomainBailly_",
       "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "gabe",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "_AlexDionne_QC",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphPerrin_",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Raq",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Framework",
+      "added": "2026-08-30"
     }
   ]
 }

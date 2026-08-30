@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-03T17:36:33.986054",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lefrancois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le prof qui rend l'IA lisible sans te vendre du r\u00eave pourri. Z\u00e9ro jargon inutile, 100% pertinence."
-      },
-      {
-        "handle": "SylvainLeRoux",
-        "region": "france",
-        "niche": "tech",
-        "followers": 75000,
-        "reason": "L'ancien de la TechCrunch FR. Il sniffe les lev\u00e9es de fonds et les deals avant m\u00eame que la presse \u00e9crite ne les sort."
-      },
-      {
-        "handle": "MickaelVernay",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Franco-am\u00e9ricain, il poste sur l'infra AI US avec un oeil europ\u00e9en. Id\u00e9al pour voir ce qui se passe hors de l'Europe."
-      },
-      {
-        "handle": "RaphaelPeltier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Crypto pur et dur, pas un influenceur 'moonboy' mais un mec qui comprend la tech derri\u00e8re. Twitte en FR quand \u00e7a compte."
-      }
-    ],
-    "summary": "Un mix solide entre des valeureux fran\u00e7ais (IA/Teck), un qu\u00e9b\u00e9cois fintech fiable et un ex-franco-am\u00e9ricain pour la vue US. Pas de vendeurs de r\u00eaves, juste des connaisseurs."
-  },
-  {
     "ts": "2026-08-03T19:36:41.394441",
     "raw_count": 8,
     "kept_count": 3,
@@ -8424,5 +8386,29 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs formation pour ne garder que des builders et des analystes qui ont encore la t\u00eate sur le guidon. Le Qu\u00e9bec se fait rare en IA pure FR donc on a pris ce qu'il y avait de plus proche du hardware/syst\u00e8me."
+  },
+  {
+    "ts": "2026-08-30T01:55:17.872428",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_AlexDionne_QC",
+        "region": "quebec",
+        "niche": "crypto/tech",
+        "followers": 20000,
+        "reason": "Qu\u00e9b\u00e9cois mais twitte en FR. Analyse fondamental crypto solides et coverage tech solide."
+      },
+      {
+        "handle": "RaphPerrin_",
+        "region": "france",
+        "niche": "bourse/trading",
+        "followers": 15000,
+        "reason": "Le prof de trading qui ne vend pas de r\u00eave. Threads techniques propres, sans jargon illisible."
+      }
+    ],
+    "summary": "Le lot est propre : z\u00e9ro vendeur de r\u00eave \u00e0 29\u20ac/mois, focus IA/Crypto/Bourse FR/QC. Des profils qui twittent encore pour le plaisir (et l'argent) du march\u00e9."
   }
 ]
