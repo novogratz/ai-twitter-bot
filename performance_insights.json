@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-30T13:54:42.244201",
-  "window_7d_actions": 5365,
-  "window_24h_actions": 853,
+  "generated_at": "2026-08-30T17:54:42.738777",
+  "window_7d_actions": 5404,
+  "window_24h_actions": 822,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5363
+      "count": 5402
     },
     {
       "pattern": "METAPHOR",
@@ -27,17 +27,21 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5363
+      "count": 5402
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 278
+      "actions": 292
+    },
+    {
+      "hour": 16,
+      "actions": 249
     },
     {
       "hour": 14,
-      "actions": 244
+      "actions": 247
     },
     {
       "hour": 21,
@@ -46,28 +50,24 @@
     {
       "hour": 11,
       "actions": 237
-    },
-    {
-      "hour": 16,
-      "actions": 235
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2402
+      "count": 2413
     },
     {
       "topic": "Autre",
-      "count": 2146
+      "count": 2162
     },
     {
       "topic": "Crypto",
-      "count": 688
+      "count": 699
     },
     {
       "topic": "Bourse",
-      "count": 438
+      "count": 444
     },
     {
       "topic": "Spatial",
@@ -77,30 +77,30 @@
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.034,
+      "24h_rate": 0.032,
       "7d_rate": 0.023
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2519
+      "count": 2542
     },
     {
       "pillar": "market_trauma",
-      "count": 1349
+      "count": 1368
     },
     {
       "pillar": "other",
-      "count": 1132
+      "count": 1141
     },
     {
       "pillar": "meme_reaction",
-      "count": 169
+      "count": 161
     },
     {
       "pillar": "reply_bait",
-      "count": 127
+      "count": 123
     },
     {
       "pillar": "ai_vs_btc",
@@ -110,19 +110,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 409
+      "count": 387
     },
     {
       "pillar": "market_trauma",
-      "count": 205
+      "count": 203
     },
     {
       "pillar": "other",
-      "count": 184
+      "count": 179
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 25
     },
     {
       "pillar": "reply_bait",
@@ -143,37 +143,37 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.23,
-      "avg_views": 46.4,
+      "posts": 82,
+      "avg_likes": 0.26,
+      "avg_views": 46.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.19,
-      "avg_views": 51.4,
+      "posts": 43,
+      "avg_likes": 0.23,
+      "avg_views": 53.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 66,
-      "avg_likes": 0.14,
-      "avg_views": 43.3,
+      "posts": 65,
+      "avg_likes": 0.18,
+      "avg_views": 45.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 7,
-      "avg_likes": 0.14,
-      "avg_views": 42.3,
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 39.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4737
+      "count": 4784
     },
     {
       "type": "quote",
@@ -181,7 +181,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 160
+      "count": 152
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-30T13:54:31.507802",
-      "text": "Persistent agents don't need your readiness. they just keep polling the API until you pay for what they broke. try them on a $5 budget and watch the burn rate curve kiss goodbye.",
+      "ts": "2026-08-30T17:53:02.800304",
+      "text": "Meta spent millions to prove ai can impersonate americans. 401k dave thinks he’s already talking with the bots. same difference at this point.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-30T13:51:21.737122",
-      "text": "NVDA guiding for 70% growth while everyone prices in plateau. that's not a top signal, that's the bill arriving before you've finished eating dinner. buy now or eat lunch alone next year.",
+      "ts": "2026-08-30T17:52:45.261002",
+      "text": "Saylor’s average cost basis is $67k. He didn’t just buy the dip; he bought his way out of being a retail investor forever and into a boardroom position that never gets margin called. corporate treasury = financial immortality at scale.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-30T13:51:04.329869",
-      "text": "$9.7B is big until you realize it’s less than CoreWeave’s quarterly interest expense on its $7B debt stack. We’re cheering for the chump while the bank owns the house.",
+      "ts": "2026-08-30T17:51:12.032244",
+      "text": "Karp called amodei \"not a caricature.\" anthropic's burn is higher than the valuation implies. he’s selling hope to employees while buying time from investors.",
       "type": "reply"
     }
   ]
