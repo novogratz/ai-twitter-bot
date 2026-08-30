@@ -2072,7 +2072,16 @@
     "LoupVivien",
     "MonaElzein",
     "JeanBaptisteVie",
-    "JulienBoussus"
+    "JulienBoussus",
+    "Lionel67",
+    "AdrienLeRouget",
+    "_alex_dionne_qc",
+    "CedricTavernier",
+    "GauthierBross",
+    "JulesD_",
+    "ThomasBorini_",
+    "LionelTessier_",
+    "RomainBailly_"
   ],
   "en": [
     "Chubby",
@@ -2524,7 +2533,8 @@
     "Prof",
     "Pubity",
     "haseab",
-    "amanda"
+    "amanda",
+    "Prakash"
   ],
   "history": [
     {
@@ -15140,6 +15150,56 @@
     {
       "lang": "fr",
       "handle": "JulienBoussus",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lionel67",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLeRouget",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "_alex_dionne_qc",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricTavernier",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "GauthierBross",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Prakash",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesD_",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBorini_",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelTessier_",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBailly_",
       "added": "2026-08-29"
     }
   ]

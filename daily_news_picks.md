@@ -17063,3 +17063,31 @@ A former Anthropic engineer built it around one simple idea:
 AI agents shouldn't just remember what they did. They should remember w
   - https://x.com/codewithimanshu/status/2093518295047741721
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 42).
+
+## 2026-08-30
+- **@anhdaden811** (12 likes, score 8/10) — NVIDIA didn’t need another headline beat 
+
+$96.2B revenue, $2.22 EPS and $89B data-center revenue all cleared expectations, yet the stock only popped around 4% after hours
+
+That tells me the strength
+  - https://x.com/AnhDaDen811/status/2093896661710020981
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 38).
+- **@mellometrics** (36 likes, score 9/10) — Daily Memecoin Recap - August 29
+
+The play really was to fullport pons and chill
+
+Pons Wants More
+$PONS -> hit $280m, leading robinhood launchpad
+- made $4m off fees in the last 24h
+- @unipcs up $3m f
+  - https://x.com/mellometrics/status/2093906459192889503
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 50).
+- **@theprofinvestor** (423 likes, score 8/10) — Bitcoin is doing what it did in: 2015 & 2022
+
+It has a habit of retesting  previous highs. And that happened this year.
+
+Every time after that we broke out to new all time highs, 
+
+It has a 100% succe
+  - https://x.com/TheProfInvestor/status/2093725537697173520
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 483).
