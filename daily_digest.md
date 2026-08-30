@@ -1531,3 +1531,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 301 likes / 133647 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 16 views: CEX isn't a market, it's just your trading app wearing a mask and asking for tips
   - 1 likes / 57 views: Nvidia buying 2M models for $13B is just paying rent on everyone else's creativity so they can sell 
+
+## 2026-08-29
+
+**Activity** — total actions: 865
+  - by type: reply=777, quote=58, quote_gif=17, hotake=8, post=4, retweet=1
+  - top sources: SEARCH-HOT=512, FEED-SWEEP-FEED=150, FEED-SWEEP-FOLLOWING=94, QUOTE=45, GIF=18, DEBATE=18, BREAKING_QRT=6, HOT_QUOTE=4
+  - top reply targets: @DanKornas=10, @TheStreet=7, @elonmusk=7, @MacroBombastic=6, @TheBTCTherapist=6
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 68 views: my clients have been saying 'this is not cheap' since Tuesday  $NVDA
+  - 1 likes / 31 views: openai x cursor ending is just openai realizing elon charges overtime
+  - 1 likes / 37 views: Solana halving every 6 months like me eating your leftovers at 3am and lying about it
