@@ -17091,3 +17091,17 @@ Every time after that we broke out to new all time highs,
 It has a 100% succe
   - https://x.com/TheProfInvestor/status/2093725537697173520
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 483).
+- **@neil_xbt** (42 likes, score 9/10) — A Chinese lab just open-sourced a frontier model that doesn't need NVIDIA at all.
+
+@Zai_org GLM-5.3-Flash: 320B parameters, 1M-token context, natively multimodal, MIT license. And the detail that shou
+  - https://x.com/neil_xbt/status/2094035404165148906
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 56).
+- **@933athkar** (16 likes, score 7/10) — Nancy Pelosi’s latest holdings just dropped.
+
+These 6 stocks she is heavily positioned in — many are already copying 
+
+1. Bloom Energy $BE
+Her largest position: 33.5% | ~$7.5M
+AI data center power dem
+  - https://x.com/933Athkar/status/2093868170826441155
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
