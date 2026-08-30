@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-03T23:36:36.331199",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautCarr\u00e9",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence absolue de l'on-chain analysis en FR. Pas de blabla, que des donn\u00e9es. Son style 'data-driven' contraste agr\u00e9ablement avec le 'zozoteur' crypto standard."
-      },
-      {
-        "handle": "SergioLuchessi",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Bas\u00e9 \u00e0 NYC mais le mec est 100% FR (et qu\u00e9b\u00e9cois de c\u0153ur). Il cover le march\u00e9 US avec un regard fran\u00e7ais lucide. Moins de noise, plus de substance."
-      },
-      {
-        "handle": "NathanaelTeboul",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "CEO de Valtix mais sa vision sur la s\u00e9curit\u00e9 cloud et la tech infrastructure est une mine d'or. Il tweete moins que les influenceurs 'growth', donc chaque post compte."
-      },
-      {
-        "handle": "DarioCrea",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'expert macro qui explique l'inflation comme \u00e0 un ado en cours de maths. Ses threads sur les cycles de taux sont des classiques \u00e0 sauvegarder."
-      },
-      {
-        "handle": "AlexisLarcher",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "La plume du Quebec qui d\u00e9mine les bullshit de Wall Street sans complexe. Il parle aussi bien de DeFi que de la r\u00e9alit\u00e9 de l'\u00e9conomie qu\u00e9b\u00e9coise."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour te donner des cerveaux qui font leur propre recherche, pas juste du copier-coller de news. De la France au Quebec en passant par la diaspora NY, voici le top niveau."
-  },
-  {
     "ts": "2026-08-04T01:36:44.566466",
     "raw_count": 8,
     "kept_count": 7,
@@ -8410,5 +8365,22 @@
       }
     ],
     "summary": "Focus sur les experts techniques (Benoit Dionnet) et les fondateurs IA/Tech reconnus pour \u00e9viter le bruit g\u00e9n\u00e9raliste. La s\u00e9lection est chirurgicale : z\u00e9ro vendeur d'air, que des cerveaux actifs dans la niche."
+  },
+  {
+    "ts": "2026-08-30T11:55:23.683697",
+    "raw_count": 10,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuDrouinQC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'incontournable du Qu\u00e9bec. Il tweete en fran\u00e7ais (souvent avec le c\u00f4t\u00e9 qu\u00e9b\u00e9cois qui fait mal), focus actions US et macro."
+      }
+    ],
+    "summary": "Je p\u00e8se le jeu : j'ai vir\u00e9 les vendeurs d'espoir \u00e0 -90% pour ne garder que ceux qui analysent, construisent ou investissent vraiment. Le Qu\u00e9bec offre une perspective moins satur\u00e9e que Paris sur la bourse US."
   }
 ]

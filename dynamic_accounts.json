@@ -2088,7 +2088,8 @@
     "poupee_nuque",
     "JulienBoussus_",
     "DorianSavalle",
-    "BenoitDionnet1"
+    "BenoitDionnet1",
+    "MathieuDrouinQC"
   ],
   "en": [
     "Chubby",
@@ -15272,6 +15273,11 @@
     {
       "lang": "en",
       "handle": "Nicolas",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDrouinQC",
       "added": "2026-08-30"
     }
   ]
