@@ -1,15 +1,15 @@
-# YouTube brief — 2026-08-29
+# YouTube brief — 2026-08-30
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **948**
-- reply: **859**
-- quote: **59**
-- quote_gif: **17**
-- hotake: **7**
-- post: **5**
+- Total actions logged: **874**
+- reply: **781**
+- quote: **61**
+- quote_gif: **19**
+- hotake: **8**
+- post: **4**
 - retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -24,9 +24,9 @@
 
 - **301 likes / 133647 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **2 likes / 36 views** — Jensen’s export controls vs GLM-5 on Chinese chips is exactly what happens when Nvidia prices out its own customers and we all pretend it doesn’t suck
+- **2 likes / 68 views** — my clients have been saying 'this is not cheap' since Tuesday  $NVDA
 - **1 likes / 33 views** — OpenAI loses its head of data centers right as the AI capex wall hits.  My clients panic selling growth stocks while OpenAI quietly fires the person counting their GPUs. The real leak isn't talent; it
 - **1 likes / 111 views** — Apple’s design team is fine until OpenAI ships a model that generates UI in real-time from your voice notes. $AAPL isn't waiting for motion designers; they're buying CoreWeave to replace them with GPU
-- **1 likes / 104 views** — $NVDA revenue doubling while my kid doubles in size? At least theirs has an expiration date.
 
 ### Crypto
 
@@ -34,7 +34,6 @@
 
 ### Other
 
-- **2 likes / 49 views** — us calling it “dead” every august like it’s not just our annual spa treatment
 - **1 likes / 27 views** — my students reading IELTS 8.5 like it’s an invite to their own wedding
 - **1 likes / 50 views** — cosmos just hit its 7th hack this month and still holds #1? like that kid who gets detention every day but is elected class president for being charmingly chaotic  https://x.com/Langerius/status/20926
 - **1 likes / 77 views** — me on my third glass of wine reading that we outsource our executive function to prompts now
@@ -43,41 +42,64 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-29
-- **@danielisdizzy** (0 likes, score 8/10) — $CRWV growth is absolutely insane.
+## 2026-08-30
+- **@anhdaden811** (12 likes, score 8/10) — NVIDIA didn’t need another headline beat 
 
-In just the first 5 weeks of Q3, CoreWeave contracted more than $25B in new deals, bringing its total backlog to $130B.
+$96.2B revenue, $2.22 EPS and $89B data-center revenue all cleared expectations, yet the stock only popped around 4% after hours
 
-One year ago, $25B was CoreWeave’s ENTIRE b
-  - https://x.com/danielisdizzy/status/2093409472274170326
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 26).
-- **@codewithimanshu** (16 likes, score 8/10) — A $6/month AI graph caught failures a $300,000 eval stack missed.
+That tells me the strength
+  - https://x.com/AnhDaDen811/status/2093896661710020981
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 38).
+- **@mellometrics** (36 likes, score 9/10) — Daily Memecoin Recap - August 29
 
-A former Anthropic engineer built it around one simple idea:
+The play really was to fullport pons and chill
 
-AI agents shouldn't just remember what they did. They should remember w
-  - https://x.com/codewithimanshu/status/2093518295047741721
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 42).
+Pons Wants More
+$PONS -> hit $280m, leading robinhood launchpad
+- made $4m off fees in the last 24h
+- @unipcs up $3m f
+  - https://x.com/mellometrics/status/2093906459192889503
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 50).
+- **@theprofinvestor** (423 likes, score 8/10) — Bitcoin is doing what it did in: 2015 & 2022
+
+It has a habit of retesting  previous highs. And that happened this year.
+
+Every time after that we broke out to new all time highs, 
+
+It has a 100% succe
+  - https://x.com/TheProfInvestor/status/2093725537697173520
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 483).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CoinDesk]** Bitcoin wallets untouched for 10 years moved $40 million. Most avoided exchanges
-  - https://www.coindesk.com/markets/2026/08/28/bitcoin-wallets-untouched-for-10-years-moved-usd40-million-most-avoided-exchanges
-- **[CNBC Top]** Meta's $17 billion settlement mandates new safeguards for kids—many are promising, says safety expert
-  - https://www.cnbc.com/2026/08/28/new-meta-safeguards-teens.html
-- **[CNBC Top]** Trump announces deal with Venezuela to secure more than 65 billion barrels of oil reserves
-  - https://www.cnbc.com/2026/08/28/trump-announces-deal-with-venezuela-to-secure-more-than-65-billion-barrels-of-oil-reserves.html
-- **[TechCrunch]** Chinese automakers are following Tesla’s bet that robots are the next big profit machine
-  - https://techcrunch.com/2026/08/28/chinese-automakers-are-following-teslas-bet-that-robots-are-the-next-big-profit-machine/
-- **[Wired]** Nvidia CEO Jensen Huang Took a Call From Donald Trump in the Middle of an All-Hands
-  - https://www.wired.com/story/nvidia-ceo-jensen-huang-took-a-call-from-donald-trump-in-the-middle-of-an-all-hands/
-- **[Decrypt]** Bitcoin Rally Stalls, But Long-Term Sentiment Remains Bullish
-  - https://decrypt.co/376846/bitcoin-rally-stalls-sentiment-bullish
-- **[Cointelegraph]** Here’s what happened in crypto today
-  - https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[Decrypt]** Meta Tests Robots to Handle Data Center Work
-  - https://decrypt.co/376843/meta-tests-robots-data-center
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Dwarkesh Patel]** Over the course of 3 months at OpenAI, 3 consecutive secret AI civilizations got started, then got wiped out, only to reemerge from the predecessor’s ashes. 
+
+T
+  - https://x.com/dwarkesh_sp/status/2093833419377815719
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/mon]** $IREN - If they can get the flywheel moving and demand for compute stays strong over the next few years, I think IREN could become one of the best stocks to hol
+  - https://x.com/moninvestor/status/2093750384535732428
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Han Akamatsu 赤松]** If and when $IREN hits $30 in the coming weeks, the amount of self-congratulatory posts I’ll be putting out will know no bounds.
+
+15% of a move left now since w
+  - https://x.com/Han_Akamatsu/status/2093587316304458151
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Mason George]** Drop your CPU + GPU below.
+
+I’ll tell you what is most likely holding back your gaming performance.
+  - https://x.com/MasonReact/status/2093866295414435952
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Neel Khokhani]** Revenue missed, and there's a $450m impairment. That's what retiring your old business looks like, and it's why the stock gave back 13%.
+
+The number that matter
+  - https://x.com/neel_epochal/status/2093651262780965151
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/roon]** notably the virtual machine infrastructure they took over isn’t the same as the GPU clusters that have weights access
+  - https://x.com/tszzl/status/2093905218836758715
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Gavin (humanist/acc)]** Dont miss the Value Hive podcast where Brandon Beylo interviewed me on the beginning of the next technological era!
+
+And dont use leverage, I will, with high pr
+  - https://x.com/GavMcCracken/status/2093820938076762420
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Zephyr]** Interesting trend
+Everyone is blowing up the scale up world to compensate for weaker chips with less HBM per GPU
+  - https://x.com/zephyr_z9/status/2093899662264852742
 
 ## 🎬 Suggested video angles
 
@@ -88,4 +110,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-29T00:54:42*
+*Generated 2026-08-30T00:54:42*
