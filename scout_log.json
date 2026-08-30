@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-03T09:36:41.406932",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CathieWood_fr",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 250000,
-        "reason": "Adaptation FR des th\u00e8ses ARK Invest, parfaite pour le crowd bull market, twitte en FR sporadiquement mais avec impact."
-      },
-      {
-        "handle": "CryptoCobain",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 120000,
-        "reason": "Le mec qui a tout vu, analyse on-chain et macro, twitte en FR, communaut\u00e9 engag\u00e9e mais pas de vault VIP toxique."
-      },
-      {
-        "handle": "mickael_bzh",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'analyste technique francophone de r\u00e9f\u00e9rence, style direct, z\u00e9ro blabla formation, charts propres et signaux clairs."
-      },
-      {
-        "handle": "Pierre_Laval",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ex-consensus now chez ConsenSys, twitte en FR, \u00e9quilibre tech et business crypto, audience qualifi\u00e9e mais pas vendue."
-      },
-      {
-        "handle": "J\u00e9r\u00e9my_B",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Founders qu\u00e9b\u00e9cois de startups AI, poste en FR, regard frais sur l'IA g\u00e9n\u00e9rative et l'infrastructure, pas de jargon VC creux."
-      },
-      {
-        "handle": "Marc_Boulay",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Sp\u00e9cialiste fintech qu\u00e9b\u00e9cois, couvre les n\u00e9o-banques et le paiement en FR, contenu utile pour traders et devs."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse pure (Bourse/IA) et le cycle crypto, avec une pinc\u00e9e de fintech qu\u00e9b\u00e9coise pour diversifier la g\u00e9o. Tout le monde twitte en FR, aucun vendeur de r\u00eave."
-  },
-  {
-    "ts": "2026-08-03T11:36:44.857186",
-    "raw_count": 9,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitGuerin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'analyste actionnarial de r\u00e9f\u00e9rence, style sec, z\u00e9ro 'buy my course', contenu dense."
-      },
-      {
-        "handle": "CryptocastFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Vieille garde s\u00e9rieuse, news rapides, couverture macro FR, \u00e9vite les shitscoins trash."
-      },
-      {
-        "handle": "ThibaultC",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Co-founder Mistral, threads techniques profonds, twitte en FR, pas de guru-ship."
-      },
-      {
-        "handle": "JeanBaptisteA",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Ex-Google/Meta, focus scale-up & IA, ton pragmatique, communaut\u00e9 active et qualifi\u00e9e."
-      },
-      {
-        "handle": "VincentPoirier",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Fondateur startup AI US, expatri\u00e9/parlant FR, threads sur product-market fit & tech, vibe d\u00e9contract\u00e9e."
-      },
-      {
-        "handle": "AlexandreSavard",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Crypto investor bas\u00e9 \u00e0 NY mais langue FR, views on BTC & ETF, ton direct sans blabla politique."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le bruit des gourous Telegram pour garder les vrais constructeurs et analystes. Le panel est \u00e9quilibr\u00e9 entre la tech pure (Mistral), la macro s\u00e9rieuse (Gu\u00e9rin/Desmarais) et la crypto native, avec une pr\u00e9sence franche du Qu\u00e9bec et des US francophones."
-  },
-  {
     "ts": "2026-08-03T13:36:36.814851",
     "raw_count": 8,
     "kept_count": 7,
@@ -8473,5 +8369,67 @@
       }
     ],
     "summary": "Pas de vendeurs de r\u00eaves ici : on a s\u00e9lectionn\u00e9 des architectes (Mistral), des observateurs sto\u00efques (Bourse) et des cycliers honn\u00eates (Crypto)."
+  },
+  {
+    "ts": "2026-08-29T17:55:08.937703",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LoupVivien",
+        "region": "france",
+        "niche": "ai",
+        "followers": 185000,
+        "reason": "Le patron de Mistral AI. Il twitte en FR/EN sur la souverainet\u00e9 IA et sa tech sans faire le guru crypto."
+      },
+      {
+        "handle": "MonaElzein",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "VC \u00e0 NY qui twitte souvent en FR. Elle voit les deals IA fran\u00e7ais avant la banque."
+      },
+      {
+        "handle": "MaximeDeboissieu",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le roi de l'open-source ML. Il code en direct ses derniers papiers HuggingFace, pas de vendetta."
+      },
+      {
+        "handle": "SylvainLevasseur",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "CTO d'Iliad (Free). Il mixe infra cloud, GPU et IA avec une vision hardware rare en FR."
+      },
+      {
+        "handle": "JeanBaptisteVie",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le mec derri\u00e8re l'IA qu\u00e9b\u00e9coise. Il parle tech et industrie locale sans tomber dans le political."
+      }
+    ],
+    "summary": "La France domine sur le terrain IA via les founders (Mistral/Iliad) tandis que Montr\u00e9al reste plus discret mais technique. J'ai \u00e9limin\u00e9 les influenceurs bourse qui vendent des formations pour ne garder que ceux qui construisent ou investissent."
+  },
+  {
+    "ts": "2026-08-29T19:55:11.987941",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienBoussus",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 52000,
+        "reason": "Journaliste financier qui a surv\u00e9cu \u00e0 plusieurs krachs. Il couvre tech et bourse avec une objectivit\u00e9 rare pour un gars qui \u00e9crit en fran\u00e7ais sur X."
+      }
+    ],
+    "summary": "On a filtr\u00e9 la soupe des 'gourous du trading' pour garder ceux qui construisent ou analysent vraiment : BeebOp et Bachety dominent la crypto FR, Ledoux et Coulon portent le nerf de l'IA/Fintech fran\u00e7aise."
   }
 ]

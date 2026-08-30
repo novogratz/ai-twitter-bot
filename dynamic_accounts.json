@@ -2068,7 +2068,11 @@
     "_JulesD_",
     "BenKsCrypto",
     "MarcRocher_",
-    "PhilippeGirard_"
+    "PhilippeGirard_",
+    "LoupVivien",
+    "MonaElzein",
+    "JeanBaptisteVie",
+    "JulienBoussus"
   ],
   "en": [
     "Chubby",
@@ -2517,7 +2521,10 @@
     "Wolf",
     "DarkViperAU",
     "SimpleFarmer",
-    "Prof"
+    "Prof",
+    "Pubity",
+    "haseab",
+    "amanda"
   ],
   "history": [
     {
@@ -15098,6 +15105,41 @@
     {
       "lang": "fr",
       "handle": "PhilippeGirard_",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Pubity",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LoupVivien",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MonaElzein",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteVie",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "haseab",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "en",
+      "handle": "amanda",
+      "added": "2026-08-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoussus",
       "added": "2026-08-29"
     }
   ]
