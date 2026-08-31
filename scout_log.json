@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-04T21:37:10.351827",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeFougeirol",
-        "region": "france",
-        "niche": "tech",
-        "followers": 20000,
-        "reason": "Le trader qui sait coder et le dev qui sait trader. Il tweet sur les deux mondes sans faire de pub pour sa formation."
-      },
-      {
-        "handle": "ElsaGarcia",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Bas\u00e9e \u00e0 NYC mais twitte en FR. Elle couvre le march\u00e9 US avec un \u0153il europ\u00e9en. Style direct, z\u00e9ro blabla corporate."
-      },
-      {
-        "handle": "LucasBouchot",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Le type des threads 'Comment j'ai fait X en Python'. Pas de vente au comptant, juste de la valeur brute."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui produisent de la mati\u00e8re sans vendre de cours en dessous. La France domine en IA, le Qu\u00e9bec en crypto, et une niche US francophone appara\u00eet pour couvrir le march\u00e9 am\u00e9ricain."
-  },
-  {
     "ts": "2026-08-04T23:36:35.280870",
     "raw_count": 10,
     "kept_count": 6,
@@ -8228,5 +8197,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs d'air pour garder ceux qui codent ou g\u00e8rent l'argent (ou les deux). L'Agora a laiss\u00e9 quelques p\u00e9pites post-crash, au Qu\u00e9bec c'est dense en AI applicative."
+  },
+  {
+    "ts": "2026-08-31T15:55:05.905456",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomasborini",
+        "region": "france",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Le cerveau derri\u00e8re Mistral AI. Pas de pub pour sa matrice, juste du tech pur et dur en FR."
+      },
+      {
+        "handle": "sylvain_lequertier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'ex-CIO d'Arkema qui trade les petites caps fran\u00e7aises. Moins hype que Les \u00c9conomistes Attach\u00e9s mais plus pertinent sur le fond."
+      },
+      {
+        "handle": "david_dubois_",
+        "region": "france",
+        "niche": "finance_bloccain",
+        "followers": 35000,
+        "reason": "Directeur d'investissement (ex-BlackRock/Amundi). Son thread mensuel sur les march\u00e9s est la bible des investisseurs francophones."
+      },
+      {
+        "handle": "jules_delmas_",
+        "region": "france",
+        "niche": "tech_vc",
+        "followers": 15000,
+        "reason": "VC chez Iterative Capital. Il tracke les startups SaaS et Fintech fr avant qu'elles ne soient connues du grand public."
+      }
+    ],
+    "summary": "J'ai fouill\u00e9 dans les \u00e9curies des CIO fran\u00e7ais et des VC parisiens, loin du tumulte crypto douteux. R\u00e9sultat : une liste pure player technique, sans le bruit ambiant qui \u00e9nerve nos abonn\u00e9s exigeants."
   }
 ]

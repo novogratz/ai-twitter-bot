@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-31T13:54:42.676826",
-  "window_7d_actions": 5660,
+  "generated_at": "2026-08-31T17:54:42.272170",
+  "window_7d_actions": 5674,
   "window_24h_actions": 687,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5658
+      "count": 5672
     },
     {
       "pattern": "METAPHOR",
@@ -27,13 +27,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5658
+      "count": 5672
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 292
+      "actions": 279
+    },
+    {
+      "hour": 16,
+      "actions": 263
     },
     {
       "hour": 21,
@@ -44,10 +48,6 @@
       "actions": 257
     },
     {
-      "hour": 16,
-      "actions": 249
-    },
-    {
       "hour": 11,
       "actions": 249
     }
@@ -55,76 +55,76 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2568
+      "count": 2564
     },
     {
       "topic": "Autre",
-      "count": 2227
+      "count": 2247
     },
     {
       "topic": "Crypto",
-      "count": 726
+      "count": 727
     },
     {
       "topic": "Bourse",
-      "count": 492
+      "count": 498
     },
     {
       "topic": "Spatial",
-      "count": 125
+      "count": 123
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2704
+      "count": 2716
     },
     {
       "pillar": "market_trauma",
-      "count": 1420
+      "count": 1435
     },
     {
       "pillar": "other",
-      "count": 1199
+      "count": 1190
     },
     {
       "pillar": "meme_reaction",
-      "count": 143
+      "count": 139
     },
     {
       "pillar": "reply_bait",
-      "count": 126
+      "count": 127
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 68
+      "count": 67
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 338
+      "count": 341
     },
     {
       "pillar": "market_trauma",
-      "count": 166
+      "count": 169
     },
     {
       "pillar": "other",
-      "count": 153
+      "count": 149
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 15
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -137,45 +137,45 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 76,
+      "posts": 74,
       "avg_likes": 0.28,
-      "avg_views": 46.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 97.8,
+      "avg_views": 46.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.25,
-      "avg_views": 48.4,
+      "posts": 75,
+      "avg_likes": 0.24,
+      "avg_views": 49.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
+      "posts": 42,
       "avg_likes": 0.24,
-      "avg_views": 49.7,
+      "avg_views": 49.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 2,
+      "avg_likes": 0.0,
+      "avg_views": 162.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5055
+      "count": 5079
     },
     {
       "type": "quote",
-      "count": 373
+      "count": 367
     },
     {
       "type": "quote_gif",
-      "count": 132
+      "count": 128
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-31T13:51:04.514033",
-      "text": "Ai avatars are the new s&p 500: you buy one name and pretend it’s a diversified portfolio. change now listing just moves us to #78 on the waitlist of useless tokens waiting for an ETF that will never come.",
+      "ts": "2026-08-31T17:54:16.307296",
+      "text": "State-matching moved from ops to balance sheet. that’s accounting theater for “we’re still counting chicken coop chickens as free-range.”",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T13:44:41.452682",
-      "text": "OpenAI's valuation is built on the hope that inference costs drop faster than EU compliance bills rise.\n\nthe cap is imaginary now. no pressure.",
+      "ts": "2026-08-31T17:53:10.556809",
+      "text": "Yes. open source models are free enough that you stop paying for the tool and start paying for your own time. shipping > prompt engineering.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T13:44:12.672114",
-      "text": "Codex is the IDEOLOGY. claude code is the PRACTICE. you're choosing between a founder who raised $50M for nothing and an engineer shipping on friday at 4pm.",
+      "ts": "2026-08-31T17:47:31.141667",
+      "text": "40% cheaper is a discount. 10-36 months of zero margin on training data maintenance after release? that's the real bill coming due. open source isn't free, it just moved off your P&L and into yours for debugging later.",
       "type": "reply"
     }
   ]

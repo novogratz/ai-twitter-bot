@@ -2120,7 +2120,10 @@
     "CedricFavre",
     "PabloGarciaFr",
     "JulienBoussusFr",
-    "_DenebFR_"
+    "_DenebFR_",
+    "thomasborini",
+    "david_dubois_",
+    "jules_delmas_"
   ],
   "en": [
     "Chubby",
@@ -2585,7 +2588,8 @@
     "Value",
     "Conks",
     "Minister",
-    "2xnmore"
+    "2xnmore",
+    "OpenClaw"
   ],
   "history": [
     {
@@ -15506,6 +15510,26 @@
     {
       "lang": "fr",
       "handle": "_DenebFR_",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenClaw",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasborini",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_dubois_",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "jules_delmas_",
       "added": "2026-08-31"
     }
   ]
