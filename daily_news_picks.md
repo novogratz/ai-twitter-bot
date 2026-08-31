@@ -17105,3 +17105,32 @@ Her largest position: 33.5% | ~$7.5M
 AI data center power dem
   - https://x.com/933Athkar/status/2093868170826441155
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+
+## 2026-08-31
+- **@anissagardizy8** (13 likes, score 7/10) — SCOOP: SB Energy offered OpenAI a major perk to land it as a data-center tenant ahead of the SoftBank-backed firm's IPO.
+
+OpenAI was issued warrants worth an estimated $5.5 billion in SB Energy.
+
+- SB
+  - https://x.com/anissagardizy8/status/2094273553466105963
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
+- **@bdinvestingg** (12 likes, score 7/10) — $AAPL just found another AI growth engine.
+
+OpenAI reportedly bought tens of thousands of Mac minis & Mac Studios to train AI agents, while Anthropic is renting Macs through AWS.
+
+This could give Appl
+  - https://x.com/bdinvestingg/status/2094263907334377857
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@intcyberdigest** (873 likes, score 8/10) — OpenAI has bought tens of thousands of Mac minis and Mac Studios to train computer-use agents, The Information reports
+
+The outlet says Anthropic rents the same machines through AWS instead
+  - https://x.com/IntCyberDigest/status/2094218161532940367
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 949).
+- **@coinbureau** (110 likes, score 8/10) — NEW: OpenAI reportedly bought tens of thousands of Mac minis and Mac Studios to train computer-use agents through reinforcement learning.
+
+While Anthropic rents similar Mac hardware through AWS, per T
+  - https://x.com/coinbureau/status/2094252731649429610
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 152).
+- **@rhyssullivan** (80 likes, score 8/10) — fyi if your takeaway from the openai huggingface incident is 'well they just suck at sandboxing' you're missing the broader picture that the capabilities described in the incident will be common place
+  - https://x.com/RhysSullivan/status/2094229463492124700
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 100).
