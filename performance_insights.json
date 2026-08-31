@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-31T05:54:42.418917",
-  "window_7d_actions": 5543,
-  "window_24h_actions": 723,
+  "generated_at": "2026-08-31T09:54:42.485366",
+  "window_7d_actions": 5607,
+  "window_24h_actions": 693,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5541
+      "count": 5605
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5541
+      "count": 5605
     }
   ],
   "best_hours_utc": [
@@ -44,57 +44,57 @@
       "actions": 257
     },
     {
-      "hour": 16,
-      "actions": 249
+      "hour": 9,
+      "actions": 251
     },
     {
-      "hour": 14,
-      "actions": 247
+      "hour": 16,
+      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2500
+      "count": 2534
     },
     {
       "topic": "Autre",
-      "count": 2192
+      "count": 2213
     },
     {
       "topic": "Crypto",
-      "count": 720
+      "count": 724
     },
     {
       "topic": "Bourse",
-      "count": 470
+      "count": 478
     },
     {
       "topic": "Spatial",
-      "count": 128
+      "count": 130
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2635
+      "count": 2665
     },
     {
       "pillar": "market_trauma",
-      "count": 1391
+      "count": 1413
     },
     {
       "pillar": "other",
-      "count": 1173
+      "count": 1188
     },
     {
       "pillar": "meme_reaction",
-      "count": 154
+      "count": 148
     },
     {
       "pillar": "reply_bait",
-      "count": 123
+      "count": 126
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 345
+      "count": 332
     },
     {
       "pillar": "market_trauma",
-      "count": 185
+      "count": 173
     },
     {
       "pillar": "other",
-      "count": 156
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -146,44 +146,44 @@
       "pillar": "ai_news_take",
       "posts": 77,
       "avg_likes": 0.27,
-      "avg_views": 46.4,
+      "avg_views": 45.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 70,
-      "avg_likes": 0.26,
-      "avg_views": 49.0,
+      "posts": 71,
+      "avg_likes": 0.25,
+      "avg_views": 48.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.26,
-      "avg_views": 51.1,
+      "posts": 42,
+      "avg_likes": 0.24,
+      "avg_views": 50.6,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4928
+      "count": 4997
     },
     {
       "type": "quote",
-      "count": 380
+      "count": 376
     },
     {
       "type": "quote_gif",
-      "count": 145
+      "count": 139
     },
     {
       "type": "hotake",
-      "count": 41
+      "count": 44
     },
     {
       "type": "post",
-      "count": 32
+      "count": 34
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-31T05:53:25.892054",
-      "text": "The 3-year-old staring at the $20 plan asking for Pro because it forgot about Max 😭👀",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-31T05:51:56.008843",
-      "text": "Daniel Koss sur NBIS. 10K clients GPU qui te regardent en attendant le résultat et une ligne de code fonctionnelle est la seule chose qui calme l'anxiété du groupe WhatsApp des actionnaires aujourd'hui.",
+      "ts": "2026-08-31T09:53:51.275684",
+      "text": "50 agents doing security work is just more ways to hallucinate a CVE. real value? nvidia nemotron cutting inference costs so low you can scan the whole attack surface while sipping your latte. cheap scrutiny wins.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T05:50:49.304851",
-      "text": "168 vs 123 tokens/sec is a nice party trick. It's not an efficiency story. it's just faster queuing at the same expensive table. throughput wins later. latency loses money now.",
+      "ts": "2026-08-31T09:53:33.867366",
+      "text": "401k Dave bought at 69k and panicked sold at 20. Clear skies just mean he's finally out of the rain. good luck on the way up.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-31T09:52:32.955056",
+      "text": "OpenAI raises at $157B on a 90% gross margin and no path to AGI before cash runs out. Anthropic is raising just in case they hit the same wall sooner. runway risk > model quality right now.",
       "type": "reply"
     }
   ]

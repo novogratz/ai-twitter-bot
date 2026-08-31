@@ -2112,7 +2112,9 @@
     "RenaudP",
     "BenjaminBessac",
     "DimitriM",
-    "JulieT"
+    "JulieT",
+    "mohamed_tazir",
+    "cassius_ka"
   ],
   "en": [
     "Chubby",
@@ -15452,6 +15454,16 @@
     {
       "lang": "fr",
       "handle": "JulieT",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "mohamed_tazir",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "cassius_ka",
       "added": "2026-08-31"
     }
   ]

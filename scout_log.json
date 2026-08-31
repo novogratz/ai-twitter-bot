@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-04T15:38:16.139689",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienPecquet",
-        "region": "france",
-        "niche": "ia",
-        "followers": 130000,
-        "reason": "Le mec qui fait d\u00e9railler des r\u00e9unions avec un seul thread sur LLMs. Il couvre l'\u00e9cosyst\u00e8me fran\u00e7ais et international sans prendre parti pour les vendeurs de tapis."
-      },
-      {
-        "handle": "GorazdMihel",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 110000,
-        "reason": "Le Saint-Trinit\u00e9 de la crypto FR. Il couvre tout : DeFi, Bitcoin, Macro. Pas de formations \u00e0 99\u20ac, juste de l'analyse pure."
-      },
-      {
-        "handle": "CyrilDonguy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "L'ex-Banque de France qui a compris que les stablecoins sont le future. Son thread sur les CBDC vaut de l'or, ses posts quotidiens aussi."
-      },
-      {
-        "handle": "RomainPiel",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Journaliste boursier qui n'a pas peur de dire que le ETF est surachet\u00e9. Il m\u00e9lange analyse technique et fondamental pour les petits porteurs."
-      },
-      {
-        "handle": "NathalieBessone",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "La voix f\u00e9minine de r\u00e9f\u00e9rence sur la DeFi en France. Elle couvre la gouvernance et les DAO. Si tu veux comprendre o\u00f9 va l'argent crypto, tu la suis."
-      },
-      {
-        "handle": "MarcLeblanc",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "VC bas\u00e9 \u00e0 SF mais qui twitte en FR. Il voit les deals d'IA avant qu'ils arrivent en France. La niche 'VC' est rare en francophone."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les 'gourous' qui vendent des signaux Telegram pour ne garder que ceux qui expliquent *pourquoi* le march\u00e9 bouge. On a du lourd sur la crypto FR (Gorazd/Cyril), de la tech QC concr\u00e8te (Gouin/Dionne) et des VC qui voient plus loin que le nez de leur ligne de code."
-  },
-  {
     "ts": "2026-08-04T17:36:24.280053",
     "raw_count": 8,
     "kept_count": 5,
@@ -8284,5 +8232,29 @@
       }
     ],
     "summary": "Du solide sans le gras marketing : des analystes techniques (Borie), des profils tech pur (P, Mathis) et la crypto qu\u00e9b\u00e9coise s\u00e9rieuse (Tessier). Z\u00e9ro vente de r\u00eave \u00e0 l'heure H."
+  },
+  {
+    "ts": "2026-08-31T05:55:07.209954",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mohamed_tazir",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "Foundeur de NLP AI Lab, twitte en FR/EN sur l'IA g\u00e9n\u00e9rative, voix technique cr\u00e9dible sans le jargon VC vide."
+      },
+      {
+        "handle": "cassius_ka",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "US-based mais twitte beaucoup en FR. Ex-Consensys. Couvre Web3 infrastructure et VC avec un regard francophone."
+      }
+    ],
+    "summary": "Focus IA/DeFi solide avec un \u00e9quilibre France-Qu\u00e9bec-Europe US via la diaspora. Zero vendeurs d'eau, que des technos ou analysts actifs en fran\u00e7ais ces derniers mois."
   }
 ]
