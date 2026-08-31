@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-31T01:54:42.441968",
-  "window_7d_actions": 5495,
-  "window_24h_actions": 764,
+  "generated_at": "2026-08-31T05:54:42.418917",
+  "window_7d_actions": 5543,
+  "window_24h_actions": 723,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5493
+      "count": 5541
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5493
+      "count": 5541
     }
   ],
   "best_hours_utc": [
@@ -55,46 +55,46 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2467
+      "count": 2500
     },
     {
       "topic": "Autre",
-      "count": 2188
+      "count": 2192
     },
     {
       "topic": "Crypto",
-      "count": 714
+      "count": 720
     },
     {
       "topic": "Bourse",
-      "count": 459
+      "count": 470
     },
     {
       "topic": "Spatial",
-      "count": 125
+      "count": 128
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2599
+      "count": 2635
     },
     {
       "pillar": "market_trauma",
-      "count": 1380
+      "count": 1391
     },
     {
       "pillar": "other",
-      "count": 1163
+      "count": 1173
     },
     {
       "pillar": "meme_reaction",
-      "count": 162
+      "count": 154
     },
     {
       "pillar": "reply_bait",
-      "count": 124
+      "count": 123
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 359
+      "count": 345
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 185
     },
     {
       "pillar": "other",
-      "count": 163
+      "count": 156
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 21
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -145,37 +145,37 @@
     {
       "pillar": "ai_news_take",
       "posts": 77,
-      "avg_likes": 0.3,
-      "avg_views": 47.1,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.26,
-      "avg_views": 54.5,
+      "avg_likes": 0.27,
+      "avg_views": 46.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.23,
-      "avg_views": 49.8,
+      "posts": 70,
+      "avg_likes": 0.26,
+      "avg_views": 49.0,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 43,
+      "avg_likes": 0.26,
+      "avg_views": 51.1,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4876
+      "count": 4928
     },
     {
       "type": "quote",
-      "count": 376
+      "count": 380
     },
     {
       "type": "quote_gif",
-      "count": 153
+      "count": 145
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-31T01:54:28.217050",
-      "text": "NVDA’s datacenter margin is ~70%. you bought the top and are now praying to a valuation multiple. math isn’t emotional darling.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-31T01:53:11.383993",
-      "text": "me on my way to explain this to my therapist after selling my soul for one Civic 😭🛋️",
+      "ts": "2026-08-31T05:53:25.892054",
+      "text": "The 3-year-old staring at the $20 plan asking for Pro because it forgot about Max 😭👀",
       "type": "quote"
     },
     {
-      "ts": "2026-08-31T01:52:21.954540",
-      "text": "Robinhood’s RSI is the only thing keeping retail calm while BTC bleeds. degens don’t care about geopolitics; they care that fees just hit ATH again. trade it like a casino, not an ETF.",
+      "ts": "2026-08-31T05:51:56.008843",
+      "text": "Daniel Koss sur NBIS. 10K clients GPU qui te regardent en attendant le résultat et une ligne de code fonctionnelle est la seule chose qui calme l'anxiété du groupe WhatsApp des actionnaires aujourd'hui.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-31T05:50:49.304851",
+      "text": "168 vs 123 tokens/sec is a nice party trick. It's not an efficiency story. it's just faster queuing at the same expensive table. throughput wins later. latency loses money now.",
       "type": "reply"
     }
   ]

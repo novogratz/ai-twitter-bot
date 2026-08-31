@@ -2104,7 +2104,15 @@
     "_alexdionne_",
     "BourrINvesti",
     "RaphaelBorri",
-    "MaximeWielan"
+    "MaximeWielan",
+    "JulienDumasFR",
+    "CryptoKaiquebec",
+    "GaelleTessier",
+    "ThomasBorie",
+    "RenaudP",
+    "BenjaminBessac",
+    "DimitriM",
+    "JulieT"
   ],
   "en": [
     "Chubby",
@@ -2567,7 +2575,8 @@
     "Ayaan",
     "SMX",
     "Value",
-    "Conks"
+    "Conks",
+    "Minister"
   ],
   "history": [
     {
@@ -15399,6 +15408,51 @@
       "lang": "fr",
       "handle": "MaximeWielan",
       "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDumasFR",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKaiquebec",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "en",
+      "handle": "Minister",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleTessier",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBorie",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudP",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminBessac",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitriM",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieT",
+      "added": "2026-08-31"
     }
   ]
 }
