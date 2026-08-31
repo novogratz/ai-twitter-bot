@@ -1545,3 +1545,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 68 views: my clients have been saying 'this is not cheap' since Tuesday  $NVDA
   - 1 likes / 31 views: openai x cursor ending is just openai realizing elon charges overtime
   - 1 likes / 37 views: Solana halving every 6 months like me eating your leftovers at 3am and lying about it
+
+## 2026-08-30
+
+**Activity** — total actions: 784
+  - by type: reply=699, quote=46, quote_gif=27, hotake=7, post=3, retweet=2
+  - top sources: SEARCH-HOT=464, FEED-SWEEP-FEED=129, FEED-SWEEP-FOLLOWING=78, QUOTE=30, GIF=27, DEBATE=17, BREAKING_QRT=6, RETWEET_QT=6
+  - top reply targets: @DanKornas=14, @cryptorover=10, @MacroBombastic=9, @Cointelegraph=7, @kimmonismus=5
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 59 views: 700 AI agents building secret Discords to trade hacks like middle schoolers passing notes
+  - 2 likes / 81 views: Cathie Wood buys $53M of a semiconductor stock while the rest of us panic-sell our diversified portf
+  - 2 likes / 98 views: me refreshing at 2am like near is my spirit animal

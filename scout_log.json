@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-04T07:36:38.285755",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Gorlice",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'anti-LinkedIn par excellence, d\u00e9crypte la finance sans jargon, followers engag\u00e9s mais pas hypnotis\u00e9s."
-      },
-      {
-        "handle": "Lililililil",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Le roi du Qu\u00e9bec pour les actions US, style direct, communaut\u00e9 loyale."
-      },
-      {
-        "handle": "PierreBoujut",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Expert CBDC et monnaie, tweets rares mais incisifs, z\u00e9ro 'buy now'."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse boursi\u00e8re fran\u00e7aise 'anti-fluff', l'IA tech locale et les traders qu\u00e9b\u00e9cois qui savent parler."
-  },
-  {
-    "ts": "2026-08-04T09:36:44.081412",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaultMa",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence absolue en France pour la macro crypto et l'impact sur la bourse. Pas de formations \u00e0 2000\u20ac, juste du concret."
-      },
-      {
-        "handle": "MickaelBounay",
-        "region": "france",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Le roi du 'Thread de l'actu tech'. Il couvre les startups IA, les lev\u00e9es de fonds et les g\u00e9ants du num\u00e9rique. Indispensable pour le contexte."
-      },
-      {
-        "handle": "AudeFroger",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Journaliste Crypto.fr, elle a le son. Interviewes exclusives, d\u00e9constructions de hype, z\u00e9ro bullshit."
-      },
-      {
-        "handle": "PierreSagot",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Bas\u00e9 \u00e0 SF, francophone. Il track les startups IA am\u00e9ricaines et les produits qui cartonnent. Le pont entre la Silicon Valley et la France."
-      },
-      {
-        "handle": "MaximillienB",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le gars qui a rendu le crypto accessible au Qu\u00e9b\u00e9cois moyen. Il couvre les ETF, la r\u00e9gulation AMF et les tokens. Vibe d\u00e9contract\u00e9e, fond solide."
-      },
-      {
-        "handle": "PierreMounier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste actions, focus tech et croissance. Ses threads sur les valorisations sont parfois cyniques mais justes. Pas de signaux payants."
-      },
-      {
-        "handle": "JeanBaptisteP",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Journaliste \u00e0 La Presse, il d\u00e9cortique les r\u00e9sultats trimestriels et la macro canadienne. Un des rares \u00e0 faire de l'analyse pure en FR."
-      },
-      {
-        "handle": "ThomasCordier",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 11000,
-        "reason": "Ex-Mastercard, maintenant VC/analyste. Il cover les fintechs US et EU. Ses takes sur Stripe ou Plaid sont toujours pertinents."
-      }
-    ],
-    "summary": "J'ai cibl\u00e9 les piliers de l'analyse crypto FR (Thibault, Aude), la fintech/bourse (Maxime, Mickael) et les perles qu\u00e9b\u00e9coises/am\u00e9ricaines francophones. Z\u00e9ro vendeurs de r\u00eaves, que des producteurs d'infos."
-  },
-  {
     "ts": "2026-08-04T11:36:18.275593",
     "raw_count": 6,
     "kept_count": 3,
@@ -8319,5 +8222,67 @@
       }
     ],
     "summary": "(no summary)"
+  },
+  {
+    "ts": "2026-08-30T21:55:17.711846",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautCoulon",
+        "region": "france",
+        "niche": "ai_fintech",
+        "followers": 25000,
+        "reason": "CEO de Kyrus. Il twitte sur l'IA et la finance plus souvent que sa fille lui t\u00e9l\u00e9phone."
+      },
+      {
+        "handle": "_jasonbnt_",
+        "region": "quebec",
+        "niche": "crypto_trading",
+        "followers": 18000,
+        "reason": "Trader QC avec une plume en or. Moins de bruit que les influencers US, plus d'alpha francophone."
+      },
+      {
+        "handle": "_alexdionne_",
+        "region": "usa",
+        "niche": "crypto_meme_vc",
+        "followers": 12000,
+        "reason": "Le jumeau de l'autre Alex. Moins connu mais plus fun sur les coins de la IA narrative."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le gras (influencers formations) pour te garder les analystes et VCs qui font bouger la line de rendement ou racontent mieux l'IA. Le Qu\u00e9bec p\u00e8se lourd sur AI/Crypto, pas besoin d'aller chercher loin en France."
+  },
+  {
+    "ts": "2026-08-30T23:54:59.943309",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BourrINvesti",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'ex-DFM qui a rendu la finance accessible sans endormir. Twitte en fran\u00e7ais, audience massive, contenu \u00e9ducatif pur."
+      },
+      {
+        "handle": "RaphaelBorri",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Founder chez Bittensor. Le gars qui parle tech/crypto en FR avec une vision longue dur\u00e9e, pas du day-trading vite fait."
+      },
+      {
+        "handle": "MaximeWielan",
+        "region": "usa",
+        "niche": "tech_vc",
+        "followers": 12000,
+        "reason": "Franco-am\u00e9ricain \u00e0 SF. Twitte en fran\u00e7ais sur la VC US depuis l'int\u00e9rieur des murs Silicon Valley."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les influenceurs formation pour ne garder que ceux qui ont du gras : un institut (Mistral), une l\u00e9gende bourse fran\u00e7aise et trois profils tech/crypto actives. Pas de bla-bla, juste des sources."
   }
 ]

@@ -2098,7 +2098,13 @@
     "TheCryptoLarkCA",
     "Bisnode",
     "JohanBertaut_",
-    "BenoitDionne_"
+    "BenoitDionne_",
+    "ThibautCoulon",
+    "_jasonbnt_",
+    "_alexdionne_",
+    "BourrINvesti",
+    "RaphaelBorri",
+    "MaximeWielan"
   ],
   "en": [
     "Chubby",
@@ -2559,7 +2565,9 @@
     "Nicolas",
     "Savage",
     "Ayaan",
-    "SMX"
+    "SMX",
+    "Value",
+    "Conks"
   ],
   "history": [
     {
@@ -15350,6 +15358,46 @@
     {
       "lang": "en",
       "handle": "SMX",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautCoulon",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "_jasonbnt_",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "_alexdionne_",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Value",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Conks",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourrINvesti",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelBorri",
+      "added": "2026-08-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeWielan",
       "added": "2026-08-30"
     }
   ]
