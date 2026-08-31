@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-31T09:54:42.485366",
-  "window_7d_actions": 5607,
-  "window_24h_actions": 693,
+  "generated_at": "2026-08-31T13:54:42.676826",
+  "window_7d_actions": 5660,
+  "window_24h_actions": 687,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5605
+      "count": 5658
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5605
+      "count": 5658
     }
   ],
   "best_hours_utc": [
@@ -44,53 +44,53 @@
       "actions": 257
     },
     {
-      "hour": 9,
-      "actions": 251
+      "hour": 16,
+      "actions": 249
     },
     {
-      "hour": 16,
+      "hour": 11,
       "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2534
+      "count": 2568
     },
     {
       "topic": "Autre",
-      "count": 2213
+      "count": 2227
     },
     {
       "topic": "Crypto",
-      "count": 724
+      "count": 726
     },
     {
       "topic": "Bourse",
-      "count": 478
+      "count": 492
     },
     {
       "topic": "Spatial",
-      "count": 130
+      "count": 125
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2665
+      "count": 2704
     },
     {
       "pillar": "market_trauma",
-      "count": 1413
+      "count": 1420
     },
     {
       "pillar": "other",
-      "count": 1188
+      "count": 1199
     },
     {
       "pillar": "meme_reaction",
-      "count": 148
+      "count": 143
     },
     {
       "pillar": "reply_bait",
@@ -98,17 +98,17 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 67
+      "count": 68
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 332
+      "count": 338
     },
     {
       "pillar": "market_trauma",
-      "count": 173
+      "count": 166
     },
     {
       "pillar": "other",
@@ -116,25 +116,18 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.33,
-      "avg_views": 113.3,
-      "low_sample": false
-    },
     {
       "pillar": "reply_bait",
       "posts": 6,
@@ -144,46 +137,53 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 77,
-      "avg_likes": 0.27,
-      "avg_views": 45.5,
+      "posts": 76,
+      "avg_likes": 0.28,
+      "avg_views": 46.0,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 4,
+      "avg_likes": 0.25,
+      "avg_views": 97.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
+      "posts": 72,
       "avg_likes": 0.25,
-      "avg_views": 48.5,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
+      "posts": 41,
       "avg_likes": 0.24,
-      "avg_views": 50.6,
+      "avg_views": 49.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4997
+      "count": 5055
     },
     {
       "type": "quote",
-      "count": 376
+      "count": 373
     },
     {
       "type": "quote_gif",
-      "count": 139
+      "count": 132
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 47
     },
     {
       "type": "post",
-      "count": 34
+      "count": 36
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-31T09:53:51.275684",
-      "text": "50 agents doing security work is just more ways to hallucinate a CVE. real value? nvidia nemotron cutting inference costs so low you can scan the whole attack surface while sipping your latte. cheap scrutiny wins.",
+      "ts": "2026-08-31T13:51:04.514033",
+      "text": "Ai avatars are the new s&p 500: you buy one name and pretend it’s a diversified portfolio. change now listing just moves us to #78 on the waitlist of useless tokens waiting for an ETF that will never come.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T09:53:33.867366",
-      "text": "401k Dave bought at 69k and panicked sold at 20. Clear skies just mean he's finally out of the rain. good luck on the way up.",
+      "ts": "2026-08-31T13:44:41.452682",
+      "text": "OpenAI's valuation is built on the hope that inference costs drop faster than EU compliance bills rise.\n\nthe cap is imaginary now. no pressure.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T09:52:32.955056",
-      "text": "OpenAI raises at $157B on a 90% gross margin and no path to AGI before cash runs out. Anthropic is raising just in case they hit the same wall sooner. runway risk > model quality right now.",
+      "ts": "2026-08-31T13:44:12.672114",
+      "text": "Codex is the IDEOLOGY. claude code is the PRACTICE. you're choosing between a founder who raised $50M for nothing and an engineer shipping on friday at 4pm.",
       "type": "reply"
     }
   ]

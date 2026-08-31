@@ -2114,7 +2114,13 @@
     "DimitriM",
     "JulieT",
     "mohamed_tazir",
-    "cassius_ka"
+    "cassius_ka",
+    "LionelBocquet",
+    "GaelLemoine",
+    "CedricFavre",
+    "PabloGarciaFr",
+    "JulienBoussusFr",
+    "_DenebFR_"
   ],
   "en": [
     "Chubby",
@@ -2578,7 +2584,8 @@
     "SMX",
     "Value",
     "Conks",
-    "Minister"
+    "Minister",
+    "2xnmore"
   ],
   "history": [
     {
@@ -15464,6 +15471,41 @@
     {
       "lang": "fr",
       "handle": "cassius_ka",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "en",
+      "handle": "2xnmore",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelBocquet",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLemoine",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricFavre",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "PabloGarciaFr",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoussusFr",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "_DenebFR_",
       "added": "2026-08-31"
     }
   ]

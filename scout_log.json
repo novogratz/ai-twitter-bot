@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-04T17:36:24.280053",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelKoenig",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le patron de Coinhouse, twitte en FR, z\u00e9ro formation \u00e0 2000\u20ac \u00e0 vendre, que du fond."
-      },
-      {
-        "handle": "JulienR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Journaliste crypto FR ultra fiable, twitte la vrai news pas les shitsponsoris\u00e9s."
-      },
-      {
-        "handle": "MarcGagnon_",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Analyste Qu\u00e9b\u00e9cois, focus bourse/tech, style direct sans le blabla LinkedIn."
-      },
-      {
-        "handle": "CamilleD",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 14000,
-        "reason": "Sp\u00e9cialiste fintech/france, analyse les lev\u00e9es de fonds tech avec du recul."
-      },
-      {
-        "handle": "VincentR",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Ex-Google maintenant ind\u00e9pendant, IA et tech en fran\u00e7ais depuis NYC, regard ext\u00e9rieur pertinent."
-      }
-    ],
-    "summary": "Focus sur des insiders (Hugging Face, Coinhouse) et des journalistes FR solides. Z\u00e9ro vendeur de r\u00eave, juste des profils qui construisent ou analysent. Le Qu\u00e9bec est mieux repr\u00e9sent\u00e9 que d'habitude avec des profils actifs."
-  },
-  {
-    "ts": "2026-08-04T19:37:09.592870",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RaphaelLeHalleur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "La r\u00e9f\u00e9rence incontest\u00e9e. Analytique, moins 'influencer' que les autres, plus 'expert'."
-      },
-      {
-        "handle": "MaximeLeboeuf",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Bas\u00e9 \u00e0 NY (diaspora), il tweete en FR mais avec le rythme US. Bon mix info macro/altcoins."
-      },
-      {
-        "handle": "HervetX",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Le roi du data visuel sur X. Ses charts sur l'inflation et les taux sont devenus du patrimoine culturel francophone."
-      },
-      {
-        "handle": "Raphaelyss",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Journaliste TechCrunch/Forbes. Il cover la tech FR/US avec une plume plus narrative que les news wires."
-      },
-      {
-        "handle": "JulienVialon",
-        "region": "france",
-        "niche": "ia",
-        "followers": 12000,
-        "reason": "Focus pur IA (LLMs, Agents, Infra). Pas de blabla, que des threads techniques et des setups SaaS."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 pour \u00e9liminer les vendeurs de r\u00eaves. La s\u00e9lection mise sur la substance : HervetX pour les graphiques, Rapha\u00ebl pour la crypto s\u00e9rieuse, et Romain/Maxime pour la couverture transatlantique. Z\u00e9ro formation \u00e0 497\u20ac."
-  },
-  {
     "ts": "2026-08-04T21:37:10.351827",
     "raw_count": 8,
     "kept_count": 3,
@@ -8256,5 +8166,67 @@
       }
     ],
     "summary": "Focus IA/DeFi solide avec un \u00e9quilibre France-Qu\u00e9bec-Europe US via la diaspora. Zero vendeurs d'eau, que des technos ou analysts actifs en fran\u00e7ais ces derniers mois."
+  },
+  {
+    "ts": "2026-08-31T09:55:07.421946",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LionelBocquet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 50000,
+        "reason": "Le roi de la d\u00e9mo trading live sur Twitter/X. Pas de cours \u00e0 99\u20ac, juste des graphiques bruts et une gueule qui en a vu d'autres."
+      },
+      {
+        "handle": "GaelLemoine",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Journaliste au Figaro qui ne survend pas sa sauce. Ses threads sur les indices sont plus denses qu'un r\u00e9sum\u00e9 LinkedIn."
+      },
+      {
+        "handle": "CedricFavre",
+        "region": "usa",
+        "niche": "ai/crypto",
+        "followers": 12000,
+        "reason": "Bas\u00e9 aux US mais tweet FR. Couvre l'intersection Silicon Valley / Paris fintech avec un angle d\u00e9cal\u00e9."
+      }
+    ],
+    "summary": "Pack \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rans du trading (Bocquet/Lemoine) et la nouvelle garde IA/Crypto (Mistral, Boussus). Z\u00e9ro formation de merde, que des vrais parleurs."
+  },
+  {
+    "ts": "2026-08-31T11:55:10.687014",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PabloGarciaFr",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'ancien de l'Agora qui a surv\u00e9cu \u00e0 la crypto-bubble sans vendre ses chaussettes. Analyse macro solide."
+      },
+      {
+        "handle": "JulienBoussusFr",
+        "region": "france",
+        "niche": "tech_vc",
+        "followers": 18000,
+        "reason": "Ex-Pierre Lassalle et ex-VC. Il voit les startups avant qu'elles ne l\u00e8vent leur s\u00e9rie A."
+      },
+      {
+        "handle": "_DenebFR_",
+        "region": "france",
+        "niche": "tech_ai",
+        "followers": 12000,
+        "reason": "Vieux de la vieille du twittero. Moins hype que les nuls en agents IA mais plus pro."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs d'air pour garder ceux qui codent ou g\u00e8rent l'argent (ou les deux). L'Agora a laiss\u00e9 quelques p\u00e9pites post-crash, au Qu\u00e9bec c'est dense en AI applicative."
   }
 ]
