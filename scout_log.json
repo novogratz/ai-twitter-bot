@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-04T05:36:43.840434",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thierrm",
-        "region": "france",
-        "niche": "ai",
-        "followers": 120000,
-        "reason": "Cofondateur de Mistral AI, il explique le LLM sans endormir le lecteur. C'est rare un gars qui comprend la techno ET les business models sans vendre du r\u00eave."
-      },
-      {
-        "handle": "alexisgarnier_",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Trader professionnel, pas influenceur. Ses threads sur la lecture de flux et les patterns sont plus utiles que 90% des newsletters payantes."
-      },
-      {
-        "handle": "mariocaz",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Diaspora FR aux USA. Il poste sur l'IA, la SaaS et le VC am\u00e9ricain mais en fran\u00e7ais. Unique en son genre pour voir l'\u00e9cosyst\u00e8me SF sans barri\u00e8re de langue."
-      },
-      {
-        "handle": "cryptobonhomme",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Annonceur officiel de la crypto au Qu\u00e9bec. Il mixe news blockchain, adoption institutionnelle et humour local. L'audience est engag\u00e9e et pas juste l\u00e0 pour les memes."
-      },
-      {
-        "handle": "jgarrigues",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Ex-Mistral, ex-DeepMind. Il poste sur l'IA, la data et les startups tech fr. Ton sec, z\u00e9ro bullshit, exactement ce qu'on cherche."
-      },
-      {
-        "handle": "julesbonnassoux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le pionnier fr du Prompt Engineering. Il twitte que dalle de temps en temps, mais chaque tweet est une p\u00e9pite que les autres r\u00e9utilisent 3 mois plus tard."
-      },
-      {
-        "handle": "louisbesson",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 11000,
-        "reason": "Ex-Lemmy, ex-Podverse. Il parle tech, produits et startup life depuis l'\u00e9tranger. Son style est \u00e9pur\u00e9, intelligent et tr\u00e8s 'product-led'."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit parisien pour ne garder que ceux qui ont du grain \u00e0 moudre. On a une belle base entre la France (Mistral, trading pro) et le Qu\u00e9bec (fintech, adoption locale), avec une touche diaspora US. Z\u00e9ro vendeur de r\u00eaves, que des profils qui construisent ou analysent."
-  },
-  {
     "ts": "2026-08-04T07:36:38.285755",
     "raw_count": 7,
     "kept_count": 3,
@@ -8361,5 +8302,22 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le gras pour garder les cerveaux : des fondateurs qui codent encore et des traders qui perdent leur argent en direct \u00e0 c\u00f4t\u00e9 du tien. Z\u00e9ro vendeur de r\u00eave, que du concret technico-financeux."
+  },
+  {
+    "ts": "2026-08-30T17:54:51.277890",
+    "raw_count": 2,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitDionne_",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "L'ancien VP de Coinhouse. Il parle argent et technologie sans vendre du r\u00eave en formation \u00e0 197\u20ac."
+      }
+    ],
+    "summary": "(no summary)"
   }
 ]

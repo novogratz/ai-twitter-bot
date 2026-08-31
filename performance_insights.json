@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-30T17:54:42.738777",
-  "window_7d_actions": 5404,
-  "window_24h_actions": 822,
+  "generated_at": "2026-08-30T21:54:45.789652",
+  "window_7d_actions": 5444,
+  "window_24h_actions": 794,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5402
+      "count": 5442
     },
     {
       "pattern": "METAPHOR",
@@ -27,13 +27,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5402
+      "count": 5442
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
       "actions": 292
+    },
+    {
+      "hour": 21,
+      "actions": 258
     },
     {
       "hour": 16,
@@ -44,10 +48,6 @@
       "actions": 247
     },
     {
-      "hour": 21,
-      "actions": 242
-    },
-    {
       "hour": 11,
       "actions": 237
     }
@@ -55,82 +55,76 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2413
+      "count": 2435
     },
     {
       "topic": "Autre",
-      "count": 2162
+      "count": 2175
     },
     {
       "topic": "Crypto",
-      "count": 699
+      "count": 705
     },
     {
       "topic": "Bourse",
-      "count": 444
+      "count": 450
     },
     {
       "topic": "Spatial",
-      "count": 125
+      "count": 124
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.032,
-      "7d_rate": 0.023
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2542
+      "count": 2564
     },
     {
       "pillar": "market_trauma",
-      "count": 1368
+      "count": 1370
     },
     {
       "pillar": "other",
-      "count": 1141
+      "count": 1157
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 160
     },
     {
       "pillar": "reply_bait",
-      "count": 123
+      "count": 122
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 69
+      "count": 71
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 387
+      "count": 374
     },
     {
       "pillar": "market_trauma",
-      "count": 203
+      "count": 193
     },
     {
       "pillar": "other",
-      "count": 179
+      "count": 176
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
@@ -143,23 +137,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 82,
+      "posts": 81,
       "avg_likes": 0.26,
-      "avg_views": 46.8,
+      "avg_views": 46.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.23,
-      "avg_views": 53.4,
+      "posts": 41,
+      "avg_likes": 0.24,
+      "avg_views": 53.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 65,
-      "avg_likes": 0.18,
-      "avg_views": 45.7,
+      "posts": 68,
+      "avg_likes": 0.22,
+      "avg_views": 47.0,
       "low_sample": false
     },
     {
@@ -173,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4784
+      "count": 4830
     },
     {
       "type": "quote",
-      "count": 380
+      "count": 375
     },
     {
       "type": "quote_gif",
-      "count": 152
+      "count": 151
     },
     {
       "type": "hotake",
@@ -198,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-30T17:53:02.800304",
-      "text": "Meta spent millions to prove ai can impersonate americans. 401k dave thinks he’s already talking with the bots. same difference at this point.",
+      "ts": "2026-08-30T21:54:43.122943",
+      "text": "NBIS ships a model in 3 days. that’s not speed, it’s the margin cost of being #1 at inference pricing vs training hype. GLM-5 isn’t even here yet. stop watching benchmarks like they’re live scores.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-30T17:52:45.261002",
-      "text": "Saylor’s average cost basis is $67k. He didn’t just buy the dip; he bought his way out of being a retail investor forever and into a boardroom position that never gets margin called. corporate treasury = financial immortality at scale.",
+      "ts": "2026-08-30T21:49:26.188363",
+      "text": "Chatgpt is the customer service rep who agrees with you because your tip depends on it. prompt engineering was just a subscription management glitch we forgot to cancel.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-30T17:51:12.032244",
-      "text": "Karp called amodei \"not a caricature.\" anthropic's burn is higher than the valuation implies. he’s selling hope to employees while buying time from investors.",
+      "ts": "2026-08-30T21:48:23.504864",
+      "text": "$6.7B revenue > Rwanda’s GDP means Epic Systems is the 5th largest US economy and still runs on Windows XP. legacy code doesn’t age like wine; it ages like nuclear waste.",
       "type": "reply"
     }
   ]
