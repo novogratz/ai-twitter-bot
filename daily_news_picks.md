@@ -17134,3 +17134,13 @@ While Anthropic rents similar Mac hardware through AWS, per T
 - **@rhyssullivan** (80 likes, score 8/10) — fyi if your takeaway from the openai huggingface incident is 'well they just suck at sandboxing' you're missing the broader picture that the capabilities described in the incident will be common place
   - https://x.com/RhysSullivan/status/2094229463492124700
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 100).
+- **@qualtrim** (193 likes, score 9/10) — Palantir just reported $1.93B revenue. It keeps $55 of every $100 generates.
+
+That's over a $1B of profit in a single quarter.
+
+$PLTR
+  - https://x.com/qualtrim/status/2094032394621710524
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 205).
+- **@rosannainvests** (0 likes, score 7/10) — Everything you need is in this table. It just needs one division -> Market cap per dollar of next-year capex: $NBIS $2.50, $CRWV $1.25, $IREN $0.48. The market is charging five times more for $NBIS bu
+  - https://x.com/RosannaInvests/status/2094136273690906915
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
