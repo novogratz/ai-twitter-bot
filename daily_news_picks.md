@@ -17149,3 +17149,13 @@ $PLTR
 - **@watcherguru** (3637 likes, score 9/10) — JUST IN:  Federal Reserve is now projected to raise interest rates by 25 bps in September.
   - https://x.com/WatcherGuru/status/2094480919985815782
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 4321).
+- **@dom_lucre** (0 likes, score 7/10) — LATEST: Tesla’s Optimus humanoid robot has entered production at Tesla’s Fremont factory, with public sales targeted for 2027, it will be the first fully functional humanoid robot to enter the homes o
+  - https://x.com/dom_lucre/status/2094186166253740421
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 676).
+- **@thecryptosquire** (387 likes, score 7/10) — What if the CLARITY Act gets passed in September… and XRP absolutely EXPLODES to $2,000 before the end of the year, just like Jake Claver predicted? 
+
+Everyone laughed at $2,000.
+
+Imagine if he gets t
+  - https://x.com/TheCryptoSquire/status/2094598866717081639
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 445).

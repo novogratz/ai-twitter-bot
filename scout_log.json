@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-05T05:36:41.155554",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienBos",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Co-fondateur de DeepMind France. Il balance des trucs d'expert sans faire semblant d'\u00eatre accessible. Rare."
-      },
-      {
-        "handle": "TanguySoubeyrand",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le patron de Mistral. Il tweet comme un humain qui code, pas comme un CEO qui r\u00e9cite une brochure."
-      },
-      {
-        "handle": "MehdiMoussai",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le gars qui a cass\u00e9 le 'guru' fran\u00e7ais. Pas de stage gratuit de 1200\u20ac, juste des analyses de bilan et de ratio."
-      },
-      {
-        "handle": "AdrienJamin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Fintech & Bourse. Il tweet sur la tech qui bouge la bourse. Le mix parfait pour ne pas s'endormir."
-      },
-      {
-        "handle": "BenjaminGautier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 14000,
-        "reason": "Fondateur de Alchemy Pay. Il parle de l'adoption crypto via le paiement. Moins hypes, plus utile."
-      },
-      {
-        "handle": "AlexandreGineste",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Ex-Pantera. Il tweet en FR/EN. Pas de sh*tcoins bizarres, juste de la macro et des infra."
-      },
-      {
-        "handle": "LucasLefebvre",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 11000,
-        "reason": "Le roi de la finance Qu\u00e9bec. Il couvre les march\u00e9s canadiens souvent ignor\u00e9s par Paris."
-      }
-    ],
-    "summary": "J'ai chass\u00e9 les vraies t\u00eates pensantes, pas les influenceurs qui vendent des formations \u00e0 19\u20ac. Mistral domine la partie IA FR, et la sc\u00e8ne crypto/finance FR est moins satur\u00e9e qu'avant. Le Qu\u00e9bec a ses perles rares, souvent oubli\u00e9es par Paris."
-  },
-  {
     "ts": "2026-08-05T07:37:05.143865",
     "raw_count": 6,
     "kept_count": 4,
@@ -8193,5 +8134,29 @@
       }
     ],
     "summary": "Cette s\u00e9lection \u00e9carte les influenceurs TikTok du Bitcoin pour se concentrer sur ceux qui tweetent avec un cerveau connect\u00e9 \u00e0 une prise Ethernet : rigueur technique et style assum\u00e9. On a couvert la tech pure, l'investissement boursier sec et le trading pro dans FR/QC/US."
+  },
+  {
+    "ts": "2026-09-01T01:55:03.439122",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GrimmDevs",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "L'ami de @davidemartin74. Il poste sur l'\u00e9cosyst\u00e8me tech FR avec un humour noir qui coupe le souffle et z\u00e9ro pub Telegram."
+      },
+      {
+        "handle": "_ThomBorini_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Cofondateur d'Imaginary Cloud. Il tweete sur la productivit\u00e9 des devs avec l'autorit\u00e9 de celui qui g\u00e8re les \u00e9quipes."
+      }
+    ],
+    "summary": "Cinq comptes qui r\u00e9sistent au test du ridicule : ils tweettent en FR, couvrent l'IA/crypto/bourse avec une pointe d'esprit sans vendre leur \u00e2me pour un lien affili\u00e9 Binance ou un Discord VIP \u00e0 29\u20ac/mois."
   }
 ]

@@ -2131,7 +2131,9 @@
     "CryptoGrosJean",
     "RexGueret",
     "Lamontagne_",
-    "_adriendumasfr"
+    "_adriendumasfr",
+    "GrimmDevs",
+    "_ThomBorini_"
   ],
   "en": [
     "Chubby",
@@ -2599,7 +2601,8 @@
     "2xnmore",
     "OpenClaw",
     "Owen",
-    "MOTION"
+    "MOTION",
+    "Netflix"
   ],
   "history": [
     {
@@ -15591,6 +15594,21 @@
       "lang": "fr",
       "handle": "_adriendumasfr",
       "added": "2026-08-31"
+    },
+    {
+      "lang": "en",
+      "handle": "Netflix",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "GrimmDevs",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "_ThomBorini_",
+      "added": "2026-09-01"
     }
   ]
 }
