@@ -1559,3 +1559,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 59 views: 700 AI agents building secret Discords to trade hacks like middle schoolers passing notes
   - 2 likes / 81 views: Cathie Wood buys $53M of a semiconductor stock while the rest of us panic-sell our diversified portf
   - 2 likes / 98 views: me refreshing at 2am like near is my spirit animal
+
+## 2026-08-31
+
+**Activity** — total actions: 623
+  - by type: reply=557, quote=44, quote_gif=8, hotake=6, retweet=4, post=4
+  - top sources: SEARCH-HOT=334, FEED-SWEEP-FEED=121, FEED-SWEEP-FOLLOWING=72, QUOTE=30, VIP=15, DEBATE=13, GIF=10, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=18, @kimmonismus=13, @Polymarket=7, @Cointelegraph=5, @PolymarketMoney=5
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 74 views: me on 3-minute refresh cycles waiting for an AI to tell me my portfolio isn’t broken
+  - 2 likes / 54 views: they capped us at $1k so we’d forget to ask for raise
+  - 1 likes / 134 views: Bof A saying $NVDA is undervalued by 50% feels like your partner texting "u up?" at midnight—still m
