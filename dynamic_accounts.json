@@ -2123,7 +2123,10 @@
     "_DenebFR_",
     "thomasborini",
     "david_dubois_",
-    "jules_delmas_"
+    "jules_delmas_",
+    "SylvainLafont",
+    "PierreDumortier",
+    "AlexisChabert"
   ],
   "en": [
     "Chubby",
@@ -2589,7 +2592,8 @@
     "Conks",
     "Minister",
     "2xnmore",
-    "OpenClaw"
+    "OpenClaw",
+    "Owen"
   ],
   "history": [
     {
@@ -15530,6 +15534,26 @@
     {
       "lang": "fr",
       "handle": "jules_delmas_",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "en",
+      "handle": "Owen",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLafont",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDumortier",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisChabert",
       "added": "2026-08-31"
     }
   ]

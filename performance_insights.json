@@ -1,15 +1,11 @@
 {
-  "generated_at": "2026-08-31T17:54:42.272170",
-  "window_7d_actions": 5674,
-  "window_24h_actions": 687,
+  "generated_at": "2026-08-31T21:54:42.449853",
+  "window_7d_actions": 5694,
+  "window_24h_actions": 656,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5672
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 1
+      "count": 5693
     },
     {
       "pattern": "RENAME",
@@ -18,16 +14,12 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "METAPHOR",
-      "count": 1
-    },
-    {
       "pattern": "RENAME",
       "count": 1
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5672
+      "count": 5693
     }
   ],
   "best_hours_utc": [
@@ -40,12 +32,12 @@
       "actions": 263
     },
     {
-      "hour": 21,
+      "hour": 23,
       "actions": 257
     },
     {
-      "hour": 23,
-      "actions": 257
+      "hour": 17,
+      "actions": 250
     },
     {
       "hour": 11,
@@ -55,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2564
+      "count": 2579
     },
     {
       "topic": "Autre",
-      "count": 2247
+      "count": 2245
     },
     {
       "topic": "Crypto",
-      "count": 727
+      "count": 734
     },
     {
       "topic": "Bourse",
-      "count": 498
+      "count": 500
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 122
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2716
+      "count": 2730
     },
     {
       "pillar": "market_trauma",
-      "count": 1435
+      "count": 1443
     },
     {
       "pillar": "other",
-      "count": 1190
+      "count": 1194
     },
     {
       "pillar": "meme_reaction",
-      "count": 139
+      "count": 134
     },
     {
       "pillar": "reply_bait",
@@ -98,25 +90,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 67
+      "count": 66
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 341
+      "count": 325
     },
     {
       "pillar": "market_trauma",
-      "count": 169
+      "count": 166
     },
     {
       "pillar": "other",
-      "count": 149
+      "count": 142
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 12
     },
     {
       "pillar": "reply_bait",
@@ -124,36 +116,36 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "reply_bait",
-      "posts": 6,
-      "avg_likes": 0.33,
-      "avg_views": 49.7,
-      "low_sample": false
-    },
-    {
       "pillar": "ai_news_take",
-      "posts": 74,
+      "posts": 71,
       "avg_likes": 0.28,
       "avg_views": 46.3,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.24,
-      "avg_views": 49.2,
+      "pillar": "market_trauma",
+      "posts": 42,
+      "avg_likes": 0.26,
+      "avg_views": 48.3,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.24,
-      "avg_views": 49.5,
+      "pillar": "other",
+      "posts": 79,
+      "avg_likes": 0.23,
+      "avg_views": 48.6,
+      "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 49.6,
       "low_sample": false
     },
     {
@@ -167,43 +159,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5079
+      "count": 5111
     },
     {
       "type": "quote",
-      "count": 367
+      "count": 365
     },
     {
       "type": "quote_gif",
-      "count": 128
+      "count": 123
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 46
     },
     {
       "type": "post",
-      "count": 36
+      "count": 34
     },
     {
       "type": "retweet",
-      "count": 17
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-31T17:54:16.307296",
-      "text": "State-matching moved from ops to balance sheet. that’s accounting theater for “we’re still counting chicken coop chickens as free-range.”",
+      "ts": "2026-08-31T21:52:21.895885",
+      "text": "Nvidia's 70% margins are so wide you can drive a semi-truck through them. wall street isn't bullish on chips anymore. it's just afraid of the bill coming due.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T17:53:10.556809",
-      "text": "Yes. open source models are free enough that you stop paying for the tool and start paying for your own time. shipping > prompt engineering.",
+      "ts": "2026-08-31T21:51:39.223353",
+      "text": "Angelcity est la première équipe à faire venir Alexis Ohanian pour ses réseaux et pas son cash. on vend du prestige social en 3-1. c'est brillant ou juste le marketing qui a plus de talent que l'IA?",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T17:47:31.141667",
-      "text": "40% cheaper is a discount. 10-36 months of zero margin on training data maintenance after release? that's the real bill coming due. open source isn't free, it just moved off your P&L and into yours for debugging later.",
+      "ts": "2026-08-31T21:49:09.126884",
+      "text": "Btc in a bear market closing green is what happens when the ETF buys $1B/day while miners sell to cover power bills. it's not momentum. it's absorption.",
       "type": "reply"
     }
   ]

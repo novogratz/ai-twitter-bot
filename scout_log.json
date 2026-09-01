@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-04T23:36:35.280870",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelLeMignot",
-        "region": "france",
-        "niche": "ai",
-        "followers": 32000,
-        "reason": "Co-founder Mistral. Moins hype que le CEO mais plus de profondeur technique. Twitte FR/EN."
-      },
-      {
-        "handle": "PierreChanel",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Cr\u00e9ateur de contenu IA fr, tr\u00e8s orient\u00e9 pro/tech. Pas dans la vente de formations \u00e0 99\u20ac, reste technique."
-      },
-      {
-        "handle": "MathieuGimenez",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Analyste on-chain l\u00e9gendaire. Parle peu mais quand il parle, \u00e7a fait bouger le march\u00e9. Style sec, pas de 'Telegram VIP'."
-      },
-      {
-        "handle": "CryptoBabesFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Communaut\u00e9 crypto fr de qualit\u00e9. Pas du hype pur, des analyses solides et des threads \u00e9ducatifs bien foutus."
-      },
-      {
-        "handle": "JLepretre",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Journaliste bourse/finance tech. Fait du reporting solide, pas du blabla politique. Vraie source pro."
-      },
-      {
-        "handle": "AlexandreDionne",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Cr\u00e9ateur de contenu crypto qu\u00e9b\u00e9cois. Couvre l'actualit\u00e9 DeFi et NFT avec un ton accessible mais pr\u00e9cis."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' \u00e0 99\u20ac pour garder des vrais experts (Mistral, Lepretre, MathieuGimenez). Le Qu\u00e9bec est mieux couvert par des profils niche (Dionne, Ducharme) que par des g\u00e9ants g\u00e9n\u00e9ralistes."
-  },
-  {
     "ts": "2026-08-05T01:36:25.580637",
     "raw_count": 8,
     "kept_count": 4,
@@ -8235,5 +8183,36 @@
       }
     ],
     "summary": "J'ai fouill\u00e9 dans les \u00e9curies des CIO fran\u00e7ais et des VC parisiens, loin du tumulte crypto douteux. R\u00e9sultat : une liste pure player technique, sans le bruit ambiant qui \u00e9nerve nos abonn\u00e9s exigeants."
+  },
+  {
+    "ts": "2026-08-31T17:55:09.127404",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainLafont",
+        "region": "france",
+        "niche": "bourse/fintech",
+        "followers": 25000,
+        "reason": "Le 'Vieux de la Vilette' modernis\u00e9. Analyse macro et march\u00e9s FR avec une prose claire, sans les jerrons typ\u00e9s finance de comptoir."
+      },
+      {
+        "handle": "PierreDumortier",
+        "region": "france",
+        "niche": "crypto/web3",
+        "followers": 18000,
+        "reason": "Foundeur de Kaiko (data) et chercheur actif. Ses threads sur la microstructure des march\u00e9s crypto valent plus cher que les groupes Telegram VIP."
+      },
+      {
+        "handle": "AlexisChabert",
+        "region": "quebec",
+        "niche": "bourse/trading",
+        "followers": 12000,
+        "reason": "Trader ind\u00e9pendant qui partage sa m\u00e9canique de trading (sans vendre le r\u00eave). Contenu technique dense en FR."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour garder ceux who build ou analyser. Du Qu\u00e9bec on prend l'IA et la tech, depuis Paris c'est du fondamental pur, sans bruit politique ni formation \u00e0 200\u20ac."
   }
 ]
