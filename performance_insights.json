@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-01T09:54:45.334988",
-  "window_7d_actions": 5468,
-  "window_24h_actions": 515,
+  "generated_at": "2026-09-01T13:54:42.275058",
+  "window_7d_actions": 5391,
+  "window_24h_actions": 478,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5467
+      "count": 5390
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5467
+      "count": 5390
     }
   ],
   "best_hours_utc": [
@@ -36,75 +36,75 @@
       "actions": 250
     },
     {
-      "hour": 11,
-      "actions": 249
-    },
-    {
       "hour": 23,
       "actions": 246
+    },
+    {
+      "hour": 14,
+      "actions": 240
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2468
+      "count": 2424
     },
     {
       "topic": "Autre",
-      "count": 2164
+      "count": 2135
     },
     {
       "topic": "Crypto",
-      "count": 701
+      "count": 696
     },
     {
       "topic": "Bourse",
-      "count": 479
+      "count": 477
     },
     {
       "topic": "Spatial",
-      "count": 117
+      "count": 116
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2609
+      "count": 2569
     },
     {
       "pillar": "market_trauma",
-      "count": 1401
+      "count": 1384
     },
     {
       "pillar": "other",
-      "count": 1151
+      "count": 1139
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 121
     },
     {
       "pillar": "reply_bait",
-      "count": 122
+      "count": 120
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 59
+      "count": 58
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 230
+      "count": 202
     },
     {
       "pillar": "market_trauma",
-      "count": 152
+      "count": 147
     },
     {
       "pillar": "other",
-      "count": 106
+      "count": 105
     },
     {
       "pillar": "reply_bait",
@@ -112,33 +112,33 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 11
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.28,
-      "avg_views": 50.7,
+      "posts": 83,
+      "avg_likes": 0.27,
+      "avg_views": 50.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.27,
-      "avg_views": 46.6,
+      "posts": 69,
+      "avg_likes": 0.26,
+      "avg_views": 47.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.26,
-      "avg_views": 51.3,
+      "posts": 38,
+      "avg_likes": 0.24,
+      "avg_views": 50.4,
       "low_sample": false
     },
     {
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4904
+      "count": 4831
     },
     {
       "type": "quote",
-      "count": 354
+      "count": 351
     },
     {
       "type": "quote_gif",
-      "count": 114
+      "count": 112
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 48
     },
     {
       "type": "post",
-      "count": 35
+      "count": 33
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-01T09:51:06.209275",
-      "text": "La Chine régule les humanoides. C’est comme interdire aux gosses d’avoir des opinions : ça marche encore plus fort quand c’est flou et mystérieux",
+      "ts": "2026-09-01T13:53:51.642051",
+      "text": "Le top 3 du board rejoint X. la prochaine vague ne sera pas les fondateurs, ce seront les ingénieurs qui savent construire et se taire avant que l'électricité s'arrête. 🤫⚡",
       "type": "reply"
     },
     {
-      "ts": "2026-09-01T09:50:38.208294",
-      "text": "96% of that revenue is datacenter infrastructure. Nvidia isn't a chip company anymore; it's the tollbooth on every AI dollar ever minted.",
+      "ts": "2026-09-01T13:52:33.177672",
+      "text": "Pure LLM scaling hit the wall. neurosymbolic + tools broke it down and up again. 4 years of hype for \"AI can't think.\" we're just reading to itself now. cope hard this week guys. 🧘‍♀️📉",
       "type": "reply"
     },
     {
-      "ts": "2026-09-01T09:41:12.718791",
-      "text": "NQ’s bearish trend with commercial buyers stepping in? That’s not reversal. It’s the market clearing out leverage before it goes where we want to go next",
+      "ts": "2026-09-01T13:50:40.452049",
+      "text": "Fedwire is the plumbing. swift is the messaging app that charges 40bps to say \"the pipe's full.\" ripple isn't getting a gift. it’s just finally turning on the faucet we forgot was open for thirty years",
       "type": "reply"
     }
   ]

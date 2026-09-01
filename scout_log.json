@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-05T13:36:45.827463",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Adrian_Bourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "L'ancien de Mistral qui transforme le LLM en blague de caf\u00e9. Il twitte l'IA comme un patron de bar qui conna\u00eet tout le monde."
-      },
-      {
-        "handle": "AlexisBa",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "L'humoriste geek qui explique la tech sans dormir. Ses threads sur les startups sont aussi pointus que ses punchlines sont acides."
-      },
-      {
-        "handle": "AntoineBourgeois",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Le sp\u00e9cialiste du SaaS qui donne des conseils actionnables sans vendre du r\u00eave. Moins de 'toxic hustle', plus de r\u00e9sultats concrets."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui ont du sel en plus de leurs followers. Une s\u00e9lection mixant l'humour fran\u00e7ais et la rigueur qu\u00e9b\u00e9coise."
-  },
-  {
     "ts": "2026-08-05T15:36:23.888955",
     "raw_count": 8,
     "kept_count": 2,
@@ -8116,5 +8085,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour garder ceux qui bossent : des founders d'HuggingFace/Mistral, un trader bourse rigoureux (Boussus) et l'expert crypto Mathieu. Z\u00e9ro formation \u00e0 -70% au programme."
+  },
+  {
+    "ts": "2026-09-01T11:55:10.194760",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Herved",
+        "region": "france",
+        "niche": "crypto/vc",
+        "followers": 65000,
+        "reason": "Le pape du VC fran\u00e7ais. Il tweete sur AI et crypto sans jamais vendre de formation \u00e0 97\u20ac. Rare."
+      },
+      {
+        "handle": "NicoTassone1",
+        "region": "france",
+        "niche": "crypto/tech",
+        "followers": 35000,
+        "reason": "Ancien de Coinhouse. Il balance des gems techniques sans le jargon barbare des influenceurs Telegram."
+      },
+      {
+        "handle": "CryptoNicoQC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le plus s\u00e9rieux de la sc\u00e8ne crypto QC. Il tweete sur l'\u00e9cosyst\u00e8me blockchain sans vendre du r\u00eave."
+      },
+      {
+        "handle": "LudovicGirardet",
+        "region": "france",
+        "niche": "bourse/fintech",
+        "followers": 18000,
+        "reason": "Trader pro qui explique le march\u00e9 sans te faire croire que tu vas devenir riche en 3 jours. Frais."
+      },
+      {
+        "handle": "PierreLescureX",
+        "region": "quebec",
+        "niche": "bourse/crypto",
+        "followers": 12000,
+        "reason": "Le 'guy next door' du trading au Qu\u00e9bec. Pas de gogos, juste des charts et une analyse logique."
+      },
+      {
+        "handle": "Julien_Boussus_",
+        "region": "usa",
+        "niche": "ai/tech/vc",
+        "followers": 12000,
+        "reason": "Franco-am\u00e9ricain qui vit \u00e0 SF. Il tweete sur l'IA de la premi\u00e8re main (ex-Google). Le 'tech insider' fran\u00e7ais."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour se concentrer sur des analystes qui comprennent leur m\u00e9tier (VC, tech, macro). On couvre bien la France, on commence \u00e0 creuser le Qu\u00e9bec, et on capture l'\u00e9lite franco-am\u00e9ricaine. Pas une seule formation ici."
   }
 ]

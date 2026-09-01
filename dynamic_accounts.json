@@ -2138,7 +2138,13 @@
     "LunaInvest",
     "JulesDumaresq",
     "MathieuFeldh",
-    "HugoDeLaHaye"
+    "HugoDeLaHaye",
+    "Herved",
+    "NicoTassone1",
+    "CryptoNicoQC",
+    "LudovicGirardet",
+    "PierreLescureX",
+    "Julien_Boussus_"
   ],
   "en": [
     "Chubby",
@@ -15656,6 +15662,36 @@
     {
       "lang": "fr",
       "handle": "HugoDeLaHaye",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "Herved",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoTassone1",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNicoQC",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicGirardet",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLescureX",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "Julien_Boussus_",
       "added": "2026-09-01"
     }
   ]
