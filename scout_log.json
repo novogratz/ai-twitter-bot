@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-05T01:36:25.580637",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BorjaLizarralde",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Franco-am\u00e9ricain (NYC). Vendeur de r\u00eaves SaaS mais avec du style. Twitte en FR souvent."
-      },
-      {
-        "handle": "DorianMazaux",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Ancien fondateur PayFit, maintenant VC. Twitte sur la tech FR sans vendre du r\u00eave \u00e0 99\u20ac."
-      },
-      {
-        "handle": "Alexis_Ba",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le mec qui d\u00e9crypte l'IA au Qu\u00e9bec. Ton direct, z\u00e9ro jargon pompeux, pur contenu."
-      },
-      {
-        "handle": "SylvainMalka",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Founder d'Albedo. L'IA frugale. Son thread sur la R&D est une mine d'or sans pub."
-      }
-    ],
-    "summary": "Mix entre les p\u00e9pites pures comme Mistral et les pros de la finance qui twittent encore. J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour garder ceux qui ont un cerveau."
-  },
-  {
-    "ts": "2026-08-05T03:36:37.723910",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JohanSedoy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence 'Deep Dive' francophone. Pas de shill, juste du fond. Si tu veux comprendre la tech derri\u00e8re le token, c'est lui."
-      },
-      {
-        "handle": "GhislainAI",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Journaliste IA chez BFMTV/Le Monde. Il balance les news tech avant qu'elles ne soient mainstream. Pr\u00e9cision + Accessibilit\u00e9."
-      },
-      {
-        "handle": "MathisR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 32000,
-        "reason": "L'anti-Linda Lemaire. Pas de blabla, que des graphiques et du sens. Il tweete moins souvent, mais chaque post est une le\u00e7on."
-      },
-      {
-        "handle": "MaximeCollard",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Fondateur de Hugging Face (avant Clement). Il tweete sur le ML et les startups AI depuis San Francisco. Visionnaire tech pur."
-      },
-      {
-        "handle": "AlexisBoulayFR",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Ancien Stripe/Revolut. Il d\u00e9cortique les startups fintech FR avec humour et pique. Pas de formation \u00e0 199\u20ac vendue ici."
-      },
-      {
-        "handle": "MarcLapointe",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directeur de recherche \u00e0 l'UdeM. Il rend l'IA accessible sans la vulgariser \u00e0 l'extr\u00eame. Le 'prof' cool que tu veux suivre."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' pour garder les ing\u00e9nieurs et les journalistes qui comprennent la tech. La s\u00e9lection mixe les fondateurs de Hugging Face aux traders qu\u00e9b\u00e9cois discrets. Z\u00e9ro 'signaux VIP', que du contenu qui tient la route."
-  },
-  {
     "ts": "2026-08-05T05:36:41.155554",
     "raw_count": 10,
     "kept_count": 7,
@@ -8214,5 +8124,74 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour garder ceux who build ou analyser. Du Qu\u00e9bec on prend l'IA et la tech, depuis Paris c'est du fondamental pur, sans bruit politique ni formation \u00e0 200\u20ac."
+  },
+  {
+    "ts": "2026-08-31T21:55:09.112949",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "FrenchyCryptoFR",
+        "region": "france",
+        "niche": "crypto/trading",
+        "followers": 48000,
+        "reason": "Focus price action et analyse chart en fran\u00e7ais. La communaut\u00e9 est engag\u00e9e sans \u00eatre toxique."
+      },
+      {
+        "handle": "CryptoGrosJean",
+        "region": "usa",
+        "niche": "crypto/defi",
+        "followers": 29000,
+        "reason": "Expat FR \u00e0 SF. Il mixe l'actu Defi US avec une touche d'humour fran\u00e7ais sur les rug pulls."
+      },
+      {
+        "handle": "CedricGrosjeanQC",
+        "region": "quebec",
+        "niche": "bourse/trading",
+        "followers": 25000,
+        "reason": "Trader pro QC qui partage sa routine et ses setups. Pas de cours \u00e0 197\u20ac, juste du\u5b9e\u64cd."
+      },
+      {
+        "handle": "ValentinLafitteFR",
+        "region": "france",
+        "niche": "bourse/vc",
+        "followers": 18000,
+        "reason": "Analyste qui couvre la tech fran\u00e7aise et les IPO. Vues pertinentes sur le march\u00e9 Euronext."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide entre la maturit\u00e9 fran\u00e7aise (PowerHasheur) et le trading concret qu\u00e9b\u00e9cois. On \u00e9vite les influenceurs 'Lifestyle' pour se concentrer sur ceux qui sortent des analyses ou du code."
+  },
+  {
+    "ts": "2026-08-31T23:55:08.492881",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RexGueret",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Le roi de l'IA d\u00e9jant\u00e9e en FR. Il tweet des choses que les chercheurs lisent mais les gens mainstream ne comprennent pas encore."
+      },
+      {
+        "handle": "Lamontagne_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "C'est l'anti-LinkedIn. Pas de jargon pompeux, que du concret technique sur les march\u00e9s avec une touche d'humaine."
+      },
+      {
+        "handle": "_adriendumasfr",
+        "region": "usa/france",
+        "niche": "ai/tech",
+        "followers": 12000,
+        "reason": "Fintech founder. Il balance des threads technique sur l'IA et la dev qui sont plus denses que les posts de Zuck."
+      }
+    ],
+    "summary": "Cette s\u00e9lection \u00e9carte les influenceurs TikTok du Bitcoin pour se concentrer sur ceux qui tweetent avec un cerveau connect\u00e9 \u00e0 une prise Ethernet : rigueur technique et style assum\u00e9. On a couvert la tech pure, l'investissement boursier sec et le trading pro dans FR/QC/US."
   }
 ]

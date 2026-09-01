@@ -17144,3 +17144,8 @@ $PLTR
 - **@rosannainvests** (0 likes, score 7/10) — Everything you need is in this table. It just needs one division -> Market cap per dollar of next-year capex: $NBIS $2.50, $CRWV $1.25, $IREN $0.48. The market is charging five times more for $NBIS bu
   - https://x.com/RosannaInvests/status/2094136273690906915
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+
+## 2026-09-01
+- **@watcherguru** (3637 likes, score 9/10) — JUST IN:  Federal Reserve is now projected to raise interest rates by 25 bps in September.
+  - https://x.com/WatcherGuru/status/2094480919985815782
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4321).

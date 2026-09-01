@@ -2126,7 +2126,12 @@
     "jules_delmas_",
     "SylvainLafont",
     "PierreDumortier",
-    "AlexisChabert"
+    "AlexisChabert",
+    "FrenchyCryptoFR",
+    "CryptoGrosJean",
+    "RexGueret",
+    "Lamontagne_",
+    "_adriendumasfr"
   ],
   "en": [
     "Chubby",
@@ -2593,7 +2598,8 @@
     "Minister",
     "2xnmore",
     "OpenClaw",
-    "Owen"
+    "Owen",
+    "MOTION"
   ],
   "history": [
     {
@@ -15554,6 +15560,36 @@
     {
       "lang": "fr",
       "handle": "AlexisChabert",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "en",
+      "handle": "MOTION",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrenchyCryptoFR",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGrosJean",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RexGueret",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lamontagne_",
+      "added": "2026-08-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adriendumasfr",
       "added": "2026-08-31"
     }
   ]
