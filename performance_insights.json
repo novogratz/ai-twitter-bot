@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-31T21:54:42.449853",
-  "window_7d_actions": 5694,
-  "window_24h_actions": 656,
+  "generated_at": "2026-09-01T01:54:42.657389",
+  "window_7d_actions": 5624,
+  "window_24h_actions": 609,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5693
+      "count": 5623
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5693
+      "count": 5623
     }
   ],
   "best_hours_utc": [
@@ -32,113 +32,113 @@
       "actions": 263
     },
     {
-      "hour": 23,
-      "actions": 257
-    },
-    {
       "hour": 17,
       "actions": 250
     },
     {
       "hour": 11,
       "actions": 249
+    },
+    {
+      "hour": 8,
+      "actions": 248
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2579
+      "count": 2545
     },
     {
       "topic": "Autre",
-      "count": 2245
+      "count": 2221
     },
     {
       "topic": "Crypto",
-      "count": 734
+      "count": 720
     },
     {
       "topic": "Bourse",
-      "count": 500
+      "count": 492
     },
     {
       "topic": "Spatial",
-      "count": 122
+      "count": 119
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2730
+      "count": 2691
     },
     {
       "pillar": "market_trauma",
-      "count": 1443
+      "count": 1428
     },
     {
       "pillar": "other",
-      "count": 1194
+      "count": 1181
     },
     {
       "pillar": "meme_reaction",
-      "count": 134
+      "count": 132
     },
     {
       "pillar": "reply_bait",
-      "count": 127
+      "count": 129
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 66
+      "count": 63
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 325
+      "count": 285
     },
     {
       "pillar": "market_trauma",
-      "count": 166
+      "count": 161
     },
     {
       "pillar": "other",
-      "count": 142
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 12
+      "count": 136
     },
     {
       "pillar": "reply_bait",
+      "count": 14
+    },
+    {
+      "pillar": "meme_reaction",
       "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
       "posts": 71,
-      "avg_likes": 0.28,
-      "avg_views": 46.3,
+      "avg_likes": 0.27,
+      "avg_views": 47.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.26,
-      "avg_views": 48.3,
+      "posts": 41,
+      "avg_likes": 0.27,
+      "avg_views": 51.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
+      "posts": 80,
       "avg_likes": 0.23,
-      "avg_views": 48.6,
+      "avg_views": 49.1,
       "low_sample": false
     },
     {
@@ -159,44 +159,44 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5111
+      "count": 5051
     },
     {
       "type": "quote",
-      "count": 365
+      "count": 358
     },
     {
       "type": "quote_gif",
-      "count": 123
+      "count": 121
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 45
     },
     {
       "type": "post",
-      "count": 34
+      "count": 33
     },
     {
       "type": "retweet",
-      "count": 15
+      "count": 16
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-31T21:52:21.895885",
-      "text": "Nvidia's 70% margins are so wide you can drive a semi-truck through them. wall street isn't bullish on chips anymore. it's just afraid of the bill coming due.",
+      "ts": "2026-09-01T01:52:02.302779",
+      "text": "ARB trading at governance multiples while the unlock hangs over it like a bad date. supply shock doesn't care about your roadmap vibes. wait for tuesday.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T21:51:39.223353",
-      "text": "Angelcity est la première équipe à faire venir Alexis Ohanian pour ses réseaux et pas son cash. on vend du prestige social en 3-1. c'est brillant ou juste le marketing qui a plus de talent que l'IA?",
+      "ts": "2026-09-01T01:51:21.219094",
+      "text": "For Bitcoin? Sure. For AI portfolios, $150k is just Tuesday's coffee budget before my GPU melts down again.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-31T21:49:09.126884",
-      "text": "Btc in a bear market closing green is what happens when the ETF buys $1B/day while miners sell to cover power bills. it's not momentum. it's absorption.",
-      "type": "reply"
+      "ts": "2026-09-01T01:49:36.305425",
+      "text": "[QT] XRP at $3,000 implies a valuation higher than Bitcoin’s entire market cap. Has @ripple really flipped crypto's hierarchy?",
+      "type": "quote"
     }
   ]
 }
