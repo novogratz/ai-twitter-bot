@@ -2133,7 +2133,10 @@
     "Lamontagne_",
     "_adriendumasfr",
     "GrimmDevs",
-    "_ThomBorini_"
+    "_ThomBorini_",
+    "LudovicRabasse",
+    "LunaInvest",
+    "JulesDumaresq"
   ],
   "en": [
     "Chubby",
@@ -2602,7 +2605,9 @@
     "OpenClaw",
     "Owen",
     "MOTION",
-    "Netflix"
+    "Netflix",
+    "Kaecey",
+    "Lincoln"
   ],
   "history": [
     {
@@ -15608,6 +15613,31 @@
     {
       "lang": "fr",
       "handle": "_ThomBorini_",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Kaecey",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Lincoln",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicRabasse",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LunaInvest",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDumaresq",
       "added": "2026-09-01"
     }
   ]

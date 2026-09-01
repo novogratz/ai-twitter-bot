@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-05T07:37:05.143865",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SachaVH",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'ancien de Coinhouse. Il tweet en FR/EN selon l'humeur du BTC. Moins 'influencer lifestyle', plus 'trader qui a vu des crashs et qui s'en branle'. Pas de formation \u00e0 vendre, juste de la logique."
-      },
-      {
-        "handle": "GaspardG",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'ex-Hedge Funder qui a tout quitt\u00e9 pour twitt\u00e9rer. Il ne vend pas de r\u00eaves, il montre les cicatrices. Le meilleur compte 'valeurs frugales' qui ne te demande pas de rejoindre son canal Telegram \u00e0 19\u20ac/mois."
-      },
-      {
-        "handle": "JulienDeWaele",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le prof en costard qui explique l'IA aux non-codes. Il tweet en FR avec une rigueur d'ing\u00e9nieur et l'humour sec d'un qu\u00e9b\u00e9cois qui voit venir la bulle \u00e0 5km."
-      },
-      {
-        "handle": "EricYLegare",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le vieux loup de la Plati\u00e8re. Il tweet en FR avec des vues contraires qui font peur aux algorithmes. Pas de gadgets, juste des cashflows et des dividendes."
-      }
-    ],
-    "summary": "Cinq profils solides, z\u00e9ro formateur \u00e0 la s\u00e9rieuse, tous actifs dans leur niche. On a mix\u00e9 les v\u00e9t\u00e9rans du trading et les nouveaux acteurs de l'IA pour \u00e9viter l'effet 'groupe WhatsApp qui se like tout seul'."
-  },
-  {
     "ts": "2026-08-05T09:36:37.825823",
     "raw_count": 10,
     "kept_count": 7,
@@ -8158,5 +8120,36 @@
       }
     ],
     "summary": "Cinq comptes qui r\u00e9sistent au test du ridicule : ils tweettent en FR, couvrent l'IA/crypto/bourse avec une pointe d'esprit sans vendre leur \u00e2me pour un lien affili\u00e9 Binance ou un Discord VIP \u00e0 29\u20ac/mois."
+  },
+  {
+    "ts": "2026-09-01T03:55:12.268728",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudovicRabasse",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le CEO de Mistral qui explique l'IA sans avoir l'air d'un influenceur LinkedIn en survitamin\u00e9. C'est rafra\u00eechissant comme un vent glacial dans le d\u00e9sert du hype."
+      },
+      {
+        "handle": "LunaInvest",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "Le compte qui rappelle que la bourse n'est pas un casino. Ils postent des analyses de valeur en FR pour ceux qui ont perdu l'habitude d'\u00e9conomiser."
+      },
+      {
+        "handle": "JulesDumaresq",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Directeur de recherche chez OpenAI (avant les d\u00e9parts massifs). Il tweete en FR avec une logique implacable. C'est rare qu'un chercheur de ce calibre parle fran\u00e7ais sans accent."
+      }
+    ],
+    "summary": "Un panel \u00e9quilibr\u00e9 entre les colosses fran\u00e7ais (Mistral), le talent qu\u00e9b\u00e9cois discret et quelques perles crypto francophones. Pasde formations \u00e0 99\u20ac en vue, juste du contenu qui vaut son pesant de bitcoins."
   }
 ]

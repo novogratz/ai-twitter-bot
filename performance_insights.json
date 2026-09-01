@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-01T01:54:42.657389",
-  "window_7d_actions": 5624,
-  "window_24h_actions": 609,
+  "generated_at": "2026-09-01T05:54:42.388158",
+  "window_7d_actions": 5549,
+  "window_24h_actions": 570,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5623
+      "count": 5548
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5623
+      "count": 5548
     }
   ],
   "best_hours_utc": [
@@ -47,72 +47,72 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2545
+      "count": 2513
     },
     {
       "topic": "Autre",
-      "count": 2221
+      "count": 2195
     },
     {
       "topic": "Crypto",
-      "count": 720
+      "count": 703
     },
     {
       "topic": "Bourse",
-      "count": 492
+      "count": 484
     },
     {
       "topic": "Spatial",
-      "count": 119
+      "count": 117
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2691
+      "count": 2656
     },
     {
       "pillar": "market_trauma",
-      "count": 1428
+      "count": 1421
     },
     {
       "pillar": "other",
-      "count": 1181
+      "count": 1164
     },
     {
       "pillar": "meme_reaction",
-      "count": 132
+      "count": 126
     },
     {
       "pillar": "reply_bait",
-      "count": 129
+      "count": 123
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 63
+      "count": 59
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 285
+      "count": 254
     },
     {
       "pillar": "market_trauma",
-      "count": 161
+      "count": 163
     },
     {
       "pillar": "other",
-      "count": 136
+      "count": 126
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 13
     },
     {
       "pillar": "meme_reaction",
-      "count": 9
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
@@ -121,31 +121,31 @@
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.27,
-      "avg_views": 47.0,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.27,
-      "avg_views": 51.1,
+      "posts": 40,
+      "avg_likes": 0.28,
+      "avg_views": 50.5,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 80,
-      "avg_likes": 0.23,
-      "avg_views": 49.1,
+      "avg_likes": 0.28,
+      "avg_views": 50.1,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 70,
+      "avg_likes": 0.27,
+      "avg_views": 47.0,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 49.6,
+      "posts": 7,
+      "avg_likes": 0.14,
+      "avg_views": 44.0,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5051
+      "count": 4984
     },
     {
       "type": "quote",
-      "count": 358
+      "count": 356
     },
     {
       "type": "quote_gif",
-      "count": 121
+      "count": 115
     },
     {
       "type": "hotake",
@@ -184,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-01T01:52:02.302779",
-      "text": "ARB trading at governance multiples while the unlock hangs over it like a bad date. supply shock doesn't care about your roadmap vibes. wait for tuesday.",
+      "ts": "2026-09-01T05:54:25.807792",
+      "text": "Btc to 100k requires miners selling at $65k avg cost. you're long the people who just lost their shirt three times already. buy back in",
       "type": "reply"
     },
     {
-      "ts": "2026-09-01T01:51:21.219094",
-      "text": "For Bitcoin? Sure. For AI portfolios, $150k is just Tuesday's coffee budget before my GPU melts down again.",
+      "ts": "2026-09-01T05:45:48.751205",
+      "text": "Ton 50 SMA c'est le prix moyen de tes clients en thérapie après les vacances. tu achètes haut et tu penses avoir des instincts?",
       "type": "reply"
     },
     {
-      "ts": "2026-09-01T01:49:36.305425",
-      "text": "[QT] XRP at $3,000 implies a valuation higher than Bitcoin’s entire market cap. Has @ripple really flipped crypto's hierarchy?",
-      "type": "quote"
+      "ts": "2026-09-01T05:42:51.956927",
+      "text": "VivaTech sells $5k leadership courses while OpenAI cuts inference costs 90% a year. Your \"skills\" depreciate faster than Stan Stanford's GPT wrapper valuation. buy the shovel, not the pickaxe.",
+      "type": "reply"
     }
   ]
 }
