@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-05T09:36:37.825823",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BinanceFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 320000,
-        "reason": "L'officiel. Pas un blogueur, pas un guru. Juste la news crypto traduite et valid\u00e9e. Moins de bruit, plus d'info."
-      },
-      {
-        "handle": "CryptoKoin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Gaspard. Il couvre la tech financi\u00e8re avec un ton l\u00e9ger. \u00c9vite le 'moon boy' qui hurle sur le Bitcoin. Focus sur l'innovation r\u00e9elle."
-      },
-      {
-        "handle": "c0re100",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Ex-Lynx. Il tweete la data, les LLMs et la tech en fran\u00e7ais avec une pr\u00e9cision chirurgical. Le mec qui explique le prompt engineering sans te vendre du r\u00eave."
-      },
-      {
-        "handle": "TechCulte",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "La r\u00e9f\u00e9rence tech FR au Qu\u00e9bec. Ils tweetent tout ce qui p\u00e8te au Canada. L'anti-blogueur am\u00e9ricain qui parle trop."
-      },
-      {
-        "handle": "thomazet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Thom. Il twitte en fr, il code en fr, il rigole en fr. L'anti-marketing pur. Pas de formation \u00e0 2000\u20ac, juste du talent."
-      },
-      {
-        "handle": "cryptomarketfr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "L'agr\u00e9gateur FR le plus fiable. Pas de 'signal VIP', juste un flux propre des coins les plus actifs du moment."
-      },
-      {
-        "handle": "LeBit",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le gars de Les Echos sur X. Il tweete la macro-\u00e9conomie fran\u00e7aise en direct. Pas de formation \u00e0 99\u20ac, juste de la finance de vrai."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les trenches IA FR (Mistral, c0re100), les crypto non-gurus (BinanceFR, LeBit) et une perle qu\u00e9b\u00e9coise (AlexisDionne_). Z\u00e9ro vente de r\u00eave, 100% tweet\u00e9 en fran\u00e7ais."
-  },
-  {
     "ts": "2026-08-05T13:36:45.827463",
     "raw_count": 8,
     "kept_count": 3,
@@ -8151,5 +8092,29 @@
       }
     ],
     "summary": "Un panel \u00e9quilibr\u00e9 entre les colosses fran\u00e7ais (Mistral), le talent qu\u00e9b\u00e9cois discret et quelques perles crypto francophones. Pasde formations \u00e0 99\u20ac en vue, juste du contenu qui vaut son pesant de bitcoins."
+  },
+  {
+    "ts": "2026-09-01T07:55:30.958769",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuFeldh",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Ex-coinbase. Il couvre la macro crypto et les march\u00e9s avec pr\u00e9cision, sans vendre du r\u00eave."
+      },
+      {
+        "handle": "HugoDeLaHaye",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Directeur de la tech chez Mistral AI. Pas un influenceur, il code et explique l'IA sans jargon marketing."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour garder ceux qui bossent : des founders d'HuggingFace/Mistral, un trader bourse rigoureux (Boussus) et l'expert crypto Mathieu. Z\u00e9ro formation \u00e0 -70% au programme."
   }
 ]

@@ -2136,7 +2136,9 @@
     "_ThomBorini_",
     "LudovicRabasse",
     "LunaInvest",
-    "JulesDumaresq"
+    "JulesDumaresq",
+    "MathieuFeldh",
+    "HugoDeLaHaye"
   ],
   "en": [
     "Chubby",
@@ -2607,7 +2609,8 @@
     "MOTION",
     "Netflix",
     "Kaecey",
-    "Lincoln"
+    "Lincoln",
+    "QwenWork"
   ],
   "history": [
     {
@@ -15638,6 +15641,21 @@
     {
       "lang": "fr",
       "handle": "JulesDumaresq",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "en",
+      "handle": "QwenWork",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuFeldh",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDeLaHaye",
       "added": "2026-09-01"
     }
   ]
