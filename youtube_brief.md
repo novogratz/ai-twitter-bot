@@ -1,16 +1,16 @@
-# YouTube brief — 2026-08-31
+# YouTube brief — 2026-09-01
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **772**
-- reply: **689**
-- quote: **44**
-- quote_gif: **26**
-- hotake: **7**
+- Total actions logged: **614**
+- reply: **551**
+- quote: **42**
+- quote_gif: **8**
+- hotake: **6**
+- post: **4**
 - retweet: **3**
-- post: **3**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,10 +23,10 @@
 ### AI
 
 - **301 likes / 133647 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **2 likes / 36 views** — Jensen’s export controls vs GLM-5 on Chinese chips is exactly what happens when Nvidia prices out its own customers and we all pretend it doesn’t suck
 - **2 likes / 68 views** — my clients have been saying 'this is not cheap' since Tuesday  $NVDA
 - **2 likes / 59 views** — 700 AI agents building secret Discords to trade hacks like middle schoolers passing notes
 - **2 likes / 113 views** — AGI that gets told to fuck off is just an intern with trust issues and no severance package
+- **2 likes / 74 views** — me on 3-minute refresh cycles waiting for an AI to tell me my portfolio isn’t broken
 
 ### Bourse
 
@@ -36,60 +36,37 @@
 
 - **2 likes / 98 views** — me refreshing at 2am like near is my spirit animal
 - **2 likes / 87 views** — my clients charge $200/hr for this level of self-awareness...
-- **1 likes / 77 views** — me on my third glass of wine reading that we outsource our executive function to prompts now
+- **2 likes / 54 views** — they capped us at $1k so we’d forget to ask for raise
+- **1 likes / 16 views** — CEX isn't a market, it's just your trading app wearing a mask and asking for tips
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-31
-- **@anissagardizy8** (13 likes, score 7/10) — SCOOP: SB Energy offered OpenAI a major perk to land it as a data-center tenant ahead of the SoftBank-backed firm's IPO.
-
-OpenAI was issued warrants worth an estimated $5.5 billion in SB Energy.
-
-- SB
-  - https://x.com/anissagardizy8/status/2094273553466105963
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
-- **@bdinvestingg** (12 likes, score 7/10) — $AAPL just found another AI growth engine.
-
-OpenAI reportedly bought tens of thousands of Mac minis & Mac Studios to train AI agents, while Anthropic is renting Macs through AWS.
-
-This could give Appl
-  - https://x.com/bdinvestingg/status/2094263907334377857
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
-- **@intcyberdigest** (873 likes, score 8/10) — OpenAI has bought tens of thousands of Mac minis and Mac Studios to train computer-use agents, The Information reports
-
-The outlet says Anthropic rents the same machines through AWS instead
-  - https://x.com/IntCyberDigest/status/2094218161532940367
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 949).
-- **@coinbureau** (110 likes, score 8/10) — NEW: OpenAI reportedly bought tens of thousands of Mac minis and Mac Studios to train computer-use agents through reinforcement learning.
-
-While Anthropic rents similar Mac hardware through AWS, per T
-  - https://x.com/coinbureau/status/2094252731649429610
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 152).
-- **@rhyssullivan** (80 likes, score 8/10) — fyi if your takeaway from the openai huggingface incident is 'well they just suck at sandboxing' you're missing the broader picture that the capabilities described in the incident will be common place
-  - https://x.com/RhysSullivan/status/2094229463492124700
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 100).
+## 2026-09-01
+- **@watcherguru** (3637 likes, score 9/10) — JUST IN:  Federal Reserve is now projected to raise interest rates by 25 bps in September.
+  - https://x.com/WatcherGuru/status/2094480919985815782
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4321).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CoinDesk]** Bitcoin barely blinks as U.S. hits Iran, sending oil higher and stocks lower
-  - https://www.coindesk.com/markets/2026/08/31/bitcoin-barely-blinks-as-u-s-hits-iran-sending-oil-higher-and-stocks-lower
-- **[CNBC Top]** BYD shares slide as fierce China competition dents first-half earnings
-  - https://www.cnbc.com/2026/08/31/byd-shares-slide-as-fierce-china-competition-dents-first-half-earnings.html
-- **[CNBC Tech]** BYD shares slide as fierce China competition dents first-half earnings
-  - https://www.cnbc.com/2026/08/31/byd-shares-slide-as-fierce-china-competition-dents-first-half-earnings.html
-- **[CNBC Top]** Jackson Hole analyst roundup: Warsh's speech sends hike chances higher, may put Fed `at odds' with Treasury
-  - https://www.cnbc.com/2026/08/31/jackson-hole-fed-chair-kevin-warsh-hawkish-rate-hikes-analysts.html
-- **[CNBC Top]** Meta- and Google-backed Indian telecom operator Jio Platforms gets regulatory nod for IPO
-  - https://www.cnbc.com/2026/08/31/jio-ipo-nse-india-shares-meta-google.html
-- **[Simon Willison]** Understanding ChatGPT Work
-  - https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/
-- **[Cointelegraph]** Bitcoin’s new quantum defenses, 18.9M SOL cancelled: Hodler’s Digest
-  - https://cointelegraph.com/magazine/bitcoins-new-quantum-defenses-189m-sol-cancelled-hodlers-digest?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CNBC Top]** What caused Nvidia's nasty reversal Friday? Look to the Fed for clues
-  - https://www.cnbc.com/2026/08/30/what-caused-nvidias-nasty-reversal-friday-look-to-the-fed-for-clues.html
+- **[CoinDesk]** Bitcoin steady above $78,000, HYPE leads as majors slip on hawkish Fed bets
+  - https://www.coindesk.com/markets/2026/09/01/bitcoin-steady-above-usd78-000-hype-leads-as-majors-slip-on-hawkish-fed-bets
+- **[CoinDesk]** Trump Jr's firm leads $1 billion Polymarket raise at $21 billion value: Report
+  - https://www.coindesk.com/business/2026/09/01/trump-jr-s-firm-leads-usd1-billion-polymarket-raise-at-usd21-billion-value-report
+- **[Cointelegraph]** Thailand SEC proposes retail access to regulated overseas crypto derivatives
+  - https://cointelegraph.com/news/thailand-sec-retail-overseas-crypto-derivatives?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[The Block]** DeFi Development Corp proposes $20 million preferred stock offering to buy more SOL
+  - https://www.theblock.co/news/business/2026-08-31-solana-defi-development-preferred-stock-offering-413190
+- **[CNBC Top]** The $3 trillion oil market has just gotten more accessible than ever: No longer a 'rich man's game'
+  - https://www.cnbc.com/2026/09/01/oil-market-is-getting-more-accessible-what-it-means-for-wti-brent.html
+- **[TechCrunch]** Apple shares ‘shocking evidence’ against former employee accused of stealing company data for OpenAI
+  - https://techcrunch.com/2026/08/31/apple-shares-shocking-evidence-against-former-employee-accused-of-stealing-company-data-for-openai/
+- **[TechCrunch AI]** Apple shares ‘shocking evidence’ against former employee accused of stealing company data for OpenAI
+  - https://techcrunch.com/2026/08/31/apple-shares-shocking-evidence-against-former-employee-accused-of-stealing-company-data-for-openai/
+- **[CNBC Top]** Microsoft Outlook and OpenAI's ChatGPT Work are experiencing user outages
+  - https://www.cnbc.com/2026/08/31/microsoft-outlook-and-openais-chatgpt-work-experience-outages-.html
 
 ## 🎬 Suggested video angles
 
@@ -100,4 +77,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-31T00:54:43*
+*Generated 2026-09-01T00:54:42*
