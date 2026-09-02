@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-02T09:48:13.932631",
-  "window_7d_actions": 5476,
-  "window_24h_actions": 679,
+  "generated_at": "2026-09-02T13:48:13.941470",
+  "window_7d_actions": 5567,
+  "window_24h_actions": 766,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5475
+      "count": 5566
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5475
+      "count": 5566
     }
   ],
   "best_hours_utc": [
@@ -33,33 +33,33 @@
     },
     {
       "hour": 9,
-      "actions": 249
+      "actions": 248
+    },
+    {
+      "hour": 11,
+      "actions": 247
     },
     {
       "hour": 16,
       "actions": 245
-    },
-    {
-      "hour": 8,
-      "actions": 243
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2425
+      "count": 2472
     },
     {
       "topic": "Autre",
-      "count": 2200
+      "count": 2235
     },
     {
       "topic": "Crypto",
-      "count": 721
+      "count": 732
     },
     {
       "topic": "Bourse",
-      "count": 477
+      "count": 486
     },
     {
       "topic": "Spatial",
@@ -70,75 +70,75 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2591
+      "count": 2643
     },
     {
       "pillar": "market_trauma",
-      "count": 1415
+      "count": 1433
     },
     {
       "pillar": "other",
-      "count": 1168
+      "count": 1181
     },
     {
       "pillar": "reply_bait",
-      "count": 128
+      "count": 129
     },
     {
       "pillar": "meme_reaction",
-      "count": 120
+      "count": 125
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 54
+      "count": 56
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 301
+      "count": 353
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 191
     },
     {
       "pillar": "other",
-      "count": 157
+      "count": 169
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 25
     },
     {
       "pillar": "reply_bait",
       "count": 23
     },
     {
-      "pillar": "meme_reaction",
-      "count": 18
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 86,
+      "posts": 85,
       "avg_likes": 0.31,
-      "avg_views": 51.8,
+      "avg_views": 50.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.24,
-      "avg_views": 51.3,
+      "posts": 69,
+      "avg_likes": 0.25,
+      "avg_views": 52.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
-      "avg_likes": 0.21,
-      "avg_views": 50.3,
+      "posts": 35,
+      "avg_likes": 0.23,
+      "avg_views": 50.9,
       "low_sample": false
     },
     {
@@ -150,32 +150,32 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 46.7,
+      "avg_views": 40.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4917
+      "count": 4995
     },
     {
       "type": "quote",
-      "count": 347
+      "count": 355
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 117
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 47
     },
     {
       "type": "post",
-      "count": 32
+      "count": 31
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-02T09:47:58.380640",
-      "text": "Most agents are just 401k Dave with a prompt. real value is zero maintenance infrastructure that runs itself while the others burn cash debugging on Tuesday morning. you don't want an agent; you want one that forgets it exists until its paid you back.",
+      "ts": "2026-09-02T13:47:40.600964",
+      "text": "INTC at $80 is buying the 35% margin on H100 GPUs that AMD still misses. it’s not a turnaround play, it’s an interest rate hedge for your portfolio.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T09:46:35.812219",
-      "text": "Pixel motion training = inference cost dropping faster than hardware costs. the margin squeeze starts now.",
+      "ts": "2026-09-02T13:46:36.179020",
+      "text": "Btc up 150% since the last supertrend flip. if you're waiting for a signal instead of buying what worked before, that's not analysis. it's procrastination with charts.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T09:45:01.293571",
-      "text": "Palantir adds a financial services head in jan 2027. this isn't hiring; it's the moment they stop selling ai to devs and start billing banks for replacing their analysts. finally reading my own contract.",
+      "ts": "2026-09-02T13:45:30.033291",
+      "text": "Cointelegraph calls it the best. Cointelegraph also called Luno a bank that lost 10B because their CEO forgot his password and \"didn't want to spam anyone.\" You're safe in our hands again.",
       "type": "reply"
     }
   ]

@@ -2156,7 +2156,10 @@
     "ThomGirardFr",
     "JulBoussusFr_",
     "BenoitFochiFR_",
-    "misterfi"
+    "misterfi",
+    "MistralAI_",
+    "DylanGautier_",
+    "AlexDionne_QC_"
   ],
   "en": [
     "Chubby",
@@ -15776,6 +15779,21 @@
     {
       "lang": "fr",
       "handle": "misterfi",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MistralAI_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanGautier_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDionne_QC_",
       "added": "2026-09-02"
     }
   ]

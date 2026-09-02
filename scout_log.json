@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-06T01:36:16.838029",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lenny_Recette",
-        "region": "france",
-        "niche": "ai",
-        "followers": 120000,
-        "reason": "La bible de l'IA en FR. Il d\u00e9terre les papers US et les traduit en 30 secondes. Plus utile qu'un MBA."
-      },
-      {
-        "handle": "TheSatoshiShot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le roi du thread fr sur BTC/ETH. Pas de signaux, juste du prix brut et des charts propres. Il tweet quand il veut, souvent le soir avec un verre."
-      },
-      {
-        "handle": "CryptoKedves",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Canadien bas\u00e9 \u00e0 NYC, twitte en FR/EN. Le sp\u00e9cialiste DeFi. Si lui il a peur, tu cours."
-      },
-      {
-        "handle": "NicoVernay",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Le tech bro qu\u00e9b\u00e9cois. Couvre SaaS, AI et startups. Son feed, c'est un mix parfait entre infos durs et m\u00e9chancet\u00e9s bien senties."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les influenceurs 'lambo' pour ne garder que les analystes qui font travailler les m\u00e9ninges. TheSatoshiShot et Lenny_Recette sont les incontournables FR, compl\u00e9t\u00e9s par des profils plus nich\u00e9s au Qu\u00e9bec et aux USA."
-  },
-  {
     "ts": "2026-08-06T03:36:29.429942",
     "raw_count": 8,
     "kept_count": 7,
@@ -8074,5 +8036,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la flotte : j'\u00e9vite les influenceurs qui vendent du r\u00eave crypto et je cible ceux qui font de l'analyse concr\u00e8te ou couvrent bien la tech francophone. Ces profils apportent un vrai signal bruit-filter."
+  },
+  {
+    "ts": "2026-09-02T11:48:32.654162",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MistralAI_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 320000,
+        "reason": "Le fran\u00e7ais qui a fait taire les Am\u00e9ricains sur le LLM open source. Moins de hype, plus de code."
+      },
+      {
+        "handle": "DylanGautier_",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 28000,
+        "reason": "Journaliste d'investigation tech. Twitte sur les startups fran\u00e7aises qui mentent \u00e0 leurs investisseurs."
+      },
+      {
+        "handle": "AlexDionne_QC_",
+        "region": "quebec",
+        "niche": "bourse/dividende",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour les dividendes. Il aime le Canada autant qu'il d\u00e9teste Wall Street."
+      }
+    ],
+    "summary": "5 comptes solides (pas des vendeurs d'air). PowerHasheur pour la data pure, Dylan Gautier pour l'enqu\u00eate tech fran\u00e7aise, Boussus pour les fondamentaux boursiers cruels. Le mix parfait entre France et Qu\u00e9bec sans les formations \u00e0 prix canon."
   }
 ]
