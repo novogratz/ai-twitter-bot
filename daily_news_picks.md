@@ -17159,3 +17159,29 @@ Everyone laughed at $2,000.
 Imagine if he gets t
   - https://x.com/TheCryptoSquire/status/2094598866717081639
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 445).
+
+## 2026-09-02
+- **@diligentplane** (435 likes, score 9/10) — Sold off all of my $NVDA and got off margin
+
+I was essentially using my NVIDIA position like cash and realized a bit over $6K in profit
+
+Raised a bunch of cash
+
+With Treasury yields soaring, oil movin
+  - https://x.com/DiligentPlane/status/2094819217992274005
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 563).
+- **@drayinvests** (21 likes, score 8/10) — Nvidia $NVDA right now is trading at 14x 2027 earnings...
+
+They just recorded +106% YoY revenue growth and are guiding for +70% growth next year 
+
+How could you not buy this stock right now?
+  - https://x.com/drayinvests/status/2094909822596472950
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27).
+- **@tt_stocks_** (33 likes, score 9/10) — Everyone focuses on GPUs, data centers and networking, but one of the biggest constraints over the next several years may simply be getting enough power to the grid and getting it there fast enough.
+  - https://x.com/TT_stocks_/status/2094365149024993455
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 63).
+- **@wolf_tradingx** (11 likes, score 7/10) — The ultra $GPRO pivot into AI datacenter leaves a massive dump at open from +78% to +46% and halted. 
+
+Yikes.
+  - https://x.com/WOLF_TradingX/status/2094781497832300582
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 13).
