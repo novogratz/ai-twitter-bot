@@ -2159,7 +2159,17 @@
     "misterfi",
     "MistralAI_",
     "DylanGautier_",
-    "AlexDionne_QC_"
+    "AlexDionne_QC_",
+    "ThibautFay",
+    "LudovicChabot",
+    "JulienDrouin_qc",
+    "PierreSavardqc",
+    "MathildeSavoye",
+    "MarcRavigneaux",
+    "LorenzoPalloni",
+    "ThomasVillain",
+    "CryptoMaxiFr",
+    "BercyCrypto"
   ],
   "en": [
     "Chubby",
@@ -2633,7 +2643,8 @@
     "Lincoln",
     "QwenWork",
     "Psyhodelik",
-    "Zunaira"
+    "Zunaira",
+    "Bubblemaps"
   ],
   "history": [
     {
@@ -15794,6 +15805,61 @@
     {
       "lang": "fr",
       "handle": "AlexDionne_QC_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautFay",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicChabot",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDrouin_qc",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreSavardqc",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathildeSavoye",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Bubblemaps",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcRavigneaux",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoPalloni",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasVillain",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMaxiFr",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BercyCrypto",
       "added": "2026-09-02"
     }
   ]
