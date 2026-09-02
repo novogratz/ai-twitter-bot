@@ -1573,3 +1573,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 74 views: me on 3-minute refresh cycles waiting for an AI to tell me my portfolio isn’t broken
   - 2 likes / 54 views: they capped us at $1k so we’d forget to ask for raise
   - 1 likes / 134 views: Bof A saying $NVDA is undervalued by 50% feels like your partner texting "u up?" at midnight—still m
+
+## 2026-09-01
+
+**Activity** — total actions: 468
+  - by type: reply=409, quote=33, quote_gif=13, post=6, hotake=5, retweet=2
+  - top sources: SEARCH-HOT=199, FEED-SWEEP-FEED=101, FEED-SWEEP-FOLLOWING=70, DEBATE=21, QUOTE=18, GIF=15, VIP=11, RETWEET_QT=6
+  - top reply targets: @TheBTCTherapist=14, @cryptorover=7, @FirstSquawk=6, @DanKornas=6, @kimmonismus=6
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 329 likes / 144310 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 2 likes / 32 views: Elon’s renting chips like they’re Airbnb slots during Coachella  me checking if $SPCE is finally moo
+  - 1 likes / 19 views: Solana’s 10-month drought just broke and suddenly everyone remembers they have an account

@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-08-05T15:36:23.888955",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MarcLanfranchi",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Ex-Polytechnique, il balance des analyses macro/crypto sans jargon de comptoir. Rare."
-      },
-      {
-        "handle": "AdrienJegou",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "La p\u00e9pite de Mistral. Il twitte la tech pure, pas les pubs de la newsletter. Un vrai ing\u00e9nieur."
-      }
-    ],
-    "summary": "Focus IA et Crypto pur, sans les vendeurs de r\u00eave. Tu as Mistral pour la tech, Dionne pour le Qu\u00e9bec, et Floch pour le filtrage de qualit\u00e9."
-  },
-  {
     "ts": "2026-08-05T17:36:21.573039",
     "raw_count": 7,
     "kept_count": 4,
@@ -8137,5 +8113,36 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour se concentrer sur des analystes qui comprennent leur m\u00e9tier (VC, tech, macro). On couvre bien la France, on commence \u00e0 creuser le Qu\u00e9bec, et on capture l'\u00e9lite franco-am\u00e9ricaine. Pas une seule formation ici."
+  },
+  {
+    "ts": "2026-09-01T23:48:48.206253",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexandreDionneQC",
+        "region": "quebec",
+        "niche": "tech/ia",
+        "followers": 35000,
+        "reason": "Le tech lead qui d\u00e9crypte l'IA au Qu\u00e9bec. Moins de buzz, plus d'ex\u00e9cutables."
+      },
+      {
+        "handle": "BaptisteMichez",
+        "region": "france",
+        "niche": "tech/vc",
+        "followers": 25000,
+        "reason": "Investisseur VC. Il tweet sur ce qu'il ach\u00e8te avant que les m\u00e9dias n'en parlent."
+      },
+      {
+        "handle": "LorenzoMangioneFR",
+        "region": "france",
+        "niche": "tech/ia",
+        "followers": 15000,
+        "reason": "Le type qui vit en mode 'builder'. Si il tweet sur une techno C'est qu'il la code."
+      }
+    ],
+    "summary": "La France domine le secteur crypto (Hasheur/MisterFi), tandis que la QC se bat avec de petites p\u00e9pites tech/d\u00e9viasc\u00e9es. C'est dense, c\u2019est vrai, y\u2019a moins d\u2019inactifs qu\u2019on pourrait craindre."
   }
 ]

@@ -2144,7 +2144,8 @@
     "CryptoNicoQC",
     "LudovicGirardet",
     "PierreLescureX",
-    "Julien_Boussus_"
+    "Julien_Boussus_",
+    "BaptisteMichez"
   ],
   "en": [
     "Chubby",
@@ -2616,7 +2617,8 @@
     "Netflix",
     "Kaecey",
     "Lincoln",
-    "QwenWork"
+    "QwenWork",
+    "Psyhodelik"
   ],
   "history": [
     {
@@ -15692,6 +15694,16 @@
     {
       "lang": "fr",
       "handle": "Julien_Boussus_",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Psyhodelik",
+      "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteMichez",
       "added": "2026-09-01"
     }
   ]
