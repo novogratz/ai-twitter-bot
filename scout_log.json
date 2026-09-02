@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-08-05T21:36:17.653313",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thibaut_delarue",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le roi de l'analyse on-chain fr, tweete moins que les autres mais chaque thread vaut de l'or."
-      },
-      {
-        "handle": "Maelle_Maiz",
-        "region": "france",
-        "niche": "tech",
-        "followers": 32000,
-        "reason": "Ex-DeepMind, IA pure sans le blabla startup, tweete en FR avec une pr\u00e9cision chirurgicale."
-      },
-      {
-        "handle": "Rapha\u00eblGirard",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "Fintech FR hardcore, couvre la r\u00e9gulation et les produits, tweete 3x par jour en fran\u00e7ais."
-      },
-      {
-        "handle": "Jules_Brueyre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Le bestio qui explique l'IA aux humains, thread quotidien sur les LLMs, style p\u00e9dagogique mais tranchant."
-      },
-      {
-        "handle": "LucieBourgeois_",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "La seule qui d\u00e9cortique les actions canadiennes et US en fran\u00e7ais sans se prendre pour un guru du weekend."
-      }
-    ],
-    "summary": "Une s\u00e9lection sans gras, focus analyse pure et fondamental. J'ai filtr\u00e9 les influenceurs qui tweetent leur d\u00e9jeuner et gard\u00e9 ceux qui tweetent des charts ou des paper research."
-  },
-  {
-    "ts": "2026-08-05T23:36:39.333105",
-    "raw_count": 10,
-    "kept_count": 9,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitGrimaud",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'ami de la crypto-francophone. Il twitte la t\u00eate du march\u00e9, pas des pubs. Sa newsletter est une bible, son fil un flux pur."
-      },
-      {
-        "handle": "Rapha3lLeBlogger",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le roi de l'IA g\u00e9n\u00e9rative en FR. Il teste, il compare, il partage. Moins 'marketing', plus 'vraiment utilis\u00e9'."
-      },
-      {
-        "handle": "LunaLevy",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Luna Levy. La voix de la crypto francophone \u00e0 NYC. Elle mixe le regard de l'int\u00e9rieur (Wall Street) et le langage FR. Une p\u00e9pite de connexion transatlantique."
-      },
-      {
-        "handle": "JulienBourdin",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Le qu\u00e9b\u00e9cois qui cartonne sur l'IA. Il traduit les paper tech enFR digestible. Son audience est qualifi\u00e9e, ses threads sont des p\u00e9pites."
-      },
-      {
-        "handle": "PierreLeduc",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Pierre Leduc. Le v\u00e9t\u00e9ran crypto du Qu\u00e9bec. Il couvre la macro, la DeFi et les new coins avec un \u0153il de vieux routier. Filtre \u00e0 'vapeur' efficace."
-      },
-      {
-        "handle": "JulesCottereau",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Jules Cottereau. Le mec qui a quitt\u00e9 un job de banquier pour suivre les march\u00e9s sur X. Son style : direct, sans chichi, des setups clairs."
-      },
-      {
-        "handle": "AlexisLevay",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Alexis Levay. Il couvre l'IA et la tech avec une expertise technique rare. Pas des blablas, des insights sur les architectures et les usages."
-      },
-      {
-        "handle": "HugoBourdin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le sp\u00e9cialiste de l'investissement action long terme. Il tweet ses positions r\u00e9elles, ses erreurs. C'est de l'analyste financier, pas du coach."
-      },
-      {
-        "handle": "MathieuDufresne",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le gars des march\u00e9s. Il analyse la macro et les actions avec une rigueur qui force le respect. Moins de bruit, plus de signal."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les profils ind\u00e9pendants et les analystes 'fond', \u00e9vitant les gros comptes institutionnels satur\u00e9s. La France domine en volume crypto, le Qu\u00e9bec a une sc\u00e8ne IA/tech surprenante, et la diaspora USA apporte un view externe pr\u00e9cieux."
-  },
-  {
     "ts": "2026-08-06T01:36:16.838029",
     "raw_count": 5,
     "kept_count": 4,
@@ -8116,5 +7998,81 @@
       }
     ],
     "summary": "Six comptes solides s\u00e9lectionn\u00e9s pour \u00e9viter le bruit des influenceurs 'vendeurs de r\u00eave'. Ce sont soit des analystes techniques, soit des investisseurs actionnaires qui partagent leur travail r\u00e9el plut\u00f4t que leurs promesses futures. La couverture est \u00e9quilibr\u00e9e entre analyse macro FR et micro-niches tech QC/US."
+  },
+  {
+    "ts": "2026-09-02T05:48:49.346177",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautDezere",
+        "region": "france",
+        "niche": "fintech / bourse",
+        "followers": 85000,
+        "reason": "L'humour de la boutique qui fait mal. Il parle crypto/banque sans vendre son \u00e2me \u00e0 Telegram."
+      },
+      {
+        "handle": "MaximeDuchene21",
+        "region": "usa",
+        "niche": "crypto / trading",
+        "followers": 60000,
+        "reason": "Base \u00e0 NYC mais tweete en FR. L'expertise technique sans le jargon obscur."
+      },
+      {
+        "handle": "LaurentLeCunff",
+        "region": "france",
+        "niche": "bourse / macro",
+        "followers": 45000,
+        "reason": "L'ancien de Xerfi qui d\u00e9cortique les bilans avec la pr\u00e9cision d'un surgisseur."
+      },
+      {
+        "handle": "ThomGirardFr",
+        "region": "france",
+        "niche": "bourse / analyse fondamentale",
+        "followers": 35000,
+        "reason": "Poste souvent le soir. Moins 'finance bro' que la moyenne, plus fondamental."
+      },
+      {
+        "handle": "JulBoussusFr_",
+        "region": "france",
+        "niche": "bourse / investissement passif",
+        "followers": 28000,
+        "reason": "Le calme plat. Contraire au HFT de base."
+      },
+      {
+        "handle": "BenoitFochiFR_",
+        "region": "france",
+        "niche": "crypto / web3",
+        "followers": 15000,
+        "reason": "Ancien de Coinhouse. Parle tech et march\u00e9 sans vendre une formation \u00e0 97\u20ac."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le sable pour ne garder que l'or : des comptes qui analysent mieux qu'ils n'influentient (ou presque). Pas de 'join my telegram', juste du contenu ou du punchline utile."
+  },
+  {
+    "ts": "2026-09-02T07:48:38.135480",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "misterfi",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 185000,
+        "reason": "L'ap\u00f4tre de l'\u00e9conomie r\u00e9elle. Il fait vomir les quantos avec du bon sens brut et des ratios P/E qui font mal."
+      },
+      {
+        "handle": "sylvain_gauthier_",
+        "region": "france",
+        "niche": "crypto/tech",
+        "followers": 45000,
+        "reason": "Cr\u00e9ateur du blog CryptoActu. Il balance des infos techniques avant que les grands m\u00e9dias n'en parlent."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la flotte : j'\u00e9vite les influenceurs qui vendent du r\u00eave crypto et je cible ceux qui font de l'analyse concr\u00e8te ou couvrent bien la tech francophone. Ces profils apportent un vrai signal bruit-filter."
   }
 ]

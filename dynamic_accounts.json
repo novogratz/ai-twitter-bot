@@ -2149,7 +2149,14 @@
     "_adriendumas_",
     "TheCryptopundit",
     "MaximeAgnier",
-    "j_bourdon"
+    "j_bourdon",
+    "ThibautDezere",
+    "MaximeDuchene21",
+    "LaurentLeCunff",
+    "ThomGirardFr",
+    "JulBoussusFr_",
+    "BenoitFochiFR_",
+    "misterfi"
   ],
   "en": [
     "Chubby",
@@ -15734,6 +15741,41 @@
     {
       "lang": "fr",
       "handle": "j_bourdon",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDezere",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDuchene21",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurentLeCunff",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomGirardFr",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulBoussusFr_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFochiFR_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "misterfi",
       "added": "2026-09-02"
     }
   ]
