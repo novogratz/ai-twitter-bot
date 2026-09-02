@@ -2145,7 +2145,11 @@
     "LudovicGirardet",
     "PierreLescureX",
     "Julien_Boussus_",
-    "BaptisteMichez"
+    "BaptisteMichez",
+    "_adriendumas_",
+    "TheCryptopundit",
+    "MaximeAgnier",
+    "j_bourdon"
   ],
   "en": [
     "Chubby",
@@ -2618,7 +2622,8 @@
     "Kaecey",
     "Lincoln",
     "QwenWork",
-    "Psyhodelik"
+    "Psyhodelik",
+    "Zunaira"
   ],
   "history": [
     {
@@ -15705,6 +15710,31 @@
       "lang": "fr",
       "handle": "BaptisteMichez",
       "added": "2026-09-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adriendumas_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Zunaira",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheCryptopundit",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAgnier",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "j_bourdon",
+      "added": "2026-09-02"
     }
   ]
 }

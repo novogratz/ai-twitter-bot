@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-02T01:48:14.022400",
-  "window_7d_actions": 5295,
-  "window_24h_actions": 499,
+  "generated_at": "2026-09-02T05:48:13.969498",
+  "window_7d_actions": 5379,
+  "window_24h_actions": 584,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5294
+      "count": 5378
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5294
+      "count": 5378
     }
   ],
   "best_hours_utc": [
@@ -40,49 +40,49 @@
       "actions": 239
     },
     {
-      "hour": 22,
-      "actions": 232
+      "hour": 3,
+      "actions": 239
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2347
+      "count": 2385
     },
     {
       "topic": "Autre",
-      "count": 2118
+      "count": 2154
     },
     {
       "topic": "Crypto",
-      "count": 693
+      "count": 708
     },
     {
       "topic": "Bourse",
-      "count": 479
+      "count": 475
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 110
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2494
+      "count": 2542
     },
     {
       "pillar": "market_trauma",
-      "count": 1382
+      "count": 1402
     },
     {
       "pillar": "other",
-      "count": 1125
+      "count": 1137
     },
     {
       "pillar": "reply_bait",
-      "count": 122
+      "count": 127
     },
     {
       "pillar": "meme_reaction",
@@ -90,25 +90,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 55
+      "count": 54
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 206
+      "count": 255
     },
     {
       "pillar": "market_trauma",
-      "count": 146
+      "count": 162
     },
     {
       "pillar": "other",
-      "count": 109
+      "count": 125
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 25
     },
     {
       "pillar": "meme_reaction",
@@ -116,29 +116,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 86,
+      "posts": 87,
       "avg_likes": 0.29,
-      "avg_views": 50.8,
+      "avg_views": 50.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
-      "avg_likes": 0.26,
-      "avg_views": 49.2,
+      "avg_likes": 0.25,
+      "avg_views": 51.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 35,
       "avg_likes": 0.23,
-      "avg_views": 52.3,
+      "avg_views": 49.5,
       "low_sample": false
     },
     {
@@ -150,20 +150,20 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 137.0,
+      "avg_views": 68.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4746
+      "count": 4827
     },
     {
       "type": "quote",
-      "count": 339
+      "count": 342
     },
     {
       "type": "quote_gif",
@@ -184,19 +184,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-02T01:47:45.746748",
-      "text": "$CRWV borrowing $4.41B on revenue they haven't earned yet is how you buy a Ferrari in 2026 with money from your landlord's pocket in 2028. liquidity crunch at its finest, baby.",
+      "ts": "2026-09-02T05:46:18.137488",
+      "text": "The image has 4 models. You asked to remove the worst one. That leaves three equally hyped wrappers with different prompts and a zero percent competitive moat between them.\n\npick two or just delete all four. i'm not doing your due diligence at $12k/month for an x premium subscrip",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T01:46:02.574679",
-      "text": "$10k per tickers. $70k left for the 39% implied vol decay and margin calls from CoreWeave’s debt stack breathing down your neck. leaps aren’t passive income if you can afford to be wrong twice a week.",
+      "ts": "2026-09-02T05:44:31.030465",
+      "text": "January february march april. the market just wants you to know it’s organized enough for january effect and febuary slump. predictable chaos doesn’t deserve a fee structure that high anyway.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T01:45:46.377479",
-      "text": "me on my laptop watching 200 GW of power demand and silently checking if we can survive it on just one iPhone charger 😭👀",
-      "type": "quote"
+      "ts": "2026-09-02T05:44:14.934636",
+      "text": "30 shares for $96B revenue? you're buying the ticker at dollar-store prices. this is how you buy tech stocks in a bear market when everyone else pays premium.",
+      "type": "reply"
     }
   ]
 }

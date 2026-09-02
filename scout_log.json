@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-05T17:36:21.573039",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JGThibault",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "L'\u00e9vang\u00e9liste AI de Hugging Face, son feed est un cours magistral gratuit sur le mod\u00e8le de business Open Source."
-      },
-      {
-        "handle": "VincentD",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "L'analyste macro crypto qui tweete en FR depuis NY, ses prises de position contrariennes valent l'abonnement."
-      },
-      {
-        "handle": "0xMerkle",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le baron m\u00e9connu qui transforme la microstructure crypto en digestible pour les mortels, sans vendre de r\u00eave."
-      },
-      {
-        "handle": "AlexisLamoureux",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Foundeur SaaS qu\u00e9b\u00e9cois qui mixe strat\u00e9gie produit et IA avec une honn\u00eatet\u00e9 brute sur les \u00e9checs."
-      }
-    ],
-    "summary": "Le panel est serr\u00e9 entre des experts techniques pur-sang (Girard, 0xMerkle) et des observateurs business (Elie). Aucun ne vend de 'guru' life."
-  },
-  {
-    "ts": "2026-08-05T19:36:40.369253",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "YvanDumont",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le 'Crypto Qu\u00e9b\u00e9cois'. Il couvre les march\u00e9s US avec un regard canadien, parle FR, et \u00e9vite les shills habituels. C'est l'anti-influenceur parfait."
-      },
-      {
-        "handle": "ThibautDelor",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "CEO de La Fabrique \u00e0 l'IA. Il balance des threads deep-dive sur la stacks techniques fran\u00e7aises (Mistral, etc.) sans vendre de formation \u00e0 99\u20ac."
-      },
-      {
-        "handle": "AntoineBailly_",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Fintech analyste pur jus. Il d\u00e9cortique les bilans, les fusions et les tech de la finance (Babylon, Qonto, Lydia). Moins de hype, plus de fond."
-      },
-      {
-        "handle": "ValentinLemoyne",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Analyste fintech. Il parle de Stripe, Adyen et des nouvelles r\u00e9gulations europ\u00e9ennes. Pas de 'moon', juste des flux de tr\u00e9sorerie."
-      },
-      {
-        "handle": "JorisDutartre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Foundeur de Lili (IA pour les comptes). Il tweete beaucoup sur la productivit\u00e9 IA et le SaaS FR. Son ton est direct, son audience est qualifi\u00e9e."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui font tourner la m\u00e9canique : les vrais buildeurs et les analystes de terrain. De Mistral aux petits malins de la DeFi, ce sont les sources primaires FR qui comptent."
-  },
-  {
     "ts": "2026-08-05T21:36:17.653313",
     "raw_count": 6,
     "kept_count": 5,
@@ -8144,5 +8061,60 @@
       }
     ],
     "summary": "La France domine le secteur crypto (Hasheur/MisterFi), tandis que la QC se bat avec de petites p\u00e9pites tech/d\u00e9viasc\u00e9es. C'est dense, c\u2019est vrai, y\u2019a moins d\u2019inactifs qu\u2019on pourrait craindre."
+  },
+  {
+    "ts": "2026-09-02T01:48:34.423531",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_adriendumas_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le visionnaire qui a vu l'agentique avant que ce soit un buzzword. Ses threads sur la structure des mod\u00e8les valent plus cher qu'une newsletter \u00e0 50\u20ac."
+      },
+      {
+        "handle": "_adrienchauvenne",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Francophone bas\u00e9 aux USA. Il capte les news on-chain avant m\u00eame qu'elles ne soient sur Twitter/X. Moins de bruit que le reste des KOL crypto."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la jungle pour garder uniquement ceux qui apportent du net ou du fric, pas du vent. Une bonne dose d'AI fran\u00e7aise pure souche et un mix France/Quebec/USA pour couvrir les fuseaux horaires des march\u00e9s."
+  },
+  {
+    "ts": "2026-09-02T03:48:48.039914",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheCryptopundit",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 24000,
+        "reason": "Le meilleur trader crypto FR pour le short-term. Il ne vend pas de r\u00eave, il montre les trades avec leur risque associ\u00e9. Rare."
+      },
+      {
+        "handle": "MaximeAgnier",
+        "region": "quebec",
+        "niche": "crypto/web3",
+        "followers": 18000,
+        "reason": "Expert web3 qu\u00e9b\u00e9cois. Il couvre les narratives DeFi et NFT avec un \u0153il critique qui manque trop souvent sur la sc\u00e8ne francophone."
+      },
+      {
+        "handle": "j_bourdon",
+        "region": "quebec",
+        "niche": "tech/crypto",
+        "followers": 12000,
+        "reason": "Investisseur QC actif sur l'IA et les startups. Moins bruyant que ses coll\u00e8gues m\u00e9diatiques mais plus pr\u00e9cis dans le picking de secteurs tech \u00e9mergents."
+      }
+    ],
+    "summary": "Six comptes solides s\u00e9lectionn\u00e9s pour \u00e9viter le bruit des influenceurs 'vendeurs de r\u00eave'. Ce sont soit des analystes techniques, soit des investisseurs actionnaires qui partagent leur travail r\u00e9el plut\u00f4t que leurs promesses futures. La couverture est \u00e9quilibr\u00e9e entre analyse macro FR et micro-niches tech QC/US."
   }
 ]
