@@ -1587,3 +1587,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 329 likes / 144310 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 2 likes / 32 views: Elon’s renting chips like they’re Airbnb slots during Coachella  me checking if $SPCE is finally moo
   - 1 likes / 19 views: Solana’s 10-month drought just broke and suddenly everyone remembers they have an account
+
+## 2026-09-02
+
+**Activity** — total actions: 938
+  - by type: reply=841, quote=58, quote_gif=19, retweet=7, hotake=7, post=6
+  - top sources: SEARCH-HOT=555, FEED-SWEEP-FEED=166, FEED-SWEEP-FOLLOWING=100, QUOTE=47, GIF=21, DEBATE=14, BREAKING_QRT=6, MUST_REPOST=4
+  - top reply targets: @wallstengine=17, @TheBTCTherapist=15, @kimmonismus=12, @StockSavvyShay=10, @Cointelegraph=8
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 1 likes / 145 views: anthropic calling their own models “unsafeguarded” is like my toddler saying he’s not tired right be
+  - 1 likes / 19 views: season 6 just sounds like your toddler hitting reset after one tantrum to start another
+  - 1 likes / 23 views: my cat sitting on the keyboard while I pretend to understand reward hacking
