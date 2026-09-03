@@ -2174,7 +2174,12 @@
     "ThomasSoyer_",
     "RomainCazals",
     "GautierDrouet",
-    "MarcDesnoyers_"
+    "MarcDesnoyers_",
+    "BenoitF_48",
+    "TanguyGauquie",
+    "CyrilDumasFR",
+    "AntoineDelaune",
+    "RomainMazauric"
   ],
   "en": [
     "Chubby",
@@ -2650,7 +2655,10 @@
     "Psyhodelik",
     "Zunaira",
     "Bubblemaps",
-    "max"
+    "max",
+    "Blendi",
+    "AnderSon",
+    "Global_Macro"
   ],
   "history": [
     {
@@ -15897,6 +15905,46 @@
       "lang": "en",
       "handle": "max",
       "added": "2026-09-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Blendi",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "en",
+      "handle": "AnderSon",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Global_Macro",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitF_48",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyGauquie",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDumasFR",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineDelaune",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMazauric",
+      "added": "2026-09-03"
     }
   ]
 }
