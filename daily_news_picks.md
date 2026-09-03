@@ -17222,3 +17222,28 @@ Are you more scared of a Bitcoin crash to 60k or of watching 100k happen while y
 You know there’s only one right answer, right?
   - https://x.com/marc02200/status/2095292688216064356
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
+- **@web3marmot** (144 likes, score 9/10) — 🚨 THIS IS HOW THE AI BUBBLE WILL CRASH THE S&P 500
+
+Read the post carefully before buying stocks.
+
+Two AI giants are going public in the same year:
+
+→ OpenAI ($1T+ target)
+→ Anthropic ($2T+ target)
+  - https://x.com/Web3Marmot/status/2095193863509905444
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 182).
+- **@0xavseenko** (6 likes, score 7/10) — $1,000 invested 15 years ago would be worth today:
+
+₿ Bitcoin - $8,970,000
+Nvidia - $735,000
+Tesla - $231,000
+Apple - $29,000
+S&P 500 - $8,400
+Gold - $2,150
+
+The difference between a good investment a
+  - https://x.com/0xAvseenko/status/2095371685121704192
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 10).
+- **@arakharazian** (1031 likes, score 9/10) — New from Ramp data: the latest threat to the AI trade. AI companies' revenues are heavily dependent on a small set of customers. 80% of OpenAI and Anthropic's enterprise revenues come from 1% of their
+  - https://x.com/arakharazian/status/2095204452609171555
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1251).
