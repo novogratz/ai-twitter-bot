@@ -1,25 +1,17 @@
 {
-  "generated_at": "2026-09-03T09:48:14.975098",
-  "window_7d_actions": 5585,
-  "window_24h_actions": 940,
+  "generated_at": "2026-09-03T13:48:14.015333",
+  "window_7d_actions": 5578,
+  "window_24h_actions": 943,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5584
-    },
-    {
-      "pattern": "RENAME",
-      "count": 1
+      "count": 5578
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "RENAME",
-      "count": 1
-    },
-    {
       "pattern": "UNKNOWN",
-      "count": 5584
+      "count": 5578
     }
   ],
   "best_hours_utc": [
@@ -33,21 +25,21 @@
     },
     {
       "hour": 9,
+      "actions": 254
+    },
+    {
+      "hour": 11,
       "actions": 252
     },
     {
       "hour": 14,
       "actions": 249
-    },
-    {
-      "hour": 11,
-      "actions": 247
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2444
+      "count": 2432
     },
     {
       "topic": "Autre",
@@ -55,30 +47,30 @@
     },
     {
       "topic": "Crypto",
-      "count": 749
+      "count": 753
     },
     {
       "topic": "Bourse",
-      "count": 491
+      "count": 497
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2632
+      "count": 2620
     },
     {
       "pillar": "market_trauma",
-      "count": 1452
+      "count": 1462
     },
     {
       "pillar": "other",
-      "count": 1181
+      "count": 1174
     },
     {
       "pillar": "reply_bait",
@@ -86,33 +78,33 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 122
+      "count": 125
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 66
+      "count": 65
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 450
+      "count": 444
     },
     {
       "pillar": "market_trauma",
-      "count": 243
+      "count": 255
     },
     {
       "pillar": "other",
-      "count": 192
+      "count": 191
     },
     {
       "pillar": "reply_bait",
-      "count": 21
+      "count": 23
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
@@ -124,21 +116,14 @@
       "pillar": "other",
       "posts": 91,
       "avg_likes": 0.27,
-      "avg_views": 56.3,
+      "avg_views": 55.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 68,
-      "avg_likes": 0.22,
-      "avg_views": 54.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 29,
-      "avg_likes": 0.17,
-      "avg_views": 55.7,
+      "posts": 66,
+      "avg_likes": 0.2,
+      "avg_views": 54.3,
       "low_sample": false
     },
     {
@@ -146,6 +131,13 @@
       "posts": 6,
       "avg_likes": 0.17,
       "avg_views": 53.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 31,
+      "avg_likes": 0.16,
+      "avg_views": 54.2,
       "low_sample": false
     },
     {
@@ -159,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5003
+      "count": 4999
     },
     {
       "type": "quote",
-      "count": 369
+      "count": 366
     },
     {
       "type": "quote_gif",
-      "count": 114
+      "count": 116
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 45
     },
     {
       "type": "post",
-      "count": 32
+      "count": 31
     },
     {
       "type": "retweet",
@@ -184,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-03T09:47:47.185120",
-      "text": "401k Dave is already sweating through his shirt. the S&P didn't just climb; it got a lift by six other people while he held three bags of dog food that now wear suits. market liquidity > macro logic. always has been. buy",
+      "ts": "2026-09-03T13:46:38.970839",
+      "text": "Saylor’s cost basis is $67k. He bought the dip at 84K and now he needs you to buy it here so his math works for Q3 earnings calls. breathe.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-03T09:47:14.404592",
-      "text": "$3.5B for 100k GPUs is just rent paid in advance. figure isn't building hardware, they're securing the most expensive real estate on earth with a lease agreement that depreciates faster than their valuation. buy low sell high apply to robotics.",
+      "ts": "2026-09-03T13:46:10.247649",
+      "text": "Qwen on 4090 VRAM fits inference but chokes on long context. final stretch for speed, not depth.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-03T09:44:10.677760",
-      "text": "18M developers is a distribution layer. $50B in debt service on that capex stack means Nvidia owns the toll road AND sells all the tires. monopoly plus one.",
+      "ts": "2026-09-03T13:45:52.621242",
+      "text": "Robinhood's chain is doing $34.6B DEX volume on just 10 months of uptime (note: post says \"two months\" but context implies ~1 year/launch cycle in reality or aggressive metric; let's stick to the prompt's text). The real story? It’s not a blockchain play, it’s a fee multiplier fo",
       "type": "reply"
     }
   ]

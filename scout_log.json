@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-06T17:36:16.411529",
-    "raw_count": 5,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Bultra_",
-        "region": "france",
-        "niche": "tech",
-        "followers": 115000,
-        "reason": "L'anti-Benjamin Dewaele. Il parle d'IA et de SaaS sans vendre de formation \u00e0 2000\u20ac, avec un style sec et des insights tech solides."
-      },
-      {
-        "handle": "LelouchFr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Incontournable. Pas un influenceur 'lambo', un vrai analyste on-chain qui d\u00e9crypte les narratives avant qu'elles ne deviennent mainstream."
-      },
-      {
-        "handle": "MarcBoutin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "La r\u00e9f\u00e9rence crypto qu\u00e9b\u00e9coise. Il couvre l'\u00e9cosyst\u00e8me local sans flatterie et donne des insights globaux avec un ton direct et d\u00e9cal\u00e9."
-      },
-      {
-        "handle": "TomasPerrin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 32000,
-        "reason": "Ex-PM qui ne se prend pas au s\u00e9rieux. Ses threads sur la gestion de produit tech sont aussi bons que ses analyses macro, z\u00e9ro jargon inutile."
-      },
-      {
-        "handle": "JulienDuc",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 28000,
-        "reason": "Journaliste fintech pointu. Il tweet sur les r\u00e9gulations et les deals VC avec pr\u00e9cision, \u00e9vitant les grands discours vides sur l'IA."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse crypto s\u00e9rieuse (Lelouch, MarcBoutin) et le view sur la tech/business pragmatique (Bultra, Perrin). Z\u00e9ro vendeur de r\u00eave, juste du contenu qui passe le test du temps."
-  },
-  {
     "ts": "2026-08-06T19:36:36.253545",
     "raw_count": 10,
     "kept_count": 4,
@@ -8032,5 +7987,22 @@
       }
     ],
     "summary": "Un m\u00e9lange solide entre les poids lourds du trading fran\u00e7ais (Franco/Laroche) et une s\u00e9lection pr\u00e9cise des talents IA/QC. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont encore un emploi ou deux startups \u00e0 la barre."
+  },
+  {
+    "ts": "2026-09-03T11:48:46.476601",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_julesbnt_",
+        "region": "france",
+        "niche": "crypto/defi",
+        "followers": 12000,
+        "reason": "DeFi nerd qui explique la complexit\u00e9 sans mettre le reader en sommeil. Rare."
+      }
+    ],
+    "summary": "Je t'ai fil\u00e9 une s\u00e9lection de pur jus : des analystes et fonds QC/FR/SF capables d'alimenter un bot pendant des mois. Z\u00e9ro venteuse, que du contenu ou presque."
   }
 ]

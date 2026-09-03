@@ -2185,7 +2185,8 @@
     "MaxenceB",
     "SachaFavre",
     "AdrienLaroche",
-    "RomainDuclos_"
+    "RomainDuclos_",
+    "_julesbnt_"
   ],
   "en": [
     "Chubby",
@@ -15986,6 +15987,11 @@
     {
       "lang": "fr",
       "handle": "RomainDuclos_",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "_julesbnt_",
       "added": "2026-09-03"
     }
   ]
