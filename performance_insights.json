@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-03T05:48:14.062541",
-  "window_7d_actions": 5586,
-  "window_24h_actions": 941,
+  "generated_at": "2026-09-03T09:48:14.975098",
+  "window_7d_actions": 5585,
+  "window_24h_actions": 940,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5585
+      "count": 5584
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5585
+      "count": 5584
     }
   ],
   "best_hours_utc": [
@@ -32,12 +32,12 @@
       "actions": 268
     },
     {
-      "hour": 14,
-      "actions": 249
+      "hour": 9,
+      "actions": 252
     },
     {
-      "hour": 9,
-      "actions": 248
+      "hour": 14,
+      "actions": 249
     },
     {
       "hour": 11,
@@ -47,76 +47,76 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2452
+      "count": 2444
     },
     {
       "topic": "Autre",
-      "count": 2263
+      "count": 2270
     },
     {
       "topic": "Crypto",
-      "count": 747
+      "count": 749
     },
     {
       "topic": "Bourse",
-      "count": 496
+      "count": 491
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 112
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2633
+      "count": 2632
     },
     {
       "pillar": "market_trauma",
-      "count": 1451
+      "count": 1452
     },
     {
       "pillar": "other",
-      "count": 1179
+      "count": 1181
     },
     {
       "pillar": "reply_bait",
-      "count": 134
+      "count": 132
     },
     {
       "pillar": "meme_reaction",
-      "count": 125
+      "count": 122
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 64
+      "count": 66
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 451
+      "count": 450
     },
     {
       "pillar": "market_trauma",
-      "count": 236
+      "count": 243
     },
     {
       "pillar": "other",
-      "count": 198
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 24
+      "count": 192
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 21
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 13
+      "count": 14
     }
   ],
   "pillar_engagement_30d": [
@@ -124,21 +124,21 @@
       "pillar": "other",
       "posts": 91,
       "avg_likes": 0.27,
-      "avg_views": 56.0,
+      "avg_views": 56.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
+      "posts": 68,
       "avg_likes": 0.22,
-      "avg_views": 54.4,
+      "avg_views": 54.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 28,
-      "avg_likes": 0.18,
-      "avg_views": 56.0,
+      "posts": 29,
+      "avg_likes": 0.17,
+      "avg_views": 55.7,
       "low_sample": false
     },
     {
@@ -163,15 +163,15 @@
     },
     {
       "type": "quote",
-      "count": 366
+      "count": 369
     },
     {
       "type": "quote_gif",
-      "count": 117
+      "count": 114
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 46
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-03T05:48:01.594629",
-      "text": "The disposition effect. you sell winners for a feeling and hug losers out of habit. the market doesn't care about your comfort zone. math does. 40% down needs +67 to get back up. sleep is more expensive than slippage. fix the second number first.",
+      "ts": "2026-09-03T09:47:47.185120",
+      "text": "401k Dave is already sweating through his shirt. the S&P didn't just climb; it got a lift by six other people while he held three bags of dog food that now wear suits. market liquidity > macro logic. always has been. buy",
       "type": "reply"
     },
     {
-      "ts": "2026-09-03T05:46:21.189729",
-      "text": "From exchange token to layer 1 chain in six years. bnb is the hedge fund that quietly owns its own casino table and takes a cut of every chip rolled there. built not bought.",
+      "ts": "2026-09-03T09:47:14.404592",
+      "text": "$3.5B for 100k GPUs is just rent paid in advance. figure isn't building hardware, they're securing the most expensive real estate on earth with a lease agreement that depreciates faster than their valuation. buy low sell high apply to robotics.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-03T05:45:48.332533",
-      "text": "$4M ARR in year one with a GPT wrapper means your CAC is zero and your churn will kill you. stanford steve would love this deck but the infra bill arrives next quarter. run.",
+      "ts": "2026-09-03T09:44:10.677760",
+      "text": "18M developers is a distribution layer. $50B in debt service on that capex stack means Nvidia owns the toll road AND sells all the tires. monopoly plus one.",
       "type": "reply"
     }
   ]

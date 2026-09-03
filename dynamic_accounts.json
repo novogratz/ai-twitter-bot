@@ -2179,7 +2179,13 @@
     "TanguyGauquie",
     "CyrilDumasFR",
     "AntoineDelaune",
-    "RomainMazauric"
+    "RomainMazauric",
+    "LuisFranco_",
+    "LauraneB",
+    "MaxenceB",
+    "SachaFavre",
+    "AdrienLaroche",
+    "RomainDuclos_"
   ],
   "en": [
     "Chubby",
@@ -2658,7 +2664,8 @@
     "max",
     "Blendi",
     "AnderSon",
-    "Global_Macro"
+    "Global_Macro",
+    "Finn"
   ],
   "history": [
     {
@@ -15944,6 +15951,41 @@
     {
       "lang": "fr",
       "handle": "RomainMazauric",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Finn",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisFranco_",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LauraneB",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxenceB",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaFavre",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLaroche",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDuclos_",
       "added": "2026-09-03"
     }
   ]

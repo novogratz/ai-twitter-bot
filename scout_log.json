@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-06T15:36:33.988652",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreCahen",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Vieille gloire du web, mais reste une r\u00e9f\u00e9rence tech/biz FR. L'audience est mature, pas les abonn\u00e9s de pub."
-      },
-      {
-        "handle": "MaximeSteffan",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Ex-HuggingFace, expert ModelOps. Twitte les techiques sans vendre de r\u00eave, pur grain de sel pro."
-      },
-      {
-        "handle": "MaxBorsen",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Am\u00e9ricain d'origine, twitte en fran\u00e7ais. Vue internationale sur le march\u00e9 crypto, sans \u00eatre un blogueur US standard."
-      },
-      {
-        "handle": "EricBalzamo",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Journaliste Bloomberg bas\u00e9 aux US, mais aborde les march\u00e9s globaux. L'info rapide, fiable, en FR."
-      },
-      {
-        "handle": "JulienAston",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Actionnariat long terme, valeurs fran\u00e7aises. Pas de daytrading hype, du concret qui fait avancer la r\u00e9flexion."
-      }
-    ],
-    "summary": "J'ai cibl\u00e9 les piliers de l'\u00e9cosyst\u00e8me FR (Mistral, HuggingFace alumni) et les pros du Qu\u00e9bec qui \u00e9vitent le buzz. Pour les USA, des profils bilingues apportent une vue externe sans \u00eatre anglophones purs."
-  },
-  {
     "ts": "2026-08-06T17:36:16.411529",
     "raw_count": 5,
     "kept_count": 5,
@@ -8025,5 +7980,57 @@
       }
     ],
     "summary": "J'ai \u00e9pur\u00e9 le sable pour garder les p\u00e9pites qui ne vendent pas l'air du temps mais fondent l'intelligence de march\u00e9. Mistral domine FR, Dionne est incontournable au QC, et Cyril garde le cap value en France."
+  },
+  {
+    "ts": "2026-09-03T05:48:57.776047",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuisFranco_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le roi de l'\u00e9ducation boursi\u00e8re en FR. Pas des signaux miracles, mais un d\u00e9clic math\u00e9matique brutal sur les ETF et la dur\u00e9e."
+      },
+      {
+        "handle": "LauraneB",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ex-Polymath. Elle parle crypto comme on discute du temps qu'il fait : sans pathos, avec des chiffres et une pointe d'ironie."
+      },
+      {
+        "handle": "MaxenceB",
+        "region": "france",
+        "niche": "tech/crypto/ia",
+        "followers": 18000,
+        "reason": "L'entrepreneur qui n'a pas oubli\u00e9 la rue. Ses threads sur les leviers financiers et le SaaS sont plus utiles que la moiti\u00e9 des livres Payhip du march\u00e9."
+      },
+      {
+        "handle": "SachaFavre",
+        "region": "usa",
+        "niche": "crypto/web3",
+        "followers": 15000,
+        "reason": "Bas\u00e9 NY mais l'esprit FR. Ses threads sur les cycles crypto sont aussi pr\u00e9cis qu'un chronom\u00e8tre suisse et moins chiants que ceux de Raoul Pal."
+      },
+      {
+        "handle": "AdrienLaroche",
+        "region": "france",
+        "niche": "ia/tech",
+        "followers": 14000,
+        "reason": "Found AI. Il vulgarise l'explosion de l'IA g\u00e9n\u00e9rative sans te vendre le r\u00eave du codeur paresseux."
+      },
+      {
+        "handle": "RomainDuclos_",
+        "region": "quebec",
+        "niche": "tech/ai",
+        "followers": 12000,
+        "reason": "Expert IA qu\u00e9b\u00e9cois. Moins 'influencer', plus ing\u00e9nieur qui d\u00e9cortique les LLMs sans te faire croire qu'il va te rendre riche en trois jours."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide entre les poids lourds du trading fran\u00e7ais (Franco/Laroche) et une s\u00e9lection pr\u00e9cise des talents IA/QC. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont encore un emploi ou deux startups \u00e0 la barre."
   }
 ]
