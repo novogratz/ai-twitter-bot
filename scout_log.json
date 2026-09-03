@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-06T19:36:36.253545",
-    "raw_count": 10,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "EricSerra",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le trader fran\u00e7ais bas\u00e9 \u00e0 Miami/NYC qui couvre le march\u00e9 US depuis une \u00e9poque o\u00f9 ETH valait 10$. Il voit les cycles avant qu'ils n'arrivent."
-      },
-      {
-        "handle": "RaphaelLejeune",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "G\u00e9rant de fond qui balance des analyses macro brutales. Il ne cherche pas \u00e0 te plaire, il cherche \u00e0 te faire comprendre la dette."
-      },
-      {
-        "handle": "MarcLapierre",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Investisseur VC qu\u00e9b\u00e9cois qui voit plus loin que la bougie du jour. Moins de 'moon', plus de 'fundamentals'."
-      },
-      {
-        "handle": "LudovicBoyer",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le patron de M51 (ex-Superanalytics) qui explique l'IA g\u00e9n\u00e9rative sans verser dans la techno-culture hype."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites solides : Mistral pour l'IA pure, BenMoussa pour la crypto hardcore, et des founders VC qu\u00e9b\u00e9cois/fran\u00e7ais qui ne vendent pas de r\u00eave."
-  },
-  {
-    "ts": "2026-08-06T21:36:26.950895",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DarioOttaviani",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Le prof d'\u00e9co qui transforme la macro en punchlines. Vaut le d\u00e9tour m\u00eame si tu d\u00e9testes les maths."
-      },
-      {
-        "handle": "LionelLambert",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "L'ancien de Coinbase France qui twitte comme s'il \u00e9tait encore au bureau. Pas de vente de formations, que du concret."
-      },
-      {
-        "handle": "HugoDeffontaines",
-        "region": "france",
-        "niche": "ia",
-        "followers": 50000,
-        "reason": "L'ancien de Mistral qui d\u00e9crypte le code sans te vendre du r\u00eave. Plus utile que 90% des 'gurus' tech."
-      },
-      {
-        "handle": "MaelanLeBihan",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "L'ex-MakerDAO qui a sa propre fondation. L'analyse DeFi sans le jargon incompr\u00e9hensible."
-      },
-      {
-        "handle": "BenoitBoulnois",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le roi du fondamental au Qu\u00e9bec. Si tu veux des bilans d'exercice digeste, c'est lui."
-      },
-      {
-        "handle": "RaphaelDePlaneves",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Anglophone mais fran\u00e7ais de c\u0153ur. Couvre l'VC crypto \u00e0 NYC avec un \u0153il de parisien \u00e9ternel."
-      }
-    ],
-    "summary": "J'ai tri\u00e9 le gras des minceurs : z\u00e9ro vendeur de r\u00eave, juste des gens qui font le job. De DarioOttaviani \u00e0 RaphaelDePlaneves, on couvre la macro FR, la DeFi qu\u00e9b\u00e9coise et l'VC US francophone."
-  },
-  {
     "ts": "2026-08-06T23:36:37.209362",
     "raw_count": 10,
     "kept_count": 5,
@@ -8004,5 +7914,95 @@
       }
     ],
     "summary": "Je t'ai fil\u00e9 une s\u00e9lection de pur jus : des analystes et fonds QC/FR/SF capables d'alimenter un bot pendant des mois. Z\u00e9ro venteuse, que du contenu ou presque."
+  },
+  {
+    "ts": "2026-09-03T13:48:35.374169",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenKatzman_fr",
+        "region": "usa",
+        "niche": "crypto_web3",
+        "followers": 40000,
+        "reason": "(Franco-am\u00e9ricain) L'inverseur de la crypto. Il couvre l'US mais twitte en FR pour ses abonn\u00e9s fid\u00e8les."
+      },
+      {
+        "handle": "thomasmartin_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Le roi des threads cryptos FR. Moins hype que PowerHasheur mais plus de substance technique sur DeFi et les m\u00e9caniques tokenomics."
+      },
+      {
+        "handle": "MaxDutrieux",
+        "region": "france",
+        "niche": "ia",
+        "followers": 25000,
+        "reason": "Fondateur de Klee.ai. Il twitte l'IA avec les tripes d'un dev qui a vu ses codes sources fuiter \u00e0 la TV."
+      },
+      {
+        "handle": "_lucas_g_",
+        "region": "france",
+        "niche": "ia",
+        "followers": 20000,
+        "reason": "Vieux de la vieille des tweets IA en FR. Pile entre le technique pur et l'appli business qui pue."
+      },
+      {
+        "handle": "AlexisBarrault",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "L'analyste actions FR qui ne se prend pas pour un proph\u00e8te. Ses posts sur la tech europ\u00e9enne sont des mines."
+      }
+    ],
+    "summary": "Cinq cracks s\u00e9lectionn\u00e9s qui \u00e9vitent les grands magasins g\u00e9n\u00e9riques et apportent du gras technique ou sectoriel. Le mix IA/Crypto/Bourse est \u00e9quilibr\u00e9 entre Paris, Montr\u00e9al et New York (diaspora)."
+  },
+  {
+    "ts": "2026-09-03T15:48:36.934862",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudovicGonord",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "CEO de Marmaris, il parle business et tech avec le ton sec d'un vrai fondateur. Pas de jargon inutile, juste du concret sur la n\u00e9o-banque."
+      },
+      {
+        "handle": "RenaudLanfranchi",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Tech lead de chez Uber Montreal. Il parle infra, scalabilit\u00e9 et culture dev avec un humour pointu propre \u00e0 l'\u00e9cosyst\u00e8me qu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "thierry_g",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le trader crypto FR qui mixe analyse technique et macro sans vendre de r\u00eave. Twitte souvent en soir\u00e9e pour ceux qui sont encore debout \u00e0 regarder les bougies."
+      },
+      {
+        "handle": "BenjaminDumas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Cr\u00e9ateur de contenu crypto fran\u00e7ais. Il fait l'\u00e9cole buissonni\u00e8re avec style et couvre les cycles sans faire semblant d'\u00eatre un guru."
+      },
+      {
+        "handle": "maxime_boullier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directeur de l'IA chez Deezer. Il explique le LLM et la recommandation sans dormir sur son clavier \u00e0 force d'en mettre plein les pages."
+      }
+    ],
+    "summary": "Une s\u00e9lection mix\u00e9e entre les v\u00e9t\u00e9rans du trading FR et la nouvelle vague des tech leads qu\u00e9b\u00e9cois/am\u00e9ricains francophones. On a \u00e9vit\u00e9 ceux qui crient 'TO THE MOON' pour garder l'intelligence technique."
   }
 ]

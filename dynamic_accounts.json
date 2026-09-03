@@ -2186,7 +2186,16 @@
     "SachaFavre",
     "AdrienLaroche",
     "RomainDuclos_",
-    "_julesbnt_"
+    "_julesbnt_",
+    "BenKatzman_fr",
+    "thomasmartin_",
+    "MaxDutrieux",
+    "_lucas_g_",
+    "AlexisBarrault",
+    "LudovicGonord",
+    "thierry_g",
+    "BenjaminDumas",
+    "maxime_boullier"
   ],
   "en": [
     "Chubby",
@@ -15992,6 +16001,51 @@
     {
       "lang": "fr",
       "handle": "_julesbnt_",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenKatzman_fr",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasmartin_",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxDutrieux",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "_lucas_g_",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBarrault",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicGonord",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "thierry_g",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDumas",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_boullier",
       "added": "2026-09-03"
     }
   ]

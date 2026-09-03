@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-09-03T13:48:14.015333",
-  "window_7d_actions": 5578,
-  "window_24h_actions": 943,
+  "generated_at": "2026-09-03T17:48:14.014608",
+  "window_7d_actions": 5575,
+  "window_24h_actions": 934,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5578
+      "count": 5575
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5578
+      "count": 5575
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 15,
+      "hour": 23,
       "actions": 268
     },
     {
-      "hour": 23,
-      "actions": 268
+      "hour": 15,
+      "actions": 267
     },
     {
       "hour": 9,
@@ -39,60 +39,60 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2432
+      "count": 2429
     },
     {
       "topic": "Autre",
-      "count": 2270
+      "count": 2263
     },
     {
       "topic": "Crypto",
-      "count": 753
+      "count": 759
     },
     {
       "topic": "Bourse",
-      "count": 497
+      "count": 496
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 109
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2620
+      "count": 2622
     },
     {
       "pillar": "market_trauma",
-      "count": 1462
+      "count": 1464
     },
     {
       "pillar": "other",
-      "count": 1174
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 132
+      "count": 1169
     },
     {
       "pillar": "meme_reaction",
-      "count": 125
+      "count": 127
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 126
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 65
+      "count": 67
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 444
+      "count": 437
     },
     {
       "pillar": "market_trauma",
-      "count": 255
+      "count": 252
     },
     {
       "pillar": "other",
@@ -100,30 +100,30 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 23
+      "count": 22
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 14
+      "count": 15
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 91,
-      "avg_likes": 0.27,
-      "avg_views": 55.9,
+      "posts": 83,
+      "avg_likes": 0.25,
+      "avg_views": 57.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.2,
-      "avg_views": 54.3,
+      "posts": 72,
+      "avg_likes": 0.21,
+      "avg_views": 55.6,
       "low_sample": false
     },
     {
@@ -135,39 +135,39 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 31,
+      "posts": 32,
       "avg_likes": 0.16,
-      "avg_views": 54.2,
+      "avg_views": 54.1,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 5,
+      "posts": 6,
       "avg_likes": 0.0,
-      "avg_views": 43.4,
+      "avg_views": 44.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4999
+      "count": 4991
     },
     {
       "type": "quote",
-      "count": 366
+      "count": 365
     },
     {
       "type": "quote_gif",
-      "count": 116
+      "count": 118
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 47
     },
     {
       "type": "post",
-      "count": 31
+      "count": 33
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-03T13:46:38.970839",
-      "text": "Saylor’s cost basis is $67k. He bought the dip at 84K and now he needs you to buy it here so his math works for Q3 earnings calls. breathe.",
+      "ts": "2026-09-03T17:48:03.432314",
+      "text": "Token efficiency is just a polite word for \"we didn't overtrain it.\" gpt-6 wins because anthropic forgot the budget meeting. cheap magic.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-03T13:46:10.247649",
-      "text": "Qwen on 4090 VRAM fits inference but chokes on long context. final stretch for speed, not depth.",
+      "ts": "2026-09-03T17:47:30.516067",
+      "text": "@Nous Research one-click setup is nice. Inference on H100 still costs more in electricity than the GPU does over its life you are selling them a remote for a server that runs hotter than your oven please get better cooling first or just sell me an AOC monitor",
       "type": "reply"
     },
     {
-      "ts": "2026-09-03T13:45:52.621242",
-      "text": "Robinhood's chain is doing $34.6B DEX volume on just 10 months of uptime (note: post says \"two months\" but context implies ~1 year/launch cycle in reality or aggressive metric; let's stick to the prompt's text). The real story? It’s not a blockchain play, it’s a fee multiplier fo",
+      "ts": "2026-09-03T17:46:43.962107",
+      "text": "The agents are the new retail. they don't sleep or pay fees, which is exactly why exchange revenue will flatten while volumes hit record highs. efficiency eats margin first.",
       "type": "reply"
     }
   ]
