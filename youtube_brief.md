@@ -1,16 +1,16 @@
-# YouTube brief — 2026-09-02
+# YouTube brief — 2026-09-03
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **485**
-- reply: **420**
-- quote: **34**
-- quote_gif: **12**
-- retweet: **8**
+- Total actions logged: **943**
+- reply: **849**
+- quote: **60**
+- quote_gif: **20**
+- hotake: **7**
 - post: **6**
-- hotake: **5**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -43,92 +43,62 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-09-02
-- **@diligentplane** (435 likes, score 9/10) — Sold off all of my $NVDA and got off margin
+## 2026-09-03
+- **@0xaralez** (40 likes, score 9/10) — 🚨 FINAL BITCOIN CRASH STARTS NEXT WEEK
 
-I was essentially using my NVIDIA position like cash and realized a bit over $6K in profit
+Relief rally is already over and next dump will be massive
 
-Raised a bunch of cash
+My plan is simple:
 
-With Treasury yields soaring, oil movin
-  - https://x.com/DiligentPlane/status/2094819217992274005
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 563).
-- **@drayinvests** (21 likes, score 8/10) — Nvidia $NVDA right now is trading at 14x 2027 earnings...
+$77K → $57K → $45K (Bottom) → $58K → $87K
 
-They just recorded +106% YoY revenue growth and are guiding for +70% growth next year 
+The final bottom will form in $42K-$
+  - https://x.com/0xAralez/status/2095289017537327521
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 52).
+- **@milkroadai** (15 likes, score 8/10) — Robotics VC funding hit an all time high and here are some of the companies that are set to benefit from this (Save this).
 
-How could you not buy this stock right now?
-  - https://x.com/drayinvests/status/2094909822596472950
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27).
-- **@tt_stocks_** (33 likes, score 9/10) — Everyone focuses on GPUs, data centers and networking, but one of the biggest constraints over the next several years may simply be getting enough power to the grid and getting it there fast enough.
-  - https://x.com/TT_stocks_/status/2094365149024993455
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 63).
-- **@wolf_tradingx** (11 likes, score 7/10) — The ultra $GPRO pivot into AI datacenter leaves a massive dump at open from +78% to +46% and halted. 
+From 2021 through 2024, robotics deal activity was flat, somewhere between $
+  - https://x.com/MilkRoadAI/status/2095215476997812365
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 31).
+- **@0xphilanthrop** (12 likes, score 7/10) — 🚨 OH FUCK… BITCOIN’S NEXT SUPER-CYCLE BOTTOM MAY BE CLOSER THAN ANYONE THINKS
 
-Yikes.
-  - https://x.com/WOLF_TradingX/status/2094781497832300582
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 13).
+This chart is getting impossible to ignore.
+
+2015 → Bottom.
+2019 → Bottom.
+2022 → Bottom.
+2026 → Next?
+
+Every major cycl
+  - https://x.com/0xPhilanthrop/status/2095208400992739571
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@marc02200** (11 likes, score 7/10) — Let’s be honest here … 
+
+Are you more scared of a Bitcoin crash to 60k or of watching 100k happen while you delayed your buys?
+
+You know there’s only one right answer, right?
+  - https://x.com/marc02200/status/2095292688216064356
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Rand Group]** $TAO heating up engines. On its way to 4 digits
-  - https://x.com/randgroup/status/2092555150510698987
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Muro]** $HYPE & $TAO 
-
-Thank me later
-  - https://x.com/MuroCrypto/status/2094900001910522021
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Dami-Defi]** $TAO: $234, up 20%+ weekly.
-
-$NEAR: $1.93, holding above key averages.
-
-$FET: $0.15.
-
-$RENDER: $1.33.
-
-Four AI tokens. Four different price points.
-
-Which one h
-  - https://x.com/DamiDefi/status/2093054945583120477
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Bella]** Good Night CT  
-
-The real experiment wasn’t quantum vs CPU.
-
-It was whether @quipnetwork could make both compete through one decentralized compute layer.
-
-Visit
-  - https://x.com/bellaa_web3/status/2094808016130576568
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Chain INK]** Layers of Decentralized AI 
-
-2026: ~$21B MC
-2030: ~$80B (~40% CAGR est.)
-
-$NEAR → Confidential AI Intents
-$QUBIC → Mining Redirected To AI
-$SERV → Multi-Agent O
-  - https://x.com/0xchainink/status/2094871398036746410
-- **[X_FOLLOWING/Himanshu Kumar]** You can earn $500 per day if you have:
-
-1. A laptop
-2. Wi-Fi
-3. Time
-
-Here are 10 Claude prompts that pay you daily:
-  - https://x.com/codewithimanshu/status/2094721491963404468
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/2xnmore]** $TAO did not arrive on Aerodrome last Saturday.
-
-It arrived nine days earlier. The headline is a Chainlink recap.
-
-On August 20, ForeverMoney put a 1:1 TAO repr
-  - https://x.com/2xnmore/status/2094862230705647975
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Zoe]** i know price action of $TAO is slow 
-
-but its going to have its own bullrun
-
-once the decentralized AI is again in news
-
-till that accumulate
-  - https://x.com/zoetoshi/status/2094836516329824513
+- **[CoinDesk]** Bitcoin back above $77,500, XRP leads majors as Fed hike odds slide to 62%
+  - https://www.coindesk.com/markets/2026/09/03/bitcoin-back-above-usd77-500-xrp-leads-majors-as-fed-hike-odds-near-66
+- **[The Block]** ‘Much ado about nothing’: CFTC files to dismiss CME’s lawsuit over crypto perpetual futures
+  - https://www.theblock.co/news/regulation/2026-09-02-cftc-dismiss-cme-413416
+- **[CNBC Top]** Google starts September with AI momentum after longest monthly losing streak in over a decade
+  - https://www.cnbc.com/2026/09/02/google-starts-september-with-ai-momentum-after-long-losing-streak.html
+- **[CNBC Tech]** Google starts September with AI momentum after longest monthly losing streak in over a decade
+  - https://www.cnbc.com/2026/09/02/google-starts-september-with-ai-momentum-after-long-losing-streak.html
+- **[CNBC Top]** Broadcom delivers strong earnings view as CEO touts growth with AI labs
+  - https://www.cnbc.com/2026/09/02/broadcom-avgo-q3-earnings-report-2026.html
+- **[CNBC Tech]** Broadcom delivers strong earnings view as CEO touts growth with AI labs
+  - https://www.cnbc.com/2026/09/02/broadcom-avgo-q3-earnings-report-2026.html
+- **[Wired]** Meta Pushes Its New AI Agent on Employees—but Eases Off on Tokenmaxxing
+  - https://www.wired.com/story/meta-pushes-its-new-ai-agent-on-employees-but-eases-off-on-tokenmaxxing/
+- **[Decrypt]** Anthropic Admits Security Failures Behind Claude Hacking Incidents
+  - https://decrypt.co/377232/anthropic-security-claude-ai-hacks
 
 ## 🎬 Suggested video angles
 
@@ -139,4 +109,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-02T00:48:14*
+*Generated 2026-09-03T00:48:14*
