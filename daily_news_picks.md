@@ -17185,3 +17185,40 @@ How could you not buy this stock right now?
 Yikes.
   - https://x.com/WOLF_TradingX/status/2094781497832300582
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 13).
+
+## 2026-09-03
+- **@0xaralez** (40 likes, score 9/10) — 🚨 FINAL BITCOIN CRASH STARTS NEXT WEEK
+
+Relief rally is already over and next dump will be massive
+
+My plan is simple:
+
+$77K → $57K → $45K (Bottom) → $58K → $87K
+
+The final bottom will form in $42K-$
+  - https://x.com/0xAralez/status/2095289017537327521
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 52).
+- **@milkroadai** (15 likes, score 8/10) — Robotics VC funding hit an all time high and here are some of the companies that are set to benefit from this (Save this).
+
+From 2021 through 2024, robotics deal activity was flat, somewhere between $
+  - https://x.com/MilkRoadAI/status/2095215476997812365
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 31).
+- **@0xphilanthrop** (12 likes, score 7/10) — 🚨 OH FUCK… BITCOIN’S NEXT SUPER-CYCLE BOTTOM MAY BE CLOSER THAN ANYONE THINKS
+
+This chart is getting impossible to ignore.
+
+2015 → Bottom.
+2019 → Bottom.
+2022 → Bottom.
+2026 → Next?
+
+Every major cycl
+  - https://x.com/0xPhilanthrop/status/2095208400992739571
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@marc02200** (11 likes, score 7/10) — Let’s be honest here … 
+
+Are you more scared of a Bitcoin crash to 60k or of watching 100k happen while you delayed your buys?
+
+You know there’s only one right answer, right?
+  - https://x.com/marc02200/status/2095292688216064356
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).

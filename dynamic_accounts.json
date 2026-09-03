@@ -2649,7 +2649,8 @@
     "QwenWork",
     "Psyhodelik",
     "Zunaira",
-    "Bubblemaps"
+    "Bubblemaps",
+    "max"
   ],
   "history": [
     {
@@ -15890,6 +15891,11 @@
     {
       "lang": "fr",
       "handle": "MarcDesnoyers_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "en",
+      "handle": "max",
       "added": "2026-09-02"
     }
   ]
