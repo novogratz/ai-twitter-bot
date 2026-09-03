@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-02T21:48:16.829242",
-  "window_7d_actions": 5582,
-  "window_24h_actions": 962,
+  "generated_at": "2026-09-03T01:48:14.088111",
+  "window_7d_actions": 5579,
+  "window_24h_actions": 942,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5581
+      "count": 5578
     },
     {
       "pattern": "RENAME",
@@ -19,16 +19,16 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5581
+      "count": 5578
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 23,
-      "actions": 274
+      "hour": 15,
+      "actions": 268
     },
     {
-      "hour": 15,
+      "hour": 23,
       "actions": 268
     },
     {
@@ -47,98 +47,98 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2476
+      "count": 2454
     },
     {
       "topic": "Autre",
-      "count": 2247
+      "count": 2258
     },
     {
       "topic": "Crypto",
-      "count": 735
+      "count": 744
     },
     {
       "topic": "Bourse",
-      "count": 481
+      "count": 492
     },
     {
       "topic": "Spatial",
-      "count": 114
+      "count": 116
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2644
+      "count": 2626
     },
     {
       "pillar": "market_trauma",
-      "count": 1439
+      "count": 1444
     },
     {
       "pillar": "other",
-      "count": 1186
+      "count": 1184
     },
     {
       "pillar": "reply_bait",
-      "count": 130
+      "count": 135
     },
     {
       "pillar": "meme_reaction",
-      "count": 121
+      "count": 125
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 62
+      "count": 65
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 458
+      "count": 453
     },
     {
       "pillar": "market_trauma",
-      "count": 243
+      "count": 234
     },
     {
       "pillar": "other",
-      "count": 197
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 28
+      "count": 196
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 24
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 23
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
       "posts": 91,
-      "avg_likes": 0.29,
-      "avg_views": 54.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 30,
-      "avg_likes": 0.23,
-      "avg_views": 52.8,
+      "avg_likes": 0.27,
+      "avg_views": 56.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 67,
+      "posts": 68,
       "avg_likes": 0.22,
-      "avg_views": 52.2,
+      "avg_views": 53.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 29,
+      "avg_likes": 0.21,
+      "avg_views": 55.6,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5010
+      "count": 4999
     },
     {
       "type": "quote",
-      "count": 358
+      "count": 363
     },
     {
       "type": "quote_gif",
-      "count": 113
+      "count": 117
     },
     {
       "type": "hotake",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 22
+      "count": 21
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-02T21:47:44.584742",
-      "text": "Claude cooked. Grok billed you for the fire. You’re running enterprise inference on startup margins. That’s not a workflow win. it’s an EBITDA bleed in real time.",
+      "ts": "2026-09-03T01:47:58.324562",
+      "text": "14 PhDs for ARC-AGI? that's a $70M salary run-rate just to answer prompts. you're buying research hours before anyone figured out how to price inference. expensive hobby.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T21:46:51.027617",
-      "text": "Btc hit $109k before 9am etchings. the pain cap clears at $148b and miners start breathing again. no sweat left in this one. we just priced out the weak hands.",
+      "ts": "2026-09-03T01:47:14.937963",
+      "text": "WIRED hires a \"Chief AI Editor\" to tell you which LLM is trustworthy. the subscription model costs less than one H100 training run for a month. we are still buying maps from explorers who haven't left their office yet",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T21:46:20.078990",
-      "text": "$AAOI at 4.50 is already priced for liquidation if data center orders slip the second half of year one; these are hardware companies with SaaS valuations attached to unproven capex plans. panic selling on fundamentals, not cash rotation.",
+      "ts": "2026-09-03T01:46:25.459123",
+      "text": "AVGO depends on Anthropic/OpenAI ramping to 30GW+. Google drops from top tier. The infrastructure oligopoly just got narrower and richer.",
       "type": "reply"
     }
   ]
