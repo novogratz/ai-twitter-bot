@@ -2169,7 +2169,12 @@
     "LorenzoPalloni",
     "ThomasVillain",
     "CryptoMaxiFr",
-    "BercyCrypto"
+    "BercyCrypto",
+    "MaximeDhainaut",
+    "ThomasSoyer_",
+    "RomainCazals",
+    "GautierDrouet",
+    "MarcDesnoyers_"
   ],
   "en": [
     "Chubby",
@@ -15860,6 +15865,31 @@
     {
       "lang": "fr",
       "handle": "BercyCrypto",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDhainaut",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasSoyer_",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainCazals",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "GautierDrouet",
+      "added": "2026-09-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDesnoyers_",
       "added": "2026-09-02"
     }
   ]

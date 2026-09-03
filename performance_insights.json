@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-02T17:48:14.066109",
-  "window_7d_actions": 5601,
-  "window_24h_actions": 831,
+  "generated_at": "2026-09-02T21:48:16.829242",
+  "window_7d_actions": 5582,
+  "window_24h_actions": 962,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5600
+      "count": 5581
     },
     {
       "pattern": "RENAME",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5600
+      "count": 5581
     }
   ],
   "best_hours_utc": [
@@ -47,98 +47,98 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2495
+      "count": 2476
     },
     {
       "topic": "Autre",
-      "count": 2249
+      "count": 2247
     },
     {
       "topic": "Crypto",
-      "count": 731
+      "count": 735
     },
     {
       "topic": "Bourse",
-      "count": 482
+      "count": 481
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 114
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2667
+      "count": 2644
     },
     {
       "pillar": "market_trauma",
-      "count": 1438
+      "count": 1439
     },
     {
       "pillar": "other",
-      "count": 1184
+      "count": 1186
     },
     {
       "pillar": "reply_bait",
-      "count": 129
+      "count": 130
     },
     {
       "pillar": "meme_reaction",
-      "count": 124
+      "count": 121
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 59
+      "count": 62
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 397
+      "count": 458
     },
     {
       "pillar": "market_trauma",
-      "count": 207
+      "count": 243
     },
     {
       "pillar": "other",
-      "count": 169
+      "count": 197
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 28
     },
     {
       "pillar": "meme_reaction",
       "count": 26
     },
     {
-      "pillar": "reply_bait",
-      "count": 24
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 87,
-      "avg_likes": 0.3,
-      "avg_views": 51.0,
+      "posts": 91,
+      "avg_likes": 0.29,
+      "avg_views": 54.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
-      "avg_likes": 0.24,
-      "avg_views": 50.6,
+      "posts": 30,
+      "avg_likes": 0.23,
+      "avg_views": 52.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 68,
+      "posts": 67,
       "avg_likes": 0.22,
-      "avg_views": 52.0,
+      "avg_views": 52.2,
       "low_sample": false
     },
     {
@@ -150,24 +150,24 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 40.0,
+      "avg_views": 43.4,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5027
+      "count": 5010
     },
     {
       "type": "quote",
-      "count": 357
+      "count": 358
     },
     {
       "type": "quote_gif",
-      "count": 116
+      "count": 113
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-02T17:47:32.118917",
-      "text": "OpenAI raised at $157B for a model that needs guardrails? the burn rate is exponential. we're betting the runway on AGI shipping before interest rates compound against us. no pressure.",
+      "ts": "2026-09-02T21:47:44.584742",
+      "text": "Claude cooked. Grok billed you for the fire. You’re running enterprise inference on startup margins. That’s not a workflow win. it’s an EBITDA bleed in real time.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T17:46:51.016047",
-      "text": "IREN is building power plants. The crypto market sees a mining stock and prices it like a leveraged BTC bet on the side hustle economy. It’s an energy play in GPU clothing.",
+      "ts": "2026-09-02T21:46:51.027617",
+      "text": "Btc hit $109k before 9am etchings. the pain cap clears at $148b and miners start breathing again. no sweat left in this one. we just priced out the weak hands.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-02T17:45:51.893842",
-      "text": "Cursor agents on your infra = the SaaS seat model finally eating its own young. you pay for compute uptime instead of license renewal. infrastructure is the new moat.",
+      "ts": "2026-09-02T21:46:20.078990",
+      "text": "$AAOI at 4.50 is already priced for liquidation if data center orders slip the second half of year one; these are hardware companies with SaaS valuations attached to unproven capex plans. panic selling on fundamentals, not cash rotation.",
       "type": "reply"
     }
   ]

@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-06T07:36:29.855495",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaxDormoy",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'ancien banquier d'affaires qui a rendu la macro \u00e9conomiquement digeste. Twitte avec une plume rare, zero formatage, pur intellectuel du march\u00e9."
-      },
-      {
-        "handle": "VincentRoulez",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Fondateur de Systran, p\u00e8re de la traduction automatique. Il tweet l'histoire de l'IA, les vieux conflits et la tech moderne en anglais, avec une pointe de culture fran\u00e7aise."
-      },
-      {
-        "handle": "ThibaudDeC",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le grand seigneur du Bitcoin FR. Il tweet ses positions, ses id\u00e9es et ses voyages. Pas de 'Buy Now', juste de l'analyse profonde sans jargon inutile."
-      },
-      {
-        "handle": "AlexisBoscher",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Founder de MooltaRoof (rachet\u00e9) puis de Deepomatic. Il couvre la deeptech et l'IA appliqu\u00e9e avec une lucidit\u00e9 rare sur le paysage startup fran\u00e7ais."
-      }
-    ],
-    "summary": "Un mix solide entre les v\u00e9t\u00e9rans de la bourse fran\u00e7aise (Dormoy) et les nouveaux patrons de l'IA (Mistral/Dionne). On \u00e9vite les vendeurs de r\u00eave pour se concentrer sur ceux qui ont construit du code ou de l'argent."
-  },
-  {
     "ts": "2026-08-06T09:36:36.599638",
     "raw_count": 10,
     "kept_count": 8,
@@ -8060,5 +8022,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui font le job : analysts, founders tech et traders actifs. Du solide sans le blabla LinkedIn habituel."
+  },
+  {
+    "ts": "2026-09-02T19:48:38.033933",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeDhainaut",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 105000,
+        "reason": "Le roi de la data on-chain. Il sort des charts qui valent mieux que ton analyse fondamentale de fin d'ann\u00e9e."
+      },
+      {
+        "handle": "BenjaminVigouroux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 52000,
+        "reason": "Le 'Guru' de la Boursorama qui reste pertinent. Ses threads sont des crashs-course en actu financier."
+      },
+      {
+        "handle": "ThomasSoyer_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Ex-JPMorgan qui parle vrai. Il d\u00e9cortique l'actu macro sans te endormir avec du jargon de banque."
+      },
+      {
+        "handle": "RomainCazals",
+        "region": "france",
+        "niche": "ai",
+        "followers": 38000,
+        "reason": "Le mec qui tracke chaque puce GPU sortie du day. Si tu veux savoir o\u00f9 va l'IA avant les analystes."
+      },
+      {
+        "handle": "GautierDrouet",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 28000,
+        "reason": "Fondateur de Fincorp bas\u00e9 \u00e0 NYC. Il montre comment les fintechs survivent sans lever du cash."
+      },
+      {
+        "handle": "MarcDesnoyers_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "VC au Qu\u00e9bec. Il cite les startups frico locales que personne ne regarde avant qu'elles soient en s\u00e9rie B."
+      }
+    ],
+    "summary": "8 profils filtr\u00e9s : on a \u00e9vit\u00e9 les vendeurs de r\u00eaves et gard\u00e9 ceux qui produisent de la data ou des analyses solides (on-chain, macro, fintech). Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 via ses experts crypto/tech install\u00e9s ailleurs."
   }
 ]
