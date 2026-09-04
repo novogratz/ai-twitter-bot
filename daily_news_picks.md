@@ -17247,3 +17247,38 @@ The difference between a good investment a
 - **@arakharazian** (1031 likes, score 9/10) — New from Ramp data: the latest threat to the AI trade. AI companies' revenues are heavily dependent on a small set of customers. 80% of OpenAI and Anthropic's enterprise revenues come from 1% of their
   - https://x.com/arakharazian/status/2095204452609171555
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 1251).
+
+## 2026-09-04
+- **@kyanyang_** (867 likes, score 9/10) — openai asked me to test GPT 6 Astra, but uh, i turnt it down
+
+they offered me like, 15, sum shi like 10, like 5 billion free tokens
+
+it was on this big gpu cluster out in jacksonville
+
+but i turnt it
+  - https://x.com/kyanyang_/status/2095608970966937923
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 913).
+- **@coinbureau** (320 likes, score 9/10) — 🚨BREAKING: OpenAI claims its new GPT-6 Astra has OVERTAKEN Anthropic as the world's most intelligent AI model.
+
+The $852 BILLION company says Astra is "market-leading in software engineering, science
+  - https://x.com/coinbureau/status/2095577822928806351
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 382).
+- **@beth_kindig** (0 likes, score 8/10) — CoreWeave $CRWV offered the first look at $NVDA Vera Rubin NVL72’s performance on DeepSeek R1 in July, finding up to a 10X increase in tokens per MW compared to the GB200. 
+
+Back-of-napkin math shows
+  - https://x.com/Beth_Kindig/status/2095492248175616174
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 34).
+- **@wallstengine** (244 likes, score 9/10) — Jane Street signs ~$13B AI cloud deal with Crusoe
+
+The 5-year agreement will give Jane Street access to advanced GPU clusters for AI training and inference.
+
+Jane Street has also committed roughly $6B
+  - https://x.com/wallstengine/status/2095591834596913232
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 258).
+- **@unity** (159 likes, score 9/10) — A huge milestone for @OpenAI with the GPT-6 Astra launch 🎉
+
+Thanks for highlighting how Unity works alongside coding agents to build immersive 3D environments. 
+
+Congratulations on the release! 👏
+  - https://x.com/unity/status/2095704146452037959
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 175).
