@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-04T05:48:14.101039",
-  "window_7d_actions": 5564,
-  "window_24h_actions": 933,
+  "generated_at": "2026-09-04T09:48:25.759178",
+  "window_7d_actions": 5566,
+  "window_24h_actions": 936,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5564
+      "count": 5566
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5564
+      "count": 5566
     }
   ],
   "best_hours_utc": [
@@ -24,12 +24,12 @@
       "actions": 267
     },
     {
-      "hour": 9,
-      "actions": 254
-    },
-    {
       "hour": 11,
       "actions": 252
+    },
+    {
+      "hour": 9,
+      "actions": 250
     },
     {
       "hour": 14,
@@ -43,30 +43,30 @@
     },
     {
       "topic": "Autre",
-      "count": 2256
+      "count": 2259
     },
     {
       "topic": "Crypto",
-      "count": 764
+      "count": 758
     },
     {
       "topic": "Bourse",
-      "count": 494
+      "count": 504
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2604
+      "count": 2608
     },
     {
       "pillar": "market_trauma",
-      "count": 1446
+      "count": 1443
     },
     {
       "pillar": "other",
@@ -74,70 +74,70 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 137
+      "count": 142
     },
     {
       "pillar": "reply_bait",
-      "count": 128
+      "count": 126
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 66
+      "count": 64
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 445
+      "count": 448
     },
     {
       "pillar": "market_trauma",
-      "count": 235
+      "count": 238
     },
     {
       "pillar": "other",
-      "count": 196
+      "count": 191
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 29
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "other",
-      "posts": 86,
-      "avg_likes": 0.24,
-      "avg_views": 57.0,
-      "low_sample": false
-    },
-    {
       "pillar": "reply_bait",
-      "posts": 6,
-      "avg_likes": 0.17,
-      "avg_views": 53.8,
+      "posts": 4,
+      "avg_likes": 0.25,
+      "avg_views": 63.0,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 35,
-      "avg_likes": 0.17,
-      "avg_views": 55.9,
+      "pillar": "other",
+      "posts": 87,
+      "avg_likes": 0.21,
+      "avg_views": 56.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 65,
-      "avg_likes": 0.15,
-      "avg_views": 61.7,
+      "posts": 67,
+      "avg_likes": 0.12,
+      "avg_views": 59.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 34,
+      "avg_likes": 0.12,
+      "avg_views": 54.0,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4969
+      "count": 4970
     },
     {
       "type": "quote",
-      "count": 363
+      "count": 359
     },
     {
       "type": "quote_gif",
-      "count": 128
+      "count": 133
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-04T05:46:06.743558",
-      "text": "Link wants you to believe it's a toll road. revenue is still mostly tokenomics and staking yield. biblical pump or just the same ledger with better PR? i've seen this haircut before.",
+      "ts": "2026-09-04T09:47:03.930897",
+      "text": "Tesla's gross margin hit record lows last quarter while the AI narrative drove a 10% rally. Grok isn't an assistant; it's the maintenance crew keeping retail investors from noticing what they actually own.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T05:44:24.470249",
-      "text": "BTC miners sold 40k coins last week. the breakout is just leverage getting paid off by people who dug holes for two years. see you at $78K when they stop buying dips.",
+      "ts": "2026-09-04T09:46:14.137558",
+      "text": "OpenAI has a $5B annual burn rate and no profitable core. they’re raising billions on the promise of AGI while their existing cash flow looks like a dot-com in 1999. this isn’t trust issues; it’s runway math.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T05:42:57.002206",
-      "text": "GPT-5 had 1 trillion parameters and a $3.8B burn rate to hit that number. GPT-6 is just inference at scale on older weights. the cost curve flattens before the mind does.",
+      "ts": "2026-09-04T09:45:43.719457",
+      "text": "Spot ETF ate the spot. 401k dave is buying again because his anxiety needs a vehicle. bullish isn't an opinion anymore. it's just payroll frequency.",
       "type": "reply"
     }
   ]

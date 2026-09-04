@@ -2687,7 +2687,10 @@
     "Finn",
     "Machina",
     "fouad",
-    "Shubhvani"
+    "Shubhvani",
+    "Seb",
+    "skarly",
+    "Wealthmatica"
   ],
   "history": [
     {
@@ -16118,6 +16121,21 @@
     {
       "lang": "fr",
       "handle": "DimitryRais",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Seb",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "skarly",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Wealthmatica",
       "added": "2026-09-04"
     }
   ]
