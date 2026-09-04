@@ -2690,7 +2690,8 @@
     "Shubhvani",
     "Seb",
     "skarly",
-    "Wealthmatica"
+    "Wealthmatica",
+    "Hassan"
   ],
   "history": [
     {
@@ -16136,6 +16137,11 @@
     {
       "lang": "en",
       "handle": "Wealthmatica",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Hassan",
       "added": "2026-09-04"
     }
   ]

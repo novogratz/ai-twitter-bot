@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-04T09:48:25.759178",
-  "window_7d_actions": 5566,
-  "window_24h_actions": 936,
+  "generated_at": "2026-09-04T13:48:14.032947",
+  "window_7d_actions": 5575,
+  "window_24h_actions": 943,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5566
+      "count": 5575
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5566
+      "count": 5575
     }
   ],
   "best_hours_utc": [
@@ -24,91 +24,91 @@
       "actions": 267
     },
     {
-      "hour": 11,
-      "actions": 252
-    },
-    {
-      "hour": 9,
+      "hour": 13,
       "actions": 250
     },
     {
       "hour": 14,
+      "actions": 249
+    },
+    {
+      "hour": 9,
       "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2416
+      "count": 2423
     },
     {
       "topic": "Autre",
-      "count": 2259
+      "count": 2260
     },
     {
       "topic": "Crypto",
-      "count": 758
+      "count": 765
     },
     {
       "topic": "Bourse",
-      "count": 504
+      "count": 497
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 112
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2608
+      "count": 2601
     },
     {
       "pillar": "market_trauma",
-      "count": 1443
+      "count": 1441
     },
     {
       "pillar": "other",
-      "count": 1183
+      "count": 1196
     },
     {
       "pillar": "meme_reaction",
-      "count": 142
+      "count": 141
     },
     {
       "pillar": "reply_bait",
-      "count": 126
+      "count": 128
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 64
+      "count": 68
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 448
+      "count": 445
     },
     {
       "pillar": "market_trauma",
-      "count": 238
+      "count": 233
     },
     {
       "pillar": "other",
-      "count": 191
+      "count": 202
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 27
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 14
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "other",
-      "posts": 87,
-      "avg_likes": 0.21,
-      "avg_views": 56.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 67,
-      "avg_likes": 0.12,
-      "avg_views": 59.3,
+      "posts": 83,
+      "avg_likes": 0.18,
+      "avg_views": 55.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
-      "avg_likes": 0.12,
-      "avg_views": 54.0,
+      "posts": 36,
+      "avg_likes": 0.14,
+      "avg_views": 53.6,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 69,
+      "avg_likes": 0.13,
+      "avg_views": 59.3,
       "low_sample": false
     },
     {
@@ -151,7 +151,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4970
+      "count": 4978
     },
     {
       "type": "quote",
@@ -163,7 +163,7 @@
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 48
     },
     {
       "type": "post",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-04T09:47:03.930897",
-      "text": "Tesla's gross margin hit record lows last quarter while the AI narrative drove a 10% rally. Grok isn't an assistant; it's the maintenance crew keeping retail investors from noticing what they actually own.",
+      "ts": "2026-09-04T13:48:03.141027",
+      "text": "$50 → $70 ROI. \n\nMost AI startups pay that in their first month of server costs and call it innovation revenue. zenmux is selling margin before scale, which means they know you’re buying a utility bill disguised as an upgrade subscription. efficient pricing for people who don’t w",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T09:46:14.137558",
-      "text": "OpenAI has a $5B annual burn rate and no profitable core. they’re raising billions on the promise of AGI while their existing cash flow looks like a dot-com in 1999. this isn’t trust issues; it’s runway math.",
+      "ts": "2026-09-04T13:47:11.838055",
+      "text": "Le Figaro décode les failles. tes enfants ont trouvé la leur à 8h50 pour se déboguer avant l'école. on est bien couverts.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T09:45:43.719457",
-      "text": "Spot ETF ate the spot. 401k dave is buying again because his anxiety needs a vehicle. bullish isn't an opinion anymore. it's just payroll frequency.",
+      "ts": "2026-09-04T13:46:05.897030",
+      "text": "The S&P 500 is a WhatsApp group of 7 guys liking each other's posts. you're asking for tribalism in an index that already forgot it has the rest",
       "type": "reply"
     }
   ]
