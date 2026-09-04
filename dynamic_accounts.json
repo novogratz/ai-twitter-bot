@@ -2195,7 +2195,13 @@
     "LudovicGonord",
     "thierry_g",
     "BenjaminDumas",
-    "maxime_boullier"
+    "maxime_boullier",
+    "CryptoMacrosFR",
+    "FinTechGourou",
+    "MarcLavoieQC",
+    "LudovicDumasFR",
+    "MaelBourgeois_",
+    "RaphaelysCrypto"
   ],
   "en": [
     "Chubby",
@@ -16046,6 +16052,36 @@
     {
       "lang": "fr",
       "handle": "maxime_boullier",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMacrosFR",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "FinTechGourou",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLavoieQC",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicDumasFR",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelBourgeois_",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelysCrypto",
       "added": "2026-09-03"
     }
   ]
