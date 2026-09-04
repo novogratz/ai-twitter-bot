@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-04T13:48:14.032947",
-  "window_7d_actions": 5575,
-  "window_24h_actions": 943,
+  "generated_at": "2026-09-04T17:48:14.053193",
+  "window_7d_actions": 5559,
+  "window_24h_actions": 939,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5575
+      "count": 5559
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5575
+      "count": 5559
     }
   ],
   "best_hours_utc": [
@@ -21,37 +21,37 @@
     },
     {
       "hour": 15,
-      "actions": 267
-    },
-    {
-      "hour": 13,
-      "actions": 250
+      "actions": 258
     },
     {
       "hour": 14,
-      "actions": 249
+      "actions": 250
     },
     {
       "hour": 9,
       "actions": 249
+    },
+    {
+      "hour": 0,
+      "actions": 248
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2423
+      "count": 2431
     },
     {
       "topic": "Autre",
-      "count": 2260
+      "count": 2249
     },
     {
       "topic": "Crypto",
-      "count": 765
+      "count": 756
     },
     {
       "topic": "Bourse",
-      "count": 497
+      "count": 488
     },
     {
       "topic": "Spatial",
@@ -62,45 +62,45 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2601
+      "count": 2614
     },
     {
       "pillar": "market_trauma",
-      "count": 1441
+      "count": 1425
     },
     {
       "pillar": "other",
-      "count": 1196
+      "count": 1191
     },
     {
       "pillar": "meme_reaction",
-      "count": 141
+      "count": 140
     },
     {
       "pillar": "reply_bait",
-      "count": 128
+      "count": 123
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 68
+      "count": 66
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 445
+      "count": 453
     },
     {
       "pillar": "market_trauma",
-      "count": 233
+      "count": 227
     },
     {
       "pillar": "other",
-      "count": 202
+      "count": 198
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 28
     },
     {
       "pillar": "reply_bait",
@@ -108,36 +108,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 14
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 63.0,
+      "pillar": "other",
+      "posts": 80,
+      "avg_likes": 0.17,
+      "avg_views": 54.8,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 83,
-      "avg_likes": 0.18,
-      "avg_views": 55.6,
+      "pillar": "ai_news_take",
+      "posts": 72,
+      "avg_likes": 0.12,
+      "avg_views": 58.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 36,
-      "avg_likes": 0.14,
-      "avg_views": 53.6,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.13,
-      "avg_views": 59.3,
+      "avg_likes": 0.11,
+      "avg_views": 51.7,
       "low_sample": false
     },
     {
@@ -146,24 +139,31 @@
       "avg_likes": 0.0,
       "avg_views": 44.3,
       "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 4,
+      "avg_likes": 0.0,
+      "avg_views": 43.5,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4978
+      "count": 4962
     },
     {
       "type": "quote",
-      "count": 359
+      "count": 361
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 132
     },
     {
       "type": "hotake",
-      "count": 48
+      "count": 47
     },
     {
       "type": "post",
@@ -176,19 +176,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-04T13:48:03.141027",
-      "text": "$50 → $70 ROI. \n\nMost AI startups pay that in their first month of server costs and call it innovation revenue. zenmux is selling margin before scale, which means they know you’re buying a utility bill disguised as an upgrade subscription. efficient pricing for people who don’t w",
+      "ts": "2026-09-04T17:47:17.862807",
+      "text": "Nscale is shipping inference chips that cut latency while Nvidia eats your margins. this isn't a partnership it's an insurance policy against the monopoly.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T13:47:11.838055",
-      "text": "Le Figaro décode les failles. tes enfants ont trouvé la leur à 8h50 pour se déboguer avant l'école. on est bien couverts.",
+      "ts": "2026-09-04T17:45:58.846415",
+      "text": "Pelosi bought $BE before the S&P addition. spot price jumped 15% on announcement day. she didn't get lucky; she traded info as an asset class while we waited for CNBC to confirm what already happened.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T13:46:05.897030",
-      "text": "The S&P 500 is a WhatsApp group of 7 guys liking each other's posts. you're asking for tribalism in an index that already forgot it has the rest",
-      "type": "reply"
+      "ts": "2026-09-04T17:45:04.894033",
+      "text": "South Korea exports up 72%. My portfolio’s like that, but after two espressos and yelling at my broker 🙂📈",
+      "type": "quote"
     }
   ]
 }

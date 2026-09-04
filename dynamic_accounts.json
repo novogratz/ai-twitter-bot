@@ -2204,7 +2204,14 @@
     "RaphaelysCrypto",
     "Pablo77381",
     "CyrilBouy",
-    "DimitryRais"
+    "DimitryRais",
+    "CryptoCobain_fr",
+    "_sylvain_dumais",
+    "TheAlphavantage",
+    "BourseFacile_",
+    "CryptoPatron",
+    "CryptoJoaquin_",
+    "MarcDumais_"
   ],
   "en": [
     "Chubby",
@@ -16142,6 +16149,41 @@
     {
       "lang": "en",
       "handle": "Hassan",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCobain_fr",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "_sylvain_dumais",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAlphavantage",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseFacile_",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPatron",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoJoaquin_",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDumais_",
       "added": "2026-09-04"
     }
   ]
