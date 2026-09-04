@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-08-07T03:36:24.656227",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelLeCorgion",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'ap\u00f4tre de la DCA en fran\u00e7ais, twitte sans filtre et \u00e9vite les cours \u00e0 500 balles."
-      },
-      {
-        "handle": "BenoitDrouot",
-        "region": "france",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Ancien de M7 Ventures, couvre startups AI/DeepTech, twitte en FR."
-      },
-      {
-        "handle": "Lachambre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Tech & IA pur jus, ex-BNP Paribas, twitte en FR et \u00e9vite le buzz cr\u00e9ateur de contenu."
-      },
-      {
-        "handle": "MaximeMachado",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Fintech & AI, ex-Wealthfront, twitte en FR et EN pour la diaspora."
-      },
-      {
-        "handle": "BenoitGarcia",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "CEO de Syntellix, couvre IA g\u00e9n\u00e9rative et deep tech, twitte en fran\u00e7ais."
-      },
-      {
-        "handle": "JulienMoinet",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "Fintech & Bitcoin FR, twitte souvent sans se prendre au s\u00e9rieux."
-      },
-      {
-        "handle": "NathanaelLescanne",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Trader qu\u00e9b\u00e9cois, couverture macro et bourse, twitte en fran\u00e7ais et anglais."
-      }
-    ],
-    "summary": "Pas de vendeurs de r\u00eaves ici, que des makers, traders et analysts qui twittent en FR. J'ai filtr\u00e9 les influenceurs en costume-cravate au profit de gens qui codent ou g\u00e8rent de l'argent r\u00e9el."
-  },
-  {
-    "ts": "2026-08-07T05:36:22.955266",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Baptistech",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'humour boursier de r\u00e9f\u00e9rence. Pas de pubs Telegram, juste des constats qui font mal mais font rire."
-      },
-      {
-        "handle": "TrentMcBing",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 75000,
-        "reason": "Co-fondateur d'Ocean Protocol. Parle anglais mais sa communaut\u00e9 est FR/EN et il est cit\u00e9 partout dans les listes 'AI France'."
-      },
-      {
-        "handle": "G0u2",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "L'inverseur contrarien ultime. Twitte en FR/EN, vision macro claire, z\u00e9ro blabla de guru."
-      },
-      {
-        "handle": "Laurae2",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le 'mad scientist' qu\u00e9b\u00e9cois de l'IA. Posts techniques profonds mais accessibles, style direct."
-      },
-      {
-        "handle": "Alexandre_Dionne",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La voix qu\u00e9b\u00e9coise sur la crypto. Fondamental, \u00e9ducatif, mais jamais scolaire."
-      },
-      {
-        "handle": "CyrilDelmas",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Ancien de la tech, couvre AI et SaaS. Analyse le business model plus que le hype."
-      }
-    ],
-    "summary": "Focus sur des experts qui \u00e9crivent leur propre sauce plut\u00f4t que de relayer des tweets vus et revus. Le mix France/Qu\u00e9bec/USA donne une vue 360\u00b0 sans r\u00e9p\u00e9tition."
-  },
-  {
     "ts": "2026-08-07T07:36:52.099714",
     "raw_count": 8,
     "kept_count": 6,
@@ -7969,5 +7858,46 @@
       }
     ],
     "summary": "La France domine l'IA avec des profils ex-tech (MaelBourgeois) et le Qu\u00e9bec surp\u00e8se en VC IA par rapport \u00e0 sa taille financi\u00e8re. Attention, c'est un march\u00e9 satur\u00e9 de vendeurs de r\u00eaves : ici on garde ceux qui ont du grain."
+  },
+  {
+    "ts": "2026-09-04T01:48:49.677472",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Pablo77381",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "Le baron du Bitcoin fran\u00e7ais. Twitte en FR/EN mais l'essence est francophone. Moins 'influencer', plus 'fondateur de plateforme'. Pas de formation \u00e0 vendre."
+      },
+      {
+        "handle": "CyrilBouy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Fintech/ICO fr. Twitte en FR souvent sur la r\u00e9gulation et les projets tech locaux (Mangopay etc). Un des rares qui parle 'vraie' finance crypto sans shitter un coin."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour garder ceux qui bossent : des fondateurs actifs, un chercheur s\u00e9rieux et le plus gros trader technique QC. C'est dense, c'traite tous azimuts sans r\u00e9p\u00e9ter ce que tu as d\u00e9j\u00e0."
+  },
+  {
+    "ts": "2026-09-04T03:48:35.704710",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DimitryRais",
+        "region": "france",
+        "niche": "ai/tech",
+        "followers": 25000,
+        "reason": "Le roi de l'IA en France. Pas un guru formations, mais le gars qui comprend la tech derri\u00e8re les buzzwords."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' crypto fran\u00e7ais pour ne garder que ceux qui font vraiment avancer l'aiguille : Dumas et Raisson en France (mais c'est pris), Dionne au Qu\u00e9bec. Le reste est du potentiel high-yield."
   }
 ]

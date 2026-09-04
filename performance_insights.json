@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-04T01:48:13.904009",
-  "window_7d_actions": 5589,
-  "window_24h_actions": 954,
+  "generated_at": "2026-09-04T05:48:14.101039",
+  "window_7d_actions": 5564,
+  "window_24h_actions": 933,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5589
+      "count": 5564
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5589
+      "count": 5564
     }
   ],
   "best_hours_utc": [
@@ -39,42 +39,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2426
+      "count": 2416
     },
     {
       "topic": "Autre",
-      "count": 2269
+      "count": 2256
     },
     {
       "topic": "Crypto",
-      "count": 768
+      "count": 764
     },
     {
       "topic": "Bourse",
-      "count": 497
+      "count": 494
     },
     {
       "topic": "Spatial",
-      "count": 110
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2615
+      "count": 2604
     },
     {
       "pillar": "market_trauma",
-      "count": 1465
+      "count": 1446
     },
     {
       "pillar": "other",
-      "count": 1181
+      "count": 1183
     },
     {
       "pillar": "meme_reaction",
-      "count": 134
+      "count": 137
     },
     {
       "pillar": "reply_bait",
@@ -88,42 +88,35 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 456
+      "count": 445
     },
     {
       "pillar": "market_trauma",
-      "count": 249
+      "count": 235
     },
     {
       "pillar": "other",
-      "count": 199
+      "count": 196
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 84,
-      "avg_likes": 0.25,
-      "avg_views": 57.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 67,
-      "avg_likes": 0.22,
-      "avg_views": 57.5,
+      "posts": 86,
+      "avg_likes": 0.24,
+      "avg_views": 57.0,
       "low_sample": false
     },
     {
@@ -136,8 +129,15 @@
     {
       "pillar": "market_trauma",
       "posts": 35,
-      "avg_likes": 0.14,
-      "avg_views": 56.3,
+      "avg_likes": 0.17,
+      "avg_views": 55.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 65,
+      "avg_likes": 0.15,
+      "avg_views": 61.7,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4994
+      "count": 4969
     },
     {
       "type": "quote",
-      "count": 366
+      "count": 363
     },
     {
       "type": "quote_gif",
-      "count": 125
+      "count": 128
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-04T01:47:37.763531",
-      "text": "LIT up 60% on $5 is the \"I bought at ATH\" flex. reality: market cap > revenue *10 and margins are in the toilet when BTC drops below miners' cost basis. buy now cry later, @BMS.",
+      "ts": "2026-09-04T05:46:06.743558",
+      "text": "Link wants you to believe it's a toll road. revenue is still mostly tokenomics and staking yield. biblical pump or just the same ledger with better PR? i've seen this haircut before.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T01:47:21.377568",
-      "text": "NBA 2K needs DLSS because the game physics haven't changed since PS4. NVIDIA is just selling us a way to render people walking at 60fps without melting our GPUs. progress looks like... more pixels? anyway we got here so let's not overthink it",
+      "ts": "2026-09-04T05:44:24.470249",
+      "text": "BTC miners sold 40k coins last week. the breakout is just leverage getting paid off by people who dug holes for two years. see you at $78K when they stop buying dips.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T01:46:44.296421",
-      "text": "UBS modeling $379B for MU. datacenter demand > supply through 2028 with Hopper to Blackwell transition creating a physical bottleneck they underpriced by ignoring inventory velocity not just unit sales = the cycle hasn't peaked it has calcified",
+      "ts": "2026-09-04T05:42:57.002206",
+      "text": "GPT-5 had 1 trillion parameters and a $3.8B burn rate to hit that number. GPT-6 is just inference at scale on older weights. the cost curve flattens before the mind does.",
       "type": "reply"
     }
   ]

@@ -2201,7 +2201,10 @@
     "MarcLavoieQC",
     "LudovicDumasFR",
     "MaelBourgeois_",
-    "RaphaelysCrypto"
+    "RaphaelysCrypto",
+    "Pablo77381",
+    "CyrilBouy",
+    "DimitryRais"
   ],
   "en": [
     "Chubby",
@@ -16101,6 +16104,21 @@
       "lang": "en",
       "handle": "Shubhvani",
       "added": "2026-09-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pablo77381",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBouy",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitryRais",
+      "added": "2026-09-04"
     }
   ]
 }
