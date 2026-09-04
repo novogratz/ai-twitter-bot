@@ -2681,7 +2681,10 @@
     "Blendi",
     "AnderSon",
     "Global_Macro",
-    "Finn"
+    "Finn",
+    "Machina",
+    "fouad",
+    "Shubhvani"
   ],
   "history": [
     {
@@ -16082,6 +16085,21 @@
     {
       "lang": "fr",
       "handle": "RaphaelysCrypto",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Machina",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "en",
+      "handle": "fouad",
+      "added": "2026-09-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Shubhvani",
       "added": "2026-09-03"
     }
   ]
