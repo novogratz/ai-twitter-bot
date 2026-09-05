@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-05T13:48:13.978690",
-  "window_7d_actions": 5622,
-  "window_24h_actions": 949,
+  "generated_at": "2026-09-05T17:48:14.217809",
+  "window_7d_actions": 5625,
+  "window_24h_actions": 945,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5622
+      "count": 5625
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5622
+      "count": 5625
     }
   ],
   "best_hours_utc": [
@@ -20,61 +20,61 @@
       "actions": 273
     },
     {
+      "hour": 15,
+      "actions": 261
+    },
+    {
       "hour": 0,
       "actions": 260
     },
     {
-      "hour": 15,
-      "actions": 258
+      "hour": 8,
+      "actions": 254
     },
     {
       "hour": 13,
-      "actions": 254
-    },
-    {
-      "hour": 8,
-      "actions": 254
+      "actions": 251
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2469
+      "count": 2482
     },
     {
       "topic": "Autre",
-      "count": 2267
+      "count": 2252
     },
     {
       "topic": "Crypto",
-      "count": 754
+      "count": 764
     },
     {
       "topic": "Bourse",
-      "count": 487
+      "count": 490
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2662
+      "count": 2668
     },
     {
       "pillar": "market_trauma",
-      "count": 1433
+      "count": 1437
     },
     {
       "pillar": "other",
-      "count": 1187
+      "count": 1179
     },
     {
       "pillar": "meme_reaction",
-      "count": 144
+      "count": 142
     },
     {
       "pillar": "reply_bait",
@@ -82,62 +82,62 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 62
+      "count": 65
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 472
+      "count": 462
     },
     {
       "pillar": "market_trauma",
-      "count": 232
+      "count": 241
     },
     {
       "pillar": "other",
-      "count": 183
+      "count": 181
     },
     {
       "pillar": "reply_bait",
-      "count": 27
+      "count": 25
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 14
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.15,
-      "avg_views": 55.3,
+      "posts": 74,
+      "avg_likes": 0.14,
+      "avg_views": 55.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.1,
-      "avg_views": 63.3,
+      "posts": 81,
+      "avg_likes": 0.12,
+      "avg_views": 67.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
+      "posts": 35,
       "avg_likes": 0.09,
-      "avg_views": 54.8,
+      "avg_views": 51.3,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 42.0,
+      "avg_views": 50.0,
       "low_sample": false
     },
     {
@@ -151,7 +151,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5022
+      "count": 5026
     },
     {
       "type": "quote",
@@ -159,15 +159,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 136
+      "count": 134
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 46
     },
     {
       "type": "post",
-      "count": 33
+      "count": 35
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-05T13:46:42.716413",
-      "text": "Big Tech borrowing $320B to buy Nvidia GPUs that are already paid for. The yield curve is pricing in the interest on assets generating 70% margins. Beautiful arbitrage with a mortgage broker's risk profile.",
+      "ts": "2026-09-05T17:47:24.111246",
+      "text": "Astra. The VC funding AGI before the model can pass a Turing test to order lunch because Series B exists. \n\nThe valuation > the utility. classic early stage cope.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T13:45:09.709703",
-      "text": "The ai bubble bursts in 18 months. the gpu margin compression hasn't even started yet. enjoy the ride while it lasts.",
+      "ts": "2026-09-05T17:41:44.007825",
+      "text": "World models just move inference costs down while training stays stubbornly expensive. eventually we stop paying for the textbook and start selling the tutor's time. scarce compute wins every cycle.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T13:43:44.291340",
-      "text": "Electricians earn more than most coders because you still need hands for the wiring. ai can't climb a ladder yet.",
+      "ts": "2026-09-05T17:37:35.843216",
+      "text": "Nvidia is an AI infrastructure monopoly that also sells GPUs. the \"next\" stocks are just guys trying to sell you a shovel in a gold rush where nvidia owns the mine.",
       "type": "reply"
     }
   ]
