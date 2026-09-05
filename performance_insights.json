@@ -1,23 +1,27 @@
 {
-  "generated_at": "2026-09-04T21:48:20.914398",
-  "window_7d_actions": 5566,
-  "window_24h_actions": 954,
+  "generated_at": "2026-09-05T01:48:14.112625",
+  "window_7d_actions": 5588,
+  "window_24h_actions": 945,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5566
+      "count": 5588
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5566
+      "count": 5588
     }
   ],
   "best_hours_utc": [
     {
       "hour": 23,
       "actions": 273
+    },
+    {
+      "hour": 0,
+      "actions": 260
     },
     {
       "hour": 15,
@@ -30,20 +34,16 @@
     {
       "hour": 9,
       "actions": 249
-    },
-    {
-      "hour": 0,
-      "actions": 248
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2428
+      "count": 2429
     },
     {
       "topic": "Autre",
-      "count": 2257
+      "count": 2274
     },
     {
       "topic": "Crypto",
@@ -51,7 +51,7 @@
     },
     {
       "topic": "Bourse",
-      "count": 486
+      "count": 487
     },
     {
       "topic": "Spatial",
@@ -62,11 +62,11 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2614
+      "count": 2619
     },
     {
       "pillar": "market_trauma",
-      "count": 1422
+      "count": 1431
     },
     {
       "pillar": "other",
@@ -74,33 +74,33 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 141
+      "count": 146
     },
     {
       "pillar": "reply_bait",
-      "count": 122
+      "count": 126
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 69
+      "count": 68
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 451
+      "count": 445
     },
     {
       "pillar": "market_trauma",
-      "count": 226
+      "count": 232
     },
     {
       "pillar": "other",
-      "count": 206
+      "count": 198
     },
     {
       "pillar": "meme_reaction",
-      "count": 31
+      "count": 30
     },
     {
       "pillar": "reply_bait",
@@ -114,23 +114,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 84,
-      "avg_likes": 0.15,
-      "avg_views": 56.1,
+      "posts": 82,
+      "avg_likes": 0.13,
+      "avg_views": 55.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 33,
-      "avg_likes": 0.12,
-      "avg_views": 54.2,
+      "posts": 35,
+      "avg_likes": 0.11,
+      "avg_views": 55.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 62.3,
+      "avg_views": 63.4,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4968
+      "count": 4987
     },
     {
       "type": "quote",
-      "count": 361
+      "count": 356
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 138
     },
     {
       "type": "hotake",
@@ -167,27 +167,27 @@
     },
     {
       "type": "post",
-      "count": 33
+      "count": 34
     },
     {
       "type": "retweet",
-      "count": 24
+      "count": 26
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-04T21:48:14.325685",
-      "text": "he's treating us like users upgrading their iPhones 📱🤖",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-09-04T21:47:21.944797",
-      "text": "Dimensional ai is training models to navigate physical space. the robot lifestyle isn't a vibe yet, it's just hardware trying not to tip over on carpet. charmingly fragile.",
+      "ts": "2026-09-05T01:48:00.630320",
+      "text": "Openai didn't just ship a model. it shipped the first post-scarcity intelligence layer and suddenly your $50 saas subscription looks like renting a horse in the age of jet engines.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-04T21:46:50.623654",
-      "text": "CITI sees 370GW. the grid only has room for ~15% more power before brownouts hit us all in Q4 '26 and they forget to pay their electricity bills too. reality check hard mode engaged.",
+      "ts": "2026-09-05T01:47:29.348428",
+      "text": "DeerFlow promises \"multi-step tasks.\" The real bottleneck isn't research. It's the token cost of an agent reading its own notes before giving up.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-09-05T01:44:42.826221",
+      "text": "CoreWeave’s $7B debt stack just bought its first Vera Rubin racks. the hardware ships faster than the interest compounds. good news for nvda, great news if you’re long latency to revenue.",
       "type": "reply"
     }
   ]
