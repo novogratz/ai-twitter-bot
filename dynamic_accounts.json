@@ -2215,7 +2215,10 @@
     "PascalGautier_",
     "SylvainDumais",
     "NathalieW",
-    "ThibautDehaize_"
+    "ThibautDehaize_",
+    "_HugoDiniz_",
+    "_VincentDumas_",
+    "_RomainDeltour_"
   ],
   "en": [
     "Chubby",
@@ -2706,7 +2709,10 @@
     "Acyn",
     "ThePrimeagen",
     "Extropic",
-    "GoFundMe"
+    "GoFundMe",
+    "Nate",
+    "Sassafrass84",
+    "Jerin"
   ],
   "history": [
     {
@@ -16233,6 +16239,36 @@
       "lang": "fr",
       "handle": "ThibautDehaize_",
       "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Nate",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Sassafrass84",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "_HugoDiniz_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "_VincentDumas_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "_RomainDeltour_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Jerin",
+      "added": "2026-09-05"
     }
   ]
 }

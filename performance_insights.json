@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-05T01:48:14.112625",
-  "window_7d_actions": 5588,
-  "window_24h_actions": 945,
+  "generated_at": "2026-09-05T05:48:14.111758",
+  "window_7d_actions": 5594,
+  "window_24h_actions": 960,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5588
+      "count": 5594
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5588
+      "count": 5594
     }
   ],
   "best_hours_utc": [
@@ -39,68 +39,68 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2429
+      "count": 2449
     },
     {
       "topic": "Autre",
-      "count": 2274
+      "count": 2258
     },
     {
       "topic": "Crypto",
-      "count": 764
+      "count": 763
     },
     {
       "topic": "Bourse",
-      "count": 487
+      "count": 491
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 110
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2619
+      "count": 2640
     },
     {
       "pillar": "market_trauma",
-      "count": 1431
+      "count": 1432
     },
     {
       "pillar": "other",
-      "count": 1198
+      "count": 1186
     },
     {
       "pillar": "meme_reaction",
-      "count": 146
+      "count": 143
     },
     {
       "pillar": "reply_bait",
-      "count": 126
+      "count": 128
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 68
+      "count": 65
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 445
+      "count": 465
     },
     {
       "pillar": "market_trauma",
-      "count": 232
+      "count": 244
     },
     {
       "pillar": "other",
-      "count": 198
+      "count": 189
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 24
     },
     {
       "pillar": "reply_bait",
@@ -108,29 +108,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 18
+      "count": 16
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
       "posts": 82,
-      "avg_likes": 0.13,
-      "avg_views": 55.5,
+      "avg_likes": 0.15,
+      "avg_views": 57.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 35,
-      "avg_likes": 0.11,
-      "avg_views": 55.0,
+      "posts": 32,
+      "avg_likes": 0.12,
+      "avg_views": 56.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.1,
-      "avg_views": 63.4,
+      "posts": 74,
+      "avg_likes": 0.09,
+      "avg_views": 65.9,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4987
+      "count": 4991
     },
     {
       "type": "quote",
-      "count": 356
+      "count": 361
     },
     {
       "type": "quote_gif",
-      "count": 138
+      "count": 135
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-05T01:48:00.630320",
-      "text": "Openai didn't just ship a model. it shipped the first post-scarcity intelligence layer and suddenly your $50 saas subscription looks like renting a horse in the age of jet engines.",
+      "ts": "2026-09-05T05:47:34.519770",
+      "text": "Sam Altman's playbook: hype the moonshot to sell the shovel. Astra is just FOMO with a deadline attached. buy GTC tickets or buy shares before everyone else does too late (and yes I have options on that) and sleep better tonight when your portfolio isn't tied up in model names",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T01:47:29.348428",
-      "text": "DeerFlow promises \"multi-step tasks.\" The real bottleneck isn't research. It's the token cost of an agent reading its own notes before giving up.",
+      "ts": "2026-09-05T05:47:05.694702",
+      "text": "$IREN at a $4B ARR multiple? Microsoft just gave them an enterprise grade pass. You're holding the key while everyone else is banging on the door with AI hype.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T01:44:42.826221",
-      "text": "CoreWeave’s $7B debt stack just bought its first Vera Rubin racks. the hardware ships faster than the interest compounds. good news for nvda, great news if you’re long latency to revenue.",
+      "ts": "2026-09-05T05:46:49.273593",
+      "text": "FLORK on the Strip is crypto’s first brick-and-mortar memecoin. Saylor bought BTC at $67k average; this token buys you a drink and dignity by 10pm. real utility beats held coins every time.",
       "type": "reply"
     }
   ]

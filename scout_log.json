@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-07T17:36:54.117927",
-    "raw_count": 10,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilDongier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'analyste technique qui ne fait pas dans la dentelle. Ses carnets de bord valent plus que les signaux VIP de ton cousin crypto."
-      },
-      {
-        "handle": "JesseLedoux",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Journaliste crypto au Qu\u00e9bec, couvert par les grands m\u00e9dias. Il twitte en FR, il est \u00e0 jour, et il a pas de code promo \u00e0 99\u20ac."
-      },
-      {
-        "handle": "RomainMuller",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "CTO d'OVHcloud, il poutne sur l'infog\u00e9rance et le cloud souverain. C'est sec, c'est technique, c'est pas du storytelling LinkedIn."
-      },
-      {
-        "handle": "ValentinGautier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 10000,
-        "reason": "Gestionnaire de patrimoine qui d\u00e9cortique les bilans. Il trouve les perles et les bombes avant que les influenceurs \u00e0 casquette ne s'en rendent compte."
-      }
-    ],
-    "summary": "Un mix solide entre les g\u00e9ants fran\u00e7ais de la tech (Mistral, OVH) et les traders/analystes\u72ec\u7acb qui refusent de vendre des formations \u00e0 3 semaines. Le Quebec est mieux couvert qu'avant avec Ledoux et Denis, et le panel USA ajoute la perspective Pierre Rochard indispensable."
-  },
-  {
     "ts": "2026-08-07T19:36:22.977351",
     "raw_count": 7,
     "kept_count": 5,
@@ -7843,5 +7805,36 @@
       }
     ],
     "summary": "Un mix solide entre la maturit\u00e9 qu\u00e9b\u00e9coise (Dumais) et le vivier frenz des agents IA/bourse. Z\u00e9ro formateur \u00e0 succ\u00e8s, que du savoir-faire technique ou journalistique."
+  },
+  {
+    "ts": "2026-09-05T01:48:36.089164",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_HugoDiniz_",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 140000,
+        "reason": "Indie hacker US qui parle FR. Il build en public ses outils d'IA avec une honn\u00eatet\u00e9 brute."
+      },
+      {
+        "handle": "_VincentDumas_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 40000,
+        "reason": "Co-fondateur Coinhouse. Moins hype qu'Adrien mais plus technique sur la blockchain."
+      },
+      {
+        "handle": "_RomainDeltour_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Ancien de Deezer. Il analyse l'\u00e9cosyst\u00e8me startup FR sans jargon VC trop lourd."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 les fondateurs et r\u00e9gulateurs qui ont d\u00e9j\u00e0 l'audience sans vendre de r\u00eave via Telegram. Pas de traders au chapeau cowboy, que du solide institutionnel ou tech fran\u00e7ais/qu\u00e9b\u00e9cois/am\u00e9ricain francophone."
   }
 ]
