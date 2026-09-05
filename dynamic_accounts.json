@@ -2720,7 +2720,10 @@
     "Jerin",
     "ShinyNfts",
     "Yarchi",
-    "evnsnclr"
+    "evnsnclr",
+    "VALO2ASIA",
+    "b",
+    "Resurekt"
   ],
   "history": [
     {
@@ -16316,6 +16319,21 @@
     {
       "lang": "fr",
       "handle": "RomainBouju_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "VALO2ASIA",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "b",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Resurekt",
       "added": "2026-09-05"
     }
   ]
