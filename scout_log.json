@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-07T19:36:22.977351",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeMory",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Cr\u00e9ateur de MarketScreener. Il fait des analyses de valeurs concr\u00e8tes, pas du storytelling abstrait."
-      },
-      {
-        "handle": "LudovicMichelet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 50000,
-        "reason": "Le patron de Lucca. Il twitte sur la tech fran\u00e7aise avec un humour d\u00e9cal\u00e9 qui passe mieux que les analyses de la Monnaie Parisienne."
-      },
-      {
-        "handle": "JulienSalaun",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "CEO de Coinhouse. Le genre de compte qui donne des infos de march\u00e9 r\u00e9elles sans vendre son \u00e2me \u00e0 un coach en trading TikTok."
-      },
-      {
-        "handle": "DavidLavoie",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Analyste qu\u00e9b\u00e9cois qui d\u00e9crypte les march\u00e9s avec un bon sens de l'analyse fondamentale, loin du bruit g\u00e9n\u00e9raliste."
-      },
-      {
-        "handle": "CyrilKhan",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Bas\u00e9 \u00e0 NYC mais twitte en fran\u00e7ais. Il couvre l'intersection Web3/AI avec un ton direct, sans le blabla institutionnel."
-      }
-    ],
-    "summary": "On laisse tomber les influenceurs TikTok qui vendent du r\u00eave pour aller voir ceux qui construisent la tech ou l'argent : Mistral, Lucca et les pros de Coinhouse/MarketScreener."
-  },
-  {
     "ts": "2026-08-07T21:36:36.268435",
     "raw_count": 10,
     "kept_count": 8,
@@ -7836,5 +7791,57 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 les fondateurs et r\u00e9gulateurs qui ont d\u00e9j\u00e0 l'audience sans vendre de r\u00eave via Telegram. Pas de traders au chapeau cowboy, que du solide institutionnel ou tech fran\u00e7ais/qu\u00e9b\u00e9cois/am\u00e9ricain francophone."
+  },
+  {
+    "ts": "2026-09-05T07:48:51.268279",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienBoussus1",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Vid\u00e9o-preneur IA avant l'heure. Il twitte des threads synth\u00e9tiques que les investisseurs lisent."
+      },
+      {
+        "handle": "MarcGirard_FR",
+        "region": "usa",
+        "niche": "ai_saas",
+        "followers": 19000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais tweete en FR. Il d\u00e9cortique les business models des startups AI avec un sarcasme amer."
+      },
+      {
+        "handle": "PierreRosencweig",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "G\u00e9n\u00e9raliste crypto pas fanfaronne. Il tweete des threads structurels sur les L2 sans jargon."
+      },
+      {
+        "handle": "ThibaultDarras",
+        "region": "france",
+        "niche": "ai_fintech",
+        "followers": 15000,
+        "reason": "CEO chez Atrium. Il poste des threads sur le SaaS AI qui font pleurer de rire les CTO."
+      },
+      {
+        "handle": "SophieBouchard_",
+        "region": "usa",
+        "niche": "fintech_vc",
+        "followers": 14000,
+        "reason": "VC \u00e0 San Francisco. Elle donne l'avis rare des investisseurs US sur les startups fran\u00e7aises via X."
+      },
+      {
+        "handle": "RomainBouju_",
+        "region": "quebec",
+        "niche": "ia_bourse",
+        "followers": 12000,
+        "reason": "La voix grave du Qu\u00e9bec sur l'IA et la tech. Il mixe trading algo et actualit\u00e9s ML en direct."
+      }
+    ],
+    "summary": "8 candidats solides qui \u00e9vitent le cirque des signaux Telegram et privil\u00e9gient l'analyse brute ou narrative. La s\u00e9lection est \u00e9quilibr\u00e9e entre expertise technique, vision march\u00e9 et ironie locale (FR/QC/US)."
   }
 ]

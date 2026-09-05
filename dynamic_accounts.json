@@ -2218,7 +2218,12 @@
     "ThibautDehaize_",
     "_HugoDiniz_",
     "_VincentDumas_",
-    "_RomainDeltour_"
+    "_RomainDeltour_",
+    "JulienBoussus1",
+    "MarcGirard_FR",
+    "ThibaultDarras",
+    "SophieBouchard_",
+    "RomainBouju_"
   ],
   "en": [
     "Chubby",
@@ -2712,7 +2717,10 @@
     "GoFundMe",
     "Nate",
     "Sassafrass84",
-    "Jerin"
+    "Jerin",
+    "ShinyNfts",
+    "Yarchi",
+    "evnsnclr"
   ],
   "history": [
     {
@@ -16268,6 +16276,46 @@
     {
       "lang": "en",
       "handle": "Jerin",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "ShinyNfts",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Yarchi",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "evnsnclr",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoussus1",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGirard_FR",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultDarras",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "SophieBouchard_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBouju_",
       "added": "2026-09-05"
     }
   ]

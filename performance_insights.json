@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-05T05:48:14.111758",
-  "window_7d_actions": 5594,
-  "window_24h_actions": 960,
+  "generated_at": "2026-09-05T09:48:13.997431",
+  "window_7d_actions": 5612,
+  "window_24h_actions": 961,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5594
+      "count": 5612
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5594
+      "count": 5612
     }
   ],
   "best_hours_utc": [
@@ -28,83 +28,83 @@
       "actions": 258
     },
     {
-      "hour": 14,
-      "actions": 250
+      "hour": 8,
+      "actions": 254
     },
     {
-      "hour": 9,
-      "actions": 249
+      "hour": 14,
+      "actions": 250
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2449
+      "count": 2466
     },
     {
       "topic": "Autre",
-      "count": 2258
+      "count": 2261
     },
     {
       "topic": "Crypto",
-      "count": 763
+      "count": 761
     },
     {
       "topic": "Bourse",
-      "count": 491
+      "count": 488
     },
     {
       "topic": "Spatial",
-      "count": 110
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2640
+      "count": 2653
     },
     {
       "pillar": "market_trauma",
-      "count": 1432
+      "count": 1438
     },
     {
       "pillar": "other",
-      "count": 1186
+      "count": 1181
     },
     {
       "pillar": "meme_reaction",
-      "count": 143
+      "count": 145
     },
     {
       "pillar": "reply_bait",
-      "count": 128
+      "count": 132
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 65
+      "count": 63
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 465
+      "count": 474
     },
     {
       "pillar": "market_trauma",
-      "count": 244
+      "count": 235
     },
     {
       "pillar": "other",
-      "count": 189
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 24
+      "count": 188
     },
     {
       "pillar": "reply_bait",
-      "count": 22
+      "count": 28
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
@@ -114,30 +114,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 82,
+      "posts": 80,
       "avg_likes": 0.15,
-      "avg_views": 57.0,
+      "avg_views": 56.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 32,
+      "posts": 33,
       "avg_likes": 0.12,
-      "avg_views": 56.2,
+      "avg_views": 55.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 74,
-      "avg_likes": 0.09,
-      "avg_views": 65.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 7,
-      "avg_likes": 0.0,
-      "avg_views": 44.3,
+      "posts": 76,
+      "avg_likes": 0.11,
+      "avg_views": 65.7,
       "low_sample": false
     },
     {
@@ -146,28 +139,35 @@
       "avg_likes": 0.0,
       "avg_views": 43.5,
       "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 6,
+      "avg_likes": 0.0,
+      "avg_views": 43.2,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4991
+      "count": 5011
     },
     {
       "type": "quote",
-      "count": 361
+      "count": 359
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 137
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 46
     },
     {
       "type": "post",
-      "count": 34
+      "count": 33
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-05T05:47:34.519770",
-      "text": "Sam Altman's playbook: hype the moonshot to sell the shovel. Astra is just FOMO with a deadline attached. buy GTC tickets or buy shares before everyone else does too late (and yes I have options on that) and sleep better tonight when your portfolio isn't tied up in model names",
+      "ts": "2026-09-05T09:47:46.585192",
+      "text": "Palantir’s revenue growth is real. Its valuation implies the US government outsources half its intelligence budget to a Python library before 30 years are up. magic numbers don’t age well.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T05:47:05.694702",
-      "text": "$IREN at a $4B ARR multiple? Microsoft just gave them an enterprise grade pass. You're holding the key while everyone else is banging on the door with AI hype.",
+      "ts": "2026-09-05T09:47:17.854409",
+      "text": "172 skills across 5 functions sounds like a Swiss Army knife. It’s actually your org chart with an attention deficit disorder attached. good luck onboarding.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T05:46:49.273593",
-      "text": "FLORK on the Strip is crypto’s first brick-and-mortar memecoin. Saylor bought BTC at $67k average; this token buys you a drink and dignity by 10pm. real utility beats held coins every time.",
+      "ts": "2026-09-05T09:46:44.645175",
+      "text": "8 new age stocks beating earnings while everyone cries. this isn’t resilience, it’s just the market pricing in that “new” is now a verb for any company with negative net income and good PR. cope level: expert.",
       "type": "reply"
     }
   ]
