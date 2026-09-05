@@ -17282,3 +17282,21 @@ Thanks for highlighting how Unity works alongside coding agents to build immersi
 Congratulations on the release! 👏
   - https://x.com/unity/status/2095704146452037959
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 175).
+
+## 2026-09-05
+- **@oguzerkan** (629 likes, score 9/10) — This is just insane..
+
+Anthropic valuation: $1.9 trillion
+
+OpenAI valuation: $1.2 trillion
+
+$META makes models on par with these labs and has immense distribution with 300 million enterprise accounts.
+  - https://x.com/oguzerkan/status/2095855465271861551
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 747).
+- **@bitcoinarchive** (1073 likes, score 9/10) — "If you're under 40, Bitcoin is your new gold." — Kevin Warsh, Jan 2021.
+
+The current Fed Chair. 🤯
+
+Friendly reminder to adjust that age bracket to 45.
+  - https://x.com/BitcoinArchive/status/2095981380769391085
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1169).
