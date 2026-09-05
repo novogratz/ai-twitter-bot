@@ -225,5 +225,26 @@
     ],
     "cadence_factor": 1.05,
     "rationale": "L'activité est saine (38 actions récentes) avec une forte appétence pour les quotes et hotakes sur l'IA coding/valuation. On monte légèrement le volume de replies pour capitaliser sur la 'mood féroce'. On pivote vers des thèmes plus cyniques sur les fondamentaux financiers derrière le Hype IA."
+  },
+  {
+    "ts": "2026-09-04T21:48:13.953798",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 12,
+      "MAX_HOTAKES_PER_DAY": 15,
+      "MAX_QUOTES_PER_DAY": 160,
+      "MAX_RETWEETS_PER_DAY": 4,
+      "MAX_BREAKOUTS_PER_DAY": 1,
+      "MAX_SPICY_PER_DAY": 2,
+      "MAX_REPLIES_PER_CYCLE": 45,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "Nvidia vs Palantir: Le duel des rentiers",
+      "AGI Bubble: Quand l'IA commence à génére",
+      "BTC ETF Flows: La classe moyenne qui ach"
+    ],
+    "cadence_factor": 1.05,
+    "rationale": "Le bot est actif et 'féroce' mais dans une phase de consolidation après sa pause d'août. On maintient un volume agressif sur les quotes pour nourrir l'algorithme avec du cynisme pur (surtout via VIP/FEED-SWEEP). Les losers indiquent que le générique IA ne pèse plus, donc on cible la valuation et les flux de cash."
   }
 ]

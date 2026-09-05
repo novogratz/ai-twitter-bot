@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-07T15:36:31.814205",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LuisVieira_",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 95000,
-        "reason": "L'homme le plus lu sur AI en FR. Ses threads sur les agents IA sont plus clairs que la doc officielle, et il a un go\u00fbt prononc\u00e9 pour le sarcasme \u00e0 5 heures du matin."
-      },
-      {
-        "handle": "CryptoM0nk",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "L'analyste technique discret. Pas de hype, pas de 'moon', juste du graph qui tient la route et des tweets qui ne n\u00e9cessitent pas de signer un abonnement Telegram pour comprendre."
-      },
-      {
-        "handle": "FintechFrancophone",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "La newsletter/compte qui recycle le meilleur de la tech finance fr. C'est l'\u00e9pine dorsale silencieuse qui vous \u00e9vite de scroller pendant 3 heures pour trouver l'info."
-      }
-    ],
-    "summary": "Une s\u00e9lection de 8 comptes qui \u00e9vitent le pi\u00e8ge des 'gourous du trading' en vendant des signaux. On a du lourd (Mistral), du qu\u00e9b\u00e9cois authentique (Maki/Dionne) et de la prose technique de qualit\u00e9."
-  },
-  {
     "ts": "2026-08-07T17:36:54.117927",
     "raw_count": 10,
     "kept_count": 4,
@@ -7843,5 +7812,36 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent comment l'argent et le code s'affrontent quotidiennement en FR/Qu\u00e9bec."
+  },
+  {
+    "ts": "2026-09-04T21:48:44.320076",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainDumais",
+        "region": "quebec",
+        "niche": "crypto / tech",
+        "followers": 28000,
+        "reason": "L'ancien de ConsenSys qui balance des perles sur Web3 avec du recul. Twitte en FR, z\u00e9ro hype vide."
+      },
+      {
+        "handle": "NathalieW",
+        "region": "france",
+        "niche": "crypto / tech",
+        "followers": 18500,
+        "reason": "Journaliste crypto de choc. Elle ne vend pas d'air conditionn\u00e9 pour traders."
+      },
+      {
+        "handle": "ThibautDehaize_",
+        "region": "france",
+        "niche": "ia / deep tech",
+        "followers": 12000,
+        "reason": "G\u00e9nie de l'infra IA (ex-Koyeb). Il comprend mieux le hardware que les vendeurs d'id\u00e9es."
+      }
+    ],
+    "summary": "Un mix solide entre la maturit\u00e9 qu\u00e9b\u00e9coise (Dumais) et le vivier frenz des agents IA/bourse. Z\u00e9ro formateur \u00e0 succ\u00e8s, que du savoir-faire technique ou journalistique."
   }
 ]

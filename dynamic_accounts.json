@@ -2212,7 +2212,10 @@
     "CryptoPatron",
     "CryptoJoaquin_",
     "MarcDumais_",
-    "PascalGautier_"
+    "PascalGautier_",
+    "SylvainDumais",
+    "NathalieW",
+    "ThibautDehaize_"
   ],
   "en": [
     "Chubby",
@@ -2699,7 +2702,11 @@
     "Seb",
     "skarly",
     "Wealthmatica",
-    "Hassan"
+    "Hassan",
+    "Acyn",
+    "ThePrimeagen",
+    "Extropic",
+    "GoFundMe"
   ],
   "history": [
     {
@@ -16190,6 +16197,41 @@
     {
       "lang": "fr",
       "handle": "PascalGautier_",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Acyn",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "ThePrimeagen",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Extropic",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "en",
+      "handle": "GoFundMe",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDumais",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieW",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDehaize_",
       "added": "2026-09-04"
     }
   ]
