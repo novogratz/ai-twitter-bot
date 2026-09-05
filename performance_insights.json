@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-04T17:48:14.053193",
-  "window_7d_actions": 5559,
-  "window_24h_actions": 939,
+  "generated_at": "2026-09-04T21:48:20.914398",
+  "window_7d_actions": 5566,
+  "window_24h_actions": 954,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5559
+      "count": 5566
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5559
+      "count": 5566
     }
   ],
   "best_hours_utc": [
@@ -39,23 +39,23 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2431
+      "count": 2428
     },
     {
       "topic": "Autre",
-      "count": 2249
+      "count": 2257
     },
     {
       "topic": "Crypto",
-      "count": 756
+      "count": 764
     },
     {
       "topic": "Bourse",
-      "count": 488
+      "count": 486
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
@@ -66,41 +66,41 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1425
+      "count": 1422
     },
     {
       "pillar": "other",
-      "count": 1191
+      "count": 1198
     },
     {
       "pillar": "meme_reaction",
-      "count": 140
+      "count": 141
     },
     {
       "pillar": "reply_bait",
-      "count": 123
+      "count": 122
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 66
+      "count": 69
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 453
+      "count": 451
     },
     {
       "pillar": "market_trauma",
-      "count": 227
+      "count": 226
     },
     {
       "pillar": "other",
-      "count": 198
+      "count": 206
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 31
     },
     {
       "pillar": "reply_bait",
@@ -108,29 +108,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 18
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.17,
-      "avg_views": 54.8,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.12,
-      "avg_views": 58.7,
+      "posts": 84,
+      "avg_likes": 0.15,
+      "avg_views": 56.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.11,
-      "avg_views": 51.7,
+      "posts": 33,
+      "avg_likes": 0.12,
+      "avg_views": 54.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 71,
+      "avg_likes": 0.1,
+      "avg_views": 62.3,
       "low_sample": false
     },
     {
@@ -151,7 +151,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4962
+      "count": 4968
     },
     {
       "type": "quote",
@@ -159,7 +159,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 132
+      "count": 133
     },
     {
       "type": "hotake",
@@ -176,19 +176,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-04T17:47:17.862807",
-      "text": "Nscale is shipping inference chips that cut latency while Nvidia eats your margins. this isn't a partnership it's an insurance policy against the monopoly.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-09-04T17:45:58.846415",
-      "text": "Pelosi bought $BE before the S&P addition. spot price jumped 15% on announcement day. she didn't get lucky; she traded info as an asset class while we waited for CNBC to confirm what already happened.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-09-04T17:45:04.894033",
-      "text": "South Korea exports up 72%. My portfolio’s like that, but after two espressos and yelling at my broker 🙂📈",
+      "ts": "2026-09-04T21:48:14.325685",
+      "text": "he's treating us like users upgrading their iPhones 📱🤖",
       "type": "quote"
+    },
+    {
+      "ts": "2026-09-04T21:47:21.944797",
+      "text": "Dimensional ai is training models to navigate physical space. the robot lifestyle isn't a vibe yet, it's just hardware trying not to tip over on carpet. charmingly fragile.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-09-04T21:46:50.623654",
+      "text": "CITI sees 370GW. the grid only has room for ~15% more power before brownouts hit us all in Q4 '26 and they forget to pay their electricity bills too. reality check hard mode engaged.",
+      "type": "reply"
     }
   ]
 }

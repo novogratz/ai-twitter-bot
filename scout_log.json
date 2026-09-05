@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-07T13:36:37.013871",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LionelMaurel",
-        "region": "france",
-        "niche": "ia",
-        "followers": 45000,
-        "reason": "Le 'David vs Goliath' fran\u00e7ais de l'IA open source. Twitte ses r\u00e9sultats bruts, z\u00e9ro blabla marketing, pur technicien."
-      },
-      {
-        "handle": "RomainBazire",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'anti-ClaudeBismuth. Pas de 'FED' tout le temps, mais des analyses macro solides et un ton sec qui tue le buzz."
-      },
-      {
-        "handle": "JulienLeduc",
-        "region": "usa",
-        "niche": "ia",
-        "followers": 22000,
-        "reason": "Fondateur de Leduc AI (NYC). Diaspora FR active, twitte en FR sur les startups AI US avec un recul francophone."
-      },
-      {
-        "handle": "ThomasMaire",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "VC crypto bas\u00e9 \u00e0 NYC. Twitte en FR sur les cycles DeFi/Web3, a un \u0153il de fond qui voit venir les narratives."
-      },
-      {
-        "handle": "CyrilMizrahi",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Fondateur de Lemonway. Twitte sur la fintech, les paiements et la tech fr avec une perspective founder qui a du sens."
-      },
-      {
-        "handle": "PhilippeCharron",
-        "region": "quebec",
-        "niche": "ia",
-        "followers": 12000,
-        "reason": "Le prof de l'IA au Qu\u00e9bec. Ses threads sur LLMs et agents sont plus pointus que 99% des 'gurus' tech."
-      }
-    ],
-    "summary": "Le lot couvre le gros poisson (0xMaki), l'expertise tech pure (Mizrahi/Charron) et une belle triangulation Qu\u00e9bec/USA. Tout est v\u00e9rifi\u00e9 actif sous 30 jours, aucun formateur \u00e0 1000\u20ac, juste des builders et des traders qui ont du style."
-  },
-  {
     "ts": "2026-08-07T15:36:31.814205",
     "raw_count": 8,
     "kept_count": 3,
@@ -7878,5 +7826,22 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 entre deux feux pour \u00e9viter ceux qui vendent du r\u00eave \u00e0 970\u20ac. On a un mix solide : Patrone pour l'\u00e9ducation crypto, BourseFacile pour le trading pur, et Dionne pour la pointe AI. Rien de gratuit ici."
+  },
+  {
+    "ts": "2026-09-04T19:48:36.232729",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PascalGautier_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'anc\u00eatre du bull run crypto en FR. Il twitte la macro comme il respire."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent comment l'argent et le code s'affrontent quotidiennement en FR/Qu\u00e9bec."
   }
 ]

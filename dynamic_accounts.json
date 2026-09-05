@@ -2211,7 +2211,8 @@
     "BourseFacile_",
     "CryptoPatron",
     "CryptoJoaquin_",
-    "MarcDumais_"
+    "MarcDumais_",
+    "PascalGautier_"
   ],
   "en": [
     "Chubby",
@@ -16184,6 +16185,11 @@
     {
       "lang": "fr",
       "handle": "MarcDumais_",
+      "added": "2026-09-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PascalGautier_",
       "added": "2026-09-04"
     }
   ]
