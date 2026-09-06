@@ -2233,7 +2233,16 @@
     "ThalesLP",
     "DarioAmici",
     "LudoDelfortrie",
-    "JulienLeDuff"
+    "JulienLeDuff",
+    "CyprienGach",
+    "VladTenev",
+    "JulesBnt",
+    "ThibaudMoinet",
+    "PierreRochardFR",
+    "BertieTheHedge",
+    "LudovicHuguet",
+    "MathieuDelforge",
+    "JulienLemaire"
   ],
   "en": [
     "Chubby",
@@ -2737,7 +2746,9 @@
     "BFM",
     "hedgedhog",
     "breno",
-    "InfoGram"
+    "InfoGram",
+    "Commend",
+    "Grummz"
   ],
   "history": [
     {
@@ -16419,6 +16430,61 @@
       "lang": "fr",
       "handle": "JulienLeDuff",
       "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Commend",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Grummz",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyprienGach",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "VladTenev",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBnt",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudMoinet",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRochardFR",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "BertieTheHedge",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicHuguet",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDelforge",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLemaire",
+      "added": "2026-09-06"
     }
   ]
 }
