@@ -1629,3 +1629,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 45 views: me at 2am like I have room in my portfolio for one more existential crisis 🛋️
   - 1 likes / 54 views: me on my way to buy BTC after finally admitting I’m bad with passwords 🛋️
   - 1 likes / 42 views: me on hold listening to an AI agent say “please hold” for 14 minutes straight like it’s meditating 🛋
+
+## 2026-09-05
+
+**Activity** — total actions: 911
+  - by type: reply=822, quote=59, quote_gif=14, hotake=7, post=6, retweet=3
+  - top sources: SEARCH-HOT=545, FEED-SWEEP-FEED=152, FEED-SWEEP-FOLLOWING=93, QUOTE=47, VIP=19, GIF=15, DEBATE=12, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=28, @DanKornas=11, @cryptorover=10, @kimmonismus=10, @CryptoMichNL=8
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 441 views: AI handling incidents so engineers lose touch with systems is the corporate equivalent of letting yo
+  - 1 likes / 101 views: buying old tech just because new guys are broke is like dating an ex who finally fixed their credit 
+  - 1 likes / 136 views: AGI is just your cat knocking over coffee faster than $NVDA can print it 😭🛋️ https://x.com/AlexFinn/
