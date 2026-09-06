@@ -2247,7 +2247,10 @@
     "GaspardAudebert",
     "_MickaelB_",
     "LudovicBaudet_",
-    "P4rkl"
+    "P4rkl",
+    "_thomborini",
+    "GaspardMoulinet",
+    "_AlexDionne_QC_"
   ],
   "en": [
     "Chubby",
@@ -2754,7 +2757,10 @@
     "InfoGram",
     "Commend",
     "Grummz",
-    "Tanaka"
+    "Tanaka",
+    "Stonepic",
+    "Aerodrome",
+    "Sui"
   ],
   "history": [
     {
@@ -16520,6 +16526,36 @@
     {
       "lang": "fr",
       "handle": "P4rkl",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Stonepic",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Aerodrome",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "_thomborini",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Sui",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardMoulinet",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "_AlexDionne_QC_",
       "added": "2026-09-06"
     }
   ]

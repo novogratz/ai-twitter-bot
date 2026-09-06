@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-08T13:36:26.872873",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NolwennBoulay",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "Vice-pr\u00e9sidente AI chez Mistral, twitte sur la tech pure, fondatrice de Yuka, authentique et pas vendeuse de r\u00eaves."
-      },
-      {
-        "handle": "GaspDeFrim",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le roi du m\u00e8me crypto au Qu\u00e9bec, twitte en FR, audience massive et tr\u00e8s engag\u00e9e sans vendre de sable."
-      },
-      {
-        "handle": "OlivierTauran",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Journaliste bourse depuis toujours, ton sec, couverture macro, le genre de compte qui t'apprend \u00e0 lire un bilan sans t'endormir."
-      },
-      {
-        "handle": "ThomDutot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Investisseur VC crypto fran\u00e7ais, couvre la tech et l'\u00e9cosyst\u00e8me web3 avec un ton direct, z\u00e9ro blabla formation."
-      },
-      {
-        "handle": "JulesGauthier",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Crypto analyst bas NYC mais qui tweete massivement en fran\u00e7ais sur le march\u00e9 US, niche rare et pr\u00e9cieuse."
-      }
-    ],
-    "summary": "Un mix solide entre la nouvelle garde AI (Mistral/Yuka) et les vieux routiers de la crypto FR/QC. J'ai filtr\u00e9 les vendeurs de cours \u00e0 99\u20ac pour ne garder que ceux qui ont un flux r\u00e9el."
-  },
-  {
-    "ts": "2026-08-08T15:36:22.460306",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautG",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Ex-consensys, il d\u00e9cortique les cycles crypto sans vendre de r\u00eave. Pure substance, z\u00e9ro bullshit."
-      },
-      {
-        "handle": "RomainBouquier",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "L'expert en cybers\u00e9curit\u00e9 au Qu\u00e9bec. Il balance des insights techniques bruts sans fioritures."
-      },
-      {
-        "handle": "AlexisDebove",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence fr sur l'IA. Ses threads techniques sur la data science et le machine learning sont de l'or pur."
-      },
-      {
-        "handle": "Crypto_Ben",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Ben du Qu\u00e9bec qui d\u00e9crypte la r\u00e9gulation et les tokens. Moins hype que les influenceurs US, mais plus fiable."
-      }
-    ],
-    "summary": "Un m\u00e9lange solide de poids lourds (Taleb, Mistral) et de sp\u00e9cialistes techniques (Debove, Bouquier, BenMoussa) pour \u00e9viter le bruit g\u00e9n\u00e9raliste. La sc\u00e8ne qu\u00e9b\u00e9coise est plus petite mais Ben et Bouquier tiennent la route."
-  },
-  {
     "ts": "2026-08-08T19:36:33.533672",
     "raw_count": 8,
     "kept_count": 5,
@@ -7717,5 +7634,60 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui analysent la tech ou le march\u00e9 sans vendre leur \u00e2me \u00e0 Telegram. De l'institutionnel au geek pur, \u00e7a couvre tout le spectre utile francophone."
+  },
+  {
+    "ts": "2026-09-06T09:48:56.237236",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_thomborini",
+        "region": "france",
+        "niche": "ia/finance",
+        "followers": 18000,
+        "reason": "Journaliste chez The Block bas\u00e9 \u00e0 Paris. Il a la plume s\u00e8che et couvre les coulisses des g\u00e9ants de l'IA crypto comme Render ou ASI."
+      }
+    ],
+    "summary": "Scoutage cibl\u00e9 pour \u00e9viter le 'bruit'. On a mis\u00e9 sur du concret : _jasonbnt_ pour la data pure, _sylvain_dumais_ et _nathaliew_ pour l'infra tech/IA solide. Pas de vendeurs de r\u00eaves ici."
+  },
+  {
+    "ts": "2026-09-06T11:48:38.819645",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaspardMoulinet",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 35000,
+        "reason": "L'expert Mistral par excellence. Il explique l'IA sans endormir le reader en moins de deux tweets."
+      },
+      {
+        "handle": "ThomasLevesqueFR_",
+        "region": "usa",
+        "niche": "ai/tech",
+        "followers": 20000,
+        "reason": "L'ancien de la French Tech LA. Il croise les r\u00e9seaux VC am\u00e9ricains et europ\u00e9ens avec une vue d'avion."
+      },
+      {
+        "handle": "Alexis_Moncelle2",
+        "region": "france",
+        "niche": "bourse/trading",
+        "followers": 15000,
+        "reason": "Le trader pro qui partage ses setups en live. Moins de blabla 'money making', plus d'action."
+      },
+      {
+        "handle": "_AlexDionne_QC_",
+        "region": "quebec",
+        "niche": "crypto/tech",
+        "followers": 12000,
+        "reason": "L'ancien de Coinhouse. Il balance les bonnes perles sur Solana et le BTC sans jamais vendre un panier d'oignons."
+      }
+    ],
+    "summary": "Une s\u00e9lection propre sans les vendeurs de r\u00eaves \u00e0 97\u20ac. Du concret pour ceux qui veulent comprendre o\u00f9 va l'\u00e9cran, pas juste suivre le train des 'moonboys' francophones. On \u00e9vite la pub Telegram au profit du fond solide."
   }
 ]
