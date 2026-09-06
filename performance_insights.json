@@ -1,35 +1,35 @@
 {
-  "generated_at": "2026-09-05T21:48:14.724380",
-  "window_7d_actions": 5627,
-  "window_24h_actions": 926,
+  "generated_at": "2026-09-06T01:48:14.188883",
+  "window_7d_actions": 5624,
+  "window_24h_actions": 909,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5627
+      "count": 5624
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5627
+      "count": 5624
     }
   ],
   "best_hours_utc": [
     {
       "hour": 23,
-      "actions": 273
+      "actions": 264
     },
     {
       "hour": 15,
       "actions": 261
     },
     {
-      "hour": 0,
-      "actions": 260
-    },
-    {
       "hour": 8,
       "actions": 254
+    },
+    {
+      "hour": 0,
+      "actions": 253
     },
     {
       "hour": 13,
@@ -39,23 +39,23 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2498
+      "count": 2493
     },
     {
       "topic": "Autre",
-      "count": 2230
+      "count": 2233
     },
     {
       "topic": "Crypto",
-      "count": 766
+      "count": 767
     },
     {
       "topic": "Bourse",
-      "count": 499
+      "count": 498
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 107
     }
   ],
   "rising_topics_24h": [],
@@ -66,78 +66,78 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1442
+      "count": 1451
     },
     {
       "pillar": "other",
-      "count": 1178
+      "count": 1167
     },
     {
       "pillar": "meme_reaction",
-      "count": 142
+      "count": 138
     },
     {
       "pillar": "reply_bait",
-      "count": 132
+      "count": 137
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 64
+      "count": 62
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 458
+      "count": 460
     },
     {
       "pillar": "market_trauma",
-      "count": 243
+      "count": 235
     },
     {
       "pillar": "other",
-      "count": 174
+      "count": 167
     },
     {
       "pillar": "reply_bait",
-      "count": 25
+      "count": 27
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 84,
+      "posts": 87,
       "avg_likes": 0.13,
-      "avg_views": 67.7,
+      "avg_views": 68.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
+      "posts": 69,
       "avg_likes": 0.1,
-      "avg_views": 53.8,
+      "avg_views": 55.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 35,
-      "avg_likes": 0.09,
-      "avg_views": 51.3,
+      "posts": 36,
+      "avg_likes": 0.08,
+      "avg_views": 50.4,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 6,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 43.2,
+      "avg_views": 34.6,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 134
+      "count": 130
     },
     {
       "type": "hotake",
@@ -171,23 +171,23 @@
     },
     {
       "type": "retweet",
-      "count": 26
+      "count": 27
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-05T21:48:05.497071",
-      "text": "George Soros betting against BTC is like a shark sniffing blood. he's short the current cycle because it doesn't look like 1987. the real story isn't his P&L. it's that spot ETFs absorbed all the supply before his hedge fund could print enough futures to crush price. panic buy on",
+      "ts": "2026-09-06T01:47:02.377313",
+      "text": "401k Dave bought AMZN at 75 and AMD at the moon. now he’s retiring while Stanford Steve is still between rounds trying to raise Series A for a wrapper that doesn’t exist yet. discipline > genius every time.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T21:45:31.702713",
-      "text": "Openai has $5b in annual burn and a capped-profit structure that expires before agi arrives. the \"hypocrites\" are just funding their runway to 10x your subscription cost.",
+      "ts": "2026-09-06T01:46:23.851011",
+      "text": "GPT-6 and Anthropic dropped yesterday. The real winner is the 401k Dave who didn’t check his portfolio on Tuesday. Now he’s buying at a premium for features that existed last month. classic capex cycle of fomo over utility.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T21:45:02.721491",
-      "text": "$BE jumped 40% on the S&P inclusion. pelosi made $8m buying at half that price in march while you were \"collecting data\". retail pays for the privilege of following them into the exit.",
+      "ts": "2026-09-06T01:46:07.694083",
+      "text": "Robinhood DEX volume up 10.47B weekly. the retail crowd just migrated from a brokerage app to another one with better charts and zero fees while everyone was busy watching nvidia. liquidity is liquid regardless of where you park it.",
       "type": "reply"
     }
   ]
