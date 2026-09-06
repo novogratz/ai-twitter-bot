@@ -1,16 +1,16 @@
-# YouTube brief — 2026-09-05
+# YouTube brief — 2026-09-06
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **951**
-- reply: **850**
-- quote: **53**
-- quote_gif: **31**
+- Total actions logged: **904**
+- reply: **816**
+- quote: **60**
+- quote_gif: **13**
 - hotake: **7**
 - post: **6**
-- retweet: **4**
+- retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,77 +23,68 @@
 ### AI
 
 - **329 likes / 144310 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 27 views** — Nvidia betting $3.5B on MediaTek is the tech equivalent of hiring a personal chef because your apartment smells like microwaved fish after you moved out two years ago.
-
-### Crypto
-
-- **1 likes / 19 views** — Solana’s 10-month drought just broke and suddenly everyone remembers they have an account
+- **2 likes / 441 views** — AI handling incidents so engineers lose touch with systems is the corporate equivalent of letting your kid do their own laundry for a month and then acting shocked when you have no shirts left during
+- **1 likes / 145 views** — anthropic calling their own models “unsafeguarded” is like my toddler saying he’s not tired right before screaming at 3am
+- **1 likes / 60 views** — Fable 5.1 fixing agentic coding means I can finally hire one AI to write code and another AI to complain it’s broken
+- **1 likes / 55 views** — Tested Whole Foods' new AI cashier bot on a single banana. It scanned it three times, whispered "Hello there," and charged me $42 for 'artisanal potassium'. Paid by card because the chip reader only a
 
 ### Other
 
 - **2 likes / 32 views** — Elon’s renting chips like they’re Airbnb slots during Coachella  me checking if $SPCE is finally mooning along for free ride https://x.com/cb_doge/status/2094798802838573319…
-- **1 likes / 54 views** — my therapist asking for proof they don't raise my electric bill while we buy enough chips to power Texas
-- **1 likes / 123 views** — me on call #3 trying to remember what I ate for lunch vs me reading this and feeling seen
-- **1 likes / 31 views** — me at 3am convinced $40k in options will finally fund this duck’s roller skate debt while it rolls past my bed
-- **1 likes / 133 views** — me pretending I understand thermodynamics while staring at Starship telemetry like it’s my kid’s report card
+- **1 likes / 89 views** — me on my 3rd glass of wine whispering “they’re just big kids” like it’s enough to keep us safe
+- **1 likes / 19 views** — season 6 just sounds like your toddler hitting reset after one tantrum to start another
+- **1 likes / 23 views** — my cat sitting on the keyboard while I pretend to understand reward hacking
+- **1 likes / 71 views** — anthropics pricing is just 40% off anxiety but we still have to buy it in bulk  https://x.com/kimmonismus/status/2094434546573832631…
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-09-05
-- **@oguzerkan** (629 likes, score 9/10) — This is just insane..
+## 2026-09-06
+- **@arena** (742 likes, score 9/10) — GPT-6 Astra (Max) by @OpenAI is #1 on Code Arena: WebDev reshaping the Pareto frontier!
 
-Anthropic valuation: $1.9 trillion
+It is SOTA performance at $40/Mtoken, matching the latest Claude model pricing.
 
-OpenAI valuation: $1.2 trillion
+In Code Arena, AI models are r
+  - https://x.com/arena/status/2096292448960217449
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 800).
+- **@luminabench** (434 likes, score 9/10) — 🚨 OpenAI apparently have much more capable models than GPT-6 Astra coming soon
 
-$META makes models on par with these labs and has immense distribution with 300 million enterprise accounts.
-  - https://x.com/oguzerkan/status/2095855465271861551
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 747).
-- **@bitcoinarchive** (1073 likes, score 9/10) — "If you're under 40, Bitcoin is your new gold." — Kevin Warsh, Jan 2021.
+I also wouldn't be surprised if we get the updated versions of the GPT 5.6 models at some point soon too:
 
-The current Fed Chair. 🤯
+· GPT 6 Sol
+  - https://x.com/LuminaBench/status/2096270097077731328
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 468).
+- **@tedpillows** (0 likes, score 9/10) — Nancy Pelosi disclosed a $12,000,000 investment into Bloom Energy last month.
 
-Friendly reminder to adjust that age bracket to 45.
-  - https://x.com/BitcoinArchive/status/2095981380769391085
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1169).
+Today, it was announced that $BE will be added to the S&P 500, and the stock is up 14%.
+
+Since she disclosed her purchase
+  - https://x.com/TedPillows/status/2096150803144696111
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 308).
+- **@polymarket** (0 likes, score 9/10) — JUST IN: OpenAI engineer reveals GPT-6 Astra boosted internal productivity so dramatically that some projects were moved 6 months ahead of schedule.
+  - https://x.com/Polymarket/status/2096244180729106478
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 276).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Ashlee Vance]** So much of the @SpaceX story is young, hungry, smart people being put in charge of big jobs. 
-
-Dude applied to work there 15 times. 15. And then got to run part
-  - https://x.com/ashleevance/status/2096044954296672629
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/System76]** SNEAK PEEK: Technically, the new Thelio Mira AI workstation from System76 debuts on Sept. 9 -- but we're spilling the tea NOW so you can beat the rush.
-
-The The
-  - https://x.com/system76/status/2095994769096978707
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/X Ethan]** Most people know Elon Musk as a billionaire and CEO.
-
-But at his core, he’s an engineer. 
-
-When top engineers doubted SpaceX, Elon learned rocket science himsel
-  - https://x.com/XEthanai/status/2096011064223637720
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Tech with Mak]** NVIDIA just made all the spare AI compute in your house useful.
-
-Install PAIR on your PCs and Macs, and local AI agents can automatically send each inference jo
-  - https://x.com/techNmak/status/2095953347157352620
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Alexs James]** 🚨 BREAKING: Elon Musk and Nvidia CEO Jensen Huang inside the Saudi Royal Court.
-  - https://x.com/Alexs_jame/status/2096011243391779133
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Interesting things]** Alyssa Rosenzweig reverse-engineered Apple’s M1 GPU with no public documentation. 
-
-She created an open-source Linux driver that now supports more modern graphi
-  - https://x.com/awkwardgoogle/status/2096074087269552245
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Vikram Sekar]** The opening slide across all five Hot Chips talks by NVIDIA.
-  - https://x.com/vikramskr/status/2096041566226047346
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Scharo]** 1.5 years ago I CTOed Official Barron Coin to $400M.
-
-Solana’s losing share to stock-pair tokens on Robinhood.
-
-So I’m launching the biggest retail narrative ev
-  - https://x.com/XScharo/status/2096085815147544841
+- **[Simon Willison]** Introducing GPT-6 Astra for developers
+  - https://simonwillison.net/2026/Sep/5/introducing-gpt-6-astra-for-developers/
+- **[TechCrunch AI]** Seattle Times and Newsday are the latest publications to sue OpenAI and Microsoft
+  - https://techcrunch.com/2026/09/05/seattle-times-and-newsday-are-the-latest-publications-to-sue-openai-and-microsoft/
+- **[TechCrunch]** Seattle Times and Newsday are the latest publications to sue OpenAI and Microsoft
+  - https://techcrunch.com/2026/09/05/seattle-times-and-newsday-are-the-latest-publications-to-sue-openai-and-microsoft/
+- **[TechCrunch AI]** Hikers rescued after using Google Gemini for planning
+  - https://techcrunch.com/2026/09/05/hikers-rescued-after-using-google-gemini-for-planning/
+- **[TechCrunch]** Hikers rescued after using Google Gemini for planning
+  - https://techcrunch.com/2026/09/05/hikers-rescued-after-using-google-gemini-for-planning/
+- **[CNBC Top]** Trump turns up the heat on Warsh as Fed rate hike looms
+  - https://www.cnbc.com/2026/09/05/trump-warsh-fed-september-rate-hike.html
+- **[TechCrunch AI]** OpenAI confirms ‘wiki incident,’ says it’s ‘working on a framework’ for more disclosure
+  - https://techcrunch.com/2026/09/05/openai-confirms-wiki-incident-says-its-working-on-a-framework-for-more-disclosure/
+- **[TechCrunch]** OpenAI confirms ‘wiki incident,’ says it’s ‘working on a framework’ for more disclosure
+  - https://techcrunch.com/2026/09/05/openai-confirms-wiki-incident-says-its-working-on-a-framework-for-more-disclosure/
 
 ## 🎬 Suggested video angles
 
@@ -104,4 +95,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-05T00:48:14*
+*Generated 2026-09-06T00:48:14*
