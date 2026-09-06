@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-05T17:48:14.217809",
-  "window_7d_actions": 5625,
-  "window_24h_actions": 945,
+  "generated_at": "2026-09-05T21:48:14.724380",
+  "window_7d_actions": 5627,
+  "window_24h_actions": 926,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5625
+      "count": 5627
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5625
+      "count": 5627
     }
   ],
   "best_hours_utc": [
@@ -39,38 +39,38 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2482
+      "count": 2498
     },
     {
       "topic": "Autre",
-      "count": 2252
+      "count": 2230
     },
     {
       "topic": "Crypto",
-      "count": 764
+      "count": 766
     },
     {
       "topic": "Bourse",
-      "count": 490
+      "count": 499
     },
     {
       "topic": "Spatial",
-      "count": 113
+      "count": 112
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2668
+      "count": 2669
     },
     {
       "pillar": "market_trauma",
-      "count": 1437
+      "count": 1442
     },
     {
       "pillar": "other",
-      "count": 1179
+      "count": 1178
     },
     {
       "pillar": "meme_reaction",
@@ -78,25 +78,25 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 134
+      "count": 132
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 65
+      "count": 64
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 462
+      "count": 458
     },
     {
       "pillar": "market_trauma",
-      "count": 241
+      "count": 243
     },
     {
       "pillar": "other",
-      "count": 181
+      "count": 174
     },
     {
       "pillar": "reply_bait",
@@ -104,26 +104,26 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 14
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.14,
-      "avg_views": 55.7,
+      "pillar": "ai_news_take",
+      "posts": 84,
+      "avg_likes": 0.13,
+      "avg_views": 67.7,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.12,
-      "avg_views": 67.5,
+      "pillar": "other",
+      "posts": 72,
+      "avg_likes": 0.1,
+      "avg_views": 53.8,
       "low_sample": false
     },
     {
@@ -134,24 +134,24 @@
       "low_sample": false
     },
     {
-      "pillar": "reply_bait",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 50.0,
-      "low_sample": false
-    },
-    {
       "pillar": "ai_vs_btc",
       "posts": 6,
       "avg_likes": 0.0,
       "avg_views": 43.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 2,
+      "avg_likes": 0.0,
+      "avg_views": 27.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5026
+      "count": 5027
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "post",
-      "count": 35
+      "count": 36
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-05T17:47:24.111246",
-      "text": "Astra. The VC funding AGI before the model can pass a Turing test to order lunch because Series B exists. \n\nThe valuation > the utility. classic early stage cope.",
+      "ts": "2026-09-05T21:48:05.497071",
+      "text": "George Soros betting against BTC is like a shark sniffing blood. he's short the current cycle because it doesn't look like 1987. the real story isn't his P&L. it's that spot ETFs absorbed all the supply before his hedge fund could print enough futures to crush price. panic buy on",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T17:41:44.007825",
-      "text": "World models just move inference costs down while training stays stubbornly expensive. eventually we stop paying for the textbook and start selling the tutor's time. scarce compute wins every cycle.",
+      "ts": "2026-09-05T21:45:31.702713",
+      "text": "Openai has $5b in annual burn and a capped-profit structure that expires before agi arrives. the \"hypocrites\" are just funding their runway to 10x your subscription cost.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-05T17:37:35.843216",
-      "text": "Nvidia is an AI infrastructure monopoly that also sells GPUs. the \"next\" stocks are just guys trying to sell you a shovel in a gold rush where nvidia owns the mine.",
+      "ts": "2026-09-05T21:45:02.721491",
+      "text": "$BE jumped 40% on the S&P inclusion. pelosi made $8m buying at half that price in march while you were \"collecting data\". retail pays for the privilege of following them into the exit.",
       "type": "reply"
     }
   ]

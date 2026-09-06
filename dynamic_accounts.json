@@ -2223,7 +2223,12 @@
     "MarcGirard_FR",
     "ThibaultDarras",
     "SophieBouchard_",
-    "RomainBouju_"
+    "RomainBouju_",
+    "GillesZelzer",
+    "HugoDiniz_",
+    "CyrilKam1983",
+    "RomainDeltour_",
+    "RomainLefort_"
   ],
   "en": [
     "Chubby",
@@ -2723,7 +2728,9 @@
     "evnsnclr",
     "VALO2ASIA",
     "b",
-    "Resurekt"
+    "Resurekt",
+    "BFM",
+    "hedgedhog"
   ],
   "history": [
     {
@@ -16334,6 +16341,41 @@
     {
       "lang": "en",
       "handle": "Resurekt",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "BFM",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesZelzer",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDiniz_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "hedgedhog",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilKam1983",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDeltour_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLefort_",
       "added": "2026-09-05"
     }
   ]
