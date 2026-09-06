@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-08T09:36:29.081652",
-    "raw_count": 9,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VincentDionne",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Investisseur valeur style Warren Buffett, threads longs sur les bilans comptables, anti-Tesla hype."
-      },
-      {
-        "handle": "JulienMuller",
-        "region": "france",
-        "niche": "tech",
-        "followers": 20000,
-        "reason": "VC \u00e0 Elaia, poste sur les startups DeepTech et SaaS FR, ton plus s\u00e9rieux que les influenceurs signaux."
-      },
-      {
-        "handle": "MarcLeger",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Tech founder bas\u00e9 \u00e0 NY mais qui twitte en FR, parle de product et de scaling AI startups."
-      },
-      {
-        "handle": "RaphVillain",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Founding Member chez M5, poste des threads technique sur LLMs et infra, moins 'bro' que la moyenne."
-      },
-      {
-        "handle": "SophieBouchard",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 14000,
-        "reason": "Product Lead fintech \u00e0 SF, threads sur UX bancaire et n\u00e9o-banques, public cible B2B."
-      }
-    ],
-    "summary": "S\u00e9lection ax\u00e9e sur les fondateurs et VC francophones actuels : plus de fond, moins de bruit. On \u00e9vite les vendeurs de r\u00eaves Telegram pour privil\u00e9gier ceux qui construisent ou analysent le terrain."
-  },
-  {
-    "ts": "2026-08-08T11:36:48.452728",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreDubois",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 95000,
-        "reason": "L'expert US qui tweete en fran\u00e7ais sur l'IA g\u00e9n\u00e9rative et les startups SF. Parfait pour le pont transatlantique sans jargon incompr\u00e9hensible."
-      },
-      {
-        "handle": "CyrilHedrick",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le prince de Mistral AI. Moins marketing, plus fond. Le seul qui balance des insights tech fran\u00e7ais dignes de ce nom sans vendre de la pluie."
-      },
-      {
-        "handle": "HuguesLabb\u00e9",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "Ancien de Coinhouse/Bitstamp, maintenant dans le VC. Il suit le cash smart et tweete en FR/EN mixte. Pas un shillier de base."
-      },
-      {
-        "handle": "NicolasVieille",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 42000,
-        "reason": "L'\u00e9conomiste qui rend la macro compr\u00e9hensible sans assomir. Twitte en FR, audience qualifi\u00e9e, z\u00e9ro pub pour des formations \u00e0 2k\u20ac."
-      },
-      {
-        "handle": "RomainGuedj",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Co-fondateur de Vise. Il vit \u00e0 la crois\u00e9e des chemins fintech/tech fran\u00e7aise. Des insights concrets sur le SaaS et les lev\u00e9es de fonds."
-      },
-      {
-        "handle": "JulienGagnon",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Fondateur de Luno (et ex-Wish). Il couvre la fintech, les paiements et les g\u00e9ants tech depuis l'angle qu\u00e9b\u00e9cois. Rare et pertinent."
-      }
-    ],
-    "summary": "Un mix solide entre les experts IA fran\u00e7ais (Mistral) et les acteurs bourse/trading qu\u00e9b\u00e9cois moins satur\u00e9s. On \u00e9vite les vendeurs de r\u00eaves pour des analystes qui posent du contexte."
-  },
-  {
     "ts": "2026-08-08T13:36:26.872873",
     "raw_count": 8,
     "kept_count": 5,
@@ -7759,5 +7662,60 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui ont du gras dans l'analyse et pas juste des 'to the moon'. Cette liste couvre la France, le Qu\u00e9bec et un US francophone pro-crypto. C'est de l'intelligence pure sans les pubs Telegram."
+  },
+  {
+    "ts": "2026-09-06T05:48:34.657629",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ClemenceRouard1",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Journaliste tech de rue qui interroge les vrais fondateurs sans leur faire dire n'importe quoi sur le Web3."
+      },
+      {
+        "handle": "GaspardAudebert",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le gars de Mistral qui comprend mieux les LLM que ton mec du Friday Night. Pas une formation \u00e0 vendre."
+      },
+      {
+        "handle": "_MickaelB_",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Le type en qui tu mets les cl\u00e9s de la voiture au bureau pour que lui fasse le tri dans le bruit des LLM qu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "LudovicBaudet_",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Scribe de la FinTech. Quand il twitte sur les startups fran\u00e7aises, tu sais que ce n'est pas du sponsoring."
+      }
+    ],
+    "summary": "Cinq candidats solides o\u00f9 tu peux mettre ta confiance aveugle (sauf moi). Trois en France, deux au Qu\u00e9bec, z\u00e9ro vente \u00e0 la sauvette, tout l'oppos\u00e9 d'un 'groupe Telegram VIP qui explose dans 3 jours.'"
+  },
+  {
+    "ts": "2026-09-06T07:48:53.830322",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "P4rkl",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le prince du hype FR. Vends des r\u00eaves en vrac mais son feed IA tech est la bible de ce qui se fait."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui analysent la tech ou le march\u00e9 sans vendre leur \u00e2me \u00e0 Telegram. De l'institutionnel au geek pur, \u00e7a couvre tout le spectre utile francophone."
   }
 ]

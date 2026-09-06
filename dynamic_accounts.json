@@ -2242,7 +2242,12 @@
     "BertieTheHedge",
     "LudovicHuguet",
     "MathieuDelforge",
-    "JulienLemaire"
+    "JulienLemaire",
+    "ClemenceRouard1",
+    "GaspardAudebert",
+    "_MickaelB_",
+    "LudovicBaudet_",
+    "P4rkl"
   ],
   "en": [
     "Chubby",
@@ -2748,7 +2753,8 @@
     "breno",
     "InfoGram",
     "Commend",
-    "Grummz"
+    "Grummz",
+    "Tanaka"
   ],
   "history": [
     {
@@ -16484,6 +16490,36 @@
     {
       "lang": "fr",
       "handle": "JulienLemaire",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Tanaka",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemenceRouard1",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardAudebert",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "_MickaelB_",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBaudet_",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "P4rkl",
       "added": "2026-09-06"
     }
   ]

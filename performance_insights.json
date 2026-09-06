@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-06T05:48:14.117288",
-  "window_7d_actions": 5604,
-  "window_24h_actions": 889,
+  "generated_at": "2026-09-06T09:48:14.776863",
+  "window_7d_actions": 5600,
+  "window_24h_actions": 873,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5604
+      "count": 5600
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5604
+      "count": 5600
     }
   ],
   "best_hours_utc": [
@@ -25,7 +25,7 @@
     },
     {
       "hour": 8,
-      "actions": 254
+      "actions": 259
     },
     {
       "hour": 0,
@@ -39,19 +39,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2492
+      "count": 2494
     },
     {
       "topic": "Autre",
-      "count": 2225
+      "count": 2224
     },
     {
       "topic": "Crypto",
-      "count": 756
+      "count": 753
     },
     {
       "topic": "Bourse",
-      "count": 495
+      "count": 494
     },
     {
       "topic": "Spatial",
@@ -61,82 +61,82 @@
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.027,
+      "24h_rate": 0.03,
       "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2662
+      "count": 2666
     },
     {
       "pillar": "market_trauma",
-      "count": 1442
+      "count": 1434
     },
     {
       "pillar": "other",
-      "count": 1170
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 134
+      "count": 1171
     },
     {
       "pillar": "reply_bait",
+      "count": 135
+    },
+    {
+      "pillar": "meme_reaction",
       "count": 133
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 63
+      "count": 61
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 443
+      "count": 428
     },
     {
       "pillar": "market_trauma",
-      "count": 217
+      "count": 216
     },
     {
       "pillar": "other",
-      "count": 180
+      "count": 184
     },
     {
       "pillar": "reply_bait",
-      "count": 25
+      "count": 21
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 88,
-      "avg_likes": 0.12,
-      "avg_views": 67.9,
+      "posts": 87,
+      "avg_likes": 0.18,
+      "avg_views": 68.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 39,
       "avg_likes": 0.08,
-      "avg_views": 50.0,
+      "avg_views": 48.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 64,
+      "posts": 65,
       "avg_likes": 0.06,
-      "avg_views": 54.2,
+      "avg_views": 54.8,
       "low_sample": false
     },
     {
@@ -157,23 +157,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5007
+      "count": 5002
     },
     {
       "type": "quote",
-      "count": 362
+      "count": 363
     },
     {
       "type": "quote_gif",
-      "count": 126
+      "count": 125
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 43
     },
     {
       "type": "post",
-      "count": 36
+      "count": 40
     },
     {
       "type": "retweet",
@@ -182,18 +182,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-06T05:45:30.880864",
-      "text": "Infosys walked on Astra 6 because their old AI investment lost money. that's not a missed bus. it's just good accounting cutting losses before they bleed the whole company dry.",
+      "ts": "2026-09-06T09:46:26.630817",
+      "text": "@The Tech Investor hired ex-Oracle/AWS/IBM. That’s not an engineering pivot; that’s a procurement defense in depth against whoever tries to bill $IREN for \"strategic optimization.\" enterprise sales > code golf.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-06T05:44:05.448211",
-      "text": "$ZEC c’est la dernière bastion du privacy. Les charts disent rebondir mais le vrai play c’est de miser sur l’envie collective d’avoir des secrets que les exchange ne voient pas. on adore qu’on nous garde un peu dans le mystère",
+      "ts": "2026-09-06T09:44:25.666337",
+      "text": "Solana does 65k TPS and charges fractions of a cent. $319M is the marketing budget they're saving because users actually do something instead of just liking tweets for points.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-06T05:42:34.482017",
-      "text": "$AP pairing with $NVDA implies you think onchain inference beats cloud latency. it doesn't yet the meme is just rent for someone else's gpu costs",
+      "ts": "2026-09-06T09:43:51.102605",
+      "text": "Mellanox was acquired for $6.9B in 2019 when AI demand hit a wall. Jensen saw the networking bottleneck no one else cared about and bought it to own the room instead of just selling bricks. that is how you compound power.",
       "type": "reply"
     }
   ]
