@@ -17300,3 +17300,29 @@ The current Fed Chair. 🤯
 Friendly reminder to adjust that age bracket to 45.
   - https://x.com/BitcoinArchive/status/2095981380769391085
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 1169).
+
+## 2026-09-06
+- **@arena** (742 likes, score 9/10) — GPT-6 Astra (Max) by @OpenAI is #1 on Code Arena: WebDev reshaping the Pareto frontier!
+
+It is SOTA performance at $40/Mtoken, matching the latest Claude model pricing.
+
+In Code Arena, AI models are r
+  - https://x.com/arena/status/2096292448960217449
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 800).
+- **@luminabench** (434 likes, score 9/10) — 🚨 OpenAI apparently have much more capable models than GPT-6 Astra coming soon
+
+I also wouldn't be surprised if we get the updated versions of the GPT 5.6 models at some point soon too:
+
+· GPT 6 Sol
+  - https://x.com/LuminaBench/status/2096270097077731328
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 468).
+- **@tedpillows** (0 likes, score 9/10) — Nancy Pelosi disclosed a $12,000,000 investment into Bloom Energy last month.
+
+Today, it was announced that $BE will be added to the S&P 500, and the stock is up 14%.
+
+Since she disclosed her purchase
+  - https://x.com/TedPillows/status/2096150803144696111
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 308).
+- **@polymarket** (0 likes, score 9/10) — JUST IN: OpenAI engineer reveals GPT-6 Astra boosted internal productivity so dramatically that some projects were moved 6 months ahead of schedule.
+  - https://x.com/Polymarket/status/2096244180729106478
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 276).

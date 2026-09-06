@@ -2228,7 +2228,12 @@
     "HugoDiniz_",
     "CyrilKam1983",
     "RomainDeltour_",
-    "RomainLefort_"
+    "RomainLefort_",
+    "MaelAbergel",
+    "ThalesLP",
+    "DarioAmici",
+    "LudoDelfortrie",
+    "JulienLeDuff"
   ],
   "en": [
     "Chubby",
@@ -2730,7 +2735,9 @@
     "b",
     "Resurekt",
     "BFM",
-    "hedgedhog"
+    "hedgedhog",
+    "breno",
+    "InfoGram"
   ],
   "history": [
     {
@@ -16376,6 +16383,41 @@
     {
       "lang": "fr",
       "handle": "RomainLefort_",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "breno",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelAbergel",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThalesLP",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "en",
+      "handle": "InfoGram",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "DarioAmici",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoDelfortrie",
+      "added": "2026-09-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeDuff",
       "added": "2026-09-05"
     }
   ]

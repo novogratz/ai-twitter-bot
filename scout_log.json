@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-08T01:36:11.093655",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HugoDenis",
-        "region": "france",
-        "niche": "ai",
-        "followers": 120000,
-        "reason": "CTO Mistral AI, twitte en FR, c'est la bible du LLM local."
-      },
-      {
-        "handle": "AdrienBoulay",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'analyste qui rend la macro digestible sans endormir le audience."
-      },
-      {
-        "handle": "SergeMiche",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi de la newsletter et du trading long terme au Qu\u00e9bec."
-      }
-    ],
-    "summary": "5 comptes actifs, \u00e0 forte audience et \u00e0 haute densit\u00e9 d'info. Pas de vendeurs de r\u00eave, que du contenu."
-  },
-  {
-    "ts": "2026-08-08T03:36:34.179737",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Mona_Mamdouh",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "La voix francophone de l'IA aux USA. Elle couvre les tendances, les jobs et les startups tech d'un \u0153il global."
-      },
-      {
-        "handle": "HassanBachiri",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Directeur de la Data & IA chez OVHcloud. Il tweete sec sur l'infra IA et les LLMs sans vendre du r\u00eave, juste du tangible."
-      },
-      {
-        "handle": "Adil_Benmoussa",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Expert IA francophone tr\u00e8s actif sur le march\u00e9 du travail tech et les nouveaux outils. Ses threads sur l'IA pratique valent de l'or."
-      },
-      {
-        "handle": "Noureddine_Boutaib",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Le mec qui a fait briller Mistral avant de se lancer. Il mixe IA, \u00e9thique et impact business avec un style francophone rare."
-      },
-      {
-        "handle": "Alexis_Sol",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Consultant IA qu\u00e9b\u00e9cois actif. Il d\u00e9crypte l'IA generative et l'adoption enterprise avec une touche pragmatique, loin du hype pur."
-      }
-    ],
-    "summary": "Un mix solide de profils fran\u00e7ais (infrastructure/recherche), qu\u00e9b\u00e9cois (acad\u00e9mique/startup) et diaspora US. Tous tweetent en fran\u00e7ais, tous ont >5k abonn\u00e9s et \u00e9vitent la vente de formations \u00e0 1000 balles."
-  },
-  {
     "ts": "2026-08-08T05:36:45.551474",
     "raw_count": 8,
     "kept_count": 4,
@@ -7773,5 +7697,60 @@
       }
     ],
     "summary": "J'ai creus\u00e9 pour \u00e9viter le lot des 'gourous crypto vendant leur PDF'. Le r\u00e9sultat ? Des ex-technos, des VCs silencieux qui twittent mieux que les influenceurs Instagram de la finance. La sc\u00e8ne qu\u00e9b\u00e9coise est sous-cot\u00e9e mais techniquement solide."
+  },
+  {
+    "ts": "2026-09-05T21:48:41.013316",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaelAbergel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 80000,
+        "reason": "Ancien de Coinbase. Il explique le crypto-trading comme si tu avais deux cerveaux au lieu d'un."
+      },
+      {
+        "handle": "ThalesLP",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "L'oracle vivant de Mistral AI. Il tweet plus vite que la prod ne compile."
+      }
+    ],
+    "summary": "Je suis retenu les pros du cru : ThalesLP pour la tech pure, Jasonbnt et JulesD pour le trading francophone sec. Z\u00e9ro influenceur Telegram ici, que des vrais cerveaux qui tweetent en FR sans se payer de luxe."
+  },
+  {
+    "ts": "2026-09-05T23:48:37.081453",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DarioAmici",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Le prof de HEC qui vulgarise l'IA avec la classe. Z\u00e9ro bullshit 'rejoins ma newsletter', juste des insights solides."
+      },
+      {
+        "handle": "LudoDelfortrie",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Expert IA francophone de r\u00e9f\u00e9rence. Pas un vendeur de solutions SaaS douteuses."
+      },
+      {
+        "handle": "JulienLeDuff",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Fondateur d'Adversarial AI. Le genre de mec qui twitte des threads techniques en FR pour moins de followers que les influenceurs 'business'."
+      }
+    ],
+    "summary": "Focus IA francophone de qualit\u00e9 : des experts tech et VC qui prouvent que savoir twitter n'exclut pas le cerveau contrairement \u00e0 la moyenne du BuzzFeed news fran\u00e7ais."
   }
 ]
