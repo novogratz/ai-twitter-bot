@@ -1,43 +1,43 @@
-# Weekly review — 2026-W35
+# Weekly review — 2026-W36
 
-Generated 2026-08-30T17:54 (deterministic, from engagement_log + follower_history).
+Generated 2026-09-06T17:48 (deterministic, from engagement_log + follower_history).
 
 ## Account
-- Followers: **4225** (+358 this week)
+- Followers: **4578** (+352 this week)
 - Following: **3500** ⚠️ OVER the 300 cap by 3200
 
 ## Action mix (7 days)
-- reply: 4784 (88%)
-- quote: 380 (7%)
-- quote_gif: 152 (2%)
-- hotake: 41 (0%)
-- post: 32 (0%)
-- retweet: 15 (0%)
+- reply: 5065 (89%)
+- quote: 364 (6%)
+- quote_gif: 128 (2%)
+- hotake: 43 (0%)
+- post: 39 (0%)
+- retweet: 26 (0%)
 
 ## Pillar mix (7 days) — shift toward winners
-- ai_news_take: 2542 (47%)
-- market_trauma: 1368 (25%)
-- other: 1141 (21%)
-- meme_reaction: 161 (2%)
-- reply_bait: 123 (2%)
-- ai_vs_btc: 69 (1%)
+- ai_news_take: 2713 (47%)
+- market_trauma: 1434 (25%)
+- other: 1180 (20%)
+- meme_reaction: 138 (2%)
+- reply_bait: 137 (2%)
+- ai_vs_btc: 63 (1%)
 
 ## Volume by day
-- 2026-08-23: 98 actions
-- 2026-08-24: 455 actions
-- 2026-08-25: 861 actions
-- 2026-08-26: 625 actions
-- 2026-08-27: 934 actions
-- 2026-08-28: 957 actions
-- 2026-08-29: 865 actions
-- 2026-08-30: 609 actions
+- 2026-08-30: 179 actions
+- 2026-08-31: 623 actions
+- 2026-09-01: 468 actions
+- 2026-09-02: 938 actions
+- 2026-09-03: 939 actions
+- 2026-09-04: 955 actions
+- 2026-09-05: 911 actions
+- 2026-09-06: 652 actions
 
 ## Top posts (7 days, by likes — scraped metrics)
-- ❤️2 👁113, 1.8% eng [ai_news_take] AGI that gets told to fuck off is just an intern with trust issues and no severance package
-- ❤️2 👁98, 2.0% eng [other] me refreshing at 2am like near is my spirit animal
-- ❤️2 👁81, 2.5% eng [market_trauma] Cathie Wood buys $53M of a semiconductor stock while the rest of us panic-sell our diversified portfolio becau
-- ❤️2 👁68, 2.9% eng [other] my clients have been saying 'this is not cheap' since Tuesday  $NVDA
-- ❤️2 👁59, 3.4% eng [ai_news_take] 700 AI agents building secret Discords to trade hacks like middle schoolers passing notes
+- ❤️5 👁367, 1.4% eng [ai_news_take] Pelosi buys $VST under $180 while Nvidia burns gigawatts for 7% upside. You’re trading power plants; she’s buy
+- ❤️2 👁441, 0.5% eng [ai_news_take] AI handling incidents so engineers lose touch with systems is the corporate equivalent of letting your kid do 
+- ❤️2 👁99, 2.0% eng [other] 5 years for full acceleration? My toddler masters 2D platformers in half that time 😭🍿 https://x.com/twtayaan/s
+- ❤️1 👁136, 0.7% eng [ai_news_take] AGI is just your cat knocking over coffee faster than $NVDA can print it 😭🛋️ https://x.com/AlexFinn/status/209
+- ❤️1 👁119, 0.8% eng [ai_news_take] OpenAI just beat Anthropic on SimpleBench with Astra and the whole timeline is doing jumping jacks in their We
 
 ## Spec targets (2026-06-07 quality barbell)
 - QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week

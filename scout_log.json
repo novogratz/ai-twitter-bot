@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-08T19:36:33.533672",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RomainDartois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 145000,
-        "reason": "Le patron de Mistral AI. Twitte des insights techniques bruts, pas du marketing de com'."
-      },
-      {
-        "handle": "Gaspard05",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Journaliste IA au Figaro. Va droit au but, couvre les mod\u00e8les open-source avant qu'ils soient cool."
-      },
-      {
-        "handle": "CyrilDong",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Fondateur de Lucca. Parle de SaaS, de lev\u00e9es de fonds et de la tech french-touch sans le 'storytelling' habituel."
-      },
-      {
-        "handle": "RomainFoucault",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Bas\u00e9 \u00e0 NYC mais twitte en FR. Fond\u00e9 Bitcoin Magazine FR. Conna\u00eet la hype et le cycle mieux que personne."
-      },
-      {
-        "handle": "PierreLescanne",
-        "region": "france",
-        "niche": "ai",
-        "followers": 11000,
-        "reason": "Product Leader AI. Partage ses retours terrain sur l'impl\u00e9mentation LLM en entreprise. Rarement vu."
-      }
-    ],
-    "summary": "Pas de vendeurs de r\u00eaves ici, juste des makers et des analysts qui \u00e9crivent pour ceux qui comprennent. La France domine l'IA fr, le Qu\u00e9bec garde le cap sur la crypto s\u00e9rieuse, et les US apportent la vue am\u00e9ricaine francophone."
-  },
-  {
     "ts": "2026-08-08T21:36:42.170326",
     "raw_count": 10,
     "kept_count": 5,
@@ -7689,5 +7644,43 @@
       }
     ],
     "summary": "Une s\u00e9lection propre sans les vendeurs de r\u00eaves \u00e0 97\u20ac. Du concret pour ceux qui veulent comprendre o\u00f9 va l'\u00e9cran, pas juste suivre le train des 'moonboys' francophones. On \u00e9vite la pub Telegram au profit du fond solide."
+  },
+  {
+    "ts": "2026-09-06T13:48:45.992944",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Gael_Fournier_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 32000,
+        "reason": "Ex-Hedge Fund Manager. Son analyse de la microcap fran\u00e7aise est plus fine que celle des journalistes boursiers grand public."
+      },
+      {
+        "handle": "Luisa_Morais",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Journaliste IA \u00e0 France Info. Contrairement aux influenceurs qui vendent de l'air, elle interviewe les vrais fondateurs (Mistral, Le Merrer)."
+      },
+      {
+        "handle": "_maxime_lemellec",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "CTO de Leboncoin. Il twitterait sur la tech scale-up plus souvent que sur le prix du beurre."
+      },
+      {
+        "handle": "_luc_dev",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "DevFR. Il tweete en code et en fran\u00e7ais sur l'IA g\u00e9n\u00e9rative au quotidien. Pas de hype verbage."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 les profils qui ont du code ou des P&L derri\u00e8re le clavier pour \u00e9viter la pollution des 'gurus de l'IA'. La s\u00e9lection est \u00e9pur\u00e9e : si \u00e7a ne parle pas d'algorithme, de capital-risque ou de blockchain, on mute."
   }
 ]

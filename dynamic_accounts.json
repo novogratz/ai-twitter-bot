@@ -2250,7 +2250,10 @@
     "P4rkl",
     "_thomborini",
     "GaspardMoulinet",
-    "_AlexDionne_QC_"
+    "_AlexDionne_QC_",
+    "Gael_Fournier_",
+    "Luisa_Morais",
+    "_luc_dev"
   ],
   "en": [
     "Chubby",
@@ -2760,7 +2763,9 @@
     "Tanaka",
     "Stonepic",
     "Aerodrome",
-    "Sui"
+    "Sui",
+    "marcus",
+    "LCI"
   ],
   "history": [
     {
@@ -16556,6 +16561,31 @@
     {
       "lang": "fr",
       "handle": "_AlexDionne_QC_",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "marcus",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gael_Fournier_",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "Luisa_Morais",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "_luc_dev",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "LCI",
       "added": "2026-09-06"
     }
   ]
