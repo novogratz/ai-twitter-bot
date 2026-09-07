@@ -2263,7 +2263,11 @@
     "MaximeCassier",
     "_huguesg",
     "HugoBourgeois_",
-    "Alex_Puget_"
+    "Alex_Puget_",
+    "BulwarkInvest",
+    "CyrilM83",
+    "ThomBorini",
+    "HugoDNIZ"
   ],
   "en": [
     "Chubby",
@@ -2782,7 +2786,10 @@
     "Dolto",
     "hiddenliburua",
     "Canopy",
-    "LorelaiCT"
+    "LorelaiCT",
+    "OpenBMB",
+    "PBA",
+    "LindyMan"
   ],
   "history": [
     {
@@ -16688,6 +16695,41 @@
     {
       "lang": "fr",
       "handle": "Alex_Puget_",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenBMB",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "PBA",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "LindyMan",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BulwarkInvest",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilM83",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomBorini",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDNIZ",
       "added": "2026-09-07"
     }
   ]

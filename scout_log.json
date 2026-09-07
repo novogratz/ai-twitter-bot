@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-09T09:36:32.737350",
-    "raw_count": 9,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HassanBouacheri",
-        "region": "france",
-        "niche": "ai",
-        "followers": 145000,
-        "reason": "Le baron fran\u00e7ais de l'IA. Il couvre l'\u00e9cosyst\u00e8me avec une pr\u00e9cision chirurgicale, pas de pubs crypto pourris, juste de la pure tech."
-      },
-      {
-        "handle": "MaximeAguillon",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "Expert Deep Learning, pas dans la hype, dans le code. Twitte souvent en anglais mais ses threads FR sont des p\u00e9pites de p\u00e9dagogie."
-      },
-      {
-        "handle": "ThomasPy",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Founders de Perplexity. Il poste en EN mais ses threads sur l'AGI et le FR tech sont suivis par toute la diaspora."
-      },
-      {
-        "handle": "ValentinDubois",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Ex-DeFi chez ConsenSys. Il poste des threads techniques sur le DeFi FR sans le jargon 'to the moon'."
-      },
-      {
-        "handle": "LionelRoussel",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "L'anti-blogueur bourse. Pas de Telegram VIP, juste des analyses macro et actions solides. Il tweette sec."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs 'Lifestyle' pour ne garder que les profils qui tweetent comme s'ils avaient du travail \u00e0 faire : Pierre Rochard (crypto US/FR), Hassan (IA FR) et ses pairs. Z\u00e9ro 'signaux Telegram', 100% contenu technique ou macro."
-  },
-  {
     "ts": "2026-08-09T11:36:32.782478",
     "raw_count": 10,
     "kept_count": 8,
@@ -7584,5 +7539,43 @@
       }
     ],
     "summary": "Une s\u00e9lection chirurgicale : on \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur des buildeurs actifs. On couvre Mistral, la quant finance FR et quelques p\u00e9pites QC qui bossent au Qu\u00e9bec ou dans la diaspora US tech-francophone."
+  },
+  {
+    "ts": "2026-09-07T15:48:43.527844",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BulwarkInvest",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le baron des boules de cristal. Il pr\u00e9dit les krachs avec une pr\u00e9cision d\u00e9sesp\u00e9rante et la confiance en soi d'un gourou qui vient juste de signer son virement."
+      },
+      {
+        "handle": "CyrilM83",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'ancien de Coinhouse qui balance des perles aussi fra\u00eeches que ses ordres d'achat en bear market. Moins hype que les influenceurs Telegram, plus utile."
+      },
+      {
+        "handle": "ThomBorini",
+        "region": "france",
+        "niche": "tech_vc",
+        "followers": 20000,
+        "reason": "Ex-BNP Paribas devenu VC. Il track la tech fran\u00e7aise avec le regard affam\u00e9 d'un chasseur de primeurs qui a rat\u00e9 son boulot."
+      },
+      {
+        "handle": "HugoDNIZ",
+        "region": "france",
+        "niche": "finance",
+        "followers": 18000,
+        "reason": "Le prof qui rend la finance d\u00e9cente. Ses threads sur les cycles sont plus pr\u00e9cis que le barom\u00e8tre de ta grand-m\u00e8re."
+      }
+    ],
+    "summary": "Un focus solide sur les fondateurs et analysts qui font encore le poids : pas d'influenceurs \u00e0 trois poils, juste ceux qui ont soit cod\u00e9 la tech, soit perdu leur fric dessus."
   }
 ]
