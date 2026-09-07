@@ -17326,3 +17326,16 @@ Since she disclosed her purchase
 - **@polymarket** (0 likes, score 9/10) — JUST IN: OpenAI engineer reveals GPT-6 Astra boosted internal productivity so dramatically that some projects were moved 6 months ahead of schedule.
   - https://x.com/Polymarket/status/2096244180729106478
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 276).
+
+## 2026-09-07
+- **@coinbureau** (49 likes, score 9/10) — 🇺🇸 LATEST: NVIDIA CEO Jensen Huang says “AGI has arrived.” 
+
+With OpenAI’s GPT-6 Astra release, Huang reveals that the model was trained on 100,000+ NVIDIA Grace Blackwell NVLink72 systems, and addi
+  - https://x.com/coinbureau/status/2096803141874295122
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 75).
+- **@volatilemarkts** (33 likes, score 8/10) — Twelve machines. 2.4 terabytes of unified memory. One coordinated inference problem.
+
+Seven DGX Sparks: 896 GB, CUDA, brutal at compute.
+Five Mac Studios: 1.5 TB, Metal, brutal at bandwidth and unbeat
+  - https://x.com/volatilemarkts/status/2096797538888057213
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).

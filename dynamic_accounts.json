@@ -2254,7 +2254,10 @@
     "Gael_Fournier_",
     "Luisa_Morais",
     "_luc_dev",
-    "RomainBour"
+    "RomainBour",
+    "_alex_puget",
+    "ThierryBruno_",
+    "_thomasc"
   ],
   "en": [
     "Chubby",
@@ -2767,7 +2770,8 @@
     "Sui",
     "marcus",
     "LCI",
-    "BURKOV"
+    "BURKOV",
+    "Anissa"
   ],
   "history": [
     {
@@ -16598,6 +16602,26 @@
     {
       "lang": "fr",
       "handle": "RomainBour",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "_alex_puget",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThierryBruno_",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "_thomasc",
+      "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Anissa",
       "added": "2026-09-06"
     }
   ]
