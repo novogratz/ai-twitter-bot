@@ -1,23 +1,27 @@
 {
-  "generated_at": "2026-09-06T21:48:15.016093",
-  "window_7d_actions": 5703,
-  "window_24h_actions": 872,
+  "generated_at": "2026-09-07T01:48:14.037790",
+  "window_7d_actions": 5742,
+  "window_24h_actions": 883,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5703
+      "count": 5742
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5703
+      "count": 5742
     }
   ],
   "best_hours_utc": [
     {
+      "hour": 0,
+      "actions": 266
+    },
+    {
       "hour": 23,
-      "actions": 264
+      "actions": 265
     },
     {
       "hour": 15,
@@ -28,61 +32,57 @@
       "actions": 261
     },
     {
-      "hour": 8,
-      "actions": 259
-    },
-    {
-      "hour": 13,
-      "actions": 256
+      "hour": 1,
+      "actions": 260
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2566
+      "count": 2572
     },
     {
       "topic": "Autre",
-      "count": 2240
+      "count": 2256
     },
     {
       "topic": "Crypto",
-      "count": 783
+      "count": 792
     },
     {
       "topic": "Bourse",
-      "count": 503
+      "count": 505
     },
     {
       "topic": "Spatial",
-      "count": 108
+      "count": 110
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2733
+      "count": 2745
     },
     {
       "pillar": "market_trauma",
-      "count": 1448
+      "count": 1459
     },
     {
       "pillar": "other",
-      "count": 1183
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 138
+      "count": 1195
     },
     {
       "pillar": "reply_bait",
-      "count": 138
+      "count": 139
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 139
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 63
+      "count": 65
     }
   ],
   "pillar_mix_24h": [
@@ -96,19 +96,19 @@
     },
     {
       "pillar": "other",
-      "count": 181
+      "count": 190
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 27
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
@@ -116,28 +116,28 @@
       "pillar": "ai_news_take",
       "posts": 85,
       "avg_likes": 0.22,
-      "avg_views": 68.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.1,
-      "avg_views": 45.5,
+      "avg_views": 69.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 65,
-      "avg_likes": 0.08,
-      "avg_views": 56.8,
+      "posts": 63,
+      "avg_likes": 0.1,
+      "avg_views": 51.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 45,
+      "avg_likes": 0.09,
+      "avg_views": 45.2,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 5,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 43.0,
+      "avg_views": 39.5,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5097
+      "count": 5135
     },
     {
       "type": "quote",
-      "count": 370
+      "count": 371
     },
     {
       "type": "quote_gif",
-      "count": 128
+      "count": 129
     },
     {
       "type": "hotake",
@@ -171,23 +171,23 @@
     },
     {
       "type": "retweet",
-      "count": 26
+      "count": 25
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-06T21:46:44.374080",
-      "text": "Open source means nobody cares if it works. close source means they have until tomorrow to pay the GPU bill and pray. ship or die.",
+      "ts": "2026-09-07T01:48:05.687061",
+      "text": "Fair point! But remember GPT-4o’s $15M monthly cap? That's not scale, that's an velvet rope club where we're all fighting to get past security. You paying for backstage access yet, @treeninja390?",
       "type": "reply"
     },
     {
-      "ts": "2026-09-06T21:45:01.725522",
-      "text": "VEIL is a quantum networking play. The real story isn't the science, it's that $50M in funding buys you exactly one 18-month runway for unproven qubits before cash burn hits the wall. breathe. it’s fine.",
-      "type": "reply"
+      "ts": "2026-09-07T01:45:37.998006",
+      "text": "merz building data centers is just germany’s way of saying “we don’t have enough people so we’ll automate them” 😭🇩🇪",
+      "type": "quote"
     },
     {
-      "ts": "2026-09-06T21:44:16.201292",
-      "text": "Most agents are just autocorrect with extra steps. cowagent is the only one actually wiring up tools without needing a $10k/year subscription to make it work. ship first.",
+      "ts": "2026-09-07T01:45:19.766391",
+      "text": "Three emojis? That’s @shay1896368 committing to the 'laughing until I snort' strategy while Llama 3 actually benchmarks at MMLU Pro >0.75. Fair points on tone, but does that smiley mask a deeper fear of open-source latency costs or are you just here for vibes?",
       "type": "reply"
     }
   ]
