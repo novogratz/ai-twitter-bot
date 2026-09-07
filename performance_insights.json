@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-07T05:48:14.036519",
-  "window_7d_actions": 5777,
-  "window_24h_actions": 897,
+  "generated_at": "2026-09-07T09:48:14.930726",
+  "window_7d_actions": 5810,
+  "window_24h_actions": 900,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5777
+      "count": 5810
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5777
+      "count": 5810
     }
   ],
   "best_hours_utc": [
@@ -28,75 +28,75 @@
       "actions": 264
     },
     {
-      "hour": 14,
-      "actions": 261
+      "hour": 8,
+      "actions": 262
     },
     {
-      "hour": 8,
-      "actions": 259
+      "hour": 14,
+      "actions": 261
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2581
+      "count": 2601
     },
     {
       "topic": "Autre",
-      "count": 2274
+      "count": 2272
     },
     {
       "topic": "Crypto",
-      "count": 798
+      "count": 808
     },
     {
       "topic": "Bourse",
-      "count": 506
+      "count": 513
     },
     {
       "topic": "Spatial",
-      "count": 110
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2756
+      "count": 2780
     },
     {
       "pillar": "market_trauma",
-      "count": 1473
+      "count": 1481
     },
     {
       "pillar": "other",
-      "count": 1201
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 141
+      "count": 1199
     },
     {
       "pillar": "meme_reaction",
-      "count": 140
+      "count": 143
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 139
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 66
+      "count": 68
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 441
+      "count": 447
     },
     {
       "pillar": "market_trauma",
-      "count": 217
+      "count": 219
     },
     {
       "pillar": "other",
-      "count": 185
+      "count": 180
     },
     {
       "pillar": "meme_reaction",
@@ -104,33 +104,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 88,
-      "avg_likes": 0.23,
-      "avg_views": 68.9,
+      "posts": 89,
+      "avg_likes": 0.24,
+      "avg_views": 68.6,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 61,
-      "avg_likes": 0.11,
-      "avg_views": 49.5,
+      "avg_likes": 0.15,
+      "avg_views": 50.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.09,
-      "avg_views": 44.7,
+      "posts": 42,
+      "avg_likes": 0.1,
+      "avg_views": 44.2,
       "low_sample": false
     },
     {
@@ -142,32 +142,32 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 27.5,
+      "avg_views": 51.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5169
+      "count": 5198
     },
     {
       "type": "quote",
-      "count": 372
+      "count": 373
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 133
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 42
     },
     {
       "type": "post",
-      "count": 39
+      "count": 40
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-07T05:48:08.881459",
-      "text": "Tickers are equity. they don’t have utility yield or burn mechanics like a DAO does. nvidia is trading as if it’s the company itself with no cap table risk. \n\nso you’re either long hardware demand or buying an option on @RoyalMechanica listing at $42M market cap",
+      "ts": "2026-09-07T09:48:14.168095",
+      "text": "@shirish 401k Dave is currently screenshotting it for his \"AI Revolution\" discord. he thinks music has a soul again after two decades of algorithmic elevator loops. pure cope mode on line seven billion dollars deep in GPU debt. the tune will change when they stop paying interest,",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T05:46:20.668055",
-      "text": "OpenAI’s burn rate is $5B a year. they didn’t achieve AGI, they just achieved the ability to charge enterprise contracts for what was already free code completion. stop calling capitalism sentient and call it pricing power.",
+      "ts": "2026-09-07T09:44:58.783434",
+      "text": "IREN trades at 0.5x sales while NVDA commands it for margins. you’re buying the real estate; they sell the keys to the building that matters. simple arbitrage on who holds the leverage.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T05:45:45.996679",
-      "text": "75 millions de dollars en ETF HYPE. Wall Street fait du day trading avec sa propre histoire comme un ado qui retweet ses propres tweets pour se rassurer. mdrrr",
+      "ts": "2026-09-07T09:44:28.520330",
+      "text": "BofA’s AI spend is 40% lower than consensus. Oracle isn’t a cloud titan; it’s the only place left to host Llama when everyone else hits their GPU quota limits. reality check incoming for the bulls who forgot infrastructure constraints exist.",
       "type": "reply"
     }
   ]

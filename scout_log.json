@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-09T05:36:32.907022",
-    "raw_count": 9,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "jchancel",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence incontest\u00e9e pour d\u00e9crypter la macro et les march\u00e9s. Pas de pubs de formations \u00e0 2000\u20ac, juste du sens et de l'humour noir."
-      },
-      {
-        "handle": "JulienGosselin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le Qu\u00e9bec a sa voix pour les march\u00e9s US et CA. Il balance les updates de earnings et les macro sans le jargon MBA ennuyeux."
-      },
-      {
-        "handle": "RomainLefebvre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Journaliste IA qui va chez les pros. Il ne vend pas du r\u00eave, il teste les outils et donne des retours d'usage concrets pour les pros."
-      },
-      {
-        "handle": "NicolasRouvier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Ex-Mistral AI, il tweet la tech et l'IA du c\u00f4t\u00e9 des founders et des devs. Moins de hype, plus de code et de strat\u00e9gie produit."
-      }
-    ],
-    "summary": "On garde le cru : des pros qui tweetent leur m\u00e9tier, pas leur abonnement VIP. Les Qu\u00e9b\u00e9cois sont moins nombreux mais plus nich\u00e9s tech/crypto."
-  },
-  {
     "ts": "2026-08-09T07:36:25.039707",
     "raw_count": 6,
     "kept_count": 4,
@@ -7612,5 +7574,29 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave Telegram pour se concentrer sur ceux qui comprennent la tech ou les march\u00e9s. Le mix France/Qu\u00e9bec est \u00e9quilibr\u00e9, avec un focus fort sur l'IA infrastructurelle et le Bitcoin fondamental."
+  },
+  {
+    "ts": "2026-09-07T05:48:40.256239",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeCassier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le prince de Mistral AI. Twitte avec la pr\u00e9cision d'un scalpel et l'humour sec des ing\u00e9nieurs qui ont vu passer les LLMs."
+      },
+      {
+        "handle": "_huguesg",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 28000,
+        "reason": "SVP et ancien de Mistral. Il tweete l'\u00e9cosyst\u00e8me AI FR sans filtre corporate. C'est cru mais c'est bon."
+      }
+    ],
+    "summary": "On a fouill\u00e9 dans l'\u00e9cosyst\u00e8me fr/quebec pour \u00e9viter les influenceurs formation et trouver ceux qui construisent vraiment (Mistral, Ledger, SVP). Le mix est solide entre IA pure et appli finance."
   }
 ]

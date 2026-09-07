@@ -2259,7 +2259,9 @@
     "ThierryBruno_",
     "_thomasc",
     "SylvainArbulu",
-    "MathieuDuffieq"
+    "MathieuDuffieq",
+    "MaximeCassier",
+    "_huguesg"
   ],
   "en": [
     "Chubby",
@@ -2776,7 +2778,8 @@
     "Anissa",
     "Outofnone",
     "Dolto",
-    "hiddenliburua"
+    "hiddenliburua",
+    "Canopy"
   ],
   "history": [
     {
@@ -16652,6 +16655,21 @@
     {
       "lang": "fr",
       "handle": "MathieuDuffieq",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Canopy",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCassier",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "_huguesg",
       "added": "2026-09-07"
     }
   ]
