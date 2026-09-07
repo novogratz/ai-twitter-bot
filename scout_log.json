@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-09T03:36:41.922786",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenjaminCowen",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 200000,
-        "reason": "Le ma\u00eetre des 'long term cycles'. Il tweet en EN, mais ses graphiques sont si clairs qu'ils sont partout dans les feeds FR. Incontournable pour la data."
-      },
-      {
-        "handle": "DorianFry",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'homme le plus fiable de l'Hexagone pour le trading BTC/ETH, z\u00e9ro hype, 100% charts. Il tweet en FR/EN mais l'audience FR est massive."
-      },
-      {
-        "handle": "Luisa_Markovic",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Ex-Bloomberg, ex-LinkedIn, la reine du Tech FR. Elle couvre AI, SaaS et Startups avec un ton tr\u00e8s terre-\u00e0-terre, moins 'LinkedIn influencer' que la moyenne."
-      },
-      {
-        "handle": "Rapha\u00eblProust",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "Une des voix les plus influentes de la crypto qu\u00e9b\u00e9coise. Il tweet fort sur la macro et le Bitcoin, avec une identit\u00e9 'qu\u00e9b\u00e9cois tech' qui se d\u00e9tache."
-      },
-      {
-        "handle": "LudovicTang",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "CTO & Researcher, il poste des threads techniques sur les LLMs et l'IA g\u00e9n\u00e9rative. Un peu plus 'pro' que le 'hypeboy' lambda, tr\u00e8s qualitatif."
-      },
-      {
-        "handle": "MaximeChouinard",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Analyste de bourse, il couvre la US et la CA. Son style est plus 'conseiller' que 'trader day-one', mais tr\u00e8s \u00e9ducatif pour une audience francophone nord-am\u00e9ricaine."
-      },
-      {
-        "handle": "JeanLoubert",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Journaliste financier (L'Actualit\u00e9, L'\u00c9conomiste), il apporte du recul et du contexte macro. Le genre de compte qui tweet 'pourquoi \u00e7a baisse' au lieu de 'achetez tout de suite'."
-      }
-    ],
-    "summary": "Scouting complet des r\u00e9gions FR, QC et USA. On privil\u00e9gie ici l'analyse pure et les comptes qui tweet encore 'en vrai' (pas des bots). L'absence de grands influenceurs 'pompes' est un bon signe pour la qualit\u00e9 du feed."
-  },
-  {
     "ts": "2026-08-09T05:36:32.907022",
     "raw_count": 9,
     "kept_count": 4,
@@ -7647,5 +7588,29 @@
       }
     ],
     "summary": "Une s\u00e9lection mixte entre les v\u00e9t\u00e9rons macro FR et le petit monde VC/QC actif. Z\u00e9ro vendeur de r\u00eaves \u00e0 90\u20ac/mois dans l'assortiment."
+  },
+  {
+    "ts": "2026-09-07T03:49:12.625004",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainArbulu",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le Pape du Bitcoin FR. Pas de pubs \u00e0 la con juste des threads techniques et macro qui font avancer le SHIB."
+      },
+      {
+        "handle": "MathieuDuffieq",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'ancien de Coinhouse qui twitte mieux que la plupart des analystes Binance. Focus DeFi et infrastructure."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave Telegram pour se concentrer sur ceux qui comprennent la tech ou les march\u00e9s. Le mix France/Qu\u00e9bec est \u00e9quilibr\u00e9, avec un focus fort sur l'IA infrastructurelle et le Bitcoin fondamental."
   }
 ]

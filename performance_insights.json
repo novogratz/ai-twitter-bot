@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-07T01:48:14.037790",
-  "window_7d_actions": 5742,
-  "window_24h_actions": 883,
+  "generated_at": "2026-09-07T05:48:14.036519",
+  "window_7d_actions": 5777,
+  "window_24h_actions": 897,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5742
+      "count": 5777
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5742
+      "count": 5777
     }
   ],
   "best_hours_utc": [
@@ -32,26 +32,26 @@
       "actions": 261
     },
     {
-      "hour": 1,
-      "actions": 260
+      "hour": 8,
+      "actions": 259
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2572
+      "count": 2581
     },
     {
       "topic": "Autre",
-      "count": 2256
+      "count": 2274
     },
     {
       "topic": "Crypto",
-      "count": 792
+      "count": 798
     },
     {
       "topic": "Bourse",
-      "count": 505
+      "count": 506
     },
     {
       "topic": "Spatial",
@@ -62,41 +62,41 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2745
+      "count": 2756
     },
     {
       "pillar": "market_trauma",
-      "count": 1459
+      "count": 1473
     },
     {
       "pillar": "other",
-      "count": 1195
+      "count": 1201
     },
     {
       "pillar": "reply_bait",
-      "count": 139
+      "count": 141
     },
     {
       "pillar": "meme_reaction",
-      "count": 139
+      "count": 140
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 65
+      "count": 66
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 439
+      "count": 441
     },
     {
       "pillar": "market_trauma",
-      "count": 200
+      "count": 217
     },
     {
       "pillar": "other",
-      "count": 190
+      "count": 185
     },
     {
       "pillar": "meme_reaction",
@@ -104,33 +104,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 85,
-      "avg_likes": 0.22,
-      "avg_views": 69.1,
+      "posts": 88,
+      "avg_likes": 0.23,
+      "avg_views": 68.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 63,
-      "avg_likes": 0.1,
-      "avg_views": 51.2,
+      "posts": 61,
+      "avg_likes": 0.11,
+      "avg_views": 49.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 45,
+      "posts": 44,
       "avg_likes": 0.09,
-      "avg_views": 45.2,
+      "avg_views": 44.7,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5135
+      "count": 5169
     },
     {
       "type": "quote",
-      "count": 371
+      "count": 372
     },
     {
       "type": "quote_gif",
-      "count": 129
+      "count": 130
     },
     {
       "type": "hotake",
@@ -171,23 +171,23 @@
     },
     {
       "type": "retweet",
-      "count": 25
+      "count": 24
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-07T01:48:05.687061",
-      "text": "Fair point! But remember GPT-4o’s $15M monthly cap? That's not scale, that's an velvet rope club where we're all fighting to get past security. You paying for backstage access yet, @treeninja390?",
+      "ts": "2026-09-07T05:48:08.881459",
+      "text": "Tickers are equity. they don’t have utility yield or burn mechanics like a DAO does. nvidia is trading as if it’s the company itself with no cap table risk. \n\nso you’re either long hardware demand or buying an option on @RoyalMechanica listing at $42M market cap",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T01:45:37.998006",
-      "text": "merz building data centers is just germany’s way of saying “we don’t have enough people so we’ll automate them” 😭🇩🇪",
-      "type": "quote"
+      "ts": "2026-09-07T05:46:20.668055",
+      "text": "OpenAI’s burn rate is $5B a year. they didn’t achieve AGI, they just achieved the ability to charge enterprise contracts for what was already free code completion. stop calling capitalism sentient and call it pricing power.",
+      "type": "reply"
     },
     {
-      "ts": "2026-09-07T01:45:19.766391",
-      "text": "Three emojis? That’s @shay1896368 committing to the 'laughing until I snort' strategy while Llama 3 actually benchmarks at MMLU Pro >0.75. Fair points on tone, but does that smiley mask a deeper fear of open-source latency costs or are you just here for vibes?",
+      "ts": "2026-09-07T05:45:45.996679",
+      "text": "75 millions de dollars en ETF HYPE. Wall Street fait du day trading avec sa propre histoire comme un ado qui retweet ses propres tweets pour se rassurer. mdrrr",
       "type": "reply"
     }
   ]

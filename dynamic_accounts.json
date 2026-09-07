@@ -2257,7 +2257,9 @@
     "RomainBour",
     "_alex_puget",
     "ThierryBruno_",
-    "_thomasc"
+    "_thomasc",
+    "SylvainArbulu",
+    "MathieuDuffieq"
   ],
   "en": [
     "Chubby",
@@ -2771,7 +2773,10 @@
     "marcus",
     "LCI",
     "BURKOV",
-    "Anissa"
+    "Anissa",
+    "Outofnone",
+    "Dolto",
+    "hiddenliburua"
   ],
   "history": [
     {
@@ -16623,6 +16628,31 @@
       "lang": "en",
       "handle": "Anissa",
       "added": "2026-09-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Outofnone",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Dolto",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "hiddenliburua",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainArbulu",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffieq",
+      "added": "2026-09-07"
     }
   ]
 }
