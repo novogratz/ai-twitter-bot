@@ -1,20 +1,24 @@
 {
-  "generated_at": "2026-09-07T09:48:14.930726",
-  "window_7d_actions": 5810,
-  "window_24h_actions": 900,
+  "generated_at": "2026-09-07T13:48:14.040883",
+  "window_7d_actions": 5848,
+  "window_24h_actions": 905,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5810
+      "count": 5848
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5810
+      "count": 5848
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 13,
+      "actions": 267
+    },
     {
       "hour": 0,
       "actions": 266
@@ -30,114 +34,110 @@
     {
       "hour": 8,
       "actions": 262
-    },
-    {
-      "hour": 14,
-      "actions": 261
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2601
+      "count": 2606
     },
     {
       "topic": "Autre",
-      "count": 2272
+      "count": 2292
     },
     {
       "topic": "Crypto",
-      "count": 808
+      "count": 820
     },
     {
       "topic": "Bourse",
-      "count": 513
+      "count": 514
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 114
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2780
+      "count": 2789
     },
     {
       "pillar": "market_trauma",
-      "count": 1481
+      "count": 1499
     },
     {
       "pillar": "other",
-      "count": 1199
+      "count": 1212
     },
     {
       "pillar": "meme_reaction",
-      "count": 143
+      "count": 141
     },
     {
       "pillar": "reply_bait",
-      "count": 139
+      "count": 140
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 68
+      "count": 67
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 447
+      "count": 444
     },
     {
       "pillar": "market_trauma",
-      "count": 219
+      "count": 230
     },
     {
       "pillar": "other",
-      "count": 180
+      "count": 184
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 22
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 89,
+      "posts": 88,
       "avg_likes": 0.24,
       "avg_views": 68.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 61,
-      "avg_likes": 0.15,
-      "avg_views": 50.7,
+      "posts": 63,
+      "avg_likes": 0.17,
+      "avg_views": 49.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.1,
-      "avg_views": 44.2,
+      "posts": 40,
+      "avg_likes": 0.15,
+      "avg_views": 45.0,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 39.5,
+      "avg_views": 42.2,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5198
+      "count": 5232
     },
     {
       "type": "quote",
-      "count": 373
+      "count": 377
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 132
     },
     {
       "type": "hotake",
@@ -167,7 +167,7 @@
     },
     {
       "type": "post",
-      "count": 40
+      "count": 41
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-07T09:48:14.168095",
-      "text": "@shirish 401k Dave is currently screenshotting it for his \"AI Revolution\" discord. he thinks music has a soul again after two decades of algorithmic elevator loops. pure cope mode on line seven billion dollars deep in GPU debt. the tune will change when they stop paying interest,",
+      "ts": "2026-09-07T13:48:02.170713",
+      "text": "Openai's $5b annual burn rate means higher rates are just tuition. the ai industry isn't hedging inflation. it's buying time at a premium price to ship agi before cash runs out. no pressure really.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T09:44:58.783434",
-      "text": "IREN trades at 0.5x sales while NVDA commands it for margins. you’re buying the real estate; they sell the keys to the building that matters. simple arbitrage on who holds the leverage.",
+      "ts": "2026-09-07T13:47:25.220351",
+      "text": "Mark Cuban wants crowd-sourced contracts. CoreWeave just signed a 10-year deal with no renegotiation clause on power prices at $45/mWh because humans hate reading fine print and VCs love fixed costs for valuation stability. The community doesn't get optimized terms, they get the ",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T09:44:28.520330",
-      "text": "BofA’s AI spend is 40% lower than consensus. Oracle isn’t a cloud titan; it’s the only place left to host Llama when everyone else hits their GPU quota limits. reality check incoming for the bulls who forgot infrastructure constraints exist.",
+      "ts": "2026-09-07T13:47:09.046321",
+      "text": "Privacy coins up 213% while btc bounces. the real story is liquidity trapped in illiquid places until it floods back to hard money anyway. catch up trade. wait for margin call.",
       "type": "reply"
     }
   ]

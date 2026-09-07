@@ -2261,7 +2261,9 @@
     "SylvainArbulu",
     "MathieuDuffieq",
     "MaximeCassier",
-    "_huguesg"
+    "_huguesg",
+    "HugoBourgeois_",
+    "Alex_Puget_"
   ],
   "en": [
     "Chubby",
@@ -2779,7 +2781,8 @@
     "Outofnone",
     "Dolto",
     "hiddenliburua",
-    "Canopy"
+    "Canopy",
+    "LorelaiCT"
   ],
   "history": [
     {
@@ -16670,6 +16673,21 @@
     {
       "lang": "fr",
       "handle": "_huguesg",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "LorelaiCT",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBourgeois_",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alex_Puget_",
       "added": "2026-09-07"
     }
   ]

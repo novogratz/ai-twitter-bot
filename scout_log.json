@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-09T07:36:25.039707",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NathanLabbe",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "L'ind\u00e9modable. V\u00e9t\u00e9rans du Bitcointube, il passe de l'analyse on-chain \u00e0 la macro sans se la raconter. Moins hyst\u00e9rique que ses pairs, plus pertinent."
-      },
-      {
-        "handle": "AlexisPrieur",
-        "region": "france",
-        "niche": "ai",
-        "followers": 32000,
-        "reason": "Cofondateur de Lila et ex-Google. Il tweete l'IA sous-jacente, pas les prompts. Le rare qui explique le 'comment' sans vendre du r\u00eave."
-      },
-      {
-        "handle": "JulienDeWit",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Journaliste \u00e0 360\u00b0, il capte les micro-tendances crypto avant qu'elles ne deviennent du buzz. Rapide, sec, sans filtre."
-      },
-      {
-        "handle": "VincentLacroix",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Gestionnaire de fonds qu\u00e9b\u00e9cois. Il tweete la bourse comme on respire, avec cette franchise qui fait mal mais qui sauve des portefeuilles."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les influenceurs qui vendent du vent pour trouver ceux qui l'utilisent : des fondateurs d'IA, des gestionnaires de fonds et des v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu aux cycles. Des gens qui twittent, pas des robots qui repostent."
-  },
-  {
     "ts": "2026-08-09T09:36:32.737350",
     "raw_count": 9,
     "kept_count": 5,
@@ -7598,5 +7560,29 @@
       }
     ],
     "summary": "On a fouill\u00e9 dans l'\u00e9cosyst\u00e8me fr/quebec pour \u00e9viter les influenceurs formation et trouver ceux qui construisent vraiment (Mistral, Ledger, SVP). Le mix est solide entre IA pure et appli finance."
+  },
+  {
+    "ts": "2026-09-07T11:48:42.307796",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoBourgeois_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Le patron de la Newsletter La Tech Box. Il twitte sur SaaS/AI sans vendre des formations \u00e0 prix d'or."
+      },
+      {
+        "handle": "Alex_Puget_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Co-founder chez Mistral AI. Il tweet sur la LLM et l'open-source sans le jargon VC lourd."
+      }
+    ],
+    "summary": "Une s\u00e9lection chirurgicale : on \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur des buildeurs actifs. On couvre Mistral, la quant finance FR et quelques p\u00e9pites QC qui bossent au Qu\u00e9bec ou dans la diaspora US tech-francophone."
   }
 ]
