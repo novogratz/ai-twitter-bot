@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-08T21:36:42.170326",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoGaulois",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Celui qui a surv\u00e9cu \u00e0 trois bear markets sans ciller. Ses analyses on-chain sont techniques mais expliqu\u00e9es comme \u00e0 un pote au bar. Pas de liens d'affiliation douteux."
-      },
-      {
-        "handle": "FrenchTechVC",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "L'agr\u00e9gateur indispensable pour qui veut voir les deals de la French Tech avant Bloomberg. Moins ax\u00e9 'stock', plus ax\u00e9 'startup & financement', mais crucial pour l'\u00e9cosyst\u00e8me."
-      },
-      {
-        "handle": "MarcTremblay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Vieux de la vieille qui a vu passer toutes les bulles. Son style est direct, ses charts sont propres, et il n'a pas peur de dire 'vends' quand tout le monde ach\u00e8te."
-      },
-      {
-        "handle": "GaspardR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'inverseur \u00e0 l'\u00e2me de trader, ses threads sur la gestion de risque sont des classiques. Il \u00e9vite le 'guru' pour le 'p\u00e9dagogue un peu cynique', ce qui change du lot."
-      },
-      {
-        "handle": "AlgoTradingFR",
-        "region": "france",
-        "niche": "trading",
-        "followers": 10000,
-        "reason": "Le bot qui tweete en fran\u00e7ais mais qui a l'\u00e2me d'un quant. Ses backtests sont partag\u00e9s, les erreurs aussi. C'est brutal, c'est math\u00e9matique, et \u00e7a fait du bien \u00e0 la vue."
-      }
-    ],
-    "summary": "Un m\u00e9lange solide de poids lourds institutionnels (Mistral) et de talents underground qui tweetent en vrai fran\u00e7ais. J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont une opinion tranch\u00e9e et v\u00e9rifiable sur l'IA, la macro et le trading."
-  },
-  {
     "ts": "2026-08-09T01:36:30.215129",
     "raw_count": 7,
     "kept_count": 4,
@@ -7682,5 +7637,22 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 les profils qui ont du code ou des P&L derri\u00e8re le clavier pour \u00e9viter la pollution des 'gurus de l'IA'. La s\u00e9lection est \u00e9pur\u00e9e : si \u00e7a ne parle pas d'algorithme, de capital-risque ou de blockchain, on mute."
+  },
+  {
+    "ts": "2026-09-06T17:48:37.986669",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainBour",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le gars qui transforme la paper research en threads digestes. Moins 'influencer', plus vrai d\u00e9v IA FR."
+      }
+    ],
+    "summary": "Un mix solide entre les veterans (Dumas) et la nouvelle vague analytique (Romain Bour). J'ai \u00e9vit\u00e9 les gros comptes institutionnels morts pour du sang frais en FR/QC/US diaspora."
   }
 ]
