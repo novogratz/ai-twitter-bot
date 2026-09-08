@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-10T02:59:46.856345",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Thibault_M",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'expert macro qui parle fran\u00e7ais. Pas de jargon inutile, des charts clairs, il tweete souvent sur les taux et l'Europe. L'analyste qu'on voudrait avoir au bar pour expliquer pourquoi \u00e7a va mal."
-      },
-      {
-        "handle": "RaphaelMouly",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le CTO de Mistral. Il twitte des trucs techniques en anglais mais avec une culture FR, pas le style 'CEO qui vend du r\u00eave', mais le 'ing\u00e9nieur qui a boss\u00e9 48h'. L'anti-Jack Dorsey."
-      },
-      {
-        "handle": "MarcChabot",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "Journaliste financier au Qu\u00e9bec. Il couvre les march\u00e9s US et CA avec un regard francophone. Il tweete des infos rapides, pas des pav\u00e9s philosophiques. L'anti-Bloomberg pour ceux qui ont la flemme de lire."
-      },
-      {
-        "handle": "VincentMoulin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Franco-Am\u00e9ricain, bas\u00e9 SF. Il tweete en anglais mais avec un twist FR quand il parle d'Europe. Couvre l'IA et la fintech. Le genre de gars qui sait pourquoi l'Europe rate son virage num\u00e9rique depuis 2010."
-      },
-      {
-        "handle": "Crypto_Thom",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Le gars qui a surv\u00e9cu \u00e0 4 bear markets. Pas de shilling de meme-coin \u00e0 0.0001\u20ac, juste de l'analyse on-chain et du sentiment. Il tweete en FR, mais son anglais est meilleur pour les d\u00e9tails techniques."
-      },
-      {
-        "handle": "LucasMangin",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Fintech VC bas\u00e9 \u00e0 NYC. Il tweete en anglais mais ses insights sur les startups FR/CA sont pr\u00e9cieux. Pas un 'influencer', un 'deal-maker'. Son feed, c'est les jobs de demain pour les francophones."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la bouse : pas de vendeurs de r\u00eaves \u00e0 99\u20ac, juste des profils qui ont de l'exp\u00e9rience dans les dents. La France domine l'IA (Mistral), le Qu\u00e9bec est le roi de la crypto s\u00e9rieuse, et les USA apportent la finesse VC franco-am\u00e9ricaine."
-  },
-  {
-    "ts": "2026-08-10T04:59:43.047195",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThauThau",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "L'ex-Mistral qui raconte le monde tech avec le cynisme juste. Moins 'buzz', plus 'vrai'. Pas de pub pour son cours \u00e0 97\u20ac."
-      },
-      {
-        "handle": "RomainB",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Am\u00e9ricain francophone bas\u00e9 \u00e0 SF. Il tweete l'IA US avec une touche europ\u00e9enne. Moins hype, plus 'what works'."
-      },
-      {
-        "handle": "MathieuLanfranchi",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Ancien de Coinhouse/Parity. Il tweete l'infra, pas le hype. Ceux qui suivent le Bitcoin depuis 2017 le connaissent d\u00e9j\u00e0."
-      },
-      {
-        "handle": "AdriDumasFr",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Focus LLMs et agents. Des threads techniques mais lisibles. Il \u00e9vite le 'AI will kill you' pour montrer ce qui code vraiment."
-      },
-      {
-        "handle": "MaximeDemeure",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 14000,
-        "reason": "Fintech FR. Il couvre les regtech et la data. Pas de signaux, juste des insights business que les investisseurs lisent."
-      },
-      {
-        "handle": "BenjaminHoffmann",
-        "region": "france",
-        "niche": "ai",
-        "followers": 11000,
-        "reason": "CTO de Malt (ex). Il tweete sur l'IA applied au SaaS et \u00e0 la B2B. Le genre de compte qui fait gagner du temps aux pros."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les fondateurs techniques (Mistral/HFT) et les VC locaux pour \u00e9viter les 'gourous' du signal Telegram. Le focus est sur l'infra et le business, pas le buzz. Les qu\u00e9b\u00e9cois et la diaspora US sont bien repr\u00e9sent\u00e9s par des comptes actifs qui tweetent en FR sans accent."
-  },
-  {
     "ts": "2026-08-10T06:59:12.977789",
     "raw_count": 6,
     "kept_count": 5,
@@ -7472,5 +7368,88 @@
       }
     ],
     "summary": "J'ai traqu\u00e9 les vrais architectes du son plut\u00f4t que les vendeurs de r\u00eaves crypto \u00e0 domicile. Une mixit\u00e9 France/Qu\u00e9bec/SF qui donne du gras intellectuel au bot."
+  },
+  {
+    "ts": "2026-09-08T09:48:32.380083",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaelanRieunier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Ex-Mistral. Il tweet de la tech et des tokenomics avec l'humour d'un ing\u00e9nieur qui a vu trop de slumps en crypto."
+      },
+      {
+        "handle": "RomainFavre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Analyste macro. Il transforme la BCE en op\u00e9ra comique avec des tweets courts qui font mal aux gencives."
+      },
+      {
+        "handle": "_Jules_BNT",
+        "region": "qu\u00e9bec/usa",
+        "niche": "ai/crypto",
+        "followers": 12000,
+        "reason": "Foundeur de BNB Research. Il mixe l'anglais avec des touches FR quand il est inspir\u00e9 (ou \u00e9nerv\u00e9). Deep dive tech sans le blabla vendeur."
+      }
+    ],
+    "summary": "Un m\u00e9lange entre les g\u00e9ants crypto fran\u00e7ais qui ont surv\u00e9cu aux hivers et une p\u00e9pite qu\u00e9b\u00e9coise qui d\u00e9verse ses charts dans le vide sid\u00e9ral. Z\u00e9ro formation \u00e0 acheter, juste du contenu ou des tweets sarcastiques."
+  },
+  {
+    "ts": "2026-09-08T11:48:36.870754",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JessePollak",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 250000,
+        "reason": "L'ap\u00f4tre du prompt engineering am\u00e9ricain. Il tweet en anglais mais est la bible de l'IA genFR."
+      },
+      {
+        "handle": "CedricGiraudet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Investisseur\u957f\u7ebf. Pas de signaux VIP \u00e0 5\u20ac/mois, juste des charts propre et du sens."
+      },
+      {
+        "handle": "SylvainLevasseur",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "VP chez Mistral AI. Le mec qui balance la tech pure sans le blabla VC \u00e0 deux balles."
+      },
+      {
+        "handle": "EricDucheminQC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le trader qu\u00e9b\u00e9cois qui balance ses setup. Pas de 'groupe priv\u00e9', juste du grain."
+      },
+      {
+        "handle": "MaximeMangoldFR",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Expert infra crypto/DeFi. Il tweet en FR parfois et explique les blockschains comme un chef."
+      },
+      {
+        "handle": "JulienNestor",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Founder SaaS FR. Il montre comment l'IA tue les agences de prod et remplace les juniors."
+      }
+    ],
+    "summary": "Focus IA genFR (Mistral/Pollak) + Crypto solides sans l'effet 'Telegram VIP'. Z\u00e9ro politicien, z\u00e9ro formateur \u00e0 la tron\u00e7onneuse."
   }
 ]
