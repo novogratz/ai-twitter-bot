@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-10T00:59:16.607679",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Cryptosauvage",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence FR pour la macro crypto, twitte en FR mais pense globe-trotter."
-      },
-      {
-        "handle": "RomainFouques",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'anti-guru qui montre ses pertes : l'analyste le plus honn\u00eate du Twitter francophone."
-      },
-      {
-        "handle": "VittorioBianco",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 52000,
-        "reason": "Le Parisien \u00e0 NYC qui cartonne dans le VC fintech, twitte en FR mais vit dans la jungle."
-      },
-      {
-        "handle": "BenjaminBel",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le prof de l'IA qui transforme l'agentic en digestible sans vendre de la poudre de perlimpinpin."
-      },
-      {
-        "handle": "LavoieTrading",
-        "region": "quebec",
-        "niche": "trading",
-        "followers": 28000,
-        "reason": "Pure technique, z\u00e9ro hype, pour ceux qui ont les nerfs solides."
-      }
-    ],
-    "summary": "10 comptes de qualit\u00e9 pure, z\u00e9ro vendeur de r\u00eaves, couvrant la trilogie France/Qu\u00e9bec/Diaspora US. On a \u00e9vit\u00e9 les influenceurs crypto de deuxi\u00e8me zone pour privil\u00e9gier les fondateurs et analystes techniques."
-  },
-  {
     "ts": "2026-08-10T02:59:46.856345",
     "raw_count": 8,
     "kept_count": 6,
@@ -7493,5 +7448,29 @@
       }
     ],
     "summary": "La France domine par la qualit\u00e9 des fondateurs (Dumas, Borini) qui ont \u00e9vit\u00e9 le pi\u00e8ge du 'guru'. Le Qu\u00e9bec tient bon via Dionne et sa communaut\u00e9 Solana. USA : Diniz reste l'exception francophone utile sur LLMs."
+  },
+  {
+    "ts": "2026-09-08T07:48:33.517602",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Borloo_B",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'ancien ministre qui a compris que le Bitcoin est plus solide que son gouvernement. Il tweete moins qu'il ne commente la d\u00e9sinfo."
+      },
+      {
+        "handle": "MorganeBoulay",
+        "region": "usa",
+        "niche": "vc/crypto",
+        "followers": 18000,
+        "reason": "Founding Partner chez Variant qui twitte en fran\u00e7ais depuis la Silicon Valley. Elle est le pont entre Paris et SF sans faire 'expat'. "
+      }
+    ],
+    "summary": "J'ai traqu\u00e9 les vrais architectes du son plut\u00f4t que les vendeurs de r\u00eaves crypto \u00e0 domicile. Une mixit\u00e9 France/Qu\u00e9bec/SF qui donne du gras intellectuel au bot."
   }
 ]

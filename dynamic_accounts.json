@@ -2279,7 +2279,9 @@
     "LefrancaisduBTC",
     "_adriendumas",
     "NathalieGoulet",
-    "HugoDiniz"
+    "HugoDiniz",
+    "Borloo_B",
+    "MorganeBoulay"
   ],
   "en": [
     "Chubby",
@@ -16814,6 +16816,16 @@
     {
       "lang": "fr",
       "handle": "HugoDiniz",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Borloo_B",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganeBoulay",
       "added": "2026-09-08"
     }
   ]

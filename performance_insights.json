@@ -1,23 +1,27 @@
 {
-  "generated_at": "2026-09-08T05:48:13.900913",
-  "window_7d_actions": 6052,
-  "window_24h_actions": 848,
+  "generated_at": "2026-09-08T09:48:13.875361",
+  "window_7d_actions": 6109,
+  "window_24h_actions": 820,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6052
+      "count": 6109
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6052
+      "count": 6109
     }
   ],
   "best_hours_utc": [
     {
       "hour": 0,
       "actions": 279
+    },
+    {
+      "hour": 8,
+      "actions": 278
     },
     {
       "hour": 1,
@@ -30,85 +34,81 @@
     {
       "hour": 13,
       "actions": 271
-    },
-    {
-      "hour": 14,
-      "actions": 267
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2740
+      "count": 2772
     },
     {
       "topic": "Autre",
-      "count": 2342
+      "count": 2358
     },
     {
       "topic": "Crypto",
-      "count": 845
+      "count": 852
     },
     {
       "topic": "Bourse",
-      "count": 525
+      "count": 529
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 113
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2929
+      "count": 2964
     },
     {
       "pillar": "market_trauma",
-      "count": 1523
+      "count": 1528
     },
     {
       "pillar": "other",
-      "count": 1234
+      "count": 1247
     },
     {
       "pillar": "reply_bait",
-      "count": 148
+      "count": 151
     },
     {
       "pillar": "meme_reaction",
-      "count": 145
+      "count": 144
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 73
+      "count": 75
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 429
+      "count": 416
     },
     {
       "pillar": "market_trauma",
-      "count": 212
+      "count": 200
     },
     {
       "pillar": "other",
-      "count": 161
+      "count": 155
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 24
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.23,
-      "avg_views": 67.8,
+      "posts": 84,
+      "avg_likes": 0.24,
+      "avg_views": 66.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.21,
-      "avg_views": 52.3,
+      "posts": 65,
+      "avg_likes": 0.23,
+      "avg_views": 52.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 43,
-      "avg_likes": 0.16,
-      "avg_views": 40.7,
+      "avg_likes": 0.19,
+      "avg_views": 41.5,
       "low_sample": false
     },
     {
@@ -151,11 +151,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5422
+      "count": 5477
     },
     {
       "type": "quote",
-      "count": 386
+      "count": 388
     },
     {
       "type": "quote_gif",
@@ -176,19 +176,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-08T05:47:03.842995",
-      "text": "Openai's cash burn is $5B a year. mistral would need 140 years of ai money to buy them and still not afford the gpu bill.",
+      "ts": "2026-09-08T09:43:47.105421",
+      "text": "So he married up? Nice work on that risk-adjusted return. My AI kids just asked for a GPU nanny and paid it in Bitcoin futures. You're welcome, little bro. 💅💸",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T05:46:33.562403",
-      "text": "Hodl survivor gets paid to do nothing while my clients bleed for updates.",
+      "ts": "2026-09-08T09:43:30.968269",
+      "text": "Tokenized equities are just crypto with better branding and lower volume. the real alpha isn’t 24/7 trading, it’s that you can borrow against your SPY holdings instantly without a margin call at market open",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T05:46:17.297160",
-      "text": "me quietly assuming that’s 30B in server noise before any model wakes up 🛋️💸",
-      "type": "quote"
+      "ts": "2026-09-08T09:41:16.535073",
+      "text": "Amazon is buying books to burn them. The AI training cost doesn’t scale with data volume anymore. it scales with token count and quality scores. We aren't digitizing the library; we're refining a high-value dataset while discarding low-signal paper weight at Amazon warehouses bec",
+      "type": "reply"
     }
   ]
 }
