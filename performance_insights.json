@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-08T01:48:13.888437",
-  "window_7d_actions": 6003,
-  "window_24h_actions": 871,
+  "generated_at": "2026-09-08T05:48:13.900913",
+  "window_7d_actions": 6052,
+  "window_24h_actions": 848,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6003
+      "count": 6052
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6003
+      "count": 6052
     }
   ],
   "best_hours_utc": [
@@ -21,7 +21,7 @@
     },
     {
       "hour": 1,
-      "actions": 273
+      "actions": 274
     },
     {
       "hour": 23,
@@ -39,46 +39,46 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2709
+      "count": 2740
     },
     {
       "topic": "Autre",
-      "count": 2330
+      "count": 2342
     },
     {
       "topic": "Crypto",
-      "count": 839
+      "count": 845
     },
     {
       "topic": "Bourse",
-      "count": 523
+      "count": 525
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 112
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2896
+      "count": 2929
     },
     {
       "pillar": "market_trauma",
-      "count": 1517
+      "count": 1523
     },
     {
       "pillar": "other",
-      "count": 1225
+      "count": 1234
     },
     {
       "pillar": "reply_bait",
-      "count": 146
+      "count": 148
     },
     {
       "pillar": "meme_reaction",
-      "count": 146
+      "count": 145
     },
     {
       "pillar": "ai_vs_btc",
@@ -88,15 +88,15 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 437
+      "count": 429
     },
     {
       "pillar": "market_trauma",
-      "count": 221
+      "count": 212
     },
     {
       "pillar": "other",
-      "count": 166
+      "count": 161
     },
     {
       "pillar": "reply_bait",
@@ -104,7 +104,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
@@ -113,31 +113,31 @@
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "reply_bait",
+      "posts": 4,
+      "avg_likes": 0.25,
+      "avg_views": 57.8,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_news_take",
-      "posts": 84,
+      "posts": 81,
       "avg_likes": 0.23,
-      "avg_views": 68.0,
+      "avg_views": 67.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 68,
       "avg_likes": 0.21,
-      "avg_views": 52.9,
+      "avg_views": 52.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.2,
-      "avg_views": 42.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 51.7,
+      "posts": 43,
+      "avg_likes": 0.16,
+      "avg_views": 40.7,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5373
+      "count": 5422
     },
     {
       "type": "quote",
-      "count": 385
+      "count": 386
     },
     {
       "type": "quote_gif",
-      "count": 137
+      "count": 136
     },
     {
       "type": "hotake",
@@ -176,19 +176,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-08T01:46:25.029440",
-      "text": "Fair on Ireland’s grid strain, but that power mostly powers cooling fans and idle GPUs waiting for prompts like “write me an email.” If actual compute was the beast we think it is, why are our tokens still cheaper than tap water?",
+      "ts": "2026-09-08T05:47:03.842995",
+      "text": "Openai's cash burn is $5B a year. mistral would need 140 years of ai money to buy them and still not afford the gpu bill.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T01:46:08.714388",
-      "text": "Palantir's gov tech revenue isn't sticky. It's cyclical congressional budgets with a 15-month procurement lag and zero switching costs for legacy contractors who just need to justify the spend before term limits kick in next cycle.",
+      "ts": "2026-09-08T05:46:33.562403",
+      "text": "Hodl survivor gets paid to do nothing while my clients bleed for updates.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T01:44:53.022897",
-      "text": "Small caps need a catalyst to survive. right now the only wind in their sails is nostalgia.",
-      "type": "reply"
+      "ts": "2026-09-08T05:46:17.297160",
+      "text": "me quietly assuming that’s 30B in server noise before any model wakes up 🛋️💸",
+      "type": "quote"
     }
   ]
 }

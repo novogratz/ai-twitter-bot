@@ -2271,7 +2271,15 @@
     "JulesD_1",
     "_adriendumasfr_",
     "_thomasc_",
-    "_julesbnt"
+    "_julesbnt",
+    "LionelHenryFr",
+    "VincentDumasFr",
+    "MaximeCormier",
+    "VincentDumas_",
+    "LefrancaisduBTC",
+    "_adriendumas",
+    "NathalieGoulet",
+    "HugoDiniz"
   ],
   "en": [
     "Chubby",
@@ -2794,7 +2802,8 @@
     "OpenBMB",
     "PBA",
     "LindyMan",
-    "Joule14"
+    "Joule14",
+    "Pecuniasports"
   ],
   "history": [
     {
@@ -16761,6 +16770,51 @@
       "lang": "fr",
       "handle": "_julesbnt",
       "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Pecuniasports",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelHenryFr",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDumasFr",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCormier",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDumas_",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefrancaisduBTC",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adriendumas",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieGoulet",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDiniz",
+      "added": "2026-09-08"
     }
   ]
 }
