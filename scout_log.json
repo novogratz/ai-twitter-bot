@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-09T17:36:29.245310",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Hugo_Marchand",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Vice-Pr\u00e9sident chez Mistral AI. Il tweet en FR, mixe recherche et business, \u00e9vite le 'guru' pour aller droit au but tech."
-      },
-      {
-        "handle": "LorenzoBertelli",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "Fondamentaux purs, focus tech/france. Pas de signaux, pas de Telegram VIP, juste des charts et des bilans annuels honn\u00eates."
-      },
-      {
-        "handle": "Thomas_Cazeneuve",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Vox de CryptoCure. Le genre de compte qui explique la tech derri\u00e8re le coin sans vendre du r\u00eave, tr\u00e8s actif en FR."
-      },
-      {
-        "handle": "MathieuDuss",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Directeur IA au Qu\u00e9bec, couvre l'\u00e9cosyst\u00e8me tech qu\u00e9b\u00e9cois. Parle aux founders, pas aux traders de day, authentique."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le brouhaha des 'gurus' du CAC40 pour trouver des profils qui twittent encore (pas des mus\u00e9es). Mix \u00e9quilibr\u00e9 entre la vague Mistral (FR), les vieux de la vieille crypto (USA/FR) et une perle QC tech. Attention aux followers fant\u00f4mes sur certains comptes, la qualit\u00e9 du fil prime sur le volume ici."
-  },
-  {
     "ts": "2026-08-09T19:36:27.298882",
     "raw_count": 6,
     "kept_count": 4,
@@ -7535,5 +7497,22 @@
       }
     ],
     "summary": "Z\u00e9ro guru formation \u00e0 97\u20ac dans le lot. Des fondateurs et analystes qui tweetent encore de leurs vrais doigts sur des sujets pointus (infra AI, Fintech). La s\u00e9lection est s\u00e8che pour \u00e9viter les influenceur-soussalaires."
+  },
+  {
+    "ts": "2026-09-07T21:48:38.847731",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_julesbnt",
+        "region": "france",
+        "niche": "crypto/vc",
+        "followers": 25000,
+        "reason": "Le cousin fondateur de Coinhouse qui couvre l'investissement early stage. Il tweete comme un VC parisien classique : sec et factuel."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 l'\u00e9cosyst\u00e8me parisien (famille Dumas/BNT/Thom) pour le top-tier crypto/action, tout en \u00e9chantillonnant Montr\u00e9al via Dumais et Dionne. Z\u00e9ro vendeur de formation ici : que du contenu brut."
   }
 ]

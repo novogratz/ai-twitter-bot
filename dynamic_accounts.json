@@ -2270,7 +2270,8 @@
     "HugoDNIZ",
     "JulesD_1",
     "_adriendumasfr_",
-    "_thomasc_"
+    "_thomasc_",
+    "_julesbnt"
   ],
   "en": [
     "Chubby",
@@ -16754,6 +16755,11 @@
     {
       "lang": "fr",
       "handle": "_thomasc_",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "_julesbnt",
       "added": "2026-09-07"
     }
   ]
