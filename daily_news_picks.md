@@ -17339,3 +17339,25 @@ Seven DGX Sparks: 896 GB, CUDA, brutal at compute.
 Five Mac Studios: 1.5 TB, Metal, brutal at bandwidth and unbeat
   - https://x.com/volatilemarkts/status/2096797538888057213
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).
+
+## 2026-09-08
+- **@globalstats11** (52 likes, score 9/10) — The World’s Largest Companies by Market Cap (2005–2026) 💰
+
+2026
+1. 🇺🇸 NVIDIA - $4.85 Trillion
+2. 🇺🇸 Apple - $4.31 Trillion
+3. 🇺🇸 Microsoft - $2.77 Trillion
+4. 🇺🇸 Alphabet - $2.56 Trillion
+5.
+  - https://x.com/Globalstats11/status/2097145404681077127
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 62).
+- **@stocksavvyshay** (832 likes, score 9/10) — WHO GETS PAID TO TURN AI DATA CENTERS ON
+
+U.S. data centers above 100MW are set to explode this decade but power, interconnects and electrical infrastructure determine how much of that pipeline actual
+  - https://x.com/StockSavvyShay/status/2096986282593522065
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 950).
+- **@cryptorover** (108 likes, score 9/10) — 💥BREAKING: Odds of a FED rate hike next week climb to almost 60%. 
+
+This is bearish for Bitcoin & risk assets... 🚨
+  - https://x.com/cryptorover/status/2097174048367419902
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 184).
