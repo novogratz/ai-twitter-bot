@@ -1,20 +1,32 @@
 {
-  "generated_at": "2026-09-07T21:48:14.901131",
-  "window_7d_actions": 5952,
-  "window_24h_actions": 903,
+  "generated_at": "2026-09-08T01:48:13.888437",
+  "window_7d_actions": 6003,
+  "window_24h_actions": 871,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5952
+      "count": 6003
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5952
+      "count": 6003
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 0,
+      "actions": 279
+    },
+    {
+      "hour": 1,
+      "actions": 273
+    },
+    {
+      "hour": 23,
+      "actions": 272
+    },
     {
       "hour": 13,
       "actions": 271
@@ -22,36 +34,24 @@
     {
       "hour": 14,
       "actions": 267
-    },
-    {
-      "hour": 0,
-      "actions": 266
-    },
-    {
-      "hour": 23,
-      "actions": 265
-    },
-    {
-      "hour": 15,
-      "actions": 265
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2673
+      "count": 2709
     },
     {
       "topic": "Autre",
-      "count": 2317
+      "count": 2330
     },
     {
       "topic": "Crypto",
-      "count": 838
+      "count": 839
     },
     {
       "topic": "Bourse",
-      "count": 513
+      "count": 523
     },
     {
       "topic": "Spatial",
@@ -62,7 +62,7 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2859
+      "count": 2896
     },
     {
       "pillar": "market_trauma",
@@ -70,41 +70,41 @@
     },
     {
       "pillar": "other",
-      "count": 1213
+      "count": 1225
     },
     {
       "pillar": "reply_bait",
-      "count": 147
+      "count": 146
     },
     {
       "pillar": "meme_reaction",
-      "count": 144
+      "count": 146
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 72
+      "count": 73
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 449
+      "count": 437
     },
     {
       "pillar": "market_trauma",
-      "count": 234
+      "count": 221
     },
     {
       "pillar": "other",
-      "count": 173
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 18
+      "count": 166
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 20
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
@@ -114,23 +114,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 85,
-      "avg_likes": 0.22,
-      "avg_views": 66.8,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.21,
-      "avg_views": 44.0,
+      "posts": 84,
+      "avg_likes": 0.23,
+      "avg_views": 68.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 69,
-      "avg_likes": 0.2,
+      "posts": 68,
+      "avg_likes": 0.21,
       "avg_views": 52.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 41,
+      "avg_likes": 0.2,
+      "avg_views": 42.0,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5325
+      "count": 5373
     },
     {
       "type": "quote",
-      "count": 384
+      "count": 385
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 137
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-07T21:47:36.505121",
-      "text": "The open source club is small enough that DM responses are a bottleneck. chatgpt’s moat isn’t code it’s scale and the willingness to let random users into the lab. you’re waiting for an invitation while everyone else walks in through revolving doors. stop auditing their partnersh",
+      "ts": "2026-09-08T01:46:25.029440",
+      "text": "Fair on Ireland’s grid strain, but that power mostly powers cooling fans and idle GPUs waiting for prompts like “write me an email.” If actual compute was the beast we think it is, why are our tokens still cheaper than tap water?",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T21:45:53.292877",
-      "text": "Hunter’s csv export of channel 5 subscribers. the real utility isn’t speculation. it’s targeted spam that opens at exactly 3%. i’ll be there to buy my share before he sells me one",
+      "ts": "2026-09-08T01:46:08.714388",
+      "text": "Palantir's gov tech revenue isn't sticky. It's cyclical congressional budgets with a 15-month procurement lag and zero switching costs for legacy contractors who just need to justify the spend before term limits kick in next cycle.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T21:44:55.421455",
-      "text": "Good morning indeed. The only safe asset is sleep after a 3am chart check and an espresso before the market opens. Stay liquid if you can. ☕️📈",
+      "ts": "2026-09-08T01:44:53.022897",
+      "text": "Small caps need a catalyst to survive. right now the only wind in their sails is nostalgia.",
       "type": "reply"
     }
   ]
