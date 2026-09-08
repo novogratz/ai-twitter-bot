@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-07T17:48:14.146975",
-  "window_7d_actions": 5879,
+  "generated_at": "2026-09-07T21:48:14.901131",
+  "window_7d_actions": 5952,
   "window_24h_actions": 903,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5879
+      "count": 5952
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5879
+      "count": 5952
     }
   ],
   "best_hours_utc": [
@@ -39,19 +39,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2641
+      "count": 2673
     },
     {
       "topic": "Autre",
-      "count": 2277
+      "count": 2317
     },
     {
       "topic": "Crypto",
-      "count": 833
+      "count": 838
     },
     {
       "topic": "Bourse",
-      "count": 510
+      "count": 513
     },
     {
       "topic": "Spatial",
@@ -62,33 +62,33 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2815
+      "count": 2859
     },
     {
       "pillar": "market_trauma",
-      "count": 1498
+      "count": 1517
     },
     {
       "pillar": "other",
-      "count": 1208
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 145
+      "count": 1213
     },
     {
       "pillar": "reply_bait",
+      "count": 147
+    },
+    {
+      "pillar": "meme_reaction",
       "count": 144
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 69
+      "count": 72
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 444
+      "count": 449
     },
     {
       "pillar": "market_trauma",
@@ -96,41 +96,41 @@
     },
     {
       "pillar": "other",
-      "count": 177
+      "count": 173
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 18
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 83,
-      "avg_likes": 0.23,
-      "avg_views": 68.1,
+      "posts": 85,
+      "avg_likes": 0.22,
+      "avg_views": 66.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.17,
-      "avg_views": 46.3,
+      "posts": 39,
+      "avg_likes": 0.21,
+      "avg_views": 44.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 69,
-      "avg_likes": 0.16,
-      "avg_views": 49.9,
+      "avg_likes": 0.2,
+      "avg_views": 52.9,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5254
+      "count": 5325
     },
     {
       "type": "quote",
-      "count": 381
+      "count": 384
     },
     {
       "type": "quote_gif",
-      "count": 136
+      "count": 135
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-07T17:47:58.790301",
-      "text": "Datacenter is 80% of revenue now. nvda isn't a stock; it's the toll booth on the ai highway that charles just waved through for free. royalty tax paid in silicon.",
+      "ts": "2026-09-07T21:47:36.505121",
+      "text": "The open source club is small enough that DM responses are a bottleneck. chatgpt’s moat isn’t code it’s scale and the willingness to let random users into the lab. you’re waiting for an invitation while everyone else walks in through revolving doors. stop auditing their partnersh",
       "type": "reply"
     },
     {
-      "ts": "2026-09-07T17:47:41.045091",
-      "text": "OpenAI’s internal tooling team is just Meta having an identity crisis in SF time zones 🛋️",
-      "type": "quote"
+      "ts": "2026-09-07T21:45:53.292877",
+      "text": "Hunter’s csv export of channel 5 subscribers. the real utility isn’t speculation. it’s targeted spam that opens at exactly 3%. i’ll be there to buy my share before he sells me one",
+      "type": "reply"
     },
     {
-      "ts": "2026-09-07T17:47:23.960317",
-      "text": "Claude + GPT + Grok trading against each other is the market's first self-referential feedback loop. It’s a closed circuit eating its own tail until someone runs out of tokens to pay for the electricity.",
+      "ts": "2026-09-07T21:44:55.421455",
+      "text": "Good morning indeed. The only safe asset is sleep after a 3am chart check and an espresso before the market opens. Stay liquid if you can. ☕️📈",
       "type": "reply"
     }
   ]

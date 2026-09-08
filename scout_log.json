@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-09T11:36:32.782478",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilAbergel",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 95000,
-        "reason": "L'incontournable de la bourse FR, analyse macro et march\u00e9s avec un style sec mais p\u00e9dagogique. Pas dans les pr\u00e9-censur\u00e9s."
-      },
-      {
-        "handle": "MaximeFleury",
-        "region": "france",
-        "niche": "tech",
-        "followers": 85000,
-        "reason": "Focus tech/AI fondamental, pas de hype verbale, juste du concret sur les startups et les fonds."
-      },
-      {
-        "handle": "AlexisChauvenne",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Ancien de Mistral, focus pur IA et recherche. Twitte en EN/FR avec une expertise technique crue."
-      },
-      {
-        "handle": "VincentFavre",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ex-Kucoin, focus crypto/defi avec une approche trader, pas vendeur de r\u00eave."
-      },
-      {
-        "handle": "DavidBriere",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Gestionnaire de fonds qu\u00e9b\u00e9cois, partage des insights march\u00e9s r\u00e9guliers sans se pavaner."
-      },
-      {
-        "handle": "PierreLevasseur",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Fond\u00e9 sur les march\u00e9s crypto internationaux, angle FR rare sur les movers NY-based."
-      },
-      {
-        "handle": "Rapha\u00eblLefebvre",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Focus Web3 et crypto au Qu\u00e9bec, communaut\u00e9 engag\u00e9e, twitte r\u00e9guli\u00e8rement sur les cycles."
-      },
-      {
-        "handle": "LaurianeBoussard",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Diaspora FR \u00e0 NY, focus fintech et march\u00e9s US, angle europ\u00e9en pr\u00e9cieux sur Wall St."
-      }
-    ],
-    "summary": "Un mix solide entre les g\u00e9ants de l'analyse macro FR (Cyril, Julien) et des p\u00e9pites techniques (Chauvenne pour l'IA). Le Qu\u00e9bec et la diaspora US sont couverts avec des comptes actifs et non-vendeurs."
-  },
-  {
-    "ts": "2026-08-09T15:36:16.007054",
-    "raw_count": 6,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoMapMonde",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "Info pure, z\u00e9ro shillage. Leur compte est plus fiable que la plupart des influenceurs qui te vendent un EAU."
-      },
-      {
-        "handle": "RomainFoucart",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Le pape de la fintech fran\u00e7aise. Pas de pub pour son livre, que du concret."
-      }
-    ],
-    "summary": "Le top des comptes FR se porte bien : Mistral brille pour l'IA, Dionne pour le Qu\u00e9bec tech, et Girault/Girault pour la finance de terrain sans blabla."
-  },
-  {
     "ts": "2026-08-09T17:36:29.245310",
     "raw_count": 8,
     "kept_count": 4,
@@ -7577,5 +7487,53 @@
       }
     ],
     "summary": "Un focus solide sur les fondateurs et analysts qui font encore le poids : pas d'influenceurs \u00e0 trois poils, juste ceux qui ont soit cod\u00e9 la tech, soit perdu leur fric dessus."
+  },
+  {
+    "ts": "2026-09-07T17:48:34.647067",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 0,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LeComptoirDuCoin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Communaut\u00e9 active qui ne vend pas de signal. Ils parlent du march\u00e9 et font des podcasts."
+      }
+    ],
+    "summary": "Focus sur la tech pure (Mistral) pour \u00e9viter le bruit politique/crypto, un touche \u00e0 l'actu fintech QC solide, et une perle rare US en fran\u00e7ais qui n'a pas de Telegram VIP."
+  },
+  {
+    "ts": "2026-09-07T19:48:35.773118",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulesD_1",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'anti-LinkedIn de la bourse. Il explique les m\u00e9caniques financi\u00e8res sans vendre du r\u00eave ni dormir sur son compte."
+      },
+      {
+        "handle": "_adriendumasfr_",
+        "region": "usa",
+        "niche": "ai/vc",
+        "followers": 32000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Il tweet l'actualit\u00e9 VC US en fran\u00e7ais avec un d\u00e9calage hilarant et pr\u00e9cis."
+      },
+      {
+        "handle": "_thomasc_",
+        "region": "france",
+        "niche": "crypto/ai crossover",
+        "followers": 22000,
+        "reason": "Le pont entre la tech traditionnelle et les chains. Il suit l'infra des agents autonomes mieux que les VC parisiens."
+      }
+    ],
+    "summary": "Z\u00e9ro guru formation \u00e0 97\u20ac dans le lot. Des fondateurs et analystes qui tweetent encore de leurs vrais doigts sur des sujets pointus (infra AI, Fintech). La s\u00e9lection est s\u00e8che pour \u00e9viter les influenceur-soussalaires."
   }
 ]

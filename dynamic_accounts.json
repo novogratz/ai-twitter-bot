@@ -2267,7 +2267,10 @@
     "BulwarkInvest",
     "CyrilM83",
     "ThomBorini",
-    "HugoDNIZ"
+    "HugoDNIZ",
+    "JulesD_1",
+    "_adriendumasfr_",
+    "_thomasc_"
   ],
   "en": [
     "Chubby",
@@ -2789,7 +2792,8 @@
     "LorelaiCT",
     "OpenBMB",
     "PBA",
-    "LindyMan"
+    "LindyMan",
+    "Joule14"
   ],
   "history": [
     {
@@ -16730,6 +16734,26 @@
     {
       "lang": "fr",
       "handle": "HugoDNIZ",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Joule14",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesD_1",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adriendumasfr_",
+      "added": "2026-09-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "_thomasc_",
       "added": "2026-09-07"
     }
   ]
