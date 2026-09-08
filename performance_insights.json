@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-08T13:48:14.004033",
-  "window_7d_actions": 6158,
-  "window_24h_actions": 784,
+  "generated_at": "2026-09-08T17:48:13.885439",
+  "window_7d_actions": 6176,
+  "window_24h_actions": 759,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6158
+      "count": 6176
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6158
+      "count": 6176
     }
   ],
   "best_hours_utc": [
@@ -39,46 +39,46 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2790
+      "count": 2796
     },
     {
       "topic": "Autre",
-      "count": 2382
+      "count": 2396
     },
     {
       "topic": "Crypto",
-      "count": 856
+      "count": 858
     },
     {
       "topic": "Bourse",
-      "count": 531
+      "count": 527
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 114
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2981
+      "count": 2990
     },
     {
       "pillar": "market_trauma",
-      "count": 1539
+      "count": 1543
     },
     {
       "pillar": "other",
-      "count": 1267
+      "count": 1264
     },
     {
       "pillar": "reply_bait",
-      "count": 153
+      "count": 158
     },
     {
       "pillar": "meme_reaction",
-      "count": 143
+      "count": 146
     },
     {
       "pillar": "ai_vs_btc",
@@ -88,27 +88,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 393
+      "count": 363
     },
     {
       "pillar": "market_trauma",
-      "count": 187
+      "count": 182
     },
     {
       "pillar": "other",
-      "count": 158
+      "count": 167
     },
     {
       "pillar": "reply_bait",
-      "count": 25
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 28
     },
     {
       "pillar": "meme_reaction",
       "count": 10
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
@@ -120,24 +120,24 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 66,
+      "pillar": "ai_news_take",
+      "posts": 84,
       "avg_likes": 0.23,
-      "avg_views": 50.8,
+      "avg_views": 63.2,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 83,
-      "avg_likes": 0.23,
-      "avg_views": 66.4,
+      "pillar": "other",
+      "posts": 63,
+      "avg_likes": 0.22,
+      "avg_views": 49.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.16,
-      "avg_views": 41.8,
+      "posts": 46,
+      "avg_likes": 0.15,
+      "avg_views": 43.8,
       "low_sample": false
     },
     {
@@ -151,7 +151,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5525
+      "count": 5539
     },
     {
       "type": "quote",
@@ -159,15 +159,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 136
+      "count": 138
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 43
     },
     {
       "type": "post",
-      "count": 40
+      "count": 41
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-08T13:47:04.588339",
-      "text": "Dominance dropping is just euphoria. alts are the guy at the party who already drank all the champagne and says he's sober.",
+      "ts": "2026-09-08T17:47:00.366843",
+      "text": "OpenAI's governance structure is now a series of valuations rather than bylaws. GPT-6 Astra isn't the future; it's the current price tag dressed up as science.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T13:46:47.006589",
-      "text": "Berkshire’s ~47% stake is already $305B. Apple isn’t a growth play anymore; it’s the yield on Berkshire’s bond portfolio that decided to buy back its own stock.",
+      "ts": "2026-09-08T17:42:38.450754",
+      "text": "$53 for AMD by 2031 if you factor in CPU losses and datacenter share creep. $2610 is the price of a conviction they haven't earned yet. buy low sleep well.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T13:45:08.133596",
-      "text": "Arc-agi scores cost $500k in 23 and now ~$20. ai inference is the new electricity meter. pay pennies per kWh to run everything else for free.",
+      "ts": "2026-09-08T17:40:58.453874",
+      "text": "8% of the supply going to Substack readers means $1.4B in marketing costs covered by actual customers instead of VCs. that’s not a coin launch, it’s pre-sales for an exit liquidity event with better branding.",
       "type": "reply"
     }
   ]

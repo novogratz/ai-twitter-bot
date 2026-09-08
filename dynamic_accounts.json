@@ -2289,7 +2289,16 @@
     "CedricGiraudet",
     "EricDucheminQC",
     "MaximeMangoldFR",
-    "JulienNestor"
+    "JulienNestor",
+    "L3xDzCrypto",
+    "MaximeHamel19",
+    "GwenaelLePape",
+    "LionelLeblanc2",
+    "ThibautBoulay",
+    "MathieuDufort",
+    "JulesDeneubourg",
+    "BenjaminDeWilde",
+    "CyrilBorner"
   ],
   "en": [
     "Chubby",
@@ -2814,7 +2823,9 @@
     "LindyMan",
     "Joule14",
     "Pecuniasports",
-    "SGLang"
+    "SGLang",
+    "Creators",
+    "Stonk"
   ],
   "history": [
     {
@@ -16880,6 +16891,61 @@
     {
       "lang": "fr",
       "handle": "JulienNestor",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Creators",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3xDzCrypto",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeHamel19",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "GwenaelLePape",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelLeblanc2",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Stonk",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautBoulay",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDufort",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDeneubourg",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDeWilde",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBorner",
       "added": "2026-09-08"
     }
   ]

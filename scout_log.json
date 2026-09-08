@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-10T06:59:12.977789",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximePom",
-        "region": "france",
-        "niche": "tech",
-        "followers": 165000,
-        "reason": "L'expert technique de Numerama qui d\u00e9cortique l'IA et la tech sans se payer de t\u00eate. Il twitte en FR, audience massive, z\u00e9ro pub pour sa t\u00e9l\u00e9."
-      },
-      {
-        "handle": "ThomasTalon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 145000,
-        "reason": "Crypto fr, fondamentaliste, twitte en FR. Il balance des vues claires sur la blockchain sans vendre son eau \u00e0 199\u20ac/an."
-      },
-      {
-        "handle": "GaelLeGallo",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'analyste du Figaro. Il couvre la macro et les actions avec pr\u00e9cision. Comptable s\u00e9rieux mais toujours pertinent, pas un guru qui crie sur les toits."
-      },
-      {
-        "handle": "VincentCotnoir",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Journaliste tech qu\u00e9b\u00e9cois reconnu. Il couvre les startups, la IA et la tech avec un ton l\u00e9ger mais des infos solides. Actif et FR."
-      },
-      {
-        "handle": "BenjaminMuller",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Crypto fran\u00e7ais install\u00e9 \u00e0 NY. Il mixe l'actualit\u00e9 US et FR. Twitte en FR, bonne analyse on-chain, pas un vendeur de r\u00eave."
-      }
-    ],
-    "summary": "6 profils solides : des analystes techniques et crypto qui parlent fran\u00e7ais sans se la raconter. On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour garder les vrais esprits."
-  },
-  {
-    "ts": "2026-08-10T08:59:27.918203",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelLefranc",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le prof de finance qui transforme les rapports annuels en com\u00e9die stand-up. Pas de formation \u00e0 99\u20ac, juste du bon sens qui fait mal."
-      },
-      {
-        "handle": "JulienBouchard",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "L'expert SaaS montr\u00e9alais qui prouve que le startup bro est mortel quand on a du sens. Vient de lancer sa propre fondation de gestion."
-      },
-      {
-        "handle": "BenoitMazoyer",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Diaspora FR aux US qui fait briller la tech hexagonale depuis l'\u00e9tranger. Analyse IA s\u00e9rieuse mais pas assoupissante."
-      }
-    ],
-    "summary": "Cinq francophones qui ne vendent pas du r\u00eave, mais du concret. De la finance d\u00e9complex\u00e9e \u00e0 l'IA qui frappe fort : ils font parler sans brailler."
-  },
-  {
     "ts": "2026-08-10T10:59:15.769050",
     "raw_count": 8,
     "kept_count": 5,
@@ -7451,5 +7375,95 @@
       }
     ],
     "summary": "Focus IA genFR (Mistral/Pollak) + Crypto solides sans l'effet 'Telegram VIP'. Z\u00e9ro politicien, z\u00e9ro formateur \u00e0 la tron\u00e7onneuse."
+  },
+  {
+    "ts": "2026-09-08T13:48:36.671826",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "L3xDzCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "Alex est devenu une institution. Il couvre les cycles avec la s\u00e9r\u00e9nit\u00e9 d'un moine bouddhiste qui a vu passer trois krachs."
+      },
+      {
+        "handle": "mickael_boussier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 50000,
+        "reason": "Le baron de la bourse fran\u00e7aise. Ses threads sur les rapports annuels et le d\u00e9cryptage des r\u00e9sultats sont une mine d'or sans blabla marketing."
+      },
+      {
+        "handle": "MaximeHamel19",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "L'incontournable qu\u00e9b\u00e9cois. Il vulgarise la complexit\u00e9 financi\u00e8re sans jamais vendre de r\u00eave pourri en story."
+      },
+      {
+        "handle": "GwenaelLePape",
+        "region": "france",
+        "niche": "ai/fintech",
+        "followers": 25000,
+        "reason": "Un pro de la data qui d\u00e9crypte l'IA en entreprise. Moins 'hype', plus utile pour comprendre o\u00f9 va vraiment l'argent."
+      },
+      {
+        "handle": "LionelLeblanc2",
+        "region": "usa",
+        "niche": "crypto/web3",
+        "followers": 15000,
+        "reason": "Bas\u00e9 \u00e0 NY mais la t\u00eate bien pleine en FR. Il couvre les startups web3 avec une expertise de terrain rare."
+      }
+    ],
+    "summary": "Cette session extrait des v\u00e9t\u00e9rans solides plut\u00f4t que du vent m\u00e9diatique. L'\u00e9chantillon couvre les deux rives et quelques profils US actifs \u00e0 Paris/NY, en \u00e9vitant syst\u00e9matiquement la clique des vendeurs de r\u00eaves Telegrams."
+  },
+  {
+    "ts": "2026-09-08T15:48:37.377360",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautBoulay",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "L'architecte de Mistral AI. Il tweette la tech pure sans les hype cycles interminables du reste des influenceurs."
+      },
+      {
+        "handle": "MathieuDufort",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "Fondateur de Wistia (exil\u00e9) mais reste tr\u00e8s actif sur l'\u00e9cosyst\u00e8me startup QC et SaaS. Le genre de mec qui explique le business model r\u00e9el."
+      },
+      {
+        "handle": "JulesDeneubourg",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Fondateur de Lightricks (Photoroom). La diaspora FR \u00e0 SF qui balance des insights g\u00e9ants sur l'IA visuelle sans le 'J'ai cr\u00e9\u00e9 un GPT en Python pour gagner ma vie'"
+      },
+      {
+        "handle": "BenjaminDeWilde",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Co-fondateur de Yuka. Il balance des insights produits/tech FR que les 'gourous' bourse n'ont pas lus."
+      },
+      {
+        "handle": "CyrilBorner",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Ancien de chez BlaBlaCar et Doctolib. Il tweette la croissance tech FR avec des anecdotes backstage que LinkedIn garde sous cloche."
+      }
+    ],
+    "summary": "L'\u00e9cosyst\u00e8me est satur\u00e9 d'influenceurs crypto, mais la vraie valeur se niche chez les fondateux tech (Mistral, Yuka) et quelques traders Qu\u00e9b\u00e9cois qui n'ont pas besoin de vendre des groupes Telegram. J'ai filtr\u00e9 le bruit pour ne garder que ceux avec un vrai CV derri\u00e8re."
   }
 ]
