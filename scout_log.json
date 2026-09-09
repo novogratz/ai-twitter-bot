@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-08-11T00:59:43.480832",
-    "raw_count": 7,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienRigot",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'ancien de JPMorgan qui explique la macro sans endormir le lectorat, pur jus de Wall Street d\u00e9gueulass\u00e9."
-      },
-      {
-        "handle": "BenjaminDussert",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Ancien de Coinhouse, il couvre le march\u00e9 avec la pr\u00e9cision d'un comptable qui a d\u00e9couvert le DeFi."
-      }
-    ],
-    "summary": "Un m\u00e9lange de mastodontes institutionnels et de petits poucets qui bossent vraiment la niche. On \u00e9vite les influenceurs crypto qui vendent des NFTs \u00e0 0.5 ETH et les 'gurus' de trading sur YouTube."
-  },
-  {
     "ts": "2026-08-11T02:59:33.652010",
     "raw_count": 8,
     "kept_count": 7,
@@ -7423,5 +7399,36 @@
       }
     ],
     "summary": "Mix parfait entre les v\u00e9t\u00e9rons du VC (Girard, Dumas) et les experts de terrain walsh & calv\u00e9. Ils couvrent la macro sans s'endormir sur des clich\u00e9s LinkedIn."
+  },
+  {
+    "ts": "2026-09-09T11:48:37.875688",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasFronios",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le mec qui fait exister Mistral en bourse. Vibe tech-founder parisienne, twitte l'actu IA sans vendre du r\u00eave."
+      },
+      {
+        "handle": "_alexander_duval",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Diaspora FR bas\u00e9e \u00e0 NY. Il couvre l'IA US avec un regard fran\u00e7ais qui trouve tout excessif."
+      },
+      {
+        "handle": "_adrienleruyet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "L'ing\u00e9nieur IA qui fait l'univ. Pas de hype, que du code et des papers traduits sans trahir les auteurs."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui ont le cul entre deux chaises (ou clavier). Des pros du code et des march\u00e9s, surtout en France o\u00f9 la sc\u00e8ne crypto-AI explose sans perdre son humour acide."
   }
 ]

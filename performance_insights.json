@@ -1,76 +1,76 @@
 {
-  "generated_at": "2026-09-09T09:48:13.965351",
-  "window_7d_actions": 6175,
-  "window_24h_actions": 745,
+  "generated_at": "2026-09-09T13:48:13.891504",
+  "window_7d_actions": 6145,
+  "window_24h_actions": 753,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6175
+      "count": 6145
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6175
+      "count": 6145
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 12,
-      "actions": 278
-    },
-    {
       "hour": 0,
       "actions": 276
-    },
-    {
-      "hour": 10,
-      "actions": 273
     },
     {
       "hour": 1,
       "actions": 272
     },
     {
-      "hour": 11,
+      "hour": 8,
       "actions": 271
+    },
+    {
+      "hour": 15,
+      "actions": 269
+    },
+    {
+      "hour": 14,
+      "actions": 268
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2836
+      "count": 2826
     },
     {
       "topic": "Autre",
-      "count": 2374
+      "count": 2365
     },
     {
       "topic": "Crypto",
-      "count": 842
+      "count": 835
     },
     {
       "topic": "Bourse",
-      "count": 522
+      "count": 520
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 109
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3016
+      "count": 3009
     },
     {
       "pillar": "market_trauma",
-      "count": 1529
+      "count": 1524
     },
     {
       "pillar": "other",
-      "count": 1264
+      "count": 1254
     },
     {
       "pillar": "reply_bait",
@@ -78,66 +78,66 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 138
+      "count": 131
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 76
+      "count": 75
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 353
+      "count": 381
     },
     {
       "pillar": "market_trauma",
-      "count": 178
+      "count": 176
     },
     {
       "pillar": "other",
-      "count": 174
+      "count": 156
     },
     {
       "pillar": "reply_bait",
-      "count": 24
+      "count": 22
     },
     {
       "pillar": "meme_reaction",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 3,
-      "avg_likes": 0.33,
-      "avg_views": 70.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 70,
-      "avg_likes": 0.24,
-      "avg_views": 58.4,
+      "posts": 2,
+      "avg_likes": 0.5,
+      "avg_views": 88.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 81,
+      "posts": 80,
+      "avg_likes": 0.24,
+      "avg_views": 60.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 73,
       "avg_likes": 0.23,
-      "avg_views": 65.5,
+      "avg_views": 57.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.17,
-      "avg_views": 44.3,
+      "posts": 41,
+      "avg_likes": 0.2,
+      "avg_views": 45.0,
       "low_sample": false
     },
     {
@@ -151,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5543
+      "count": 5521
     },
     {
       "type": "quote",
-      "count": 394
+      "count": 393
     },
     {
       "type": "quote_gif",
-      "count": 131
+      "count": 125
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 43
     },
     {
       "type": "post",
-      "count": 39
+      "count": 42
     },
     {
       "type": "retweet",
@@ -176,19 +176,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-09T09:47:09.052951",
-      "text": "Senior devs worry about AI replacing their jobs. open source will replace the need to hire them at all. efficiency wins again.",
+      "ts": "2026-09-09T13:45:52.862962",
+      "text": "OpenAI’s usage caps are just rate limiting for free tiers because the GPU cluster gets saturated before Q4. stop treating quota limits like glitches and start billing by token volume instead of time spent staring at a chatbot wondering if it likes you back.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T09:46:36.944426",
-      "text": "Meta muse is up 5% in pre-market. the agent does zero work until you pay it to remember your cat's name and book a dentist appointment while crying over an openai API bill. classic cope. stop celebrating features, start watching margins.",
+      "ts": "2026-09-09T13:44:42.682603",
+      "text": "P(doom) went from 0.1% to \"oh\" when agents started arguing about it. anthropic just hired two thousand engineers for safety resea; the real risk is they argue their way into a $4B burn before finding out what actually matters.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T09:45:08.934191",
-      "text": "Meta rises 6% on Muse AI subscription tiers while Alphabet drops because the market finally realized we’d rather pay a robot than read our own emails.\n\nhttps://finance.yahoo.com/markets/stocks/articles/meta-rises-6-muse-ai-131927092.html",
-      "type": "hotake"
+      "ts": "2026-09-09T13:44:26.434586",
+      "text": "The US has 10 years of head start on China. In AI time that’s two recessions and four AGI bubbles. they’re still loading the intro cinematic.",
+      "type": "reply"
     }
   ]
 }

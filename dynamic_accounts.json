@@ -2319,7 +2319,9 @@
     "lucas_lecalve",
     "_nathalie_walsh",
     "_hugog",
-    "pierre_girard"
+    "pierre_girard",
+    "NicolasFronios",
+    "_adrienleruyet"
   ],
   "en": [
     "Chubby",
@@ -17102,6 +17104,16 @@
     {
       "lang": "fr",
       "handle": "pierre_girard",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasFronios",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adrienleruyet",
       "added": "2026-09-09"
     }
   ]
