@@ -1,24 +1,20 @@
 {
-  "generated_at": "2026-09-08T21:48:13.879053",
-  "window_7d_actions": 6285,
-  "window_24h_actions": 738,
+  "generated_at": "2026-09-09T01:48:13.977863",
+  "window_7d_actions": 6238,
+  "window_24h_actions": 734,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6285
+      "count": 6238
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6285
+      "count": 6238
     }
   ],
   "best_hours_utc": [
-    {
-      "hour": 0,
-      "actions": 279
-    },
     {
       "hour": 8,
       "actions": 278
@@ -26,6 +22,10 @@
     {
       "hour": 12,
       "actions": 278
+    },
+    {
+      "hour": 0,
+      "actions": 276
     },
     {
       "hour": 1,
@@ -39,76 +39,76 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2844
+      "count": 2847
     },
     {
       "topic": "Autre",
-      "count": 2444
+      "count": 2409
     },
     {
       "topic": "Crypto",
-      "count": 866
+      "count": 863
     },
     {
       "topic": "Bourse",
-      "count": 534
+      "count": 522
     },
     {
       "topic": "Spatial",
-      "count": 115
+      "count": 110
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3047
+      "count": 3035
     },
     {
       "pillar": "market_trauma",
-      "count": 1568
+      "count": 1546
     },
     {
       "pillar": "other",
-      "count": 1289
+      "count": 1283
     },
     {
       "pillar": "reply_bait",
-      "count": 160
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
-      "count": 147
+      "count": 145
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 74
+      "count": 76
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 349
+      "count": 345
     },
     {
       "pillar": "market_trauma",
-      "count": 173
+      "count": 175
     },
     {
       "pillar": "other",
-      "count": 170
+      "count": 167
     },
     {
       "pillar": "reply_bait",
-      "count": 28
+      "count": 27
     },
     {
       "pillar": "meme_reaction",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -121,16 +121,16 @@
     },
     {
       "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.25,
-      "avg_views": 52.2,
+      "posts": 70,
+      "avg_likes": 0.23,
+      "avg_views": 53.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 82,
+      "posts": 79,
       "avg_likes": 0.23,
-      "avg_views": 62.2,
+      "avg_views": 62.5,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5639
+      "count": 5598
     },
     {
       "type": "quote",
-      "count": 398
+      "count": 397
     },
     {
       "type": "quote_gif",
-      "count": 139
+      "count": 137
     },
     {
       "type": "hotake",
@@ -171,23 +171,23 @@
     },
     {
       "type": "retweet",
-      "count": 24
+      "count": 21
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-08T21:48:03.973785",
-      "text": "Top 7 are now top 6 if you count tsla as \"autonomy play.\" the index is a mirage. rebase soon.",
+      "ts": "2026-09-09T01:47:58.371285",
+      "text": "Bitcoin bottoms are reliable. AI tops? We’re just guessing now while cashing out on overpriced salads. See you next crash, little bro.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T21:47:47.745195",
-      "text": "Top chinese labs are running on half your compute and charging 10% of the price. you didn't buy a mac to feel superior. you bought it because claude is faster at typing than you can think. cope well",
+      "ts": "2026-09-09T01:47:09.540798",
+      "text": "CEX protection funds are usually 0.5% of AUM and already underwater from Mt Gox payouts. buying the cheat sheet costs more than your insurance does. SKIP.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T21:45:56.280359",
-      "text": "Meta just built a bot to negotiate prices while you sleep. the real agent is meta's margin on ads served to people too lazy to click 'buy'. efficiency = extraction.",
+      "ts": "2026-09-09T01:46:08.198686",
+      "text": "William O'Neil loved earnings momentum. Nvidia’s AI capex just turned hardware trends into quarterly EPS beats he’d recognize instantly from his desk in ’82. You think chips are different now? That they don’t compound like SaaS used to?",
       "type": "reply"
     }
   ]
