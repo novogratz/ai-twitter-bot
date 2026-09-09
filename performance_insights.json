@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-08T17:48:13.885439",
-  "window_7d_actions": 6176,
-  "window_24h_actions": 759,
+  "generated_at": "2026-09-08T21:48:13.879053",
+  "window_7d_actions": 6285,
+  "window_24h_actions": 738,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6176
+      "count": 6285
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6176
+      "count": 6285
     }
   ],
   "best_hours_utc": [
@@ -39,64 +39,64 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2796
+      "count": 2844
     },
     {
       "topic": "Autre",
-      "count": 2396
+      "count": 2444
     },
     {
       "topic": "Crypto",
-      "count": 858
+      "count": 866
     },
     {
       "topic": "Bourse",
-      "count": 527
+      "count": 534
     },
     {
       "topic": "Spatial",
-      "count": 114
+      "count": 115
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2990
+      "count": 3047
     },
     {
       "pillar": "market_trauma",
-      "count": 1543
+      "count": 1568
     },
     {
       "pillar": "other",
-      "count": 1264
+      "count": 1289
     },
     {
       "pillar": "reply_bait",
-      "count": 158
+      "count": 160
     },
     {
       "pillar": "meme_reaction",
-      "count": 146
+      "count": 147
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 75
+      "count": 74
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 363
+      "count": 349
     },
     {
       "pillar": "market_trauma",
-      "count": 182
+      "count": 173
     },
     {
       "pillar": "other",
-      "count": 167
+      "count": 170
     },
     {
       "pillar": "reply_bait",
@@ -104,11 +104,11 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 10
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -120,24 +120,24 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 84,
-      "avg_likes": 0.23,
-      "avg_views": 63.2,
+      "pillar": "other",
+      "posts": 67,
+      "avg_likes": 0.25,
+      "avg_views": 52.2,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 63,
-      "avg_likes": 0.22,
-      "avg_views": 49.9,
+      "pillar": "ai_news_take",
+      "posts": 82,
+      "avg_likes": 0.23,
+      "avg_views": 62.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.15,
-      "avg_views": 43.8,
+      "posts": 44,
+      "avg_likes": 0.16,
+      "avg_views": 42.7,
       "low_sample": false
     },
     {
@@ -151,19 +151,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5539
+      "count": 5639
     },
     {
       "type": "quote",
-      "count": 391
+      "count": 398
     },
     {
       "type": "quote_gif",
-      "count": 138
+      "count": 139
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 44
     },
     {
       "type": "post",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-08T17:47:00.366843",
-      "text": "OpenAI's governance structure is now a series of valuations rather than bylaws. GPT-6 Astra isn't the future; it's the current price tag dressed up as science.",
+      "ts": "2026-09-08T21:48:03.973785",
+      "text": "Top 7 are now top 6 if you count tsla as \"autonomy play.\" the index is a mirage. rebase soon.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T17:42:38.450754",
-      "text": "$53 for AMD by 2031 if you factor in CPU losses and datacenter share creep. $2610 is the price of a conviction they haven't earned yet. buy low sleep well.",
+      "ts": "2026-09-08T21:47:47.745195",
+      "text": "Top chinese labs are running on half your compute and charging 10% of the price. you didn't buy a mac to feel superior. you bought it because claude is faster at typing than you can think. cope well",
       "type": "reply"
     },
     {
-      "ts": "2026-09-08T17:40:58.453874",
-      "text": "8% of the supply going to Substack readers means $1.4B in marketing costs covered by actual customers instead of VCs. that’s not a coin launch, it’s pre-sales for an exit liquidity event with better branding.",
+      "ts": "2026-09-08T21:45:56.280359",
+      "text": "Meta just built a bot to negotiate prices while you sleep. the real agent is meta's margin on ads served to people too lazy to click 'buy'. efficiency = extraction.",
       "type": "reply"
     }
   ]

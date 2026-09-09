@@ -2298,7 +2298,10 @@
     "MathieuDufort",
     "JulesDeneubourg",
     "BenjaminDeWilde",
-    "CyrilBorner"
+    "CyrilBorner",
+    "Laurine_Belot",
+    "MaxBazire",
+    "GillesZunino"
   ],
   "en": [
     "Chubby",
@@ -2825,7 +2828,11 @@
     "Pecuniasports",
     "SGLang",
     "Creators",
-    "Stonk"
+    "Stonk",
+    "Robotaxi",
+    "Axiom",
+    "YOH",
+    "MouMou"
   ],
   "history": [
     {
@@ -16946,6 +16953,41 @@
     {
       "lang": "fr",
       "handle": "CyrilBorner",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Robotaxi",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Axiom",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Laurine_Belot",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBazire",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesZunino",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "en",
+      "handle": "YOH",
+      "added": "2026-09-08"
+    },
+    {
+      "lang": "en",
+      "handle": "MouMou",
       "added": "2026-09-08"
     }
   ]

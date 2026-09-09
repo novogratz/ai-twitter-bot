@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-10T10:59:15.769050",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LemuelB",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'humour tech francophone par excellence. Moins 'analyse pur' que 'culture web3', mais une audience qualifi\u00e9e qui retient ses posts sur l'IA et la crypto."
-      },
-      {
-        "handle": "RomainRieu",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Fondateur de Blockpit, un des rares \u00e0 expliquer les fondamentaux (TVL, staking) sans vendre du r\u00eave. Ton direct, z\u00e9ro 'lambo'."
-      },
-      {
-        "handle": "MaelBouton",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Journaliste crypto au Devoir. Couvre les cycles, les r\u00e9gulations et les infrastructures. Le profil le plus 'journalistique' du Qu\u00e9bec sur le sujet."
-      },
-      {
-        "handle": "AlexisBoudet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste actionnariat, focus sur la data et les bilans. Parle de tout (IA, \u00e9nergie, banque) avec des chiffres, pas des intuitions magiques."
-      },
-      {
-        "handle": "ThomasDeneux",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 11000,
-        "reason": "Co-fondateur de Trezor FR. Twitte sur la s\u00e9curit\u00e9, la DeFi et l'adoption crypto. Ton pragmatique, pas de 'to the moon'."
-      }
-    ],
-    "summary": "Scoutage cibl\u00e9 sur les profils 'journalistes actifs' et 'founders techniques' plut\u00f4t que les 'influenceurs signaux'. Le lot mixe analyse macro (Gilles), deep tech (Alexis Bessac) et crypto infrastructure (Romain Rieu). Z\u00e9ro vente de r\u00eave."
-  },
-  {
     "ts": "2026-08-10T12:59:22.207018",
     "raw_count": 10,
     "kept_count": 2,
@@ -7465,5 +7420,50 @@
       }
     ],
     "summary": "L'\u00e9cosyst\u00e8me est satur\u00e9 d'influenceurs crypto, mais la vraie valeur se niche chez les fondateux tech (Mistral, Yuka) et quelques traders Qu\u00e9b\u00e9cois qui n'ont pas besoin de vendre des groupes Telegram. J'ai filtr\u00e9 le bruit pour ne garder que ceux avec un vrai CV derri\u00e8re."
+  },
+  {
+    "ts": "2026-09-08T17:48:38.861604",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Laurine_Belot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "La star de l'IA FR, ex-Mistral. Moins 'influenceur', plus vraie technoprenante qui d\u00e9crypte les LLM sans vendredromie."
+      },
+      {
+        "handle": "MaxBazire",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le ROI du trading FR sur X. Pas de pub Telegram \u00e0 la con juste des charts et un style sec qu'on aime ou on d\u00e9teste."
+      },
+      {
+        "handle": "GillesZunino",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Co-fondateur de Bitcoin.meq. Twitte en FR avec une pr\u00e9cision chirurgicale et z\u00e9ro bruit."
+      },
+      {
+        "handle": "ThomasTassanValpert",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Directeur R&D IA. Moins hype que les influenceurs 'Agent', plus technique et solide sur l'application r\u00e9elle des mod\u00e8les."
+      },
+      {
+        "handle": "NathalieLafontaine",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Banqui\u00e8re d'affaires US mais tweete r\u00e9guli\u00e8rement en fran\u00e7ais pour la diaspora. Le m\u00e9lange parfait Wall Street / Culture FR."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le baba cool pour ne garder que ceux qui produisent de la vraie value : Gilles Zunino au Qu\u00e9bec, Max Bazire en France action. C'est moins de noms mais chacun a un style unique et une audience fid\u00e8le sans les pubs Telegram agressives."
   }
 ]
