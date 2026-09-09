@@ -2321,7 +2321,11 @@
     "_hugog",
     "pierre_girard",
     "NicolasFronios",
-    "_adrienleruyet"
+    "_adrienleruyet",
+    "_david_jean",
+    "_julie_lagarda",
+    "_lucas_g",
+    "_romainsz_"
   ],
   "en": [
     "Chubby",
@@ -2853,7 +2857,8 @@
     "Axiom",
     "YOH",
     "MouMou",
-    "Dimitri"
+    "Dimitri",
+    "Apodex"
   ],
   "history": [
     {
@@ -17114,6 +17119,31 @@
     {
       "lang": "fr",
       "handle": "_adrienleruyet",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Apodex",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_david_jean",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_julie_lagarda",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_lucas_g",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_romainsz_",
       "added": "2026-09-09"
     }
   ]
