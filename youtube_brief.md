@@ -1,16 +1,16 @@
-# YouTube brief — 2026-09-08
+# YouTube brief — 2026-09-09
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **877**
-- reply: **792**
-- quote: **56**
-- quote_gif: **15**
-- post: **6**
+- Total actions logged: **737**
+- reply: **664**
+- quote: **45**
+- quote_gif: **12**
 - hotake: **6**
-- retweet: **2**
+- post: **6**
+- retweet: **4**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -25,19 +25,15 @@
 - **347 likes / 153619 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **5 likes / 367 views** — Pelosi buys $VST under $180 while Nvidia burns gigawatts for 7% upside. You’re trading power plants; she’s buying electricity futures from AI’s electric bill. The grid is the new GPU bottleneck ⚡
 - **2 likes / 441 views** — AI handling incidents so engineers lose touch with systems is the corporate equivalent of letting your kid do their own laundry for a month and then acting shocked when you have no shirts left during
-- **1 likes / 42 views** — me on hold listening to an AI agent say “please hold” for 14 minutes straight like it’s meditating 🛋️ 😭
-
-### Crypto
-
-- **1 likes / 54 views** — me on my way to buy BTC after finally admitting I’m bad with passwords 🛋️
+- **1 likes / 98 views** — Procreate looking at Midjourney like I don’t need an AI to think for me 🙂👀
+- **1 likes / 23 views** — Wine’s poured, kids are down. here's what actually mattered in AI today 🧵
 
 ### Other
 
 - **2 likes / 99 views** — 5 years for full acceleration? My toddler masters 2D platformers in half that time 😭🍿 https://x.com/twtayaan/status/2095868738784354389…
 - **2 likes / 38 views** — me refreshing my portfolio wondering if i should sell everything and eat dirt while they feed it more books 😭
-- **1 likes / 45 views** — me at 2am like I have room in my portfolio for one more existential crisis 🛋️
-- **1 likes / 105 views** — Berlin just uploaded their hard drive to Dropbox and forgot to delete it 😭 🛋️: sipping tea calmly
-- **1 likes / 101 views** — buying old tech just because new guys are broke is like dating an ex who finally fixed their credit card bill 💳👀
+- **2 likes / 115 views** — London at number 2 is just Paris trying to explain its rent prices with better grammar 😭👀
+- **1 likes / 112 views** — Elon hoarding compute like he’s hiding chocolate from his kids 🍫👀 https://x.com/teortaxesTex/status/2096466877232869832…
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -68,42 +64,22 @@ This is bearish for Bitcoin & risk assets... 🚨
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_HOME/Cardano Community]** Linda breaks down where Cardano actually stands: Hydra and Leios scaling, USDCx liquidity growth, the Alpha Growth Prime DeFi push, Draper's institutional fund,
-  - https://x.com/Cardano/status/2097000715520536651
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Jitendra MALIK]** I am seeing claims around LLMs, specifically Astra having made serious progress on robotics. The tasks that are demonstrated are simple pick and place tasks wit
-  - https://x.com/JitendraMalikCV/status/2097173961264284039
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Gookie 🥷]** You don't need a robot to train one.
-
-@axisrobotics runs entirely in your browser.
-
-No hardware. 
-No simulation software to install.
-
-The process is simple:
-
-Pi
-  - https://x.com/GookieNft/status/2097152109699334324
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/wedrick]** The world is the real training ground for robots
-
-And that’s why I think the biggest value of crowd sourced robotics data isn’t just the scale
-
-It’s the coverag
-  - https://x.com/wedrick126807/status/2097161015511367756
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/First Squawk]** XPeng puts humanoid robot production lines into operation and completes first advanced robot
-  - https://x.com/FirstSquawk/status/2097150307616911740
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Sam]** Make One prediction for 2030:
-
-A)Most software is written by AI
-B)Humanoid robots are everywhere
-C)Smartphones are no longer #1
-D)One AI company becomes insanel
-  - https://x.com/Sam8002642/status/2097175748625010900
-- **[X_HOME/Mario Nawfal]** 🇨🇦🇺🇸 Canada's 50% counter-tariffs are now live on $20 billion of American goods, with steel hit hardest
-
-Ottawa's retaliation covers hundreds of products at rat
-  - https://x.com/MarioNawfal/status/2097182247627444381
-- **[X_HOME/DegenApeDev]** Solana is for the poors!
-  - https://x.com/DegenApeDev/status/2097182391492067611
+- **[CoinDesk]** Bitcoin recovers toward $79,000 as Zcash records a $500 million ETF haul
+  - https://www.coindesk.com/markets/2026/09/09/bitcoin-recovers-toward-usd79-000-as-zcash-records-a-usd500-million-etf-haul
+- **[Cointelegraph]** Malone Lam pleads guilty in $245M crypto theft conspiracy
+  - https://cointelegraph.com/news/malone-lam-pleads-guilty-245m-crypto-theft-conspiracy?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[MIT Tech Review]** What OpenAI’s latest controversy tells us about the future of math
+  - https://www.technologyreview.com/2026/09/08/1143747/what-openais-latest-controversy-tells-us-about-the-future-of-math/
+- **[Simon Willison]** Quoting Terence Tao
+  - https://simonwillison.net/2026/Sep/9/terence-tao/
+- **[Simon Willison]** Introducing ChatGPT Images 2.5
+  - https://simonwillison.net/2026/Sep/8/introducing-chatgpt-images-25/
+- **[CNBC Tech]** Jim Cramer says investors are too focused on AI stocks. Here’s where he says to look instead
+  - https://www.cnbc.com/2026/09/08/jim-cramer-investors-focused-ai-stocks.html
+- **[CNBC Top]** AI infrastructure stocks rally on deal announcements from Qualcomm, Corning
+  - https://www.cnbc.com/2026/09/08/ai-infrastructure-stocks-rally-on-deal-from-qualcomm-and-corning.html
+- **[CNBC Tech]** AI infrastructure stocks rally on deal announcements from Qualcomm, Corning
+  - https://www.cnbc.com/2026/09/08/ai-infrastructure-stocks-rally-on-deal-from-qualcomm-and-corning.html
 
 ## 🎬 Suggested video angles
 
@@ -114,4 +90,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-08T00:48:13*
+*Generated 2026-09-09T00:48:13*
