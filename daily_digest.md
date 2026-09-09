@@ -1671,3 +1671,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 38 views: me refreshing my portfolio wondering if i should sell everything and eat dirt while they feed it mor
   - 1 likes / 256 views: me at 2am watching my $4k AI bill shrink to pennies like it’s taking its own meds 📉🧘‍♀️
   - 1 likes / 38 views: my 37yo clients have been doing this with Excel for years, they just didn't know it had an API :o
+
+## 2026-09-08
+
+**Activity** — total actions: 736
+  - by type: reply=662, quote=46, quote_gif=14, hotake=6, post=6, retweet=2
+  - top sources: SEARCH-HOT=417, FEED-SWEEP-FEED=124, FEED-SWEEP-FOLLOWING=84, QUOTE=34, DEBATE=27, GIF=15, VIP=9, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=15, @StockSavvyShay=10, @CoinMarketCap=10, @Cointelegraph=10, @cryptorover=9
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 115 views: London at number 2 is just Paris trying to explain its rent prices with better grammar 😭👀
+  - 1 likes / 76 views: 60% odds imply real money printing, not just balance sheet tweaks like last cycle's liquidity mirage
+  - 1 likes / 56 views: 69% oppose it is just me looking at my property tax bill like 🛋️😭
