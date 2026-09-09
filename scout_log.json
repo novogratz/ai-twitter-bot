@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-10T12:59:22.207018",
-    "raw_count": 10,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AdrienDumasFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Celui qui rend la lecture des rapports annuels supportable. Ton sec, focus uniquement sur les fondamentaux, z\u00e9ro buzz."
-      },
-      {
-        "handle": "JeanBaptisteN",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Journaliste tech \u00e0 la FineMousse. Couvre l'\u00e9cosyst\u00e8me montr\u00e9alais avec un \u0153il critique. Moins de hype, plus de business."
-      }
-    ],
-    "summary": "On \u00e9vite les vendeurs de r\u00eaves Telegram pour privil\u00e9gier les technocrates et les journalistes de terrain. Les profils choisis ont un historique v\u00e9rifiable et twittent en fran\u00e7ais r\u00e9guli\u00e8rement."
-  },
-  {
-    "ts": "2026-08-10T14:59:24.025935",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DylanTzou",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "L'anti-Whale francophone. Pas de shill de shitcoins bidons, mais une analyse On-Chain solide et un ton cynique qui fait mal aux chevilles."
-      },
-      {
-        "handle": "MaximeBouttier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Jusqu'au boutiste et pragmatique. Il couvre la bourse fran\u00e7aise avec une honn\u00eatet\u00e9 d\u00e9sarmante, z\u00e9ro blabla, que des tableaux et des ratios."
-      },
-      {
-        "handle": "GuillaumeB",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Analyste crypto s\u00e9rieux, pas un shiller. Ses threads sur la macro et les cycles Bitcoin sont parmi les plus cit\u00e9s en FR."
-      },
-      {
-        "handle": "RenaudLanfrey",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Le fondateur de Marmelab. Il tweete sur la tech, l'IA et la productivit\u00e9 sans vendre du r\u00eave, juste du concret. Le genre de compte qui reste dans tes favoris."
-      },
-      {
-        "handle": "SorenAndersen",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Dan Brown de l'IA. Il est \u00e0 NYC mais twitte en FR (et EN). Ses threads sur l'agentic AI sont des p\u00e9pites techniques, style 'L'IA va changer la donne'."
-      },
-      {
-        "handle": "AlexisPoulin_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise sur la tech et l'IA. Il d\u00e9crypte les news US en FR avec humour, parfait pour rester inform\u00e9 sans lire la presse anglaise."
-      },
-      {
-        "handle": "BaptisteMaire",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Ancien de PayFit, fondateur de Payfit. Il couvre la fintech, l'\u00e9conomie et l'immobilier avec un style de founder qui comprend la m\u00e9canique."
-      }
-    ],
-    "summary": "Une s\u00e9lection de pros qui tweetent du contenu brut plut\u00f4t que des pubs Telegram. La France domine en fintech/crypto, le Qu\u00e9bec en tech/bourse, et les USA apportent une perspective IA francophone."
-  },
-  {
     "ts": "2026-08-10T16:59:21.637039",
     "raw_count": 7,
     "kept_count": 3,
@@ -7465,5 +7382,46 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le baba cool pour ne garder que ceux qui produisent de la vraie value : Gilles Zunino au Qu\u00e9bec, Max Bazire en France action. C'est moins de noms mais chacun a un style unique et une audience fid\u00e8le sans les pubs Telegram agressives."
+  },
+  {
+    "ts": "2026-09-08T21:48:44.247036",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasMaurin14",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 205789,
+        "reason": "L'\u00e9v\u00eaque du trading retail FR. Plus de followers que d'actions en poche parfois."
+      },
+      {
+        "handle": "HuguesGagnepain",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Ancien X (Twitter) engineer maintenant dans l'IA g\u00e9n\u00e9rative. P\u00eacheux de prompts et d'outils fr."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui construisent ou analysent (Dumas, Gagnepain). Le Qu\u00e9bec est moins satur\u00e9 en 'gurus', j'ai mis\u00e9 sur Dionne et Ribert pour la fiabilit\u00e9. Attention aux 205k followers de Maurin : c'est du contenu populaire mais parfois simplifi\u00e9."
+  },
+  {
+    "ts": "2026-09-08T23:48:32.862822",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickaelb_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18500,
+        "reason": "Le trader quantique fran\u00e7ais. Tweets courts per\u00e7ants sur les algo et l'IA en finance. Z\u00e9ro blabla politique."
+      }
+    ],
+    "summary": "5 profils techniques et fondateurs plut\u00f4t que des influenceurs 'vape'. Pas de vendeurs de r\u00eave, juste du concret sur l'IA/Finance \u00e0 travers le prisme francophone."
   }
 ]
