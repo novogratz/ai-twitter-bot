@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-10T20:59:30.495171",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThomasGuitton",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "Product Manager chez Deezer, mais tweete beaucoup sur l'IA et la tech FR. Ton d\u00e9cal\u00e9, contenu de qualit\u00e9."
-      },
-      {
-        "handle": "LuisaVega",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Journaliste crypto au Qu\u00e9bec. Couvre les regs nord-am\u00e9ricaines avec un regard local. Actif, pertinent, pas de shilling."
-      },
-      {
-        "handle": "JulesSerrano",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "Fondateur de Hugging Face. Quand il tweete, le march\u00e9 bouge. Le compte officiel est une mine d'or pour la tech AI."
-      }
-    ],
-    "summary": "On a mix\u00e9 les g\u00e9ants silencieux (Dario, Jules) avec des influenceurs actifs (Maxime, Alexis) pour un \u00e9quilibre info brute / analyse. Z\u00e9ro vendeur de r\u00eaves, que du concret."
-  },
-  {
-    "ts": "2026-08-10T22:59:22.042956",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienCavard",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Fondateur d'Elli, il balance des threads techniques solides sur les LLMs et les donn\u00e9es, loin du hype pure."
-      },
-      {
-        "handle": "RomainBorday",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "La voix de la tech qu\u00e9b\u00e9coise, couvre IA et startups avec une vision strat\u00e9gique qui d\u00e9passe le local."
-      },
-      {
-        "handle": "MaximeDalleau",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Ancien BFM TV, il dig\u00e8re la macro crypto avec un style journalistique fluide et pas trop de jargon obscur."
-      },
-      {
-        "handle": "ThibautDellBosque",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le 'Paul Graham' fran\u00e7ais qui parle vrai sur les agents et le dev, sans la poussi\u00e8re \u00e0 puces des influencers."
-      },
-      {
-        "handle": "AdrienBourgeoisFr",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "G\u00e8re sa bo\u00eete d'investissement, twitte ses positions r\u00e9elles avec humour, pas de signaux payants."
-      },
-      {
-        "handle": "MaximeBoutin",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 11000,
-        "reason": "Foundeur AI, il balance des insights bruts sur le d\u00e9ploiement et les co\u00fbts, sans filtre marketing."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre les fondateurs techniques (Bourgeois, Bessac) et les analysts macro (Chadid, Borday). Qu\u00e9bec bien repr\u00e9sent\u00e9 pour \u00e9viter l'\u00e9cho de Paris."
-  },
-  {
     "ts": "2026-08-11T00:59:43.480832",
     "raw_count": 7,
     "kept_count": 2,
@@ -7430,5 +7347,81 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rans boursiers fran\u00e7ais (Dufour/Maulini) qui font rigoler tout en analysant, et la sc\u00e8ne crypto/VC plus pointue. On reste loin des vendeurs de r\u00eave Telegram pour privil\u00e9gier ceux qui tweetent leur pain quotidien."
+  },
+  {
+    "ts": "2026-09-09T05:48:39.611929",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "m2d7",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "L'instagrabber des cryptos fran\u00e7aises. Il tweete souvent en FR avec humour et couvre les micro-caps sans vendre de r\u00eave."
+      },
+      {
+        "handle": "CryptoGamer92",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le profil 'degen' qui a touch\u00e9 le fond et en rit. Il couvre NFT/Crypto FR avec un ton tr\u00e8s terre-\u00e0-terre."
+      }
+    ],
+    "summary": "Une s\u00e9lection mixant des influenceurs crypto fran\u00e7ais au ton d\u00e9complex\u00e9 et des experts IA bas\u00e9s aux USA mais ancr\u00e9s dans l'\u00e9cosyst\u00e8me francophone pour \u00e9viter le biais purement hexagonal. Pas de vendeuse de r\u00eave, juste du signal."
+  },
+  {
+    "ts": "2026-09-09T07:48:43.658099",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeSylvestre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "La bible des options en FR. Il parle de volatilit\u00e9 et d'omega comme si c'\u00e9tait sa langue maternelle."
+      },
+      {
+        "handle": "lucas_lecalve",
+        "region": "france",
+        "niche": "tech/ia",
+        "followers": 25000,
+        "reason": "Co-founder de WeAreDevelopers. Il couvre l'IA comme un insider qui a le droit d'\u00eatre cynique."
+      },
+      {
+        "handle": "_nathalie_walsh",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La seule qui m\u00e9lange humour qu\u00e9b\u00e9cois et analyse de march\u00e9 sans dormir sur le tas."
+      },
+      {
+        "handle": "_hugog",
+        "region": "france",
+        "niche": "crypto/trading",
+        "followers": 16000,
+        "reason": "L'ex-SquareOne qui a pivot\u00e9 vers le trading pur. Ses setups sur l'ETH sont plus fiables que ses pr\u00e9dictions politiques."
+      },
+      {
+        "handle": "pierre_girard",
+        "region": "france",
+        "niche": "crypto/vc",
+        "followers": 15000,
+        "reason": "Ex-SquareOne. Il trouve les gems avant qu'elles ne deviennent mainstream et se plaint du CAC40 entre deux tweets."
+      },
+      {
+        "handle": "adrien_girard_fr",
+        "region": "france",
+        "niche": "ai/vc",
+        "followers": 12000,
+        "reason": "Pas le 'hello world' de l'IA. Il tweete sur les infrastructures et le hardware comme un mec qui a des actions NVDA en poche."
+      }
+    ],
+    "summary": "Mix parfait entre les v\u00e9t\u00e9rons du VC (Girard, Dumas) et les experts de terrain walsh & calv\u00e9. Ils couvrent la macro sans s'endormir sur des clich\u00e9s LinkedIn."
   }
 ]

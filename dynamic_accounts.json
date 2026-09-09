@@ -2312,7 +2312,14 @@
     "BenoitRochon",
     "_HugoG_",
     "ThibaudMaulini",
-    "RomainGuegan_"
+    "RomainGuegan_",
+    "m2d7",
+    "CryptoGamer92",
+    "MaximeSylvestre",
+    "lucas_lecalve",
+    "_nathalie_walsh",
+    "_hugog",
+    "pierre_girard"
   ],
   "en": [
     "Chubby",
@@ -17060,6 +17067,41 @@
     {
       "lang": "fr",
       "handle": "RomainGuegan_",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "m2d7",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGamer92",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSylvestre",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_lecalve",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_nathalie_walsh",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_hugog",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "pierre_girard",
       "added": "2026-09-09"
     }
   ]

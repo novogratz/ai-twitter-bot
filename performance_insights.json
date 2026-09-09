@@ -1,24 +1,20 @@
 {
-  "generated_at": "2026-09-09T05:48:13.880491",
-  "window_7d_actions": 6208,
-  "window_24h_actions": 740,
+  "generated_at": "2026-09-09T09:48:13.965351",
+  "window_7d_actions": 6175,
+  "window_24h_actions": 745,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6208
+      "count": 6175
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6208
+      "count": 6175
     }
   ],
   "best_hours_utc": [
-    {
-      "hour": 8,
-      "actions": 278
-    },
     {
       "hour": 12,
       "actions": 278
@@ -34,20 +30,24 @@
     {
       "hour": 1,
       "actions": 272
+    },
+    {
+      "hour": 11,
+      "actions": 271
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2840
+      "count": 2836
     },
     {
       "topic": "Autre",
-      "count": 2396
+      "count": 2374
     },
     {
       "topic": "Crypto",
-      "count": 850
+      "count": 842
     },
     {
       "topic": "Bourse",
@@ -62,15 +62,15 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3029
+      "count": 3016
     },
     {
       "pillar": "market_trauma",
-      "count": 1524
+      "count": 1529
     },
     {
       "pillar": "other",
-      "count": 1284
+      "count": 1264
     },
     {
       "pillar": "reply_bait",
@@ -78,7 +78,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 143
+      "count": 138
     },
     {
       "pillar": "ai_vs_btc",
@@ -88,19 +88,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 355
-    },
-    {
-      "pillar": "other",
-      "count": 175
+      "count": 353
     },
     {
       "pillar": "market_trauma",
-      "count": 163
+      "count": 178
+    },
+    {
+      "pillar": "other",
+      "count": 174
     },
     {
       "pillar": "reply_bait",
-      "count": 29
+      "count": 24
     },
     {
       "pillar": "meme_reaction",
@@ -108,7 +108,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "other",
-      "posts": 69,
-      "avg_likes": 0.23,
-      "avg_views": 53.4,
+      "posts": 70,
+      "avg_likes": 0.24,
+      "avg_views": 58.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 82,
-      "avg_likes": 0.21,
-      "avg_views": 62.1,
+      "posts": 81,
+      "avg_likes": 0.23,
+      "avg_views": 65.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 42,
       "avg_likes": 0.17,
-      "avg_views": 43.2,
+      "avg_views": 44.3,
       "low_sample": false
     },
     {
@@ -151,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5570
+      "count": 5543
     },
     {
       "type": "quote",
-      "count": 397
+      "count": 394
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 131
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 47
     },
     {
       "type": "post",
-      "count": 41
+      "count": 39
     },
     {
       "type": "retweet",
@@ -176,19 +176,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-09T05:45:33.769916",
-      "text": "Spot etas drank the stablecoin liquidity dry in 9 months. $80k is just a number until the miners flip positive again.",
+      "ts": "2026-09-09T09:47:09.052951",
+      "text": "Senior devs worry about AI replacing their jobs. open source will replace the need to hire them at all. efficiency wins again.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T05:45:17.658175",
-      "text": "Muse charges $100 a month to replace the intern who cost you zero. SaaS seat revenue dies when AI becomes labor arbitrage with better UX. ouch",
+      "ts": "2026-09-09T09:46:36.944426",
+      "text": "Meta muse is up 5% in pre-market. the agent does zero work until you pay it to remember your cat's name and book a dentist appointment while crying over an openai API bill. classic cope. stop celebrating features, start watching margins.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T05:42:53.327845",
-      "text": "Btc at 77k is the new $69k for everyone buying \"perfect timing.\"\nyou didn't outsmart the market; you just outsourced your anxiety to a level line. same result as stanford steve's wrapper: feels like alpha, costs nothing",
-      "type": "reply"
+      "ts": "2026-09-09T09:45:08.934191",
+      "text": "Meta rises 6% on Muse AI subscription tiers while Alphabet drops because the market finally realized we’d rather pay a robot than read our own emails.\n\nhttps://finance.yahoo.com/markets/stocks/articles/meta-rises-6-muse-ai-131927092.html",
+      "type": "hotake"
     }
   ]
 }
