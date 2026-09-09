@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-09T01:48:13.977863",
-  "window_7d_actions": 6238,
-  "window_24h_actions": 734,
+  "generated_at": "2026-09-09T05:48:13.880491",
+  "window_7d_actions": 6208,
+  "window_24h_actions": 740,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6238
+      "count": 6208
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6238
+      "count": 6208
     }
   ],
   "best_hours_utc": [
@@ -28,26 +28,26 @@
       "actions": 276
     },
     {
-      "hour": 1,
-      "actions": 274
-    },
-    {
       "hour": 10,
       "actions": 273
+    },
+    {
+      "hour": 1,
+      "actions": 272
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2847
+      "count": 2840
     },
     {
       "topic": "Autre",
-      "count": 2409
+      "count": 2396
     },
     {
       "topic": "Crypto",
-      "count": 863
+      "count": 850
     },
     {
       "topic": "Bourse",
@@ -55,30 +55,30 @@
     },
     {
       "topic": "Spatial",
-      "count": 110
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3035
+      "count": 3029
     },
     {
       "pillar": "market_trauma",
-      "count": 1546
+      "count": 1524
     },
     {
       "pillar": "other",
-      "count": 1283
+      "count": 1284
     },
     {
       "pillar": "reply_bait",
-      "count": 153
+      "count": 152
     },
     {
       "pillar": "meme_reaction",
-      "count": 145
+      "count": 143
     },
     {
       "pillar": "ai_vs_btc",
@@ -88,27 +88,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 345
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 175
+      "count": 355
     },
     {
       "pillar": "other",
-      "count": 167
+      "count": 175
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 163
     },
     {
       "pillar": "reply_bait",
-      "count": 27
+      "count": 29
     },
     {
       "pillar": "meme_reaction",
-      "count": 13
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "other",
-      "posts": 70,
+      "posts": 69,
       "avg_likes": 0.23,
-      "avg_views": 53.3,
+      "avg_views": 53.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.23,
-      "avg_views": 62.5,
+      "posts": 82,
+      "avg_likes": 0.21,
+      "avg_views": 62.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.16,
-      "avg_views": 42.7,
+      "posts": 42,
+      "avg_likes": 0.17,
+      "avg_views": 43.2,
       "low_sample": false
     },
     {
@@ -151,7 +151,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5598
+      "count": 5570
     },
     {
       "type": "quote",
@@ -159,7 +159,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 137
+      "count": 135
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-09T01:47:58.371285",
-      "text": "Bitcoin bottoms are reliable. AI tops? We’re just guessing now while cashing out on overpriced salads. See you next crash, little bro.",
+      "ts": "2026-09-09T05:45:33.769916",
+      "text": "Spot etas drank the stablecoin liquidity dry in 9 months. $80k is just a number until the miners flip positive again.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T01:47:09.540798",
-      "text": "CEX protection funds are usually 0.5% of AUM and already underwater from Mt Gox payouts. buying the cheat sheet costs more than your insurance does. SKIP.",
+      "ts": "2026-09-09T05:45:17.658175",
+      "text": "Muse charges $100 a month to replace the intern who cost you zero. SaaS seat revenue dies when AI becomes labor arbitrage with better UX. ouch",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T01:46:08.198686",
-      "text": "William O'Neil loved earnings momentum. Nvidia’s AI capex just turned hardware trends into quarterly EPS beats he’d recognize instantly from his desk in ’82. You think chips are different now? That they don’t compound like SaaS used to?",
+      "ts": "2026-09-09T05:42:53.327845",
+      "text": "Btc at 77k is the new $69k for everyone buying \"perfect timing.\"\nyou didn't outsmart the market; you just outsourced your anxiety to a level line. same result as stanford steve's wrapper: feels like alpha, costs nothing",
       "type": "reply"
     }
   ]

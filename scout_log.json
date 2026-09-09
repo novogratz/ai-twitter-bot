@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-10T16:59:21.637039",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thierry_frederix",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence absolue pour comprendre la macro sans s'endormir. Il transforme les donn\u00e9es ennuyeuses en cartes graphiques intelligibles."
-      },
-      {
-        "handle": "AdrienPerray",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "G\u00e9ostrat\u00e9gie de la tech. Il explique pourquoi la France rase-mage tout en IA sans jamais prendre le ton arrogant du 'gourou'."
-      },
-      {
-        "handle": "SylvainM",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Cofondateur de Mistral. Il tweet en FR/EN avec une humilit\u00e9 rafra\u00eechissante, loin des ego dilatoires de la Silicon Valley."
-      }
-    ],
-    "summary": "Le terrain est satur\u00e9 de vendeurs de r\u00eave en formation crypto. Ces comptes se distinguent par leur rigueur analytique (Bessac, Frederix) ou leur profondeur industrielle (Perray, SylvainM). Le Qu\u00e9bec offre une p\u00e9pite avec Tremblay pour la crypto nord-am\u00e9ricaine."
-  },
-  {
-    "ts": "2026-08-10T18:59:22.148277",
-    "raw_count": 6,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaxenceDf",
-        "region": "france",
-        "niche": "ai",
-        "followers": 90000,
-        "reason": "Le meilleur tracker IA francophone. Il r\u00e9sume les arXiv et les news US en FR avant que tout le monde ne les ait lues. Indispensable pour rester dans le coup."
-      },
-      {
-        "handle": "Lionel63720",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le roi incontest\u00e9 du trading retail en France. Pas de formations \u00e0 2000\u20ac, juste du cash en live et des analyses boursi\u00e8res quotidiennes en FR."
-      },
-      {
-        "handle": "ThibaudDelaage",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Ancien de Coinhouse, il couvre le cycle crypto avec du concret. Twitte souvent en FR, z\u00e9ro hype vide, des posts qui font r\u00e9fl\u00e9chir et aimer."
-      },
-      {
-        "handle": "JulienLefort01",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Fondateur de DeepSense.ai. Il poste des threads techniques accessibles sur l'IA g\u00e9n\u00e9rative et l'infra. C'est du savoir pur, pas du coaching."
-      },
-      {
-        "handle": "MarcLamothe_",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 25000,
-        "reason": "L'expert Qu\u00e9becois en macro-\u00e9conomie et march\u00e9s. Il explique pourquoi \u00e7a va mal (ou bien) avec des analogies dr\u00f4les. Le contraste avec la Finance FR en version d\u00e9complex\u00e9e."
-      },
-      {
-        "handle": "CryptoBenoitFR",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Franco-am\u00e9ricain bas\u00e9 \u00e0 NYC. Il combine l'actu US avec une touche FR. Postes tr\u00e8s actifs sur DeFi et l'impact de la Fed, avec un ton sec et efficace."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre les inamovibles du retail (Lionel), les experts techniques (Maxence, Thibaud) et la fra\u00eecheur qu\u00e9b\u00e9coise (Marc). Z\u00e9ro influenceur en Costar, 100% contenu."
-  },
-  {
     "ts": "2026-08-10T20:59:30.495171",
     "raw_count": 7,
     "kept_count": 3,
@@ -7423,5 +7340,95 @@
       }
     ],
     "summary": "5 profils techniques et fondateurs plut\u00f4t que des influenceurs 'vape'. Pas de vendeurs de r\u00eave, juste du concret sur l'IA/Finance \u00e0 travers le prisme francophone."
+  },
+  {
+    "ts": "2026-09-09T01:48:41.445526",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_VincentDumas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'\u0153il gauche du march\u00e9 crypto. Il tweete quand les autres dorment."
+      },
+      {
+        "handle": "MaximeMessaoudi",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le CTO de Qwant. Il d\u00e9monte les hype cycles AI avant qu'ils ne plafonnent."
+      },
+      {
+        "handle": "Crypto_Merlin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "On-chain analysis brute. Pas de 'moon', juste des donn\u00e9es."
+      },
+      {
+        "handle": "AlexandreDionneQC",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "IA appliqu\u00e9e et data au Qu\u00e9bec. Moins hype que Paris, mais plus concret pour les devs."
+      },
+      {
+        "handle": "AlexPuel",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "La fintec frans\u00e9enne d\u00e9crypt\u00e9e. C'est moins sexy que l'IA mais \u00e7a paie les factures."
+      }
+    ],
+    "summary": "J'ai \u00e9cart\u00e9 les vendeurs de r\u00eaves Telegram pour garder ceux qui construisent ou analysent vraiment le secteur IA fran\u00e7ais et qu\u00e9b\u00e9cois, avec un petit bonus US francophone utile."
+  },
+  {
+    "ts": "2026-09-09T03:48:52.947107",
+    "raw_count": 9,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitRochon",
+        "region": "usa/france_diaspora",
+        "niche": "bourse/tech/ai",
+        "followers": 65000,
+        "reason": "Le roi de la data boursi\u00e8re. Il tweete en FR (et EN), couvre l'IA et les actions tech avec des graphiques qui font mal."
+      },
+      {
+        "handle": "PierreBertin21749",
+        "region": "france",
+        "niche": "crypto/web3",
+        "followers": 56000,
+        "reason": "V\u00e9t\u00e9ran de la crypto fran\u00e7aise. Il tweete l'essentiel sans le hype vide de z\u00e9ro."
+      },
+      {
+        "handle": "_HugoG_",
+        "region": "france",
+        "niche": "crypto/web3",
+        "followers": 52000,
+        "reason": "Journaliste web3 l\u00e9gendaire. Il tweete vite et sans filtre sur DeFi/NFTs."
+      },
+      {
+        "handle": "ThibaudMaulini",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "L'humour cynique sur le march\u00e9 des options. Pas de formation \u00e0 acheter, juste du trading r\u00e9el."
+      },
+      {
+        "handle": "RomainGuegan_",
+        "region": "france",
+        "niche": "tech/vc/ai",
+        "followers": 24000,
+        "reason": "Partner \u00e0 Maelstrom. La niche VC francophone la plus active sur l'impact de l'IA."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rans boursiers fran\u00e7ais (Dufour/Maulini) qui font rigoler tout en analysant, et la sc\u00e8ne crypto/VC plus pointue. On reste loin des vendeurs de r\u00eave Telegram pour privil\u00e9gier ceux qui tweetent leur pain quotidien."
   }
 ]
