@@ -2329,7 +2329,9 @@
     "RaphaelHassner",
     "MaximeBonnery",
     "JulienDelboscq",
-    "RomainBouvier"
+    "RomainBouvier",
+    "_JulieLagarda_",
+    "m_bernade"
   ],
   "en": [
     "Chubby",
@@ -2865,7 +2867,9 @@
     "Apodex",
     "Funbssss",
     "Marco",
-    "Trezor"
+    "Trezor",
+    "Barrett",
+    "Pools"
   ],
   "history": [
     {
@@ -17186,6 +17190,26 @@
     {
       "lang": "en",
       "handle": "Trezor",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Barrett",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "_JulieLagarda_",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "m_bernade",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Pools",
       "added": "2026-09-09"
     }
   ]

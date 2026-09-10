@@ -17361,3 +17361,12 @@ U.S. data centers above 100MW are set to explode this decade but power, intercon
 This is bearish for Bitcoin & risk assets... 🚨
   - https://x.com/cryptorover/status/2097174048367419902
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 184).
+
+## 2026-09-10
+- **@venturetwins** (19918 likes, score 9/10) — OpenAI: “We’ve solved math” 
+
+Anthropic: “Our AI is so powerful it’s going to kill you”
+
+Google: “Introducing Gemini 3.9 Flash! It’s 30% faster and 15% worse than the last Gemini”
+  - https://x.com/venturetwins/status/2097769059937047002
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 20326).
