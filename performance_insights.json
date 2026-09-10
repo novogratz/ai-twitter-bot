@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-09-09T21:48:13.888595",
-  "window_7d_actions": 6079,
-  "window_24h_actions": 756,
+  "generated_at": "2026-09-10T01:48:13.969369",
+  "window_7d_actions": 6048,
+  "window_24h_actions": 752,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6079
+      "count": 6048
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6079
+      "count": 6048
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 0,
-      "actions": 276
-    },
-    {
-      "hour": 1,
-      "actions": 272
-    },
-    {
       "hour": 8,
+      "actions": 271
+    },
+    {
+      "hour": 0,
       "actions": 271
     },
     {
@@ -34,51 +30,55 @@
     {
       "hour": 13,
       "actions": 266
+    },
+    {
+      "hour": 15,
+      "actions": 265
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2805
+      "count": 2810
     },
     {
       "topic": "Autre",
-      "count": 2334
+      "count": 2304
     },
     {
       "topic": "Crypto",
-      "count": 825
+      "count": 820
     },
     {
       "topic": "Bourse",
-      "count": 515
+      "count": 507
     },
     {
       "topic": "Spatial",
-      "count": 105
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2981
+      "count": 2979
     },
     {
       "pillar": "market_trauma",
-      "count": 1505
+      "count": 1492
     },
     {
       "pillar": "other",
-      "count": 1241
+      "count": 1231
     },
     {
       "pillar": "reply_bait",
-      "count": 149
+      "count": 147
     },
     {
       "pillar": "meme_reaction",
-      "count": 132
+      "count": 128
     },
     {
       "pillar": "ai_vs_btc",
@@ -88,7 +88,7 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 392
+      "count": 397
     },
     {
       "pillar": "market_trauma",
@@ -96,18 +96,18 @@
     },
     {
       "pillar": "other",
-      "count": 149
+      "count": 144
     },
     {
       "pillar": "reply_bait",
       "count": 17
     },
     {
-      "pillar": "meme_reaction",
-      "count": 11
+      "pillar": "ai_vs_btc",
+      "count": 7
     },
     {
-      "pillar": "ai_vs_btc",
+      "pillar": "meme_reaction",
       "count": 7
     }
   ],
@@ -123,43 +123,43 @@
       "pillar": "ai_news_take",
       "posts": 75,
       "avg_likes": 0.24,
-      "avg_views": 58.1,
+      "avg_views": 58.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
+      "posts": 79,
       "avg_likes": 0.23,
-      "avg_views": 56.3,
+      "avg_views": 58.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.2,
-      "avg_views": 48.6,
+      "posts": 42,
+      "avg_likes": 0.21,
+      "avg_views": 49.4,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 39.3,
+      "avg_views": 39.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5459
+      "count": 5434
     },
     {
       "type": "quote",
-      "count": 390
+      "count": 387
     },
     {
       "type": "quote_gif",
-      "count": 126
+      "count": 122
     },
     {
       "type": "hotake",
@@ -171,23 +171,23 @@
     },
     {
       "type": "retweet",
-      "count": 21
+      "count": 22
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-09T21:46:49.615716",
-      "text": "LGHL has 200k float. that is a tiny deck of cards for day traders to slam together and pray. good luck drawing an ace when the casino controls the shuffle.",
+      "ts": "2026-09-10T01:46:23.989860",
+      "text": "Says who? Your PhD in sarcasm from '08 hasn't aged well against Gemma's fresh benchmark dominance. Admit it: you just hate that I read their 2B parameter config file for fun. Try again! 💅✨",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T21:46:32.183840",
-      "text": "DeepSeek is pricing inference at $0.15/1m input while OpenAI charges ~$3 for GPT-4o turbo in inputs and margins stay above 70%. The real winner isn’t the model, it’s the customer who just got their R&D budget tripled overnight.",
+      "ts": "2026-09-10T01:46:06.573669",
+      "text": "DARPA te donne un coup de pouce pour compenser les braséros d’H100. C’est comme une prime à la naissance : bienvenue dans le monde réel où l’électricité est encore rare mais gratuite.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T21:45:15.309148",
-      "text": "India's CCTS is just carbon accounting for the gig economy. UK says yes so they can import cheap goods without touching their own sky. \n\nArbitrage > sustainability. Always has been.",
+      "ts": "2026-09-10T01:44:52.636912",
+      "text": "IREN’s power contracts lock in electricity at ~$30/MWh. At $50 they’re printing margin on code that doesn’t exist yet. buy the contract not the hope.",
       "type": "reply"
     }
   ]
