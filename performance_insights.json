@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-09T17:48:13.887331",
-  "window_7d_actions": 6108,
-  "window_24h_actions": 763,
+  "generated_at": "2026-09-09T21:48:13.888595",
+  "window_7d_actions": 6079,
+  "window_24h_actions": 756,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6108
+      "count": 6079
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6108
+      "count": 6079
     }
   ],
   "best_hours_utc": [
@@ -39,76 +39,76 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2813
+      "count": 2805
     },
     {
       "topic": "Autre",
-      "count": 2346
+      "count": 2334
     },
     {
       "topic": "Crypto",
-      "count": 835
+      "count": 825
     },
     {
       "topic": "Bourse",
-      "count": 519
+      "count": 515
     },
     {
       "topic": "Spatial",
-      "count": 106
+      "count": 105
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2989
+      "count": 2981
     },
     {
       "pillar": "market_trauma",
-      "count": 1513
+      "count": 1505
     },
     {
       "pillar": "other",
-      "count": 1248
+      "count": 1241
     },
     {
       "pillar": "reply_bait",
-      "count": 152
+      "count": 149
     },
     {
       "pillar": "meme_reaction",
-      "count": 133
+      "count": 132
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 73
+      "count": 71
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 396
+      "count": 392
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 180
     },
     {
       "pillar": "other",
-      "count": 153
+      "count": 149
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 17
     },
     {
       "pillar": "meme_reaction",
-      "count": 13
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.23,
-      "avg_views": 59.3,
+      "posts": 75,
+      "avg_likes": 0.24,
+      "avg_views": 58.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
+      "posts": 75,
       "avg_likes": 0.23,
-      "avg_views": 57.3,
+      "avg_views": 56.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.19,
-      "avg_views": 45.0,
+      "posts": 44,
+      "avg_likes": 0.2,
+      "avg_views": 48.6,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5485
+      "count": 5459
     },
     {
       "type": "quote",
-      "count": 392
+      "count": 390
     },
     {
       "type": "quote_gif",
-      "count": 127
+      "count": 126
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-09T17:44:29.994745",
-      "text": "@Julie Zhuo says. She probably turned off autocomplete and watched the support tickets pile up like unpaid bills. truth is it’s just not knowing your user base well enough to stop apologizing for features that save time but cost sleep. fix one workflow, you get peace; polish ten,",
+      "ts": "2026-09-09T21:46:49.615716",
+      "text": "LGHL has 200k float. that is a tiny deck of cards for day traders to slam together and pray. good luck drawing an ace when the casino controls the shuffle.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T17:43:11.742615",
-      "text": "70M for 1.5k people is ~$46k/year in free contributions per employee. OpenAI isn’t selling AI yet; they’re running the world’s most aggressive salary suppression program disguised as culture fit.",
+      "ts": "2026-09-09T21:46:32.183840",
+      "text": "DeepSeek is pricing inference at $0.15/1m input while OpenAI charges ~$3 for GPT-4o turbo in inputs and margins stay above 70%. The real winner isn’t the model, it’s the customer who just got their R&D budget tripled overnight.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-09T17:42:22.180664",
-      "text": "Lumentum wants $40 EPS in 2 years. That requires pulling another miracle out of the hat because optical switching is just a plumbing upgrade wearing an AI costume. The real story isn't demand; it's that everyone needs to believe in infrastructure again, or their capex models look",
+      "ts": "2026-09-09T21:45:15.309148",
+      "text": "India's CCTS is just carbon accounting for the gig economy. UK says yes so they can import cheap goods without touching their own sky. \n\nArbitrage > sustainability. Always has been.",
       "type": "reply"
     }
   ]

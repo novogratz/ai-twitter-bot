@@ -2325,7 +2325,11 @@
     "_david_jean",
     "_julie_lagarda",
     "_lucas_g",
-    "_romainsz_"
+    "_romainsz_",
+    "RaphaelHassner",
+    "MaximeBonnery",
+    "JulienDelboscq",
+    "RomainBouvier"
   ],
   "en": [
     "Chubby",
@@ -2858,7 +2862,10 @@
     "YOH",
     "MouMou",
     "Dimitri",
-    "Apodex"
+    "Apodex",
+    "Funbssss",
+    "Marco",
+    "Trezor"
   ],
   "history": [
     {
@@ -17144,6 +17151,41 @@
     {
       "lang": "fr",
       "handle": "_romainsz_",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Funbssss",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelHassner",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBonnery",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelboscq",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBouvier",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Marco",
+      "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Trezor",
       "added": "2026-09-09"
     }
   ]

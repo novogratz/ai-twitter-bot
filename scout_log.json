@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-08-11T04:59:13.421394",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "SylvainLeGal",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "VP chez Mistral. Le tech-twitter fran\u00e7ais qui mixe AI et VC avec humour. Pas un guru, un builder."
-      },
-      {
-        "handle": "CryptoRenaissance",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "La newsletter crypto FR n\u00b01 sur X. Journalisme solide, couverture Ethereum et macro. Pas de shillage."
-      },
-      {
-        "handle": "GaelLebrat",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Fondateur de Koyeb. Twitte frappe fort sur l'infra AI et les startups SaaS. Punchy et technique."
-      },
-      {
-        "handle": "MaximeRoussy",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Investisseur retail s\u00e9rieux, focus dividendes et value. Compte actif, pas de 'rejoins le discord'."
-      }
-    ],
-    "summary": "J'ai mis\u00e9 sur les leaders d'opinion tech (Mistral/LeGal) et les v\u00e9t\u00e9rans crypto (Maki/CryptoRenaissance) pour couvrir les 3 r\u00e9gions sans tomber dans les vendeurs de r\u00eave."
-  },
-  {
-    "ts": "2026-08-11T06:59:23.138059",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lamassure",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Mathieu est un math\u00e9maticien qui trade. Il d\u00e9cortique les flux et l'algo. C'est sec, c'est cru, c'est pas du coaching \u00e0 1500 balles le mois."
-      },
-      {
-        "handle": "Moulin_Theo",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Theo Moulin, bas\u00e9 SF. Il couvre l'IA de l'int\u00e9rieur, pas depuis un canap\u00e9 \u00e0 Lyon. Ses threads sur les LLMs sont plus clairs que la plupart des articles de presse tech."
-      },
-      {
-        "handle": "NestorHedg",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'asiatique de la macro FR. Il couvre Nikkei, Hang Seng et USD/JPY comme un patissier couvre ses tartes. Rare de voir ce niveau de niche en FR."
-      }
-    ],
-    "summary": "Six comptes solides qui \u00e9vitent le buzzword bingo. On a des pros du trading, des devs qui construisent, et un Qu\u00e9b\u00e9cois qui fait briller l'IA francophone \u00e0 Toronto."
-  },
-  {
     "ts": "2026-08-11T08:59:15.498318",
     "raw_count": 6,
     "kept_count": 6,
@@ -7416,5 +7347,60 @@
       }
     ],
     "summary": "Une s\u00e9lection chirurginale : on \u00e9vite le bruit des vendeurs d'or, pour se concentrer sur ceux qui comprennent vraiment comment l'\u00e9conomie num\u00e9ripique fonctionne (ou s'en sort). Pas de formations \u00e0 prix canon ici."
+  },
+  {
+    "ts": "2026-09-09T17:48:38.479478",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RaphaelHassner",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le Saint-Si\u00e8ge de l'IA en France. Si tu ne suis pas Rapha\u00ebl, ton algorithme est sourd."
+      },
+      {
+        "handle": "MaximeBonnery",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 32000,
+        "reason": "CTO de Qonto. Il mixe tech et business sans se prendre pour un guru LinkedIn."
+      },
+      {
+        "handle": "JulienDelboscq",
+        "region": "france",
+        "niche": "ai/startups",
+        "followers": 18000,
+        "reason": "Deeplearning.ai France. Il vulgarise sans emb\u00eater et pousse les vrais acteurs."
+      },
+      {
+        "handle": "RomainBouvier",
+        "region": "france",
+        "niche": "ai/web3",
+        "followers": 12000,
+        "reason": "Ancien ConsenSys. Il est l\u00e0 depuis l'\u00e8re Ethereum classique et survit aux crashs."
+      }
+    ],
+    "summary": "Focus France IA/Fintech avec un mix fondateur/journaliste, + une base Qu\u00e9b\u00e9coise solide sur le tech/crypto pour varier les angles g\u00e9o sans verser dans l'entre-soi parisien. Z\u00e9ro vendeurs d'espoir \u00e0 90\u20ac."
+  },
+  {
+    "ts": "2026-09-09T19:48:40.344104",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 0,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_vincentdumasfr_",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 21000,
+        "reason": "La diaspora IA \u00e0 NY. Il relie le march\u00e9 fran\u00e7ais aux grands patrons de la Silicon Valley."
+      }
+    ],
+    "summary": "Un mix solide entre les v\u00e9t\u00e9rans qui tiennent l'\u00e9cosyst\u00e8me FR (#TheAIShrink, #adriendumas) et une p\u00e9pique QC bien plus discr\u00e8te mais d'une efficacit\u00e9 redoutable. On \u00e9vite les influenceurs formateurs pour se concentrer sur ceux qui construisent ou analysent vraiment."
   }
 ]
