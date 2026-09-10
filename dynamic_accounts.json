@@ -2340,7 +2340,9 @@
     "Alexis_Guilleux",
     "NathalieWalsh_",
     "LucasRabiller",
-    "_adrieng89"
+    "_adrieng89",
+    "DylanMakC",
+    "PierreRochverge"
   ],
   "en": [
     "Chubby",
@@ -2880,7 +2882,9 @@
     "Barrett",
     "Pools",
     "GenLayer",
-    "hoodminers"
+    "hoodminers",
+    "ElevenLabs",
+    "MoneyGram"
   ],
   "history": [
     {
@@ -17276,6 +17280,26 @@
     {
       "lang": "fr",
       "handle": "_adrieng89",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanMakC",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRochverge",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "en",
+      "handle": "ElevenLabs",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "en",
+      "handle": "MoneyGram",
       "added": "2026-09-10"
     }
   ]

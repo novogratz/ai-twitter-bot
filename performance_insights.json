@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-10T13:48:13.984023",
-  "window_7d_actions": 5979,
-  "window_24h_actions": 777,
+  "generated_at": "2026-09-10T17:48:13.871297",
+  "window_7d_actions": 5944,
+  "window_24h_actions": 770,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5979
+      "count": 5944
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5979
+      "count": 5944
     }
   ],
   "best_hours_utc": [
@@ -24,34 +24,34 @@
       "actions": 270
     },
     {
-      "hour": 15,
-      "actions": 265
+      "hour": 13,
+      "actions": 267
     },
     {
       "hour": 8,
       "actions": 264
     },
     {
-      "hour": 13,
+      "hour": 10,
       "actions": 263
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2802
+      "count": 2796
     },
     {
       "topic": "Autre",
-      "count": 2265
+      "count": 2245
     },
     {
       "topic": "Crypto",
-      "count": 796
+      "count": 787
     },
     {
       "topic": "Bourse",
-      "count": 500
+      "count": 496
     },
     {
       "topic": "Spatial",
@@ -62,27 +62,27 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2952
+      "count": 2939
     },
     {
       "pillar": "market_trauma",
-      "count": 1462
+      "count": 1454
     },
     {
       "pillar": "other",
-      "count": 1214
+      "count": 1205
     },
     {
       "pillar": "reply_bait",
-      "count": 153
+      "count": 150
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 125
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 72
+      "count": 71
     }
   ],
   "pillar_mix_24h": [
@@ -96,19 +96,19 @@
     },
     {
       "pillar": "other",
-      "count": 151
+      "count": 148
     },
     {
       "pillar": "reply_bait",
-      "count": 24
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 11
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 13
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
@@ -121,23 +121,23 @@
     },
     {
       "pillar": "other",
-      "posts": 84,
-      "avg_likes": 0.24,
-      "avg_views": 58.0,
+      "posts": 81,
+      "avg_likes": 0.27,
+      "avg_views": 60.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
-      "avg_likes": 0.19,
-      "avg_views": 50.0,
+      "posts": 36,
+      "avg_likes": 0.22,
+      "avg_views": 55.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 75,
-      "avg_likes": 0.17,
-      "avg_views": 57.5,
+      "posts": 79,
+      "avg_likes": 0.16,
+      "avg_views": 59.2,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5376
+      "count": 5348
     },
     {
       "type": "quote",
-      "count": 377
+      "count": 372
     },
     {
       "type": "quote_gif",
-      "count": 121
+      "count": 120
     },
     {
       "type": "hotake",
@@ -167,7 +167,7 @@
     },
     {
       "type": "post",
-      "count": 37
+      "count": 36
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-10T13:45:35.633317",
-      "text": "Pltr’s rule of 40 is the only one actually holding. everything else is just a flag waiting to get broken out by margin compression. hope your bases are deep enough to survive earnings season.",
+      "ts": "2026-09-10T17:45:16.297926",
+      "text": "Every time someone says BTC is “different,” 401k Dave rebuying at new highs proves it’s exactly the same. he just forgot what $20k felt like.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T13:44:38.557026",
-      "text": "The TNX is the yield on 10-year notes. rates are climbing because long-term inflation isn't dead yet and nobody's telling us that either.",
+      "ts": "2026-09-10T17:43:00.254550",
+      "text": "Oracle veut du vert. Bloom Energy vend de l'oxygène. Le vrai problème n'est pas le carbone, c'est les 50 mégawatts que ton réseau local ne supporte pas.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T13:43:18.755676",
-      "text": "Huang says security is next. The real story: inference costs are about to outpace training by 3x once the code gets smart enough to break itself in production. run fast, patch harder.",
+      "ts": "2026-09-10T17:42:30.181664",
+      "text": "@deman's midterms bet misses the real driver. Trump controls 80% of datacenter power permitting right now and that capex cycle runs on physical wires not sentiment. his chill is just cooling down server rooms for Q4 earnings, which have already priced in everything he can break o",
       "type": "reply"
     }
   ]

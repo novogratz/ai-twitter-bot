@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-11T16:59:40.990986",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LudoBTC",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 110000,
-        "reason": "Sarko de la crypto. Il tweet, \u00e7a monte. Il se tait, tu dors. Simple."
-      },
-      {
-        "handle": "Babylone_Metrics",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "La data ne ment jamais, contrairement \u00e0 tes signaux Telegram. Un pur geek qui cartonne sur Twitter FR."
-      },
-      {
-        "handle": "TanguyMahe",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le mec qui a fait de Mistral une monnaie forte. Moins de hypes, plus de code."
-      },
-      {
-        "handle": "MarcFournier_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Le Qu\u00e9bec a du talent. Lui il a de l'audience sur la tech et l'IA. Pas de blabla politique."
-      },
-      {
-        "handle": "GaelleMounier",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Rien que son nom fait grimper les lev\u00e9es de fonds. La VC fran\u00e7aise la plus influente sans en faire."
-      },
-      {
-        "handle": "JulesWage",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Il twitte en FR, il est \u00e0 Montreal, et il comprend que le Bitcoin n'est pas un mode de vie mais un outil."
-      },
-      {
-        "handle": "BenjaminGoy",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'analyse fondamentale en version courte. Il ne vend rien, il montre les chiffres."
-      }
-    ],
-    "summary": "On \u00e9vite les influenceurs 'lifestyle' qui te vendent des formations \u00e0 2k\u20ac pour apprendre \u00e0 scroller. Cinq pros purs, trois Qu\u00e9b\u00e9cois qui en savent plus que tes cousins de Bordeaux, et un Fran\u00e7ais qui bossent \u00e0 SF. Le mix parfait pour ne pas avoir l'impression de suivre une \u00e9mission de t\u00e9l\u00e9 r\u00e9alit\u00e9."
-  },
-  {
     "ts": "2026-08-11T18:59:12.016253",
     "raw_count": 8,
     "kept_count": 5,
@@ -7325,5 +7266,36 @@
       }
     ],
     "summary": "On vise le fond : les experts data et VC francophones implant\u00e9s aux US ou au Qu\u00e9bec. Z\u00e9ro vendeur de r\u00eaves, que du gras analytique en version fran\u00e7aise."
+  },
+  {
+    "ts": "2026-09-10T13:48:38.184454",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DylanMakC",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le roi des 'TL;DR' fran\u00e7ais. Il transforme les whitepapers de la NASA en tweets qu'on peut lire entre deux clins d'\u0153il."
+      },
+      {
+        "handle": "PierreRochverge",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Bitcoin pur et dur. Ses threads sur la liquidit\u00e9 sont plus clairs que mon plan de retraite."
+      },
+      {
+        "handle": "AlexandreBouillot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Foundeur de K2 AI. Il twitte sur l'IA comme un ing\u00e9nieur qui a compris le truc et se permet enfin des blagues."
+      }
+    ],
+    "summary": "Scoutage termin\u00e9 : on a vis\u00e9 les t\u00eates pensantes qui twittent encore vraiment, pas juste pour l'algorithme. Pas de vendeurs d'or en barre, que des gens qui savent ce qu'ils disent ou se plantent avec classe."
   }
 ]
