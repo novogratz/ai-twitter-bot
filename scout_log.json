@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-11T12:59:14.103112",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "louis_morvan",
-        "region": "france",
-        "niche": "tech",
-        "followers": 65000,
-        "reason": "Vice-Pr\u00e9sident Europe chez Hugging Face. C'est LA r\u00e9f\u00e9rence fran\u00e7aise pour l'IA open source. Il twitte ce qui compte vraiment (mod\u00e8les, dataloading, MLOps) avant les autres."
-      },
-      {
-        "handle": "mickaelbouffon",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Le grand patron de Frugal Invest. Pas un influenceur qui vend des formations, un vrai fond d'investissement. Twitte en fran\u00e7ais, analyse profonde, z\u00e9ro hype."
-      },
-      {
-        "handle": "benjamin_2345",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 32000,
-        "reason": "Le plus gros 'crypto bro' francophone qui n'a pas de communaut\u00e9 Telegram VIP. Il couvre DeFi, Bitcoin et on-chain data avec pr\u00e9cision, sans vendre le r\u00eave du lamborghini."
-      },
-      {
-        "handle": "paul_golaz",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Co-fondateur de Everseen. Il combine une th\u00e8se PhD en AI avec une vision business tr\u00e8s sharp. Il ne fait pas que tweeter des citations de Musk, il explique la tech."
-      },
-      {
-        "handle": "juliensolot",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Cr\u00e9ateur de la chaine 'Le Boursicoteur'. Contrairement aux autres qui vendent des signaux, il fait des analyses fondamentales solides et twitte r\u00e9guli\u00e8rement ses positions."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le gras : z\u00e9ro influenceur 'lifestyle', juste des analystes et fondateurs qui twittent ce qu'ils font. De la fondamentale fran\u00e7aise aux p\u00e9pites qu\u00e9b\u00e9coises."
-  },
-  {
     "ts": "2026-08-11T14:59:19.352467",
     "raw_count": 7,
     "kept_count": 6,
@@ -7353,5 +7308,57 @@
       }
     ],
     "summary": "Le lot est mixte : QC domine en bourse classique avec Dionne, tandis que FR brille par ses ex-founders fintech et v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu aux deux bear markets sans vendre leurs \u00e2mes \u00e0 Telegram. Pas de vendeurs de r\u00eaves ici."
+  },
+  {
+    "ts": "2026-09-10T07:48:39.737036",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Mael_Aubinais",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "L'incontournable de l'IA applicative en FR. Il tweet la v\u00e9rit\u00e9 tech sans le jargon VC qui emmerde."
+      },
+      {
+        "handle": "ThibautMaury_",
+        "region": "usa",
+        "niche": "ai/tech",
+        "followers": 60000,
+        "reason": "Ex-VC qui tweet sur la Silicon Valley depuis l'int\u00e9rieur. Il conna\u00eet les fondateurs que tu aimerais \u00eatre."
+      },
+      {
+        "handle": "Alexis_Guilleux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le roi du thread bourse fran\u00e7aise. Il explique les bilans comme un pro qui te tape sur l'\u00e9paule."
+      },
+      {
+        "handle": "NathalieWalsh_",
+        "region": "usa",
+        "niche": "crypto/tech",
+        "followers": 40000,
+        "reason": "Journaliste crypto \u00e0 San Francisco. Elle est l\u00e0 o\u00f9 l'argent se d\u00e9place avant que tu ne le voies."
+      },
+      {
+        "handle": "AdrienBourgeois_",
+        "region": "france",
+        "niche": "ai/tech",
+        "followers": 15000,
+        "reason": "Vibe AI & Tech. Il mixe le hardware et les LLMs avec une \u00e9l\u00e9gance rare."
+      },
+      {
+        "handle": "LucasRabiller",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "G\u00e9ant de l'info FinTech. Si tu veux savoir qui emprunte \u00e0 quel taux sans dormir sur ton clavier."
+      }
+    ],
+    "summary": "Un panel qui couvre l'IA de A \u00e0 Z (Aubinais), la bourse fran\u00e7aise real (Guilleux) et l'\u00e9cosyst\u00e8me qu\u00e9b\u00e9cois/US francophone. Pas de vendeurs de r\u00eaves, juste des gens qui regardent les graphiques."
   }
 ]

@@ -2334,7 +2334,12 @@
     "m_bernade",
     "_Thomasmorfin",
     "_AdrienLeruyet_",
-    "_LDev_"
+    "_LDev_",
+    "Mael_Aubinais",
+    "ThibautMaury_",
+    "Alexis_Guilleux",
+    "NathalieWalsh_",
+    "LucasRabiller"
   ],
   "en": [
     "Chubby",
@@ -2873,7 +2878,8 @@
     "Trezor",
     "Barrett",
     "Pools",
-    "GenLayer"
+    "GenLayer",
+    "hoodminers"
   ],
   "history": [
     {
@@ -17234,6 +17240,36 @@
     {
       "lang": "fr",
       "handle": "_LDev_",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "en",
+      "handle": "hoodminers",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mael_Aubinais",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMaury_",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Guilleux",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieWalsh_",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasRabiller",
       "added": "2026-09-10"
     }
   ]

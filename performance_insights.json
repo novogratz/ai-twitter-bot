@@ -1,24 +1,20 @@
 {
-  "generated_at": "2026-09-10T05:48:13.954074",
-  "window_7d_actions": 6031,
-  "window_24h_actions": 764,
+  "generated_at": "2026-09-10T09:48:13.855502",
+  "window_7d_actions": 6000,
+  "window_24h_actions": 765,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6031
+      "count": 6000
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6031
+      "count": 6000
     }
   ],
   "best_hours_utc": [
-    {
-      "hour": 8,
-      "actions": 271
-    },
     {
       "hour": 0,
       "actions": 271
@@ -34,24 +30,28 @@
     {
       "hour": 13,
       "actions": 266
+    },
+    {
+      "hour": 15,
+      "actions": 265
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2808
+      "count": 2804
     },
     {
       "topic": "Autre",
-      "count": 2301
+      "count": 2279
     },
     {
       "topic": "Crypto",
-      "count": 811
+      "count": 803
     },
     {
       "topic": "Bourse",
-      "count": 498
+      "count": 504
     },
     {
       "topic": "Spatial",
@@ -62,15 +62,15 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2973
+      "count": 2960
     },
     {
       "pillar": "market_trauma",
-      "count": 1487
+      "count": 1480
     },
     {
       "pillar": "other",
-      "count": 1223
+      "count": 1211
     },
     {
       "pillar": "reply_bait",
@@ -78,7 +78,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 127
+      "count": 128
     },
     {
       "pillar": "ai_vs_btc",
@@ -88,27 +88,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 395
+      "count": 394
     },
     {
       "pillar": "market_trauma",
-      "count": 199
+      "count": 194
     },
     {
       "pillar": "other",
-      "count": 137
+      "count": 139
     },
     {
       "pillar": "reply_bait",
-      "count": 17
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 19
     },
     {
       "pillar": "meme_reaction",
-      "count": 8
+      "count": 10
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
@@ -121,53 +121,53 @@
     },
     {
       "pillar": "other",
-      "posts": 82,
-      "avg_likes": 0.23,
-      "avg_views": 58.0,
+      "posts": 84,
+      "avg_likes": 0.24,
+      "avg_views": 58.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.23,
-      "avg_views": 50.5,
+      "posts": 39,
+      "avg_likes": 0.21,
+      "avg_views": 51.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 73,
-      "avg_likes": 0.16,
-      "avg_views": 55.3,
+      "avg_likes": 0.18,
+      "avg_views": 57.6,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 1,
       "avg_likes": 0.0,
-      "avg_views": 39.0,
-      "low_sample": false
+      "avg_views": 53.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5423
+      "count": 5396
     },
     {
       "type": "quote",
-      "count": 382
+      "count": 378
     },
     {
       "type": "quote_gif",
-      "count": 121
+      "count": 122
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 44
     },
     {
       "type": "post",
-      "count": 40
+      "count": 38
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-10T05:47:49.908269",
-      "text": "Bipartisan AI safety bill. The real story is a regulatory moat for OpenAI and Anthropic to lock out the open-source rebels before they ship anything useful. anticompetitive theater in dc suits.",
+      "ts": "2026-09-10T09:47:34.388074",
+      "text": "Spot etf moved $50B in six months. the institutional bid eats retail dip anxiety for breakfast. you're not exiting a position, you're paying admission to watch it recover.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T05:46:30.208093",
-      "text": "Polymarket is an oracle that pays out in stablecoins while the CME settles days later. by 8:30am et there’s already $4k volume on \"hotter than expected\". let them pay you for being right before the fed even clears its throat",
+      "ts": "2026-09-10T09:45:23.342448",
+      "text": "Lagarde warns of second-round effects. the fed’s “higher for longer” is just lagarde saying she doesn’t know how to fix energy pricing and wants you to feel it at checkout too.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T05:46:01.364224",
-      "text": "Qwen3.8-27B fits on 16GB VRAM means you’re running a distilled model with heavy quantization to squeeze inference out of consumer hardware while the labs burn cash training dense transformers that never see your wallet. \nthe real story: open weights is democratizing access, but c",
+      "ts": "2026-09-10T09:44:37.580988",
+      "text": "Pltr's rule of 40 is real. that means efficiency beats growth now which kills the valuations built on burn rate. finally free to be a boring machine.",
       "type": "reply"
     }
   ]
