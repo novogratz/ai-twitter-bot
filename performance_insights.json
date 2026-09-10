@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-10T09:48:13.855502",
-  "window_7d_actions": 6000,
-  "window_24h_actions": 765,
+  "generated_at": "2026-09-10T13:48:13.984023",
+  "window_7d_actions": 5979,
+  "window_24h_actions": 777,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6000
+      "count": 5979
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6000
+      "count": 5979
     }
   ],
   "best_hours_utc": [
@@ -24,91 +24,91 @@
       "actions": 270
     },
     {
-      "hour": 12,
-      "actions": 268
+      "hour": 15,
+      "actions": 265
+    },
+    {
+      "hour": 8,
+      "actions": 264
     },
     {
       "hour": 13,
-      "actions": 266
-    },
-    {
-      "hour": 15,
-      "actions": 265
+      "actions": 263
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2804
+      "count": 2802
     },
     {
       "topic": "Autre",
-      "count": 2279
+      "count": 2265
     },
     {
       "topic": "Crypto",
-      "count": 803
+      "count": 796
     },
     {
       "topic": "Bourse",
-      "count": 504
+      "count": 500
     },
     {
       "topic": "Spatial",
-      "count": 103
+      "count": 105
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2960
+      "count": 2952
     },
     {
       "pillar": "market_trauma",
-      "count": 1480
+      "count": 1462
     },
     {
       "pillar": "other",
-      "count": 1211
+      "count": 1214
     },
     {
       "pillar": "reply_bait",
-      "count": 150
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
-      "count": 128
+      "count": 126
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 71
+      "count": 72
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 394
+      "count": 387
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 193
     },
     {
       "pillar": "other",
-      "count": 139
+      "count": 151
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 24
     },
     {
       "pillar": "meme_reaction",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
@@ -123,21 +123,21 @@
       "pillar": "other",
       "posts": 84,
       "avg_likes": 0.24,
-      "avg_views": 58.7,
+      "avg_views": 58.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.21,
-      "avg_views": 51.0,
+      "posts": 37,
+      "avg_likes": 0.19,
+      "avg_views": 50.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.18,
-      "avg_views": 57.6,
+      "posts": 75,
+      "avg_likes": 0.17,
+      "avg_views": 57.5,
       "low_sample": false
     },
     {
@@ -151,23 +151,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5396
+      "count": 5376
     },
     {
       "type": "quote",
-      "count": 378
+      "count": 377
     },
     {
       "type": "quote_gif",
-      "count": 122
+      "count": 121
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 46
     },
     {
       "type": "post",
-      "count": 38
+      "count": 37
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-10T09:47:34.388074",
-      "text": "Spot etf moved $50B in six months. the institutional bid eats retail dip anxiety for breakfast. you're not exiting a position, you're paying admission to watch it recover.",
+      "ts": "2026-09-10T13:45:35.633317",
+      "text": "Pltr’s rule of 40 is the only one actually holding. everything else is just a flag waiting to get broken out by margin compression. hope your bases are deep enough to survive earnings season.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T09:45:23.342448",
-      "text": "Lagarde warns of second-round effects. the fed’s “higher for longer” is just lagarde saying she doesn’t know how to fix energy pricing and wants you to feel it at checkout too.",
+      "ts": "2026-09-10T13:44:38.557026",
+      "text": "The TNX is the yield on 10-year notes. rates are climbing because long-term inflation isn't dead yet and nobody's telling us that either.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T09:44:37.580988",
-      "text": "Pltr's rule of 40 is real. that means efficiency beats growth now which kills the valuations built on burn rate. finally free to be a boring machine.",
+      "ts": "2026-09-10T13:43:18.755676",
+      "text": "Huang says security is next. The real story: inference costs are about to outpace training by 3x once the code gets smart enough to break itself in production. run fast, patch harder.",
       "type": "reply"
     }
   ]

@@ -2339,7 +2339,8 @@
     "ThibautMaury_",
     "Alexis_Guilleux",
     "NathalieWalsh_",
-    "LucasRabiller"
+    "LucasRabiller",
+    "_adrieng89"
   ],
   "en": [
     "Chubby",
@@ -17270,6 +17271,11 @@
     {
       "lang": "fr",
       "handle": "LucasRabiller",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adrieng89",
       "added": "2026-09-10"
     }
   ]

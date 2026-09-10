@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-11T14:59:19.352467",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudMa",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le prof de la crypto fran\u00e7aise. Il a des abonn\u00e9s, il twitte en FR, z\u00e9ro formation \u00e0 2k\u20ac. C'est la r\u00e9f\u00e9rence."
-      },
-      {
-        "handle": "MaximeMillet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Fondateur de L'Usine \u00e0 Data. Il twitte sur l'IA pro, les jobs, la tech. Audience qualifi\u00e9e, pas de vente de r\u00eaves."
-      },
-      {
-        "handle": "RenaudLanfranchi",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Gars de chez Palantier, vit entre Paris et SF. Il parle IA, strat\u00e9gie et business en FR. Le mix parfait US/FR."
-      },
-      {
-        "handle": "Lemipatrick",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Le pionnier qu\u00e9b\u00e9cois. Il couvre tech et march\u00e9s. Moins de volume que les pros US, mais qualit\u00e9 FR rare au Qu\u00e9bec."
-      },
-      {
-        "handle": "MathisLevrau",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Ancien de la finance de march\u00e9, maintenant dans la crypto/web3. Analyse pro, style FR limpide."
-      },
-      {
-        "handle": "AntoineLeClec",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Vieux de la vieille du web/france. Couvre l'IA et la tech business FR. Pas un 'influencer', un observateur."
-      }
-    ],
-    "summary": "Je vire le bruit des 'gourous' qui vendent du r\u00eave. Je garde les vrais\uff1aun humouriste (CyrilDh), deux pros s\u00e9rieux (Thibaud, Mathis), un qu\u00e9b\u00e9cois (Lemipatrick) et un transatlantique IA (Renaud). C'est du solide, du frais."
-  },
-  {
     "ts": "2026-08-11T16:59:40.990986",
     "raw_count": 10,
     "kept_count": 7,
@@ -7360,5 +7308,22 @@
       }
     ],
     "summary": "Un panel qui couvre l'IA de A \u00e0 Z (Aubinais), la bourse fran\u00e7aise real (Guilleux) et l'\u00e9cosyst\u00e8me qu\u00e9b\u00e9cois/US francophone. Pas de vendeurs de r\u00eaves, juste des gens qui regardent les graphiques."
+  },
+  {
+    "ts": "2026-09-10T11:48:35.415595",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_adrieng89",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Adrien Girard. Ex-consultant qui balance des insights tech/fran\u00e7ais comme un patron de start-up qu'on a vir\u00e9 pour \u00eatre trop vrai."
+      }
+    ],
+    "summary": "On vise le fond : les experts data et VC francophones implant\u00e9s aux US ou au Qu\u00e9bec. Z\u00e9ro vendeur de r\u00eaves, que du gras analytique en version fran\u00e7aise."
   }
 ]
