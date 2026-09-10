@@ -2331,7 +2331,10 @@
     "JulienDelboscq",
     "RomainBouvier",
     "_JulieLagarda_",
-    "m_bernade"
+    "m_bernade",
+    "_Thomasmorfin",
+    "_AdrienLeruyet_",
+    "_LDev_"
   ],
   "en": [
     "Chubby",
@@ -2869,7 +2872,8 @@
     "Marco",
     "Trezor",
     "Barrett",
-    "Pools"
+    "Pools",
+    "GenLayer"
   ],
   "history": [
     {
@@ -17211,6 +17215,26 @@
       "lang": "en",
       "handle": "Pools",
       "added": "2026-09-09"
+    },
+    {
+      "lang": "en",
+      "handle": "GenLayer",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "_Thomasmorfin",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "_AdrienLeruyet_",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "_LDev_",
+      "added": "2026-09-10"
     }
   ]
 }

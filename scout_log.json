@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-11T10:59:09.882570",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "victoriachan",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "La tech reporter de r\u00e9f\u00e9rence pour la Silicon Valley, mais elle tweet souvent en fran\u00e7ais sur les startups fran\u00e7aises qui r\u00e9ussissent \u00e0 l'\u00e9tranger."
-      },
-      {
-        "handle": "thomasparkfr",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi du 'value investing' francophone. Il tweet comme il vit : des ann\u00e9es en silence, puis un thread de 10 traits qui vaut mieux que 100 coursiers."
-      },
-      {
-        "handle": "crypt0m0nk",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ancien trader, maintenant strat\u00e8ge. Pas de hype, que des graphiques et des cycles. Il a vu les crashes avant que les news ne sortent."
-      },
-      {
-        "handle": "mistercryptoFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Un classique. Il couvre le march\u00e9 crypto francophone avec une r\u00e9gularit\u00e9 qui fait d\u00e9faut aux autres. Pas de vente de formedes \u00e0 97\u20ac."
-      },
-      {
-        "handle": "nordfinanciers",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le groupe d'analyse qu\u00e9b\u00e9cois qui balance des insights sur les actions locales et US. Moins bruyant que les influenceurs USA, plus pertinent."
-      },
-      {
-        "handle": "sophienicole",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Elle d\u00e9mystifie la DeFi et les NFTs sans \u00eatre condescendante. Son audience est petite mais fid\u00e8le, ce qui est rare."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la merde des 'vendeurs de r\u00eave' pour te sortir des comptes qui tweetent encore pour eux-m\u00eames, pas juste pour le engagement. C'est sec, c'est pertinent, et \u00e7a ne sent pas la formation \u00e0 vendre."
-  },
-  {
     "ts": "2026-08-11T12:59:14.103112",
     "raw_count": 6,
     "kept_count": 5,
@@ -7374,5 +7322,36 @@
       }
     ],
     "summary": "Le champ est plus propre que jamais : fini la vague des vendeurs de formations \u00e0 97\u20ac. Ici, on a glan\u00e9 des analystes macro solides et des traders pro. Le Qu\u00e9bec nous offre une p\u00e9pite avec Dionne (d\u00e9j\u00e0 connu) mais aussi Bazile pour le style. La France reste forte sur l'IA tech avec Bernardeau qui domine sans crier gare."
+  },
+  {
+    "ts": "2026-09-10T03:48:38.939730",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_Thomasmorfin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "La valeur pure sur la CAC40. Pas de hype Nvidia ici, que des bilans comptables qui sentent le vieux papier."
+      },
+      {
+        "handle": "_AdrienLeruyet_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le type qui a l'air de savoir ce qu'il triture dans son labo. R\u00e9cits techniques sans le sommeil."
+      },
+      {
+        "handle": "_LDev_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Ancien de Coinhouse. Il parle march\u00e9 et liquidit\u00e9s sans faire croire que Bitcoin va racheter la France."
+      }
+    ],
+    "summary": "Le lot est mixte : QC domine en bourse classique avec Dionne, tandis que FR brille par ses ex-founders fintech et v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu aux deux bear markets sans vendre leurs \u00e2mes \u00e0 Telegram. Pas de vendeurs de r\u00eaves ici."
   }
 ]
