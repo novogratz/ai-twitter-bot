@@ -17370,3 +17370,32 @@ Anthropic: “Our AI is so powerful it’s going to kill you”
 Google: “Introducing Gemini 3.9 Flash! It’s 30% faster and 15% worse than the last Gemini”
   - https://x.com/venturetwins/status/2097769059937047002
   - **WHY**: Source fiable + impact concret (score signal 15, engagement 20326).
+
+## 2026-09-11
+- **@pequityresearch** (20 likes, score 7/10) — AI inference expected to grow to 75% of data center TAM by 2030. 
+
+GPU share of AI server shipment will decline from 69.7% in 2026 to 58.5% in 2030, but still controlling the lead. 
+
+$NVDA $AMD $GOOGL
+  - https://x.com/pequityresearch/status/2098253523771084978
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 24).
+- **@amitisinvesting** (250 likes, score 9/10) — A TON OF THINGS HAPPENED IN THE STOCK MARKET TODAY.
+
+Here's a full recap:
+
+1. Nvidia $NVDA and Palantir $PLTR expanded their AI partnership, building a new stack that combines Palantir’s sovereign AI
+  - https://x.com/amitisinvesting/status/2098255098862264725
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 316).
+- **@velvetchapel** (189 likes, score 9/10) — My September 11 stock advice:
+
+$LITE (Lumentum) — Buy on pullbacks
+
+$AMD (Advanced Micro Devices) — Buy at $190–$200
+
+$SOFI (SoFi Technologies) — Buy at $24–$27
+
+$RKLB (Rocket Lab) — Buy at $45–$50
+
+$
+  - https://x.com/velvetchapel/status/2098261114090041406
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 205).
