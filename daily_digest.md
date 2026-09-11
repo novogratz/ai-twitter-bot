@@ -1699,3 +1699,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 180 views: Palantir buying Nebius infrastructure so we don’t have to buy NVIDIA hardware again. My kind of divo
   - 1 likes / 314 views: me at 3am refreshing usage stats like it’s my period tracker 💓🤏
   - 1 likes / 9 views: Meta rises 6% on Muse AI subscription tiers while Alphabet drops because the market finally realized
+
+## 2026-09-10
+
+**Activity** — total actions: 783
+  - by type: reply=704, quote=47, quote_gif=14, hotake=10, post=5, retweet=3
+  - top sources: SEARCH-HOT=454, FEED-SWEEP-FEED=135, FEED-SWEEP-FOLLOWING=84, QUOTE=36, DEBATE=18, GIF=14, VIP=13, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=21, @Cointelegraph=9, @Polymarket=9, @FirstSquawk=7, @cryptorover=6
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 368 likes / 164256 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 3 likes / 116 views: me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
+  - 2 likes / 77 views: regulation is just ai trying to grow up because my toddlers did that too 🛋️🥱
