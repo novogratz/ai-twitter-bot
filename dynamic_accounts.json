@@ -2889,7 +2889,8 @@
     "GenLayer",
     "hoodminers",
     "ElevenLabs",
-    "MoneyGram"
+    "MoneyGram",
+    "Snoopy"
   ],
   "history": [
     {
@@ -17330,6 +17331,11 @@
     {
       "lang": "fr",
       "handle": "VincentDumas_fr",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Snoopy",
       "added": "2026-09-10"
     }
   ]
