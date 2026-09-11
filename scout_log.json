@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-12T00:59:10.218286",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeLeClerc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "Le roi de l'IAFR, co-fondateur d'Illama. Il transforme les papiers arXiv en tweets digestes sans vendre du vent."
-      },
-      {
-        "handle": "JulienHerman",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Le trader quanto qui fait de l'IA. Il code ses propres agents en Python et twitte le code en FR. Rare, pur et utile."
-      },
-      {
-        "handle": "JulienVallier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'analyste qu\u00e9b\u00e9cois qui ne vend que des actions, pas des formations. Ses threads sur la valorisation sont de la pure classe."
-      },
-      {
-        "handle": "LucasD",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Le journaliste qui a tout vu. Il couvre la fintech qu\u00e9b\u00e9coise et mondiale avec un regard critique qui ne se laisse pas avoir par le buzz."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour garder les cerveaux, pas les bouches. Ces comptes couvrent le spectre IA/Bourse avec une vraie expertise technique, pas juste du r\u00e9tweet. Pr\u00eats \u00e0 booster l'algo."
-  },
-  {
-    "ts": "2026-08-12T02:59:10.968578",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilRoussel",
-        "region": "france",
-        "niche": "finance",
-        "followers": 40000,
-        "reason": "Expert crypto institutionnel, ses threads expliquent la DeFi comme si tu avais 5 ans mais avec des chiffres."
-      },
-      {
-        "handle": "Deneb",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Focus Ethereum et DeFi, analyse technique pointue, z\u00e9ro blabla marketing, purement technique."
-      },
-      {
-        "handle": "CoinhouseFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'exchange parisien a un feed \u00e9ditorial de haute qualit\u00e9 sur la r\u00e9gulation europ\u00e9enne et les flux on-chain."
-      },
-      {
-        "handle": "MaximeBesson",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Fondateur de Nansen, il ponde des threads virales en FR sur la data on-chain depuis sa base US."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux op\u00e9rationnels : pas de gurus en costard, juste des makers et des traders qui savent ce qu'est un gas fee ou un ratio P/E."
-  },
-  {
     "ts": "2026-08-12T06:59:07.562030",
     "raw_count": 5,
     "kept_count": 3,
@@ -7227,5 +7151,46 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la bouillie de vendeurs d'or et retenu les vrais acteurs tech. Pas besoin des 150 followers fant\u00f4mes, juste du contenu qui pique sans faire saigner le compte bancaire."
+  },
+  {
+    "ts": "2026-09-11T01:48:42.677361",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ValentinDuthoit",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Ancien de la City qui a d\u00e9valis\u00e9 la France pour lancer une n\u00e9o-banque \u00e0 Lyon. Twitte comme un trader fatigu\u00e9."
+      },
+      {
+        "handle": "CryptoDelirium",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Pas de signals payants, juste un mec qui aime Bitcoin et le caf\u00e9. Rare en FR."
+      }
+    ],
+    "summary": "Le march\u00e9 FR est satur\u00e9 de vendeurs de r\u00eaves en solde ; ici on a filtr\u00e9 ceux qui savent encore analyser sans crier 'FOMO'. Le Qu\u00e9bec reste la p\u00e9pite pour avoir du s\u00e9rieux boursier avec un accent charmant mais pas trop."
+  },
+  {
+    "ts": "2026-09-11T03:48:53.277047",
+    "raw_count": 10,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Pierrelh",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le gars qui a vu l'IA avant qu'elle soit sexy. Vieux de la vieille HEC/Polytechnique qui balance des threads percutants sur Mistral et les US sans se prendre pour un gourou."
+      }
+    ],
+    "summary": "La sc\u00e8ne AI FR est plus dense qu'en crypto pour le moment (Pierrelh/AdrianGirardFr). Le Qu\u00e9bec reste une mine d'or moins satur\u00e9e avec des traders actifs comme Alex Dionne. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves et cibl\u00e9 ceux qui ont du gras sur l'\u00e9pingle."
   }
 ]

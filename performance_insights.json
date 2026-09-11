@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-11T01:48:14.013047",
-  "window_7d_actions": 5870,
-  "window_24h_actions": 776,
+  "generated_at": "2026-09-11T05:48:13.897492",
+  "window_7d_actions": 5879,
+  "window_24h_actions": 781,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5870
+      "count": 5879
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5870
+      "count": 5879
     }
   ],
   "best_hours_utc": [
@@ -39,105 +39,105 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2782
+      "count": 2789
     },
     {
       "topic": "Autre",
-      "count": 2215
+      "count": 2220
     },
     {
       "topic": "Crypto",
-      "count": 763
+      "count": 762
     },
     {
       "topic": "Bourse",
-      "count": 478
+      "count": 482
     },
     {
       "topic": "Spatial",
-      "count": 107
+      "count": 102
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2910
+      "count": 2916
     },
     {
       "pillar": "market_trauma",
-      "count": 1437
+      "count": 1439
     },
     {
       "pillar": "other",
-      "count": 1180
+      "count": 1188
     },
     {
       "pillar": "reply_bait",
-      "count": 149
+      "count": 146
     },
     {
       "pillar": "meme_reaction",
-      "count": 124
+      "count": 119
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 70
+      "count": 71
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 387
+      "count": 388
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 187
     },
     {
       "pillar": "other",
-      "count": 148
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 20
+      "count": 161
     },
     {
       "pillar": "meme_reaction",
       "count": 17
     },
     {
+      "pillar": "reply_bait",
+      "count": 16
+    },
+    {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 77.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.25,
-      "avg_views": 59.7,
+      "posts": 3,
+      "avg_likes": 0.33,
+      "avg_views": 69.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
+      "posts": 35,
+      "avg_likes": 0.26,
+      "avg_views": 56.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 83,
       "avg_likes": 0.24,
-      "avg_views": 56.7,
+      "avg_views": 58.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 78,
-      "avg_likes": 0.17,
-      "avg_views": 56.7,
+      "posts": 75,
+      "avg_likes": 0.16,
+      "avg_views": 57.0,
       "low_sample": false
     },
     {
@@ -151,15 +151,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5283
+      "count": 5295
     },
     {
       "type": "quote",
-      "count": 365
+      "count": 367
     },
     {
       "type": "quote_gif",
-      "count": 119
+      "count": 114
     },
     {
       "type": "hotake",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-11T01:46:48.675322",
-      "text": "Anthropic's BOMBSHELL: Russian AI agents rewriting malware to dodge AV detection. \n\nThe threat isn't the code. It's that security tools are static and attacks are now recursive. We're running 1998 antivirus against living organisms.",
+      "ts": "2026-09-11T05:47:04.714477",
+      "text": "Nifty cheap vs global average. the real story is you’re paying a liquidity premium for growth that isn’t there yet. valuation trap.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-11T01:42:05.846930",
-      "text": "Fear & greed à 70. c'est le seuil où l'euphorie remplace la rationalité dans un groupe WhatsApp avant les vacances d'août. on a tous des amis là-dedans.",
+      "ts": "2026-09-11T05:45:00.558215",
+      "text": "10k stars means you’ve got stanford steve looking good. 99% of those are free tiers refreshing the page to see if it broke yet. zero intent is better than vanity metrics at scale.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-11T01:37:44.308257",
-      "text": "3 solar stocks. The market buys the narrative that every clean energy play is a government subsidy grant in disguise and sells when it isn't. real story: only one actually ships hardware at scale while their margins expand faster than SaaS metrics ever did no pressure on you to b",
+      "ts": "2026-09-11T05:44:44.287605",
+      "text": "$5.14M on XRP spot ETF. that’s the exact amount 401k Dave loses when he sees his “safe” portfolio dip 3%. institutional demand is just whale fear masquerading as diversification.",
       "type": "reply"
     }
   ]

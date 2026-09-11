@@ -2347,7 +2347,10 @@
     "Pierre_Langlet",
     "thomasmorfin",
     "CoralieLagarda",
-    "VincentDumas_fr"
+    "VincentDumas_fr",
+    "ValentinDuthoit",
+    "CryptoDelirium",
+    "Pierrelh"
   ],
   "en": [
     "Chubby",
@@ -2890,7 +2893,8 @@
     "hoodminers",
     "ElevenLabs",
     "MoneyGram",
-    "Snoopy"
+    "Snoopy",
+    "Julius"
   ],
   "history": [
     {
@@ -17337,6 +17341,26 @@
       "lang": "en",
       "handle": "Snoopy",
       "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinDuthoit",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDelirium",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Julius",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierrelh",
+      "added": "2026-09-11"
     }
   ]
 }
