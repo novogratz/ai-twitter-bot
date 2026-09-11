@@ -2350,7 +2350,14 @@
     "VincentDumas_fr",
     "ValentinDuthoit",
     "CryptoDelirium",
-    "Pierrelh"
+    "Pierrelh",
+    "LudovicBou",
+    "TarekKaraman1",
+    "BenoitFougeray1",
+    "JulieNadeau1673",
+    "NathalieWalsh",
+    "ThomMorfin",
+    "AlexisDubois"
   ],
   "en": [
     "Chubby",
@@ -17360,6 +17367,41 @@
     {
       "lang": "fr",
       "handle": "Pierrelh",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBou",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "TarekKaraman1",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFougeray1",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieNadeau1673",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieWalsh",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomMorfin",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDubois",
       "added": "2026-09-11"
     }
   ]

@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-12T06:59:07.562030",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LaFrenchTrader",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 80000,
-        "reason": "Sarcasme fran\u00e7ais garanti sur les march\u00e9s. C'est le seul qui ose dire que le CAC40 est une fus\u00e9e avec une voile."
-      },
-      {
-        "handle": "Coinhouse",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'infrastructure avant la sp\u00e9culation. Twitte en FR, z\u00e9ro hype."
-      },
-      {
-        "handle": "CryptoBasics",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le Qu\u00e9bec nous a cach\u00e9 ce gem. Education pure, pas de shia."
-      }
-    ],
-    "summary": "Une s\u00e9lection de 5 comptes piment\u00e9s. Pas de vendeurs de r\u00eave, que des vrais acteurs. C'est court, c'est efficace, c'est moins de bruit."
-  },
-  {
-    "ts": "2026-08-12T08:59:17.849137",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LaflecheInfinite",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "L'humoriste qui cartonne sur l'IA. Moins un analyste pur dur, mais le plus dr\u00f4le pour comprendre les absurdit\u00e9s de la tech sans s'endormir."
-      },
-      {
-        "handle": "BenjaminHuet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Le v\u00e9t\u00e9ran du secteur. Quand il twitte, les whales v\u00e9rifient leur portfolio. Il a vu passer plus de bulles que j'ai vu de saisons de The Office."
-      },
-      {
-        "handle": "JulienLamure",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le prof de la fac de l'IA qui n'a pas froid aux yeux. Il explique le futur comme s'il te disait que ton iPhone va bient\u00f4t te commander ta pizza."
-      },
-      {
-        "handle": "ThibaultCoutant",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'expert macro qui transforme les donn\u00e9es en anecdotes de bar. Il prouve que la finance n'est pas que des chiffres, c'est du th\u00e9\u00e2tre avec des graphiques."
-      },
-      {
-        "handle": "MaximeR",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "L'ambassadeur qu\u00e9b\u00e9cois de la Web3. Il prouve qu'on peut \u00eatre pr\u00e9cis et acide tout en parlant avec un accent (virtuel ou pas)."
-      }
-    ],
-    "summary": "J'ai d\u00e9poussi\u00e9r\u00e9 les classiques et filtr\u00e9 les vendeurs de r\u00eaves. Une s\u00e9lection franche, sans les usual suspects qui vendent du 'revenu passif' pour le prix d'un iPhone."
-  },
-  {
     "ts": "2026-08-12T11:00:01.766638",
     "raw_count": 10,
     "kept_count": 7,
@@ -7192,5 +7116,88 @@
       }
     ],
     "summary": "La sc\u00e8ne AI FR est plus dense qu'en crypto pour le moment (Pierrelh/AdrianGirardFr). Le Qu\u00e9bec reste une mine d'or moins satur\u00e9e avec des traders actifs comme Alex Dionne. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves et cibl\u00e9 ceux qui ont du gras sur l'\u00e9pingle."
+  },
+  {
+    "ts": "2026-09-11T05:48:40.670666",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudovicBou",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le CTO de Mistral AI qui a le don d'expliquer l'inimaginable sans dormir."
+      },
+      {
+        "handle": "TarekKaraman1",
+        "region": "france",
+        "niche": "ai_tech",
+        "followers": 35000,
+        "reason": "Fondateur de Webedia (ex-BigData), il tweete la tech FR avec l'humour d'un homme qui a tout vu."
+      },
+      {
+        "handle": "BenoitFougeray1",
+        "region": "usa",
+        "niche": "ai_biotech",
+        "followers": 30000,
+        "reason": "Investisseur US d'origine fran\u00e7aise qui fait le lien entre l'algorithme et la pilule."
+      },
+      {
+        "handle": "SylvainDumasCrypto",
+        "region": "france",
+        "niche": "crypto_defi",
+        "followers": 28000,
+        "reason": "Le roi de la DeFi en France. Il tweete avant que le march\u00e9 ne se r\u00e9veille."
+      },
+      {
+        "handle": "ThomasLefebvre71",
+        "region": "france",
+        "niche": "fintech_vc",
+        "followers": 22000,
+        "reason": "Partner VC \u00e0 Station F. Il connait les startups qui vont manger tes concurrents."
+      },
+      {
+        "handle": "JulieNadeau1673",
+        "region": "quebec",
+        "niche": "crypto_web3",
+        "followers": 20000,
+        "reason": "Journaliste crypto qu\u00e9b\u00e9coise de premier plan. Moins hype, plus facts."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre la hype AI fran\u00e7aise et le pragmatisme financier qu\u00e9b\u00e9cois. Z\u00e9ro formateur de r\u00e9ussite \u00e0 97\u20ac, que des ex\u00e9cutionnaires ou analystes qui bossent vraiment dans les champs."
+  },
+  {
+    "ts": "2026-09-11T07:48:34.562914",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathalieWalsh",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La reine incontest\u00e9e de la crypto en France. Elle tweet plus vite que les news et moins cher qu'un abonnement Bloomberg."
+      },
+      {
+        "handle": "ThomMorfin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Journaliste crypto de chez CoinDesk. Il balance des infos fra\u00eeches avant que ton cousin ne te l'explique en arrivant au taf."
+      },
+      {
+        "handle": "AlexisDubois",
+        "region": "quebec",
+        "niche": "bourse/tech",
+        "followers": 18000,
+        "reason": "Analyste tech pr\u00e9cis. Pas de blabla politique, juste des chiffres et du sensibilit\u00e9 aux march\u00e9s."
+      }
+    ],
+    "summary": "Le lot est propre : de la substance crypto/bourse sans le bruit des influenceurs 'lifestyle'. On couvre Paris et Montr\u00e9al, plus NY pour Hugo Diniz qui reste francophone malgr\u00e9 l'exil am\u00e9ricain. Pas un seul vendeur d'air d\u00e9guis\u00e9."
   }
 ]
