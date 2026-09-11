@@ -2357,7 +2357,8 @@
     "JulieNadeau1673",
     "NathalieWalsh",
     "ThomMorfin",
-    "AlexisDubois"
+    "AlexisDubois",
+    "_julesd"
   ],
   "en": [
     "Chubby",
@@ -2901,7 +2902,8 @@
     "ElevenLabs",
     "MoneyGram",
     "Snoopy",
-    "Julius"
+    "Julius",
+    "saweeeties"
   ],
   "history": [
     {
@@ -17402,6 +17404,16 @@
     {
       "lang": "fr",
       "handle": "AlexisDubois",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "en",
+      "handle": "saweeeties",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "_julesd",
       "added": "2026-09-11"
     }
   ]

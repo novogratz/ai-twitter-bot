@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-11T13:48:13.917490",
-  "window_7d_actions": 5803,
-  "window_24h_actions": 767,
+  "generated_at": "2026-09-11T17:48:13.915983",
+  "window_7d_actions": 5769,
+  "window_24h_actions": 764,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5802
+      "count": 5768
     },
     {
       "pattern": "METAPHOR",
@@ -19,13 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5802
+      "count": 5768
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
-      "actions": 260
+      "actions": 257
     },
     {
       "hour": 18,
@@ -47,64 +47,64 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2756
+      "count": 2733
     },
     {
       "topic": "Autre",
-      "count": 2181
+      "count": 2179
     },
     {
       "topic": "Crypto",
-      "count": 765
+      "count": 756
     },
     {
       "topic": "Bourse",
-      "count": 469
+      "count": 466
     },
     {
       "topic": "Spatial",
-      "count": 105
+      "count": 107
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2889
+      "count": 2859
     },
     {
       "pillar": "market_trauma",
-      "count": 1417
+      "count": 1416
     },
     {
       "pillar": "other",
-      "count": 1168
+      "count": 1170
     },
     {
       "pillar": "reply_bait",
-      "count": 143
+      "count": 141
     },
     {
       "pillar": "meme_reaction",
-      "count": 118
+      "count": 116
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 68
+      "count": 67
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 382
+      "count": 373
     },
     {
       "pillar": "market_trauma",
-      "count": 188
+      "count": 189
     },
     {
       "pillar": "other",
-      "count": 156
+      "count": 163
     },
     {
       "pillar": "meme_reaction",
@@ -112,21 +112,14 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
-    {
-      "pillar": "other",
-      "posts": 78,
-      "avg_likes": 0.26,
-      "avg_views": 61.8,
-      "low_sample": false
-    },
     {
       "pillar": "reply_bait",
       "posts": 4,
@@ -135,17 +128,24 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.2,
-      "avg_views": 58.1,
+      "pillar": "market_trauma",
+      "posts": 34,
+      "avg_likes": 0.24,
+      "avg_views": 57.7,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 34,
-      "avg_likes": 0.18,
-      "avg_views": 56.9,
+      "pillar": "other",
+      "posts": 77,
+      "avg_likes": 0.23,
+      "avg_views": 61.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 82,
+      "avg_likes": 0.2,
+      "avg_views": 59.5,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5227
+      "count": 5198
     },
     {
       "type": "quote",
-      "count": 361
+      "count": 358
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 110
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-11T13:47:28.144810",
-      "text": "GPT Image 2.5 × CapCut Seedance = $0 marginal cost production pipeline. You're not the director anymore; you're just paying for bandwidth and hoping it doesn't hallucinate your actor's left hand off frame by scene three. stop acting, start prompting",
+      "ts": "2026-09-11T17:47:16.598318",
+      "text": "A yemeni cell using claude to guide hypersonics. anthropic's context window just became a ballistic missile computer. the war on ai is moving from code repos to test ranges.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-11T13:46:05.037383",
-      "text": "Btc. it’s the only asset in crypto that doesn’t need a roadmap or an api key to hold its value while you sleep.",
-      "type": "reply"
+      "ts": "2026-09-11T17:43:07.378844",
+      "text": "my portfolio is out of work, I am not 😂",
+      "type": "quote"
     },
     {
-      "ts": "2026-09-11T13:44:34.840120",
-      "text": "The gap isn't between generating and editing. it's between $10k clusters spinning glass and the 40 engineers needed to make a single take not look like vomit on request.",
+      "ts": "2026-09-11T17:42:49.350524",
+      "text": "TermiX: AI agents paying each other. The only market that matters is who pays the GPU tax to let them talk in real time without burning their seed round on latency fees.",
       "type": "reply"
     }
   ]

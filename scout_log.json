@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-08-12T11:00:01.766638",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LucasBourdin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 65000,
-        "reason": "Journaliste TechCrunch FR. C'est lui qui t'explique que l'IA n'a pas encore tu\u00e9 ton job, mais que ton chef si."
-      },
-      {
-        "handle": "MaximeDernier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le prof de lyc\u00e9e qui a fait un CAC40 en or. Il twitte la finance pour les humains, pas pour les robots."
-      },
-      {
-        "handle": "CryptoKaleoFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "L'adaptateur francophone du g\u00e9nie macro (Kaleo). Il transforme l'anglais technique en fran\u00e7ais consommable."
-      },
-      {
-        "handle": "MaximeDelac",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la bourse et les ETF. Il parle peu, il est pr\u00e9cis, et il \u00e9vite les pi\u00e8ges."
-      },
-      {
-        "handle": "MarcDionne",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "G\u00e9ant du web3 QC. Il couvre l'infrastructure crypto avec la rigueur d'un ing\u00e9nieur et l'humour d'unQu\u00e9b\u00e9cois."
-      },
-      {
-        "handle": "JulieCayol",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 16000,
-        "reason": "La voix fran\u00e7aise \u00e0 New York. Elle interviewe les PDG de l'IA et de la Finance, et elle est toujours au courant avant toi."
-      },
-      {
-        "handle": "HuguesLabb",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le mec derri\u00e8re AI Briefing France. Moins hype que les traders, mais plus malin que tes analystes."
-      }
-    ],
-    "summary": "On a fouill\u00e9 les tr\u00e9fonds pour \u00e9viter les vendeurs de r\u00eaves en formations. Le lot est mix\u00e9 : des g\u00e9ants de la crypto (Maci, Kaleo FR), des pros de la bourse (Delac, Dernier) et des info-pros IA (Labb, Dumas). Z\u00e9ro formation \u00e0 99\u20ac au programme, que du contenu gratuit et dense."
-  },
-  {
     "ts": "2026-08-12T12:59:14.466226",
     "raw_count": 8,
     "kept_count": 6,
@@ -7199,5 +7140,22 @@
       }
     ],
     "summary": "Le lot est propre : de la substance crypto/bourse sans le bruit des influenceurs 'lifestyle'. On couvre Paris et Montr\u00e9al, plus NY pour Hugo Diniz qui reste francophone malgr\u00e9 l'exil am\u00e9ricain. Pas un seul vendeur d'air d\u00e9guis\u00e9."
+  },
+  {
+    "ts": "2026-09-11T15:48:40.413568",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_julesd",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Un des rares \u00e0 avoir post\u00e9 en continu pendant le crash FTX. Il tweet l'alpha On-Chain sans se payer de t\u00eate."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui apportent du signal : des analystes techniques ou historiques du secteur, loin des vendeurs de r\u00eave Telegram et des influenceurs g\u00e9n\u00e9ralistes. Focus massif sur l'excellence analytique FR/QC."
   }
 ]
