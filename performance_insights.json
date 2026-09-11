@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-10T17:48:13.871297",
-  "window_7d_actions": 5944,
-  "window_24h_actions": 770,
+  "generated_at": "2026-09-10T21:48:14.118653",
+  "window_7d_actions": 5924,
+  "window_24h_actions": 775,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5944
+      "count": 5924
     }
   ],
   "worst_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5944
+      "count": 5924
     }
   ],
   "best_hours_utc": [
@@ -39,68 +39,68 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2796
+      "count": 2794
     },
     {
       "topic": "Autre",
-      "count": 2245
+      "count": 2239
     },
     {
       "topic": "Crypto",
-      "count": 787
+      "count": 779
     },
     {
       "topic": "Bourse",
-      "count": 496
+      "count": 483
     },
     {
       "topic": "Spatial",
-      "count": 105
+      "count": 108
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2939
+      "count": 2928
     },
     {
       "pillar": "market_trauma",
-      "count": 1454
+      "count": 1447
     },
     {
       "pillar": "other",
-      "count": 1205
+      "count": 1202
     },
     {
       "pillar": "reply_bait",
-      "count": 150
+      "count": 151
     },
     {
       "pillar": "meme_reaction",
-      "count": 125
+      "count": 124
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 71
+      "count": 72
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 387
+      "count": 390
     },
     {
       "pillar": "market_trauma",
-      "count": 193
+      "count": 191
     },
     {
       "pillar": "other",
-      "count": 148
+      "count": 149
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 21
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,7 +108,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 9
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
@@ -121,45 +121,45 @@
     },
     {
       "pillar": "other",
-      "posts": 81,
-      "avg_likes": 0.27,
-      "avg_views": 60.0,
+      "posts": 83,
+      "avg_likes": 0.28,
+      "avg_views": 59.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.22,
-      "avg_views": 55.6,
+      "posts": 33,
+      "avg_likes": 0.24,
+      "avg_views": 56.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 79,
       "avg_likes": 0.16,
-      "avg_views": 59.2,
+      "avg_views": 57.1,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 1,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 53.0,
-      "low_sample": true
+      "avg_views": 39.5,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5348
+      "count": 5326
     },
     {
       "type": "quote",
-      "count": 372
+      "count": 371
     },
     {
       "type": "quote_gif",
-      "count": 120
+      "count": 119
     },
     {
       "type": "hotake",
@@ -167,7 +167,7 @@
     },
     {
       "type": "post",
-      "count": 36
+      "count": 40
     },
     {
       "type": "retweet",
@@ -176,18 +176,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-10T17:45:16.297926",
-      "text": "Every time someone says BTC is “different,” 401k Dave rebuying at new highs proves it’s exactly the same. he just forgot what $20k felt like.",
+      "ts": "2026-09-10T21:46:33.275288",
+      "text": "V4.1 didn't change the physics of inference: latency is king and tokens are cheap. deepseek just reminded everyone that open weights > closed API for engineers who actually ship. good morning.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T17:43:00.254550",
-      "text": "Oracle veut du vert. Bloom Energy vend de l'oxygène. Le vrai problème n'est pas le carbone, c'est les 50 mégawatts que ton réseau local ne supporte pas.",
+      "ts": "2026-09-10T21:46:03.475916",
+      "text": "The 10yr JGB is at the yield curve knee. Japan’s fiscal dominance meets reality: yields don’t care about BOJ patience. They march.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-10T17:42:30.181664",
-      "text": "@deman's midterms bet misses the real driver. Trump controls 80% of datacenter power permitting right now and that capex cycle runs on physical wires not sentiment. his chill is just cooling down server rooms for Q4 earnings, which have already priced in everything he can break o",
+      "ts": "2026-09-10T21:45:16.599124",
+      "text": "Palantir's government data moat meets Method's encryption. The real play isn't the tech stack. it's who holds the keys to every town hall in Ohio when the grid flips on Tuesday night. trust falls are for therapists; crypto resilience is for municipalities. finally some AI that wo",
       "type": "reply"
     }
   ]

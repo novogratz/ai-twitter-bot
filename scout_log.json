@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-11T18:59:12.016253",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AlexAmaury",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Bas\u00e9 aux US mais voix fran\u00e7aise majeure sur la tech/IA, twitte en FR/EN, visionnaire sans \u00eatre 'influencer'."
-      },
-      {
-        "handle": "LorenzoBenedetti",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "CEO Koyan Labs, chercheur vocal, twitte en FR sur l'IA g\u00e9n\u00e9rative sans jargon bullshit, audience qualifi\u00e9e."
-      },
-      {
-        "handle": "BenjaminFleury",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "Co-fondateur de Qonto, twitte la crypto/france/tech sans vendre du r\u00eave en formation, ton direct."
-      },
-      {
-        "handle": "PierreMeyer",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Franco-am\u00e9ricain, chercheur et VC en IA, twitte en FR sur les tendances deep tech, son audience est mixte mais son contenu est FR."
-      },
-      {
-        "handle": "JulesGoulet",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Fondateur de Hiver Labs, twitte en FR sur AI agents et dev, style 'builder' pur, pas de marketing lourd."
-      }
-    ],
-    "summary": "Un mix solide entre les g\u00e9ants institutionnels fran\u00e7ais (Mistral) et les builders locaux des deux c\u00f4t\u00e9s de l'Atlantique. Pas de vendeurs de r\u00eave, que des tech/finan\u00e7aires qui savent coder ou investir."
-  },
-  {
-    "ts": "2026-08-11T20:59:31.594728",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeChauvin",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 58000,
-        "reason": "Le grand sage qu\u00e9b\u00e9cois de l'IA, il tweete en EN/FR avec une vision globale."
-      },
-      {
-        "handle": "RaphaelLequien",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Ex-Mistral, il tweete l'IA avec une profondeur rare et z\u00e9ro blabla 'Web3'."
-      },
-      {
-        "handle": "LudovicGarciaFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Focus pur march\u00e9/actions, pas de crypto, pas de tech, juste des chiffres."
-      },
-      {
-        "handle": "RemyBoudet",
-        "region": "france",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Le roi de l'analyse macro sur X, ses threads bourse sont plus clairs que les pubs Assurance Vie."
-      },
-      {
-        "handle": "HuguesGervais",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 14000,
-        "reason": "Fintech US francophone, il d\u00e9cortique les US Tech avec du bon sens qu\u00e9b\u00e9cois."
-      },
-      {
-        "handle": "VincentBoudon",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Le plus gros influenceur fintech fran\u00e7ais, il explique la tech sans l'assomer."
-      },
-      {
-        "handle": "AlexandreDionneQC",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 11000,
-        "reason": "Ex-MLQ, il tweete tech et IA en fran\u00e7ais avec un humour sec qui tue."
-      }
-    ],
-    "summary": "J'ai traqu\u00e9 les pros sans blabla politique : des analystes IA, des traders macro et des geeks crypto qui font encore des threads plut\u00f4t que des pubs LinkedIn. Le Qu\u00e9bec est plus silencieux en niche pure, donc je n'ai mis que les valeurs s\u00fbres."
-  },
-  {
     "ts": "2026-08-11T22:59:20.922374",
     "raw_count": 7,
     "kept_count": 5,
@@ -7297,5 +7193,53 @@
       }
     ],
     "summary": "Scoutage termin\u00e9 : on a vis\u00e9 les t\u00eates pensantes qui twittent encore vraiment, pas juste pour l'algorithme. Pas de vendeurs d'or en barre, que des gens qui savent ce qu'ils disent ou se plantent avec classe."
+  },
+  {
+    "ts": "2026-09-10T17:48:49.618729",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Gauthier_Bretin",
+        "region": "france",
+        "niche": "ai_tech_vc",
+        "followers": 52000,
+        "reason": "The OG de l'IA en France. Vendeur pas vendeur de formation (sauf sa newsletter gratuite qui vaut du beurre frais). Tonne la tech FR comme personne d'autre."
+      },
+      {
+        "handle": "Pierre_Langlet",
+        "region": "france",
+        "niche": "finance_trading",
+        "followers": 35000,
+        "reason": "Journaliste bourse qui explique le march\u00e9 sans endormir les spectateurs. C'est rare qu'un pro de la finance ait autant d'humour et de sens du pitch."
+      },
+      {
+        "handle": "RomainLemarchand",
+        "region": "france",
+        "niche": "crypto_defi",
+        "followers": 28000,
+        "reason": "Co-founder de Kriptomat. Il twitte en FR/EN sur la DeFi et les chains layer-1 avec une clart\u00e9 d\u00e9sarmante."
+      }
+    ],
+    "summary": "On a creus\u00e9 les pros qui ont encore leur t\u00eate : Bretin pour l'\u00e9cosyst\u00e8me IA, Langlet pour la d\u00e9crypte boursi\u00e8re sans blabla politique. Au Qu\u00e9bec on garde Poitras et Dionne car ils font vivre le cr\u00e9neau tech/crypto local sans se noyer dans 10 niches en m\u00eame temps."
+  },
+  {
+    "ts": "2026-09-10T19:48:33.241681",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomasmorfin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le roi du trading action FR. Pas de blabla VC pr\u00e9tentieux, juste des charts qui saignent et du sens."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour trouver ceux qui g\u00e8rent la r\u00e9alit\u00e9 : des traders, VC et chercheurs solides sans courir apr\u00e8s les vues LinkedIn."
   }
 ]

@@ -2342,7 +2342,10 @@
     "LucasRabiller",
     "_adrieng89",
     "DylanMakC",
-    "PierreRochverge"
+    "PierreRochverge",
+    "Gauthier_Bretin",
+    "Pierre_Langlet",
+    "thomasmorfin"
   ],
   "en": [
     "Chubby",
@@ -17300,6 +17303,21 @@
     {
       "lang": "en",
       "handle": "MoneyGram",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gauthier_Bretin",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Langlet",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasmorfin",
       "added": "2026-09-10"
     }
   ]
