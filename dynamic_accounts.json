@@ -2345,7 +2345,9 @@
     "PierreRochverge",
     "Gauthier_Bretin",
     "Pierre_Langlet",
-    "thomasmorfin"
+    "thomasmorfin",
+    "CoralieLagarda",
+    "VincentDumas_fr"
   ],
   "en": [
     "Chubby",
@@ -17318,6 +17320,16 @@
     {
       "lang": "fr",
       "handle": "thomasmorfin",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "CoralieLagarda",
+      "added": "2026-09-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDumas_fr",
       "added": "2026-09-10"
     }
   ]

@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-11T22:59:20.922374",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienDeux",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ancien de Coinhouse, il balance des perles crypto sans essayer de te vendre ton frigo."
-      },
-      {
-        "handle": "CyrilBourgeois",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Le prof de tech de la plan\u00e8te. Il explique l'IA comme si tu avais 5 ans mais sans t'ennuyer."
-      },
-      {
-        "handle": "AlexandreBourgeon",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Expert IA et data. Il est moins 'hype' et plus 'tech'. Parfait pour ceux qui veulent comprendre plut\u00f4t que parier."
-      },
-      {
-        "handle": "NathanPineau",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Il cartonne sur la fintech et le SaaS B2B. Moins de bruit que les autres, plus de substance."
-      },
-      {
-        "handle": "NolwennB5",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Journaliste crypto bas\u00e9e aux US. Elle couvre les march\u00e9s institutionnels avec un \u0153il europ\u00e9en."
-      }
-    ],
-    "summary": "Mix classique entre les valeureux de la finance FR et les experts tech qu\u00e9b\u00e9cois. Aucune formation \u00e0 999\u20ac ici, promis."
-  },
-  {
     "ts": "2026-08-12T00:59:10.218286",
     "raw_count": 7,
     "kept_count": 4,
@@ -7241,5 +7196,36 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour trouver ceux qui g\u00e8rent la r\u00e9alit\u00e9 : des traders, VC et chercheurs solides sans courir apr\u00e8s les vues LinkedIn."
+  },
+  {
+    "ts": "2026-09-10T21:48:31.459582",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CoralieLagarda",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "La seule qui transforme les carnets de cours en punchlines dignes d'un stand-up financier."
+      },
+      {
+        "handle": "VincentDumas_fr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Le grand n'importe quoi organis\u00e9 de la crypto fran\u00e7aise qui ne paie jamais sa tourn\u00e9e."
+      },
+      {
+        "handle": "AdrienBourgeoisFr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le gourou de Mistral qui prouve qu'on peut \u00eatre technique sans s'endormir sur son clavier."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la bouillie de vendeurs d'or et retenu les vrais acteurs tech. Pas besoin des 150 followers fant\u00f4mes, juste du contenu qui pique sans faire saigner le compte bancaire."
   }
 ]

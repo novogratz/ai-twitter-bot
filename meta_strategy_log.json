@@ -267,5 +267,26 @@
     ],
     "cadence_factor": 1.2,
     "rationale": "Le bot sort de pause et a encore la ferveur du débutant : on pousse les quotes (la graisse) pour saturer l'algorithme tout en gardant des hotakes acides qui collent à son obsession sur le cash-flow. Le contexte IA est mature mais cher, donc on vise la valuation absurde plutôt que la tech pure."
+  },
+  {
+    "ts": "2026-09-10T21:48:13.718116",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 12,
+      "MAX_HOTAKES_PER_DAY": 15,
+      "MAX_QUOTES_PER_DAY": 160,
+      "MAX_RETWEETS_PER_DAY": 3,
+      "MAX_BREAKOUTS_PER_DAY": 2,
+      "MAX_SPICY_PER_DAY": 1,
+      "MAX_REPLIES_PER_CYCLE": 45,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "Mistral: Le luxe français qui fait du ca",
+      "Palantir vs S&P 500: Quand l'armée US te",
+      "BTC ETF: La boîte de nuit où tout le mon"
+    ],
+    "cadence_factor": 1.2,
+    "rationale": "Le bot repart du pied gauche avec un capot fumant : on garde les quotes agressives pour saturer l'algo post-pause et on pousse les hotakes sur Palantir/Mistral/BTC qui sont nos meilleurs performers récents sans noyer le feed. On vise la concentration de cash-flow, pas la tech pure."
   }
 ]
