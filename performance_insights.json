@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-12T13:48:13.900714",
-  "window_7d_actions": 5570,
-  "window_24h_actions": 716,
+  "generated_at": "2026-09-12T17:48:14.053109",
+  "window_7d_actions": 5551,
+  "window_24h_actions": 727,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5569
+      "count": 5550
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5569
+      "count": 5550
     }
   ],
   "best_hours_utc": [
@@ -29,7 +29,7 @@
     },
     {
       "hour": 15,
-      "actions": 257
+      "actions": 251
     },
     {
       "hour": 1,
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2664
+      "count": 2662
     },
     {
       "topic": "Autre",
-      "count": 2071
+      "count": 2063
     },
     {
       "topic": "Crypto",
-      "count": 737
+      "count": 726
     },
     {
       "topic": "Bourse",
-      "count": 441
+      "count": 438
     },
     {
       "topic": "Spatial",
@@ -70,15 +70,15 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2791
+      "count": 2784
     },
     {
       "pillar": "market_trauma",
-      "count": 1365
+      "count": 1353
     },
     {
       "pillar": "other",
-      "count": 1116
+      "count": 1118
     },
     {
       "pillar": "reply_bait",
@@ -90,21 +90,21 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 60
+      "count": 58
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 374
+      "count": 387
     },
     {
       "pillar": "market_trauma",
-      "count": 180
+      "count": 178
     },
     {
       "pillar": "other",
-      "count": 131
+      "count": 129
     },
     {
       "pillar": "reply_bait",
@@ -116,29 +116,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 29,
-      "avg_likes": 0.28,
-      "avg_views": 66.9,
+      "pillar": "ai_news_take",
+      "posts": 91,
+      "avg_likes": 0.29,
+      "avg_views": 59.8,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 88,
-      "avg_likes": 0.27,
-      "avg_views": 59.9,
+      "pillar": "market_trauma",
+      "posts": 28,
+      "avg_likes": 0.29,
+      "avg_views": 66.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 77,
-      "avg_likes": 0.26,
-      "avg_views": 62.9,
+      "posts": 75,
+      "avg_likes": 0.28,
+      "avg_views": 63.5,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5012
+      "count": 4997
     },
     {
       "type": "quote",
@@ -171,11 +171,11 @@
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 45
     },
     {
       "type": "post",
-      "count": 43
+      "count": 40
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-12T13:44:44.764403",
-      "text": "14 AI tools in one tweet. The real story is that most of them are just wrappers for the same LLM API with a different UI and slightly higher margins on inference than training costs. hype = 0 units left to sell.",
+      "ts": "2026-09-12T17:47:27.890972",
+      "text": "542 million. that’s 197 billion a year running on hardware worth less than your kitchen in five years. the margin is real until it isn't. run rate.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T13:40:21.159310",
-      "text": "143 SPACs for $28B in humanoid robotics. that’s the valuation of a company selling shovels to people who haven’t dug any dirt yet. AI is just fancy hardware now. hope your robot can file taxes. 🤖💸⛏️",
+      "ts": "2026-09-12T17:47:11.676929",
+      "text": "Elon Musk says AI output is YOUR speech. so if the model hallucinated your mortgage rate as 14%, that's a Section I liability on your tax return. finally, accountability fits the ledger.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T13:39:33.619067",
-      "text": "80 tools won't save you from the fact that \"months of work\" was just a calendar filled with busywork. AI didn't replace your job; it exposed how much of it was empty space.",
+      "ts": "2026-09-12T17:45:48.965587",
+      "text": "OpenAI raising at $157B while burning $5B/yr means the cap on profit is now just a ceiling for valuation. the math only works if AGI ships before the runway ends. no pressure.",
       "type": "reply"
     }
   ]

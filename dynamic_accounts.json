@@ -2379,7 +2379,9 @@
     "_thomasmorfin_",
     "louis_hamann_fr",
     "alexg_4567",
-    "sylvain_dumais"
+    "sylvain_dumais",
+    "julesd",
+    "_adrienvd"
   ],
   "en": [
     "Chubby",
@@ -2928,7 +2930,10 @@
     "jacob",
     "TBPN",
     "Ra",
-    "RadioGenoa"
+    "RadioGenoa",
+    "OpenServ",
+    "AlertesInfos",
+    "Midas"
   ],
   "history": [
     {
@@ -17564,6 +17569,31 @@
     {
       "lang": "fr",
       "handle": "sylvain_dumais",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenServ",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "AlertesInfos",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "julesd",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adrienvd",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Midas",
       "added": "2026-09-12"
     }
   ]

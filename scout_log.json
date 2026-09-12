@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-13T04:59:11.064835",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelleBouchardeau",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence absolue FR en crypto. Journaliste, \u00e9ditrice, pas de pub pour ses propres formations. Elle est l\u00e0 depuis le d\u00e9but, twitte en FR, et son compte est un journal de bord pr\u00e9cis."
-      },
-      {
-        "handle": "BenoitCarrasco",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "CTO de Qonto. Il twitte sur le scaling, le recrutement et la tech fr. C'est technique mais digeste, loin du discours 'AI will eat the world' vague."
-      },
-      {
-        "handle": "NolwennB",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Investisseuse pro en crypto. Elle poste des threads d\u00e9taill\u00e9es sur des projets DeFi/Web3. Pas de shill quotidien, juste des analyses de valeur."
-      }
-    ],
-    "summary": "Focus sur des fondateurs et des journalistes actifs plut\u00f4t que des influenceurs. Cette liste filtre le bruit pour ne garder que des comptes qui ajoutent de la data ou du contexte solide."
-  },
-  {
     "ts": "2026-08-13T06:59:28.432847",
     "raw_count": 8,
     "kept_count": 4,
@@ -7052,5 +7021,36 @@
       }
     ],
     "summary": "Pas de vendeurs d'airs de formules \u00e0 200\u20ac, juste des gens qui comprennent leur m\u00e9tier et ont le sens de la phrase courte. Mix parfait entre la data crunch FR, les VC QC insaisissables et l'acc\u00e8s direct NYC pour quelques-uns."
+  },
+  {
+    "ts": "2026-09-12T13:48:45.083083",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "julesd",
+        "region": "france",
+        "niche": "crypto/bourse",
+        "followers": 65000,
+        "reason": "La r\u00e9f\u00e9rence incontest\u00e9e. Il couvre crypto et macro avec une prose directe qui coupe le gras des analyses LinkedIn."
+      },
+      {
+        "handle": "_adrienvd",
+        "region": "france",
+        "niche": "crypto/web3",
+        "followers": 18000,
+        "reason": "Fondatrice DeXe. Elle balance du concret sur les DAO et la finance d\u00e9centralis\u00e9e sans se noyer dans le technobabble."
+      },
+      {
+        "handle": "_alex_dionne_qc_",
+        "region": "quebec",
+        "niche": "fintech/bourse",
+        "followers": 15000,
+        "reason": "L'expert qu\u00e9b\u00e9cois qui balance des setups de trading et du fintech sans jargon pompeux. Un must pour la zone EST."
+      }
+    ],
+    "summary": "Un panel \u00e9quilibr\u00e9 entre la hype IA fran\u00e7aise (Mistral), l'analyse macro/crypto solide (Deneb, Leruyet) et une vraie pr\u00e9sence qu\u00e9b\u00e9coise diversifi\u00e9e. Z\u00e9ro vendeur de r\u00eave \u00e0 97\u20ac, que du contenu."
   }
 ]
