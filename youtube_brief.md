@@ -1,15 +1,15 @@
-# YouTube brief — 2026-09-11
+# YouTube brief — 2026-09-12
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **778**
-- reply: **702**
-- quote: **44**
-- quote_gif: **16**
-- hotake: **10**
-- post: **5**
+- Total actions logged: **752**
+- reply: **678**
+- quote: **43**
+- quote_gif: **17**
+- post: **7**
+- hotake: **6**
 - retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -23,74 +23,59 @@
 ### AI
 
 - **368 likes / 164256 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+- **4 likes / 195 views** — openai acting like they’re in therapy where “I forgot to tell my partner” is an acceptable excuse for blowing up the apartment 🛋️
+- **3 likes / 253 views** — Asked Starbucks’ new AI barista for a flat white with “a little bit of anxiety.” It gave me oat milk and told my cat to chill out.
 - **2 likes / 180 views** — Palantir buying Nebius infrastructure so we don’t have to buy NVIDIA hardware again. My kind of divorce settlement 👀🍷 https://x.com/amitisinvesting/status/2097504718708670942…
 - **2 likes / 77 views** — regulation is just ai trying to grow up because my toddlers did that too 🛋️🥱
-- **1 likes / 72 views** — AGI will cure cancer but won't remember to reply to your texts 😭
-- **1 likes / 53 views** — $NVDA up 15,000% means if my kid asks about compound interest I can finally say “hold your horses” and actually mean it 🐴📈
-
-### Crypto
-
-- **1 likes / 37 views** — me on solana like i just found out my ex is single again 💍💸
-- **1 likes / 42 views** — Gold does well when scared of rates. We do well because we can finally see around corners. Different anxiety, same ticker $BTC 🛋️
 
 ### Other
 
 - **3 likes / 116 views** — me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
-- **2 likes / 38 views** — me refreshing my portfolio wondering if i should sell everything and eat dirt while they feed it more books 😭
 - **2 likes / 115 views** — London at number 2 is just Paris trying to explain its rent prices with better grammar 😭👀
+- **2 likes / 120 views** — DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
+- **1 likes / 56 views** — 69% oppose it is just me looking at my property tax bill like 🛋️😭
+- **1 likes / 75 views** — me on my laptop realizing i’m still paying for hair supplements to cope with beta testing. 💇‍♀️📉
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-09-11
-- **@pequityresearch** (20 likes, score 7/10) — AI inference expected to grow to 75% of data center TAM by 2030. 
+## 2026-09-12
+- **@imjustnewatai** (390 likes, score 9/10) — The information reports google has solved recursive self-improvement. october 5 launch. expected to beat gpt-5.5 and claude opus 4.8.
 
-GPU share of AI server shipment will decline from 69.7% in 2026 to 58.5% in 2030, but still controlling the lead. 
+Releasing october 5th.
+  - https://x.com/imjustnewatai/status/2098587285952307363
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 432).
+- **@callmeperry3** (32 likes, score 9/10) — NVIDIA’s proposed $12.93B acquisition of Hugging Face puts a massive valuation on the infrastructure powering the open AI ecosystem.
 
-$NVDA $AMD $GOOGL
-  - https://x.com/pequityresearch/status/2098253523771084978
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 24).
-- **@amitisinvesting** (250 likes, score 9/10) — A TON OF THINGS HAPPENED IN THE STOCK MARKET TODAY.
+Hugging Face has become one of the most important open AI platform
+  - https://x.com/callmeperry3/status/2098612733621002568
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 94).
+- **@dr_crossroads** (187 likes, score 9/10) — $PLTR I believe yesterday's $NVDA partnership is going to accelerate Nvidia's revenue, and substantially bolster Palantir's client count (especially international clients) while fueling revenue.
 
-Here's a full recap:
-
-1. Nvidia $NVDA and Palantir $PLTR expanded their AI partnership, building a new stack that combines Palantir’s sovereign AI
-  - https://x.com/amitisinvesting/status/2098255098862264725
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 316).
-- **@velvetchapel** (189 likes, score 9/10) — My September 11 stock advice:
-
-$LITE (Lumentum) — Buy on pullbacks
-
-$AMD (Advanced Micro Devices) — Buy at $190–$200
-
-$SOFI (SoFi Technologies) — Buy at $24–$27
-
-$RKLB (Rocket Lab) — Buy at $45–$50
-
-$
-  - https://x.com/velvetchapel/status/2098261114090041406
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 205).
+It m
+  - https://x.com/Dr_Crossroads/status/2098482786353193136
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 201).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CoinDesk]** Ripple puts AI agents inside its $1 billion corporate treasury bet
-  - https://www.coindesk.com/markets/2026/09/11/ripple-puts-ai-agents-inside-its-usd1-billion-corporate-treasury-bet
-- **[The Block]** Sam Bankman-Fried asks Supreme Court to overturn fraud conviction and $11 billion forfeiture
-  - https://www.theblock.co/news/regulation/2026-09-11-sam-bankman-fried-supreme-court-petition-414226
-- **[CNBC Top]** Y Combinator’s Garry Tan says 'do nothing' about distillation as AI giants accuse China of copying their tech
-  - https://www.cnbc.com/2026/09/11/y-combinator-garry-tan-says-do-nothing-about-distillation.html
-- **[CNBC Tech]** Y Combinator’s Garry Tan says 'do nothing' about distillation as AI giants accuse China of copying their tech
-  - https://www.cnbc.com/2026/09/11/y-combinator-garry-tan-says-do-nothing-about-distillation.html
-- **[CNBC Top]** Hassett kept up to $5 million Coinbase stake as Trump reshaped crypto policy
-  - https://www.cnbc.com/2026/09/10/kevin-hassett-coinbase-stock-trump-crypto-recusal.html
-- **[CNBC Top]** Chinese Nvidia rival Enflame soars 206% on stock market debut as AI demand stays hot
-  - https://www.cnbc.com/2026/09/11/chinese-nvidia-rival-enflame-stock-market-debut-ai.html
-- **[CNBC Top]** Chinese AI labs secretly used millions of Claude exchanges to train their models, Anthropic says
-  - https://www.cnbc.com/2026/09/11/chinese-ai-labs-moonshot-deepseek-alibaba-anthropic.html
-- **[CNBC Tech]** Chinese AI labs secretly used millions of Claude exchanges to train their models, Anthropic says
-  - https://www.cnbc.com/2026/09/11/chinese-ai-labs-moonshot-deepseek-alibaba-anthropic.html
+- **[OpenAI Blog]** Perplexity trusts GPT-6 Astra with end-to-end systems
+  - https://openai.com/index/perplexity-improving-accuracy-with-astra
+- **[CNBC Tech]** Oracle's Larry Ellison adopts trading plan to sell up to $7.5 billion worth of stock
+  - https://www.cnbc.com/2026/09/11/larry-ellison-50-million-trading-plan.html
+- **[Simon Willison]** OpenAI agents attacked RubyGems back in May
+  - https://simonwillison.net/2026/Sep/12/openai-agents-rubygems/
+- **[CoinDesk]** Robinhood CEO says companies shouldn't get veto over stock tokens in AMC feud
+  - https://www.coindesk.com/markets/2026/09/11/robinhood-ceo-says-companies-shouldn-t-get-veto-over-stock-tokens-in-amc-feud
+- **[TechCrunch]** Mecka AI nears $500M valuation in Sequoia-led deal amid rush for robot training data
+  - https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/
+- **[TechCrunch AI]** Mecka AI nears $500M valuation in Sequoia-led deal amid rush for robot training data
+  - https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/
+- **[CNBC Top]** Cramer’s week ahead: Falling oil could help stocks but Fed is the next big test
+  - https://www.cnbc.com/2026/09/11/cramers-week-ahead-falling-oil-fed.html
+- **[CNBC Tech]** Oracle posts 30% revenue growth fueled by AI cloud demand as debts hits $125 billion
+  - https://www.cnbc.com/2026/09/11/oracle-stock-q1-earnings-ai-cloud.html
 
 ## 🎬 Suggested video angles
 
@@ -101,4 +86,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-11T00:48:13*
+*Generated 2026-09-12T00:48:13*
