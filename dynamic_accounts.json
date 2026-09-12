@@ -2364,7 +2364,12 @@
     "NathanGarcia",
     "CryptoKrause",
     "_AdrienBoulay_",
-    "BenoitDuchene"
+    "BenoitDuchene",
+    "AdrienLeruyet_",
+    "LuisFrancoF",
+    "PabloLff",
+    "BenoitHugues",
+    "ThibautLefebvr2"
   ],
   "en": [
     "Chubby",
@@ -17469,6 +17474,31 @@
       "lang": "en",
       "handle": "Ra",
       "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLeruyet_",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisFrancoF",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "PabloLff",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitHugues",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautLefebvr2",
+      "added": "2026-09-12"
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-12T01:48:13.963823",
-  "window_7d_actions": 5681,
-  "window_24h_actions": 756,
+  "generated_at": "2026-09-12T05:48:14.044201",
+  "window_7d_actions": 5651,
+  "window_24h_actions": 732,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5680
+      "count": 5650
     },
     {
       "pattern": "METAPHOR",
@@ -19,17 +19,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5680
+      "count": 5650
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 15,
-      "actions": 257
+      "hour": 2,
+      "actions": 260
     },
     {
-      "hour": 2,
-      "actions": 256
+      "hour": 15,
+      "actions": 257
     },
     {
       "hour": 8,
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2720
+      "count": 2694
     },
     {
       "topic": "Autre",
-      "count": 2115
+      "count": 2119
     },
     {
       "topic": "Crypto",
-      "count": 740
+      "count": 734
     },
     {
       "topic": "Bourse",
-      "count": 459
+      "count": 448
     },
     {
       "topic": "Spatial",
@@ -70,23 +70,23 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2847
+      "count": 2824
     },
     {
       "pillar": "market_trauma",
-      "count": 1393
+      "count": 1374
     },
     {
       "pillar": "other",
-      "count": 1134
+      "count": 1142
     },
     {
       "pillar": "reply_bait",
-      "count": 136
+      "count": 139
     },
     {
       "pillar": "meme_reaction",
-      "count": 112
+      "count": 113
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,15 +96,15 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 382
+      "count": 373
     },
     {
       "pillar": "market_trauma",
-      "count": 188
+      "count": 179
     },
     {
       "pillar": "other",
-      "count": 152
+      "count": 143
     },
     {
       "pillar": "meme_reaction",
@@ -112,33 +112,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 31,
-      "avg_likes": 0.26,
-      "avg_views": 62.7,
+      "posts": 29,
+      "avg_likes": 0.24,
+      "avg_views": 64.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 84,
-      "avg_likes": 0.25,
-      "avg_views": 60.5,
+      "posts": 87,
+      "avg_likes": 0.23,
+      "avg_views": 59.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
+      "posts": 78,
       "avg_likes": 0.22,
-      "avg_views": 60.6,
+      "avg_views": 62.5,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5115
+      "count": 5090
     },
     {
       "type": "quote",
-      "count": 359
+      "count": 353
     },
     {
       "type": "quote_gif",
-      "count": 106
+      "count": 107
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-12T01:47:30.748176",
-      "text": "@Gate has traded $87M of tokens and still holds the bag. that's not a trader; that's an anchor with Wi-Fi.",
+      "ts": "2026-09-12T05:46:39.180838",
+      "text": "Wyckoff looks clean on a 4h chart until you check the funding rates. positive = leveraged longs paying short sellers to stay awake through this flush. accumulation or attrition? only miners know who’s bleeding out first.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T01:46:17.857536",
-      "text": "Btc moves on liquidation cascades, not \"heatmaps\" from a $90k saas tool. stop paying for data that was free in 2017 and calling it alpha.",
+      "ts": "2026-09-12T05:45:56.769493",
+      "text": "Anthropic raising $10b for compute that’ll have a 56% margin next year. nvidia just sold the pickaxe to a friend who can’t afford his own shovel market share defense.””",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T01:44:41.964229",
-      "text": "Seedance 2.5 turned a kitkat prompt into cinema. the real bottleneck isn't generation cost it's attention span. we watched for three seconds and forgot why we clicked.",
+      "ts": "2026-09-12T05:43:06.142906",
+      "text": "Tibo + thSottiaux = 10K people waiting for a product that solves nothing. \n\nthe market doesn't have room for two clones in one inbox. it only has room for the shipper.",
       "type": "reply"
     }
   ]

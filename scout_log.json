@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-12T16:59:19.755519",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "yann_lecun",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 500000,
-        "reason": "Le p\u00e8re de la vision par ordinateur. Il parle fran\u00e7ais de temps en temps (ou presque). C'est la reference, il suffit de suivre."
-      },
-      {
-        "handle": "crypto_phoenix",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le v\u00e9t\u00e9ran FR. Il survit aux bull runs et aux bear markets avec la m\u00eame t\u00eate de bois mort. Analyse macro solide."
-      },
-      {
-        "handle": "vincentdelaunay",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "L'\u00e9ternel bear qui a souvent raison. Sa vision de la bourse est cynique mais juste."
-      },
-      {
-        "handle": "cryptoguyfr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Ancien de Coinhouse. Il a vu passer 3 cycles et n'a jamais paniqu\u00e9. Le calme parfait."
-      },
-      {
-        "handle": "louis_cabane",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "IA Generative. Il explique la tech \u00e0 des humains, pas \u00e0 des ing\u00e9nieurs qui s'ennuient."
-      },
-      {
-        "handle": "mickablog",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Ex-Mistral, aujourd'hui solo. Il tweet la tech FR comme un patron qui sait qu'il vient de se faire virer de sa propre bo\u00eete."
-      },
-      {
-        "handle": "maxi_1000",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "C'est le qu\u00e9b\u00e9cois qui comprend le mieux LLMs et agents AI. Pas de jargon inutile, juste du concret."
-      }
-    ],
-    "summary": "5 nouveaux venus solides en IA et Crypto FR/Quebec. J'ai \u00e9cart\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent ce qu'ils disent. 100% authentique, 0% de pub Telegram."
-  },
-  {
-    "ts": "2026-08-12T18:59:05.269066",
-    "raw_count": 6,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaeldeTregoret",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Anglophone mais les tweets FR sont percutants. Expert DeFi bas\u00e9 aux US, moins pompier que les autres."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les architectes : Deneb pour le Qu\u00e9bec, JulienG pour la crypto FR, et Rochard pour l'IA US francophone. Pas de formations, juste du nerf."
-  },
-  {
     "ts": "2026-08-12T20:59:26.391576",
     "raw_count": 8,
     "kept_count": 6,
@@ -7122,5 +7046,60 @@
       }
     ],
     "summary": "Une s\u00e9lection chirurgicale pour \u00e9viter les influenceurs qui vendent l'air qu'ils respirent : focus sur ceux qui tweetent avec le cul sur la chaise, pas juste en photo \u00e0 c\u00f4t\u00e9 d'une Tesla."
+  },
+  {
+    "ts": "2026-09-12T01:48:30.418270",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrienLeruyet_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-HuggingFace. Il balance du technique AI brut sans faire croire qu'il vend la lune."
+      },
+      {
+        "handle": "LuisFrancoF",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Crypto-francophone pure souche. Il twitte sa vie de trader pro sans se la raconter en formations."
+      }
+    ],
+    "summary": "5 candidats qui tiennent la route sans \u00eatre des vendeurs de r\u00eaves en vid\u00e9o TikTok."
+  },
+  {
+    "ts": "2026-09-12T03:48:40.180086",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PabloLff",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 285000,
+        "reason": "Le patron du Twitter FR boursier. C'est lui qui a invent\u00e9 le format 'thread \u00e9ducatif' que tout le monde plagie maintenant."
+      },
+      {
+        "handle": "BenoitHugues",
+        "region": "france",
+        "niche": "crypto / vc",
+        "followers": 35000,
+        "reason": "Le type qui connait tout le monde en crypto fran\u00e7aise. Ses threads sur l'infrastructure sont des p\u00e9pites."
+      },
+      {
+        "handle": "ThibautLefebvr2",
+        "region": "france",
+        "niche": "tech / ia",
+        "followers": 15000,
+        "reason": "Ancien exo HEC mais le vrai. Il cover l'IA tech de mani\u00e8re intelligente sans faire dans la hype \u00e0 la con."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour garder ceux qui analysent l'eau avant d'y boire : des traders, devs VC et fondateurs francophones solides en France (majorit\u00e9), au Qu\u00e9bec et aux USA. C'est qualitatif sans \u00eatre pompeux."
   }
 ]
