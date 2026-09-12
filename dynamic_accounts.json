@@ -2909,7 +2909,10 @@
     "MoneyGram",
     "Snoopy",
     "Julius",
-    "saweeeties"
+    "saweeeties",
+    "jacob",
+    "TBPN",
+    "Ra"
   ],
   "history": [
     {
@@ -17450,6 +17453,21 @@
     {
       "lang": "fr",
       "handle": "BenoitDuchene",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "en",
+      "handle": "jacob",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "en",
+      "handle": "TBPN",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Ra",
       "added": "2026-09-11"
     }
   ]

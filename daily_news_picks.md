@@ -17399,3 +17399,20 @@ $RKLB (Rocket Lab) — Buy at $45–$50
 $
   - https://x.com/velvetchapel/status/2098261114090041406
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 205).
+
+## 2026-09-12
+- **@imjustnewatai** (390 likes, score 9/10) — The information reports google has solved recursive self-improvement. october 5 launch. expected to beat gpt-5.5 and claude opus 4.8.
+
+Releasing october 5th.
+  - https://x.com/imjustnewatai/status/2098587285952307363
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 432).
+- **@callmeperry3** (32 likes, score 9/10) — NVIDIA’s proposed $12.93B acquisition of Hugging Face puts a massive valuation on the infrastructure powering the open AI ecosystem.
+
+Hugging Face has become one of the most important open AI platform
+  - https://x.com/callmeperry3/status/2098612733621002568
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 94).
+- **@dr_crossroads** (187 likes, score 9/10) — $PLTR I believe yesterday's $NVDA partnership is going to accelerate Nvidia's revenue, and substantially bolster Palantir's client count (especially international clients) while fueling revenue.
+
+It m
+  - https://x.com/Dr_Crossroads/status/2098482786353193136
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 201).
