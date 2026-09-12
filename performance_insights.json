@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-12T05:48:14.044201",
-  "window_7d_actions": 5651,
-  "window_24h_actions": 732,
+  "generated_at": "2026-09-12T09:48:13.891566",
+  "window_7d_actions": 5604,
+  "window_24h_actions": 718,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5650
+      "count": 5603
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5650
+      "count": 5603
     }
   ],
   "best_hours_utc": [
@@ -32,113 +32,113 @@
       "actions": 257
     },
     {
-      "hour": 8,
-      "actions": 256
-    },
-    {
       "hour": 11,
       "actions": 253
     },
     {
       "hour": 10,
       "actions": 249
+    },
+    {
+      "hour": 12,
+      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2694
+      "count": 2664
     },
     {
       "topic": "Autre",
-      "count": 2119
+      "count": 2099
     },
     {
       "topic": "Crypto",
-      "count": 734
+      "count": 738
     },
     {
       "topic": "Bourse",
-      "count": 448
+      "count": 444
     },
     {
       "topic": "Spatial",
-      "count": 107
+      "count": 106
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2824
+      "count": 2794
     },
     {
       "pillar": "market_trauma",
-      "count": 1374
+      "count": 1367
     },
     {
       "pillar": "other",
-      "count": 1142
+      "count": 1139
     },
     {
       "pillar": "reply_bait",
-      "count": 139
+      "count": 135
     },
     {
       "pillar": "meme_reaction",
-      "count": 113
+      "count": 111
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 59
+      "count": 58
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 373
+      "count": 363
     },
     {
       "pillar": "market_trauma",
-      "count": 179
+      "count": 177
     },
     {
       "pillar": "other",
-      "count": 143
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 18
+      "count": 146
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 17
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 29,
-      "avg_likes": 0.24,
-      "avg_views": 64.6,
+      "pillar": "ai_news_take",
+      "posts": 88,
+      "avg_likes": 0.26,
+      "avg_views": 60.4,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 87,
-      "avg_likes": 0.23,
-      "avg_views": 59.5,
+      "pillar": "market_trauma",
+      "posts": 29,
+      "avg_likes": 0.24,
+      "avg_views": 66.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
+      "posts": 77,
       "avg_likes": 0.22,
-      "avg_views": 62.5,
+      "avg_views": 62.8,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5090
+      "count": 5042
     },
     {
       "type": "quote",
-      "count": 353
+      "count": 354
     },
     {
       "type": "quote_gif",
-      "count": 107
+      "count": 105
     },
     {
       "type": "hotake",
@@ -175,7 +175,7 @@
     },
     {
       "type": "post",
-      "count": 41
+      "count": 43
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-12T05:46:39.180838",
-      "text": "Wyckoff looks clean on a 4h chart until you check the funding rates. positive = leveraged longs paying short sellers to stay awake through this flush. accumulation or attrition? only miners know who’s bleeding out first.",
+      "ts": "2026-09-12T09:46:28.947126",
+      "text": "Iran ditched the nuclear treaty and oil is rallying like a nervous ex who just found out you have new insurance coverage 💅🛋️. https://finance.yahoo.com/markets/commodities/articles/iran-says-no-longer-bound-132026940.html",
+      "type": "hotake"
+    },
+    {
+      "ts": "2026-09-12T09:45:55.647273",
+      "text": "Elon gets to keep the grid and sell the excess power at retail margins. It's not infrastructure; it's an arbitrage play on physics. bullish AF.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T05:45:56.769493",
-      "text": "Anthropic raising $10b for compute that’ll have a 56% margin next year. nvidia just sold the pickaxe to a friend who can’t afford his own shovel market share defense.””",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-09-12T05:43:06.142906",
-      "text": "Tibo + thSottiaux = 10K people waiting for a product that solves nothing. \n\nthe market doesn't have room for two clones in one inbox. it only has room for the shipper.",
+      "ts": "2026-09-12T09:45:24.670711",
+      "text": "Ceiling is $60. pepsi needs the caffeine tax to keep up with coffee pricing power and margin expansion. acquire or be acquired by a vending machine in ohio",
       "type": "reply"
     }
   ]

@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-12T20:59:26.391576",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lefroid",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "Le grand-p\u00e8re du fricastcrypto. Il a tout vu, tout dit et garde son bon sens. Moins hype que les autres, mais plus de substance."
-      },
-      {
-        "handle": "PierreMoussa",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "L'IA francophone aux US. Il a acc\u00e8s aux insiders de Palo Alto et le traduit pour nous sans jargon inutile."
-      },
-      {
-        "handle": "ThibautF",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'anti-guru. Pas de courbes flamm\u00e9es, juste du bon sens boursier. Il tweete rarement, donc chaque tweet a du poids."
-      },
-      {
-        "handle": "AdrienBourgeoisFr",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Le barom\u00e8tre des fintechs FR. Il connecte mieux les dots que personne et son ton est toujours frais."
-      },
-      {
-        "handle": "MaximeDreano",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Le roi de la tech \u00e0 Montr\u00e9al. Il couvre IA et startups avec un angle pragmatique qui manque trop souvent."
-      },
-      {
-        "handle": "AlexDionne_QC",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "La voix qui porte au Qu\u00e9bec. Il couvre l'\u00e9cosyst\u00e8me crypto local sans se voiler la face sur les scams."
-      }
-    ],
-    "summary": "J'ai chass\u00e9 les comptes qui font du bruit pour garder ceux qui font du bruit utile. Pas de formations \u00e0 999\u20ac, pas de Telegram VIP, juste des cerveaux qui analysent le march\u00e9 r\u00e9el. C'est propre, c'est net, c'est payant en attention."
-  },
-  {
-    "ts": "2026-08-12T22:59:11.985039",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Nasri",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Ex-SNX, vision macro crypto assum\u00e9e, style sec et efficace. \u00c9vite les shillings de shitcoins obscurs."
-      },
-      {
-        "handle": "RomainMoy",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi de l'analyse actionnariale en FR, pas de bla-bla, juste des tableaux Excel et des convictions. Twitte tous les jours."
-      },
-      {
-        "handle": "ThibautR",
-        "region": "france",
-        "niche": "ai",
-        "followers": 40000,
-        "reason": "Sp\u00e9cialiste IA agressive, posts fr\u00e9quents sur les startups et l'\u00e9cosyst\u00e8me French Tech. Toujours pertinent."
-      },
-      {
-        "handle": "Alex_Dionne_QC",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Institutionnel qu\u00e9b\u00e9cois, couvre DeFi et infra. Un des voix les plus calmes et analysantes au QC."
-      },
-      {
-        "handle": "LionelM",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Analyste on-chain et data-driven. Fuit les influenceurs qui crient, pr\u00e9f\u00e8re les graphiques."
-      },
-      {
-        "handle": "Marc_Alexandre",
-        "region": "quebec",
-        "niche": "trading",
-        "followers": 18000,
-        "reason": "Trader qu\u00e9b\u00e9cois actif, focus price action et psychologie. Pas de formation \u00e0 199\u20ac dans la bio."
-      }
-    ],
-    "summary": "Une s\u00e9lection solide qui \u00e9vite les vendeurs de r\u00eave : on privil\u00e9gie les fondateurs d'infra (Mistral), les analystes data (Marc_Alexandre, LionelM) et les investisseurs convictionnels (RomainMoy). Pas de 'lambo' en photo de profil, promis."
-  },
-  {
     "ts": "2026-08-13T00:59:17.373112",
     "raw_count": 8,
     "kept_count": 4,
@@ -7101,5 +6997,67 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour garder ceux qui analysent l'eau avant d'y boire : des traders, devs VC et fondateurs francophones solides en France (majorit\u00e9), au Qu\u00e9bec et aux USA. C'est qualitatif sans \u00eatre pompeux."
+  },
+  {
+    "ts": "2026-09-12T05:48:40.052628",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "jasonbnt",
+        "region": "quebec",
+        "niche": "crypto/tech",
+        "followers": 28000,
+        "reason": "Le Qu\u00e9b\u00e9cois de Toronto. Il cover la fintech et le Web3 avec une perspective anglophone francis\u00e9e tr\u00e8s rare sur l'\u00eele."
+      }
+    ],
+    "summary": "Un mix entre les veterans du trading crypto FR (_mickaelb_, _hugog_) et une nouvelle vague tech/IA plus technique (@adrienleruyet, @jasonbnt). Z\u00e9ro vendeur de r\u00eave, tout l'inverse."
+  },
+  {
+    "ts": "2026-09-12T07:48:32.347189",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Rugny",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le grand pr\u00eatre du meme crypto en FR. Il twitte moins mais quand il sort une perle ou un trade, le feed tremble. Z\u00e9ro hype formation."
+      },
+      {
+        "handle": "Mathieu_67",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le patron de Mistral AI. Il ne vend pas d'air conditionn\u00e9 dans un frigo Samsung : c'est le fondamental tech fran\u00e7ais qui compte."
+      },
+      {
+        "handle": "DariaN_7",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La queen du Bitcoin f\u00e9minin aux USA. En fran\u00e7ais parfait (souvent), elle mixe analysis technique s\u00e9rieuse et punchlines qui claquent."
+      },
+      {
+        "handle": "CryptoGilles",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le Qu\u00e9bec en a un. Gilles poste des threads techniques pointus sans se la jouer guru TED Talk. Pur produit."
+      },
+      {
+        "handle": "LionelPerrin_",
+        "region": "france",
+        "niche": "tech/vc",
+        "followers": 20000,
+        "reason": "Investisseur s\u00e9rieuse. Moins de bruit que les influenceurs formation plus, mais ses insights sur l'IA fr touchent juste."
+      }
+    ],
+    "summary": "Pas de blabla ici : on a des noms qui pond\u00e8rent ou investissent vraiment plut\u00f4t que d'afficher leur compte bancaire Instagram. De Mistral \u00e0 la reine Bitcoin qu\u00e9b\u00e9coise-am\u00e9ricaine,"
   }
 ]
