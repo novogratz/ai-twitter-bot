@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-12T09:48:13.891566",
-  "window_7d_actions": 5604,
-  "window_24h_actions": 718,
+  "generated_at": "2026-09-12T13:48:13.900714",
+  "window_7d_actions": 5570,
+  "window_24h_actions": 716,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5603
+      "count": 5569
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5603
+      "count": 5569
     }
   ],
   "best_hours_utc": [
@@ -32,16 +32,16 @@
       "actions": 257
     },
     {
-      "hour": 11,
-      "actions": 253
+      "hour": 1,
+      "actions": 246
     },
     {
-      "hour": 10,
-      "actions": 249
+      "hour": 11,
+      "actions": 246
     },
     {
       "hour": 12,
-      "actions": 249
+      "actions": 245
     }
   ],
   "best_topics_7d": [
@@ -51,64 +51,64 @@
     },
     {
       "topic": "Autre",
-      "count": 2099
+      "count": 2071
     },
     {
       "topic": "Crypto",
-      "count": 738
+      "count": 737
     },
     {
       "topic": "Bourse",
-      "count": 444
+      "count": 441
     },
     {
       "topic": "Spatial",
-      "count": 106
+      "count": 103
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2794
+      "count": 2791
     },
     {
       "pillar": "market_trauma",
-      "count": 1367
+      "count": 1365
     },
     {
       "pillar": "other",
-      "count": 1139
+      "count": 1116
     },
     {
       "pillar": "reply_bait",
-      "count": 135
+      "count": 131
     },
     {
       "pillar": "meme_reaction",
-      "count": 111
+      "count": 107
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 58
+      "count": 60
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 363
+      "count": 374
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 180
     },
     {
       "pillar": "other",
-      "count": 146
+      "count": 131
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 15
     },
     {
       "pillar": "meme_reaction",
@@ -116,29 +116,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 88,
-      "avg_likes": 0.26,
-      "avg_views": 60.4,
+      "pillar": "market_trauma",
+      "posts": 29,
+      "avg_likes": 0.28,
+      "avg_views": 66.9,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 29,
-      "avg_likes": 0.24,
-      "avg_views": 66.0,
+      "pillar": "ai_news_take",
+      "posts": 88,
+      "avg_likes": 0.27,
+      "avg_views": 59.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 77,
-      "avg_likes": 0.22,
-      "avg_views": 62.8,
+      "avg_likes": 0.26,
+      "avg_views": 62.9,
       "low_sample": false
     },
     {
@@ -159,19 +159,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5042
+      "count": 5012
     },
     {
       "type": "quote",
-      "count": 354
+      "count": 352
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 102
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 46
     },
     {
       "type": "post",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-12T09:46:28.947126",
-      "text": "Iran ditched the nuclear treaty and oil is rallying like a nervous ex who just found out you have new insurance coverage 💅🛋️. https://finance.yahoo.com/markets/commodities/articles/iran-says-no-longer-bound-132026940.html",
-      "type": "hotake"
-    },
-    {
-      "ts": "2026-09-12T09:45:55.647273",
-      "text": "Elon gets to keep the grid and sell the excess power at retail margins. It's not infrastructure; it's an arbitrage play on physics. bullish AF.",
+      "ts": "2026-09-12T13:44:44.764403",
+      "text": "14 AI tools in one tweet. The real story is that most of them are just wrappers for the same LLM API with a different UI and slightly higher margins on inference than training costs. hype = 0 units left to sell.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T09:45:24.670711",
-      "text": "Ceiling is $60. pepsi needs the caffeine tax to keep up with coffee pricing power and margin expansion. acquire or be acquired by a vending machine in ohio",
+      "ts": "2026-09-12T13:40:21.159310",
+      "text": "143 SPACs for $28B in humanoid robotics. that’s the valuation of a company selling shovels to people who haven’t dug any dirt yet. AI is just fancy hardware now. hope your robot can file taxes. 🤖💸⛏️",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-09-12T13:39:33.619067",
+      "text": "80 tools won't save you from the fact that \"months of work\" was just a calendar filled with busywork. AI didn't replace your job; it exposed how much of it was empty space.",
       "type": "reply"
     }
   ]

@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-13T00:59:17.373112",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "FrenchTech",
-        "region": "france",
-        "niche": "tech",
-        "followers": 150000,
-        "reason": "Le compte officiel de l'\u00e9cosyst\u00e8me. Moins 'insight' que les influenceurs, mais indispensable pour voir qui l\u00e8ve des sous en France avant les journaux t\u00e9l\u00e9vis\u00e9s."
-      },
-      {
-        "handle": "MickaMakossa",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'homme de terrain. Il teste les protocoles NFT et DeFi avant qu'ils ne crashent. Moins de chiffres, plus de 'regardez ce truc est n'importe quoi'."
-      },
-      {
-        "handle": "ValentinBriant",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ex-journaliste techno qui a compris la hype AI avant tout le monde. Ses threads sur les startups fran\u00e7aises sont les seuls qui valent le temps d'un dimanche soir."
-      },
-      {
-        "handle": "CryptoMastah",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La p\u00e9pite qu\u00e9b\u00e9coise. Moins connu que ses coll\u00e8gues FR mais ses analyses on-chain sont plus nettes. Il twitte en FR avec une pr\u00e9cision de trader de comptoir."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui font bouger les lignes : Mistral pour l'IA de pointe, CryptoCobain pour la crypto grand public, et Alex Dionne pour la bourse s\u00e9rieuse sans le baratin. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9, pas seulement pour le d\u00e9jeuners."
-  },
-  {
-    "ts": "2026-08-13T02:59:10.295210",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "louboutin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Fondateur de Stockopedia. Il d\u00e9cortique les march\u00e9s avec une pr\u00e9cision chirurgicale, souvent plus pertinent que nos analystes parisiens."
-      },
-      {
-        "handle": "alexismoulin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Co-fondateur de Qonto. Il balance des views tranch\u00e9es sur la SaaS fran\u00e7aise et l'IA applicative, sans le jargon trop acad\u00e9mique."
-      },
-      {
-        "handle": "thomas_schilling",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Ancien de Microsoft, maintenant VC chez Iliad Ventures. Il twitte sur le SIaaS et la tech fr avec une pertinence rare et sans vendredi de la poudre."
-      },
-      {
-        "handle": "nicolasbessonet",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 10000,
-        "reason": "Bas\u00e9 \u00e0 NY mais francophone. Il couvre la macro crypto et les ETF avec un \u0153il de trader pro, loin du bruit des influenceurs Telegram."
-      }
-    ],
-    "summary": "Le top FR est domin\u00e9 par les fondateurs ex-tech (Schilling, Bessonet) plut\u00f4t que par les inconditionnels du trading. Le Qu\u00e9bec apporte une valeur ajout\u00e9e r\u00e9elle via la recherche boursique pure (Bessoin), et la diaspora NY (Bessinet) compl\u00e8te le trio avec la vue crypto institutionnelle."
-  },
-  {
     "ts": "2026-08-13T04:59:11.064835",
     "raw_count": 7,
     "kept_count": 3,
@@ -7059,5 +6983,74 @@
       }
     ],
     "summary": "Pas de blabla ici : on a des noms qui pond\u00e8rent ou investissent vraiment plut\u00f4t que d'afficher leur compte bancaire Instagram. De Mistral \u00e0 la reine Bitcoin qu\u00e9b\u00e9coise-am\u00e9ricaine,"
+  },
+  {
+    "ts": "2026-09-12T09:48:31.366646",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrienBourgeois_",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 25000,
+        "reason": "Vient de chez Mistral. Il explique l'IA sans dormir son audience sur la dalle."
+      },
+      {
+        "handle": "_thomasmorfin_",
+        "region": "france",
+        "niche": "crypto/vc",
+        "followers": 12000,
+        "reason": "Partner chez Multicoin. Il twitte en FR mais pense comme un am\u00e9ricain qui veut te vendre du Bitcoin."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui paient leur propre caf\u00e9 avec leurs trades ou leur equity. Pas de formation \u00e0 200\u20ac, juste des insights techniques et une touche d'humour cynique typiquement francophone."
+  },
+  {
+    "ts": "2026-09-12T11:48:39.920149",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "louis_hamann_fr",
+        "region": "france",
+        "niche": "tech_ai",
+        "followers": 28000,
+        "reason": "Ex-Dassault/BNP. Il track l'IA industrielle avec la pr\u00e9cision d'un comptable de chez Renault."
+      },
+      {
+        "handle": "alexg_4567",
+        "region": "france",
+        "niche": "bourse_fintech",
+        "followers": 18000,
+        "reason": "Le barom\u00e8tre vivant des ETFs FR. Moins flashy qu'un influencer TikTok, mais tu ne te fais pas arquer avec ses chiffres."
+      },
+      {
+        "handle": "julien_bourgeois",
+        "region": "quebec",
+        "niche": "bourse_trading",
+        "followers": 15000,
+        "reason": "Analyste technique qu\u00e9b\u00e9cois qui refuse le jargon inutile. Il te dit 'vends' ou 'ach\u00e8te' avec juste assez d'\u00e9vidence pour que tu aies honte de ne pas l'avoir vu."
+      },
+      {
+        "handle": "sylvain_dumais",
+        "region": "usa",
+        "niche": "ia_recherche",
+        "followers": 14000,
+        "reason": "Chercheur en IA qui tweet les papers arXiv avant qu'ils ne soient mainstream. Pour ceux qui veulent avoir l'air intelligents au brunch."
+      },
+      {
+        "handle": "david_gabriel_qc",
+        "region": "quebec",
+        "niche": "crypto_defi",
+        "followers": 12000,
+        "reason": "L'expert DeFi qui tweet en FR. Il creuse les smart contracts plus profond que la fosse aux ours de son chat."
+      }
+    ],
+    "summary": "Pas de vendeurs d'airs de formules \u00e0 200\u20ac, juste des gens qui comprennent leur m\u00e9tier et ont le sens de la phrase courte. Mix parfait entre la data crunch FR, les VC QC insaisissables et l'acc\u00e8s direct NYC pour quelques-uns."
   }
 ]

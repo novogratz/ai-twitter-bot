@@ -2375,7 +2375,11 @@
     "Mathieu_67",
     "DariaN_7",
     "CryptoGilles",
-    "LionelPerrin_"
+    "LionelPerrin_",
+    "_thomasmorfin_",
+    "louis_hamann_fr",
+    "alexg_4567",
+    "sylvain_dumais"
   ],
   "en": [
     "Chubby",
@@ -2923,7 +2927,8 @@
     "saweeeties",
     "jacob",
     "TBPN",
-    "Ra"
+    "Ra",
+    "RadioGenoa"
   ],
   "history": [
     {
@@ -17534,6 +17539,31 @@
     {
       "lang": "fr",
       "handle": "LionelPerrin_",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "_thomasmorfin_",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "RadioGenoa",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_hamann_fr",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexg_4567",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "sylvain_dumais",
       "added": "2026-09-12"
     }
   ]
