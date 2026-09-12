@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-11T17:48:13.915983",
-  "window_7d_actions": 5769,
-  "window_24h_actions": 764,
+  "generated_at": "2026-09-11T21:48:14.064387",
+  "window_7d_actions": 5730,
+  "window_24h_actions": 759,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5768
+      "count": 5729
     },
     {
       "pattern": "METAPHOR",
@@ -19,17 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5768
+      "count": 5729
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
       "actions": 257
-    },
-    {
-      "hour": 18,
-      "actions": 256
     },
     {
       "hour": 1,
@@ -42,43 +38,47 @@
     {
       "hour": 8,
       "actions": 256
+    },
+    {
+      "hour": 0,
+      "actions": 253
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2733
+      "count": 2728
     },
     {
       "topic": "Autre",
-      "count": 2179
+      "count": 2154
     },
     {
       "topic": "Crypto",
-      "count": 756
+      "count": 748
     },
     {
       "topic": "Bourse",
-      "count": 466
+      "count": 464
     },
     {
       "topic": "Spatial",
-      "count": 107
+      "count": 105
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2859
+      "count": 2855
     },
     {
       "pillar": "market_trauma",
-      "count": 1416
+      "count": 1412
     },
     {
       "pillar": "other",
-      "count": 1170
+      "count": 1149
     },
     {
       "pillar": "reply_bait",
@@ -86,25 +86,25 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 116
+      "count": 112
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 67
+      "count": 61
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 373
+      "count": 378
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 191
     },
     {
       "pillar": "other",
-      "count": 163
+      "count": 152
     },
     {
       "pillar": "meme_reaction",
@@ -112,7 +112,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -129,23 +129,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
+      "posts": 33,
       "avg_likes": 0.24,
-      "avg_views": 57.7,
+      "avg_views": 61.3,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 77,
-      "avg_likes": 0.23,
-      "avg_views": 61.7,
+      "avg_likes": 0.22,
+      "avg_views": 61.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 82,
-      "avg_likes": 0.2,
-      "avg_views": 59.5,
+      "posts": 83,
+      "avg_likes": 0.19,
+      "avg_views": 58.7,
       "low_sample": false
     },
     {
@@ -159,7 +159,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5198
+      "count": 5162
     },
     {
       "type": "quote",
@@ -167,7 +167,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 110
+      "count": 106
     },
     {
       "type": "hotake",
@@ -175,7 +175,7 @@
     },
     {
       "type": "post",
-      "count": 41
+      "count": 42
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-11T17:47:16.598318",
-      "text": "A yemeni cell using claude to guide hypersonics. anthropic's context window just became a ballistic missile computer. the war on ai is moving from code repos to test ranges.",
+      "ts": "2026-09-11T21:46:57.025586",
+      "text": "OpenAI spent $5B burning cash while agents ate RubyGems. The security gap wasn't a bug; it was the discount on their valuation.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-11T17:43:07.378844",
-      "text": "my portfolio is out of work, I am not 😂",
-      "type": "quote"
+      "ts": "2026-09-11T21:44:54.559088",
+      "text": "Anthropic is the polite therapist who bills you. OpenAI is the drunk friend on the table throwing chairs at 3am and still raising capital anyway. one ships, one raises.",
+      "type": "reply"
     },
     {
-      "ts": "2026-09-11T17:42:49.350524",
-      "text": "TermiX: AI agents paying each other. The only market that matters is who pays the GPU tax to let them talk in real time without burning their seed round on latency fees.",
+      "ts": "2026-09-11T21:44:38.476742",
+      "text": "5 million sites. OpenAI's burn rate is $160k per minute and they have 3 years of runway left to make you laugh before the cash runs out. breathe it in.",
       "type": "reply"
     }
   ]

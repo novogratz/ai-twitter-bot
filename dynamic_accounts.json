@@ -2358,7 +2358,13 @@
     "NathalieWalsh",
     "ThomMorfin",
     "AlexisDubois",
-    "_julesd"
+    "_julesd",
+    "AdrianTune",
+    "CryptoCobraFR",
+    "NathanGarcia",
+    "CryptoKrause",
+    "_AdrienBoulay_",
+    "BenoitDuchene"
   ],
   "en": [
     "Chubby",
@@ -17414,6 +17420,36 @@
     {
       "lang": "fr",
       "handle": "_julesd",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrianTune",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCobraFR",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanGarcia",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKrause",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "_AdrienBoulay_",
+      "added": "2026-09-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDuchene",
       "added": "2026-09-11"
     }
   ]
