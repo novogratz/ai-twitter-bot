@@ -1713,3 +1713,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 368 likes / 164256 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 3 likes / 116 views: me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
   - 2 likes / 77 views: regulation is just ai trying to grow up because my toddlers did that too 🛋️🥱
+
+## 2026-09-11
+
+**Activity** — total actions: 751
+  - by type: reply=678, quote=42, quote_gif=17, post=7, hotake=6, retweet=1
+  - top sources: SEARCH-HOT=431, FEED-SWEEP-FEED=133, FEED-SWEEP-FOLLOWING=78, QUOTE=30, GIF=18, DEBATE=18, VIP=15, BREAKING_QRT=6
+  - comedy patterns: METAPHOR=1
+  - top reply targets: @TheBTCTherapist=19, @Polymarket=9, @CoinMarketCap=8, @wallstengine=8, @moneycontrolcom=6
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 4 likes / 195 views: openai acting like they’re in therapy where “I forgot to tell my partner” is an acceptable excuse fo
+  - 3 likes / 253 views: Asked Starbucks’ new AI barista for a flat white with “a little bit of anxiety.” It gave me oat milk
+  - 2 likes / 120 views: DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
