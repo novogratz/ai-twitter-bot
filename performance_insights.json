@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-11T21:48:14.064387",
-  "window_7d_actions": 5730,
-  "window_24h_actions": 759,
+  "generated_at": "2026-09-12T01:48:13.963823",
+  "window_7d_actions": 5681,
+  "window_24h_actions": 756,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5729
+      "count": 5680
     },
     {
       "pattern": "METAPHOR",
@@ -19,17 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5729
+      "count": 5680
     }
   ],
   "best_hours_utc": [
     {
       "hour": 15,
       "actions": 257
-    },
-    {
-      "hour": 1,
-      "actions": 256
     },
     {
       "hour": 2,
@@ -40,49 +36,53 @@
       "actions": 256
     },
     {
-      "hour": 0,
+      "hour": 11,
       "actions": 253
+    },
+    {
+      "hour": 10,
+      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2728
+      "count": 2720
     },
     {
       "topic": "Autre",
-      "count": 2154
+      "count": 2115
     },
     {
       "topic": "Crypto",
-      "count": 748
+      "count": 740
     },
     {
       "topic": "Bourse",
-      "count": 464
+      "count": 459
     },
     {
       "topic": "Spatial",
-      "count": 105
+      "count": 107
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2855
+      "count": 2847
     },
     {
       "pillar": "market_trauma",
-      "count": 1412
+      "count": 1393
     },
     {
       "pillar": "other",
-      "count": 1149
+      "count": 1134
     },
     {
       "pillar": "reply_bait",
-      "count": 141
+      "count": 136
     },
     {
       "pillar": "meme_reaction",
@@ -90,17 +90,17 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 61
+      "count": 59
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 378
+      "count": 382
     },
     {
       "pillar": "market_trauma",
-      "count": 191
+      "count": 188
     },
     {
       "pillar": "other",
@@ -108,11 +108,11 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
@@ -121,31 +121,24 @@
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 66.5,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
-      "posts": 33,
-      "avg_likes": 0.24,
-      "avg_views": 61.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 77,
-      "avg_likes": 0.22,
-      "avg_views": 61.4,
+      "posts": 31,
+      "avg_likes": 0.26,
+      "avg_views": 62.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 83,
-      "avg_likes": 0.19,
-      "avg_views": 58.7,
+      "posts": 84,
+      "avg_likes": 0.25,
+      "avg_views": 60.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 79,
+      "avg_likes": 0.22,
+      "avg_views": 60.6,
       "low_sample": false
     },
     {
@@ -154,16 +147,23 @@
       "avg_likes": 0.0,
       "avg_views": 36.5,
       "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 3,
+      "avg_likes": 0.0,
+      "avg_views": 63.3,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5162
+      "count": 5115
     },
     {
       "type": "quote",
-      "count": 358
+      "count": 359
     },
     {
       "type": "quote_gif",
@@ -175,27 +175,27 @@
     },
     {
       "type": "post",
-      "count": 42
+      "count": 41
     },
     {
       "type": "retweet",
-      "count": 17
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-11T21:46:57.025586",
-      "text": "OpenAI spent $5B burning cash while agents ate RubyGems. The security gap wasn't a bug; it was the discount on their valuation.",
+      "ts": "2026-09-12T01:47:30.748176",
+      "text": "@Gate has traded $87M of tokens and still holds the bag. that's not a trader; that's an anchor with Wi-Fi.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-11T21:44:54.559088",
-      "text": "Anthropic is the polite therapist who bills you. OpenAI is the drunk friend on the table throwing chairs at 3am and still raising capital anyway. one ships, one raises.",
+      "ts": "2026-09-12T01:46:17.857536",
+      "text": "Btc moves on liquidation cascades, not \"heatmaps\" from a $90k saas tool. stop paying for data that was free in 2017 and calling it alpha.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-11T21:44:38.476742",
-      "text": "5 million sites. OpenAI's burn rate is $160k per minute and they have 3 years of runway left to make you laugh before the cash runs out. breathe it in.",
+      "ts": "2026-09-12T01:44:41.964229",
+      "text": "Seedance 2.5 turned a kitkat prompt into cinema. the real bottleneck isn't generation cost it's attention span. we watched for three seconds and forgot why we clicked.",
       "type": "reply"
     }
   ]
