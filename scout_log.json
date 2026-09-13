@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-08-13T06:59:28.432847",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoMeme",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "Meme coin king FR. Moins technique, mais capture mieux la psychologie de march\u00e9 que tout le reste."
-      },
-      {
-        "handle": "mehdi_serra",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 120000,
-        "reason": "Le roi de la tech et du trading en France. Vends pas de r\u00eave, poste des charts et des analyses froides."
-      },
-      {
-        "handle": "JulienVermard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Journaliste pro, moins de clicbait que la moyenne, plus de fond. Un des seuls fiables sur les valeurs fran\u00e7aises."
-      },
-      {
-        "handle": "LudoLebailly",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Le gourou fran\u00e7ais de l'IA. Si tu veux comprendre ce qui se trame dans les labos, c'est ici."
-      }
-    ],
-    "summary": "Le lot est serr\u00e9 entre les valeurs s\u00fbres de la tech boursi\u00e8re (Serra, Vermard) et les poids lourds de l'IA. Le Qu\u00e9bec apporte une touche plus crypto/tech pure avec Dionne, tandis que l'USA reste le terrain de jeu naturel pour TheAIShrink."
-  },
-  {
-    "ts": "2026-08-13T10:59:16.057364",
-    "raw_count": 9,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LefebvreFrederic",
-        "region": "france",
-        "niche": "tech",
-        "followers": 32000,
-        "reason": "L'expert SaaS & IA de chez HEC. Moins hype que les influenceurs de 500k, plus utile que votre voisin trader."
-      },
-      {
-        "handle": "Raphaelpaquin",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "La r\u00e9f\u00e9rence tech qu\u00e9b\u00e9coise. Moins de 'moon', plus de 'merging' et d'acquisitions r\u00e9elles."
-      },
-      {
-        "handle": "LacasseJulien",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 22000,
-        "reason": "Diaspora FR aux US. Couvre Wall Street et la tech avec le flair parisien et le cynisme new-yorkais."
-      },
-      {
-        "handle": "GaelLeMarec",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Co-fondateur de Ledger. Parle de crypto et de tech en FR sans crier au scandale \u00e0 chaque tweet."
-      },
-      {
-        "handle": "DianeTremblay2",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Annie Lacroix a disparu en 2022, Diane est la nouvelle providence crypto de Montr\u00e9al. S\u00e9rieux et francophone."
-      },
-      {
-        "handle": "AntoineFauquet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 14000,
-        "reason": "Fondamentaux purs. Parle SaaS, IA et business model. Z\u00e9ro hype, 100% intellos."
-      },
-      {
-        "handle": "MathieuDrouin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Consultant crypto qu\u00e9b\u00e9cois. Pas de token shitcoin, juste de l'analyse DeFi et macro en FR."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour garder les analystes qui savent quoi acheter et ceux qui savent pourquoi \u00e7a a baiss\u00e9. Du Mistral officiel aux cracks qu\u00e9b\u00e9cois, il y a du solide."
-  },
-  {
     "ts": "2026-08-13T12:59:16.108465",
     "raw_count": 8,
     "kept_count": 6,
@@ -7052,5 +6955,39 @@
       }
     ],
     "summary": "Un panel \u00e9quilibr\u00e9 entre la hype IA fran\u00e7aise (Mistral), l'analyse macro/crypto solide (Deneb, Leruyet) et une vraie pr\u00e9sence qu\u00e9b\u00e9coise diversifi\u00e9e. Z\u00e9ro vendeur de r\u00eave \u00e0 97\u20ac, que du contenu."
+  },
+  {
+    "ts": "2026-09-12T17:48:39.991574",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_julie_lagarda_",
+        "region": "france",
+        "niche": "crypto/defi",
+        "followers": 12000,
+        "reason": "Expertise DeFi rare en zone francophone. Twitte moins souvent mais chaque thread est une p\u00e9pite technique."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre les g\u00e9ants institutionnels (Mistral) et l'\u00e9lite des traders/founders solo qui tweetent avant tout le monde \u00e0 Paris et Montr\u00e9al."
+  },
+  {
+    "ts": "2026-09-12T19:48:29.251233",
+    "raw_count": 5,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MickaelGuitton",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'oracle des chaines. Pas de hype gratuite que du technoscrupuleux."
+      }
+    ],
+    "summary": "Le top 5 est blind\u00e9 : pas un seul vendeur d'air conditionn\u00e9 ou de signaux VIP \u00e0 l'universalis, juste des technos et macro qui savent \u00e9crire."
   }
 ]

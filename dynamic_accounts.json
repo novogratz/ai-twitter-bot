@@ -2381,7 +2381,9 @@
     "alexg_4567",
     "sylvain_dumais",
     "julesd",
-    "_adrienvd"
+    "_adrienvd",
+    "_julie_lagarda_",
+    "MickaelGuitton"
   ],
   "en": [
     "Chubby",
@@ -2933,7 +2935,9 @@
     "RadioGenoa",
     "OpenServ",
     "AlertesInfos",
-    "Midas"
+    "Midas",
+    "SAAR",
+    "PaulBarron"
   ],
   "history": [
     {
@@ -17594,6 +17598,26 @@
     {
       "lang": "en",
       "handle": "Midas",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "SAAR",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "_julie_lagarda_",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "PaulBarron",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelGuitton",
       "added": "2026-09-12"
     }
   ]
