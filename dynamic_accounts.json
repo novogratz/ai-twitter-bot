@@ -2391,7 +2391,9 @@
     "BorisRouet",
     "CryptoHiverQC",
     "BenGoldshtein",
-    "AlexPomies"
+    "AlexPomies",
+    "AdilBenMoussa_",
+    "JulieLagarda_"
   ],
   "en": [
     "Chubby",
@@ -17690,6 +17692,16 @@
     {
       "lang": "en",
       "handle": "Ape",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdilBenMoussa_",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieLagarda_",
       "added": "2026-09-13"
     }
   ]

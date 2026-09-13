@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-13T18:59:19.009868",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilCohen",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "L'architecte Mistral qui balance la tech sans blabla marketing."
-      },
-      {
-        "handle": "RaphaelDessaint",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Saufy, le VC IA par excellence qui track les startups avant qu'elles soient au march\u00e9."
-      },
-      {
-        "handle": "JulesLeroux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Data Scientist prod, twitte code et mod\u00e8le, pas de 'rejoins mon club'."
-      },
-      {
-        "handle": "MarcGagnon",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Investisseur long terme, analyse financi\u00e8re pure, pas de day-trading frenzy."
-      },
-      {
-        "handle": "FrCryptoTrader",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Bas\u00e9 \u00e0 NY, twitte en FR pour la diaspora, analyse on-chain brute."
-      },
-      {
-        "handle": "ParisTechVC",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Le point de rencontre des VC fran\u00e7ais, deals fintech frais chaque semaine."
-      }
-    ],
-    "summary": "On a creus\u00e9 les p\u00e9pites IA parisiennes et la sc\u00e8ne crypto QC pour \u00e9viter les influenceurs en costumes. Pas de formation \u00e0 1999\u20ac, que du contenu ou de la tech."
-  },
-  {
     "ts": "2026-08-13T20:59:16.497563",
     "raw_count": 8,
     "kept_count": 6,
@@ -6961,5 +6909,36 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 IA/Crypto/Macro entre la rive gauche parisienne et le centre-ville montr\u00e9alais. Pas de vendeurs de r\u00eaves, que des experts."
+  },
+  {
+    "ts": "2026-09-13T07:48:43.333523",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathiasGrosshennin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le prof de finance qui te fait comprendre que ton ETF S&P c'est bien mais sa micro-cap tech c'est mieux."
+      },
+      {
+        "handle": "AdilBenMoussa_",
+        "region": "usa",
+        "niche": "tech/ai",
+        "followers": 30000,
+        "reason": "Foundeur de Pika / Bending. Il vit aux US mais twitte en FR avec l'accent du Sud-Ouest."
+      },
+      {
+        "handle": "JulieLagarda_",
+        "region": "quebec",
+        "niche": "tech/ai",
+        "followers": 20000,
+        "reason": "La professeure qui fait aimer le Deep Learning aux Qu\u00e9b\u00e9cois. Pas de jargon inutile."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour te garder ceux qui construisent vraiment l'IA et g\u00e8rent leur portefeuille sans crier sur Twitter, entre Paris, Montr\u00e9al et San Francisco."
   }
 ]
