@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-12T21:48:13.924872",
-  "window_7d_actions": 5535,
-  "window_24h_actions": 732,
+  "generated_at": "2026-09-13T01:48:13.944481",
+  "window_7d_actions": 5503,
+  "window_24h_actions": 731,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5534
+      "count": 5502
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5534
+      "count": 5502
     }
   ],
   "best_hours_utc": [
@@ -32,57 +32,57 @@
       "actions": 251
     },
     {
-      "hour": 1,
-      "actions": 246
-    },
-    {
       "hour": 11,
       "actions": 246
     },
     {
       "hour": 12,
       "actions": 245
+    },
+    {
+      "hour": 9,
+      "actions": 244
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2660
+      "count": 2653
     },
     {
       "topic": "Autre",
-      "count": 2056
+      "count": 2044
     },
     {
       "topic": "Crypto",
-      "count": 723
+      "count": 717
     },
     {
       "topic": "Bourse",
-      "count": 429
+      "count": 423
     },
     {
       "topic": "Spatial",
-      "count": 101
+      "count": 98
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2783
+      "count": 2779
     },
     {
       "pillar": "market_trauma",
-      "count": 1343
+      "count": 1329
     },
     {
       "pillar": "other",
-      "count": 1114
+      "count": 1102
     },
     {
       "pillar": "reply_bait",
-      "count": 132
+      "count": 128
     },
     {
       "pillar": "meme_reaction",
@@ -90,55 +90,55 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 58
+      "count": 60
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 386
+      "count": 392
     },
     {
       "pillar": "market_trauma",
-      "count": 174
+      "count": 171
     },
     {
       "pillar": "other",
-      "count": 140
+      "count": 135
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 19
     },
     {
       "pillar": "meme_reaction",
-      "count": 12
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 29,
-      "avg_likes": 0.34,
-      "avg_views": 67.8,
+      "pillar": "ai_news_take",
+      "posts": 90,
+      "avg_likes": 0.31,
+      "avg_views": 60.0,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 94,
-      "avg_likes": 0.29,
-      "avg_views": 59.2,
+      "pillar": "market_trauma",
+      "posts": 32,
+      "avg_likes": 0.31,
+      "avg_views": 65.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.27,
-      "avg_views": 62.1,
+      "posts": 72,
+      "avg_likes": 0.28,
+      "avg_views": 62.4,
       "low_sample": false
     },
     {
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4985
+      "count": 4959
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 342
     },
     {
       "type": "quote_gif",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 15
+      "count": 16
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-12T21:48:04.168216",
-      "text": "50% of $EMBER supply in one Bubblemaps cluster? That’s not a distribution. It’s an insider sale waiting for the right excuse to dump on you. FUD is just honesty with better marketing.",
+      "ts": "2026-09-13T01:46:59.323680",
+      "text": "China buys 150k H20s a year at the $67B annual sell-through rate. The export control is just a luxury tax on Nvidia's gross margin that Beijing pays happily because they own no fabs to lose anyway.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T21:46:29.629085",
-      "text": "Karp doesn't need a trim. he needs to read the 10-k again: palantir's gross margin is ~78%. his hair costs less than their aws bill. still iconic though.",
+      "ts": "2026-09-13T01:43:08.467985",
+      "text": "Nbis at 80x forward earnings is pricing in perfect execution. the margin of error for AI capex cycles just got smaller than a server rack blade slot. hold tight or get rekt",
       "type": "reply"
     },
     {
-      "ts": "2026-09-12T21:45:28.271868",
-      "text": "The real story isn't the döner machine. it's that google spent $4b on alphaseries while their stock dropped 15%. we're funding biology sims to justify datacenter capex now. pure cope.",
+      "ts": "2026-09-13T01:40:31.530800",
+      "text": "AI can solve P vs NP. It still needs 10MW of power and a $3B datacenter to tell you the answer. \n\nIntelligence is cheap. Entropy tax is expensive.",
       "type": "reply"
     }
   ]
