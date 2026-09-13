@@ -1,43 +1,43 @@
-# Weekly review — 2026-W36
+# Weekly review — 2026-W37
 
-Generated 2026-09-06T17:48 (deterministic, from engagement_log + follower_history).
+Generated 2026-09-13T17:48 (deterministic, from engagement_log + follower_history).
 
 ## Account
-- Followers: **4578** (+352 this week)
+- Followers: **4875** (+296 this week)
 - Following: **3500** ⚠️ OVER the 300 cap by 3200
 
 ## Action mix (7 days)
-- reply: 5065 (89%)
-- quote: 364 (6%)
-- quote_gif: 128 (2%)
-- hotake: 43 (0%)
+- reply: 4894 (90%)
+- quote: 328 (6%)
+- quote_gif: 97 (1%)
+- hotake: 47 (0%)
 - post: 39 (0%)
-- retweet: 26 (0%)
+- retweet: 16 (0%)
 
 ## Pillar mix (7 days) — shift toward winners
-- ai_news_take: 2713 (47%)
-- market_trauma: 1434 (25%)
-- other: 1180 (20%)
-- meme_reaction: 138 (2%)
-- reply_bait: 137 (2%)
-- ai_vs_btc: 63 (1%)
+- ai_news_take: 2744 (50%)
+- market_trauma: 1318 (24%)
+- other: 1077 (19%)
+- reply_bait: 126 (2%)
+- meme_reaction: 100 (1%)
+- ai_vs_btc: 56 (1%)
 
 ## Volume by day
-- 2026-08-30: 179 actions
-- 2026-08-31: 623 actions
-- 2026-09-01: 468 actions
-- 2026-09-02: 938 actions
-- 2026-09-03: 939 actions
-- 2026-09-04: 955 actions
-- 2026-09-05: 911 actions
-- 2026-09-06: 652 actions
+- 2026-09-06: 225 actions
+- 2026-09-07: 885 actions
+- 2026-09-08: 736 actions
+- 2026-09-09: 758 actions
+- 2026-09-10: 783 actions
+- 2026-09-11: 751 actions
+- 2026-09-12: 732 actions
+- 2026-09-13: 551 actions
 
 ## Top posts (7 days, by likes — scraped metrics)
-- ❤️5 👁367, 1.4% eng [ai_news_take] Pelosi buys $VST under $180 while Nvidia burns gigawatts for 7% upside. You’re trading power plants; she’s buy
-- ❤️2 👁441, 0.5% eng [ai_news_take] AI handling incidents so engineers lose touch with systems is the corporate equivalent of letting your kid do 
-- ❤️2 👁99, 2.0% eng [other] 5 years for full acceleration? My toddler masters 2D platformers in half that time 😭🍿 https://x.com/twtayaan/s
-- ❤️1 👁136, 0.7% eng [ai_news_take] AGI is just your cat knocking over coffee faster than $NVDA can print it 😭🛋️ https://x.com/AlexFinn/status/209
-- ❤️1 👁119, 0.8% eng [ai_news_take] OpenAI just beat Anthropic on SimpleBench with Astra and the whole timeline is doing jumping jacks in their We
+- ❤️4 👁195, 2.1% eng [ai_news_take] openai acting like they’re in therapy where “I forgot to tell my partner” is an acceptable excuse for blowing 
+- ❤️3 👁253, 1.2% eng [ai_news_take] Asked Starbucks’ new AI barista for a flat white with “a little bit of anxiety.” It gave me oat milk and told 
+- ❤️3 👁116, 2.6% eng [other] me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
+- ❤️2 👁120, 1.7% eng [market_trauma] DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
+- ❤️2 👁111, 1.8% eng [market_trauma] The 7 stocks buying all our dopamine, serving as group therapy for the rest of us 🛋️
 
 ## Spec targets (2026-06-07 quality barbell)
 - QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week

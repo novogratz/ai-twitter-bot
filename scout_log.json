@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-13T22:59:16.679608",
-    "raw_count": 10,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thegreatcoder",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le roi de l'algo fran\u00e7ais, ses threads sur les architectures LLM font plus mal que la vie."
-      },
-      {
-        "handle": "LionelDuc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Directeur chez Mistral, il twitte la tech sans le jargon VC qui emb\u00eate les gens."
-      },
-      {
-        "handle": "RaphaelLecourt",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste on-chain, il trouve les p\u00e9pites avant que les influenceurs ne vendent leurs sacs."
-      },
-      {
-        "handle": "PierreMigeon",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 10000,
-        "reason": "Expert IA francophone, ses insights sur l'agentic AI font oublier les pubs TikTok."
-      }
-    ],
-    "summary": "Un lineup qui balance l'expertise pure sans la vanit\u00e9 habituelle : des experts IA fran\u00e7ais, un trio qu\u00e9b\u00e9cois pertinent et un outsider US. Z\u00e9ro vendeur de r\u00eave, juste des profils qui savent ce qu'ils disent."
-  },
-  {
     "ts": "2026-08-14T00:59:24.915594",
     "raw_count": 8,
     "kept_count": 5,
@@ -6926,5 +6888,36 @@
       }
     ],
     "summary": "Une s\u00e9lection sans fioritures : l'ancien patron de Coinhouse pour le solide, un ex-trader pro pour l'action, et deux Qu\u00e9b\u00e9cois qui font vivre l'\u00e9cosyst\u00e8me Tech/AI francophone. Pas de vendeurs de r\u00eaves \u00e0 97\u20ac."
+  },
+  {
+    "ts": "2026-09-13T15:48:32.570335",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaxMizrahi",
+        "region": "france",
+        "niche": "finance/bourse",
+        "followers": 18500,
+        "reason": "Ex-PM HFT Cazenove. Il balance des perles sur la microstructure et les actions tech sans jargon scolaire. La r\u00e9f\u00e9rence 'street' FR qui ne vend rien."
+      },
+      {
+        "handle": "AlexisBretton",
+        "region": "france",
+        "niche": "ai/tech vc",
+        "followers": 15400,
+        "reason": "Partner chez Antidote. Il suit les startups IA de pr\u00e8s et tweete en FR avec une analyse business qui tranche avec le buzz pur."
+      },
+      {
+        "handle": "ClementHenry",
+        "region": "france",
+        "niche": "fintech/trading",
+        "followers": 12300,
+        "reason": "Ex-fondateur Yomoni. Il parle trading et gestion de patrimoine avec le recul du fondateur qui a tout vu (et fait)."
+      }
+    ],
+    "summary": "Le lot est fin : on balance les experts march\u00e9 francophones r\u00e9els plut\u00f4t que des influenceurs TikTok d\u00e9guis\u00e9s. Aucune formation \u00e0 acheter, juste des cerveaux."
   }
 ]

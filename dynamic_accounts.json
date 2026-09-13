@@ -2397,7 +2397,10 @@
     "ThibautDuchene",
     "MaximeDelalande",
     "JulieLagarda",
-    "PierreRochez"
+    "PierreRochez",
+    "MaxMizrahi",
+    "AlexisBretton",
+    "ClementHenry"
   ],
   "en": [
     "Chubby",
@@ -2955,7 +2958,9 @@
     "Diablo",
     "Mathelirium",
     "ROCKET",
-    "Ape"
+    "Ape",
+    "deepfates",
+    "orangie"
   ],
   "history": [
     {
@@ -17726,6 +17731,31 @@
     {
       "lang": "fr",
       "handle": "PierreRochez",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "deepfates",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "orangie",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxMizrahi",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBretton",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementHenry",
       "added": "2026-09-13"
     }
   ]
