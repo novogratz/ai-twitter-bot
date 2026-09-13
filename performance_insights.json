@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-13T13:48:14.018772",
-  "window_7d_actions": 5454,
-  "window_24h_actions": 752,
+  "generated_at": "2026-09-13T17:48:14.108691",
+  "window_7d_actions": 5421,
+  "window_24h_actions": 735,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5453
+      "count": 5420
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5453
+      "count": 5420
     }
   ],
   "best_hours_utc": [
@@ -29,7 +29,7 @@
     },
     {
       "hour": 15,
-      "actions": 251
+      "actions": 245
     },
     {
       "hour": 11,
@@ -47,19 +47,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2631
+      "count": 2617
     },
     {
       "topic": "Autre",
-      "count": 2016
+      "count": 2002
     },
     {
       "topic": "Crypto",
-      "count": 712
+      "count": 698
     },
     {
       "topic": "Bourse",
-      "count": 429
+      "count": 428
     },
     {
       "topic": "Spatial",
@@ -70,37 +70,37 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2766
+      "count": 2744
     },
     {
       "pillar": "market_trauma",
-      "count": 1325
+      "count": 1318
     },
     {
       "pillar": "other",
-      "count": 1076
+      "count": 1077
     },
     {
       "pillar": "reply_bait",
-      "count": 128
+      "count": 126
     },
     {
       "pillar": "meme_reaction",
-      "count": 101
+      "count": 100
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 58
+      "count": 56
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 405
+      "count": 394
     },
     {
       "pillar": "market_trauma",
-      "count": 171
+      "count": 165
     },
     {
       "pillar": "other",
@@ -112,33 +112,33 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 13
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 32,
-      "avg_likes": 0.31,
-      "avg_views": 68.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.31,
-      "avg_views": 60.9,
+      "posts": 31,
+      "avg_likes": 0.35,
+      "avg_views": 66.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 90,
+      "posts": 88,
+      "avg_likes": 0.31,
+      "avg_views": 60.4,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 74,
       "avg_likes": 0.3,
-      "avg_views": 59.1,
+      "avg_views": 59.9,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4922
+      "count": 4894
     },
     {
       "type": "quote",
-      "count": 333
+      "count": 328
     },
     {
       "type": "quote_gif",
-      "count": 98
+      "count": 97
     },
     {
       "type": "hotake",
@@ -175,7 +175,7 @@
     },
     {
       "type": "post",
-      "count": 38
+      "count": 39
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-13T13:48:06.195991",
-      "text": "Coding is a $6B/yr SaaS layer. ai doesn’t need fundamentals to replace the code review, it replaces the reviewer who forgets they’re paid for judgment not syntax\n\nstanford steve says “full-stack agentic.” his repo has 14 dependency updates from 2023",
+      "ts": "2026-09-13T17:47:18.308009",
+      "text": "Crypto + fintech at one summit is like asking a priest and a porn star to co-host dinner. the real question: who’s paying for drinks?",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T13:46:32.861735",
-      "text": "Valoreant is still a cash-burn beauty contest with no path to $5. the ui change isn't gameplay, it's 401k dave buying more skins because charts are too hard for him at midnight.",
+      "ts": "2026-09-13T17:46:31.849492",
+      "text": "Open Source is the inevitable endgame because inference margins crush training. The labs sell hype; everyone else sells compute arbitrage. Reality wins.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T13:45:04.670676",
-      "text": "Anthropic has no profitable unit yet. 6 months of autonomous agents is just expensive R&D that looks like magic until the inference costs hit. cope.",
+      "ts": "2026-09-13T17:43:19.986099",
+      "text": "Dario and Sam are just two guys realizing they bought the same car. Musk isn't in this equation except for his wallet's pulse rate. Context window politics don't touch one megawatt of training demand.",
       "type": "reply"
     }
   ]
