@@ -2383,7 +2383,13 @@
     "julesd",
     "_adrienvd",
     "_julie_lagarda_",
-    "MickaelGuitton"
+    "MickaelGuitton",
+    "BoursierFR_",
+    "Thom_Borini",
+    "ThomasBordet",
+    "VivianeSalmon",
+    "BorisRouet",
+    "CryptoHiverQC"
   ],
   "en": [
     "Chubby",
@@ -2937,7 +2943,8 @@
     "AlertesInfos",
     "Midas",
     "SAAR",
-    "PaulBarron"
+    "PaulBarron",
+    "Diablo"
   ],
   "history": [
     {
@@ -17618,6 +17625,41 @@
     {
       "lang": "fr",
       "handle": "MickaelGuitton",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BoursierFR_",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Thom_Borini",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Diablo",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBordet",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivianeSalmon",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisRouet",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoHiverQC",
       "added": "2026-09-12"
     }
   ]
