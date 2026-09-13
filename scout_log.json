@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-13T20:59:16.497563",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thaleslefebvre",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 180000,
-        "reason": "Le baron du fringale sur Crypto. Il tweet en FR, il est riche, et son opinion p\u00e8se plus que celle de deux analystes Bloomberg r\u00e9unis."
-      },
-      {
-        "handle": "RomainCordier",
-        "region": "france",
-        "niche": "ai",
-        "followers": 80000,
-        "reason": "Fondateur d'AlgoBridge. Il parle d'IA, de trading et de macro. Il tweet en FR. Il est pas l\u00e0 pour vendre du r\u00eave \u00e0 2000 balles."
-      },
-      {
-        "handle": "gael43435042",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le roi de l'anti-blabla boursier en FR. Pas de signaux, pas de groupe VIP \u00e0 99\u20ac. Juste des positions et des raisons."
-      },
-      {
-        "handle": "MaximeAubert",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 50000,
-        "reason": "Maxime (ex-Vultr, ex-TradingView). Il vit aux US, mais il tweet en FR. C'est un v\u00e9t\u00e9ran qui voit passer les bull/bear market sans ciller."
-      },
-      {
-        "handle": "JulienBoudot",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Julien Boudot. Il couvre la micro-cap et la tech. Il tweet en FR. Il est pas l\u00e0 pour te faire du like-baiting sur le CAC40."
-      },
-      {
-        "handle": "SylvainFoucault",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Sylvain Foucault. Pas le plus gros, mais le plus technique sur la DeFi en FR. Il tweet pour les gens qui lisent les docs, pas les memes."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le gras pour trouver le maigre de qualit\u00e9. Pas de vendeurs de r\u00eaves ici, juste des traders, des devs et des analystes qui font leur boulot en fran\u00e7ais. Attention, certains sont plus discrets que la bourse elle-m\u00eame."
-  },
-  {
     "ts": "2026-08-13T22:59:16.679608",
     "raw_count": 10,
     "kept_count": 4,
@@ -6940,5 +6888,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour te garder ceux qui construisent vraiment l'IA et g\u00e8rent leur portefeuille sans crier sur Twitter, entre Paris, Montr\u00e9al et San Francisco."
+  },
+  {
+    "ts": "2026-09-13T11:48:39.342178",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautDuchene",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le baron de Coinhouse. Il tweete comme il trade : avec un peu d'ego mais une logique b\u00e9ton."
+      },
+      {
+        "handle": "MaximeDelalande",
+        "region": "usa",
+        "niche": "crypto_defi",
+        "followers": 30000,
+        "reason": "Ex-Riot Platforms. Il tweete en anglais mais sa communaut\u00e9 FR est massive et r\u00e9active."
+      },
+      {
+        "handle": "JulieLagarda",
+        "region": "france",
+        "niche": "tech_bourse",
+        "followers": 20000,
+        "reason": "La voix calme dans la temp\u00eate du trading algo. Elle montre que les femmes commandent aussi le code quantique."
+      },
+      {
+        "handle": "PierreRochez",
+        "region": "quebec",
+        "niche": "tech_ia",
+        "followers": 18000,
+        "reason": "Le chercheur qui rend l'IA accessible sans \u00eatre ennuyeux. Moins 'influencer', plus 'experts'. Rare en Qc."
+      }
+    ],
+    "summary": "Une s\u00e9lection sans fioritures : l'ancien patron de Coinhouse pour le solide, un ex-trader pro pour l'action, et deux Qu\u00e9b\u00e9cois qui font vivre l'\u00e9cosyst\u00e8me Tech/AI francophone. Pas de vendeurs de r\u00eaves \u00e0 97\u20ac."
   }
 ]

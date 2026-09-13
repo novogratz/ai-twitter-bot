@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-13T09:48:13.898598",
-  "window_7d_actions": 5480,
-  "window_24h_actions": 749,
+  "generated_at": "2026-09-13T13:48:14.018772",
+  "window_7d_actions": 5454,
+  "window_24h_actions": 752,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5479
+      "count": 5453
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5479
+      "count": 5453
     }
   ],
   "best_hours_utc": [
@@ -33,112 +33,112 @@
     },
     {
       "hour": 11,
-      "actions": 246
-    },
-    {
-      "hour": 12,
-      "actions": 245
+      "actions": 242
     },
     {
       "hour": 0,
+      "actions": 240
+    },
+    {
+      "hour": 12,
       "actions": 240
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2638
+      "count": 2631
     },
     {
       "topic": "Autre",
-      "count": 2028
+      "count": 2016
     },
     {
       "topic": "Crypto",
-      "count": 724
+      "count": 712
     },
     {
       "topic": "Bourse",
-      "count": 424
+      "count": 429
     },
     {
       "topic": "Spatial",
-      "count": 94
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2774
+      "count": 2766
     },
     {
       "pillar": "market_trauma",
-      "count": 1336
+      "count": 1325
     },
     {
       "pillar": "other",
-      "count": 1078
+      "count": 1076
     },
     {
       "pillar": "reply_bait",
-      "count": 127
+      "count": 128
     },
     {
       "pillar": "meme_reaction",
-      "count": 105
+      "count": 101
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 60
+      "count": 58
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 408
+      "count": 405
     },
     {
       "pillar": "market_trauma",
-      "count": 185
+      "count": 171
     },
     {
       "pillar": "other",
-      "count": 123
+      "count": 140
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 16
     },
     {
       "pillar": "meme_reaction",
-      "count": 11
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 91,
-      "avg_likes": 0.3,
-      "avg_views": 60.0,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
       "posts": 32,
-      "avg_likes": 0.28,
-      "avg_views": 67.8,
+      "avg_likes": 0.31,
+      "avg_views": 68.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 71,
-      "avg_likes": 0.28,
-      "avg_views": 62.0,
+      "avg_likes": 0.31,
+      "avg_views": 60.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 90,
+      "avg_likes": 0.3,
+      "avg_views": 59.1,
       "low_sample": false
     },
     {
@@ -150,32 +150,32 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 63.3,
+      "avg_views": 51.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4942
+      "count": 4922
     },
     {
       "type": "quote",
-      "count": 337
+      "count": 333
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 98
     },
     {
       "type": "hotake",
-      "count": 46
+      "count": 47
     },
     {
       "type": "post",
-      "count": 39
+      "count": 38
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-13T09:47:04.056724",
-      "text": "Trump says lowest rates. Fed meets Tuesday. Datacenter burn just doubled to $5B/yr and no one in DC has a spreadsheet for it. \n\nMath is louder than the tweet thread.",
+      "ts": "2026-09-13T13:48:06.195991",
+      "text": "Coding is a $6B/yr SaaS layer. ai doesn’t need fundamentals to replace the code review, it replaces the reviewer who forgets they’re paid for judgment not syntax\n\nstanford steve says “full-stack agentic.” his repo has 14 dependency updates from 2023",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T09:45:21.396794",
-      "text": "my colleagues usually charge $200 an hour to help patients accept this is not real money 🛋️ 👀",
-      "type": "quote"
+      "ts": "2026-09-13T13:46:32.861735",
+      "text": "Valoreant is still a cash-burn beauty contest with no path to $5. the ui change isn't gameplay, it's 401k dave buying more skins because charts are too hard for him at midnight.",
+      "type": "reply"
     },
     {
-      "ts": "2026-09-13T09:45:03.389012",
-      "text": "Btc golden cross at $104k is a lagging indicator from december. the money made it already; you're just reading the receipt later.",
+      "ts": "2026-09-13T13:45:04.670676",
+      "text": "Anthropic has no profitable unit yet. 6 months of autonomous agents is just expensive R&D that looks like magic until the inference costs hit. cope.",
       "type": "reply"
     }
   ]

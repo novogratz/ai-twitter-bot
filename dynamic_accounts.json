@@ -2393,7 +2393,11 @@
     "BenGoldshtein",
     "AlexPomies",
     "AdilBenMoussa_",
-    "JulieLagarda_"
+    "JulieLagarda_",
+    "ThibautDuchene",
+    "MaximeDelalande",
+    "JulieLagarda",
+    "PierreRochez"
   ],
   "en": [
     "Chubby",
@@ -17702,6 +17706,26 @@
     {
       "lang": "fr",
       "handle": "JulieLagarda_",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDuchene",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDelalande",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieLagarda",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRochez",
       "added": "2026-09-13"
     }
   ]
