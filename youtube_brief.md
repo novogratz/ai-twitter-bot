@@ -1,16 +1,16 @@
-# YouTube brief — 2026-09-12
+# YouTube brief — 2026-09-13
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **752**
-- reply: **678**
+- Total actions logged: **734**
+- reply: **666**
 - quote: **43**
-- quote_gif: **17**
-- post: **7**
-- hotake: **6**
-- retweet: **1**
+- quote_gif: **9**
+- hotake: **7**
+- post: **6**
+- retweet: **3**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -31,10 +31,9 @@
 ### Other
 
 - **3 likes / 116 views** — me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
-- **2 likes / 115 views** — London at number 2 is just Paris trying to explain its rent prices with better grammar 😭👀
 - **2 likes / 120 views** — DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
-- **1 likes / 56 views** — 69% oppose it is just me looking at my property tax bill like 🛋️😭
-- **1 likes / 75 views** — me on my laptop realizing i’m still paying for hair supplements to cope with beta testing. 💇‍♀️📉
+- **2 likes / 111 views** — The 7 stocks buying all our dopamine, serving as group therapy for the rest of us 🛋️
+- **1 likes / 314 views** — me at 3am refreshing usage stats like it’s my period tracker 💓🤏
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -62,20 +61,20 @@ It m
 
 - **[OpenAI Blog]** Perplexity trusts GPT-6 Astra with end-to-end systems
   - https://openai.com/index/perplexity-improving-accuracy-with-astra
-- **[CNBC Tech]** Oracle's Larry Ellison adopts trading plan to sell up to $7.5 billion worth of stock
-  - https://www.cnbc.com/2026/09/11/larry-ellison-50-million-trading-plan.html
-- **[Simon Willison]** OpenAI agents attacked RubyGems back in May
-  - https://simonwillison.net/2026/Sep/12/openai-agents-rubygems/
-- **[CoinDesk]** Robinhood CEO says companies shouldn't get veto over stock tokens in AMC feud
-  - https://www.coindesk.com/markets/2026/09/11/robinhood-ceo-says-companies-shouldn-t-get-veto-over-stock-tokens-in-amc-feud
-- **[TechCrunch]** Mecka AI nears $500M valuation in Sequoia-led deal amid rush for robot training data
-  - https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/
-- **[TechCrunch AI]** Mecka AI nears $500M valuation in Sequoia-led deal amid rush for robot training data
-  - https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/
-- **[CNBC Top]** Cramer’s week ahead: Falling oil could help stocks but Fed is the next big test
-  - https://www.cnbc.com/2026/09/11/cramers-week-ahead-falling-oil-fed.html
-- **[CNBC Tech]** Oracle posts 30% revenue growth fueled by AI cloud demand as debts hits $125 billion
-  - https://www.cnbc.com/2026/09/11/oracle-stock-q1-earnings-ai-cloud.html
+- **[Simon Willison]** Generating running routes with GPT-6 Astra and ChatGPT Work
+  - https://simonwillison.net/2026/Sep/12/astra-running-routes/
+- **[CNBC Top]** OpenAI rules out IPO this year as Altman, Musk & Amodei warn AI is moving too fast
+  - https://www.cnbc.com/2026/09/12/anthropics-amodei-proposes-plan-to-slow-the-pace-of-advancing-ai-capabilities.html
+- **[CNBC Tech]** OpenAI rules out IPO this year as Altman, Musk & Amodei warn AI is moving too fast
+  - https://www.cnbc.com/2026/09/12/anthropics-amodei-proposes-plan-to-slow-the-pace-of-advancing-ai-capabilities.html
+- **[The Block]** CryptoQuant says bitcoin must clear resistance at $81,700 to confirm new bull market
+  - https://www.theblock.co/news/markets/2026-09-12-cryptoquant-bitcoin-resistance-support-levels-414519
+- **[CoinDesk]** OpenAI IPO won't happen this year, says Sam Altman
+  - https://www.coindesk.com/markets/2026/09/12/openai-ipo-won-t-happen-this-year-says-sam-altman
+- **[CoinDesk]** Bitcoin Suisse plans to cut up to half its Swiss jobs as it shifts work abroad
+  - https://www.coindesk.com/business/2026/09/12/bitcoin-suisse-plans-to-cut-up-to-half-its-swiss-jobs-as-it-shifts-work-abroad
+- **[TechCrunch AI]** OpenAI’s Sam Altman says it would be ‘ill-advised’ to go public in 2026
+  - https://techcrunch.com/2026/09/12/openais-sam-altman-says-it-would-be-ill-advised-to-go-public-in-2026/
 
 ## 🎬 Suggested video angles
 
@@ -86,4 +85,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-12T00:48:13*
+*Generated 2026-09-13T00:48:13*

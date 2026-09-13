@@ -1728,3 +1728,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 4 likes / 195 views: openai acting like they’re in therapy where “I forgot to tell my partner” is an acceptable excuse fo
   - 3 likes / 253 views: Asked Starbucks’ new AI barista for a flat white with “a little bit of anxiety.” It gave me oat milk
   - 2 likes / 120 views: DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
+
+## 2026-09-12
+
+**Activity** — total actions: 732
+  - by type: reply=663, quote=45, quote_gif=10, hotake=7, post=6, retweet=1
+  - top sources: SEARCH-HOT=434, FEED-SWEEP-FEED=120, FEED-SWEEP-FOLLOWING=76, QUOTE=32, DEBATE=19, VIP=13, GIF=10, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=17, @cryptorover=10, @Polymarket=9, @HealthRanger=9, @rohanpaul_ai=8
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 111 views: The 7 stocks buying all our dopamine, serving as group therapy for the rest of us 🛋️
+  - 1 likes / 149 views: Burry buying LULU under $10 means he’s finally letting go of his tech baggage and ready to feel fabr
+  - 1 likes / 119 views: OpenRouter’s #1 lab isn’t a model. It’s $NVDA hardware pretending to have an opinion. You didn't los
