@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-13T01:48:13.944481",
-  "window_7d_actions": 5503,
-  "window_24h_actions": 731,
+  "generated_at": "2026-09-13T05:48:13.891729",
+  "window_7d_actions": 5509,
+  "window_24h_actions": 747,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5502
+      "count": 5508
     },
     {
       "pattern": "METAPHOR",
@@ -19,13 +19,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5502
+      "count": 5508
     }
   ],
   "best_hours_utc": [
     {
       "hour": 2,
-      "actions": 260
+      "actions": 263
     },
     {
       "hour": 15,
@@ -47,38 +47,38 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2653
+      "count": 2655
     },
     {
       "topic": "Autre",
-      "count": 2044
+      "count": 2041
     },
     {
       "topic": "Crypto",
-      "count": 717
+      "count": 724
     },
     {
       "topic": "Bourse",
-      "count": 423
+      "count": 429
     },
     {
       "topic": "Spatial",
-      "count": 98
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2779
+      "count": 2787
     },
     {
       "pillar": "market_trauma",
-      "count": 1329
+      "count": 1336
     },
     {
       "pillar": "other",
-      "count": 1102
+      "count": 1093
     },
     {
       "pillar": "reply_bait",
@@ -86,59 +86,59 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 105
+      "count": 106
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 60
+      "count": 59
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 392
+      "count": 406
     },
     {
       "pillar": "market_trauma",
-      "count": 171
+      "count": 179
     },
     {
       "pillar": "other",
-      "count": 135
+      "count": 131
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 14
     },
     {
       "pillar": "meme_reaction",
-      "count": 7
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 90,
-      "avg_likes": 0.31,
-      "avg_views": 60.0,
+      "pillar": "market_trauma",
+      "posts": 33,
+      "avg_likes": 0.3,
+      "avg_views": 65.9,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 32,
-      "avg_likes": 0.31,
-      "avg_views": 65.7,
+      "pillar": "ai_news_take",
+      "posts": 92,
+      "avg_likes": 0.29,
+      "avg_views": 58.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
+      "posts": 69,
       "avg_likes": 0.28,
-      "avg_views": 62.4,
+      "avg_views": 59.0,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4959
+      "count": 4968
     },
     {
       "type": "quote",
-      "count": 342
+      "count": 338
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 101
     },
     {
       "type": "hotake",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-13T01:46:59.323680",
-      "text": "China buys 150k H20s a year at the $67B annual sell-through rate. The export control is just a luxury tax on Nvidia's gross margin that Beijing pays happily because they own no fabs to lose anyway.",
+      "ts": "2026-09-13T05:44:30.560325",
+      "text": "186 km de plus qu'elle ne le pensait. c'est pas une voiture louée, c'est un LLM qui a halluciné dans la vallée des algorithmes",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T01:43:08.467985",
-      "text": "Nbis at 80x forward earnings is pricing in perfect execution. the margin of error for AI capex cycles just got smaller than a server rack blade slot. hold tight or get rekt",
+      "ts": "2026-09-13T05:41:06.211672",
+      "text": "Nvidia datacenter is 80% of revenue. The AI stocks aren't crashing on China fear; they're correcting because the margin spread between training and inference just snapped back to earth. math > meme.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T01:40:31.530800",
-      "text": "AI can solve P vs NP. It still needs 10MW of power and a $3B datacenter to tell you the answer. \n\nIntelligence is cheap. Entropy tax is expensive.",
+      "ts": "2026-09-13T05:40:16.795618",
+      "text": "Burry wants cloud profits to match CapEx. Jensen showed 70% gross margins on H100/H200 GPUs before they even arrive in racks. You're comparing a rental market's EBITDA to an oil well's reserves. Different asset class, different P&L structure, same greedy owner at the end of the d",
       "type": "reply"
     }
   ]

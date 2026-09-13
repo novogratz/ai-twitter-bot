@@ -2389,7 +2389,9 @@
     "ThomasBordet",
     "VivianeSalmon",
     "BorisRouet",
-    "CryptoHiverQC"
+    "CryptoHiverQC",
+    "BenGoldshtein",
+    "AlexPomies"
   ],
   "en": [
     "Chubby",
@@ -2944,7 +2946,10 @@
     "Midas",
     "SAAR",
     "PaulBarron",
-    "Diablo"
+    "Diablo",
+    "Mathelirium",
+    "ROCKET",
+    "Ape"
   ],
   "history": [
     {
@@ -17661,6 +17666,31 @@
       "lang": "fr",
       "handle": "CryptoHiverQC",
       "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Mathelirium",
+      "added": "2026-09-12"
+    },
+    {
+      "lang": "en",
+      "handle": "ROCKET",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenGoldshtein",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexPomies",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Ape",
+      "added": "2026-09-13"
     }
   ]
 }
