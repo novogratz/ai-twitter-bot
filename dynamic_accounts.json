@@ -2409,7 +2409,11 @@
     "DariusMazur",
     "AdrienLeroyFR_",
     "JulesBNT_",
-    "HugoMounier_"
+    "HugoMounier_",
+    "_thomas_girard_",
+    "_AlexisDionne",
+    "JulienBouffard",
+    "ClementGuerin"
   ],
   "en": [
     "Chubby",
@@ -2972,7 +2976,8 @@
     "orangie",
     "Bastion",
     "Choblin",
-    "DHH"
+    "DHH",
+    "vegastar"
   ],
   "history": [
     {
@@ -17829,6 +17834,31 @@
       "lang": "fr",
       "handle": "HugoMounier_",
       "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "vegastar",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "_thomas_girard_",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "_AlexisDionne",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouffard",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementGuerin",
+      "added": "2026-09-14"
     }
   ]
 }

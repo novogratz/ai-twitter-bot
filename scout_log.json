@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-08-14T06:59:16.707975",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Morgan_Hamel",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Le seul journaliste FR qui fait de la deep-dive sur la fintech sans te vendre un stage."
-      },
-      {
-        "handle": "JeanBaptiste_Ju",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Bas\u00e9 \u00e0 NYC mais \u00e2me fran\u00e7aise. Il couvre l'IA comme un VC, pas comme un influenceur."
-      },
-      {
-        "handle": "Gael_Falaise",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "La voice du Qu\u00e9bec sur l'IA. Cher, pertinent, et \u00e7a ne dort jamais."
-      },
-      {
-        "handle": "Ludovic_Boyer",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Ex-Mistral, puriste de la data. Moins de hype, plus de dents."
-      },
-      {
-        "handle": "Pierre_Thivrier",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Founding engineer fr qui twitte sur l'infra. Pour ceux qui veulent comprendre sous le capot."
-      }
-    ],
-    "summary": "Le top est domin\u00e9 par les fondateurs et engineers fran\u00e7ais qui prouvent que la France produit du r\u00e9el, pas juste des slides. Le Qu\u00e9bec se fait rare mais les perles sont solides."
-  },
-  {
-    "ts": "2026-08-14T08:59:02.763062",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TiboImbeau",
-        "region": "france",
-        "niche": "tech",
-        "followers": 120000,
-        "reason": "Inattendu mais pertinent : il couvre l'IA et la tech avec un vrai coup d'\u0153il pro, pas influencer."
-      },
-      {
-        "handle": "JorisPancake",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "Le roi du storytelling crypto FR. Twitte en FR, humour d\u00e9cal\u00e9, z\u00e9ro formation \u00e0 197\u20ac."
-      },
-      {
-        "handle": "MathieuDumas",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Analyse macro brutale et pr\u00e9cise. Si tu cherches du lyrisme boursier, tu es servi."
-      },
-      {
-        "handle": "PierreRoussel",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Journaliste tech FR qui comprend vraiment le sujet. Pas de jargon vide, que du concret."
-      }
-    ],
-    "summary": "Pas de nouveaux venus explosifs cette session, mais on renforce le noyau dur avec Roussel (AI) et on confirme le duo pancake/dumas. Le Qu\u00e9bec reste sous-repr\u00e9sent\u00e9 mais qualitatif."
-  },
-  {
     "ts": "2026-08-14T10:59:05.218169",
     "raw_count": 6,
     "kept_count": 1,
@@ -6898,5 +6815,60 @@
       }
     ],
     "summary": "Focus IA/Crypto pur : j'ai \u00e9vit\u00e9 les g\u00e9n\u00e9ralistes qui tweetent sur tout sauf la tech, pour garder du concret sans la pubs Telegram VIP \u00e0 90\u20ac/mois"
+  },
+  {
+    "ts": "2026-09-14T01:48:40.652244",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Maxime_Levillain",
+        "region": "france",
+        "niche": "ai/tech",
+        "followers": 45000,
+        "reason": "Hugo & Boris fan #1. Il d\u00e9cortique l'IA technique sans vendre de la pluie en Brie-Comte-Robert."
+      },
+      {
+        "handle": "_thomas_girard_",
+        "region": "france",
+        "niche": "ai/tech",
+        "followers": 35000,
+        "reason": "CTO qui parle code et business. Pas de buzzwords vides, il montre comment l'IA tue les jobs interm\u00e9diaires."
+      },
+      {
+        "handle": "_AlexisDionne",
+        "region": "quebec",
+        "niche": "crypto/defi",
+        "followers": 15000,
+        "reason": "Le roi du DeFi qu\u00e9b\u00e9cois. Moins hype que les shillers de memes coins, mais un analyste qui tient la route."
+      },
+      {
+        "handle": "JulienBouffard",
+        "region": "quebec",
+        "niche": "fintech/bourse",
+        "followers": 12000,
+        "reason": "Journaliste finance qui ne dort pas. Il couvre les ETF et l'actualit\u00e9 march\u00e9s avec un franc-parler sans filtre corporate."
+      }
+    ],
+    "summary": "Focus IA technique FR (Levillain/Girard) vs Crypto/Finance QC active. Z\u00e9ro vendeur de r\u00eaves, que du contenu brut."
+  },
+  {
+    "ts": "2026-09-14T03:48:45.164270",
+    "raw_count": 10,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ClementGuerin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 14500,
+        "reason": "Le patron de Coinhouse qui balance l'info brute sur la r\u00e9gulation et les tokens. Pas dans le blabla VC \u00e9litiste."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 ceux qui ont du contenu r\u00e9el : Raphael Elmali pour l'IA qu\u00e9b\u00e9coise acad\u00e9mique, Alex Dionn\u00e9 pour la bourse Qu\u00e9becoises, et des p\u00e9pites tech FR hors de la 'hype train'. On oublie les vendeurs de r\u00eaves Telegram."
   }
 ]
