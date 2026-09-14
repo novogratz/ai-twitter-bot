@@ -17416,3 +17416,17 @@ Hugging Face has become one of the most important open AI platform
 It m
   - https://x.com/Dr_Crossroads/status/2098482786353193136
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 201).
+
+## 2026-09-14
+- **@sam_badawi** (16 likes, score 7/10) — SoftBank secured an $11.87B two-year loan facility from roughly 20 banks to help fund its OpenAI investment, above its original $10B target.
+  - https://x.com/Sam_Badawi/status/2099337446240698634
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 22).
+- **@wheelieinvestor** (1101 likes, score 9/10) — Holy sh*t we are going to moon on Monday
+
+Anthropic is tripling compute deals
+
+OpenAI just stopped offering their $200 plan due to a lack of compute
+
+There is so much demand for more GW. Stay bullish
+  - https://x.com/WheelieInvestor/status/2099200186673397997
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1237).
