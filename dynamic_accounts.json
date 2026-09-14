@@ -2418,7 +2418,11 @@
     "LaetitiaVanhove",
     "JulienLeDantzeq",
     "BenoitDinhFR",
-    "AlexPugliese_"
+    "AlexPugliese_",
+    "CryptoKong_",
+    "Peppe87",
+    "JulienDuchet",
+    "NathalieWalshFR"
   ],
   "en": [
     "Chubby",
@@ -17900,6 +17904,26 @@
     {
       "lang": "fr",
       "handle": "AlexPugliese_",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKong_",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Peppe87",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDuchet",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieWalshFR",
       "added": "2026-09-14"
     }
   ]
