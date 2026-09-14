@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-14T04:59:05.416603",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LorenzoProtector",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le roi de l'altcoin en FR, tweets quotidiens, z\u00e9ro guru, pur alpha on-chain."
-      },
-      {
-        "handle": "Adrian_Bourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Ex-Mistral/Valhalla, twitte la tech AI sans le blabla VC, tr\u00e8s technique."
-      },
-      {
-        "handle": "TheoC",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Journaliste AI chez La Tribune, excellents threads sur les startups francophones du secteur."
-      },
-      {
-        "handle": "MaximeSavary",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyse fondamentale pure, pas de signaux, juste des bilans annuels qui tuent."
-      },
-      {
-        "handle": "RomainMillet",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Ex-Rocki, visionnaire fintech qu\u00e9b\u00e9cois, tweets sur la structure du march\u00e9."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs 'lambo' pour ne garder que les analystes de fond et les builders. On a du gros calibre en crypto (Lorenzo) et en AI (Adrian/Theo), avec une touche fintech qu\u00e9b\u00e9coise indispensable (Romain)."
-  },
-  {
     "ts": "2026-08-14T06:59:16.707975",
     "raw_count": 10,
     "kept_count": 5,
@@ -6884,5 +6839,64 @@
       }
     ],
     "summary": "Focus IA FR avec le duo TheAIShrink/Mistral + force qu\u00e9b\u00e9coise via Dionne/Audet. Le reste comble les trous crypto/bourse sans prendre de gants ni vendre du r\u00eave \u00e0 prix d'or."
+  },
+  {
+    "ts": "2026-09-13T21:48:35.585261",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DariusMazur",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 50000,
+        "reason": "Le mec qui a vendu ses Bitcoin quand tout le monde l'insultait. Il twitte la r\u00e9alit\u00e9 brute en FR."
+      },
+      {
+        "handle": "PierreDucasseFR_",
+        "region": "usa",
+        "niche": "ai/tech",
+        "followers": 30000,
+        "reason": "Le Parisien de SF qui twitte la tech US en fran\u00e7ais. Ses threads sur OpenAI valent plus que les news."
+      },
+      {
+        "handle": "PierreRochardFR_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ex-coinbase France. Il explique le Bitcoin sans vendre du r\u00eave ou des formations \u00e0 99\u20ac."
+      },
+      {
+        "handle": "AdrienLeroyFR_",
+        "region": "usa",
+        "niche": "ai/tech",
+        "followers": 22000,
+        "reason": "Il analyse le march\u00e9 des donn\u00e9es et l'IA en amont. Moins de bruit que les influenceurs 'investing'."
+      },
+      {
+        "handle": "_alex_dionne_qc_",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en IA. Il tweete entre Paris et Montr\u00e9al sans jamais se perdre."
+      },
+      {
+        "handle": "JulesBNT_",
+        "region": "quebec",
+        "niche": "ai/tech",
+        "followers": 18000,
+        "reason": "Found\u00e9ris. Il couvre l'IA de fa\u00e7on technique et dr\u00f4le. Moins hype que les autres mais plus pertinent."
+      },
+      {
+        "handle": "HugoMounier_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le meilleur threader tech de France sur l'IA et les startups. Z\u00e9ro buzzword vide."
+      }
+    ],
+    "summary": "Focus IA/Crypto pur : j'ai \u00e9vit\u00e9 les g\u00e9n\u00e9ralistes qui tweetent sur tout sauf la tech, pour garder du concret sans la pubs Telegram VIP \u00e0 90\u20ac/mois"
   }
 ]

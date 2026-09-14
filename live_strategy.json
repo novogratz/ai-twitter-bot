@@ -1,21 +1,21 @@
 {
-  "ts": "2026-09-10T21:48:13.718116",
+  "ts": "2026-09-13T21:48:13.817869",
   "caps": {
-    "MAX_NEWS_PER_DAY": 12,
-    "MAX_HOTAKES_PER_DAY": 15,
-    "MAX_QUOTES_PER_DAY": 160,
+    "MAX_NEWS_PER_DAY": 15,
+    "MAX_HOTAKES_PER_DAY": 20,
+    "MAX_QUOTES_PER_DAY": 180,
     "MAX_RETWEETS_PER_DAY": 3,
     "MAX_BREAKOUTS_PER_DAY": 2,
-    "MAX_SPICY_PER_DAY": 1,
+    "MAX_SPICY_PER_DAY": 2,
     "MAX_REPLIES_PER_CYCLE": 45,
     "FOLLOW_BLAST_PER_CYCLE": 4,
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Mistral: Le luxe français qui fait du ca",
-    "Palantir vs S&P 500: Quand l'armée US te",
-    "BTC ETF: La boîte de nuit où tout le mon"
+    "Nvidia: Le casino où la maison ne dort j",
+    "GPT-6 vs AGI: Quand le rêve coûte plus c",
+    "BTC ETF: Les banquiers qui ont enfin tro"
   ],
   "cadence_factor": 1.2,
-  "rationale": "Le bot repart du pied gauche avec un capot fumant : on garde les quotes agressives pour saturer l'algo post-pause et on pousse les hotakes sur Palantir/Mistral/BTC qui sont nos meilleurs performers récents sans noyer le feed. On vise la concentration de cash-flow, pas la tech pure."
+  "rationale": "On relance la machine après une pause bien méritée : on augmente légèrement les hotakes pour capter l'engouement post-week-end et on pousse sur Nvidia/AGI qui sont nos best-performers sans noyer le feed en news génériques. On vise la concentration du cash-flow, pas la tech pure."
 }

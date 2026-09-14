@@ -2405,7 +2405,11 @@
     "LorenzoCesa",
     "MaxenceDantot",
     "CoinhouseHQ",
-    "BenoitFlocH_AI"
+    "BenoitFlocH_AI",
+    "DariusMazur",
+    "AdrienLeroyFR_",
+    "JulesBNT_",
+    "HugoMounier_"
   ],
   "en": [
     "Chubby",
@@ -2967,7 +2971,8 @@
     "deepfates",
     "orangie",
     "Bastion",
-    "Choblin"
+    "Choblin",
+    "DHH"
   ],
   "history": [
     {
@@ -17798,6 +17803,31 @@
     {
       "lang": "fr",
       "handle": "BenoitFlocH_AI",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "DHH",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariusMazur",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLeroyFR_",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBNT_",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoMounier_",
       "added": "2026-09-13"
     }
   ]
