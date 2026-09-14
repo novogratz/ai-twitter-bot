@@ -2414,7 +2414,11 @@
     "_AlexisDionne",
     "JulienBouffard",
     "ClementGuerin",
-    "thomasc_3x"
+    "thomasc_3x",
+    "LaetitiaVanhove",
+    "JulienLeDantzeq",
+    "BenoitDinhFR",
+    "AlexPugliese_"
   ],
   "en": [
     "Chubby",
@@ -17876,6 +17880,26 @@
     {
       "lang": "en",
       "handle": "Roblox",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaetitiaVanhove",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeDantzeq",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDinhFR",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexPugliese_",
       "added": "2026-09-14"
     }
   ]

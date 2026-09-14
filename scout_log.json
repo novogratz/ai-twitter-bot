@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-14T16:59:06.689273",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lemario59",
-        "region": "france",
-        "niche": "tech",
-        "followers": 85000,
-        "reason": "Ancien de l'IA DeepMind, poste des threads techniques massifs sur les agents IA sans jargon VC."
-      },
-      {
-        "handle": "BenoitG_33",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Fondateur de Coinhouse, mixe macro, tech et crypto avec un style direct et \u00e9pur\u00e9."
-      },
-      {
-        "handle": "NassimTalhaoui",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Ex-ML engineer chez Google, parle du deep learning et des LLMs en FR avec une clart\u00e9 rare."
-      },
-      {
-        "handle": "Pierre_Thibault",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Diaspora SF/NY bas\u00e9e, tweet sur SaaS et IA en FR, perspective am\u00e9ricaine d\u00e9crypt\u00e9e."
-      },
-      {
-        "handle": "JulienM_33",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Gestionnaire de portefeuille, tweet des analyses chart techniques quotidiennes, pas de signaux payants."
-      }
-    ],
-    "summary": "Le lot mixe les valeurs s\u00fbres FR (Merkle, Lemario) avec des p\u00e9pites QC et US. Pas de vendeurs de r\u00eave, juste des analystes qui comprennent leur m\u00e9tier."
-  },
-  {
-    "ts": "2026-08-14T18:59:11.318527",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "L0bomon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 90000,
-        "reason": "Le roi de la d\u00e9cence crypto fran\u00e7aise. Pas de shilling, juste des analyses techniques et on-chain qui valent leur pesant d'ether."
-      },
-      {
-        "handle": "LorenzoBenedetti",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'insomniaque de la d\u00e9centralisation. Il twitte \u00e0 3h du matin sur Ethereum quand tu veux dormir."
-      },
-      {
-        "handle": "ThibautMonnier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ancien de Google, fond\u00e9 de l'AI France. Il couvre l'IA comme un ing\u00e9nieur, pas comme un vendeur de r\u00eave."
-      },
-      {
-        "handle": "RomainMialou",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Trader pro qui partage ses setups en live. Pas de bla-bla, juste des bougies et du sang."
-      },
-      {
-        "handle": "JulienDucharme",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 11000,
-        "reason": "Bas\u00e9 \u00e0 SF, il tweete en FR sur l'IA US avec le recul de celui qui est sur le terrain."
-      }
-    ],
-    "summary": "Une s\u00e9lection de pros qui tweetent encore et qui n'ont pas encore vendu leur \u00e2me \u00e0 un club Telegram. Pas de politiciens, pas de vendeurs de r\u00eaves."
-  },
-  {
     "ts": "2026-08-14T20:59:08.303312",
     "raw_count": 6,
     "kept_count": 3,
@@ -6870,5 +6780,60 @@
       }
     ],
     "summary": "Je te sors du lot des influenceurs en costard qui vendent la lune pour ceux qui lisent vraiment le livre blanc (ou l'update GitHub). Un mix tech/crypto/finance avec une dose d'intelligence sans blabla."
+  },
+  {
+    "ts": "2026-09-14T09:48:29.540166",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaetitiaVanhove",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Ex-Paribas. Elle explique le DeFi sans endormir les comptables."
+      },
+      {
+        "handle": "JulienLeDantzeq",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Investisseur pro. Pas de signaux Telegram \u00e0 97\u20ac, juste du long terme bien tap\u00e9."
+      },
+      {
+        "handle": "MaximeVanderstraete",
+        "region": "france",
+        "niche": "crypto_defi",
+        "followers": 30000,
+        "reason": "L'humour tech au service du Yield. Moins hype que CryptoCobain, plus fiable."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eave ici : on a tri\u00e9 le sel des vrais ing\u00e9nieurs et investisseurs qui font leur travail sans vendre d'\u00e9lixir."
+  },
+  {
+    "ts": "2026-09-14T11:49:04.553337",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitDinhFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence CAC40. Pas de hype st\u00e9rile que des chiffres et du sens."
+      },
+      {
+        "handle": "AlexPugliese_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'anonyme de Montr\u00e9al qui fait sauter le CAC et les US. Pas de vente au comptoir juste des trades."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la puanteur des 'coachs' Telegram pour ne garder que ceux qui font briller l'\u00e9cosyst\u00e8me FR/NA. De Mistral \u00e0 Hugo Diniz, ce sont les seuls o\u00f9 le contenu vaut plus cher que leur liste de suivi."
   }
 ]
