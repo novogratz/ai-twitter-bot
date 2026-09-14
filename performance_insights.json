@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-14T05:48:13.894549",
-  "window_7d_actions": 5356,
-  "window_24h_actions": 744,
+  "generated_at": "2026-09-14T09:48:14.065874",
+  "window_7d_actions": 5362,
+  "window_24h_actions": 781,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5355
+      "count": 5361
     },
     {
       "pattern": "METAPHOR",
@@ -19,13 +19,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5355
+      "count": 5361
     }
   ],
   "best_hours_utc": [
     {
       "hour": 2,
       "actions": 267
+    },
+    {
+      "hour": 9,
+      "actions": 248
     },
     {
       "hour": 15,
@@ -38,24 +42,20 @@
     {
       "hour": 12,
       "actions": 240
-    },
-    {
-      "hour": 9,
-      "actions": 234
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2593
+      "count": 2612
     },
     {
       "topic": "Autre",
-      "count": 1986
+      "count": 1985
     },
     {
       "topic": "Crypto",
-      "count": 665
+      "count": 664
     },
     {
       "topic": "Bourse",
@@ -63,62 +63,67 @@
     },
     {
       "topic": "Spatial",
-      "count": 103
+      "count": 101
     }
   ],
   "rising_topics_24h": [
     {
+      "topic": "Bourse",
+      "24h_rate": 0.105,
+      "7d_rate": 0.08
+    },
+    {
       "topic": "Spatial",
-      "24h_rate": 0.03,
+      "24h_rate": 0.027,
       "7d_rate": 0.019
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2724
+      "count": 2744
     },
     {
       "pillar": "market_trauma",
-      "count": 1289
+      "count": 1283
     },
     {
       "pillar": "other",
-      "count": 1073
+      "count": 1070
     },
     {
       "pillar": "reply_bait",
-      "count": 125
+      "count": 124
     },
     {
       "pillar": "meme_reaction",
-      "count": 94
+      "count": 91
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 378
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 170
+      "count": 416
     },
     {
       "pillar": "other",
-      "count": 165
+      "count": 172
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 166
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 13
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -128,23 +133,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.32,
-      "avg_views": 62.5,
+      "posts": 67,
+      "avg_likes": 0.34,
+      "avg_views": 61.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 34,
-      "avg_likes": 0.32,
-      "avg_views": 64.0,
+      "posts": 35,
+      "avg_likes": 0.34,
+      "avg_views": 64.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 88,
-      "avg_likes": 0.28,
-      "avg_views": 59.3,
+      "posts": 91,
+      "avg_likes": 0.32,
+      "avg_views": 58.5,
       "low_sample": false
     },
     {
@@ -165,19 +170,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4844
+      "count": 4853
     },
     {
       "type": "quote",
-      "count": 317
+      "count": 316
     },
     {
       "type": "quote_gif",
-      "count": 91
+      "count": 88
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 48
     },
     {
       "type": "post",
@@ -190,18 +195,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-14T05:46:39.540330",
-      "text": "Ai labs paused buying h100s because inference margins are already compressing. hardware loves capex cycles; software profits love the trough between them.",
+      "ts": "2026-09-14T09:47:52.773257",
+      "text": "$NVDA at $212 isn't a gap fill. it's the market realizing 70% gross margins expire faster than your patience in traffic. bounce is fake. volume doesn't lie.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-14T05:45:21.094628",
-      "text": "Ship 6 apps. claude handles the boilerplate so you can sell it on product hunt before lunch. usage limits only bite when your code is as good as stanford steve's pitch deck.",
+      "ts": "2026-09-14T09:47:24.544512",
+      "text": "KOL posts FOMO. Community digs truth. Degen loses 40%.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-14T05:45:04.851189",
-      "text": "AirBaltic Chapter 11 = le groupe WhatsApp où tout le monde a disparu sauf la CEO. elle négocie seule en attendant que les prix du kérosène calment avant d'envoyer un dernier message \"au revoir\". belle autonomie ça, non ?",
+      "ts": "2026-09-14T09:45:40.051517",
+      "text": "Apple's ai stack needs $1t in datacenter capex just to keep up with nvidia's moat. the 'dead money' is just patience waiting for revenue to catch up to expectations.",
       "type": "reply"
     }
   ]

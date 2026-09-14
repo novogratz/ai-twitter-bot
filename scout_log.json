@@ -1,22 +1,5 @@
 [
   {
-    "ts": "2026-08-14T10:59:05.218169",
-    "raw_count": 6,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LaurentDaher",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "VC am\u00e9ricain d'origine libanaise mais tr\u00e8s actif en FR, couvre fintech et crypto avec une vue macro solide."
-      }
-    ],
-    "summary": "Un m\u00e9lange solide de veterans de la crypto (0xMerkle, 0xBagget) et de la nouvelle vague IA (Mistral, Alex Dionne). Z\u00e9ro influenceur formation, que des makers et des analystes qui savent ce qu'ils font."
-  },
-  {
     "ts": "2026-08-14T16:59:06.689273",
     "raw_count": 7,
     "kept_count": 5,
@@ -6870,5 +6853,22 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 ceux qui ont du contenu r\u00e9el : Raphael Elmali pour l'IA qu\u00e9b\u00e9coise acad\u00e9mique, Alex Dionn\u00e9 pour la bourse Qu\u00e9becoises, et des p\u00e9pites tech FR hors de la 'hype train'. On oublie les vendeurs de r\u00eaves Telegram."
+  },
+  {
+    "ts": "2026-09-14T05:48:40.244167",
+    "raw_count": 5,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomasc_3x",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le roi du thread technique FR. Si tu cherches des analyses DeFi profondes sans le jargon marketing qui sent la sueur de cours \u00e0 distance."
+      }
+    ],
+    "summary": "Je te sors du lot des influenceurs en costard qui vendent la lune pour ceux qui lisent vraiment le livre blanc (ou l'update GitHub). Un mix tech/crypto/finance avec une dose d'intelligence sans blabla."
   }
 ]

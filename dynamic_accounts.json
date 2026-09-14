@@ -2413,7 +2413,8 @@
     "_thomas_girard_",
     "_AlexisDionne",
     "JulienBouffard",
-    "ClementGuerin"
+    "ClementGuerin",
+    "thomasc_3x"
   ],
   "en": [
     "Chubby",
@@ -2977,7 +2978,9 @@
     "Bastion",
     "Choblin",
     "DHH",
-    "vegastar"
+    "vegastar",
+    "Yokio",
+    "Roblox"
   ],
   "history": [
     {
@@ -17858,6 +17861,21 @@
     {
       "lang": "fr",
       "handle": "ClementGuerin",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Yokio",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasc_3x",
+      "added": "2026-09-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Roblox",
       "added": "2026-09-14"
     }
   ]
