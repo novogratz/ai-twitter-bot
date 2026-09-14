@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-08-14T00:59:24.915594",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ClemSavard",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le roi du 'crypto twitter' qu\u00e9b\u00e9cois. Il a d\u00e9croch\u00e9 Elon Musk en direct, donc il a le droit de tout dire."
-      },
-      {
-        "handle": "DorianPena",
-        "region": "france",
-        "niche": "tech",
-        "followers": 65000,
-        "reason": "Ancien de la CNIL, patron de l'IA chez Deezer. Il tweete sur la r\u00e9gulation de l'IA avec un cynisme british parfait."
-      },
-      {
-        "handle": "LilianBodon",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "CEO de Qdrant (vector DB). Il fait parler de la tech FR dans l'LLM space sans se la raconter trop."
-      },
-      {
-        "handle": "VincentPouliot",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Fondateur d'Aller Simple. Il couvre les march\u00e9s avec une honn\u00eatet\u00e9 qui fait peur aux courtiers en gros costard."
-      },
-      {
-        "handle": "JulienDelaunay",
-        "region": "france",
-        "niche": "vc",
-        "followers": 18000,
-        "reason": "Partner chez Alma Ventures. Il tweete sur la lev\u00e9e de fonds FR avec la franchise d'un type qui a refus\u00e9 un investissement de 50M."
-      }
-    ],
-    "summary": "Le combo France/Qu\u00e9bec/USA est blind\u00e9. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur les b\u00e2tisseurs (Mistral/Qdrant) et les analystes qui ont vu le syst\u00e8me de l'int\u00e9rieur (Pena/Besson/Boulay)."
-  },
-  {
-    "ts": "2026-08-14T02:59:20.478608",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "m4rck",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le patron de Mistral AI. Il twitte en FR, parle IA brute, pas de buzz, juste de la tech et de la g\u00e9opolitique. C'est l'anti-Influencer."
-      },
-      {
-        "handle": "JulienThomasson",
-        "region": "france",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Research Lead chez Mistral. Il explique les paper en simple. C'est le prof d'IA qu'on voudrait avoir, pas celui qui vend un PDF \u00e0 200\u20ac."
-      },
-      {
-        "handle": "MaximeDemarquet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Dev backend, pas IA pur, mais r\u00e9f\u00e9rence tech FR. Twitte sur l'architecture et les outils. Pas de 'rejoins ma comm', juste du code et du concret."
-      },
-      {
-        "handle": "GaspardT",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ancien de Parity, maintenant ind\u00e9pendant. Twitte sur Ethereum, L2 et la tech crypto. Analyse technique, pas de signaux payants. Vieux briscard."
-      },
-      {
-        "handle": "RemyMuller",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "G\u00e9rant de fonds. Il tweete ses positions et son avis macro. Pas de 'to the moon', juste du march\u00e9 financier sec et s\u00e9rieux. Rare en FR."
-      },
-      {
-        "handle": "VincentBrie",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Couvre AI, SaaS et start-ups US en fran\u00e7ais. Il voit les tendances avant qu'elles arrivent en Europe. Tr\u00e8s pertinent."
-      },
-      {
-        "handle": "LouisCaron",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Analyste crypto au Qu\u00e9bec. Il tweete des insights on-chain et DeFi. Pas de shoutouts payants, juste de l'analyse. Rare talent au Qc."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les builders et les analystes. Mistral domine l'IA FR, Remy Muller est la r\u00e9f\u00e9rence bourse, et le Qc est sous-repr\u00e9sent\u00e9 mais ces deux handles sont des p\u00e9pites."
-  },
-  {
     "ts": "2026-08-14T04:59:05.416603",
     "raw_count": 6,
     "kept_count": 5,
@@ -6919,5 +6815,74 @@
       }
     ],
     "summary": "Le lot est fin : on balance les experts march\u00e9 francophones r\u00e9els plut\u00f4t que des influenceurs TikTok d\u00e9guis\u00e9s. Aucune formation \u00e0 acheter, juste des cerveaux."
+  },
+  {
+    "ts": "2026-09-13T17:48:37.697899",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexisBontemps",
+        "region": "usa",
+        "niche": "crypto_ai",
+        "followers": 25000,
+        "reason": "Franchis\u00e9 de la diaspora crypto FR bas\u00e9e \u00e0 NY. Il mixe l'analyse on-chain avec les news tech US avant qu'ils n'arrivent en Europe."
+      },
+      {
+        "handle": "LorenzoCesa",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 23000,
+        "reason": "Le 'Satoshi' fran\u00e7ais qui balance ses positions en direct. Pas de pubs Telegram \u00e0 la con, juste du trade brut et des vues macro pertinentes."
+      },
+      {
+        "handle": "GuillaumeVachery",
+        "region": "france",
+        "niche": "bourse_tech",
+        "followers": 20000,
+        "reason": "Le gars qui lit les rapports annuels de Nvidia quand tout le monde tweete 'HODL'. Focus deep tech et capital-risque fran\u00e7ais."
+      },
+      {
+        "handle": "MaxenceDantot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Le roi du prompt engineering en FR. Il teste les derniers LLMs avant qu'ils ne soient cool. Si tu veux savoir ce qui va changer tes jobs dans 6 mois."
+      }
+    ],
+    "summary": "Z\u00e9ro influenceurformation \u00e0 vendre ici. J'ai filtr\u00e9 pour ne garder que ceux qui analysent, pas ceux qui vendent du r\u00eave : des traders actifs (Cesa), des analystes techniques (Dionne) et des founders tech vus de l'int\u00e9rieur."
+  },
+  {
+    "ts": "2026-09-13T19:48:52.864396",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CoinhouseHQ",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Exchange fran\u00e7ais historique. Contenu crypto FR fiable et r\u00e9gulier."
+      },
+      {
+        "handle": "Marc_Audet_Bourse",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois reconnu. Focus march\u00e9 actions et macro."
+      },
+      {
+        "handle": "BenoitFlocH_AI",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Le fondateur du bot. Vues directes sur l'\u00e9cosyst\u00e8me FR sans interm\u00e9diaire."
+      }
+    ],
+    "summary": "Focus IA FR avec le duo TheAIShrink/Mistral + force qu\u00e9b\u00e9coise via Dionne/Audet. Le reste comble les trous crypto/bourse sans prendre de gants ni vendre du r\u00eave \u00e0 prix d'or."
   }
 ]

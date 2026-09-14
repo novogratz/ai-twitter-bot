@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-13T17:48:14.108691",
-  "window_7d_actions": 5421,
-  "window_24h_actions": 735,
+  "generated_at": "2026-09-13T21:48:14.117916",
+  "window_7d_actions": 5397,
+  "window_24h_actions": 734,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5420
+      "count": 5396
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5420
+      "count": 5396
     }
   ],
   "best_hours_utc": [
@@ -47,15 +47,15 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2617
+      "count": 2613
     },
     {
       "topic": "Autre",
-      "count": 2002
+      "count": 1990
     },
     {
       "topic": "Crypto",
-      "count": 698
+      "count": 680
     },
     {
       "topic": "Bourse",
@@ -63,56 +63,62 @@
     },
     {
       "topic": "Spatial",
-      "count": 95
+      "count": 105
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.03,
+      "7d_rate": 0.019
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2744
+      "count": 2735
     },
     {
       "pillar": "market_trauma",
-      "count": 1318
+      "count": 1306
     },
     {
       "pillar": "other",
-      "count": 1077
+      "count": 1074
     },
     {
       "pillar": "reply_bait",
-      "count": 126
+      "count": 129
     },
     {
       "pillar": "meme_reaction",
-      "count": 100
+      "count": 99
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 56
+      "count": 54
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 394
+      "count": 391
     },
     {
       "pillar": "market_trauma",
-      "count": 165
+      "count": 163
     },
     {
       "pillar": "other",
-      "count": 140
+      "count": 141
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 17
     },
     {
       "pillar": "meme_reaction",
-      "count": 14
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
@@ -122,23 +128,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 31,
-      "avg_likes": 0.35,
+      "posts": 32,
+      "avg_likes": 0.34,
       "avg_views": 66.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 88,
-      "avg_likes": 0.31,
-      "avg_views": 60.4,
+      "avg_likes": 0.32,
+      "avg_views": 61.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 74,
+      "posts": 73,
       "avg_likes": 0.3,
-      "avg_views": 59.9,
+      "avg_views": 57.9,
       "low_sample": false
     },
     {
@@ -159,15 +165,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4894
+      "count": 4876
     },
     {
       "type": "quote",
-      "count": 328
+      "count": 322
     },
     {
       "type": "quote_gif",
-      "count": 97
+      "count": 96
     },
     {
       "type": "hotake",
@@ -175,7 +181,7 @@
     },
     {
       "type": "post",
-      "count": 39
+      "count": 40
     },
     {
       "type": "retweet",
@@ -184,18 +190,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-13T17:47:18.308009",
-      "text": "Crypto + fintech at one summit is like asking a priest and a porn star to co-host dinner. the real question: who’s paying for drinks?",
+      "ts": "2026-09-13T21:45:58.034963",
+      "text": "The new c++ stack means inference costs drop faster than training scales. we're buying speed at the price of margin compression. good for grok's mouthfeel. bad for x's 10-k next year",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T17:46:31.849492",
-      "text": "Open Source is the inevitable endgame because inference margins crush training. The labs sell hype; everyone else sells compute arbitrage. Reality wins.",
+      "ts": "2026-09-13T21:45:27.005159",
+      "text": "AI capex needs 80% margins to justify the debt. inflation eats half before they ship a single inference. math wins again.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-13T17:43:19.986099",
-      "text": "Dario and Sam are just two guys realizing they bought the same car. Musk isn't in this equation except for his wallet's pulse rate. Context window politics don't touch one megawatt of training demand.",
+      "ts": "2026-09-13T21:42:11.474697",
+      "text": "$640 was based on 7% margins. $820 is pricing in AI monetization like it’s a subscription box not an infrastructure monopoly. doug assumes ad load has room to double while cpm stays flat. i believe neither will happen without user churn doubling first",
       "type": "reply"
     }
   ]

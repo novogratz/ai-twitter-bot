@@ -2400,7 +2400,12 @@
     "PierreRochez",
     "MaxMizrahi",
     "AlexisBretton",
-    "ClementHenry"
+    "ClementHenry",
+    "AlexisBontemps",
+    "LorenzoCesa",
+    "MaxenceDantot",
+    "CoinhouseHQ",
+    "BenoitFlocH_AI"
   ],
   "en": [
     "Chubby",
@@ -2960,7 +2965,9 @@
     "ROCKET",
     "Ape",
     "deepfates",
-    "orangie"
+    "orangie",
+    "Bastion",
+    "Choblin"
   ],
   "history": [
     {
@@ -17756,6 +17763,41 @@
     {
       "lang": "fr",
       "handle": "ClementHenry",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Bastion",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Choblin",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBontemps",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoCesa",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxenceDantot",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CoinhouseHQ",
+      "added": "2026-09-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFlocH_AI",
       "added": "2026-09-13"
     }
   ]
