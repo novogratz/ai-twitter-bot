@@ -1,16 +1,15 @@
-# YouTube brief — 2026-09-14
+# YouTube brief — 2026-09-15
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **738**
-- reply: **672**
-- quote: **35**
-- quote_gif: **17**
+- Total actions logged: **109**
+- reply: **87**
+- hotake: **7**
+- quote: **6**
 - post: **6**
-- hotake: **6**
-- retweet: **2**
+- retweet: **3**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -25,16 +24,12 @@
 - **395 likes / 174583 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **4 likes / 195 views** — openai acting like they’re in therapy where “I forgot to tell my partner” is an acceptable excuse for blowing up the apartment 🛋️
 - **3 likes / 253 views** — Asked Starbucks’ new AI barista for a flat white with “a little bit of anxiety.” It gave me oat milk and told my cat to chill out.
-- **2 likes / 77 views** — regulation is just ai trying to grow up because my toddlers did that too 🛋️🥱
-- **1 likes / 59 views** — Australia’s new AI factory: where they’ll park their data while waiting for electricity to arrive 🛋️💡
-
-### Bourse
-
-- **1 likes / 101 views** — palantir's IPO is just corporate Tinder with better conversion rates 👀😭
+- **1 likes / 87 views** — Rocket Lab to $50? Sure, if you believe AI satellites will solve overfitting faster than they burn cash on Starlink’s shadow launch market for OpenAI and Anthropic 🛰️⚡
 
 ### Other
 
 - **3 likes / 116 views** — me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
+- **3 likes / 375 views** — 4% of global oil supply vanishes and we’re still waiting for an email from maintenance?
 - **2 likes / 120 views** — DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
 - **2 likes / 111 views** — The 7 stocks buying all our dopamine, serving as group therapy for the rest of us 🛋️
 - **2 likes / 21 views** — me on my way to explain this electric bill to my husband who thinks 'solar' is just good lighting 💡📉
@@ -60,26 +55,38 @@ There is so much demand for more GW. Stay bullish
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Sam Altman]** The world deserves confidence that American companies developing increasingly capable AI will act responsibly, especially as the trajectory of progress has stee
-  - https://x.com/sama/status/2099348812305473766
-- **[X_HOME/Sam Altman]** There are two ways AI progress could go very badly and that we must avoid.
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Bryan Johnson]** I don't trust anyone's AI risk assessment. I don't think we know what awaits us. 
 
-First, we could lose control of the future to AI. This is unacceptable; we are unapo
-  - https://x.com/sama/status/2099352016988614852
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Jon Edwards]** Today’s launch represents our 700th successful Falcon mission. Rapid reusability is what makes Falcon 9 the most reliable and prolific launch vehicle in history
-  - https://x.com/edwards345/status/2099235794024067188
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Truthful🛰️]** Yeah you know what, SpaceX is building Moonbase Alpha in 5 years with this type of speed on the Moon wtf am I watchinggg😭😭😭
-  - https://x.com/Truthful_ast/status/2099304839360458843
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Beff (e/acc)]** I am fairly confident we will be launching Z1 chips in space next year on a SpaceX rocket.
+Given that, I'm choosing to be optimistic, betting an existence more extraord
+  - https://x.com/bryan_johnson/status/2099303951250432203
+- **[X_HOME/Tony Edward (Thinking Crypto Podcast)]** If the Democrats and Banks want to play games and don't get the Clarity Act passed then the status quo remains. There will be no crypto ethics in place and no u
+  - https://x.com/thinkingcrypto/status/2099701713032577432
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Erick Erickson]** The nuclear power doomers became the climate doomers and now they’re the AI doomers. The only commonality is they want the United States to recede.
+  - https://x.com/EWErickson/status/2099631690515681424
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Eliezer Yudkowsky ⏹️]** Imagine trying to design a nuclear reactor by thinking like this.  It would explode before you'd finished loading the fuel rods.
 
-Stay tuned.
-  - https://x.com/beffjezos/status/2099290090807902571
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Kalshi]** JUST IN: Elon Musk announces plans for SpaceX to launch Nvidia AI computers into space next year.
-  - https://x.com/Kalshi/status/2099328889982201920
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Kalshi]** JUST IN: Elon Musk announces plans for SpaceX to launch Nvidia AI computers into space next year.
-  - https://x.com/Kalshi/status/2099328889982201920
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/PowerGPU]** What is your GPU?
-  - https://x.com/PowerGPU/status/2099279444225495150
+I ended up learning what I did
+  - https://x.com/ESYudkowsky/status/2099585753437360503
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Yuchen Jin]** Jensen is the most based man in AI.
+
+I really hope NVIDIA builds a frontier OSS model.
+  - https://x.com/Yuchenj_UW/status/2099716342291349746
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Steve Ferguson]** The same scare tactics are be used for AI that were used for nuclear power, the anthropogenic climate change hoax and Covid.
+
+Don't fall for them
+  - https://x.com/lsferguson/status/2099624571443839002
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Sola 🇨🇦]** Canada is pitching global investors on some interesting projects today:
+
+AI data centres
+Nuclear power
+Critical minerals
+LNG
+Pipelines
+Quantum computing
+Carbon 
+  - https://x.com/SolaTheAnalyst/status/2099508017125298602
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Dave Kennedy]** AI represents one of the largest technological leaps I have witnessed in nearly 30 years in technology and cybersecurity. These models are advancing faster than
+  - https://x.com/HackingDave/status/2099583611716452517
 
 ## 🎬 Suggested video angles
 
@@ -90,4 +97,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-14T00:48:13*
+*Generated 2026-09-15T07:38:39*
