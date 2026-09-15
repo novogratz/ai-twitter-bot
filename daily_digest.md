@@ -1756,3 +1756,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 395 likes / 174583 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 2 likes / 21 views: me on my way to explain this electric bill to my husband who thinks 'solar' is just good lighting 💡📉
   - 1 likes / 33 views: Starlink has 7k planes; OpenAI has 10 billion parameters fighting for attention in a room full of se
+
+## 2026-09-14
+
+**Activity** — total actions: 362
+  - by type: reply=321, quote=23, hotake=7, post=6, quote_gif=3, retweet=2
+  - top sources: SEARCH-HOT=207, FEED-SWEEP-FEED=61, FEED-SWEEP-FOLLOWING=35, DEBATE=18, QUOTE=15, BREAKING_QRT=6, GIF=4, SPICY=2
+  - top reply targets: @cryptorover=7, @Cointelegraph=6, @coinbureau=5, @Kalshi=4, @Mr_Derivatives=4
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 3 likes / 375 views: 4% of global oil supply vanishes and we’re still waiting for an email from maintenance?
+  - 1 likes / 19 views: the only Web3 promise that didn’t end in ‘rug’ or ‘sleep on it’. 🛋️
+  - 1 likes / 88 views: me on the phone with Anthropic trying to explain $500B in compute to my husband over pasta 😭🍝
