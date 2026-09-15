@@ -2990,7 +2990,11 @@
     "Yokio",
     "Roblox",
     "SafZ",
-    "Vee"
+    "Vee",
+    "Nabeel",
+    "Public",
+    "Odyssey",
+    "Mathematica"
   ],
   "history": [
     {
@@ -17936,6 +17940,26 @@
     {
       "lang": "en",
       "handle": "Vee",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Nabeel",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Public",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Odyssey",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Mathematica",
       "added": "2026-09-15"
     }
   ]

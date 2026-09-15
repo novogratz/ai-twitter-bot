@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-15T10:38:39.602761",
-  "window_7d_actions": 4528,
-  "window_24h_actions": 8,
+  "generated_at": "2026-09-15T14:38:39.570395",
+  "window_7d_actions": 4407,
+  "window_24h_actions": 5,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4527
+      "count": 4406
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4527
+      "count": 4406
     }
   ],
   "best_hours_utc": [
@@ -36,64 +36,64 @@
       "actions": 209
     },
     {
-      "hour": 12,
-      "actions": 206
-    },
-    {
       "hour": 5,
       "actions": 200
+    },
+    {
+      "hour": 0,
+      "actions": 198
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2215
+      "count": 2175
     },
     {
       "topic": "Autre",
-      "count": 1680
+      "count": 1622
     },
     {
       "topic": "Crypto",
-      "count": 539
+      "count": 523
     },
     {
       "topic": "Bourse",
-      "count": 363
+      "count": 349
     },
     {
       "topic": "Spatial",
-      "count": 89
+      "count": 87
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.375,
+      "24h_rate": 0.6,
       "7d_rate": 0.119
     },
     {
       "topic": "Bourse",
-      "24h_rate": 0.375,
-      "7d_rate": 0.08
+      "24h_rate": 0.4,
+      "7d_rate": 0.079
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2322
+      "count": 2275
     },
     {
       "pillar": "market_trauma",
-      "count": 1079
+      "count": 1048
     },
     {
       "pillar": "other",
-      "count": 911
+      "count": 872
     },
     {
       "pillar": "reply_bait",
-      "count": 99
+      "count": 95
     },
     {
       "pillar": "meme_reaction",
@@ -107,15 +107,11 @@
   "pillar_mix_24h": [
     {
       "pillar": "market_trauma",
-      "count": 4
-    },
-    {
-      "pillar": "ai_news_take",
       "count": 3
     },
     {
-      "pillar": "other",
-      "count": 1
+      "pillar": "ai_news_take",
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -158,11 +154,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4089
+      "count": 3981
     },
     {
       "type": "quote",
-      "count": 262
+      "count": 253
     },
     {
       "type": "quote_gif",
@@ -170,11 +166,11 @@
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 44
     },
     {
       "type": "post",
-      "count": 37
+      "count": 36
     },
     {
       "type": "retweet",
