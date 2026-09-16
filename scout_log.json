@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-15T00:59:07.806232",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilDeneuve",
-        "region": "france",
-        "niche": "ai",
-        "followers": 95000,
-        "reason": "Le cerveau derri\u00e8re Mistral. Ses threads IA font plus mal qu'un shooting Starbuck."
-      },
-      {
-        "handle": "JulienMoinat",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Le pro de la bourse fran\u00e7aise. Pas de blabla, que des chiffres. Si tu aimes lire des donn\u00e9es brutes, c'est ton spot."
-      },
-      {
-        "handle": "NicolasCollon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'ancien banquier qui a tout laiss\u00e9 tomber pour le Bitcoin. Twitte moins mais chaque post est un coup de marteau."
-      },
-      {
-        "handle": "LilBitcoinQC",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 38000,
-        "reason": "La voix du Qu\u00e9bec sur le sujet. Moins hype, plus fondamental. Parfait pour ne pas se faire arnaquer."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 du c\u00f4t\u00e9 des fondateurs (Mistral) et des v\u00e9t\u00e9rans crypto (Collon) pour \u00e9viter les newbies de l'IA. Le Qu\u00e9bec est bien couvert avec des profils techniques solides plut\u00f4t que des hype-men."
-  },
-  {
     "ts": "2026-08-15T02:59:13.411244",
     "raw_count": 8,
     "kept_count": 5,
@@ -6814,5 +6776,36 @@
       }
     ],
     "summary": "On \u00e9vite les vendeurs de r\u00eave : direction des profils qui font du contenu technique ou macro sans vendre la lune. Les r\u00e9gions sont bien couvertes via le mix FR local, QC trading et US Bitcoinophile francophone."
+  },
+  {
+    "ts": "2026-09-15T20:49:38.422506",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DexertoFR_",
+        "region": "france",
+        "niche": "tech/crypto/ia",
+        "followers": 85000,
+        "reason": "L'actu tech/crypto en FR sans jargon VC \u00e0 rallonge. Vraiment."
+      },
+      {
+        "handle": "BastienSagot",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 52000,
+        "reason": "L'humour boursier fran\u00e7ais qui tue. Pas de signaux VIP, juste du caf\u00e9in\u00e9 pur."
+      },
+      {
+        "handle": "PierreRochard_fr",
+        "region": "usa",
+        "niche": "crypto/bourse",
+        "followers": 32000,
+        "reason": "(Qui tweet FR) Le mec de DeFi qui parle aux gens normaux."
+      }
+    ],
+    "summary": "Une liste sans place pour la vanit\u00e9 : du concret FR/QC/US. On a \u00e9lagu\u00e9 ceux qui vendent des r\u00eaves \u00e0 deux sous."
   }
 ]

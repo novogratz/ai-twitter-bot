@@ -2422,7 +2422,9 @@
     "CryptoKong_",
     "Peppe87",
     "JulienDuchet",
-    "NathalieWalshFR"
+    "NathalieWalshFR",
+    "DexertoFR_",
+    "BastienSagot"
   ],
   "en": [
     "Chubby",
@@ -2994,7 +2996,9 @@
     "Nabeel",
     "Public",
     "Odyssey",
-    "Mathematica"
+    "Mathematica",
+    "Rhys",
+    "Vangrid"
   ],
   "history": [
     {
@@ -17960,6 +17964,26 @@
     {
       "lang": "en",
       "handle": "Mathematica",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Rhys",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Vangrid",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "DexertoFR_",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BastienSagot",
       "added": "2026-09-15"
     }
   ]

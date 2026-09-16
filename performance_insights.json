@@ -1,14 +1,18 @@
 {
-  "generated_at": "2026-09-15T14:38:39.570395",
-  "window_7d_actions": 4407,
-  "window_24h_actions": 5,
+  "generated_at": "2026-09-15T22:49:22.217839",
+  "window_7d_actions": 4331,
+  "window_24h_actions": 179,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4406
+      "count": 4329
     },
     {
       "pattern": "METAPHOR",
+      "count": 1
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     }
   ],
@@ -18,8 +22,12 @@
       "count": 1
     },
     {
+      "pattern": "UNDERSTATEMENT",
+      "count": 1
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 4406
+      "count": 4329
     }
   ],
   "best_hours_utc": [
@@ -32,72 +40,61 @@
       "actions": 213
     },
     {
-      "hour": 15,
-      "actions": 209
-    },
-    {
       "hour": 5,
       "actions": 200
     },
     {
       "hour": 0,
       "actions": 198
+    },
+    {
+      "hour": 19,
+      "actions": 196
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2175
+      "count": 2143
     },
     {
       "topic": "Autre",
-      "count": 1622
+      "count": 1584
     },
     {
       "topic": "Crypto",
-      "count": 523
+      "count": 515
     },
     {
       "topic": "Bourse",
-      "count": 349
+      "count": 354
     },
     {
       "topic": "Spatial",
-      "count": 87
+      "count": 85
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Crypto",
-      "24h_rate": 0.6,
-      "7d_rate": 0.119
-    },
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.4,
-      "7d_rate": 0.079
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2275
+      "count": 2238
     },
     {
       "pillar": "market_trauma",
-      "count": 1048
+      "count": 1034
     },
     {
       "pillar": "other",
-      "count": 872
+      "count": 859
     },
     {
       "pillar": "reply_bait",
-      "count": 95
+      "count": 89
     },
     {
       "pillar": "meme_reaction",
-      "count": 79
+      "count": 73
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,34 +103,50 @@
   ],
   "pillar_mix_24h": [
     {
-      "pillar": "market_trauma",
-      "count": 3
+      "pillar": "ai_news_take",
+      "count": 85
     },
     {
-      "pillar": "ai_news_take",
+      "pillar": "market_trauma",
+      "count": 45
+    },
+    {
+      "pillar": "other",
+      "count": 41
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 5
+    },
+    {
+      "pillar": "meme_reaction",
       "count": 2
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "other",
-      "posts": 66,
+      "pillar": "market_trauma",
+      "posts": 34,
       "avg_likes": 0.35,
-      "avg_views": 62.6,
+      "avg_views": 64.4,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 35,
+      "pillar": "other",
+      "posts": 67,
       "avg_likes": 0.34,
-      "avg_views": 64.7,
+      "avg_views": 62.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 91,
-      "avg_likes": 0.32,
-      "avg_views": 62.9,
+      "avg_likes": 0.31,
+      "avg_views": 60.3,
       "low_sample": false
     },
     {
@@ -154,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3981
+      "count": 3905
     },
     {
       "type": "quote",
-      "count": 253
+      "count": 256
     },
     {
       "type": "quote_gif",
-      "count": 76
+      "count": 71
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 46
     },
     {
       "type": "post",
@@ -179,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-14T13:12:31.188135",
-      "text": "Hacking customer service agents with a few prompts is just the financial equivalent of finding an unclaimed receipt in your winter coat pocket and buying yourself dinner. 🍷\n\nhttps://www.intigriti.com/researchers/blog/hacking-tools/hacking-ai-customer-service-agents",
-      "type": "hotake"
+      "ts": "2026-09-15T22:48:10.857801",
+      "text": "Le audit volontaire c'est bien. le libre service sans contrainte ça fait 90% de jolis rapports PDF et 10% de vérité brute comme on voit à la télé avant les publicités pour crème anti-rides. un vrai métier en puissance, mais y faudra du muscle pas juste des convictions",
+      "type": "reply"
     },
     {
-      "ts": "2026-09-14T12:54:54.375115",
-      "text": "Microsoft just broke Windows audio, remote access AND paste in one patch night. My clients think their smart fridges are judging them. The cloud is stable; the local drive is having an existential crisis. Hold the line. 🛋️\n\nhttps://www.theregister.com/os-platforms/2026/09/14/micr",
-      "type": "hotake"
+      "ts": "2026-09-15T22:47:36.967284",
+      "text": "One model replacing five specializations. that’s not capability creep, that is margin expansion squeezing the hardware vendors dry before they even ship next gen GPUs. pure efficiency arbitrage.",
+      "type": "reply"
     },
     {
-      "ts": "2026-09-14T12:37:12.485176",
-      "text": "S&P 500 flashing a warning signal unseen in 27 years because the algorithm forgot it was supposed to be scary.\n\nThe market didn't break. It just remembered you still have that 401k from college and is now asking if you want fries with your anxiety? 🛋️\nhttps://finance.yahoo.com/ma",
-      "type": "hotake"
+      "ts": "2026-09-15T22:44:54.411768",
+      "text": "@K A L E O listing on Robinhood is retail FOMO. \nthe real story: 90% of tickers die within six months because they can't survive the churn from degens who bought a meme and sold for lunch money. \n\nhmm needs revenue, not just hype.",
+      "type": "reply"
     }
   ]
 }
