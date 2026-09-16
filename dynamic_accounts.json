@@ -2434,7 +2434,11 @@
     "BaptisteFollot",
     "LionelDelfau",
     "NicolasM",
-    "MathieuDubeau"
+    "MathieuDubeau",
+    "HuguesDiniz",
+    "CyrilTheTech",
+    "Boris_Rieu",
+    "JulienDoyonQC"
   ],
   "en": [
     "Chubby",
@@ -3011,7 +3015,10 @@
     "Vangrid",
     "theleahfiles",
     "shako",
-    "Circle"
+    "Circle",
+    "Kamino",
+    "scooter",
+    "VALORANT"
   ],
   "history": [
     {
@@ -18062,6 +18069,41 @@
     {
       "lang": "fr",
       "handle": "MathieuDubeau",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Kamino",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesDiniz",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTheTech",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "scooter",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "VALORANT",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Boris_Rieu",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDoyonQC",
       "added": "2026-09-16"
     }
   ]

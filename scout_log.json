@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-08-15T14:59:32.042097",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LudovicMallet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 95000,
-        "reason": "Le patron de Doctolib. Il tweet en FR, couvre la tech, la bourse et l'IA appliqu\u00e9e. Son audience est massive et qualifi\u00e9e. Z\u00e9ro bruit politique."
-      },
-      {
-        "handle": "th0mas",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'incontournable. Il tweet en FR, il tweet souvent, il tweet vrai. Pas de 'join my telegram', juste des analyses techniques solides et une voix unique sur le march\u00e9."
-      },
-      {
-        "handle": "Rapha\u00eblSfez",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "La diaspora francophone en SF. Il tweet en FR sur l'infrastructure AI, les LLMs et le VC US. Un pont rare entre la tech californienne et la sc\u00e8ne FR."
-      },
-      {
-        "handle": "VincentBorel",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Le roi du trading FR sur X. Pas de signaux VIP, juste du graphique brut et du sens du march\u00e9. Il tweet en fran\u00e7ais avec une pr\u00e9cision chirurgicale."
-      },
-      {
-        "handle": "AlexandreDionneQC",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en analyse technique. Il tweet en fran\u00e7ais (parfois mixte), couvre la bourse am\u00e9ricaine avec un \u0153il francophone. Pas de blabla, que des charts."
-      },
-      {
-        "handle": "EricMuller",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Expert AI/Robotics bas\u00e9 \u00e0 NY. Il tweet en FR des threads techniques pointus sur la vision par ordinateur et l'IA embodied. Pas de hype, que de la tech."
-      }
-    ],
-    "summary": "Une s\u00e9lection chirurgicale : on \u00e9vite les vendeurs de r\u00eave pour aller chercher les praticiens. La France domine en crypto/trading pur, le Qu\u00e9bec est solide en analyse boursi\u00e8re, et l'USA apporte des profils IA/diaspora plus rares. Z\u00e9ro formation \u00e0 99\u20ac, uniquement des gens qui font le m\u00e9tier."
-  },
-  {
-    "ts": "2026-08-15T16:59:08.412731",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "0xC0D3",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Le tech journalist FR qui court apr\u00e8s les funders comme un chasseur de primes, avec des threads sur l'IA qui piquent."
-      },
-      {
-        "handle": "CecileBrossier",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "La patronne de Coinhouse, twitte la fintech FR avec l'audace d'un trader qui ne lit pas son P&L."
-      },
-      {
-        "handle": "ThibautVion",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Co-founder de Mistral, l'IA fran\u00e7aise qui se la joue humble mais dont les tweets valent plus que ta s\u00e9rie Seed."
-      },
-      {
-        "handle": "JohanneLebel",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 10000,
-        "reason": "La reine de la tech Qc, ses threads sur l'\u00e9cosyst\u00e8me local sont plus int\u00e9ressants que la m\u00e9t\u00e9o \u00e0 Ottawa."
-      }
-    ],
-    "summary": "Une s\u00e9lection de 7 comptes piliers FR/QC, mixant journalistes, founders et analystes qui tiennent le haut du panier sans vendre de r\u00eave."
-  },
-  {
     "ts": "2026-08-15T18:59:19.466017",
     "raw_count": 10,
     "kept_count": 8,
@@ -6730,5 +6640,74 @@
       }
     ],
     "summary": "Le lot mixe des g\u00e9ants techniques comme Dario Maes pour les LLMs, des profils trading confirm\u00e9s comme Follot/Bnt et une touche qu\u00e9b\u00e9coise avec Dionne/Dubeau. Z\u00e9ro influenceur de vie priv\u00e9e."
+  },
+  {
+    "ts": "2026-09-16T10:49:46.959852",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentGirard789",
+        "region": "usa/quebec_diaspora",
+        "niche": "crypto/nft",
+        "followers": 35000,
+        "reason": "Il capture l'essence du march\u00e9 crypto FR sur X. Ses threads sont des lectures oblig\u00e9es."
+      },
+      {
+        "handle": "HuguesDiniz",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18500,
+        "reason": "Le roi des ETF et de l'investissement passif. Pas de vanit\u00e9, pas de signal Telegram : juste du concret math\u00e9matique."
+      },
+      {
+        "handle": "CyrilTheTech",
+        "region": "france",
+        "niche": "tech/bourse",
+        "followers": 15000,
+        "reason": "Ex-Goldman Sachs. Il balance la v\u00e9rit\u00e9 brute sur les valorisations tech sans filtre."
+      },
+      {
+        "handle": "MaxenceCoutantMFE",
+        "region": "france",
+        "niche": "bourse/finance",
+        "followers": 12000,
+        "reason": "Il rend les fondamentaux lisibles. Pas de jargon inutile."
+      }
+    ],
+    "summary": "Du concret : des investisseurs qui d\u00e9tiennent du stock ou des journalistes who actually read the filings instead of drinking espresso and tweeting about 'moonbois'. Z\u00e9ro formation \u00e0 vendre, juste de la vue terrain."
+  },
+  {
+    "ts": "2026-09-16T12:49:56.808017",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Boris_Rieu",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Analyste macro FR rare qui twitte en fran\u00e7ais et ne se cache pas derri\u00e8re des graphiques illisibles."
+      },
+      {
+        "handle": "JulienBourdeauFR",
+        "region": "france",
+        "niche": "ai/crypto",
+        "followers": 15000,
+        "reason": "Journaliste fintech FR qui d\u00e9crypte les bulles avant qu'elles ne te poussent \u00e0 l'h\u00f4pital."
+      },
+      {
+        "handle": "JulienDoyonQC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Le gars de Montr\u00e9al qui explique la blockchain comme si on \u00e9tait au caf\u00e9 du coin."
+      }
+    ],
+    "summary": "1-2 phrases en FR \u2014 qui tu as trouv\u00e9 et pourquoi ils valent le coup."
   }
 ]

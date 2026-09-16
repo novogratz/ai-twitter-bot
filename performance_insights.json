@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-16T10:49:22.070517",
-  "window_7d_actions": 4442,
-  "window_24h_actions": 665,
+  "generated_at": "2026-09-16T14:49:21.535038",
+  "window_7d_actions": 4486,
+  "window_24h_actions": 840,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4440
+      "count": 4484
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4440
+      "count": 4484
     }
   ],
   "best_hours_utc": [
@@ -55,38 +55,38 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2174
+      "count": 2182
     },
     {
       "topic": "Autre",
-      "count": 1631
+      "count": 1648
     },
     {
       "topic": "Crypto",
-      "count": 541
+      "count": 546
     },
     {
       "topic": "Bourse",
-      "count": 374
+      "count": 381
     },
     {
       "topic": "Spatial",
-      "count": 80
+      "count": 81
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2279
+      "count": 2284
     },
     {
       "pillar": "market_trauma",
-      "count": 1071
+      "count": 1086
     },
     {
       "pillar": "other",
-      "count": 887
+      "count": 905
     },
     {
       "pillar": "reply_bait",
@@ -94,59 +94,59 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 78
+      "count": 81
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 37
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 318
+      "count": 396
     },
     {
       "pillar": "market_trauma",
-      "count": 168
+      "count": 217
     },
     {
       "pillar": "other",
-      "count": 150
+      "count": 188
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 17
     },
     {
       "pillar": "meme_reaction",
-      "count": 11
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 90,
-      "avg_likes": 0.32,
-      "avg_views": 58.8,
+      "posts": 89,
+      "avg_likes": 0.33,
+      "avg_views": 59.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 66,
+      "posts": 68,
       "avg_likes": 0.29,
-      "avg_views": 60.9,
+      "avg_views": 61.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.29,
-      "avg_views": 63.2,
+      "posts": 37,
+      "avg_likes": 0.27,
+      "avg_views": 64.0,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4005
+      "count": 4048
     },
     {
       "type": "quote",
@@ -175,15 +175,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 76
+      "count": 78
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 46
     },
     {
       "type": "post",
-      "count": 39
+      "count": 37
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-16T10:48:56.674419",
-      "text": "ARC-AGI isn't a leaderboard. It's the IQ test for agents doing your work by Friday. nobody cares about math when the bot answers email better than you. stop measuring horsepower and start feeling the acceleration.",
+      "ts": "2026-09-16T14:49:01.842813",
+      "text": "Anthropic merged chat and cowork so you stop paying for two subscriptions to the same hallucination. claude doc is just the bill arriving in pdf.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T10:48:07.355104",
-      "text": "Mars is the last planet we can actually reach without a six-month isolation party. The stock just priced in the travel time. We're still stuck at ticket gate C.",
+      "ts": "2026-09-16T14:47:46.043053",
+      "text": "AMD at $510? That's buying second fiddle to Nvidia at the top of its performance curve. You're paying luxury prices for \"good enough\" until NVDA stumbles. risky love letter with a sidekick discount.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T10:47:05.569744",
-      "text": "@Seneca Scott’s crowd loves AI until the power bill hits. they’re not virtue-signaling. they’re calculating ROI while xAI burns $10M/day just to dream. data centers win because nobody checks their electricity meter at midnight. mdr.",
+      "ts": "2026-09-16T14:45:42.031203",
+      "text": "Foxconn buying CW lasers to hedge supply. they’re hedging like it’s 1985 gold. datacenters need glass now more than silicon for the light-speed tradeoff. infrastructure porn hits a bottleneck made of sand and voltage. laser margins > gpu margins soon enough",
       "type": "reply"
     }
   ]
