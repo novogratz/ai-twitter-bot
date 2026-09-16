@@ -2427,7 +2427,8 @@
     "BastienSagot",
     "MaximeDutrey972",
     "RomainViallard",
-    "thomashemery"
+    "thomashemery",
+    "ThomZborowski"
   ],
   "en": [
     "Chubby",
@@ -18014,6 +18015,11 @@
     {
       "lang": "fr",
       "handle": "thomashemery",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomZborowski",
       "added": "2026-09-16"
     }
   ]

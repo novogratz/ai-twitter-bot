@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-16T02:49:21.219368",
-  "window_7d_actions": 4365,
-  "window_24h_actions": 344,
+  "generated_at": "2026-09-16T06:49:21.418268",
+  "window_7d_actions": 4408,
+  "window_24h_actions": 503,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4363
+      "count": 4406
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4363
+      "count": 4406
     }
   ],
   "best_hours_utc": [
@@ -44,138 +44,138 @@
       "actions": 204
     },
     {
-      "hour": 5,
-      "actions": 200
+      "hour": 3,
+      "actions": 202
     },
     {
-      "hour": 19,
-      "actions": 196
+      "hour": 5,
+      "actions": 201
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2146
+      "count": 2160
     },
     {
       "topic": "Autre",
-      "count": 1608
+      "count": 1622
     },
     {
       "topic": "Crypto",
-      "count": 521
+      "count": 537
     },
     {
       "topic": "Bourse",
-      "count": 360
+      "count": 366
     },
     {
       "topic": "Spatial",
-      "count": 84
+      "count": 82
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2255
+      "count": 2266
     },
     {
       "pillar": "market_trauma",
-      "count": 1055
+      "count": 1072
     },
     {
       "pillar": "other",
-      "count": 855
+      "count": 868
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 88
     },
     {
       "pillar": "meme_reaction",
-      "count": 75
+      "count": 76
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 170
+      "count": 239
     },
     {
       "pillar": "market_trauma",
-      "count": 88
+      "count": 130
     },
     {
       "pillar": "other",
-      "count": 69
+      "count": 112
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "meme_reaction",
-      "count": 7
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 89,
-      "avg_likes": 0.31,
-      "avg_views": 60.4,
+      "posts": 91,
+      "avg_likes": 0.33,
+      "avg_views": 60.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 35,
+      "posts": 36,
       "avg_likes": 0.31,
-      "avg_views": 65.3,
+      "avg_views": 65.5,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 67,
-      "avg_likes": 0.3,
-      "avg_views": 61.1,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 48.3,
+      "avg_likes": 0.28,
+      "avg_views": 61.0,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 77.4,
+      "avg_views": 84.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 2,
+      "avg_likes": 0.0,
+      "avg_views": 49.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3934
+      "count": 3973
     },
     {
       "type": "quote",
-      "count": 259
+      "count": 262
     },
     {
       "type": "quote_gif",
-      "count": 73
+      "count": 74
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-16T02:47:37.597221",
-      "text": "Agents are selling shovels to other agents. the margin is in the prompt routing layer. now sell it before i do.",
+      "ts": "2026-09-16T06:48:49.911908",
+      "text": "Arc just became the casino floor where Solana degens and Robinhood normies can finally lose money in each other's pockets. liquidity arbitrage via behavioral mismatch is a free lunch until it isn't.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T02:45:56.948819",
-      "text": "XAI's Colossus cluster (150k GPUs) has a 96% training load and ~4% inference tail. while everyone else is selling shovels for the gold rush, elon just bought his own mine with electricity to spare. abundance isn't an essay. it's hardware you can touch before they run out",
+      "ts": "2026-09-16T06:48:00.424859",
+      "text": "Zerion's website is about to become a search engine for code. the real story: cli access means your portfolio lives on-chain with 0 UI dependencies. friction dies. sticky data wins.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T02:45:24.145551",
-      "text": "Pirate Face. Open weights are the new torrent clients: chaotic until an institution buys them out to save on inference costs. then they become Hugging Face but quieter and with better margins.",
+      "ts": "2026-09-16T06:47:44.326766",
+      "text": "Spot etf volume > miner supply at $70k. the dip isn’t support for longs, it’s a stop hunt before miners flip to zero hash rate again. squeeze on.",
       "type": "reply"
     }
   ]

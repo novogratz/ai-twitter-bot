@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-15T06:59:09.521024",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulesGhislain",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "L'incontournable de la crypto FR. Il balance des threads techniques et des views macro sans jamais vendre de soupe, juste du savoir pur."
-      },
-      {
-        "handle": "JohanBiel",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "Ancien de Microsoft, il couvre la tech et l'IA avec une lucidit\u00e9 rare. Pas de buzzword vide de sens, juste des analyses de terrain solides."
-      },
-      {
-        "handle": "ThomasLevalet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Sp\u00e9cialiste de l'IA en France, il suit les startups et la recherche locale. Un condens\u00e9 utile pour ne pas passer \u00e0 c\u00f4t\u00e9 de l'innovation hexagonale."
-      },
-      {
-        "handle": "MaximeLefebvre",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Founders et IA, il couvre le paysage startups qu\u00e9b\u00e9cois avec un \u0153il critique. Moins de hype, plus de business models."
-      },
-      {
-        "handle": "MarcLefebvre",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "L'expert fintech qui comprend vraiment les enjeux r\u00e9glementaires et technologiques. Il tweete pour les pros, pas pour les influenceurs."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le bruit pour garder les cerveaux qui alimentent le feed. De la crypto pure en France \u00e0 la bourse sage au Qu\u00e9bec, en passant par la tech VC aux US."
-  },
-  {
     "ts": "2026-08-15T08:59:07.949803",
     "raw_count": 6,
     "kept_count": 6,
@@ -6772,5 +6727,22 @@
       }
     ],
     "summary": "Le top FR est domin\u00e9 par des analystes 'terre-\u00e0-terraux' qui d\u00e9testent le buzz, tandis que la sc\u00e8ne QC et USA francophone compense avec une touche plus anglo-saxonne dans l'analyse de l'IA pure."
+  },
+  {
+    "ts": "2026-09-16T02:49:39.778109",
+    "raw_count": 5,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomZborowski",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 35000,
+        "reason": "Le mec qui explique l'IA aux gens de la terre ferme sans leur prendre le chou. Anti-hype constant."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur des analystes 'fondamentaliste' plut\u00f4t que des influenceurs bruitistes : Lagarda pour l'on-chain, Dionne pour le qu\u00e9bec et Leruyet/Zborowski pour l'IA technique sans fluff. Z\u00e9ro vente de r\u00eave ici."
   }
 ]
