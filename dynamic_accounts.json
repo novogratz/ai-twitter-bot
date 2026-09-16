@@ -2438,7 +2438,12 @@
     "HuguesDiniz",
     "CyrilTheTech",
     "Boris_Rieu",
-    "JulienDoyonQC"
+    "JulienDoyonQC",
+    "LorenzoCristi",
+    "_adriengirard_",
+    "Nathalie_Walsh_",
+    "Lachiver",
+    "_adrieng89_"
   ],
   "en": [
     "Chubby",
@@ -3018,7 +3023,8 @@
     "Circle",
     "Kamino",
     "scooter",
-    "VALORANT"
+    "VALORANT",
+    "Impact"
   ],
   "history": [
     {
@@ -18104,6 +18110,36 @@
     {
       "lang": "fr",
       "handle": "JulienDoyonQC",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoCristi",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adriengirard_",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nathalie_Walsh_",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Impact",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lachiver",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "_adrieng89_",
       "added": "2026-09-16"
     }
   ]

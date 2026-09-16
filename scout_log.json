@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-08-15T18:59:19.466017",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DexertoFR",
-        "region": "france",
-        "niche": "tech",
-        "followers": 95000,
-        "reason": "Pas que du gaming. Leur couverture IA/Tech est pr\u00e9cise, rapide et sans le 'marketing hype' des m\u00e9dias traditionnels."
-      },
-      {
-        "handle": "Lilithia_0x",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "La r\u00e9f\u00e9rence crypto FR. Elle analyse le march\u00e9 sans en faire tout un plat et \u00e9vite le jargon superflu."
-      },
-      {
-        "handle": "MarcGaudry",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'ex-directeur financier de Free. Il donne des cours de strat\u00e9gie boursi\u00e8re avec une franchise d\u00e9capante."
-      },
-      {
-        "handle": "FrenchTechAI",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "La newsletter/compte US qui suit la French Tech. Parfait pour voir ce que nos concurrents am\u00e9ricains pensent de nous."
-      },
-      {
-        "handle": "CryptoBaba_QC",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le gars qui rend la crypto accessible sans donner l'impression qu'on est dans un webinaire Zoom ennuyeux."
-      },
-      {
-        "handle": "GillesZanier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Journaliste tech pointu. Il comprend la tech mieux que les CEO qu'il interviewe, sans se prendre au s\u00e9rieux."
-      },
-      {
-        "handle": "BenoitFloc",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le fondateur du bot qui l'a s\u00e9lectionn\u00e9. Il tweet en FR depuis San Francisco, ce qui donne une perspective d\u00e9cal\u00e9e sur les deux rives."
-      },
-      {
-        "handle": "VivianeThibault",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Journaliste boursi\u00e8re de talent. Elle d\u00e9crypte les r\u00e9sultats trimestriels pour des gens qui ont la flemme de lire les rapports."
-      }
-    ],
-    "summary": "Un m\u00e9lange solide de sp\u00e9cialistes crypto FR/Qu\u00e9bec et de technophiles Boursicoteurs. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour privil\u00e9gier ceux qui d\u00e9cryptent le chaos avec humour et pr\u00e9cision."
-  },
-  {
-    "ts": "2026-08-15T20:59:09.508973",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thomas_dufraisse",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "L'ancien de Coinbase FR qui a la science infuse sur les cycles et ne vend que du vent technique, pas des cours \u00e0 2k\u20ac."
-      },
-      {
-        "handle": "nathan_kleiner",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Venteur de r\u00eave en SF qui parle fran\u00e7ais par hasard mais couvre l'IA g\u00e9n\u00e9rative avec la pr\u00e9cision d'un scalpel et l'humour d'un ados."
-      },
-      {
-        "handle": "paul_cayrel",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Directeur de la data chez Doctolib, il tweete sur l'IA de prod et pas sur le prompt engineering pour s'envoyer en l'air."
-      },
-      {
-        "handle": "maxence_vandevelde",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Expert IA fran\u00e7ais qui couvre les papers arXiv et les applications business, twitte en FR et \u00e9vite soigneusement les 'AI will save you'."
-      },
-      {
-        "handle": "lucas_brunet",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Founder fintech fran\u00e7ais qui explique la tech sans jargon inutile, le genre de compte qu'on garde parce qu'il donne des insights r\u00e9els."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui comprennent la tech : des profils techniques ou analystes qui tweetent en fran\u00e7ais sans se prendre au s\u00e9rieux."
-  },
-  {
     "ts": "2026-08-15T22:59:15.966465",
     "raw_count": 6,
     "kept_count": 2,
@@ -6709,5 +6598,60 @@
       }
     ],
     "summary": "1-2 phrases en FR \u2014 qui tu as trouv\u00e9 et pourquoi ils valent le coup."
+  },
+  {
+    "ts": "2026-09-16T14:50:01.667690",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoCristi",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Mistral AI. C'est le patron des locaux qui twitte plus vite que son code compile."
+      },
+      {
+        "handle": "_adriengirard_",
+        "region": "france",
+        "niche": "ai/crypto",
+        "followers": 18000,
+        "reason": "Le gars qui a fait sauter la t\u00eate de Bouygues. Il voit venir les bull runs avant qu'ils ne se l\u00e8vent."
+      },
+      {
+        "handle": "Nathalie_Walsh_",
+        "region": "france",
+        "niche": "bourse/tech",
+        "followers": 12000,
+        "reason": "Ancienne de la finance qui a compris que l'IA mangeait Wall Street. Pas vendeuse de r\u00eaves."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des vendeurs d'or et gard\u00e9s ceux qui ont du sang dans l'affichage ou un book en cours. Une balance entre IA fran\u00e7aise (Mistral/Maker) et Crypto/Trading qu\u00e9b\u00e9cois/fran\u00e7ais."
+  },
+  {
+    "ts": "2026-09-16T16:49:42.182017",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lachiver",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "Le roi de la d\u00e9centralisation en France. Twitte souvent, analyse technique et on-chain solide, z\u00e9ro pub formation \u00e0 97\u20ac."
+      },
+      {
+        "handle": "_adrieng89_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founding Engineer AI. Twitte dev/infra LLM plus que la hype pure, tr\u00e8s technique et pertinent."
+      }
+    ],
+    "summary": "Un mix sain entre les incontournables de l'IA fran\u00e7aise (Dumas) et le trading/crypto solide (Lachiver/BNT). Pas d'influenceurs qui crient dans le vide, juste des profils who actually ship or analyze data."
   }
 ]

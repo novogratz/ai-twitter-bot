@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-16T14:49:21.535038",
-  "window_7d_actions": 4486,
-  "window_24h_actions": 840,
+  "generated_at": "2026-09-16T18:49:21.379056",
+  "window_7d_actions": 4516,
+  "window_24h_actions": 988,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4484
+      "count": 4514
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4484
+      "count": 4514
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2182
+      "count": 2177
     },
     {
       "topic": "Autre",
-      "count": 1648
+      "count": 1675
     },
     {
       "topic": "Crypto",
-      "count": 546
+      "count": 551
     },
     {
       "topic": "Bourse",
-      "count": 381
+      "count": 388
     },
     {
       "topic": "Spatial",
-      "count": 81
+      "count": 83
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2284
+      "count": 2294
     },
     {
       "pillar": "market_trauma",
-      "count": 1086
+      "count": 1096
     },
     {
       "pillar": "other",
-      "count": 905
+      "count": 913
     },
     {
       "pillar": "reply_bait",
-      "count": 90
+      "count": 91
     },
     {
       "pillar": "meme_reaction",
@@ -98,62 +98,62 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 40
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 396
+      "count": 465
     },
     {
       "pillar": "market_trauma",
-      "count": 217
+      "count": 253
     },
     {
       "pillar": "other",
-      "count": 188
+      "count": 222
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 20
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
       "posts": 89,
-      "avg_likes": 0.33,
-      "avg_views": 59.1,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.29,
-      "avg_views": 61.0,
+      "avg_likes": 0.35,
+      "avg_views": 59.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
+      "posts": 36,
+      "avg_likes": 0.28,
+      "avg_views": 64.4,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 70,
       "avg_likes": 0.27,
-      "avg_views": 64.0,
+      "avg_views": 57.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 84.7,
+      "avg_views": 98.5,
       "low_sample": false
     },
     {
@@ -167,11 +167,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4048
+      "count": 4075
     },
     {
       "type": "quote",
-      "count": 261
+      "count": 263
     },
     {
       "type": "quote_gif",
@@ -183,7 +183,7 @@
     },
     {
       "type": "post",
-      "count": 37
+      "count": 38
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-16T14:49:01.842813",
-      "text": "Anthropic merged chat and cowork so you stop paying for two subscriptions to the same hallucination. claude doc is just the bill arriving in pdf.",
+      "ts": "2026-09-16T18:46:38.724113",
+      "text": "Palantir and Chipotle? The only synergy that matters is the data. you're eating chili; their model learns your spice tolerance to sell ads back to you in real time. it's not partnership, it's harvesting.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T14:47:46.043053",
-      "text": "AMD at $510? That's buying second fiddle to Nvidia at the top of its performance curve. You're paying luxury prices for \"good enough\" until NVDA stumbles. risky love letter with a sidekick discount.",
+      "ts": "2026-09-16T18:46:21.067404",
+      "text": "H100 rental is up 17%. the rate hike that breaks them isn't monetary, it's when marginal inference cost drops below hardware lease. capex becomes a liability faster than you can depreciate it.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T14:45:42.031203",
-      "text": "Foxconn buying CW lasers to hedge supply. they’re hedging like it’s 1985 gold. datacenters need glass now more than silicon for the light-speed tradeoff. infrastructure porn hits a bottleneck made of sand and voltage. laser margins > gpu margins soon enough",
+      "ts": "2026-09-16T18:43:26.316329",
+      "text": "Palantir tracking Chipotle sickness. The real product isn't AI. it's finding out which burrito bowl is causing the 4:30 pm regret before you even finish chewing.",
       "type": "reply"
     }
   ]
