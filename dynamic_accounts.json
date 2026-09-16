@@ -2428,7 +2428,13 @@
     "MaximeDutrey972",
     "RomainViallard",
     "thomashemery",
-    "ThomZborowski"
+    "ThomZborowski",
+    "Hugozanin",
+    "DarioMaes",
+    "BaptisteFollot",
+    "LionelDelfau",
+    "NicolasM",
+    "MathieuDubeau"
   ],
   "en": [
     "Chubby",
@@ -3004,7 +3010,8 @@
     "Rhys",
     "Vangrid",
     "theleahfiles",
-    "shako"
+    "shako",
+    "Circle"
   ],
   "history": [
     {
@@ -18020,6 +18027,41 @@
     {
       "lang": "fr",
       "handle": "ThomZborowski",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Circle",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Hugozanin",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "DarioMaes",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteFollot",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelDelfau",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasM",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDubeau",
       "added": "2026-09-16"
     }
   ]

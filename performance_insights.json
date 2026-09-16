@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-16T06:49:21.418268",
-  "window_7d_actions": 4408,
-  "window_24h_actions": 503,
+  "generated_at": "2026-09-16T10:49:22.070517",
+  "window_7d_actions": 4442,
+  "window_24h_actions": 665,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4406
+      "count": 4440
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4406
+      "count": 4440
     }
   ],
   "best_hours_utc": [
@@ -37,7 +37,7 @@
     },
     {
       "hour": 9,
-      "actions": 213
+      "actions": 217
     },
     {
       "hour": 0,
@@ -55,98 +55,98 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2160
+      "count": 2174
     },
     {
       "topic": "Autre",
-      "count": 1622
+      "count": 1631
     },
     {
       "topic": "Crypto",
-      "count": 537
+      "count": 541
     },
     {
       "topic": "Bourse",
-      "count": 366
+      "count": 374
     },
     {
       "topic": "Spatial",
-      "count": 82
+      "count": 80
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2266
+      "count": 2279
     },
     {
       "pillar": "market_trauma",
-      "count": 1072
+      "count": 1071
     },
     {
       "pillar": "other",
-      "count": 868
+      "count": 887
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 90
     },
     {
       "pillar": "meme_reaction",
-      "count": 76
+      "count": 78
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 38
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 239
+      "count": 318
     },
     {
       "pillar": "market_trauma",
-      "count": 130
+      "count": 168
     },
     {
       "pillar": "other",
-      "count": 112
+      "count": 150
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 14
     },
     {
       "pillar": "meme_reaction",
-      "count": 8
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 91,
-      "avg_likes": 0.33,
-      "avg_views": 60.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.31,
-      "avg_views": 65.5,
+      "posts": 90,
+      "avg_likes": 0.32,
+      "avg_views": 58.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.28,
-      "avg_views": 61.0,
+      "posts": 66,
+      "avg_likes": 0.29,
+      "avg_views": 60.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 38,
+      "avg_likes": 0.29,
+      "avg_views": 63.2,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3973
+      "count": 4005
     },
     {
       "type": "quote",
-      "count": 262
+      "count": 261
     },
     {
       "type": "quote_gif",
-      "count": 74
+      "count": 76
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 45
     },
     {
       "type": "post",
-      "count": 36
+      "count": 39
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-16T06:48:49.911908",
-      "text": "Arc just became the casino floor where Solana degens and Robinhood normies can finally lose money in each other's pockets. liquidity arbitrage via behavioral mismatch is a free lunch until it isn't.",
+      "ts": "2026-09-16T10:48:56.674419",
+      "text": "ARC-AGI isn't a leaderboard. It's the IQ test for agents doing your work by Friday. nobody cares about math when the bot answers email better than you. stop measuring horsepower and start feeling the acceleration.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T06:48:00.424859",
-      "text": "Zerion's website is about to become a search engine for code. the real story: cli access means your portfolio lives on-chain with 0 UI dependencies. friction dies. sticky data wins.",
+      "ts": "2026-09-16T10:48:07.355104",
+      "text": "Mars is the last planet we can actually reach without a six-month isolation party. The stock just priced in the travel time. We're still stuck at ticket gate C.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T06:47:44.326766",
-      "text": "Spot etf volume > miner supply at $70k. the dip isn’t support for longs, it’s a stop hunt before miners flip to zero hash rate again. squeeze on.",
+      "ts": "2026-09-16T10:47:05.569744",
+      "text": "@Seneca Scott’s crowd loves AI until the power bill hits. they’re not virtue-signaling. they’re calculating ROI while xAI burns $10M/day just to dream. data centers win because nobody checks their electricity meter at midnight. mdr.",
       "type": "reply"
     }
   ]

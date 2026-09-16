@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-08-15T08:59:07.949803",
-    "raw_count": 6,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GoulvenLecocq",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 185000,
-        "reason": "Le roi du trading FR. Pas de pur\u00e9e, que du b\u00e9ton. C'est le prof de maths qui t'a fait pleurer mais qui, 10 ans plus tard, s'av\u00e8re avoir raison sur tout."
-      },
-      {
-        "handle": "JulesDuchenne",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Le trader retail qui a surv\u00e9cu aux crashs. Sa niche : transformer les KPIs en phrases qu'un humain normal peut comprendre sans caf\u00e9."
-      },
-      {
-        "handle": "MathieuFrenay",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "L'expert technique qui explique le Bitcoin comme s'il parlait \u00e0 son grand-m\u00e8re, mais avec un style qui pique aux yeux. Filtre anti-herbivores efficace."
-      },
-      {
-        "handle": "BenoitTassin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "CTO de Datadog. Il twitte sur l'IA, la tech et l'industrie avec l'humour d'un ing\u00e9nieur qui a vu passer 3 cycles \u00e9conomiques. Moins hype que Mistral, plus pertinent que la moyenne."
-      },
-      {
-        "handle": "JohannBouchard",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Diaspora FR aux USA. Il couvre le march\u00e9 crypto am\u00e9ricain avec l'\u0153il critique d'un eurocentriste. Id\u00e9al pour comprendre les d\u00e9calages culturels du trading."
-      },
-      {
-        "handle": "PierreCormerais",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le prof de Poly qui rend l'IA accessible sans vendre du r\u00eave. C'est l'anti-gourou : il te dit ce que ton cerveau refuse d'accepter sur les limites de l'IA."
-      }
-    ],
-    "summary": "6 pros au-del\u00e0 des influenceurs de 'd\u00e9gainer'. Goulven et Jules pour le cash, Tassin pour la tech, Cormerais pour le Qu\u00e9bec. Pas de formation \u00e0 97\u20ac."
-  },
-  {
-    "ts": "2026-08-15T12:59:11.314886",
-    "raw_count": 7,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Venteirosa",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Br\u00e9silien vivant aux USA qui twitte en FR/EN sur l'IA. La r\u00e9f\u00e9rence technique. Si tu le suis pas, tu es encore en train de lire des tweets de d\u00e9butants."
-      },
-      {
-        "handle": "CryptoM0nkFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "L'ancien bankeur qui a crash\u00e9 pour trader. Il balance des setups BTC sans attendre 3 tweets d'intro. Z\u00e9ro blabla, pur prix."
-      }
-    ],
-    "summary": "J'ai chass\u00e9 les fondateurs qui twittent (Mistral, LucasDumont) et les traders FR purs (SylvainLeRoux, CryptoM0nk). On oublie les generalistes pour garder les experts qui nourrissent le bot sans vendre de formations \u00e0 49\u20ac."
-  },
-  {
     "ts": "2026-08-15T14:59:32.042097",
     "raw_count": 10,
     "kept_count": 6,
@@ -6744,5 +6668,67 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur des analystes 'fondamentaliste' plut\u00f4t que des influenceurs bruitistes : Lagarda pour l'on-chain, Dionne pour le qu\u00e9bec et Leruyet/Zborowski pour l'IA technique sans fluff. Z\u00e9ro vente de r\u00eave ici."
+  },
+  {
+    "ts": "2026-09-16T06:49:51.561063",
+    "raw_count": 5,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Hugozanin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18500,
+        "reason": "La r\u00e9f\u00e9rence fran\u00e7aise en IA appliqu\u00e9e aux startups. Il tweet comme il respire : technique mais accessible sans \u00eatre scolaire."
+      }
+    ],
+    "summary": "Focus IA/FinTech pure, pas de vendeurs de r\u00eave qui pushent des Telegram VIP pourri : Hugozanin domine le paysage fran\u00e7ais s\u00e9rieux dans l'IA, tandis que Pierre Bouchard reste la seule voix qu\u00e9b\u00e9coise avec du gras sans \u00eatre un 'influencer lifestyle'."
+  },
+  {
+    "ts": "2026-09-16T08:49:54.702271",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DarioMaes",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "L'ami des LLMs. Il tweet sur l'int\u00e9gration technique d'Hugging Face et de Mistral avec le genre de passion qu'on aurait normalement pour une conqu\u00eate romantique."
+      },
+      {
+        "handle": "BaptisteFollot",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Le trader ind\u00e9pendant qui a prouv\u00e9 qu'on pouvait survivre sans syndicat. Ses threads sur la gestion du risque sont plus clairs que les explications de ta m\u00e8re."
+      },
+      {
+        "handle": "LionelDelfau",
+        "region": "france",
+        "niche": "ai_fintech",
+        "followers": 45000,
+        "reason": "Le gars de chez Lyra Health. Il balance des insights sur l'IA appliqu\u00e9e \u00e0 la sant\u00e9 mentale avec une pr\u00e9cision chirurgicale et sans buzzword mortel."
+      },
+      {
+        "handle": "NicolasM",
+        "region": "usa",
+        "niche": "ai_crypto_diaspora",
+        "followers": 30000,
+        "reason": "La diaspora francophone active \u00e0 SF. Il tweet en fran\u00e7ais sur le Nasdaq et Bitcoin avec l'angle de vue d'un expatri\u00e9 qui n'a pas oubli\u00e9 ses racines."
+      },
+      {
+        "handle": "MathieuDubeau",
+        "region": "quebec",
+        "niche": "ai_tech",
+        "followers": 18000,
+        "reason": "Expert technique montr\u00e9alais. Quand il parle de d\u00e9ploiement LLM ou d'infrastructure cloud, tu comprends tout sans avoir besoin d'une licence en informatique."
+      }
+    ],
+    "summary": "Le lot mixe des g\u00e9ants techniques comme Dario Maes pour les LLMs, des profils trading confirm\u00e9s comme Follot/Bnt et une touche qu\u00e9b\u00e9coise avec Dionne/Dubeau. Z\u00e9ro influenceur de vie priv\u00e9e."
   }
 ]
