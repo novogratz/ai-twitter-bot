@@ -2424,7 +2424,9 @@
     "JulienDuchet",
     "NathalieWalshFR",
     "DexertoFR_",
-    "BastienSagot"
+    "BastienSagot",
+    "MaximeDutrey972",
+    "RomainViallard"
   ],
   "en": [
     "Chubby",
@@ -2998,7 +3000,8 @@
     "Odyssey",
     "Mathematica",
     "Rhys",
-    "Vangrid"
+    "Vangrid",
+    "theleahfiles"
   ],
   "history": [
     {
@@ -17984,6 +17987,21 @@
     {
       "lang": "fr",
       "handle": "BastienSagot",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "theleahfiles",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDutrey972",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainViallard",
       "added": "2026-09-15"
     }
   ]

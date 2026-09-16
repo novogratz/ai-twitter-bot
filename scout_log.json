@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-15T02:59:13.411244",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Rafman",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 350000,
-        "reason": "Pas un trader, un observateur. Ses threads sur les cycles crypto sont de purs joyaux narratifs, tout en FR."
-      },
-      {
-        "handle": "HugoTravers",
-        "region": "france",
-        "niche": "ai",
-        "followers": 195000,
-        "reason": "Journaliste TechCrunch bas\u00e9 \u00e0 Paris. Il tweet les news US en FR avant qu'elles ne soient mainstream sur les \u00e9crans."
-      },
-      {
-        "handle": "SylvainLeclerc",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 32000,
-        "reason": "La voix du VC qu\u00e9b\u00e9cois. Moins connu du grand public fran\u00e7ais, mais la source ultime pour les deals AI/DeepTech dans l'Hexagone Nord."
-      },
-      {
-        "handle": "MisterAragon",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Le mec qui explique l'IA aux pros sans endormir les profanes. Ton direct, contenu technique lourd mais digeste."
-      },
-      {
-        "handle": "NathalieMartin",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "La reine du Bitcoin \u00e0 NYC. Elle parle aux Francos install\u00e9s aux states. Analyse on-chain + lifestyle tech. Z\u00e9ro blabla politique."
-      }
-    ],
-    "summary": "Une s\u00e9lection blind\u00e9e : des g\u00e9ants narratives comme Nakamoto21 pour la crypto, des experts techniques comme MisterAragon pour l'IA, et des p\u00e9pites r\u00e9gionales qui \u00e9vitent les influenceurs de 'lifestyle'. Z\u00e9ro formation \u00e0 999\u20ac, 100% analyse."
-  },
-  {
     "ts": "2026-08-15T04:59:07.203323",
     "raw_count": 8,
     "kept_count": 3,
@@ -6807,5 +6762,29 @@
       }
     ],
     "summary": "Une liste sans place pour la vanit\u00e9 : du concret FR/QC/US. On a \u00e9lagu\u00e9 ceux qui vendent des r\u00eaves \u00e0 deux sous."
+  },
+  {
+    "ts": "2026-09-15T22:49:42.747782",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeDutrey972",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le patron de Trading Sytem. Il tweete des setups r\u00e9els et ne se plaint pas du march\u00e9 comme un plaignant amateur."
+      },
+      {
+        "handle": "RomainViallard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "CEO de Qdrant. Il vulgarise le vector search pour les devs sans payer d'influenceur \u00e0 c\u00f4t\u00e9."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui cr\u00e9ent de la valeur : Amon pour l'IA pure, Dutrey pour la bourse pro et Viallard pour l'infras. Le QC est repr\u00e9sent\u00e9 par Dionne sans les gimmicks."
   }
 ]
