@@ -2426,7 +2426,8 @@
     "DexertoFR_",
     "BastienSagot",
     "MaximeDutrey972",
-    "RomainViallard"
+    "RomainViallard",
+    "thomashemery"
   ],
   "en": [
     "Chubby",
@@ -3001,7 +3002,8 @@
     "Mathematica",
     "Rhys",
     "Vangrid",
-    "theleahfiles"
+    "theleahfiles",
+    "shako"
   ],
   "history": [
     {
@@ -18003,6 +18005,16 @@
       "lang": "fr",
       "handle": "RomainViallard",
       "added": "2026-09-15"
+    },
+    {
+      "lang": "en",
+      "handle": "shako",
+      "added": "2026-09-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomashemery",
+      "added": "2026-09-16"
     }
   ]
 }
