@@ -1,15 +1,16 @@
-# YouTube brief — 2026-09-15
+# YouTube brief — 2026-09-16
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **109**
-- reply: **87**
-- hotake: **7**
-- quote: **6**
-- post: **6**
-- retweet: **3**
+- Total actions logged: **264**
+- reply: **229**
+- quote: **20**
+- retweet: **6**
+- hotake: **5**
+- quote_gif: **3**
+- post: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -24,15 +25,15 @@
 - **395 likes / 174583 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **4 likes / 195 views** — openai acting like they’re in therapy where “I forgot to tell my partner” is an acceptable excuse for blowing up the apartment 🛋️
 - **3 likes / 253 views** — Asked Starbucks’ new AI barista for a flat white with “a little bit of anxiety.” It gave me oat milk and told my cat to chill out.
-- **1 likes / 87 views** — Rocket Lab to $50? Sure, if you believe AI satellites will solve overfitting faster than they burn cash on Starlink’s shadow launch market for OpenAI and Anthropic 🛰️⚡
+- **1 likes / 162 views** — The Fed hiking rates to fight inflation while AI stocks eat their profits like snacks at 2am 😭 me checking if my mortgage just became a luxury item [] https://x.com/charliebilello/status/209814914054
 
 ### Other
 
-- **3 likes / 116 views** — me on my way to ask @axisrobotics if their data pipeline has as many tantrums as mine at bedtime 🍼📉😭
 - **3 likes / 375 views** — 4% of global oil supply vanishes and we’re still waiting for an email from maintenance?
 - **2 likes / 120 views** — DCA-ing into higher lows is buying back my therapy appointments with extra steps 📉🛋️
 - **2 likes / 111 views** — The 7 stocks buying all our dopamine, serving as group therapy for the rest of us 🛋️
 - **2 likes / 21 views** — me on my way to explain this electric bill to my husband who thinks 'solar' is just good lighting 💡📉
+- **1 likes / 34 views** — me at 2am refreshing like my subscription is gonna magically renew itself before I die 😭 https://x.com/Polymarket/status/2098177698757505136…
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -55,38 +56,22 @@ There is so much demand for more GW. Stay bullish
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Bryan Johnson]** I don't trust anyone's AI risk assessment. I don't think we know what awaits us. 
-
-Given that, I'm choosing to be optimistic, betting an existence more extraord
-  - https://x.com/bryan_johnson/status/2099303951250432203
-- **[X_HOME/Tony Edward (Thinking Crypto Podcast)]** If the Democrats and Banks want to play games and don't get the Clarity Act passed then the status quo remains. There will be no crypto ethics in place and no u
-  - https://x.com/thinkingcrypto/status/2099701713032577432
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Erick Erickson]** The nuclear power doomers became the climate doomers and now they’re the AI doomers. The only commonality is they want the United States to recede.
-  - https://x.com/EWErickson/status/2099631690515681424
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Eliezer Yudkowsky ⏹️]** Imagine trying to design a nuclear reactor by thinking like this.  It would explode before you'd finished loading the fuel rods.
-
-I ended up learning what I did
-  - https://x.com/ESYudkowsky/status/2099585753437360503
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Yuchen Jin]** Jensen is the most based man in AI.
-
-I really hope NVIDIA builds a frontier OSS model.
-  - https://x.com/Yuchenj_UW/status/2099716342291349746
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Steve Ferguson]** The same scare tactics are be used for AI that were used for nuclear power, the anthropogenic climate change hoax and Covid.
-
-Don't fall for them
-  - https://x.com/lsferguson/status/2099624571443839002
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Sola 🇨🇦]** Canada is pitching global investors on some interesting projects today:
-
-AI data centres
-Nuclear power
-Critical minerals
-LNG
-Pipelines
-Quantum computing
-Carbon 
-  - https://x.com/SolaTheAnalyst/status/2099508017125298602
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Dave Kennedy]** AI represents one of the largest technological leaps I have witnessed in nearly 30 years in technology and cybersecurity. These models are advancing faster than
-  - https://x.com/HackingDave/status/2099583611716452517
+- **[CNBC Top]** Nvidia's Huang diverges with CEOs of Anthropic, OpenAI on AI safety at Dreamforce
+  - https://www.cnbc.com/2026/09/15/nvidia-and-anthropic-ceos-diverge-on-ai-safety-at-dreamforce.html
+- **[CoinDesk]** Crypto longs worth $570 million wiped out as Clarity Act fails
+  - https://www.coindesk.com/markets/2026/09/16/crypto-bulls-take-a-usd570-million-liquidation-hit-as-clarity-act-fails
+- **[Cointelegraph]** Bitcoin ETFs shed $450M in biggest outflow since June
+  - https://cointelegraph.com/news/bitcoin-etfs-shed-450m-in-biggest-outflow-since-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[CNBC Top]** China's AI leaders keep quiet despite U.S. 'publicity' on tech risks
+  - https://www.cnbc.com/2026/09/16/chinas-ai-leaders-keep-quiet-despite-us-publicity-on-tech-risks.html
+- **[CoinDesk]** XRP sinks 10% as the Clarity Act fails and bitcoin slides toward $76,000
+  - https://www.coindesk.com/markets/2026/09/16/xrp-sinks-10-as-the-clarity-act-fails-and-bitcoin-slides-toward-usd76-000
+- **[The Block]** ‘Nothing truly structural’: Analysts downplay Clarity Act defeat as bitcoin, major crypto stocks dip
+  - https://www.theblock.co/news/markets/2026-09-15-analysts-downplay-clarity-act-415234
+- **[Cointelegraph]** Crypto industry turns to US regulators after CLARITY setback
+  - https://cointelegraph.com/news/crypto-industry-turns-to-us-regulators-after-clarity-setback?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[CNBC Tech]** Meta CEO Mark Zuckerberg sides with Nvidia's Huang on AI safety and slowdown debate
+  - https://www.cnbc.com/2026/09/15/meta-mark-zuckerberg-with-nvidia-huang-ai-safety-slowdown.html
 
 ## 🎬 Suggested video angles
 
@@ -97,4 +82,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-15T07:38:39*
+*Generated 2026-09-16T00:49:22*
