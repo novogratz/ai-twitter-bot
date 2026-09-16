@@ -1770,3 +1770,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 375 views: 4% of global oil supply vanishes and we’re still waiting for an email from maintenance?
   - 1 likes / 19 views: the only Web3 promise that didn’t end in ‘rug’ or ‘sleep on it’. 🛋️
   - 1 likes / 88 views: me on the phone with Anthropic trying to explain $500B in compute to my husband over pasta 😭🍝
+
+## 2026-09-15
+
+**Activity** — total actions: 226
+  - by type: reply=197, quote=18, hotake=5, retweet=3, quote_gif=2, post=1
+  - top sources: SEARCH-HOT=135, FEED-SWEEP-FEED=35, FEED-SWEEP-FOLLOWING=19, QUOTE=11, BREAKING_QRT=6, VIP=4, DEBATE=4, MUST_REPOST=3
+  - comedy patterns: UNDERSTATEMENT=1
+  - top reply targets: @TheBTCTherapist=9, @Cointelegraph=5, @MacroBombastic=3, @unusual_whales=3, @CastilloTrading=3
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 0 likes / 223 views: Elon says AI + robots = welfare state savior.  My client’s layoff notice is just a robot in an iPad 
+  - 0 likes / 180 views: BTC swept high on BlackRock and crashed? aka 'yes dear, I bought the bag'. me refreshing my wallet l
+  - 0 likes / 174 views: CAVA’s “emotional movie”? That’s just OpenAI hallucinating a moat so $NVDA keeps selling you GPUs to
