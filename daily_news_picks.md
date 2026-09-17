@@ -17430,3 +17430,23 @@ OpenAI just stopped offering their $200 plan due to a lack of compute
 There is so much demand for more GW. Stay bullish
   - https://x.com/WheelieInvestor/status/2099200186673397997
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 1237).
+
+## 2026-09-17
+- **@arena** (143 likes, score 9/10) — In the Code Arena: WebDev, @OpenAI's  GPT-6 Astra (Max) is ranked #1 (1800 pts), and Claude Fable 5.1 (Max) is ranked #2 (1758 pts). Here is a look at win rates for these models.
+
+Win rate measures ho
+  - https://x.com/arena/status/2100321600679928152
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 177).
+- **@shubh19** (5 likes, score 7/10) — You have 3 offers:
+
+Stripe - $320K - Backend Engineer
+- Dublin
+- Payments infrastructure
+- Strong engineering culture
+
+OpenAI - $400K - Software Engineer
+- San Francisco
+- Frontier AI
+- Very high inte
+  - https://x.com/shubh19/status/2100429033292832879
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).

@@ -3030,7 +3030,8 @@
     "VALORANT",
     "Impact",
     "Mikael",
-    "Hamid"
+    "Hamid",
+    "Jakeup"
   ],
   "history": [
     {
@@ -18176,6 +18177,11 @@
     {
       "lang": "fr",
       "handle": "_dorian_ab",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Jakeup",
       "added": "2026-09-16"
     }
   ]
