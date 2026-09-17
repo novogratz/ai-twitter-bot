@@ -2448,7 +2448,8 @@
     "mohamed_amer",
     "_clementdecoing",
     "_dorian_ab",
-    "_jules_d_"
+    "_jules_d_",
+    "NathalieW_"
   ],
   "en": [
     "Chubby",
@@ -3032,7 +3033,8 @@
     "Impact",
     "Mikael",
     "Hamid",
-    "Jakeup"
+    "Jakeup",
+    "Iqra"
   ],
   "history": [
     {
@@ -18188,6 +18190,16 @@
     {
       "lang": "fr",
       "handle": "_jules_d_",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Iqra",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieW_",
       "added": "2026-09-17"
     }
   ]

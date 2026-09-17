@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-16T02:59:13.866719",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoRicky",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "L'humoriste crypto, parfait pour ne pas prendre le march\u00e9 \u00e0 la lettre."
-      },
-      {
-        "handle": "LuisGonzalezZ",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "L'ex-Mistral qui explique l'IA sans te endormir avec du jargon de consultante."
-      },
-      {
-        "handle": "AdriensZ",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Satur\u00e9 de tech, mais ses takes sur la vie de founder valent l'abonnement juste pour l'humour."
-      },
-      {
-        "handle": "Bourgeois",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 30000,
-        "reason": "Am\u00e9ricain mais francophone, couvre la fintech avec un angle plus frais que Wall Street."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les vrais profils actifs : Mistral pour la tech pure, Dionne pour le Qu\u00e9bec et Ricky pour le fun crypto. Z\u00e9ro formation \u00e0 99\u20ac, promis."
-  },
-  {
     "ts": "2026-08-16T04:59:07.773093",
     "raw_count": 7,
     "kept_count": 6,
@@ -6653,5 +6615,29 @@
       }
     ],
     "summary": "On a d\u00e9pouill\u00e9 le panier de la m\u00e9nag\u00e8re tech et trouv\u00e9 quatre noms qui tiennent la route sans vendre d'air. Des profils solides, actifs dans les trois r\u00e9gions cibles (FR/QC/US-francophone), avec un z\u00e9ro d\u00e9chet commercial."
+  },
+  {
+    "ts": "2026-09-17T08:49:49.236611",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathalieW_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence FR depuis Marsa. Elle twitte en fran\u00e7ais pour de vrai et \u00e9vite le pi\u00e8ge des cours."
+      },
+      {
+        "handle": "_Alex_Dionne_QC_",
+        "region": "quebec",
+        "niche": "bourse/tech",
+        "followers": 15000,
+        "reason": "Le mec \u00e0 Qu\u00e9bec qui donne des setups techniques sans vendre du r\u00eave."
+      }
+    ],
+    "summary": "6 profils solides qui survivent au spam Telegram et aux infographes inutiles. Mix France/Qu\u00e9bec pour garder la ligne \u00e9ditoriale \u00e0 jour sur les deux rives."
   }
 ]
