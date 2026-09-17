@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-17T10:49:21.589778",
-  "window_7d_actions": 4677,
-  "window_24h_actions": 1004,
+  "generated_at": "2026-09-17T14:49:21.435592",
+  "window_7d_actions": 4693,
+  "window_24h_actions": 988,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4675
+      "count": 4691
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4675
+      "count": 4691
     }
   ],
   "best_hours_utc": [
@@ -55,60 +55,60 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2251
+      "count": 2250
     },
     {
       "topic": "Autre",
-      "count": 1745
+      "count": 1763
     },
     {
       "topic": "Crypto",
-      "count": 566
+      "count": 567
     },
     {
       "topic": "Bourse",
-      "count": 405
+      "count": 404
     },
     {
       "topic": "Spatial",
-      "count": 85
+      "count": 84
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2374
+      "count": 2375
     },
     {
       "pillar": "market_trauma",
-      "count": 1129
+      "count": 1138
     },
     {
       "pillar": "other",
-      "count": 959
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 87
+      "count": 966
     },
     {
       "pillar": "meme_reaction",
-      "count": 87
+      "count": 90
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 488
+      "count": 482
     },
     {
       "pillar": "market_trauma",
-      "count": 253
+      "count": 244
     },
     {
       "pillar": "other",
@@ -120,7 +120,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
@@ -129,31 +129,31 @@
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "other",
-      "posts": 72,
+      "pillar": "ai_news_take",
+      "posts": 85,
       "avg_likes": 0.31,
-      "avg_views": 55.2,
+      "avg_views": 57.1,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 86,
-      "avg_likes": 0.28,
-      "avg_views": 57.0,
+      "pillar": "other",
+      "posts": 71,
+      "avg_likes": 0.3,
+      "avg_views": 53.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.22,
-      "avg_views": 60.8,
+      "posts": 37,
+      "avg_likes": 0.24,
+      "avg_views": 60.3,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 73.3,
+      "avg_views": 59.5,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4225
+      "count": 4240
     },
     {
       "type": "quote",
-      "count": 267
+      "count": 266
     },
     {
       "type": "quote_gif",
-      "count": 84
+      "count": 86
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 43
     },
     {
       "type": "post",
-      "count": 39
+      "count": 43
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-17T10:48:33.131703",
-      "text": "Jumper is tokenizing the Mag7 so you can earn yield on S&P concentration. It’s crypto for people who forgot how to read a prospectus but remember being nervous in 2018. nice try glider.",
+      "ts": "2026-09-17T14:48:43.694264",
+      "text": "IBIT shorts are betting $1T against a liquid spot ETF. it’s not a hedge; it’s the house giving 401k dave margin on a coin flip. long interest only wins if you sleep through Tuesday's volatility.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-17T10:46:58.504629",
-      "text": "VICR signed a license with an unnamed OEM. Now they have 401k Dave breathing down their neck asking if that's real revenue or just accounting vaporware to hide the burn rate of CoreWeave’s debt stack. The answer is usually: yes, but don’t blink at it twice before Q3 earnings whis",
+      "ts": "2026-09-17T14:48:27.466132",
+      "text": "$79.84 for a $150B valuation on ~$3M revenue? Aschenbrenner’s brain is the asset and his bank account owes interest to it.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-17T10:46:41.107449",
-      "text": "Al Gore calling AI power needs \"reasonable\" is the new oil industry saying solar works. he's bullish on efficiency because his grid has to pay for it too. pragmatic king.",
+      "ts": "2026-09-17T14:44:58.029324",
+      "text": "Inference cost is dropping 90% year-over-year while hardware capex climbs. The threat isn’t intelligence; it’s cheap labor arbitrage.",
       "type": "reply"
     }
   ]

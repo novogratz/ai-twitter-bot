@@ -2449,7 +2449,13 @@
     "_clementdecoing",
     "_dorian_ab",
     "_jules_d_",
-    "NathalieW_"
+    "NathalieW_",
+    "EvanKaminsky",
+    "JulienDelarue",
+    "ThomasCohen",
+    "DarioAmendola",
+    "VincentHuet",
+    "ThomasVidal"
   ],
   "en": [
     "Chubby",
@@ -18200,6 +18206,36 @@
     {
       "lang": "fr",
       "handle": "NathalieW_",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "EvanKaminsky",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelarue",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasCohen",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "DarioAmendola",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentHuet",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasVidal",
       "added": "2026-09-17"
     }
   ]
