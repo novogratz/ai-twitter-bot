@@ -2455,7 +2455,11 @@
     "ThomasCohen",
     "DarioAmendola",
     "VincentHuet",
-    "ThomasVidal"
+    "ThomasVidal",
+    "mickaelbour",
+    "_jules_bnt_",
+    "thomasthoraval",
+    "MaxRiesa"
   ],
   "en": [
     "Chubby",
@@ -3040,7 +3044,8 @@
     "Mikael",
     "Hamid",
     "Jakeup",
-    "Iqra"
+    "Iqra",
+    "Figure"
   ],
   "history": [
     {
@@ -18236,6 +18241,31 @@
     {
       "lang": "fr",
       "handle": "ThomasVidal",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelbour",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "_jules_bnt_",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Figure",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasthoraval",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxRiesa",
       "added": "2026-09-17"
     }
   ]
