@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-16T00:59:10.588326",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "C0r3ntin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 95000,
-        "reason": "Le gourou des agents autonomes, 100% technique, z\u00e9ro hype produit, juste du code et du sens."
-      },
-      {
-        "handle": "MathieuDuffet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Fondation de la value investing francophone. Contenu dense, pas de vente de r\u00eave, juste de l'analyse."
-      },
-      {
-        "handle": "RenaudProust",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Bas\u00e9 aux US, francophone. Couvre la fintech globale avec un \u0153il europ\u00e9en. Expert, pas influenceur."
-      }
-    ],
-    "summary": "5 experts silencieux qui font du bruit par la qualit\u00e9 de leur feed, pas par leurs stories Instagram."
-  },
-  {
     "ts": "2026-08-16T02:59:13.866719",
     "raw_count": 6,
     "kept_count": 4,
@@ -6667,5 +6636,22 @@
       }
     ],
     "summary": "L'\u00e9cosyst\u00e8me IA FR est satur\u00e9 de 'formateurs', mais ces 5 l\u00e0 font vraiment le travail : ils codent, analysent ou g\u00e8rent du produit. Dorian et Alex Dionne apportent la densit\u00e9 technique pure sur des march\u00e9s o\u00f9 les opinions priment souvent."
+  },
+  {
+    "ts": "2026-09-17T02:49:38.140525",
+    "raw_count": 4,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_jules_d_",
+        "region": "france",
+        "niche": "crypto_web3",
+        "followers": 20000,
+        "reason": "Web3 pur jus (ex-Consensys), twitte en FR avec du fond."
+      }
+    ],
+    "summary": "On a d\u00e9pouill\u00e9 le panier de la m\u00e9nag\u00e8re tech et trouv\u00e9 quatre noms qui tiennent la route sans vendre d'air. Des profils solides, actifs dans les trois r\u00e9gions cibles (FR/QC/US-francophone), avec un z\u00e9ro d\u00e9chet commercial."
   }
 ]

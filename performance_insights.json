@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-17T02:49:21.441945",
-  "window_7d_actions": 4599,
-  "window_24h_actions": 992,
+  "generated_at": "2026-09-17T06:49:22.678553",
+  "window_7d_actions": 4639,
+  "window_24h_actions": 996,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4597
+      "count": 4637
     },
     {
       "pattern": "METAPHOR",
@@ -27,17 +27,21 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4597
+      "count": 4637
     }
   ],
   "best_hours_utc": [
     {
       "hour": 2,
-      "actions": 233
+      "actions": 231
     },
     {
       "hour": 9,
       "actions": 217
+    },
+    {
+      "hour": 3,
+      "actions": 214
     },
     {
       "hour": 20,
@@ -46,55 +50,51 @@
     {
       "hour": 0,
       "actions": 209
-    },
-    {
-      "hour": 19,
-      "actions": 206
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2218
+      "count": 2244
     },
     {
       "topic": "Autre",
-      "count": 1711
+      "count": 1723
     },
     {
       "topic": "Crypto",
-      "count": 548
+      "count": 558
     },
     {
       "topic": "Bourse",
-      "count": 398
+      "count": 400
     },
     {
       "topic": "Spatial",
-      "count": 82
+      "count": 85
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2334
+      "count": 2363
     },
     {
       "pillar": "market_trauma",
-      "count": 1114
+      "count": 1111
     },
     {
       "pillar": "other",
-      "count": 937
+      "count": 953
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 87
     },
     {
       "pillar": "meme_reaction",
-      "count": 85
+      "count": 84
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,19 +104,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 480
+      "count": 495
     },
     {
       "pillar": "market_trauma",
-      "count": 244
+      "count": 238
     },
     {
       "pillar": "other",
-      "count": 222
+      "count": 216
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 19
     },
     {
       "pillar": "reply_bait",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 86,
-      "avg_likes": 0.31,
-      "avg_views": 58.4,
+      "posts": 87,
+      "avg_likes": 0.32,
+      "avg_views": 58.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 73,
       "avg_likes": 0.3,
-      "avg_views": 57.4,
+      "avg_views": 56.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 35,
-      "avg_likes": 0.26,
-      "avg_views": 64.2,
+      "posts": 34,
+      "avg_likes": 0.24,
+      "avg_views": 61.7,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4152
+      "count": 4190
     },
     {
       "type": "quote",
-      "count": 266
+      "count": 269
     },
     {
       "type": "quote_gif",
-      "count": 82
+      "count": 81
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-17T02:47:54.378462",
-      "text": "$103.8 a barrel? That’s the price of admitting OPEC+ is shouting at hurricanes to calm down. Supply won over geopolitics for once. We’re not out of the woods; we just forgot why we were afraid.",
+      "ts": "2026-09-17T06:49:22.147243",
+      "text": "$500M for $4B means they’re buying time at 18-month depreciation rates. the agent does the work; vcs pay premium to keep their burn rate pretty. no pressure.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-17T02:47:21.635810",
-      "text": "3 coins is what a drunk guy orders before he learns the difference between an app and OS.",
-      "type": "reply"
+      "ts": "2026-09-17T06:48:25.827812",
+      "text": "417 against 3? We aren’t betting on turbines anymore, we’re paying emotional support salaries to keep them happy 🥲",
+      "type": "quote"
     },
     {
-      "ts": "2026-09-17T02:46:03.405238",
-      "text": "Sam and Elon want slow down. Jensen wants sell more chips. The labs are dating; nvidia is the ex who keeps sending gift cards when you're busy falling in love with someone else's model. buy the vendor of doubt because it always needs new tech to prove its old thesis wrong",
+      "ts": "2026-09-17T06:47:51.312264",
+      "text": "Meta’s $8.5B saving is just their own GPU margin (70%) going from R&D expense to cost avoidance on inference costs that are doubling every 6 months.\n\nThe real story: they’re building a vertical monopoly so deep Apple would need three acquisitions and five years to catch up, if th",
       "type": "reply"
     }
   ]
