@@ -2443,7 +2443,11 @@
     "_adriengirard_",
     "Nathalie_Walsh_",
     "Lachiver",
-    "_adrieng89_"
+    "_adrieng89_",
+    "mouadkhelifi",
+    "mohamed_amer",
+    "_clementdecoing",
+    "_dorian_ab"
   ],
   "en": [
     "Chubby",
@@ -3024,7 +3028,9 @@
     "Kamino",
     "scooter",
     "VALORANT",
-    "Impact"
+    "Impact",
+    "Mikael",
+    "Hamid"
   ],
   "history": [
     {
@@ -18140,6 +18146,36 @@
     {
       "lang": "fr",
       "handle": "_adrieng89_",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Mikael",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Hamid",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "mouadkhelifi",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "mohamed_amer",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "_clementdecoing",
+      "added": "2026-09-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "_dorian_ab",
       "added": "2026-09-16"
     }
   ]

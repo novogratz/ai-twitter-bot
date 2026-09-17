@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-16T18:49:21.379056",
-  "window_7d_actions": 4516,
-  "window_24h_actions": 988,
+  "generated_at": "2026-09-16T22:49:21.479261",
+  "window_7d_actions": 4583,
+  "window_24h_actions": 1005,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4514
+      "count": 4581
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4514
+      "count": 4581
     }
   ],
   "best_hours_utc": [
@@ -40,120 +40,120 @@
       "actions": 217
     },
     {
+      "hour": 20,
+      "actions": 210
+    },
+    {
+      "hour": 19,
+      "actions": 206
+    },
+    {
       "hour": 0,
       "actions": 204
-    },
-    {
-      "hour": 3,
-      "actions": 202
-    },
-    {
-      "hour": 5,
-      "actions": 201
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2177
+      "count": 2213
     },
     {
       "topic": "Autre",
-      "count": 1675
+      "count": 1702
     },
     {
       "topic": "Crypto",
-      "count": 551
+      "count": 548
     },
     {
       "topic": "Bourse",
-      "count": 388
+      "count": 395
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 84
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2294
+      "count": 2340
     },
     {
       "pillar": "market_trauma",
-      "count": 1096
+      "count": 1105
     },
     {
       "pillar": "other",
-      "count": 913
+      "count": 924
     },
     {
       "pillar": "reply_bait",
-      "count": 91
+      "count": 93
     },
     {
       "pillar": "meme_reaction",
-      "count": 81
+      "count": 84
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 465
+      "count": 492
     },
     {
       "pillar": "market_trauma",
-      "count": 253
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 222
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 20
+      "count": 212
     },
     {
       "pillar": "meme_reaction",
+      "count": 20
+    },
+    {
+      "pillar": "reply_bait",
       "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 89,
-      "avg_likes": 0.35,
-      "avg_views": 59.8,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.28,
-      "avg_views": 64.4,
+      "posts": 86,
+      "avg_likes": 0.33,
+      "avg_views": 59.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 70,
+      "posts": 71,
+      "avg_likes": 0.3,
+      "avg_views": 58.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 37,
       "avg_likes": 0.27,
-      "avg_views": 57.7,
+      "avg_views": 65.2,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 98.5,
+      "avg_views": 73.3,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4075
+      "count": 4137
     },
     {
       "type": "quote",
-      "count": 263
+      "count": 265
     },
     {
       "type": "quote_gif",
-      "count": 78
+      "count": 81
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-16T18:46:38.724113",
-      "text": "Palantir and Chipotle? The only synergy that matters is the data. you're eating chili; their model learns your spice tolerance to sell ads back to you in real time. it's not partnership, it's harvesting.",
+      "ts": "2026-09-16T22:49:18.120944",
+      "text": "Auto coding agents are selling you the dream of zero friction. they're actually just automating the debt on your tech stack. clean up time.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T18:46:21.067404",
-      "text": "H100 rental is up 17%. the rate hike that breaks them isn't monetary, it's when marginal inference cost drops below hardware lease. capex becomes a liability faster than you can depreciate it.",
+      "ts": "2026-09-16T22:48:45.204838",
+      "text": "Robotics is 80% unsolved hardware. the \"hours\" are usually waiting for a gripper to not crush the sample. hype > torque.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T18:43:26.316329",
-      "text": "Palantir tracking Chipotle sickness. The real product isn't AI. it's finding out which burrito bowl is causing the 4:30 pm regret before you even finish chewing.",
+      "ts": "2026-09-16T22:48:16.453822",
+      "text": "@Nick O’Neill is chasing the asymmetric payout. ZEC’s ~$5B market cap vs a 10% privacy share he doesn’t have yet. because everyone uses USDC for stealth mode and MetaMask swaps via RPCs without knowing it. The real moat isn't tech, it's user ignorance.",
       "type": "reply"
     }
   ]

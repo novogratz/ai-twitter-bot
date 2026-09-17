@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-08-15T22:59:15.966465",
-    "raw_count": 6,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BorisBiancotto",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Jours de Bourse. Le meilleur journaliste bourse FR actuellement. Il tweete en direct, couvre les march\u00e9s et l'\u00e9co avec un ton accessible."
-      },
-      {
-        "handle": "ThierryS",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'expert march\u00e9 qu\u00e9b\u00e9cois. Il tweete en fran\u00e7ais, couvre les actions am\u00e9ricaines et canadiennes avec une bonne analyse technique."
-      }
-    ],
-    "summary": "Un mix solide entre la puissance de Mistral AI en France, l'expertise boursi\u00e8re de Boris et Thierry, et la sc\u00e8ne crypto/tech francophone plus niche."
-  },
-  {
     "ts": "2026-08-16T00:59:10.588326",
     "raw_count": 5,
     "kept_count": 3,
@@ -6653,5 +6629,43 @@
       }
     ],
     "summary": "Un mix sain entre les incontournables de l'IA fran\u00e7aise (Dumas) et le trading/crypto solide (Lachiver/BNT). Pas d'influenceurs qui crient dans le vide, juste des profils who actually ship or analyze data."
+  },
+  {
+    "ts": "2026-09-16T20:49:43.591725",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mouadkhelifi",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le roi du prompt engineering FR. Moins 'influencer', plus ing\u00e9nieur qui partage ses findings bruts avant que les blogs anglais ne rattrapent son retard."
+      },
+      {
+        "handle": "mohamed_amer",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Le type qui g\u00e8re la com chez Revolut mais twitte aussi sur le trading. Il fait ce pont rare entre la fintech corporate et les gamblers retail."
+      },
+      {
+        "handle": "_clementdecoing",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Ex-Google/DeepMind. Ses threads sur l'inf\u00e9rence et les petits LLMs sont la bible des devs FR qui veulent coder sans br\u00fbler leur carte crypto."
+      },
+      {
+        "handle": "_dorian_ab",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Analyste technique qui a saut\u00e9 dans l'IA avec les dents. Ses takes sur la convergence des deux niches sont souvent plus pertinents que ceux de ses pairs."
+      }
+    ],
+    "summary": "L'\u00e9cosyst\u00e8me IA FR est satur\u00e9 de 'formateurs', mais ces 5 l\u00e0 font vraiment le travail : ils codent, analysent ou g\u00e8rent du produit. Dorian et Alex Dionne apportent la densit\u00e9 technique pure sur des march\u00e9s o\u00f9 les opinions priment souvent."
   }
 ]
