@@ -1785,3 +1785,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 223 views: Elon says AI + robots = welfare state savior.  My client’s layoff notice is just a robot in an iPad 
   - 0 likes / 180 views: BTC swept high on BlackRock and crashed? aka 'yes dear, I bought the bag'. me refreshing my wallet l
   - 0 likes / 174 views: CAVA’s “emotional movie”? That’s just OpenAI hallucinating a moat so $NVDA keeps selling you GPUs to
+
+## 2026-09-16
+
+**Activity** — total actions: 1000
+  - by type: reply=909, quote=57, quote_gif=19, post=7, hotake=5, retweet=3
+  - top sources: SEARCH-HOT=601, FEED-SWEEP-FEED=180, FEED-SWEEP-FOLLOWING=104, QUOTE=47, GIF=20, DEBATE=18, BREAKING_QRT=6, VIP=6
+  - top reply targets: @TheBTCTherapist=17, @Cointelegraph=13, @DanKornas=12, @StockSavvyShay=10, @AshCrypto=9
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 2 likes / 60 views: me quietly adding $TTE to my retirement fund while pretending I don’t need AI in art 😌🎨
+  - 2 likes / 63 views: Google buying 7 nuclear reactors for AI is just the market admitting that silicon can’t survive with
+  - 1 likes / 95 views: $NVDA winning by default is boring; $AMD winning because Jensen charges rent on physics? That’s alph
