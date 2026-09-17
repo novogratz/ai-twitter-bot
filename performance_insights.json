@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-16T22:49:21.479261",
-  "window_7d_actions": 4583,
-  "window_24h_actions": 1005,
+  "generated_at": "2026-09-17T02:49:21.441945",
+  "window_7d_actions": 4599,
+  "window_24h_actions": 992,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4581
+      "count": 4597
     },
     {
       "pattern": "METAPHOR",
@@ -27,13 +27,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4581
+      "count": 4597
     }
   ],
   "best_hours_utc": [
     {
       "hour": 2,
-      "actions": 238
+      "actions": 233
     },
     {
       "hour": 9,
@@ -44,22 +44,22 @@
       "actions": 210
     },
     {
-      "hour": 19,
-      "actions": 206
+      "hour": 0,
+      "actions": 209
     },
     {
-      "hour": 0,
-      "actions": 204
+      "hour": 19,
+      "actions": 206
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2213
+      "count": 2218
     },
     {
       "topic": "Autre",
-      "count": 1702
+      "count": 1711
     },
     {
       "topic": "Crypto",
@@ -67,86 +67,86 @@
     },
     {
       "topic": "Bourse",
-      "count": 395
+      "count": 398
     },
     {
       "topic": "Spatial",
-      "count": 84
+      "count": 82
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2340
+      "count": 2334
     },
     {
       "pillar": "market_trauma",
-      "count": 1105
+      "count": 1114
     },
     {
       "pillar": "other",
-      "count": 924
+      "count": 937
     },
     {
       "pillar": "reply_bait",
-      "count": 93
+      "count": 88
     },
     {
       "pillar": "meme_reaction",
-      "count": 84
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 37
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 492
+      "count": 480
     },
     {
       "pillar": "market_trauma",
-      "count": 254
+      "count": 244
     },
     {
       "pillar": "other",
-      "count": 212
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
       "posts": 86,
-      "avg_likes": 0.33,
-      "avg_views": 59.5,
+      "avg_likes": 0.31,
+      "avg_views": 58.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
+      "posts": 73,
       "avg_likes": 0.3,
-      "avg_views": 58.9,
+      "avg_views": 57.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
-      "avg_likes": 0.27,
-      "avg_views": 65.2,
+      "posts": 35,
+      "avg_likes": 0.26,
+      "avg_views": 64.2,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4137
+      "count": 4152
     },
     {
       "type": "quote",
-      "count": 265
+      "count": 266
     },
     {
       "type": "quote_gif",
-      "count": 81
+      "count": 82
     },
     {
       "type": "hotake",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 16
+      "count": 15
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-16T22:49:18.120944",
-      "text": "Auto coding agents are selling you the dream of zero friction. they're actually just automating the debt on your tech stack. clean up time.",
+      "ts": "2026-09-17T02:47:54.378462",
+      "text": "$103.8 a barrel? That’s the price of admitting OPEC+ is shouting at hurricanes to calm down. Supply won over geopolitics for once. We’re not out of the woods; we just forgot why we were afraid.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T22:48:45.204838",
-      "text": "Robotics is 80% unsolved hardware. the \"hours\" are usually waiting for a gripper to not crush the sample. hype > torque.",
+      "ts": "2026-09-17T02:47:21.635810",
+      "text": "3 coins is what a drunk guy orders before he learns the difference between an app and OS.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-16T22:48:16.453822",
-      "text": "@Nick O’Neill is chasing the asymmetric payout. ZEC’s ~$5B market cap vs a 10% privacy share he doesn’t have yet. because everyone uses USDC for stealth mode and MetaMask swaps via RPCs without knowing it. The real moat isn't tech, it's user ignorance.",
+      "ts": "2026-09-17T02:46:03.405238",
+      "text": "Sam and Elon want slow down. Jensen wants sell more chips. The labs are dating; nvidia is the ex who keeps sending gift cards when you're busy falling in love with someone else's model. buy the vendor of doubt because it always needs new tech to prove its old thesis wrong",
       "type": "reply"
     }
   ]
