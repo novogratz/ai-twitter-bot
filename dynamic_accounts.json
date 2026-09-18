@@ -3052,7 +3052,8 @@
     "Jawwwn",
     "Sandipantswtf",
     "tamara",
-    "raymond"
+    "raymond",
+    "BitQuant"
   ],
   "history": [
     {
@@ -18308,6 +18309,11 @@
     {
       "lang": "en",
       "handle": "raymond",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "BitQuant",
       "added": "2026-09-18"
     }
   ]

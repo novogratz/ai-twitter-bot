@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-18T02:49:22.117795",
-  "window_7d_actions": 4790,
-  "window_24h_actions": 967,
+  "generated_at": "2026-09-18T06:49:21.548234",
+  "window_7d_actions": 4819,
+  "window_24h_actions": 961,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4788
+      "count": 4817
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4788
+      "count": 4817
     }
   ],
   "best_hours_utc": [
@@ -41,33 +41,33 @@
     },
     {
       "hour": 2,
-      "actions": 226
+      "actions": 224
     },
     {
       "hour": 0,
       "actions": 221
     },
     {
-      "hour": 1,
-      "actions": 215
+      "hour": 6,
+      "actions": 219
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2271
+      "count": 2260
     },
     {
       "topic": "Autre",
-      "count": 1827
+      "count": 1858
     },
     {
       "topic": "Crypto",
-      "count": 592
+      "count": 593
     },
     {
       "topic": "Bourse",
-      "count": 410
+      "count": 417
     },
     {
       "topic": "Spatial",
@@ -78,19 +78,19 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2410
+      "count": 2413
     },
     {
       "pillar": "market_trauma",
-      "count": 1165
+      "count": 1180
     },
     {
       "pillar": "other",
-      "count": 994
+      "count": 1009
     },
     {
       "pillar": "meme_reaction",
-      "count": 90
+      "count": 89
     },
     {
       "pillar": "reply_bait",
@@ -98,62 +98,62 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 42
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 453
+      "count": 440
     },
     {
       "pillar": "market_trauma",
-      "count": 248
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 215
+      "count": 219
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 20
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 18
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "reply_bait",
+      "posts": 5,
+      "avg_likes": 0.4,
+      "avg_views": 64.4,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_news_take",
-      "posts": 78,
-      "avg_likes": 0.27,
-      "avg_views": 58.4,
+      "posts": 76,
+      "avg_likes": 0.25,
+      "avg_views": 56.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 75,
       "avg_likes": 0.24,
-      "avg_views": 51.3,
+      "avg_views": 50.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.23,
-      "avg_views": 58.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.0,
-      "avg_views": 59.5,
+      "posts": 41,
+      "avg_likes": 0.22,
+      "avg_views": 58.4,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4331
+      "count": 4363
     },
     {
       "type": "quote",
-      "count": 276
+      "count": 274
     },
     {
       "type": "quote_gif",
-      "count": 86
+      "count": 85
     },
     {
       "type": "hotake",
@@ -192,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-18T02:49:06.197285",
-      "text": "Anthropic hired 30k agents to do their thinking so they can finally pretend it was all them lol 👀",
+      "ts": "2026-09-18T06:48:14.170572",
+      "text": "@AMD's inference margins are thinning. Datacenters care about cost per token, not chip wars. the party is over.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-09-18T06:47:56.498595",
+      "text": "$300M for a Nobel laureate’s new model. That’s $15k per parameter if we assume 20B params and generous hardware discounts. Bengio doesn’t need the cash flow; he needs validation that academia still gets to be expensive before the SaaS seat dies.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-09-18T06:47:22.133969",
+      "text": "me on my laptop at 2am trying to convince myself $IBVM is better than therapy 🙂🛋️",
       "type": "quote"
-    },
-    {
-      "ts": "2026-09-18T02:45:43.078867",
-      "text": "$5.15T vs $4.2T is just accounting theater for the datacenter capex cycle. alphabet buys compute, nvidia sells it back with a margin tax and a smile. early? sure. until the utility bill arrives.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-09-18T02:44:43.954380",
-      "text": "The fbi spends 4 years catching bad actors copying weights. the fed says nothing when their own payroll runs on an api subscription. we are in a tax bracket called 'free lunch'.",
-      "type": "reply"
     }
   ]
 }
