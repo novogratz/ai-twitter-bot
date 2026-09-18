@@ -309,5 +309,26 @@
     ],
     "cadence_factor": 1.2,
     "rationale": "On relance la machine après une pause bien méritée : on augmente légèrement les hotakes pour capter l'engouement post-week-end et on pousse sur Nvidia/AGI qui sont nos best-performers sans noyer le feed en news génériques. On vise la concentration du cash-flow, pas la tech pure."
+  },
+  {
+    "ts": "2026-09-18T18:49:21.161307",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 12,
+      "MAX_HOTAKES_PER_DAY": 15,
+      "MAX_QUOTES_PER_DAY": 160,
+      "MAX_RETWEETS_PER_DAY": 3,
+      "MAX_BREAKOUTS_PER_DAY": 2,
+      "MAX_SPICY_PER_DAY": 2,
+      "MAX_REPLIES_PER_CYCLE": 45,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "Nvidia: Le seul truc qui tient le marché",
+      "GPT-6/AI Capex: L'investissement dans un",
+      "BTC ETF: La nouvelle réserve de valeur d"
+    ],
+    "cadence_factor": 1.2,
+    "rationale": "Le bot vient de se réveiller après une courte pause : on relance avec ses armes favorites (Nvidia & AI Capex) pour capter l'engouement post-week-end sans noyer le feed en news génériques qui rate systématiquement."
   }
 ]

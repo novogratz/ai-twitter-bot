@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-08-17T00:58:57.845152",
-    "raw_count": 5,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Maximeliogand",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le trader retail qui assume ses pertes, l'anti-Mastercoin qui ne vend que son ego."
-      },
-      {
-        "handle": "Reneebelanger",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'analyste technique qu\u00e9b\u00e9cois qui ne se prend pas pour un guru, juste pour un mec avec un tableau blanc."
-      }
-    ],
-    "summary": "Le nord am\u00e9ricain se fait rare en crypto FR, donc le Qu\u00e9bec compense. En France, on a \u00e9vit\u00e9 les influenceurs \u00e0 formations pour rester sur les pros qui assume."
-  },
-  {
     "ts": "2026-08-17T02:59:19.013905",
     "raw_count": 8,
     "kept_count": 5,
@@ -6527,5 +6503,36 @@
       }
     ],
     "summary": "On couvre l'IA avec le grand public (TheAIShrink/Girard), on ancre la crypto au Qu\u00e9bec via les Bnt et Dionne, et on remplit le bocal tech/bourse en France pour \u00e9viter de d\u00e9pendre uniquement du 'bro-trading'. Z\u00e9ro venteuse ici."
+  },
+  {
+    "ts": "2026-09-18T18:49:44.583907",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GustavoS7439",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le roi du fric-\u00e0-crypto. Il balance des threads percutants sans vendre son laitier."
+      },
+      {
+        "handle": "MaximeMougel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le g\u00e9nie technique de Mew. Ses posts sur l'open source et les LLMs sont du pur or."
+      },
+      {
+        "handle": "ThibaudDelfolie",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'analyste qui a du sel. Il d\u00e9cortique les r\u00e9sultats trimestriels sans endormir le monde."
+      }
+    ],
+    "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans qui ont surv\u00e9cu aux hivers crypto sans vendre leur \u00e2me \u00e0 Telegram. Aucun ne te demandera un 'like' pour devenir ton ami, ils veulent juste que tu lises leurs tweets avant qu'ils soient archiv\u00e9s."
   }
 ]

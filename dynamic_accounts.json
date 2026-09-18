@@ -2473,7 +2473,10 @@
     "MaximeBoutinX",
     "VeraTessier21",
     "MickaelKerjour",
-    "LDev_"
+    "LDev_",
+    "GustavoS7439",
+    "MaximeMougel",
+    "ThibaudDelfolie"
   ],
   "en": [
     "Chubby",
@@ -18422,6 +18425,21 @@
     {
       "lang": "fr",
       "handle": "LDev_",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "GustavoS7439",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMougel",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudDelfolie",
       "added": "2026-09-18"
     }
   ]
