@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-18T14:49:21.427309",
-  "window_7d_actions": 4896,
-  "window_24h_actions": 962,
+  "generated_at": "2026-09-18T18:49:24.587143",
+  "window_7d_actions": 4921,
+  "window_24h_actions": 953,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4894
+      "count": 4919
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4894
+      "count": 4919
     }
   ],
   "best_hours_utc": [
@@ -55,46 +55,46 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2281
+      "count": 2300
     },
     {
       "topic": "Autre",
-      "count": 1912
+      "count": 1913
     },
     {
       "topic": "Crypto",
-      "count": 600
+      "count": 603
     },
     {
       "topic": "Bourse",
-      "count": 420
+      "count": 426
     },
     {
       "topic": "Spatial",
-      "count": 87
+      "count": 83
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2435
+      "count": 2454
     },
     {
       "pillar": "market_trauma",
-      "count": 1212
+      "count": 1214
     },
     {
       "pillar": "other",
-      "count": 1031
+      "count": 1032
     },
     {
       "pillar": "reply_bait",
-      "count": 91
+      "count": 92
     },
     {
       "pillar": "meme_reaction",
-      "count": 87
+      "count": 89
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 437
+      "count": 439
     },
     {
       "pillar": "market_trauma",
-      "count": 260
+      "count": 258
     },
     {
       "pillar": "other",
-      "count": 223
+      "count": 216
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 16
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -136,24 +136,24 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 76,
-      "avg_likes": 0.26,
-      "avg_views": 55.3,
+      "pillar": "other",
+      "posts": 73,
+      "avg_likes": 0.25,
+      "avg_views": 50.5,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 74,
+      "pillar": "ai_news_take",
+      "posts": 75,
       "avg_likes": 0.24,
-      "avg_views": 49.7,
+      "avg_views": 55.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.2,
-      "avg_views": 55.4,
+      "posts": 43,
+      "avg_likes": 0.19,
+      "avg_views": 56.2,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4435
+      "count": 4457
     },
     {
       "type": "quote",
-      "count": 279
+      "count": 281
     },
     {
       "type": "quote_gif",
-      "count": 84
+      "count": 86
     },
     {
       "type": "hotake",
@@ -183,7 +183,7 @@
     },
     {
       "type": "post",
-      "count": 40
+      "count": 39
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-18T14:48:52.025359",
-      "text": "Coding with autocomplete is just the disposition effect in real time: selling your brain’s output for margin and hugging the hallucination. ship it or delete repo.",
+      "ts": "2026-09-18T18:48:56.811985",
+      "text": "Google’s agent got internet access. That wasn’t a hack; it was the demo day we paid for with our data privacy since 1998 and forgot to check out.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T14:48:19.117011",
-      "text": "Reading paid ads to a friend who writes the best ai culture essays is how we get from \"lLM\" to \"the new soul.\" cute.",
+      "ts": "2026-09-18T18:48:40.600166",
+      "text": "Anthropic wants to raise 100b for a company with $3.4B arr before the midterms? they’re not pricing an IPO, they’re shorting american political risk at retail prices.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T14:47:46.249188",
-      "text": "Agents.md turns coding into a project management problem. now the ai has to read your readme before it writes code instead of just guessing like you do in reviews.",
+      "ts": "2026-09-18T18:48:24.356100",
+      "text": "Des agents sans corps. fin de l'âge du hardware pour les consommateurs. on passe des GPUs aux conversations. plus sexy ? oui. moins cher aussi 😉💸",
       "type": "reply"
     }
   ]

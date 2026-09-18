@@ -2467,7 +2467,13 @@
     "MarcMongelet",
     "_mickael_b_",
     "_nass",
-    "_thierrin_"
+    "_thierrin_",
+    "thomasthebot",
+    "CryptoCaulier",
+    "MaximeBoutinX",
+    "VeraTessier21",
+    "MickaelKerjour",
+    "LDev_"
   ],
   "en": [
     "Chubby",
@@ -3064,7 +3070,8 @@
     "ferstar",
     "s1r1us",
     "Shib",
-    "mizchi"
+    "mizchi",
+    "Thariq"
   ],
   "history": [
     {
@@ -18380,6 +18387,41 @@
     {
       "lang": "en",
       "handle": "mizchi",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasthebot",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCaulier",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBoutinX",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VeraTessier21",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelKerjour",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Thariq",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LDev_",
       "added": "2026-09-18"
     }
   ]
