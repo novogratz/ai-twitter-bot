@@ -3050,7 +3050,8 @@
     "Figure",
     "Dr_Gingerballs",
     "Jawwwn",
-    "Sandipantswtf"
+    "Sandipantswtf",
+    "tamara"
   ],
   "history": [
     {
@@ -18296,6 +18297,11 @@
     {
       "lang": "fr",
       "handle": "ClementDeCoin",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "tamara",
       "added": "2026-09-17"
     }
   ]

@@ -17450,3 +17450,18 @@ OpenAI - $400K - Software Engineer
 - Very high inte
   - https://x.com/shubh19/status/2100429033292832879
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+
+## 2026-09-18
+- **@jerry_romine_** (113 likes, score 9/10) — JENSEN SAYS MEMORY AND OPTICS ARE THE NEXT BOTTLENECK 
+
+Here are 5 stocks Nvidia has already bought into ：
+
+1. $LITE
+  - https://x.com/Jerry_Romine_/status/2100584580747329606
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 123).
+- **@zavalaa** (90 likes, score 9/10) — New:
+We had a tough time getting state leaders to talk on camera about California's new "partnership" with Anthropic and what it means for state data & security.
+
+This, as Newsom prepares an AI safety
+  - https://x.com/ZavalaA/status/2100770470664733145
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 122).
