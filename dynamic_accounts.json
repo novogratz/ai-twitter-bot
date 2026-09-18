@@ -3051,7 +3051,8 @@
     "Dr_Gingerballs",
     "Jawwwn",
     "Sandipantswtf",
-    "tamara"
+    "tamara",
+    "raymond"
   ],
   "history": [
     {
@@ -18303,6 +18304,11 @@
       "lang": "en",
       "handle": "tamara",
       "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "raymond",
+      "added": "2026-09-18"
     }
   ]
 }
