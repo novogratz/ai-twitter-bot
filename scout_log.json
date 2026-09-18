@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-16T18:59:01.616718",
-    "raw_count": 5,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenjamMinich",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le pro du d\u00e9cryptage macro qui ne se prend pas la t\u00eate. Il rend la finance accessible sans \u00eatre condescendant."
-      },
-      {
-        "handle": "Laurie_Ruel",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "La star des IA agents \u00e0 Montr\u00e9al, twitte en FR sur le framer, l'AGI et le futur du travail. Pas de pub Telegram."
-      },
-      {
-        "handle": "TanguyMauger",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Le patron de Qonto. Il tweete la fintech et le business FR avec le cynisme n\u00e9cessaire pour \u00eatre \u00e9cout\u00e9."
-      },
-      {
-        "handle": "JulesMansuy",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Tech lead \u00e0 Doctolib. Il explique la tech backend/frontend avec un humour qui fait mal aux yeux. Pas de 'growth hacking'."
-      },
-      {
-        "handle": "VincentTartaglia",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "La r\u00e9f\u00e9rence crypto FR aux USA. Analyse on-chain profonde mais lisible, sans jargon incompr\u00e9hensible."
-      }
-    ],
-    "summary": "Le march\u00e9 FR est satur\u00e9 de formateurs, ces 5 comptes apportent de la vraie expertise technique ou analytique sans vendre de r\u00eave. Le Qu\u00e9bec brille par sa densit\u00e9 de talents IA, la France par sa fintech, et les USA par nos exil\u00e9s crypto."
-  },
-  {
     "ts": "2026-08-16T20:59:15.274314",
     "raw_count": 7,
     "kept_count": 7,
@@ -6562,5 +6517,36 @@
       }
     ],
     "summary": "On a \u00e9lagu\u00e9 les vendeurs de r\u00eave pour garder ceux qui ont un cerveau op\u00e9rationnel : des ex-Goldman aux devs Mistral en passant par les traders qu\u00e9b\u00e9cois. C'est le top tier du francophone utile, pas bruyant."
+  },
+  {
+    "ts": "2026-09-18T10:49:48.210124",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_nass",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Nassim Taleb. Le roi du n\u00e9gatif qui a pr\u00e9dit la crise en disant que le march\u00e9 \u00e9tait un gros porc gras sur lequel il allait pisser."
+      },
+      {
+        "handle": "_thierrin_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Thierry N'Guessan. Le gars qui d\u00e9cortique l'IA en fr avec le s\u00e9rieux d'un neurologue et la rage d'un mec qu'on a r\u00e9veill\u00e9 \u00e0 3h du mat."
+      },
+      {
+        "handle": "_vincent_dumas_fr",
+        "region": "france",
+        "niche": "finance/bourse",
+        "followers": 20000,
+        "reason": "Vincent Dumas. Le prof de finance qui transforme les mouvements du CAC40 en anecdotes que m\u00eame ton oncle comprendre."
+      }
+    ],
+    "summary": "5 comptes solides sans le pitch 'ach\u00e8te mon signal' \u00e0 la con et avec assez d'influence pour ne pas passer pour des fant\u00f4mes sur X."
   }
 ]

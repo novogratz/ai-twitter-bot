@@ -2465,7 +2465,9 @@
     "ThomLorion",
     "LaurineTixier",
     "MarcMongelet",
-    "_mickael_b_"
+    "_mickael_b_",
+    "_nass",
+    "_thierrin_"
   ],
   "en": [
     "Chubby",
@@ -3059,7 +3061,10 @@
     "raymond",
     "BitQuant",
     "Hyperliquid",
-    "ferstar"
+    "ferstar",
+    "s1r1us",
+    "Shib",
+    "mizchi"
   ],
   "history": [
     {
@@ -18350,6 +18355,31 @@
     {
       "lang": "fr",
       "handle": "_mickael_b_",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "s1r1us",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Shib",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "_nass",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "_thierrin_",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "mizchi",
       "added": "2026-09-18"
     }
   ]

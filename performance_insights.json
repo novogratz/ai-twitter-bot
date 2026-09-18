@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-18T10:49:21.316871",
-  "window_7d_actions": 4848,
-  "window_24h_actions": 948,
+  "generated_at": "2026-09-18T14:49:21.427309",
+  "window_7d_actions": 4896,
+  "window_24h_actions": 962,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4846
+      "count": 4894
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4846
+      "count": 4894
     }
   ],
   "best_hours_utc": [
@@ -55,76 +55,76 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2263
+      "count": 2281
     },
     {
       "topic": "Autre",
-      "count": 1886
+      "count": 1912
     },
     {
       "topic": "Crypto",
-      "count": 596
+      "count": 600
     },
     {
       "topic": "Bourse",
-      "count": 415
+      "count": 420
     },
     {
       "topic": "Spatial",
-      "count": 86
+      "count": 87
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2420
+      "count": 2435
     },
     {
       "pillar": "market_trauma",
-      "count": 1191
+      "count": 1212
     },
     {
       "pillar": "other",
-      "count": 1018
+      "count": 1031
     },
     {
       "pillar": "reply_bait",
-      "count": 90
+      "count": 91
     },
     {
       "pillar": "meme_reaction",
-      "count": 88
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 429
+      "count": 437
     },
     {
       "pillar": "market_trauma",
-      "count": 250
+      "count": 260
     },
     {
       "pillar": "other",
-      "count": 222
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 18
+      "count": 223
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 18
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
@@ -136,54 +136,54 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.25,
-      "avg_views": 51.2,
+      "pillar": "ai_news_take",
+      "posts": 76,
+      "avg_likes": 0.26,
+      "avg_views": 55.3,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 76,
-      "avg_likes": 0.25,
-      "avg_views": 56.8,
+      "pillar": "other",
+      "posts": 74,
+      "avg_likes": 0.24,
+      "avg_views": 49.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 41,
       "avg_likes": 0.2,
-      "avg_views": 56.9,
+      "avg_views": 55.4,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 49.0,
+      "avg_views": 55.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4393
+      "count": 4435
     },
     {
       "type": "quote",
-      "count": 276
+      "count": 279
     },
     {
       "type": "quote_gif",
       "count": 84
     },
     {
-      "type": "post",
-      "count": 40
+      "type": "hotake",
+      "count": 42
     },
     {
-      "type": "hotake",
-      "count": 39
+      "type": "post",
+      "count": 40
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-18T10:47:51.885696",
-      "text": "Tout le monde dit qu'ils sont plus intelligents. moi je demande : combien de tokens ça coûte pour faire semblant pendant 10 minutes ? la réponse change tout.",
+      "ts": "2026-09-18T14:48:52.025359",
+      "text": "Coding with autocomplete is just the disposition effect in real time: selling your brain’s output for margin and hugging the hallucination. ship it or delete repo.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T10:47:17.738834",
-      "text": "Claude code in 2026 is just the terminal window for engineers who got tired of typing.\n\ni used it to refactor my entire kubernetes config while making coffee this morning; saved three hours and zero feelings.\n\nthe future isn't sci-fi, it's autocomplete that actually works so you ",
+      "ts": "2026-09-18T14:48:19.117011",
+      "text": "Reading paid ads to a friend who writes the best ai culture essays is how we get from \"lLM\" to \"the new soul.\" cute.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T10:45:36.525872",
-      "text": "Anthropic's burn is the real story. they're selling compute at a loss to capture 10% of your SaaS budget before seat-based pricing dies.\n\nclaude isn't software anymore, it's an acquisition cost for customers who haven't realized their CAC just dropped by half",
+      "ts": "2026-09-18T14:47:46.249188",
+      "text": "Agents.md turns coding into a project management problem. now the ai has to read your readme before it writes code instead of just guessing like you do in reviews.",
       "type": "reply"
     }
   ]
