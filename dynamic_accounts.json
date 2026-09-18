@@ -2461,7 +2461,11 @@
     "thomasthoraval",
     "MaxRiesa",
     "JulieLagardaFR",
-    "ClementDeCoin"
+    "ClementDeCoin",
+    "ThomLorion",
+    "LaurineTixier",
+    "MarcMongelet",
+    "_mickael_b_"
   ],
   "en": [
     "Chubby",
@@ -3053,7 +3057,9 @@
     "Sandipantswtf",
     "tamara",
     "raymond",
-    "BitQuant"
+    "BitQuant",
+    "Hyperliquid",
+    "ferstar"
   ],
   "history": [
     {
@@ -18314,6 +18320,36 @@
     {
       "lang": "en",
       "handle": "BitQuant",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomLorion",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurineTixier",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcMongelet",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Hyperliquid",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "ferstar",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "_mickael_b_",
       "added": "2026-09-18"
     }
   ]

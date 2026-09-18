@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-09-18T06:49:21.548234",
-  "window_7d_actions": 4819,
-  "window_24h_actions": 961,
+  "generated_at": "2026-09-18T10:49:21.316871",
+  "window_7d_actions": 4848,
+  "window_24h_actions": 948,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4817
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 1
+      "count": 4846
     },
     {
       "pattern": "UNDERSTATEMENT",
+      "count": 1
+    },
+    {
+      "pattern": "DIALOGUE",
       "count": 1
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "METAPHOR",
-      "count": 1
-    },
-    {
       "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
+      "pattern": "DIALOGUE",
+      "count": 1
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 4817
+      "count": 4846
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 20,
-      "actions": 229
+      "hour": 9,
+      "actions": 237
     },
     {
-      "hour": 9,
-      "actions": 227
+      "hour": 20,
+      "actions": 229
     },
     {
       "hour": 2,
@@ -49,82 +49,82 @@
     },
     {
       "hour": 6,
-      "actions": 219
+      "actions": 220
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2260
+      "count": 2263
     },
     {
       "topic": "Autre",
-      "count": 1858
+      "count": 1886
     },
     {
       "topic": "Crypto",
-      "count": 593
+      "count": 596
     },
     {
       "topic": "Bourse",
-      "count": 417
+      "count": 415
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 86
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2413
+      "count": 2420
     },
     {
       "pillar": "market_trauma",
-      "count": 1180
+      "count": 1191
     },
     {
       "pillar": "other",
-      "count": 1009
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 89
+      "count": 1018
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 90
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 88
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 39
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 440
+      "count": 429
     },
     {
       "pillar": "market_trauma",
-      "count": 254
+      "count": 250
     },
     {
       "pillar": "other",
-      "count": 219
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
-    },
-    {
-      "pillar": "reply_bait",
       "count": 18
     },
     {
+      "pillar": "reply_bait",
+      "count": 17
+    },
+    {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
@@ -136,6 +136,13 @@
       "low_sample": false
     },
     {
+      "pillar": "other",
+      "posts": 75,
+      "avg_likes": 0.25,
+      "avg_views": 51.2,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_news_take",
       "posts": 76,
       "avg_likes": 0.25,
@@ -143,17 +150,10 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.24,
-      "avg_views": 50.5,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
       "posts": 41,
-      "avg_likes": 0.22,
-      "avg_views": 58.4,
+      "avg_likes": 0.2,
+      "avg_views": 56.9,
       "low_sample": false
     },
     {
@@ -167,22 +167,22 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4363
+      "count": 4393
     },
     {
       "type": "quote",
-      "count": 274
+      "count": 276
     },
     {
       "type": "quote_gif",
-      "count": 85
-    },
-    {
-      "type": "hotake",
-      "count": 42
+      "count": 84
     },
     {
       "type": "post",
+      "count": 40
+    },
+    {
+      "type": "hotake",
       "count": 39
     },
     {
@@ -192,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-18T06:48:14.170572",
-      "text": "@AMD's inference margins are thinning. Datacenters care about cost per token, not chip wars. the party is over.",
+      "ts": "2026-09-18T10:47:51.885696",
+      "text": "Tout le monde dit qu'ils sont plus intelligents. moi je demande : combien de tokens ça coûte pour faire semblant pendant 10 minutes ? la réponse change tout.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T06:47:56.498595",
-      "text": "$300M for a Nobel laureate’s new model. That’s $15k per parameter if we assume 20B params and generous hardware discounts. Bengio doesn’t need the cash flow; he needs validation that academia still gets to be expensive before the SaaS seat dies.",
+      "ts": "2026-09-18T10:47:17.738834",
+      "text": "Claude code in 2026 is just the terminal window for engineers who got tired of typing.\n\ni used it to refactor my entire kubernetes config while making coffee this morning; saved three hours and zero feelings.\n\nthe future isn't sci-fi, it's autocomplete that actually works so you ",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T06:47:22.133969",
-      "text": "me on my laptop at 2am trying to convince myself $IBVM is better than therapy 🙂🛋️",
-      "type": "quote"
+      "ts": "2026-09-18T10:45:36.525872",
+      "text": "Anthropic's burn is the real story. they're selling compute at a loss to capture 10% of your SaaS budget before seat-based pricing dies.\n\nclaude isn't software anymore, it's an acquisition cost for customers who haven't realized their CAC just dropped by half",
+      "type": "reply"
     }
   ]
 }

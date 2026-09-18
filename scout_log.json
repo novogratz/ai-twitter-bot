@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-08-16T14:59:06.691456",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RomainG2710",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi de l'\u00e9ducation bourse FR, z\u00e9ro filtre, twitte fort."
-      },
-      {
-        "handle": "ThibaudLarrieu",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Fonds PEA, style direct, analyse technique sans chichi."
-      },
-      {
-        "handle": "0xMert",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Founders de Defi Llama, tr\u00e8s actif FR, tech pure."
-      },
-      {
-        "handle": "LuisFalconC1",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Mentor crypto, twitte en FR, focus on-chain et cycle."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs formation pour ne garder que des analystes, founders et journalistes actifs qui ont du substance sans vendre du r\u00eave. Le mix IA/Crypto/Bourse est solide."
-  },
-  {
-    "ts": "2026-08-16T16:59:04.372913",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreDorsey",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Founding Engineer chez Scale AI. Sa niche : l'infrastructure data qui nourrit l'IA. Tweets en FR/EN, ton technique et sec."
-      },
-      {
-        "handle": "JulesDumoulin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Cr\u00e9ateur de la newsletter The AI Breakdown. Son feed est pur deep-tech/IA, z\u00e9ro buzz, 100% fond."
-      },
-      {
-        "handle": "LamarkM",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Fondateur de Nofrills AI. Il poste des threads techniques sur LLMs et agents, ton pragmatique, pas de hype."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que des constructeurs : les fondateurs de Mistral, Scale AI et les journalistes ind\u00e9pendants qui font le vrai travail d'analyse."
-  },
-  {
     "ts": "2026-08-16T18:59:01.616718",
     "raw_count": 5,
     "kept_count": 5,
@@ -6583,5 +6514,53 @@
       }
     ],
     "summary": "J'ai d\u00e9poussi\u00e9r\u00e9 les influenceurs crypto FR/Qu\u00e9bec et vir\u00e9 ceux qui vendent du r\u00eave. Ici, on garde ceux qui expliquent le comment au lieu du pourquoi tu vas devenir riche en cliquant sur un lien dans ma bio."
+  },
+  {
+    "ts": "2026-09-18T06:49:51.605897",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomLorion",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le gars qui a rendu l'investissement passif sexy. Pas de formation \u00e0 2k\u20ac, juste du concret sur les ETF et la psychologie boursi\u00e8re."
+      },
+      {
+        "handle": "LaurineTixier",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 15000,
+        "reason": "Journaliste chez Le Monde mais twitte comme une insider tech. Elle capture la vibe AI sans le jargon de consultant LinkedIn."
+      },
+      {
+        "handle": "MarcMongelet",
+        "region": "quebec",
+        "niche": "tech/bourse",
+        "followers": 12000,
+        "reason": "Fondateur de Houdini Labs. Il parle AI/Robotics avec la pr\u00e9cision d'un ing\u00e9nieur et l'humour d'un Qu\u00e9b\u00e9cois frustr\u00e9 par le syst\u00e8me US."
+      }
+    ],
+    "summary": "On a fouill\u00e9 pour \u00e9viter les vendeurs de r\u00eaves en surv\u00eatement dor\u00e9. Ces comptes sont l\u00e0 pour twittasser la tech/macro sans vendre leur \u00e2me (ou leurs dents) \u00e0 une communaut\u00e9 Telegram VIP bond\u00e9e d'ambassadeurs pay\u00e9s."
+  },
+  {
+    "ts": "2026-09-18T08:49:48.723838",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_mickael_b_",
+        "region": "france",
+        "niche": "crypto/web3",
+        "followers": 28000,
+        "reason": "Journaliste crypto pro. Ses threads sur les narratives sont souvent plus utiles que la newsletter payante de son concurrent."
+      }
+    ],
+    "summary": "On a \u00e9lagu\u00e9 les vendeurs de r\u00eave pour garder ceux qui ont un cerveau op\u00e9rationnel : des ex-Goldman aux devs Mistral en passant par les traders qu\u00e9b\u00e9cois. C'est le top tier du francophone utile, pas bruyant."
   }
 ]
