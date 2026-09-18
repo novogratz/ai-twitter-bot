@@ -2459,7 +2459,9 @@
     "mickaelbour",
     "_jules_bnt_",
     "thomasthoraval",
-    "MaxRiesa"
+    "MaxRiesa",
+    "JulieLagardaFR",
+    "ClementDeCoin"
   ],
   "en": [
     "Chubby",
@@ -3045,7 +3047,10 @@
     "Hamid",
     "Jakeup",
     "Iqra",
-    "Figure"
+    "Figure",
+    "Dr_Gingerballs",
+    "Jawwwn",
+    "Sandipantswtf"
   ],
   "history": [
     {
@@ -18266,6 +18271,31 @@
     {
       "lang": "fr",
       "handle": "MaxRiesa",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Dr_Gingerballs",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Jawwwn",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Sandipantswtf",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieLagardaFR",
+      "added": "2026-09-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementDeCoin",
       "added": "2026-09-17"
     }
   ]

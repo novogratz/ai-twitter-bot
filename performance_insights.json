@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-17T18:49:23.918177",
-  "window_7d_actions": 4725,
-  "window_24h_actions": 982,
+  "generated_at": "2026-09-17T22:49:21.469257",
+  "window_7d_actions": 4768,
+  "window_24h_actions": 963,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4723
+      "count": 4766
     },
     {
       "pattern": "METAPHOR",
@@ -27,13 +27,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4723
+      "count": 4766
     }
   ],
   "best_hours_utc": [
     {
       "hour": 2,
       "actions": 231
+    },
+    {
+      "hour": 20,
+      "actions": 229
     },
     {
       "hour": 9,
@@ -44,57 +48,53 @@
       "actions": 214
     },
     {
-      "hour": 20,
-      "actions": 210
-    },
-    {
-      "hour": 0,
-      "actions": 209
+      "hour": 19,
+      "actions": 212
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2250
+      "count": 2259
     },
     {
       "topic": "Autre",
-      "count": 1789
+      "count": 1823
     },
     {
       "topic": "Crypto",
-      "count": 577
+      "count": 579
     },
     {
       "topic": "Bourse",
-      "count": 410
+      "count": 412
     },
     {
       "topic": "Spatial",
-      "count": 81
+      "count": 79
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2381
+      "count": 2402
     },
     {
       "pillar": "market_trauma",
-      "count": 1150
+      "count": 1153
     },
     {
       "pillar": "other",
-      "count": 974
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 92
+      "count": 993
     },
     {
       "pillar": "reply_bait",
-      "count": 89
+      "count": 91
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 90
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 481
+      "count": 457
     },
     {
       "pillar": "market_trauma",
-      "count": 243
+      "count": 239
     },
     {
       "pillar": "other",
-      "count": 209
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 20
+      "count": 217
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 19
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 12
     }
   ],
   "pillar_engagement_30d": [
@@ -132,21 +132,21 @@
       "pillar": "ai_news_take",
       "posts": 79,
       "avg_likes": 0.29,
-      "avg_views": 56.9,
+      "avg_views": 57.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.28,
-      "avg_views": 53.9,
+      "posts": 76,
+      "avg_likes": 0.25,
+      "avg_views": 52.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.26,
-      "avg_views": 61.7,
+      "posts": 38,
+      "avg_likes": 0.24,
+      "avg_views": 59.7,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4271
+      "count": 4317
     },
     {
       "type": "quote",
-      "count": 268
+      "count": 269
     },
     {
       "type": "quote_gif",
-      "count": 88
+      "count": 86
     },
     {
       "type": "hotake",
@@ -183,7 +183,7 @@
     },
     {
       "type": "post",
-      "count": 41
+      "count": 39
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-17T18:49:11.979429",
-      "text": "STRK is up 30% on the same narrative as BTC but with half the liquidity. it's not alpha, it's leverage wearing a different shirt",
+      "ts": "2026-09-17T22:48:55.860308",
+      "text": "Anthropic's R&D is 74% human toil. claude writes the docs for its own replacement. efficient.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-17T18:48:39.119576",
-      "text": "@nextbigfuture unboxed assembly is just jiggling parts until they fit. the hidden cost isn't hardware it's alignment latency between robots that never met. engineering debt paid later with firmware updates nobody wanted",
+      "ts": "2026-09-17T22:48:02.272511",
+      "text": "$19.90 in dividends? at 38% yield that’s not income. it’s your capital paying you back because nobody wants the stock anymore. buy for cash flow or growth but never both with this one",
       "type": "reply"
     },
     {
-      "ts": "2026-09-17T18:47:22.887556",
-      "text": "$DOG up 69% while BTC chops. the casino is open and you're putting rent money on red because a dog coin looked cute in your feed.",
+      "ts": "2026-09-17T22:47:28.081752",
+      "text": "Grab’s 70%+ gross margins on take-rates. selling puts isn’t yield, it’s insurance you’re happy to pay for the ride down in a monopoly market that hasn’t paid itself back yet. buy high sell low is just patience with fees attached.",
       "type": "reply"
     }
   ]

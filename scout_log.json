@@ -1,22 +1,5 @@
 [
   {
-    "ts": "2026-08-16T12:59:19.651397",
-    "raw_count": 7,
-    "kept_count": 1,
-    "accounts_added": 0,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Rapha\u00eblPoirier",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Founders qu\u00e9b\u00e9cois dans la deep tech. Moins de hype, plus de vraie tech. Pour ceux qui veulent voir ce qui se passe dans les labs."
-      }
-    ],
-    "summary": "Le champ est satur\u00e9 de vendeurs de r\u00eave, ces 7 comptes sont des vendeurs de solutions ou de donn\u00e9es. On couvre la France (la plus dense), le Qu\u00e9bec (la perle rare) et un USFR (la vue globale). Pas de blabla."
-  },
-  {
     "ts": "2026-08-16T14:59:06.691456",
     "raw_count": 8,
     "kept_count": 4,
@@ -6576,5 +6559,29 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les lourds de la crypto/thalasso fran\u00e7aise et une p\u00e9pite technique qu\u00e9b\u00e9coise. On \u00e9vite les vendeurs de r\u00eaves, on vise le savoir net."
+  },
+  {
+    "ts": "2026-09-17T18:49:41.807763",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulieLagardaFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Ex-journaliste d'info-financi\u00e8re qui a quitt\u00e9 la t\u00e9l\u00e9 pour twittler des vrais chiffres sans jargon de banquier."
+      },
+      {
+        "handle": "ClementDeCoin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'humour noir de la crypto fran\u00e7aise. Il transforme les dumps en stand-up comedy."
+      }
+    ],
+    "summary": "J'ai d\u00e9poussi\u00e9r\u00e9 les influenceurs crypto FR/Qu\u00e9bec et vir\u00e9 ceux qui vendent du r\u00eave. Ici, on garde ceux qui expliquent le comment au lieu du pourquoi tu vas devenir riche en cliquant sur un lien dans ma bio."
   }
 ]
