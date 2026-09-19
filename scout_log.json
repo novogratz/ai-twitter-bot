@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-17T12:01:36.736940",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BourseFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Le comptoir o\u00f9 l'on boit du\u7406\u6027 et l'on vend des actions CAC 40."
-      },
-      {
-        "handle": "TheAICanadian",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "L'expert IA qui survit aux buzzwords et explique le RLHF sans te faire mal aux yeux."
-      },
-      {
-        "handle": "ParisVC",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Le deal flow de Paris qui a d\u00e9j\u00e0 vu passer 3 unicorns de trop pour \u00eatre na\u00eff."
-      }
-    ],
-    "summary": "Le top 5 FR/QC IA/Crypto/Bourse. Des vrais nerds, pas des influenceurs qui sourient \u00e0 la cam\u00e9ra."
-  },
-  {
     "ts": "2026-08-17T14:02:06.029936",
     "raw_count": 8,
     "kept_count": 1,
@@ -6492,5 +6461,29 @@
       }
     ],
     "summary": "Pas d'IA hypeuse ici: on vise ceux qui comprennent le code (Girard), l'argent (@Sylvain_Dumais) ou la micro-structure du march\u00e9. Des vrais pros, pas des influenceurs de solaires."
+  },
+  {
+    "ts": "2026-09-19T08:49:45.662849",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 0,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PatrickCyrilMongraal",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'inverseur de Monga\u00ebl. Vaut son pesant d'ether pour le d\u00e9cryptage macro."
+      },
+      {
+        "handle": "Julien_Levy_Crypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Analyste on-chain s\u00e9rieux. Pas de signaux VIP \u00e0 29\u20ac/mois, juste du gras."
+      }
+    ],
+    "summary": "On a filtr\u00e9 le bruyant pour garder l'audible : des profils institutionnels ou analystes purs dans chaque r\u00e9gion. Z\u00e9ro formateur \u00e0 97\u20ac ici, que du concret."
   }
 ]

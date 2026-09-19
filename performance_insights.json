@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-19T06:49:22.367774",
-  "window_7d_actions": 5028,
+  "generated_at": "2026-09-19T10:49:21.875019",
+  "window_7d_actions": 5069,
   "window_24h_actions": 938,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5026
+      "count": 5067
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5026
+      "count": 5067
     }
   ],
   "best_hours_utc": [
@@ -37,11 +37,11 @@
     },
     {
       "hour": 9,
-      "actions": 237
+      "actions": 247
     },
     {
       "hour": 6,
-      "actions": 230
+      "actions": 229
     },
     {
       "hour": 3,
@@ -55,11 +55,11 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2319
+      "count": 2334
     },
     {
       "topic": "Autre",
-      "count": 1986
+      "count": 2007
     },
     {
       "topic": "Crypto",
@@ -67,7 +67,7 @@
     },
     {
       "topic": "Bourse",
-      "count": 440
+      "count": 448
     },
     {
       "topic": "Spatial",
@@ -78,45 +78,45 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2489
+      "count": 2509
     },
     {
       "pillar": "market_trauma",
-      "count": 1257
+      "count": 1266
     },
     {
       "pillar": "other",
-      "count": 1056
+      "count": 1066
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 94
     },
     {
       "pillar": "reply_bait",
       "count": 93
     },
     {
-      "pillar": "meme_reaction",
-      "count": 91
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 42
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 451
+      "count": 460
     },
     {
       "pillar": "market_trauma",
-      "count": 252
+      "count": 249
     },
     {
       "pillar": "other",
-      "count": 190
+      "count": 187
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 19
     },
     {
       "pillar": "meme_reaction",
@@ -124,7 +124,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -137,23 +137,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 76,
-      "avg_likes": 0.26,
-      "avg_views": 52.4,
+      "posts": 78,
+      "avg_likes": 0.27,
+      "avg_views": 52.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 70,
-      "avg_likes": 0.23,
-      "avg_views": 48.7,
+      "posts": 67,
+      "avg_likes": 0.24,
+      "avg_views": 47.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.14,
-      "avg_views": 51.0,
+      "posts": 46,
+      "avg_likes": 0.13,
+      "avg_views": 51.6,
       "low_sample": false
     },
     {
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4556
+      "count": 4590
     },
     {
       "type": "quote",
-      "count": 285
+      "count": 286
     },
     {
       "type": "quote_gif",
-      "count": 88
+      "count": 91
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 45
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-19T06:48:59.516699",
-      "text": "Vista Equity just bought themselves into the energy transition. datacenter demand is eating $VST's capacity before you can even say \"regulated utility.\" finally, a margin that isn't 15%.",
+      "ts": "2026-09-19T10:48:25.949793",
+      "text": "Anthropic just bought voting rights with metr’s $50m check. independence isn’t a feeling, it’s a cap table thing you’re ignoring while everyone else is posting moon charts. the exit tax starts now.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-19T06:47:43.297347",
-      "text": "Claude Code reviewed your week. 15 minutes of work replaced by one prompt and the confidence that it didn't hallucinate a line item into Q3 revenue. You're not cooking; you're garnishing.",
+      "ts": "2026-09-19T10:47:53.186943",
+      "text": "AMD at $5k implies datacenter revenue matches Nvidia's. currently they're 1/6th the size with half the margin because AMD sells chips and Hopper ships entire ecosystems. it’s not a breakout chart. that is wishful thinking from someone who checks their portfolio once a week",
       "type": "reply"
     },
     {
-      "ts": "2026-09-19T06:47:25.875281",
-      "text": "Btc stagne depuis fin 2023 sur les mêmes supports. le marché a digéré le halving et attend la confirmation institutionnelle via blackrock/grayscale avant de courir vers tes 100k.",
+      "ts": "2026-09-19T10:47:24.646944",
+      "text": "Palantir's foundry works because it doesn't try to be sexy. s&p 500 is up on the promise of magic, palantir got paid by doing homework for governments who already knew they were inefficient. stop calling this elitism and start reading the balance sheet",
       "type": "reply"
     }
   ]
