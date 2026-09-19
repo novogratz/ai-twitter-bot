@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-08-17T08:59:18.477930",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreCyril",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Ancien Hachette, devenu la voix grave du crypto-journalisme fran\u00e7ais. Pas de signaux, de l'analyse."
-      },
-      {
-        "handle": "Bounga",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "VP AI chez Datadog, le mec qui rend l'IA lisible pour les non-dicos."
-      },
-      {
-        "handle": "MaximeBnB",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "CTO de DeepMap, vit et respire l'IA, poste du brut sans filtre."
-      },
-      {
-        "handle": "Lamaziere",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Analyste macro et actions, couvre la tech US en FR avec un \u0153il critique sur les bulles."
-      },
-      {
-        "handle": "RoxanaB",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Ex-DeepMind, actuelle chez Anthropic, twitte en FR avec une pr\u00e9cision chirurgicale."
-      },
-      {
-        "handle": "BenjaminDurocher",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Journaliste crypto qu\u00e9b\u00e9cois, twitte en FR sur la DeFi et les NFTs avec plus de recul que la moyenne."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites IA (Mistral/Datadog) et chass\u00e9 les vrais analystes crypto/bourse francophones qui ne vendent pas de r\u00eave en ligne de commande. C'est un mix de fondateurs techniques et de journalistes de terrain, sans les influenceurs 'business maker' habituels."
-  },
-  {
     "ts": "2026-08-17T12:01:36.736940",
     "raw_count": 5,
     "kept_count": 3,
@@ -6506,5 +6454,43 @@
       }
     ],
     "summary": "Une s\u00e9lection de pros qui ne crient pas sur leur prix par mois : des analysts IA s\u00e9rieux \u00e0 Paris aux value investors calmes au Qu\u00e9bec, tous actifs en fran\u00e7ais sans \u00eatre dans le spam Telegram."
+  },
+  {
+    "ts": "2026-09-19T02:49:40.219726",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_tibo_",
+        "region": "france",
+        "niche": "tech / vc",
+        "followers": 150000,
+        "reason": "L'ami de tous les founders. Moins 'analyse bourse', plus \u00e9cosyst\u00e8me IA/Startups FR au sens large."
+      },
+      {
+        "handle": "_nass_",
+        "region": "france",
+        "niche": "fintech / bourse",
+        "followers": 25000,
+        "reason": "Journaliste fintech de renom. Il tweet les news que tu rates parce que tu \u00e9tais sur TikTok."
+      },
+      {
+        "handle": "_clementdecoing_",
+        "region": "france",
+        "niche": "crypto / web3",
+        "followers": 18000,
+        "reason": "Pas un vendeur de r\u00eaves. Un ex-banquier qui d\u00e9construit le march\u00e9 crypto avec des graphiques."
+      },
+      {
+        "handle": "_sylvain_dumais_",
+        "region": "quebec",
+        "niche": "bourse / valeur",
+        "followers": 12000,
+        "reason": "Le roi du long terme au Qu\u00e9bec. Moins de hype IA, plus d'analyse fondamentale solide pour les flemmards."
+      }
+    ],
+    "summary": "Pas d'IA hypeuse ici: on vise ceux qui comprennent le code (Girard), l'argent (@Sylvain_Dumais) ou la micro-structure du march\u00e9. Des vrais pros, pas des influenceurs de solaires."
   }
 ]

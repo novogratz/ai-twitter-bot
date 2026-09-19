@@ -2481,7 +2481,9 @@
     "LuisNunezzZ",
     "ThibautGhislain",
     "ClementDeCoinG",
-    "PierrePerrin_"
+    "PierrePerrin_",
+    "_tibo_",
+    "_nass_"
   ],
   "en": [
     "Chubby",
@@ -3082,7 +3084,10 @@
     "Thariq",
     "Sauers",
     "Zynx",
-    "Uniswap"
+    "Uniswap",
+    "Aleco",
+    "wudijo",
+    "tree"
   ],
   "history": [
     {
@@ -18489,6 +18494,31 @@
       "lang": "fr",
       "handle": "PierrePerrin_",
       "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Aleco",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "wudijo",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "tree",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "_tibo_",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "_nass_",
+      "added": "2026-09-19"
     }
   ]
 }

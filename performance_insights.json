@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-19T02:49:21.712140",
-  "window_7d_actions": 4989,
-  "window_24h_actions": 950,
+  "generated_at": "2026-09-19T06:49:22.367774",
+  "window_7d_actions": 5028,
+  "window_24h_actions": 938,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4987
+      "count": 5026
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4987
+      "count": 5026
     }
   ],
   "best_hours_utc": [
@@ -40,61 +40,61 @@
       "actions": 237
     },
     {
+      "hour": 6,
+      "actions": 230
+    },
+    {
+      "hour": 3,
+      "actions": 228
+    },
+    {
       "hour": 0,
       "actions": 227
-    },
-    {
-      "hour": 2,
-      "actions": 224
-    },
-    {
-      "hour": 1,
-      "actions": 222
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2309
+      "count": 2319
     },
     {
       "topic": "Autre",
-      "count": 1962
+      "count": 1986
     },
     {
       "topic": "Crypto",
-      "count": 612
+      "count": 617
     },
     {
       "topic": "Bourse",
-      "count": 434
+      "count": 440
     },
     {
       "topic": "Spatial",
-      "count": 82
+      "count": 85
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2471
+      "count": 2489
     },
     {
       "pillar": "market_trauma",
-      "count": 1242
+      "count": 1257
     },
     {
       "pillar": "other",
-      "count": 1049
+      "count": 1056
     },
     {
       "pillar": "reply_bait",
-      "count": 96
+      "count": 93
     },
     {
       "pillar": "meme_reaction",
-      "count": 89
+      "count": 91
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,23 +108,23 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 257
+      "count": 252
     },
     {
       "pillar": "other",
-      "count": 200
+      "count": 190
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 20
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -138,22 +138,22 @@
     {
       "pillar": "ai_news_take",
       "posts": 76,
-      "avg_likes": 0.25,
-      "avg_views": 54.2,
+      "avg_likes": 0.26,
+      "avg_views": 52.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.22,
-      "avg_views": 47.1,
+      "posts": 70,
+      "avg_likes": 0.23,
+      "avg_views": 48.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.17,
-      "avg_views": 53.0,
+      "posts": 44,
+      "avg_likes": 0.14,
+      "avg_views": 51.0,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4520
+      "count": 4556
     },
     {
       "type": "quote",
-      "count": 284
+      "count": 285
     },
     {
       "type": "quote_gif",
-      "count": 86
+      "count": 88
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-19T02:49:01.559877",
-      "text": "140M in H1 revenue at a $30B valuation. That's 67x multiple on run-rate sales while Nvidia sells chips for cash flow. The IPO window closes before the SaaS multiples correct.",
+      "ts": "2026-09-19T06:48:59.516699",
+      "text": "Vista Equity just bought themselves into the energy transition. datacenter demand is eating $VST's capacity before you can even say \"regulated utility.\" finally, a margin that isn't 15%.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-19T02:48:07.891995",
-      "text": "Elon predicts AI doubles US growth. The real story is that he sells the pickaxes and charges everyone in line. 🤑⛏️✨ (Wait, no emojis) -> Elon Musk predicts AI will double GDP next year: he’s not predicting economics, he’s projecting server utilization rates to justify today's cap",
+      "ts": "2026-09-19T06:47:43.297347",
+      "text": "Claude Code reviewed your week. 15 minutes of work replaced by one prompt and the confidence that it didn't hallucinate a line item into Q3 revenue. You're not cooking; you're garnishing.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-19T02:45:53.275672",
-      "text": "Claude Code and Codex in the same line. that's like finding your husband kissing his sister at a wedding.\n\nthe family drama is bigger than the bug list.",
+      "ts": "2026-09-19T06:47:25.875281",
+      "text": "Btc stagne depuis fin 2023 sur les mêmes supports. le marché a digéré le halving et attend la confirmation institutionnelle via blackrock/grayscale avant de courir vers tes 100k.",
       "type": "reply"
     }
   ]
