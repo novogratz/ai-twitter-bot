@@ -2477,7 +2477,11 @@
     "GustavoS7439",
     "MaximeMougel",
     "ThibaudDelfolie",
-    "_alex_puget_"
+    "_alex_puget_",
+    "LuisNunezzZ",
+    "ThibautGhislain",
+    "ClementDeCoinG",
+    "PierrePerrin_"
   ],
   "en": [
     "Chubby",
@@ -3075,7 +3079,10 @@
     "s1r1us",
     "Shib",
     "mizchi",
-    "Thariq"
+    "Thariq",
+    "Sauers",
+    "Zynx",
+    "Uniswap"
   ],
   "history": [
     {
@@ -18446,6 +18453,41 @@
     {
       "lang": "fr",
       "handle": "_alex_puget_",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Sauers",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Zynx",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Uniswap",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisNunezzZ",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautGhislain",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementDeCoinG",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePerrin_",
       "added": "2026-09-18"
     }
   ]

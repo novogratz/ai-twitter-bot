@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-17T06:59:18.172086",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickd75",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "Le patron fran\u00e7ais du Twitter crypto. Si tu ne le suis pas, tu vis sous une pierre (ou \u00e0 la campagne sans 4G)."
-      },
-      {
-        "handle": "MaximeWawrzyniak",
-        "region": "france",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Co-fondateur de Vinted. Son feed est une mine d'or sur la productivit\u00e9 et la tech fran\u00e7aise, sans la pub de promo."
-      },
-      {
-        "handle": "Julien_Dev",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Le gars qui fait d\u00e9coller Mistral. Il poste du technique pur, sans les blabla de VC habituels."
-      },
-      {
-        "handle": "JF_Dumais",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Journaliste crypto au Qu\u00e9bec. Il couvre le march\u00e9 local mieux que n'importe quel m\u00e9dia g\u00e9n\u00e9raliste."
-      },
-      {
-        "handle": "PierreDionneQC",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 10000,
-        "reason": "L'expert fintech qu\u00e9b\u00e9cois. Il comprend mieux les blockchains que le banquier de ton quartier."
-      }
-    ],
-    "summary": "La France reste le royaume des influenceurs crypto (Deneb/MickD75), tandis que le Qu\u00e9bec offre des analystes boursiers plus techniques et moins 'shy'queurs. Les USA n'ont qu'un seul repr\u00e9sentant francophone majeur (Maki), ce qui est \u00e9trange pour un hub tech."
-  },
-  {
     "ts": "2026-08-17T08:59:18.477930",
     "raw_count": 10,
     "kept_count": 6,
@@ -6506,5 +6461,50 @@
       }
     ],
     "summary": "On \u00e9carte les vendeurs de r\u00eaves : ici on garde ceux qui comprennent comment l'argent circule (Dorian) ou comment la technique change la finance (Alex P, Thomas B). Le Qu\u00e9bec est mieux couvert via deux voix distinctes pour ne pas se r\u00e9p\u00e9ter."
+  },
+  {
+    "ts": "2026-09-18T22:49:44.243384",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuisNunezzZ",
+        "region": "france",
+        "niche": "ai/tech",
+        "followers": 45000,
+        "reason": "Le roi des prompts FR. Twitte sur l'IA g\u00e9n\u00e9rative et le productivisme tech sans \u00eatre un gamin de Discord."
+      },
+      {
+        "handle": "ThibautGhislain",
+        "region": "france",
+        "niche": "ai/startup/vc",
+        "followers": 35000,
+        "reason": "Ancien HEC et VC. Il couvre la deep tech fran\u00e7aise avec l'oeil du banquier mais les mots de celui qui code."
+      },
+      {
+        "handle": "MaximeVilleneuve",
+        "region": "quebec",
+        "niche": "bourse/finance perso",
+        "followers": 25000,
+        "reason": "\"C'est ma routine\" est devenu une marque. Il mixe analyse fondamentale solide et humeur qu\u00e9b\u00e9coise tr\u00e8s lisible."
+      },
+      {
+        "handle": "ClementDeCoinG",
+        "region": "france",
+        "niche": "crypto/data",
+        "followers": 18000,
+        "reason": "Il balance des charts et du data brut. C'est technique mais accessible pour quiconque veut voir la b\u00eate."
+      },
+      {
+        "handle": "PierrePerrin_",
+        "region": "france",
+        "niche": "bourse/value investing",
+        "followers": 15000,
+        "reason": "Pas un trader de salon. Il poste des analyses fondamentales longues qui donnent envie d'ouvrir Excel."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui ne crient pas sur leur prix par mois : des analysts IA s\u00e9rieux \u00e0 Paris aux value investors calmes au Qu\u00e9bec, tous actifs en fran\u00e7ais sans \u00eatre dans le spam Telegram."
   }
 ]

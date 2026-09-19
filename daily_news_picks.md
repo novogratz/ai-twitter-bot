@@ -17465,3 +17465,21 @@ We had a tough time getting state leaders to talk on camera about California's n
 This, as Newsom prepares an AI safety
   - https://x.com/ZavalaA/status/2100770470664733145
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 122).
+
+## 2026-09-19
+- **@beth_kindig** (102 likes, score 9/10) — Microsoft $MSFT is reportedly planning to more than triple its data center capacity from 12GW to 38GW by 2032, including owned and leased capacity but excluding rented capacity from neoclouds. 
+
+$AMZN
+  - https://x.com/Beth_Kindig/status/2101095696954949997
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 128).
+- **@kalshi_finance** (122 likes, score 9/10) — JUST IN: OpenAI expects to spend $856 billion on compute and infrastructure through 2030
+  - https://x.com/Kalshi_Finance/status/2101123215221256284
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 146).
+- **@lmstudio** (390 likes, score 9/10) — Qwen3.8-27B, up to 144 tok/sec on M5 Max. 
+Let that sink in. ⚡️✨🚀
+
+Excited to partner with @inco_ai to bring you their Splash inference engine in LM Studio on day 0!
+
+Get it running now: https://lmst
+  - https://x.com/lmstudio/status/2101110346954207521
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 424).
