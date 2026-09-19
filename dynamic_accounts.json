@@ -3087,7 +3087,9 @@
     "Uniswap",
     "Aleco",
     "wudijo",
-    "tree"
+    "tree",
+    "Electroverse",
+    "amuse"
   ],
   "history": [
     {
@@ -18518,6 +18520,16 @@
     {
       "lang": "fr",
       "handle": "_nass_",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Electroverse",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "amuse",
       "added": "2026-09-19"
     }
   ]
