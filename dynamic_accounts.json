@@ -2483,7 +2483,11 @@
     "ClementDeCoinG",
     "PierrePerrin_",
     "_tibo_",
-    "_nass_"
+    "_nass_",
+    "JulianBrodski",
+    "Hugo_Diniz_",
+    "MaximeScheer",
+    "ThomasBoulay_"
   ],
   "en": [
     "Chubby",
@@ -3089,7 +3093,8 @@
     "wudijo",
     "tree",
     "Electroverse",
-    "amuse"
+    "amuse",
+    "Watney"
   ],
   "history": [
     {
@@ -18530,6 +18535,31 @@
     {
       "lang": "en",
       "handle": "amuse",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Watney",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulianBrodski",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "Hugo_Diniz_",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeScheer",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBoulay_",
       "added": "2026-09-19"
     }
   ]

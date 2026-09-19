@@ -1,22 +1,5 @@
 [
   {
-    "ts": "2026-08-17T14:02:06.029936",
-    "raw_count": 8,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HuggingFace",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 150000,
-        "reason": "Bas\u00e9s \u00e0 NYC mais co-fond\u00e9s par des Fran\u00e7ais, ils diffusent la gospel open source avec une efficacit\u00e9 militaire."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rons crypto fr et les new-rules de l'IA, avec une belle couverture qu\u00e9b\u00e9coise qui manque souvent dans les listes US."
-  },
-  {
     "ts": "2026-08-17T16:01:41.931234",
     "raw_count": 5,
     "kept_count": 3,
@@ -6485,5 +6468,57 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruyant pour garder l'audible : des profils institutionnels ou analystes purs dans chaque r\u00e9gion. Z\u00e9ro formateur \u00e0 97\u20ac ici, que du concret."
+  },
+  {
+    "ts": "2026-09-19T16:49:48.878652",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulianBrodski",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le trader de Crypto-Matin. Il explique le march\u00e9 sans dormir sur sa machine \u00e0 laver des formations \u00e0 197\u20ac."
+      },
+      {
+        "handle": "Raphaelpassalacqua",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 28000,
+        "reason": "Ex-CTO de Klarna. Il twitte sur l'IA et le SaaS comme un mec qui vient d'\u00e9chouer une startup plut\u00f4t que comme un guru."
+      },
+      {
+        "handle": "Hugo_Diniz_",
+        "region": "france",
+        "niche": "crypto/tech",
+        "followers": 21000,
+        "reason": "Le VC de Coinhouse. Il trouve les gemmes avant qu'elles ne soient trop mainstream."
+      },
+      {
+        "handle": "AntoineRozhovetski",
+        "region": "usa",
+        "niche": "crypto/tech",
+        "followers": 18500,
+        "reason": "Cr\u00e9ateur de Bankless. Il balance des perles sur la finance d\u00e9centralis\u00e9e avec un accent US mais une \u00e2me francophone (bas\u00e9 entre NY et Paris)."
+      },
+      {
+        "handle": "MaximeScheer",
+        "region": "france",
+        "niche": "tech/vc",
+        "followers": 15000,
+        "reason": "Founding Partner chez Kima Ventures. Il suit la tech fran\u00e7aise comme un faucon mais avec le sourire."
+      },
+      {
+        "handle": "ThomasBoulay_",
+        "region": "france",
+        "niche": "ai/tech",
+        "followers": 14000,
+        "reason": "Journaliste \u00e0 La Tribune. Il couvre l'IA fran\u00e7aise sans jamais faire de pub pour sa propre formation."
+      }
+    ],
+    "summary": "Un m\u00e9lange serr\u00e9 entre les poids lourds institutionnels (Mistral) et la fine fleur des VC/traders actifs qui ne vendent pas du vent mais des insights concrets."
   }
 ]
