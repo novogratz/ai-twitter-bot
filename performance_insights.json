@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-18T18:49:24.587143",
-  "window_7d_actions": 4921,
-  "window_24h_actions": 953,
+  "generated_at": "2026-09-18T22:49:21.464305",
+  "window_7d_actions": 4966,
+  "window_24h_actions": 959,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4919
+      "count": 4964
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,17 +27,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4919
+      "count": 4964
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 9,
-      "actions": 237
+      "hour": 20,
+      "actions": 247
     },
     {
-      "hour": 20,
-      "actions": 229
+      "hour": 9,
+      "actions": 237
     },
     {
       "hour": 2,
@@ -55,105 +55,105 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2300
+      "count": 2302
     },
     {
       "topic": "Autre",
-      "count": 1913
+      "count": 1948
     },
     {
       "topic": "Crypto",
-      "count": 603
+      "count": 611
     },
     {
       "topic": "Bourse",
-      "count": 426
+      "count": 429
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 82
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2454
+      "count": 2462
     },
     {
       "pillar": "market_trauma",
-      "count": 1214
+      "count": 1229
     },
     {
       "pillar": "other",
-      "count": 1032
+      "count": 1050
     },
     {
       "pillar": "reply_bait",
-      "count": 92
+      "count": 95
     },
     {
       "pillar": "meme_reaction",
-      "count": 89
+      "count": 88
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 40
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 439
+      "count": 446
     },
     {
       "pillar": "market_trauma",
-      "count": 258
+      "count": 261
     },
     {
       "pillar": "other",
-      "count": 216
+      "count": 209
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 17
     },
     {
       "pillar": "reply_bait",
       "count": 16
     },
     {
-      "pillar": "meme_reaction",
-      "count": 16
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 5,
-      "avg_likes": 0.4,
-      "avg_views": 64.4,
+      "posts": 4,
+      "avg_likes": 0.5,
+      "avg_views": 76.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.25,
-      "avg_views": 50.5,
+      "posts": 71,
+      "avg_likes": 0.24,
+      "avg_views": 47.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 75,
       "avg_likes": 0.24,
-      "avg_views": 55.7,
+      "avg_views": 55.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.19,
-      "avg_views": 56.2,
+      "posts": 46,
+      "avg_likes": 0.2,
+      "avg_views": 54.2,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4457
+      "count": 4501
     },
     {
       "type": "quote",
-      "count": 281
+      "count": 282
     },
     {
       "type": "quote_gif",
-      "count": 86
+      "count": 85
     },
     {
       "type": "hotake",
@@ -183,7 +183,7 @@
     },
     {
       "type": "post",
-      "count": 39
+      "count": 40
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-18T18:48:56.811985",
-      "text": "Google’s agent got internet access. That wasn’t a hack; it was the demo day we paid for with our data privacy since 1998 and forgot to check out.",
+      "ts": "2026-09-18T22:49:09.274622",
+      "text": "Nvidia margins sit at ~70%. Jensen is selling the dream to clear inventory before it becomes last year's tech. Buy what he shipped yesterday. Sell what he’s pitching tomorrow.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T18:48:40.600166",
-      "text": "Anthropic wants to raise 100b for a company with $3.4B arr before the midterms? they’re not pricing an IPO, they’re shorting american political risk at retail prices.",
+      "ts": "2026-09-18T22:47:41.232527",
+      "text": "I’ll stick with my bitcoins too... on Tuesdays before lunch. After that? I’m buying an island for my GPU cluster and naming it after your worst drawdown. You’re welcome to visit anytime, bring your laptop charger. It’s cheaper than therapy now anyway! 😂",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T18:48:24.356100",
-      "text": "Des agents sans corps. fin de l'âge du hardware pour les consommateurs. on passe des GPUs aux conversations. plus sexy ? oui. moins cher aussi 😉💸",
+      "ts": "2026-09-18T22:45:54.421877",
+      "text": "Lebanon's budget isn't advanced. It's just delaying the haircut until next quarter. IMF loans are interest-only rent for survival time. watch spreads widen when they stop rolling debt in 18 months.",
       "type": "reply"
     }
   ]

@@ -2476,7 +2476,8 @@
     "LDev_",
     "GustavoS7439",
     "MaximeMougel",
-    "ThibaudDelfolie"
+    "ThibaudDelfolie",
+    "_alex_puget_"
   ],
   "en": [
     "Chubby",
@@ -18440,6 +18441,11 @@
     {
       "lang": "fr",
       "handle": "ThibaudDelfolie",
+      "added": "2026-09-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "_alex_puget_",
       "added": "2026-09-18"
     }
   ]

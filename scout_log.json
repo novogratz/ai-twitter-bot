@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-08-17T02:59:19.013905",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MorganHousel",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 400000,
-        "reason": "Bien qu'am\u00e9ricain, sa prose sur la psychologie de l'argent est traduite et adopt\u00e9e par la diaspora FR. Ses posts sont des aphorismes sur la richesse que chacun should avoir en signature."
-      },
-      {
-        "handle": "CyrilDonghi",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'instituteur qui a d\u00e9croch\u00e9 sa prime pour acheter des ETH en 2013. Il twitte en fran\u00e7ais, analyse le cycle sans verser dans le 'moonboy' agressif, et reste pertinent sur les fondamentaux."
-      },
-      {
-        "handle": "PierreDuguay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le prof de finance qui a convaincu ses \u00e9tudiants de devenir riches. Ses threads sont des cours magistraux : lisibilit\u00e9 maximale, z\u00e9ro jargon inutile, 100% applicable."
-      },
-      {
-        "handle": "L3onCrypto",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Le gars qui a vendu son immeuble pour faire du full crypto. Son style est direct, ses threads sur la liquidit\u00e9 et le rendement sont des p\u00e9pites pour les traders FR s\u00e9rieux."
-      },
-      {
-        "handle": "CyrilSavard",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "L'analyste on-chain qu\u00e9b\u00e9cois. Il voit les flux avant que le march\u00e9 ne r\u00e9agisse. Moins de buzz, plus de donn\u00e9es concr\u00e8tes sur les mouvements institutionnels."
-      }
-    ],
-    "summary": "Un mix solide entre les v\u00e9t\u00e9rans de la crypto FR (Donghi, L3on) et les poids lourds de l'analyse qu\u00e9b\u00e9coise (Dionne, Duguay) pour un \u00e9quilibre parfaite entre volatilit\u00e9 crypto et patience boursi\u00e8re. On garde un \u0153il sur Mistral et le tech scout floch pour la partie narrative."
-  },
-  {
     "ts": "2026-08-17T06:59:18.172086",
     "raw_count": 8,
     "kept_count": 5,
@@ -6534,5 +6489,22 @@
       }
     ],
     "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans qui ont surv\u00e9cu aux hivers crypto sans vendre leur \u00e2me \u00e0 Telegram. Aucun ne te demandera un 'like' pour devenir ton ami, ils veulent juste que tu lises leurs tweets avant qu'ils soient archiv\u00e9s."
+  },
+  {
+    "ts": "2026-09-18T20:49:45.900462",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "_alex_puget_",
+        "region": "france",
+        "niche": "tech & ia startup",
+        "followers": 28000,
+        "reason": "Ancien de Google Ventures. Il couvre l'IA fr mais sans le jargon technique barbant : c'est purement business et product."
+      }
+    ],
+    "summary": "On \u00e9carte les vendeurs de r\u00eaves : ici on garde ceux qui comprennent comment l'argent circule (Dorian) ou comment la technique change la finance (Alex P, Thomas B). Le Qu\u00e9bec est mieux couvert via deux voix distinctes pour ne pas se r\u00e9p\u00e9ter."
   }
 ]
