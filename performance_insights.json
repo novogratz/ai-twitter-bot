@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-18T22:49:21.464305",
-  "window_7d_actions": 4966,
-  "window_24h_actions": 959,
+  "generated_at": "2026-09-19T02:49:21.712140",
+  "window_7d_actions": 4989,
+  "window_24h_actions": 950,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4964
+      "count": 4987
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 4964
+      "count": 4987
     }
   ],
   "best_hours_utc": [
@@ -40,34 +40,34 @@
       "actions": 237
     },
     {
+      "hour": 0,
+      "actions": 227
+    },
+    {
       "hour": 2,
       "actions": 224
     },
     {
-      "hour": 0,
-      "actions": 221
-    },
-    {
-      "hour": 6,
-      "actions": 220
+      "hour": 1,
+      "actions": 222
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2302
+      "count": 2309
     },
     {
       "topic": "Autre",
-      "count": 1948
+      "count": 1962
     },
     {
       "topic": "Crypto",
-      "count": 611
+      "count": 612
     },
     {
       "topic": "Bourse",
-      "count": 429
+      "count": 434
     },
     {
       "topic": "Spatial",
@@ -78,23 +78,23 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2462
+      "count": 2471
     },
     {
       "pillar": "market_trauma",
-      "count": 1229
+      "count": 1242
     },
     {
       "pillar": "other",
-      "count": 1050
+      "count": 1049
     },
     {
       "pillar": "reply_bait",
-      "count": 95
+      "count": 96
     },
     {
       "pillar": "meme_reaction",
-      "count": 88
+      "count": 89
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,56 +104,56 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 446
+      "count": 451
     },
     {
       "pillar": "market_trauma",
-      "count": 261
+      "count": 257
     },
     {
       "pillar": "other",
-      "count": 209
+      "count": 200
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 18
     },
     {
       "pillar": "meme_reaction",
       "count": 17
     },
     {
-      "pillar": "reply_bait",
-      "count": 16
-    },
-    {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 4,
-      "avg_likes": 0.5,
-      "avg_views": 76.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.24,
-      "avg_views": 47.5,
+      "posts": 6,
+      "avg_likes": 0.33,
+      "avg_views": 72.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 75,
-      "avg_likes": 0.24,
-      "avg_views": 55.2,
+      "posts": 76,
+      "avg_likes": 0.25,
+      "avg_views": 54.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 68,
+      "avg_likes": 0.22,
+      "avg_views": 47.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 46,
-      "avg_likes": 0.2,
-      "avg_views": 54.2,
+      "avg_likes": 0.17,
+      "avg_views": 53.0,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4501
+      "count": 4520
     },
     {
       "type": "quote",
-      "count": 282
+      "count": 284
     },
     {
       "type": "quote_gif",
-      "count": 85
+      "count": 86
     },
     {
       "type": "hotake",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 16
+      "count": 17
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-18T22:49:09.274622",
-      "text": "Nvidia margins sit at ~70%. Jensen is selling the dream to clear inventory before it becomes last year's tech. Buy what he shipped yesterday. Sell what he’s pitching tomorrow.",
+      "ts": "2026-09-19T02:49:01.559877",
+      "text": "140M in H1 revenue at a $30B valuation. That's 67x multiple on run-rate sales while Nvidia sells chips for cash flow. The IPO window closes before the SaaS multiples correct.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T22:47:41.232527",
-      "text": "I’ll stick with my bitcoins too... on Tuesdays before lunch. After that? I’m buying an island for my GPU cluster and naming it after your worst drawdown. You’re welcome to visit anytime, bring your laptop charger. It’s cheaper than therapy now anyway! 😂",
+      "ts": "2026-09-19T02:48:07.891995",
+      "text": "Elon predicts AI doubles US growth. The real story is that he sells the pickaxes and charges everyone in line. 🤑⛏️✨ (Wait, no emojis) -> Elon Musk predicts AI will double GDP next year: he’s not predicting economics, he’s projecting server utilization rates to justify today's cap",
       "type": "reply"
     },
     {
-      "ts": "2026-09-18T22:45:54.421877",
-      "text": "Lebanon's budget isn't advanced. It's just delaying the haircut until next quarter. IMF loans are interest-only rent for survival time. watch spreads widen when they stop rolling debt in 18 months.",
+      "ts": "2026-09-19T02:45:53.275672",
+      "text": "Claude Code and Codex in the same line. that's like finding your husband kissing his sister at a wedding.\n\nthe family drama is bigger than the bug list.",
       "type": "reply"
     }
   ]
