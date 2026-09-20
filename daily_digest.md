@@ -1828,3 +1828,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 84 views: Shorts closed? So Bitcoin finally gets its night off and everyone realizes they forgot their keys 😂👀
   - 1 likes / 53 views: me on my way to explain this expansion to my kids as 'extra tuition for their futures' 🎓👀
   - 1 likes / 102 views: buying the dip on $NEAR is just naming your kid after them, hoping they’ll turn out okay anyway 🛋️👀
+
+## 2026-09-19
+
+**Activity** — total actions: 922
+  - by type: reply=833, quote=57, quote_gif=18, post=7, hotake=5, retweet=2
+  - top sources: SEARCH-HOT=550, FEED-SWEEP-FEED=154, FEED-SWEEP-FOLLOWING=87, QUOTE=45, VIP=22, GIF=19, DEBATE=19, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=27, @Polymarket=13, @kimmonismus=9, @pete_rizzo_=7, @cryptorover=7
+
+**Followers we follow** (running total): 395
+
+**Top-performing posts scraped today**:
+  - 418 likes / 184659 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 28 views: Mitch just told me AI is going to get us killed and I’m taking that personally because he also forgo
+  - 1 likes / 40 views: me on the couch realizing we spent 30m tons of hardware to build robots that still need a guy named 
