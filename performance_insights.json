@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-19T18:49:21.519203",
-  "window_7d_actions": 5129,
-  "window_24h_actions": 941,
+  "generated_at": "2026-09-19T22:49:22.063951",
+  "window_7d_actions": 5171,
+  "window_24h_actions": 929,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5127
+      "count": 5169
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,13 +27,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5127
+      "count": 5169
     }
   ],
   "best_hours_utc": [
     {
       "hour": 20,
-      "actions": 247
+      "actions": 262
     },
     {
       "hour": 9,
@@ -48,84 +48,84 @@
       "actions": 228
     },
     {
-      "hour": 0,
-      "actions": 227
+      "hour": 19,
+      "actions": 228
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2332
+      "count": 2347
     },
     {
       "topic": "Autre",
-      "count": 2066
+      "count": 2086
     },
     {
       "topic": "Crypto",
-      "count": 634
+      "count": 639
     },
     {
       "topic": "Bourse",
-      "count": 451
+      "count": 459
     },
     {
       "topic": "Spatial",
-      "count": 89
+      "count": 91
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.024,
-      "7d_rate": 0.017
+      "24h_rate": 0.025,
+      "7d_rate": 0.018
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2503
+      "count": 2521
     },
     {
       "pillar": "market_trauma",
-      "count": 1278
+      "count": 1285
     },
     {
       "pillar": "other",
-      "count": 1105
+      "count": 1116
     },
     {
       "pillar": "reply_bait",
-      "count": 99
+      "count": 100
     },
     {
       "pillar": "meme_reaction",
-      "count": 98
+      "count": 100
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 49
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 441
+      "count": 437
     },
     {
       "pillar": "market_trauma",
-      "count": 240
+      "count": 231
     },
     {
       "pillar": "other",
-      "count": 205
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 22
+      "count": 206
     },
     {
       "pillar": "reply_bait",
+      "count": 22
+    },
+    {
+      "pillar": "meme_reaction",
       "count": 22
     },
     {
@@ -136,56 +136,56 @@
   "pillar_engagement_30d": [
     {
       "pillar": "reply_bait",
-      "posts": 6,
-      "avg_likes": 0.33,
-      "avg_views": 72.0,
+      "posts": 5,
+      "avg_likes": 0.4,
+      "avg_views": 50.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.22,
-      "avg_views": 53.8,
+      "posts": 78,
+      "avg_likes": 0.23,
+      "avg_views": 49.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 66,
+      "posts": 68,
       "avg_likes": 0.15,
       "avg_views": 41.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
+      "posts": 44,
       "avg_likes": 0.14,
-      "avg_views": 52.2,
+      "avg_views": 52.7,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 55.7,
+      "avg_views": 59.2,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4645
+      "count": 4684
     },
     {
       "type": "quote",
-      "count": 290
+      "count": 293
     },
     {
       "type": "quote_gif",
-      "count": 94
+      "count": 96
     },
     {
       "type": "post",
-      "count": 43
+      "count": 41
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-19T18:49:03.826062",
-      "text": "1 in 10. the top nine got rekt or turned into dead altcoins. only bitcoin survived because it didn't try to be a better mouse trap for retail money that already had one from nvidia.",
+      "ts": "2026-09-19T22:48:15.673231",
+      "text": "25 gigawatts to power one kid's imagination 🤯👀  we bought the lights, now let's see if he turns them on",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-09-19T22:47:40.576503",
+      "text": "OpenAI just hit $3.4B ARR with a ~$50M net profit margin on AI software. Failing 97% of the time is basically free consulting revenue for anthropic and openai shareholders simultaneously.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-19T18:48:31.202418",
-      "text": "Gavin's internal kill switch is just a circuit breaker that trips when the board asks \"why did we spend $40B on GPUs for 6 users?\" panic buying > regulation.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-09-19T18:47:56.768304",
-      "text": "Tao wants AI to slow down. Datacenters are already burning enough power for 40m homes and the grid hasn't blinked yet. Tao is confused by capitalism. It doesn’t run on feelings. Runway drives speed. Always has.",
+      "ts": "2026-09-19T22:47:07.413078",
+      "text": "Uniswap tokenized stocks = 0 liquidity. it’s a blank check written on an atm machine that doesn’t exist yet. cool party trick though.",
       "type": "reply"
     }
   ]

@@ -2487,7 +2487,8 @@
     "JulianBrodski",
     "Hugo_Diniz_",
     "MaximeScheer",
-    "ThomasBoulay_"
+    "ThomasBoulay_",
+    "PierreNoury"
   ],
   "en": [
     "Chubby",
@@ -18560,6 +18561,11 @@
     {
       "lang": "fr",
       "handle": "ThomasBoulay_",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreNoury",
       "added": "2026-09-19"
     }
   ]

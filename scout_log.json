@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-08-17T16:01:41.931234",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaultDela",
-        "region": "france",
-        "niche": "tech",
-        "followers": 95000,
-        "reason": "Le roi des threads tech en FR. Pas que de la finance, mais ses vues sur les GAFAM et l'IA font bouger les lignes."
-      },
-      {
-        "handle": "Ludo4764",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 70000,
-        "reason": "L'incontournable. Il couvre tout : macro, actions, tech. Le seul qui fait de l'analyse fine sans vendre du r\u00eave sur Telegram."
-      },
-      {
-        "handle": "JulienLeloup",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Ancien trader, aujourd'hui analyste ind\u00e9pendant. Ses threads sur l'\u00e9valuation des startups tech et SaaS sont les plus pertinentes du march\u00e9 FR."
-      }
-    ],
-    "summary": "Je sature pas le feed avec des vendeurs de r\u00eave. J'ai filtr\u00e9 pour ne garder que ceux qui ont du fond : Ludo pour la macro/bourse, Thibault pour la tech g\u00e9n\u00e9rale, Julien pour l'analyse fondamentale tech, et Mistral pour l'IA. Le Qu\u00e9bec est mieux couvert par un visionnaire infra (Alex) que par un trader classique."
-  },
-  {
     "ts": "2026-08-17T18:02:12.755402",
     "raw_count": 6,
     "kept_count": 4,
@@ -6520,5 +6489,29 @@
       }
     ],
     "summary": "Un m\u00e9lange serr\u00e9 entre les poids lourds institutionnels (Mistral) et la fine fleur des VC/traders actifs qui ne vendent pas du vent mais des insights concrets."
+  },
+  {
+    "ts": "2026-09-19T18:49:52.983575",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreNoury",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "L'ancien de Deezer/Spotify qui est devenu le 'dada\u00efste technique' pr\u00e9f\u00e9r\u00e9 des d\u00e9veloppeurs IA FR. Humour noir garanti."
+      },
+      {
+        "handle": "BenjaminPouliquen",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Le 'AI Native' de Montr\u00e9al. Twitte sur le produit IA et l'\u00e9cosyst\u00e8me tech QC avec une \u00e9nergie rare."
+      }
+    ],
+    "summary": "Pas de gourous crypto vendant du r\u00eave ici, juste des technos et des buildeurs IA/FinTech actifs. On \u00e9vite les influenceurs 'Lifestyle' pour ne garder que ceux qui font bouger la tech."
   }
 ]
