@@ -25,6 +25,8 @@ from typing import Optional, Tuple
 
 from . import config
 from .logger import log
+from .active_hours import is_active, now_local
+from zoneinfo import ZoneInfo
 
 _LOCK = threading.Lock()
 
@@ -44,9 +46,13 @@ def _load_ledger() -> list:
     try:
         with open(config.ACTION_LEDGER_FILE) as f:
             data = json.load(f)
-            return data if isinstance(data, list) else []
-    except (OSError, json.JSONDecodeError):
+            if not isinstance(data, list):
+                raise ValueError("Action ledger must be a list")
+            return data
+    except FileNotFoundError:
         return []
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("Action ledger unreadable; refusing unaudited writes") from exc
 
 
 def _save_ledger(rows: list) -> None:
@@ -58,8 +64,8 @@ def _save_ledger(rows: list) -> None:
         with open(tmp, "w") as f:
             json.dump(rows, f)
         os.replace(tmp, config.ACTION_LEDGER_FILE)
-    except OSError:
-        pass
+    except OSError as exc:
+        raise RuntimeError("Action ledger could not be saved") from exc
 
 
 def record(action: str, target: str = "", dry_run: bool = False) -> None:
@@ -69,31 +75,42 @@ def record(action: str, target: str = "", dry_run: bool = False) -> None:
         rows.append({
             "action": action,
             "target": (target or "").lower().lstrip("@"),
-            "ts": datetime.now().isoformat(),
+            "ts": now_local().isoformat(),
             "dry_run": bool(dry_run),
         })
         _save_ledger(rows)
 
 
+def _ledger_time(stamp: str) -> datetime | None:
+    try:
+        dt = datetime.fromisoformat(stamp)
+        # Historical entries were recorded using the Toronto host's naive clock.
+        return dt.replace(tzinfo=ZoneInfo(config.BOT_TIMEZONE)) if dt.tzinfo is None else dt
+    except (ValueError, TypeError):
+        return None
+
+
 def _rows_for_action_today(action: str) -> list:
-    today = datetime.now().date().isoformat()
+    today = now_local().date()
     return [r for r in _load_ledger()
-            if r.get("action") == action and r.get("ts", "")[:10] == today]
+            if r.get("action") == action and not r.get("dry_run")
+            and (stamp := _ledger_time(r.get("ts", ""))) is not None
+            and stamp.astimezone(ZoneInfo(config.BOT_TIMEZONE)).date() == today]
 
 
 def count_today(action: str) -> int:
     return len(_rows_for_action_today(action))
 
 
+def profile_count_today() -> int:
+    return sum(count_today(action) for action in (POST, QUOTE, RETWEET))
+
+
 def seconds_since_last(action: str) -> float:
-    rows = [r for r in _load_ledger() if r.get("action") == action]
-    if not rows:
-        return float("inf")
-    last = max(r.get("ts", "") for r in rows)
-    try:
-        return (datetime.now() - datetime.fromisoformat(last)).total_seconds()
-    except ValueError:
-        return float("inf")
+    stamps = [_ledger_time(r.get("ts", "")) for r in _load_ledger()
+              if r.get("action") == action and not r.get("dry_run")]
+    stamps = [stamp for stamp in stamps if stamp is not None]
+    return now_local().timestamp() - max(s.timestamp() for s in stamps) if stamps else float("inf")
 
 
 def last_touch(target: str) -> Optional[datetime]:
@@ -104,7 +121,7 @@ def last_touch(target: str) -> Optional[datetime]:
     if not stamps:
         return None
     try:
-        return datetime.fromisoformat(max(stamps))
+        return _ledger_time(max(stamps))
     except ValueError:
         return None
 
@@ -113,7 +130,7 @@ def within_churn_cooldown(target: str) -> bool:
     last = last_touch(target)
     if last is None:
         return False
-    return (datetime.now() - last) < timedelta(days=config.CHURN_COOLDOWN_DAYS)
+    return (now_local() - last) < timedelta(days=config.CHURN_COOLDOWN_DAYS)
 
 
 # --- pacing -----------------------------------------------------------------
@@ -329,40 +346,22 @@ def can_unfollow(handle: str) -> Tuple[bool, str]:
 
 
 def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tuple[bool, str]:
-    """Daily cap + jittered min-spacing for originals / quotes / replies.
-
-    Jitter is folded into the required gap (NOT a blocking sleep) so we never
-    stall a scheduler thread for the 45-min post spacing: each call requires
-    base_gap + random(0, jitter) seconds since the last same-type action, so
-    spacing is randomized and writes never line up into a burst.
-
-    `high_value=True` on a QUOTE grants BONUS slots beyond the daily cap
-    (mega-viral carve-out 2026-06-08): a genuinely huge AI viral is the
-    highest-ROI quote target, so the daily cap must never block it. Spacing
-    still applies. Only the quote chokepoint passes this, and only for posts
-    above QUOTE_MEGA_VIRAL_LIKES.
-
-    `urgent=True` skips ONLY the min-spacing gate (the DAILY CAP still
-    applies) — for breaking-news QRTs (self-improve #4, 2026-06-24): a real
-    signal spike must fire NOW, not wait out the ~2-3 min routine quote gap,
-    or it misses the fresh-viral window. The breaking lane is self-capped
-    (BREAKING_QRT_MAX_PER_DAY=6), so this can't burst.
-    """
+    """Hard day budget and bedtime; legacy urgency flags grant no bypass."""
+    if not is_active():
+        return False, "asleep (active 04:30–22:00 America/Toronto)"
+    if action in (QUOTE, RETWEET):
+        return False, "automatic quote/repost cap is 0 (editorial originals only)"
     if action == POST:
-        cap = config.MAX_ORIGINALS_PER_DAY
+        if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
+            return False, "daily profile publication cap reached (7)"
+        if count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
+            return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
         gap = config.MIN_SECONDS_BETWEEN_POSTS + random.uniform(0, config.POST_JITTER_SECONDS)
-    elif action == QUOTE:
-        cap = config.MAX_QUOTE_REPOSTS_PER_DAY
-        if high_value:
-            cap += config.QUOTE_MEGA_VIRAL_BONUS_SLOTS
-        gap = config.MIN_SECONDS_BETWEEN_QUOTES + random.uniform(0, config.QUOTE_JITTER_SECONDS)
     elif action == REPLY:
-        cap = config.MAX_REPLIES_PER_DAY
+        # No daily reply limit; retain spacing and per-tweet dedup.
         gap = config.MIN_SECONDS_BETWEEN_REPLIES + random.uniform(0, config.REPLY_JITTER_SECONDS)
     else:
-        return (True, "")
-    if count_today(action) >= cap:
-        return (False, f"daily {action} cap reached ({cap})")
-    if not urgent and not spacing_ok(action, gap):
-        return (False, f"too soon since last {action} (need ~{int(gap)}s gap)")
-    return (True, "")
+        return True, ""
+    if not spacing_ok(action, gap):
+        return False, f"too soon since last {action} (need ~{int(gap)}s gap)"
+    return True, ""

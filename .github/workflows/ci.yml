@@ -20,6 +20,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install minimal deps
-        run: pip install pytest
+        run: pip install pytest apscheduler==3.10.4
       - name: Run guard tests
         run: python -m pytest tests/ -q

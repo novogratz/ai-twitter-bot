@@ -12,12 +12,31 @@ import webbrowser
 from .config import BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
 from .json_safety import sanitize_for_json
 from .logger import log
+from .active_hours import require_active, OutsideActiveHours
 
 # Global lock: only one bot can use Safari at a time.
 # Without this, the reply bot and engage bot type over each other. RLock is
 # intentional: blank-page recovery can be triggered from inside a scrape that
 # already owns the lock, and it must restart Safari before releasing control.
-_safari_lock = threading.RLock()
+class _AwakeSafariLock:
+    def __init__(self):
+        self._lock = threading.RLock()
+
+    def __enter__(self):
+        require_active()
+        self._lock.acquire()
+        try:
+            require_active()  # queued work may acquire the browser after bedtime
+        except BaseException:
+            self._lock.release()
+            raise
+        return self
+
+    def __exit__(self, *exc):
+        self._lock.release()
+
+
+_safari_lock = _AwakeSafariLock()
 
 # Reactive black-screen recovery: track consecutive blank pages.
 # When Safari renders an empty app shell (service worker stale state), every
@@ -130,7 +149,9 @@ def _reset_blank_page_count():
 def _run_applescript(script: str, retries: int = 1) -> bool:
     """Run an AppleScript command with optional retries. Returns True on success."""
     for attempt in range(retries):
+        require_active()
         try:
+            require_active()
             subprocess.run(["osascript", "-e", script], check=True,
                            capture_output=True, text=True)
             return True
@@ -344,7 +365,7 @@ class ToolCallLeakError(Exception):
     """
 
 
-def post_tweet(text: str, image_path: str = None):
+def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
 
     Without image: uses the lightweight intent URL (text only).
@@ -352,9 +373,12 @@ def post_tweet(text: str, image_path: str = None):
     intent URL doesn't support media uploads.
     """
     text = _scrub_metadata_leaks(text)
-    text = _strip_post_urls(text)  # no external links in posts (mandate)
-    from .humanizer import casualize
-    text = casualize(text)  # human texture (2026-06-10 "spotted as a bot")
+    if not editorial:
+        text = _strip_post_urls(text)
+        from .humanizer import casualize
+        text = casualize(text)
+    # Editorial wording and its checked source link must survive unchanged.
+
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -394,9 +418,14 @@ def post_tweet(text: str, image_path: str = None):
         return True
 
     with _safari_lock:
+        # The initial check happens before waiting for Safari. Recheck under
+        # its lock so concurrent posts cannot both consume the last slot.
+        ok, why = action_guard.can_post(action_guard.POST)
+        if not ok:
+            log.info("[POST] policy skip after browser wait (%s).", why)
+            return False
         if image_path:
             _post_tweet_with_image(text, image_path)
-            _like_own_latest_tweet()
             action_guard.record(action_guard.POST)
             content_guard.note_posted(text)
             _record_posted(text)
@@ -413,14 +442,16 @@ def post_tweet(text: str, image_path: str = None):
         end tell
         '''
         log.info("Auto-clicking Post...")
-        _run_applescript(script)
-        time.sleep(2)
-        log.info("Tweet posted!")
-        close_front_tab()
-        _like_own_latest_tweet()
+        if not _run_applescript(script):
+            return False
         action_guard.record(action_guard.POST)
+        log.info("Tweet submitted!")
         content_guard.note_posted(text)
         _record_posted(text)
+        try:
+            close_front_tab()
+        except OutsideActiveHours:
+            pass
     return True
 
 
@@ -498,6 +529,7 @@ def _click_testid(testid: str) -> str:
     tmp.write(js)
     tmp.close()
     try:
+        require_active()
         res = subprocess.run(["osascript", "-e", f'''
         set jsCode to (read POSIX file "{tmp.name}")
         tell application "Safari"
@@ -591,18 +623,18 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
         return True
 
     with _safari_lock:
+        if not action_guard.can_post(action_guard.POST)[0]:
+            return False
         log.info(f"[POST] Composing tweet with GIF ({gif_query!r})...")
         webbrowser.open("https://x.com/compose/post")
         time.sleep(6)
         _paste_text(text)
         time.sleep(1)
         _attach_native_gif(gif_query)  # best-effort; text-only on failure
-        _run_applescript('tell application "System Events" to keystroke return using command down')
-        time.sleep(3)
-        log.info("[POST] Tweet (with GIF) posted!")
-        close_front_tab()
-        _like_own_latest_tweet()
+        if not _run_applescript('tell application "System Events" to keystroke return using command down'):
+            return False
         action_guard.record(action_guard.POST)
+        log.info("[POST] Tweet (with GIF) submitted!")
         content_guard.note_posted(text)
         _record_posted(text)
         # A/B tag: source carries the GIF marker + query so the analyzer can
@@ -769,6 +801,7 @@ def reply_to_own_latest(reply_text: str, must_contain: str = "") -> bool:
                 return result
                 '''
                 try:
+                    require_active()
                     r = subprocess.run(
                         ["osascript", "-e", ascript],
                         capture_output=True, text=True, timeout=8,
@@ -994,7 +1027,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     # mistakes are the only proof of humanity. Enforced here so every reply
     # path obeys, whichever bot generated the text.
     _typo_handles = {h.strip().lower() for h in os.environ.get(
-        "HUMAN_TYPO_HANDLES", "Graphseo").split(",") if h.strip()}
+        "HUMAN_TYPO_HANDLES", "").split(",") if h.strip()}
     try:
         _parent_handle = tweet_url.split("x.com/")[1].split("/")[0].lower()
     except (IndexError, AttributeError):
@@ -1371,6 +1404,7 @@ def _scrape_profile_quality() -> dict:
     end tell
     '''
     try:
+        require_active()
         res = subprocess.run(["osascript", "-e", applescript],
                              capture_output=True, text=True, timeout=15)
         if res.returncode == 0 and res.stdout.strip():
@@ -1495,6 +1529,7 @@ def follow_account(username: str, reciprocal: bool = False,
         '''
         status = ""
         try:
+            require_active()
             res = subprocess.run(["osascript", "-e", applescript],
                                  capture_output=True, text=True, timeout=15)
             status = (res.stdout or "").strip()
@@ -1649,6 +1684,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
     '''
 
     def _try_once(timeout_s: int):
+        require_active()
         return subprocess.run(
             ["osascript", "-e", applescript],
             capture_output=True, text=True, timeout=timeout_s,
@@ -1886,6 +1922,7 @@ def scrape_following_feed(max_tweets: int = 15):
         end tell
         '''
         try:
+            require_active()
             subprocess.run(["osascript", "-e", applescript],
                            capture_output=True, text=True, timeout=8)
         except Exception as e:
@@ -1929,137 +1966,21 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top"):
 
 
 def post_thread(tweets: list[str]):
-    """Post a thread by posting the first tweet, then replying to it."""
-    if not tweets:
-        return
-
-    with _safari_lock:
-        log.info(f"[THREAD] Posting tweet 1/{len(tweets)}...")
-        # Post first tweet inline (no nested lock)
-        url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": tweets[0]})
-        webbrowser.open(url)
-        time.sleep(4)
-        _run_applescript('''
-        tell application "System Events"
-            keystroke return using command down
-        end tell
-        ''')
-        time.sleep(2)
-        close_front_tab()
-
-        if len(tweets) < 2:
-            return
-
-        time.sleep(3)
-        log.info("[THREAD] Opening own profile to find the tweet...")
-        webbrowser.open(BOT_PROFILE_URL)
-        time.sleep(5)
-
-        _navigate_to_first_tweet()
-        time.sleep(4)
-
-        for i, tweet_text in enumerate(tweets[1:], start=2):
-            log.info(f"[THREAD] Posting tweet {i}/{len(tweets)}...")
-
-            _run_applescript('''
-            tell application "System Events"
-                keystroke "r"
-            end tell
-            ''')
-            time.sleep(2)
-
-            _paste_text(tweet_text)
-            time.sleep(1)
-
-            _run_applescript('''
-            tell application "System Events"
-                keystroke return using command down
-            end tell
-            ''')
-            time.sleep(3)
-            log.info(f"[THREAD] Tweet {i} posted!")
-
-        close_front_tab()
-        log.info("[THREAD] Thread complete!")
-        # Self-like the thread head — user mandate 2026-05-18:
-        # "Always auto like your own tweets or quotes... always".
-        try:
-            _like_own_latest_tweet()
-        except Exception as e:
-            log.info(f"[THREAD] self-like failed: {e}")
+    """Retired: profile publishing uses individual editorial originals."""
+    log.info("[POST_THREAD] Disabled by editorial publishing policy.")
+    return False
 
 
 def retweet_post(tweet_url: str):
-    """Retweet an arbitrary tweet by URL.
-
-    Opens the tweet detail page, presses 't' (X retweet shortcut), then Enter
-    to confirm the 'Repost' menu item. Uses the same Safari lock as everything
-    else so it can't race with reply/post cycles.
-    """
-    from . import action_guard, config as _cfg
-    if _cfg.DRY_RUN:
-        log.info(f"[RETWEET][DRY_RUN] would repost {tweet_url}.")
-        action_guard.record(action_guard.RETWEET, target=tweet_url, dry_run=True)
-        return
-    with _safari_lock:
-        log.info(f"[RETWEET] Opening tweet: {tweet_url}")
-        webbrowser.open(tweet_url)
-        time.sleep(7)
-
-        _run_applescript('tell application "Safari" to activate')
-        time.sleep(1)
-
-        # Press 't' to open the retweet menu, then Enter to confirm "Repost".
-        _run_applescript('''
-        tell application "System Events"
-            keystroke "t"
-            delay 1.2
-            keystroke return
-        end tell
-        ''')
-        time.sleep(2)
-        log.info(f"[RETWEET] Reposted: {tweet_url}")
-        action_guard.record(action_guard.RETWEET, target=tweet_url)
-        _maybe_like_parent(tweet_url, "QUOTE_LIKE_PARENT_PROB", 0.2)
-        close_front_tab()
+    """Retired: profile publishing uses individual editorial originals."""
+    log.info("[RETWEET_POST] Disabled by editorial publishing policy.")
+    return False
 
 
 def reboost_tweet(tweet_url: str) -> None:
-    """Un-retweet then re-retweet a tweet in one Safari session.
-
-    Pressing 't'+Enter on X toggles the retweet state. Two presses with a
-    short gap = undo then redo, which makes the tweet appear fresh in
-    followers' feeds without leaving a gap. Used to recycle the pinned tweet.
-    """
-    with _safari_lock:
-        log.info(f"[REBOOST] Opening tweet: {tweet_url}")
-        webbrowser.open(tweet_url)
-        time.sleep(7)
-        _run_applescript('tell application "Safari" to activate')
-        time.sleep(1)
-
-        # First toggle: undo the existing retweet
-        _run_applescript('''
-        tell application "System Events"
-            keystroke "t"
-            delay 1.5
-            keystroke return
-        end tell
-        ''')
-        log.info("[REBOOST] Un-retweeted. Waiting before re-RT...")
-        time.sleep(5)
-
-        # Second toggle: re-retweet → appears fresh in feed
-        _run_applescript('''
-        tell application "System Events"
-            keystroke "t"
-            delay 1.5
-            keystroke return
-        end tell
-        ''')
-        time.sleep(2)
-        log.info(f"[REBOOST] Re-retweeted: {tweet_url}")
-        close_front_tab()
+    """Retired: profile publishing uses individual editorial originals."""
+    log.info("[REBOOST_TWEET] Disabled by editorial publishing policy.")
+    return False
 
 
 def pin_own_tweet(tweet_url: str) -> bool:
@@ -2127,6 +2048,7 @@ def pin_own_tweet(tweet_url: str) -> bool:
         end tell
         '''
         try:
+            require_active()
             r = subprocess.run(
                 ["osascript", "-e", applescript],
                 capture_output=True, text=True, timeout=timeout_s,
@@ -2168,32 +2090,9 @@ def pin_own_tweet(tweet_url: str) -> bool:
 
 
 def retweet_own_latest():
-    """Visit own profile and retweet the latest tweet for extra exposure."""
-    with _safari_lock:
-        log.info("[BOOST] Opening own profile to retweet latest tweet...")
-        webbrowser.open(BOT_PROFILE_URL)
-        time.sleep(5)
-
-        _navigate_to_first_tweet()
-        time.sleep(3)
-
-        script = '''
-        tell application "System Events"
-            keystroke "t"
-        end tell
-        '''
-        if _run_applescript(script):
-            time.sleep(1)
-            _run_applescript('''
-            tell application "System Events"
-                keystroke return
-            end tell
-            ''')
-            time.sleep(2)
-            log.info("[BOOST] Retweeted own latest tweet!")
-        else:
-            log.info("[BOOST] Failed to retweet.")
-        close_front_tab()
+    """Retired: profile publishing uses individual editorial originals."""
+    log.info("[RETWEET_OWN_LATEST] Disabled by editorial publishing policy.")
+    return False
 
 
 def like_own_tweet_replies():
@@ -2289,6 +2188,7 @@ def scrape_own_tweet_and_replies():
         '''
         import json
         try:
+            require_active()
             result = subprocess.run(
                 ["osascript", "-e", js_script],
                 capture_output=True, text=True, timeout=30,

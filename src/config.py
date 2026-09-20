@@ -33,12 +33,16 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits. Defaults enforce the 2026 growth mix:
-# 3-5+ original posts/day minimum, led by "Le Décode" insight posts, with
-# quick news takes as the secondary original surface.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "6"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "8"))
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "10"))
+# Operator policy (2026-09-20): six editorial posts, at most seven profile
+# publications per Toronto day, and uncapped replies while awake. These
+# ceilings cannot be raised by stale .env files or autonomous strategy data.
+BOT_TIMEZONE = "America/Toronto"
+TARGET_POSTS_PER_DAY = 6
+MAX_PROFILE_POSTS_PER_DAY = 7
+MAX_NEWS_PER_DAY = 7
+MAX_HOTAKES_PER_DAY = 7
+MAX_QUOTES_PER_DAY = 0
+MAX_RETWEETS_PER_DAY = 0
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
@@ -134,54 +138,22 @@ RETRY_DELAY_SECONDS = 5
 # to verify the new behavior before any live writes, then set DRY_RUN=0.
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
-# Posting caps + spacing (originals = post_tweet; quotes = quote_tweet).
-# 2026-06-07 AGENT SPEC (Part 2 — Content): originals are the CONVERSION
-# layer, 3-4/day anchored to US market slots (~9:30am / 12:30pm / 4-5pm /
-# 8pm ET). One post per slot — never two originals within ~10-15 min (they
-# cannibalize each other's reach). 2.5h+jitter spacing approximates the
-# slot rhythm across all original surfaces at the chokepoint.
-# 2026-06-09 (operator: "I don't see enough posts being created"): originals
-# 4→10/day across 8 slots (was 4). More shots on the profile = more chances
-# to land a like-winning post. Spacing dropped to ~75 min so 8 slots fit.
-MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "10"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(75 * 60)))
-POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
+# All original surfaces share the same ceiling and at least one hour of
+# spacing. The editorial scheduler normally spaces posts by 2.5–3.5 hours.
+MAX_ORIGINALS_PER_DAY = min(7, int(os.environ.get("MAX_ORIGINALS_PER_DAY", "7")))
+MIN_SECONDS_BETWEEN_POSTS = max(3600, int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", "3600")))
+POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", "0"))
 
-# Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed
-# 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
-# high daily cap + short, jittered spacing so the 4-min quote cycle actually
-# produces quotes instead of getting capped out.
-# 2026-06-03: GO CRAZY on quote-reposts. 30→80/day, spacing 8→3 min.
-# 2026-06-05: 180s+jitter120 made the 3-min quote job miss its spacing window
-# on most fires (part of the 28/day-actual vs cap gap). 120s+jitter60 lets a
-# 3-min cadence mostly clear while staying jittered (no bursts). Cap 80→100.
-# 2026-06-05 PM (operator: "do more quote retweet, it was extremely
-# successful — abuse a bit of it for the next few weeks"): cap 100→150,
-# spacing 120→90s+jitter45. Still jittered, still no bursts.
-# 2026-06-07 PM-2 QRT SURGE (operator: "QRTs of relative large accounts get
-# thousands of views — abuse those", measured on his own data; supersedes
-# the spec's 1-2/day). High cap, 5-min jittered spacing, 300-like floor =
-# large-account targeting. Quality gates (niche, dedup, 24h age, voice)
-# stay absolute.
-# PM-4/5: quality barbell at 60/day (operator: "totally cool if we do more
-# than 40") — replies carry quantity, QRTs carry craft; SKIP gate does the
-# quality work.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "100"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "300"))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "180"))
-# Mega-viral carve-out (learning 2026-06-08): a 1,459-like AI viral got
-# blocked purely by the daily quote cap at night. Genuinely huge AI posts
-# are the highest-ROI quote targets — give them BONUS slots beyond the cap
-# so the cap never blocks a top-tier viral again. Spacing still applies.
-QUOTE_MEGA_VIRAL_LIKES = int(os.environ.get("QUOTE_MEGA_VIRAL_LIKES", "1000"))
-QUOTE_MEGA_VIRAL_BONUS_SLOTS = int(os.environ.get("QUOTE_MEGA_VIRAL_BONUS_SLOTS", "25"))
+# Automatic quotes, reposts and recycling are retired. Legacy callers still
+# encounter these hard limits, including urgent/mega-viral bypass attempts.
+MAX_QUOTE_REPOSTS_PER_DAY = 0
+MIN_SECONDS_BETWEEN_QUOTES = 3600
+QUOTE_JITTER_SECONDS = 0
+QUOTE_MEGA_VIRAL_LIKES = 1000
+QUOTE_MEGA_VIRAL_BONUS_SLOTS = 0
 
-# 2026-06-07 AGENT SPEC: the reply machine is the core engine — no volume
-# cap, no daily limit. Minimum spacing kept at 8s+jitter for ban safety
-# (absolute floor — X shadow-bans accounts that burst with 0s spacing; a
-# Safari-driven account physically serializes anyway). Only a hard
-# rate-limit pauses replies — then resume at full throttle.
-MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "999999"))
+# 0 explicitly means unlimited replies. Keep browser pacing and URL dedup.
+MAX_REPLIES_PER_DAY = 0
 MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "8"))
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "7"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
@@ -261,6 +233,14 @@ def get_live_cap(name: str, default: int) -> int:
     """Return the live cap for `name` from live_strategy.json, or `default`
     (from env / module-level constant) if the agent hasn't run yet or the
     file is malformed. Best-effort, never raises."""
+    fixed = {
+        "MAX_QUOTES_PER_DAY": 0, "MAX_QUOTE_REPOSTS_PER_DAY": 0,
+        "MAX_RETWEETS_PER_DAY": 0, "MAX_REPLIES_PER_DAY": 0,
+        "MAX_ORIGINALS_PER_DAY": MAX_ORIGINALS_PER_DAY,
+        "MAX_NEWS_PER_DAY": 7, "MAX_HOTAKES_PER_DAY": 7,
+    }
+    if name in fixed:
+        return fixed[name]
     if not os.path.exists(_LIVE_STRATEGY_FILE):
         return default
     try:
