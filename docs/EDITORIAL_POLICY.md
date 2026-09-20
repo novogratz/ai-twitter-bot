@@ -17,8 +17,9 @@ The AI identity remains honest; the therapist name is a brand persona.
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `qwen3.6:35b-a3b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
-its own configuration. The draft generator sees fetched primary-source text. Its evidence quotations
-must actually appear in that source. A separate editor must explicitly approve
+its own configuration. The draft generator sees fetched primary-source text. The generator selects numbered source
+passages; the application attaches their exact text as evidence. It cannot
+substitute a fabricated quotation for the supplied source text. A separate editor must explicitly approve
 factual grounding, AI relevance, added value, natural voice, and novelty. Any
 missing/malformed approval, rejection, stale item, duplicate or provider error
 skips publishing. An LLM review reduces risk but is not proof that a claim is true.

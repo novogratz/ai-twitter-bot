@@ -190,7 +190,7 @@ def collect_sources(state: dict, now=None) -> list:
     candidates.sort(key=lambda c: c["published_at"], reverse=True)
     candidates = candidates[:3]  # also offer practical learning topics in every slot
     # Rotate evergreen topics daily, so quiet days still offer useful teaching.
-    offset = now.date().toordinal() % len(KNOWLEDGE)
+    offset = now.date().toordinal() % len(KNOWLEDGE) if KNOWLEDGE else 0
     for topic, title, url in KNOWLEDGE[offset:] + KNOWLEDGE[:offset]:
         if url not in used:
             candidates.append(dict(title=title, url=url, publisher="Hugging Face docs",
@@ -226,9 +226,18 @@ def _json_call(prompt: str, label: str) -> dict:
         return {}
 
 
+def source_evidence(source):
+    """Number exact source sentences so generation never has to recopy them."""
+    sentences = [part.strip() for part in re.split(r"(?<=[.!?])\s+", source["body"])
+                 if 35 <= len(part.strip()) <= 700 and len(part.split()) >= 5]
+    return {str(i): sentence for i, sentence in enumerate(sentences[:40])}
+
+
 def draft_post(slot, sources, recent, feedback=""):
     from .personality_store import render_core_identity, hard_rules_block
     language = "French" if os.environ.get("CONTENT_LANG_PRIMARY", "en") == "fr" else "English"
+    evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
+                         "evidence": source_evidence(source)} for source in sources]
     prompt = f"""{render_core_identity('en')}
 {hard_rules_block()}
 Write ONE original AI post in {language}. Today's slot: {slot[1]}.
@@ -247,10 +256,12 @@ Never invent numbers, results, personal tests, patients or life events.
 Label an inference as an opinion. Never call knowledge docs breaking news.
 Do not repeat recent stories or their punchlines. Skip if nothing earns a slot.
 Return ONLY JSON: {{"source_id":"0", "text":"...", "angle":"...",
-"takeaway":"...", "evidence":["short exact quote copied from source body"]}}.
-Return {{"skip":true}} if no strong post is possible.
+"takeaway":"...", "evidence_ids":["0"]}}.
+Select 1–3 evidence IDs from the chosen source. These are exact source
+sentences supplied by the application. Never make up IDs or quotations.
+Set "skip":true (with empty text/evidence_ids) if no strong post is possible.
 RECENT POSTS: {json.dumps(recent[-12:], ensure_ascii=False)}
-SOURCES: {json.dumps(sources, ensure_ascii=False)}"""
+SOURCES: {json.dumps(evidence_sources, ensure_ascii=False)}"""
     return _json_call(prompt, "EDITORIAL_DRAFT")
 
 
@@ -265,6 +276,13 @@ def review_draft(draft, sources, recent, exceptional=False):
         return False, "missing substance, source, or invalid length", source
     if _BAIT.search(text) or re.search(r"https?://|#|\[|\]", text):
         return False, "bait or publishing scaffolding", source
+    if "evidence_ids" in draft:
+        ids = draft["evidence_ids"]
+        snippets = source_evidence(source)
+        if (not isinstance(ids, list) or not 1 <= len(ids) <= 3
+                or any(not isinstance(i, str) or i not in snippets for i in ids)):
+            return False, "invalid source evidence IDs", source
+        draft["evidence"] = [snippets[i] for i in ids]
     evidence = draft.get("evidence")
     body = " ".join(source["body"].lower().split())
     if (not isinstance(evidence, list) or not 1 <= len(evidence) <= 3

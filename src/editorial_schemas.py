@@ -7,11 +7,11 @@ DRAFT_SCHEMA = {
         "text": {"type": "string", "maxLength": 250},
         "angle": {"type": "string", "maxLength": 160},
         "takeaway": {"type": "string", "maxLength": 200},
-        "evidence": {"type": "array", "maxItems": 3,
-                     "items": {"type": "string", "maxLength": 400}},
+        "evidence_ids": {"type": "array", "maxItems": 3,
+                         "items": {"type": "string", "enum": [str(i) for i in range(40)]}},
         "skip": {"type": "boolean"},
     },
-    "required": ["source_id", "text", "angle", "takeaway", "evidence"],
+    "required": ["source_id", "text", "angle", "takeaway", "evidence_ids"],
     "additionalProperties": False,
 }
 

@@ -320,7 +320,7 @@ def test_editorial_requests_use_dedicated_model_and_strict_schema(monkeypatch):
     llm._run_ollama_http("Review prompt", "EDITORIAL_REVIEW", 30)
     llm._run_ollama_http("Reply prompt", "DIRECT_REPLY", 30)
     assert requests[0]["model"] == requests[1]["model"] == "editor-model"
-    assert "evidence" in requests[0]["format"]["required"]
+    assert "evidence_ids" in requests[0]["format"]["required"]
     assert requests[1]["format"]["properties"]["grounded"] == {"type": "boolean"}
     assert requests[2]["model"] == "reply-model" and "format" not in requests[2]
     assert llm._FUNNY_FORCER not in requests[0]["prompt"]
@@ -330,3 +330,32 @@ def test_explicit_skip_is_not_publishable_even_with_complete_fields(draft_fixtur
     draft, source, _ = draft_fixture
     draft["skip"] = True
     assert not editorial.review_draft(draft, [source], [])[0]
+
+
+def test_evidence_ids_resolve_to_exact_fetched_text(draft_fixture):
+    draft, source, _ = draft_fixture
+    draft["evidence_ids"] = ["0"]
+    draft["evidence"] = ["invented quotation"]
+    assert editorial.review_draft(draft, [source], [])[0]
+    assert draft["evidence"] == [source["body"]]
+    draft["evidence_ids"] = ["invented"]
+    assert not editorial.review_draft(draft, [source], [])[0]
+
+
+def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    feed = "https://openai.com/news/rss.xml"
+    monkeypatch.setattr(editorial, "FEEDS", (("OpenAI", feed),))
+    monkeypatch.setattr(editorial, "KNOWLEDGE", ())
+    items = "".join(
+        f"<item><title>AI model {name}</title><link>https://openai.com/{name}</link>"
+        f"<pubDate>{stamp}</pubDate></item>"
+        for name, stamp in (("fresh", "2026-09-20T10:00:00-04:00"),
+                            ("old", "2026-09-10T10:00:00-04:00"),
+                            ("future", "2026-09-21T10:00:00-04:00"),
+                            ("unknown", "")))
+    xml = f"<rss><channel>{items}</channel></rss>"
+    monkeypatch.setattr(editorial, "_fetch", lambda url: xml if url == feed else
+                        "<article>" + "A useful AI model update with sourced details. " * 10 + "</article>")
+    sources = editorial.collect_sources({}, now)
+    assert [s["url"] for s in sources] == ["https://openai.com/fresh"]
