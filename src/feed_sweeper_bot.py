@@ -1,4 +1,4 @@
-"""Feed sweeper — act on EVERY fresh on-niche post in the For You / Following feed.
+"""Feed sweeper — useful replies to fresh AI posts in the For You / Following feed.
 
 Operator mandate 2026-06-05 ("it's simple"): scroll the main feed and engage
 with every post you see —
@@ -137,55 +137,12 @@ def _sweep_one_feed(source, scraper):
             continue
         if not _is_on_niche(text):
             continue
-        likes = int(t.get("likes") or 0)
-        if likes >= FEED_SWEEP_QUOTE_MIN_LIKES and url not in quoted:
-            if respect_list.is_protected(t.get("author", "")):
-                if url not in replied:
-                    reply_candidates.append(t)
-            else:
-                quote_candidates.append(t)
-                if likes >= BANGER_LIKES and url not in replied:
-                    reply_candidates.append(t)
-        elif url not in replied:
+        # Every eligible item can receive a useful reply, including popular
+        # ones formerly diverted to the quote lane.
+        if url not in replied:
             reply_candidates.append(t)
 
-    log.info(f"[SWEEP] {source}: {len(quote_candidates)} quote candidates, {len(reply_candidates)} reply candidates.")
-
-    # --- QUOTE the good ones (most-liked first) — with GIF when LLM asks ---
-    quote_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     quotes_done = 0
-    for cand in quote_candidates:
-        if quotes_done >= FEED_SWEEP_MAX_QUOTES_PER_CYCLE:
-            break
-        if _too_old_to_quote(cand):
-            continue
-        author = cand.get("author", "someone")
-        quote = content_guard.generate_validated(
-            lambda: _generate_quote(author, cand.get("text", "")),
-            kind="quote", label="SWEEP-QUOTE")
-        if not quote:
-            continue
-        try:
-            # Extract GIF tag before posting — the LLM puts [GIF: ...] in the text.
-            quote_text, gif_query = extract_gif_query(quote)
-            if gif_query:
-                log.info(f"[SWEEP] GIF quote for @{author} — GIF: {gif_query!r}")
-                posted = quote_tweet_with_gif(cand["url"], quote_text, gif_query)
-            else:
-                posted = quote_tweet(cand["url"], quote_text)
-        except Exception:
-            traceback.print_exc()
-            quoted.add(cand["url"])
-            _save_quoted(quoted)
-            continue
-        if not posted:
-            log.info("[SWEEP] Quote chokepoint skipped (spacing/cap) — stopping quote pass.")
-            break
-        quoted.add(cand["url"])
-        _save_quoted(quoted)
-        quotes_done += 1
-        gif_tag = f" +GIF({gif_query})" if gif_query else ""
-        log.info(f"[SWEEP] Quoted @{author} ({cand.get('likes')} likes){gif_tag}.")
 
     # --- REPLY to the meh ones --------------------------------------------
     # No shuffle: _reply_to_tweets orders fresh-and-rising first

@@ -64,3 +64,9 @@ CLAUDE.local.md
 watchdog.log
 suggest.log
 suggestions.md
+
+# Editorial publishing state and local reach measurements
+editorial_state.json
+editorial_review.jsonl
+editorial_reach.json
+editorial_reach.md

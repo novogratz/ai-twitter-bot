@@ -54,7 +54,7 @@ def _save_state(st: dict) -> None:
         json.dump(st, f, indent=1)
 
 
-SELF_QUOTE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 35-40, practicing
+SELF_QUOTE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 45, practicing
 therapist and mom, the sharpest AI mind on the timeline (warm, wry, zero bro-speak).
 
 ~24 hours ago YOU posted this, and it performed well:

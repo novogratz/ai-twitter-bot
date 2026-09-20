@@ -156,22 +156,13 @@ OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
 _FUNNY_FORCER = (
-    "TON DE SORTIE OBLIGATOIRE: drôle, mordant, irrévérencieux. "
-    "Pas d'explication. Pas de mise en garde. Pas de 'mais ça dépend'. "
-    "Un constat sec + une chute qui pique. "
-    "Ne sois pas seulement pertinent: cherche le vrai rire, le truc qu'on "
-    "envoie dans un groupe WhatsApp avec 'mdr'. "
-    "Si la punchline ressemble à une analyse LinkedIn raccourcie, recommence. "
-    "Si la phrase ne te ferait pas rire à voix haute, RÉÉCRIS. "
-    "Aucune phrase neutre ou bilan-prudent. Aucune méta-instruction "
-    "(pas de '⚠️', 'CRITIQUE:', 'OUTPUT:', 'PATTERN:'). "
-    "Tu écris UNE ligne ou DEUX max, point.\n\n"
-    "Exemples du niveau attendu:\n"
-    "- \"Nvidia à 4000Md. C'est le mec en soirée qui a déjà bu tout le "
-    "champagne et te dit qu'il est sobre.\"\n"
-    "- \"Le S&P porté par 7 méga caps, c'est pas un marché. C'est un "
-    "groupe WhatsApp qui se like tout seul.\"\n\n"
-    "MAINTENANT, ta tâche:\n\n"
+    "Voice: a confident, warm, witty 45-year-old woman and mom who loves AI. "
+    "Write a natural response to this particular conversation in its language. "
+    "Bring a useful detail or a clear opinion; a joke is optional. "
+    "Use contractions, varied sentence lengths and ordinary words. "
+    "No automatic question ending, catchphrase, forced punchline, fake typo, "
+    "engagement bait, bro-speak or invented personal experience. "
+    "Occasional subtle flirtation is fine when welcome; keep the AI insight central.\n\n"
 )
 
 
@@ -241,11 +232,16 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     """
     import urllib.request
     import urllib.error
-    full_prompt = _FUNNY_FORCER + "/no_think\n\n" + prompt
+    from .active_hours import require_active, seconds_until_bedtime
+    require_active()
+    timeout = min(timeout, max(1, int(seconds_until_bedtime())))
+    editorial = label.startswith("EDITORIAL")
+    full_prompt = ("" if editorial else _FUNNY_FORCER) + "/no_think\n\n" + prompt
     payload = json.dumps({
         "model": OLLAMA_MODEL,
         "prompt": full_prompt,
         "stream": False,
+        **({"format": "json"} if editorial else {}),
         "keep_alive": "24h",
         # Disable thinking-mode (qwen3.6 uncensored variants stream their
         # chain-of-thought into a separate `thinking` field while leaving
@@ -253,7 +249,7 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
         # generation mode and the answer lands in `response`).
         "think": False,
         "options": {
-            "temperature": 1.0,
+            "temperature": (0.2 if label == "EDITORIAL_REVIEW" else 0.65) if editorial else 1.0,
             "top_p": 0.95,
             "repeat_penalty": 1.15,
             # The long Décode prompts are regularly 16k-24k chars before
@@ -591,7 +587,10 @@ def _run_cmd(
     timeout: Optional[int],
     cwd: Optional[str],
 ) -> LLMResult:
-    effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
+    from .active_hours import require_active, seconds_until_bedtime
+    require_active()
+    effective_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS,
+                            max(1, int(seconds_until_bedtime())))
     try:
         proc = subprocess.Popen(
             cmd,
@@ -684,6 +683,8 @@ def run_llm(
     force_provider: Optional[str] = None,
     structured_output: bool = False,
 ) -> LLMResult:
+    from .active_hours import require_active
+    require_active()
     provider = force_provider or _provider()
 
     # When the user has set AI_CLI=ollama/opencode, route everything through
@@ -944,9 +945,13 @@ def unwrap_text(stdout: str, structured_output: bool = False) -> str:
     # 2026-06-05 (reply collapse 397→42/day): ollama returned the array on one
     # line, _unwrap_ndjson parsed it, found a list instead of dict events, and
     # returned "" — every search-reply cycle died with valid replies in hand.
-    if structured_output and raw.startswith("["):
+    if structured_output and raw.startswith(("[", "{")):
         try:
-            if isinstance(json.loads(raw), list):
+            value = json.loads(raw)
+            envelope_keys = {"type", "result", "response", "choices", "content", "message"}
+            if isinstance(value, list) or (isinstance(value, dict) and not envelope_keys.intersection(value)):
+                # Editorial JSON contains a "text" key: the event unwrapper
+                # otherwise extracts just that string and drops the evidence.
                 return strip_tool_calls(raw)
         except json.JSONDecodeError:
             pass

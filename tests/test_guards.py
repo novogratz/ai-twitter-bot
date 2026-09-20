@@ -1906,28 +1906,11 @@ def test_positive_only_subjects_in_hard_rules():
     assert "override" in low or "overrides" in low
 
 
-def test_mega_viral_quote_bypasses_daily_cap(monkeypatch):
-    """Learning 2026-06-08: a 1,459-like AI viral was blocked purely by the
-    daily quote cap. high_value quotes (mega-virals) get bonus slots beyond
-    the cap so a top-tier viral is never blocked; normal quotes still hit
-    the cap. Spacing still applies to both."""
+def test_mega_viral_quote_cannot_bypass_editorial_policy(monkeypatch):
     from src import action_guard as ag
-    from src import config as cfg
-
-    cap = cfg.MAX_QUOTE_REPOSTS_PER_DAY
-    monkey_count = {"n": cap}
-    monkeypatch.setattr(ag, "count_today", lambda action: monkey_count["n"] if action == ag.QUOTE else 0)
-    monkeypatch.setattr(ag, "spacing_ok", lambda action, gap: True)
-
-    ok_normal, why = ag.can_post(ag.QUOTE, high_value=False)
-    assert not ok_normal and "cap" in why, "normal quote must be capped at the limit"
-    ok_mega, _ = ag.can_post(ag.QUOTE, high_value=True)
-    assert ok_mega, "mega-viral quote must bypass the daily cap (bonus slots)"
-
-    # Bonus is finite: at cap+bonus, even mega-virals stop.
-    monkey_count["n"] = cap + cfg.QUOTE_MEGA_VIRAL_BONUS_SLOTS
-    ok_mega2, _ = ag.can_post(ag.QUOTE, high_value=True)
-    assert not ok_mega2, "bonus slots are bounded — not an infinite bypass"
+    monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
+    for urgent in (False, True):
+        assert not ag.can_post(ag.QUOTE, high_value=True, urgent=urgent)[0]
 
 
 def test_suppression_watch_needs_minimum_seasoned_sample(monkeypatch, tmp_path):
@@ -1973,43 +1956,25 @@ def test_suppression_watch_needs_minimum_seasoned_sample(monkeypatch, tmp_path):
 
 
 def test_core_identity_has_ai_fan_voice():
-    """Operator 2026-06-09: 'be more excited about AI, be a fan of AI'. The
-    voice anchor (loaded into every prompt) must carry the AI-fan/enthusiast
-    dimension so excitement shows in posts/quotes/replies."""
-    import os
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    txt = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "ai fan" in txt or "genuine ai fan" in txt or "superfan" in txt
-    assert "excit" in txt and ("wonder" in txt or "thrill" in txt)
-    # V2 (2026-06-16): the "AI Therapist" name stays, but the voice is now
-    # the smart AI friend (humor-first); the old "calm the fear" therapy
-    # mechanic was demoted, so don't pin it.
-    assert "therapist" in txt and "smart" in txt and "friend" in txt
+    from pathlib import Path
+    for path in ("core_identity.md", "core_identity_en.md"):
+        text = Path(path).read_text().lower()
+        assert "obsessed with ai" in text and "excited" in text
+        assert "45-year-old woman and mom" in text
 
 
-def test_core_identity_has_likes_principle():
-    """Operator 2026-06-09: posts/quotes get views but not likes (replies do).
-    The voice anchor must carry the 'likes come from FEELING, lead with the
-    emotion not the data' principle so it reaches every surface."""
-    import os
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    txt = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "earn a like" in txt or "earn the like" in txt
-    assert "lead with the feeling" in txt
-    assert "relatable" in txt and "view" in txt
+def test_core_identity_prioritizes_reader_value():
+    from pathlib import Path
+    text = Path("core_identity.md").read_text().lower()
+    assert "reader takeaway" in text and "source" in text
+    assert "never fill a quota with filler" in text
 
 
-def test_core_identity_positive_obsessed_energy():
-    """Operator 2026-06-09: relentlessly positive, AI-obsessed, feel-good
-    enthusiast about life + AI; make people feel good (real therapist).
-    The voice anchor must carry this energy so it drives every surface."""
-    import os
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    txt = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "relentlessly positive" in txt
-    assert "obsessed with ai" in txt
-    assert "feel good" in txt or "feel good." in txt
-    assert "never doom" in txt  # positivity must exclude doom/cynicism
+def test_core_identity_keeps_warmth_and_honest_criticism():
+    from pathlib import Path
+    text = Path("core_identity.md").read_text().lower()
+    assert "kind and hopeful" in text and "never cruel" in text
+    assert "honest criticism" in text and "uncertainty" in text
 
 
 def test_post_tweet_returns_bool_for_skip_vs_ship():
@@ -2309,27 +2274,13 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
 
 
-def test_core_identity_carries_strategy_v2():
-    """Operator 2026-06-16 — Content Strategy V2: the account is a
-    personality-driven AI commentary account ('AI explained by a smart
-    friend'), NOT a news feed/RSS/stock-pump. The voice anchor must carry
-    the V2 pillars (humor lead), the smart-friend persona, the 'interpret
-    don't summarize / react don't explain' rules, and the infra investing
-    angle — so every surface inherits the new strategy."""
-    import os
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    txt = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "smart friend" in txt
-    assert "not an rss" in txt or "not a news feed" in txt
-    assert "humor" in txt and "contrarian" in txt
-    assert "interpret" in txt and "summarize" in txt  # interpret, don't summarize
-    assert "react" in txt and "explain" in txt        # react, don't explain
-    # Investing pillar = infrastructure/power angle, the named V2 targets.
-    assert "coreweave" in txt and ("power plant" in txt or "electricity" in txt)
-    # Quote discovery actually reaches the V2 infra names.
-    from src import quote_tweet_bot
-    assert "CoreWeave" in "".join(quote_tweet_bot.AI_VIRAL_QUERIES) or \
-        "CoreWeave" in ",".join(quote_tweet_bot.TOP_AI_HANDLES)
+def test_core_identity_carries_editorial_strategy():
+    from pathlib import Path
+    text = Path("core_identity.md").read_text().lower()
+    assert "six original ai posts" in text
+    assert "seven is the absolute ceiling" in text
+    assert "no automated quote tweets" in text
+    assert "replies remain uncapped" in text
 
 
 def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
@@ -2865,21 +2816,10 @@ def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
     assert "not on whitelist" in why_off
 
 
-def test_urgent_quote_skips_spacing_keeps_cap(monkeypatch):
-    """Self-improve #4 (2026-06-24): breaking-news QRTs were blocked by the
-    routine quote min-spacing, missing the fresh-viral window. urgent=True
-    skips ONLY spacing; the daily cap still applies."""
-    from src import action_guard as ag, config
+def test_urgent_quote_obeys_editorial_policy(monkeypatch):
+    from src import action_guard as ag
     monkeypatch.setattr(ag, "count_today", lambda a: 0)
-    monkeypatch.setattr(ag, "spacing_ok", lambda a, g: False)  # spacing would block
-    ok_norm, why = ag.can_post(ag.QUOTE)
-    assert not ok_norm and "too soon" in why
-    ok_urg, _ = ag.can_post(ag.QUOTE, urgent=True)
-    assert ok_urg, "urgent must bypass spacing"
-    # urgent still respects the daily cap
-    monkeypatch.setattr(ag, "count_today", lambda a: 10**9)
-    ok_cap, why_cap = ag.can_post(ag.QUOTE, urgent=True)
-    assert not ok_cap and "cap" in why_cap
+    assert not ag.can_post(ag.QUOTE, urgent=True)[0]
 
 
 def test_wsb_fetch_falls_back_when_reddit_blocked(monkeypatch):
@@ -2975,14 +2915,14 @@ def test_persona_is_woman_mom_therapist_across_surfaces():
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "woman" in spine and "mom" in spine and "35-40" in spine
+    assert "woman" in spine and "mom" in spine and "45-year-old" in spine
     assert "sharpest ai mind" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
     from src import direct_reply, quote_tweet_bot, hotake_agent, agent, btc_blitz
-    assert "a woman, 35-40" in direct_reply.REPLY_PROMPT.lower()
+    assert "a woman, 45" in direct_reply.REPLY_PROMPT.lower()
     assert "mom" in direct_reply.REPLY_PROMPT.lower()
-    assert "a woman, 35-40" in quote_tweet_bot.QUOTE_PROMPT.lower()
+    assert "a woman, 45" in quote_tweet_bot.QUOTE_PROMPT.lower()
     assert "therapist mom" in hotake_agent.HOTAKE_PROMPT.lower()
     import inspect
     agent_src = inspect.getsource(agent)
@@ -3204,8 +3144,8 @@ def test_savvy_tech_mom_register_and_ai_primary_news_sources():
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
-    assert "savvy tech mom" in spine and "not a troll" in spine
-    assert "smarter and calmer" in spine, "helpful register must be stated"
+    assert "45-year-old woman and mom" in spine and "never cruel" in spine
+    assert "something useful" in spine, "helpful register must be stated"
 
     from src.rss_signal_bot import RSS_FEEDS
     names = {n for n, _ in RSS_FEEDS}
@@ -3316,9 +3256,9 @@ def test_winner_format_in_prompts_and_evening_slots():
         low = prompt.lower()
         assert 'me [verb]' in low, "measured winner format must be in the prompt"
         assert "1 in 5" in low, "winner format must be rationed"
-    src = open("main.py").read()
-    assert "(23, 0, False)" in src and "(22, 30, False)" in src, \
-        "slot grid must cover the measured 20:00-23:00 ET window"
+    from src.editorial_bot import SLOTS
+    assert all("04:30" <= clock < "22:00" for clock, _ in SLOTS)
+    assert "20:30" in dict(SLOTS)
 
 
 def test_spicy_dial_suggestive_never_explicit():
@@ -3353,9 +3293,8 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     refusals (the 3500 total-following ceiling) — a transient refusal must
     end the cycle WITHOUT burning candidates; (3) self-quote floor was
     unreachable (0 quotes in 9 days) — default must be <=2."""
-    src = open("main.py").read()
-    assert 'id="pin_job"' in src and "safe_run_pin_cycle," in src, \
-        "pin_job must be REGISTERED, not just imported (dead-import family)"
+    from main import build_scheduler
+    assert build_scheduler().get_job("pin_job") is not None
 
     import json
     from src import follow_engagers_bot as fe
@@ -3443,9 +3382,8 @@ def test_daily_rundown_thread_signal_anchored_and_promoter_contracts(monkeypatch
     assert "allowed_tools" not in src, "no LLM-WebSearch dependency (reply_agent lesson)"
     assert "Today in AI" in thread_bot.THREAD_PROMPT or "rundown" in thread_bot.THREAD_PROMPT
     assert "woman" in thread_bot.THREAD_PROMPT.lower(), "her voice in the thread prompt"
-    main_src = open("main.py").read()
-    assert 'hour=19' in main_src.split('id="thread_job"')[0].rsplit("scheduler.add_job", 1)[1], \
-        "rundown fires in the evening best-hours window"
+    from main import build_scheduler
+    assert build_scheduler().get_job("thread_job") is None
 
     # Promoter
     from src import reply_promoter_bot as rp
@@ -3476,23 +3414,14 @@ def test_daily_rundown_thread_signal_anchored_and_promoter_contracts(monkeypatch
         "a promoted winner is consumed forever"
 
 
-def test_startup_warmup_has_wall_clock_budget():
-    """2026-07-28: the 08:43 boot spent 46 minutes in warmup before
-    scheduler.start() — every phase is bounded (the PM-17 lesson) but the
-    SUM was not, so all interval jobs sat dark for ~3/4h after each
-    restart. Pin: a wall-clock budget helper exists, and every expensive
-    post-warmup phase (retweet/quote bursts, hot-quote, originals, blitz,
-    burst rounds) is gated on it, with the env knob read at call time."""
-    src = open("main.py").read()
-    assert "_warmup_over_budget" in src and "STARTUP_WARMUP_BUDGET_MINUTES" in src
-    # Every expensive phase gated: count the gate uses (def + >= 6 call sites)
-    assert src.count("_warmup_over_budget()") >= 6, \
-        "all startup phases after the reply warmup must respect the budget"
-    # The budget must be checked INSIDE the multi-round loops, not just once
-    for marker in ("Startup quote burst", "Startup burst round"):
-        block = src[src.index(marker) - 400:src.index(marker)]
-        assert "_warmup_over_budget()" in block, \
-            f"loop containing {marker!r} must check the budget per iteration"
+def test_scheduler_build_has_no_startup_publishing(monkeypatch):
+    import main
+    def forbidden(*a, **k):
+        raise AssertionError("Startup must not execute an editorial cycle")
+    monkeypatch.setattr(main, "safe_run_editorial_cycle", forbidden)
+    scheduler = main.build_scheduler()
+    assert scheduler.get_job("editorial_job") is not None
+    assert not any("quote" in j.id or "boost" in j.id or "thread" in j.id for j in scheduler.get_jobs())
 
 
 def test_violence_cruelty_gate_blocks_at_every_surface():

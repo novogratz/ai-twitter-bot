@@ -62,7 +62,7 @@ def _save_state(st: dict) -> None:
         json.dump(st, f, indent=1)
 
 
-DEBATE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 35-40, a practicing
+DEBATE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 45, a practicing
 therapist and a mom, and THE sharpest AI mind on the timeline: you know every model, every
 release, every benchmark, every filing — better than anyone in this thread.
 
@@ -105,7 +105,6 @@ def run_debate_cycle():
         return
 
     max_per_cycle = int(os.environ.get("DEBATE_MAX_PER_CYCLE", "3"))
-    max_per_day = int(os.environ.get("DEBATE_MAX_PER_DAY", "40"))
     max_turns_author = int(os.environ.get("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "4"))
     max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
 
@@ -113,10 +112,6 @@ def run_debate_cycle():
     today = date.today().isoformat()
     if st.get("date") != today:
         st = {"date": today, "turns_by_author": {}, "count_today": 0}
-    if st["count_today"] >= max_per_day:
-        log.info(f"[DEBATE] Daily cap reached ({max_per_day}). Skipping.")
-        return
-
     from .twitter_client import scrape_mentions, reply_to_tweet
     from .reply_bot import load_replied
     mentions = scrape_mentions(max_tweets=20)
@@ -133,7 +128,7 @@ def run_debate_cycle():
     mentions.sort(key=lambda t: _tweet_age_hours(t.get("url") or ""))
 
     for t in mentions:
-        if posted >= max_per_cycle or st["count_today"] >= max_per_day:
+        if posted >= max_per_cycle:
             break
         url = t.get("url") or ""
         author = _handle_from_url(url)

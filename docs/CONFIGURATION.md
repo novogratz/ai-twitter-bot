@@ -1,3 +1,27 @@
+# Active editorial settings (September 20, 2026)
+
+The current policy is [documented here](EDITORIAL_POLICY.md). These settings
+supersede the historical surfaces listed below:
+
+| Setting | Effective value |
+|---|---|
+| Working hours | 04:30–22:00 America/Toronto, DST aware |
+| `TARGET_POSTS_PER_DAY` | 6 |
+| `MAX_PROFILE_POSTS_PER_DAY` | 7, hard combined ceiling |
+| `MAX_ORIGINALS_PER_DAY` | 7 maximum; environment may lower it |
+| `MAX_QUOTES_PER_DAY`, `MAX_QUOTE_REPOSTS_PER_DAY`, `MAX_RETWEETS_PER_DAY` | 0, hard disabled |
+| `MAX_REPLIES_PER_DAY` | 0 means unlimited |
+| `MIN_SECONDS_BETWEEN_POSTS` | At least 3600 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
+| `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers |
+
+Legacy profile job caps do not add posting slots. `get_live_cap` cannot lift the
+hard ceiling, restore quotes/reposts, or impose a daily reply limit.
+
+---
+
+## Historical module configuration reference
+
 # Configuration reference
 
 Every knob is an environment variable, settable in `.env` (loaded by `src/config.py:_load_dotenv`). Defaults are tuned for an English-content / global-audience build with conservative caps.

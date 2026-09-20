@@ -109,3 +109,15 @@ def _no_prod_state(monkeypatch, tmp_path):
     from src import personality_store as _ps
     monkeypatch.setattr(_ps, "PERSONALITY_FILE", str(tmp_path / "personality.json"))
     yield
+
+
+@_pytest.fixture(autouse=True)
+def _daylight_default(monkeypatch):
+    """Legacy tests run during daytime independent of the CI host's clock.
+
+    Boundary tests replace this clock with their own explicit instants.
+    """
+    from src import active_hours
+    real_now = active_hours.now_local
+    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
+    yield
