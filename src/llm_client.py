@@ -152,7 +152,7 @@ def contains_post_unsafe_leak(text: str) -> bool:
     return False
 
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
-EDITORIAL_OLLAMA_MODEL = os.environ.get("EDITORIAL_OLLAMA_MODEL", "qwen3.6:35b-a3b")
+EDITORIAL_OLLAMA_MODEL = os.environ.get("EDITORIAL_OLLAMA_MODEL", "gemma4:31b")
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 

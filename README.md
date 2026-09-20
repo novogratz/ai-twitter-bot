@@ -38,7 +38,8 @@ See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details
 ## Run
 
 Requires macOS, Safari with JavaScript from Apple Events enabled, Python 3.12+,
-[uv](https://docs.astral.sh/uv/), and the configured local Ollama model.
+[uv](https://docs.astral.sh/uv/), and the configured local Ollama models. Originals use `gemma4:31b` by default
+(`EDITORIAL_OLLAMA_MODEL`); replies use the existing reply model.
 
 ```bash
 pip install -r requirements.txt
