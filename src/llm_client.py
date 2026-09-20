@@ -152,6 +152,7 @@ def contains_post_unsafe_leak(text: str) -> bool:
     return False
 
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
+EDITORIAL_OLLAMA_MODEL = os.environ.get("EDITORIAL_OLLAMA_MODEL", "qwen3.6:35b-a3b")
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
@@ -234,14 +235,18 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     import urllib.error
     from .active_hours import require_active, seconds_until_bedtime
     require_active()
-    timeout = min(timeout, max(1, int(seconds_until_bedtime())))
     editorial = label.startswith("EDITORIAL")
+    if editorial:
+        timeout = max(timeout, int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")))
+    timeout = min(timeout, max(1, int(seconds_until_bedtime())))
+    from .editorial_schemas import DRAFT_SCHEMA, REVIEW_SCHEMA
+    schema = REVIEW_SCHEMA if label == "EDITORIAL_REVIEW" else DRAFT_SCHEMA
     full_prompt = ("" if editorial else _FUNNY_FORCER) + "/no_think\n\n" + prompt
     payload = json.dumps({
-        "model": OLLAMA_MODEL,
+        "model": EDITORIAL_OLLAMA_MODEL if editorial else OLLAMA_MODEL,
         "prompt": full_prompt,
         "stream": False,
-        **({"format": "json"} if editorial else {}),
+        **({"format": schema} if editorial else {}),
         "keep_alive": "24h",
         # Disable thinking-mode (qwen3.6 uncensored variants stream their
         # chain-of-thought into a separate `thinking` field while leaving
@@ -699,7 +704,8 @@ def run_llm(
         effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
         log.info(
             f"[LLM] {label}: ollama primary → ollama HTTP / "
-            f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
+            f"{EDITORIAL_OLLAMA_MODEL if label.startswith('EDITORIAL') else OLLAMA_MODEL} "
+            f"(requested timeout {effective_timeout}s)."
         )
         ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
         if not _should_fallback(ollama_result):

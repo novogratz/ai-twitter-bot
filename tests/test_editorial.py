@@ -292,3 +292,41 @@ def test_corrupt_ledger_cannot_grant_extra_posts(monkeypatch, tmp_path):
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(ledger))
     with pytest.raises(RuntimeError, match="ledger unreadable"):
         ag.can_post(ag.POST)
+
+
+def test_editorial_requests_use_dedicated_model_and_strict_schema(monkeypatch):
+    import urllib.request
+    from src import llm_client as llm
+    requests = []
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def read(self):
+            return b'{"response": "{}"}'
+
+    def request(req, **kwargs):
+        requests.append(json.loads(req.data))
+        return Response()
+
+    monkeypatch.setattr(urllib.request, "urlopen", request)
+    monkeypatch.setattr(llm, "EDITORIAL_OLLAMA_MODEL", "editor-model")
+    monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
+    llm._run_ollama_http("Draft prompt", "EDITORIAL_DRAFT", 30)
+    llm._run_ollama_http("Review prompt", "EDITORIAL_REVIEW", 30)
+    llm._run_ollama_http("Reply prompt", "DIRECT_REPLY", 30)
+    assert requests[0]["model"] == requests[1]["model"] == "editor-model"
+    assert "evidence" in requests[0]["format"]["required"]
+    assert requests[1]["format"]["properties"]["grounded"] == {"type": "boolean"}
+    assert requests[2]["model"] == "reply-model" and "format" not in requests[2]
+    assert llm._FUNNY_FORCER not in requests[0]["prompt"]
+
+
+def test_explicit_skip_is_not_publishable_even_with_complete_fields(draft_fixture):
+    draft, source, _ = draft_fixture
+    draft["skip"] = True
+    assert not editorial.review_draft(draft, [source], [])[0]

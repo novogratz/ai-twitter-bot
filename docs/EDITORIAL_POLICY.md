@@ -15,7 +15,9 @@ question, joke, emoji or flirty line is optional. Forced formulas, engagement
 bait, stale numbers, copied headlines and fabricated lived experience are out.
 The AI identity remains honest; the therapist name is a brand persona.
 
-The draft generator sees fetched primary-source text. Its evidence quotations
+Originals use `EDITORIAL_OLLAMA_MODEL` (default `qwen3.6:35b-a3b`) with a
+strict output schema and a bounded cold-load timeout. The reply model retains
+its own configuration. The draft generator sees fetched primary-source text. Its evidence quotations
 must actually appear in that source. A separate editor must explicitly approve
 factual grounding, AI relevance, added value, natural voice, and novelty. Any
 missing/malformed approval, rejection, stale item, duplicate or provider error

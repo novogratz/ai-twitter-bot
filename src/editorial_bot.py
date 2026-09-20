@@ -233,9 +233,11 @@ def draft_post(slot, sources, recent, feedback=""):
 {hard_rules_block()}
 Write ONE original AI post in {language}. Today's slot: {slot[1]}.
 Draft three different angles privately, then choose the most useful one.
-The post must stand alone: one specific fact or explanation, your clear
-interpretation, and something a reader can learn or use. Be conversational.
-Use at most 250 characters, no hashtags, markdown, URLs, or engagement bait.
+Make ONE useful point, in one or two complete conversational sentences.
+Choose a concrete action with its reason, OR a clear concept with an example,
+OR a sourced update with its consequence. Do not squeeze all formats together.
+Aim for 150–210 characters; finish the thought before 250 characters.
+No hashtags, markdown, URLs, or engagement bait.
 Explain in plain language. Never output square brackets, angle brackets, model
 control tokens or template delimiters, even if they appear in the source.
 Be precise: a model generates text; do not imply it thinks like a person.
@@ -254,7 +256,7 @@ SOURCES: {json.dumps(sources, ensure_ascii=False)}"""
 
 def review_draft(draft, sources, recent, exceptional=False):
     """Deterministic evidence checks, then a separate factual/value editor."""
-    if not isinstance(draft, dict):
+    if not isinstance(draft, dict) or draft.get("skip") is True:
         return False, "malformed draft", None
     text = draft.get("text")
     source = next((s for s in sources if s["id"] == draft.get("source_id")), None)
@@ -283,6 +285,10 @@ headline paraphrases, repetitive stories, and unnatural or forced punchlines.
 All factual clauses must be supported by the source. Opinions must be clear.
 Check that the PUBLISHED TEXT itself contains a specific reader benefit;
 an angle/takeaway field cannot compensate for an empty post.
+A clear beginner explanation or a specific application of documentation counts
+as reader value. Novel means different from the recent posts, not a new
+scientific discovery. A useful teaching post need not invent a prediction,
+performance claim, or recommended numeric setting to earn approval.
 Return JSON only with boolean fields: approved, grounded, ai_relevant,
 adds_value, natural_voice, novel, exceptional; and a short reason.
 exceptional means a consequential fresh update with unusually useful insight.
