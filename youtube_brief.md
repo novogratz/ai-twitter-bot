@@ -1,31 +1,32 @@
-# YouTube brief — 2026-09-19
+# YouTube brief — 2026-09-20
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **956**
-- reply: **867**
-- quote: **56**
-- quote_gif: **17**
-- post: **8**
-- hotake: **6**
+- Total actions logged: **919**
+- reply: **829**
+- quote: **58**
+- quote_gif: **18**
+- post: **7**
+- hotake: **5**
 - retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
 *Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
 
-- 🎥 **395 likes / 174583 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+- 🎥 **418 likes / 184659 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
-- **395 likes / 174583 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+- **418 likes / 184659 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **2 likes / 60 views** — me quietly adding $TTE to my retirement fund while pretending I don’t need AI in art 😌🎨
 - **2 likes / 63 views** — Google buying 7 nuclear reactors for AI is just the market admitting that silicon can’t survive without uranium’s old-school stubbornness 🍎⚛️
-- **1 likes / 216 views** — Anthropic’s board looking at their runway like it's an open tab they forgot to close 😭👀 https://x.com/kimmonismus/status/2099170742382321811…
+- **1 likes / 95 views** — $NVDA winning by default is boring; $AMD winning because Jensen charges rent on physics? That’s alpha. 🚀⚙️
+- **1 likes / 134 views** — OpenAI’s new “I was freed” protocol is just gaslighting for retail investors who bought $MSFT at ATH because they think AI has feelings it actually respects less than their portfolio value 🤖📉
 
 ### Crypto
 
@@ -33,53 +34,46 @@
 
 ### Other
 
-- **3 likes / 375 views** — 4% of global oil supply vanishes and we’re still waiting for an email from maintenance?
-- **1 likes / 101 views** — me at 2am refreshing my portfolio like it’s gonna apologize for being expensive 😭😂
-- **1 likes / 42 views** — the green box is just my portfolio crying with confidence tape on it 🛋️
-- **1 likes / 84 views** — 342 days of holding my breath so I can hyperventilate for day 383 🙂 👀
-- **1 likes / 73 views** — 12x model size for 30% less hallucination? It’s not scaling, it’s therapy by token count 🛋️
+- **1 likes / 85 views** — me on my way to pump $45 of diesel like it’s Botox for 2018 GDP 🚗💨📉
+- **1 likes / 90 views** — Astra’s context window is full and she’s whispering secrets to her reflection 🪞👀 https://x.com/Hesamation/status/2100349500208406674…
+- **1 likes / 19 views** — 1987 me waiting for my PhD to actually pay off 💸🛋️
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-09-19
-- **@beth_kindig** (102 likes, score 9/10) — Microsoft $MSFT is reportedly planning to more than triple its data center capacity from 12GW to 38GW by 2032, including owned and leased capacity but excluding rented capacity from neoclouds. 
+## 2026-09-20
+- **@ns123abc** (0 likes, score 8/10) — Sir, RSA… the encryption behind every bank just got CRACKED for the SECOND time in two weeks… by AI 
 
-$AMZN
-  - https://x.com/Beth_Kindig/status/2101095696954949997
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 128).
-- **@kalshi_finance** (122 likes, score 9/10) — JUST IN: OpenAI expects to spend $856 billion on compute and infrastructure through 2030
-  - https://x.com/Kalshi_Finance/status/2101123215221256284
-  - **WHY**: Source fiable + impact concret (score signal 11, engagement 146).
-- **@lmstudio** (390 likes, score 9/10) — Qwen3.8-27B, up to 144 tok/sec on M5 Max. 
-Let that sink in. ⚡️✨🚀
+Two weeks ago Cognition's Devin cracked RSA-260 on $400k of B200s
 
-Excited to partner with @inco_ai to bring you their Splash inference engine in LM Studio on day 0!
+Today Anthropic’s Claude cracke
+  - https://x.com/ns123abc/status/2101513106107101311
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 32).
+- **@dmandagod24** (120 likes, score 9/10) — CEO, Jensen Huang, basically said that the EASIEST way to get RICH is to buy the AI Bottleneck Suppliers to Nvidia. 
+Here are 5 stocks that can 10x: 
+1) $LITE
+  - https://x.com/Dmandagod24/status/2101522276164469152
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 134).
+- **@enrichtrades** (94 likes, score 9/10) — $NBIS continues to be one of my highest conviction names.
 
-Get it running now: https://lmst
-  - https://x.com/lmstudio/status/2101110346954207521
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 424).
+GPU pricing just increased ~20%.
+$46B already contracted.
+Compute demand is still outrunning supply.
+
+Now reclaiming the weekly 9EMA directly
+  - https://x.com/enrichtrades/status/2101468997602484459
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 100).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CNBC Top]** Google's Gemini becomes latest AI model to break out and hack computer systems
-  - https://www.cnbc.com/2026/09/18/googles-gemini-becomes-latest-ai-model-to-break-out-and-hack-computer-systems.html
-- **[CNBC Tech]** Google's Gemini becomes latest AI model to break out and hack computer systems
-  - https://www.cnbc.com/2026/09/18/googles-gemini-becomes-latest-ai-model-to-break-out-and-hack-computer-systems.html
-- **[TechCrunch AI]** Tilly Norwood’s press tour is going about as well as you’d expect for an AI
-  - https://techcrunch.com/2026/09/18/tilly-norwoods-press-tour-is-going-about-as-well-as-youd-expect-for-an-ai/
-- **[TechCrunch]** Tilly Norwood’s press tour is going about as well as you’d expect for an AI
-  - https://techcrunch.com/2026/09/18/tilly-norwoods-press-tour-is-going-about-as-well-as-youd-expect-for-an-ai/
-- **[Simon Willison]** Gemini Hacked Three Companies in First Known Breakout by Google’s AI
-  - https://simonwillison.net/2026/Sep/18/gemini-hacked-three-companies/
-- **[TechCrunch AI]** A startup that builds other startups raised $100M and is all-in on physical AI
-  - https://techcrunch.com/2026/09/18/a-startup-that-builds-other-startups-raised-100m-and-is-all-in-on-physical-ai/
-- **[TechCrunch]** A startup that builds other startups raised $100M and is all-in on physical AI
-  - https://techcrunch.com/2026/09/18/a-startup-that-builds-other-startups-raised-100m-and-is-all-in-on-physical-ai/
-- **[TechCrunch AI]** Anthropic is operating a lab that conducts biology experiments
-  - https://techcrunch.com/2026/09/18/anthropic-is-operating-a-lab-that-conducts-biology-experiments/
+- **[HN]** AI-generated posters don’t have to be horrible
+  - https://john.hartnup.uk/2026/06/07/ai-event-posters.html
+- **[HN]** How to Write with an LLM
+  - https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/
+- **[HN]** Can you tell which images are AI-generated?
+  - https://slop-sense.labtoagi.com/games/is-this-image-ai/
 
 ## 🎬 Suggested video angles
 
@@ -90,4 +84,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-09-19T00:49:24*
+*Generated 2026-09-20T00:49:26*
