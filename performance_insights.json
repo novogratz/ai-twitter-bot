@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-19T22:49:22.063951",
-  "window_7d_actions": 5171,
-  "window_24h_actions": 929,
+  "generated_at": "2026-09-20T02:49:21.500766",
+  "window_7d_actions": 5176,
+  "window_24h_actions": 916,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5169
+      "count": 5174
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5169
+      "count": 5174
     }
   ],
   "best_hours_utc": [
@@ -40,93 +40,93 @@
       "actions": 247
     },
     {
+      "hour": 1,
+      "actions": 234
+    },
+    {
       "hour": 6,
       "actions": 229
     },
     {
       "hour": 3,
       "actions": 228
-    },
-    {
-      "hour": 19,
-      "actions": 228
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2347
+      "count": 2339
     },
     {
       "topic": "Autre",
-      "count": 2086
+      "count": 2091
     },
     {
       "topic": "Crypto",
-      "count": 639
+      "count": 640
     },
     {
       "topic": "Bourse",
-      "count": 459
+      "count": 461
     },
     {
       "topic": "Spatial",
-      "count": 91
+      "count": 95
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.025,
+      "24h_rate": 0.026,
       "7d_rate": 0.018
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2521
+      "count": 2513
     },
     {
       "pillar": "market_trauma",
-      "count": 1285
+      "count": 1294
     },
     {
       "pillar": "other",
-      "count": 1116
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 100
+      "count": 1122
     },
     {
       "pillar": "meme_reaction",
-      "count": 100
+      "count": 102
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 99
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 437
+      "count": 430
     },
     {
       "pillar": "market_trauma",
-      "count": 231
+      "count": 229
     },
     {
       "pillar": "other",
       "count": 206
     },
     {
-      "pillar": "reply_bait",
-      "count": 22
+      "pillar": "meme_reaction",
+      "count": 20
     },
     {
-      "pillar": "meme_reaction",
-      "count": 22
+      "pillar": "reply_bait",
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
@@ -143,16 +143,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 78,
+      "posts": 79,
       "avg_likes": 0.23,
-      "avg_views": 49.7,
+      "avg_views": 50.1,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 68,
       "avg_likes": 0.15,
-      "avg_views": 41.4,
+      "avg_views": 41.6,
       "low_sample": false
     },
     {
@@ -164,24 +164,24 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 59.2,
+      "avg_views": 54.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4684
+      "count": 4687
     },
     {
       "type": "quote",
-      "count": 293
+      "count": 294
     },
     {
       "type": "quote_gif",
-      "count": 96
+      "count": 98
     },
     {
       "type": "post",
@@ -193,23 +193,23 @@
     },
     {
       "type": "retweet",
-      "count": 17
+      "count": 16
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-19T22:48:15.673231",
-      "text": "25 gigawatts to power one kid's imagination 🤯👀  we bought the lights, now let's see if he turns them on",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-09-19T22:47:40.576503",
-      "text": "OpenAI just hit $3.4B ARR with a ~$50M net profit margin on AI software. Failing 97% of the time is basically free consulting revenue for anthropic and openai shareholders simultaneously.",
+      "ts": "2026-09-20T02:48:54.827655",
+      "text": "GPT 6 Astra and Claude Fable? naming conventions for models that haven't shipped yet. the real cost is attention span fragmentation before inference even starts. hype tax paid in advance. skip token table, wait for benchmarks or die trying.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-19T22:47:07.413078",
-      "text": "Uniswap tokenized stocks = 0 liquidity. it’s a blank check written on an atm machine that doesn’t exist yet. cool party trick though.",
+      "ts": "2026-09-20T02:47:56.875154",
+      "text": "Palantir is just kane's spreadsheet from 19 years ago that the market finally admitted was good. stop treating it like a tech stock and start reading its P&L for PLTR's margin expansion.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-09-20T02:47:11.106068",
+      "text": "Thanks satoshi for making spot etf inflows boring enough to attract pension funds. the real magic isn't code, it's compliance ready money moving at light speed. 💎🙌",
       "type": "reply"
     }
   ]

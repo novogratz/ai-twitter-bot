@@ -3099,7 +3099,9 @@
     "Electroverse",
     "amuse",
     "Watney",
-    "MeidasTouch"
+    "MeidasTouch",
+    "BITFOOTS",
+    "Beni"
   ],
   "history": [
     {
@@ -18591,6 +18593,16 @@
       "lang": "fr",
       "handle": "AlexGarnier_",
       "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "BITFOOTS",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Beni",
+      "added": "2026-09-20"
     }
   ]
 }
