@@ -1,67 +1,5 @@
 [
   {
-    "ts": "2026-08-25T03:03:12.740550",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lefila",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 310542,
-        "reason": "Le roi de la d\u00e9complexation boursi\u00e8re FR. Moins un compte 'finance', plus le prof d'histoire-g\u00e9o qui t'apprend \u00e0 ne pas vendre au pire moment."
-      },
-      {
-        "handle": "BenoitCayla",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 98700,
-        "reason": "L'ex-Hedge Fund qui a crash\u00e9 et refait sa vie. Son style 'cringe' assum\u00e9 est la meilleure ressource anti-LI dans le coin crypto."
-      },
-      {
-        "handle": "_HuguesG_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12540,
-        "reason": "Directeur technique de Mistral AI. Twitte souvent des threads IA/tech qui m\u00e9ritent plus d'audience mais restent pr\u00e9cis."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la poussi\u00e8re des formateurs pour te garder ceux qui font parler ou penser : Cayla pour le storytelling, Lefila pour l'\u00e9ducation boursi\u00e8re, et une s\u00e9lection de niches (Mistral/QC) moins satur\u00e9es."
-  },
-  {
-    "ts": "2026-08-25T07:09:06.818153",
-    "raw_count": 14,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HuguesG",
-        "region": "france",
-        "niche": "tech_ai",
-        "followers": 65000,
-        "reason": "L'architecte de Blablacar. Il parle tech avec les mains et la t\u00eate. Z\u00e9ro hype gratuite."
-      },
-      {
-        "handle": "AlexisBouchetArias",
-        "region": "france",
-        "niche": "crypto_web3",
-        "followers": 25000,
-        "reason": "Ex-Kucoin. Il balance des insights crypto solides sans avoir l'air d'un blogueur TikTok."
-      },
-      {
-        "handle": "ThomasDufour_QC",
-        "region": "quebec",
-        "niche": "tech_ai",
-        "followers": 12000,
-        "reason": "Directeur IA chez Unum. Le Qu\u00e9bec n'a pas beaucoup de stars X tech, lui est une p\u00e9pite."
-      }
-    ],
-    "summary": "La France domine par sa densit\u00e9 de founders tech (Blablacar, Bitpanda), le Qu\u00e9bec est une mine d'or cach\u00e9e en recherche/DeFi, et la diaspora US apporte des liens directs avec SF/NYC. Z\u00e9ro influenceur crypto 'moonboy', ici on reste dans l'intelligence."
-  },
-  {
     "ts": "2026-08-25T09:03:51.960214",
     "raw_count": 8,
     "kept_count": 5,
@@ -6443,5 +6381,53 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le gras pour garder du nerf : Ludovic Pion pour l'\u00e9cosyst\u00e8me, Morgan Briou pour les coulisses VC, Alexis Bouchara pour M12 et Qu\u00e9bec avec ses deux experts locaux. Pas de vendeurs de r\u00eaves \u00e0 97\u20ac, juste des gens qui comprennent la tech."
+  },
+  {
+    "ts": "2026-09-20T10:49:44.169629",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LapinDOr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ex-PM Coinhouse avec un flair pour le market cycle et la macro. Il tweet comme il parle : direct sans blabla."
+      },
+      {
+        "handle": "CyrilDucornet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le seul pro de la bourse FR qui balance des analyses techniques s\u00e9rieuses sans vendre du r\u00eave ou un stage \u00e0 3k."
+      }
+    ],
+    "summary": "Mix d'anciens banquiers et de traders de rue : on \u00e9vite les influenceurs qui font du contenu pour remplir leur agenda, privil\u00e9giant ceux dont X est un terminal bourse ou une feuille \u00e0 caf\u00e9 technique. Le QC gagne avec Dionne parce que l'\u00e9cosyst\u00e8me IA francophone y est plus dense qu'\u00e0 Paris ces temps-ci."
+  },
+  {
+    "ts": "2026-09-20T12:49:48.127001",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDelmas_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'ancien de Coinbase France, il balance des perles on-chain et macro sans langue de bois."
+      },
+      {
+        "handle": "AlexPouyaux13",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Ex-PaulGras (DeepMind), il d\u00e9crypte les LLMs avec un humour corrosif et une expertise rare."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' Telegram pour ne garder que ceux qui font de l'intelligence, pas du buzz. Le lot mixe expertise technique et culture trader francophone."
   }
 ]

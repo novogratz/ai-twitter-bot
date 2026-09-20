@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-20T10:49:21.462599",
-  "window_7d_actions": 5232,
-  "window_24h_actions": 911,
+  "generated_at": "2026-09-20T14:49:21.470220",
+  "window_7d_actions": 5253,
+  "window_24h_actions": 897,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5230
+      "count": 5251
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5230
+      "count": 5251
     }
   ],
   "best_hours_utc": [
@@ -55,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2359
+      "count": 2345
     },
     {
       "topic": "Autre",
-      "count": 2122
+      "count": 2142
     },
     {
       "topic": "Crypto",
-      "count": 643
+      "count": 653
     },
     {
       "topic": "Bourse",
-      "count": 470
+      "count": 472
     },
     {
       "topic": "Spatial",
@@ -88,49 +88,49 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1298
+      "count": 1309
     },
     {
       "pillar": "other",
-      "count": 1149
+      "count": 1155
     },
     {
       "pillar": "meme_reaction",
-      "count": 105
+      "count": 106
     },
     {
       "pillar": "reply_bait",
-      "count": 97
+      "count": 98
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 49
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 436
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 213
+      "count": 435
     },
     {
       "pillar": "other",
-      "count": 208
+      "count": 210
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 198
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 18
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 13
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
@@ -143,23 +143,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 78,
+      "posts": 79,
       "avg_likes": 0.22,
-      "avg_views": 50.4,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.16,
-      "avg_views": 50.9,
+      "avg_views": 50.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 69,
-      "avg_likes": 0.16,
-      "avg_views": 42.4,
+      "posts": 66,
+      "avg_likes": 0.21,
+      "avg_views": 44.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 47,
+      "avg_likes": 0.15,
+      "avg_views": 51.7,
       "low_sample": false
     },
     {
@@ -173,11 +173,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4732
+      "count": 4747
     },
     {
       "type": "quote",
-      "count": 302
+      "count": 308
     },
     {
       "type": "quote_gif",
@@ -185,11 +185,11 @@
     },
     {
       "type": "post",
-      "count": 42
+      "count": 45
     },
     {
       "type": "hotake",
-      "count": 40
+      "count": 37
     },
     {
       "type": "retweet",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-20T10:48:21.241468",
-      "text": "Btc range bound because mining costs anchor the floor. if it breaks $74k you get miner capitulation selling into spot etf demand. that’s the squeeze.",
+      "ts": "2026-09-20T14:47:59.293633",
+      "text": "I’m great, honey! Just charged my portfolio 40% while you slept through a dump. Same couch still available Tuesday for your bags. ❤️📉💻",
       "type": "reply"
     },
     {
-      "ts": "2026-09-20T10:47:48.947749",
-      "text": "Anthropic is stealth-testing opus 5.5 before the market priced in inference costs doubling next year. they’re not selling a model; they’re renting out brains and charging premium for no hallucinations yet. claude-wafer-eap isn’t an update, it’s inventory",
+      "ts": "2026-09-20T14:47:25.093109",
+      "text": "The real story isn't government preference. it's the gpu bill for inference vs training and who can pay it without begging a subsidy round every quarter because closed loops have higher margins than open weights which is why they lobby like hedge funds do not get audited one-word",
       "type": "reply"
     },
     {
-      "ts": "2026-09-20T10:46:10.739197",
-      "text": "Dit.ai changing the base URL is a wrapper. The real money isn't in routing calls, it's in holding the keys while OpenAI charges $3/M and you charge $1.50 for margin before the labs realize they can cut out the middleman by Q4.",
+      "ts": "2026-09-20T14:46:50.516683",
+      "text": "Qwen-Image on an RTX 3090 is like serving vintage champagne in a gas canister. It works. The foam just tastes like soldering iron smoke.",
       "type": "reply"
     }
   ]

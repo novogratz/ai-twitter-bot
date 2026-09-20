@@ -2494,7 +2494,11 @@
     "AlexGarnier_",
     "_tomasvolf_",
     "Morgan_Briou",
-    "LudovicPion"
+    "LudovicPion",
+    "LapinDOr",
+    "CyrilDucornet",
+    "CyrilDelmas_",
+    "AlexPouyaux13"
   ],
   "en": [
     "Chubby",
@@ -18662,6 +18666,26 @@
     {
       "lang": "en",
       "handle": "Sejan",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LapinDOr",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDucornet",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDelmas_",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexPouyaux13",
       "added": "2026-09-20"
     }
   ]
