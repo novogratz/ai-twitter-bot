@@ -17483,3 +17483,26 @@ Excited to partner with @inco_ai to bring you their Splash inference engine in L
 Get it running now: https://lmst
   - https://x.com/lmstudio/status/2101110346954207521
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 424).
+
+## 2026-09-20
+- **@ns123abc** (0 likes, score 8/10) — Sir, RSA… the encryption behind every bank just got CRACKED for the SECOND time in two weeks… by AI 
+
+Two weeks ago Cognition's Devin cracked RSA-260 on $400k of B200s
+
+Today Anthropic’s Claude cracke
+  - https://x.com/ns123abc/status/2101513106107101311
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 32).
+- **@dmandagod24** (120 likes, score 9/10) — CEO, Jensen Huang, basically said that the EASIEST way to get RICH is to buy the AI Bottleneck Suppliers to Nvidia. 
+Here are 5 stocks that can 10x: 
+1) $LITE
+  - https://x.com/Dmandagod24/status/2101522276164469152
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 134).
+- **@enrichtrades** (94 likes, score 9/10) — $NBIS continues to be one of my highest conviction names.
+
+GPU pricing just increased ~20%.
+$46B already contracted.
+Compute demand is still outrunning supply.
+
+Now reclaiming the weekly 9EMA directly
+  - https://x.com/enrichtrades/status/2101468997602484459
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 100).

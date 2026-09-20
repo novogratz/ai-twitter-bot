@@ -2488,7 +2488,10 @@
     "Hugo_Diniz_",
     "MaximeScheer",
     "ThomasBoulay_",
-    "PierreNoury"
+    "PierreNoury",
+    "CyrilPD",
+    "Ludovic28",
+    "AlexGarnier_"
   ],
   "en": [
     "Chubby",
@@ -3095,7 +3098,8 @@
     "tree",
     "Electroverse",
     "amuse",
-    "Watney"
+    "Watney",
+    "MeidasTouch"
   ],
   "history": [
     {
@@ -18566,6 +18570,26 @@
     {
       "lang": "fr",
       "handle": "PierreNoury",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "en",
+      "handle": "MeidasTouch",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilPD",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludovic28",
+      "added": "2026-09-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexGarnier_",
       "added": "2026-09-19"
     }
   ]

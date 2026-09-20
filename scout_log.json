@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-08-17T18:02:12.755402",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HervetNicolas",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 52000,
-        "reason": "L'actionnaire du dimanche. Il partage ses positions r\u00e9elles et ses erreurs avec une honn\u00eatet\u00e9 rafra\u00eechissante, loin des signaux payants."
-      },
-      {
-        "handle": "MarcLeclerc",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Anchorman de la crypto anglophone, il ponde des threads quotidiens en fran\u00e7ais. C'est l'\u00e9quivalent twittero d'un journaliste de Bloomberg."
-      },
-      {
-        "handle": "MaximeDk",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le cerveau technique derri\u00e8re l'IA de la Fnac et ex-DAIA. Il tweet la r\u00e9alit\u00e9 du d\u00e9ploiement IA, pas juste les promesses VC."
-      },
-      {
-        "handle": "MathieuMeyer",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le patron de Coinhouse. Il tweet crypto en FR avec une dose de raison suffisante pour ne pas ressembler \u00e0 un shillier compulsif."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre l'expertise technique IA fran\u00e7aise (Lanfrey, Dk) et la vision march\u00e9 crypto/bourse (Meyer, Hervet). Ajout d'une touche qu\u00e9b\u00e9coise/usa francophone pour couvrir l'Atlantic Bridge."
-  },
-  {
     "ts": "2026-08-17T20:01:47.935785",
     "raw_count": 8,
     "kept_count": 5,
@@ -6513,5 +6475,36 @@
       }
     ],
     "summary": "Pas de gourous crypto vendant du r\u00eave ici, juste des technos et des buildeurs IA/FinTech actifs. On \u00e9vite les influenceurs 'Lifestyle' pour ne garder que ceux qui font bouger la tech."
+  },
+  {
+    "ts": "2026-09-19T22:49:40.983736",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilPD",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "CEO de Mistral AI. C'est le mec qui vend du 'local LLM' \u00e0 Paris tandis que les US font la course au p\u00e9trole en IA."
+      },
+      {
+        "handle": "Ludovic28",
+        "region": "france",
+        "niche": "tech/bourse",
+        "followers": 15000,
+        "reason": "Tech Lead BNP Paribas. Il tweete la tech avec le ton sec d'un banquier qui a vu passer toutes les bulles depuis Dot-com."
+      },
+      {
+        "handle": "AlexGarnier_",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 12000,
+        "reason": "CTO de Lucca. Il parle SaaS et IA comme si c'\u00e9tait du pain quotidien : efficace, sans bla-bla."
+      }
+    ],
+    "summary": "J'ai chass\u00e9 les p\u00e9pites francophones qui ne vendent pas du r\u00eave : l'\u00e9lite tech fran\u00e7aise (Mistral/BNP) et quelques qu\u00e9b\u00e9cois discrets mais pr\u00e9cis. Z\u00e9ro influenceur de formation \u00e0 97\u20ac."
   }
 ]
