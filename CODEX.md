@@ -1,5 +1,30 @@
 # CODEX.md
 
+## Current operator policy — September 20, 2026
+
+This supersedes the historical volume, overnight and persona notes below.
+The bot works only 04:30–22:00 America/Toronto. Target six useful original AI
+posts daily, at most seven combined profile publications. Quotes, reposts,
+self-recycling, thread bursts and startup bursts are disabled. Daytime replies
+remain uncapped, with browser pacing, per-tweet dedup and quality checks.
+
+The persona is a confident, warm, naturally conversational, occasionally flirty
+45-year-old mom and AI enthusiast. No forced jokes, repeated slogans, invented
+experiences or fake typos. AI knowledge, news and useful updates come first.
+
+`main.py` runs the editorial scheduler. `src/editorial_bot.py` uses fetched
+primary sources, evidence checks and a separate editorial review. Review
+feedback informs bounded retries; ambiguous submissions retain their slot.
+`src/active_hours.py` and the browser boundary enforce bedtime. Old strategy
+values cannot restore quotes or lift the hard seven-post ceiling.
+
+The 500k-view target is measured using observed views of originals published
+in the last seven days, with missing coverage explicit; it is not guaranteed
+or reported as homepage attribution. The active scheduler excludes autonomous
+code/prompt rewriting. Preserve live state on deployment: existing actions
+still count toward today's cap. See `docs/EDITORIAL_POLICY.md` and README.
+
+
 Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). Use whichever CLI you have authenticated.
 
 > **You'll hate me until I'm right.**
