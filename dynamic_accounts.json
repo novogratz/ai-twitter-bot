@@ -2491,7 +2491,10 @@
     "PierreNoury",
     "CyrilPD",
     "Ludovic28",
-    "AlexGarnier_"
+    "AlexGarnier_",
+    "_tomasvolf_",
+    "Morgan_Briou",
+    "LudovicPion"
   ],
   "en": [
     "Chubby",
@@ -3101,7 +3104,13 @@
     "Watney",
     "MeidasTouch",
     "BITFOOTS",
-    "Beni"
+    "Beni",
+    "ZecMart",
+    "StepFun",
+    "legalprimes",
+    "Focus",
+    "Loma",
+    "BuBBliK"
   ],
   "history": [
     {
@@ -18602,6 +18611,51 @@
     {
       "lang": "en",
       "handle": "Beni",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "ZecMart",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "StepFun",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "legalprimes",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "_tomasvolf_",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Focus",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Loma",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "BuBBliK",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "Morgan_Briou",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicPion",
       "added": "2026-09-20"
     }
   ]
