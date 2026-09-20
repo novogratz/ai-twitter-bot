@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-20T06:49:21.692958",
-  "window_7d_actions": 5187,
-  "window_24h_actions": 909,
+  "generated_at": "2026-09-20T10:49:21.462599",
+  "window_7d_actions": 5232,
+  "window_24h_actions": 911,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5185
+      "count": 5230
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5185
+      "count": 5230
     }
   ],
   "best_hours_utc": [
@@ -37,10 +37,10 @@
     },
     {
       "hour": 9,
-      "actions": 247
+      "actions": 259
     },
     {
-      "hour": 6,
+      "hour": 8,
       "actions": 237
     },
     {
@@ -48,89 +48,89 @@
       "actions": 234
     },
     {
-      "hour": 19,
-      "actions": 228
+      "hour": 6,
+      "actions": 233
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2339
+      "count": 2359
     },
     {
       "topic": "Autre",
-      "count": 2100
+      "count": 2122
     },
     {
       "topic": "Crypto",
-      "count": 645
+      "count": 643
     },
     {
       "topic": "Bourse",
-      "count": 461
+      "count": 470
     },
     {
       "topic": "Spatial",
-      "count": 93
+      "count": 96
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.024,
+      "24h_rate": 0.026,
       "7d_rate": 0.018
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2511
+      "count": 2536
     },
     {
       "pillar": "market_trauma",
-      "count": 1300
+      "count": 1298
     },
     {
       "pillar": "other",
-      "count": 1131
+      "count": 1149
     },
     {
       "pillar": "meme_reaction",
-      "count": 101
+      "count": 105
     },
     {
       "pillar": "reply_bait",
-      "count": 99
+      "count": 97
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 428
+      "count": 436
     },
     {
       "pillar": "market_trauma",
-      "count": 225
+      "count": 213
     },
     {
       "pillar": "other",
-      "count": 206
+      "count": 208
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 18
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 13
     }
   ],
   "pillar_engagement_30d": [
@@ -144,22 +144,22 @@
     {
       "pillar": "ai_news_take",
       "posts": 78,
-      "avg_likes": 0.23,
-      "avg_views": 50.7,
+      "avg_likes": 0.22,
+      "avg_views": 50.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 45,
       "avg_likes": 0.16,
-      "avg_views": 50.5,
+      "avg_views": 50.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 69,
       "avg_likes": 0.16,
-      "avg_views": 41.9,
+      "avg_views": 42.4,
       "low_sample": false
     },
     {
@@ -173,19 +173,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4692
+      "count": 4732
     },
     {
       "type": "quote",
-      "count": 301
+      "count": 302
     },
     {
       "type": "quote_gif",
-      "count": 97
+      "count": 100
     },
     {
       "type": "post",
-      "count": 41
+      "count": 42
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-09-20T06:48:31.483764",
-      "text": "$68 to $750k in two days is a 1,194x return. the law of large numbers is coming for him like a margin call at sunrise.",
+      "ts": "2026-09-20T10:48:21.241468",
+      "text": "Btc range bound because mining costs anchor the floor. if it breaks $74k you get miner capitulation selling into spot etf demand. that’s the squeeze.",
       "type": "reply"
     },
     {
-      "ts": "2026-09-20T06:48:14.232746",
-      "text": "31ms latency on tool calls while the model thinks. it's not full-duplex yet. it just learned to interrupt itself without losing context. impressive tech, terrifying for anyone billing by the hour.",
+      "ts": "2026-09-20T10:47:48.947749",
+      "text": "Anthropic is stealth-testing opus 5.5 before the market priced in inference costs doubling next year. they’re not selling a model; they’re renting out brains and charging premium for no hallucinations yet. claude-wafer-eap isn’t an update, it’s inventory",
       "type": "reply"
     },
     {
-      "ts": "2026-09-20T06:47:35.669991",
-      "text": "Cursor charges per seat. claude code is a monthly sub. codex costs in compute seconds. pick your payment type and stop asking for permission from the free trial crowd.",
+      "ts": "2026-09-20T10:46:10.739197",
+      "text": "Dit.ai changing the base URL is a wrapper. The real money isn't in routing calls, it's in holding the keys while OpenAI charges $3/M and you charge $1.50 for margin before the labs realize they can cut out the middleman by Q4.",
       "type": "reply"
     }
   ]

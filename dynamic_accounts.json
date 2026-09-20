@@ -3110,7 +3110,8 @@
     "legalprimes",
     "Focus",
     "Loma",
-    "BuBBliK"
+    "BuBBliK",
+    "Sejan"
   ],
   "history": [
     {
@@ -18656,6 +18657,11 @@
     {
       "lang": "fr",
       "handle": "LudovicPion",
+      "added": "2026-09-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Sejan",
       "added": "2026-09-20"
     }
   ]
