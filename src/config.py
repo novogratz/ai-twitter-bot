@@ -31,7 +31,6 @@ BOT_PROFILE_URL = f"https://x.com/{BOT_HANDLE}"
 HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
 REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
-DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
 # Operator policy (2026-09-20): six editorial posts, at most seven profile
 # publications per Toronto day, and uncapped replies while awake. These
@@ -88,13 +87,10 @@ def _default_model(
 # get OPUS. They're low-volume + high-stakes (they show on the profile and
 # must earn the like), so the best model is worth it. The reply firehose
 # (1000+/day) stays on fast/cheap haiku — it's already converting well.
-# NEWS_MODEL also drives breakout_bot; HOTAKE_MODEL drives spicy_bot.
 NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
 REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
 HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
-ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
-QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-1.5-flash"))
 
 # Profile and reply provider overrides. Default both to Ollama; Codex is the
 # cloud fallback when explicitly enabled. Claude is not used by default.
@@ -181,7 +177,6 @@ FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
 # ("not on whitelist" refusals). All other gates (anti-churn, daily cap,
 # spacing, following ceiling) still apply. Set 0 to re-block.
 FOLLOWBACK_BYPASS_WHITELIST = os.environ.get("FOLLOWBACK_BYPASS_WHITELIST", "1") == "1"
-ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "0") == "1"
 FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
 FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "150"))

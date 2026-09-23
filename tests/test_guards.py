@@ -28,18 +28,6 @@ def isolate_dedup(monkeypatch, tmp_path):
     cg._RECENT_NORM.clear()
 
 
-@pytest.fixture(autouse=True)
-def _engine_health_past_warmup(monkeypatch):
-    """Tests exercise engine-health checks directly — put the process past
-    the boot-warmup grace window so the checks actually run. The warmup test
-    itself overrides _PROCESS_START explicitly."""
-    from datetime import datetime, timedelta
-    from src import engine_health_bot as ehb
-    monkeypatch.setattr(ehb, "_PROCESS_START",
-                        datetime.now() - timedelta(minutes=ehb.WARMUP_MINUTES + 10))
-    yield
-
-
 # --- dedup v2 -------------------------------------------------------------
 
 def test_dedup_catches_same_thesis_different_words():
@@ -169,16 +157,6 @@ def test_post_unsafe_leak_detection():
     assert not contains_post_unsafe_leak("a normal tweet about GPUs")
 
 
-# --- scrape timestamp regression (the 2-day retweet collapse) -----------------
-
-def test_scrape_age_uses_timestamp_field():
-    from datetime import datetime, timedelta, timezone
-    from src.retweet_bot import _scrape_age_hours
-    fresh = (datetime.now(timezone.utc) - timedelta(hours=3)).isoformat()
-    assert _scrape_age_hours({"timestamp": fresh}) < 4
-    assert _scrape_age_hours({"timestamp": ""}) > 100_000  # unknown = stale
-
-
 # --- history idempotency -------------------------------------------------------
 
 def test_save_tweet_idempotent(monkeypatch, tmp_path):
@@ -209,166 +187,6 @@ def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     with out.open("w", encoding="utf-8") as f:
         json.dump(safe, f, indent=2, ensure_ascii=False)
     assert "AI math  signal" in out.read_text(encoding="utf-8")
-
-
-# --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
-
-def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
-    """quote_tweet() returns False on dup/spacing skip — the hot_quote bot
-    MUST NOT mark the slot 'done' or burn the candidate URL, otherwise the
-    highest-signal 4x/day surface silently disappears when dedup catches a
-    near-miss. Witnessed 2026-06-05 (2 of 2 hot_quote slots burned before
-    the fix)."""
-    from src import hot_quote_bot as hqb
-
-    state_file = tmp_path / "hot_quote_state.json"
-    quoted_file = tmp_path / "quoted.json"
-    monkeypatch.setattr(hqb, "STATE_FILE", str(state_file))
-    monkeypatch.setattr(hqb, "QUOTED_FILE", str(quoted_file))
-
-    monkeypatch.setattr(hqb, "_load_signal_items", lambda: [
-        {"title": "Topic A", "summary": "hint A"},
-        {"title": "Topic B", "summary": "hint B"},
-    ])
-    monkeypatch.setattr(hqb, "_search_best_tweet", lambda topic: {
-        "author": "elonmusk",
-        "text": "AI is the future",
-        "likes": 9000,
-        "url": f"https://x.com/elonmusk/status/{abs(hash(topic)) % 10**18}",
-    })
-    monkeypatch.setattr(hqb, "_generate_quote", lambda a, t, h: "calm take on AI")
-    monkeypatch.setattr(hqb, "can_post", lambda action: (True, ""))
-
-    calls = []
-
-    def fake_quote(url, comment):
-        calls.append(url)
-        return False  # simulate dedup / spacing skip at the chokepoint
-
-    monkeypatch.setattr(hqb, "quote_tweet", fake_quote)
-
-    hqb.run_hot_quote_cycle()
-
-    # Both topics tried, both skipped — slot NOT consumed, URLs NOT burned.
-    assert len(calls) == 2, "both topics should be tried after a skip"
-    assert not state_file.exists() or "last_slot" not in json.loads(state_file.read_text())
-    assert not quoted_file.exists() or json.loads(quoted_file.read_text()) == []
-
-
-def test_hot_quote_consumes_slot_on_successful_post(monkeypatch, tmp_path):
-    from src import hot_quote_bot as hqb
-
-    state_file = tmp_path / "hot_quote_state.json"
-    quoted_file = tmp_path / "quoted.json"
-    monkeypatch.setattr(hqb, "STATE_FILE", str(state_file))
-    monkeypatch.setattr(hqb, "QUOTED_FILE", str(quoted_file))
-
-    monkeypatch.setattr(hqb, "_load_signal_items", lambda: [
-        {"title": "Topic A", "summary": "hint A"},
-    ])
-    url = "https://x.com/elonmusk/status/1"
-    monkeypatch.setattr(hqb, "_search_best_tweet", lambda topic: {
-        "author": "elonmusk", "text": "AI is the future", "likes": 9000, "url": url,
-    })
-    monkeypatch.setattr(hqb, "_generate_quote", lambda a, t, h: "calm take on AI")
-    monkeypatch.setattr(hqb, "can_post", lambda action: (True, ""))
-    monkeypatch.setattr(hqb, "quote_tweet", lambda u, c: True)
-    monkeypatch.setattr(hqb, "log_reply", lambda *a, **k: None)
-
-    hqb.run_hot_quote_cycle()
-
-    state = json.loads(state_file.read_text())
-    assert state.get("last_slot")
-    assert url in json.loads(quoted_file.read_text())
-
-
-def test_hot_quote_spacing_block_never_touches_safari_or_llm(monkeypatch, tmp_path):
-    """When quote spacing blocks, hot_quote must NOT busy-loop scrape+LLM
-    laps — each lap eats two serialized Safari searches + an ollama call
-    that belong to the reply lane (witnessed 2026-06-07 11:22-11:24, three
-    full laps before the gap elapsed). Spacing block → cheap wait; still
-    blocked → end cycle with the slot preserved."""
-    from src import hot_quote_bot as hqb
-
-    state_file = tmp_path / "hot_quote_state.json"
-    quoted_file = tmp_path / "quoted.json"
-    monkeypatch.setattr(hqb, "STATE_FILE", str(state_file))
-    monkeypatch.setattr(hqb, "QUOTED_FILE", str(quoted_file))
-
-    monkeypatch.setattr(hqb, "_load_signal_items", lambda: [
-        {"title": "Topic A", "summary": "hint A"},
-    ])
-    monkeypatch.setattr(
-        hqb, "can_post",
-        lambda action: (False, "too soon since last quote (need ~439s gap)"),
-    )
-    monkeypatch.setattr(hqb, "_wait_for_quote_spacing", lambda **kw: False)
-
-    def boom(*a, **k):
-        raise AssertionError("Safari/LLM must not be touched while spacing-blocked")
-
-    monkeypatch.setattr(hqb, "_search_best_tweet", boom)
-    monkeypatch.setattr(hqb, "_generate_quote", boom)
-    monkeypatch.setattr(hqb, "quote_tweet", boom)
-
-    hqb.run_hot_quote_cycle()  # must return cleanly, no scrape, no post
-
-    # Slot preserved for the next fire.
-    assert not state_file.exists() or "last_slot" not in json.loads(state_file.read_text())
-
-
-# --- breaking QRT spike detector (2026-06-07 "DO IT" viral push) ---------------
-
-def test_breaking_qrt_fires_only_on_dominant_spike():
-    """A story is 'breaking' only when it DOMINATES the signal pool:
-    score >= floor AND >= ratio x runner-up. A flat pool must never fire."""
-    from src.breaking_qrt_bot import pick_breaking_item
-
-    spike = [{"title": "OpenAI buys AMD", "score": 26}, {"title": "B", "score": 1}]
-    assert pick_breaking_item(spike, {}) is spike[0]
-
-    flat = [{"title": "A story", "score": 20}, {"title": "B story", "score": 18}]
-    assert pick_breaking_item(flat, {}) is None  # 20 < 3x18 — nothing dominant
-
-    weak = [{"title": "A story", "score": 5}, {"title": "B story", "score": 1}]
-    assert pick_breaking_item(weak, {}) is None  # under the 15 floor
-
-
-def test_breaking_qrt_never_fires_same_story_twice():
-    from src.breaking_qrt_bot import pick_breaking_item, _story_key
-
-    items = [{"title": "OpenAI buys AMD for $100B", "score": 30}]
-    state = {"fired_stories": [_story_key("OpenAI buys AMD for $100B")]}
-    assert pick_breaking_item(items, state) is None
-
-    # Same story, shuffled/extended headline — key is order-insensitive.
-    rephrased = [{"title": "for $100B, OpenAI buys AMD", "score": 30}]
-    assert pick_breaking_item(rephrased, state) is None
-
-
-def test_breaking_qrt_chokepoint_skip_keeps_story_armed(monkeypatch, tmp_path):
-    """quote_tweet returning False must NOT consume the story or the daily
-    budget — the next 10-min cycle retries while the story is still hot
-    (same family as the hot_quote slot-burn bug)."""
-    from src import breaking_qrt_bot as bqb
-
-    state_file = tmp_path / "breaking_qrt_state.json"
-    monkeypatch.setattr(bqb, "STATE_FILE", str(state_file))
-    monkeypatch.setattr(bqb, "can_post", lambda action, **k: (True, ""))
-    monkeypatch.setattr(bqb, "_load_signal_items",
-                        lambda: [{"title": "OpenAI buys AMD", "score": 30}])
-    monkeypatch.setattr(bqb, "_search_best_tweet", lambda topic: {
-        "author": "WatcherGuru", "text": "JUST IN: ...", "likes": 9000,
-        "url": "https://x.com/WatcherGuru/status/1"})
-    monkeypatch.setattr(bqb, "_generate_quote", lambda a, t, h: "sharp take")
-    monkeypatch.setattr(bqb, "quote_tweet", lambda u, c, **k: False)
-    monkeypatch.setattr(bqb, "_mark_quoted", lambda u: None)
-
-    bqb.run_breaking_qrt_cycle()
-
-    state = json.loads(state_file.read_text()) if state_file.exists() else {}
-    assert state.get("fired_today", 0) == 0
-    assert bqb._story_key("OpenAI buys AMD") not in state.get("fired_stories", [])
 
 
 # --- truncation guard (the "botched ChatGPT paste" callout, 2026-06-05) -------
@@ -464,19 +282,7 @@ def test_inject_human_typo_skips_unsafe_words():
     assert inject_human_typo(text) == text
 
 
-# --- GIF tag pipeline (operator 2026-06-05: funny GIFs on posts/quotes) --------
-
-def test_extract_gif_query(tmp_path, monkeypatch):
-    # Isolate the GIF anti-repeat state file (2026-06-24): extract_gif_query
-    # now runs rotate_gif_query, which reads/writes gif_recent.json — without
-    # isolation this test is non-deterministic (rotates/drops a query seen in
-    # prod state). Fresh empty recent-file => the first pick passes through.
-    from src import humanizer
-    monkeypatch.setattr(humanizer, "_GIF_RECENT_FILE", str(tmp_path / "gif_recent.json"))
-    clean, q = humanizer.extract_gif_query("the couch is open.\n\n[GIF: this is fine]")
-    assert q == "this is fine" and "[GIF" not in clean and "couch" in clean
-    clean2, q2 = humanizer.extract_gif_query("no tag here")
-    assert q2 == "" and clean2 == "no tag here"
+# --- GIF tag scrubbing (operator 2026-06-05) ----------------------------------
 
 
 def test_gif_tag_scrubbed_at_chokepoint():
@@ -515,285 +321,6 @@ def test_review_mode_queues_instead_of_posting(monkeypatch, tmp_path):
     q = json.load(open(qpath))
     assert len(q) == 1 and q[0]["kind"] == "post"
     assert recorded == []  # nothing published
-
-
-def test_niche_excludes_space_now():
-    from src.retweet_bot import _is_on_niche
-    assert not _is_on_niche("Beautiful photo of the lunar surface from the Artemis mission astronauts")
-    assert _is_on_niche("Nvidia datacenter revenue is 88% of the company now")
-
-
-# --- engine-health false-collapse on disabled surfaces (2026-06-06) -------------
-
-def test_engine_health_skips_disabled_surface(monkeypatch, tmp_path):
-    """MAX_RETWEETS_PER_DAY=0 (monetization mandate) disables bare retweets.
-    Comparing today's forced-0 against a multi-day pre-mandate baseline must
-    NOT fire a 'collapsed' alert — the surface is intentionally OFF, not
-    failing. Without this guard the self-heal launches every cycle on a
-    deliberately-disabled engine and burns the Claude cooldown.
-    """
-    import os
-    import csv
-    from src import engine_health_bot as ehb
-
-    log_path = tmp_path / "engagement_log.csv"
-    alerts_path = tmp_path / "engine_health_alerts.json"
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")  # never spawn the emergency script
-    monkeypatch.setenv("MAX_RETWEETS_PER_DAY", "0")  # mandate: retweets OFF
-
-    from datetime import date, timedelta
-    rows = [["timestamp", "type", "text", "target_url"]]
-    for i in range(1, 8):
-        d = (date.today() - timedelta(days=i)).isoformat()
-        for _ in range(50):
-            rows.append([f"{d}T00:00:00", "retweet", "x", "y"])
-    with open(log_path, "w") as f:
-        csv.writer(f).writerows(rows)
-
-    ehb.run_engine_health_cycle()
-    assert not alerts_path.exists(), "disabled surface must not trigger a collapse alert"
-
-
-def test_engine_health_still_alerts_active_surface(monkeypatch, tmp_path):
-    """Mirror of the above: when the cap is positive but today's count is 0
-    against a large baseline, the alert MUST still fire. Guards against the
-    fix over-suppressing."""
-    import os
-    import csv
-    from src import engine_health_bot as ehb
-
-    log_path = tmp_path / "engagement_log.csv"
-    alerts_path = tmp_path / "engine_health_alerts.json"
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_REPLIES_PER_DAY", "100")  # surface is ON
-
-    from datetime import date, timedelta
-    rows = [["timestamp", "type", "text", "target_url"]]
-    for i in range(1, 8):
-        d = (date.today() - timedelta(days=i)).isoformat()
-        for _ in range(50):
-            rows.append([f"{d}T00:00:00", "reply", "x", "y"])
-    with open(log_path, "w") as f:
-        csv.writer(f).writerows(rows)
-
-    ehb.run_engine_health_cycle()
-    assert alerts_path.exists()
-    import json as _json
-    alerts = _json.load(open(alerts_path))
-    flat = " ".join(a for entry in alerts for a in entry.get("alerts", []))
-    assert "reply collapsed" in flat
-
-
-def test_engine_health_clamps_baseline_by_cap(monkeypatch, tmp_path):
-    """Operator lowered MAX_HOTAKES_PER_DAY 8 → 2 under the monetization
-    mandate; the 7-day baseline still reflected the old cap (~19 by hour 6).
-    Today's 2 == the entire daily quota — that's success, not a 'collapse'.
-    The watchdog must clamp the baseline by the current cap so a hit-cap
-    surface never trips the 40% ratio alert (and never burns self-heal).
-    """
-    import csv
-    from src import engine_health_bot as ehb
-
-    log_path = tmp_path / "engagement_log.csv"
-    alerts_path = tmp_path / "engine_health_alerts.json"
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_ORIGINALS_PER_DAY", "2")  # cap was lowered
-    # Isolate the CAP clamp: disable the slot-quiet gate + slots-elapsed clamp
-    # (each has its own dedicated test).
-    monkeypatch.setattr(ehb, "SLOT_EVAL_FROM_HOUR", 0)
-    monkeypatch.setattr(ehb, "SLOT_EVAL_UNTIL_HOUR", 24)
-    monkeypatch.setattr(ehb, "_slots_elapsed", lambda h: 9999.0)
-
-    from datetime import date, datetime, timedelta
-    hour_now = datetime.now().hour
-    rows = [["timestamp", "type", "text", "target_url"]]
-    # 7 historical days with cap-era baseline of ~20 hotakes spread BEFORE the
-    # current hour — keeps every row inside the same-hour-of-day window.
-    for i in range(1, 8):
-        d = (date.today() - timedelta(days=i)).isoformat()
-        for _ in range(20):
-            rows.append([f"{d}T00:00:00", "hotake", "x", "y"])
-    # Today: hit the new cap of 2.
-    today = date.today().isoformat()
-    rows.append([f"{today}T0{max(hour_now-1,0):01d}:00:00", "hotake", "x", "y"])
-    rows.append([f"{today}T0{max(hour_now-1,0):01d}:30:00", "hotake", "x", "y"])
-    with open(log_path, "w") as f:
-        csv.writer(f).writerows(rows)
-
-    ehb.run_engine_health_cycle()
-    assert not alerts_path.exists(), "surface at its daily cap must not alert"
-
-
-def test_engine_health_quote_disabled_only_if_all_caps_zero(monkeypatch, tmp_path):
-    """quote is governed by MAX_QUOTES_PER_DAY AND MAX_QUOTE_REPOSTS_PER_DAY.
-    If either is positive, quote is still ON and a 0-count should alert."""
-    import csv
-    from src import engine_health_bot as ehb
-
-    log_path = tmp_path / "engagement_log.csv"
-    alerts_path = tmp_path / "engine_health_alerts.json"
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_QUOTES_PER_DAY", "0")
-    monkeypatch.setenv("MAX_QUOTE_REPOSTS_PER_DAY", "6")  # the other path still on
-
-    from datetime import date, timedelta
-    rows = [["timestamp", "type", "text", "target_url"]]
-    for i in range(1, 8):
-        d = (date.today() - timedelta(days=i)).isoformat()
-        for _ in range(20):
-            rows.append([f"{d}T00:00:00", "quote", "x", "y"])
-    with open(log_path, "w") as f:
-        csv.writer(f).writerows(rows)
-
-    ehb.run_engine_health_cycle()
-    assert alerts_path.exists(), "quote must still alert when only ONE of its caps is zero"
-
-
-def test_engine_health_suppresses_alert_when_surface_fired_recently(monkeypatch, tmp_path):
-    """A surface that fired in the current or previous hour is alive — slow,
-    not collapsed. Without this guard, the 04:01 cycle on 2026-06-07 reported
-    'hotake collapsed: 2 vs ~10' while the hotake bot had fired successfully
-    at 03:23 and 03:43 (max 20-min cadence), and was firing again at 04:02.
-    Same false-positive class as PR #6 / #7: never burn the self-heal cooldown
-    on a healthy bot whose only sin is matching today's cadence instead of the
-    7-day cumulative-by-hour baseline.
-    """
-    import csv
-    from src import engine_health_bot as ehb
-
-    log_path = tmp_path / "engagement_log.csv"
-    alerts_path = tmp_path / "engine_health_alerts.json"
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "400")  # operator-raised cap
-
-    from datetime import date, datetime, timedelta
-    hour_now = datetime.now().hour
-    if hour_now < 1:
-        # At hour 0 there is no "previous hour today" to fire in — skip.
-        return
-    rows = [["timestamp", "type", "text", "target_url"]]
-    # 7 historical days with ~10 hotakes each before this hour → baseline=10.
-    for i in range(1, 8):
-        d = (date.today() - timedelta(days=i)).isoformat()
-        for _ in range(10):
-            rows.append([f"{d}T00:00:00", "hotake", "x", "y"])
-    # Today: 2 hotakes fired in the previous hour — well below the baseline of
-    # 10 (would normally alert at 20%) but the surface is plainly alive.
-    today = date.today().isoformat()
-    prev_h = hour_now - 1
-    rows.append([f"{today}T{prev_h:02d}:23:00", "hotake", "x", "y"])
-    rows.append([f"{today}T{prev_h:02d}:43:00", "hotake", "x", "y"])
-    with open(log_path, "w") as f:
-        csv.writer(f).writerows(rows)
-
-    ehb.run_engine_health_cycle()
-    assert not alerts_path.exists(), (
-        "surface that fired in the previous hour must not trigger a collapse alert"
-    )
-
-
-def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
-    """Mirror of the recent-fire guard: when the surface has been silent for
-    2+ clock hours (no fire in the current hour OR the previous one), the
-    alert MUST still fire. Guards against the recent-fire suppression
-    over-masking a real collapse."""
-    import csv
-    from src import engine_health_bot as ehb
-
-    log_path = tmp_path / "engagement_log.csv"
-    alerts_path = tmp_path / "engine_health_alerts.json"
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_ORIGINALS_PER_DAY", "400")
-    # Disable the slot-quiet-hours gate + slots clamp (each has its own
-    # dedicated test) so this exercises sustained-silence at ANY wall hour.
-    monkeypatch.setattr(ehb, "SLOT_EVAL_FROM_HOUR", 0)
-    monkeypatch.setattr(ehb, "SLOT_EVAL_UNTIL_HOUR", 24)
-    monkeypatch.setattr(ehb, "_slots_elapsed", lambda h: 9999.0)
-
-    from datetime import date, datetime, timedelta
-    hour_now = datetime.now().hour
-    if hour_now < 2:
-        # Need ≥2 hours of "earlier today" available to model the silence.
-        return
-    rows = [["timestamp", "type", "text", "target_url"]]
-    for i in range(1, 8):
-        d = (date.today() - timedelta(days=i)).isoformat()
-        for _ in range(10):
-            rows.append([f"{d}T00:00:00", "hotake", "x", "y"])
-    # Today: a single fire 2 hours ago — outside the recent-fire window.
-    today = date.today().isoformat()
-    stale_h = hour_now - 2
-    rows.append([f"{today}T{stale_h:02d}:30:00", "hotake", "x", "y"])
-    with open(log_path, "w") as f:
-        csv.writer(f).writerows(rows)
-
-    ehb.run_engine_health_cycle()
-    assert alerts_path.exists(), (
-        "sustained silence (no fire in current or previous hour) must still alert"
-    )
-
-
-def test_self_heal_env_kill_switch_is_read_at_call_time(monkeypatch, tmp_path):
-    """The self-heal kill switch (ENABLE_SELF_HEAL=0) MUST take effect when set
-    via monkeypatch.setenv — and by extension via a live .env edit on the
-    running bot. Regression: when ENABLE_SELF_HEAL / SELF_HEAL_COOLDOWN_HOURS
-    were module-level constants evaluated at import, every other engine-health
-    test (which calls run_engine_health_cycle() with synthetic 'collapsed'
-    data) silently spawned bin/auto_improve.sh --emergency in production —
-    which in turn launched a real headless Claude run against a phantom alert.
-    Pin both gates at call time so the env-based override is honored.
-    """
-    from src import engine_health_bot as ehb
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    # Force the cooldown check to think the stamp is fresh — proves the
-    # kill switch short-circuits BEFORE the cooldown read.
-    monkeypatch.setattr(ehb, "_SELF_HEAL_STAMP", str(tmp_path / "noop"))
-    spawned = []
-    import subprocess as _subprocess
-    monkeypatch.setattr(
-        _subprocess, "Popen", lambda *a, **k: spawned.append(a) or None,
-    )
-    ehb._maybe_trigger_self_heal(["reply collapsed: 0 today vs ~50 (synthetic)"])
-    assert spawned == [], (
-        "ENABLE_SELF_HEAL=0 must suppress the auto_improve.sh subprocess "
-        "(was leaking because the flag was read at import time)"
-    )
-
-
-def test_self_heal_cooldown_env_is_read_at_call_time(monkeypatch, tmp_path):
-    """SELF_HEAL_COOLDOWN_HOURS must also be honored at call time so the
-    operator can extend the cooldown live (e.g. during a known-bad window)
-    without a bot restart. Writes a stamp 1h old, sets cooldown to 24h, and
-    asserts no subprocess fires."""
-    from src import engine_health_bot as ehb
-    from datetime import datetime, timedelta
-    stamp = tmp_path / ".last_self_heal"
-    stamp.write_text(datetime.now().isoformat())
-    import os as _os
-    one_hour_ago = (datetime.now() - timedelta(hours=1)).timestamp()
-    _os.utime(stamp, (one_hour_ago, one_hour_ago))
-    monkeypatch.setattr(ehb, "_SELF_HEAL_STAMP", str(stamp))
-    monkeypatch.setenv("ENABLE_SELF_HEAL", "1")
-    monkeypatch.setenv("SELF_HEAL_COOLDOWN_HOURS", "24")
-    spawned = []
-    import subprocess as _subprocess
-    monkeypatch.setattr(
-        _subprocess, "Popen", lambda *a, **k: spawned.append(a) or None,
-    )
-    ehb._maybe_trigger_self_heal(["reply collapsed: 0 today vs ~50 (synthetic)"])
-    assert spawned == [], "cooldown env override must be honored at call time"
 
 
 # --- 2026-06-07 agent spec: follow policy (Part 1 hard constraints) ---------
@@ -903,7 +430,7 @@ def test_unfollow_protects_all_whitelist_tiers(follow_env):
         assert not ok and "protected" in why, (handle, why)
 
 
-# --- 2026-06-07 round 2: pillar tags / freshness sort / trim / reply-bait ---
+# --- 2026-06-07 round 2: pillar tags / freshness sort / trim ---------------
 
 def test_pillar_classifier_buckets():
     from src.pillar_tags import classify
@@ -920,9 +447,9 @@ def test_pillar_classifier_buckets():
 
 def _url_with_age(minutes: int) -> str:
     from datetime import datetime, timezone
-    from src.reply_bot import _TWITTER_EPOCH
+    from src.x_urls import _TWITTER_EPOCH_MS
     now_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
-    tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH) << 22
+    tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH_MS) << 22
     return f"https://x.com/someone/status/{tweet_id}"
 
 
@@ -962,36 +489,7 @@ def test_smart_trim_salvages_overlong_reply():
     assert ok, why
 
 
-def test_reply_bait_weekly_cap(monkeypatch, tmp_path):
-    """Reply-bait question posts are capped per ISO week (spec: 3-4/week)."""
-    from src import spicy_bot as sb
-    monkeypatch.setattr(sb, "SPICY_STATE_FILE", str(tmp_path / "spicy.json"))
-    assert sb._week_question_count() == 0
-    for _ in range(sb.REPLY_BAIT_PER_WEEK):
-        sb._increment_question_count()
-    assert sb._week_question_count() == sb.REPLY_BAIT_PER_WEEK
-    assert sb._week_question_count() >= sb.REPLY_BAIT_PER_WEEK  # gate trips
-
-
-def test_weekly_review_builds():
-    from src.weekly_review_bot import build_review
-    out = build_review()
-    assert out.startswith("# Weekly review")
-    assert "## Pillar mix" in out
-
-
-def test_unfollow_cycle_disabled_at_cap_zero(monkeypatch):
-    """Cap 0 = operator unfollows manually; the cycle must bail before any
-    Safari scrape work."""
-    from src import smart_unfollow_bot as sub, config
-    monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 0)
-    called = []
-    monkeypatch.setattr(sub, "_scrape_handle_list", lambda *a, **k: called.append(a) or [])
-    sub.run_unfollow_cycle()
-    assert called == [], "unfollow cycle must not touch Safari when cap is 0"
-
-
-# --- 2026-06-07 round 3: lane queries / seed resolution / top posts ---------
+# --- 2026-06-07 round 3: lane queries ---------------------------------------
 
 def test_reply_queries_are_on_lane():
     """Spec lane: AI x markets x psychology. NO space content; the tier1-2
@@ -1006,41 +504,6 @@ def test_reply_queries_are_on_lane():
     # but trimmed to 1 query — operator 2026-06-08 "focus more on AI": the
     # therapist voice frames AI replies; it's no longer a topic lane.
     assert "panic" in joined, "market-trauma voice target missing"
-
-
-def test_seed_identity_matcher():
-    from src.marquee_follow_bot import _seed_matches_identity
-    seed = {"display_name": "Morgan Housel",
-            "keywords": ["psychology of money", "behavior", "risk"]}
-    # Name token match.
-    assert _seed_matches_identity(seed, "Morgan Housel")
-    # Keyword-in-bio match even when the name moved.
-    assert _seed_matches_identity(seed, "MH", "Author. The Psychology of Money.")
-    # Confident mismatch: scrape worked, nothing matches → never follow blind.
-    assert not _seed_matches_identity(seed, "Crypto Airdrop Hub", "free $BONK giveaway")
-    # No metadata → nothing to verify against → matches.
-    assert _seed_matches_identity({"handle": "x"}, "whatever", "")
-
-
-def test_weekly_top_posts_sorted_and_windowed(monkeypatch, tmp_path):
-    from datetime import datetime, timedelta
-    from src import weekly_review_bot as wr
-    now = datetime.now()
-    rows = [
-        {"text": "old banger", "likes": 999, "views": 9999,
-         "timestamp": (now - timedelta(days=30)).isoformat()},
-        {"text": "this week small", "likes": 1, "views": 50,
-         "timestamp": (now - timedelta(days=1)).isoformat()},
-        {"text": "this week big", "likes": 7, "views": 300,
-         "timestamp": (now - timedelta(days=2)).isoformat()},
-    ]
-    p = tmp_path / "perf.json"
-    p.write_text(json.dumps(rows))
-    monkeypatch.setattr(wr, "PERFORMANCE_LOG_FILE", str(p))
-    top = wr._top_posts()
-    assert [r["text"] for r in top] == ["this week big", "this week small"], (
-        "must window to 7 days and sort by likes desc"
-    )
 
 
 # --- 2026-06-07 PM: early-reply pools are curator-driven, never static ------
@@ -1062,69 +525,7 @@ def test_early_reply_targets_are_curator_driven():
     assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
 
 
-# --- 2026-06-07 learning-loop fixes: self_winners provenance + clearing -----
-
-def test_self_winners_filters_foreign_and_french(monkeypatch, tmp_path):
-    """The own-wins bank must reject scraped retweet ads (implausible view
-    counts), French-era posts, and must CLEAR the bank when nothing
-    qualifies (stale injection bug)."""
-    from datetime import datetime
-    from src import self_winners as sw
-    now = datetime.now().isoformat()
-    perf = [
-        # legit therapist-era winner
-        {"text": "Your portfolio is not down, it is processing trauma. Sit with it a moment.",
-         "likes": 5, "views": 900, "timestamp": now, "scraped_at": now},
-        # scraped retweet ad — 2M views is not this account
-        {"text": "Start with one idea. End with a feed full of content. Get unlimited!",
-         "likes": 35, "views": 2_000_000, "timestamp": now, "scraped_at": now},
-        # French-era post
-        {"text": "Les actions technologiques semblent chères mais la révolution ne fait que commencer pour les investisseurs.",
-         "likes": 17, "views": 7000, "timestamp": now, "scraped_at": now},
-    ]
-    perf_file = tmp_path / "perf.json"
-    perf_file.write_text(json.dumps(perf))
-    bank_file = tmp_path / "winners.md"
-    monkeypatch.setattr(sw, "PERFORMANCE_LOG_FILE", str(perf_file))
-    monkeypatch.setattr(sw, "SELF_WINNERS_FILE", str(bank_file))
-    monkeypatch.setattr(sw, "MIN_LIKES_FLOOR", 3)
-
-    sw.run_self_winners_cycle()
-    bank = bank_file.read_text()
-    assert "processing trauma" in bank
-    assert "Get unlimited" not in bank, "foreign mega-view ad must be filtered"
-    assert "actions technologiques" not in bank, "French-era post must be filtered"
-
-    # Nothing qualifies → bank is CLEARED, not left stale.
-    perf_file.write_text(json.dumps([perf[1], perf[2]]))
-    sw.run_self_winners_cycle()
-    assert "processing trauma" not in bank_file.read_text()
-    assert sw.render_self_winners_block() == "" or "processing trauma" not in sw.render_self_winners_block()
-
-
-def test_pillar_engagement_aggregates(monkeypatch, tmp_path):
-    from datetime import datetime
-    from src import analyzer_bot as ab
-    now = datetime.now().isoformat()
-    perf = [
-        {"text": "Your panic selling is just fear wearing a trade ticket. Breathe.",
-         "likes": 10, "views": 1000, "timestamp": now},
-        {"text": "Diagnosis: chronic dip-denial. The drawdown is the therapy bill.",
-         "likes": 20, "views": 3000, "timestamp": now},
-        {"text": "OpenAI ships a new model, GPUs everywhere sigh.",
-         "likes": 3, "views": 500, "timestamp": now},
-    ]
-    (tmp_path / "performance_log.json").write_text(json.dumps(perf))
-    monkeypatch.setattr(ab, "_PROJECT_ROOT", str(tmp_path))
-    out = ab._pillar_engagement()
-    by = {r["pillar"]: r for r in out}
-    assert by["market_trauma"]["posts"] == 2
-    assert by["market_trauma"]["avg_likes"] == 15.0
-    assert by["ai_news_take"]["avg_likes"] == 3.0
-    assert out[0]["pillar"] == "market_trauma", "sorted by avg_likes desc"
-
-
-# --- 2026-06-07 PM: self-curated tracking + BTC bestie blitz ----------------
+# --- 2026-06-07 PM: self-curated tracking ----------------------------------
 
 def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
     """Only ON-LANE engagements count as evidence (FR-era rows classify
@@ -1163,117 +564,6 @@ def test_curator_promotion_quality_bar():
     assert not _promotable({"handle": "goodname", "engagements": 4}), "below promote floor"
 
 
-def test_btc_blitz_filters_and_sorts(monkeypatch):
-    """Blitz keeps only HIS posts <=48h, most-liked first; reposts of others
-    on his profile and stale posts are dropped."""
-    from src import btc_blitz as bb
-    from src import twitter_client as tc
-    fresh_small = {"url": _url_with_age(60).replace("/someone/", "/thebtctherapist/"), "likes": 3, "text": "a"}
-    fresh_big = {"url": _url_with_age(120).replace("/someone/", "/thebtctherapist/"), "likes": 800, "text": "b"}
-    stale = {"url": _url_with_age(50 * 60).replace("/someone/", "/thebtctherapist/"), "likes": 9000, "text": "c"}
-    foreign = {"url": _url_with_age(30), "likes": 500, "text": "d"}  # /someone/ = repost
-    monkeypatch.setattr(tc, "scrape_profile_tweets",
-                        lambda *a, **k: [fresh_small, stale, foreign, fresh_big])
-    out = bb._fresh_bestie_posts()
-    assert out == [fresh_big, fresh_small], (
-        "must keep only his <=48h posts, sorted most-liked first"
-    )
-
-
-# --- 2026-06-07 PM-3: self-RT recycler discipline ----------------------------
-
-def test_boost_recycler_decision_logic(monkeypatch):
-    """First-boost new winners after 1h; recycle (un-RT→re-RT) only with
-    4h+ gaps and under the per-post cycle cap; never touch <1h or >48h."""
-    from datetime import datetime, timedelta
-    from src import boost_recycler_bot as br
-    now = datetime.now()
-    too_fresh = {"url": _url_with_age(20), "likes": 50}
-    winner_new = {"url": _url_with_age(90), "likes": 10}
-    winner_recyclable = {"url": _url_with_age(8 * 60), "likes": 30}
-    too_old = {"url": _url_with_age(50 * 60), "likes": 900}
-
-    # New winner (not yet RT'd) wins over a recyclable one — first boost.
-    action, url = br.pick_action(
-        [too_fresh, winner_new, winner_recyclable, too_old],
-        state={winner_recyclable["url"]: {"boosts": 1, "last": (now - timedelta(hours=9)).isoformat()}},
-        currently_retweeted={winner_recyclable["url"]},
-        now=now,
-    )
-    assert (action, url) == ("boost", winner_new["url"])
-
-    # Only the recyclable one left → recycle it (gap satisfied).
-    action, url = br.pick_action(
-        [too_fresh, winner_recyclable, too_old],
-        state={winner_recyclable["url"]: {"boosts": 1, "last": (now - timedelta(hours=9)).isoformat()}},
-        currently_retweeted={winner_recyclable["url"]},
-        now=now,
-    )
-    assert (action, url) == ("recycle", winner_recyclable["url"])
-
-    # Gap not yet elapsed → hold.
-    action, _ = br.pick_action(
-        [winner_recyclable],
-        state={winner_recyclable["url"]: {"boosts": 1, "last": (now - timedelta(hours=1)).isoformat()}},
-        currently_retweeted={winner_recyclable["url"]},
-        now=now,
-    )
-    assert action is None
-
-    # Cycle cap reached → hold forever.
-    action, _ = br.pick_action(
-        [winner_recyclable],
-        state={winner_recyclable["url"]: {"boosts": br.BOOST_RECYCLE_MAX_CYCLES,
-                                          "last": (now - timedelta(hours=20)).isoformat()}},
-        currently_retweeted={winner_recyclable["url"]},
-        now=now,
-    )
-    assert action is None
-
-
-def test_boost_recycler_prefers_commented_posts(monkeypatch):
-    """Operator 2026-06-27: reshare posts people COMMENTED on first. A post
-    with comments outranks a higher-like post with no comments (replies are
-    weighted), and a low-like post still qualifies if it has comments."""
-    from datetime import datetime
-    from src import boost_recycler_bot as br
-    now = datetime.now()
-    # Both recyclable (age in window, already RT'd, no row → gap satisfied).
-    # high_likes score = 40; commented score = 10*5 + 3 = 53 → commented wins.
-    high_likes_no_comments = {"url": _url_with_age(8 * 60), "likes": 40, "replies": 0}
-    low_likes_with_comments = {"url": _url_with_age(9 * 60), "likes": 3, "replies": 10}
-    retweeted = {high_likes_no_comments["url"], low_likes_with_comments["url"]}
-    action, url = br.pick_action(
-        [high_likes_no_comments, low_likes_with_comments],
-        state={}, currently_retweeted=retweeted, now=now,
-    )
-    assert action == "recycle" and url == low_likes_with_comments["url"]
-    # A post with ONLY comments (below the like floor) must still qualify as a
-    # winner via the replies floor — pick_action returns it, not None.
-    only_comments = {"url": _url_with_age(7 * 60), "likes": 0, "replies": 4}
-    action2, url2 = br.pick_action(
-        [only_comments], state={},
-        currently_retweeted={only_comments["url"]}, now=now,
-    )
-    assert action2 == "recycle" and url2 == only_comments["url"]
-
-
-# --- 2026-06-07: engine-health warmup grace (boot false-emergency) ----------
-
-def test_engine_health_warmup_suppresses_boot_alerts(monkeypatch):
-    """Right after process start every surface reads 0-by-this-hour — that's
-    downtime, not collapse. Witnessed live 2026-06-07: an emergency self-heal
-    Claude run was spawned for 'reply collapsed: 0 today' minutes after boot.
-    Within WARMUP_MINUTES the cycle must do nothing; after it, checks run."""
-    from datetime import datetime, timedelta
-    from src import engine_health_bot as ehb
-    monkeypatch.setattr(ehb, "_PROCESS_START", datetime.now())
-    assert ehb._in_warmup(), "fresh boot must be in warmup"
-    monkeypatch.setattr(ehb, "_PROCESS_START",
-                        datetime.now() - timedelta(minutes=ehb.WARMUP_MINUTES + 5))
-    assert not ehb._in_warmup(), "past the warmup window checks must resume"
-
-
 def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
     scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
@@ -1304,50 +594,6 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
     assert not tc._profile_visit_allowed("graphseo")
     assert tc._profile_visit_allowed("thebtctherapist")
-
-
-def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
-    """Operator 2026-06-07: 'reply to everything graphseo and thebtctherapist
-    post'. The blitz must cover BOTH: bestie pass for TheBTCTherapist, buddy
-    pass for Graphseo — every fresh post gets exactly one reply, already-
-    replied URLs are skipped before the LLM."""
-    from src import btc_blitz as bb
-    from src import twitter_client as tc
-    from src import engagement_log as el
-
-    posts = {
-        "TheBTCTherapist": [
-            {"url": "https://x.com/TheBTCTherapist/status/111", "text": "btc pain", "likes": 5},
-        ],
-        "Graphseo": [
-            {"url": "https://x.com/Graphseo/status/222", "text": "fresh seo take", "likes": 3},
-            {"url": "https://x.com/Graphseo/status/333", "text": "already covered", "likes": 9},
-        ],
-    }
-    monkeypatch.setattr(bb, "_fresh_posts", lambda h: list(posts.get(h, [])))
-    gen_calls = []
-    monkeypatch.setattr(
-        bb, "generate_vip_reply",
-        lambda tpl, txt, model, label, author=None: gen_calls.append((label, txt)) or "sharp take")
-    # Graphseo routes to his dedicated FR generator (operator 2026-06-07:
-    # English shipped to him once — never again).
-    import src.direct_reply as dr
-    monkeypatch.setattr(dr, "_generate_graphseo_reply",
-                        lambda txt: gen_calls.append(("GRAPHSEO_FR", txt)) or "réponse précise en français")
-    # One Graphseo post already replied — must be skipped pre-LLM.
-    monkeypatch.setattr(rs, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
-    sent = []
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
-    monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
-
-    bb.run_btc_blitz_cycle()
-
-    assert sent == [
-        "https://x.com/TheBTCTherapist/status/111",  # bestie pass
-        "https://x.com/Graphseo/status/222",         # buddy pass
-    ]
-    assert all("already covered" not in txt for _, txt in gen_calls), \
-        "replied URL must be skipped BEFORE the LLM call"
 
 
 def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
@@ -1570,28 +816,6 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
         assert not ok, f"{leak!r} must never publish"
 
 
-def test_quote_ai_viral_pass_present_and_ranked():
-    """Operator 2026-06-07: 'not really quote retweet on AI... do it more —
-    find viral content from viral big accounts in AI or TOP posts in AI'.
-    The quote bot must carry an always-scanned AI-viral pass (from: the
-    biggest AI accounts + high-min_faves AI topics) and rank those
-    candidates ahead of the generic pool."""
-    from src import quote_tweet_bot as qb
-    # Big AI accounts present.
-    for h in ("sama", "openai", "anthropicai", "karpathy", "googledeepmind"):
-        assert h in [x.lower() for x in qb.TOP_AI_HANDLES], f"missing top AI handle {h}"
-    # AI-viral queries are from: the big accounts and high min_faves topics.
-    joined = " ".join(qb.AI_VIRAL_QUERIES).lower()
-    assert "from:sama" in joined and "from:openai" in joined
-    assert "min_faves:1000" in joined or "min_faves:800" in joined, "needs a TOP-post viral floor"
-    # Ranking order: priority + ai_viral + rest — assert the source line
-    # prepends ai_viral ahead of the generic candidates.
-    import inspect
-    src = inspect.getsource(qb.run_quote_tweet_cycle)
-    assert "ai_viral_candidates + priority_candidates + candidates" in src, \
-        "AI virals must LEAD the main quote lane (bestie is covered by btc_blitz)"
-
-
 def test_startup_reply_warmup_is_bounded(monkeypatch):
     """Operator 2026-06-07: 'more quote retweet on AI'. Root cause was an
     UNBOUNDED startup reply warmup that ran 20+ min and blocked
@@ -1622,176 +846,6 @@ def test_startup_reply_warmup_is_bounded(monkeypatch):
     assert calls["queries"] < 21, "must stop scanning queries once the budget is spent"
 
 
-# --- 2026-06-08: GIF post/quote double-log fix ------------------------------
-
-def test_bot_gif_hotake_logs_once_not_twice(monkeypatch, tmp_path):
-    """Regression pin for the 2026-06-08 duplicate-row bug.
-
-    Before this fix, every GIF hot take wrote TWO rows to engagement_log:
-      (a) action_type='post', source='GIF/<q>'   ← post_tweet_with_gif
-      (b) action_type='hotake', source=''         ← bot.py unconditional log
-    The pillar classifier then bucketed (a) as meme_reaction and (b) as
-    market_trauma (content match). Result: one ship inflated two pillars
-    AND two per-action counts — the very same per-pillar metric that drove
-    the autonomous 29.8x market_trauma pivot. The fix: bot.py must skip the
-    second log call when gif_query is set."""
-    from src import bot as bot_mod
-    from src import engagement_log as el
-
-    csv_path = str(tmp_path / "engagement_log.csv")
-    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
-
-    def fake_post_with_gif(text, gif_query, force=False):
-        # Mirrors the real chokepoint's logging: action_type=post,
-        # source=GIF/<q>. Returns True on a successful ship.
-        el.log_post(text, source=f"GIF/{gif_query}")
-        return True
-
-    monkeypatch.setattr(bot_mod, "post_tweet_with_gif", fake_post_with_gif)
-
-    # Replay the small block of bot.py that owns the dispatch. We capture
-    # any caller-side log_hotake/log_post calls to assert they're skipped.
-    caller_logs = []
-    monkeypatch.setattr(bot_mod, "log_hotake",
-                        lambda *a, **k: caller_logs.append(("hotake", a, k)))
-    monkeypatch.setattr(bot_mod, "log_post",
-                        lambda *a, **k: caller_logs.append(("post", a, k)))
-
-    tweet = "SoftBank -6%. The AI rally is in its first real therapy session."
-    gif_query = "this is fine"
-    tweet_source = "hotake"
-    pattern_id = "OTHER"
-
-    # Reproduce the exact bot.py block (the one we just guarded).
-    bot_mod.post_tweet_with_gif(tweet, gif_query)
-    if not gif_query:
-        if tweet_source == "hotake":
-            bot_mod.log_hotake(tweet, pattern_id=pattern_id)
-        else:
-            bot_mod.log_post(tweet, pattern_id=pattern_id)
-
-    # The caller-side log MUST be skipped when GIF was used.
-    assert caller_logs == [], (
-        "bot.py double-logged when gif_query was set — chokepoint already "
-        "logged the row")
-
-    # And the engagement_log.csv must hold exactly ONE row for this tweet.
-    with open(csv_path) as f:
-        rows = [ln for ln in f.read().splitlines() if tweet[:30] in ln]
-    assert len(rows) == 1, (
-        f"expected 1 engagement_log row for the GIF hotake, got {len(rows)}: {rows}")
-    assert "GIF/this is fine" in rows[0], "chokepoint's GIF/ marker missing"
-
-
-def test_bot_no_gif_text_only_hotake_still_logs(monkeypatch, tmp_path):
-    """Inverse guard: a text-only (no-GIF) hot take must still log_hotake.
-    The fix targets only the duplicate path; the no-GIF path must keep its
-    single log row, otherwise hotake counts would silently drop to zero."""
-    from src import bot as bot_mod
-    from src import engagement_log as el
-
-    csv_path = str(tmp_path / "engagement_log.csv")
-    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
-
-    caller_logs = []
-    monkeypatch.setattr(bot_mod, "log_hotake",
-                        lambda *a, **k: caller_logs.append("hotake"))
-    monkeypatch.setattr(bot_mod, "log_post",
-                        lambda *a, **k: caller_logs.append("post"))
-
-    tweet = "Loss aversion isn't a bug, it's the feature."
-    gif_query = ""  # text-only
-    tweet_source = "hotake"
-
-    if not gif_query:
-        if tweet_source == "hotake":
-            bot_mod.log_hotake(tweet, pattern_id="OTHER")
-        else:
-            bot_mod.log_post(tweet, pattern_id="OTHER")
-
-    assert caller_logs == ["hotake"], (
-        f"text-only hotake must log once as 'hotake', got {caller_logs}")
-
-
-def test_quote_tweet_gif_logs_once_not_twice(monkeypatch, tmp_path):
-    """Same family as the bot.py fix: quote_tweet_with_gif logs as
-    action_type='quote_gif' with source='GIF/<q>'. quote_tweet_bot used to
-    ALSO call log_reply(action_type='quote', source='QUOTE/<author>')
-    unconditionally afterwards, producing two rows per GIF quote. The
-    second row inflated both 'quote' and 'quote_gif' action counts and
-    polluted per-pillar attribution. quote_tweet_bot must skip the log
-    when _gif_q is set."""
-    from src import quote_tweet_bot as qb
-    from src import engagement_log as el
-
-    csv_path = str(tmp_path / "engagement_log.csv")
-    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
-
-    caller_logs = []
-    monkeypatch.setattr(qb, "log_reply",
-                        lambda *a, **k: caller_logs.append((a, k)))
-
-    url = "https://x.com/somefin/status/1234567890"
-    quote = "$145B is the rent on silicon that doesn't exist yet."
-    author = "somefin"
-    _gif_q = "wolf of wall street"
-
-    # Reproduce the guarded block.
-    if not _gif_q:
-        qb.log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
-
-    assert caller_logs == [], (
-        "quote_tweet_bot must skip log_reply when _gif_q is set "
-        "(quote_tweet_with_gif already logged as quote_gif)")
-
-
-def test_bot_gif_dup_guard_present_in_source():
-    """Structural pin: regression-guard the `if not gif_query:` wrapper in
-    bot.py's _run_single_bot_cycle. The behavior test above can pass even
-    if a future refactor moves the dispatch elsewhere; this test holds the
-    code shape that the chokepoint contract relies on."""
-    import inspect
-    from src import bot as bot_mod
-    src = inspect.getsource(bot_mod._run_single_bot_cycle)
-    assert "if not gif_query:" in src, (
-        "bot.py _run_single_bot_cycle must guard the engagement-log "
-        "dispatch with `if not gif_query:` (chokepoint already logs)")
-
-
-def test_quote_tweet_gif_dup_guard_present_in_source():
-    """Structural pin: same family as the bot.py guard."""
-    import inspect
-    from src import quote_tweet_bot as qb
-    src = inspect.getsource(qb.run_quote_tweet_cycle)
-    assert "if not _gif_q:" in src, (
-        "quote_tweet_bot.run_quote_tweet_cycle must guard the log_reply "
-        "call with `if not _gif_q:` (chokepoint logs as quote_gif)")
-
-
-def test_bot_cycle_no_unbound_tweet_when_news_capped(monkeypatch):
-    """2026-06-08 live crash: `tweet` was initialized only inside
-    `if can_news:`, so when the news cap was full (can_news=False,
-    can_hotake=True) the `if tweet is None ...` check hit UnboundLocalError
-    and crashed every post cycle. Pin: news-capped + hotake-available runs
-    cleanly and ships the hotake."""
-    from src import bot as b
-    monkeypatch.setattr(b, "_get_counters", lambda: (999, 0))   # news capped, hotake open
-    monkeypatch.setattr(b, "_live_news_cap", lambda: 999)
-    monkeypatch.setattr(b, "_live_hotake_cap", lambda: 40)
-    monkeypatch.setattr(b, "generate_hotake", lambda: "TEST-FIXTURE hotake zz-unbound-regression zz.")
-    monkeypatch.setattr(b, "_increment_counter", lambda k: None)
-    monkeypatch.setattr(b, "humanize", lambda t: t)
-    shipped = {}
-    # Stop right after tweet is chosen — patch post_tweet to capture, not send.
-    monkeypatch.setattr(b, "post_tweet", lambda *a, **k: shipped.setdefault("text", a[0] if a else "") or True)
-    try:
-        b._run_single_bot_cycle()
-    except UnboundLocalError as e:
-        raise AssertionError(f"UnboundLocalError regression: {e}")
-    # The hotake path must have been reached (tweet was not None).
-    assert shipped.get("text"), "news-capped cycle should fall back to the hotake and post it"
-
-
 def test_positive_only_subjects_in_hard_rules():
     """Operator 2026-06-08: Apple / US government / Trump / Elon Musk must be
     spoken of ONLY positively. The rule must live in the non-overridable
@@ -1811,48 +865,6 @@ def test_mega_viral_quote_cannot_bypass_editorial_policy(monkeypatch):
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     for urgent in (False, True):
         assert not ag.can_post(ag.QUOTE, high_value=True, urgent=urgent)[0]
-
-
-def test_suppression_watch_needs_minimum_seasoned_sample(monkeypatch, tmp_path):
-    """Operator log 2026-06-09 06:50: 'FLAGGED — avg likes 0.00 on last 2
-    seasoned posts < threshold 1.0. Pausing aggressive bots until 10:50'.
-    The profile scrape returned only 5 own posts; the old gate (n<=4 BEFORE
-    dropping the freshest 3) let n=2 through and flagged on noise. Same
-    false-positive fired 9 times in bot.log. The fix drops the freshest
-    first, then requires MIN_SEASONED_FOR_FLAG samples."""
-    from src import suppression_watch_bot as swb
-
-    state_file = tmp_path / "suppression_state.json"
-    monkeypatch.setattr(swb, "SUPPRESSION_STATE_FILE", str(state_file))
-    monkeypatch.setattr(swb, "MIN_SEASONED_FOR_FLAG", 5)
-
-    # 5 raw own posts → 2 seasoned after the drop. Old code flagged; new code skips.
-    own_url = "https://x.com/TheAIShrink/status/100"
-    five_zero_like = [
-        {"url": f"{own_url}{i}", "likes": 0, "is_reply": False} for i in range(5)
-    ]
-    monkeypatch.setattr(swb, "scrape_profile_tweets", lambda *a, **k: five_zero_like)
-    monkeypatch.setattr(swb, "_is_own_post", lambda t: True)
-
-    swb.run_suppression_watch_cycle()
-    assert not swb.is_paused(), \
-        "thin sample (n<MIN) must NOT trip suppression — was false-flagging on n=2"
-
-    # And a healthy 8-raw → 5-seasoned sample with real likes still computes:
-    healthy = [{"url": f"{own_url}{i}", "likes": 3, "is_reply": False} for i in range(8)]
-    monkeypatch.setattr(swb, "scrape_profile_tweets", lambda *a, **k: healthy)
-    swb.run_suppression_watch_cycle()
-    import json as _json
-    s = _json.loads(state_file.read_text())
-    assert s["last_n"] == 5 and s["last_avg"] == 3.0, \
-        f"expected n=5 avg=3.0, got n={s.get('last_n')} avg={s.get('last_avg')}"
-    assert s["paused_until"] is None, "avg=3 > threshold=1 must NOT pause"
-
-    # And a genuine collapse with enough samples still flags:
-    collapsed = [{"url": f"{own_url}{i}", "likes": 0, "is_reply": False} for i in range(8)]
-    monkeypatch.setattr(swb, "scrape_profile_tweets", lambda *a, **k: collapsed)
-    swb.run_suppression_watch_cycle()
-    assert swb.is_paused(), "n>=MIN with avg<threshold MUST still flag — signal preserved"
 
 
 def test_core_identity_has_ai_fan_voice():
@@ -1909,39 +921,9 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
         cg.is_duplicate = orig_isdup
 
 
-def test_hotake_dedup_block_english_no_space():
-    """2026-06-09: the hotake anti-repeat block was in FRENCH (weak on an
-    English bot) and pushed SPACE content ('space push mode') — off-persona,
-    and it let the same line ('AI capex is the new rent') regenerate 13x.
-    The block must be English, anti-repeat on phrasing, and space-free."""
-    import inspect
-    from src import hotake_agent as h
-    src = inspect.getsource(h)
-    # The dedup/anti-repeat block must be English now.
-    assert "DO NOT REPEAT" in src and "HARD PIVOT" in src
-    assert "PIVOT ABSOLU" not in src, "dedup block still French"
-    # Space must be excluded from the SCOPE blocks, never promoted as a pillar.
-    assert "space push mode" not in src.lower()
-    assert "off-persona" in src.lower()
-    assert "espace: spacex" not in src.lower(), "French space scope still present"
-    assert "2. space: spacex" not in src.lower(), "English space scope pillar still present"
-
-
 def test_prompts_are_english_only():
-    """Operator 2026-06-09: 'we are english only bro'. The live generation
-    prompts must carry no French scaffolding (the old FR persona prompts +
-    dead 25k PROMPT_TEMPLATE are gone)."""
-    import re
-    fr = re.compile(r"\b(tu écris|t'as|c'est pas|réécris|hors-scope|déjà posté dans|ne couvre pas le même|piège|chute française)\b", re.I)
-    from src.hotake_agent import HOTAKE_PROMPT
-    rendered = HOTAKE_PROMPT.format(lang_directive="[EN]", performance_section="", dedup_section="")
-    assert not fr.search(rendered.lower()), "hotake prompt still has French"
-    # Dead French templates must be gone.
-    a = open("src/agent.py").read()
-    assert "AI & Space Decoder" not in a, "dead French PROMPT_TEMPLATE still present"
-    h = open("src/hotake_agent.py").read()
-    assert "_ARCHIVE_OLD_HOTAKE_PROMPT" not in h, "dead French hotake archive still present"
-    # No FR reply-seeking query.
+    """Operator 2026-06-09: 'we are english only bro'. The reply lane must
+    not seek French posts."""
     from src.direct_reply import SEARCH_QUERIES
     assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
 
@@ -2052,87 +1034,6 @@ def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
         "remaining=1 must bound generations AND posts to 1"
 
 
-def test_agent_bounds_allow_operator_volume_mandate():
-    """Pins the CURRENT operator mandate on the agent clamp sites — when the
-    mandate changes, change the bounds AND this test together (lesson
-    2026-06-09: stale bounds silently re-clamped live_strategy every 4h).
-
-    Current mandate = HUMANIZE 2026-06-10 ("you got spotted as a bot"):
-    machine-cadence volume was the tell, so the bounds must cap originals
-    at human-plausible levels (news<=4, hotakes<=8, quotes<=48) — an agent
-    must NOT be able to crank volume back to bot-fingerprint territory."""
-    from src.meta_strategy_agent import _BOUNDS
-    from src.strategy_lab_bot import ALLOWED_PATHS
-    # 2026-07-06 mandate ("you didn't do enough replies nor posts today...
-    # i barely see retweet quote and new posts"): agents had re-clamped
-    # live_strategy to news 4 / hotakes 8 / quotes 48 / retweets 2 —
-    # forfeiting most post slots. FLOORS now guarantee a visible profile;
-    # ceilings track the mandate. Both clamp sites pinned identically.
-    for bounds in (_BOUNDS, {k.replace("caps.", ""): v for k, v in ALLOWED_PATHS.items()}):
-        # 2026-07-19 operator: "bring more external news with updates on AI
-        # ... comment and post more" — news floor 6->12 so agents can never
-        # demote the news surface below a visible daily presence.
-        assert bounds["MAX_NEWS_PER_DAY"][0] >= 12, "agents must not starve news"
-        assert bounds["MAX_HOTAKES_PER_DAY"][0] >= 12, "agents must not starve hotakes"
-        assert bounds["MAX_QUOTES_PER_DAY"][0] >= 100, "agents must not starve quotes"
-        assert bounds["MAX_RETWEETS_PER_DAY"][0] >= 2, "agents must not zero retweets"
-        assert bounds["MAX_NEWS_PER_DAY"][1] >= 14
-        assert bounds["MAX_HOTAKES_PER_DAY"][1] >= 28
-        assert bounds["MAX_QUOTES_PER_DAY"][1] >= 240
-        assert bounds["MAX_RETWEETS_PER_DAY"][1] >= 10
-    # 2026-07-05 operator "like and follow more": both agents own the
-    # like/follow keys with matching bounds. Floor 1 on follow_blast — a
-    # lab-written 0 killed ALL blast follows through early July, and
-    # meta_strategy's wholesale caps rewrite must not drop the keys either.
-    for bounds in (_BOUNDS, {k.replace("caps.", ""): v for k, v in ALLOWED_PATHS.items()}):
-        assert bounds["FOLLOW_BLAST_PER_CYCLE"][0] >= 1, \
-            "agents must never zero follow discovery again"
-        assert bounds["FOLLOW_BLAST_PER_CYCLE"][1] <= 5, \
-            "follow_blast stays human-paced (ceiling <= 5/cycle)"
-        assert bounds["LIKE_BOT_PER_CYCLE"][0] >= 1
-        assert bounds["LIKE_BOT_PER_CYCLE"][1] <= 60, \
-            "like_bot ceiling stays below automation-flag territory"
-
-
-def test_follow_blast_is_topic_search_through_chokepoint():
-    """2026-06-12 operator: "it needs to search for new topics then follow
-    the big accounts." The old blast bot opened FRENCH people-searches and
-    blind-JS-clicked every Follow button — bypassing caps, spacing, churn
-    and the quality gate. The rebuilt bot must: EN big-topic queries only
-    (min_faves floors), authors extracted from URLs, and every follow
-    routed through twitter_client.follow_account (the chokepoint)."""
-    import inspect
-    from src import follow_blast_bot as fb
-
-    # Queries: English, big-post floors, no French-era tails.
-    assert all("lang:en" in q for q in fb.BLAST_QUERIES)
-    assert all("min_faves" in q for q in fb.BLAST_QUERIES)
-    assert not any("lang:fr" in q for q in fb.BLAST_QUERIES)
-
-    src = inspect.getsource(fb.run_follow_blast_cycle)
-    assert "follow_account(" in src, "follows must go through the chokepoint"
-    assert "scrape_x_search" in src, "discovery must be topic search"
-    assert "_click_follow_buttons" not in inspect.getsource(fb), \
-        "the blind click-all-Follow-buttons path must stay dead"
-
-
-def test_quote_bot_follows_quoted_author_after_ship():
-    """2026-06-12 operator: "make sure you follow big accounts". After a
-    confirmed quote ship the bot follows the quoted author (big by
-    construction via the min-likes floors; just got our QRT notification).
-    Best-effort behind the chokepoint; never follows itself; env-gated."""
-    import inspect
-    from src import quote_tweet_bot
-
-    src = inspect.getsource(quote_tweet_bot)
-    assert "FOLLOW_QUOTED_AUTHORS" in src
-    assert "follow_account(_handle)" in src
-    # The follow must sit AFTER the confirmed-ship marker, never before.
-    assert src.index("Quote posted.") < src.index("follow_account(_handle)")
-    # Self-follow guard via URL handle (ground truth), not scraper author.
-    assert "BOT_HANDLE" in src
-
-
 def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     """2026-06-12 operator: "the accounts you follow are trash, very small
     ... not related to AI or investment or crypto". The follow chokepoint
@@ -2206,44 +1107,6 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
         "reply must not unconditionally like the parent"
 
 
-def test_first_comment_self_reply_wired_and_guarded(monkeypatch):
-    """2026-06-15 (operator: "do even better"). Posts get ~22 views — reach
-    is the bottleneck. After an original ships, the bot drops a first-comment
-    self-reply (first-hour signal + reply bait). Must be wired in bot.py and
-    best-effort: short/empty/disabled input => no Safari work, returns False."""
-    import inspect
-    from src import first_comment, bot
-
-    assert "post_first_comment" in inspect.getsource(bot)
-
-    # Disabled => no work (never touches Safari).
-    monkeypatch.setattr(first_comment, "FIRST_COMMENT_ENABLED", False)
-    assert first_comment.post_first_comment("a real original post here") is False
-
-    # Enabled but too-short input => skipped before any LLM/Safari call.
-    monkeypatch.setattr(first_comment, "FIRST_COMMENT_ENABLED", True)
-    assert first_comment.post_first_comment("tiny") is False
-
-
-def test_reply_winners_feeds_post_and_quote_prompts():
-    """2026-06-15 operator: "replies get crazy likes, posts don't — could
-    the bot inspire itself from replies?" The reply_winners bank mines our
-    highest-liked replies; the post (hotake) + quote generators inject them
-    as voice exemplars, mined from our own /with_replies tab."""
-    import inspect
-    from src import reply_winners, hotake_agent, quote_tweet_bot
-
-    # Empty bank renders nothing (no stale injection — self_winners lesson).
-    assert reply_winners.render_reply_winners_block() == "" or \
-        reply_winners._read_entries()
-
-    # Both profile generators consult the bank.
-    assert "reply_winners" in inspect.getsource(hotake_agent)
-    assert "reply_winners" in inspect.getsource(quote_tweet_bot)
-    # Mined from our own /with_replies (the one place reply likes show).
-    assert "scrape_own_replies" in inspect.getsource(reply_winners)
-
-
 def test_scrape_own_replies_surfaces_seasoned_window():
     """2026-06-18 — the bank was empty for 3 days because scrape_own_replies
     only scrolled twice on /with_replies, surfacing 6-9 articles per cycle
@@ -2280,50 +1143,15 @@ def test_profile_surfaces_force_capable_provider():
     """Profile generators must pass force_provider=PROFILE_LLM_PROVIDER so
     profile/reply routing can be changed independently from AI_CLI."""
     import inspect
-    from src import hotake_agent, agent, quote_tweet_bot, breakout_bot, spicy_bot
+    from src import editorial_bot
 
-    for mod in (hotake_agent, agent, quote_tweet_bot, breakout_bot, spicy_bot):
-        src = inspect.getsource(mod)
-        assert "force_provider=PROFILE_LLM_PROVIDER" in src, \
-            f"{mod.__name__} must force the profile provider on its generation call"
+    assert "force_provider=config.PROFILE_LLM_PROVIDER" in inspect.getsource(editorial_bot._json_call), \
+        "the editorial generator must force the profile provider"
 
     from src import config
     # Default is Ollama, env-overridable to Codex/Gemini when needed.
     assert config.PROFILE_LLM_PROVIDER in ("ollama", "codex", "gemini", None) or \
         isinstance(config.PROFILE_LLM_PROVIDER, str)
-
-
-def test_generate_quote_no_artificial_timeout_clipping_cloud_provider():
-    """2026-06-17 — quote_tweet_bot._generate_quote used to pass timeout=30
-    to run_llm, an ollama-era number. Since 2026-06-14 the QUOTE lane runs
-    through PROFILE_LLM_PROVIDER, where a cloud CLI spawn +
-    generation regularly exceed 30s. Result: 7 'all 3 attempts failed
-    (empty draft)' SKIPs in a single day, each burning ~3 min on the
-    timeout + ollama-fallback retry ladder. Other PROFILE_LLM_PROVIDER
-    callers (NEWS, HOTAKE, SPICY, BREAKOUT, THREAD) pass no explicit
-    timeout — they take the 180s DEFAULT_LLM_TIMEOUT_SECONDS. _generate_quote
-    must match that contract: when force_provider=PROFILE_LLM_PROVIDER is
-    used, no sub-default timeout may be hard-coded on the call."""
-    import inspect
-    from src import quote_tweet_bot as qb
-    src = inspect.getsource(qb._generate_quote)
-    # The call must still force the profile provider for content quality.
-    assert "force_provider=PROFILE_LLM_PROVIDER" in src, (
-        "_generate_quote must keep force_provider=PROFILE_LLM_PROVIDER "
-        "(otherwise QUOTE drops back to the ollama firehose model)"
-    )
-    # And it must NOT clip the call to a sub-default timeout that would
-    # truncate cloud generation mid-flight. timeout=60 is the minimum
-    # survivable for this prompt; anything stricter is the old bug.
-    import re
-    m = re.search(r"run_llm\([^)]*timeout\s*=\s*(\d+)[^)]*label=\"QUOTE\"", src) or \
-        re.search(r"run_llm\([^)]*label=\"QUOTE\"[^)]*timeout\s*=\s*(\d+)", src)
-    if m:
-        assert int(m.group(1)) >= 60, (
-            f"_generate_quote run_llm timeout={m.group(1)}s is too short for "
-            "PROFILE_LLM_PROVIDER; use >=60s or omit "
-            "(defaults to 180s)."
-        )
 
 
 def test_decode_header_stripped_at_chokepoint():
@@ -2367,26 +1195,6 @@ def test_follow_growth_mode_unties_ceiling_from_followers(monkeypatch):
     monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
     assert action_guard.following_ceiling() == 1423, \
         "legacy mode keeps following <= followers"
-
-
-def test_news_daily_combos_eligible_all_day(monkeypatch, tmp_path):
-    """2026-06-11 (operator: "do more"): the 6-10 AM ET daily-news window
-    predates the slot grid and made news ineligible for every afternoon
-    slot — once hotakes capped, all later slots forfeited (3 of 6 that
-    day). Outside force-mode, daily combos must be eligible at ANY hour;
-    the per-day (topic,format) dedup + MAX_NEWS_PER_DAY bound the total."""
-    from src import agent
-
-    monkeypatch.setattr(agent, "_DAILY_TOPIC_STATE_FILE",
-                        str(tmp_path / "topic_state.json"))
-    monkeypatch.setattr(agent, "_is_in_daily_window", lambda: False)
-    monkeypatch.setattr(agent, "_is_in_weekly_window", lambda: False)
-    agent_globals = vars(agent)
-    agent_globals.pop("_news_mode", None)
-    combo = agent._next_topic_not_done_today()
-    assert combo is not None and combo[1] == "daily", (
-        "daily news combos must be eligible outside the legacy 6-10 AM window"
-    )
 
 
 def test_burned_structure_contrast_reframe_blocked():
@@ -2491,93 +1299,6 @@ def test_casualize_human_texture_is_safe():
     assert not looks_truncated(out)
 
 
-def test_engine_health_quote_gif_counts_as_quote_and_slot_quiet_hours(monkeypatch, tmp_path):
-    """2026-06-10 02:06 double false alarm (burned a self-heal run on a
-    healthy engine): (1) quote_gif ships were invisible to the 'quote'
-    bucket — count AND recent-fire guard missed them; (2) 'hotake collapsed'
-    fired overnight although originals are slot-scheduled 08:30-21:30 and
-    quiet-by-design at night."""
-    import csv as _csv
-    from datetime import datetime as _dt
-    from src import engine_health_bot as ehb
-
-    # (1) quote_gif rows must land in the 'quote' bucket.
-    log_path = tmp_path / "engagement_log.csv"
-    now = _dt.now()
-    rows = [["timestamp", "type", "text", "target_url"]]
-    rows.append([now.strftime("%Y-%m-%dT%H:00:00"), "quote_gif", "x", "y"])
-    with open(log_path, "w") as f:
-        _csv.writer(f).writerows(rows)
-    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
-    counts, latest = ehb._counts_by_day_hour()
-    assert counts.get((now.date().isoformat(), "quote")) == 1, \
-        "quote_gif must count toward the quote surface"
-    assert latest.get("quote") == now.hour, \
-        "quote_gif must update the quote recent-fire hour"
-
-    # (2) slot surfaces are not evaluated outside slot hours; 24/7 surfaces are.
-    assert ehb._in_slot_quiet_hours("originals", 2), "originals at 02h = quiet by design"
-    assert ehb._in_slot_quiet_hours("originals", 23), "originals at 23h = quiet by design"
-    assert not ehb._in_slot_quiet_hours("originals", 14), "originals midday must be watched"
-    assert not ehb._in_slot_quiet_hours("quote", 2), "quote runs 24/7 — always watched"
-    assert not ehb._in_slot_quiet_hours("reply", 2), "reply runs 24/7 — always watched"
-
-
-def test_quote_us_night_throttle(monkeypatch):
-    """2026-06-10 (operator: 'get better'): overnight quotes scraped at 5-31
-    views — the audience is US-waking-hours. The quote cycle mostly skips
-    during the US night (cheap, before Safari/LLM) so cap + fresh parents
-    concentrate on daytime; ~1 in 3 night cycles still runs."""
-    from src import quote_tweet_bot as qb
-
-    assert qb._is_us_night_hour(3), "3 AM NY is night"
-    assert qb._is_us_night_hour(23), "11 PM NY is night"
-    assert not qb._is_us_night_hour(9), "9 AM NY is day"
-    assert not qb._is_us_night_hour(22), "10 PM NY is still day"
-
-    import inspect
-    src = inspect.getsource(qb.run_quote_tweet_cycle)
-    assert "_is_us_night_hour" in src and "QUOTE_NIGHT_RUN_PROB" in src, \
-        "night throttle must gate the quote cycle before any Safari/LLM work"
-
-
-def test_trusted_news_pass_skips_when_not_in_profile_allowlist(monkeypatch):
-    """2026-06-17: the home/search-only mandate (2026-06-07) gates ALL
-    profile visits behind PROFILE_VISIT_ALLOWLIST (default
-    TheBTCTherapist,Graphseo). The trusted-news passes in quote_tweet_bot
-    and retweet_bot iterate Reuters/Bloomberg/CNBC/etc — none of which are
-    allowlisted — so every scrape returns [] before any Safari work. The
-    iteration itself is dead: ~5K 'profile visit blocked' log lines and
-    no quote/retweet candidates ever came from this path. Pre-filter the
-    sample by `_profile_visit_allowed` so the dead pass exits quietly."""
-    import inspect
-    from src import quote_tweet_bot as qb
-    from src import retweet_bot as rb
-    from src import twitter_client as tc
-
-    monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
-    # None of the trusted-news outlets are on the default allowlist
-    # (TheBTCTherapist + Graphseo) — sanity-check.
-    assert not tc._profile_visit_allowed("Reuters")
-    assert not tc._profile_visit_allowed("BloombergTV")
-    assert not tc._profile_visit_allowed("CNBC")
-
-    # Structural pin: both passes pre-filter the sample by
-    # `_profile_visit_allowed` BEFORE iteration/logging.
-    qsrc = inspect.getsource(qb.run_quote_tweet_cycle)
-    assert "_profile_visit_allowed" in qsrc, \
-        "quote trusted-news pass must pre-filter by the profile allowlist"
-    rsrc = inspect.getsource(rb.run_retweet_cycle)
-    assert "_profile_visit_allowed" in rsrc, \
-        "retweet trusted-news pass must pre-filter by the profile allowlist"
-
-    # If the allowlist is widened to include a trusted handle, the
-    # pre-filter must let it through.
-    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist,Graphseo,Reuters")
-    assert tc._profile_visit_allowed("Reuters")
-    assert not tc._profile_visit_allowed("BloombergTV")
-
-
 def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
     """2026-06-17: engage_bot's reciprocity-like step calls
     visit_profile_and_like, which is gated by PROFILE_VISIT_ALLOWLIST
@@ -2602,25 +1323,6 @@ def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
     like_idx = src.find("visit_profile_and_like(username")
     assert 0 < gate_idx < like_idx, \
         "_profile_visit_allowed check must run before visit_profile_and_like"
-
-
-def test_engine_health_slots_elapsed_clamp():
-    """2026-06-10 12:34 false alarm: 'hotake collapsed: 4 today vs ~14 by
-    this hour' — the ~14 came from interval-era days; under the slot regime
-    only ~6.5 slot tries had been offered by 12:34, so 4 originals was
-    HEALTHY. The originals baseline must clamp to slots elapsed today."""
-    from src import engine_health_bot as ehb
-
-    assert ehb._slots_elapsed(8.5) == 0.0, "no slots before the window opens"
-    mid = ehb._slots_elapsed(12.5)
-    assert 5.5 <= mid <= 7.5, f"~6.5 tries by 12:30, got {mid}"
-    assert ehb._slots_elapsed(23) == ehb.SLOT_TRIES_PER_DAY, "full grid after close"
-    # And originals is the watched surface (post+hotake folded together —
-    # the slot machinery decides which fills a slot, per-surface is noise).
-    assert "originals" in ehb.WATCHED_TYPES
-    assert "post" not in ehb.WATCHED_TYPES and "hotake" not in ehb.WATCHED_TYPES
-    assert ehb._KIND_REMAP.get("post") == "originals"
-    assert ehb._KIND_REMAP.get("hotake") == "originals"
 
 
 def test_deliberate_skip_short_circuits_validation_retries():
@@ -2654,44 +1356,6 @@ def test_deliberate_skip_short_circuits_validation_retries():
     assert calls["n"] == 3, "None must still retry up to `attempts` times"
 
 
-def test_generate_quote_raises_deliberate_skip_on_skip_rationale(monkeypatch):
-    """_generate_quote must raise DeliberateSkip (not return None) when the
-    model returns a SKIP — so the content_guard retry loop short-circuits.
-    Returning None preserved the old 3-retry waste."""
-    from src import quote_tweet_bot as qtb
-    from src import content_guard as cg
-
-    class R:
-        returncode = 0
-        stdout = "SKIP. Off-niche and not worth quoting."
-        stderr = ""
-
-    monkeypatch.setattr(qtb, "run_llm", lambda *a, **k: R())
-    monkeypatch.setattr(qtb, "unwrap_text", lambda s: s)
-
-    raised = False
-    try:
-        qtb._generate_quote("someone", "some tweet text")
-    except cg.DeliberateSkip:
-        raised = True
-    assert raised, "_generate_quote must raise DeliberateSkip on SKIP-or-rationale"
-
-
-def test_gif_anti_repeat_no_broken_record(tmp_path, monkeypatch):
-    """2026-06-24: the bot shipped 'michael jordan crying' as the GIF on 8+
-    market-down posts in a row (broken-record bot tell). rotate_gif_query
-    must vary it: a repeated pick rotates to a same-emotion alternate, so
-    consecutive identical requests don't ship the same GIF."""
-    from src import humanizer
-    monkeypatch.setattr(humanizer, "_GIF_RECENT_FILE", str(tmp_path / "gif_recent.json"))
-    picks = [humanizer.rotate_gif_query("michael jordan crying") for _ in range(5)]
-    assert picks[0] == "michael jordan crying"
-    assert picks.count("michael jordan crying") == 1, "GIF still repeating"
-    assert len(set(p for p in picks if p)) >= 3, "not enough variety"
-    # a never-used GIF passes through unchanged
-    assert humanizer.rotate_gif_query("wolf of wall street") == "wolf of wall street"
-
-
 def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
     """Self-improve #3 (2026-06-24): followback was dead — whitelist-only
     blocked following people who engage with us. reciprocal=True bypasses ONLY
@@ -2716,31 +1380,6 @@ def test_urgent_quote_obeys_editorial_policy(monkeypatch):
     from src import action_guard as ag
     monkeypatch.setattr(ag, "count_today", lambda a: 0)
     assert not ag.can_post(ag.QUOTE, urgent=True)[0]
-
-
-def test_wsb_fetch_falls_back_when_reddit_blocked(monkeypatch):
-    """2026-07-04: Reddit 403-blocks unauthenticated hot.json from this
-    network, so the weekly WSB signal fetch died with a full traceback in
-    bot.log every attempt. Pin the contract: a blocked Reddit source falls
-    through to ApeWisdom (normalized to (TICKER, mentions) and gated by
-    ALLOWED_TICKERS), and a total source failure returns [] without raising."""
-    import urllib.error
-    from src import wsb_signal_bot as wsb
-
-    def reddit_blocked():
-        raise urllib.error.HTTPError(wsb.WSB_API, 403, "Blocked", {}, None)
-
-    monkeypatch.setattr(wsb, "_counts_from_reddit", reddit_blocked)
-    monkeypatch.setattr(
-        wsb, "_counts_from_apewisdom",
-        lambda: {"NVDA": 40, "GME": 90, "RKLB": 7},
-    )
-    tickers = wsb._fetch_wsb_tickers()
-    assert tickers == [("NVDA", 40), ("RKLB", 7)], tickers  # GME not allowed
-
-    # both sources dead => empty list, no exception escapes
-    monkeypatch.setattr(wsb, "_counts_from_apewisdom", reddit_blocked)
-    assert wsb._fetch_wsb_tickers() == []
 
 
 def test_direct_reply_scans_rotating_query_subset(monkeypatch):
@@ -2815,26 +1454,18 @@ def test_persona_is_woman_mom_therapist_across_surfaces():
     assert "sharpest ai mind" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
-    from src import direct_reply, quote_tweet_bot, hotake_agent, agent
+    from src import direct_reply
     assert "a woman, 45" in direct_reply.REPLY_PROMPT.lower()
     assert "mom" in direct_reply.REPLY_PROMPT.lower()
-    assert "a woman, 45" in quote_tweet_bot.QUOTE_PROMPT.lower()
-    assert "therapist mom" in hotake_agent.HOTAKE_PROMPT.lower()
-    import inspect
-    agent_src = inspect.getsource(agent)
-    assert "practicing\ntherapist and mom" in agent_src or "therapist and mom" in agent_src
     bestie_prompt = direct_reply.BESTIE_REPLY_PROMPT.lower()
     assert "big sister" in bestie_prompt and "big brother" not in bestie_prompt
 
 
-def test_follow_gate_english_only_and_unfollow_target_hold(monkeypatch):
-    """Operator 2026-07-19: (1) 'follow US / english accounts not foreigner
+def test_follow_gate_english_only(monkeypatch):
+    """Operator 2026-07-19: 'follow US / english accounts not foreigner
     langage follows' — the quality gate (rides EVERY follow path via the
     follow_account chokepoint) must reject non-Latin-script and foreign-
-    language bios; (2) 'periodically unfollow some accounts — not too many —
-    keep around 600-700 following max' — smart_unfollow prunes a trickle
-    ONLY while following > FOLLOW_TARGET_MAX, and holds (zero Safari work)
-    at/below target."""
+    language bios."""
     from src.twitter_client import _follow_quality_decision
     monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
     monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
@@ -2854,22 +1485,6 @@ def test_follow_gate_english_only_and_unfollow_target_hold(monkeypatch):
     # Whitelisted seeds stay exempt (Graphseo's FR bio is by design)
     ok, _ = _follow_quality_decision(500, "SEO et croissance pour les startups", "Julien", True)
     assert ok, "whitelisted seed must bypass the language gate"
-
-    # Unfollow target hold
-    from src import smart_unfollow_bot as su
-    scraped = []
-    monkeypatch.setattr(su, "_scrape_handle_list", lambda *a, **k: scraped.append(a) or [])
-    monkeypatch.setattr("src.config.MAX_UNFOLLOWS_PER_DAY", 60)
-    monkeypatch.setenv("UNFOLLOW_CAP_PER_CYCLE", "5")
-    monkeypatch.setenv("FOLLOW_TARGET_MAX", "700")
-    # At/below target -> hold, no Safari
-    monkeypatch.setattr("src.action_guard.current_counts", lambda: (1500, 650))
-    su.run_unfollow_cycle()
-    assert scraped == [], "at/below target the cycle must not touch Safari"
-    # Above target -> the prune path proceeds (scrape gets called)
-    monkeypatch.setattr("src.action_guard.current_counts", lambda: (1500, 3305))
-    su.run_unfollow_cycle()
-    assert len(scraped) >= 1, "above target the trickle prune must run"
 
 
 def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
@@ -3054,25 +1669,15 @@ def test_replyback_reciprocity_never_follows(monkeypatch):
     assert visited == ["fresh"]
 
 
-def test_savvy_tech_mom_register_and_ai_primary_news_sources():
-    """Operator 2026-07-19: 'bring more external news with updates on AI...
-    comment and post more... be less a troll and more a savvy tech mom.'
-    Pins: (1) the spine carries the savvy-tech-mom-not-a-troll register so
-    every surface inherits it; (2) the RSS ladder includes AI-primary
-    first-party sources (lab blogs), not just tech press; (3) the news
-    volume floor moved in BOTH agent clamp sites (covered in the bounds
-    test) and the .env ceiling allows the mandate."""
+def test_savvy_tech_mom_register():
+    """Operator 2026-07-19: 'be less a troll and more a savvy tech mom.'
+    The spine carries the savvy-tech-mom-not-a-troll register so every
+    surface inherits it."""
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
     assert "45-year-old woman and mom" in spine and "never cruel" in spine
     assert "something useful" in spine, "helpful register must be stated"
-
-    from src.rss_signal_bot import RSS_FEEDS
-    names = {n for n, _ in RSS_FEEDS}
-    for required in ("OpenAI Blog", "Google AI Blog", "DeepMind Blog",
-                     "HuggingFace Blog", "NVIDIA Blog"):
-        assert required in names, f"AI-primary source missing: {required}"
 
 
 def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
@@ -3112,65 +1717,9 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
         "attempted handles never retried; next cycle takes the next engager"
 
 
-def test_self_quote_recycles_own_winner_ship_gated(monkeypatch, tmp_path):
-    """2026-07-19 (pending since 06-07 'quote-yourself'): the recycler must
-    pick OUR 20-48h post above the likes floor, ship through the
-    quote_tweet chokepoint, and mark the day/URL consumed ONLY on a
-    confirmed ship (hot_quote slot-burn family)."""
-    import json, time as _time
-    from src import self_quote_bot as sq
-    monkeypatch.setattr(sq, "STATE_FILE", str(tmp_path / "sq_state.json"))
-
-    def _mk_url(age_hours, author="theaishrink"):
-        ts = int(_time.time() * 1000) - int(age_hours * 3600 * 1000)
-        return f"https://x.com/{author}/status/{(ts - sq._TWITTER_EPOCH) << 22}"
-
-    winner = _mk_url(30)
-    tweets = [
-        {"url": _mk_url(2), "text": "too fresh", "likes": 9},
-        {"url": winner, "text": "the winner", "likes": 5},
-        {"url": _mk_url(30, "someoneelse"), "text": "not ours", "likes": 50},
-    ]
-    monkeypatch.setattr("src.twitter_client.scrape_profile_tweets", lambda *a, **k: tweets)
-    shipped = []
-
-    class _R:
-        returncode = 0
-        stdout = "update: it aged well"
-        stderr = ""
-    monkeypatch.setattr(sq, "run_llm", lambda *a, **k: _R())
-    monkeypatch.setattr(sq, "humanize", lambda t: t)
-    monkeypatch.setenv("SELF_QUOTE_MIN_LIKES", "3")
-
-    # Chokepoint refusal -> nothing consumed, day not marked
-    monkeypatch.setattr("src.twitter_client.quote_tweet",
-                        lambda url, c, **k: shipped.append(("refused", url)) and False)
-    sq.run_self_quote_cycle()
-    st = sq._load_state()
-    assert st.get("date") == "" and st.get("quoted") == [], \
-        "chokepoint refusal must preserve the slot and the candidate"
-
-    # Confirmed ship -> winner consumed, daily state marked
-    monkeypatch.setattr("src.twitter_client.quote_tweet",
-                        lambda url, c, **k: shipped.append(("ok", url)) or True)
-    sq.run_self_quote_cycle()
-    st = sq._load_state()
-    assert st.get("quoted") == [winner], "must quote OUR 20-48h winner only"
-    sq.run_self_quote_cycle()  # same day -> no second attempt
-    assert len([s for s in shipped if s[0] == "ok"]) == 1, "max 1/day"
-
-
-def test_winner_format_in_prompts_and_evening_slots():
-    """2026-07-19: (1) the measured 'me [verb]' winner format (92 likes /
-    49K views vs 0-3 baseline) is productized into the hotake + quote
-    prompts WITH rationing language (a stamped-on winner is the next bot
-    tell); (2) the post-slot grid covers the analyzer's measured best
-    hours through 23:00 ET."""
-    from src import hotake_agent, quote_tweet_bot
-    for prompt in (hotake_agent.HOTAKE_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
-        low = prompt.lower()
-        assert 'me [verb]' in low, "measured winner format must be in the prompt"
-        assert "1 in 5" in low, "winner format must be rationed"
+def test_evening_slots_stay_inside_waking_hours():
+    """2026-07-19: the post-slot grid covers the measured best evening
+    hours, inside Waking hours."""
     from src.editorial_bot import SLOTS
     assert all("04:30" <= clock < "22:00" for clock, _ in SLOTS)
     assert "20:30" in dict(SLOTS)
@@ -3192,22 +1741,20 @@ def test_spicy_dial_suggestive_never_explicit():
     assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
     assert "smart is the sexy" in spine, "authority must ride with the heat"
 
-    from src import direct_reply, quote_tweet_bot
-    for prompt in (direct_reply.REPLY_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
-        low = prompt.lower()
-        assert "flirt" in low and "never explicit" in low, \
-            "surface prompts must carry the dial WITH its guardrail"
+    from src import direct_reply
+    low = direct_reply.REPLY_PROMPT.lower()
+    assert "flirt" in low and "never explicit" in low, \
+        "surface prompts must carry the dial WITH its guardrail"
 
 
 def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path):
-    """2026-07-28 nine-day health read — three shipped features were dead:
+    """2026-07-28 nine-day health read — shipped features were dead:
     (1) pin_bot was the DEAD-IMPORT family again (imported + in the
     hot-reload map, scheduler.add_job never called, zero [PIN] lines ever)
     — pin that main.py registers pin_job; (2) follow_engagers burned 262
     candidates into its attempted-forever set via TRANSIENT policy
     refusals (the 3500 total-following ceiling) — a transient refusal must
-    end the cycle WITHOUT burning candidates; (3) self-quote floor was
-    unreachable (0 quotes in 9 days) — default must be <=2."""
+    end the cycle WITHOUT burning candidates."""
     from main import build_scheduler
     assert build_scheduler().get_job("pin_job") is not None
 
@@ -3226,11 +1773,6 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     st = fe._load_state()
     assert st.get("attempted", []) == [], \
         "transient policy refusal must NOT burn the candidate"
-
-    import inspect
-    from src import self_quote_bot
-    assert '"SELF_QUOTE_MIN_LIKES", "2"' in inspect.getsource(self_quote_bot), \
-        "self-quote floor must be reachable (2 = self-like + 1 external)"
 
 
 def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
@@ -3279,52 +1821,6 @@ def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     assert restarts == [] and tc._blank_page_count == 0, \
         "legit-empty mentions tab must never count as a blank page"
     tc._reset_blank_page_count()
-
-
-def test_daily_rundown_thread_signal_anchored_and_promoter_contracts(monkeypatch, tmp_path):
-    """2026-07-28 ('do everything you think we should do'): (1) the daily
-    thread is now the 'Today in AI' rundown — HER voice, anchored to
-    external_signal.json (no LLM-WebSearch dependency, the reply_agent
-    lesson), SKIPs without fresh signal, evening cron; (2) the reply
-    promoter graduates the bank's top winner into a standalone post at
-    most once/day, each winner once ever, ship-gated."""
-    import inspect, json
-    from src import thread_bot
-    src = inspect.getsource(thread_bot)
-    assert "_fresh_signal_block" in src, "thread must be signal-anchored"
-    assert "allowed_tools" not in src, "no LLM-WebSearch dependency (reply_agent lesson)"
-    assert "Today in AI" in thread_bot.THREAD_PROMPT or "rundown" in thread_bot.THREAD_PROMPT
-    assert "woman" in thread_bot.THREAD_PROMPT.lower(), "her voice in the thread prompt"
-    from main import build_scheduler
-    assert build_scheduler().get_job("thread_job") is None
-
-    # Promoter
-    from src import reply_promoter_bot as rp
-    monkeypatch.setattr(rp, "STATE_FILE", str(tmp_path / "rp_state.json"))
-    bank = tmp_path / "reply_winners.md"
-    bank.write_text('# header\n- (7 likes) "the sharpest thing we said all week"\n- (2 likes) "meh"\n')
-    monkeypatch.setattr(rp, "WINNERS_FILE", str(bank))
-
-    class _R:
-        returncode = 0
-        stdout = "standalone version of the sharpest thing"
-        stderr = ""
-    monkeypatch.setattr(rp, "run_llm", lambda *a, **k: _R())
-    monkeypatch.setattr(rp, "humanize", lambda t: t)
-    shipped, logged = [], []
-    monkeypatch.setattr("src.twitter_client.post_tweet", lambda t, **k: shipped.append(t) or True)
-    monkeypatch.setattr("src.engagement_log.log_post", lambda *a, **k: logged.append(a))
-    monkeypatch.setenv("REPLY_PROMOTE_MIN_LIKES", "4")
-
-    rp.run_reply_promoter_cycle()
-    assert shipped == ["standalone version of the sharpest thing"], \
-        "top winner above the floor must be promoted"
-    assert len(logged) == 1, "log only on confirmed ship"
-    rp.run_reply_promoter_cycle()
-    assert len(shipped) == 1, "max 1 promotion/day"
-    st = rp._load_state()
-    assert "the sharpest thing we said all week" in st["promoted"], \
-        "a promoted winner is consumed forever"
 
 
 def test_scheduler_build_has_no_startup_publishing(monkeypatch):

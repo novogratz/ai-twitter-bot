@@ -3,9 +3,7 @@
 Without a follower-count time series we can't tell which days/cycles
 ACTUALLY drove growth vs. which just felt productive. This bot scrapes
 /TheAIShrink every 30 min, parses the follower count from the profile
-header via JS, and appends to follower_history.json. The
-meta_strategy_agent reads the recent slope on every cycle and feeds
-'we gained N followers in the last 24h' into its prompt.
+header via JS, and appends to follower_history.json.
 
 No LLM, just one Safari visit + JS extraction.
 """
@@ -17,7 +15,7 @@ import tempfile
 import time
 import traceback
 import webbrowser
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from .config import _PROJECT_ROOT, BOT_HANDLE
 from .logger import log
@@ -121,44 +119,6 @@ def _save_history(arr: list):
     arr = arr[-1500:]
     with open(FOLLOWER_HISTORY_FILE, "w") as f:
         json.dump(arr, f, indent=2)
-
-
-def get_growth_block() -> str:
-    """Render a prompt block summarising recent follower delta. Empty when
-    we don't have at least 2 samples."""
-    arr = _load_history()
-    if len(arr) < 2:
-        return ""
-    latest = arr[-1]
-    now_ts = datetime.fromisoformat(latest["ts"])
-    now_count = int(latest.get("count") or 0)
-
-    def find_delta(hours: int) -> int:
-        cutoff = now_ts - timedelta(hours=hours)
-        for entry in reversed(arr[:-1]):
-            try:
-                ts = datetime.fromisoformat(entry["ts"])
-            except (ValueError, KeyError):
-                continue
-            if ts <= cutoff:
-                return now_count - int(entry.get("count") or 0)
-        return now_count - int(arr[0].get("count") or 0)
-
-    d1 = find_delta(1)
-    d24 = find_delta(24)
-    d168 = find_delta(168)
-
-    return (
-        "==================================================\n"
-        "FOLLOWER GROWTH SIGNAL (your scoreboard)\n"
-        "==================================================\n"
-        f"Current followers: {now_count}\n"
-        f"Last 1h:    {d1:+d}\n"
-        f"Last 24h:   {d24:+d}\n"
-        f"Last 7d:    {d168:+d}\n"
-        "Goal: 10k. Every tweet you write should pass the test:\n"
-        "'will this earn ONE follow?' If not → SKIP.\n"
-    )
 
 
 def run_follower_tracker_cycle():

@@ -247,10 +247,14 @@ These are how the code behaves today, not design intent:
 
 ## Legacy modules
 
-Most files in `src/` are not reached by any scheduled job: the quote, repost,
-thread, boost, signal, self-modification and analytics bots. They stay for
-reference and because `tests/test_guards.py` still pins their guards. A
-module is live only if a job in `build_scheduler()` reaches it.
+The quote, repost, thread, boost, signal, self-modification and analytics
+bots that no job reached were deleted (issue #110); git history keeps them.
+Every module under `src/` is now reached from `main.py`, and
+`tests/test_disabled_surfaces.py` fails when one is not. Live code still reads
+some files those bots used to write, as frozen data with no writer left:
+`directives.md` (`reply_agent`), `pruned_accounts.json` and
+`reinforced_accounts.json` (`evolution_store.filter_and_weight`, used by
+`engage_bot` and `early_bird_bot`).
 
 ## Adding a job
 
@@ -273,7 +277,7 @@ module is live only if a job in `build_scheduler()` reaches it.
 boundaries, bedtime checks at the lock and before AppleScript, the daily
 budget, slot timing and retries, source evidence, review rejection, ambiguous
 submissions, dry-run isolation and reach accounting. `tests/test_guards.py`
-pins the chokepoint guards, including those of legacy modules.
+pins the chokepoint guards.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`,
 `scripts/` and `tests/`, subfolders included, with `ast`. It fails when an
 intra-project import, function-local or inside `try/except` included, names a
@@ -281,7 +285,9 @@ missing module or an undefined name, imports a module under `src/` by its bare
 name instead of through its package, or crosses a package folder without
 `__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
 `main.py` reaches through imports names a quote, repost or thread write;
-only `twitter_client`, which defines them, is exempt.
+only `twitter_client`, which defines them, is exempt. It also fails when a
+module under `src/` is not reached from `main.py`, function-local imports
+included.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript` and `_paste_text` raise, the logger writes to a temporary

@@ -58,10 +58,6 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies. Mini keeps the volume surface cheaper. |
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
-| `QUOTE_MODEL` | `gpt-5.4-mini` | Model for FR quote-post commentary on external tweets. |
-| `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
-| `NEWS_POSTS_PER_CYCLE` | `3` | Number of separate news posts to publish per post cycle. |
-| `NEWS_POST_SPACING_SECONDS` | `120` | Delay between burst news posts. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
 
 ---
@@ -74,10 +70,6 @@ Original content uses LLM cycles + appears on the profile feed; the cap balances
 |---|---|---|
 | `MAX_NEWS_PER_DAY` | `5` | Real sourced Décode insight posts. |
 | `MAX_HOTAKES_PER_DAY` | `3` | Quick takes on AI / crypto / macro stories. |
-| `MAX_BREAKOUTS_PER_DAY` | `4` | Breakout reactions to viral stories. |
-| `MAX_SPICY_PER_DAY` | `4` | Polarizing takes / questions. |
-
-Threads are 1/day each (`thread_bot` and `digest_thread_bot`) — non-overridable, idempotent state file.
 
 ---
 
@@ -89,12 +81,9 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 |---|---|---|
 | `MAX_QUOTES_PER_DAY` | `300` | Bot-level cap for the quote bot (the chokepoint cap `MAX_QUOTE_REPOSTS_PER_DAY`=150 is the binding one). |
 | `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
-| `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each deterministic candidate scrape. |
 | `MAX_REPLIES_PER_CYCLE` | `3` | Broad reply-bot cap per cycle. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | `2` | High-value profile/feed reply cap per cycle; cadence targets 20-50/day. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | `5` | English reply cap inside one direct-reply cycle. |
-| `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (plain-repost own top reply). |
-| `MAX_BOOSTS_PER_DAY` | (no cap) | Self-RT scheduled by cadence only. |
 
 ---
 
@@ -104,16 +93,10 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `FOLLOW_BLAST_PER_CYCLE` | `30` | Bulk Follow-button clicks per cycle. |
-| `FOLLOW_BLAST_DAILY_CAP` | `650` | Daily circuit breaker for bulk Follow-button clicks. |
 | `LIKE_BOT_PER_CYCLE` | `22` | Bulk Like-button clicks per cycle. |
 | `LIKE_BOT_DAILY_CAP` | `1800` | Daily circuit breaker for bulk Like-button clicks. |
 | `FOLLOWBACK_CAP` | `8` | Follow-back attempts per cycle. |
-| `UNFOLLOW_CAP_PER_CYCLE` | `15` | Smart-unfollow targets per cycle. |
 | `EARLY_BIRD_MAX_REPLIES_PER_CYCLE` | `4` | Early-bird replies per cycle. |
-| `VIRAL_FOLLOWUP_CAP` | `3` | Viral follow-up replies per cycle. |
-| `VIRAL_THRESHOLD` | `8` | Likes threshold to trigger viral follow-up. |
-| `SPIKE_LIKES` | `25` | Likes threshold to trigger spike orchestration. |
 
 ---
 
@@ -121,22 +104,9 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `RETWEET_MIN_LIKES` | `25` | Skip retweet candidates below this floor; niche/source/age gates carry quality. |
-| `RETWEET_MAX_AGE_HOURS` | `18` | Skip candidates older than this. |
-| `FEED_REPOST_MIN_ENGAGEMENT` | `5` | Minimum likes + 2×replies for feed-native reposts from For You / Following / search. |
-| `RETWEET_FEED_SEARCHES_PER_CYCLE` | `12` | Targeted crypto / AI / bourse searches scraped by the retweet cycle, with extra FR searches before EN fallback. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | `1440` | Max age for direct replies. Keeps big-post search from commenting on old viral tweets. |
-| `X_FEED_SEARCHES_PER_CYCLE` | `2` | Targeted searches merged into `external_signal.json` for news generation. |
 | `LIKE_TOP_TAB_PROBABILITY` | `0.55` | Probability the like bot uses X Top search instead of Live to train For You toward the niche. |
-| `QUOTE_MAX_AGE_HOURS` | `18` | Max age for quote-post candidates. |
-| `BREAKOUT_MIN_LIKES` | `30` | Min likes to consider a tweet a "breakout candidate". |
-| `BREAKOUT_VELOCITY_LIKES` | `100` | Likes threshold for "this is breaking". |
-| `MAX_BREAKOUTS_PER_DAY` | `4` | Daily cap on breakout posts. |
-| `PROMOTE_MIN_LIKES` | `5` | Min likes on a reply before it's promotable. |
 | `PIN_MIN_LIKES` | `5` | Min likes on a post before it's pinnable. |
-| `SUPPRESSION_AVG_LIKES_FLOOR` | `1.0` | Trigger shadowban-pause if avg drops below. |
-| `SUPPRESSION_COOLDOWN_H` | `4` | Hours to pause aggressive bots after a flag. |
-| `AUTO_TUNE_LOOKBACK_MIN` | `90` | Window for real-time velocity gauge. |
 
 ---
 
@@ -152,18 +122,18 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `ENABLE_AI_MAINTENANCE` | `0` | Strategy + evolution + reflection + meta-strategy + self-evolution agents. Disabled by default so calls go to news/replies. |
-| `ENABLE_AI_DISCOVERY` | `0` | Discover + scout agents. Disabled by default to skip account-discovery LLM calls. |
+| `ENABLE_AI_MAINTENANCE` | `0` | Lets the 4-hour `operator_cycle.sh` spend a Codex CLI run. The in-process agents it once enabled were removed. |
+| `ENABLE_AI_DISCOVERY` | `0` | Parsed by `config.py`; the discover and scout agents it gated were removed, so nothing acts on it. |
 
 ---
 
 ## Authoring
 
-`config.py` exposes runtime helpers that read JSON state files written by autonomous agents:
+`config.py` exposes runtime helpers that read `live_strategy.json`, written by the removed autonomous agents:
 
 ```python
 from src.config import (
-    get_live_cap,                # cap from meta_strategy_agent (env fallback)
+    get_live_cap,                # cap from live_strategy.json (env fallback), clamped by the hard ceilings
     get_live_cadence_factor,     # cadence multiplier (default 1.0)
     get_live_topic_focus,        # current topic focus list
 )
@@ -186,29 +156,17 @@ NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini
 PRIORITY_REPLY_MODEL=gpt-5.4-mini
-QUOTE_MODEL=gpt-5.4-mini
-ROAST_MODEL=gpt-5.4-mini
-NEWS_POSTS_PER_CYCLE=3
-NEWS_POST_SPACING_SECONDS=120
 
 MAX_NEWS_PER_DAY=10
 MAX_HOTAKES_PER_DAY=0
-MAX_BREAKOUTS_PER_DAY=4
-MAX_SPICY_PER_DAY=4
 MAX_QUOTES_PER_DAY=80
 MAX_RETWEETS_PER_DAY=30
-RETWEETS_PER_CYCLE=3
 MAX_REPLIES_PER_CYCLE=8
 DIRECT_REPLY_MAX_PER_CYCLE=32
 DIRECT_REPLY_MAX_EN_PER_CYCLE=5
 
-FOLLOW_BLAST_PER_CYCLE=30
-FOLLOW_BLAST_DAILY_CAP=650
 LIKE_BOT_PER_CYCLE=22
 LIKE_BOT_DAILY_CAP=1800
-RETWEET_MIN_LIKES=25
-RETWEET_MAX_AGE_HOURS=18
-QUOTE_MAX_AGE_HOURS=18
 
 ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0
@@ -228,17 +186,12 @@ older tables on this page as historical defaults).
 |---|---|---|
 | `MAX_QUOTE_REPOSTS_PER_DAY` / `MAX_QUOTES_PER_DAY` | `100` | QRT quality lane — the focus surface. 50-like floor, screenshot-or-SKIP gate. |
 | `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
-| `QUOTE_MIN_LIKES` | `50` | Mid-size analytical posts are the measured winners (not mega-virals). |
 | `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
 | `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |
 | `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
 | `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
 | `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |
 | `MAX_UNFOLLOWS_PER_DAY` | `0` | Bot never unfollows — operator-manual (`bin/mass_unfollow.py`). |
-| `REPLY_BAIT_PER_WEEK` | `4` | spicy QUESTION mode weekly cap. |
-| `BOOST_RECYCLE_MIN_LIKES` | `2` | Winner bar: ≥1 external like (bot self-likes at publish). |
-| `BOOST_RECYCLE_GAP_HOURS` / `BOOST_RECYCLE_MAX_CYCLES` | `4` / `4` | un-RT→re-RT recycling pace per winner (≤48h). |
 | `CURATOR_WINDOW_DAYS` / `CURATOR_DISCOVERED_PER_DAY` / `CURATOR_DISCOVERED_MAX` | `4` / `3` / `50` | Self-curated tracked list + whitelist `discovered`-tier promotion caps. |
 | `PINNED_TRACKED_HANDLES` | `TheBTCTherapist,Graphseo` | The only operator-pinned scan targets — everything else is earned. |
-| `SELF_WINNERS_MIN_LIKES` / `SELF_WINNERS_WINDOW_DAYS` / `SELF_WINNERS_MAX_VIEWS` | `3` / `4` / `100000` | Own-wins prompt bank: floor, therapist-era window, foreign-content guard. |
-| `BESTIE_HANDLE` | `TheBTCTherapist` | Bestie blitz target. |
+| `BESTIE_HANDLE` | `TheBTCTherapist` | Account whose posts get the bestie prompt in the `direct_reply` VIP scan. |

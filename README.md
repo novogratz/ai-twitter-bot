@@ -71,9 +71,9 @@ runtime files and are not committed to Git.
 Scheduled jobs are defined in `main.py`. `src/editorial_bot.py` handles source
 selection, drafting and review. `src/active_hours.py` owns the Toronto clock.
 `src/action_guard.py` and `src/twitter_client.py` enforce limits at the browser
-boundary. Legacy content modules remain available for reference, with their
-quote/repost/thread publication paths disabled centrally. The scheduled jobs
-carry no quote, repost or thread branch.
+boundary. The legacy content modules are gone (issue #110): every module under
+`src/` is reached from `main.py`. Quote, repost and thread publication stays
+disabled centrally, and the scheduled jobs carry no such branch.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
 `.env` or strategy values cannot lift the seven-post ceiling or restore quotes.

@@ -6,8 +6,10 @@ config change cannot bring them back. It reads the source with `ast`: every
 module under `src/` that `main.py` reaches through imports, at any depth,
 except `twitter_client`, which defines the chokepoints.
 
-The legacy modules that drove those surfaces stay out of reach too, and no
-other live module borrows a private helper from `reply_bot` (issue #108).
+No live module borrows a private helper from `reply_bot` (issue #108), and
+every module under `src/` is reached from `main.py`, so legacy code cannot
+pile up again (issue #110). The walk follows function-local imports too:
+`reply_bot` is reached only through the `ENABLE_REPLY_SEARCH` branch.
 """
 import ast
 from pathlib import Path
@@ -77,9 +79,12 @@ def test_live_modules_never_reference_a_disabled_write():
         "(2026-09-20 policy: zero):\n  " + "\n  ".join(problems))
 
 
-def test_legacy_surface_modules_are_unreachable_from_main():
-    reached = live_modules() & {"btc_blitz", "quote_tweet_bot", "retweet_bot"}
-    assert not reached, f"main.py reaches legacy modules: {sorted(reached)}"
+def test_every_src_module_is_reached_from_main():
+    modules = {path.stem for path in SRC.glob("*.py")} - {"__init__"}
+    unreached = sorted(modules - live_modules())
+    assert not unreached, (
+        "Modules under src/ that no import chain from main.py reaches; wire "
+        "them into a job or delete them:\n  " + "\n  ".join(unreached))
 
 
 def _private_reply_bot_imports(path):

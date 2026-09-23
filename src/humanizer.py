@@ -3,7 +3,6 @@
 Strips AI artifacts (em dashes, robotic openers, double punctuation) with
 pure Python rules. Fast, free, and predictable.
 """
-import os
 import re
 
 from .logger import log
@@ -140,131 +139,6 @@ def _strip_multiple_alternatives(text: str) -> str:
             stripped.count('"') == 2):
         text = stripped[1:-1].strip()
     return text
-
-
-# Shared viral-GIF vocabulary (operator 2026-06-05: "use all the most viral
-# GIFs and memes... people should LOVE IT"). One block injected into every
-# GIF-capable prompt so the model searches terms that actually return bangers.
-GIF_GUIDE_BLOCK = """GIF SEARCH VOCABULARY — match the emotion, pick the icon
-(operator 2026-07-19: "use new GIFs, it's always the same" — VARY them; if
-you used one of these recently, pick a DIFFERENT row or a fresh search of
-your own. Her persona is a therapist mom — sitcom/reaction-queen energy
-lands better than finance-bro memes):
-- EXCEPTIONALLY GOOD / huge win → [GIF: jonah hill excited] / [GIF: leonardo dicaprio clapping] / [GIF: chef kiss] / [GIF: oprah celebration] / [GIF: happy dance]
-- boss move / victory lap        → [GIF: wolf of wall street] / [GIF: salute] / [GIF: beyonce flawless] / [GIF: nailed it]
-- market bleeding / pain         → [GIF: michael jordan crying] / [GIF: this is fine] / [GIF: moira rose scream] / [GIF: grabbing wine]
-- calm in chaos (therapist core) → [GIF: this is fine] / [GIF: keep calm] / [GIF: deep breath] / [GIF: sipping tea calmly]
-- deadpan / unimpressed          → [GIF: tina fey eye roll] / [GIF: blinking guy] / [GIF: jim halpert look] / [GIF: judge judy eye roll]
-- suspicion / "sure about that"  → [GIF: futurama fry suspicious] / [GIF: john cena are you sure] / [GIF: side eye chloe]
-- waiting forever                → [GIF: pablo escobar waiting] / [GIF: skeleton waiting] / [GIF: judge judy tapping watch]
-- panic / FOMO                   → [GIF: kermit panic] / [GIF: surprised pikachu] / [GIF: kevin hart panic]
-- mind blown / big reveal        → [GIF: mind blown] / [GIF: math lady] / [GIF: shocked will smith]
-- shots fired / mic drop         → [GIF: mic drop] / [GIF: michael jackson popcorn] / [GIF: sipping tea kermit]
-- proud mom energy / warm        → [GIF: proud mom] / [GIF: slow clap] / [GIF: you did it]
-- "I told you so" (gentle)       → [GIF: told you so] / [GIF: knowing smile]
-Rule: ONE GIF max, only when it AMPLIFIES the punchline. Iconic beats
-obscure. NEVER the same GIF twice in the same day — rotate rows."""
-
-_GIF_TAG_RE = re.compile(r"\[\s*GIF\s*:\s*([^\]\n\r]{2,60})\]", re.IGNORECASE)
-
-
-# GIF anti-repeat (operator 2026-06-24: "michael jordan crying, fix the bug"
-# — the model picked the SAME GIF every market-down post, 8+ in a row, a
-# broken-record bot tell). Same-emotion alternates so a repeat rotates to a
-# fresh-but-fitting GIF; recent picks tracked on disk so it varies across
-# cycles/restarts.
-_GIF_ALTERNATES = {
-    "michael jordan crying": ["moira rose scream", "grabbing wine",
-        "spongebob crying", "kermit panic", "math lady", "skeleton waiting"],
-    "this is fine": ["deep breath", "sipping tea calmly",
-        "keep calm", "grabbing wine", "moira rose scream"],
-    "ben affleck smoking": ["michael jordan crying", "this is fine",
-        "spongebob crying", "grabbing wine"],
-    "leonardo dicaprio cheers": ["oprah celebration", "leonardo dicaprio clapping",
-        "salute", "jonah hill excited", "happy dance"],
-    "wolf of wall street": ["beyonce flawless", "salute", "nailed it",
-        "oprah celebration"],
-    "jonah hill excited": ["oprah celebration", "happy dance", "chef kiss",
-        "leonardo dicaprio clapping"],
-    "mind blown": ["math lady", "surprised pikachu", "shocked will smith"],
-    "surprised pikachu": ["mind blown", "math lady", "shocked will smith",
-        "side eye chloe"],
-    "futurama fry suspicious": ["john cena are you sure", "side eye chloe",
-        "math lady", "jim halpert look"],
-    "pablo escobar waiting": ["skeleton waiting", "judge judy tapping watch",
-        "blinking guy"],
-    "kermit panic": ["kevin hart panic", "surprised pikachu", "deep breath",
-        "pablo escobar waiting"],
-    "mic drop": ["sipping tea kermit", "michael jackson popcorn",
-        "knowing smile"],
-    "keep calm": ["deep breath", "sipping tea calmly", "this is fine"],
-    "chef kiss": ["nailed it", "oprah celebration", "proud mom"],
-}
-_GIF_RECENT_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "gif_recent.json")
-# 16 (was 8, operator 2026-07-19 "always the same GIF... get better"): with
-# a ~30-query bank a memory of 8 let favorites lap every few hours.
-_GIF_RECENT_KEEP = int(os.environ.get("GIF_RECENT_KEEP", "16"))
-
-
-def _gif_recent() -> list:
-    try:
-        import json
-        with open(_GIF_RECENT_FILE) as f:
-            v = json.load(f)
-        return v if isinstance(v, list) else []
-    except (OSError, ValueError):
-        return []
-
-
-def _record_gif(q: str) -> None:
-    try:
-        import json
-        recent = (_gif_recent() + [q])[-_GIF_RECENT_KEEP:]
-        with open(_GIF_RECENT_FILE, "w") as f:
-            json.dump(recent, f)
-    except OSError:
-        pass
-
-
-def rotate_gif_query(query: str) -> str:
-    """If `query` was used recently, swap it for a same-emotion alternate not
-    used recently; if none fits, drop the GIF (return ""). Records the final
-    choice. Breaks the same-GIF-every-post broken record."""
-    q = (query or "").strip().lower()
-    if not q:
-        return ""
-    recent = _gif_recent()
-    if q not in recent:
-        _record_gif(q)
-        return q
-    for alt in _GIF_ALTERNATES.get(q, []):
-        if alt not in recent:
-            _record_gif(alt)
-            return alt
-    return ""  # all alternates stale → post text-only this time
-
-
-def extract_gif_query(text: str) -> tuple:
-    """Pull a `[GIF: <search query>]` tag out of generated text.
-
-    Operator 2026-06-05 ("you nailed it"): funny posts/quotes carry a GIF from
-    X's native picker. Generators emit the tag; the posting bot extracts it
-    and routes to post_tweet_with_gif / quote_tweet_with_gif. Returns
-    (cleaned_text, query_or_empty).
-
-    Anti-repeat (2026-06-24): the query runs through rotate_gif_query so the
-    same GIF never ships post after post.
-    """
-    if not text:
-        return text, ""
-    m = _GIF_TAG_RE.search(text)
-    if not m:
-        return text, ""
-    query = " ".join(m.group(1).split()).strip().lower()
-    cleaned = (text[: m.start()] + text[m.end():]).strip()
-    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
-    return cleaned, rotate_gif_query(query)
 
 
 # Adjacent keys per letter (AZERTY-leaning, valid on QWERTY rows too) — used

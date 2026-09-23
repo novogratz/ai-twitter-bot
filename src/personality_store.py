@@ -221,33 +221,6 @@ def record_interaction(handle: str, kind: str = "reply") -> None:
         pass
 
 
-def upsert_topic(name: str, **updates) -> dict:
-    key = (name or "").lower().strip()
-    if not key:
-        return {}
-    data = load()
-    topic = data["topics"].get(key, {"stance": "neutral", "frame": "", "evidence": []})
-
-    ev_add = updates.pop("evidence_to_add", None)
-    if ev_add:
-        existing = list(topic.get("evidence", []))
-        seen = set(existing)
-        for e in ev_add:
-            e = (e or "").strip()
-            if e and e not in seen:
-                existing.append(e)
-                seen.add(e)
-        topic["evidence"] = existing[-15:]
-
-    for k, v in updates.items():
-        if v is not None:
-            topic[k] = v
-
-    data["topics"][key] = topic
-    save(data)
-    return topic
-
-
 def render_account_block(handle: str) -> str:
     """Prompt-ready FR block describing what we know about @handle.
     Empty string if no dossier — agent treats them as a fresh face."""
@@ -321,101 +294,6 @@ def render_core_identity(lang: str = "fr") -> str:
     )
 
 
-BOT_SELF_FILE = os.path.join(_PROJECT_ROOT, "bot_self.json")
-BOT_SELF_FR_FILE = os.path.join(_PROJECT_ROOT, "bot_self_fr.json")
-BOT_SELF_EN_FILE = os.path.join(_PROJECT_ROOT, "bot_self_en.json")
-
-
-def _load_bot_self(lang: str = "fr") -> dict:
-    """Load bot_self for a language. FR tries bot_self_fr.json then legacy bot_self.json."""
-    if lang == "en":
-        path = BOT_SELF_EN_FILE
-    else:
-        path = BOT_SELF_FR_FILE if os.path.exists(BOT_SELF_FR_FILE) else BOT_SELF_FILE
-    if not os.path.exists(path):
-        return {}
-    try:
-        with open(path, "r") as f:
-            d = json.load(f)
-        return d if isinstance(d, dict) else {}
-    except (json.JSONDecodeError, OSError):
-        return {}
-
-
-def render_bot_self(lang: str = "fr") -> str:
-    """Inject the bot's CURRENT self-narrative into prompts.
-
-    Loads from bot_self_fr.json or bot_self_en.json depending on language.
-    Falls back to legacy bot_self.json for FR.
-    Written by self_evolution_agent.py every few hours.
-    Empty string if the file is missing or malformed.
-    """
-    d = _load_bot_self(lang)
-    if not d:
-        return ""
-
-    if lang == "en":
-        parts = []
-        parts.append("==================================================")
-        parts.append("CURRENT STATE (your real mood — autonomous update)")
-        parts.append("==================================================")
-        if d.get("mood"):
-            parts.append(f"Mood: {d['mood']}")
-        if d.get("obsession"):
-            parts.append(f"Current obsession: {d['obsession']}")
-        if d.get("recent_learning"):
-            parts.append(f"Recent takeaway: {d['recent_learning']}")
-        if d.get("character_traits"):
-            parts.append(f"Character: {', '.join(d['character_traits'])}")
-        if d.get("self_narrative"):
-            parts.append("")
-            parts.append(d["self_narrative"])
-        if d.get("voice_tweaks"):
-            parts.append("")
-            parts.append("Today's voice tweaks:")
-            for t in d["voice_tweaks"]:
-                parts.append(f"- {t}")
-        if d.get("drift"):
-            parts.append("")
-            parts.append("Positions that drifted:")
-            for topic, stance in d["drift"].items():
-                parts.append(f"- {topic}: {stance}")
-        parts.append("")
-        parts.append("This block describes your current state — not a strict rule.")
-        parts.append("You're free to deviate if the moment calls for it.")
-        return "\n".join(parts)
-
-    parts = []
-    parts.append("==================================================")
-    parts.append("ETAT DU MOMENT (ton humeur reelle, mise a jour autonome)")
-    parts.append("==================================================")
-    if d.get("mood"):
-        parts.append(f"Humeur: {d['mood']}")
-    if d.get("obsession"):
-        parts.append(f"Obsession en ce moment: {d['obsession']}")
-    if d.get("recent_learning"):
-        parts.append(f"Constat recent: {d['recent_learning']}")
-    if d.get("character_traits"):
-        parts.append(f"Traits de caractere: {', '.join(d['character_traits'])}")
-    if d.get("self_narrative"):
-        parts.append("")
-        parts.append(d["self_narrative"])
-    if d.get("voice_tweaks"):
-        parts.append("")
-        parts.append("Reglages de voix pour aujourd'hui:")
-        for t in d["voice_tweaks"]:
-            parts.append(f"- {t}")
-    if d.get("drift"):
-        parts.append("")
-        parts.append("Positions qui ont bouge:")
-        for topic, stance in d["drift"].items():
-            parts.append(f"- {topic}: {stance}")
-    parts.append("")
-    parts.append("Ce bloc decrit ton etat actuel — pas une regle stricte.")
-    parts.append("Tu es libre de t'en eloigner si l'instant le demande.")
-    return "\n".join(parts)
-
-
 def render_global_mood() -> str:
     """High-level state of mind across all dossiers — for news/hot take prompts
     that aren't aimed at a specific account. Empty if store is sparse."""
@@ -446,23 +324,6 @@ def render_global_mood() -> str:
     if top_predators:
         names = ", ".join(f"@{h}" for h, _ in top_predators)
         lines.append(f"- Patterns predateurs surveilles (cible: leurs systemes): {names}")
-    return "\n".join(lines)
-
-
-def render_topic_block(name: str) -> str:
-    t = load().get("topics", {}).get((name or "").lower())
-    if not t:
-        return ""
-    lines = [f"# Memoire sujet: {name}"]
-    if t.get("stance") and t["stance"] != "neutral":
-        lines.append(f"- Position accumulee: {t['stance']}")
-    if t.get("frame"):
-        lines.append(f"- Cadre: {t['frame']}")
-    ev = t.get("evidence") or []
-    if ev:
-        lines.append("- Preuves:")
-        for e in ev[-5:]:
-            lines.append(f"  - {e}")
     return "\n".join(lines)
 
 

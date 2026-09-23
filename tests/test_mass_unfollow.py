@@ -137,3 +137,13 @@ def test_sigterm_stops_before_the_next_unfollow(script):
     assert script.browser.picks == 1
     assert script.ledger == ["user1"]
     assert json.loads(script.results.read_text()) == ["user1"]
+
+
+def test_legacy_keep_set_protects_respect_list_targets_and_seed_tiers(script, monkeypatch):
+    from src import engage_bot, respect_list
+    monkeypatch.setattr(respect_list, "load", lambda: {"mistralai"})
+    monkeypatch.setattr(action_guard, "load_whitelist",
+                        lambda: {"tier1": {"thebtctherapist"}, "tier2": {"morganhousel"}})
+    keep = script._legacy_keep_set()
+    assert {"mistralai", "thebtctherapist", "morganhousel"} <= keep
+    assert {h.lower() for h in engage_bot.TARGET_ACCOUNTS} <= keep

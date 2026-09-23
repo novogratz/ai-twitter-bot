@@ -15,7 +15,6 @@ from .state_errors import StateUnreadable
 from .humanizer import humanize, strip_agent_preamble
 from .reply_language import looks_french
 from .engagement_log import log_reply
-from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 # Posts this job is done with until restart: definitive Reply admission
 # refusals, posts the model declined, posts answered. Temporary refusals and
@@ -113,12 +112,6 @@ ALWAYS_REPLY_FR_ACCOUNTS = [
 ]
 ALWAYS_REPLY_EN_ACCOUNTS = [h for h in ALWAYS_REPLY_ACCOUNTS if h not in ALWAYS_REPLY_FR_ACCOUNTS]
 
-_NON_LATIN_RE = re.compile(r"[\u0400-\u04FF\u0600-\u06FF\u0900-\u097F\u3040-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF]")
-_STRONG_NON_FR_MARKERS = re.compile(
-    r"ñ|\b(del|más|sí|años|meses|hacia|hacer|hacemos|puedo|puedes|puede|pueden|tengo|tienes|tiene|tienen|estoy|estás|estamos|están|soy|eres|somos|muy|todos|todas|nuestro|nuestra|nuestros|nuestras|esto|eso|aquello|este|ese|aquel|você|está|então|isso|isto|perché|però|sempre|però|grazie|qualche|para|sobre)\b",
-    re.IGNORECASE,
-)
-
 _NICHE_PATTERN = re.compile(
     r"\b("
     r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|altman|musk|ml|deep\s*learning|neural|saas|software|cloud|datacenter|"
@@ -133,37 +126,6 @@ _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 
 def _is_on_niche(text: str) -> bool:
     return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
-
-def _is_fr_or_en(text: str) -> bool:
-    if not text: return True
-    if _NON_LATIN_RE.search(text): return False
-    if _STRONG_NON_FR_MARKERS.search(text): return False
-    return True
-
-FR_ACCOUNTS = [
-    "XFenaux", "RodolpheSteffan", "IVTrading", "Phil_RX", "Graphseo", "vision_ia",
-    "DereeperVivre", "FinTales_", "MathieuL1", "FlasheurInvest", "ThomasVeillet",
-    "YoannLOPEZ", "Capital", "LesEchos", "BFMBourse", "FinaryApp", "leo_labruyere",
-    "Freddy_Invest", "Romain_Del_Rio", "InvestirAgency", "PowerHasheur", "Dark_Emi_",
-    "JournalDuCoin", "LeJournalDuCoin", "powl_d", "Cryptoast", "CryptoastMedia",
-    "coinacademy_fr", "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
-    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "TheBigWhale_", "CointribuneFR",
-    "TheDeFISaint", "ChrisBlec", "Raph_Bloch", "Crypto_Doublard", "fredo_bullen",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "cyrildiagne", "yacine999",
-    "ClementDelangue", "Thomas_Wolf", "ncasenmare", "olivier_ramier", "sileix",
-    "Frandroid", "Numerama", "01net", "JournalDuGeek", "GuillaumeBesson", "EricDrd",
-    "Arnaud_Esquerre", "SpaceX_France", "ESA_fr", "Aerospace_Valley", "MaffreLaurent", "Latribune", "usinenouvelle",
-]
-
-EN_ACCOUNTS = [
-    "novogratz", "jbelizaireCEO", "Cointelegraph", "OpenAI", "AnthropicAI",
-    "GoogleDeepMind", "sama", "elonmusk", "VitalikButerin", "karpathy", "xAI",
-    "MistralAI", "nvidia", "rowancheung", "TheRundownAI", "CoreWeave", "CrusoeEnergy",
-    "LambdaAPI", "applied_dc", "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
-    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms", "SpaceX", "PeterDiamandis", "KobeissiLetter", "unusual_whales", "ylecun",
-    "fchollet", "AndrewYNg", "lilianweng", "demishassabis", "drfeifei", "ID_AA_Carmack",
-    "jeremyphoward", "gwern", "cursor_ai", "sualeh", "amanrsanger", "mntruell",
-    ]
 
 SEARCH_QUERIES = [
     # ===== 2026-06-07 AGENT SPEC lane: AI x markets x PSYCHOLOGY. =====

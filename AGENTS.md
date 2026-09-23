@@ -25,7 +25,8 @@ change. The same holds for the operator-owned guardrails: `core_identity.md`,
 ## Active code
 
 `main.py` is the whole scheduler: read `build_scheduler()` for the live jobs.
-Modules none of those jobs reach are legacy, kept for reference.
+Every module under `src/` is reached from `main.py`; a test fails on a module
+nothing imports, so wire new code into a job or delete it.
 
 | Concern | Where |
 |---|---|
