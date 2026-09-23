@@ -131,11 +131,16 @@ def can_debate_turn(author: str) -> Tuple[bool, str]:
     return True, ""
 
 
-def seconds_since_last(action: str) -> float:
+def _last_write(action: str) -> Optional[datetime]:
     stamps = [_ledger_time(r.get("ts", "")) for r in _load_ledger()
               if r.get("action") == action and not r.get("dry_run")]
     stamps = [stamp for stamp in stamps if stamp is not None]
-    return now_local().timestamp() - max(s.timestamp() for s in stamps) if stamps else float("inf")
+    return max(stamps, key=lambda s: s.timestamp()) if stamps else None
+
+
+def seconds_since_last(action: str) -> float:
+    last = _last_write(action)
+    return now_local().timestamp() - last.timestamp() if last else float("inf")
 
 
 def last_touch(target: str) -> Optional[datetime]:
@@ -169,6 +174,38 @@ def jitter_sleep(max_seconds: int) -> None:
 
 def spacing_ok(action: str, min_seconds: int) -> bool:
     return seconds_since_last(action) >= min_seconds
+
+
+# action -> (minimum gap, jitter) as config attribute names, read at call time.
+_SPACING = {
+    REPLY: ("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS"),
+    POST: ("MIN_SECONDS_BETWEEN_POSTS", "POST_JITTER_SECONDS"),
+    FOLLOW: ("MIN_SECONDS_BETWEEN_FOLLOWS", "FOLLOW_SPACING_JITTER_SECONDS"),
+}
+
+
+def spacing_gap(action: str) -> float:
+    """The gap the next write of `action` needs after the previous one.
+
+    The jitter is drawn once per previous write of that action, seeded on its
+    ledger timestamp: every caller sees the same gap, so a job waiting it out
+    is admitted when the wait ends, and retrying cannot fish for a small draw.
+    """
+    if action not in _SPACING:
+        raise ValueError(f"no write spacing for {action!r}")
+    base, jitter = (getattr(config, name) for name in _SPACING[action])
+    last = _last_write(action)
+    seed = f"{action}:{last.isoformat() if last else ''}"
+    return base + random.Random(seed).uniform(0, jitter)
+
+
+def seconds_until_allowed(action: str) -> float:
+    """Seconds before `can_post(action)` stops refusing on spacing; 0 when
+    the spacing is clear or nothing was written yet. Never more than one
+    gap: a ledger row stamped in the future (clock set back, copied ledger)
+    must not park a waiting job for hours; can_post still refuses it."""
+    gap = spacing_gap(action)
+    return min(gap, max(0.0, gap - seconds_since_last(action)))
 
 
 # --- whitelist --------------------------------------------------------------
@@ -331,8 +368,7 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
     if follows_today >= config.MAX_FOLLOWS_PER_DAY:
         return (False, f"daily follow cap reached ({config.MAX_FOLLOWS_PER_DAY})")
     # Never burst-follow: >=10-min jittered gap between follows (spec Part 1).
-    gap = config.MIN_SECONDS_BETWEEN_FOLLOWS + random.uniform(
-        0, config.FOLLOW_SPACING_JITTER_SECONDS)
+    gap = spacing_gap(FOLLOW)
     if not spacing_ok(FOLLOW, gap):
         return (False, f"too soon since last follow (need ~{int(gap)}s gap)")
     # Hard total-following ceiling — never exceed 300; ~150 while followers
@@ -383,12 +419,10 @@ def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tup
             return False, "daily profile publication cap reached (7)"
         if count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
             return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
-        gap = config.MIN_SECONDS_BETWEEN_POSTS + random.uniform(0, config.POST_JITTER_SECONDS)
-    elif action == REPLY:
-        # No daily reply limit; retain spacing and per-tweet dedup.
-        gap = config.MIN_SECONDS_BETWEEN_REPLIES + random.uniform(0, config.REPLY_JITTER_SECONDS)
-    else:
+    elif action != REPLY:
         return True, ""
+    # No daily reply limit; replies retain spacing and per-tweet dedup.
+    gap = spacing_gap(action)
     if not spacing_ok(action, gap):
         return False, f"too soon since last {action} (need ~{int(gap)}s gap)"
     return True, ""

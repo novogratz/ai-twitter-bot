@@ -3,7 +3,10 @@
 chokepoint are stubs, the Replied store, the ledger and BLOCKLIST are real.
 conftest points the state files at tmp_path, empties each job's `_skipped`
 set and fixes the clock at noon Toronto."""
-from datetime import datetime, timezone
+import math
+from datetime import datetime, timedelta, timezone
+from types import SimpleNamespace
+from zoneinfo import ZoneInfo
 
 import pytest
 
@@ -211,6 +214,123 @@ def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
     dr.run_direct_reply_cycle()
 
     assert sent == [vip["url"], searched["url"]]
+
+
+# --- Reply spacing in the pipeline (#131) -------------------------------------
+
+@pytest.fixture
+def spacing(pipeline, monkeypatch):
+    """The pipeline on a Toronto noon clock that its sleeps advance. The stub
+    chokepoint records each Reply in the real ledger, as a ship would."""
+    from src.guards import action_guard as ag, active_hours
+
+    dr, generated, sent, _ = pipeline
+    s = SimpleNamespace(dr=dr, sent=sent, slept=[], waited_at_send=[], gap_after_send=[],
+                        on_sleep=lambda: None,
+                        now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
+    monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
+    monkeypatch.setattr(ag, "now_local", lambda: s.now)
+
+    def sleep(seconds):
+        s.slept.append(seconds)
+        # Round up like time.sleep, which never returns early.
+        s.now += timedelta(microseconds=math.ceil(seconds * 1_000_000))
+        s.on_sleep()
+
+    def chokepoint(url, text):
+        s.waited_at_send.append(sum(s.slept))
+        assert ag.seconds_until_allowed(ag.REPLY) == 0, "sent before the spacing cleared"
+        sent.append(url)
+        ag.record(ag.REPLY, url)
+        s.gap_after_send.append(ag.spacing_gap(ag.REPLY))
+        return True
+
+    monkeypatch.setattr(dr, "_sleep", sleep)
+    monkeypatch.setattr(dr, "reply_to_tweet", chokepoint)
+    return s
+
+
+def test_pipeline_waits_out_the_spacing_after_its_own_reply(spacing):
+    """Generation N+1 is ready as Reply N ships: it waits out N's gap."""
+    s = spacing
+    tweets = [{"url": fresh("someone", n=1), "text": "one"}, {"url": fresh("other", n=2), "text": "two"}]
+
+    assert s.dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 2
+
+    assert s.waited_at_send == [0, pytest.approx(s.gap_after_send[0])]
+    assert all(0 < step <= 1.0 for step in s.slept), "short slices, so a stop cuts the wait"
+
+
+def test_pipeline_does_not_wait_when_the_spacing_is_clear(spacing):
+    from src.guards import action_guard as ag
+
+    s = spacing
+    ag.record(ag.REPLY, fresh("earlier"))
+    s.now += timedelta(seconds=60)
+    url = fresh("someone", n=1)
+
+    assert s.dr._reply_to_tweets([{"url": url, "text": "post"}], set(), "SEARCH-HOT") == 1
+
+    assert s.slept == [] and s.sent == [url]
+
+
+def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing, monkeypatch):
+    """The chokepoint stays the judge: another job's Reply lands mid-wait,
+    the real reply_to_tweet refuses on spacing before Safari, writes no
+    ledger row, and the post stays replayable."""
+    from src.guards import action_guard as ag, reply_admission
+    from src.guards.reply_admission import Refusal
+    from src.x import twitter_client as tc
+
+    s = spacing
+    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)  # every gap is exactly the minimum
+    ag.record(ag.REPLY, fresh("earlier"))
+
+    def another_job_replies_after_the_first_slice():
+        if len(s.slept) == 1:
+            ag.record(ag.REPLY, fresh("elsewhere", n=9))
+
+    s.on_sleep = another_job_replies_after_the_first_slice
+    verdicts = []
+    judge = reply_admission.judge_reply
+    monkeypatch.setattr(reply_admission, "judge_reply",
+                        lambda *a, **k: verdicts.append(judge(*a, **k)) or verdicts[-1])
+    monkeypatch.setattr(s.dr, "reply_to_tweet", tc.reply_to_tweet)
+    url, tried = fresh("someone", n=1), set()
+
+    assert s.dr._reply_to_tweets([{"url": url, "text": "post"}], tried, "SEARCH-HOT") == 0
+
+    assert sum(s.slept) == config.MIN_SECONDS_BETWEEN_REPLIES
+    assert [v.refusal for v in verdicts] == [Refusal.SPACING]
+    assert ag.count_today(ag.REPLY) == 2, "only the earlier Reply and the other job's"
+    assert url not in s.dr._skipped and url not in replied_store.load_replied()
+    assert url in tried, "tried again next cycle, with a new generation"
+
+
+@pytest.mark.parametrize("cut", ["stop", "overnight"])
+def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypatch, cut):
+    import threading
+    from src.guards import action_guard as ag, active_hours
+
+    s = spacing
+    stop = threading.Event()
+    monkeypatch.setattr(active_hours, "_STOP", stop)
+
+    def cut_short():
+        if cut == "stop":
+            stop.set()
+        else:
+            s.now = s.now.replace(hour=22, minute=0, second=0)
+
+    ag.record(ag.REPLY, fresh("earlier"))
+    s.on_sleep = cut_short
+
+    with pytest.raises(active_hours.OutsideActiveHours):
+        s.dr._reply_to_tweets([{"url": fresh("someone", n=1), "text": "post"}], set(), "SEARCH-HOT")
+
+    assert len(s.slept) == 1, "the next slice sees the stop or 22:00"
+    assert s.sent == [], "nothing ships"
+    assert ag.count_today(ag.REPLY) == 1
 
 
 def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):

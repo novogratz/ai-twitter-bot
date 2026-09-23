@@ -592,6 +592,7 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
                 from ..core.pattern_tags import extract_pattern as _extract_pattern
                 reply, _pattern_id = _extract_pattern(reply)
                 reply = humanize(reply)
+                _wait_out_reply_spacing(source_name)
                 log.info(f"[{source_name}] Replying to @{author}...")
                 try:
                     shipped = reply_to_tweet(url, reply)
@@ -608,10 +609,33 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
                     log_reply(url, reply, action_type="reply", source=_src, pattern_id=_pattern_id or "")
                     posted += 1
                     if _reply_lang == "en" and en_counter: en_counter[0] += 1
-                    # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
-                    # No extra sleep here — don't double-throttle.
+                    # No sleep after a ship: the spacing is waited out before
+                    # the next reply_to_tweet, for the gap action_guard drew.
             pending = nxt
     return posted
+
+
+_SPACING_WAIT_SLICE_SECONDS = 1.0
+_sleep = time.sleep
+
+
+def _wait_out_reply_spacing(source_name: str) -> None:
+    """Wait, outside the Safari lock, for the Reply spacing action_guard will
+    require: the next generation is often ready 0-2 s after the last Reply
+    and would be refused on spacing, its model call wasted. The chokepoint
+    still judges: a Reply from another job during the wait makes it refuse.
+    Short slices so a stop request or 22:00 raises OutsideActiveHours."""
+    from ..guards import action_guard
+    from ..guards.active_hours import require_active
+    remaining = action_guard.seconds_until_allowed(action_guard.REPLY)
+    if remaining > 0:
+        log.info(f"[{source_name}] Waiting {remaining:.1f}s for Reply spacing...")
+    while remaining > 0:
+        require_active()
+        step = min(remaining, _SPACING_WAIT_SLICE_SECONDS)
+        _sleep(step)
+        remaining -= step
+
 
 # Rotation cursor for the per-cycle query slice. Process-lifetime state:
 # a restart just restarts the rotation, which is harmless (the slice is

@@ -72,8 +72,8 @@ exceptions; all but the editorial and reach-report jobs also report to
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies. Generation of reply N+1 overlaps the posting of reply N. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post. |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, through the `direct_reply_job` pipeline. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
@@ -200,6 +200,13 @@ Three modules sit behind them:
   timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. A
   corrupt ledger refuses the write. Quotes and retweets are always refused;
   replies only need their spacing (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter).
+  `spacing_gap` draws the jitter of the reply, original and follow gaps once
+  per write, seeded on the timestamp of the last write of that action (dry
+  runs excluded): every caller sees the same gap, and retrying cannot fish
+  for a smaller draw. `seconds_until_allowed` returns what is left of it,
+  capped at one gap so that a ledger row stamped in the future (clock set
+  back, copied ledger) cannot park a waiting job; `can_post` still refuses
+  until the spacing clears.
   No active job calls `unfollow_account`, and `MAX_UNFOLLOWS_PER_DAY`
   defaults to 0.
 - `src/guards/content_guard.py` validates text before publication: near-term
@@ -226,6 +233,15 @@ threshold, thread-reply shape, handle pools, per-cycle caps. Each keeps a
 module-level `_skipped` set, lost at restart, of posts refused definitively,
 declined by the model (SKIP) or answered. A temporary refusal or a failed
 model call leaves the post replayable.
+
+The `direct_reply` pipeline, shared with `feed_sweep`, generates reply N+1
+while reply N is posted, so its text is ready as soon as reply N's ledger row
+is written. Before calling `reply_to_tweet`, outside the Safari lock, it
+sleeps `seconds_until_allowed(REPLY)` in one-second slices and raises
+`OutsideActiveHours` on a stop request or at 22:00. The chokepoint still
+judges: when another job's reply lands during the wait, `reply_to_tweet`
+refuses on spacing, writes no ledger row, and the post stays replayable in a
+later cycle, at the cost of a new generation.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
