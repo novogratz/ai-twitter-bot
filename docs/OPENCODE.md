@@ -56,15 +56,12 @@ Use `LLM_FALLBACK_MODEL` to force one fallback model for every fallback provider
 or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
 news, replies, hot takes, quote commentary, and every other `run_llm()` caller.
 
-## Running as an agent (replace main.py)
+## Skills
 
-Use the `run-agent` skill. OpenCode runs the bot loop itself with native WebSearch + Bash:
-
-```bash
-opencode run --model ollama/qwen3-coder:30b --dangerously-skip-permissions
-```
-
-Then type `/run-agent` to start the loop.
+OpenCode reads the operator skills from `.claude/skills/` natively; there is
+no `.opencode/skills` copy. `opencode debug skill` lists them. The
+`run-agent` skill, which ran the bot loop inside OpenCode instead of
+`main.py`, was removed on 2026-09-23: it drove quotes and unreviewed posts.
 
 ## Using other providers (OpenRouter, Qwen, etc.)
 

@@ -235,8 +235,15 @@ can be deleted.
   `ENABLE_CODEX_OPERATOR=1` or `ENABLE_AI_MAINTENANCE=1`.
 - `bin/mass_unfollow.py` unfollows by hand from `/following`. It refuses to
   run while the bot runs, unless `--force`, and records each unfollow in the
-  ledger.
+  ledger. It drives `osascript` directly and does not check active hours.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
-- The skills in `.claude/skills/` and `.codex/skills/` predate the policy.
-  Several drive disabled surfaces (`retweet`, `thread`) or reset counters
-  (`reset`). Read a skill against the policy before running it.
+
+## Skills
+
+The operator skills live in `.claude/skills/` only; `.codex/skills` is a
+relative symlink to it and OpenCode reads `.claude/skills` natively. They
+were pruned to the 2026-09-20 policy on 2026-09-23: the skills that drove
+retweets, boosts, quotes, threads, hot takes, unreviewed posts, counter
+resets, strategy or self-improvement loops are gone. The manual write
+skills (`engage`, `follow`, `like`, `reply`, `unfollow`) need the bot
+stopped, because the Safari lock only serialises writes inside one process.

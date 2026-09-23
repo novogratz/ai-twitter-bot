@@ -363,7 +363,8 @@ def _review_mode() -> bool:
 
 def _queue_for_review(kind: str, payload: dict) -> None:
     """Human-in-the-loop queue (REVIEW_MODE=1): drafts land in
-    review_queue.json instead of publishing; the /approve skill ships them."""
+    review_queue.json instead of publishing. Nothing ships them since the
+    /approve skill was removed (2026-09-23)."""
     import json as _json
     from .config import _PROJECT_ROOT as _PR
     path = os.path.join(_PR, "review_queue.json")

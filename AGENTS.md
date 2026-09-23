@@ -92,9 +92,11 @@ the caller's module. A guard change ships with a test pinning it.
 - An editorial slot in `pending` state was submitted ambiguously; it is never
   retried automatically. Check the profile before clearing it
   ([recovery](docs/OPERATIONS.md#recovery)).
-- `.claude/skills/` (mirrored in `.codex/skills/`) predates the 2026-09-20 policy: several skills drive
-  disabled surfaces (retweet, thread, counter reset). Read a skill against
-  the policy before running it.
+- `.claude/skills/` is the one skills source and matches the 2026-09-20
+  policy. `.codex/skills` is a relative symlink to it; OpenCode reads
+  `.claude/skills` natively. Edit skills there only, and delete a skill
+  rather than let it drive a disabled surface. Skills that write to X or
+  start, stop or restart the bot run on an explicit operator request only.
 
 ## Documentation
 
