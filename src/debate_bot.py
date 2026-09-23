@@ -12,37 +12,27 @@ response from them is a new mention, so the rally continues naturally —
 bounded by the per-author daily Debate turn cap, counted at the reply
 chokepoint and shared with replyback, so no thread spirals.
 
-Contracts honored: reply_to_tweet chokepoint (one-reply-per-tweet dedup,
-caps, spacing, language) — NO caller-side premark; log only on a confirmed
+Contracts honored: Reply admission judges each mention, Debate turn cap
+included, before the model call; the reply_to_tweet chokepoint judges it
+again with the text — NO caller-side premark; log only on a confirmed
 ship; Safari work only inside the client primitives.
 """
 import os
-import re
 import time
 import traceback
-from datetime import datetime, timezone
+from collections import Counter
+from datetime import timedelta
 
-from .config import BLOCKLIST, BOT_HANDLE, REPLY_MODEL
+from . import x_urls
+from .config import REPLY_MODEL
 from .logger import log
 from .llm_client import run_llm, unwrap_text
 from .humanizer import humanize
+from .reply_admission import judge_parent
 
-_TWITTER_EPOCH = 1288834974657
-
-
-def _tweet_age_hours(url: str) -> float:
-    m = re.search(r"/status/(\d+)", url or "")
-    if not m:
-        return 9999.0
-    ts_ms = (int(m.group(1)) >> 22) + _TWITTER_EPOCH
-    tweet_time = datetime.fromtimestamp(ts_ms / 1000, tz=timezone.utc)
-    return (datetime.now(tz=timezone.utc) - tweet_time).total_seconds() / 3600
-
-
-def _handle_from_url(url: str) -> str:
-    # Same parser as the reply chokepoint, so the early cap check agrees.
-    from .twitter_client import _status_author
-    return _status_author(url)
+# Mentions this job drops until restart: definitive Reply admission
+# refusals and mentions the model declined.
+_skipped: set = set()
 
 
 DEBATE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 45, a practicing
@@ -90,56 +80,46 @@ def run_debate_cycle():
     max_per_cycle = int(os.environ.get("DEBATE_MAX_PER_CYCLE", "3"))
     max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
 
-    from . import action_guard
     from .twitter_client import scrape_mentions, reply_to_tweet
-    from .replied_store import load_replied
     mentions = scrape_mentions(max_tweets=20)
     if not mentions:
         log.info("[DEBATE] No mentions scraped this cycle.")
         return
 
-    replied = load_replied()
-    own = BOT_HANDLE.lower()
     posted = 0
-    skipped = {"own": 0, "old": 0, "replied": 0, "blocklist": 0, "turncap": 0}
+    skips = Counter()
 
     # Freshest first — a debate is won in the first minutes.
-    mentions.sort(key=lambda t: _tweet_age_hours(t.get("url") or ""))
+    mentions.sort(key=lambda t: x_urls.age(t.get("url") or "") or timedelta.max)
 
     for t in mentions:
         if posted >= max_per_cycle:
             break
         url = t.get("url") or ""
-        author = _handle_from_url(url)
-        if not url or not author:
+        if not url or url in _skipped:
             continue
-        if author == own:
-            skipped["own"] += 1
+        age = x_urls.age(url)
+        if age is None or age > timedelta(hours=max_age_hours):
+            skips["old"] += 1
             continue
-        if author in BLOCKLIST:
-            skipped["blocklist"] += 1
-            continue
-        if _tweet_age_hours(url) > max_age_hours:
-            skipped["old"] += 1
-            continue
-        if url in replied:
-            skipped["replied"] += 1
-            continue
-        # Early skip saves the model call; the chokepoint enforces the cap.
-        if not action_guard.can_debate_turn(author)[0]:
-            skipped["turncap"] += 1
-            continue
-
         text = (t.get("text") or "").strip()
         if not text:
             continue
+        verdict = judge_parent(url, debate_turn=True)
+        if not verdict:
+            skips[verdict.refusal.name.lower()] += 1
+            if verdict.refusal.definitive:
+                _skipped.add(url)
+            continue
+        author = verdict.author
 
         prompt = DEBATE_PROMPT.format(author=author, tweet_text=text[:500])
         result = run_llm(prompt, REPLY_MODEL, label="DEBATE")
         if result.returncode != 0:
-            continue
+            continue  # a failed call is retried next cycle
         reply = unwrap_text(result.stdout).strip()
         if not reply or reply.upper().startswith("SKIP"):
+            _skipped.add(url)
             continue
         reply = humanize(reply)
 
@@ -152,7 +132,7 @@ def run_debate_cycle():
             time.sleep(3)
 
     log.info(f"[DEBATE] Cycle done: {posted} debate replies posted "
-             f"(skips: {', '.join(f'{k}={v}' for k, v in skipped.items() if v)}).")
+             f"(skips: {', '.join(f'{k}={v}' for k, v in skips.items())}).")
 
 
 def safe_run_debate_cycle():

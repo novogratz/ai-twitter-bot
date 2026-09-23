@@ -225,3 +225,75 @@ def test_profile_jobs_stop_on_unreadable_store(profile_job):
     with pytest.raises(StateUnreadable):
         run()
     assert generated == []
+
+
+# --- debate (mentions) ------------------------------------------------------
+
+class _Llm:
+    def __init__(self, stdout, returncode=0):
+        self.stdout, self.returncode, self.stderr = stdout, returncode, ""
+
+
+@pytest.fixture
+def debate(monkeypatch, blocklist):
+    from src import debate_bot as db
+    from src import twitter_client as tc
+
+    mentions = []
+    outputs = {}
+    generated, sent = [], []
+
+    def llm(prompt, *a, **k):
+        text = next(t for t in outputs if f'"{t}"' in prompt)  # the quoted mention
+        generated.append(text)
+        return outputs[text]
+
+    monkeypatch.setenv("ENABLE_DEBATES", "1")
+    monkeypatch.setattr(tc, "scrape_mentions", lambda **k: list(mentions))
+    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text, **k: sent.append((url, k)) or True)
+    monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(db, "run_llm", llm)
+    monkeypatch.setattr(db.time, "sleep", lambda *a: None)
+    return db, mentions, outputs, generated, sent
+
+
+def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monkeypatch):
+    from src import action_guard
+
+    db, mentions, outputs, generated, sent = debate
+    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+    action_guard.record(action_guard.DEBATE_TURN, target="capped")
+    blocked, capped, admitted = fresh("pgm_pm", n=1), fresh("capped", n=2), fresh("someone", n=3)
+    mentions += [{"url": blocked, "text": "blocked"}, {"url": capped, "text": "capped"},
+                 {"url": admitted, "text": "admitted"}]
+    outputs.update({t: _Llm(DRAFT) for t in ("blocked", "capped", "admitted")})
+
+    db.run_debate_cycle()
+
+    assert generated == ["admitted"]
+    assert sent == [(admitted, {"debate_turn": True})]
+    assert db._skipped == {blocked}, "the turn cap is temporary: capped stays replayable"
+
+
+def test_debate_sets_aside_skips_but_replays_failed_generations(debate):
+    db, mentions, outputs, generated, sent = debate
+    declined, failed = fresh("someone", n=1), fresh("other", n=2)
+    mentions += [{"url": declined, "text": "declined"}, {"url": failed, "text": "failed"}]
+    outputs.update({"declined": _Llm("SKIP. nothing to debate"), "failed": _Llm("", returncode=1)})
+
+    db.run_debate_cycle()
+    db.run_debate_cycle()
+
+    assert sorted(generated) == ["declined", "failed", "failed"]
+    assert sent == []
+    assert db._skipped == {declined}
+
+
+def test_debate_stops_on_unreadable_store(debate):
+    db, mentions, outputs, generated, _ = debate
+    mentions.append({"url": fresh("someone"), "text": "post"})
+    outputs["post"] = _Llm(DRAFT)
+    corrupt_replied_store()
+    with pytest.raises(StateUnreadable):
+        db.run_debate_cycle()
+    assert generated == []

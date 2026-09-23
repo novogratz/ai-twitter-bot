@@ -3030,8 +3030,9 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
     import time as _time
     from src import action_guard as ag
     from src import debate_bot as db
+    from src import x_urls
 
-    fresh_id = (int(_time.time() * 1000) - db._TWITTER_EPOCH - 60_000) << 22
+    fresh_id = (int(_time.time() * 1000) - x_urls._TWITTER_EPOCH_MS - 60_000) << 22
     mentions = [
         {"url": f"https://x.com/challenger/status/{fresh_id}", "text": "you're wrong about inference costs", "author": "Challenger"},
         {"url": f"https://x.com/{'theaishrink'}/status/{fresh_id + 1}", "text": "own reply", "author": "The AI Therapist"},
@@ -3042,7 +3043,7 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
         # The real chokepoint records the Debate turn it ships.
         assert k == {"debate_turn": True}, "mentions are Debate turns"
         shipped.append(url)
-        ag.record(ag.DEBATE_TURN, target=db._handle_from_url(url))
+        ag.record(ag.DEBATE_TURN, target=x_urls.author(url))
         return True
     monkeypatch.setattr("src.twitter_client.reply_to_tweet", chokepoint)
     monkeypatch.setattr("src.replied_store.load_replied", lambda: set())

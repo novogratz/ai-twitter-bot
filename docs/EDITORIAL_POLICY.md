@@ -59,10 +59,10 @@ slot needs news from the last six hours and an exceptional-value approval.
   ignored on both sides), when the parent is the account's own post, or
   when the URL carries no author handle. This moves the blocklist to the
   chokepoint without relaxing it. `direct_reply`, `feed_sweep`,
-  `early_bird` and `mega_watch` ask the same admission before generating;
-  `mega_watch` no longer matches `BLOCKLIST` against the scraper's display
-  name, which is not an identity. `debate` and `replyback` keep their own
-  filters until they call the admission themselves (issue #100).
+  `early_bird`, `mega_watch` and `debate` ask the same admission before
+  generating; `mega_watch` no longer matches `BLOCKLIST` against the
+  scraper's display name, which is not an identity. `replyback` keeps its
+  own filters until it calls the admission itself (issue #100).
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write, including the likes and pins that
