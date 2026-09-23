@@ -8,7 +8,9 @@ to /TheAIShrink. With ~20 likes per cycle and ~4 cycles per hour, that's
 Strategy:
   - Every 15 min, pick a niche search query (rotating).
   - Open /search?q=... in live or top mode.
-  - JS-click N visible like buttons (skip already-liked = unlike state).
+  - Like up to N listed posts through twitter_client._like_posts_on_page,
+    so each like goes through like_tweet: liked cache, Blocked accounts,
+    click then confirmation, ledger row.
   - No replies, no follows — pure engagement noise. Cheap and effective.
 
 Rate-conscious: 15-20 likes/cycle × 4 cycles/hour = ~80/hour. X soft-rate
@@ -16,17 +18,16 @@ on likes is ~1000/hour. We're far below.
 """
 import os
 import random
-import subprocess
-import tempfile
 import time
 import traceback
 import urllib.parse
 import webbrowser
 
-from ..guards.active_hours import require_active
 from ..core import config
 from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
+from ..guards import action_guard
+from ..x import twitter_client
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 
 LIKE_QUERIES = [
@@ -52,53 +53,6 @@ def _daily_cap() -> int:
     return int(os.environ.get("LIKE_BOT_DAILY_CAP", "3000"))
 
 
-def _click_likes_on_page(max_clicks: int) -> int:
-    """JS: find unliked like buttons on the page and click them."""
-    # This path runs osascript itself, so it must check the clock and the
-    # stop the way safari._run_applescript does.
-    require_active()
-    js_code = f"""
-    (function() {{
-        var buttons = document.querySelectorAll('[data-testid="like"]');
-        var clicked = 0;
-        for (var i = 0; i < buttons.length && clicked < {max_clicks}; i++) {{
-            try {{
-                buttons[i].click();
-                clicked++;
-            }} catch (e) {{}}
-        }}
-        return clicked;
-    }})()
-    """
-    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-    tmp.write(js_code)
-    tmp.close()
-    applescript = f'''
-    tell application "Safari" to activate
-    set jsCode to (read POSIX file "{tmp.name}")
-    tell application "Safari"
-        set result to do JavaScript jsCode in current tab of front window
-    end tell
-    '''
-    try:
-        r = subprocess.run(
-            ["osascript", "-e", applescript],
-            capture_output=True, text=True, timeout=20,
-        )
-        os.unlink(tmp.name)
-        out = (r.stdout or "").strip()
-        try:
-            return int(out)
-        except (ValueError, TypeError):
-            return 0
-    except Exception:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
-        return 0
-
-
 def _load_daily_state() -> dict:
     import json
     from datetime import date
@@ -122,7 +76,8 @@ def _save_daily_state(state: dict) -> None:
 
 
 def run_like_cycle():
-    """Open a niche search, scroll, JS-click N visible like buttons."""
+    """Open a niche search, scroll, like up to N listed posts through
+    `like_tweet`. The daily count adds the LIKED outcomes only."""
     state = _load_daily_state()
     daily_cap = _daily_cap()
     remaining = max(0, daily_cap - int(state.get("count") or 0))
@@ -150,24 +105,25 @@ def run_like_cycle():
         _scroll_page()
         time.sleep(1)
 
-        # Pause briefly between batches so the action doesn't burst.
-        clicked_total = 0
-        # Two batches of half so we space out the JS clicks slightly.
-        first = cycle_cap // 2 + cycle_cap % 2
-        second = cycle_cap - first
+        outcomes = []
+        liked_before = action_guard.count_today(action_guard.LIKE)
         try:
-            clicked_total += _click_likes_on_page(first)
-            time.sleep(random.uniform(1.5, 3.0))
-            clicked_total += _click_likes_on_page(second)
+            outcomes = twitter_client._like_posts_on_page(
+                cycle_cap, lambda post: True,
+                page_ok=lambda page: urllib.parse.urlparse(page).path == "/search")
         finally:
-            # A stop between batches must still count the first batch.
-            state["count"] = int(state.get("count") or 0) + max(0, clicked_total)
+            # like_tweet writes one ledger row per LIKED and the Safari lock
+            # keeps every other like out, so the ledger delta still counts the
+            # likes that shipped when a stop interrupts the walk.
+            liked = max(0, action_guard.count_today(action_guard.LIKE) - liked_before)
+            state["count"] = int(state.get("count") or 0) + liked
             _save_daily_state(state)
 
         close_front_tab()
 
     log.info(
-        f"[LIKE] Liked {clicked_total} tweets on '{query}' ({tab}) "
+        f"[LIKE] Liked {liked} tweets on '{query}' ({tab}) "
+        f"[{twitter_client._like_summary(outcomes)}] "
         f"({state['count']}/{daily_cap} today)."
     )
 

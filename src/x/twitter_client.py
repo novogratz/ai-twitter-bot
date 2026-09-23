@@ -1,7 +1,6 @@
 """Write chokepoints for X via Safari + AppleScript (macOS only): each post,
 reply, like, follow, unfollow and pin has one function here that owns its
-rules. Known gap: `like_job` (`src/account/like_bot.py`) still clicks likes
-with its own JavaScript, outside `like_tweet`."""
+rules."""
 import json
 import os
 import random
@@ -1089,14 +1088,15 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
             safari.close_front_tab()
 
 
-def pin_own_tweet(tweet_url: str) -> bool:
+def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
     """Pin one of our own tweets to the profile via the More menu.
 
     Best-effort. X's tweet-action menu DOM is stable but the wording of the
     'Pin' item varies (FR: 'Épingler à votre profil' / EN: 'Pin to your
-    profile'). We click via JS by matching either string. Returns True if
-    the pin appeared to succeed (menu item found + clicked + confirm dialog
-    handled), False otherwise.
+    profile'). We click via JS by matching either string. Returns True and
+    writes a ledger row if the pin appeared to succeed (menu item found +
+    clicked + confirm dialog handled), False and no row otherwise. DRY_RUN
+    writes a dry-run ledger row and returns DRY_RUN_RECORDED.
 
     Note: X surfaces a confirmation modal on first pin per session; we
     handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
@@ -1104,10 +1104,12 @@ def pin_own_tweet(tweet_url: str) -> bool:
     import json as _json
     import tempfile
     from ..core import config as _cfg
+    from ..guards import action_guard
 
     if _cfg.dry_run():
         log.info(f"[PIN][DRY_RUN] would pin {tweet_url}.")
-        return False
+        action_guard.record(action_guard.PIN, target=tweet_url, dry_run=True)
+        return DRY_RUN_RECORDED
 
     js_code = """
     (function() {
@@ -1194,10 +1196,13 @@ def pin_own_tweet(tweet_url: str) -> bool:
 
         step3 = _exec_js(js_confirm)
         log.info(f"[PIN] Confirm modal: {step3}")
+        shipped = step3 in ("CONFIRMED", "NO_CONFIRM")
+        if shipped:
+            action_guard.record(action_guard.PIN, target=tweet_url)
         # Whether the confirm modal appeared or not, we leave the page.
         time.sleep(1)
         safari.close_front_tab()
-        return step3 in ("CONFIRMED", "NO_CONFIRM")
+        return shipped
 
 
 def like_own_tweet_replies() -> list[LikeOutcome]:

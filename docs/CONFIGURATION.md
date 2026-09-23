@@ -93,8 +93,8 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `LIKE_BOT_PER_CYCLE` | `22` | Bulk Like-button clicks per cycle. |
-| `LIKE_BOT_DAILY_CAP` | `1800` | Daily circuit breaker for bulk Like-button clicks. |
+| `LIKE_BOT_PER_CYCLE` | `22` | Search posts `like_job` hands to `like_tweet` per cycle; at most that many likes. |
+| `LIKE_BOT_DAILY_CAP` | `1800` | Daily circuit breaker on the likes `like_job` shipped (`LIKED` only). |
 | `FOLLOWBACK_CAP` | `8` | Follow-back attempts per cycle. |
 | `EARLY_BIRD_MAX_REPLIES_PER_CYCLE` | `4` | Early-bird replies per cycle. |
 

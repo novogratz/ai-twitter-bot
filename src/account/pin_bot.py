@@ -11,7 +11,8 @@ Strategy:
   - Pick the post with the highest like count from the last ~30 tweets
     (the visible profile window).
   - Skip if already pinned (track via pin_history.json).
-  - Pin via twitter_client.pin_own_tweet (best-effort JS menu click).
+  - Pin via twitter_client.pin_own_tweet (best-effort JS menu click), which
+    writes the ledger row. A dry run does not spend the day's attempt.
 """
 import json
 import os
@@ -22,7 +23,7 @@ from datetime import date
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, is_own_post
-from ..x.twitter_client import pin_own_tweet
+from ..x import twitter_client
 
 PIN_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "pin_history.json")
 PIN_STATE_FILE = os.path.join(_PROJECT_ROOT, "pin_daily_state.json")
@@ -152,12 +153,15 @@ def run_pin_cycle():
 
     # Best-effort pin. The JS menu-click is fragile; if it fails we log and move on.
     try:
-        ok = pin_own_tweet(best["url"])
+        ok = twitter_client.pin_own_tweet(best["url"])
     except Exception:
         log.info("[PIN] pin_own_tweet raised:")
         traceback.print_exc()
         ok = False
 
+    if ok is twitter_client.DRY_RUN_RECORDED:
+        log.info("[PIN][DRY_RUN] Dry-run pin recorded; today's attempt is not spent.")
+        return
     _mark_ran_today()
 
     if ok:

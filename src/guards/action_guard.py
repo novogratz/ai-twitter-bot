@@ -2,7 +2,7 @@
 
 Single chokepoint for rate-limits, daily caps, anti-churn and the follow
 policy. Wired into the lowest-level write functions in twitter_client
-(post_tweet / reply_* / follow_account / unfollow_account / like) so every
+(post_tweet / reply_* / follow_account / unfollow_account / like / pin) so every
 caller — whichever of the ~30 bots — is governed by the same rules without
 rewriting each bot.
 
@@ -39,6 +39,7 @@ FOLLOW = "follow"
 UNFOLLOW = "unfollow"
 LIKE = "like"
 RETWEET = "retweet"
+PIN = "pin"
 # Bookkeeping row beside REPLY: the answered author, for the per-author cap.
 DEBATE_TURN = "debate_turn"
 

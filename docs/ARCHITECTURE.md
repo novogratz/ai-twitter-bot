@@ -47,10 +47,9 @@ run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
 - `safari._run_applescript`, `safari._run_js` and each direct `osascript`
-  call inside `twitter_client` and `scraper`, and in `like_bot`'s like
-  clicks. The read-only `osascript` calls in `followback_bot`,
-  `follower_tracker_bot` and `safari_hygiene` are only covered by the lock
-  check or by `awake_job`;
+  call inside `twitter_client` and `scraper`. The read-only `osascript`
+  calls in `followback_bot`, `follower_tracker_bot` and `safari_hygiene` are
+  only covered by the lock check or by `awake_job`;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
   also capped at the time left before 22:00;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
@@ -164,8 +163,8 @@ call a primitive through its module (`safari._run_applescript(...)`), never a
 
 Every write that should count goes through a function in
 `src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
-`reply_to_tweet_in_thread`, `follow_account`, `like_tweet`. `post_tweet`,
-the reply functions and `follow_account` return `True` when they submitted the
+`reply_to_tweet_in_thread`, `follow_account`, `like_tweet`, `pin_own_tweet`. `post_tweet`,
+the reply functions, `follow_account` and `pin_own_tweet` return `True` when they submitted the
 action, `False` when a rule refused it or an AppleScript step failed, and
 callers log or count only on `True`. No ledger row is written on `False`.
 Under `DRY_RUN` these functions write a dry-run ledger row and return
@@ -191,12 +190,18 @@ reads the article again and returns `LIKED` only once the button shows
 `unlike`; the ledger row and the cache entry then carry the URL read on the
 page. That read, about a second after the click, sees X's optimistic
 interface: it proves the page shows the like, not that X accepted it.
-`visit_profile_and_like` and `like_own_tweet_replies` list the
+`visit_profile_and_like`, `like_own_tweet_replies` and `like_job` list the
 articles on the page and call it with each post's URL: the profile's own
-posts for the first, the replies under our latest post for the second,
-never our own posts. A `BLOCKED` post is skipped and the walk goes on; a
-`FAILED` one stops it. Both open nothing under `DRY_RUN` and close their tab
-even when a like raises.
+posts for the first, the replies under our latest post for the second, the
+posts of a niche search for `like_job`, never our own posts. A `BLOCKED`
+post is skipped and the walk goes on; a `FAILED` one stops it. All three
+open nothing under `DRY_RUN`; the first two close their tab even when a
+like raises. `like_job` adds to its daily count the likes the ledger
+recorded during its walk, so a stop mid-walk still counts them.
+
+`pin_own_tweet` writes a `pin` ledger row when the pin went through, and a
+dry-run row under `DRY_RUN`, after which `pin_job` keeps its daily attempt
+unspent. A `pin` row is not a profile publication.
 
 No write function exists for quotes, reposts, threads, GIF posts or
 self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
@@ -289,11 +294,9 @@ home-timeline attribution. It does not influence any cap.
 
 These are how the code behaves today, not design intent:
 
-- `like_job` and `pin_job` click in Safari without going through a
-  chokepoint: no ledger entry and no `can_post`. `DRY_RUN` stops them
-  without a dry-run ledger row; `pin_job` still spends its daily pin
-  attempt. `like_tweet` has no `can_post` either: likes are
-  recorded, not capped.
+- `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
+  recorded, not capped by the ledger. `like_job` and `pin_job` keep their
+  own daily caps in their state files.
 - `follow_engagers_bot`, `like_bot` and `pin_bot` key their
   daily counters on `date.today()` (machine time), while the ledger uses the
   Toronto day.
