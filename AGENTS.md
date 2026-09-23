@@ -13,7 +13,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Six sourced AI originals targeted a day, a seventh only in the exceptional
   slot; seven combined profile publications at most.
 - Quotes, reposts, self-recycling, threads and startup bursts stay at zero.
-- Replies are uncapped in waking hours, paced and deduplicated per tweet.
+- Replies are uncapped in waking hours, paced and deduplicated per tweet;
+  debate turns are capped per engager per day.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same

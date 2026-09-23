@@ -3174,6 +3174,29 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
         "a turn without a URL handle fails closed"
 
 
+def test_debate_turn_cap_rechecked_under_the_safari_lock(monkeypatch):
+    """Another thread can ship the Engager's last turn while this one waits
+    for the browser: the re-check under the lock refuses before Safari."""
+    import contextlib
+    from src import action_guard as ag
+    from src import content_guard as cg
+    from src import twitter_client as tc
+
+    monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
+    monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+
+    @contextlib.contextmanager
+    def contended_lock():
+        ag.record(ag.DEBATE_TURN, target="challenger")  # the other thread won
+        yield
+    monkeypatch.setattr(tc, "_safari_lock", contended_lock())
+    # _run_applescript stays walled off by conftest: reaching Safari fails.
+    assert not tc.reply_to_tweet("https://x.com/challenger/status/7", "Batching changes the cost curve.", debate_turn=True)
+    assert ag.debate_turns_today("challenger") == 1
+
+
 def test_replyback_answers_are_debate_turns(monkeypatch, tmp_path):
     """Replyback answers people who replied to the account: each answer is a
     Debate turn, and an author at the cap is skipped before the model call."""

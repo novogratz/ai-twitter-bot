@@ -56,8 +56,8 @@ _Avoid_: try, cycle, poll
 ### Conversation
 
 **Reply**:
-A post answering someone else's post. Never a Profile publication and never
-capped per day.
+A post answering someone else's post. Never a Profile publication, and no
+daily total applies to Replies.
 _Avoid_: comment, response
 
 **Debate turn**:

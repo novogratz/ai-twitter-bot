@@ -40,8 +40,9 @@ def _tweet_age_hours(url: str) -> float:
 
 
 def _handle_from_url(url: str) -> str:
-    m = re.search(r"x\.com/([^/]+)/status/", url or "")
-    return m.group(1).lower() if m else ""
+    # Same parser as the reply chokepoint, so the early cap check agrees.
+    from .twitter_client import _status_author
+    return _status_author(url)
 
 
 DEBATE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 45, a practicing

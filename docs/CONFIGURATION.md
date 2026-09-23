@@ -13,7 +13,7 @@ supersede the historical surfaces listed below:
 | `MAX_REPLIES_PER_DAY` | 0 means unlimited |
 | `MIN_SECONDS_BETWEEN_POSTS` | At least 3600 |
 | `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
-| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job` and `replyback_job`; read at call time |
+| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job`, `replyback_job` and `babysit_job`; read at call time |
 | `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers |
 
 Legacy profile job caps do not add posting slots. `get_live_cap` cannot lift the

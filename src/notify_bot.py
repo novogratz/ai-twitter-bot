@@ -164,8 +164,9 @@ def run_replyback_cycle():
         # saves the model call; the chokepoint enforces and counts the cap.
         from .action_guard import can_debate_turn
         from .twitter_client import _status_author
-        if reply_url and not can_debate_turn(_status_author(reply_url))[0]:
-            log.info(f"[REPLYBACK] Debate turn cap reached for @{handle} - skipping.")
+        ok, why = can_debate_turn(_status_author(reply_url)) if reply_url else (True, "")
+        if not ok:
+            log.info(f"[REPLYBACK] Debate turn refused ({why}) - skipping.")
             continue
 
         is_influencer = handle in influencers

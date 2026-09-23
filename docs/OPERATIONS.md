@@ -212,6 +212,8 @@ Files written by active jobs:
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart |
 
 Most other JSON files at the root belong to legacy jobs and no longer change.
+`debate_state.json` is one of them since debate turns moved to the ledger; it
+can be deleted.
 
 ## Legacy tools
 

@@ -1061,6 +1061,15 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         return True
 
     with _safari_lock:
+        # Re-check under the lock that also records the turn: two threads
+        # answering the same Engager cannot both take the last turn. The
+        # race loser stays marked replied; the early check above keeps the
+        # common refusal fresh.
+        if debate_turn:
+            ok, why = action_guard.can_debate_turn(_debate_author)
+            if not ok:
+                log.info(f"[REPLY] debate skip under lock ({why}): {tweet_url}")
+                return False
         # Make sure Safari is focused first
         _run_applescript('''
         tell application "Safari" to activate
