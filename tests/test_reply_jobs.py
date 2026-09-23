@@ -247,6 +247,94 @@ def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch, disabl
     assert sent == logged == [answered], "a quote item ships nothing and logs nothing"
 
 
+# --- reply search (one model call finds and drafts) --------------------------
+
+@pytest.fixture
+def reply_search(monkeypatch, blocklist):
+    """reply_bot with a stub search-and-draft model and a stub chokepoint;
+    the model returns `batch`."""
+    from src import reply_bot as rb
+
+    batch, searched, sent, logged = [], [], [], []
+
+    def generate(recent_topics=None, already_replied=None):
+        searched.append(already_replied)
+        return list(batch)
+
+    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
+    monkeypatch.setattr(rb, "MAX_REPLIES_PER_CYCLE", 20)
+    monkeypatch.setattr(rb, "refresh_feed", lambda: None)
+    monkeypatch.setattr(rb, "get_recent_tweets", lambda hours: [])
+    monkeypatch.setattr(rb, "generate_replies", generate)
+    monkeypatch.setattr(rb, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+    monkeypatch.setattr(rb, "log_reply", lambda url, *a, **k: logged.append(url))
+    monkeypatch.setattr(rb.time, "sleep", lambda *a: None)
+    return rb, batch, searched, sent, logged
+
+
+def target(url, text=""):
+    return {"tweet_url": url, "reply": DRAFT, "type": "reply", "tweet_text": text}
+
+
+def test_reply_search_asks_admission_before_sending(reply_search):
+    rb, batch, searched, sent, logged = reply_search
+    answered = fresh("someone", n=1)
+    replied_store.claim(answered)
+    ok = fresh("someone", n=5)
+    batch += [
+        target(fresh("pgm_pm", n=2)),
+        target(fresh(config.BOT_HANDLE, n=3)),
+        target(answered),
+        target("https://x.com/i/web/status/" + x_urls.status_id(fresh("x", n=4))),
+        target(fresh("someone", minutes=49 * 60, n=6)),
+        target(ok),
+    ]
+
+    rb.run_reply_cycle()
+
+    assert len(searched) == 1 and answered in searched[0], "the model is told which posts are answered"
+    assert sent == logged == [ok], "a post admission refuses never reaches the chokepoint"
+
+
+def test_reply_search_never_writes_the_replied_store(reply_search, monkeypatch):
+    """Defect 3 of #100: the cycle marked candidates before sending and
+    saved them into the Replied store at the end, shipped or not."""
+    rb, batch, _, sent, logged = reply_search
+    refused, shipped = fresh("someone", n=1), fresh("other", n=2)
+    batch += [target(refused), target(shipped), target(refused)]
+    monkeypatch.setattr(rb, "reply_to_tweet", lambda url, text: sent.append(url) or url == shipped)
+
+    rb.run_reply_cycle()
+
+    assert sent == [refused, shipped], "each target tried once per cycle"
+    assert logged == [shipped], "log only what shipped"
+    assert replied_store.load_replied() == set(), "only the chokepoint marks the store"
+
+
+def test_reply_search_stops_on_unreadable_store(reply_search):
+    rb, batch, searched, sent, _ = reply_search
+    batch.append(target(fresh("someone")))
+    corrupt_replied_store()
+    with pytest.raises(StateUnreadable):
+        rb.run_reply_cycle()
+    assert searched == [], "the model is not paid on an unreadable store"
+    assert sent == []
+
+
+def test_reply_search_does_not_swallow_unreadable_store_at_the_chokepoint(reply_search, monkeypatch):
+    rb, batch, _, sent, _ = reply_search
+    batch += [target(fresh("someone", n=1)), target(fresh("other", n=2))]
+
+    def unreadable(url, text):
+        sent.append(url)
+        raise StateUnreadable("replied store unreadable")
+
+    monkeypatch.setattr(rb, "reply_to_tweet", unreadable)
+    with pytest.raises(StateUnreadable):
+        rb.run_reply_cycle()
+    assert len(sent) == 1, "the cycle stops at the first unreadable store"
+
+
 # --- early_bird and mega_watch (profile scans) ------------------------------
 
 @pytest.fixture(params=["early_bird", "mega_watch"])

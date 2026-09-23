@@ -61,8 +61,9 @@ slot needs news from the last six hours and an exceptional-value approval.
   ignored on both sides), when the parent is the account's own post, or
   when the URL carries no author handle. The six scheduled reply jobs ask
   the same admission before paying for a generation and keep no copy of
-  these rules (issue #100); the legacy `reply_job`
-  (`ENABLE_REPLY_SEARCH=1`) does not. `BLOCKLIST` is matched on the URL
+  these rules (issue #100). The legacy `reply_job`
+  (`ENABLE_REPLY_SEARCH=1`) finds and drafts in one model call, so it asks
+  admission for each target before sending (issue #109). `BLOCKLIST` is matched on the URL
   handle only: `direct_reply`, `feed_sweep`, `mega_watch` and `replyback`
   no longer match it against the scraper's display name, which is not an
   identity. The replyback profile likes still check both.
