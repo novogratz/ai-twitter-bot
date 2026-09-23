@@ -1,12 +1,20 @@
 ---
 name: config
-description: View and edit bot configuration - limits, models, settings
+description: View and edit bot configuration - pacing, follows, models, settings
 allowed-tools: Read Edit
 ---
 
 Show and edit config:
 
-1. Read `src/config.py` - display all settings (handle, limits, models, retry)
-2. Show which env vars can override them
-3. If user wants changes, edit `src/config.py`
-4. Remind to restart bot for changes to take effect
+1. Read `src/config.py` and `docs/CONFIGURATION.md` (its top table is
+   current; the rest documents legacy env vars) - display the settings
+2. Show which env vars can override them (`.env`)
+3. If the operator wants changes, edit `.env` or `src/config.py`
+4. Remind that changes take effect at restart
+
+Hard ceilings cannot be lifted from `.env` or `live_strategy.json`, and are
+not edited without an explicit operator request that also updates
+`docs/EDITORIAL_POLICY.md` in the same change: the seven-post ceiling
+(`MAX_ORIGINALS_PER_DAY` can only go lower), the one-hour spacing between
+originals, quotes and reposts at zero, waking hours, `BLOCKLIST` and the
+48-hour `REPOST_MAX_AGE_HOURS` clamp.

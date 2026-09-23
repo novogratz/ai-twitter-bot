@@ -2366,6 +2366,15 @@ For full operations playbook see [`docs/OPERATIONS.md`](OPERATIONS.md).
 
 ## Skills
 
+> **Superseded (2026-09-23).** The skills were pruned to the 2026-09-20
+> policy (#113). Twelve drove disabled surfaces or bypassed the editorial
+> pipeline and were deleted: `approve`, `boost`, `hotake`, `improve`,
+> `news`, `post`, `reset`, `retweet`, `run-agent` (it ran the bot loop
+> inside OpenCode instead of `main.py`, with quotes and unreviewed posts),
+> `strategy`, `thread`, `tweet`. `.claude/skills/` became the one source;
+> the `.codex/skills` and `.opencode/skills` copies had drifted. See
+> [`OPERATIONS.md#skills`](OPERATIONS.md#skills).
+
 > `bin/stop_bot.sh` — arms `.bot_disabled` + SIGTERMs main.py processes
 > scoped to this repo's cwd. Was briefly wired as a Claude Code Stop hook
 > (2026-07-05) — REMOVED 2026-07-06 after it killed the operator's running

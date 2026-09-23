@@ -78,7 +78,15 @@ the repo root honours it; a supervisor that restarts the bot ignores it.
 ## Supervisors
 
 Only one should be active. Check which one before stopping the bot, or it
-comes back.
+comes back:
+
+```bash
+launchctl list com.kzer.ai-twitter-bot   # exit 0: the launchd job is loaded
+pgrep -f bin/watchdog.sh                 # prints a PID: the watchdog runs
+```
+
+Query the exact label: `launchctl list | grep com.kzer.ai-twitter-bot` also
+matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
 
 - **launchd** (`launchd/com.kzer.ai-twitter-bot.plist`, installed by
   `bin/install_autonomous.sh`): `KeepAlive`, `RunAtLoad`, 30-second throttle.
@@ -94,6 +102,23 @@ comes back.
   comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
+
+## Manual writes
+
+The `engage`, `follow`, `like`, `reply` and `unfollow` skills write to the
+real account from a second process. Before any of them:
+
+1. The operator asked for this run explicitly.
+2. The bot is stopped: `pgrep -if "python.*main\.py"` prints nothing. The
+   Safari lock only serialises writes inside one process, so a manual write
+   beside a running bot interleaves with it in Safari. Stop it through
+   [Stop](#stop).
+3. No supervisor restarts it during the run: see [Supervisors](#supervisors).
+4. Waking hours, on the bot's own Toronto clock:
+   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   prints `True`. The `twitter_client` chokepoints refuse writes Overnight;
+   `bin/mass_unfollow.py` does not (issue #122), so the `unfollow` skill adds
+   a start cutoff and a bound.
 
 ## Watching
 
@@ -235,8 +260,14 @@ can be deleted.
   `ENABLE_CODEX_OPERATOR=1` or `ENABLE_AI_MAINTENANCE=1`.
 - `bin/mass_unfollow.py` unfollows by hand from `/following`. It refuses to
   run while the bot runs, unless `--force`, and records each unfollow in the
-  ledger.
+  ledger. It drives `osascript` directly, does not check Waking hours,
+  defaults `--max` to 10**6 and never aborts on a rate limit (issue #122):
+  run it only within the `unfollow` skill's bound and start cutoff.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
-- The skills in `.claude/skills/` and `.codex/skills/` predate the policy.
-  Several drive disabled surfaces (`retweet`, `thread`) or reset counters
-  (`reset`). Read a skill against the policy before running it.
+
+## Skills
+
+The operator skills live in `.claude/skills/` only; `.codex/skills` is a
+relative symlink to it and OpenCode reads `.claude/skills` natively. They
+match the 2026-09-20 policy: none drives a disabled surface. The manual
+write skills follow [Manual writes](#manual-writes).

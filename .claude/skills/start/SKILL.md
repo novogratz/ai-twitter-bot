@@ -1,17 +1,23 @@
 ---
 name: start
-description: Start the full bot in background (all 4 bots)
+description: Start the bot in the background with bin/run.sh. Only on an explicit operator request.
+disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 
-Start the bot:
+Start the bot. Only when the operator explicitly asks for it: the bot
+publishes on a real account. See `docs/OPERATIONS.md#start`.
 
-1. **First** clear the kill-switch: `rm -f .bot_disabled`
-   - The watchdog (`bot_watchdog.sh`) skips restart while this file exists. /stop creates it; /start must remove it so the watchdog can resume auto-recovery.
-2. Check if already running: `ps aux | grep -iE "python[3]? main\.py" | grep -v grep`
-   - Case-insensitive: macOS framework Python shows as `Python main.py` (capital P).
-3. If running, show the PID
-4. If not, start it: `nohup uv run python main.py >> bot.log 2>&1 &
-   - MUST be `uv run` — bare `python3` lacks apscheduler and crashes on import (bit us 2026-06-05). Output appends to bot.log so crashes are visible.`
-5. Confirm with PID
-6. Show first lines of bot.log
+1. Check if already running: `pgrep -if "python.*main\.py"` and `cat bot.lock`.
+   If it runs, show the PIDs and stop here.
+2. Check the supervisors (`docs/OPERATIONS.md#supervisors`):
+   `launchctl list com.kzer.ai-twitter-bot` exits 0 (launchd job loaded) or
+   `pgrep -f bin/watchdog.sh` prints a PID. If one is active, it starts the
+   bot by itself: report it instead of launching a second copy.
+3. Start: `nohup ./bin/run.sh >/tmp/aitwitter_run.out 2>&1 &`
+   - `run.sh` kills every `python.*main.py` on the machine, pre-warms the
+     reply model during waking hours, then runs `uv run python main.py`
+     with output appended to `bot.log`.
+4. Wait 10 seconds, confirm the PID with `pgrep -if "python.*main\.py"`.
+5. Show the last lines of `bot.log`. Started Overnight, the bot logs
+   `[HOURS] Asleep. Next wake: …` and does nothing until Waking hours.

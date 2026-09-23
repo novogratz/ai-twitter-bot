@@ -1,19 +1,25 @@
 ---
 name: stats
-description: Show full engagement stats dashboard - posts, replies, follows, history
+description: Show the engagement stats dashboard - originals, replies, follows, reach
 allowed-tools: Bash Read Glob
 ---
 
-Show engagement stats:
+Show engagement stats, read-only:
 
-1. Read `engagement_log.csv` - count posts, replies, hot takes, quote tweets by day
-2. Read `daily_state.json` - today's counters
-3. Read `replied_tweets.json` - total unique tweets replied to
-4. Read `followed_accounts.json` - accounts followed
-5. Read `tweet_history.json` - recent tweet topics
+1. `action_ledger.json` - counted writes (`post`, `reply`, `follow`, `like`,
+   `debate_turn`…) with Toronto timestamps; skip rows with `dry_run: true`
+2. `editorial_state.json` - today's slots and the recent `published` originals
+3. `editorial_review.jsonl` - approvals and rejection reasons of recent drafts
+4. `editorial_reach.md` - observed views of the last seven days of originals
+   against the 500,000 target
+5. `engagement_log.csv` - append-only action log
+6. `replied_tweets.json` - tweets already answered, by status ID
+7. `followed_accounts.json` - accounts followed
 
 Present a clean summary:
-- Today: news posted, hot takes posted, replies sent
-- All-time totals
-- Last 5 tweets and last 5 replies
-- Patterns or insights (posting rate, most active hour, etc.)
+- Today: originals published against the target of six (Profile
+  publications against the ceiling of seven), replies sent, follows, likes
+- Last 7 days per day
+- Last 5 originals and last 5 replies
+- Reach against target, with the missing coverage the report states
+- Patterns (review rejection reasons, most active hour)
