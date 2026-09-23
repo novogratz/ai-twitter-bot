@@ -21,7 +21,8 @@ def _stub_like_browser(monkeypatch, tmp_path):
 
 
 def test_live_strategy_cannot_raise_likes_per_cycle(monkeypatch, tmp_path):
-    from src import config, like_bot
+    from src.core import config
+    from src import like_bot
 
     strategy = tmp_path / "live_strategy.json"
     strategy.write_text(json.dumps({"caps": {"LIKE_BOT_PER_CYCLE": 500}}))
@@ -163,7 +164,9 @@ def _dry_run_reply_path(monkeypatch):
 
 
 def test_human_typo_text_is_the_validated_text(monkeypatch):
-    from src import content_guard, humanizer, twitter_client
+    from src import content_guard
+    from src.core import humanizer
+    from src.x import twitter_client
 
     _dry_run_reply_path(monkeypatch)
     monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
@@ -179,7 +182,9 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
 
 
 def test_language_check_judges_the_text_before_the_typo(monkeypatch):
-    from src import content_guard, humanizer, reply_language, twitter_client
+    from src import content_guard, reply_language
+    from src.core import humanizer
+    from src.x import twitter_client
 
     _dry_run_reply_path(monkeypatch)
     monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
@@ -197,7 +202,9 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch):
     assert validated[-1].endswith("(typo)")
 
 def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
-    from src import content_guard, humanizer, twitter_client
+    from src import content_guard
+    from src.core import humanizer
+    from src.x import twitter_client
     from src.replied_store import load_replied
 
     _dry_run_reply_path(monkeypatch)
@@ -212,7 +219,9 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
 
 
 def test_dry_run_is_read_at_call_time(monkeypatch):
-    from src import action_guard, config, twitter_client
+    from src import action_guard
+    from src.core import config
+    from src.x import twitter_client
 
     assert not hasattr(config, "DRY_RUN"), "a frozen module constant must not come back"
     monkeypatch.setenv("DRY_RUN", "0")
@@ -233,7 +242,8 @@ def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_pa
     """like_job, notify_job and pin_job clicked in Safari
     whatever DRY_RUN said. conftest fails the test on webbrowser.open or
     _run_applescript; direct osascript calls are walled off here."""
-    from src import like_bot, twitter_client
+    from src import like_bot
+    from src.x import twitter_client
 
     def no_osascript(*a, **k):
         raise AssertionError("dry run reached osascript")
@@ -259,7 +269,8 @@ def _live_browser(monkeypatch, failing_step=None):
     "stop_before_submit", "stop_at_submit" and "stop_after_submit" request a
     stop at that point.
     """
-    from src import action_guard, twitter_client as tc
+    from src import action_guard
+    from src.x import twitter_client as tc
     from src.active_hours import OutsideActiveHours
 
     monkeypatch.setenv("DRY_RUN", "0")
@@ -299,7 +310,7 @@ REPLY = "Batching is where inference margins are won or lost."
 
 
 def test_reply_ships_and_records_when_every_step_runs(monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     from src.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
@@ -311,7 +322,7 @@ def test_reply_ships_and_records_when_every_step_runs(monkeypatch):
 
 
 def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     from src.replied_store import load_replied, save_replied
 
     other = "https://x.com/else/status/2063500000000000119"
@@ -328,7 +339,7 @@ def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monk
 
 
 def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     from src.replied_store import load_replied
 
     for n, debate_turn in enumerate((False, True)):
@@ -343,7 +354,8 @@ def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
 def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
     """Another thread takes the Engager's last turn while this one waits for
     the browser: admission, judged under the lock, refuses before the claim."""
-    from src import action_guard, twitter_client as tc
+    from src import action_guard
+    from src.x import twitter_client as tc
     from src.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
@@ -369,7 +381,9 @@ def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
 def test_live_reply_pastes_the_validated_text(monkeypatch):
     """The text in the composer is the text admission validated, typo and
     dash cleanup included, never the raw draft."""
-    from src import content_guard, humanizer, twitter_client as tc
+    from src import content_guard
+    from src.core import humanizer
+    from src.x import twitter_client as tc
 
     _live_browser(monkeypatch)
     pasted, validated = [], []
@@ -389,7 +403,8 @@ def test_live_reply_pastes_the_validated_text(monkeypatch):
 def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     """A Reply shipped by another thread while this one waited for the
     browser: the spacing check sees it and nothing is claimed."""
-    from src import action_guard, twitter_client as tc
+    from src import action_guard
+    from src.x import twitter_client as tc
     from src.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
@@ -417,7 +432,9 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
     refuse with False before it, like any other skip."""
     from datetime import datetime
     from zoneinfo import ZoneInfo
-    from src import active_hours, config, twitter_client as tc
+    from src import active_hours
+    from src.core import config
+    from src.x import twitter_client as tc
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
@@ -428,7 +445,7 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
 def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     """A simulated Reply writes a dry_run ledger row only: the Replied store
     holds Replies that shipped, so going live later can still answer it."""
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     from src.replied_store import load_replied
 
     recorded = []
@@ -446,7 +463,9 @@ def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
 def test_refused_reply_never_reaches_safari(monkeypatch):
     """Blocked account, own post and author-less URLs stop at admission:
     conftest fails the test if Safari is touched."""
-    from src import action_guard, config, twitter_client as tc
+    from src import action_guard
+    from src.core import config
+    from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
@@ -459,7 +478,7 @@ def test_refused_reply_never_reaches_safari(monkeypatch):
 
 def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch):
     import pytest
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     from src.active_hours import OutsideActiveHours
     from src.replied_store import load_replied
 
@@ -487,7 +506,8 @@ def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch
 
 
 def test_release_drops_only_the_claimed_tweet(monkeypatch):
-    from src import config, replied_store
+    from src.core import config
+    from src import replied_store
 
     keep, drop = "2063500000000000150", "2063500000000000151"
     with open(config.REPLIED_FILE, "w") as f:
@@ -499,7 +519,8 @@ def test_release_drops_only_the_claimed_tweet(monkeypatch):
 
 
 def test_image_post_that_fails_records_nothing(monkeypatch, tmp_path):
-    from src import content_guard, twitter_client as tc
+    from src import content_guard
+    from src.x import twitter_client as tc
 
     image = tmp_path / "chart.png"
     image.write_bytes(b"png")
@@ -519,7 +540,8 @@ def test_image_post_that_fails_records_nothing(monkeypatch, tmp_path):
 
 
 def _dry_run_follow_path(monkeypatch):
-    from src import action_guard, twitter_client as tc
+    from src import action_guard
+    from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "1")
     monkeypatch.setattr(action_guard, "can_follow", lambda *a, **k: (True, ""))
@@ -532,7 +554,9 @@ def _dry_run_follow_path(monkeypatch):
 def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tmp_path):
     """#123: follow_account returned True on a dry run, so engage_bot stored
     handles it never followed and no later live cycle followed them."""
-    from src import action_guard, engage_bot, evolution_store, twitter_client as tc
+    from src import action_guard, engage_bot
+    from src.core import evolution_store
+    from src.x import twitter_client as tc
 
     recorded = _dry_run_follow_path(monkeypatch)
     followed_file = tmp_path / "followed_accounts.json"

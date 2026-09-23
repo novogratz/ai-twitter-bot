@@ -106,7 +106,7 @@ def _restart_safari() -> bool:
     holding network state). Cookies / localStorage survive — login persists.
     """
     try:
-        from . import safari_hygiene
+        from ..x import safari_hygiene
         return safari_hygiene.restart_safari(reason="health_recovery")
     except Exception as e:
         log.warning(f"[HEALTH] Safari restart failed: {e}")

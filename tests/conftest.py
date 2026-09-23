@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def pytest_configure(config):
-    from src.logger import setup_logging
+    from src.core.logger import setup_logging
 
     logger = setup_logging()
     for h in list(logger.handlers):
@@ -63,12 +63,33 @@ def _no_safari(monkeypatch):
         )
 
     monkeypatch.setattr(_wb, "open", _blocked)
-    try:
-        from src import twitter_client as _tc
-        monkeypatch.setattr(_tc, "_run_applescript", _blocked)
-        monkeypatch.setattr(_tc, "_paste_text", _blocked)
-    except Exception:
-        pass
+    # No try/except: an import that breaks (a moved module) must fail every
+    # test, not silently drop the wall.
+    from src.x import twitter_client as _tc
+    monkeypatch.setattr(_tc, "_run_applescript", _blocked)
+    monkeypatch.setattr(_tc, "_paste_text", _blocked)
+
+    # twitter_client, safari_hygiene and several jobs call
+    # subprocess.run(["osascript", ...]) directly, past the helpers above.
+    # subprocess.run/call/check_output all go through subprocess.Popen.
+    import subprocess as _sp
+
+    def _drives_safari(argv):
+        argv = [str(a) for a in argv] if isinstance(argv, (list, tuple)) else str(argv).split()
+        if not argv:
+            return False
+        program = os.path.basename(argv[0])
+        return program == "osascript" or (
+            program in ("open", "pkill", "killall")
+            and any("Safari" in a or "WebKit" in a for a in argv[1:]))
+
+    class _WalledPopen(_sp.Popen):
+        def __init__(self, args, *a, **k):
+            if _drives_safari(args):
+                _blocked()
+            super().__init__(args, *a, **k)
+
+    monkeypatch.setattr(_sp, "Popen", _WalledPopen)
     yield
 
 
@@ -86,22 +107,22 @@ def _no_safari(monkeypatch):
 @_pytest.fixture(autouse=True)
 def _no_prod_state(monkeypatch, tmp_path):
     hist = str(tmp_path / "tweet_history.json")
-    from src import config as _cfg
+    from src.core import config as _cfg
     monkeypatch.setattr(_cfg, "ENGAGEMENT_LOG_FILE", str(tmp_path / "engagement_log.csv"))
     monkeypatch.setattr(_cfg, "HISTORY_FILE", hist)
     monkeypatch.setattr(_cfg, "REPLIED_FILE", str(tmp_path / "replied_tweets.json"))
     monkeypatch.setattr(_cfg, "ACTION_LEDGER_FILE", str(tmp_path / "action_ledger.json"))
     # from-imports bind at import time — patch every namespace that copied one.
-    from src import engagement_log as _el
+    from src.core import engagement_log as _el
     monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
-    from src import history as _hist
+    from src.core import history as _hist
     monkeypatch.setattr(_hist, "HISTORY_FILE", hist)
     from src import content_guard as _cg
     monkeypatch.setattr(_cg, "_HISTORY_FILE", hist)
     # personality.json: log_reply -> personality_store.record_interaction
     # writes dossiers — a test author leaked into prod 2026-07-19 (same
     # family as the 2026-06-09 fixture pollution).
-    from src import personality_store as _ps
+    from src.core import personality_store as _ps
     monkeypatch.setattr(_ps, "PERSONALITY_FILE", str(tmp_path / "personality.json"))
     # The frozen Engager list is tracked in git: never read the live one.
     from src import follow_engagers_bot as _fe

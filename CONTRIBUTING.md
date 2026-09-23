@@ -30,7 +30,7 @@ the real one on the live account.
 The codebase is intentionally pragmatic, not over-engineered. A few conventions:
 
 - One job = one module under `src/` exposing `run_<name>_cycle()` + `safe_run_<name>_cycle()`, registered with `add()` in `main.py:build_scheduler()`.
-- Settings live in `src/config.py` or `.env`. Never hardcode magic numbers — use `int(os.environ.get("X", "default"))`, read at call time when it gates a side effect.
+- Settings live in `src/core/config.py` or `.env`. Never hardcode magic numbers — use `int(os.environ.get("X", "default"))`, read at call time when it gates a side effect.
 - Persistent state goes in JSON at the repo root, named `<bot_name>_state.json` or `<bot_name>_history.json`.
 - Comments only when the WHY is non-obvious. Don't restate WHAT the code does.
 - No em dashes in user-facing copy (it's a brand consistency thing — see `humanizer.py`).

@@ -4,8 +4,8 @@ from functools import wraps
 import threading
 from zoneinfo import ZoneInfo
 
-from . import config
-from .logger import log
+from .core import config
+from .core.logger import log
 
 
 _STOP = threading.Event()

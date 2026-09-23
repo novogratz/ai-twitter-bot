@@ -12,9 +12,9 @@ import os
 import random
 import time
 import traceback
-from .logger import log
-from .config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
-from .twitter_client import visit_profile_and_like, follow_account, _profile_visit_allowed
+from .core.logger import log
+from .core.config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
+from .x.twitter_client import visit_profile_and_like, follow_account, _profile_visit_allowed
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
@@ -88,7 +88,7 @@ def _save_followed(followed: set):
 
 def run_engage_cycle():
     """Visit a sample of feed-discovered profiles, like their latest tweets."""
-    from .evolution_store import filter_and_weight
+    from .core.evolution_store import filter_and_weight
     followed = _load_followed()
     pool = filter_and_weight(_build_pool())
 
@@ -137,7 +137,7 @@ def run_engage_cycle():
 
 
 def safe_run_engage_cycle():
-    from . import health
+    from .core import health
     try:
         run_engage_cycle()
         health.record_success("engage")

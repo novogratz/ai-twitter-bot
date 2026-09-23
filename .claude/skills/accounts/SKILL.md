@@ -20,6 +20,6 @@ Manage target accounts:
    `VIP_ACCOUNTS` or `whitelist.json` accordingly. Changes to code or
    `.env` take effect at restart.
 
-To block an account everywhere, `BLOCKLIST` in `src/config.py` and
+To block an account everywhere, `BLOCKLIST` in `src/core/config.py` and
 `respect_list.json` are operator-managed: change them only on an explicit
 operator request.

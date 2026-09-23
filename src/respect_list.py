@@ -31,8 +31,8 @@ import re
 from datetime import datetime
 from typing import Optional, Tuple
 
-from .config import _PROJECT_ROOT
-from .logger import log
+from .core.config import _PROJECT_ROOT
+from .core.logger import log
 
 RESPECT_FILE = os.path.join(_PROJECT_ROOT, "respect_list.json")
 

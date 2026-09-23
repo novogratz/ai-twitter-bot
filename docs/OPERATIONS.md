@@ -35,7 +35,7 @@ least:
   `LLM_ALLOW_REMOTE_FALLBACK` variable mentioned in the example does not
   exist in the code.
 
-`src/config.py` loads `.env` without overriding variables already set in the
+`src/core/config.py` loads `.env` without overriding variables already set in the
 shell. Check the setup without a browser or a model with the dry-run command
 from [`AGENTS.md#verification`](../AGENTS.md#verification).
 
@@ -187,7 +187,7 @@ does not block a post. Missed slots are not caught up.
 
 **Unwanted content.** Add the handle to the respect list
 (`python3 -c "from src.respect_list import add; add('handle', 'reason')"`,
-picked up at the next prompt) or to `BLOCKLIST` in `src/config.py` (restart
+picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
 needed). Both are operator-managed. The respect list only reaches prompts that
 include the hard rules: debate and VIP replies ignore it (see
 [ARCHITECTURE.md](ARCHITECTURE.md#known-gaps)).
@@ -208,7 +208,7 @@ Changes to `.env` or code take effect at restart.
 
 What cannot be tuned from `.env` or `live_strategy.json`: the seven-post
 ceiling, the one-hour spacing floor between originals, quotes and reposts at
-zero, and waking hours. They live in `src/config.py` and
+zero, and waking hours. They live in `src/core/config.py` and
 `src/active_hours.py`; changing them needs an operator request and an update
 to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
 `live_strategy.json` any more.

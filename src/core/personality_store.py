@@ -102,7 +102,7 @@ def _render_hard_rules() -> str:
     """
     out = _BASE_HARD_RULES
     try:
-        from . import respect_list
+        from .. import respect_list
         block = respect_list.render_block()
         if block:
             out = out + "\n\n" + block

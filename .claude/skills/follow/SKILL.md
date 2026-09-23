@@ -13,7 +13,7 @@ Follow @$username. Only on an explicit operator request.
    `pgrep -if "python.*main\.py"` prints nothing and
    `uv run python -c "from src.active_hours import is_active; print(is_active())"`
    prints `True`.
-3. Run `uv run python -c "from src.twitter_client import follow_account; print(follow_account('$username'))"`
+3. Run `uv run python -c "from src.x.twitter_client import follow_account; print(follow_account('$username'))"`
    - `follow_account` applies the follow policy: whitelist-only, daily cap,
      spacing, total-following ceiling, 30-day anti-churn, quality gate. A
      refusal is logged as `[FOLLOW] policy refuses …` in `bot.log`.

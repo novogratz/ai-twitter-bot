@@ -33,7 +33,7 @@ code reads the variables that gated them any more: `FAVORITE_REPOSTS_PER_CYCLE`,
 
 # Configuration reference
 
-Every knob is an environment variable, settable in `.env` (loaded by `src/config.py:_load_dotenv`). Defaults are tuned for an English-content / global-audience build with conservative caps.
+Every knob is an environment variable, settable in `.env` (loaded by `src/core/config.py:_load_dotenv`). Defaults are tuned for an English-content / global-audience build with conservative caps.
 
 ---
 
@@ -132,7 +132,7 @@ Per-cycle quotas (not daily caps):
 `config.py` exposes runtime helpers that read `live_strategy.json`, written by the removed autonomous agents:
 
 ```python
-from src.config import (
+from src.core.config import (
     get_live_cap,                # cap from live_strategy.json (env fallback), clamped by the hard ceilings
     get_live_cadence_factor,     # cadence multiplier (default 1.0)
     get_live_topic_focus,        # current topic focus list

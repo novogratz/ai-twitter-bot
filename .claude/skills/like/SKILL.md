@@ -14,6 +14,6 @@ Like @$username's latest posts. Only on an explicit operator request.
    state, so it un-likes an already-liked post and still logs "Tweet liked!".
 
 Once #121 ships, the call is
-`uv run python -c "from src.twitter_client import visit_profile_and_like; visit_profile_and_like('$username', like_count=2)"`,
+`uv run python -c "from src.x.twitter_client import visit_profile_and_like; visit_profile_and_like('$username', like_count=2)"`,
 with the preconditions in `docs/OPERATIONS.md#manual-writes`, for a handle
 in `PROFILE_VISIT_ALLOWLIST` (`.env`, default `TheBTCTherapist,Graphseo`).

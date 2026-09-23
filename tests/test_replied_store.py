@@ -5,9 +5,9 @@ import threading
 
 import pytest
 
-from src import config
+from src.core import config
 from src import replied_store as rs
-from src.state_errors import StateUnreadable
+from src.core.state_errors import StateUnreadable
 
 
 def _url(n, author="someone"):
@@ -91,7 +91,7 @@ def test_failed_write_keeps_the_previous_store(monkeypatch):
 
 def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
     from src import action_guard as ag
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     recorded = []
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, ""))
     monkeypatch.setattr(ag, "record", lambda *a, **k: recorded.append(a))
@@ -104,7 +104,7 @@ def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
 
 
 def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
-    from src import health
+    from src.core import health
     monkeypatch.setattr(health, "HEALTH_FILE", str(tmp_path / "safari_health.json"))
     restarts = []
     monkeypatch.setattr(health, "_restart_safari", lambda: restarts.append(1) or True)

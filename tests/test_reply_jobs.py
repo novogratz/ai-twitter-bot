@@ -7,8 +7,10 @@ from datetime import datetime, timezone
 
 import pytest
 
-from src import config, replied_store, x_urls
-from src.state_errors import StateUnreadable
+from src.core import config
+from src import replied_store
+from src.x import x_urls
+from src.core.state_errors import StateUnreadable
 
 DRAFT = "Batching is where inference margins are won or lost, not in the model."
 
@@ -95,7 +97,7 @@ def test_direct_reply_sets_aside_model_skips_but_replays_temporary_refusals(pipe
 def test_direct_reply_cycle_never_marks_unsent_candidates(pipeline, monkeypatch):
     """Defect 3: the VIP lane and the pipeline both marked candidates that
     never shipped, and the cycle saved them into the Replied store."""
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
     vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
@@ -121,7 +123,7 @@ def test_direct_reply_cycle_stops_on_unreadable_store(pipeline):
 
 
 def test_direct_reply_vip_lane_does_not_swallow_unreadable_store(pipeline, monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     dr, _, _, _ = pipeline
     searched = []
@@ -154,7 +156,7 @@ def test_direct_reply_cycle_does_not_swallow_unreadable_store(pipeline, monkeypa
 
 def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeypatch):
     from src import feed_sweeper_bot as fs
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
@@ -182,7 +184,7 @@ def viral(handle, n):
 
 def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
     from src import feed_sweeper_bot as fs
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
@@ -196,7 +198,7 @@ def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
 
 
 def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
     vip, searched = viral("TheBTCTherapist", 1), viral("someone", 2)
@@ -327,7 +329,7 @@ def profile_job(request, monkeypatch, blocklist):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
     from src import direct_reply as dr
     from src import early_bird_bot as eb
-    from src import evolution_store
+    from src.core import evolution_store
     from src import mega_watch_bot as mw
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
@@ -414,7 +416,7 @@ class _Llm:
 @pytest.fixture
 def debate(monkeypatch, blocklist):
     from src import debate_bot as db
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     mentions = []
     outputs = {}
@@ -428,7 +430,7 @@ def debate(monkeypatch, blocklist):
     monkeypatch.setenv("ENABLE_DEBATES", "1")
     monkeypatch.setattr(tc, "scrape_mentions", lambda **k: list(mentions))
     monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text, **k: sent.append((url, k)) or True)
-    monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: None)
+    monkeypatch.setattr("src.core.engagement_log.log_reply", lambda *a, **k: None)
     monkeypatch.setattr(db, "run_llm", llm)
     monkeypatch.setattr(db.time, "sleep", lambda *a: None)
     return db, mentions, outputs, generated, sent
@@ -439,7 +441,7 @@ def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monke
 
     db, mentions, outputs, generated, sent = debate
     logged = []
-    monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
+    monkeypatch.setattr("src.core.engagement_log.log_reply", lambda *a, **k: logged.append(a))
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
     action_guard.record(action_guard.DEBATE_TURN, target="capped")
     blocked, own = fresh("pgm_pm", n=1), fresh(config.BOT_HANDLE, n=2)
@@ -457,7 +459,7 @@ def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monke
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
 
     db = debate[0]
     scraped = []

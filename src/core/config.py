@@ -1,7 +1,7 @@
 """Central configuration for the @TheAIShrink Twitter bot."""
 import os
 
-_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..")
+_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
 
 def _load_dotenv(path: str = os.path.join(_PROJECT_ROOT, ".env")) -> None:
     """Load simple KEY=VALUE pairs without adding a dependency."""

@@ -23,11 +23,11 @@ import traceback
 from collections import Counter
 from datetime import timedelta
 
-from . import x_urls
-from .config import REPLY_MODEL
-from .logger import log
-from .llm_client import run_llm, unwrap_text
-from .humanizer import humanize
+from .x import x_urls
+from .core.config import REPLY_MODEL
+from .core.logger import log
+from .core.llm_client import run_llm, unwrap_text
+from .core.humanizer import humanize
 from .reply_admission import judge_parent
 
 # Mentions this job is done with until restart: definitive Reply admission
@@ -80,7 +80,7 @@ def run_debate_cycle():
     max_per_cycle = int(os.environ.get("DEBATE_MAX_PER_CYCLE", "3"))
     max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
 
-    from .twitter_client import scrape_mentions, reply_to_tweet
+    from .x.twitter_client import scrape_mentions, reply_to_tweet
     mentions = scrape_mentions(max_tweets=20)
     if not mentions:
         log.info("[DEBATE] No mentions scraped this cycle.")
@@ -130,7 +130,7 @@ def run_debate_cycle():
         if reply_to_tweet(url, reply, debate_turn=True):
             _skipped.add(url)
             posted += 1
-            from .engagement_log import log_reply
+            from .core.engagement_log import log_reply
             log_reply(url, reply, "reply", source=f"DEBATE/{author}")
             time.sleep(3)
 
@@ -139,7 +139,7 @@ def run_debate_cycle():
 
 
 def safe_run_debate_cycle():
-    from . import health
+    from .core import health
     try:
         run_debate_cycle()
         health.record_success("debate")

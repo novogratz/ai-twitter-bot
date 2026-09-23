@@ -14,9 +14,9 @@ Hard rules preserved:
 import os
 import traceback
 
-from . import x_urls
-from .config import BLOCKLIST, BOT_HANDLE
-from .logger import log
+from .x import x_urls
+from .core.config import BLOCKLIST, BOT_HANDLE
+from .core.logger import log
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -41,7 +41,7 @@ def _harvest_active_authors(tweets: list) -> None:
     if not tweets:
         return
     try:
-        from .dynamic_strategy import add_dynamic_accounts, get_dynamic_accounts
+        from .core.dynamic_strategy import add_dynamic_accounts, get_dynamic_accounts
         existing = get_dynamic_accounts()
         known = set(h.lower() for bucket in ("en", "fr") for h in existing.get(bucket, []))
         known.update(BLOCKLIST)
@@ -72,7 +72,7 @@ def _harvest_active_authors(tweets: list) -> None:
 
 def run_feed_sweep_cycle():
     """Sweep BOTH For You and Following every cycle — the primary loop."""
-    from .twitter_client import scrape_home_feed, scrape_following_feed
+    from .x.twitter_client import scrape_home_feed, scrape_following_feed
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
         _sweep_one_feed(source, scraper)
 
@@ -120,7 +120,7 @@ def _sweep_one_feed(source, scraper):
 
 
 def safe_run_feed_sweep_cycle():
-    from . import health
+    from .core import health
     try:
         run_feed_sweep_cycle()
         health.record_success("feed_sweep")

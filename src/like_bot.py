@@ -24,10 +24,10 @@ import urllib.parse
 import webbrowser
 
 from .active_hours import require_active
-from . import config
-from .config import _PROJECT_ROOT
-from .logger import log
-from .twitter_client import _safari_lock, close_front_tab, _scroll_page
+from .core import config
+from .core.config import _PROJECT_ROOT
+from .core.logger import log
+from .x.twitter_client import _safari_lock, close_front_tab, _scroll_page
 
 LIKE_QUERIES = [
     "AI datacenter OR power demand lang:en min_faves:50",
@@ -174,7 +174,7 @@ def run_like_cycle():
 
 def safe_run_like_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
+    from .core import health
     try:
         run_like_cycle()
         health.record_success("like")

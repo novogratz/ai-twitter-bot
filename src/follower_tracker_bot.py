@@ -17,9 +17,9 @@ import traceback
 import webbrowser
 from datetime import datetime
 
-from .config import _PROJECT_ROOT, BOT_HANDLE
-from .logger import log
-from .twitter_client import _safari_lock, close_front_tab
+from .core.config import _PROJECT_ROOT, BOT_HANDLE
+from .core.logger import log
+from .x.twitter_client import _safari_lock, close_front_tab
 
 FOLLOWER_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "follower_history.json")
 
@@ -138,7 +138,7 @@ def run_follower_tracker_cycle():
 
 
 def safe_run_follower_tracker_cycle():
-    from . import health
+    from .core import health
     try:
         run_follower_tracker_cycle()
         health.record_success("follower_tracker")

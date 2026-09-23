@@ -14,7 +14,8 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src import action_guard, active_hours, config
+from src import action_guard, active_hours
+from src.core import config
 
 SCRIPT = Path(__file__).resolve().parent.parent / "bin" / "mass_unfollow.py"
 

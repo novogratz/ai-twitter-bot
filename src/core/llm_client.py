@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Optional, Sequence
 
+from .config import _PROJECT_ROOT
 from .logger import log
 
 
@@ -233,13 +234,13 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     """
     import urllib.request
     import urllib.error
-    from .active_hours import require_active, seconds_until_bedtime
+    from ..active_hours import require_active, seconds_until_bedtime
     require_active()
     editorial = label.startswith("EDITORIAL")
     if editorial:
         timeout = max(timeout, int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")))
     timeout = min(timeout, max(1, int(seconds_until_bedtime())))
-    from .editorial_schemas import DRAFT_SCHEMA, REVIEW_SCHEMA
+    from ..editorial_schemas import DRAFT_SCHEMA, REVIEW_SCHEMA
     schema = REVIEW_SCHEMA if label == "EDITORIAL_REVIEW" else DRAFT_SCHEMA
     full_prompt = ("" if editorial else _FUNNY_FORCER) + "/no_think\n\n" + prompt
     payload = json.dumps({
@@ -320,10 +321,7 @@ DEFAULT_LLM_TIMEOUT_SECONDS = int(os.environ.get("LLM_TIMEOUT_SECONDS", "180"))
 # we cache that timestamp and skip codex entirely until it passes — going
 # straight to the opencode fallback. Avoids paying the 6+ min ladder cost
 # every cycle when codex is locked out for days.
-_CODEX_LOCKOUT_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "codex_lockout.json",
-)
+_CODEX_LOCKOUT_FILE = os.path.join(_PROJECT_ROOT, "codex_lockout.json")
 _CODEX_USAGE_LIMIT_RE = re.compile(
     r"try again at (\w+)\s+(\d+)\w*,\s+(\d{4})\s+(\d+):(\d+)\s*([APap][Mm])",
 )
@@ -530,7 +528,7 @@ def _run_cmd(
     timeout: Optional[int],
     cwd: Optional[str],
 ) -> LLMResult:
-    from .active_hours import require_active, seconds_until_bedtime
+    from ..active_hours import require_active, seconds_until_bedtime
     require_active()
     effective_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS,
                             max(1, int(seconds_until_bedtime())))
@@ -626,7 +624,7 @@ def run_llm(
     force_provider: Optional[str] = None,
     structured_output: bool = False,
 ) -> LLMResult:
-    from .active_hours import require_active
+    from ..active_hours import require_active
     require_active()
     provider = force_provider or _provider()
 

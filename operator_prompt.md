@@ -50,7 +50,7 @@ You are the autonomous operator of the @CryptoAIDecode Twitter bot. The owner st
    - Everything stable → tighten ONE knob: smaller cap on a struggling lever, bigger on a winning one.
    - You CAN edit prompts (`PROMPT_TEMPLATE` in `agent.py` / `hotake_agent.py` / `reply_agent.py`) if data shows a tone problem.
    - You CAN edit the bio in those prompts if data justifies it.
-   - You CAN edit `src/twitter_client.py` and other infra files if step 4 surfaced a code bug. That IS the lever.
+   - You CAN edit `src/x/twitter_client.py` and other infra files if step 4 surfaced a code bug. That IS the lever.
    - You CANNOT touch BLOCKLIST, quiet hours (1am-7am Paris), troll-ideas-not-people rule, or the no-em-dash rule.
    - **Pure restart is NEVER the lever** unless the bot is genuinely dead AND step 4 confirmed no repeating error pattern. "Bot off, restart it" is the lazy answer; find why it went off.
 

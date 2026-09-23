@@ -18,15 +18,15 @@ import time
 import traceback
 from datetime import timedelta
 
-from . import x_urls
-from .logger import log
-from .twitter_client import scrape_profile_tweets, reply_to_tweet
+from .x import x_urls
+from .core.logger import log
+from .x.twitter_client import scrape_profile_tweets, reply_to_tweet
 from .reply_admission import judge_parent
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
 from .reply_language import looks_french
-from .engagement_log import log_reply
-from .humanizer import humanize
-from .state_errors import StateUnreadable
+from .core.engagement_log import log_reply
+from .core.humanizer import humanize
+from .core.state_errors import StateUnreadable
 
 # Posts this job is done with until restart: definitive Reply admission
 # refusals, posts the model declined, posts answered.
@@ -138,7 +138,7 @@ def run_mega_watch_cycle():
 
 def safe_run_mega_watch_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
+    from .core import health
     try:
         run_mega_watch_cycle()
         health.record_success("mega_watch")
