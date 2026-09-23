@@ -29,7 +29,7 @@ fi
 # ~23GB model takes ~170s — longer than the bot's per-call timeout. Use
 # OLLAMA_MODEL from .env so a model swap auto-warms the right one.
 if command -v curl >/dev/null 2>&1 && uv run python -c \
-  'import sys; from src.active_hours import is_active; sys.exit(0 if is_active() else 1)'; then
+  'import sys; from src.guards.active_hours import is_active; sys.exit(0 if is_active() else 1)'; then
   OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive}"
   echo "[run] Pre-warming $OLLAMA_MODEL_NAME (keep_alive=24h)..."
   curl -fsS --max-time 300 http://localhost:11434/api/generate \

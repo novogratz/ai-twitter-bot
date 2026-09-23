@@ -16,7 +16,7 @@ import os
 import traceback
 from datetime import date, timedelta
 
-from . import action_guard
+from .guards import action_guard
 from .x import x_urls
 from .core.config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .core.logger import log

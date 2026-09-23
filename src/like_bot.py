@@ -23,7 +23,7 @@ import traceback
 import urllib.parse
 import webbrowser
 
-from .active_hours import require_active
+from .guards.active_hours import require_active
 from .core import config
 from .core.config import _PROJECT_ROOT
 from .core.logger import log

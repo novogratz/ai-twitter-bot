@@ -36,8 +36,8 @@ from .x.twitter_client import reply_to_tweet, refresh_feed
 from .core.history import get_recent_tweets
 from .core.engagement_log import log_reply
 from .core.humanizer import humanize
-from .replied_store import load_replied
-from .reply_admission import judge_parent
+from .guards.replied_store import load_replied
+from .guards.reply_admission import judge_parent
 from .core.state_errors import StateUnreadable
 
 

@@ -10,7 +10,7 @@ from .core.logger import log
 from .core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
 from .core.llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .x.twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
-from .reply_admission import judge_parent
+from .guards.reply_admission import judge_parent
 from .core.state_errors import StateUnreadable
 from .core.humanizer import humanize, strip_agent_preamble
 from .reply_language import looks_french
@@ -533,7 +533,7 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
         if remaining is not None and submitted >= remaining:
             return None
         for tweet in candidates:
-            from .active_hours import require_active
+            from .guards.active_hours import require_active
             require_active()
             url, text = tweet["url"], tweet["text"]
             if url in tried or url in skipped: continue

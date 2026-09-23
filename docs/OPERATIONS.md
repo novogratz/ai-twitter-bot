@@ -115,7 +115,7 @@ real account from a second process. Before any of them:
    [Stop](#stop).
 3. No supervisor restarts it during the run: see [Supervisors](#supervisors).
 4. Waking hours, on the bot's own Toronto clock:
-   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
    and `bin/mass_unfollow.py` refuses to start Overnight and stops at 22:00.
 
@@ -186,7 +186,7 @@ documentation pages always supplement the news, so a quiet news day alone
 does not block a post. Missed slots are not caught up.
 
 **Unwanted content.** Add the handle to the respect list
-(`python3 -c "from src.respect_list import add; add('handle', 'reason')"`,
+(`python3 -c "from src.guards.respect_list import add; add('handle', 'reason')"`,
 picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
 needed). Both are operator-managed. The respect list only reaches prompts that
 include the hard rules: debate and VIP replies ignore it (see
@@ -209,8 +209,8 @@ Changes to `.env` or code take effect at restart.
 What cannot be tuned from `.env` or `live_strategy.json`: the seven-post
 ceiling, the one-hour spacing floor between originals, quotes and reposts at
 zero, and waking hours. They live in `src/core/config.py` and
-`src/active_hours.py`; changing them needs an operator request and an update
-to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
+`src/guards/active_hours.py`; changing them needs an operator request and an
+update to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
 `live_strategy.json` any more.
 
 To stop one job, remove its `add(...)` line in `build_scheduler()` and

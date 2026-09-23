@@ -14,7 +14,7 @@ from .x.twitter_client import (
 )
 from .replyback_agent import generate_replyback
 from .core.humanizer import humanize
-from .reply_admission import judge_parent
+from .guards.reply_admission import judge_parent
 import random
 
 _OWN_HANDLE = BOT_HANDLE.lower()

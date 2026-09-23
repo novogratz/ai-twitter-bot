@@ -17,9 +17,9 @@ import os
 import tempfile
 import threading
 
-from .core import config
-from .x import x_urls
-from .core.state_errors import StateUnreadable
+from ..core import config
+from ..x import x_urls
+from ..core.state_errors import StateUnreadable
 
 _REPLIED_CAP = 50000
 _write_lock = threading.Lock()

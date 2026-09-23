@@ -57,7 +57,7 @@ slot needs news from the last six hours and an exceptional-value approval.
   someone who answered the account is a debate turn, whichever job sends it.
   The per-tweet dedup store fails closed: while it is unreadable, no reply
   ships.
-- Reply admission (`src/reply_admission.py`) runs at the reply chokepoint
+- Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
   ignored on both sides), when the parent is the account's own post, or

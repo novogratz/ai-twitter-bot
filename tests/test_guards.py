@@ -13,10 +13,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 
-from src import content_guard as cg
+from src.guards import content_guard as cg
 from src.core import pattern_tags
 from src.core.llm_client import unwrap_text, contains_post_unsafe_leak
-from src import replied_store as rs
+from src.guards import replied_store as rs
 
 
 @pytest.fixture(autouse=True)
@@ -244,7 +244,7 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     """Two reply bots racing on the same tweet: the second write MUST be
     refused at the chokepoint regardless of which bot it came from."""
     import src.x.twitter_client as tc
-    from src import action_guard
+    from src.guards import action_guard
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     _fake_safari(monkeypatch)
@@ -308,7 +308,7 @@ def test_hashtags_stripped_at_chokepoint():
 def test_review_mode_queues_instead_of_posting(monkeypatch, tmp_path):
     import json, os
     import src.x.twitter_client as tc
-    from src import action_guard
+    from src.guards import action_guard
     monkeypatch.setenv("REVIEW_MODE", "1")
     import src.core.config as config
     monkeypatch.setattr(config, "_PROJECT_ROOT", str(tmp_path))
@@ -328,7 +328,7 @@ def test_review_mode_queues_instead_of_posting(monkeypatch, tmp_path):
 @pytest.fixture()
 def follow_env(monkeypatch, tmp_path):
     """Isolated ledger + whitelist + counts for action_guard follow tests."""
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
     from src.core import config
 
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(tmp_path / "ledger.json"))
@@ -643,7 +643,7 @@ def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
     """reply_to_tweet must return True when the reply ships and False on the
     dedup skip — callers gate log_reply on this."""
     from src.x import twitter_client as tc
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
@@ -705,7 +705,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     ('what a shame'). The chokepoint must strip em/en dashes for EVERY
     reply path, even ones that skip humanize()."""
     from src.x import twitter_client as tc
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
@@ -719,7 +719,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     # the DRY_RUN branch by reading the typo-injection input. We assert via
     # content_guard.validate receiving dash-free text.
     seen = {}
-    import src.content_guard as cg2
+    import src.guards.content_guard as cg2
     real_validate = cg2.validate
     def spy_validate(text, kind="post"):
         seen["text"] = text
@@ -737,7 +737,7 @@ def test_skip_rationale_never_publishes():
     ('The tweet is incomplete (cuts off mid-sentence)...') and an
     exact-match SKIP check published it as a reply. Pin both layers:
     generator-side prefix check and the content_guard chokepoint."""
-    from src import content_guard as cg
+    from src.guards import content_guard as cg
     ok, why = cg.validate("SKIP. The tweet is incomplete (cuts off mid-sentence at 'rema'), "
                           "and the angle is generic crypto psychology.", kind="reply")
     assert not ok and "SKIP" in why
@@ -795,8 +795,8 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     him from ANY bot, BEFORE the dedup mark (post stays fresh for an FR
     retry). SKIPPED-variant leaks are also pinned here."""
     from src.x import twitter_client as tc
-    from src import action_guard as ag
-    from src import content_guard as cg
+    from src.guards import action_guard as ag
+    from src.guards import content_guard as cg
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
@@ -862,7 +862,7 @@ def test_positive_only_subjects_in_hard_rules():
 
 
 def test_mega_viral_quote_cannot_bypass_editorial_policy(monkeypatch):
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     for urgent in (False, True):
         assert not ag.can_post(ag.QUOTE, high_value=True, urgent=urgent)[0]
@@ -897,8 +897,8 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     on policy/content/dedup skip and True only when it ships, so the caller
     can gate logging (same family as the reply phantom-log fix)."""
     from src.x import twitter_client as tc
-    from src import action_guard as ag
-    from src import content_guard as cg
+    from src.guards import action_guard as ag
+    from src.guards import content_guard as cg
 
     # Dedup skip → False (and no Safari).
     monkeypatch_targets = []
@@ -939,7 +939,7 @@ def test_tests_cannot_write_production_state(tmp_path):
     import os
     from src.core import config as cfg
     from src.core import engagement_log as el, history as hist
-    from src import content_guard as cg
+    from src.guards import content_guard as cg
 
     repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     for mod, attr in ((el, "ENGAGEMENT_LOG_FILE"), (hist, "HISTORY_FILE"),
@@ -999,7 +999,7 @@ def test_burned_catchphrases_blocked_at_chokepoint():
     one day carried the same catchphrase, every one 0 likes. The exemplars
     are gone from the prompts and the chokepoint refuses the burned phrases
     on the profile surfaces (posts + quotes). Replies are unaffected."""
-    from src import content_guard as cg
+    from src.guards import content_guard as cg
 
     burned = "Wild launch today. We are so early, most people can't feel it yet."
     for kind in ("original", "quote"):
@@ -1159,7 +1159,7 @@ def test_profile_surfaces_force_capable_provider():
     """Profile generators must pass force_provider=PROFILE_LLM_PROVIDER so
     profile/reply routing can be changed independently from AI_CLI."""
     import inspect
-    from src import editorial_bot
+    from src.editorial import editorial_bot
 
     assert "force_provider=config.PROFILE_LLM_PROVIDER" in inspect.getsource(editorial_bot._json_call), \
         "the editorial generator must force the profile provider"
@@ -1198,7 +1198,7 @@ def test_follow_growth_mode_unties_ceiling_from_followers(monkeypatch):
     (following>followers mid-purge would block every follow), while
     FOLLOW_TOTAL_CAP stays the hard stop and legacy mode keeps the old
     followers-tied invariant."""
-    from src import action_guard
+    from src.guards import action_guard
     from src.core import config
 
     monkeypatch.setattr(action_guard, "current_counts",
@@ -1220,7 +1220,7 @@ def test_burned_structure_contrast_reframe_blocked():
     crush") — 6+ ships in 40 posts, the new tell that got the account
     publicly spotted as a bot. The chokepoint must refuse the SHAPE for
     originals and quotes; replies and innocent text stay unaffected."""
-    from src import content_guard
+    from src.guards import content_guard
 
     burned = [
         "Everyone in the thread is calling this fear but that's not fear, that's a crush on the future.",
@@ -1248,7 +1248,7 @@ def test_qrt_playbook_setup_colon_and_dotdot_texture():
     as truncated (the GIF chokepoints that allowed it are removed, #111);
     (2) humanize() must preserve the human ".." / "..." texture (only 4+
     dots is an artifact); (3) casualize() never strips a ".." ending."""
-    from src import content_guard
+    from src.guards import content_guard
     from src.core.humanizer import humanize, casualize
 
     setup = "Goldman Sachs watching retail buy the dip at 110x revenue:"
@@ -1273,7 +1273,7 @@ def test_casualize_human_texture_is_safe():
     ("JUST IN:"), proper nouns, or produce text looks_truncated() rejects."""
     import random
     from src.core.humanizer import casualize
-    from src.content_guard import looks_truncated
+    from src.guards.content_guard import looks_truncated
 
     # Deterministic "always fire" rng.
     class _Fire:
@@ -1337,7 +1337,7 @@ def test_deliberate_skip_short_circuits_validation_retries():
     ~43 min/day of wasted compute. Fix: gen_fn raises DeliberateSkip on
     a confident refusal; generate_validated catches it and stops retrying.
     """
-    from src import content_guard as cg
+    from src.guards import content_guard as cg
 
     calls = {"n": 0}
 
@@ -1367,7 +1367,7 @@ def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
     the whitelist gate (when FOLLOWBACK_BYPASS_WHITELIST), never the other
     gates. Pin: a non-whitelisted handle is whitelist-blocked normally but
     NOT for a reciprocal follow-back."""
-    from src import action_guard
+    from src.guards import action_guard
     from src.core import config
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
     monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", True)
@@ -1383,7 +1383,7 @@ def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
 
 
 def test_urgent_quote_obeys_editorial_policy(monkeypatch):
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
     monkeypatch.setattr(ag, "count_today", lambda a: 0)
     assert not ag.can_post(ag.QUOTE, urgent=True)[0]
 
@@ -1606,8 +1606,8 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     the reply chokepoint, whichever bot answers: debate_bot and replyback
     share one count. Ordinary replies to the same author stay uncapped, a
     refused turn leaves the tweet unmarked, and the cap is read at call time."""
-    from src import action_guard as ag
-    from src import content_guard as cg
+    from src.guards import action_guard as ag
+    from src.guards import content_guard as cg
     from src.x import twitter_client as tc
 
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
@@ -1639,8 +1639,8 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     """Another thread can ship the Engager's last turn while this one waits
     for the browser: admission, judged under the lock, refuses before Safari."""
     import contextlib
-    from src import action_guard as ag
-    from src import content_guard as cg
+    from src.guards import action_guard as ag
+    from src.guards import content_guard as cg
     from src.x import twitter_client as tc
 
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
@@ -1704,7 +1704,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     ok, _ = _follow_quality_decision(42, "just a person", "Sam", False)
     assert not ok, "non-engager path keeps the size gate"
 
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
     from src import follow_engagers_bot as fe
     for engager in ("oldguy", "business", "freshfan"):  # business: big-media skip
         ag.record(ag.DEBATE_TURN, target=engager)
@@ -1726,7 +1726,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
 def test_evening_slots_stay_inside_waking_hours():
     """2026-07-19: the post-slot grid covers the measured best evening
     hours, inside Waking hours."""
-    from src.editorial_bot import SLOTS
+    from src.editorial.editorial_bot import SLOTS
     assert all("04:30" <= clock < "22:00" for clock, _ in SLOTS)
     assert "20:30" in dict(SLOTS)
 
@@ -1764,14 +1764,14 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     from main import build_scheduler
     assert build_scheduler().get_job("pin_job") is not None
 
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
     from src import follow_engagers_bot as fe
     ag.record(ag.DEBATE_TURN, target="somefan")
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     called = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h, engager=False: called.append(h) or True)
-    monkeypatch.setattr("src.action_guard.can_follow",
+    monkeypatch.setattr("src.guards.action_guard.can_follow",
                         lambda h, reciprocal=False: (False, "total following ceiling reached (3500 >= 3500)"))
     monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     fe.run_follow_engagers_cycle()
@@ -1790,7 +1790,7 @@ def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     non-matching openers pass. Also: the mentions tab (legitimately empty
     when nobody mentioned us) must never count toward blank-page restarts."""
     import json
-    from src import content_guard as cg
+    from src.guards import content_guard as cg
     from src.core import history as hist
     from datetime import datetime
 
@@ -1846,7 +1846,7 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
     chokepoint must refuse violence/cruelty content on EVERY surface —
     replies included — while common idioms (killer app, made a killing,
     AI killed my job) still pass."""
-    from src.content_guard import validate
+    from src.guards.content_guard import validate
     live_leak = ("Palantir was built for pattern recognition. Killing the "
                  "right terrorist = higher ROI on every contract.")
     for kind in ("original", "quote", "reply"):

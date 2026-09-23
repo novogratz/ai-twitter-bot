@@ -8,8 +8,8 @@ import signal
 import threading
 
 from src.core import config
-from src.active_hours import awake_job, is_active, next_wake
-from src.editorial_bot import SLOTS, safe_run_editorial_cycle
+from src.guards.active_hours import awake_job, is_active, next_wake
+from src.editorial.editorial_bot import SLOTS, safe_run_editorial_cycle
 from src.core.logger import log
 
 _SINGLETON_LOCK_HANDLE = None
@@ -84,7 +84,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.pin_bot import safe_run_pin_cycle
         from src.x.safari_hygiene import safe_run_session_refresh
         from src.follower_tracker_bot import safe_run_follower_tracker_cycle
-        from src.reach_report import safe_run_reach_report
+        from src.editorial.reach_report import safe_run_reach_report
 
         add(safe_run_engage_cycle, 8, "engage_job")
         add(safe_run_followback_cycle, 20, "followback_job")
@@ -116,7 +116,7 @@ def main():
     stop = threading.Event()
 
     def shutdown(signum, frame):
-        from src.active_hours import request_stop
+        from src.guards.active_hours import request_stop
         request_stop()
         stop.set()
 

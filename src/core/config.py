@@ -124,8 +124,8 @@ RETRY_DELAY_SECONDS = 5
 # Everything here is config, not hardcoded logic (per the revision mandate).
 # Enforced centrally at the write chokepoints (twitter_client.post_tweet /
 # reply_* / follow_account / unfollow_account) via
-# src/action_guard.py + src/content_guard.py. NOTE: this bot is Safari +
-# AppleScript driven (no X API), so "API rate-limit / 429 backoff" maps to
+# src/guards/action_guard.py + src/guards/content_guard.py. NOTE: this bot is
+# Safari + AppleScript driven (no X API), so "API rate-limit / 429 backoff" maps to
 # Safari write-pacing here — same intent (no bursts), different mechanism.
 # ---------------------------------------------------------------------------
 

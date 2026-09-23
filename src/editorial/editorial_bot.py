@@ -11,11 +11,11 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from . import action_guard, content_guard
-from .core import config
-from .active_hours import is_active, now_local, require_active
-from .core.llm_client import run_llm, unwrap_text
-from .core.logger import log
+from ..guards import action_guard, content_guard
+from ..core import config
+from ..guards.active_hours import is_active, now_local, require_active
+from ..core.llm_client import run_llm, unwrap_text
+from ..core.logger import log
 
 STATE_FILE = Path(config._PROJECT_ROOT) / "editorial_state.json"
 AUDIT_FILE = Path(config._PROJECT_ROOT) / "editorial_review.jsonl"
@@ -235,7 +235,7 @@ def source_evidence(source):
 
 
 def draft_post(slot, sources, recent, feedback=""):
-    from .core.personality_store import render_core_identity, hard_rules_block
+    from ..core.personality_store import render_core_identity, hard_rules_block
     language = "French" if os.environ.get("CONTENT_LANG_PRIMARY", "en") == "fr" else "English"
     evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
                          "evidence": source_evidence(source)} for source in sources]
@@ -368,7 +368,7 @@ def run_editorial_cycle(preview=False):
         # A slow source/model call must not publish an expired slot.
         if due_slot(state=state) != slot:
             return audit
-        from .x.twitter_client import post_tweet
+        from ..x.twitter_client import post_tweet
         text = draft["text"].strip() + "\n\n" + source["url"]
         if config.dry_run():
             log.info("[EDITORIAL][DRY_RUN] %s", text)

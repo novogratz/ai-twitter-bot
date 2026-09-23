@@ -117,7 +117,7 @@ def _no_prod_state(monkeypatch, tmp_path):
     monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
     from src.core import history as _hist
     monkeypatch.setattr(_hist, "HISTORY_FILE", hist)
-    from src import content_guard as _cg
+    from src.guards import content_guard as _cg
     monkeypatch.setattr(_cg, "_HISTORY_FILE", hist)
     # personality.json: log_reply -> personality_store.record_interaction
     # writes dossiers — a test author leaked into prod 2026-07-19 (same
@@ -136,7 +136,7 @@ def _daylight_default(monkeypatch):
 
     Boundary tests replace this clock with their own explicit instants.
     """
-    from src import active_hours
+    from src.guards import active_hours
     real_now = active_hours.now_local
     monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
     yield

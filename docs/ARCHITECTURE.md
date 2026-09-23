@@ -35,7 +35,7 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 22:00, DST
+`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 22:00, DST
 handled by `zoneinfo`. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
@@ -97,7 +97,8 @@ Two settings decide how much of the table does anything:
 
 ## Editorial pipeline
 
-`src/editorial_bot.py` runs one slot at a time under a non-blocking lock.
+`src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
+lock.
 
 1. **Slot.** `SLOTS` lists 05:00, 08:00, 11:30, 14:30, 17:30, 20:30 and an
    optional 21:30. A slot is due for 45 minutes, never past 22:00, and only if
@@ -172,16 +173,16 @@ Three modules sit behind them:
   repost caps at 0, originals capped at 7 and spaced by at least 3600 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
-- `src/action_guard.py` keeps `action_ledger.json` (90 days, Toronto
+- `src/guards/action_guard.py` keeps `action_ledger.json` (90 days, Toronto
   timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. A
   corrupt ledger refuses the write. Quotes and retweets are always refused;
   replies only need their spacing (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter).
   No active job calls `unfollow_account`, and `MAX_UNFOLLOWS_PER_DAY`
   defaults to 0.
-- `src/content_guard.py` validates text before publication: near-term price
-  targets, duplicates, truncation, violence, skip rationales.
+- `src/guards/content_guard.py` validates text before publication: near-term
+  price targets, duplicates, truncation, violence, skip rationales.
 
-`reply_to_tweet` takes every rule from `src/reply_admission.py` (Reply
+`reply_to_tweet` takes every rule from `src/guards/reply_admission.py` (Reply
 admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
 handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
 answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
@@ -204,7 +205,7 @@ declined by the model (SKIP) or answered. A temporary refusal or a failed
 model call leaves the post replayable.
 
 After admission, `reply_to_tweet` deduplicates through
-`src/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
+`src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
 tweet already answered, and marks it just before writing, all under one lock.
 A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
@@ -224,7 +225,7 @@ outgoing text.
 
 ## Reach report
 
-`src/reach_report.py` matches the originals recorded in
+`src/editorial/reach_report.py` matches the originals recorded in
 `editorial_state.json` over the last seven days against a scrape of our own
 profile, sums their public view counts and compares the total with the
 500,000-view target. It reports missing coverage and never claims

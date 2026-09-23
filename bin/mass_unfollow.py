@@ -43,7 +43,7 @@ import threading
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
-from src import action_guard, active_hours  # noqa: E402
+from src.guards import action_guard, active_hours  # noqa: E402
 from src.core import config  # noqa: E402
 
 # Stays under X's unfollow quota of about 190 per window; at pace `normal`
@@ -94,7 +94,7 @@ def _whitelist_keep_set() -> set:
 
 def _legacy_keep_set() -> set:
     """The wide keep-set of the retired smart_unfollow job, plus the whitelist."""
-    from src import respect_list
+    from src.guards import respect_list
     from src.early_bird_bot import EARLY_BIRD_ACCOUNTS
     from src.engage_bot import TARGET_ACCOUNTS
     from src.mega_watch_bot import MEGA_ACCOUNTS

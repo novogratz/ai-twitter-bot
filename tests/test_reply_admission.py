@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src import (
+from src.guards import (
     action_guard,
     active_hours,
     content_guard,
@@ -15,7 +15,7 @@ from src import (
 )
 from src.core import config, humanizer
 from src.x import x_urls
-from src.reply_admission import Refusal, judge_parent, judge_reply
+from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
 
 TEXT = "Batching is where inference margins are won or lost."

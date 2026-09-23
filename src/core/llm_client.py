@@ -234,13 +234,13 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     """
     import urllib.request
     import urllib.error
-    from ..active_hours import require_active, seconds_until_bedtime
+    from ..guards.active_hours import require_active, seconds_until_bedtime
     require_active()
     editorial = label.startswith("EDITORIAL")
     if editorial:
         timeout = max(timeout, int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")))
     timeout = min(timeout, max(1, int(seconds_until_bedtime())))
-    from ..editorial_schemas import DRAFT_SCHEMA, REVIEW_SCHEMA
+    from ..editorial.editorial_schemas import DRAFT_SCHEMA, REVIEW_SCHEMA
     schema = REVIEW_SCHEMA if label == "EDITORIAL_REVIEW" else DRAFT_SCHEMA
     full_prompt = ("" if editorial else _FUNNY_FORCER) + "/no_think\n\n" + prompt
     payload = json.dumps({
@@ -528,7 +528,7 @@ def _run_cmd(
     timeout: Optional[int],
     cwd: Optional[str],
 ) -> LLMResult:
-    from ..active_hours import require_active, seconds_until_bedtime
+    from ..guards.active_hours import require_active, seconds_until_bedtime
     require_active()
     effective_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS,
                             max(1, int(seconds_until_bedtime())))
@@ -624,7 +624,7 @@ def run_llm(
     force_provider: Optional[str] = None,
     structured_output: bool = False,
 ) -> LLMResult:
-    from ..active_hours import require_active
+    from ..guards.active_hours import require_active
     require_active()
     provider = force_provider or _provider()
 
