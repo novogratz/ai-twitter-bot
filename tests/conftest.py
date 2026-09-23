@@ -69,6 +69,7 @@ def _no_safari(monkeypatch):
     # them through the module, so this patch reaches every src.x path.
     from src.x import safari as _safari
     monkeypatch.setattr(_safari, "_run_applescript", _blocked)
+    monkeypatch.setattr(_safari, "_run_js", _blocked)
     monkeypatch.setattr(_safari, "_paste_text", _blocked)
 
     # twitter_client, scraper, safari_hygiene and several jobs call

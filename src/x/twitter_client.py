@@ -689,9 +689,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 def unfollow_account(username: str) -> bool:
     """Visit a user's profile and click Following → confirm Unfollow.
 
-    Best-effort. Returns True if the unfollow flow appeared to complete
-    (Following button found + clicked + confirm clicked). False otherwise.
-    Used by smart_unfollow_bot to keep follow-ratio healthy.
+    Returns True, and records the unfollow, only once the page reported the
+    confirm click; False otherwise, with nothing recorded. No active job
+    calls it.
     """
     username = (username or "").strip().lstrip("@")
     if not username or len(username) > 15 or not all(
@@ -722,42 +722,43 @@ def unfollow_account(username: str) -> bool:
 
         # Step 1: click the "Following" button. Try multiple selectors since
         # X occasionally renames data-testid values.
-        click_following = '''
-        tell application "Safari"
-            do JavaScript "
-                var btn = document.querySelector('[data-testid$=\"-unfollow\"]');
-                if (!btn) btn = document.querySelector('[data-testid=\"userActions\"] [role=\"button\"]');
-                if (!btn) {
-                    var spans = document.querySelectorAll('[role=\"button\"] span');
-                    for (var i = 0; i < spans.length; i++) {
-                        if (spans[i].textContent.trim() === 'Following') { btn = spans[i].closest('[role=\"button\"]'); break; }
-                    }
+        click_following = """
+        (function() {
+            var btn = document.querySelector('[data-testid$="-unfollow"]');
+            if (!btn) btn = document.querySelector('[data-testid="userActions"] [role="button"]');
+            if (!btn) {
+                var spans = document.querySelectorAll('[role="button"] span');
+                for (var i = 0; i < spans.length; i++) {
+                    if (spans[i].textContent.trim() === 'Following') { btn = spans[i].closest('[role="button"]'); break; }
                 }
-                if (btn) { btn.click(); return 'CLICKED'; }
-                return 'NO_FOLLOWING_BTN';
-            " in current tab of front window
-        end tell
-        '''
-        result = safari._run_applescript(click_following)
-        if not result or result.strip() == "NO_FOLLOWING_BTN":
-            log.info(f"[UNFOLLOW] Not following @{username} (or button not found) — skipping.")
+            }
+            if (btn) { btn.click(); return 'CLICKED'; }
+            return 'NO_FOLLOWING_BTN';
+        })()
+        """
+        result = safari._run_js(click_following)
+        if result != "CLICKED":
+            log.info(f"[UNFOLLOW] Not following @{username} (or button not found: "
+                     f"{result or 'no answer'}) — skipping.")
             safari.close_front_tab()
             return False
         time.sleep(1.5)
 
         # Step 2: click the confirm in the modal.
-        click_confirm = '''
-        tell application "Safari"
-            do JavaScript "
-                var btn = document.querySelector('[data-testid=\"confirmationSheetConfirm\"]');
-                if (btn) { btn.click(); return 'CONFIRMED'; }
-                return 'NO_CONFIRM';
-            " in current tab of front window
-        end tell
-        '''
-        safari._run_applescript(click_confirm)
+        click_confirm = """
+        (function() {
+            var btn = document.querySelector('[data-testid="confirmationSheetConfirm"]');
+            if (btn) { btn.click(); return 'CONFIRMED'; }
+            return 'NO_CONFIRM';
+        })()
+        """
+        result = safari._run_js(click_confirm)
         time.sleep(1.5)
         safari.close_front_tab()
+        if result != "CONFIRMED":
+            log.info(f"[UNFOLLOW] Confirmation not clicked for @{username} "
+                     f"({result or 'no answer'}) — nothing recorded.")
+            return False
         action_guard.record(action_guard.UNFOLLOW, target=username)
         action_guard.adjust_following(-1)
         log.info(f"[UNFOLLOW] Unfollowed @{username}.")

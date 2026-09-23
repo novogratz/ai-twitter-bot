@@ -1015,17 +1015,17 @@ def test_tests_cannot_spawn_osascript(monkeypatch):
 
 
 def test_every_browser_path_goes_through_the_conftest_walls():
-    """conftest walls `_run_applescript` and `_paste_text` off in src.x.safari,
-    which defines them, and `webbrowser.open` and `subprocess.Popen` on their
-    modules. A module that binds one by name (`from .safari import
-    _run_applescript`, `from subprocess import Popen`) keeps the real object
-    past the wall, so twitter_client, scraper and the jobs reach them through
-    their module (#118)."""
+    """conftest walls `_run_applescript`, `_run_js` and `_paste_text` off in
+    src.x.safari, which defines them, and `webbrowser.open` and
+    `subprocess.Popen` on their modules. A module that binds one by name
+    (`from .safari import _run_applescript`, `from subprocess import Popen`)
+    keeps the real object past the wall, so twitter_client, scraper and the
+    jobs reach them through their module (#118)."""
     import ast
     from pathlib import Path
     from src.x import safari
 
-    walled = {"_run_applescript", "_paste_text"}
+    walled = {"_run_applescript", "_run_js", "_paste_text"}
     for name in walled:
         with pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"):
             getattr(safari, name)("return 1")
