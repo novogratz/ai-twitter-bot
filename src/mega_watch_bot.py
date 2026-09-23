@@ -29,8 +29,8 @@ from .engagement_log import log_reply
 from .humanizer import humanize
 from .state_errors import StateUnreadable
 
-# Posts this job drops until restart: definitive Reply admission refusals
-# and posts the model declined.
+# Posts this job is done with until restart: definitive Reply admission
+# refusals, posts the model declined, posts answered.
 _skipped: set = set()
 
 # 2026-06-07 PM (operator): static list GONE — the ≤4-min watcher scans the
@@ -105,8 +105,10 @@ def run_mega_watch_cycle():
             if reply_text is _LLM_RATE_LIMITED:
                 log.info("[MEGA] LLM budget reached; stopping this cycle before posting attempts.")
                 return
+            if reply_text is None:
+                continue  # failed call: replayable next cycle
             if not reply_text:
-                _skipped.add(url)
+                _skipped.add(url)  # the model declined
                 continue
             reply_text = humanize(reply_text)
             if len(reply_text) < 10 or len(reply_text) > 270:
@@ -118,6 +120,7 @@ def run_mega_watch_cycle():
             try:
                 if not reply_to_tweet(url, reply_text):
                     continue  # chokepoint skip — nothing posted, no phantom log
+                _skipped.add(url)
                 try:
                     log_reply(url, reply_text, action_type="reply", source=f"MEGA/{username}")
                 except Exception:

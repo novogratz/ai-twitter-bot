@@ -43,8 +43,8 @@ BANGER_LIKES = int(os.environ.get("FEED_SWEEP_BANGER_LIKES", "1000"))
 # Authors with at least this many likes on a post get added to dynamic_accounts.
 HARVEST_MIN_LIKES = int(os.environ.get("FEED_SWEEP_HARVEST_MIN_LIKES", "100"))
 
-# Posts this job drops until restart: definitive Reply admission refusals
-# and posts the model declined.
+# Posts this job is done with until restart: definitive Reply admission
+# refusals, posts the model declined, posts answered.
 _skipped: set = set()
 
 

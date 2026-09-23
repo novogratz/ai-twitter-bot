@@ -190,8 +190,9 @@ a generation. `StateUnreadable` passes through their per-query and
 per-reply `except Exception` blocks, so an unreadable state file ends the
 cycle. They keep only their own selection filters: niche, age
 threshold, thread-reply shape, handle pools, per-cycle caps. Each keeps a
-module-level `_skipped` set, lost at restart, of posts refused definitively
-or declined by the model; a temporary refusal leaves the post replayable.
+module-level `_skipped` set, lost at restart, of posts refused definitively,
+declined by the model (SKIP) or answered. A temporary refusal or a failed
+model call leaves the post replayable.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a

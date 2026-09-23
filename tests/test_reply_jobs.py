@@ -72,21 +72,22 @@ def test_direct_reply_asks_admission_before_generating(pipeline):
     assert dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 1
     assert generated == ["admitted"], "no generation for a post admission refuses"
     assert sent == [ok]
-    assert dr._skipped == set(refused), "definitive refusals are set aside"
+    assert dr._skipped == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
 def test_direct_reply_sets_aside_model_skips_but_replays_temporary_refusals(pipeline, monkeypatch):
     dr, generated, sent, drafts = pipeline
-    declined, bounced = fresh("someone", n=1), fresh("other", n=2)
-    drafts["declined"] = None  # the model answered SKIP
+    declined, failed, bounced = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
+    drafts.update({"declined": "", "failed": None})  # the model said SKIP; the call failed
     monkeypatch.setattr(dr, "reply_to_tweet", lambda url, text: sent.append(url) or False)
-    tweets = [{"url": declined, "text": "declined"}, {"url": bounced, "text": "bounced"}]
+    tweets = [{"url": declined, "text": "declined"}, {"url": failed, "text": "failed"},
+              {"url": bounced, "text": "bounced"}]
 
     for _cycle in range(2):
         dr._reply_to_tweets(list(tweets), set(), "SEARCH-HOT")
 
-    assert generated == ["declined", "bounced", "bounced"], \
-        "a SKIP is not paid twice; a chokepoint refusal gets a new generation"
+    assert generated == ["declined", "failed", "bounced", "failed", "bounced"], \
+        "a SKIP is not paid twice; a failed call or a chokepoint refusal is replayed"
     assert dr._skipped == {declined}
     assert replied_store.load_replied() == set(), "nothing shipped, nothing marked"
 
@@ -117,6 +118,25 @@ def test_direct_reply_cycle_stops_on_unreadable_store(pipeline):
     with pytest.raises(StateUnreadable):
         dr._reply_to_tweets([{"url": fresh("someone"), "text": "post"}], set(), "SEARCH-HOT")
     assert generated == []
+
+
+def test_direct_reply_vip_lane_does_not_swallow_unreadable_store(pipeline, monkeypatch):
+    from src import twitter_client as tc
+
+    dr, _, _, _ = pipeline
+    searched = []
+
+    def unreadable(url, text):
+        raise StateUnreadable("replied store unreadable")
+
+    monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
+    monkeypatch.setattr(tc, "scrape_x_search", lambda *a, **k: [{"url": fresh("graphseo"), "text": "vip post"}])
+    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: searched.append(1) or [])
+    monkeypatch.setattr(dr, "_generate_graphseo_reply", lambda text: "réponse précise sur le trafic organique")
+    monkeypatch.setattr(tc, "reply_to_tweet", unreadable)
+    with pytest.raises(StateUnreadable):
+        dr.run_direct_reply_cycle()
+    assert searched == [], "the search lane never starts"
 
 
 def test_direct_reply_cycle_does_not_swallow_unreadable_store(pipeline, monkeypatch):
@@ -151,7 +171,7 @@ def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeyp
 
     assert generated == ["admitted"]
     assert sent == [named_like_us]
-    assert fs._skipped == {blocked}
+    assert fs._skipped == {blocked, named_like_us}
     assert dr._skipped == set(), "each job keeps its own set"
 
 
@@ -201,19 +221,19 @@ def test_profile_jobs_ask_admission_before_generating(profile_job):
 
     assert generated == ["admitted"]
     assert sent == [admitted["url"]]
-    assert module._skipped == {blocked["url"]}
+    assert module._skipped == {blocked["url"], admitted["url"]}
 
 
-def test_profile_jobs_set_aside_model_skips(profile_job):
+def test_profile_jobs_set_aside_model_skips_but_replay_failed_calls(profile_job):
     module, run, profiles, generated, sent, drafts = profile_job
-    declined = post("someone", "declined")
-    profiles["someone"] = [declined]
-    drafts["declined"] = None
+    declined, failed = post("someone", "declined", n=1), post("other", "failed", n=2)
+    profiles.update({"someone": [declined], "other": [failed]})
+    drafts.update({"declined": "", "failed": None})
 
     run()
     run()
 
-    assert generated == ["declined"], "a SKIP is not paid twice"
+    assert sorted(generated) == ["declined", "failed", "failed"], "a SKIP is not paid twice"
     assert sent == []
     assert module._skipped == {declined["url"]}
 
@@ -225,6 +245,18 @@ def test_profile_jobs_stop_on_unreadable_store(profile_job):
     with pytest.raises(StateUnreadable):
         run()
     assert generated == []
+
+
+def test_profile_jobs_do_not_swallow_unreadable_store_at_the_chokepoint(profile_job, monkeypatch):
+    module, run, profiles, _, _, _ = profile_job
+    profiles["someone"] = [post("someone", "post")]
+
+    def unreadable(url, text):
+        raise StateUnreadable("replied store unreadable")
+
+    monkeypatch.setattr(module, "reply_to_tweet", unreadable)
+    with pytest.raises(StateUnreadable):
+        run()
 
 
 # --- debate (mentions) ------------------------------------------------------
@@ -261,6 +293,8 @@ def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monke
     from src import action_guard
 
     db, mentions, outputs, generated, sent = debate
+    logged = []
+    monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
     action_guard.record(action_guard.DEBATE_TURN, target="capped")
     blocked, capped, admitted = fresh("pgm_pm", n=1), fresh("capped", n=2), fresh("someone", n=3)
@@ -272,7 +306,19 @@ def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monke
 
     assert generated == ["admitted"]
     assert sent == [(admitted, {"debate_turn": True})]
-    assert db._skipped == {blocked}, "the turn cap is temporary: capped stays replayable"
+    assert len(logged) == 1, "log only on a confirmed ship"
+    assert db._skipped == {blocked, admitted}, "the turn cap is temporary: capped stays replayable"
+
+
+def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
+    from src import twitter_client as tc
+
+    db = debate[0]
+    scraped = []
+    monkeypatch.setattr(tc, "scrape_mentions", lambda **k: scraped.append(1) or [])
+    monkeypatch.setenv("ENABLE_DEBATES", "0")
+    db.run_debate_cycle()
+    assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
 
 
 def test_debate_sets_aside_skips_but_replays_failed_generations(debate):
@@ -323,14 +369,19 @@ def replyback(monkeypatch, blocklist):
     return nb, replies, drafts, generated, sent
 
 
-def test_replyback_asks_admission_with_the_turn_cap_before_generating(replyback):
+def test_replyback_asks_admission_with_the_turn_cap_before_generating(replyback, monkeypatch):
+    from src import action_guard
+
     nb, replies, _, generated, sent = replyback
+    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+    action_guard.record(action_guard.DEBATE_TURN, target="capped")
     blocked, own = fresh("pgm_pm", n=1), fresh(config.BOT_HANDLE, n=2)
-    admitted = fresh("someone", n=3)
+    capped, admitted = fresh("capped", n=3), fresh("someone", n=4)
     replies += [
         {"user": "Friendly @pgm_pm", "text": "blocked handle", "url": blocked},
         {"user": "Us @TheAIShrink", "text": "our own reply", "url": own},
         {"user": "No link @nolink", "text": "no status URL", "url": ""},
+        {"user": "Capped @capped", "text": "hard disagree on that one", "url": capped},
         {"user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
     ]
 
@@ -338,19 +389,20 @@ def test_replyback_asks_admission_with_the_turn_cap_before_generating(replyback)
 
     assert generated == ["display name is not an identity"]
     assert sent == [(admitted, {"debate_turn": True})]
-    assert nb._skipped == {blocked, own}
+    assert nb._skipped == {blocked, own, admitted}, "the turn cap is temporary"
 
 
-def test_replyback_sets_aside_model_skips(replyback):
+def test_replyback_sets_aside_model_skips_but_replays_failed_calls(replyback):
     nb, replies, drafts, generated, sent = replyback
-    declined = fresh("someone")
-    replies.append({"user": "@someone", "text": "nothing to add", "url": declined})
-    drafts["nothing to add"] = None
+    declined, failed = fresh("someone", n=1), fresh("other", n=2)
+    replies += [{"user": "@someone", "text": "nothing to add", "url": declined},
+                {"user": "@other", "text": "model is down", "url": failed}]
+    drafts.update({"nothing to add": "SKIP. no debatable content", "model is down": None})
 
     nb.run_replyback_cycle()
     nb.run_replyback_cycle()
 
-    assert generated == ["nothing to add"]
+    assert generated == ["nothing to add", "model is down", "model is down"]
     assert sent == []
     assert nb._skipped == {declined}
 

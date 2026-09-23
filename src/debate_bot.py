@@ -30,8 +30,8 @@ from .llm_client import run_llm, unwrap_text
 from .humanizer import humanize
 from .reply_admission import judge_parent
 
-# Mentions this job drops until restart: definitive Reply admission
-# refusals and mentions the model declined.
+# Mentions this job is done with until restart: definitive Reply admission
+# refusals, mentions the model declined, mentions answered.
 _skipped: set = set()
 
 
@@ -126,6 +126,7 @@ def run_debate_cycle():
         # No premark — the chokepoint owns the replied store. Ship-gated
         # bookkeeping only (phantom-log family).
         if reply_to_tweet(url, reply, debate_turn=True):
+            _skipped.add(url)
             posted += 1
             from .engagement_log import log_reply
             log_reply(url, reply, "reply", source=f"DEBATE/{author}")

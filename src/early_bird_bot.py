@@ -27,8 +27,8 @@ from .engagement_log import log_reply
 from .humanizer import humanize
 from .state_errors import StateUnreadable
 
-# Posts this job drops until restart: definitive Reply admission refusals
-# and posts the model declined.
+# Posts this job is done with until restart: definitive Reply admission
+# refusals, posts the model declined, posts answered.
 _skipped: set = set()
 
 # 2026-06-07 PM (operator): "stop going to the static accounts… develop
@@ -128,6 +128,8 @@ def run_early_bird_cycle():
             if reply is _LLM_RATE_LIMITED:
                 log.info("[EARLYBIRD] LLM budget reached; stopping this cycle before posting attempts.")
                 return
+            if reply is None:
+                continue  # failed call: replayable next cycle
             if not reply:
                 log.info(f"[EARLYBIRD] Generation returned SKIP for @{username}.")
                 _skipped.add(url)
@@ -144,6 +146,7 @@ def run_early_bird_cycle():
             try:
                 if not reply_to_tweet(url, reply):
                     continue  # chokepoint skip — nothing posted, no phantom log
+                _skipped.add(url)
                 try:
                     log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}", pattern_id=_pattern_id or "")
                 except Exception:

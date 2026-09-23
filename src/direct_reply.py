@@ -19,8 +19,9 @@ from .reply_language import looks_french
 from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
-# Posts this job drops until restart: definitive Reply admission refusals
-# and posts the model declined. Temporary refusals stay replayable.
+# Posts this job is done with until restart: definitive Reply admission
+# refusals, posts the model declined, posts answered. Temporary refusals and
+# failed model calls stay replayable.
 _skipped: set = set()
 # Parents who ALWAYS get French replies, whatever the language detector
 # says about one short post (operator 2026-06-07).
@@ -361,7 +362,8 @@ Output ONLY the reply text (no quotes, no labels), or SKIP if genuinely off-topi
 
 
 def _generate_graphseo_reply(tweet_text: str) -> str | None:
-    """Generate a sharp reply to @Graphseo using Claude CLI (forced, not Ollama)."""
+    """Generate a sharp reply to @Graphseo using Claude CLI (forced, not Ollama).
+    "" when the model declines (SKIP), None when the call fails."""
     from .llm_client import run_llm, unwrap_text
     import shutil
     prompt = GRAPHSEO_PROMPT.format(tweet_text=tweet_text[:300])
@@ -371,8 +373,10 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     if result.returncode != 0 or not result.stdout:
         return None
     text = unwrap_text(result.stdout).strip()
-    if not text or text.upper().startswith("SKIP"):
+    if not text:
         return None
+    if text.upper().startswith("SKIP"):
+        return ""
     # Sentence-aware cap — a blind [:220] slice published a mid-sentence
     # reply on 2026-06-05 and got the account publicly called out as AI.
     from .humanizer import smart_trim
@@ -432,8 +436,10 @@ def _run_graphseo_scan(tried: set) -> int:
                        else _BUDDY_REPLY_PROMPT)
                 reply = _gen(tpl, text, PRIORITY_REPLY_MODEL,
                              f"VIP_REPLY/{handle}", author=handle)
+            if reply is None:
+                continue  # failed call: replayable
             if not reply:
-                _skipped.add(url)
+                _skipped.add(url)  # the model declined
                 continue
             reply = humanize(reply)  # em-dash strip + AI-artifact cleanup
             log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
@@ -448,6 +454,7 @@ def _run_graphseo_scan(tried: set) -> int:
                 continue
             if not shipped:
                 continue  # chokepoint skip — don't log a phantom reply
+            _skipped.add(url)
             try:
                 log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
             except Exception:
@@ -459,6 +466,8 @@ def _run_graphseo_scan(tried: set) -> int:
 
 
 def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
+    """The model's draft; "" when it declines (SKIP), None when the call
+    fails, _LLM_RATE_LIMITED past the hourly budget."""
     from . import personality_store
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
@@ -486,7 +495,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         # rationale ("SKIP. The tweet is incomplete...") and an exact-match
         # check published the whole refusal as a live reply (2026-06-07,
         # operator: "LOL BRO").
-        if reply.upper().strip().startswith("SKIP"): return None
+        if reply.upper().strip().startswith("SKIP"): return ""
         return reply
     except Exception: return None
 
@@ -557,8 +566,8 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
     just before the LLM call → log_reply only on a confirmed ship.
 
     `tried` holds the posts this cycle already tried, in memory only.
-    `skipped` is the calling job's set of posts dropped until restart
-    (direct_reply's own by default)."""
+    `skipped` is the calling job's set of posts it is done with until
+    restart (direct_reply's own by default)."""
     from concurrent.futures import ThreadPoolExecutor
 
     if skipped is None:
@@ -631,9 +640,9 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
             except Exception:
                 traceback.print_exc()
                 reply = None
-            if not reply:
-                skipped.add(url)  # the model declined (or failed): not paid again
-            elif reply is not _LLM_RATE_LIMITED:
+            if reply == "":
+                skipped.add(url)  # the model declined: not paid again
+            elif reply and reply is not _LLM_RATE_LIMITED:
                 from .pattern_tags import extract_pattern as _extract_pattern
                 reply, _pattern_id = _extract_pattern(reply)
                 reply = humanize(reply)
@@ -646,6 +655,7 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
                     traceback.print_exc()
                     shipped = False
                 if shipped:
+                    skipped.add(url)
                     # Include the query (source_detail) in the tag so per-query
                     # conversion is measurable (2026-06-08).
                     _src = f"{source_name}/{source_detail[:60]}" if source_detail else source_name

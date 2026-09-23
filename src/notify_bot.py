@@ -21,8 +21,8 @@ from .reply_admission import judge_parent
 import random
 
 _OWN_HANDLE = BOT_HANDLE.lower()
-# Replies this job drops until restart: definitive Reply admission refusals
-# and replies the model declined.
+# Replies this job is done with until restart: definitive Reply admission
+# refusals, replies the model declined, replies answered.
 _skipped: set = set()
 _HANDLE_RE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
 _MENTION_RE = re.compile(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])")
@@ -145,7 +145,9 @@ def run_replyback_cycle():
         )
         reply = generate_replyback(own_tweet, text)
         if not reply:
-            _skipped.add(reply_url)
+            continue  # failed call: replayable next cycle
+        if reply.strip().upper().startswith("SKIP"):
+            _skipped.add(reply_url)  # the model declined
             continue
 
         reply = humanize(reply)
@@ -155,6 +157,7 @@ def run_replyback_cycle():
             # All reply-backs are nested in-thread now (influencer or not).
             if not reply_to_tweet_in_thread(reply_url, reply, debate_turn=True):
                 continue  # chokepoint skip — stays fresh, no phantom count
+            _skipped.add(reply_url)
             count += 1
         except StateUnreadable:
             raise  # no reply can ship: stop paying for generations
