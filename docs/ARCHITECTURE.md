@@ -162,7 +162,26 @@ Under `DRY_RUN` these functions write a dry-run ledger row and return
 result persists nothing after a dry run, and one that must tell a dry run
 from a refusal compares with `is` (`follow_engagers_bot`). One limit:
 `True` means `osascript` ran the keystrokes, not that X confirmed them.
-`like_tweet` returns nothing.
+
+`like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`, and follows
+the same `DRY_RUN_RECORDED` rule. It never presses the `l` shortcut, which
+toggles and acts on X's own selection. A post whose URL handle is a
+Blocked account, matched as Reply admission matches it, returns `BLOCKED`
+before anything is read, clicked or recorded. One JavaScript step finds the
+article by the URL's status ID, read from the article's own timestamp link
+and not a quoted post's, and clicks its button only when it is `like`,
+never `unlike`. A post in `liked_tweets.json` or shown as liked returns
+`ALREADY_LIKED`; a post not found returns `FAILED`. After the click it
+reads the article again and returns `LIKED` only once the button shows
+`unlike`; the ledger row and the cache entry then carry the URL read on the
+page. That read, about a second after the click, sees X's optimistic
+interface: it proves the page shows the like, not that X accepted it.
+`visit_profile_and_like` and `like_own_tweet_replies` list the
+articles on the page and call it with each post's URL: the profile's own
+posts for the first, the replies under our latest post for the second,
+never our own posts. A `BLOCKED` post is skipped and the walk goes on; a
+`FAILED` one stops it. Both open nothing under `DRY_RUN` and close their tab
+even when a like raises.
 
 No write function exists for quotes, reposts, threads, GIF posts or
 self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
@@ -239,11 +258,11 @@ home-timeline attribution. It does not influence any cap.
 
 These are how the code behaves today, not design intent:
 
-- `like_job`, `notify_job` and `pin_job` click in Safari without going
-  through a chokepoint: no ledger entry and no `can_post`. `DRY_RUN` stops
-  them without a dry-run ledger row; `pin_job` still spends its daily pin
-  attempt.
-  `notify_job` presses the `l` key, which toggles a like.
+- `like_job` and `pin_job` click in Safari without going through a
+  chokepoint: no ledger entry and no `can_post`. `DRY_RUN` stops them
+  without a dry-run ledger row; `pin_job` still spends its daily pin
+  attempt. `like_tweet` has no `can_post` either: likes are
+  recorded, not capped.
 - `follow_engagers_bot`, `like_bot` and `pin_bot` key their
   daily counters on `date.today()` (machine time), while the ledger uses the
   Toronto day.

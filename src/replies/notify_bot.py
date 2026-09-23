@@ -11,6 +11,7 @@ from ..x.twitter_client import (
     post_tweet,
     visit_profile_and_like,
     is_own_post as _is_own_post,
+    LikeOutcome,
 )
 from .replyback_agent import generate_replyback
 from ..core.humanizer import humanize
@@ -182,7 +183,9 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
     reads the ledger's Debate turns and passes engager=True (CONTEXT.md:
     Engager).
     """
-    visited = 0
+    visited = 0  # visits attempted, the cap
+    engaged = 0  # engagers with at least one like that shipped
+    liked = 0
     seen_handles = set()
     candidates = list(replies)
     random.shuffle(candidates)  # don't always hit the same top-of-list person
@@ -205,14 +208,21 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
 
         log.info(f"[RECIPROCATE] Visiting @{handle} (like)...")
         try:
-            visit_profile_and_like(handle, like_count=2)
-            visited += 1
+            outcomes = visit_profile_and_like(handle, like_count=2)
         except Exception:
             log.info(f"[RECIPROCATE] Failed to reciprocate @{handle}:")
             traceback.print_exc()
+            continue
+        visited += 1
+        n = sum(o is LikeOutcome.LIKED for o in outcomes)
+        if n:
+            engaged += 1
+            liked += n
+        else:
+            log.info(f"[RECIPROCATE] Nothing liked on @{handle}.")
 
-    if visited:
-        log.info(f"[RECIPROCATE] Engaged back with {visited} engager(s).")
+    if engaged:
+        log.info(f"[RECIPROCATE] Engaged back with {engaged} engager(s): {liked} like(s).")
 
 
 def safe_run_notify_cycle():

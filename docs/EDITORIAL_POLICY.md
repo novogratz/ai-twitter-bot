@@ -68,13 +68,16 @@ slot needs news from the last six hours and an exceptional-value approval.
   admission for each target before sending (issue #109). `BLOCKLIST` is matched on the URL
   handle only: `direct_reply`, `feed_sweep`, `mega_watch` and `replyback`
   no longer match it against the scraper's display name, which is not an
-  identity. The replyback profile likes still check both.
+  identity. The replyback profile likes still check both. `like_tweet`
+  refuses a post whose URL handle is a Blocked account with the same match.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
-- `DRY_RUN=1` stops every browser write, including the likes and pins that
-  bypass the ledger. A dry-run reply never marks the tweet as answered, and
-  a dry-run follow never enters `followed_accounts.json` or the
-  follow-engagers state.
+- `DRY_RUN=1` stops every browser write, including the `like_job` likes and
+  the pins that bypass the ledger. The profile likes (`engage_job`, and
+  replyback's likes to Engagers) and the notify likes go through
+  `like_tweet` and its ledger: under `DRY_RUN` they open nothing. A
+  dry-run reply never marks the tweet as answered, and a dry-run follow
+  never enters `followed_accounts.json` or the follow-engagers state.
 
 ## Inspection and recovery
 
