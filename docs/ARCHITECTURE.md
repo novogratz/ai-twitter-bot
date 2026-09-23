@@ -101,8 +101,10 @@ Two settings decide how much of the table does anything:
 1. **Slot.** `SLOTS` lists 05:00, 08:00, 11:30, 14:30, 17:30, 20:30 and an
    optional 21:30. A slot is due for 45 minutes, never past 22:00, and only if
    `editorial_state.json` has no entry for it. A missed slot is not caught up.
-2. **Attempts.** Three per slot per day, restarts included. The counter is
-   saved before any work.
+2. **Attempts.** Three per slot per day, restarts included. An attempt is a
+   draft submitted to review: the counter is saved once a draft exists and
+   before review. A pass with no source, a draft model error or an explicit
+   skip spends none; the 45-minute window bounds those passes.
 3. **Sources.** Six first-party feeds (OpenAI, Google AI, DeepMind, Hugging
    Face, NVIDIA, Microsoft Research) supply AI news under 48 hours old; the
    three newest are kept. Twelve Hugging Face documentation pages rotate daily
@@ -121,8 +123,8 @@ Two settings decide how much of the table does anything:
 6. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
    next attempt. Nothing is written when `can_post` refuses (spacing or
-   ceiling), when the three attempts are spent, or when no source could be
-   fetched; that last case still consumes an attempt.
+   ceiling), when the three attempts are spent, or when the pass yields no
+   draft.
 7. **Publish.** Waking hours and slot validity are checked again. The slot is
    marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
    the draft plus the source URL. `True` marks it `published`; `False` frees

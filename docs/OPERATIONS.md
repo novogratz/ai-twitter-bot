@@ -148,8 +148,9 @@ sleep 3 && open -a Safari
 then the `[EDITORIAL]` and `[POST]` lines of `bot.log` and `attempts` in
 `editorial_state.json`. Causes that leave no audit line: the one-hour spacing
 or the daily ceiling, sources that could not be fetched, attempts spent, a
-model error. The evergreen documentation pages always supplement the news, so
-a quiet news day alone does not block a post. Missed slots are not caught up.
+model error. A pass that produces no draft spends no attempt. The evergreen
+documentation pages always supplement the news, so a quiet news day alone
+does not block a post. Missed slots are not caught up.
 
 **Unwanted content.** Add the handle to the respect list
 (`python3 -c "from src.respect_list import add; add('handle', 'reason')"`,

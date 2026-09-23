@@ -192,6 +192,32 @@ def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixtu
     assert not editorial._read_state().get("published")
 
 
+def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture):
+    """An Attempt is a Draft submitted to the Editor (CONTEXT.md). A feed
+    outage, a generator error or an explicit skip must not burn the Slot."""
+    from src import twitter_client as tc
+    calls = []
+    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append(text) or True)
+    monkeypatch.setattr(editorial, "collect_sources", lambda *a: [])
+    for _ in range(3):
+        assert editorial.run_editorial_cycle() is None
+    monkeypatch.setattr(editorial, "collect_sources", lambda *a: [draft_fixture[1]])
+    for no_draft in ({}, None, {"skip": True, "source_id": "0", "text": "", "evidence_ids": []}):
+        monkeypatch.setattr(editorial, "draft_post", lambda *a, d=no_draft: d)
+        for _ in range(3):
+            assert editorial.run_editorial_cycle() is None
+    def provider_down(*a):
+        raise TimeoutError("cold load")
+    monkeypatch.setattr(editorial, "draft_post", provider_down)
+    assert editorial.safe_run_editorial_cycle() is None
+    assert not editorial._read_state().get("attempts", {}).get("08:00")
+    assert not editorial.AUDIT_FILE.exists()
+    monkeypatch.setattr(editorial, "draft_post", lambda *a: draft_fixture[0])
+    assert editorial.run_editorial_cycle()["approved"]
+    assert len(calls) == 1
+    assert editorial._read_state()["attempts"]["08:00"] == 1
+
+
 def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture):
     from src import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("expired draft published"))

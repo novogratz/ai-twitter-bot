@@ -38,6 +38,8 @@ slot needs news from the last six hours and an exceptional-value approval.
   remote work can finish; it cannot authorize a later out-of-hours submission.
 - Slots: 05:00, 08:00, 11:30, 14:30, 17:30, 20:30, optional 21:30.
 - A slot permits at most three attempts over 45 minutes (the last ends at 22:00).
+  An attempt is a draft submitted to the editor; a pass without a draft
+  spends none.
   There is no backlog catchup. At least one hour separates originals.
 - Seven profile publications per local day is absolute. The ledger includes
   originals, quotes and reposts already made that day. Deploying this change
