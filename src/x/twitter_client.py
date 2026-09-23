@@ -586,9 +586,6 @@ def _maybe_like_parent(tweet_url: str, env_key: str, default_prob: float) -> Non
         log.info(f"[LIKE] parent-like skipped ({e}).")
 
 
-LIKED_TWEETS_FILE = os.path.join(_PROJECT_ROOT, "liked_tweets.json") if "_PROJECT_ROOT" in globals() else None
-
-
 def _liked_cache_path() -> str:
     """Lazy-resolve the liked_tweets.json path to avoid import-order issues."""
     from ..core.config import _PROJECT_ROOT as _PR
