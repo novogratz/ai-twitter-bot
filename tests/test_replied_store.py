@@ -122,7 +122,7 @@ def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
 def test_replyback_stops_on_unreadable_store(monkeypatch):
     """replyback catches reply errors per engager; an unreadable store must
     end the cycle at the first engager, before paying for a generation."""
-    from src import notify_bot as nb
+    from src.replies import notify_bot as nb
     monkeypatch.setenv("DRY_RUN", "1")
     replies = [{"user": f"@fan{i}", "text": "what about inference margins?",
                 "url": f"https://x.com/fan{i}/status/20635000000000{i:05d}"} for i in range(3)]

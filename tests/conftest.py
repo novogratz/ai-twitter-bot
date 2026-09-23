@@ -125,7 +125,7 @@ def _no_prod_state(monkeypatch, tmp_path):
     from src.core import personality_store as _ps
     monkeypatch.setattr(_ps, "PERSONALITY_FILE", str(tmp_path / "personality.json"))
     # The frozen Engager list is tracked in git: never read the live one.
-    from src import follow_engagers_bot as _fe
+    from src.account import follow_engagers_bot as _fe
     monkeypatch.setattr(_fe, "FROZEN_REPLIED_BACK_FILE", str(tmp_path / "replied_back.json"))
     yield
 
@@ -149,5 +149,5 @@ def _fresh_job_memory(monkeypatch):
     import importlib
     for name in ("direct_reply", "feed_sweeper_bot", "early_bird_bot", "mega_watch_bot", "debate_bot",
                  "notify_bot"):
-        monkeypatch.setattr(importlib.import_module(f"src.{name}"), "_skipped", set())
+        monkeypatch.setattr(importlib.import_module(f"src.replies.{name}"), "_skipped", set())
     yield

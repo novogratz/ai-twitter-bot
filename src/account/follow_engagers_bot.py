@@ -16,10 +16,10 @@ import os
 import traceback
 from datetime import date, timedelta
 
-from .guards import action_guard
-from .x import x_urls
-from .core.config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
-from .core.logger import log
+from ..guards import action_guard
+from ..x import x_urls
+from ..core.config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
+from ..core.logger import log
 
 # replied_back.json stopped being written on 2026-09-23 (issue #100): the
 # ledger's Debate turns replaced it. Its Engagers are read until they age out
@@ -95,7 +95,7 @@ def run_follow_engagers_cycle():
     own = BOT_HANDLE.lower()
     followed = 0
 
-    from .x.twitter_client import DRY_RUN_RECORDED, follow_account
+    from ..x.twitter_client import DRY_RUN_RECORDED, follow_account
     # 2026-07-28 fix: 262 candidates were burned into `attempted` by
     # TRANSIENT policy refusals (the 3500 total-following ceiling blocked
     # every follow for days). Pre-check the policy CHEAPLY: a transient
@@ -136,7 +136,7 @@ def run_follow_engagers_cycle():
 
 
 def safe_run_follow_engagers_cycle():
-    from .core import health
+    from ..core import health
     try:
         run_follow_engagers_cycle()
         health.record_success("follow_engagers")

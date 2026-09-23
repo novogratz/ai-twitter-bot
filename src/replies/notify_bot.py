@@ -1,10 +1,10 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
 import re
 import traceback
-from .core.config import BLOCKLIST, BOT_HANDLE
-from .core.logger import log
-from .core.state_errors import StateUnreadable
-from .x.twitter_client import (
+from ..core.config import BLOCKLIST, BOT_HANDLE
+from ..core.logger import log
+from ..core.state_errors import StateUnreadable
+from ..x.twitter_client import (
     like_own_tweet_replies,
     scrape_own_tweet_and_replies,
     reply_to_tweet_in_thread,
@@ -13,8 +13,8 @@ from .x.twitter_client import (
     is_own_post as _is_own_post,
 )
 from .replyback_agent import generate_replyback
-from .core.humanizer import humanize
-from .guards.reply_admission import judge_parent
+from ..core.humanizer import humanize
+from ..guards.reply_admission import judge_parent
 import random
 
 _OWN_HANDLE = BOT_HANDLE.lower()
@@ -27,7 +27,7 @@ _MENTION_RE = re.compile(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])")
 
 def _influencer_handles() -> set:
     """Merge engage + reply-target lists into a single lowercase set."""
-    from .engage_bot import TARGET_ACCOUNTS as ENGAGE_TARGETS
+    from ..account.engage_bot import TARGET_ACCOUNTS as ENGAGE_TARGETS
     from .reply_agent import TARGET_ACCOUNTS as REPLY_TARGETS
     return {h.lower() for h in list(ENGAGE_TARGETS) + list(REPLY_TARGETS)}
 
@@ -217,7 +217,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
 
 def safe_run_notify_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from .core import health
+    from ..core import health
     try:
         run_notify_cycle()
         health.record_success("notify")
@@ -229,7 +229,7 @@ def safe_run_notify_cycle():
 
 def safe_run_replyback_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from .core import health
+    from ..core import health
     try:
         run_replyback_cycle()
         health.record_success("replyback")

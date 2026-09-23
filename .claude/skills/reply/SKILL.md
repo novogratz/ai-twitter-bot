@@ -12,7 +12,7 @@ Only on an explicit operator request: it replies on the real account.
    `pgrep -if "python.*main\.py"` prints nothing and
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. If the bot runs, suggest `/stop` first.
-2. Run `uv run python -c "from src.direct_reply import safe_run_direct_reply_cycle; safe_run_direct_reply_cycle(max_replies=3)"`
+2. Run `uv run python -c "from src.replies.direct_reply import safe_run_direct_reply_cycle; safe_run_direct_reply_cycle(max_replies=3)"`
    - `max_replies` bounds the search pass only; the VIP scan runs whole.
    - Each candidate goes through `reply_admission.judge_parent` before
      generation; `reply_to_tweet` checks and marks `replied_tweets.json`.

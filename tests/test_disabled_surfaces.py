@@ -96,7 +96,8 @@ def _disabled_write_references(path):
 
 def test_live_modules_never_reference_a_disabled_write():
     modules = live_modules()
-    assert {"direct_reply", "feed_sweeper_bot", "notify_bot", "reply_bot"} <= modules
+    assert {"replies.direct_reply", "replies.feed_sweeper_bot", "replies.notify_bot",
+            "replies.reply_bot"} <= modules
     assert {"x.twitter_client", "x.safari_hygiene", "core.llm_client"} <= modules
     problems = [f"{_file(name).relative_to(ROOT)}:{line}: {ref}"
                 for name in sorted(modules)
@@ -115,11 +116,30 @@ def test_twitter_client_exposes_no_disabled_write():
 
 def test_every_src_module_is_reached_from_main():
     modules = src_module_names()
-    assert {"core", "core.config", "x", "x.twitter_client", "direct_reply"} <= modules
+    assert {"core", "core.config", "x", "x.twitter_client", "replies", "replies.direct_reply",
+            "account", "account.engage_bot"} <= modules
     unreached = sorted(modules - live_modules())
     assert not unreached, (
         "Modules under src/ that no import chain from main.py reaches; wire "
         "them into a job or delete them:\n  " + "\n  ".join(unreached))
+
+
+# Jobs sit on top: no package below them imports them, and account jobs
+# never import reply jobs (#116). A shared helper goes down to core.
+_MAY_IMPORT = {"replies": {"replies", "account"}, "account": {"account"}}
+
+
+def test_packages_never_import_the_job_packages_above_them():
+    problems = []
+    for name in sorted(src_module_names()):
+        package = name.split(".")[0]
+        for target in sorted(_imported_src_modules(_file(name))):
+            above = target.split(".")[0]
+            if above in _MAY_IMPORT and above not in _MAY_IMPORT.get(package, set()):
+                problems.append(f"{_file(name).relative_to(ROOT)} imports {target}")
+    assert not problems, (
+        "A lower package imports a job package; move the shared code down to "
+        "src/core:\n  " + "\n  ".join(problems))
 
 
 def _private_reply_bot_imports(path):
@@ -133,7 +153,7 @@ def _private_reply_bot_imports(path):
 
 def test_live_modules_never_borrow_a_private_reply_bot_helper():
     problems = [f"{_file(name).relative_to(ROOT)}:{line}: {ref}"
-                for name in sorted(live_modules() - {"reply_bot"})
+                for name in sorted(live_modules() - {"replies.reply_bot"})
                 for line, ref in _private_reply_bot_imports(_file(name))]
     assert not problems, (
         "A live module imports a private reply_bot helper; move it to the "

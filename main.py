@@ -56,13 +56,13 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(safe_run_editorial_cycle, 10, "editorial_job", executor="editorial", first_seconds=10)
 
     if not post_only:
-        from src.direct_reply import safe_run_direct_reply_cycle
-        from src.feed_sweeper_bot import safe_run_feed_sweep_cycle
-        from src.early_bird_bot import safe_run_early_bird_cycle
-        from src.notify_bot import safe_run_replyback_cycle, safe_run_notify_cycle
-        from src.debate_bot import safe_run_debate_cycle
-        from src.mega_watch_bot import safe_run_mega_watch_cycle
-        from src.first_hour_babysitter import safe_run_babysit_cycle
+        from src.replies.direct_reply import safe_run_direct_reply_cycle
+        from src.replies.feed_sweeper_bot import safe_run_feed_sweep_cycle
+        from src.replies.early_bird_bot import safe_run_early_bird_cycle
+        from src.replies.notify_bot import safe_run_replyback_cycle, safe_run_notify_cycle
+        from src.replies.debate_bot import safe_run_debate_cycle
+        from src.replies.mega_watch_bot import safe_run_mega_watch_cycle
+        from src.replies.first_hour_babysitter import safe_run_babysit_cycle
 
         add(safe_run_direct_reply_cycle, 2, "direct_reply_job", first_seconds=2)
         add(safe_run_feed_sweep_cycle, 8, "feed_sweep_job")
@@ -73,17 +73,17 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(safe_run_babysit_cycle, 5, "babysit_job")
         add(safe_run_notify_cycle, 20, "notify_job")
         if os.environ.get("ENABLE_REPLY_SEARCH", "0") == "1":
-            from src.reply_bot import safe_run_reply_cycle
+            from src.replies.reply_bot import safe_run_reply_cycle
             add(safe_run_reply_cycle, 3, "reply_job")
 
     if not post_only and not reply_only:
-        from src.engage_bot import safe_run_engage_cycle
-        from src.followback_bot import safe_run_followback_cycle
-        from src.follow_engagers_bot import safe_run_follow_engagers_cycle
-        from src.like_bot import safe_run_like_cycle
-        from src.pin_bot import safe_run_pin_cycle
+        from src.account.engage_bot import safe_run_engage_cycle
+        from src.account.followback_bot import safe_run_followback_cycle
+        from src.account.follow_engagers_bot import safe_run_follow_engagers_cycle
+        from src.account.like_bot import safe_run_like_cycle
+        from src.account.pin_bot import safe_run_pin_cycle
         from src.x.safari_hygiene import safe_run_session_refresh
-        from src.follower_tracker_bot import safe_run_follower_tracker_cycle
+        from src.account.follower_tracker_bot import safe_run_follower_tracker_cycle
         from src.editorial.reach_report import safe_run_reach_report
 
         add(safe_run_engage_cycle, 8, "engage_job")

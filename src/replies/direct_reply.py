@@ -5,16 +5,16 @@ import random
 import time
 import traceback
 from datetime import timedelta
-from .x import x_urls
-from .core.logger import log
-from .core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
-from .core.llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
-from .x.twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
-from .guards.reply_admission import judge_parent
-from .core.state_errors import StateUnreadable
-from .core.humanizer import humanize, strip_agent_preamble
-from .reply_language import looks_french
-from .core.engagement_log import log_reply
+from ..x import x_urls
+from ..core.logger import log
+from ..core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
+from ..core.llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
+from ..x.twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
+from ..guards.reply_admission import judge_parent
+from ..core.state_errors import StateUnreadable
+from ..core.humanizer import humanize, strip_agent_preamble
+from ..core.reply_language import looks_french
+from ..core.engagement_log import log_reply
 
 # Posts this job is done with until restart: definitive Reply admission
 # refusals, posts the model declined, posts answered. Temporary refusals and
@@ -271,7 +271,7 @@ Output ONLY the reply text (no quotes, no labels), or SKIP if genuinely off-topi
 def _generate_graphseo_reply(tweet_text: str) -> str | None:
     """Generate a sharp reply to @Graphseo using Claude CLI (forced, not Ollama).
     "" when the model declines (SKIP), None when the call fails."""
-    from .core.llm_client import run_llm, unwrap_text
+    from ..core.llm_client import run_llm, unwrap_text
     import shutil
     prompt = GRAPHSEO_PROMPT.format(tweet_text=tweet_text[:300])
     force = "claude" if shutil.which("claude") else None
@@ -286,7 +286,7 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
         return ""
     # Sentence-aware cap — a blind [:220] slice published a mid-sentence
     # reply on 2026-06-05 and got the account publicly called out as AI.
-    from .core.humanizer import smart_trim
+    from ..core.humanizer import smart_trim
     return smart_trim(text, 220)
 
 
@@ -371,8 +371,8 @@ def _run_graphseo_scan(tried: set) -> int:
 
     `tried` holds the posts this cycle already tried, in memory only.
     """
-    from .x.twitter_client import scrape_x_search, reply_to_tweet
-    from .core.engagement_log import log_reply
+    from ..x.twitter_client import scrape_x_search, reply_to_tweet
+    from ..core.engagement_log import log_reply
 
     VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(
         "VIP_SCAN_HANDLES", "Graphseo,TheBTCTherapist").split(",") if h.strip()]
@@ -442,7 +442,7 @@ def _run_graphseo_scan(tried: set) -> int:
 def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     """The model's draft; "" when it declines (SKIP), None when the call
     fails, _LLM_RATE_LIMITED past the hourly budget."""
-    from .core import personality_store
+    from ..core import personality_store
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
     core_identity = personality_store.render_core_identity(lang=lang)
@@ -533,7 +533,7 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
         if remaining is not None and submitted >= remaining:
             return None
         for tweet in candidates:
-            from .guards.active_hours import require_active
+            from ..guards.active_hours import require_active
             require_active()
             url, text = tweet["url"], tweet["text"]
             if url in tried or url in skipped: continue
@@ -589,7 +589,7 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
             if reply == "":
                 skipped.add(url)  # the model declined: not paid again
             elif reply and reply is not _LLM_RATE_LIMITED:
-                from .core.pattern_tags import extract_pattern as _extract_pattern
+                from ..core.pattern_tags import extract_pattern as _extract_pattern
                 reply, _pattern_id = _extract_pattern(reply)
                 reply = humanize(reply)
                 log.info(f"[{source_name}] Replying to @{author}...")
@@ -692,7 +692,7 @@ def run_direct_reply_cycle(max_replies=None):
     log.info(f"[DIRECT] Posted {total} replies this cycle.")
 
 def safe_run_direct_reply_cycle(max_replies=None):
-    from .core import health
+    from ..core import health
     try:
         run_direct_reply_cycle(max_replies=max_replies)
         health.record_success("direct_reply")

@@ -33,9 +33,9 @@ import traceback
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
-from .core.config import (_PROJECT_ROOT, BLOCKLIST, BOT_HANDLE,
+from ..core.config import (_PROJECT_ROOT, BLOCKLIST, BOT_HANDLE,
                      ENGAGEMENT_LOG_FILE, WHITELIST_FILE)
-from .core.logger import log
+from ..core.logger import log
 
 TRACKED_FILE = os.path.join(_PROJECT_ROOT, "tracked_accounts.json")
 TARGETS_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_targets_log.json")
@@ -61,7 +61,7 @@ def _author_engagements(window_days: int = WINDOW_DAYS) -> dict:
     curator survive a persona pivot: stale-lane evidence stops scoring the
     moment the voice changed, even though the rows are still in the window.
     """
-    from .core.pillar_tags import classify as _classify_pillar
+    from ..core.pillar_tags import classify as _classify_pillar
     cutoff = (datetime.now() - timedelta(days=window_days)).isoformat()
     counts: dict = defaultdict(int)
     own = (BOT_HANDLE or "").lower()
@@ -211,7 +211,7 @@ def run_curator_cycle() -> None:
 
 
 def safe_run_curator_cycle() -> None:
-    from .core import health
+    from ..core import health
     try:
         run_curator_cycle()
         health.record_success("account_curator")
