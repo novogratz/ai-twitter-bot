@@ -9,25 +9,23 @@ anywhere on X — the one surface the replyback bot's own-latest-tweet scan
 never sees), and answer the fresh ones with a sharp, warm comeback that
 lands one number/mechanism and invites the next round. Each further
 response from them is a new mention, so the rally continues naturally —
-bounded by a per-author daily turn cap so no thread spirals.
+bounded by the per-author daily Debate turn cap, counted at the reply
+chokepoint and shared with replyback, so no thread spirals.
 
 Contracts honored: reply_to_tweet chokepoint (one-reply-per-tweet dedup,
 caps, spacing, language) — NO caller-side premark; log only on a confirmed
 ship; Safari work only inside the client primitives.
 """
-import json
 import os
 import re
 import time
 import traceback
-from datetime import date, datetime, timedelta, timezone
+from datetime import datetime, timezone
 
-from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE, REPLY_MODEL
+from .config import BLOCKLIST, BOT_HANDLE, REPLY_MODEL
 from .logger import log
 from .llm_client import run_llm, unwrap_text
 from .humanizer import humanize
-
-DEBATE_STATE_FILE = os.path.join(_PROJECT_ROOT, "debate_state.json")
 
 _TWITTER_EPOCH = 1288834974657
 
@@ -44,22 +42,6 @@ def _tweet_age_hours(url: str) -> float:
 def _handle_from_url(url: str) -> str:
     m = re.search(r"x\.com/([^/]+)/status/", url or "")
     return m.group(1).lower() if m else ""
-
-
-def _load_state() -> dict:
-    try:
-        with open(DEBATE_STATE_FILE) as f:
-            st = json.load(f)
-        if isinstance(st, dict):
-            return st
-    except (OSError, json.JSONDecodeError):
-        pass
-    return {"date": "", "turns_by_author": {}, "count_today": 0}
-
-
-def _save_state(st: dict) -> None:
-    with open(DEBATE_STATE_FILE, "w") as f:
-        json.dump(st, f, indent=1)
 
 
 DEBATE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 45, a practicing
@@ -105,13 +87,9 @@ def run_debate_cycle():
         return
 
     max_per_cycle = int(os.environ.get("DEBATE_MAX_PER_CYCLE", "3"))
-    max_turns_author = int(os.environ.get("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "4"))
     max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
 
-    st = _load_state()
-    today = date.today().isoformat()
-    if st.get("date") != today:
-        st = {"date": today, "turns_by_author": {}, "count_today": 0}
+    from . import action_guard
     from .twitter_client import scrape_mentions, reply_to_tweet
     from .reply_bot import load_replied
     mentions = scrape_mentions(max_tweets=20)
@@ -146,7 +124,8 @@ def run_debate_cycle():
         if url in replied:
             skipped["replied"] += 1
             continue
-        if st["turns_by_author"].get(author, 0) >= max_turns_author:
+        # Early skip saves the model call; the chokepoint enforces the cap.
+        if not action_guard.can_debate_turn(author)[0]:
             skipped["turncap"] += 1
             continue
 
@@ -165,16 +144,12 @@ def run_debate_cycle():
 
         # No premark — the chokepoint owns the replied store. Ship-gated
         # bookkeeping only (phantom-log family).
-        if reply_to_tweet(url, reply):
+        if reply_to_tweet(url, reply, debate_turn=True):
             posted += 1
-            st["count_today"] += 1
-            st["turns_by_author"][author] = st["turns_by_author"].get(author, 0) + 1
-            _save_state(st)
             from .engagement_log import log_reply
             log_reply(url, reply, "reply", source=f"DEBATE/{author}")
             time.sleep(3)
 
-    _save_state(st)
     log.info(f"[DEBATE] Cycle done: {posted} debate replies posted "
              f"(skips: {', '.join(f'{k}={v}' for k, v in skipped.items() if v)}).")
 

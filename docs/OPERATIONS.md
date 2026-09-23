@@ -196,7 +196,7 @@ Files written by active jobs:
 | `editorial_state.json` | `editorial_bot` | Slots, attempts, feedback, published originals, used sources |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report |
-| `action_ledger.json` | `action_guard` | Counted writes, 90 days |
+| `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, 90 days |
 | `following_count.json` | `action_guard` | Following count used by the follow ceiling |
 | `replied_tweets.json` | `reply_to_tweet`, `direct_reply` | Tweets already answered |
 | `replied_back.json` | `notify_bot` | Replyback dedup, source for `follow_engagers_job` |
@@ -204,7 +204,6 @@ Files written by active jobs:
 | `engagement_log.csv` | `engagement_log` | Append-only action log |
 | `followed_accounts.json` | follow paths | Accounts followed by the bot |
 | `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days |
-| `debate_state.json` | `debate_bot` | Turns per author per day |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried |
 | `like_bot_state.json` | `like_bot` | Daily like count |
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day |

@@ -3091,9 +3091,9 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
     own/blocklisted mentions are skipped, ship-gated logging only, and
     ENABLE_DEBATES=0 short-circuits before any Safari work."""
     import time as _time
+    from src import action_guard as ag
     from src import debate_bot as db
 
-    monkeypatch.setattr(db, "DEBATE_STATE_FILE", str(tmp_path / "debate_state.json"))
     fresh_id = (int(_time.time() * 1000) - db._TWITTER_EPOCH - 60_000) << 22
     mentions = [
         {"url": f"https://x.com/challenger/status/{fresh_id}", "text": "you're wrong about inference costs", "author": "Challenger"},
@@ -3101,7 +3101,13 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
     ]
     shipped = []
     monkeypatch.setattr("src.twitter_client.scrape_mentions", lambda max_tweets=20: list(mentions))
-    monkeypatch.setattr("src.twitter_client.reply_to_tweet", lambda url, txt: shipped.append(url) or True)
+    def chokepoint(url, txt, **k):
+        # The real chokepoint records the Debate turn it ships.
+        assert k == {"debate_turn": True}, "mentions are Debate turns"
+        shipped.append(url)
+        ag.record(ag.DEBATE_TURN, target=db._handle_from_url(url))
+        return True
+    monkeypatch.setattr("src.twitter_client.reply_to_tweet", chokepoint)
     monkeypatch.setattr("src.reply_bot.load_replied", lambda: set())
     logged = []
     monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
@@ -3131,6 +3137,68 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
     monkeypatch.setenv("ENABLE_DEBATES", "0")
     db.run_debate_cycle()
     assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
+
+
+def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
+    """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
+    the reply chokepoint, whichever bot answers: debate_bot and replyback
+    share one count. Ordinary replies to the same author stay uncapped, a
+    refused turn leaves the tweet unmarked, and the cap is read at call time."""
+    from src import action_guard as ag
+    from src import content_guard as cg
+    from src import reply_bot as rb
+    from src import twitter_client as tc
+
+    monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
+    monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(tc, "_run_applescript", lambda *a: True)
+    monkeypatch.setattr(tc, "_paste_text", lambda *a: None)
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
+    monkeypatch.setattr(tc, "close_front_tab", lambda: None)
+    monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "2")
+
+    text = "Inference cost falls when batching works, so the margin story depends on utilisation."
+    url = lambda author, n: f"https://x.com/{author}/status/{n}"
+    assert tc.reply_to_tweet(url("Challenger", 1), text, debate_turn=True)
+    assert tc.reply_to_tweet_in_thread(url("challenger", 2), text, debate_turn=True)
+    assert not tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
+    assert url("challenger", 3) not in rb.load_replied(), "refused turn must stay fresh"
+    assert tc.reply_to_tweet(url("challenger", 4), text), "plain replies stay uncapped"
+    assert tc.reply_to_tweet(url("someone_else", 5), text, debate_turn=True)
+    assert ag.debate_turns_today("challenger") == 2
+    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "3")
+    assert tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
+    assert not tc.reply_to_tweet("https://x.com/i/web/status/6", text, debate_turn=True), \
+        "a turn without a URL handle fails closed"
+
+
+def test_replyback_answers_are_debate_turns(monkeypatch, tmp_path):
+    """Replyback answers people who replied to the account: each answer is a
+    Debate turn, and an author at the cap is skipped before the model call."""
+    from src import action_guard as ag
+    from src import notify_bot as nb
+
+    monkeypatch.setattr(nb, "REPLIED_BACK_FILE", str(tmp_path / "replied_back.json"))
+    monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
+    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
+    monkeypatch.setattr(nb, "humanize", lambda t: t)
+    replies = [
+        {"user": "Capped @capped", "text": "hard disagree on that one", "url": "https://x.com/capped/status/11"},
+        {"user": "Fresh @fresh", "text": "so what should I test first?", "url": "https://x.com/fresh/status/12"},
+    ]
+    monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
+                        lambda: {"own_tweet": "our original", "replies": replies})
+    generated, shipped = [], []
+    monkeypatch.setattr(nb, "generate_replyback", lambda own, text: generated.append(text) or "Start with your real failure cases.")
+    monkeypatch.setattr(nb, "reply_to_tweet_in_thread",
+                        lambda url, text, **k: shipped.append((url, k)) or True)
+    monkeypatch.setattr(ag, "can_debate_turn", lambda author: (author != "capped", ""))
+
+    nb.run_replyback_cycle()
+    assert generated == [replies[1]["text"]], "capped author must be skipped before the LLM"
+    assert shipped == [(replies[1]["url"], {"debate_turn": True})]
 
 
 def test_savvy_tech_mom_register_and_ai_primary_news_sources():

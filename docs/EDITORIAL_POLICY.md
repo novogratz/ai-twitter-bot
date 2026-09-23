@@ -47,7 +47,8 @@ slot needs news from the last six hours and an exceptional-value approval.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
   Thread and recycling browser paths are disabled. Feed sweeps now reply.
 - Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
-  per-author debate turns protect conversation quality.
+  per-author debate turns protect conversation quality. Every answer to
+  someone who answered the account is a debate turn, whichever job sends it.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 

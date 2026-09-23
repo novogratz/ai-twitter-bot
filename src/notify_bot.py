@@ -161,6 +161,14 @@ def run_replyback_cycle():
         if dedup_key in replied_back:
             continue
 
+        # Answering someone who answered us is a Debate turn. Early skip
+        # saves the model call; the chokepoint enforces and counts the cap.
+        from .action_guard import can_debate_turn
+        from .twitter_client import _status_author
+        if reply_url and not can_debate_turn(_status_author(reply_url))[0]:
+            log.info(f"[REPLYBACK] Debate turn cap reached for @{handle} - skipping.")
+            continue
+
         is_influencer = handle in influencers
         log.info(
             f"[REPLYBACK] {'[INFLUENCER] ' if is_influencer else ''}"
@@ -184,7 +192,7 @@ def run_replyback_cycle():
 
         try:
             # All reply-backs are nested in-thread now (influencer or not).
-            if not reply_to_tweet_in_thread(reply_url, reply):
+            if not reply_to_tweet_in_thread(reply_url, reply, debate_turn=True):
                 continue  # chokepoint skip — stays fresh, no phantom count
             replied_back.add(dedup_key)
             count += 1

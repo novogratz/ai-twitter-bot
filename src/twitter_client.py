@@ -942,11 +942,21 @@ def like_tweet(tweet_url: str = ""):
         log.info("Failed to like tweet, continuing...")
 
 
-def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
+def _status_author(url: str) -> str:
+    """Author handle from a /status/ URL; empty for X's anonymous /i/ paths."""
+    m = re.search(r"x\.com/([A-Za-z0-9_]{1,15})/status/", url or "")
+    return m.group(1).lower() if m and m.group(1).lower() != "i" else ""
+
+
+def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
     """Open a tweet, like it, click reply, type the reply, and submit.
 
     Returns True only when the reply actually shipped (or was DRY_RUN-
     recorded), False on every skip (policy, content_guard, dedup).
+
+    `debate_turn=True` marks an answer to someone who answered the account
+    (CONTEXT.md). The per-author daily cap is checked and counted here, so
+    every answering bot shares one count.
 
     ⛔ CALLERS MUST NOT write the replied store before calling this — the
     chokepoint below loads the on-disk canonical set and REFUSES anything
@@ -1008,6 +1018,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
             log.info(f"[REPLY] FR-forced parent @{_fr_parent} but reply looks "
                      f"English — refusing (post stays fresh): {reply_text[:80]!r}")
             return False
+    # Debate turn cap, BEFORE the dedup mark: a capped turn stays fresh.
+    _debate_author = _status_author(tweet_url) if debate_turn else ""
+    if debate_turn:
+        ok, why = action_guard.can_debate_turn(_debate_author)
+        if not ok:
+            log.info(f"[REPLY] debate skip ({why}): {tweet_url}")
+            return False
     # ONE reply per tweet, EVER — enforced at the chokepoint (operator
     # 2026-06-05: "never send 2 replies on same tweet"). Each reply bot
     # loads replied_tweets.json at cycle start, so two bots racing within
@@ -1039,6 +1056,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     if _cfg.DRY_RUN:
         log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
         action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
+        if debate_turn:
+            action_guard.record(action_guard.DEBATE_TURN, target=_debate_author, dry_run=True)
         return True
 
     with _safari_lock:
@@ -1090,6 +1109,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
         time.sleep(2)  # Wait for submission
         log.info("Reply posted!")
         action_guard.record(action_guard.REPLY, target=tweet_url)
+        if debate_turn:
+            action_guard.record(action_guard.DEBATE_TURN, target=_debate_author)
         close_front_tab()
     return True
 
@@ -2205,14 +2226,14 @@ def scrape_own_tweet_and_replies():
         return None
 
 
-def reply_to_tweet_in_thread(reply_url: str, reply_text: str):
+def reply_to_tweet_in_thread(reply_url: str, reply_text: str, *, debate_turn: bool = False):
     """Reply to a specific reply (nested), so our reply lands UNDER theirs in the thread.
 
     Works because navigating to a reply's own status URL puts that reply in focus, so
     pressing 'r' replies to *that* reply. Reuses reply_to_tweet's flow.
     """
     log.info(f"[REPLYBACK] Replying in-thread to: {reply_url}")
-    return reply_to_tweet(reply_url, reply_text)
+    return reply_to_tweet(reply_url, reply_text, debate_turn=debate_turn)
 
 
 def reply_to_reply(reply_text: str):
