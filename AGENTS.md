@@ -82,7 +82,8 @@ the caller's module. A guard change ships with a test pinning it.
   counts toward today's ceiling: keep it across deploys, and leave unrelated
   state files out of your commits.
 - An editorial slot in `pending` state was submitted ambiguously; it is never
-  retried automatically. Check the profile before clearing it.
+  retried automatically. Check the profile before clearing it
+  ([recovery](docs/OPERATIONS.md#recovery)).
 - `.claude/skills/` (mirrored in `.codex/skills/`) predates the 2026-09-20 policy: several skills drive
   disabled surfaces (retweet, thread, counter reset). Read a skill against
   the policy before running it.
@@ -102,5 +103,6 @@ the caller's module. A guard change ships with a test pinning it.
 
 `CLAUDE.md` imports this file; edit `AGENTS.md` only. A behaviour change
 updates this file, `README.md` and the policy in the same commit; adding or
-removing a job also updates the jobs table in `docs/ARCHITECTURE.md`. The
-incident narrative goes to `docs/HISTORY.md`.
+removing a job also updates the jobs table in `docs/ARCHITECTURE.md`, a new
+env var goes in `docs/CONFIGURATION.md` and a new state file in the
+`docs/OPERATIONS.md` table. The incident narrative goes to `docs/HISTORY.md`.

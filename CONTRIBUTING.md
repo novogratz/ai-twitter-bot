@@ -19,12 +19,8 @@ This repo runs continuously in production. Changes affect a live X account. Read
 
 ## Check before pushing
 
-```bash
-uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
-uv run --with-requirements requirements.txt python main.py --dry-run
-```
-
-Never use `./bin/run.sh` as a smoke test: it kills any running bot and starts
+Run the test suite and the dry-run from
+[`AGENTS.md#verification`](AGENTS.md#verification). Never use `./bin/run.sh` as a smoke test: it kills any running bot and starts
 the real one on the live account.
 
 ---
@@ -49,15 +45,9 @@ See [`docs/ARCHITECTURE.md#adding-a-job`](docs/ARCHITECTURE.md#adding-a-job).
 
 ## Documentation updates
 
-If you change behaviour visible to operators or other contributors, also update:
-
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — jobs table, editorial pipeline
-- [`docs/OPERATIONS.md`](docs/OPERATIONS.md) — runbook + state file table
-- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) — env var reference
-- [`README.md`](README.md) — top-level overview
-- [`AGENTS.md`](AGENTS.md) — agent context (`CLAUDE.md` imports it)
-
-No hook enforces this: if a change is genuinely doc-irrelevant, say so in the commit message.
+Which files a behaviour change updates, and what each doc covers, is set in
+[`AGENTS.md#documentation`](AGENTS.md#documentation). No hook enforces it: if
+a change is genuinely doc-irrelevant, say so in the commit message.
 
 ---
 
@@ -73,5 +63,8 @@ Wrap at ~72 chars. Reference issue numbers if any.
 
 Co-Authored-By: <attribution lines>
 ```
+
+Stage exact paths, never `git add -A`: the repo root holds live state files
+that stay out of unrelated commits. Never pass `--no-verify`.
 
 Autonomous-agent commits use a fixed prefix: `Autonomous <agent> update — <summary>`. Keep them recognisable for log filtering.

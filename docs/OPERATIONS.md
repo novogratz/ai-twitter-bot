@@ -36,11 +36,8 @@ least:
   exist in the code.
 
 `src/config.py` loads `.env` without overriding variables already set in the
-shell. Check the setup without a browser or a model:
-
-```bash
-uv run --with-requirements requirements.txt python main.py --dry-run
-```
+shell. Check the setup without a browser or a model with the dry-run command
+from [`AGENTS.md#verification`](../AGENTS.md#verification).
 
 ## Start
 

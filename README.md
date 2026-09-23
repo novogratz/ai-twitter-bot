@@ -47,13 +47,13 @@ cp .env.example .env
 uv run python main.py
 ```
 
-`.env.example` still carries the old handle and `CONTENT_LANG_PRIMARY=fr`;
-fix both before the first run ([setup](docs/OPERATIONS.md#setup)).
+`.env.example` predates the current account: fix `.env` as described in
+[setup](docs/OPERATIONS.md#setup) before the first run.
 
 ```bash
 uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM
-uv run python main.py --reply-only  # daytime conversations only
-uv run python main.py --post-only   # editorial originals only
+uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
+uv run --with-requirements requirements.txt python main.py --post-only   # editorial originals only
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
 ```
 
