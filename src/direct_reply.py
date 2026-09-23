@@ -14,6 +14,7 @@ from .replied_store import load_replied, save_replied
 from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
 from .config import BLOCKLIST, BOT_HANDLE
 from .humanizer import humanize
+from .reply_language import looks_french
 from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
@@ -133,10 +134,6 @@ _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 
 def _is_on_niche(text: str) -> bool:
     return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
-
-# Language detection moved to reply_language, which Reply admission shares;
-# the jobs keep these names until they import it themselves.
-from .reply_language import looks_english as _looks_english, looks_french as _looks_french
 
 def _is_fr_or_en(text: str) -> bool:
     if not text: return True
@@ -588,7 +585,7 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             if url in fresh_replied:
                 replied.add(url)
                 continue
-            _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if not _looks_french(text) else "fr")
+            _reply_lang = "fr" if source_name.startswith("PROFILE") else ("fr" if looks_french(text) else "en")
             # FR-forced parents (operator 2026-06-07: "i saw some english on
             # Julien response" — @Graphseo is French; short/ambiguous posts
             # fooled the detector). Hard override, all sources.

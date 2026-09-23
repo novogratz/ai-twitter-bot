@@ -79,7 +79,8 @@ def run_engagement_targeting_cycle():
     from . import action_guard
     from .replied_store import load_replied, save_replied
     from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
-    from .direct_reply import _generate_single_reply, _is_on_niche, _is_fr_or_en, _looks_english
+    from .direct_reply import _generate_single_reply, _is_on_niche, _is_fr_or_en
+    from .reply_language import looks_english
     from .twitter_client import scrape_profile_tweets, reply_to_tweet
 
     # If the daily reply cap is already spent, don't even scrape.
@@ -139,7 +140,7 @@ def run_engagement_targeting_cycle():
         if not ok:
             log.info(f"[ET] Reply policy stop ({why}).")
             break
-        lang = "en" if _looks_english(c["text"]) else "fr"
+        lang = "en" if looks_english(c["text"]) else "fr"
         log.info(f"[ET] Target @{c['author']} velocity={c['score']:.1f} "
                  f"age={c['age_min']:.0f}m lang={lang}")
         reply = _generate_single_reply(c["author"], c["text"], lang=lang)

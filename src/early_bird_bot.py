@@ -22,7 +22,8 @@ from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .replied_store import load_replied
 from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
-from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche, _looks_french
+from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
+from .reply_language import looks_french
 from .engagement_log import log_reply
 from .humanizer import humanize
 
@@ -122,7 +123,7 @@ def run_early_bird_cycle():
             reply = _generate_single_reply(
                 username,
                 text,
-                lang="fr" if _looks_french(text) else "en",
+                lang="fr" if looks_french(text) else "en",
             )
             if reply is _LLM_RATE_LIMITED:
                 log.info("[EARLYBIRD] LLM budget reached; stopping this cycle before posting attempts.")
