@@ -23,6 +23,7 @@ import traceback
 import urllib.parse
 import webbrowser
 
+from .active_hours import require_active
 from .config import _PROJECT_ROOT
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
@@ -47,6 +48,9 @@ LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
 
 def _click_likes_on_page(max_clicks: int) -> int:
     """JS: find unliked like buttons on the page and click them."""
+    # This path runs osascript itself, so it must check the clock and the
+    # stop the way twitter_client._run_applescript does.
+    require_active()
     js_code = f"""
     (function() {{
         var buttons = document.querySelectorAll('[data-testid="like"]');
@@ -140,14 +144,17 @@ def run_like_cycle():
         cycle_cap = min(LIKES_PER_CYCLE, remaining)
         first = cycle_cap // 2 + cycle_cap % 2
         second = cycle_cap - first
-        clicked_total += _click_likes_on_page(first)
-        time.sleep(random.uniform(1.5, 3.0))
-        clicked_total += _click_likes_on_page(second)
+        try:
+            clicked_total += _click_likes_on_page(first)
+            time.sleep(random.uniform(1.5, 3.0))
+            clicked_total += _click_likes_on_page(second)
+        finally:
+            # A stop between batches must still count the first batch.
+            state["count"] = int(state.get("count") or 0) + max(0, clicked_total)
+            _save_daily_state(state)
 
         close_front_tab()
 
-    state["count"] = int(state.get("count") or 0) + max(0, clicked_total)
-    _save_daily_state(state)
     log.info(
         f"[LIKE] Liked {clicked_total} tweets on '{query}' ({tab}) "
         f"({state['count']}/{LIKE_BOT_DAILY_CAP} today)."

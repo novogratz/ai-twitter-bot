@@ -66,3 +66,78 @@ def test_mega_watch_skips_posts_older_than_max_age(monkeypatch):
     mw.run_mega_watch_cycle()
 
     assert replied_to == [fresh]
+
+
+def _stop_requested(monkeypatch):
+    import threading
+    from src import active_hours
+
+    stop = threading.Event()
+    stop.set()
+    monkeypatch.setattr(active_hours, "_STOP", stop)
+
+
+def test_awake_job_starts_nothing_after_stop(monkeypatch):
+    from src.active_hours import awake_job
+
+    ran = []
+    job = awake_job(lambda: ran.append(True))
+    _stop_requested(monkeypatch)
+
+    assert job() is None
+    assert ran == []
+
+
+def test_can_post_refuses_after_stop(monkeypatch):
+    from src import action_guard
+
+    assert action_guard.can_post(action_guard.REPLY)[0] is True
+    _stop_requested(monkeypatch)
+
+    ok, why = action_guard.can_post(action_guard.REPLY)
+    assert not ok and "stop" in why
+
+
+def test_is_active_ignores_stop_for_the_scheduler_loop(monkeypatch):
+    from src import active_hours
+
+    _stop_requested(monkeypatch)
+
+    assert active_hours.is_active() is True
+    assert active_hours.may_act() is False
+
+
+def test_like_clicks_refused_after_stop(monkeypatch):
+    import pytest
+    from src import like_bot
+    from src.active_hours import OutsideActiveHours
+
+    calls = []
+    monkeypatch.setattr(like_bot.subprocess, "run", lambda *a, **k: calls.append(a))
+    _stop_requested(monkeypatch)
+
+    with pytest.raises(OutsideActiveHours):
+        like_bot._click_likes_on_page(5)
+    assert calls == []
+
+
+def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
+    from src import like_bot
+    from src.active_hours import OutsideActiveHours
+    import pytest
+
+    _stub_like_browser(monkeypatch, tmp_path)
+    monkeypatch.setattr(like_bot, "LIKES_PER_CYCLE", 10)
+    batches = iter([5, OutsideActiveHours("stop")])
+
+    def click(n):
+        outcome = next(batches)
+        if isinstance(outcome, Exception):
+            raise outcome
+        return outcome
+
+    monkeypatch.setattr(like_bot, "_click_likes_on_page", click)
+
+    with pytest.raises(OutsideActiveHours):
+        like_bot.run_like_cycle()
+    assert like_bot._load_daily_state()["count"] == 5

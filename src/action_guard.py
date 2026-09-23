@@ -25,7 +25,7 @@ from typing import Optional, Tuple
 
 from . import config
 from .logger import log
-from .active_hours import is_active, now_local
+from .active_hours import is_active, now_local, stop_requested
 from .state_errors import StateUnreadable
 from zoneinfo import ZoneInfo
 
@@ -365,6 +365,8 @@ def can_unfollow(handle: str) -> Tuple[bool, str]:
 
 def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime; legacy urgency flags grant no bypass."""
+    if stop_requested():
+        return False, "stop requested"
     if not is_active():
         return False, "asleep (active 04:30–22:00 America/Toronto)"
     if action in (QUOTE, RETWEET):

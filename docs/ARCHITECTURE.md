@@ -38,21 +38,22 @@ before touching the browser or a model).
 `src/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 22:00, DST
 handled by `zoneinfo`. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
-no-op outside the window (a job started after a stop request halts at its
-first `require_active()`).
+no-op in the same cases (`may_act()`), and a job already running halts at its
+next `require_active()`. `is_active()` reads the clock only: the scheduler's
+pause/resume loop must not treat a stop as a wake-up boundary.
 
 Pausing the scheduler is not enough, because a job queued at 21:59 would still
 run. The check is repeated at each point where work leaves the process:
 
 - `twitter_client._AwakeSafariLock`, before and after acquiring the Safari lock;
 - `twitter_client._run_applescript` and each direct `osascript` call inside
-  `twitter_client`. The `osascript` calls in `like_bot`, `followback_bot`,
-  `follower_tracker_bot` and `safari_hygiene` are only covered by the lock
-  check or by `awake_job`;
+  `twitter_client`, and in `like_bot`'s like clicks. The read-only
+  `osascript` calls in `followback_bot`, `follower_tracker_bot` and
+  `safari_hygiene` are only covered by the lock check or by `awake_job`;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
   also capped at the time left before 22:00;
-- `action_guard.can_post`, and `editorial_bot` before fetching a source and
-  again before publishing.
+- `action_guard.can_post`, which also refuses once a stop was requested, and
+  `editorial_bot` before fetching a source and again before publishing.
 
 A request already sent to X or to a model can finish after 22:00; it cannot
 authorize a new action.
