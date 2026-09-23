@@ -47,7 +47,8 @@ Each one is a bug that shipped live. The full incident stories are in
 
 - **Chokepoints own the rules.** Enforce a rule inside the `twitter_client`
   write function, so every caller inherits it; a per-bot check leaves the
-  other callers open.
+  other callers open. A reply job asks `reply_admission.judge_parent`
+  before generating instead of copying a rule.
 - **Log only what shipped.** Write chokepoints return `True` only when the
   action happened. Callers log, count and consume a slot or candidate on
   `True` only. A failed AppleScript step is not a shipped action: return

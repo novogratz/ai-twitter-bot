@@ -9,8 +9,9 @@ every post and respond naturally in conversations.
 - **Active daily: 04:30–22:00 America/Toronto**, with daylight saving handled automatically.
 - **Six original posts planned; seven is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
-  Every reply passes Reply admission at the write: blocked accounts, the
-  account's own posts and links without an author handle are refused.
+  Every reply passes Reply admission before generation and again at the
+  write: blocked accounts, the account's own posts and links without an
+  author handle are refused.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **No automatic quote tweets, reposts, self-recycling, startup bursts, or burst threads.**

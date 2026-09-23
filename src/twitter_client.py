@@ -980,12 +980,6 @@ def like_tweet(tweet_url: str = ""):
         log.info("Failed to like tweet, continuing...")
 
 
-def _status_author(url: str) -> str:
-    """Author handle from a /status/ URL; empty for X's anonymous /i/ paths."""
-    from .x_urls import author
-    return author(url)
-
-
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
     """Open a tweet, click reply, type the reply, and submit.
 

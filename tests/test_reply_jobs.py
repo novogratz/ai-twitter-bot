@@ -297,3 +297,76 @@ def test_debate_stops_on_unreadable_store(debate):
     with pytest.raises(StateUnreadable):
         db.run_debate_cycle()
     assert generated == []
+
+
+# --- replyback (replies under our latest post) ------------------------------
+
+@pytest.fixture
+def replyback(monkeypatch, blocklist):
+    from src import notify_bot as nb
+
+    replies = []
+    drafts = {}
+    generated, sent = [], []
+
+    def generate(own_tweet, text):
+        generated.append(text)
+        return drafts.get(text, DRAFT)
+
+    monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
+                        lambda: {"own_tweet": "our post", "replies": list(replies)})
+    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
+    monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
+    monkeypatch.setattr(nb, "generate_replyback", generate)
+    monkeypatch.setattr(nb, "reply_to_tweet_in_thread",
+                        lambda url, text, **k: sent.append((url, k)) or True)
+    return nb, replies, drafts, generated, sent
+
+
+def test_replyback_asks_admission_with_the_turn_cap_before_generating(replyback):
+    nb, replies, _, generated, sent = replyback
+    blocked, own = fresh("pgm_pm", n=1), fresh(config.BOT_HANDLE, n=2)
+    admitted = fresh("someone", n=3)
+    replies += [
+        {"user": "Friendly @pgm_pm", "text": "blocked handle", "url": blocked},
+        {"user": "Us @TheAIShrink", "text": "our own reply", "url": own},
+        {"user": "No link @nolink", "text": "no status URL", "url": ""},
+        {"user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
+    ]
+
+    nb.run_replyback_cycle()
+
+    assert generated == ["display name is not an identity"]
+    assert sent == [(admitted, {"debate_turn": True})]
+    assert nb._skipped == {blocked, own}
+
+
+def test_replyback_sets_aside_model_skips(replyback):
+    nb, replies, drafts, generated, sent = replyback
+    declined = fresh("someone")
+    replies.append({"user": "@someone", "text": "nothing to add", "url": declined})
+    drafts["nothing to add"] = None
+
+    nb.run_replyback_cycle()
+    nb.run_replyback_cycle()
+
+    assert generated == ["nothing to add"]
+    assert sent == []
+    assert nb._skipped == {declined}
+
+
+# --- follow_engagers (Engagers from the ledger) -----------------------------
+
+def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
+    import json
+    from src import action_guard
+    from src import follow_engagers_bot as fe
+
+    for author in ("oldfan", "newfan", "oldfan"):
+        action_guard.record(action_guard.DEBATE_TURN, target=author)
+    action_guard.record(action_guard.DEBATE_TURN, target="simulated", dry_run=True)
+    action_guard.record(action_guard.REPLY, target=fresh("replied_to"))
+    with open(fe.FROZEN_REPLIED_BACK_FILE, "w") as f:
+        json.dump(["https://x.com/frozenfan/status/1", "text:no url", "https://x.com/newfan/status/2"], f)
+
+    assert fe._engager_handles() == ["oldfan", "newfan", "frozenfan"]

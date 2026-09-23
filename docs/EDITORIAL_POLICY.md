@@ -57,12 +57,12 @@ slot needs news from the last six hours and an exceptional-value approval.
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
   ignored on both sides), when the parent is the account's own post, or
-  when the URL carries no author handle. This moves the blocklist to the
-  chokepoint without relaxing it. `direct_reply`, `feed_sweep`,
-  `early_bird`, `mega_watch` and `debate` ask the same admission before
-  generating; `mega_watch` no longer matches `BLOCKLIST` against the
-  scraper's display name, which is not an identity. `replyback` keeps its
-  own filters until it calls the admission itself (issue #100).
+  when the URL carries no author handle. Every active reply job asks the same
+  admission before paying for a generation and keeps no copy of these
+  rules (issue #100). `BLOCKLIST` is matched on the URL handle only:
+  `mega_watch` and `replyback` no longer match it against the scraper's
+  display name, which is not an identity. The replyback profile likes
+  still check both.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write, including the likes and pins that

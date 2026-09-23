@@ -106,6 +106,9 @@ def _no_prod_state(monkeypatch, tmp_path):
     # family as the 2026-06-09 fixture pollution).
     from src import personality_store as _ps
     monkeypatch.setattr(_ps, "PERSONALITY_FILE", str(tmp_path / "personality.json"))
+    # The frozen Engager list is tracked in git: never read the live one.
+    from src import follow_engagers_bot as _fe
+    monkeypatch.setattr(_fe, "FROZEN_REPLIED_BACK_FILE", str(tmp_path / "replied_back.json"))
     yield
 
 
@@ -126,6 +129,7 @@ def _fresh_job_memory(monkeypatch):
     """Each reply job keeps the posts it dropped in a module-level set for
     the life of the process; every test starts with empty ones."""
     import importlib
-    for name in ("direct_reply", "feed_sweeper_bot", "early_bird_bot", "mega_watch_bot", "debate_bot"):
+    for name in ("direct_reply", "feed_sweeper_bot", "early_bird_bot", "mega_watch_bot", "debate_bot",
+                 "notify_bot"):
         monkeypatch.setattr(importlib.import_module(f"src.{name}"), "_skipped", set())
     yield

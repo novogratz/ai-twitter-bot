@@ -17,10 +17,13 @@ from .twitter_client import (
 )
 from .replyback_agent import generate_replyback
 from .humanizer import humanize
+from .reply_admission import judge_parent
 import random
 
-REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
 _OWN_HANDLE = BOT_HANDLE.lower()
+# Replies this job drops until restart: definitive Reply admission refusals
+# and replies the model declined.
+_skipped: set = set()
 _HANDLE_RE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
 _MENTION_RE = re.compile(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])")
 
@@ -46,7 +49,8 @@ def _extract_handle(user_string: str) -> str:
 
 
 def _is_blocklisted(user_string: str, handle: str) -> bool:
-    """Hardened blocklist check.
+    """Hardened blocklist check for the reciprocity likes; Replies go
+    through Reply admission instead.
 
     Bug 2026-04-26: scraper sometimes returned a display name ("la pique")
     instead of the @handle ("pgm_pm"), so `handle in BLOCKLIST` missed and
@@ -62,21 +66,6 @@ def _is_blocklisted(user_string: str, handle: str) -> bool:
         if blocked and blocked in user_lower:
             return True
     return False
-
-
-def _load_replied_back() -> set:
-    if os.path.exists(REPLIED_BACK_FILE):
-        try:
-            with open(REPLIED_BACK_FILE, "r") as f:
-                return set(json.load(f))
-        except (json.JSONDecodeError, IOError):
-            pass
-    return set()
-
-
-def _save_replied_back(replied: set):
-    with open(REPLIED_BACK_FILE, "w") as f:
-        json.dump(list(replied)[-500:], f, indent=2)
 
 
 def run_notify_cycle():
@@ -100,7 +89,6 @@ def run_replyback_cycle():
 
     own_tweet = data["own_tweet"]
     replies = data["replies"]
-    replied_back = _load_replied_back()
     influencers = _influencer_handles()
     count = 0
 
@@ -124,51 +112,31 @@ def run_replyback_cycle():
         user = reply_info.get("user", "")
         text = reply_info.get("text", "")
         reply_url = reply_info.get("url", "")
-        handle = _extract_handle(user)
-        if not handle and reply_url:
-            # 2026-06-05 fix: the scraper's User-Name anchor returns the
-            # DISPLAY name ("The AI Therapist"), not the @handle, so half the
-            # engagers were skipped ("No usable handle"). The reply's status
-            # URL always carries the author handle — use it as the fallback.
-            try:
-                url_handle = reply_url.split("x.com/")[1].split("/")[0].lower()
-                if _HANDLE_RE.fullmatch(url_handle):
-                    handle = url_handle
-            except (IndexError, AttributeError):
-                pass
-        if not handle:
-            log.info(f"[REPLYBACK] No usable handle in user={user!r} - skipping.")
-            continue
 
-        # Skip blocklisted handles (e.g., @pgm_pm). Hardened to catch
-        # display-name variants ("la pique") that the scraper sometimes
-        # hands us instead of the @handle.
-        if _is_blocklisted(user, handle):
-            log.info(f"[REPLYBACK] Blocklisted user={user!r} handle={handle!r} - skipping.")
+        # IN-THREAD-ONLY rule (user directive 2026-04-27 PM, before 2-week
+        # away mission): NEVER post standalone @mention tweets — they land
+        # as new posts on our profile and look like spam. If we don't have
+        # a reply_url to nest under, SKIP the engager. Loyalty-building is
+        # only worth it when it stays inside the conversation.
+        if not reply_url:
+            log.info(f"[REPLYBACK] No reply_url for user={user!r} — skipping (in-thread-only rule).")
             continue
-
-        # Skip our own replies (never reply to ourselves)
-        if handle == _OWN_HANDLE or _OWN_HANDLE in user.lower():
-            log.info(f"[REPLYBACK] Own reply — skipping.")
+        if reply_url in _skipped:
             continue
 
         # Skip very short or empty replies
         if len(text) < 5:
             continue
 
-        # Dedup key: prefer reply URL (stable, unique); fall back to text snippet
-        dedup_key = reply_url or f"text:{text[:50]}"
-        if dedup_key in replied_back:
+        # Answering someone who answered us is a Debate turn. Admission
+        # reads the author from the URL, never from the display name.
+        verdict = judge_parent(reply_url, debate_turn=True)
+        if not verdict:
+            if verdict.refusal.definitive:
+                _skipped.add(reply_url)
+            log.info(f"[REPLYBACK] Not admitted ({verdict.refusal.name}: {verdict.reason}) - skipping.")
             continue
-
-        # Answering someone who answered us is a Debate turn. Early skip
-        # saves the model call; the chokepoint enforces and counts the cap.
-        from .action_guard import can_debate_turn
-        from .twitter_client import _status_author
-        ok, why = can_debate_turn(_status_author(reply_url)) if reply_url else (True, "")
-        if not ok:
-            log.info(f"[REPLYBACK] Debate turn refused ({why}) - skipping.")
-            continue
+        handle = verdict.author
 
         is_influencer = handle in influencers
         log.info(
@@ -177,25 +145,16 @@ def run_replyback_cycle():
         )
         reply = generate_replyback(own_tweet, text)
         if not reply:
+            _skipped.add(reply_url)
             continue
 
         reply = humanize(reply)
         log.info(f"[REPLYBACK] Reply ({len(reply)} chars): {reply}")
 
-        # IN-THREAD-ONLY rule (user directive 2026-04-27 PM, before 2-week
-        # away mission): NEVER post standalone @mention tweets — they land
-        # as new posts on our profile and look like spam. If we don't have
-        # a reply_url to nest under, SKIP the engager. Loyalty-building is
-        # only worth it when it stays inside the conversation.
-        if not reply_url:
-            log.info(f"[REPLYBACK] No reply_url for @{handle} — skipping (in-thread-only rule).")
-            continue
-
         try:
             # All reply-backs are nested in-thread now (influencer or not).
             if not reply_to_tweet_in_thread(reply_url, reply, debate_turn=True):
                 continue  # chokepoint skip — stays fresh, no phantom count
-            replied_back.add(dedup_key)
             count += 1
         except StateUnreadable:
             raise  # no reply can ship: stop paying for generations
@@ -203,7 +162,6 @@ def run_replyback_cycle():
             log.info(f"[REPLYBACK] Failed to reply back:")
             traceback.print_exc()
 
-    _save_replied_back(replied_back)
     log.info(f"[REPLYBACK] Replied back to {count} people.")
 
     # Reciprocity loop: for non-influencer engagers, visit their profile and
@@ -221,7 +179,8 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
     max_visits per cycle to stay under bot detection.
 
     No follow here: engager follows belong to follow_engagers_job, which
-    reads replied_back.json and passes engager=True (CONTEXT.md: Engager).
+    reads the ledger's Debate turns and passes engager=True (CONTEXT.md:
+    Engager).
     """
     visited = 0
     seen_handles = set()

@@ -208,7 +208,6 @@ Files written by active jobs:
 | `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, 90 days |
 | `following_count.json` | `action_guard` | Following count used by the follow ceiling |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID |
-| `replied_back.json` | `notify_bot` | Replyback dedup, source for `follow_engagers_job` |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus |
 | `engagement_log.csv` | `engagement_log` | Append-only action log |
 | `followed_accounts.json` | follow paths | Accounts followed by the bot |
@@ -221,6 +220,11 @@ Files written by active jobs:
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart |
 
 Most other JSON files at the root belong to legacy jobs and no longer change.
+`replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
+to the replied store and the Engager list to the ledger's debate turns.
+`follow_engagers_job` still reads it until its entries age out of the
+ledger's 90 days; delete it, and the fallback in `follow_engagers_bot`,
+around 2026-12-22.
 `debate_state.json` is one of them since debate turns moved to the ledger; it
 can be deleted.
 

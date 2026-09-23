@@ -3142,7 +3142,6 @@ def test_replyback_answers_are_debate_turns(monkeypatch, tmp_path):
     from src import action_guard as ag
     from src import notify_bot as nb
 
-    monkeypatch.setattr(nb, "REPLIED_BACK_FILE", str(tmp_path / "replied_back.json"))
     monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
     monkeypatch.setattr(nb, "humanize", lambda t: t)
@@ -3203,7 +3202,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     """2026-07-19 likes+follows push: (1) the engager quality path skips
     size/niche (behavior proves both; small engagers follow back at the
     highest rate) but KEEPS the English gate; (2) follow_engagers_bot pulls
-    handles from replied_back.json (newest first), never retries an
+    Engagers from the ledger's Debate turns (newest first), never retries an
     attempted handle, respects caps, and routes through follow_account
     with engager=True."""
     from src.twitter_client import _follow_quality_decision
@@ -3217,21 +3216,15 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     ok, _ = _follow_quality_decision(42, "just a person", "Sam", False)
     assert not ok, "non-engager path keeps the size gate"
 
-    import json
+    from src import action_guard as ag
     from src import follow_engagers_bot as fe
-    rb = tmp_path / "replied_back.json"
-    rb.write_text(json.dumps([
-        "https://x.com/oldguy/status/111",
-        "https://x.com/business/status/222",       # big-media skip
-        "https://x.com/freshfan/status/333",
-    ]))
-    monkeypatch.setattr(fe, "REPLIED_BACK_FILE", str(rb))
+    for engager in ("oldguy", "business", "freshfan"):  # business: big-media skip
+        ag.record(ag.DEBATE_TURN, target=engager)
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     followed = []
     monkeypatch.setattr("src.twitter_client.follow_account",
                         lambda h, engager=False: followed.append((h, engager)) or True)
-    monkeypatch.setattr("src.action_guard.can_follow",
-                        lambda h, reciprocal=False: (True, ""))
+    monkeypatch.setattr(ag, "can_follow", lambda h, reciprocal=False: (True, ""))
     monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
@@ -3341,11 +3334,9 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     from main import build_scheduler
     assert build_scheduler().get_job("pin_job") is not None
 
-    import json
+    from src import action_guard as ag
     from src import follow_engagers_bot as fe
-    rb = tmp_path / "replied_back.json"
-    rb.write_text(json.dumps(["https://x.com/somefan/status/111"]))
-    monkeypatch.setattr(fe, "REPLIED_BACK_FILE", str(rb))
+    ag.record(ag.DEBATE_TURN, target="somefan")
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     called = []
     monkeypatch.setattr("src.twitter_client.follow_account",
