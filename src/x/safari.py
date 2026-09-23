@@ -1,10 +1,12 @@
 """Safari and AppleScript primitives shared by the X reading and write
 modules: the Safari lock, AppleScript runs, paste, tab and keyboard moves.
 
-Other modules call the walled primitives (`_run_applescript`, `_paste_text`)
-through the module (`safari._run_applescript(...)`), never through a `from`
-import, so the test walls patched here reach them."""
+Other modules call the walled primitives (`_run_applescript`, `_run_js`,
+`_paste_text`) through the module (`safari._run_applescript(...)`), never
+through a `from` import, so the test walls patched here reach them."""
+import os
 import subprocess
+import tempfile
 import threading
 import time
 from ..core.config import RETRY_DELAY_SECONDS
@@ -50,6 +52,39 @@ def _run_applescript(script: str, retries: int = 1) -> bool:
                 log.warning(f"AppleScript failed (attempt {attempt + 1}/{retries}), retrying...")
                 time.sleep(RETRY_DELAY_SECONDS)
     return False
+
+
+def _run_js(js: str, timeout_s: int = 15) -> str:
+    """Run `js` in Safari's front tab and return its result, "" when the
+    osascript call fails. The script goes through a temp file, so `js` needs
+    no AppleScript escaping."""
+    require_active()
+    path = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=".js",
+                                         delete=False) as tmp:
+            path = tmp.name
+            tmp.write(js)
+        res = subprocess.run(["osascript", "-e", f'''
+        set jsCode to (read POSIX file "{path}" as «class utf8»)
+        tell application "Safari"
+            do JavaScript jsCode in current tab of front window
+        end tell
+        '''], capture_output=True, text=True, timeout=timeout_s)
+        if res.returncode != 0:
+            log.info(f"Page JavaScript failed (osascript exit {res.returncode}): "
+                     f"{(res.stderr or '').strip()[:300]}")
+            return ""
+        return (res.stdout or "").strip()
+    except (OSError, subprocess.SubprocessError) as e:
+        log.info(f"Page JavaScript failed: {e!r}")
+        return ""
+    finally:
+        if path:
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
 
 
 def _escape_for_applescript(text: str) -> str:

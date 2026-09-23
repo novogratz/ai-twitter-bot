@@ -52,6 +52,15 @@ def pytest_configure(config):
 import pytest as _pytest
 
 
+_UNWALLED = {}
+
+
+@_pytest.fixture
+def unwalled():
+    """The real safari primitives, for tests that fake subprocess themselves."""
+    return _UNWALLED
+
+
 @_pytest.fixture(autouse=True)
 def _no_safari(monkeypatch):
     import webbrowser as _wb
@@ -68,7 +77,10 @@ def _no_safari(monkeypatch):
     # The primitives live in src.x.safari; twitter_client and scraper call
     # them through the module, so this patch reaches every src.x path.
     from src.x import safari as _safari
+    for name in ("_run_applescript", "_run_js", "_paste_text"):
+        _UNWALLED.setdefault(name, getattr(_safari, name))
     monkeypatch.setattr(_safari, "_run_applescript", _blocked)
+    monkeypatch.setattr(_safari, "_run_js", _blocked)
     monkeypatch.setattr(_safari, "_paste_text", _blocked)
 
     # twitter_client, scraper, safari_hygiene and several jobs call
