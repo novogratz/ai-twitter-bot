@@ -17,9 +17,15 @@ Safety:
     anti-churn so follow bots don't re-follow) and decrements
     following_count.json.
   - Jittered 3.5-7s spacing + a 20-40s breather every 25 unfollows.
-  - Aborts after 5 consecutive failed confirm modals (likely action block).
+  - A rate-limit toast or 5 consecutive failed confirm modals trigger a
+    cooldown, never an abort.
+  - Refuses to start Overnight and stops before the next unfollow once
+    Waking hours end (22:00 America/Toronto) or on SIGTERM/SIGINT.
+  - Stops after --max unfollows, 150 by default.
   - Refuses to run while the bot scheduler is up (Safari lock conflict);
     override with --force.
+  - mass_unfollow_results.json is rewritten after every unfollow, so an
+    interrupted run still reports.
 
 Usage:
   .venv/bin/python bin/mass_unfollow.py [--max N] [--force]
@@ -29,14 +35,46 @@ import json
 import os
 import random
 import re
+import signal
 import subprocess
 import sys
-import time
+import threading
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
-from src import action_guard, config  # noqa: E402
+from src import action_guard, active_hours, config  # noqa: E402
+
+# Stays under X's unfollow quota of about 190 per window; at pace `normal`
+# (~480/h) a run ends in about 27 minutes.
+DEFAULT_MAX = 150
+
+_STOP = threading.Event()
+
+
+def _on_signal(signum, frame) -> None:
+    active_hours.request_stop()
+    _STOP.set()
+
+
+def _pause(seconds: float) -> None:
+    """A sleep that SIGTERM/SIGINT cuts short."""
+    _STOP.wait(seconds)
+
+
+def _must_stop() -> bool:
+    """Overnight or a stop signal: no further unfollow."""
+    if active_hours.may_act():
+        return False
+    reason = ("stop signal" if active_hours.stop_requested()
+              else "Waking hours ended (22:00 America/Toronto)")
+    print("STOP: %s" % reason, flush=True)
+    return True
+
+
+def _save_results(unfollowed: list) -> None:
+    with open(os.path.join(ROOT, "mass_unfollow_results.json"), "w") as f:
+        json.dump(unfollowed, f)
 
 
 def _whitelist_keep_set() -> set:
@@ -144,7 +182,7 @@ def _reload_page() -> None:
          "'RELOADED'\" in current tab of front window"],
         capture_output=True, text=True, timeout=15,
     )
-    time.sleep(8)
+    _pause(8)
 
 
 def _ensure_following_page() -> None:
@@ -163,12 +201,13 @@ def _ensure_following_page() -> None:
              f'tell application "Safari" to set URL of current tab of front window to "{target}"'],
             capture_output=True, text=True, timeout=15,
         )
-        time.sleep(6)
+        _pause(6)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--max", type=int, default=10**6, help="stop after N unfollows")
+    ap.add_argument("--max", type=int, default=DEFAULT_MAX,
+                    help="stop after N unfollows (default %(default)s)")
     ap.add_argument("--force", action="store_true",
                     help="run even if the bot scheduler is up (Safari lock conflict)")
     ap.add_argument("--keep", choices=["whitelist", "legacy"], default="whitelist",
@@ -188,6 +227,13 @@ def main() -> None:
                          "consecutive hit, capped at 4x); every pace cools down "
                          "and resumes — the run never aborts on a rate limit")
     args = ap.parse_args()
+
+    if not active_hours.may_act():
+        print("ABORT: Overnight. Waking hours are 04:30–22:00 America/Toronto.",
+              flush=True)
+        sys.exit(1)
+    signal.signal(signal.SIGTERM, _on_signal)
+    signal.signal(signal.SIGINT, _on_signal)
 
     if args.pace == "insane":
         confirm_wait, gap_lo, gap_hi = 0.5, 0.4, 1.0
@@ -226,16 +272,20 @@ def main() -> None:
         mins = min(args.cooldown_mins * (1.5 ** (limit_hits - 1)),
                    args.cooldown_mins * 4)
         print("COOLDOWN %.1f min (#%d): %s" % (mins, limit_hits, reason), flush=True)
-        time.sleep(mins * 60)
+        _pause(mins * 60)
         noconfirm_streak = 0
         run_js(CLEAR_TAGS_JS)  # re-arm cells whose click never confirmed
 
     while len(unfollowed) < args.max:
+        if _must_stop():
+            break
         res = run_js(pick_js)
         if res.startswith("CLICK:"):
             empty_rounds = 0
             h = res[6:] or "unknown"
-            time.sleep(confirm_wait)
+            _pause(confirm_wait)
+            if _must_stop():  # the modal stays open: nothing unfollowed
+                break
             c = run_js(CONFIRM_JS)
             confirmed = c.startswith("CONFIRMED")
             toast = c.split("|TOAST:", 1)[1] if "|TOAST:" in c else ""
@@ -249,6 +299,7 @@ def main() -> None:
                 if limit_hits and len(unfollowed) % 50 == 0:
                     limit_hits = 0  # healthy streak → reset backoff
                 unfollowed.append(h)
+                _save_results(unfollowed)
                 try:
                     action_guard.record(action_guard.UNFOLLOW, target=h)
                     action_guard.adjust_following(-1)
@@ -262,12 +313,12 @@ def main() -> None:
                 if noconfirm_streak >= 5:
                     cooldown("5 consecutive failed confirms")
                     continue
-                time.sleep(3)
-            time.sleep(random.uniform(gap_lo, gap_hi))
+                _pause(3)
+            _pause(random.uniform(gap_lo, gap_hi))
             if unfollowed and len(unfollowed) % breather_every == 0:
                 p = random.uniform(breather_lo, breather_hi)
                 print("breather %.0fs" % p, flush=True)
-                time.sleep(p)
+                _pause(p)
         elif res == "NONE":
             empty_rounds += 1
             if empty_rounds >= 6:
@@ -282,23 +333,24 @@ def main() -> None:
                     break
                 print("empty viewport — reload + re-verify (%d/3)"
                       % reload_attempts, flush=True)
-                time.sleep(args.cooldown_mins * 60)
+                _pause(args.cooldown_mins * 60)
+                if _must_stop():
+                    break
                 _reload_page()
                 run_js(CLEAR_TAGS_JS)
                 empty_rounds = 0
                 continue
             run_js(SCROLL_JS)
-            time.sleep(2.5)
+            _pause(2.5)
         else:
             empty_rounds += 1
             print("JS err:", res[:200], flush=True)
             if empty_rounds >= 6:
                 print("ABORT: repeated JS errors", flush=True)
                 break
-            time.sleep(3)
+            _pause(3)
 
-    with open(os.path.join(ROOT, "mass_unfollow_results.json"), "w") as f:
-        json.dump(unfollowed, f)
+    _save_results(unfollowed)
     print("TOTAL unfollowed: %d" % len(unfollowed), flush=True)
 
 
