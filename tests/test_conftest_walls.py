@@ -61,10 +61,19 @@ def test_every_browser_path_goes_through_the_conftest_walls():
     `subprocess.Popen` on their modules. A module that binds one by name
     (`from .safari import _run_applescript`, `from subprocess import Popen`)
     keeps the real object past the wall, so twitter_client, scraper and the
-    jobs reach them through their module (#118)."""
+    jobs reach them through their module (#118). Page JavaScript runs only
+    through `safari._run_js`, and only safari.py spawns `osascript` (#144)."""
     import ast
     from pathlib import Path
     from src.x import safari
+
+    # Direct osascript calls that stay, and why:
+    # - safari_hygiene quits, relaunches, activates and navigates Safari,
+    #   no page JavaScript;
+    # - bin/mass_unfollow.py is an operator tool with its own waking-hours
+    #   stop and error strings, not yet routed through _run_js.
+    own_osascript = {"src/x/safari_hygiene.py", "bin/mass_unfollow.py"}
+    own_page_js = {"bin/mass_unfollow.py"}
 
     walled = {"_run_applescript", "_run_js", "_paste_text"}
     for name in walled:
@@ -83,4 +92,11 @@ def test_every_browser_path_goes_through_the_conftest_walls():
             elif (isinstance(node, ast.FunctionDef) and node.name in walled
                   and path != Path(safari.__file__)):
                 problems.append(f"{path.relative_to(root)}:{node.lineno}: defines {node.name}")
+            elif (isinstance(node, ast.Constant) and isinstance(node.value, str)
+                  and path != Path(safari.__file__)):
+                rel = path.relative_to(root).as_posix()
+                if "do JavaScript" in node.value and rel not in own_page_js:
+                    problems.append(f"{rel}:{node.lineno}: runs do JavaScript past safari._run_js")
+                if node.value.split(" ")[0] == "osascript" and rel not in own_osascript:
+                    problems.append(f"{rel}:{node.lineno}: spawns osascript")
     assert not problems, "Browser primitive bound past the conftest walls:\n  " + "\n  ".join(problems)

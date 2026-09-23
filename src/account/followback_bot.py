@@ -19,13 +19,13 @@ import json
 import os
 import random
 import re
-import subprocess
-import tempfile
 import time
 import traceback
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from ..core.logger import log
+from ..guards.active_hours import OutsideActiveHours
+from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 from ..x.twitter_client import follow_account
 
@@ -74,36 +74,15 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
     })()
     """.replace("MAX", str(max_handles * 2))
 
-    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-    tmp.write(js_code)
-    tmp.close()
-
-    applescript = f'''
-    tell application "Safari" to activate
-    set jsCode to (read POSIX file "{tmp.name}")
-    tell application "Safari"
-        set result to do JavaScript jsCode in current tab of front window
-    end tell
-    '''
     try:
-        result = subprocess.run(
-            ["osascript", "-e", applescript],
-            capture_output=True, text=True, timeout=30,
-        )
-        os.unlink(tmp.name)
-        if result.returncode != 0:
-            log.info(f"[FOLLOWBACK] JS failed: {result.stderr[:200]}")
-            return []
-        raw = (result.stdout or "").strip()
+        raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
         if not raw:
             return []
         handles = [h for h in raw.split(",") if h]
         return handles[:max_handles]
+    except OutsideActiveHours:
+        raise
     except Exception:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
         log.info("[FOLLOWBACK] Scrape exception:")
         traceback.print_exc()
         return []

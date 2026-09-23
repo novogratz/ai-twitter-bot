@@ -198,12 +198,12 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
     conftest fails the test on webbrowser.open or _run_applescript; direct
     osascript calls are walled off here."""
     from src.account import like_bot
-    from src.x import twitter_client
+    from src.x import safari, twitter_client
 
     def no_osascript(*a, **k):
         raise AssertionError("dry run reached osascript")
 
-    monkeypatch.setattr(twitter_client.subprocess, "run", no_osascript)
+    monkeypatch.setattr(safari.subprocess, "run", no_osascript)
     monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
     opened = []
     monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: opened.append(a))
@@ -330,13 +330,14 @@ def test_page_posts_fills_the_mode_and_target_and_parses_json(monkeypatch):
     assert tc._page_posts("read") == {}
 
 
-def test_run_page_js_logs_failures_and_returns_empty(monkeypatch):
-    from src.x import twitter_client as tc
+def test_run_page_js_logs_failures_and_returns_empty(monkeypatch, unwalled):
+    from src.x import safari, twitter_client as tc
 
     lines = []
     monkeypatch.setattr(tc.log, "info", lambda msg, *a, **k: lines.append(msg))
-    monkeypatch.setattr(tc, "require_active", lambda: None)
-    monkeypatch.setattr(tc.subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(
+    monkeypatch.setattr(safari, "_run_js", unwalled["_run_js"])
+    monkeypatch.setattr(safari, "require_active", lambda: None)
+    monkeypatch.setattr(safari.subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(
         a[0], 1, stdout="", stderr="execution error: JavaScript from Apple Events is off\n"))
     assert tc._run_page_js("1") == ""
     assert lines == ["[LIKE] Page JavaScript failed (osascript exit 1): "
@@ -344,19 +345,20 @@ def test_run_page_js_logs_failures_and_returns_empty(monkeypatch):
 
     def timeout(*a, **k):
         raise subprocess.TimeoutExpired("osascript", 10)
-    monkeypatch.setattr(tc.subprocess, "run", timeout)
+    monkeypatch.setattr(safari.subprocess, "run", timeout)
     assert tc._run_page_js("1") == ""
     assert lines[-1].startswith("[LIKE] Page JavaScript failed: TimeoutExpired(")
 
 
-def test_like_click_refuses_osascript_after_stop(monkeypatch):
+def test_like_click_refuses_osascript_after_stop(monkeypatch, unwalled):
     """The like click itself checks the stop before it reaches osascript."""
     import pytest
     from src.guards.active_hours import OutsideActiveHours
-    from src.x import twitter_client
+    from src.x import safari, twitter_client
 
     ran = []
-    monkeypatch.setattr(twitter_client.subprocess, "run", lambda *a, **k: ran.append(a))
+    monkeypatch.setattr(safari, "_run_js", unwalled["_run_js"])
+    monkeypatch.setattr(safari.subprocess, "run", lambda *a, **k: ran.append(a))
     stop_requested(monkeypatch)
 
     with pytest.raises(OutsideActiveHours):

@@ -29,11 +29,12 @@ import os
 import subprocess
 import time
 import traceback
-import tempfile
 from datetime import datetime
 
 from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
+from ..guards.active_hours import OutsideActiveHours
+from . import safari
 
 HYGIENE_STATE_FILE = os.path.join(_PROJECT_ROOT, "safari_hygiene_state.json")
 
@@ -125,33 +126,6 @@ _RENDER_CHECK_JS = """
 """.strip()
 
 
-def _run_safari_js(js_code: str, timeout: int = 30) -> tuple[bool, str]:
-    """Run JS in Safari's current tab without AppleScript quote hazards."""
-    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
-    tmp.write(js_code)
-    tmp.close()
-    script = f'''
-tell application "Safari" to activate
-set jsCode to (read POSIX file "{tmp.name}")
-tell application "Safari"
-  set result to do JavaScript jsCode in current tab of front window
-end tell
-'''
-    try:
-        res = subprocess.run(
-            ["osascript", "-e", script],
-            capture_output=True, text=True, timeout=timeout,
-        )
-        return res.returncode == 0, (res.stdout or res.stderr or "").strip()
-    except Exception as e:
-        return False, str(e)
-    finally:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
-
-
 def _warm_up_xcom() -> bool:
     """Navigate to x.com, clear service workers/caches, hard reload.
 
@@ -173,17 +147,17 @@ end tell
         )
         time.sleep(8)
 
-        ok, out = _run_safari_js(_CLEAR_SW_AND_RELOAD_JS, timeout=45)
-        if not ok:
-            log.warning(f"[HYGIENE] x.com SW clear JS failed: {out[:200]}")
+        # A failure is logged by _run_js under [HYGIENE]; the render check
+        # below decides.
+        safari._run_js(_CLEAR_SW_AND_RELOAD_JS, 45, log_prefix="[HYGIENE]", activate=True)
         time.sleep(12)
 
         for attempt in range(3):
-            ok, status = _run_safari_js(_RENDER_CHECK_JS, timeout=20)
-            if ok and status.startswith("READY:"):
+            status = safari._run_js(_RENDER_CHECK_JS, 20, log_prefix="[HYGIENE]", activate=True)
+            if status.startswith("READY:"):
                 log.info(f"[HYGIENE] x.com warmed up — service workers cleared, render verified ({status}).")
                 return True
-            if ok and status == "LOGIN_REQUIRED":
+            if status == "LOGIN_REQUIRED":
                 log.warning("[HYGIENE] x.com warm-up reached login page; manual login may be required.")
                 return False
 
@@ -204,6 +178,8 @@ end tell
 
         log.warning("[HYGIENE] x.com warm-up failed render verification after 3 attempts.")
         return False
+    except OutsideActiveHours:
+        raise
     except Exception as e:
         log.warning(f"[HYGIENE] x.com warm-up failed (non-fatal): {e}")
         return False

@@ -9,9 +9,9 @@ def test_safari_warmup_verifies_render_and_retries_blank(monkeypatch):
 
     commands = []
     statuses = iter([
-        (True, "BLANK:0:https://x.com/home"),
-        (True, "BLANK:0:https://x.com/home?bot_recover=1"),
-        (True, "READY:shell:500"),
+        "BLANK:0:https://x.com/home",
+        "BLANK:0:https://x.com/home?bot_recover=1",
+        "READY:shell:500",
     ])
 
     class _R:
@@ -22,12 +22,12 @@ def test_safari_warmup_verifies_render_and_retries_blank(monkeypatch):
     monkeypatch.setattr(sh.subprocess, "run", lambda *a, **k: commands.append(a) or _R())
     monkeypatch.setattr(sh.time, "sleep", lambda *_: None)
 
-    def fake_js(js_code, timeout=30):
+    def fake_js(js_code, timeout_s=15, **_):
         if "serviceWorker" in js_code:
-            return True, ""
+            return ""
         return next(statuses)
 
-    monkeypatch.setattr(sh, "_run_safari_js", fake_js)
+    monkeypatch.setattr(sh.safari, "_run_js", fake_js)
 
     assert sh._warm_up_xcom()
     joined = "\n".join(str(c) for c in commands)

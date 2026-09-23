@@ -830,15 +830,11 @@ def _scripted_pin_js(monkeypatch, steps):
 
     answers = iter(steps)
 
-    class Done:
-        def __init__(self, out):
-            self.stdout, self.returncode = out, 0
-
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(tc.subprocess, "run", lambda *a, **k: Done(next(answers)))
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))
 
 
 @pytest.mark.parametrize("steps, shipped", [

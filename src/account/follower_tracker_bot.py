@@ -10,8 +10,6 @@ No LLM, just one Safari visit + JS extraction.
 import json
 import os
 import re
-import subprocess
-import tempfile
 import time
 import traceback
 import webbrowser
@@ -19,6 +17,8 @@ from datetime import datetime
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
+from ..guards.active_hours import OutsideActiveHours
+from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab
 
 FOLLOWER_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "follower_history.json")
@@ -61,16 +61,6 @@ def _scrape_follower_count() -> int:
         return '';
     })()
     '''
-    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-    tmp.write(js_code)
-    tmp.close()
-    applescript = f'''
-    tell application "Safari" to activate
-    set jsCode to (read POSIX file "{tmp.name}")
-    tell application "Safari"
-        set result to do JavaScript jsCode in current tab of front window
-    end tell
-    '''
 
     with _safari_lock:
         url = f"https://x.com/{BOT_HANDLE}"
@@ -79,22 +69,12 @@ def _scrape_follower_count() -> int:
         time.sleep(7)
 
         try:
-            r = subprocess.run(
-                ["osascript", "-e", applescript],
-                capture_output=True, text=True, timeout=20,
-            )
-            os.unlink(tmp.name)
+            raw = safari._run_js(js_code, 20, log_prefix="[FOLLOWER]", activate=True)
             close_front_tab()
-            if r.returncode != 0:
-                log.info(f"[FOLLOWER] JS failed: {r.stderr[:160]}")
-                return 0
-            raw = (r.stdout or "").strip()
             return _parse_count(raw)
+        except OutsideActiveHours:
+            raise
         except Exception:
-            try:
-                os.unlink(tmp.name)
-            except OSError:
-                pass
             try:
                 close_front_tab()
             except Exception:
