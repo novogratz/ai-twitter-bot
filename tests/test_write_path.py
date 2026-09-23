@@ -593,3 +593,108 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     state = json.loads(state_file.read_text())
     assert state["count_today"] == 0 and state["attempted"] == []
     assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]
+
+
+# --- Reply spacing, drawn once per Reply (#131) ------------------------------
+
+def _ledger_clock(monkeypatch):
+    """A Toronto noon clock shared by the ledger and the Waking hours check."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from src.guards import action_guard, active_hours
+
+    now = [datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto"))]
+    monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
+    monkeypatch.setattr(action_guard, "now_local", lambda: now[0])
+    return now
+
+
+def test_reply_gap_is_drawn_once_per_reply(monkeypatch):
+    from datetime import timedelta
+    from src.core import config
+    from src.guards import action_guard as ag
+
+    now = _ledger_clock(monkeypatch)
+    ag.record(ag.REPLY, "https://x.com/a/status/1")
+    gap = ag.spacing_gap(ag.REPLY)
+    low = config.MIN_SECONDS_BETWEEN_REPLIES
+    assert low <= gap <= low + config.REPLY_JITTER_SECONDS
+    assert {ag.spacing_gap(ag.REPLY) for _ in range(50)} == {gap}, "every caller sees one gap"
+
+    ag.record(ag.REPLY, "https://x.com/a/status/2", dry_run=True)
+    assert ag.spacing_gap(ag.REPLY) == gap, "a dry-run row draws nothing"
+
+    now[0] += timedelta(seconds=30)
+    ag.record(ag.REPLY, "https://x.com/a/status/3")
+    assert ag.spacing_gap(ag.REPLY) != gap, "a new Reply draws a new gap"
+
+
+def test_reply_gap_keeps_its_jitter_across_replies(monkeypatch):
+    from datetime import timedelta
+    from src.core import config
+    from src.guards import action_guard as ag
+
+    now = _ledger_clock(monkeypatch)
+    gaps = []
+    for n in range(40):
+        now[0] += timedelta(seconds=17)
+        ag.record(ag.REPLY, f"https://x.com/a/status/{n}")
+        gaps.append(ag.spacing_gap(ag.REPLY))
+    low, jitter = config.MIN_SECONDS_BETWEEN_REPLIES, config.REPLY_JITTER_SECONDS
+    assert all(low <= g <= low + jitter for g in gaps)
+    assert max(gaps) - min(gaps) > jitter / 2, "the jitter still spreads the gaps"
+
+
+def test_wait_never_exceeds_one_gap_after_a_future_ledger_row(monkeypatch):
+    """A Reply stamped an hour ahead (clock set back) would otherwise make
+    the pipeline wait an hour; the chokepoint alone keeps refusing it."""
+    from datetime import timedelta
+    from src.guards import action_guard as ag
+
+    now = _ledger_clock(monkeypatch)
+    now[0] += timedelta(hours=1)
+    ag.record(ag.REPLY, "https://x.com/a/status/1")
+    now[0] -= timedelta(hours=1)
+    assert ag.seconds_until_allowed(ag.REPLY) == ag.spacing_gap(ag.REPLY)
+    assert ag.can_post(ag.REPLY)[0] is False
+
+
+def test_can_post_reply_admits_exactly_when_the_wait_reaches_zero(monkeypatch):
+    from datetime import timedelta
+    from src.guards import action_guard as ag
+
+    now = _ledger_clock(monkeypatch)
+    assert ag.seconds_until_allowed(ag.REPLY) == 0, "an empty ledger waits for nothing"
+    ag.record(ag.REPLY, "https://x.com/a/status/1")
+    wait = ag.seconds_until_allowed(ag.REPLY)
+    assert wait == ag.spacing_gap(ag.REPLY)
+
+    now[0] += timedelta(seconds=wait - 0.01)
+    assert 0 < ag.seconds_until_allowed(ag.REPLY) <= 0.011
+    verdicts = {ag.can_post(ag.REPLY) for _ in range(50)}
+    assert verdicts == {(False, f"too soon since last reply (need ~{int(wait)}s gap)")}, \
+        "retrying cannot fish for a smaller draw"
+
+    now[0] += timedelta(seconds=0.02)
+    assert ag.seconds_until_allowed(ag.REPLY) == 0
+    assert ag.can_post(ag.REPLY) == (True, "")
+
+
+def test_original_gap_is_drawn_once_per_original(monkeypatch):
+    from datetime import timedelta
+    from src.core import config
+    from src.guards import action_guard as ag
+
+    now = _ledger_clock(monkeypatch)
+    monkeypatch.setattr(config, "POST_JITTER_SECONDS", 600)
+    ag.record(ag.POST, "original")
+    gap = ag.spacing_gap(ag.POST)
+    assert config.MIN_SECONDS_BETWEEN_POSTS <= gap <= config.MIN_SECONDS_BETWEEN_POSTS + 600
+    assert ag.seconds_until_allowed(ag.POST) == gap
+
+    now[0] += timedelta(seconds=gap - 1)
+    assert {ag.can_post(ag.POST) for _ in range(50)} == \
+        {(False, f"too soon since last post (need ~{int(gap)}s gap)")}
+    now[0] += timedelta(seconds=2)
+    assert ag.seconds_until_allowed(ag.POST) == 0
+    assert ag.can_post(ag.POST) == (True, "")
