@@ -32,6 +32,8 @@ Modules none of those jobs reach are legacy, kept for reference.
 | Originals: sources, evidence, draft, separate review | `src/editorial_bot.py`, `src/editorial_schemas.py` |
 | Toronto clock, bedtime checks | `src/active_hours.py` |
 | Caps, pacing, write ledger, follow policy | `src/action_guard.py` |
+| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/reply_admission.py` |
+| Author, status ID and age read from a status URL | `src/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/replied_store.py` |
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/content_guard.py` |
@@ -54,7 +56,8 @@ Each one is a bug that shipped live. The full incident stories are in
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.
 - **Handles come from URLs.** The scraper's `author` field is the display
-  name. Use `twitter_client.is_own_post` or the `/status/` URL, never
+  name. Use `x_urls.author` on the `/status/` URL, or
+  `twitter_client.is_own_post` on a scraped tweet, never
   `author == BOT_HANDLE`.
 - **Side-effect switches are read at call time.** An env var gating a post,
   a subprocess or a network write is read inside the function, never as a

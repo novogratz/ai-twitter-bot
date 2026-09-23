@@ -180,14 +180,14 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
 
 
 def test_language_check_judges_the_text_before_the_typo(monkeypatch):
-    from src import content_guard, direct_reply, humanizer, twitter_client
+    from src import content_guard, humanizer, reply_language, twitter_client
 
     _dry_run_reply_path(monkeypatch)
     monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
     monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", "typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     judged, validated = [], []
-    monkeypatch.setattr(direct_reply, "_looks_english", lambda text: judged.append(text) or False)
+    monkeypatch.setattr(reply_language, "looks_english", lambda text: judged.append(text) or False)
     real_validate = content_guard.validate
     monkeypatch.setattr(content_guard, "validate",
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
@@ -344,20 +344,109 @@ def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
         assert url in load_replied()
 
 
-def test_debate_race_loser_keeps_its_claim(monkeypatch):
-    """The in-lock debate re-check refuses after the claim: that tweet stays
-    taken, only earlier refusals leave it fresh."""
+def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
+    """Another thread takes the Engager's last turn while this one waits for
+    the browser: admission, judged under the lock, refuses before the claim."""
     from src import action_guard, twitter_client as tc
     from src.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
-    answers = iter([(True, ""), (False, "turn cap reached")])
-    monkeypatch.setattr(action_guard, "can_debate_turn", lambda *a, **k: next(answers))
+    lock_held = []
+    monkeypatch.setattr(action_guard, "can_debate_turn",
+                        lambda *a, **k: (False, "turn cap reached") if lock_held else (True, ""))
+
+    class ContendedLock:
+        def __enter__(self):
+            lock_held.append(True)  # the other thread shipped the last turn meanwhile
+
+        def __exit__(self, *exc):
+            lock_held.clear()
+
+    monkeypatch.setattr(tc, "_safari_lock", ContendedLock())
     url = "https://x.com/someone/status/2063500000000000160"
 
     assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is False
     assert recorded == []
-    assert url in load_replied()
+    assert url not in load_replied()
+
+
+def test_live_reply_pastes_the_validated_text(monkeypatch):
+    """The text in the composer is the text admission validated, typo and
+    dash cleanup included, never the raw draft."""
+    from src import content_guard, humanizer, twitter_client as tc
+
+    _live_browser(monkeypatch)
+    pasted, validated = [], []
+    monkeypatch.setattr(tc, "_paste_text", lambda text: pasted.append(text) or True)
+    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
+    real_validate = content_guard.validate
+    monkeypatch.setattr(content_guard, "validate",
+                        lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
+    url = "https://x.com/typofriend/status/2063500000000000165"
+
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is True
+    assert pasted == [validated[-1]]
+    assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
+
+
+def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
+    """A Reply shipped by another thread while this one waited for the
+    browser: the spacing check sees it and nothing is claimed."""
+    from src import action_guard, twitter_client as tc
+    from src.replied_store import load_replied
+
+    recorded = _live_browser(monkeypatch)
+    lock_held = []
+    monkeypatch.setattr(action_guard, "can_post",
+                        lambda *a, **k: (False, "too soon") if lock_held else (True, ""))
+
+    class ContendedLock:
+        def __enter__(self):
+            lock_held.append(True)
+
+        def __exit__(self, *exc):
+            lock_held.clear()
+
+    monkeypatch.setattr(tc, "_safari_lock", ContendedLock())
+    url = "https://x.com/someone/status/2063500000000000166"
+
+    assert tc.reply_to_tweet(url, REPLY) is False
+    assert recorded == []
+    assert url not in load_replied()
+
+
+def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
+    """A simulated Reply writes a dry_run ledger row only: the Replied store
+    holds Replies that shipped, so going live later can still answer it."""
+    from src import twitter_client as tc
+    from src.replied_store import load_replied
+
+    recorded = []
+    _dry_run_reply_path(monkeypatch)
+    from src import action_guard
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
+    url = "https://x.com/someone/status/2063500000000000170"
+
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is True
+    assert url not in load_replied()
+    assert [k for _, k in recorded] == [{"target": url, "dry_run": True},
+                                        {"target": "someone", "dry_run": True}]
+
+
+def test_refused_reply_never_reaches_safari(monkeypatch):
+    """Blocked account, own post and author-less URLs stop at admission:
+    conftest fails the test if Safari is touched."""
+    from src import action_guard, config, twitter_client as tc
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
+    for url in ("https://x.com/La_Pique_Off/status/2063500000000000180",
+                f"https://x.com/{config.BOT_HANDLE}/status/2063500000000000181",
+                "https://x.com/i/web/status/2063500000000000182"):
+        assert tc.reply_to_tweet(url, REPLY) is False, url
+
 
 def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch):
     import pytest

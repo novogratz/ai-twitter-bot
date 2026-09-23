@@ -409,6 +409,19 @@ def test_validate_allows_casual_unpunctuated_ending():
 
 # --- one reply per tweet, EVER (double-reply incident, 2026-06-05) -------------
 
+def _fake_safari(monkeypatch):
+    """Live (non-dry) reply path with every Safari step succeeding: the
+    Replied store is only claimed when a Reply really ships."""
+    import src.twitter_client as tc
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(tc, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(tc, "_paste_text", lambda *a, **k: True)
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    monkeypatch.setattr(tc, "close_front_tab", lambda: None)
+    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+
+
 def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     """Two reply bots racing on the same tweet: the second write MUST be
     refused at the chokepoint regardless of which bot it came from."""
@@ -416,13 +429,13 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     from src import action_guard
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    monkeypatch.setenv("DRY_RUN", "1")
+    _fake_safari(monkeypatch)
     monkeypatch.setattr(action_guard, "can_post", lambda action: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
 
     url = "https://x.com/Graphseo/status/1234567890123456789"
-    reply = "the spelling-mistake signal lasts exactly one fine-tune cycle. enjoy it while it works"
+    reply = "le signal des fautes tient exactement un cycle de finetuning, profites-en tant que ça marche"
     tc.reply_to_tweet(url, reply)
     tc.reply_to_tweet(url, reply + " v2")          # same tweet, second bot
     tc.reply_to_tweet(url + "?s=20", reply + " v3")  # same tweet, different URL form
@@ -1480,15 +1493,15 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
 
 
 def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
-    """reply_to_tweet must return True when the reply ships (DRY_RUN counts)
-    and False on the dedup skip — callers gate log_reply on this."""
+    """reply_to_tweet must return True when the reply ships and False on the
+    dedup skip — callers gate log_reply on this."""
     from src import twitter_client as tc
     from src import action_guard as ag
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
-    monkeypatch.setenv("DRY_RUN", "1")
+    _fake_safari(monkeypatch)
 
     url = "https://x.com/foo/status/2063500000000000042"
     text = "Naming the fear is step one. The number says 40 billion in capex."
@@ -3161,9 +3174,9 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
         "a turn without a URL handle fails closed"
 
 
-def test_debate_turn_cap_rechecked_under_the_safari_lock(monkeypatch):
+def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     """Another thread can ship the Engager's last turn while this one waits
-    for the browser: the re-check under the lock refuses before Safari."""
+    for the browser: admission, judged under the lock, refuses before Safari."""
     import contextlib
     from src import action_guard as ag
     from src import content_guard as cg
@@ -3180,8 +3193,10 @@ def test_debate_turn_cap_rechecked_under_the_safari_lock(monkeypatch):
         yield
     monkeypatch.setattr(tc, "_safari_lock", contended_lock())
     # _run_applescript stays walled off by conftest: reaching Safari fails.
-    assert not tc.reply_to_tweet("https://x.com/challenger/status/7", "Batching changes the cost curve.", debate_turn=True)
+    url = "https://x.com/challenger/status/7"
+    assert not tc.reply_to_tweet(url, "Batching changes the cost curve.", debate_turn=True)
     assert ag.debate_turns_today("challenger") == 1
+    assert url not in rs.load_replied(), "the race loser was never claimed"
 
 
 def test_replyback_answers_are_debate_turns(monkeypatch, tmp_path):
