@@ -17,7 +17,8 @@ Show engagement stats, read-only:
 7. `followed_accounts.json` - accounts followed
 
 Present a clean summary:
-- Today: originals published (out of 7), replies sent, follows, likes
+- Today: originals published against the target of six (Profile
+  publications against the ceiling of seven), replies sent, follows, likes
 - Last 7 days per day
 - Last 5 originals and last 5 replies
 - Reach against target, with the missing coverage the report states

@@ -96,7 +96,10 @@ the caller's module. A guard change ships with a test pinning it.
   policy. `.codex/skills` is a relative symlink to it; OpenCode reads
   `.claude/skills` natively. Edit skills there only, and delete a skill
   rather than let it drive a disabled surface. Skills that write to X or
-  start, stop or restart the bot run on an explicit operator request only.
+  start, stop or restart the bot run on an explicit operator request only,
+  and say so in their body: their `disable-model-invocation: true`
+  frontmatter stops only Claude Code from invoking them on its own. Codex
+  ignores it, and other harnesses may too.
 
 ## Documentation
 

@@ -59,9 +59,8 @@ news, replies, hot takes, quote commentary, and every other `run_llm()` caller.
 ## Skills
 
 OpenCode reads the operator skills from `.claude/skills/` natively; there is
-no `.opencode/skills` copy. `opencode debug skill` lists them. The
-`run-agent` skill, which ran the bot loop inside OpenCode instead of
-`main.py`, was removed on 2026-09-23: it drove quotes and unreviewed posts.
+no `.opencode/skills` copy. `opencode debug skill` lists them. The bot loop
+runs in `main.py` only; no skill runs it inside OpenCode.
 
 ## Using other providers (OpenRouter, Qwen, etc.)
 

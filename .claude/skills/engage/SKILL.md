@@ -8,11 +8,15 @@ allowed-tools: Bash Read
 Trigger one engage cycle, the same one `engage_job` runs every 8 minutes.
 Only on an explicit operator request: it follows and likes on the real account.
 
-1. The bot must be stopped: `pgrep -if "python.*main\.py"` returns nothing.
-   The Safari lock only serialises writes inside one process. If it runs,
-   suggest `/stop` first.
-2. Only during active hours (04:30–22:00 Toronto); the chokepoints refuse
-   writes outside them.
-3. Run `uv run python -c "from src.engage_bot import safe_run_engage_cycle; safe_run_engage_cycle()"`
-4. Report from the `[ENGAGE]`, `[FOLLOW]` and `[LIKE]` lines of `bot.log`:
+1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
+   `pgrep -if "python.*main\.py"` prints nothing and
+   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   prints `True`. If the bot runs, suggest `/stop` first.
+   Never run it with `DRY_RUN=1` (`uv run python -c "from src import config; print(config.dry_run())"`
+   prints `True`): the cycle records its dry-run follows in
+   `followed_accounts.json`, so those handles are never followed (#123).
+   Until #121 ships, its like pass can un-like the latest post of a
+   `PROFILE_VISIT_ALLOWLIST` handle: tell the operator before running.
+2. Run `uv run python -c "from src.engage_bot import safe_run_engage_cycle; safe_run_engage_cycle()"`
+3. Report from the `[ENGAGE]`, `[FOLLOW]` and `[LIKE]` lines of `bot.log`:
    profiles visited, follows made or refused by the follow policy, likes.

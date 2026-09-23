@@ -1,6 +1,6 @@
 ---
 name: like
-description: Visit an allowlisted profile and like its latest posts
+description: Visit an allowlisted profile and like its latest posts - do not run until issue 121 ships
 arguments: [username]
 disable-model-invocation: true
 allowed-tools: Bash Read
@@ -8,13 +8,12 @@ allowed-tools: Bash Read
 
 Like @$username's latest posts. Only on an explicit operator request.
 
-1. Strip @ if present
-2. The handle must be in `PROFILE_VISIT_ALLOWLIST` (`.env`, default
-   `TheBTCTherapist,Graphseo`); otherwise the call logs
-   `[LIKE] profile visit blocked` and does nothing.
-3. The bot must be stopped (`pgrep -if "python.*main\.py"` returns nothing):
-   it shares Safari. Only during active hours (04:30–22:00 Toronto).
-4. The like is the `l` shortcut, which toggles: an already-liked post gets
-   unliked. Check the profile first and lower `like_count` accordingly.
-5. Run `uv run python -c "from src.twitter_client import visit_profile_and_like; visit_profile_and_like('$username', like_count=2)"`
-6. Confirm from the `bot.log` lines ("Tweet liked!" or "Failed to like").
+1. Do not run this until issue #121 ships; tell the operator so and stop.
+   `visit_profile_and_like` presses the toggling `l` shortcut on the latest
+   post before its loop, even with `like_count=0`, without reading the liked
+   state, so it un-likes an already-liked post and still logs "Tweet liked!".
+
+Once #121 ships, the call is
+`uv run python -c "from src.twitter_client import visit_profile_and_like; visit_profile_and_like('$username', like_count=2)"`,
+with the preconditions in `docs/OPERATIONS.md#manual-writes`, for a handle
+in `PROFILE_VISIT_ALLOWLIST` (`.env`, default `TheBTCTherapist,Graphseo`).

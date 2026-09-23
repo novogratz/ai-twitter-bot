@@ -10,13 +10,14 @@ Stop the bot. Only when the operator explicitly asks for it. See
 
 1. Check the supervisors first, or the bot comes back
    (`docs/OPERATIONS.md#supervisors`):
-   - launchd: `launchctl list | grep com.kzer.ai-twitter-bot`. If loaded, ask
-     the operator before unloading it (`bin/uninstall_autonomous.sh`).
+   - launchd: `launchctl list com.kzer.ai-twitter-bot` exits 0 when loaded.
+     If loaded, ask the operator before unloading it
+     (`bin/uninstall_autonomous.sh`).
    - `bin/watchdog.sh`: `pgrep -f bin/watchdog.sh`. If running,
      `touch .watchdog_off` so it stays hands-off.
 2. Run `bin/stop_bot.sh`: touches `.bot_disabled`, then SIGTERMs the
-   `main.py` processes whose working directory is this repo. SIGTERM counts
-   as bedtime: no job starts and no write is admitted after it.
+   `main.py` processes whose working directory is this repo. After SIGTERM,
+   as Overnight, no job starts and no write is admitted.
 3. Wait 3 seconds, verify with `pgrep -if "python.*main\.py"`.
 4. If a process from this repo remains, report it; `bin/stop.sh` escalates to
    SIGKILL but hits every `python.*main.py` on the machine, so ask first.

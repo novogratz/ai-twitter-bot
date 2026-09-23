@@ -9,12 +9,16 @@ allowed-tools: Bash Read Write
 Follow @$username. Only on an explicit operator request.
 
 1. Strip @ if present
-2. The bot must be stopped (`pgrep -if "python.*main\.py"` returns nothing):
-   it shares Safari. Only during active hours (04:30–22:00 Toronto).
-3. Run `uv run python -c "from src.twitter_client import follow_account; print(follow_account('$username'))"`
+2. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
+   `pgrep -if "python.*main\.py"` prints nothing and
+   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   prints `True`.
+3. Run `uv run python -c "from src import config; from src.twitter_client import follow_account; print(follow_account('$username'), 'dry_run' if config.dry_run() else 'live')"`
    - `follow_account` applies the follow policy: whitelist-only, daily cap,
      spacing, total-following ceiling, 30-day anti-churn, quality gate. A
      refusal is logged as `[FOLLOW] policy refuses …` in `bot.log`.
-4. Only if it printed `True`, add the handle to `followed_accounts.json` if
-   not already there. `False` means nothing shipped: write nothing.
+   - Under `DRY_RUN=1` it returns `True` without following anyone (#123).
+4. Only if it printed `True live`, add the handle to `followed_accounts.json`
+   if not already there. `False`, or `True dry_run`, means nothing shipped:
+   write nothing.
 5. Report the result and, on refusal, the reason from `bot.log`.

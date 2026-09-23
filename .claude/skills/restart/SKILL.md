@@ -9,9 +9,10 @@ Restart the bot. Only when the operator explicitly asks for it. Code, `.env`
 and config changes take effect at restart.
 
 1. Check the supervisors (`docs/OPERATIONS.md#supervisors`):
-   `launchctl list | grep com.kzer.ai-twitter-bot` and
-   `pgrep -f bin/watchdog.sh`. If one is active, it relaunches the bot after
-   the stop: report it and let it do the start instead of step 3.
+   `launchctl list com.kzer.ai-twitter-bot` exits 0 (launchd job loaded) or
+   `pgrep -f bin/watchdog.sh` prints a PID. If one is active, it relaunches
+   the bot after the stop: report it and let it do the start instead of
+   step 3.
 2. Stop: `bin/stop_bot.sh`, wait 3 seconds, verify with
    `pgrep -if "python.*main\.py"`.
 3. Start: `nohup ./bin/run.sh >/tmp/aitwitter_run.out 2>&1 &`
