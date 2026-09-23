@@ -15,6 +15,11 @@ never burst. Same intent, different mechanism.
 Persistent ledger (ACTION_LEDGER_FILE): every executed (or dry-run) write is
 recorded as {action, target, ts}. Used for the 30-day follow/unfollow
 anti-churn check and for auditing.
+
+The file holds one JSON object per line: `record` appends a line, reads parse
+only the lines added since the previous read, and rows past the 90-day
+retention are dropped at most once a day. A ledger in the former format, one
+JSON list, is read as is and converted in place at the next `record`.
 """
 import json
 import os
@@ -30,7 +35,8 @@ from .active_hours import is_active, now_local, stop_requested
 from ..core.state_errors import StateUnreadable
 from zoneinfo import ZoneInfo
 
-_LOCK = threading.Lock()
+# Reentrant: record() holds it while _load_ledger() takes it again.
+_LOCK = threading.RLock()
 
 # Action types
 POST = "post"
@@ -47,43 +53,153 @@ DEBATE_TURN = "debate_turn"
 
 # --- ledger ----------------------------------------------------------------
 
+_RETENTION_DAYS = 90  # plenty for the 30-day cooldown + audit
+# Bytes compared at the head of the file and before the last parsed line, to
+# tell an append (read only the new lines) from a rewrite (read everything).
+_FINGERPRINT = 64
+_UNREADABLE = "Action ledger unreadable; refusing unaudited writes"
+
+# What the last read saw: path, file identity, size and mtime, `offset` (end
+# of the last complete line), fingerprints, `legacy` (JSON list) and rows.
+_cache: dict = {}
+# path -> Toronto date of the last retention pass.
+_compacted_on: dict = {}
+
+
+def _parse_lines(data: bytes) -> Tuple[list, int]:
+    """Rows of the complete lines in `data`, and the bytes they span. Bytes
+    after the last newline are left out: an append cut short, or one still
+    being written by another process."""
+    end = data.rfind(b"\n") + 1
+    rows = []
+    for line in data[:end].split(b"\n"):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except ValueError as exc:
+            raise StateUnreadable(_UNREADABLE) from exc
+        if not isinstance(row, dict):
+            raise StateUnreadable(f"{_UNREADABLE}: a line is not an object")
+        rows.append(row)
+    return rows, end
+
+
+def _parse_list(data: bytes) -> list:
+    try:
+        rows = json.loads(data)
+    except ValueError as exc:
+        raise StateUnreadable(_UNREADABLE) from exc
+    if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
+        raise StateUnreadable(f"{_UNREADABLE}: not a list of objects")
+    return rows
+
+
+def _fingerprints(f, offset: int) -> Tuple[bytes, bytes]:
+    f.seek(0)
+    head = f.read(min(_FINGERPRINT, offset))
+    start = max(0, offset - _FINGERPRINT)
+    f.seek(start)
+    return head, f.read(offset - start)
+
+
 def _load_ledger() -> list:
-    try:
-        with open(config.ACTION_LEDGER_FILE) as f:
-            data = json.load(f)
-            if not isinstance(data, list):
-                raise ValueError("Action ledger must be a list")
-            return data
-    except FileNotFoundError:
-        return []
-    except (OSError, json.JSONDecodeError) as exc:
-        raise StateUnreadable("Action ledger unreadable; refusing unaudited writes") from exc
+    """Every ledger row, oldest first. The list is shared: never mutate it."""
+    path = config.ACTION_LEDGER_FILE
+    with _LOCK:
+        try:
+            st = os.stat(path)
+        except FileNotFoundError:
+            _cache.clear()
+            return []
+        except OSError as exc:
+            raise StateUnreadable(_UNREADABLE) from exc
+        c = _cache
+        if (c.get("path") == path and c["id"] == (st.st_dev, st.st_ino)
+                and (c["size"], c["mtime_ns"]) == (st.st_size, st.st_mtime_ns)):
+            return c["rows"]
+        try:
+            with open(path, "rb") as f:
+                fst = os.fstat(f.fileno())
+                ident = (fst.st_dev, fst.st_ino)
+                start = 0
+                if (c.get("path") == path and c["id"] == ident and not c["legacy"]
+                        and fst.st_size >= c["offset"]
+                        and _fingerprints(f, c["offset"]) == c["prints"]):
+                    start = c["offset"]
+                f.seek(start)
+                data = f.read()
+                legacy = start == 0 and data.lstrip()[:1] == b"["
+                if legacy:
+                    rows, used = _parse_list(data), len(data)
+                else:
+                    rows, used = _parse_lines(data)
+                    # Empty, or one fragment and nothing else: no complete
+                    # line vouches for this file.
+                    if start == 0 and used == 0:
+                        raise StateUnreadable(f"{_UNREADABLE}: no complete line")
+                prints = _fingerprints(f, start + used)
+        except OSError as exc:
+            raise StateUnreadable(_UNREADABLE) from exc
+        if start:
+            rows = c["rows"] + rows if rows else c["rows"]
+        if data[used:].strip():
+            log.warning("[LEDGER] Ignoring an incomplete last line (interrupted write): %r",
+                        data[used:used + 80])
+        _cache.clear()
+        _cache.update(path=path, id=ident, size=start + len(data), mtime_ns=fst.st_mtime_ns,
+                      offset=start + used, prints=prints, legacy=legacy, rows=rows)
+        return rows
 
 
-def _save_ledger(rows: list) -> None:
-    # Keep the file bounded — 90 days is plenty for a 30-day cooldown + audit.
-    cutoff = (datetime.now() - timedelta(days=90)).isoformat()
-    rows = [r for r in rows if r.get("ts", "") >= cutoff]
-    tmp = config.ACTION_LEDGER_FILE + ".tmp"
-    try:
-        with open(tmp, "w") as f:
-            json.dump(rows, f)
-        os.replace(tmp, config.ACTION_LEDGER_FILE)
-    except OSError as exc:
-        raise StateUnreadable("Action ledger could not be saved") from exc
+def _rewrite(path: str, rows: list) -> None:
+    """Replace the ledger atomically with `rows`, one JSON object per line."""
+    tmp = path + ".tmp"
+    with open(tmp, "wb") as f:
+        f.write(b"".join(json.dumps(r).encode() + b"\n" for r in rows))
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+
+def _compact_if_due(path: str, rows: list) -> None:
+    today = now_local().date()
+    if _compacted_on.get(path) == today:
+        return
+    cutoff = (datetime.now() - timedelta(days=_RETENTION_DAYS)).isoformat()
+    kept = [r for r in rows if r.get("ts", "") >= cutoff]
+    if len(kept) < len(rows):
+        _rewrite(path, kept)
+        log.info("[LEDGER] Dropped %d rows older than %d days", len(rows) - len(kept), _RETENTION_DAYS)
+    _compacted_on[path] = today
 
 
 def record(action: str, target: str = "", dry_run: bool = False) -> None:
     """Append an action to the ledger (thread-safe)."""
+    path = config.ACTION_LEDGER_FILE
     with _LOCK:
-        rows = _load_ledger()
-        rows.append({
+        rows = _load_ledger()  # a corrupt ledger refuses the write here
+        row = {
             "action": action,
             "target": (target or "").lower().lstrip("@"),
             "ts": now_local().isoformat(),
             "dry_run": bool(dry_run),
-        })
-        _save_ledger(rows)
+        }
+        try:
+            if _cache.get("legacy"):
+                _rewrite(path, rows)
+                log.info("[LEDGER] Converted %d rows from a JSON list to one row per line", len(rows))
+            elif _cache and _cache["size"] > _cache["offset"]:
+                # Appending after a cut-short line would glue both into one
+                # corrupt line: drop the fragment _load_ledger ignored.
+                os.truncate(path, _cache["offset"])
+            _compact_if_due(path, rows)
+            with open(path, "ab") as f:
+                f.write(json.dumps(row).encode() + b"\n")
+                f.flush()
+                os.fsync(f.fileno())
+        except OSError as exc:
+            raise StateUnreadable("Action ledger could not be saved") from exc
 
 
 def _ledger_time(stamp: str) -> datetime | None:

@@ -127,10 +127,11 @@ real account from a second process. Before any of them:
 | `editorial_state.json` | Today's attempts per slot, slots `pending` or `published`, recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
-| `action_ledger.json` | Every counted write with its Toronto timestamp; the source of today's budget |
+| `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
 
 ```bash
 tail -F bot.log | grep -E '\[(HOURS|EDITORIAL|POST)\]'
+jq -c 'select(.action == "post" and .dry_run != true)' action_ledger.json | tail -n 5
 tail -n 5 editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' editorial_state.json
 ```
@@ -153,6 +154,24 @@ the editorial cycle errors out and the ledger refuses writes. Repair the JSON
 by hand, keeping today's entries, or restore a copy taken today. Never delete
 the ledger or restore it from git: the committed `action_ledger.json` dates
 from July 2026, and either move resets today's count and grants extra posts.
+
+The ledger holds one JSON object per line. A last line cut short by an
+interrupted write, with no final newline, is skipped with a `[LEDGER]` warning
+in `bot.log` and dropped by the next write; the rows before it still count.
+Any other bad line, an empty file or a file holding no complete line refuses
+every write. With the bot stopped, list the bad lines, fix or delete those
+lines only, keeping today's rows, then restart:
+
+```bash
+python3 - <<'EOF'
+import json
+for n, line in enumerate(open("action_ledger.json"), 1):
+    try:
+        assert not line.strip() or isinstance(json.loads(line), dict)
+    except (ValueError, AssertionError):
+        print(n, line[:80].rstrip())
+EOF
+```
 
 **Corrupt `replied_tweets.json`.** The store fails closed: `reply_to_tweet`
 and the reply cycles that read it raise `StateUnreadable` until it is
@@ -222,6 +241,11 @@ JSON files at the repo root are live state. Keep them across deploys and out
 of unrelated commits. Git tracks some of them, including `action_ledger.json`,
 `following_count.json` and `respect_list.json`, with stale copies: a
 `git checkout`, `reset` or `pull` that touches them overwrites live state.
+`action_ledger.json` keeps its name but holds one JSON object per line since
+issue #147. A ledger in the former format, one JSON list like the committed
+copy, is still read, and the first write after a restart converts it in place
+without dropping a row (`[LEDGER] Converted N rows` in `bot.log`); the same
+write then drops the rows past 90 days.
 Files written by active jobs:
 
 | File | Written by | Holds |
@@ -229,7 +253,7 @@ Files written by active jobs:
 | `editorial_state.json` | `editorial_bot` | Slots, attempts, feedback, published originals, used sources |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report |
-| `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, 90 days |
+| `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, one JSON object per line, 90 days |
 | `following_count.json` | `action_guard` | Following count used by the follow ceiling |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus |

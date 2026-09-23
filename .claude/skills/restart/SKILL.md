@@ -20,4 +20,6 @@ and config changes take effect at restart.
 5. Show the last lines of `bot.log`.
 
 `action_ledger.json` and `editorial_state.json` survive the restart: today's
-posts still count and a `pending` slot stays pending.
+posts still count and a `pending` slot stays pending. A ledger still in the
+former single-list format is converted at the first write after the restart:
+`bot.log` then shows `[LEDGER] Converted N rows`.
