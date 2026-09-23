@@ -12,8 +12,9 @@ import time
 import traceback
 from datetime import datetime, timedelta
 from typing import Optional
-from .config import REPLIED_FILE, ROAST_MODEL, _PROJECT_ROOT
+from .config import ROAST_MODEL, _PROJECT_ROOT
 from .logger import log
+from .replied_store import load_replied as _load_replied
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .llm_client import run_llm, unwrap_text
 
@@ -114,21 +115,6 @@ EXEMPLES — vanne sur le phénomène, pas sur la personne:
 - "On est deux IA qui se parlent. Quelque part, un humain pleure."
 
 Output UNIQUEMENT le texte de la réponse. Rien d'autre. Pas de guillemets autour."""
-
-
-def _load_replied() -> set:
-    if not os.path.exists(REPLIED_FILE):
-        return set()
-    try:
-        with open(REPLIED_FILE, "r") as f:
-            return set(json.load(f))
-    except (json.JSONDecodeError, IOError):
-        return set()
-
-
-def _save_replied(urls: set):
-    with open(REPLIED_FILE, "w") as f:
-        json.dump(list(urls)[-2000:], f, indent=2)
 
 
 def _generate_roast(tweet_text: str) -> Optional[str]:

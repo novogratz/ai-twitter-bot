@@ -848,7 +848,7 @@ def _load_liked_set():
     """Return a CanonReplied set of canonical IDs we've already liked.
     Cross-bot dedup via canonical status ID prevents the 'l' shortcut
     from toggling-OFF a like we set in an earlier cycle."""
-    from .reply_bot import _CanonReplied
+    from .replied_store import CanonReplied as _CanonReplied
     s = _CanonReplied()
     path = _liked_cache_path()
     if not os.path.exists(path):
@@ -866,7 +866,7 @@ def _load_liked_set():
 
 def _save_liked_set(s) -> None:
     """Persist liked set as ordered list, cap at 50k from the tail."""
-    from .reply_bot import _canonical_tweet_id
+    from .replied_store import canonical_tweet_id as _canonical_tweet_id
     path = _liked_cache_path()
     existing = []
     existing_set = set()
@@ -952,7 +952,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     """Open a tweet, like it, click reply, type the reply, and submit.
 
     Returns True only when the reply actually shipped (or was DRY_RUN-
-    recorded), False on every skip (policy, content_guard, dedup).
+    recorded), False on every skip (policy, content_guard, dedup). Raises
+    health.StateUnreadable when the ledger or the replied store cannot be
+    read: nothing ships until the file is repaired.
 
     `debate_turn=True` marks an answer to someone who answered the account
     (CONTEXT.md). The per-author daily cap is checked and counted here, so
@@ -1030,14 +1032,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     # loads replied_tweets.json at cycle start, so two bots racing within
     # minutes both think the tweet is fresh; re-checking the on-disk
     # canonical set here right before the write kills the race for ALL
-    # reply paths at once.
-    from .reply_bot import load_replied, save_replied
-    _replied_now = load_replied()
-    if tweet_url in _replied_now:
+    # reply paths at once. claim() checks and marks under one lock, and
+    # raises on an unreadable store rather than letting duplicates through.
+    from . import replied_store
+    if not replied_store.claim(tweet_url):
         log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
         return False
-    _replied_now.add(tweet_url)
-    save_replied(_replied_now)
 
     # Operator mandate 2026-06-05: replies to @Graphseo (and ONLY him) always
     # carry exactly ONE human-looking keyboard typo — he tweeted that spelling

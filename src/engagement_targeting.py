@@ -77,7 +77,8 @@ def _velocity(t: dict, age_min: float) -> float:
 def run_engagement_targeting_cycle():
     """Rank whitelist posts by velocity and reply to the hottest few."""
     from . import action_guard
-    from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
+    from .replied_store import load_replied, save_replied
+    from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
     from .direct_reply import _generate_single_reply, _is_on_niche, _is_fr_or_en, _looks_english
     from .twitter_client import scrape_profile_tweets, reply_to_tweet
 

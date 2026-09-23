@@ -323,7 +323,7 @@ def _load_quoted():
     """Return CanonReplied set of tweets we've already quoted OR retweeted.
     Cross-bot dedup: 2026-05-18 user feedback — "If you quote retweet a
     post, then dont retweet as well on top of it, it looks bad"."""
-    from .reply_bot import _CanonReplied
+    from .replied_store import CanonReplied as _CanonReplied
     s = _CanonReplied()
     for item in _read_id_list_q(QUOTED_FILE):
         s.add(item)
@@ -334,7 +334,7 @@ def _load_quoted():
 
 def _save_quoted(s):
     """Persist insertion order, cap at 5000. Mirrors reply_bot pattern."""
-    from .reply_bot import _canonical_tweet_id
+    from .replied_store import canonical_tweet_id as _canonical_tweet_id
     existing = _read_id_list_q(QUOTED_FILE)
     existing_set = set(existing)
     for u in s:

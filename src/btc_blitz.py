@@ -196,7 +196,7 @@ def run_btc_blitz_cycle() -> None:
         log.info(f"[BTC-BLITZ] QRT'd ({t.get('likes')} likes){' +GIF' if gif_q else ''}: {url}")
 
     # --- 2. Reply to EVERY fresh post not yet replied -----------------------
-    from .reply_bot import load_replied
+    from .replied_store import load_replied
     from .twitter_client import reply_to_tweet
     from .engagement_log import log_reply
     replies_done = 0

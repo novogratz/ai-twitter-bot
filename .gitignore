@@ -70,3 +70,7 @@ editorial_state.json
 editorial_review.jsonl
 editorial_reach.json
 editorial_reach.md
+
+# Atomic-write temp files left by a killed process
+.replied_tweets.*.tmp
+action_ledger.json.tmp

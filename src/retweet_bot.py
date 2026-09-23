@@ -423,7 +423,7 @@ def _load_retweeted():
     """Return a CanonReplied set containing canonical IDs of tweets we
     already retweeted OR quoted. Cross-bot dedup so we don't both quote
     AND retweet the same tweet (looks bad on the timeline). 2026-05-18."""
-    from .reply_bot import _CanonReplied
+    from .replied_store import CanonReplied as _CanonReplied
     s = _CanonReplied()
     for item in _read_id_list(RETWEETED_FILE):
         s.add(item)
@@ -441,7 +441,7 @@ def _save_retweeted(s):
     """
     existing = _read_id_list(RETWEETED_FILE)
     existing_set = set(existing)
-    from .reply_bot import _canonical_tweet_id
+    from .replied_store import canonical_tweet_id as _canonical_tweet_id
     for u in s:
         cid = _canonical_tweet_id(u)
         if cid and cid not in existing_set:
@@ -870,7 +870,7 @@ def _reply_after_repost(pick: dict, replied: set) -> None:
         from .humanizer import humanize
         from .twitter_client import reply_to_tweet
         from .engagement_log import log_reply as _log_reply
-        from .reply_bot import load_replied as _load_replied
+        from .replied_store import load_replied as _load_replied
         # Disk re-check before the expensive LLM call — see direct_reply
         # `_reply_to_tweets` for the post-mortem: ~17s of wasted ollama
         # per chokepoint skip when a concurrent reply bot already shipped.
@@ -908,7 +908,7 @@ def run_retweet_cycle():
     ship several reposts while preserving niche/source/dedup gates.
     """
     from .config import get_live_cap
-    from .reply_bot import load_replied, save_replied
+    from .replied_store import load_replied, save_replied
     cap = get_live_cap("MAX_RETWEETS_PER_DAY", MAX_RETWEETS_PER_DAY)
     if _today_count() >= cap:
         log.info(f"[RETWEET] Daily cap reached ({cap}). Skipping.")
