@@ -6,7 +6,7 @@ same tweet cannot both ship. Bot cycles read the store to skip taken tweets
 before paying for a generation.
 
 Fails closed like the action ledger (issue #100): an unreadable or
-malformed file raises `health.StateUnreadable` instead of reading as empty, because an empty store
+malformed file raises `StateUnreadable` instead of reading as empty, because an empty store
 lets every duplicate through. Writes go to a temp file then `os.replace`,
 so a concurrent reader never sees a half-written list, and the
 read-merge-write runs under one lock so parallel jobs cannot drop each
@@ -19,7 +19,7 @@ import tempfile
 import threading
 
 from . import config
-from .health import StateUnreadable
+from .state_errors import StateUnreadable
 
 _REPLIED_CAP = 50000
 _write_lock = threading.Lock()
@@ -98,15 +98,18 @@ def _write_entries(entries: list) -> None:
         raise
 
 
-def _merge(entries: list, urls) -> list:
-    """Append the status IDs of `urls` the entries lack, preserving order."""
+def _merge(entries: list, urls) -> int:
+    """Append to `entries` the status IDs of `urls` it lacks, preserving
+    order; return how many were added."""
     known = {canonical_tweet_id(u) for u in entries}
+    added = 0
     for u in urls:
         cid = canonical_tweet_id(u) if isinstance(u, str) else ""
         if cid and cid not in known:
             entries.append(cid)
             known.add(cid)
-    return entries
+            added += 1
+    return added
 
 
 def load_replied() -> CanonReplied:
@@ -124,7 +127,9 @@ def save_replied(urls) -> None:
     re-reads the file under the lock, so a parallel job's entries survive.
     """
     with _write_lock:
-        _write_entries(_merge(_read_entries(), urls))
+        entries = _read_entries()
+        if _merge(entries, urls):
+            _write_entries(entries)
 
 
 def claim(url: str) -> bool:
@@ -133,13 +138,9 @@ def claim(url: str) -> bool:
     Check and mark happen under one lock, so two threads claiming the same
     tweet cannot both win.
     """
-    cid = canonical_tweet_id(url)
-    if not cid:
-        return False
     with _write_lock:
         entries = _read_entries()
-        if cid in {canonical_tweet_id(u) for u in entries}:
+        if not _merge(entries, [url]):
             return False
-        entries.append(cid)
         _write_entries(entries)
     return True

@@ -5,7 +5,7 @@ import re
 import traceback
 from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .logger import log
-from .health import StateUnreadable
+from .state_errors import StateUnreadable
 from .twitter_client import (
     like_own_tweet_replies,
     retweet_own_latest,

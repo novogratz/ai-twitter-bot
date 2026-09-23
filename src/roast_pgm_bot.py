@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 from .config import ROAST_MODEL, _PROJECT_ROOT
 from .logger import log
-from .replied_store import load_replied as _load_replied
+from .replied_store import load_replied
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .llm_client import run_llm, unwrap_text
 
@@ -156,7 +156,7 @@ def run_roast_pgm_cycle():
 
     _record_scrape_success()
 
-    replied = _load_replied()
+    replied = load_replied()
     posted = 0
 
     for t in tweets:

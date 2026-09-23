@@ -423,8 +423,8 @@ def _load_retweeted():
     """Return a CanonReplied set containing canonical IDs of tweets we
     already retweeted OR quoted. Cross-bot dedup so we don't both quote
     AND retweet the same tweet (looks bad on the timeline). 2026-05-18."""
-    from .replied_store import CanonReplied as _CanonReplied
-    s = _CanonReplied()
+    from . import replied_store
+    s = replied_store.CanonReplied()
     for item in _read_id_list(RETWEETED_FILE):
         s.add(item)
     for item in _read_id_list(QUOTED_FILE):
@@ -441,9 +441,9 @@ def _save_retweeted(s):
     """
     existing = _read_id_list(RETWEETED_FILE)
     existing_set = set(existing)
-    from .replied_store import canonical_tweet_id as _canonical_tweet_id
+    from . import replied_store
     for u in s:
-        cid = _canonical_tweet_id(u)
+        cid = replied_store.canonical_tweet_id(u)
         if cid and cid not in existing_set:
             existing.append(cid)
             existing_set.add(cid)

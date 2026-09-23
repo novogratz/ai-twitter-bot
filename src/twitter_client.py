@@ -848,8 +848,8 @@ def _load_liked_set():
     """Return a CanonReplied set of canonical IDs we've already liked.
     Cross-bot dedup via canonical status ID prevents the 'l' shortcut
     from toggling-OFF a like we set in an earlier cycle."""
-    from .replied_store import CanonReplied as _CanonReplied
-    s = _CanonReplied()
+    from . import replied_store
+    s = replied_store.CanonReplied()
     path = _liked_cache_path()
     if not os.path.exists(path):
         return s
@@ -866,7 +866,7 @@ def _load_liked_set():
 
 def _save_liked_set(s) -> None:
     """Persist liked set as ordered list, cap at 50k from the tail."""
-    from .replied_store import canonical_tweet_id as _canonical_tweet_id
+    from . import replied_store
     path = _liked_cache_path()
     existing = []
     existing_set = set()
@@ -880,7 +880,7 @@ def _save_liked_set(s) -> None:
         except (json.JSONDecodeError, OSError):
             pass
     for u in s:
-        cid = _canonical_tweet_id(u)
+        cid = replied_store.canonical_tweet_id(u)
         if cid and cid not in existing_set:
             existing.append(cid)
             existing_set.add(cid)
@@ -953,7 +953,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     Returns True only when the reply actually shipped (or was DRY_RUN-
     recorded), False on every skip (policy, content_guard, dedup). Raises
-    health.StateUnreadable when the ledger or the replied store cannot be
+    StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
     `debate_turn=True` marks an answer to someone who answered the account

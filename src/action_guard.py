@@ -26,7 +26,7 @@ from typing import Optional, Tuple
 from . import config
 from .logger import log
 from .active_hours import is_active, now_local
-from .health import StateUnreadable
+from .state_errors import StateUnreadable
 from zoneinfo import ZoneInfo
 
 _LOCK = threading.Lock()

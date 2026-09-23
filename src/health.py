@@ -22,15 +22,10 @@ import time
 from datetime import datetime
 from .config import _PROJECT_ROOT
 from .logger import log
+from .state_errors import StateUnreadable
 
 HEALTH_FILE = os.path.join(_PROJECT_ROOT, "safari_health.json")
 AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
-
-class StateUnreadable(RuntimeError):
-    """A fail-closed state file (action ledger, replied store) cannot be read
-    or saved. The bot refuses the write; restarting Safari cannot fix it, so
-    record_failure does not count it (docs/OPERATIONS.md#recovery)."""
-
 
 RECOVERY_THRESHOLD = 3      # consecutive cycle failures before we restart
 COOLDOWN_SECONDS = 600      # don't restart Safari more than once per 10 min
@@ -68,6 +63,9 @@ def record_failure(label: str = "") -> bool:
 
     Recovery = quit + relaunch Safari. Idempotent and rate-limited via
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
+
+    Call it from the `except` block that caught the cycle's error: a
+    StateUnreadable in flight is logged and not counted.
     """
     exc = sys.exc_info()[1]
     if isinstance(exc, StateUnreadable):
