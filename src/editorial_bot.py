@@ -333,18 +333,24 @@ def run_editorial_cycle(preview=False):
         today = now_local().date().isoformat()
         if state.get("date") != today:
             state = {"date": today, "slots": {}, "published": state.get("published", [])[-90:]}
-        # At most three attempts in this window, including process restarts.
+        # At most three Attempts in this window, including process restarts.
         attempts = state.setdefault("attempts", {})
         if attempts.get(slot[0], 0) >= 3:
             return None
-        if not preview:
-            attempts[slot[0]] = attempts.get(slot[0], 0) + 1
-            _save_state(state)
         sources = collect_sources(state)
         if not sources:
             return None
         recent = [p["text"] for p in state.get("published", [])]
         draft = draft_post(slot, sources, recent, state.get("feedback", {}).get(slot[0], ""))
+        # No Draft (provider error, malformed JSON, explicit skip), no
+        # Attempt: the 45-minute window already bounds these passes.
+        if not isinstance(draft, dict) or not draft or draft.get("skip") is True:
+            log.info("[EDITORIAL] No draft for %s this pass.", slot[0])
+            return None
+        if not preview:
+            # Counted before review, so a crash mid-review still spends it.
+            attempts[slot[0]] = attempts.get(slot[0], 0) + 1
+            _save_state(state)
         ok, reason, source = review_draft(draft, sources, recent, exceptional=slot[0] == "21:30")
         audit = dict(ts=now_local().isoformat(), slot=slot[0], approved=ok,
                      reason=reason, draft=draft, source_url=source["url"] if source else "")

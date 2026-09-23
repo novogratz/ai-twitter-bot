@@ -71,9 +71,9 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies. The quote branch is gone: `quotes_done` is hard-coded to 0. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to fresh posts from the top tracked handles. |
-| `replyback_job` | 3 min | Replies under our latest post to people who answered it, then likes their profiles and tries to follow up to 5 of them. |
+| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
-| `debate_job` | 12 min | Answers fresh mentions, at most 4 turns per author per day. |
+| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow a handful of accounts and likes their posts when profile visits are allowed. |
 | `followback_job` | 20 min | Follows back recent followers (`reciprocal=True`). |
@@ -88,8 +88,8 @@ Two settings decide how much of the table does anything:
 
 - `PROFILE_VISIT_ALLOWLIST` (default `TheBTCTherapist,Graphseo`). Profile
   scrapes and profile likes return nothing for other handles, so
-  `early_bird_job`, `mega_watch_job` and the like step of `engage_job` only
-  act on allowlisted accounts.
+  `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
+  replyback profile likes only act on allowlisted accounts.
 - The follow policy in `action_guard.can_follow`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
   decides what actually passes.
@@ -101,8 +101,10 @@ Two settings decide how much of the table does anything:
 1. **Slot.** `SLOTS` lists 05:00, 08:00, 11:30, 14:30, 17:30, 20:30 and an
    optional 21:30. A slot is due for 45 minutes, never past 22:00, and only if
    `editorial_state.json` has no entry for it. A missed slot is not caught up.
-2. **Attempts.** Three per slot per day, restarts included. The counter is
-   saved before any work.
+2. **Attempts.** Three per slot per day, restarts included. An attempt is a
+   draft submitted to review: the counter is saved once a draft exists and
+   before review. A pass with no source, a draft model error or an explicit
+   skip spends none; the 45-minute window bounds those passes.
 3. **Sources.** Six first-party feeds (OpenAI, Google AI, DeepMind, Hugging
    Face, NVIDIA, Microsoft Research) supply AI news under 48 hours old; the
    three newest are kept. Twelve Hugging Face documentation pages rotate daily
@@ -121,8 +123,8 @@ Two settings decide how much of the table does anything:
 6. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
    next attempt. Nothing is written when `can_post` refuses (spacing or
-   ceiling), when the three attempts are spent, or when no source could be
-   fetched; that last case still consumes an attempt.
+   ceiling), when the three attempts are spent, or when the pass yields no
+   draft.
 7. **Publish.** Waking hours and slot validity are checked again. The slot is
    marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
    the draft plus the source URL. `True` marks it `published`; `False` frees
@@ -194,7 +196,7 @@ These are how the code behaves today, not design intent:
 - `like_job`, `notify_job` and `pin_job` click in Safari without going
   through a chokepoint: no ledger entry, no `can_post`, and `DRY_RUN` does not
   stop them. `notify_job` presses the `l` key, which toggles a like.
-- `debate_bot`, `follow_engagers_bot`, `like_bot` and `pin_bot` key their
+- `follow_engagers_bot`, `like_bot` and `pin_bot` key their
   daily counters on `date.today()` (machine time), while the ledger uses the
   Toronto day.
 - `session_refresh_job` and the `health` recovery restart Safari without

@@ -38,6 +38,8 @@ FOLLOW = "follow"
 UNFOLLOW = "unfollow"
 LIKE = "like"
 RETWEET = "retweet"
+# Bookkeeping row beside REPLY: the answered author, for the per-author cap.
+DEBATE_TURN = "debate_turn"
 
 
 # --- ledger ----------------------------------------------------------------
@@ -104,6 +106,21 @@ def count_today(action: str) -> int:
 
 def profile_count_today() -> int:
     return sum(count_today(action) for action in (POST, QUOTE, RETWEET))
+
+
+def debate_turns_today(author: str) -> int:
+    author = (author or "").lower().lstrip("@")
+    return sum(1 for r in _rows_for_action_today(DEBATE_TURN) if r.get("target") == author)
+
+
+def can_debate_turn(author: str) -> Tuple[bool, str]:
+    """Per-author daily cap on Debate turns, shared by every answering bot."""
+    if not (author or "").strip().lstrip("@"):
+        return False, "debate turn without an author handle"
+    cap = int(os.environ.get("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "4"))
+    if debate_turns_today(author) >= cap:
+        return False, f"debate turn cap reached for @{author} ({cap}/day)"
+    return True, ""
 
 
 def seconds_since_last(action: str) -> float:
