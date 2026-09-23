@@ -49,7 +49,8 @@ run. The check is repeated at each point where work leaves the process:
 - `safari._run_applescript`, `safari._run_js` and each direct `osascript`
   call inside `twitter_client` and `scraper`, and in `like_bot`'s like
   clicks. The read-only `osascript` calls in `followback_bot`,
-  `follower_tracker_bot` and `safari_hygiene` are only covered by the lock check or by `awake_job`;
+  `follower_tracker_bot` and `safari_hygiene` are only covered by the lock
+  check or by `awake_job`;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
   also capped at the time left before 22:00;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
@@ -155,7 +156,8 @@ The browser layer is three modules in `src/x/`. `safari.py` holds the
 primitives: the Safari lock, `_run_applescript`, `_run_js` (page JavaScript
 that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
-post and its replies, and the blank-page recovery those reads trigger. `twitter_client.py` holds the write chokepoints. Writes use
+post and its replies, and the blank-page recovery those reads trigger.
+`twitter_client.py` holds the write chokepoints. Writes use
 reading and primitives, reading uses primitives, never the other way. Both
 call a primitive through its module (`safari._run_applescript(...)`), never a
 `from` import, so the test walls reach every path.
@@ -173,7 +175,8 @@ from a refusal compares with `is` (`follow_engagers_bot`). One limit:
 `True` means `osascript` ran the keystrokes, not that X confirmed them.
 `unfollow_account`, which no active job calls, reads both page answers and
 returns `True`, with its ledger row, only once the page reported the click on
-X's confirmation sheet.
+X's confirmation sheet. If `_run_js` times out (15 s) after that click, the
+unfollow may have shipped unrecorded.
 
 `like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`, and follows
 the same `DRY_RUN_RECORDED` rule. It never presses the `l` shortcut, which
@@ -354,12 +357,12 @@ above it: nothing outside `src/replies/` and `src/account/` imports them, and
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript`, `_run_js`, `_paste_text` and any subprocess that runs
-`osascript` or aims `open`, `pkill` or `killall` at Safari raise (an import error on
-`src.x.safari` fails every test rather than dropping the wall), the
-logger writes to a temporary file, and the engagement log, tweet history, replied store, ledger and
-personality file point to `tmp_path`. A mock placed on a caller module misses
-function-local imports; patch the primitive in `safari` and a scrape in
-`scraper`. `tests/test_guards.py` fails when a module binds a walled
+`osascript` or aims `open`, `pkill` or `killall` at Safari raise (an import
+error on `src.x.safari` fails every test rather than dropping the wall), the
+logger writes to a temporary file, and the engagement log, tweet history,
+replied store, ledger and personality file point to `tmp_path`. A mock placed
+on a caller module misses function-local imports; patch the primitive in
+`safari` and a scrape in `scraper`. `tests/test_guards.py` fails when a module binds a walled
 primitive, `webbrowser` or `subprocess.Popen` by name, past the wall.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python

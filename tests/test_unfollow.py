@@ -88,3 +88,40 @@ def test_dry_run_records_a_dry_row_without_the_browser(unfollow_env, monkeypatch
     rows = unfollow_env.ledger()
     assert [(r["action"], r["dry_run"]) for r in rows] == [(unfollow_env.ag.UNFOLLOW, True)]
     assert unfollow_env.following() == 100
+
+
+def _fake_osascript(monkeypatch, run):
+    import subprocess
+    from src.x import safari
+    monkeypatch.setattr(safari, "require_active", lambda: None)
+    monkeypatch.setattr(safari, "subprocess", SimpleNamespace(
+        run=run, SubprocessError=subprocess.SubprocessError,
+        TimeoutExpired=subprocess.TimeoutExpired))
+
+
+@pytest.mark.parametrize("outcome, expected", [
+    (SimpleNamespace(returncode=0, stdout="CLICKED\n", stderr=""), "CLICKED"),
+    (SimpleNamespace(returncode=1, stdout="", stderr="execution error"), ""),
+    ("timeout", ""),
+])
+def test_run_js_returns_the_page_answer_and_removes_its_temp_file(monkeypatch, unwalled, outcome, expected):
+    """_run_js reads the JS back as UTF-8, returns osascript's stdout, "" on a
+    failed or timed-out run, and never leaves its temp file behind."""
+    import os
+    import subprocess
+    seen = {}
+
+    def run(argv, **kwargs):
+        script = argv[-1]
+        seen["path"] = script.split('POSIX file "')[1].split('"')[0]
+        seen["utf8"] = "\u00abclass utf8\u00bb" in script
+        with open(seen["path"], encoding="utf-8") as f:
+            seen["js"] = f.read()
+        if outcome == "timeout":
+            raise subprocess.TimeoutExpired(argv, kwargs.get("timeout"))
+        return outcome
+
+    _fake_osascript(monkeypatch, run)
+    assert unwalled["_run_js"]("return 'é';") == expected
+    assert seen["js"] == "return 'é';" and seen["utf8"]
+    assert not os.path.exists(seen["path"])

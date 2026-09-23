@@ -59,12 +59,14 @@ def _run_js(js: str, timeout_s: int = 15) -> str:
     osascript call fails. The script goes through a temp file, so `js` needs
     no AppleScript escaping."""
     require_active()
-    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
-    tmp.write(js)
-    tmp.close()
+    path = None
     try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=".js",
+                                         delete=False) as tmp:
+            path = tmp.name
+            tmp.write(js)
         res = subprocess.run(["osascript", "-e", f'''
-        set jsCode to (read POSIX file "{tmp.name}")
+        set jsCode to (read POSIX file "{path}" as «class utf8»)
         tell application "Safari"
             do JavaScript jsCode in current tab of front window
         end tell
@@ -78,10 +80,11 @@ def _run_js(js: str, timeout_s: int = 15) -> str:
         log.info(f"Page JavaScript failed: {e!r}")
         return ""
     finally:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
+        if path:
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
 
 
 def _escape_for_applescript(text: str) -> str:
