@@ -7,8 +7,8 @@ allowed-tools: Read Write Bash Edit
 Manage target accounts:
 
 1. Engage pool (`engage_job`), built at each cycle, not a static list:
-   `VIP_ACCOUNTS` in `src/engage_bot.py`, plus the handles the feed sweeper
-   harvested in `dynamic_accounts.json` (`en`/`fr` buckets) and
+   `VIP_ACCOUNTS` in `src/account/engage_bot.py`, plus the handles the feed
+   sweeper harvested in `dynamic_accounts.json` (`en`/`fr` buckets) and
    `discovered_accounts.json`. `TARGET_ACCOUNTS` is an import shim, not the
    pool. Show counts per source.
 2. Follow whitelist: `whitelist.json` (`tiers`, `seeds`). With

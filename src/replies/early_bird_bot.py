@@ -16,15 +16,15 @@ import random
 import time
 import traceback
 from datetime import timedelta
-from .x import x_urls
-from .core.logger import log
-from .x.twitter_client import scrape_profile_tweets, reply_to_tweet
-from .guards.reply_admission import judge_parent
+from ..x import x_urls
+from ..core.logger import log
+from ..x.twitter_client import scrape_profile_tweets, reply_to_tweet
+from ..guards.reply_admission import judge_parent
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
-from .reply_language import looks_french
-from .core.engagement_log import log_reply
-from .core.humanizer import humanize
-from .core.state_errors import StateUnreadable
+from ..core.reply_language import looks_french
+from ..core.engagement_log import log_reply
+from ..core.humanizer import humanize
+from ..core.state_errors import StateUnreadable
 
 # Posts this job is done with until restart: definitive Reply admission
 # refusals, posts the model declined, posts answered.
@@ -40,7 +40,7 @@ EARLY_BIRD_ACCOUNTS: list = []  # intentionally empty — see _scan_pool()
 
 
 def _scan_pool() -> list:
-    from .account_curator import tracked_handles
+    from ..account.account_curator import tracked_handles
     return tracked_handles(limit=30)
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
@@ -58,7 +58,7 @@ def run_early_bird_cycle():
     posted = 0
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
-    from .core.evolution_store import filter_and_weight
+    from ..core.evolution_store import filter_and_weight
     from .direct_reply import ALWAYS_REPLY_ACCOUNTS
     pool = filter_and_weight(_scan_pool())
     always_pool = filter_and_weight(ALWAYS_REPLY_ACCOUNTS)
@@ -134,7 +134,7 @@ def run_early_bird_cycle():
                 _skipped.add(url)
                 continue
 
-            from .core.pattern_tags import extract_pattern as _extract_pattern
+            from ..core.pattern_tags import extract_pattern as _extract_pattern
             reply, _pattern_id = _extract_pattern(reply)
             reply = humanize(reply)
             log.info(f"[EARLYBIRD] Reply ({len(reply)} chars): {reply}")
@@ -167,7 +167,7 @@ def run_early_bird_cycle():
 
 def safe_run_early_bird_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from .core import health
+    from ..core import health
     try:
         run_early_bird_cycle()
         health.record_success("early_bird")

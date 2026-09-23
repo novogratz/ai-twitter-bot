@@ -36,7 +36,7 @@ def blocklist(monkeypatch):
 @pytest.fixture
 def pipeline(monkeypatch, blocklist):
     """direct_reply's pipeline with a stub model and a stub chokepoint."""
-    from src import direct_reply as dr
+    from src.replies import direct_reply as dr
 
     monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
@@ -155,7 +155,7 @@ def test_direct_reply_cycle_does_not_swallow_unreadable_store(pipeline, monkeypa
 
 
 def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeypatch):
-    from src import feed_sweeper_bot as fs
+    from src.replies import feed_sweeper_bot as fs
     from src.x import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
@@ -183,7 +183,7 @@ def viral(handle, n):
 
 
 def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
-    from src import feed_sweeper_bot as fs
+    from src.replies import feed_sweeper_bot as fs
     from src.x import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
@@ -214,7 +214,7 @@ def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
 
 
 def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
-    from src import reply_bot as rb
+    from src.replies import reply_bot as rb
 
     quoted, answered = fresh("someone", n=1), fresh("other", n=2)
     monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
@@ -240,7 +240,7 @@ def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
 def reply_search(monkeypatch, blocklist):
     """reply_bot with a stub search-and-draft model and a stub chokepoint;
     the model returns `batch`."""
-    from src import reply_bot as rb
+    from src.replies import reply_bot as rb
 
     batch, searched, sent, logged = [], [], [], []
 
@@ -327,10 +327,10 @@ def test_reply_search_does_not_swallow_unreadable_store_at_the_chokepoint(reply_
 @pytest.fixture(params=["early_bird", "mega_watch"])
 def profile_job(request, monkeypatch, blocklist):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
-    from src import direct_reply as dr
-    from src import early_bird_bot as eb
+    from src.replies import direct_reply as dr
+    from src.replies import early_bird_bot as eb
     from src.core import evolution_store
-    from src import mega_watch_bot as mw
+    from src.replies import mega_watch_bot as mw
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
@@ -415,7 +415,7 @@ class _Llm:
 
 @pytest.fixture
 def debate(monkeypatch, blocklist):
-    from src import debate_bot as db
+    from src.replies import debate_bot as db
     from src.x import twitter_client as tc
 
     mentions = []
@@ -500,7 +500,7 @@ def test_debate_stops_on_unreadable_store(debate):
 
 @pytest.fixture
 def replyback(monkeypatch, blocklist):
-    from src import notify_bot as nb
+    from src.replies import notify_bot as nb
 
     replies = []
     drafts = {}
@@ -563,7 +563,7 @@ def test_replyback_sets_aside_model_skips_but_replays_failed_calls(replyback):
 def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
     import json
     from src.guards import action_guard
-    from src import follow_engagers_bot as fe
+    from src.account import follow_engagers_bot as fe
 
     for author in ("oldfan", "newfan", "oldfan"):
         action_guard.record(action_guard.DEBATE_TURN, target=author)

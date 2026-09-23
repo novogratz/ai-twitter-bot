@@ -9,9 +9,9 @@ import os
 import re
 from datetime import datetime
 from typing import Optional
-from .core.logger import log
-from .core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
-from .core.llm_client import run_llm, unwrap_text
+from ..core.logger import log
+from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
+from ..core.llm_client import run_llm, unwrap_text
 
 # Core influencers — AI + Space + Robotics + Investment, French priority
 TARGET_ACCOUNTS = [
@@ -585,7 +585,7 @@ def generate_replies(recent_topics=None, already_replied=None):
 
     # Autonomous evolution-agent directives — appended to discovered_section
     # so they don't disturb the prompt template's required keys.
-    from .core.evolution_store import get_directives_block
+    from ..core.evolution_store import get_directives_block
     directives_block = get_directives_block()
     if directives_block:
         discovered_section = (discovered_section or "") + directives_block
@@ -593,7 +593,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     # Personality store — global mood + hard rules. Per-author dossiers are
     # injected by direct_reply.py (which knows the author). This path searches
     # broadly so we attach the global state of mind only.
-    from .core import personality_store
+    from ..core import personality_store
     mood = personality_store.render_global_mood()
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood

@@ -461,7 +461,7 @@ def test_reply_candidates_sorted_fresh_and_rising_first():
     """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
     must beat a 60-hour-old tweet; unknown-age URLs go last; within the
     same freshness bucket, higher likes-per-hour wins."""
-    from src.direct_reply import _freshness_sort_key
+    from src.replies.direct_reply import _freshness_sort_key
     fresh_hot = {"url": _url_with_age(20), "likes": 400}
     fresh_cold = {"url": _url_with_age(25), "likes": 2}
     old = {"url": _url_with_age(60 * 60), "likes": 90000}
@@ -498,7 +498,7 @@ def test_smart_trim_salvages_overlong_reply():
 def test_reply_queries_are_on_lane():
     """Spec lane: AI x markets x psychology. NO space content; the tier1-2
     seeds + foils must be scanned directly via from: queries."""
-    from src.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
+    from src.replies.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
     joined = " ".join(SEARCH_QUERIES + HOT_TAB_QUERIES).lower()
     for banned in ("spacex", "starship", "nasa", "satellite", "rocket lab", "orbit"):
         assert banned not in joined, f"space term {banned!r} is off-persona"
@@ -516,12 +516,12 @@ def test_early_reply_targets_are_curator_driven():
     """2026-06-07 PM operator mandate: NO static target lists — the scan
     pools come from account_curator.tracked_handles(), pinned with the only
     two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
-    from src.early_bird_bot import EARLY_BIRD_ACCOUNTS
-    from src.mega_watch_bot import MEGA_ACCOUNTS
+    from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
+    from src.replies.mega_watch_bot import MEGA_ACCOUNTS
     assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
         "static early-reply lists must stay empty — pools come from the curator"
     )
-    from src.account_curator import PINNED, tracked_handles
+    from src.account.account_curator import PINNED, tracked_handles
     # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
     # reply conversion on his question post (operator: "more things like this").
     assert tuple(PINNED) == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
@@ -535,7 +535,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
     """Only ON-LANE engagements count as evidence (FR-era rows classify
     'other' and are ignored); pinned handles always lead the tracked list."""
     from datetime import datetime
-    from src import account_curator as ac
+    from src.account import account_curator as ac
     now = datetime.now().isoformat()
     log_file = tmp_path / "log.csv"
     rows = []
@@ -562,7 +562,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
 def test_curator_promotion_quality_bar():
     """Following is a higher bar than tracking: spam-pattern handles (long
     digit runs) and thin evidence never reach the whitelist."""
-    from src.account_curator import _promotable
+    from src.account.account_curator import _promotable
     assert _promotable({"handle": "unusual_whales", "engagements": 9})
     assert not _promotable({"handle": "bisdianora24202", "engagements": 9}), "digit-run spam"
     assert not _promotable({"handle": "goodname", "engagements": 4}), "below promote floor"
@@ -608,7 +608,7 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
     engagement_log. Contract pinned here: (1) the on-disk store must NOT
     contain the URL at the moment reply_to_tweet is invoked; (2) log_reply
     fires ONLY when reply_to_tweet returns True."""
-    import src.direct_reply as dr
+    import src.replies.direct_reply as dr
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     url = _url_with_age(5)
@@ -666,7 +666,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     generator (French + deliberate-typo style) to @TheBTCTherapist's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
     never _generate_graphseo_reply; output passes through humanize."""
-    import src.direct_reply as dr
+    import src.replies.direct_reply as dr
 
     # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
     # LOCALLY from twitter_client — patch THERE, not on direct_reply.
@@ -750,7 +750,7 @@ def test_skip_rationale_never_publishes():
     ok, _ = cg.validate("Most investors skip the part where conviction gets tested.", kind="reply")
     assert ok
     # Generator-side: prefix match, not exact match.
-    from src import direct_reply as dr
+    from src.replies import direct_reply as dr
     import src.core.llm_client as llm
     class R: returncode = 0; stdout = "SKIP. Here is why I refuse..."; stderr = ""
     # _generate_single_reply path is LLM-bound; test the cheap invariant via
@@ -774,7 +774,7 @@ def test_reply_queries_are_ai_first():
     see more AI shit'. The reply lane must be majority-AI: at least half of
     the search queries carry an AI term, BTC tail stays minimal (feud lane
     only, ≤2 queries)."""
-    from src.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
+    from src.replies.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", "agi", "nvidia", "gpu", "llama", "deepseek",
                 "palantir", "cursor", "copilot", "tsmc", "humanoid", " ia ")
@@ -826,7 +826,7 @@ def test_startup_reply_warmup_is_bounded(monkeypatch):
     scheduler.start() — so the dedicated quote/AI-viral jobs never came
     online (15:43 boot: 300+ replies, 0 quotes). run_direct_reply_cycle
     must honor max_replies and STOP, yielding Safari."""
-    import src.direct_reply as dr
+    import src.replies.direct_reply as dr
     # Every query returns 5 fresh on-niche tweets; without the cap the cycle
     # would reply to all of them across all 21 queries.
     calls = {"replies": 0, "queries": 0}
@@ -928,7 +928,7 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
 def test_prompts_are_english_only():
     """Operator 2026-06-09: 'we are english only bro'. The reply lane must
     not seek French posts."""
-    from src.direct_reply import SEARCH_QUERIES
+    from src.replies.direct_reply import SEARCH_QUERIES
     assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
 
 
@@ -1030,7 +1030,7 @@ def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
     must START generating reply N+1 while reply N is still posting — and keep
     the contracts: one gen + one post per candidate, log only on ship."""
     import threading
-    from src import direct_reply as dr
+    from src.replies import direct_reply as dr
 
     gen_calls = []
     second_gen_started = threading.Event()
@@ -1324,7 +1324,7 @@ def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
     before the like step. The follow_account call above is intentionally
     NOT gated (mechanically required to click the Follow button)."""
     import inspect
-    from src import engage_bot as eb
+    from src.account import engage_bot as eb
 
     src = inspect.getsource(eb.run_engage_cycle)
     # Pin: the cycle imports the allowlist gate and uses it to skip likes
@@ -1405,7 +1405,7 @@ def test_direct_reply_scans_rotating_query_subset(monkeypatch):
     contract: each cycle scans a bounded rotating slice, consecutive cycles
     rotate (no slice starvation), full coverage lands within ceil(N/K)
     cycles, and the K env is read at call time."""
-    from src import direct_reply as dr
+    from src.replies import direct_reply as dr
     monkeypatch.setenv("DIRECT_REPLY_QUERIES_PER_CYCLE", "8")
     qs = [f"q{i}" for i in range(26)]
     dr._QUERY_ROTATION_OFFSET[0] = 0
@@ -1432,7 +1432,7 @@ def test_reply_search_surface_disabled_by_default(monkeypatch):
     over 35h, plus a refresh_feed() Safari touch every ~3 min. Pin: with
     ENABLE_REPLY_SEARCH unset/0 the cycle returns before ANY side effect
     (no Safari, no LLM); =1 re-arms the path. Env read at call time."""
-    from src import reply_bot as rb
+    from src.replies import reply_bot as rb
 
     calls = []
     monkeypatch.setattr(rb, "refresh_feed", lambda: calls.append("safari"))
@@ -1469,7 +1469,7 @@ def test_persona_is_woman_mom_therapist_across_surfaces():
     assert "sharpest ai mind" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
-    from src import direct_reply
+    from src.replies import direct_reply
     assert "a woman, 45" in direct_reply.REPLY_PROMPT.lower()
     assert "mom" in direct_reply.REPLY_PROMPT.lower()
     bestie_prompt = direct_reply.BESTIE_REPLY_PROMPT.lower()
@@ -1578,7 +1578,7 @@ def test_pin_rotation_url_ground_truth_and_stale_override():
     must come from is_own_post (URL ground truth), and a pin older than
     PIN_MAX_AGE_DAYS must stop defending its slot via the 1.3x beat rule."""
     import inspect
-    from src import pin_bot
+    from src.account import pin_bot
     src = inspect.getsource(pin_bot.run_pin_cycle)
     assert "is_own_post" in src, "pin candidates must be filtered by URL ground truth"
     assert 'author != BOT_HANDLE' not in src and 'author and author !=' not in src, \
@@ -1673,7 +1673,7 @@ def test_replyback_reciprocity_never_follows(monkeypatch):
     """Engager follows belong to follow_engagers_job (engager=True). The
     replyback reciprocity pass only visits and likes; its old bare
     follow_account call was refused by the Seed-account rule anyway."""
-    from src import notify_bot as nb
+    from src.replies import notify_bot as nb
 
     visited = []
     monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: visited.append(h))
@@ -1714,7 +1714,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     assert not ok, "non-engager path keeps the size gate"
 
     from src.guards import action_guard as ag
-    from src import follow_engagers_bot as fe
+    from src.account import follow_engagers_bot as fe
     for engager in ("oldguy", "business", "freshfan"):  # business: big-media skip
         ag.record(ag.DEBATE_TURN, target=engager)
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
@@ -1756,7 +1756,7 @@ def test_spicy_dial_suggestive_never_explicit():
     assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
     assert "smart is the sexy" in spine, "authority must ride with the heat"
 
-    from src import direct_reply
+    from src.replies import direct_reply
     low = direct_reply.REPLY_PROMPT.lower()
     assert "flirt" in low and "never explicit" in low, \
         "surface prompts must carry the dial WITH its guardrail"
@@ -1774,7 +1774,7 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     assert build_scheduler().get_job("pin_job") is not None
 
     from src.guards import action_guard as ag
-    from src import follow_engagers_bot as fe
+    from src.account import follow_engagers_bot as fe
     ag.record(ag.DEBATE_TURN, target="somefan")
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     called = []

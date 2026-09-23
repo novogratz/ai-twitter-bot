@@ -63,7 +63,11 @@ authorize a new action.
 `build_scheduler()` registers 17 jobs, plus `reply_job` when
 `ENABLE_REPLY_SEARCH=1`. Each `safe_run_*` entry point catches its own
 exceptions; all but the editorial and reach-report jobs also report to
-`health`.
+`health`. The reply jobs live in `src/replies/`; `engage_job`,
+`followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and
+`follower_tracker_job` in `src/account/`; `editorial_job` and
+`reach_report_job` in `src/editorial/`; `session_refresh_job` in
+`src/x/safari_hygiene.py`.
 
 | Job | Every | What the cycle does today |
 |---|---|---|
@@ -265,8 +269,11 @@ some files those bots used to write, as frozen data with no writer left:
 
 ## Adding a job
 
-1. Expose `safe_run_<name>_cycle()` in `src/<name>.py`. Catch every exception
-   inside it and call `health.record_success` or `record_failure`.
+1. Expose `safe_run_<name>_cycle()` in a module of the package that owns its
+   concern: `src/replies/<name>.py` for a reply job, `src/account/<name>.py`
+   for a follow, like or pin job. The top level of `src/` holds only
+   packages. Catch every exception inside it and call `health.record_success`
+   or `record_failure`.
 2. Register it in `build_scheduler()` with `add(fn, minutes, "<name>_job")`.
    Never call `scheduler.add_job` directly: `add()` supplies the waking-hours
    wrapper.
@@ -293,8 +300,8 @@ name instead of through its package, or crosses a package folder without
 `__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
 `main.py` reaches through imports, `twitter_client` included, defines or
 names a quote, repost, thread or GIF write. It also fails when a
-module under `src/`, packages such as `src/core/` and `src/x/` included, is
-not reached from `main.py`, function-local imports included.
+module in any package under `src/` is not reached from `main.py`,
+function-local imports included.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript`, `_paste_text` and any subprocess that runs `osascript`

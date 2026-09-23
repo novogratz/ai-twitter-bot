@@ -29,11 +29,15 @@ Every module under `src/` is reached from `main.py`; a test fails on a module
 nothing imports, so wire new code into a job or delete it. `src/core/` holds
 the shared foundations (config, logger, LLM client, history and engagement
 stores), `src/x/` the browser layer, `src/guards/` the clock, caps and
-admission checks, and `src/editorial/` the originals pipeline.
+admission checks, `src/editorial/` the originals pipeline, `src/replies/` the
+reply jobs, and `src/account/` the follow, like, pin and follower-count jobs.
+The top level of `src/` holds only packages.
 
 | Concern | Where |
 |---|---|
 | Originals: sources, evidence, draft, separate review | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, notify | `src/replies/` |
+| Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
 | Caps, pacing, write ledger, follow policy | `src/guards/action_guard.py` |
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/guards/reply_admission.py` |

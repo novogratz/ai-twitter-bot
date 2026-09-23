@@ -4,9 +4,9 @@ import re
 import time
 import traceback
 from datetime import datetime, timedelta, timezone
-from .x import x_urls
-from .core.config import MAX_REPLIES_PER_CYCLE
-from .core.logger import log
+from ..x import x_urls
+from ..core.config import MAX_REPLIES_PER_CYCLE
+from ..core.logger import log
 
 
 # Legacy modules still import these two helpers; live code reads x_urls.
@@ -32,13 +32,13 @@ def _tweet_age_minutes(tweet_url: str) -> int:
     age = datetime.now(tz=timezone.utc) - tweet_time
     return int(age.total_seconds() / 60)
 from .reply_agent import generate_replies
-from .x.twitter_client import reply_to_tweet, refresh_feed
-from .core.history import get_recent_tweets
-from .core.engagement_log import log_reply
-from .core.humanizer import humanize
-from .guards.replied_store import load_replied
-from .guards.reply_admission import judge_parent
-from .core.state_errors import StateUnreadable
+from ..x.twitter_client import reply_to_tweet, refresh_feed
+from ..core.history import get_recent_tweets
+from ..core.engagement_log import log_reply
+from ..core.humanizer import humanize
+from ..guards.replied_store import load_replied
+from ..guards.reply_admission import judge_parent
+from ..core.state_errors import StateUnreadable
 
 
 def _reply_search_enabled() -> bool:
@@ -144,7 +144,7 @@ def run_reply_cycle():
 
 def safe_run_reply_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from .core import health
+    from ..core import health
     try:
         run_reply_cycle()
         health.record_success("reply")

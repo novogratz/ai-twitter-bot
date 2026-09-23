@@ -3,7 +3,7 @@ import json
 
 
 def _stub_like_browser(monkeypatch, tmp_path):
-    from src import like_bot
+    from src.account import like_bot
 
     monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
     monkeypatch.setattr(like_bot.webbrowser, "open", lambda *a, **k: None)
@@ -22,7 +22,7 @@ def _stub_like_browser(monkeypatch, tmp_path):
 
 def test_live_strategy_cannot_raise_likes_per_cycle(monkeypatch, tmp_path):
     from src.core import config
-    from src import like_bot
+    from src.account import like_bot
 
     strategy = tmp_path / "live_strategy.json"
     strategy.write_text(json.dumps({"caps": {"LIKE_BOT_PER_CYCLE": 500}}))
@@ -37,14 +37,14 @@ def test_live_strategy_cannot_raise_likes_per_cycle(monkeypatch, tmp_path):
 
 def _status_url(handle, minutes_ago):
     from datetime import datetime, timezone
-    from src.reply_bot import _TWITTER_EPOCH
+    from src.replies.reply_bot import _TWITTER_EPOCH
 
     ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes_ago * 60_000
     return f"https://x.com/{handle}/status/{(ms - _TWITTER_EPOCH) << 22}"
 
 
 def test_mega_watch_skips_posts_older_than_max_age(monkeypatch):
-    from src import mega_watch_bot as mw
+    from src.replies import mega_watch_bot as mw
 
     fresh = _status_url("bigai", 1)
     stale = _status_url("bigai", 30)
@@ -108,7 +108,7 @@ def test_is_active_ignores_stop_for_the_scheduler_loop(monkeypatch):
 
 
 def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path):
-    from src import like_bot
+    from src.account import like_bot
 
     requested = _stub_like_browser(monkeypatch, tmp_path)
     monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "6")
@@ -121,7 +121,7 @@ def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path):
 
 def test_like_clicks_refused_after_stop(monkeypatch):
     import pytest
-    from src import like_bot
+    from src.account import like_bot
     from src.guards.active_hours import OutsideActiveHours
 
     calls = []
@@ -134,7 +134,7 @@ def test_like_clicks_refused_after_stop(monkeypatch):
 
 
 def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
-    from src import like_bot
+    from src.account import like_bot
     from src.guards.active_hours import OutsideActiveHours
     import pytest
 
@@ -183,7 +183,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
 
 def test_language_check_judges_the_text_before_the_typo(monkeypatch):
     from src.guards import content_guard
-    from src import reply_language
+    from src.core import reply_language
     from src.core import humanizer
     from src.x import twitter_client
 
@@ -243,7 +243,7 @@ def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_pa
     """like_job, notify_job and pin_job clicked in Safari
     whatever DRY_RUN said. conftest fails the test on webbrowser.open or
     _run_applescript; direct osascript calls are walled off here."""
-    from src import like_bot
+    from src.account import like_bot
     from src.x import twitter_client
 
     def no_osascript(*a, **k):
@@ -556,7 +556,7 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
     """#123: follow_account returned True on a dry run, so engage_bot stored
     handles it never followed and no later live cycle followed them."""
     from src.guards import action_guard
-    from src import engage_bot
+    from src.account import engage_bot
     from src.core import evolution_store
     from src.x import twitter_client as tc
 
@@ -580,7 +580,7 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
 def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_path):
     """A dry-run follow neither counts toward the day nor burns the Engager,
     and still stops the cycle at its per-cycle bound."""
-    from src import follow_engagers_bot as fe
+    from src.account import follow_engagers_bot as fe
 
     recorded = _dry_run_follow_path(monkeypatch)
     state_file = tmp_path / "follow_engagers_state.json"

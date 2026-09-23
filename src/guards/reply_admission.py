@@ -26,7 +26,7 @@ from . import (
     content_guard,
     replied_store,
 )
-from .. import reply_language
+from ..core import reply_language
 from ..core import config, humanizer
 from ..x import x_urls
 from ..core.logger import log
