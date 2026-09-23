@@ -209,7 +209,6 @@ def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch, disa
 
 
 def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch, disabled_writes):
-    from src import btc_blitz
     from src import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
@@ -217,7 +216,7 @@ def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch, 
     monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
     monkeypatch.setattr(tc, "scrape_x_search", lambda *a, **k: [vip])
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [searched])
-    monkeypatch.setattr(btc_blitz, "_gen", lambda *a, **k: DRAFT)
+    monkeypatch.setattr(dr, "generate_vip_reply", lambda *a, **k: DRAFT)
     monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
 
     dr.run_direct_reply_cycle()

@@ -4,7 +4,8 @@ The scraper's `author` field is a display name; the URL is the only
 reliable source for the handle (AGENTS.md: handles come from URLs). Reply
 admission, the Replied store and the reply jobs read it here, so they
 agree: an anonymous `/i/` URL has no author. Legacy modules still parse
-URLs through `reply_bot`.
+URLs through `reply_bot`. `is_reply_like_tweet` tells the reply jobs which
+scraped tweets are nested replies they should not target.
 """
 import re
 from datetime import datetime, timedelta, timezone
@@ -37,3 +38,19 @@ def age(url: str, now: datetime | None = None) -> timedelta | None:
         return None
     posted = datetime.fromtimestamp(((int(sid) >> 22) + _TWITTER_EPOCH_MS) / 1000, tz=timezone.utc)
     return (now or datetime.now(tz=timezone.utc)) - posted
+
+
+def is_reply_like_tweet(tweet: dict, expected_author: str = "") -> bool:
+    """Return True for nested replies/thread comments we should not target."""
+    text = (tweet.get("text") or "").lstrip()
+    if text.startswith("@") or bool(tweet.get("is_reply")):
+        return True
+    expected = (expected_author or "").lower().lstrip("@")
+    if expected:
+        url_handle = author(tweet.get("url") or "")
+        name = (tweet.get("author") or "").lower().lstrip("@")
+        if url_handle and url_handle != expected:
+            return True
+        if name and name not in {"unknown", expected}:
+            return True
+    return False

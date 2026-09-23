@@ -14,6 +14,7 @@ Hard rules preserved:
 import os
 import traceback
 
+from . import x_urls
 from .config import BLOCKLIST, BOT_HANDLE
 from .logger import log
 
@@ -77,7 +78,7 @@ def run_feed_sweep_cycle():
 
 
 def _sweep_one_feed(source, scraper):
-    from .direct_reply import _reply_to_tweets, _is_on_niche, _is_reply_like_tweet
+    from .direct_reply import _reply_to_tweets, _is_on_niche
 
     log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
     try:
@@ -99,7 +100,7 @@ def _sweep_one_feed(source, scraper):
         text = (t.get("text") or "").strip()
         if not url or not text:
             continue
-        if _is_reply_like_tweet(t):
+        if x_urls.is_reply_like_tweet(t):
             continue
         if not _is_on_niche(text):
             continue

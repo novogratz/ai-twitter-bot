@@ -240,7 +240,7 @@ These are how the code behaves today, not design intent:
   taking `_safari_lock`. The job has no waking-hours check of its own; it only
   runs while the scheduler is awake.
 - `debate_bot` (`DEBATE_PROMPT`) and the VIP generators in `direct_reply`
-  (`btc_blitz._gen`, `_generate_graphseo_reply`) build prompts without the
+  (`generate_vip_reply`, `_generate_graphseo_reply`) build prompts without the
   hard rules or the respect list.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.

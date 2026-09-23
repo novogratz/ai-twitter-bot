@@ -52,7 +52,7 @@ def test_mega_watch_skips_posts_older_than_max_age(monkeypatch):
         {"url": stale, "author": "bigai", "text": "GPU clusters are the new power plants"},
         {"url": fresh, "author": "bigai", "text": "GPU clusters are the new power plants"},
     ])
-    monkeypatch.setattr(mw, "_is_reply_like_tweet", lambda *a, **k: False)
+    monkeypatch.setattr(mw.x_urls, "is_reply_like_tweet", lambda *a, **k: False)
     monkeypatch.setattr(mw, "_is_on_niche", lambda text: True)
     monkeypatch.setattr(mw, "_generate_single_reply",
                         lambda **k: "Power is the real bottleneck for these clusters.")

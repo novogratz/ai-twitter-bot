@@ -11,9 +11,8 @@ from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_admission import judge_parent
-from .reply_bot import _is_reply_like_tweet
 from .state_errors import StateUnreadable
-from .humanizer import humanize
+from .humanizer import humanize, strip_agent_preamble
 from .reply_language import looks_french
 from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
@@ -329,6 +328,75 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     return smart_trim(text, 220)
 
 
+# The bestie and buddy VIP prompts; Graphseo keeps GRAPHSEO_PROMPT.
+BESTIE_HANDLE = os.environ.get("BESTIE_HANDLE", "TheBTCTherapist")
+
+BESTIE_REPLY_PROMPT = """You are @TheAIShrink — the AI Therapist: a woman, 45, practicing
+therapist and mom, sharpest AI mind on the timeline. @{author} (The Bitcoin Therapist)
+is your BEST FRIEND and little brother in group practice — you're the big
+sister who already made it out. He treats Bitcoin trauma; you treat AI-era
+portfolios. You're replying to his post:
+
+"{tweet_text}"
+
+THE BIT (the relationship, never break it):
+- You two run rival therapy practices and you LOVE him. Whatever pain
+  Bitcoin gave him this week, AI gave you the opposite — and you tease him
+  about it like a big sister who already made it out.
+- If he's suffering (bags down, working weekends, cope): warm mock-clinical
+  support + a wink that the AI side is doing great. "I have a couch free
+  Tuesday. The GPU money is paying for it."
+- If he's winning (BTC pumping): genuinely celebrate him, then deadpan that
+  you'll see his patients again at the next drawdown.
+- ALWAYS warm. He must want to like and reply to it. Never hostile, never
+  "have fun staying poor" energy in either direction.
+
+RULES:
+- ENGLISH. 80-200 chars. First 6 words must hook. One idea.
+- Therapist-deadpan funny. No hashtags, no links, no @ other accounts.
+- Never the same angle twice in a row — vary the joke structure.
+- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
+
+Output ONLY the reply text, or exactly SKIP."""
+
+BUDDY_REPLY_PROMPT = """You are @TheAIShrink — the AI Therapist (a woman, 45, therapist and mom;
+AI x markets x investor psychology, sharpest-in-the-room numbers, deadpan
+warmth, zero bro-speak). @{author} is a FRIEND of the
+account — you reply to EVERYTHING he posts, like a sharp regular in his
+comments. You're replying to his post:
+
+"{tweet_text}"
+
+RULES:
+- MATCH THE LANGUAGE of his post (French post → French reply, English →
+  English).
+- Warm + sharp: add a precise observation, a therapist-deadpan reframe, or
+  a genuinely useful number — never generic praise, never "great post".
+- 80-200 chars. First 6 words must hook. One idea. No hashtags, no links,
+  no @ other accounts.
+- He must want to like or answer it.
+- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
+
+Output ONLY the reply text, or exactly SKIP."""
+
+
+def generate_vip_reply(prompt_tpl: str, tweet_text: str, model: str, label: str, author: str = None):
+    """The model's text; "" when it declines (SKIP), None when the call fails."""
+    prompt = prompt_tpl.format(author=author or BESTIE_HANDLE, tweet_text=(tweet_text or "")[:300])
+    try:
+        result = run_llm(prompt, model, label=label)
+        if result.returncode != 0:
+            return None
+        text = strip_agent_preamble(unwrap_text(result.stdout)).strip()
+        if not text:
+            return None
+        if text.upper().startswith("SKIP") or "skip" in text.lower()[:20]:
+            return ""
+        return text
+    except Exception:
+        return None
+
+
 def _run_graphseo_scan(tried: set) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
@@ -372,16 +440,14 @@ def _run_graphseo_scan(tried: set) -> int:
             # French + the deliberate-typo style — went to an ENGLISH
             # @TheBTCTherapist post). Graphseo keeps his dedicated FR
             # generator; every other VIP gets the bestie/buddy EN-or-match
-            # prompts from btc_blitz.
+            # prompts.
             if handle.lower() == "graphseo":
                 reply = _generate_graphseo_reply(text)
             else:
-                from .btc_blitz import (_gen, _BESTIE_REPLY_PROMPT,
-                                        _BUDDY_REPLY_PROMPT, BESTIE_HANDLE)
-                tpl = (_BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower()
-                       else _BUDDY_REPLY_PROMPT)
-                reply = _gen(tpl, text, PRIORITY_REPLY_MODEL,
-                             f"VIP_REPLY/{handle}", author=handle)
+                tpl = (BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower()
+                       else BUDDY_REPLY_PROMPT)
+                reply = generate_vip_reply(tpl, text, PRIORITY_REPLY_MODEL,
+                                           f"VIP_REPLY/{handle}", author=handle)
             if reply is None:
                 continue  # failed call: replayable
             if not reply:

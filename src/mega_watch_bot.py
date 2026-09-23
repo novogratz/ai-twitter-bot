@@ -22,7 +22,6 @@ from . import x_urls
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .reply_admission import judge_parent
-from .reply_bot import _is_reply_like_tweet
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
 from .reply_language import looks_french
 from .engagement_log import log_reply
@@ -75,7 +74,7 @@ def run_mega_watch_cycle():
             text = (t.get("text") or "").strip()
             if not text:
                 continue
-            if _is_reply_like_tweet(t, expected_author=username):
+            if x_urls.is_reply_like_tweet(t, expected_author=username):
                 log.info(f"[MEGA] Looks like a thread reply — skipping {url}")
                 continue
             # The status ID carries the post time; a URL without one is skipped.

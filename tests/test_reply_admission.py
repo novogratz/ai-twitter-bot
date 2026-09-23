@@ -44,6 +44,17 @@ def test_status_id_and_snowflake_age():
     assert x_urls.age("https://x.com/someone") is None
 
 
+def test_reply_like_tweet_is_a_nested_reply_or_someone_elses_post():
+    assert x_urls.is_reply_like_tweet({"url": url("someone"), "text": "@a hi"})
+    assert x_urls.is_reply_like_tweet({"url": url("someone"), "text": "hi", "is_reply": True})
+    assert not x_urls.is_reply_like_tweet({"url": url("someone"), "text": "hi"})
+    own = {"url": url("SomeOne"), "text": "hi", "author": "someone"}
+    assert not x_urls.is_reply_like_tweet(own, expected_author="@someone")
+    assert x_urls.is_reply_like_tweet(own, expected_author="other")
+    assert x_urls.is_reply_like_tweet({**own, "author": "Some One"}, expected_author="someone")
+    assert not x_urls.is_reply_like_tweet({**own, "author": "unknown"}, expected_author="someone")
+
+
 # --- rules on the post ------------------------------------------------------
 
 @pytest.mark.parametrize("handle,token", [

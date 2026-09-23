@@ -78,7 +78,8 @@ def run_engagement_targeting_cycle():
     """Rank whitelist posts by velocity and reply to the hottest few."""
     from . import action_guard
     from .replied_store import load_replied, save_replied
-    from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
+    from .reply_bot import _tweet_age_minutes, _handle_from_url
+    from .x_urls import is_reply_like_tweet
     from .direct_reply import _generate_single_reply, _is_on_niche, _is_fr_or_en
     from .reply_language import looks_english
     from .twitter_client import scrape_profile_tweets, reply_to_tweet
@@ -116,7 +117,7 @@ def run_engagement_targeting_cycle():
             text = (t.get("text") or "").strip()
             if not text or not _is_on_niche(text) or not _is_fr_or_en(text):
                 continue
-            if _is_reply_like_tweet(t):
+            if is_reply_like_tweet(t):
                 continue
             if int(t.get("likes") or 0) < MIN_LIKES:
                 continue

@@ -1327,7 +1327,7 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
     monkeypatch.setattr(bb, "_fresh_posts", lambda h: list(posts.get(h, [])))
     gen_calls = []
     monkeypatch.setattr(
-        bb, "_gen",
+        bb, "generate_vip_reply",
         lambda tpl, txt, model, label, author=None: gen_calls.append((label, txt)) or "sharp take")
     # Graphseo routes to his dedicated FR generator (operator 2026-06-07:
     # English shipped to him once — never again).
@@ -1417,7 +1417,6 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
     never _generate_graphseo_reply; output passes through humanize."""
     import src.direct_reply as dr
-    from src import btc_blitz as bb
 
     # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
     # LOCALLY from twitter_client — patch THERE, not on direct_reply.
@@ -1437,9 +1436,9 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
                         lambda text: graphseo_calls.append(text) or "réponse française")
     gen_labels = []
     def fake_gen(tpl, txt, model, label, author=None):
-        gen_labels.append((label, tpl is bb._BESTIE_REPLY_PROMPT))
+        gen_labels.append((label, tpl is dr.BESTIE_REPLY_PROMPT))
         return "the AI side sends love — and a fruit basket"
-    monkeypatch.setattr(bb, "_gen", fake_gen)
+    monkeypatch.setattr(dr, "generate_vip_reply", fake_gen)
     sent = []
     monkeypatch.setattr(tc, "reply_to_tweet", lambda u, t: sent.append(t) or True)
     import src.engagement_log as el
@@ -2816,7 +2815,7 @@ def test_persona_is_woman_mom_therapist_across_surfaces():
     assert "sharpest ai mind" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
-    from src import direct_reply, quote_tweet_bot, hotake_agent, agent, btc_blitz
+    from src import direct_reply, quote_tweet_bot, hotake_agent, agent
     assert "a woman, 45" in direct_reply.REPLY_PROMPT.lower()
     assert "mom" in direct_reply.REPLY_PROMPT.lower()
     assert "a woman, 45" in quote_tweet_bot.QUOTE_PROMPT.lower()
@@ -2824,8 +2823,8 @@ def test_persona_is_woman_mom_therapist_across_surfaces():
     import inspect
     agent_src = inspect.getsource(agent)
     assert "practicing\ntherapist and mom" in agent_src or "therapist and mom" in agent_src
-    blitz_src = inspect.getsource(btc_blitz).lower()
-    assert "big sister" in blitz_src and "big brother" not in blitz_src
+    bestie_prompt = direct_reply.BESTIE_REPLY_PROMPT.lower()
+    assert "big sister" in bestie_prompt and "big brother" not in bestie_prompt
 
 
 def test_follow_gate_english_only_and_unfollow_target_hold(monkeypatch):
