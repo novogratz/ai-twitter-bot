@@ -5,6 +5,9 @@ branches silent; this test pins that the branches themselves are gone, so a
 config change cannot bring them back. It reads the source with `ast`: every
 module under `src/` that `main.py` reaches through imports, at any depth,
 except `twitter_client`, which defines the chokepoints.
+
+The legacy modules that drove those surfaces stay out of reach too, and no
+other live module borrows a private helper from `reply_bot` (issue #108).
 """
 import ast
 from pathlib import Path
@@ -72,3 +75,26 @@ def test_live_modules_never_reference_a_disabled_write():
     assert not problems, (
         "A module reached from main.py names a quote, repost or thread write "
         "(2026-09-20 policy: zero):\n  " + "\n  ".join(problems))
+
+
+def test_legacy_surface_modules_are_unreachable_from_main():
+    reached = live_modules() & {"btc_blitz", "quote_tweet_bot", "retweet_bot"}
+    assert not reached, f"main.py reaches legacy modules: {sorted(reached)}"
+
+
+def _private_reply_bot_imports(path):
+    for node in ast.walk(ast.parse(path.read_text())):
+        if (isinstance(node, ast.ImportFrom)
+                and (node.module or "").split(".")[-1] == "reply_bot"):
+            for alias in node.names:
+                if alias.name.startswith("_"):
+                    yield node.lineno, alias.name
+
+
+def test_live_modules_never_borrow_a_private_reply_bot_helper():
+    problems = [f"src/{name}.py:{line}: {ref}"
+                for name in sorted(live_modules() - {"reply_bot"})
+                for line, ref in _private_reply_bot_imports(SRC / f"{name}.py")]
+    assert not problems, (
+        "A live module imports a private reply_bot helper; move it to the "
+        "module that owns its concern:\n  " + "\n  ".join(problems))

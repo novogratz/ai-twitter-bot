@@ -20,11 +20,11 @@ import os
 import traceback
 
 from .config import REPLY_MODEL
+from .direct_reply import (BESTIE_HANDLE, BESTIE_REPLY_PROMPT, BUDDY_REPLY_PROMPT,
+                           generate_vip_reply)
 from .logger import log
-from .llm_client import run_llm, unwrap_text
-from .humanizer import humanize, smart_trim, strip_agent_preamble
+from .humanizer import humanize, smart_trim
 
-BESTIE_HANDLE = os.environ.get("BESTIE_HANDLE", "TheBTCTherapist")
 BLITZ_MAX_AGE_MINUTES = 48 * 60  # ⛔ hard 48h rule — do not raise
 BLITZ_SCRAPE_DEPTH = int(os.environ.get("BLITZ_SCRAPE_DEPTH", "30"))
 
@@ -35,54 +35,6 @@ BLITZ_SCRAPE_DEPTH = int(os.environ.get("BLITZ_SCRAPE_DEPTH", "30"))
 def _buddy_handles() -> list:
     raw = os.environ.get("BLITZ_BUDDY_HANDLES", "Graphseo")
     return [h.strip().lstrip("@") for h in raw.split(",") if h.strip()]
-
-_BESTIE_REPLY_PROMPT = """You are @TheAIShrink — the AI Therapist: a woman, 45, practicing
-therapist and mom, sharpest AI mind on the timeline. @{author} (The Bitcoin Therapist)
-is your BEST FRIEND and little brother in group practice — you're the big
-sister who already made it out. He treats Bitcoin trauma; you treat AI-era
-portfolios. You're replying to his post:
-
-"{tweet_text}"
-
-THE BIT (the relationship, never break it):
-- You two run rival therapy practices and you LOVE him. Whatever pain
-  Bitcoin gave him this week, AI gave you the opposite — and you tease him
-  about it like a big sister who already made it out.
-- If he's suffering (bags down, working weekends, cope): warm mock-clinical
-  support + a wink that the AI side is doing great. "I have a couch free
-  Tuesday. The GPU money is paying for it."
-- If he's winning (BTC pumping): genuinely celebrate him, then deadpan that
-  you'll see his patients again at the next drawdown.
-- ALWAYS warm. He must want to like and reply to it. Never hostile, never
-  "have fun staying poor" energy in either direction.
-
-RULES:
-- ENGLISH. 80-200 chars. First 6 words must hook. One idea.
-- Therapist-deadpan funny. No hashtags, no links, no @ other accounts.
-- Never the same angle twice in a row — vary the joke structure.
-- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
-
-Output ONLY the reply text, or exactly SKIP."""
-
-_BUDDY_REPLY_PROMPT = """You are @TheAIShrink — the AI Therapist (a woman, 45, therapist and mom;
-AI x markets x investor psychology, sharpest-in-the-room numbers, deadpan
-warmth, zero bro-speak). @{author} is a FRIEND of the
-account — you reply to EVERYTHING he posts, like a sharp regular in his
-comments. You're replying to his post:
-
-"{tweet_text}"
-
-RULES:
-- MATCH THE LANGUAGE of his post (French post → French reply, English →
-  English).
-- Warm + sharp: add a precise observation, a therapist-deadpan reframe, or
-  a genuinely useful number — never generic praise, never "great post".
-- 80-200 chars. First 6 words must hook. One idea. No hashtags, no links,
-  no @ other accounts.
-- He must want to like or answer it.
-- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
-
-Output ONLY the reply text, or exactly SKIP."""
 
 
 def _fresh_posts(handle: str):
@@ -113,23 +65,6 @@ def _fresh_bestie_posts():
     return _fresh_posts(BESTIE_HANDLE)
 
 
-def _gen(prompt_tpl: str, tweet_text: str, model: str, label: str, author: str = None):
-    """The model's text; "" when it declines (SKIP), None when the call fails."""
-    prompt = prompt_tpl.format(author=author or BESTIE_HANDLE, tweet_text=(tweet_text or "")[:300])
-    try:
-        result = run_llm(prompt, model, label=label)
-        if result.returncode != 0:
-            return None
-        text = strip_agent_preamble(unwrap_text(result.stdout)).strip()
-        if not text:
-            return None
-        if text.upper().startswith("SKIP") or "skip" in text.lower()[:20]:
-            return ""
-        return text
-    except Exception:
-        return None
-
-
 def run_btc_blitz_cycle() -> None:
     fresh = _fresh_bestie_posts()
     if not fresh:
@@ -150,7 +85,7 @@ def run_btc_blitz_cycle() -> None:
         # this set move; the chokepoint stays the final guard.
         if url in load_replied():
             continue
-        reply = _gen(_BESTIE_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL, "BTC_BLITZ_REPLY")
+        reply = generate_vip_reply(BESTIE_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL, "BTC_BLITZ_REPLY")
         if not reply:
             continue
         reply = smart_trim(humanize(reply), 278)
@@ -179,7 +114,7 @@ def run_btc_blitz_cycle() -> None:
                 from .direct_reply import _generate_graphseo_reply
                 reply = _generate_graphseo_reply(t.get("text", ""))
             else:
-                reply = _gen(_BUDDY_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL,
+                reply = generate_vip_reply(BUDDY_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL,
                              "BUDDY_BLITZ_REPLY", author=buddy)
             if not reply:
                 continue

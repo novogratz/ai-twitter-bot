@@ -33,7 +33,7 @@ Modules none of those jobs reach are legacy, kept for reference.
 | Toronto clock, bedtime checks | `src/active_hours.py` |
 | Caps, pacing, write ledger, follow policy | `src/action_guard.py` |
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/reply_admission.py` |
-| Author, status ID and age read from a status URL | `src/x_urls.py` |
+| Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/replied_store.py` |
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/content_guard.py` |

@@ -20,7 +20,6 @@ from . import x_urls
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .reply_admission import judge_parent
-from .reply_bot import _is_reply_like_tweet
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
 from .reply_language import looks_french
 from .engagement_log import log_reply
@@ -93,7 +92,7 @@ def run_early_bird_cycle():
             text = tweet.get("text", "")
             if not url or url in _skipped:
                 continue
-            if _is_reply_like_tweet(tweet, expected_author=username):
+            if x_urls.is_reply_like_tweet(tweet, expected_author=username):
                 log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
                 continue
 
