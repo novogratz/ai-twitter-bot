@@ -8,7 +8,6 @@ from .logger import log
 from .state_errors import StateUnreadable
 from .twitter_client import (
     like_own_tweet_replies,
-    retweet_own_latest,
     scrape_own_tweet_and_replies,
     reply_to_tweet_in_thread,
     post_tweet,
@@ -218,6 +217,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
         log.info(f"[RECIPROCATE] Engaged back with {visited} engager(s).")
 
 
+# No job boosts any more; legacy boost_recycler_bot still imports these two.
 _BOOST_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "boost_history.json")
 
 
@@ -235,99 +235,6 @@ def _save_boost_history(s: set):
     with open(_BOOST_HISTORY_FILE, "w") as f:
         # Cap at 500 — far above any realistic 90-day window.
         json.dump(list(s)[-500:], f)
-
-
-def run_boost_cycle():
-    """Smart boost (2026-05-06): pick our highest-engagement recent post and
-    retweet THAT, not just the latest. The latest may be stale or low-signal;
-    the cheapest distribution lever should ride our actual viral content.
-
-    Falls back to retweet_own_latest() if scraping fails (so we never miss a
-    cycle if X's profile DOM hiccups).
-    """
-    from .twitter_client import scrape_profile_tweets, retweet_post, reboost_tweet
-
-    history = _load_boost_history()
-    log.info("[BOOST] Scraping own profile to pick best recent post...")
-    try:
-        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=12)
-    except Exception:
-        # 2026-06-07 fix: NEVER blind-toggle via retweet_own_latest here —
-        # pressing 't'+Enter on an already-retweeted post UN-retweets it.
-        # The morning log showed the banger's self-RT being toggled off/on
-        # every 20 min ("All recent posts already boosted — using
-        # retweet_own_latest"). On failure, skip; next cycle retries.
-        log.info("[BOOST] Scrape failed — skipping cycle (no blind toggle):")
-        traceback.print_exc()
-        return
-
-    if not tweets:
-        log.info("[BOOST] No tweets scraped — skipping cycle (no blind toggle).")
-        return
-
-    # Filter: must be ours, must have a URL. `own` = never-boosted (first-RT
-    # candidates); `own_boosted` = already-RT'd (resurfacing candidates).
-    own, own_boosted = [], []
-    bot_lc = BOT_HANDLE.lower()
-    for t in tweets:
-        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
-        # not the handle; comparing it to BOT_HANDLE silently dropped every
-        # own post (2026-06-07 banger bug). is_own_post is ground truth.
-        if not _is_own_post(t):
-            continue
-        url = t.get("url") or ""
-        if not url:
-            continue
-        row = {
-            "url": url,
-            "likes": int(t.get("likes") or 0),
-            "replies": int(t.get("replies") or 0),
-            "text": (t.get("text") or "").strip(),
-        }
-        (own_boosted if url in history else own).append(row)
-
-    if not own:
-        # Everything visible is already self-RT'd. Resurface the BANGER —
-        # the highest-engagement own post — via un-RT→re-RT (reboost_tweet
-        # always ends in the retweeted state, never a blind toggle).
-        if not own_boosted:
-            log.info("[BOOST] No own posts in scrape window — skipping.")
-            return
-        banger = max(own_boosted, key=lambda c: (c["likes"], c["replies"]))
-        log.info(f"[BOOST] All recent posts already boosted — resurfacing the "
-                 f"banger ({banger['likes']} likes): {banger['text'][:100]!r}")
-        try:
-            reboost_tweet(banger["url"])
-        except Exception:
-            log.info("[BOOST] Banger reboost failed:")
-            traceback.print_exc()
-        return
-
-    # Smart boost timing 2026-05-08: prefer the FRESHEST post (top-of-list
-    # in scrape order) rather than the highest-likes one. Algo push window
-    # is the first 30-60 min after publish — that's when self-RT lifts the
-    # most. The historical winners we already boosted; the new one we
-    # haven't. Highest-likes fallback if the freshest is identical.
-    fresh_top = own[0]  # scraper returns newest-first
-    if fresh_top["likes"] >= 1 or len(own) == 1:
-        best = fresh_top
-        log.info(
-            f"[BOOST] Boosting FRESHEST post (algo window): "
-            f"{fresh_top['likes']} likes / {fresh_top['replies']} replies — "
-            f"{fresh_top['text'][:120]!r}"
-        )
-    else:
-        # Freshest has 0 engagement signal — fall back to highest-likes
-        # in the visible window (still better than retweet_own_latest).
-        best = max(own, key=lambda c: (c["likes"], c["replies"]))
-    history.add(best["url"])
-    _save_boost_history(history)
-    try:
-        retweet_post(best["url"])
-        log.info(f"[BOOST] Boosted: {best['url']}")
-    except Exception:
-        log.info("[BOOST] Boost failed:")
-        traceback.print_exc()
 
 
 def safe_run_notify_cycle():
@@ -353,14 +260,3 @@ def safe_run_replyback_cycle():
         traceback.print_exc()
         health.record_failure("replyback")
 
-
-def safe_run_boost_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
-    try:
-        run_boost_cycle()
-        health.record_success("boost")
-    except Exception:
-        log.info("[BOOST] Error during boost cycle:")
-        traceback.print_exc()
-        health.record_failure("boost")

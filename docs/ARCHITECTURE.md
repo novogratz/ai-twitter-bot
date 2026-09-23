@@ -69,7 +69,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies. Generation of reply N+1 overlaps the posting of reply N. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and replies. The quote branch is gone: `quotes_done` is hard-coded to 0. |
+| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
@@ -283,7 +283,9 @@ pins the chokepoint guards, including those of legacy modules.
 intra-project import, function-local or inside `try/except` included, names a
 missing module or an undefined name, imports a module under `src/` by its bare
 name instead of through its package, or crosses a package folder without
-`__init__.py`.
+`__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
+`main.py` reaches through imports names a quote, repost or thread write;
+only `twitter_client`, which defines them, is exempt.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript` and `_paste_text` raise, the logger writes to a temporary
