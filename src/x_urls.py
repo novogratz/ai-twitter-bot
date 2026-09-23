@@ -1,0 +1,38 @@
+"""What a tweet's status URL says: its author, its status ID, its age.
+
+The scraper's `author` field is a display name; the URL is the only
+reliable source for the handle (AGENTS.md: handles come from URLs). Every
+module that needs one of these reads it here, so the rules agree: an
+anonymous `/i/` URL has no author, whoever asks.
+"""
+import re
+from datetime import datetime, timedelta, timezone
+
+# Snowflake epoch: ms since 2010-11-04T01:42:54.657Z.
+_TWITTER_EPOCH_MS = 1288834974657
+_AUTHOR_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/\d")
+_STATUS_RE = re.compile(r"/status/(\d+)")
+
+
+def author(url: str) -> str:
+    """Lowercase author handle, or "" when the URL names none (`/i/`)."""
+    m = _AUTHOR_RE.search(url or "")
+    if not m or m.group(1).lower() == "i":
+        return ""
+    return m.group(1).lower()
+
+
+def status_id(url: str) -> str:
+    """The tweet's status ID, or "" when the URL carries none."""
+    m = _STATUS_RE.search(url or "")
+    return m.group(1) if m else ""
+
+
+def age(url: str, now: datetime | None = None) -> timedelta | None:
+    """Time since the tweet was posted, read from its snowflake ID; None
+    when the URL carries no status ID."""
+    sid = status_id(url)
+    if not sid:
+        return None
+    posted = datetime.fromtimestamp(((int(sid) >> 22) + _TWITTER_EPOCH_MS) / 1000, tz=timezone.utc)
+    return (now or datetime.now(tz=timezone.utc)) - posted
