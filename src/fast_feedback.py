@@ -15,7 +15,8 @@ Heuristic (intentionally simple + safe):
 
 Hand-curated static targets are NEVER touched here. Only the strategy
 agent's own additions are subject to fast pruning. This preserves the
-"append-only safety boundary" already documented in CLAUDE.md.
+strategy agent's "additions only" boundary (docs/HISTORY.md,
+"Self-modification boundary").
 
 Called once per performance cycle (every 2h) so a bad addition gets
 killed within 2h of crossing the noise threshold.

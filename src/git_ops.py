@@ -16,7 +16,7 @@ Notes:
     accidentally commit secrets or local debug files.
   - We never use `--no-verify` (let pre-commit hooks run normally).
   - Pushes to the current branch; the autonomous mandate explicitly
-    permits this (CLAUDE.md project_autonomous_mandate memory).
+    permits this (2026-06-05 autonomous mandate, docs/HISTORY.md).
 """
 import os
 import subprocess

@@ -72,7 +72,7 @@ do not survey everything.
    for whether the profile surfaces are earning likes; if a format/voice
    measurably wins, tilt toward it.
 2. IMPROVE: implement ONE SMALL, concrete change (fix > feature), target
-   ≤~40 lines of diff. Match existing code style and invariants (CLAUDE.md).
+   ≤~40 lines of diff. Match existing code style and invariants (AGENTS.md).
    If you can't find a clear win, a focused test or a doc-accuracy fix counts
    — shipping something small and correct beats a sprawling change that
    times out.
@@ -84,7 +84,7 @@ do not survey everything.
    and NEVER arm delayed kill timers.
 4. SHIP VIA PR (operator mandate — PR flow, never direct push to main here):
    a. git checkout -b improve/$(date +%Y-%m-%d)-<short-slug>   (branch from up-to-date main)
-   b. Commit ONLY your improvement files (update CLAUDE.md+CODEX.md, +README if user-facing, same commit). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those on main.
+   b. Commit ONLY your improvement files (a behaviour change updates AGENTS.md, README.md and docs/EDITORIAL_POLICY.md in the same commit, per AGENTS.md > Documentation). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those on main.
    c. git push -u origin <branch>
    d. gh pr create --fill --body including: what was diagnosed, what changed, test results, and the standard Claude Code footer.
    e. CI wait — BOUNDED so you don't burn the turn budget polling: 'sleep 90 && gh pr checks <pr-number>'. If green → step f. If still pending, 'sleep 90 && gh pr checks <pr-number>' ONCE more. If FAILED → fix on the branch, push, and repeat this bounded wait at most ONE more time.

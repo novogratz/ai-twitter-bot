@@ -1581,7 +1581,7 @@ take you've already written."""
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
-            # Source rejectlist (CLAUDE.md content-farm list). Prompt-side
+            # Source rejectlist (`_REJECTED_SOURCE_DOMAINS`). Prompt-side
             # rule leaks ~once a day, so this is the deterministic backstop.
             if _is_rejected_source(src_url):
                 log.info(f"[NEWS] Source on content-farm rejectlist — SKIPPING: {src_url}")

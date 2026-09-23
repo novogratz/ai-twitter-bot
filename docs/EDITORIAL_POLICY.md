@@ -51,12 +51,13 @@ slot needs news from the last six hours and an exceptional-value approval.
 
 ## Inspection and recovery
 
-`uv run python main.py --dry-run` shows jobs and policy without browser/model
-calls. `editorial_review.jsonl` stores accepted and rejected draft decisions.
-`editorial_state.json` stores attempts, slots and recent publication/source
-history. A `pending` slot means submission was interrupted or ambiguous: it is
-not automatically retried. Check the profile before clearing that slot manually.
-Corrupt editorial state fails closed and is reported in the log.
+The dry-run command ([`AGENTS.md#verification`](../AGENTS.md#verification))
+shows jobs and policy without browser/model calls. `editorial_review.jsonl`
+stores accepted and rejected draft decisions. `editorial_state.json` stores
+attempts, slots and recent publication/source history. A `pending` slot is never
+retried automatically; clear it by hand as described in
+[`OPERATIONS.md#recovery`](OPERATIONS.md#recovery). Corrupt editorial state
+fails closed and is reported in the log.
 
 The active scheduler omits autonomous code/prompt rewriting and older profile
 publishing jobs. Hard caps in `src/config.py` also override stale strategy data.

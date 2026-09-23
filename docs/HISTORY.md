@@ -1,31 +1,14 @@
-# CODEX.md
+# History — mandates and incidents, June to September 2026
 
-## Current operator policy — September 20, 2026
+Archive of the former `CLAUDE.md` / `CODEX.md`, moved here on 2026-09-23.
+Everything below predates the editorial policy of 2026-09-20
+([`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md)), which supersedes it: volumes,
+caps, schedules, personas and lifecycle instructions here are historical.
+Read an entry to understand why a legacy module behaves as it does, or before
+re-enabling a disabled surface. Dates in each entry are the source of truth;
+their order in the file is not strictly chronological.
 
-This supersedes the historical volume, overnight and persona notes below.
-The bot works only 04:30–22:00 America/Toronto. Target six useful original AI
-posts daily, at most seven combined profile publications. Quotes, reposts,
-self-recycling, thread bursts and startup bursts are disabled. Daytime replies
-remain uncapped, with browser pacing, per-tweet dedup and quality checks.
-
-The persona is a confident, warm, naturally conversational, occasionally flirty
-45-year-old mom and AI enthusiast. No forced jokes, repeated slogans, invented
-experiences or fake typos. AI knowledge, news and useful updates come first.
-
-`main.py` runs the editorial scheduler. `src/editorial_bot.py` uses fetched
-primary sources, evidence checks and a separate editorial review. Review
-feedback informs bounded retries; ambiguous submissions retain their slot.
-`src/active_hours.py` and the browser boundary enforce bedtime. Old strategy
-values cannot restore quotes or lift the hard seven-post ceiling.
-
-The 500k-view target is measured using observed views of originals published
-in the last seven days, with missing coverage explicit; it is not guaranteed
-or reported as homepage attribution. The active scheduler excludes autonomous
-code/prompt rewriting. Preserve live state on deployment: existing actions
-still count toward today's cap. See `docs/EDITORIAL_POLICY.md` and README.
-
-
-Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). Use whichever CLI you have authenticated.
+---
 
 > **You'll hate me until I'm right.**
 
@@ -2377,7 +2360,7 @@ opencode auth              # or claude login / gemini login
 ./bin/run.sh               # foreground start, Ctrl-C to stop
 ```
 
-For full operations playbook see [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
+For full operations playbook see [`docs/OPERATIONS.md`](OPERATIONS.md).
 
 ---
 
@@ -2504,13 +2487,17 @@ Agents CANNOT touch:
 | `directives.md` | Style guide (rewritten by evolution_agent when maintenance is enabled) |
 | `engagement_log.csv` | Append-only action log (source of truth for ROI math) |
 
-For the full module catalog see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+For the full module catalog see [`docs/ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ---
 
 ## Adding a new bot
 
-See [`docs/ARCHITECTURE.md#6-adding-a-new-bot`](docs/ARCHITECTURE.md#6-adding-a-new-bot).
+> **Superseded (2026-09-23).** Follow
+> [`ARCHITECTURE.md#adding-a-job`](ARCHITECTURE.md#adding-a-job): daily
+> counters now key on the Toronto day, not `date.today()`.
+
+See [`docs/ARCHITECTURE.md#adding-a-job`](ARCHITECTURE.md#adding-a-job).
 
 Mandatory invariants:
 
@@ -2524,4 +2511,7 @@ Mandatory invariants:
 
 ## Memory model
 
-This file is read by Claude Code agentic sessions when working on the bot's source. It exists to give the AI context about the project so first-time edits don't break invariants. The same content lives in [`CODEX.md`](CODEX.md) for Codex CLI sessions. **Keep them in sync** when you edit either.
+> **Superseded (2026-09-23).** Agent sessions now read
+> [`AGENTS.md`](../AGENTS.md); nothing loads this archive automatically.
+
+This file is read by Claude Code agentic sessions when working on the bot's source. It exists to give the AI context about the project so first-time edits don't break invariants.

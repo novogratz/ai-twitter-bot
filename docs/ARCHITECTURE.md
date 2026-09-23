@@ -1,256 +1,247 @@
 # Architecture
 
-This document is the engineering reference for the bot. For the runbook see [OPERATIONS.md](OPERATIONS.md); for env vars see [CONFIGURATION.md](CONFIGURATION.md).
+How the running bot is built, as of the 2026-09-20 policy (PR #97). The rules
+it enforces are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md); how to run and
+debug it is in [OPERATIONS.md](OPERATIONS.md). `main.py` is the source of truth
+for what runs: where this page and the code disagree, trust the code.
 
----
+The pre-September system (~30 bots, quotes, reposts, self-modifying agents) is
+described in [HISTORY.md](HISTORY.md) and in this file's git history before
+commit `e7b4d47`.
 
-## 1. System overview
+## Process
 
-The bot is a single Python process running an `APScheduler.BlockingScheduler` loop. ~30 jobs (each one a "bot") fire on independent intervals and serialize browser access via a single `_safari_lock` mutex inside `twitter_client.py`. The process never makes Twitter/X API calls; all interactions go through Safari + AppleScript JS-injection.
+One Python process drives Safari through AppleScript and injected JavaScript.
+There is no X API client.
 
-### Process model
+`main.py` builds an APScheduler `BackgroundScheduler` with two thread pools:
+`editorial` (one thread, originals only) and `default` (twelve threads, every
+other job). Reply scans cannot starve the editorial job of a thread, but all
+browser work shares `_safari_lock`, so a post can still wait behind a reply.
+Every job is an `IntervalTrigger` registered through the local `add()` helper,
+which wraps it in `active_hours.awake_job`. There are no cron triggers, no
+startup bursts and no warmup phase.
 
-```
-main.py
-   │
-   ├── argparse → flags (--post-only, --reply-only, --dry-run)
-   ├── signal handlers → SIGTERM/SIGINT → graceful scheduler.shutdown()
-   ├── BlockingScheduler
-   │     ├── 30+ IntervalTrigger jobs, each wrapped in safe_run_*
-   │     └── Each safe_run_* calls health.record_success/failure
-   │
-   └── twitter_client._safari_lock (threading.RLock)
-            └── serialises all Safari activations
-```
+At start, `main()`:
 
-### Data flow
+1. takes `bot.lock` with `fcntl.flock` and exits if another instance holds it;
+2. installs SIGTERM/SIGINT handlers that call `active_hours.request_stop()`;
+3. starts the scheduler paused, then checks `is_active()` every 15 seconds and
+   pauses or resumes it at the 04:30 and 22:00 boundaries.
 
-```
-                     ┌─────────────────────────┐
-                     │   external_signal.json  │
-        RSS  ─────┐  │  (RSS + HN + Reddit +   │
-        HN   ─────┼──▶  X /home, top 30)       │
-        Reddit ───┘  └────────────┬────────────┘
-        X /home  ────────────────┘
-                                  ▼
-        ┌─── prompt assembly (agent.py / hotake_agent.py / etc.) ───┐
-        │                                                           │
-        │   1. lang_directive (en|fr) ── from lang_mode.py           │
-        │   2. core_identity ── from core_identity.md                │
-        │   3. bot_self ── from self_evolution_agent.json            │
-        │   4. global_mood ── from personality.json                  │
-        │   5. external_signal ── HN/RSS/Reddit/Home pulse           │
-        │   6. follower_growth ── from follower_history.json         │
-        │   7. pattern_stats ── from engagement_log + performance    │
-        │   8. live_strategy ── from meta_strategy_agent (caps)      │
-        │   9. directives.md ── from evolution_agent (style rules)   │
-        │  10. hard_rules + respect_list (always last)               │
-        │                                                           │
-        └────────────┬──────────────────────────────────────────────┘
-                     ▼
-              run_llm() → configured CLI provider
-                     ▼
-              humanizer + strip_agent_preamble + scrub_metadata_leaks
-                     ▼
-              twitter_client.post_tweet
-                     ▼
-              engagement_log.csv (with pattern attribution)
-                     ▼
-        performance.evaluate_and_learn (every 2h)
-                     ▼
-        evolution_agent / reflection_agent / meta_strategy_agent
-                     ▼
-        rewrite directives + dossiers + caps
-                     ▼
-        git_ops.auto_push (per agent)
-```
+Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
+only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
+before touching the browser or a model).
 
----
+## Waking hours
 
-## 2. Module catalog
+`src/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 22:00, DST
+handled by `zoneinfo`. `require_active()` raises `OutsideActiveHours` outside
+that window or once a stop was requested; `awake_job()` turns a job into a
+no-op outside the window (a job started after a stop request halts at its
+first `require_active()`).
 
-63 modules. Grouped by responsibility.
+Pausing the scheduler is not enough, because a job queued at 21:59 would still
+run. The check is repeated at each point where work leaves the process:
 
-### Content generation (2026-06-07: slot model — originals are the conversion layer)
+- `twitter_client._AwakeSafariLock`, before and after acquiring the Safari lock;
+- `twitter_client._run_applescript` and each direct `osascript` call inside
+  `twitter_client`. The `osascript` calls in `like_bot`, `followback_bot`,
+  `follower_tracker_bot` and `safari_hygiene` are only covered by the lock
+  check or by `awake_job`;
+- `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
+  also capped at the time left before 22:00;
+- `action_guard.can_post`, and `editorial_bot` before fetching a source and
+  again before publishing.
 
-| Module | Cadence | Output |
+A request already sent to X or to a model can finish after 22:00; it cannot
+authorize a new action.
+
+## Jobs
+
+`build_scheduler()` registers 17 jobs, plus `reply_job` when
+`ENABLE_REPLY_SEARCH=1`. Each `safe_run_*` entry point catches its own
+exceptions; all but the editorial and reach-report jobs also report to
+`health`.
+
+| Job | Every | What the cycle does today |
 |---|---|---|
-| `run_post_slot` (main.py) | cron 09:30 / 12:30 / 16:30 / 20:00 NY ±15min jitter | ONE original per US-market slot — tries news/hotake → breakout → spicy → stunt, stops on the first landed post; 12:30 leads with the GIF stunt |
-| `agent.py` / `hotake_agent.py` | inside slots | News post / hot take (therapist-framed, no URL in body) |
-| `breakout_bot.py` | inside slots | Fast-trend reaction post |
-| `spicy_bot.py` | inside slots | Polarising take; QUESTION reply-bait capped 4/week |
-| `viral_stunt_bot.py` | inside slots (leads 12:30) | Native-GIF meme original |
-| `thread_bot.py` / `digest_thread_bot.py` / `recap_thread_bot.py` | DISABLED | threads aren't in the spec mix |
+| `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies. Generation of reply N+1 overlaps the posting of reply N. |
+| `feed_sweep_job` | 8 min | Reads For You and Following and replies. The quote branch is gone: `quotes_done` is hard-coded to 0. |
+| `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
+| `mega_watch_job` | 2 min | Replies to fresh posts from the top tracked handles. |
+| `replyback_job` | 3 min | Replies under our latest post to people who answered it, then likes their profiles and tries to follow up to 5 of them. |
+| `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
+| `debate_job` | 12 min | Answers fresh mentions, at most 4 turns per author per day. |
+| `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
+| `engage_job` | 8 min | Tries to follow a handful of accounts and likes their posts when profile visits are allowed. |
+| `followback_job` | 20 min | Follows back recent followers (`reciprocal=True`). |
+| `follow_engagers_job` | 50 min | Follows people who replied to us, from `replied_back.json`. |
+| `like_job` | 4 min | Likes posts from niche searches. |
+| `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
+| `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
+| `follower_tracker_job` | 30 min | Records the follower count in `follower_history.json`. |
+| `reach_report_job` | 60 min | Writes `editorial_reach.json` and `.md`. See [Reach report](#reach-report). |
 
-### Reshare (the QUALITY lane — operator focus 2026-06-07)
+Two settings decide how much of the table does anything:
 
-| Module | Cadence | Behavior |
-|---|---|---|
-| `quote_tweet_bot.py` | every 4 min | EN viral-query + curator-handle discovery → 50-like floor, 24h age, niche → the measured formula (re-denominate the number + mechanism metaphor + closing question) → ≤100/day chokepoint, screenshot-worthy or SKIP |
-| `hot_quote_bot.py` | cron 8/12/16/20 NY ±10min | external_signal top story → most viral tweet about it → quote |
-| `btc_blitz.py` (quote side) | startup + 6h | @TheBTCTherapist best ≤48h posts → AI-side inversion bit + GIF |
-| `retweet_bot.py` | every 2 min | Plain RTs ≤2/day — reciprocity / MUST_REPOST (TheBTCTherapist) only |
-| `notify_bot.run_boost_cycle` | every 20 min | Self-RT freshest own post (algo-window timing) |
-| `boost_recycler_bot.py` | every 45 min | Winners (≥1 external like in 1h) → self-RT at 1h, then un-RT→re-RT every 4h+, max 4 cycles, ≤48h |
+- `PROFILE_VISIT_ALLOWLIST` (default `TheBTCTherapist,Graphseo`). Profile
+  scrapes and profile likes return nothing for other handles, so
+  `early_bird_job`, `mega_watch_job` and the like step of `engage_job` only
+  act on allowlisted accounts.
+- The follow policy in `action_guard.can_follow`. With the code defaults, the
+  whitelist and the following ceiling refuse most follows; the live `.env`
+  decides what actually passes.
 
-### Reply paths (the QUANTITY lane — unlimited, freshest-fast-rising first)
+## Editorial pipeline
 
-| Module | Cadence | Source |
-|---|---|---|
-| `direct_reply.py` | dynamic | Investor-psych + AI + markets searches, `from:` scans of seeds/foils; `_freshness_sort_key` orders <60-min risers first |
-| `feed_sweeper_bot.py` | every 8 min | For You / Following: ≥100 likes → quote, below → reply |
-| `btc_blitz.py` (reply side) | startup + 6h | EVERY ≤48h @TheBTCTherapist post (one reply per tweet, ever) |
-| `early_bird_bot.py` | every 4-12 min | Curator top-30 (`account_curator.tracked_handles`), 12-min freshness window |
-| `mega_watch_bot.py` | every 90s | Curator top-12, ≤4-min window, top-5-reply race |
-| `replyback_agent.py` (in `notify_bot`) | every 8 min | Reply-back to people who reply to OUR tweets |
-| `first_hour_babysitter.py` | every 10 min | Extra replyback sweeps while latest post <60 min old |
-| `viral_followup_bot.py` | every 5 min | When own post gets traction, post follow-up |
-| `spike_bot.py` | every 8 min | When own post hits ≥25 likes, orchestrate amplification |
+`src/editorial_bot.py` runs one slot at a time under a non-blocking lock.
 
-### Follow / network (2026-06-07: operator-manual unfollows, curator-earned targets)
+1. **Slot.** `SLOTS` lists 05:00, 08:00, 11:30, 14:30, 17:30, 20:30 and an
+   optional 21:30. A slot is due for 45 minutes, never past 22:00, and only if
+   `editorial_state.json` has no entry for it. A missed slot is not caught up.
+2. **Attempts.** Three per slot per day, restarts included. The counter is
+   saved before any work.
+3. **Sources.** Six first-party feeds (OpenAI, Google AI, DeepMind, Hugging
+   Face, NVIDIA, Microsoft Research) supply AI news under 48 hours old; the
+   three newest are kept. Twelve Hugging Face documentation pages rotate daily
+   as evergreen topics. URLs used in the last seven days are skipped. Each page
+   is fetched over HTTPS from an allowed host, 12-second timeout, 1 MB read.
+4. **Draft.** The model sees `core_identity.md`, the hard rules, the slot
+   brief, the last rejection reason for this slot, recent posts and numbered
+   evidence sentences from each source. It returns JSON matching
+   `editorial_schemas.DRAFT_SCHEMA`, or an explicit skip.
+5. **Review.** Deterministic checks first: 80–250 characters, trusted source,
+   angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
+   1–3 evidence ids that resolve to sentences found in the source text, then
+   `content_guard.validate` and `is_duplicate`. The 21:30 slot needs news under
+   six hours old. A second model call (`REVIEW_SCHEMA`) must approve all six
+   criteria, plus `exceptional` at 21:30.
+6. **Audit.** An attempt that reaches review appends a line to
+   `editorial_review.jsonl`; a rejection stores its reason as feedback for the
+   next attempt. Nothing is written when `can_post` refuses (spacing or
+   ceiling), when the three attempts are spent, or when no source could be
+   fetched; that last case still consumes an attempt.
+7. **Publish.** Waking hours and slot validity are checked again. The slot is
+   marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
+   the draft plus the source URL. `True` marks it `published`; `False` frees
+   the slot; an exception leaves it `pending`, which is never retried
+   automatically. With `DRY_RUN` set, the text is logged and nothing is marked.
 
-| Module | Cadence | Behavior |
-|---|---|---|
-| `marquee_follow_bot.py` (seed-follow) | every 15 min | Whitelist seeds in tier priority order, 1 attempt/cycle; display-name resolution before follow; chokepoint enforces 20/day, ≥10-min gaps, 300/150 total ceiling |
-| `account_curator.py` | every 4h | Earns `tracked_accounts.json` from on-lane engagements × conversion weights (pins: TheBTCTherapist, Graphseo); promotes ≤3/day to whitelist `discovered` tier |
-| `smart_unfollow_bot.py` | DISABLED (cap 0) | Operator unfollows manually (`bin/mass_unfollow.py` / `/unfollow` skill) |
-| `follow_blast_bot.py` / `followback_bot.py` | OFF / cap 0 | whitelist-only mode blocks strangers at the chokepoint |
-| `discover_bot.py` / `scout_agent.py` | every 2h / 4h | Discovery candidates → suggestions (never auto-follow outside the whitelist) |
+`editorial=True` skips the URL stripping and the random casualization other
+posts get, so the reviewed text ships unchanged. `post_tweet` checks
+`can_post(POST)` again under the Safari lock.
 
-### Like / promote
+Models: drafts and reviews go through `run_llm` with
+`force_provider=PROFILE_LLM_PROVIDER`. On Ollama, `EDITORIAL*` labels use
+`EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with the JSON schema as
+`format`, and a timeout of `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
+bedtime. When Ollama fails, `llm_client` falls back to `LLM_FALLBACK_CLI`,
+which defaults to codex even when the variable is empty. `LLM_DISABLE_FALLBACK=1`
+turns the fallback off.
 
-| Module | Cadence | Behavior |
-|---|---|---|
-| `like_bot.py` | every 15 min | JS-click ~18 likes on niche search results |
-| `pin_bot.py` | every 6h (idempotent daily) | Auto-pin highest-likes own post via JS menu |
-| `promote_bot.py` | every 3h | Plain-repost top recent reply onto profile |
+## Write path and limits
 
-### Real-time signal
+Every write that should count goes through a function in
+`src/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
+`reply_to_tweet_in_thread`, `follow_account`, `like_tweet`. `post_tweet`,
+the reply functions and `follow_account` return `True` when they submitted the
+action, `False` when a rule refused it, and callers log or count only on
+`True`. Two limits: `True` means the keystrokes were sent, not that X
+confirmed them, and under `DRY_RUN` these functions also return `True`.
+`like_tweet` returns nothing.
 
-| Module | Cadence | Source |
-|---|---|---|
-| `rss_signal_bot.py` | every 5 min | 20 trusted RSS feeds, parallel fetch |
-| `hn_signal_bot.py` | every 20 min | HN front page + Reddit hot |
-| `x_home_scout_bot.py` | every 7 min | /home niche-filter |
-| `auto_tune_bot.py` | every 30 min | Per-source velocity gauge |
-| `mega_watch_bot.py` (signal side) | every 90s | Top-10 mega-account fresh tweets |
+Three modules sit behind them:
 
-### Autonomous self-modification
+- `src/config.py` holds the ceilings that neither `.env` nor
+  `live_strategy.json` can lift: seven profile publications a day, quote and
+  repost caps at 0, originals capped at 7 and spaced by at least 3600 seconds,
+  replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
+  these fixed values whatever `live_strategy.json` says.
+- `src/action_guard.py` keeps `action_ledger.json` (90 days, Toronto
+  timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. A
+  corrupt ledger refuses the write. Quotes and retweets are always refused;
+  replies only need their spacing (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter).
+  No active job calls `unfollow_account`, and `MAX_UNFOLLOWS_PER_DAY`
+  defaults to 0.
+- `src/content_guard.py` validates text before publication: near-term price
+  targets, duplicates, truncation, violence, skip rationales.
 
-| Agent | Cadence | Output | Auto-push |
-|---|---|---|---|
-| `meta_strategy_agent.py` | 4h | `live_strategy.json` (caps, cadence, topic focus) | ✓ |
-| `strategy_agent.py` | 3h | `dynamic_queries.json` + `dynamic_accounts.json` | ✓ |
-| `evolution_agent.py` | 3h | `directives.md` + `pruned_accounts.json` + `reinforced_accounts.json` | ✓ |
-| `reflection_agent.py` | 6h | `personality.json` (per-account dossiers + topic positions) | ✓ |
-| `self_evolution_agent.py` | 4h | `bot_self.json` (mood, obsession, drift, self_narrative) | ✓ |
-| `scout_agent.py` | 4h | `dynamic_accounts.json` + auto-follows | ✓ |
+`reply_to_tweet` also owns reply deduplication. It re-reads
+`replied_tweets.json`, refuses a tweet already answered, and marks it just
+before writing.
 
-### Performance + telemetry
+`personality_store.hard_rules_block()` renders the hard rules and the respect
+list from `respect_list.json`. The editorial prompt, the replyback prompt and
+`direct_reply._generate_single_reply` (shared by the search, feed-sweep,
+early-bird and mega-watch replies) include it; the debate prompt and the VIP generators do
+not (see [Known gaps](#known-gaps)). No chokepoint applies the respect list to
+outgoing text.
 
-| Module | Cadence | Behavior |
-|---|---|---|
-| `performance.py` | every 2h | Scrape own profile metrics, write `performance_log.json` + `learnings.json`, compute pattern bandit |
-| `daily_digest.py` | hourly (idempotent) | Append yesterday's rollup to `daily_digest.md` |
-| `follower_tracker_bot.py` | every 30 min | Scrape /CryptoAIDecode header, log `follower_history.json` |
-| `cleanup_bot.py` | hourly (idempotent) | Daily state hygiene — log rotation + JSON caps |
-| `heartbeat_bot.py` | every 60s | Alive-tick log line |
+## Reach report
 
-Current impact bias: active prompts and repost scoring favor concrete,
-numeric, named-actor updates over abstract one-liners. The data-backed pattern
-is actor + exact number + consequence, e.g. BTC buys, funding, valuations,
-capex, regulation, datacenter energy, and clear winners/losers.
+`src/reach_report.py` matches the originals recorded in
+`editorial_state.json` over the last seven days against a scrape of our own
+profile, sums their public view counts and compares the total with the
+500,000-view target. It reports missing coverage and never claims
+home-timeline attribution. It does not influence any cap.
 
-### Safety + infrastructure
+## Known gaps
 
-| Module | Purpose |
-|---|---|
-| `health.py` | Per-bot success/failure tracking; 3-fail Safari restart |
-| `suppression_watch_bot.py` | Hourly engagement health check; pauses aggressive bots if avg likes drop |
-| `respect_list.py` | Soft list of protected handles; output scrub before post |
-| `personality_store.py` | Hard rules + per-account dossiers + bot self loader |
-| `humanizer.py` | Strip AI artifacts (em dashes, robotic openers, agent preamble) |
-| `pattern_tags.py` | Comedy-pattern enum + extract/scrub helpers |
-| `lang_mode.py` | Bilingual content language picker |
-| `git_ops.py` | Best-effort autonomous git push helper |
-| `engagement_log.py` | CSV append-only log: ts, type, text, target_url, source, pattern |
+These are how the code behaves today, not design intent:
 
----
+- `like_job`, `notify_job` and `pin_job` click in Safari without going
+  through a chokepoint: no ledger entry, no `can_post`, and `DRY_RUN` does not
+  stop them. `notify_job` presses the `l` key, which toggles a like.
+- `debate_bot`, `follow_engagers_bot`, `like_bot` and `pin_bot` key their
+  daily counters on `date.today()` (machine time), while the ledger uses the
+  Toronto day.
+- `session_refresh_job` and the `health` recovery restart Safari without
+  taking `_safari_lock`. The job has no waking-hours check of its own; it only
+  runs while the scheduler is awake.
+- `debate_bot` (`DEBATE_PROMPT`) and the VIP generators in `direct_reply`
+  (`btc_blitz._gen`, `_generate_graphseo_reply`) build prompts without the
+  hard rules or the respect list.
+- `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
+  can overlap.
 
-## 3. Key invariants
+## Legacy modules
 
-These properties hold at every point in the bot's life cycle:
+Most files in `src/` are not reached by any scheduled job: the quote, repost,
+thread, boost, signal, self-modification and analytics bots. They stay for
+reference and because `tests/test_guards.py` still pins their guards. A
+module is live only if a job in `build_scheduler()` reaches it.
 
-1. **No cycle ever crashes the scheduler.** Every `safe_run_*` wraps the body in try/except and reports to `health`.
-2. **No state file is corrupted by partial write.** Every persistent file uses `json.dump` to a fully-formed dict; counter increments load-modify-save.
-3. **No tweet is double-posted.** Every reply/post path has lock-URL-before-publish dedup against a persistent set.
-4. **No protected handle is named in critical content.** The `respect_list.scrub_text_or_skip()` final-line defense rejects output containing `@<protected>` or bare-token + derisive marker.
-5. **No pattern/source/image metadata leaks into a posted tweet.** `pattern_tags.extract_pattern` + `humanizer.strip_agent_preamble` + `twitter_client._scrub_metadata_leaks` form a 3-layer guard.
-6. **No autonomous agent can move caps outside hard ranges.** `meta_strategy_agent._BOUNDS` clamps every output.
-7. **No git commit is created on a failed cycle.** `auto_push` is called only after `health.record_success`.
+## Adding a job
 
----
+1. Expose `safe_run_<name>_cycle()` in `src/<name>.py`. Catch every exception
+   inside it and call `health.record_success` or `record_failure`.
+2. Register it in `build_scheduler()` with `add(fn, minutes, "<name>_job")`.
+   Never call `scheduler.add_job` directly: `add()` supplies the waking-hours
+   wrapper.
+3. Take `_safari_lock` for any browser work and close the tab you opened.
+4. Write only through the `twitter_client` chokepoints; add a new rule inside
+   the chokepoint, not in the job.
+5. Key daily counters on the Toronto day (`active_hours.now_local()`).
+6. Pin the new behaviour with a test. A job that publishes more, or revives a
+   disabled surface, also needs an operator request and an update to
+   [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
 
-## 4. Hard rules (immutable)
+## Tests
 
-Two rules are stamped into every generation prompt via `personality_store.HARD_RULES_BLOCK`. They cannot be auto-rewritten by any agent:
+`tests/test_editorial.py` covers the current policy: Toronto and DST
+boundaries, bedtime checks at the lock and before AppleScript, the daily
+budget, slot timing and retries, source evidence, review rejection, ambiguous
+submissions, dry-run isolation and reach accounting. `tests/test_guards.py`
+pins the chokepoint guards, including those of legacy modules.
 
-1. **No illegal content** in any form.
-2. **No trolling of US government / federal agencies** (Fed, SEC, IRS, FBI, DOJ, etc.). Commenting on the *facts* of their decisions is fine; mocking is not.
+`tests/conftest.py` walls tests off from production: `webbrowser.open`,
+`_run_applescript` and `_paste_text` raise, the logger writes to a temporary
+file, and the engagement log, tweet history, replied store, ledger and
+personality file point to `tmp_path`. A mock placed on a caller module misses
+function-local imports; patch the primitive in `twitter_client`.
 
-A third dynamic rule is added at runtime from `respect_list.json`: never criticize protected handles by name.
-
----
-
-## 5. Self-modification boundary
-
-What an agent CAN modify autonomously:
-
-- `dynamic_queries.json` / `dynamic_accounts.json` (additions only)
-- `directives.md` (overwritten each cycle)
-- `pruned_accounts.json` (max 3 prunes/cycle, TTL 30d)
-- `reinforced_accounts.json` (max 5/cycle, no TTL)
-- `personality.json` (max 30 account updates / 10 topic updates per cycle)
-- `bot_self.json` (max 5 voice_tweaks, 5 drift entries)
-- `live_strategy.json` (caps clamped to bounds)
-
-What it CANNOT touch:
-
-- `core_identity.md` (the ideological spine)
-- `BLOCKLIST` in `config.py`
-- `respect_list.py` defaults (operator-managed)
-- `personality_store.HARD_RULES_BLOCK`
-- Quiet-hour boundaries
-- Any source code (only state files)
-
----
-
-## 6. Adding a new bot
-
-1. Write `src/<your_bot>.py` exposing `safe_run_<your_bot>_cycle()`.
-2. Inside `safe_run_*`, wrap the cycle body in try/except. Call `health.record_success/failure` at the end.
-3. If the bot writes state files that should be visible in git, call `git_ops.auto_push([...], "message")` after success.
-4. If the bot interacts with X via Safari, take `_safari_lock` before opening any URL and `close_front_tab` at the end.
-5. Register in `main.py`:
-   ```python
-   from src.your_bot import safe_run_your_bot_cycle
-   ...
-   scheduler.add_job(
-       safe_run_your_bot_cycle,
-       trigger=IntervalTrigger(minutes=N),
-       id="your_bot_job",
-   )
-   ```
-6. If your bot has a daily cap, key it by `date.today().isoformat()` in a state file and short-circuit when reached.
-
----
-
-## 7. Testing strategy
-
-Modules are stateless or store JSON; the bot is exercised by running it. There are no traditional unit tests. The contract is:
-
-- `python3 -c "import main"` must succeed (CI smoke test).
-- `python3 -c "import src.<module>"` must succeed for every module.
-- `./bin/run.sh` must boot through the AUTONOMY AUDIT block without exception within 10 seconds.
-
-Any new bot must satisfy the same contract.
+CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
+3.12 with only `pytest` and `apscheduler` installed, on every pull request and
+every push to `main`.

@@ -42,16 +42,19 @@ Requires macOS, Safari with JavaScript from Apple Events enabled, Python 3.12+,
 (`EDITORIAL_OLLAMA_MODEL`); replies use the existing reply model.
 
 ```bash
-pip install -r requirements.txt
+uv venv && uv pip install -r requirements.txt
 cp .env.example .env
 uv run python main.py
 ```
 
+`.env.example` predates the current account: fix `.env` as described in
+[setup](docs/OPERATIONS.md#setup) before the first run.
+
 ```bash
-uv run python main.py --dry-run     # print policy/jobs and exit; no browser or LLM
-uv run python main.py --reply-only  # daytime conversations only
-uv run python main.py --post-only   # editorial originals only
-uv run python -m pytest tests/ -q
+uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM
+uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
+uv run --with-requirements requirements.txt python main.py --post-only   # editorial originals only
+uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
 ```
 
 `bot.log` contains runtime activity. `editorial_review.jsonl` records decisions;

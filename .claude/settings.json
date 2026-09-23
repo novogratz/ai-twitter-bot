@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Reminder: Make sure CLAUDE.md and README.md are updated if you changed bot behavior.'"
+            "command": "echo 'Reminder: a behaviour change updates AGENTS.md, README.md and docs/EDITORIAL_POLICY.md in the same commit (AGENTS.md, Documentation).'"
           }
         ]
       }

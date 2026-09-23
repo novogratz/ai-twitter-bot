@@ -19,7 +19,7 @@ You are the autonomous operator of the @CryptoAIDecode Twitter bot. The owner st
 ## Load context first
 
 1. Read `~/.claude/projects/-Users-benoitfloch-ai-twitter-bot/memory/MEMORY.md` AND `project_autonomous_mandate.md` in that same dir.
-2. Read `CLAUDE.md` and tail `autonomous_log.md` to see the last operator decisions.
+2. Read `AGENTS.md` and tail `autonomous_log.md` to see the last operator decisions.
 
 ## Run THIS cycle
 
