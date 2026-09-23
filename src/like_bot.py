@@ -23,7 +23,9 @@ import traceback
 import urllib.parse
 import webbrowser
 
-from .config import _PROJECT_ROOT, get_live_cap
+from .active_hours import require_active
+from . import config
+from .config import _PROJECT_ROOT
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
@@ -38,14 +40,23 @@ LIKE_QUERIES = [
     "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
 ]
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
-
-LIKES_PER_CYCLE = int(os.environ.get("LIKE_BOT_PER_CYCLE", "40"))
-LIKE_BOT_DAILY_CAP = int(os.environ.get("LIKE_BOT_DAILY_CAP", "3000"))
 LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
+
+
+def _likes_per_cycle() -> int:
+    # Environment only, read each cycle: live_strategy.json must not raise it.
+    return int(os.environ.get("LIKE_BOT_PER_CYCLE", "40"))
+
+
+def _daily_cap() -> int:
+    return int(os.environ.get("LIKE_BOT_DAILY_CAP", "3000"))
 
 
 def _click_likes_on_page(max_clicks: int) -> int:
     """JS: find unliked like buttons on the page and click them."""
+    # This path runs osascript itself, so it must check the clock and the
+    # stop the way twitter_client._run_applescript does.
+    require_active()
     js_code = f"""
     (function() {{
         var buttons = document.querySelectorAll('[data-testid="like"]');
@@ -113,14 +124,20 @@ def _save_daily_state(state: dict) -> None:
 def run_like_cycle():
     """Open a niche search, scroll, JS-click N visible like buttons."""
     state = _load_daily_state()
-    remaining = max(0, LIKE_BOT_DAILY_CAP - int(state.get("count") or 0))
+    daily_cap = _daily_cap()
+    remaining = max(0, daily_cap - int(state.get("count") or 0))
     if remaining <= 0:
-        log.info(f"[LIKE] Daily cap reached ({LIKE_BOT_DAILY_CAP}) — skipping.")
+        log.info(f"[LIKE] Daily cap reached ({daily_cap}) — skipping.")
         return
+    cycle_cap = min(_likes_per_cycle(), remaining)
     query = random.choice(LIKE_QUERIES)
     encoded = urllib.parse.quote(query)
     tab = "top" if random.random() < TOP_TAB_PROBABILITY else "live"
     url = f"https://x.com/search?q={encoded}&f={tab}"
+    if config.dry_run():
+        log.info(f"[LIKE][DRY_RUN] would like up to {cycle_cap} "
+                 f"tweets on '{query}' ({tab}).")
+        return
 
     with _safari_lock:
         log.info(f"[LIKE] Opening {tab} search: {query}")
@@ -136,20 +153,22 @@ def run_like_cycle():
         # Pause briefly between batches so the action doesn't burst.
         clicked_total = 0
         # Two batches of half so we space out the JS clicks slightly.
-        cycle_cap = min(get_live_cap("LIKE_BOT_PER_CYCLE", LIKES_PER_CYCLE), remaining)
         first = cycle_cap // 2 + cycle_cap % 2
         second = cycle_cap - first
-        clicked_total += _click_likes_on_page(first)
-        time.sleep(random.uniform(1.5, 3.0))
-        clicked_total += _click_likes_on_page(second)
+        try:
+            clicked_total += _click_likes_on_page(first)
+            time.sleep(random.uniform(1.5, 3.0))
+            clicked_total += _click_likes_on_page(second)
+        finally:
+            # A stop between batches must still count the first batch.
+            state["count"] = int(state.get("count") or 0) + max(0, clicked_total)
+            _save_daily_state(state)
 
         close_front_tab()
 
-    state["count"] = int(state.get("count") or 0) + max(0, clicked_total)
-    _save_daily_state(state)
     log.info(
         f"[LIKE] Liked {clicked_total} tweets on '{query}' ({tab}) "
-        f"({state['count']}/{LIKE_BOT_DAILY_CAP} today)."
+        f"({state['count']}/{daily_cap} today)."
     )
 
 

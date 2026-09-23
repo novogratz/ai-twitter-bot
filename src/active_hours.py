@@ -28,6 +28,19 @@ def is_active(now: datetime | None = None) -> bool:
     return time(4, 30) <= local.time().replace(tzinfo=None) < time(22, 0)
 
 
+def stop_requested() -> bool:
+    return _STOP.is_set()
+
+
+def may_act(now: datetime | None = None) -> bool:
+    """Waking hours and no stop requested: external work may start.
+
+    The scheduler's pause/resume loop keeps using is_active(), which ignores
+    the stop so shutdown never flips the scheduler back on.
+    """
+    return not stop_requested() and is_active(now)
+
+
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     wake = local.replace(hour=4, minute=30, second=0, microsecond=0)
@@ -35,7 +48,7 @@ def next_wake(now: datetime | None = None) -> datetime:
 
 
 def require_active() -> None:
-    if _STOP.is_set() or not is_active():
+    if not may_act():
         raise OutsideActiveHours("Bot asleep: active 04:30–22:00 America/Toronto")
 
 
@@ -43,7 +56,7 @@ def awake_job(fn):
     """Also gate queued jobs and work that crossed the 22:00 boundary."""
     @wraps(fn)
     def run(*args, **kwargs):
-        if not is_active():
+        if not may_act():
             return None
         try:
             return fn(*args, **kwargs)

@@ -48,7 +48,8 @@ Each one is a bug that shipped live. The full incident stories are in
   other callers open.
 - **Log only what shipped.** Write chokepoints return `True` only when the
   action happened. Callers log, count and consume a slot or candidate on
-  `True` only.
+  `True` only. A failed AppleScript step is not a shipped action: return
+  `False` and write no ledger row.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.
@@ -57,7 +58,7 @@ Each one is a bug that shipped live. The full incident stories are in
   `author == BOT_HANDLE`.
 - **Side-effect switches are read at call time.** An env var gating a post,
   a subprocess or a network write is read inside the function, never as a
-  module constant.
+  module constant. `DRY_RUN` is read through `config.dry_run()`.
 - **Keyboard shortcuts toggle.** A retweet keystroke on a retweeted post
   un-retweets it: know the state before pressing.
 - **Trim with `humanizer.smart_trim`.** A bare `[:N]` slice on outgoing

@@ -36,6 +36,8 @@ slot needs news from the last six hours and an exceptional-value approval.
 - The scheduler pauses overnight. Queued jobs, browser-lock acquisition,
   AppleScript execution and model calls also check the window. Already-issued
   remote work can finish; it cannot authorize a later out-of-hours submission.
+  A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
+  write is admitted after it.
 - Slots: 05:00, 08:00, 11:30, 14:30, 17:30, 20:30, optional 21:30.
 - A slot permits at most three attempts over 45 minutes (the last ends at 22:00).
   An attempt is a draft submitted to the editor; a pass without a draft
@@ -53,6 +55,8 @@ slot needs news from the last six hours and an exceptional-value approval.
   ships.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
+- `DRY_RUN=1` stops every browser write, including the likes and pins that
+  bypass the ledger.
 
 ## Inspection and recovery
 

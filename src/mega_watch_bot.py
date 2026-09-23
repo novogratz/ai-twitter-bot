@@ -90,14 +90,9 @@ def run_mega_watch_cycle():
             if _is_reply_like_tweet(t, expected_author=username):
                 log.info(f"[MEGA] Looks like a thread reply — skipping {url}")
                 continue
-            # Mega-account replies usually have NO age in the scrape;
-            # fall back to "if it's not in our replied set, treat as
-            # fresh enough for these handles".
-            try:
-                age_min = _tweet_age_minutes(t)
-            except Exception:
-                age_min = 0
-            if age_min and age_min > MAX_AGE_MIN:
+            # The status ID carries the post time; an unparseable URL reads
+            # as 9999 minutes and is skipped.
+            if _tweet_age_minutes(url) > MAX_AGE_MIN:
                 continue
 
             # Niche gate — skip off-topic mega tweets (sama posting about

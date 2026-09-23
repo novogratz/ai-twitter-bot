@@ -38,21 +38,22 @@ before touching the browser or a model).
 `src/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 22:00, DST
 handled by `zoneinfo`. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
-no-op outside the window (a job started after a stop request halts at its
-first `require_active()`).
+no-op in the same cases (`may_act()`), and a job already running halts at its
+next `require_active()`. `is_active()` reads the clock only: the scheduler's
+pause/resume loop must not treat a stop as a wake-up boundary.
 
 Pausing the scheduler is not enough, because a job queued at 21:59 would still
 run. The check is repeated at each point where work leaves the process:
 
 - `twitter_client._AwakeSafariLock`, before and after acquiring the Safari lock;
 - `twitter_client._run_applescript` and each direct `osascript` call inside
-  `twitter_client`. The `osascript` calls in `like_bot`, `followback_bot`,
-  `follower_tracker_bot` and `safari_hygiene` are only covered by the lock
-  check or by `awake_job`;
+  `twitter_client`, and in `like_bot`'s like clicks. The read-only
+  `osascript` calls in `followback_bot`, `follower_tracker_bot` and
+  `safari_hygiene` are only covered by the lock check or by `awake_job`;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
   also capped at the time left before 22:00;
-- `action_guard.can_post`, and `editorial_bot` before fetching a source and
-  again before publishing.
+- `action_guard.can_post`, which also refuses once a stop was requested, and
+  `editorial_bot` before fetching a source and again before publishing.
 
 A request already sent to X or to a model can finish after 22:00; it cannot
 authorize a new action.
@@ -70,7 +71,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies. Generation of reply N+1 overlaps the posting of reply N. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies. The quote branch is gone: `quotes_done` is hard-coded to 0. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
-| `mega_watch_job` | 2 min | Replies to fresh posts from the top tracked handles. |
+| `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
@@ -149,10 +150,11 @@ Every write that should count goes through a function in
 `src/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
 `reply_to_tweet_in_thread`, `follow_account`, `like_tweet`. `post_tweet`,
 the reply functions and `follow_account` return `True` when they submitted the
-action, `False` when a rule refused it, and callers log or count only on
-`True`. Two limits: `True` means the keystrokes were sent, not that X
-confirmed them, and under `DRY_RUN` these functions also return `True`.
-`like_tweet` returns nothing.
+action, `False` when a rule refused it or an AppleScript step failed, and
+callers log or count only on `True`. No ledger row is written on `False`. Two
+limits: `True` means `osascript` ran the keystrokes, not that X confirmed
+them, and under `DRY_RUN` these functions also return `True`. `like_tweet`
+returns nothing.
 
 Three modules sit behind them:
 
@@ -175,7 +177,13 @@ Three modules sit behind them:
 tweet already answered, and marks it just before writing, all under one lock.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty.
+instead of reading as empty. If the reply keystroke or the paste fails, or a
+stop or 22:00 interrupts the sequence before the submit keystroke, nothing
+was sent: `replied_store.release` removes the claim. A job that keeps its own
+loaded set, like `direct_reply`, saves the claim back at the end of its
+cycle, so the tweet may still go unanswered. If the submit keystroke fails,
+the outcome is unknown: the claim stays, so the tweet never gets a second
+reply.
 
 `personality_store.hard_rules_block()` renders the hard rules and the respect
 list from `respect_list.json`. The editorial prompt, the replyback prompt and
@@ -197,8 +205,10 @@ home-timeline attribution. It does not influence any cap.
 These are how the code behaves today, not design intent:
 
 - `like_job`, `notify_job` and `pin_job` click in Safari without going
-  through a chokepoint: no ledger entry, no `can_post`, and `DRY_RUN` does not
-  stop them. `notify_job` presses the `l` key, which toggles a like.
+  through a chokepoint: no ledger entry and no `can_post`. `DRY_RUN` stops
+  them without a dry-run ledger row; `pin_job` still spends its daily pin
+  attempt.
+  `notify_job` presses the `l` key, which toggles a like.
 - `follow_engagers_bot`, `like_bot` and `pin_bot` key their
   daily counters on `date.today()` (machine time), while the ledger uses the
   Toronto day.

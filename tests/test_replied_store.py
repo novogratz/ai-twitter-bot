@@ -95,7 +95,7 @@ def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
     recorded = []
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, ""))
     monkeypatch.setattr(ag, "record", lambda *a, **k: recorded.append(a))
-    monkeypatch.setattr(config, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
     with open(config.REPLIED_FILE, "w") as f:
         f.write("[")
     with pytest.raises(StateUnreadable):
@@ -123,7 +123,7 @@ def test_replyback_stops_on_unreadable_store(monkeypatch):
     """replyback catches reply errors per engager; an unreadable store must
     end the cycle at the first engager instead of paying one generation each."""
     from src import notify_bot as nb
-    monkeypatch.setattr(config, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
     replies = [{"user": f"@fan{i}", "text": "what about inference margins?",
                 "url": f"https://x.com/fan{i}/status/20635000000000{i:05d}"} for i in range(3)]
     monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",

@@ -136,7 +136,9 @@ RETRY_DELAY_SECONDS = 5
 # Kill switch / dry-run. When 1, every write action (post, reply, follow,
 # unfollow, like, quote, retweet) is LOGGED but NOT executed — run this first
 # to verify the new behavior before any live writes, then set DRY_RUN=0.
-DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
+# A side-effect switch, so it is read on every call, never frozen at import.
+def dry_run() -> bool:
+    return os.environ.get("DRY_RUN", "0") == "1"
 
 # All original surfaces share the same ceiling and at least one hour of
 # spacing. The editorial scheduler normally spaces posts by 2.5–3.5 hours.

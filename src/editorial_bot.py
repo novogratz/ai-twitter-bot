@@ -369,7 +369,7 @@ def run_editorial_cycle(preview=False):
             return audit
         from .twitter_client import post_tweet
         text = draft["text"].strip() + "\n\n" + source["url"]
-        if config.DRY_RUN:
+        if config.dry_run():
             log.info("[EDITORIAL][DRY_RUN] %s", text)
             return audit
         # Reserve before submitting. An interrupted/ambiguous submission must

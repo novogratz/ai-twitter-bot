@@ -25,7 +25,7 @@ from typing import Optional, Tuple
 
 from . import config
 from .logger import log
-from .active_hours import is_active, now_local
+from .active_hours import is_active, now_local, stop_requested
 from .state_errors import StateUnreadable
 from zoneinfo import ZoneInfo
 
@@ -155,7 +155,7 @@ def within_churn_cooldown(target: str) -> bool:
 
 def jitter_sleep(max_seconds: int) -> None:
     """Sleep a random 0..max_seconds so writes never burst. No-op in dry-run."""
-    if config.DRY_RUN or max_seconds <= 0:
+    if config.dry_run() or max_seconds <= 0:
         return
     time.sleep(random.uniform(0, max_seconds))
 
@@ -261,7 +261,7 @@ def adjust_following(delta: int) -> None:
     +1 per follow / -1 per unfollow so the gate reflects reality as the prune
     runs. A periodic profile scrape can overwrite count for an exact resync.
     """
-    if config.DRY_RUN:
+    if config.dry_run():
         return
     with _LOCK:
         try:
@@ -365,6 +365,8 @@ def can_unfollow(handle: str) -> Tuple[bool, str]:
 
 def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime; legacy urgency flags grant no bypass."""
+    if stop_requested():
+        return False, "stop requested"
     if not is_active():
         return False, "asleep (active 04:30–22:00 America/Toronto)"
     if action in (QUOTE, RETWEET):
