@@ -12,23 +12,20 @@ NEXT = "https://x.com/thebtctherapist/status/2063500000000000102"
 REPOST = "https://x.com/someoneelse/status/2063500000000000103"
 OWN = "https://x.com/TheAIShrink/status/2063500000000000104"
 REPLY = "https://x.com/engager/status/2063500000000000105"
+BLOCKED = "https://x.com/BlockedOne/status/2063500000000000107"
 
 
 class FakePage:
     """Answers `_page_posts` like `_POSTS_JS` would on a page of posts."""
 
-    def __init__(self, page="https://x.com/thebtctherapist", posts=(), focused=None):
+    def __init__(self, page="https://x.com/thebtctherapist", posts=()):
         self.page = page
         self.posts = [dict(p) for p in posts]
-        self.focused = focused
         self.clicks = []
         self.click_sticks = True
 
     def _find(self, target_id):
         from src.x import x_urls
-        if not target_id and self.focused is not None:
-            return self.posts[self.focused]
-        target_id = target_id or x_urls.status_id(self.page)
         return next((p for p in self.posts if target_id and x_urls.status_id(p["url"]) == target_id), None)
 
     def __call__(self, mode, target_id=""):
@@ -76,7 +73,6 @@ def test_already_liked_post_is_never_clicked(browser):
     from src.x import twitter_client as tc
 
     page = browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": True}])
-    assert tc.like_tweet() is tc.LikeOutcome.ALREADY_LIKED
     assert tc.like_tweet(POST) is tc.LikeOutcome.ALREADY_LIKED
     assert page.clicks == [] and browser["recorded"] == []
 
@@ -86,7 +82,6 @@ def test_cached_like_is_never_clicked_even_if_the_page_says_not_liked(browser):
 
     tc._mark_liked(POST)
     page = browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": False}])
-    assert tc.like_tweet() is tc.LikeOutcome.ALREADY_LIKED
     assert tc.like_tweet(POST) is tc.LikeOutcome.ALREADY_LIKED
     assert page.clicks == []
 
@@ -96,18 +91,18 @@ def test_like_clicks_the_identified_post_once_and_records_the_read_url(browser):
     from src.x import twitter_client as tc
 
     page = browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": False}])
-    outcome = tc.like_tweet()
+    outcome = tc.like_tweet(POST)
     assert outcome is tc.LikeOutcome.LIKED and outcome
     assert page.clicks == [POST]
     assert browser["recorded"] == [((action_guard.LIKE,), {"target": POST})]
     assert tc._already_liked(POST)
 
 
-def test_a_given_url_clicks_that_post_not_the_focused_one(browser):
+def test_like_clicks_the_given_post_not_another(browser):
     from src.x import twitter_client as tc
 
     page = browser["page"] = FakePage(
-        posts=[{"url": POST, "liked": False}, {"url": NEXT, "liked": False}], focused=0)
+        posts=[{"url": POST, "liked": False}, {"url": NEXT, "liked": False}])
     assert tc.like_tweet(NEXT) is tc.LikeOutcome.LIKED
     assert page.clicks == [NEXT]
 
@@ -124,7 +119,7 @@ def test_unconfirmed_click_is_not_a_like(browser):
 
 
 @pytest.mark.parametrize("page_url, url", [
-    ("https://x.com/home", ""),                 # no identifiable post
+    (POST, ""),                                 # no URL: the open status page is not a target
     (POST, NEXT),                               # requested post not on the page
     (POST, "https://x.com/thebtctherapist"),    # URL without a status ID
 ])
@@ -149,7 +144,40 @@ def test_dry_run_like_returns_dry_run_recorded_and_reads_nothing(browser, monkey
     assert browser["recorded"] == [((action_guard.LIKE,), {"target": POST, "dry_run": True})]
 
 
-def test_reciprocity_likes_their_own_posts_and_reports_each(browser):
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_blocked_account_post_is_never_liked(browser, monkeypatch, dry_run):
+    """CONTEXT.md: a Blocked account is barred from any interaction. The
+    handle comes from the URL and is matched as Reply admission matches it
+    (case, underscores ignored); nothing is read, clicked or recorded, not
+    even a dry-run row."""
+    from src.core import config
+    from src.x import twitter_client as tc
+
+    monkeypatch.setattr(config, "BLOCKLIST", {"blockedone"})
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
+    for url in (BLOCKED, "https://x.com/Blocked_One_FR/status/2063500000000000108"):
+        outcome = tc.like_tweet(url)
+        assert outcome is tc.LikeOutcome.BLOCKED and not outcome
+        assert not tc._already_liked(url)
+    assert browser["recorded"] == []
+
+
+def test_blocked_reply_is_skipped_and_the_walk_goes_on(browser, monkeypatch):
+    from src.core import config
+    from src.x import twitter_client as tc
+
+    monkeypatch.setattr(config, "BLOCKLIST", {"blockedone"})
+    monkeypatch.setenv("NOTIFY_LIKE_REPLIES_COUNT", "3")
+    page = browser["page"] = FakePage(page=OWN, posts=[
+        {"url": BLOCKED, "liked": False},
+        {"url": REPLY, "liked": False},
+    ])
+    assert tc.like_own_tweet_replies() == [tc.LikeOutcome.BLOCKED, tc.LikeOutcome.LIKED]
+    assert page.clicks == [REPLY]
+
+
+def test_profile_visit_likes_their_own_posts_and_reports_each(browser):
     from src.x import twitter_client as tc
 
     page = browser["page"] = FakePage(posts=[
@@ -164,7 +192,7 @@ def test_reciprocity_likes_their_own_posts_and_reports_each(browser):
 
 
 @pytest.mark.parametrize("dry_run, like_count", [("0", 0), ("1", 2)])
-def test_reciprocity_opens_nothing_for_zero_likes_or_dry_run(monkeypatch, dry_run, like_count):
+def test_profile_visit_opens_nothing_for_zero_likes_or_dry_run(monkeypatch, dry_run, like_count):
     from src.x import twitter_client as tc
 
     # conftest fails the test on any webbrowser.open or _run_applescript.
@@ -214,7 +242,7 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     assert browser["closed"] == 2
 
 
-def test_reciprocity_counts_only_likes_that_shipped(monkeypatch):
+def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     from src.replies import notify_bot as nb
     LikeOutcome = nb.LikeOutcome  # test_editorial reloads twitter_client
 
@@ -244,6 +272,25 @@ def test_page_posts_fills_the_mode_and_target_and_parses_json(monkeypatch):
     assert seen[0].rstrip().endswith('("press", "2063500000000000101")')
     monkeypatch.setattr(tc, "_run_page_js", lambda js: "")
     assert tc._page_posts("read") == {}
+
+
+def test_run_page_js_logs_failures_and_returns_empty(monkeypatch):
+    from src.x import twitter_client as tc
+
+    lines = []
+    monkeypatch.setattr(tc.log, "info", lambda msg, *a, **k: lines.append(msg))
+    monkeypatch.setattr(tc, "require_active", lambda: None)
+    monkeypatch.setattr(tc.subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(
+        a[0], 1, stdout="", stderr="execution error: JavaScript from Apple Events is off\n"))
+    assert tc._run_page_js("1") == ""
+    assert lines == ["[LIKE] Page JavaScript failed (osascript exit 1): "
+                     "execution error: JavaScript from Apple Events is off"]
+
+    def timeout(*a, **k):
+        raise subprocess.TimeoutExpired("osascript", 10)
+    monkeypatch.setattr(tc.subprocess, "run", timeout)
+    assert tc._run_page_js("1") == ""
+    assert lines[-1].startswith("[LIKE] Page JavaScript failed: TimeoutExpired(")
 
 
 # The JavaScript itself, run by node against a minimal fake DOM that knows
@@ -290,14 +337,6 @@ El.prototype.closest = function(sel) {
     for (var n = this; n; n = n.parent) if (n.matches(sel)) return n;
     return null;
 };
-El.prototype.find = function(id) {
-    if (this.attrs.id === id) return this;
-    for (var i = 0; i < this.children.length; i++) {
-        var f = this.children[i].find(id);
-        if (f) return f;
-    }
-    return null;
-};
 El.prototype.click = function() {
     clicks.push(this.attrs.id || '');
     if (this.attrs['data-testid'] === 'like') this.attrs['data-testid'] = 'unlike';
@@ -305,17 +344,18 @@ El.prototype.click = function() {
 """
 
 
-def _article(url, button, id_, quoted=""):
+def _article(url, button, id_, quoted="", quoted_first=False):
     children = [{"tag": "a", "attrs": {"href": url}, "children": [{"tag": "time"}]}]
     if quoted:
-        children.append({"tag": "div", "children": [
-            {"tag": "a", "attrs": {"href": quoted}, "children": [{"tag": "time"}]}]})
+        card = {"tag": "div", "children": [{"tag": "article", "children": [
+            {"tag": "a", "attrs": {"href": quoted}, "children": [{"tag": "time"}]}]}]}
+        children.insert(0 if quoted_first else 1, card)
     children.append({"tag": "div", "children": [
         {"tag": "button", "attrs": {"data-testid": button, "id": f"{id_}-button"}}]})
     return {"tag": "article", "attrs": {"data-testid": "tweet", "id": id_}, "children": children}
 
 
-def _run_posts_js(articles, mode, target_id="", path="/home", focus_id=""):
+def _run_posts_js(articles, mode, target_id="", path="/home"):
     from src.x import twitter_client as tc
 
     node = shutil.which("node")
@@ -324,11 +364,7 @@ def _run_posts_js(articles, mode, target_id="", path="/home", focus_id=""):
     snippet = tc._POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
     program = _FAKE_DOM_JS + f"""
 var root = new El({json.dumps({"tag": "html", "children": [{"tag": "body", "children": articles}]})});
-var body = root.children[0];
-var focusId = {json.dumps(focus_id)};
 var document = {{
-    documentElement: root, body: body,
-    activeElement: focusId ? root.find(focusId) : body,
     querySelectorAll: function(sel) {{ return root.querySelectorAll(sel); }}
 }};
 var location = {{pathname: {json.dumps(path)}, href: 'https://x.com' + {json.dumps(path)}}};
@@ -360,23 +396,22 @@ def test_js_read_mode_clicks_nothing():
     assert _run_posts_js(articles, "read", POST_ID) == ({"url": POST, "result": "not_liked"}, [])
 
 
-@pytest.mark.parametrize("articles, target, path, focus", [
-    ([_article(POST, "like", "a")], "", "/home", ""),             # nothing identifies a post
-    ([_article(POST, "like", "a")], NEXT_ID, "/home", ""),        # requested post absent
-    ([_article(POST, "like", "a", quoted=NEXT)], NEXT_ID, "/home", ""),  # only quoted
-    ([{"tag": "div", "attrs": {"id": "nav"}}, _article(POST, "like", "a")], "", "/home", "nav"),
+@pytest.mark.parametrize("articles, target, path", [
+    ([_article(POST, "like", "a")], "", "/home"),                 # no target
+    ([_article(POST, "like", "a")], "", f"/thebtctherapist/status/{POST_ID}"),  # not even the status page's post
+    ([_article(POST, "like", "a")], NEXT_ID, "/home"),            # requested post absent
+    ([_article(POST, "like", "a", quoted=NEXT)], NEXT_ID, "/home"),  # only quoted
+    ([_article(POST, "like", "a", quoted=NEXT, quoted_first=True)], NEXT_ID, "/home"),
 ])
-def test_js_fails_without_clicking_when_no_article_is_identified(articles, target, path, focus):
-    out, clicks = _run_posts_js(articles, "press", target, path=path, focus_id=focus)
+def test_js_fails_without_clicking_when_no_article_is_identified(articles, target, path):
+    out, clicks = _run_posts_js(articles, "press", target, path=path)
     assert out == {"url": "", "result": "failed"} and clicks == []
 
 
-def test_js_falls_back_to_the_focused_then_the_status_page_post():
-    articles = [_article(NEXT, "like", "a"), _article(POST, "like", "b")]
-    focused, clicks = _run_posts_js(articles, "press", focus_id="b-button")
-    assert focused["url"] == POST and clicks == ["b-button"]
-    own, clicks = _run_posts_js(articles, "press", path=f"/thebtctherapist/status/{NEXT_ID}")
-    assert own["url"] == NEXT and clicks == ["a-button"]
+def test_js_reads_the_quoting_post_url_even_when_the_quoted_card_comes_first():
+    articles = [_article(POST, "like", "a", quoted=NEXT, quoted_first=True)]
+    assert _run_posts_js(articles, "list")[0]["posts"] == [POST]
+    assert _run_posts_js(articles, "press", POST_ID) == ({"url": POST, "result": "clicked"}, ["a-button"])
 
 
 def test_js_lists_the_posts_in_page_order():

@@ -165,17 +165,22 @@ from a refusal compares with `is` (`follow_engagers_bot`). One limit:
 
 `like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`, and follows
 the same `DRY_RUN_RECORDED` rule. It never presses the `l` shortcut, which
-toggles and acts on X's own selection. One JavaScript step finds the
-article (the given URL's status ID, else the focused post, else the status
-page's own post) and clicks its button only when it is `like`, never
-`unlike`. A post in `liked_tweets.json` or shown as liked returns
+toggles and acts on X's own selection. A post whose URL handle is a
+Blocked account, matched as Reply admission matches it, returns `BLOCKED`
+before anything is read, clicked or recorded. One JavaScript step finds the
+article by the URL's status ID, read from the article's own timestamp link
+and not a quoted post's, and clicks its button only when it is `like`,
+never `unlike`. A post in `liked_tweets.json` or shown as liked returns
 `ALREADY_LIKED`; a post not found returns `FAILED`. After the click it
 reads the article again and returns `LIKED` only once the button shows
 `unlike`; the ledger row and the cache entry then carry the URL read on the
-page. `visit_profile_and_like` and `like_own_tweet_replies` list the
+page. That read, about a second after the click, sees X's optimistic
+interface: it proves the page shows the like, not that X accepted it.
+`visit_profile_and_like` and `like_own_tweet_replies` list the
 articles on the page and call it with each post's URL: the profile's own
 posts for the first, the replies under our latest post for the second,
-never our own posts. Both open nothing under `DRY_RUN` and close their tab
+never our own posts. A `BLOCKED` post is skipped and the walk goes on; a
+`FAILED` one stops it. Both open nothing under `DRY_RUN` and close their tab
 even when a like raises.
 
 No write function exists for quotes, reposts, threads, GIF posts or

@@ -18,9 +18,10 @@ Like @$username's latest posts. Only on an explicit operator request.
 3. Run `uv run python -c "from src.core import config; from src.x.twitter_client import visit_profile_and_like; print([o.value for o in visit_profile_and_like('$username', like_count=2)], 'dry_run' if config.dry_run() else 'live')"`
    - It prints one outcome per post of theirs shown on the profile
      (reposts of others skipped): `liked`, `already_liked` (nothing
-     clicked) or `failed` (the post or its like button could not be found,
-     or the page did not show the like after the click; nothing recorded).
-     The walk stops at the first `failed`.
+     clicked), `blocked` (a Blocked account; nothing clicked or recorded) or
+     `failed` (the post or its like button could not be found, or the page
+     did not show the like after the click; nothing recorded). The walk
+     stops at the first `failed`.
    - `[]` means the profile was refused, `like_count` was 0, or `DRY_RUN=1`
      (it then prints `dry_run` and opens nothing).
 4. Report the outcomes and the `[LIKE]` lines of `bot.log`, which name each

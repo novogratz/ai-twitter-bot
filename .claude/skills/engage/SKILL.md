@@ -15,4 +15,5 @@ Only on an explicit operator request: it follows and likes on the real account.
 2. Run `uv run python -c "from src.account.engage_bot import safe_run_engage_cycle; safe_run_engage_cycle()"`
 3. Report from the `[ENGAGE]`, `[FOLLOW]` and `[LIKE]` lines of `bot.log`:
    profiles visited, follows made or refused by the follow policy, likes
-   (the `[LIKE] @handle: …` summary counts liked, already liked and failed).
+   (the `[LIKE] @handle: …` summary counts liked, already liked, blocked
+   and failed).

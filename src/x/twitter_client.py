@@ -632,6 +632,7 @@ class LikeOutcome(Enum):
     the result counts only the likes that shipped."""
     LIKED = "liked"
     ALREADY_LIKED = "already_liked"
+    BLOCKED = "blocked"
     FAILED = "failed"
 
     def __bool__(self):
@@ -639,10 +640,10 @@ class LikeOutcome(Enum):
 
 
 # The article is identified before anything is clicked: the post with status
-# ID __TARGET_ID__, else the focused post, else the status page's own post.
-# Only a data-testid="like" button is clicked, never "unlike", so a like can
-# neither toggle off nor land on another post. Mode "read" clicks nothing;
-# "list" returns the status URL of every post on the page.
+# ID __TARGET_ID__, and no other. Only a data-testid="like" button is
+# clicked, never "unlike", so a like can neither toggle off nor land on
+# another post. Mode "read" clicks nothing; "list" returns the status URL of
+# every post on the page.
 _POSTS_JS = r"""
 (function(mode, targetId) {
     var SEL = 'article[data-testid="tweet"]';
@@ -650,11 +651,14 @@ _POSTS_JS = r"""
         var m = (href || '').match(/\/status\/(\d+)/);
         return m ? m[1] : '';
     }
-    // The post's own timestamp link comes before a quoted post's.
+    // A quoted post's timestamp link can come before the post's own.
     function statusLink(art) {
-        var t = art.querySelector('a[href*="/status/"] time');
-        var a = t && t.closest('a');
-        return a ? a.href : '';
+        var times = art.querySelectorAll('a[href*="/status/"] time');
+        for (var j = 0; j < times.length; j++) {
+            var a = times[j].closest('a');
+            if (a && a.closest('article') === art) return a.href;
+        }
+        return '';
     }
     var all = document.querySelectorAll(SEL);
     var i;
@@ -663,17 +667,9 @@ _POSTS_JS = r"""
         for (i = 0; i < all.length; i++) posts.push(statusLink(all[i]));
         return JSON.stringify({page: location.href, posts: posts});
     }
-    var art = null, id = targetId;
-    if (!id) {
-        var el = document.activeElement;
-        if (el && el !== document.body && el !== document.documentElement) {
-            art = el.closest ? el.closest(SEL) : null;
-        } else {
-            id = statusId(location.pathname);
-        }
-    }
-    for (i = 0; id && !art && i < all.length; i++) {
-        if (statusId(statusLink(all[i])) === id) art = all[i];
+    var art = null;
+    for (i = 0; targetId && !art && i < all.length; i++) {
+        if (statusId(statusLink(all[i])) === targetId) art = all[i];
     }
     var url = art ? statusLink(art) : '';
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
@@ -704,10 +700,15 @@ def _run_page_js(js: str) -> str:
             do JavaScript jsCode in current tab of front window
         end tell
         '''], capture_output=True, text=True, timeout=10)
+        if res.returncode != 0:
+            log.info(f"[LIKE] Page JavaScript failed (osascript exit {res.returncode}): "
+                     f"{(res.stderr or '').strip()[:300]}")
+            return ""
         return (res.stdout or "").strip()
     except OutsideActiveHours:
         raise
-    except Exception:
+    except Exception as e:
+        log.info(f"[LIKE] Page JavaScript failed: {e!r}")
         return ""
     finally:
         try:
@@ -727,40 +728,37 @@ def _page_posts(mode: str, target_id: str = "") -> dict:
     return data if isinstance(data, dict) else {}
 
 
-def like_tweet(tweet_url: str = "") -> "LikeOutcome | _DryRunRecorded":
-    """Like one post of the open page: `tweet_url`'s when given, else the
-    focused post, else the open status page's own post.
+def like_tweet(tweet_url: str) -> "LikeOutcome | _DryRunRecorded":
+    """Like the post of the open page whose status ID `tweet_url` carries.
 
     The 'l' shortcut toggles and acts on X's own selection, so it is never
     pressed: the post is found by its status ID and only its "like" button
-    is clicked. LIKED is returned once the page shows the post liked; the
-    liked cache and the ledger then carry the URL read on the page. A post
-    in the liked cache or shown as liked is left alone. DRY_RUN writes a
-    dry-run ledger row and returns DRY_RUN_RECORDED.
+    is clicked. A post by a Blocked account (author read from the URL,
+    matched as Reply admission does) returns BLOCKED; nothing is clicked or
+    recorded. LIKED is returned once
+    the page shows the post liked; the liked cache and the ledger then carry
+    the URL read on the page. A post in the liked cache or shown as liked is
+    left alone. DRY_RUN writes a dry-run ledger row and returns
+    DRY_RUN_RECORDED.
     """
-    if tweet_url and _already_liked(tweet_url):
-        log.info(f"[LIKE] already liked {tweet_url[-50:]}; skipping.")
-        return LikeOutcome.ALREADY_LIKED
-    from ..guards import action_guard
+    from ..guards import action_guard, reply_admission
     from ..core import config as _cfg
     from . import x_urls
+    handle = x_urls.author(tweet_url)
+    if handle and reply_admission.is_blocked_account(handle):
+        log.info(f"[LIKE] @{handle} is a Blocked account; {tweet_url} not liked.")
+        return LikeOutcome.BLOCKED
+    if _already_liked(tweet_url):
+        log.info(f"[LIKE] already liked {tweet_url[-50:]}; skipping.")
+        return LikeOutcome.ALREADY_LIKED
     if _cfg.dry_run():
-        log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:] if tweet_url else '(open tweet)'}.")
+        log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:]}.")
         action_guard.record(action_guard.LIKE, target=tweet_url, dry_run=True)
         return DRY_RUN_RECORDED
     target = x_urls.status_id(tweet_url)
-    if tweet_url and not target:
-        log.info(f"[LIKE] {tweet_url} carries no status ID; nothing clicked.")
-        return LikeOutcome.FAILED
     if not target:
-        post = _page_posts("read")
-        target = x_urls.status_id(post.get("url") or "")
-        if not target:
-            log.info("[LIKE] No identifiable post on the open page; nothing clicked.")
-            return LikeOutcome.FAILED
-        if post.get("result") == "already_liked" or _already_liked(post["url"]):
-            log.info(f"[LIKE] already liked {post['url']}; skipping.")
-            return LikeOutcome.ALREADY_LIKED
+        log.info(f"[LIKE] {tweet_url or '(no URL)'} carries no status ID; nothing clicked.")
+        return LikeOutcome.FAILED
     pressed = _page_posts("press", target)
     url = pressed.get("url") or ""
     if pressed.get("result") == "already_liked":
@@ -1314,7 +1312,7 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
     LikeOutcome per post handled; `like_count=0` and DRY_RUN open nothing.
 
     Gated by `_profile_visit_allowed` (2026-06-07 home/search-only mandate):
-    reciprocity likes happen when we meet people on feeds/search, not by
+    likes to Engagers happen when we meet them on feeds/search, not by
     visiting their profile."""
     if not _profile_visit_allowed(username):
         log.info(f"[LIKE] profile visit blocked (home/search-only mandate): @{username}")

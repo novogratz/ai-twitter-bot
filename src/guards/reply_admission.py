@@ -68,7 +68,7 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     author = x_urls.author(url)
     if not author:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
-    if _blocked(author):
+    if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
     if author == config.BOT_HANDLE.lower():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
@@ -121,7 +121,7 @@ def _normalise(handle: str) -> str:
     return re.sub(r"[\s_\-@]", "", (handle or "").lower())
 
 
-def _blocked(author: str) -> bool:
+def is_blocked_account(author: str) -> bool:
     """A Blocked account token anywhere in the handle, both sides stripped of
     case, spaces, dashes and underscores: "la pique" catches @la_pique_off."""
     handle = _normalise(author)

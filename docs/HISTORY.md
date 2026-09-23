@@ -14,11 +14,11 @@ their order in the file is not strictly chronological.
 > that change deletes them from a checkout; a pull that meets one of them
 > modified stops, and goes through once the file is moved aside.
 
-> **2026-09-23 — LIKES NO LONGER PRESS `l` (issue #121):** X's `l`
+> **2026-09-23 — likes no longer press `l` (issue #121):** X's `l`
 > shortcut toggles. On 2026-05-18 the reply path's like un-liked a post
 > the bot had liked a cycle earlier; the liked cache then guarded only
 > callers that passed a URL. `visit_profile_and_like`, which `engage_job`
-> and the replyback reciprocity call, passed none: it un-liked
+> and replyback's likes to Engagers call, passed none: it un-liked
 > already-liked posts, pressed once even with `like_count=0` and logged
 > "Tweet liked!" either way, and `notify_job` pressed `j`/`l` blind. A
 > first fix read the focused post before pressing, but `l` acts on X's
