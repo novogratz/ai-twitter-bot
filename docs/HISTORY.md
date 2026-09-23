@@ -2493,6 +2493,10 @@ For the full module catalog see [`docs/ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Adding a new bot
 
+> **Superseded (2026-09-23).** Follow
+> [`ARCHITECTURE.md#adding-a-job`](ARCHITECTURE.md#adding-a-job): daily
+> counters now key on the Toronto day, not `date.today()`.
+
 See [`docs/ARCHITECTURE.md#adding-a-job`](ARCHITECTURE.md#adding-a-job).
 
 Mandatory invariants:
@@ -2506,5 +2510,8 @@ Mandatory invariants:
 ---
 
 ## Memory model
+
+> **Superseded (2026-09-23).** Agent sessions now read
+> [`AGENTS.md`](../AGENTS.md); nothing loads this archive automatically.
 
 This file is read by Claude Code agentic sessions when working on the bot's source. It exists to give the AI context about the project so first-time edits don't break invariants.
