@@ -1,6 +1,8 @@
-"""src/x/twitter_client write chokepoints: replies, posts and follows
-(issues #100, #101)."""
+"""src/x/twitter_client write chokepoints: replies, posts, follows,
+unfollows and pins (issues #100, #101, #141, #142)."""
+import json
 from datetime import datetime
+from types import SimpleNamespace
 
 import pytest
 
@@ -9,7 +11,7 @@ from src.guards import action_guard as ag
 from src.guards import replied_store as rs
 from src.core import config
 from src.core.state_errors import StateUnreadable
-from tests.helpers import TORONTO, _stop_requested, _url, clock
+from tests.helpers import OWN_BEST, TORONTO, _pin_rows, _stop_requested, _url, clock
 
 
 # --- one reply per tweet, EVER (double-reply incident, 2026-06-05) -------------
@@ -742,3 +744,130 @@ def test_follow_gate_english_only(monkeypatch):
     ok, _ = _follow_quality_decision(500, "SEO et croissance pour les startups", "Julien", True)
     assert ok, "whitelisted seed must bypass the language gate"
 
+
+# --- unfollows: read both page answers, record only a confirmed unfollow (#141)
+
+
+@pytest.fixture()
+def unfollow_env(monkeypatch, tmp_path):
+    """Unfollow allowed by policy, browser stubbed; `answers` feeds the page
+    JavaScript results in order."""
+    from src.core import config
+    from src.guards import action_guard as ag
+    from src.x import safari
+    from src.x import twitter_client as tc
+
+    monkeypatch.delenv("DRY_RUN", raising=False)
+    monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 5)
+    monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
+    wl = tmp_path / "whitelist.json"
+    wl.write_text(json.dumps({"tiers": {"tier1": ["karpathy"]}}))
+    monkeypatch.setattr(config, "WHITELIST_FILE", str(wl))
+    monkeypatch.setattr(ag, "_WL_CACHE", {})
+    monkeypatch.setattr(ag, "_WL_MTIME", 0.0)
+    following = tmp_path / "following_count.json"
+    following.write_text(json.dumps({"count": 100}))
+    monkeypatch.setattr(ag, "_FOLLOWING_COUNT_FILE", str(following))
+
+    answers, scripts, opened, closed = [], [], [], []
+
+    def run_js(js):
+        scripts.append(js)
+        return answers.pop(0) if answers else ""
+
+    monkeypatch.setattr(safari, "_run_js", run_js)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
+    monkeypatch.setattr(tc.webbrowser, "open", lambda url, *a, **k: opened.append(url) or True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+
+    return SimpleNamespace(
+        tc=tc, ag=ag, answers=answers, scripts=scripts, opened=opened, closed=closed,
+        following=lambda: json.loads(following.read_text())["count"],
+        ledger=ag._load_ledger)
+
+
+@pytest.mark.parametrize("answer", ["NO_FOLLOWING_BTN", ""])
+def test_missing_following_button_records_nothing(unfollow_env, answer):
+    unfollow_env.answers.append(answer)
+
+    assert unfollow_env.tc.unfollow_account("someaccount") is False
+
+    assert len(unfollow_env.scripts) == 1, "no confirm without a Following click"
+    assert unfollow_env.ledger() == []
+    assert unfollow_env.following() == 100
+    assert unfollow_env.closed
+
+
+@pytest.mark.parametrize("answer", ["NO_CONFIRM", ""])
+def test_missing_confirmation_records_nothing(unfollow_env, answer):
+    unfollow_env.answers.extend(["CLICKED", answer])
+
+    assert unfollow_env.tc.unfollow_account("someaccount") is False
+
+    assert unfollow_env.ledger() == []
+    assert unfollow_env.following() == 100
+    assert unfollow_env.closed
+
+
+def test_confirmed_unfollow_records_one_row(unfollow_env):
+    unfollow_env.answers.extend(["CLICKED", "CONFIRMED"])
+
+    assert unfollow_env.tc.unfollow_account("@SomeAccount") is True
+
+    rows = unfollow_env.ledger()
+    assert [(r["action"], r["target"], r["dry_run"]) for r in rows] == [
+        (unfollow_env.ag.UNFOLLOW, "someaccount", False)]
+    assert unfollow_env.following() == 99
+    assert unfollow_env.closed
+
+
+def test_dry_run_records_a_dry_row_without_the_browser(unfollow_env, monkeypatch):
+    monkeypatch.setenv("DRY_RUN", "1")
+
+    assert unfollow_env.tc.unfollow_account("someaccount") is unfollow_env.tc.DRY_RUN_RECORDED
+
+    assert unfollow_env.opened == [] and unfollow_env.scripts == []
+    rows = unfollow_env.ledger()
+    assert [(r["action"], r["dry_run"]) for r in rows] == [(unfollow_env.ag.UNFOLLOW, True)]
+    assert unfollow_env.following() == 100
+
+
+# --- pins: record only a shipped pin (#142) --------------------------------------
+
+
+def _scripted_pin_js(monkeypatch, steps):
+    """Live pin_own_tweet with each osascript call answering the next step."""
+    from src.x import safari, twitter_client as tc
+
+    answers = iter(steps)
+
+    class Done:
+        def __init__(self, out):
+            self.stdout, self.returncode = out, 0
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(tc.subprocess, "run", lambda *a, **k: Done(next(answers)))
+
+
+@pytest.mark.parametrize("steps, shipped", [
+    (["MORE_CLICKED", "PIN_CLICKED", "CONFIRMED"], True),
+    (["MORE_CLICKED", "PIN_CLICKED", "NO_CONFIRM"], False),
+    (["MORE_CLICKED", "PIN_NOT_FOUND_4"], False),
+    (["NO_ARTICLE"], False),
+    (["MORE_CLICKED", "PIN_CLICKED", ""], False),
+])
+def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, steps, shipped):
+    """Log only what shipped: one ledger row when the confirm dialog was
+    clicked, none when a step failed or no confirm dialog appeared. A pin
+    is not a profile publication."""
+    from src.guards import action_guard
+    from src.x import twitter_client as tc
+
+    _scripted_pin_js(monkeypatch, steps)
+
+    assert tc.pin_own_tweet(OWN_BEST) is shipped
+    assert [r["target"] for r in _pin_rows()] == ([OWN_BEST.lower()] if shipped else [])
+    assert action_guard.profile_count_today() == 0

@@ -175,3 +175,27 @@ def isolate_dedup(monkeypatch, tmp_path):
     cg._RECENT_NORM.clear()
     yield
     cg._RECENT_NORM.clear()
+
+
+@_pytest.fixture
+def like_job(monkeypatch, tmp_path):
+    """Live like_job on a scripted search page; the real walk and like_tweet run."""
+    from src.account import like_bot
+    from src.x import safari, twitter_client as tc
+    from tests.helpers import SearchPage
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS"):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
+    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
+    state = {"page": SearchPage([]), "closed": 0}
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
+
+    def close_front_tab():
+        state["closed"] += 1
+    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
+    return state

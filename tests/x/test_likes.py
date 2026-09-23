@@ -7,7 +7,7 @@ import subprocess
 
 import pytest
 
-from tests.helpers import _stop_requested
+from tests.helpers import FRESH, SearchPage, _stop_requested
 
 
 POST = "https://x.com/thebtctherapist/status/2063500000000000101"
@@ -154,6 +154,30 @@ def test_nothing_clicked_when_the_post_is_not_identified(browser, page_url, url)
     outcome = tc.like_tweet(url)
     assert outcome is tc.LikeOutcome.FAILED and not outcome
     assert page.clicks == [] and browser["recorded"] == []
+
+
+def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch):
+    """like_tweet takes the Safari lock itself, so a caller that forgot it
+    cannot interleave its click with another job's browser work."""
+    from src.x import safari, twitter_client as tc
+
+    held = []
+
+    class RecordingLock:
+        def __enter__(self):
+            held.append(True)
+
+        def __exit__(self, *exc):
+            held.pop()
+
+    monkeypatch.setattr(safari, "_safari_lock", RecordingLock())
+    page = like_job["page"] = SearchPage([{"url": FRESH, "liked": False}])
+    seen = []
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: seen.append(bool(held)) or page(*a))
+
+    assert tc.like_tweet(FRESH) is tc.LikeOutcome.LIKED
+    assert seen == [True, True]
+    assert held == []
 
 
 def test_dry_run_like_returns_dry_run_recorded_and_reads_nothing(browser, monkeypatch):
