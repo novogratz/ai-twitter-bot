@@ -1,10 +1,11 @@
-"""No live module can reach a quote, repost or thread write (issue #107).
+"""No live module can reach a quote, repost or thread write (issues #107, #111).
 
 The 2026-09-20 policy sets these surfaces to zero. Caps at zero kept the old
 branches silent; this test pins that the branches themselves are gone, so a
 config change cannot bring them back. It reads the source with `ast`: every
 module under `src/` that `main.py` reaches through imports, at any depth,
-except `twitter_client`, which defines the chokepoints.
+`twitter_client` included. `twitter_client` no longer defines these write
+functions at all (issue #111): bringing one back takes new code.
 
 No live module borrows a private helper from `reply_bot` (issue #108), and
 every module under `src/` is reached from `main.py`, so legacy code cannot
@@ -18,9 +19,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 
 DISABLED_WRITES = {
-    "quote_tweet", "quote_tweet_with_gif",
+    "quote_tweet", "quote_tweet_with_gif", "post_tweet_with_gif",
     "retweet_post", "retweet_own_latest", "reboost_tweet",
-    "post_thread", "reply_to_own_latest",
+    "post_thread", "reply_to_own_latest", "reply_to_reply",
 }
 
 
@@ -58,7 +59,9 @@ def live_modules():
 
 def _disabled_write_references(path):
     for node in ast.walk(ast.parse(path.read_text())):
-        if isinstance(node, ast.Name) and node.id in DISABLED_WRITES:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name in DISABLED_WRITES:
+            yield node.lineno, node.name
+        elif isinstance(node, ast.Name) and node.id in DISABLED_WRITES:
             yield node.lineno, node.id
         elif isinstance(node, ast.Attribute) and node.attr in DISABLED_WRITES:
             yield node.lineno, node.attr
@@ -71,12 +74,20 @@ def _disabled_write_references(path):
 def test_live_modules_never_reference_a_disabled_write():
     modules = live_modules()
     assert {"direct_reply", "feed_sweeper_bot", "notify_bot", "reply_bot"} <= modules
+    assert "twitter_client" in modules
     problems = [f"src/{name}.py:{line}: {ref}"
-                for name in sorted(modules - {"twitter_client"})
+                for name in sorted(modules)
                 for line, ref in _disabled_write_references(SRC / f"{name}.py")]
     assert not problems, (
-        "A module reached from main.py names a quote, repost or thread write "
-        "(2026-09-20 policy: zero):\n  " + "\n  ".join(problems))
+        "A module reached from main.py defines or names a quote, repost, "
+        "thread or GIF write (2026-09-20 policy: zero):\n  " + "\n  ".join(problems))
+
+
+def test_twitter_client_exposes_no_disabled_write():
+    from src import twitter_client
+
+    present = sorted(name for name in DISABLED_WRITES if hasattr(twitter_client, name))
+    assert not present, f"twitter_client still exposes {present}"
 
 
 def test_every_src_module_is_reached_from_main():
