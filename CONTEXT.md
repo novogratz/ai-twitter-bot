@@ -65,6 +65,13 @@ A Reply to an Engager, in answer to what they said to the account; capped per
 Engager per day.
 _Avoid_: rally, round, comeback
 
+**Reply admission**:
+The Operator's rules a Reply must pass before it ships: first on the post
+it answers (author, Blocked account, own post, already Replied, Waking hours,
+Debate turn cap), then again with the spacing since the last Reply and the
+final text. Only a Reply it admits is sent.
+_Avoid_: gate, prefilter, reply filter
+
 **Replied store**:
 The record of every post the account has Replied to, keyed on the post's
 status ID: one Reply per post, ever. While it is unreadable, no Reply ships.
