@@ -297,17 +297,18 @@ def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monke
     monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
     action_guard.record(action_guard.DEBATE_TURN, target="capped")
-    blocked, capped, admitted = fresh("pgm_pm", n=1), fresh("capped", n=2), fresh("someone", n=3)
-    mentions += [{"url": blocked, "text": "blocked"}, {"url": capped, "text": "capped"},
-                 {"url": admitted, "text": "admitted"}]
-    outputs.update({t: _Llm(DRAFT) for t in ("blocked", "capped", "admitted")})
+    blocked, own = fresh("pgm_pm", n=1), fresh(config.BOT_HANDLE, n=2)
+    capped, admitted = fresh("capped", n=3), fresh("someone", n=4)
+    mentions += [{"url": blocked, "text": "blocked"}, {"url": own, "text": "own"},
+                 {"url": capped, "text": "capped"}, {"url": admitted, "text": "admitted"}]
+    outputs.update({t: _Llm(DRAFT) for t in ("blocked", "own", "capped", "admitted")})
 
     db.run_debate_cycle()
 
     assert generated == ["admitted"]
     assert sent == [(admitted, {"debate_turn": True})]
     assert len(logged) == 1, "log only on a confirmed ship"
-    assert db._skipped == {blocked, admitted}, "the turn cap is temporary: capped stays replayable"
+    assert db._skipped == {blocked, own, admitted}, "the turn cap is temporary: capped stays replayable"
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
@@ -321,16 +322,19 @@ def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
     assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
 
 
-def test_debate_sets_aside_skips_but_replays_failed_generations(debate):
+def test_debate_sets_aside_skips_but_replays_failed_generations(debate, monkeypatch):
     db, mentions, outputs, generated, sent = debate
-    declined, failed = fresh("someone", n=1), fresh("other", n=2)
-    mentions += [{"url": declined, "text": "declined"}, {"url": failed, "text": "failed"}]
-    outputs.update({"declined": _Llm("SKIP. nothing to debate"), "failed": _Llm("", returncode=1)})
+    declined, failed, empty = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
+    mentions += [{"url": declined, "text": "declined"}, {"url": failed, "text": "failed"},
+                 {"url": empty, "text": "empty"}]
+    outputs.update({"declined": _Llm("SKIP. nothing to debate"), "failed": _Llm("", returncode=1),
+                    "empty": _Llm("")})
+    monkeypatch.setenv("DEBATE_MAX_PER_CYCLE", "5")
 
     db.run_debate_cycle()
     db.run_debate_cycle()
 
-    assert sorted(generated) == ["declined", "failed", "failed"]
+    assert sorted(generated) == ["declined", "empty", "empty", "failed", "failed"]
     assert sent == []
     assert db._skipped == {declined}
 

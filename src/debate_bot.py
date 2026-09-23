@@ -118,7 +118,9 @@ def run_debate_cycle():
         if result.returncode != 0:
             continue  # a failed call is retried next cycle
         reply = unwrap_text(result.stdout).strip()
-        if not reply or reply.upper().startswith("SKIP"):
+        if not reply:
+            continue  # an empty answer is a failed call: replayable
+        if reply.upper().startswith("SKIP"):
             _skipped.add(url)
             continue
         reply = humanize(reply)
