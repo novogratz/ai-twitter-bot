@@ -270,12 +270,10 @@ comment in the launchd plist) and `operator_prompt.md` (`operator_cycle.sh`).
 `live_strategy.json` stays because `AGENTS.md` and the `config` skill cite it,
 though no active job calls the `config.get_live_*` readers.
 
-Issue #112 removed from git the root files only deleted modules wrote or read,
-and the tracked outputs (`run.out`, `*_output.txt`, `reply.txt`…); git history
-keeps them. Pulling that change deletes them from the checkout: if
-`git status` shows one of them modified, the pull stops until it is moved
-aside. `debate_state.json` is untracked and unused since debate turns moved
-to the ledger; it can be deleted.
+Run `git status` before `git pull`: a pull that deletes a file modified in
+the checkout stops until that file is moved aside
+([2026-09-23 root cleanup](HISTORY.md)). `debate_state.json` is untracked
+and unused since debate turns moved to the ledger; it can be deleted.
 
 ## Legacy tools
 
