@@ -32,8 +32,6 @@ from . import (
 )
 from .logger import log
 
-REPLY_MAX_CHARS = 278
-
 
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
@@ -100,10 +98,10 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.SPACING, why, author)
 
     text = _strip_dashes(draft)
-    if len(text) > REPLY_MAX_CHARS:
+    if len(text) > content_guard.REPLY_MAX_CHARS:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
-        trimmed = humanizer.smart_trim(text, REPLY_MAX_CHARS)
+        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
         log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
         text = trimmed
     text = humanizer.casualize(text)

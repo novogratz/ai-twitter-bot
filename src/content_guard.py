@@ -28,6 +28,9 @@ from typing import Callable, Optional, Tuple
 from .config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES, _PROJECT_ROOT
 from .logger import log
 
+# X composer limit for replies and quotes; Reply admission trims to it.
+REPLY_MAX_CHARS = 278
+
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
 # Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
@@ -522,8 +525,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if kind in ("reply", "quote"):
         # Hard X limit for these surfaces — an over-limit draft gets cut by
         # the composer mid-sentence, which reads as a botched AI paste.
-        if len(text) > 278:
-            return (False, f"too long for a {kind} ({len(text)} chars > 278) — would truncate mid-sentence")
+        if len(text) > REPLY_MAX_CHARS:
+            return (False, f"too long for a {kind} ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 
