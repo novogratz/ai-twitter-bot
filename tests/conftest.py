@@ -165,3 +165,13 @@ def _fresh_job_memory(monkeypatch):
                  "notify_bot"):
         monkeypatch.setattr(importlib.import_module(f"src.replies.{name}"), "_skipped", set())
     yield
+
+
+@_pytest.fixture()
+def isolate_dedup(monkeypatch, tmp_path):
+    """Each test gets an empty dedup corpus (no real tweet_history bleed)."""
+    from src.guards import content_guard as cg
+    monkeypatch.setattr(cg, "_HISTORY_FILE", str(tmp_path / "none.json"))
+    cg._RECENT_NORM.clear()
+    yield
+    cg._RECENT_NORM.clear()

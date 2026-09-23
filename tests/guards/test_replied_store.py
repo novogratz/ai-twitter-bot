@@ -8,10 +8,7 @@ import pytest
 from src.core import config
 from src.guards import replied_store as rs
 from src.core.state_errors import StateUnreadable
-
-
-def _url(n, author="someone"):
-    return f"https://x.com/{author}/status/20635000000000{n:05d}"
+from tests.helpers import _url
 
 
 def test_missing_store_reads_empty():
@@ -89,53 +86,14 @@ def test_failed_write_keeps_the_previous_store(monkeypatch):
     assert leftovers == []
 
 
-def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
-    from src.guards import action_guard as ag
-    from src.x import twitter_client as tc
-    recorded = []
-    monkeypatch.setattr(ag, "can_post", lambda kind: (True, ""))
-    monkeypatch.setattr(ag, "record", lambda *a, **k: recorded.append(a))
-    monkeypatch.setenv("DRY_RUN", "1")
+def test_release_drops_only_the_claimed_tweet(monkeypatch):
+    from src.core import config
+    from src.guards import replied_store
+
+    keep, drop = "2063500000000000150", "2063500000000000151"
     with open(config.REPLIED_FILE, "w") as f:
-        f.write("[")
-    with pytest.raises(StateUnreadable):
-        tc.reply_to_tweet(_url(1), "Batching is the whole margin story: utilisation decides the price.")
-    assert recorded == [], "nothing ships on an unreadable store"
+        json.dump({"urls": [f"https://x.com/a/status/{keep}", drop]}, f)
 
+    replied_store.release(f"https://x.com/b/status/{drop}")
 
-def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
-    from src.core import health
-    monkeypatch.setattr(health, "HEALTH_FILE", str(tmp_path / "safari_health.json"))
-    restarts = []
-    monkeypatch.setattr(health, "_restart_safari", lambda: restarts.append(1) or True)
-    with open(config.REPLIED_FILE, "w") as f:
-        f.write("[")
-    for _ in range(health.RECOVERY_THRESHOLD + 1):
-        try:
-            rs.load_replied()
-        except Exception:
-            assert health.record_failure("direct_reply") is False
-    assert restarts == [], "a corrupt store is not a Safari failure"
-    assert not os.path.exists(health.HEALTH_FILE), "the failure counter is left alone"
-
-
-def test_replyback_stops_on_unreadable_store(monkeypatch):
-    """replyback catches reply errors per engager; an unreadable store must
-    end the cycle at the first engager, before paying for a generation."""
-    from src.replies import notify_bot as nb
-    monkeypatch.setenv("DRY_RUN", "1")
-    replies = [{"user": f"@fan{i}", "text": "what about inference margins?",
-                "url": f"https://x.com/fan{i}/status/20635000000000{i:05d}"} for i in range(3)]
-    monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
-                        lambda: {"own_tweet": "batching is the margin story", "replies": replies})
-    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
-    monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: pytest.fail("cycle must not finish"))
-    monkeypatch.setattr(nb, "humanize", lambda t: t)
-    generations = []
-    monkeypatch.setattr(nb, "generate_replyback", lambda own, text: generations.append(text) or
-                        "Utilisation decides it: a busy H100 earns its price, an idle one never does.")
-    with open(config.REPLIED_FILE, "w") as f:
-        f.write("[")
-    with pytest.raises(StateUnreadable):
-        nb.run_replyback_cycle()
-    assert generations == [], "Reply admission stops the cycle before the model call"
+    assert json.load(open(config.REPLIED_FILE)) == [f"https://x.com/a/status/{keep}"]

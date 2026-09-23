@@ -353,11 +353,28 @@ some files those bots used to write, as frozen data with no writer left:
 
 ## Tests
 
-`tests/test_editorial.py` covers the current policy: Toronto and DST
-boundaries, bedtime checks at the lock and before AppleScript, the daily
-budget, slot timing and retries, source evidence, review rejection, ambiguous
-submissions, dry-run isolation and reach accounting. `tests/test_guards.py`
-pins the chokepoint guards.
+The suite mirrors `src/`: `tests/<package>/` holds the tests of one package
+(`core`, `x`, `guards`, `editorial`, `replies`, `account`), one file per
+module or concern, such as `tests/guards/test_action_guard.py` or
+`tests/x/test_write_path.py`. A test that crosses packages sits with the
+module owning the rule it pins: a chokepoint rule under `tests/x/`, a job's
+use of it under the job's package. Every test folder has an `__init__.py`,
+so two packages can hold files of the same name. Helpers shared by several
+packages live in `tests/helpers.py`, fixtures in `tests/conftest.py`.
+
+The current policy is pinned across packages: Toronto and DST boundaries in
+`tests/guards/test_active_hours.py`, bedtime checks at the lock and before
+AppleScript in `tests/x/test_safari.py`, the daily budget and write spacing
+in `tests/guards/test_action_guard.py`, and slot timing and retries, source
+evidence, review rejection, ambiguous submissions, dry-run isolation and
+reach accounting under `tests/editorial/`.
+
+The files at the top of `tests/` pin cross-cutting invariants:
+`test_conftest_walls.py` (the walls below), `test_state_file_paths.py` (every
+state file resolves to the repo root), `test_scheduler.py` (the jobs
+`build_scheduler()` registers), `test_voice.py` (`core_identity.md` and the
+reply prompts that carry it), `test_mass_unfollow.py`
+(`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`,
 `scripts/` and `tests/`, subfolders included, with `ast`. It fails when an
 intra-project import, function-local or inside `try/except` included, names a
@@ -378,8 +395,10 @@ error on `src.x.safari` fails every test rather than dropping the wall), the
 logger writes to a temporary file, and the engagement log, tweet history,
 replied store, ledger and personality file point to `tmp_path`. A mock placed
 on a caller module misses function-local imports; patch the primitive in
-`safari` and a scrape in `scraper`. `tests/test_guards.py` fails when a module binds a walled
-primitive, `webbrowser` or `subprocess.Popen` by name, past the wall.
+`safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when a module binds a walled
+primitive, `webbrowser` or `subprocess.Popen` by name, past the wall. The
+`isolate_dedup` fixture, opted into with `pytest.mark.usefixtures`, also
+empties the content guard's dedup corpus.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and

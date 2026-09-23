@@ -4,7 +4,7 @@ chokepoint are stubs, the Replied store, the ledger and BLOCKLIST are real.
 conftest points the state files at tmp_path, empties each job's `_skipped`
 set and fixes the clock at noon Toronto."""
 import math
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from types import SimpleNamespace
 from zoneinfo import ZoneInfo
 
@@ -14,14 +14,10 @@ from src.core import config
 from src.guards import replied_store
 from src.x import x_urls
 from src.core.state_errors import StateUnreadable
+from tests.helpers import fresh
+
 
 DRAFT = "Batching is where inference margins are won or lost, not in the model."
-
-
-def fresh(handle, minutes=5, n=0):
-    """A status URL posted `minutes` ago; `n` keeps URLs distinct."""
-    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes * 60_000
-    return f"https://x.com/{handle}/status/{((ms - x_urls._TWITTER_EPOCH_MS) << 22) + n}"
 
 
 def corrupt_replied_store():
@@ -35,6 +31,7 @@ def blocklist(monkeypatch):
 
 
 # --- direct_reply and feed_sweeper (shared pipeline) ------------------------
+
 
 @pytest.fixture
 def pipeline(monkeypatch, blocklist):
@@ -218,6 +215,7 @@ def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
 
 # --- Reply spacing in the pipeline (#131) -------------------------------------
 
+
 @pytest.fixture
 def spacing(pipeline, monkeypatch):
     """The pipeline on a Toronto noon clock that its sleeps advance. The stub
@@ -356,6 +354,39 @@ def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
 
 # --- reply search (one model call finds and drafts) --------------------------
 
+
+@pytest.mark.usefixtures("isolate_dedup")
+def test_reply_search_surface_disabled_by_default(monkeypatch):
+    """2026-07-19: the LLM-web-search reply surface (reply_bot -> reply_agent)
+    is retired by default. Web search cannot index <=24h x.com tweets, so the
+    path either hallucinated URLs (PR #59) or answered conversationally to its
+    own stale FR-era persona prompt — 388 failed Claude CLI calls for 1 reply
+    over 35h, plus a refresh_feed() Safari touch every ~3 min. Pin: with
+    ENABLE_REPLY_SEARCH unset/0 the cycle returns before ANY side effect
+    (no Safari, no LLM); =1 re-arms the path. Env read at call time."""
+    from src.replies import reply_bot as rb
+
+    calls = []
+    monkeypatch.setattr(rb, "refresh_feed", lambda: calls.append("safari"))
+    monkeypatch.setattr(rb, "generate_replies", lambda **kw: calls.append("llm") or None)
+
+    # Default (unset) -> disabled, zero side effects
+    monkeypatch.delenv("ENABLE_REPLY_SEARCH", raising=False)
+    rb.run_reply_cycle()
+    assert calls == [], "disabled surface must not touch Safari or the LLM"
+
+    # Explicit 0 -> same
+    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "0")
+    rb.run_reply_cycle()
+    assert calls == [], "ENABLE_REPLY_SEARCH=0 must short-circuit the cycle"
+
+    # =1 -> the path runs again (env read at call time, no restart needed)
+    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
+    monkeypatch.setattr(rb, "MAX_REPLIES_PER_CYCLE", 5)
+    rb.run_reply_cycle()
+    assert calls == ["safari", "llm"], "ENABLE_REPLY_SEARCH=1 must re-arm the surface"
+
+
 @pytest.fixture
 def reply_search(monkeypatch, blocklist):
     """reply_bot with a stub search-and-draft model and a stub chokepoint;
@@ -444,6 +475,58 @@ def test_reply_search_does_not_swallow_unreadable_store_at_the_chokepoint(reply_
 
 # --- early_bird and mega_watch (profile scans) ------------------------------
 
+
+@pytest.mark.usefixtures("isolate_dedup")
+def test_early_reply_targets_are_curator_driven():
+    """2026-06-07 PM operator mandate: NO static target lists — the scan
+    pools come from account_curator.tracked_handles(), pinned with the only
+    two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
+    from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
+    from src.replies.mega_watch_bot import MEGA_ACCOUNTS
+    assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
+        "static early-reply lists must stay empty — pools come from the curator"
+    )
+    from src.account.account_curator import PINNED, tracked_handles
+    # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
+    # reply conversion on his question post (operator: "more things like this").
+    assert tuple(PINNED) == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
+    handles = tracked_handles(limit=5)
+    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
+
+
+def _status_url(handle, minutes_ago):
+    from datetime import datetime, timezone
+    from src.replies.reply_bot import _TWITTER_EPOCH
+
+    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes_ago * 60_000
+    return f"https://x.com/{handle}/status/{(ms - _TWITTER_EPOCH) << 22}"
+
+
+def test_mega_watch_skips_posts_older_than_max_age(monkeypatch):
+    from src.replies import mega_watch_bot as mw
+
+    fresh = _status_url("bigai", 1)
+    stale = _status_url("bigai", 30)
+    monkeypatch.setattr(mw, "_watch_pool", lambda: ["bigai"])
+    monkeypatch.setattr(mw, "scrape_profile_tweets", lambda *a, **k: [
+        {"url": stale, "author": "bigai", "text": "GPU clusters are the new power plants"},
+        {"url": fresh, "author": "bigai", "text": "GPU clusters are the new power plants"},
+    ])
+    monkeypatch.setattr(mw.x_urls, "is_reply_like_tweet", lambda *a, **k: False)
+    monkeypatch.setattr(mw, "_is_on_niche", lambda text: True)
+    monkeypatch.setattr(mw, "_generate_single_reply",
+                        lambda **k: "Power is the real bottleneck for these clusters.")
+    monkeypatch.setattr(mw, "humanize", lambda text: text)
+    monkeypatch.setattr(mw, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(mw.time, "sleep", lambda *_: None)
+    replied_to = []
+    monkeypatch.setattr(mw, "reply_to_tweet", lambda url, text: replied_to.append(url) or True)
+
+    mw.run_mega_watch_cycle()
+
+    assert replied_to == [fresh]
+
+
 @pytest.fixture(params=["early_bird", "mega_watch"])
 def profile_job(request, monkeypatch, blocklist):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
@@ -527,6 +610,7 @@ def test_profile_jobs_do_not_swallow_unreadable_store_at_the_chokepoint(profile_
 
 
 # --- debate (mentions) ------------------------------------------------------
+
 
 class _Llm:
     def __init__(self, stdout, returncode=0):
@@ -618,6 +702,7 @@ def test_debate_stops_on_unreadable_store(debate):
 
 # --- replyback (replies under our latest post) ------------------------------
 
+
 @pytest.fixture
 def replyback(monkeypatch, blocklist):
     from src.replies import notify_bot as nb
@@ -678,20 +763,58 @@ def test_replyback_sets_aside_model_skips_but_replays_failed_calls(replyback):
     assert nb._skipped == {declined}
 
 
-# --- follow_engagers (Engagers from the ledger) -----------------------------
+def test_replyback_stops_on_unreadable_store(monkeypatch):
+    """replyback catches reply errors per engager; an unreadable store must
+    end the cycle at the first engager, before paying for a generation."""
+    from src.replies import notify_bot as nb
+    monkeypatch.setenv("DRY_RUN", "1")
+    replies = [{"user": f"@fan{i}", "text": "what about inference margins?",
+                "url": f"https://x.com/fan{i}/status/20635000000000{i:05d}"} for i in range(3)]
+    monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
+                        lambda: {"own_tweet": "batching is the margin story", "replies": replies})
+    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
+    monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: pytest.fail("cycle must not finish"))
+    monkeypatch.setattr(nb, "humanize", lambda t: t)
+    generations = []
+    monkeypatch.setattr(nb, "generate_replyback", lambda own, text: generations.append(text) or
+                        "Utilisation decides it: a busy H100 earns its price, an idle one never does.")
+    with open(config.REPLIED_FILE, "w") as f:
+        f.write("[")
+    with pytest.raises(StateUnreadable):
+        nb.run_replyback_cycle()
+    assert generations == [], "Reply admission stops the cycle before the model call"
 
-def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
-    import json
-    from src.guards import action_guard
-    from src.account import follow_engagers_bot as fe
 
-    for author in ("oldfan", "newfan", "oldfan"):
-        action_guard.record(action_guard.DEBATE_TURN, target=author)
-    action_guard.record(action_guard.DEBATE_TURN, target="simulated", dry_run=True)
-    action_guard.record(action_guard.REPLY, target=fresh("replied_to"))
-    with open(fe.FROZEN_REPLIED_BACK_FILE, "w") as f:
-        json.dump([fresh("agedout", minutes=91 * 24 * 60), fresh("frozenfan", n=1), "text:no url",
-                   fresh("i", n=3), fresh("newfan", n=2)], f)
+@pytest.mark.usefixtures("isolate_dedup")
+def test_replyback_reciprocity_never_follows(monkeypatch):
+    """Engager follows belong to follow_engagers_job (engager=True). The
+    replyback reciprocity pass only visits and likes; its old bare
+    follow_account call was refused by the Seed-account rule anyway."""
+    from src.replies import notify_bot as nb
 
-    assert fe._engager_handles() == ["oldfan", "newfan", "frozenfan"], \
-        "the frozen file ages out with the ledger's 90 days; an /i/ URL names nobody"
+    visited = []
+    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: visited.append(h) or [])
+    monkeypatch.setattr(nb, "follow_account",
+                        lambda *a, **k: pytest.fail("replyback must not follow"), raising=False)
+    monkeypatch.setattr(nb.random, "random", lambda: 0.0)
+    nb._reciprocate_engagers([{"user": "Fresh @fresh", "url": "https://x.com/fresh/status/12"}], set())
+    assert visited == ["fresh"]
+
+
+def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
+    from src.replies import notify_bot as nb
+    LikeOutcome = nb.LikeOutcome
+
+    results = {"liker": [LikeOutcome.LIKED, LikeOutcome.ALREADY_LIKED],
+               "stale": [LikeOutcome.ALREADY_LIKED], "broken": [LikeOutcome.FAILED],
+               "unsure": [LikeOutcome.UNCONFIRMED]}
+    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: results[h])
+    monkeypatch.setattr(nb.random, "random", lambda: 0.0)
+    lines = []
+    monkeypatch.setattr(nb.log, "info", lambda msg, *a, **k: lines.append(msg))
+    replies = [{"user": f"@{h}", "url": f"https://x.com/{h}/status/1"} for h in results]
+    nb._reciprocate_engagers(replies, set())
+    assert "[RECIPROCATE] Engaged back with 1 engager(s): 1 like(s)." in lines
+    assert "[RECIPROCATE] Nothing liked on @stale." in lines
+    assert "[RECIPROCATE] Nothing liked on @broken." in lines
+    assert "[RECIPROCATE] Nothing liked on @unsure." in lines
