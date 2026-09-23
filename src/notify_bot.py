@@ -5,6 +5,7 @@ import re
 import traceback
 from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .logger import log
+from .state_errors import StateUnreadable
 from .twitter_client import (
     like_own_tweet_replies,
     retweet_own_latest,
@@ -196,6 +197,8 @@ def run_replyback_cycle():
                 continue  # chokepoint skip — stays fresh, no phantom count
             replied_back.add(dedup_key)
             count += 1
+        except StateUnreadable:
+            raise  # no reply can ship: stop paying for generations
         except Exception:
             log.info(f"[REPLYBACK] Failed to reply back:")
             traceback.print_exc()

@@ -130,6 +130,15 @@ by hand, keeping today's entries, or restore a copy taken today. Never delete
 the ledger or restore it from git: the committed `action_ledger.json` dates
 from July 2026, and either move resets today's count and grants extra posts.
 
+**Corrupt `replied_tweets.json`.** The store fails closed: `reply_to_tweet`
+and the reply cycles that read it raise `StateUnreadable` until it is
+repaired, so no reply ships. `health` logs these failures without counting
+them toward a Safari restart; the same holds for the ledger.
+Stop the bot, repair the JSON by hand (usually a truncated tail: cut back to
+the last complete entry and close the list), then restart. Never delete it:
+an empty store lets every loop answer tweets it already answered. The file is
+gitignored, so git holds no copy to restore.
+
 **x.com renders a blank page.** After 3 consecutive empty scrapes across at
 least 2 different pages (2 in a row on the home feed), `twitter_client`
 restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
@@ -198,7 +207,7 @@ Files written by active jobs:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report |
 | `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, 90 days |
 | `following_count.json` | `action_guard` | Following count used by the follow ceiling |
-| `replied_tweets.json` | `reply_to_tweet`, `direct_reply` | Tweets already answered |
+| `replied_tweets.json` | `replied_store` (`reply_to_tweet`, `direct_reply`) | Tweets already answered, by status ID |
 | `replied_back.json` | `notify_bot` | Replyback dedup, source for `follow_engagers_job` |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus |
 | `engagement_log.csv` | `engagement_log` | Append-only action log |

@@ -16,6 +16,7 @@ import pytest
 from src import content_guard as cg
 from src import pattern_tags
 from src.llm_client import unwrap_text, contains_post_unsafe_leak
+from src import replied_store as rs
 
 
 @pytest.fixture(autouse=True)
@@ -411,11 +412,10 @@ def test_validate_allows_casual_unpunctuated_ending():
 def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     """Two reply bots racing on the same tweet: the second write MUST be
     refused at the chokepoint regardless of which bot it came from."""
-    import src.reply_bot as rb
     import src.twitter_client as tc
     from src import action_guard, config
 
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(config, "DRY_RUN", True)
     monkeypatch.setattr(action_guard, "can_post", lambda action: (True, ""))
     recorded = []
@@ -794,10 +794,9 @@ def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_pa
     ~3.6h of compute/day before the fix.
     """
     import src.direct_reply as dr
-    import src.reply_bot as rb
 
     # Isolate the on-disk replied set so the test doesn't bleed real state.
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
 
     # Two on-niche tweets the in-memory cycle-start snapshot thinks are fresh.
     fresh_url = "https://x.com/some_ai_account/status/2063500000000000001"
@@ -806,13 +805,13 @@ def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_pa
         {"url": fresh_url, "text": "openai just raised at 500B valuation", "author": "some_ai_account"},
         {"url": racy_url, "text": "anthropic shipped a new tool — claude can now run terminals", "author": "some_ai_account"},
     ]
-    cycle_snapshot = rb.load_replied()  # empty at start
+    cycle_snapshot = rs.load_replied()  # empty at start
 
     # Simulate a concurrent reply bot writing `racy_url` to disk between the
     # snapshot and the LLM call.
-    concurrent_snapshot = rb.load_replied()
+    concurrent_snapshot = rs.load_replied()
     concurrent_snapshot.add(racy_url)
-    rb.save_replied(concurrent_snapshot)
+    rs.save_replied(concurrent_snapshot)
 
     llm_calls: list[str] = []
 
@@ -1395,7 +1394,6 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
     pass for Graphseo — every fresh post gets exactly one reply, already-
     replied URLs are skipped before the LLM."""
     from src import btc_blitz as bb
-    from src import reply_bot as rb
     from src import twitter_client as tc
     from src import quote_tweet_bot as qb
     from src import engagement_log as el
@@ -1420,7 +1418,7 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
     monkeypatch.setattr(dr, "_generate_graphseo_reply",
                         lambda txt: gen_calls.append(("GRAPHSEO_FR", txt)) or "réponse précise en français")
     # One Graphseo post already replied — must be skipped pre-LLM.
-    monkeypatch.setattr(rb, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
+    monkeypatch.setattr(rs, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
     # Quote pass: bestie URL already quoted so the test stays reply-only.
     monkeypatch.setattr(qb, "_load_quoted", lambda: {"https://x.com/TheBTCTherapist/status/111"})
     monkeypatch.setattr(qb, "_save_quoted", lambda q: None)
@@ -1447,15 +1445,14 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
     contain the URL at the moment reply_to_tweet is invoked; (2) log_reply
     fires ONLY when reply_to_tweet returns True."""
     import src.direct_reply as dr
-    import src.reply_bot as rb
 
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     url = "https://x.com/some_ai_account/status/2063500000000000009"
     tweets = [{"url": url, "text": "nvidia margins at 75 percent again", "author": "some_ai_account"}]
 
     premarked_at_call = []
     def fake_reply(u, text):
-        premarked_at_call.append(u in rb.load_replied())
+        premarked_at_call.append(u in rs.load_replied())
         return True
     logged = []
     monkeypatch.setattr(dr, "_generate_single_reply",
@@ -1467,7 +1464,7 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
     monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
     monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
 
-    n = dr._reply_to_tweets(tweets, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+    n = dr._reply_to_tweets(tweets, rs.load_replied(), "SEARCH-HOT", en_counter=[0])
     assert premarked_at_call == [False], \
         "caller premarked the store — the chokepoint would refuse its own reply"
     assert n == 1 and len(logged) == 1
@@ -1477,7 +1474,7 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
     url2 = "https://x.com/some_ai_account/status/2063500000000000010"
     tweets2 = [{"url": url2, "text": "tsmc capex at 40 billion now", "author": "some_ai_account"}]
     monkeypatch.setattr(dr, "reply_to_tweet", lambda u, t: False)
-    n2 = dr._reply_to_tweets(tweets2, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+    n2 = dr._reply_to_tweets(tweets2, rs.load_replied(), "SEARCH-HOT", en_counter=[0])
     assert n2 == 0 and logged == [], \
         "chokepoint skip must not produce a phantom engagement_log row"
 
@@ -1486,11 +1483,10 @@ def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
     """reply_to_tweet must return True when the reply ships (DRY_RUN counts)
     and False on the dedup skip — callers gate log_reply on this."""
     from src import twitter_client as tc
-    from src import reply_bot as rb
     from src import action_guard as ag
     from src import config as cfg
 
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setattr(cfg, "DRY_RUN", True)
@@ -1518,7 +1514,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     # posted live replies to @TheBTCTherapist mid-test. conftest's
     # _no_safari wall now makes that mistake fail loudly instead.)
     import src.twitter_client as tc
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
     url = "https://x.com/TheBTCTherapist/status/2063500000000000077"
     monkeypatch.setattr(tc, "scrape_x_search",
@@ -1541,7 +1537,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
     monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
 
-    dr._run_graphseo_scan(rb.load_replied())
+    dr._run_graphseo_scan(rs.load_replied())
 
     assert graphseo_calls == [], "Graphseo FR generator must NEVER run for the bestie"
     assert gen_labels == [("VIP_REPLY/TheBTCTherapist", True)]
@@ -1554,11 +1550,10 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     ('what a shame'). The chokepoint must strip em/en dashes for EVERY
     reply path, even ones that skip humanize()."""
     from src import twitter_client as tc
-    from src import reply_bot as rb
     from src import action_guard as ag
     from src import config as cfg
 
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     recorded = {}
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
@@ -1644,12 +1639,11 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     him from ANY bot, BEFORE the dedup mark (post stays fresh for an FR
     retry). SKIPPED-variant leaks are also pinned here."""
     from src import twitter_client as tc
-    from src import reply_bot as rb
     from src import action_guard as ag
     from src import config as cfg
     from src import content_guard as cg
 
-    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setattr(cfg, "DRY_RUN", True)
@@ -1658,7 +1652,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     english = "The market just told you what your conviction is worth this week."
     assert tc.reply_to_tweet(url, english) is False
     # Post must stay UNMARKED — a later FR draft can still ship.
-    assert url not in rb.load_replied()
+    assert url not in rs.load_replied()
     french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
     assert tc.reply_to_tweet(url, french) is True
 
@@ -3108,7 +3102,7 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
         ag.record(ag.DEBATE_TURN, target=db._handle_from_url(url))
         return True
     monkeypatch.setattr("src.twitter_client.reply_to_tweet", chokepoint)
-    monkeypatch.setattr("src.reply_bot.load_replied", lambda: set())
+    monkeypatch.setattr("src.replied_store.load_replied", lambda: set())
     logged = []
     monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
 
@@ -3146,7 +3140,6 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     refused turn leaves the tweet unmarked, and the cap is read at call time."""
     from src import action_guard as ag
     from src import content_guard as cg
-    from src import reply_bot as rb
     from src import twitter_client as tc
 
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
@@ -3164,7 +3157,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     assert tc.reply_to_tweet(url("Challenger", 1), text, debate_turn=True)
     assert tc.reply_to_tweet_in_thread(url("challenger", 2), text, debate_turn=True)
     assert not tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
-    assert url("challenger", 3) not in rb.load_replied(), "refused turn must stay fresh"
+    assert url("challenger", 3) not in rs.load_replied(), "refused turn must stay fresh"
     assert tc.reply_to_tweet(url("challenger", 4), text), "plain replies stay uncapped"
     assert tc.reply_to_tweet(url("someone_else", 5), text, debate_turn=True)
     assert ag.debate_turns_today("challenger") == 2

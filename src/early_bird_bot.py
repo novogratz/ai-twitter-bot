@@ -20,7 +20,8 @@ import traceback
 from .config import BLOCKLIST, BOT_HANDLE
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
-from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
+from .replied_store import load_replied
+from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche, _looks_french
 from .engagement_log import log_reply
 from .humanizer import humanize

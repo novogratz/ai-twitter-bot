@@ -26,6 +26,7 @@ from typing import Optional, Tuple
 from . import config
 from .logger import log
 from .active_hours import is_active, now_local
+from .state_errors import StateUnreadable
 from zoneinfo import ZoneInfo
 
 _LOCK = threading.Lock()
@@ -54,7 +55,7 @@ def _load_ledger() -> list:
     except FileNotFoundError:
         return []
     except (OSError, json.JSONDecodeError) as exc:
-        raise RuntimeError("Action ledger unreadable; refusing unaudited writes") from exc
+        raise StateUnreadable("Action ledger unreadable; refusing unaudited writes") from exc
 
 
 def _save_ledger(rows: list) -> None:
@@ -67,7 +68,7 @@ def _save_ledger(rows: list) -> None:
             json.dump(rows, f)
         os.replace(tmp, config.ACTION_LEDGER_FILE)
     except OSError as exc:
-        raise RuntimeError("Action ledger could not be saved") from exc
+        raise StateUnreadable("Action ledger could not be saved") from exc
 
 
 def record(action: str, target: str = "", dry_run: bool = False) -> None:

@@ -49,6 +49,8 @@ slot needs news from the last six hours and an exceptional-value approval.
 - Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
   per-author debate turns protect conversation quality. Every answer to
   someone who answered the account is a debate turn, whichever job sends it.
+  The per-tweet dedup store fails closed: while it is unreadable, no reply
+  ships.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 

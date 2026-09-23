@@ -170,9 +170,12 @@ Three modules sit behind them:
 - `src/content_guard.py` validates text before publication: near-term price
   targets, duplicates, truncation, violence, skip rationales.
 
-`reply_to_tweet` also owns reply deduplication. It re-reads
-`replied_tweets.json`, refuses a tweet already answered, and marks it just
-before writing.
+`reply_to_tweet` also owns reply deduplication through
+`src/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
+tweet already answered, and marks it just before writing, all under one lock.
+The store is keyed on status ID, written through a temp file and
+`os.replace`, and fails closed like the ledger: an unreadable file raises
+instead of reading as empty.
 
 `personality_store.hard_rules_block()` renders the hard rules and the respect
 list from `respect_list.json`. The editorial prompt, the replyback prompt and

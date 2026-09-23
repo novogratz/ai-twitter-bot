@@ -1,11 +1,10 @@
 """Reply bot: finds AI tweets and posts troll replies."""
-import json
 import os
 import re
 import time
 import traceback
 from datetime import datetime, timezone
-from .config import MAX_REPLIES_PER_CYCLE, REPLIED_FILE, BLOCKLIST, BOT_HANDLE
+from .config import MAX_REPLIES_PER_CYCLE, BLOCKLIST, BOT_HANDLE
 from .logger import log
 
 _OWN_HANDLE = BOT_HANDLE.lower()
@@ -53,101 +52,7 @@ from .twitter_client import reply_to_tweet, retweet_post, refresh_feed
 from .history import get_recent_tweets
 from .engagement_log import log_reply
 from .humanizer import humanize
-
-
-_REPLIED_CAP = 50000
-
-
-def _canonical_tweet_id(url: str) -> str:
-    """Extract the status ID from a tweet URL.
-
-    Status IDs are globally unique on X, but the SAME tweet can surface
-    under multiple author URLs because feed-scraping sometimes mis-attributes
-    the author handle (e.g. when a tweet shows in a profile via quote / RT
-    context). Dedup keyed on the raw URL string would let the same tweet
-    get replied to multiple times under different scraped prefixes.
-
-    Bug 2026-05-17: status 2056061134629933072 got 3 replies same day under
-    @elonmusk, @ABaradez, @LeJournalDuCoin URLs — all same actual tweet.
-    """
-    if not url:
-        return ""
-    m = re.search(r"/status/(\d+)", url)
-    if m:
-        return m.group(1)
-    return url.strip().lower()
-
-
-class _CanonReplied(set):
-    """Set wrapper that canonicalizes URLs to status IDs on add/contains.
-    Lets existing call sites use `url in replied` / `replied.add(url)`
-    unchanged while the underlying storage is keyed on status ID."""
-
-    def __contains__(self, item) -> bool:
-        return super().__contains__(_canonical_tweet_id(item))
-
-    def add(self, item) -> None:
-        super().add(_canonical_tweet_id(item))
-
-    def update(self, items) -> None:
-        for x in items:
-            self.add(x)
-
-
-def load_replied() -> set:
-    """Return a canonicalizing set so `url in replied` dedupes on status ID."""
-    raw: list[str] = []
-    if os.path.exists(REPLIED_FILE):
-        try:
-            with open(REPLIED_FILE, "r") as f:
-                data = json.load(f)
-            if isinstance(data, list):
-                raw = [str(u) for u in data if u]
-            elif isinstance(data, dict):
-                raw = [str(u) for u in (data.get("urls") or []) if u]
-        except (json.JSONDecodeError, OSError):
-            raw = []
-    s = _CanonReplied()
-    for item in raw:
-        s.add(item)
-    return s
-
-
-def save_replied(urls: set):
-    """Save replied URLs preserving insertion order.
-
-    Bug 2026-05-16: previous impl was `list(urls)[-2000:]` which slices a
-    Python SET. Sets are unordered → each save randomly dropped ~half of
-    the URLs. URLs fell out of the cache, then another bot rediscovered
-    the same tweet days later and replied again. Engagement_log shows 414
-    duplicate-reply URLs from this bug.
-
-    Fix: re-read the on-disk ordered list, append any URLs the in-memory
-    set has but the file doesn't, cap at 50k from the TAIL (newest), and
-    write back as a list. Also re-reading at save time handles parallel
-    APScheduler cycles cleanly (last writer merges with whatever landed
-    in between).
-    """
-    existing_list: list[str] = []
-    if os.path.exists(REPLIED_FILE):
-        try:
-            with open(REPLIED_FILE, "r") as f:
-                data = json.load(f)
-            if isinstance(data, list):
-                existing_list = [u for u in data if isinstance(u, str)]
-            elif isinstance(data, dict):
-                existing_list = [u for u in (data.get("urls") or []) if isinstance(u, str)]
-        except (json.JSONDecodeError, OSError):
-            existing_list = []
-    existing_set = set(existing_list)
-    for u in urls:
-        if isinstance(u, str) and u not in existing_set:
-            existing_list.append(u)
-            existing_set.add(u)
-    if len(existing_list) > _REPLIED_CAP:
-        existing_list = existing_list[-_REPLIED_CAP:]
-    with open(REPLIED_FILE, "w") as f:
-        json.dump(existing_list, f, indent=2)
+from .replied_store import load_replied, save_replied
 
 
 def _reply_search_enabled() -> bool:

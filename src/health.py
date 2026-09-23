@@ -17,10 +17,12 @@ ANY mix of bots is the trigger, since they all share Safari.
 """
 import json
 import os
+import sys
 import time
 from datetime import datetime
 from .config import _PROJECT_ROOT
 from .logger import log
+from .state_errors import StateUnreadable
 
 HEALTH_FILE = os.path.join(_PROJECT_ROOT, "safari_health.json")
 AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
@@ -61,7 +63,15 @@ def record_failure(label: str = "") -> bool:
 
     Recovery = quit + relaunch Safari. Idempotent and rate-limited via
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
+
+    Call it from the `except` block that caught the cycle's error: a
+    StateUnreadable in flight is logged and not counted.
     """
+    exc = sys.exc_info()[1]
+    if isinstance(exc, StateUnreadable):
+        log.error(f"[HEALTH] {label or 'cycle'} halted: {exc}. Not a Safari failure, "
+                  f"no restart; repair the file (docs/OPERATIONS.md#recovery).")
+        return False
     data = _load()
     data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
     log.info(f"[HEALTH] {label or 'cycle'} FAILED — consecutive = {data['consecutive_failures']}.")

@@ -32,6 +32,7 @@ Modules none of those jobs reach are legacy, kept for reference.
 | Originals: sources, evidence, draft, separate review | `src/editorial_bot.py`, `src/editorial_schemas.py` |
 | Toronto clock, bedtime checks | `src/active_hours.py` |
 | Caps, pacing, write ledger, follow policy | `src/action_guard.py` |
+| Replied store: one reply per tweet, keyed on status ID | `src/replied_store.py` |
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/twitter_client.py` |

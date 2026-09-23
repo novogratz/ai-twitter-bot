@@ -92,7 +92,7 @@ def run_debate_cycle():
 
     from . import action_guard
     from .twitter_client import scrape_mentions, reply_to_tweet
-    from .reply_bot import load_replied
+    from .replied_store import load_replied
     mentions = scrape_mentions(max_tweets=20)
     if not mentions:
         log.info("[DEBATE] No mentions scraped this cycle.")

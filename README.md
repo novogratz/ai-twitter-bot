@@ -9,6 +9,8 @@ every post and respond naturally in conversations.
 - **Active daily: 04:30–22:00 America/Toronto**, with daylight saving handled automatically.
 - **Six original posts planned; seven is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
+  If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
+  it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **No automatic quote tweets, reposts, self-recycling, startup bursts, or burst threads.**
 - Every scheduled original uses a fetched primary source, a specific takeaway,
   duplicate checks, and a separate editorial review before publishing.
