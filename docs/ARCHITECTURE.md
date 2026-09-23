@@ -192,9 +192,7 @@ The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
 instead of reading as empty. If the reply keystroke or the paste fails, or a
 stop or 22:00 interrupts the sequence before the submit keystroke, nothing
-was sent: `replied_store.release` removes the claim. A job that keeps its own
-loaded set, like `direct_reply`, saves the claim back at the end of its
-cycle, so the tweet may still go unanswered. If the submit keystroke fails,
+was sent: `replied_store.release` removes the claim. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 

@@ -119,3 +119,13 @@ def _daylight_default(monkeypatch):
     real_now = active_hours.now_local
     monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
     yield
+
+
+@_pytest.fixture(autouse=True)
+def _fresh_job_memory(monkeypatch):
+    """Each reply job keeps the posts it dropped in a module-level set for
+    the life of the process; every test starts with empty ones."""
+    import importlib
+    for name in ("direct_reply", "feed_sweeper_bot"):
+        monkeypatch.setattr(importlib.import_module(f"src.{name}"), "_skipped", set())
+    yield

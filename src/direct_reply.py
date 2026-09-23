@@ -5,20 +5,23 @@ import re
 import random
 import time
 import traceback
-from datetime import date as _date
+from datetime import date as _date, timedelta
+from . import x_urls
 from .logger import log
 from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER, _PROJECT_ROOT
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
-from .replied_store import load_replied, save_replied
-from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
-from .config import BLOCKLIST, BOT_HANDLE
+from .reply_admission import judge_parent
+from .reply_bot import _is_reply_like_tweet
+from .state_errors import StateUnreadable
 from .humanizer import humanize
 from .reply_language import looks_french
 from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
-_OWN_HANDLE = BOT_HANDLE.lower()
+# Posts this job drops until restart: definitive Reply admission refusals
+# and posts the model declined. Temporary refusals stay replayable.
+_skipped: set = set()
 # Parents who ALWAYS get French replies, whatever the language detector
 # says about one short post (operator 2026-06-07).
 _FR_FORCED_HANDLES = {h.strip().lstrip("@").lower() for h in os.environ.get(
@@ -376,7 +379,7 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     return smart_trim(text, 220)
 
 
-def _run_graphseo_scan(replied: set) -> int:
+def _run_graphseo_scan(tried: set) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
     Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
@@ -385,9 +388,10 @@ def _run_graphseo_scan(replied: set) -> int:
     serialized Safari per cycle and converted to zero on the EN persona).
     Each handle is a cheap `from:` search, no profile visit; the 6h
     btc_blitz converges full coverage, this lane keeps pickup fast.
+
+    `tried` holds the posts this cycle already tried, in memory only.
     """
     from .twitter_client import scrape_x_search, reply_to_tweet
-    from .reply_bot import _tweet_age_minutes
     from .engagement_log import log_reply
 
     VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(
@@ -404,9 +408,15 @@ def _run_graphseo_scan(replied: set) -> int:
         for t in tweets:
             url = t.get("url", "")
             text = t.get("text", "")
-            if not url or not text or url in replied:
+            if not url or not text or url in tried or url in _skipped:
                 continue
-            if _tweet_age_minutes(url) > 2880:
+            age = x_urls.age(url)
+            if age is None or age > timedelta(hours=48):
+                continue
+            verdict = judge_parent(url)
+            if not verdict:
+                if verdict.refusal.definitive:
+                    _skipped.add(url)
                 continue
             # Per-handle persona (bug 2026-06-07: the Graphseo FR prompt —
             # French + the deliberate-typo style — went to an ENGLISH
@@ -423,22 +433,26 @@ def _run_graphseo_scan(replied: set) -> int:
                 reply = _gen(tpl, text, PRIORITY_REPLY_MODEL,
                              f"VIP_REPLY/{handle}", author=handle)
             if not reply:
+                _skipped.add(url)
                 continue
             reply = humanize(reply)  # em-dash strip + AI-artifact cleanup
             log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
+            tried.add(url)
             try:
                 shipped = reply_to_tweet(url, reply)
-                replied.add(url)
-                if not shipped:
-                    continue  # chokepoint skip — don't log a phantom reply
-                try:
-                    log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
-                except Exception:
-                    pass
-                posted += 1
+            except StateUnreadable:
+                raise
             except Exception:
                 log.info(f"[VIP] Reply failed for @{handle}:")
                 traceback.print_exc()
+                continue
+            if not shipped:
+                continue  # chokepoint skip — don't log a phantom reply
+            try:
+                log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
+            except Exception:
+                pass
+            posted += 1
         log.info(f"[VIP] @{handle} done.")
     log.info(f"[VIP] Total VIP replies posted: {posted}.")
     return posted
@@ -517,36 +531,38 @@ def _freshness_sort_key(tweet):
     """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
     to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
 
-    Primary: age bucket (<=60 min, <=6h, older, unknown-age last — unknown
-    parses as 9999 min via the snowflake helper). Secondary within a bucket:
-    likes-per-hour velocity, highest first. First-hour replies are where the
-    algo weight and the profile-visit conversion live; a 60-hour-old tweet
-    must never consume the slot a 20-minute riser deserved.
+    Primary: age bucket (<=60 min, <=6h, older, unknown-age last).
+    Secondary within a bucket: likes-per-minute velocity, highest first.
+    First-hour replies are where the algo weight and the profile-visit
+    conversion live; a 60-hour-old tweet must never consume the slot a
+    20-minute riser deserved.
     """
-    age = _tweet_age_minutes(tweet.get("url", ""))
-    if age <= 60:
-        bucket = 0
-    elif age <= 360:
-        bucket = 1
-    elif age < 9999:
-        bucket = 2
-    else:
-        bucket = 3
-    likes = tweet.get("likes") or 0
-    velocity = likes / max(age, 1.0)
-    return (bucket, -velocity, age)
+    age = x_urls.age(tweet.get("url", ""))
+    if age is None:
+        return (3, 0.0, float("inf"))
+    minutes = age.total_seconds() / 60
+    bucket = 0 if minutes <= 60 else 1 if minutes <= 360 else 2
+    velocity = (tweet.get("likes") or 0) / max(minutes, 1.0)
+    return (bucket, -velocity, minutes)
 
 
-def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
+def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=None, en_counter=None,
+                     skipped=None):
     """Reply to candidates with PIPELINED generation (2026-06-09, operator:
     "BOT REALLY SLOW... ACCELERATE"). The old loop serialized a ~30-50s LLM
     call THEN ~20s of Safari per reply (~65s/reply — each resource idle
     while the other worked). Now reply N+1 GENERATES (worker thread, no
     Safari lock) while reply N POSTS (Safari) — cycle ≈ max(gen, post),
-    close to 2x throughput. All gates and contracts preserved: cheap gates →
-    fresh disk dedup just before the LLM call → never premark the on-disk
-    replied store → log_reply only on a confirmed ship."""
+    close to 2x throughput. Contracts: cheap job filters → Reply admission
+    just before the LLM call → log_reply only on a confirmed ship.
+
+    `tried` holds the posts this cycle already tried, in memory only.
+    `skipped` is the calling job's set of posts dropped until restart
+    (direct_reply's own by default)."""
     from concurrent.futures import ThreadPoolExecutor
+
+    if skipped is None:
+        skipped = _skipped
 
     posted = 0
     submitted = 0
@@ -564,38 +580,34 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         for tweet in candidates:
             from .active_hours import require_active
             require_active()
-            url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
-            # Only hard safety gates: dedup + own handle + blocklist.
-            if url in replied: continue
-            if _handle_from_url(url) == _OWN_HANDLE: continue
-            if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
+            url, text = tweet["url"], tweet["text"]
+            if url in tried or url in skipped: continue
             # Age gate everywhere — never reply to posts older than 5 days.
-            if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
+            age = x_urls.age(url)
+            if age is None or age > timedelta(minutes=DIRECT_REPLY_MAX_AGE_MINUTES): continue
             # Niche filter only for search (broad queries) — feeds get no filter.
             if not is_feed and not _is_on_niche(text): continue
             limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
             if limited: return None
-            # Disk re-check JUST before the expensive LLM call — another reply bot
-            # (direct_reply / feed_sweeper / retweet_bot replyback) may have shipped
-            # a reply to this URL since this cycle's `load_replied()` snapshot. The
-            # chokepoint in twitter_client.reply_to_tweet is the final guard, but it
-            # only fires AFTER ~17s of wasted LLM time per skip — 774 such skips
-            # across 06-06+07 = ~3.6h of wasted compute/day. Reload is ~5ms.
-            fresh_replied = load_replied()
-            if url in fresh_replied:
-                replied.add(url)
+            # Reply admission JUST before the expensive LLM call: it re-reads
+            # the Replied store, so a post another job answered since the
+            # scrape is dropped here, not ~17s of generation later at the
+            # chokepoint (774 such wasted calls across 06-06+07).
+            verdict = judge_parent(url)
+            if not verdict:
+                if verdict.refusal.definitive:
+                    skipped.add(url)
                 continue
+            author = verdict.author
             _reply_lang = "fr" if source_name.startswith("PROFILE") else ("fr" if looks_french(text) else "en")
             # FR-forced parents (operator 2026-06-07: "i saw some english on
             # Julien response" — @Graphseo is French; short/ambiguous posts
             # fooled the detector). Hard override, all sources.
-            if _handle_from_url(url) in _FR_FORCED_HANDLES:
+            if author in _FR_FORCED_HANDLES:
                 _reply_lang = "fr"
-            # ⛔ NEVER premark the on-disk replied store here — the chokepoint
-            # in twitter_client.reply_to_tweet loads it and refuses anything
-            # already present (the 2026-06-05 phantom-reply bug). In-memory
-            # only: no same-cycle re-pick.
-            replied.add(url)
+            # In memory only: the chokepoint claims the Replied store itself
+            # and refuses anything already in it (2026-06-05 premark bug).
+            tried.add(url)
             log.info(f"[{source_name}] Generating reply for @{author}...")
             try:
                 fut = pool.submit(_generate_single_reply, author, text, lang=_reply_lang)
@@ -619,13 +631,17 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             except Exception:
                 traceback.print_exc()
                 reply = None
-            if reply and reply is not _LLM_RATE_LIMITED:
+            if not reply:
+                skipped.add(url)  # the model declined (or failed): not paid again
+            elif reply is not _LLM_RATE_LIMITED:
                 from .pattern_tags import extract_pattern as _extract_pattern
                 reply, _pattern_id = _extract_pattern(reply)
                 reply = humanize(reply)
                 log.info(f"[{source_name}] Replying to @{author}...")
                 try:
                     shipped = reply_to_tweet(url, reply)
+                except StateUnreadable:
+                    raise
                 except Exception:
                     traceback.print_exc()
                     shipped = False
@@ -673,13 +689,15 @@ def run_direct_reply_cycle(max_replies=None):
     from ever running (15:43 boot: zero quotes 20 min in, Safari 100%
     reply-held). Steady-state job calls with None = unbounded.
     """
-    replied = load_replied()
+    tried = set()  # posts tried this cycle; the Replied store is the chokepoint's
     total, en_counter = 0, [0]
     remaining = max_replies  # None = unbounded
 
     # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
     try:
-        _run_graphseo_scan(replied)
+        _run_graphseo_scan(tried)
+    except StateUnreadable:
+        raise
     except Exception:
         log.info("[GRAPHSEO] Scan error:")
         traceback.print_exc()
@@ -705,15 +723,16 @@ def run_direct_reply_cycle(max_replies=None):
         try:
             tweets = scrape_x_search(query, max_tweets=25, tab="top")
             if tweets:
-                n = _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query,
+                n = _reply_to_tweets(tweets, tried, "SEARCH-HOT", source_detail=query,
                                      remaining=remaining, en_counter=en_counter)
                 total += n
                 if remaining is not None:
                     remaining -= n
+        except StateUnreadable:
+            raise
         except Exception:
             traceback.print_exc()
 
-    save_replied(replied)
     log.info(f"[DIRECT] Posted {total} replies this cycle.")
 
 def safe_run_direct_reply_cycle(max_replies=None):

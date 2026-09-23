@@ -207,7 +207,7 @@ Files written by active jobs:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report |
 | `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, 90 days |
 | `following_count.json` | `action_guard` | Following count used by the follow ceiling |
-| `replied_tweets.json` | `replied_store` (`reply_to_tweet`, `direct_reply`) | Tweets already answered, by status ID |
+| `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID |
 | `replied_back.json` | `notify_bot` | Replyback dedup, source for `follow_engagers_job` |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus |
 | `engagement_log.csv` | `engagement_log` | Append-only action log |
