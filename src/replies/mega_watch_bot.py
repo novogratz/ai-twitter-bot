@@ -20,7 +20,8 @@ from datetime import timedelta
 
 from ..x import x_urls
 from ..core.logger import log
-from ..x.twitter_client import scrape_profile_tweets, reply_to_tweet
+from ..x.scraper import scrape_profile_tweets
+from ..x.twitter_client import reply_to_tweet
 from ..guards.reply_admission import judge_parent
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
 from ..core.reply_language import looks_french

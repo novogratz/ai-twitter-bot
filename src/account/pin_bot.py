@@ -21,7 +21,8 @@ from datetime import date
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
-from ..x.twitter_client import scrape_profile_tweets, pin_own_tweet, is_own_post
+from ..x.scraper import scrape_profile_tweets, is_own_post
+from ..x.twitter_client import pin_own_tweet
 
 PIN_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "pin_history.json")
 PIN_STATE_FILE = os.path.join(_PROJECT_ROOT, "pin_daily_state.json")

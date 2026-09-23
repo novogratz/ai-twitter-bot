@@ -19,7 +19,7 @@ from datetime import datetime
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
-from ..x.twitter_client import _safari_lock, close_front_tab
+from ..x.safari import _safari_lock, close_front_tab
 
 FOLLOWER_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "follower_history.json")
 

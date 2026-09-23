@@ -80,7 +80,8 @@ def run_debate_cycle():
     max_per_cycle = int(os.environ.get("DEBATE_MAX_PER_CYCLE", "3"))
     max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
 
-    from ..x.twitter_client import scrape_mentions, reply_to_tweet
+    from ..x.scraper import scrape_mentions
+    from ..x.twitter_client import reply_to_tweet
     mentions = scrape_mentions(max_tweets=20)
     if not mentions:
         log.info("[DEBATE] No mentions scraped this cycle.")

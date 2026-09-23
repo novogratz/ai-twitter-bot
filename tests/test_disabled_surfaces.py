@@ -4,8 +4,9 @@ The 2026-09-20 policy sets these surfaces to zero. Caps at zero kept the old
 branches silent; this test pins that the branches themselves are gone, so a
 config change cannot bring them back. It reads the source with `ast`: every
 module under `src/` that `main.py` reaches through imports, at any depth,
-`twitter_client` included. `twitter_client` no longer defines these write
-functions at all (issue #111): bringing one back takes new code.
+the browser modules `twitter_client`, `scraper` and `safari` included. None of
+them defines these write functions (issue #111): bringing one back takes new
+code.
 
 No live module borrows a private helper from `reply_bot` (issue #108), and
 every module under `src/` is reached from `main.py`, so legacy code cannot
@@ -98,7 +99,8 @@ def test_live_modules_never_reference_a_disabled_write():
     modules = live_modules()
     assert {"replies.direct_reply", "replies.feed_sweeper_bot", "replies.notify_bot",
             "replies.reply_bot"} <= modules
-    assert {"x.twitter_client", "x.safari_hygiene", "core.llm_client"} <= modules
+    assert {"x.twitter_client", "x.scraper", "x.safari", "x.safari_hygiene",
+            "core.llm_client"} <= modules
     problems = [f"{_file(name).relative_to(ROOT)}:{line}: {ref}"
                 for name in sorted(modules)
                 for line, ref in _disabled_write_references(_file(name))]
@@ -108,16 +110,17 @@ def test_live_modules_never_reference_a_disabled_write():
 
 
 def test_twitter_client_exposes_no_disabled_write():
-    from src.x import twitter_client
+    from src.x import safari, scraper, twitter_client
 
-    present = sorted(name for name in DISABLED_WRITES if hasattr(twitter_client, name))
-    assert not present, f"twitter_client still exposes {present}"
+    present = sorted(f"{module.__name__}.{name}" for module in (twitter_client, scraper, safari)
+                     for name in DISABLED_WRITES if hasattr(module, name))
+    assert not present, f"the browser layer still exposes {present}"
 
 
 def test_every_src_module_is_reached_from_main():
     modules = src_module_names()
-    assert {"core", "core.config", "x", "x.twitter_client", "replies", "replies.direct_reply",
-            "account", "account.engage_bot"} <= modules
+    assert {"core", "core.config", "x", "x.twitter_client", "x.scraper", "x.safari", "replies",
+            "replies.direct_reply", "account", "account.engage_bot"} <= modules
     unreached = sorted(modules - live_modules())
     assert not unreached, (
         "Modules under src/ that no import chain from main.py reaches; wire "

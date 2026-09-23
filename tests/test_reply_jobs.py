@@ -100,12 +100,12 @@ def test_direct_reply_sets_aside_model_skips_but_replays_temporary_refusals(pipe
 def test_direct_reply_cycle_never_marks_unsent_candidates(pipeline, monkeypatch):
     """Defect 3: the VIP lane and the pipeline both marked candidates that
     never shipped, and the cycle saved them into the Replied store."""
-    from src.x import twitter_client as tc
+    from src.x import scraper, twitter_client as tc
 
     dr, generated, sent, _ = pipeline
     vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
     monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
-    monkeypatch.setattr(tc, "scrape_x_search", lambda *a, **k: [{"url": vip, "text": "vip post"}])
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [{"url": vip, "text": "vip post"}])
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": searched, "text": "search post"}])
     monkeypatch.setattr(dr, "_generate_graphseo_reply", lambda text: "réponse précise sur le trafic organique")
     monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or False)
@@ -126,7 +126,7 @@ def test_direct_reply_cycle_stops_on_unreadable_store(pipeline):
 
 
 def test_direct_reply_vip_lane_does_not_swallow_unreadable_store(pipeline, monkeypatch):
-    from src.x import twitter_client as tc
+    from src.x import scraper, twitter_client as tc
 
     dr, _, _, _ = pipeline
     searched = []
@@ -135,7 +135,7 @@ def test_direct_reply_vip_lane_does_not_swallow_unreadable_store(pipeline, monke
         raise StateUnreadable("replied store unreadable")
 
     monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
-    monkeypatch.setattr(tc, "scrape_x_search", lambda *a, **k: [{"url": fresh("graphseo"), "text": "vip post"}])
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [{"url": fresh("graphseo"), "text": "vip post"}])
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: searched.append(1) or [])
     monkeypatch.setattr(dr, "_generate_graphseo_reply", lambda text: "réponse précise sur le trafic organique")
     monkeypatch.setattr(tc, "reply_to_tweet", unreadable)
@@ -159,7 +159,7 @@ def test_direct_reply_cycle_does_not_swallow_unreadable_store(pipeline, monkeypa
 
 def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeypatch):
     from src.replies import feed_sweeper_bot as fs
-    from src.x import twitter_client as tc
+    from src.x import scraper
 
     dr, generated, sent, _ = pipeline
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
@@ -169,8 +169,8 @@ def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeyp
         {"url": blocked, "text": "blocked by handle", "author": "Friendly Name"},
         {"url": named_like_us, "text": "admitted", "author": config.BOT_HANDLE},
     ]
-    monkeypatch.setattr(tc, "scrape_home_feed", lambda **k: list(feed))
-    monkeypatch.setattr(tc, "scrape_following_feed", lambda **k: [])
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: list(feed))
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
 
     fs.run_feed_sweep_cycle()
 
@@ -187,13 +187,13 @@ def viral(handle, n):
 
 def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
     from src.replies import feed_sweeper_bot as fs
-    from src.x import twitter_client as tc
+    from src.x import scraper
 
     dr, generated, sent, _ = pipeline
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
     feed = [viral("someone", 1), viral("other", 2)]
-    monkeypatch.setattr(tc, "scrape_home_feed", lambda **k: list(feed))
-    monkeypatch.setattr(tc, "scrape_following_feed", lambda **k: [])
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: list(feed))
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
 
     fs.run_feed_sweep_cycle()
 
@@ -201,12 +201,12 @@ def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
 
 
 def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
-    from src.x import twitter_client as tc
+    from src.x import scraper, twitter_client as tc
 
     dr, generated, sent, _ = pipeline
     vip, searched = viral("TheBTCTherapist", 1), viral("someone", 2)
     monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
-    monkeypatch.setattr(tc, "scrape_x_search", lambda *a, **k: [vip])
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [vip])
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [searched])
     monkeypatch.setattr(dr, "generate_vip_reply", lambda *a, **k: DRAFT)
     monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
@@ -536,7 +536,7 @@ class _Llm:
 @pytest.fixture
 def debate(monkeypatch, blocklist):
     from src.replies import debate_bot as db
-    from src.x import twitter_client as tc
+    from src.x import scraper, twitter_client as tc
 
     mentions = []
     outputs = {}
@@ -548,7 +548,7 @@ def debate(monkeypatch, blocklist):
         return outputs[text]
 
     monkeypatch.setenv("ENABLE_DEBATES", "1")
-    monkeypatch.setattr(tc, "scrape_mentions", lambda **k: list(mentions))
+    monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: list(mentions))
     monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text, **k: sent.append((url, k)) or True)
     monkeypatch.setattr("src.core.engagement_log.log_reply", lambda *a, **k: None)
     monkeypatch.setattr(db, "run_llm", llm)
@@ -579,11 +579,11 @@ def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monke
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
-    from src.x import twitter_client as tc
+    from src.x import scraper
 
     db = debate[0]
     scraped = []
-    monkeypatch.setattr(tc, "scrape_mentions", lambda **k: scraped.append(1) or [])
+    monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: scraped.append(1) or [])
     monkeypatch.setenv("ENABLE_DEBATES", "0")
     db.run_debate_cycle()
     assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"

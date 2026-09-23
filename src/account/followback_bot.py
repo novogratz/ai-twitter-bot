@@ -26,7 +26,8 @@ import traceback
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from ..core.logger import log
-from ..x.twitter_client import follow_account, _safari_lock, close_front_tab, _run_applescript, _scroll_page
+from ..x.safari import _safari_lock, close_front_tab, _scroll_page
+from ..x.twitter_client import follow_account
 
 import webbrowser
 

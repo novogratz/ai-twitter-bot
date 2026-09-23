@@ -47,26 +47,27 @@ class FakePage:
 def browser(monkeypatch, tmp_path):
     """Live write path on a scripted page; ledger rows and tab closes recorded."""
     from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
-    monkeypatch.setattr(tc, "_navigate_to_first_tweet", lambda: None)
+    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: None)
     state = {"page": FakePage(), "recorded": [], "closed": 0}
     monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: state["recorded"].append((a, k)))
 
     def close_front_tab():
         state["closed"] += 1
-    monkeypatch.setattr(tc, "close_front_tab", close_front_tab)
+    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
 
 
 def test_no_like_path_presses_the_l_shortcut():
-    from src.x import twitter_client as tc
-    assert 'keystroke "l"' not in inspect.getsource(tc)
+    from src.x import safari, scraper, twitter_client as tc
+    for module in (safari, scraper, tc):
+        assert 'keystroke "l"' not in inspect.getsource(module)
 
 
 def test_already_liked_post_is_never_clicked(browser):
@@ -244,7 +245,7 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
 
 def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     from src.replies import notify_bot as nb
-    LikeOutcome = nb.LikeOutcome  # test_editorial reloads twitter_client
+    LikeOutcome = nb.LikeOutcome
 
     results = {"liker": [LikeOutcome.LIKED, LikeOutcome.ALREADY_LIKED],
                "stale": [LikeOutcome.ALREADY_LIKED], "broken": [LikeOutcome.FAILED]}

@@ -231,11 +231,12 @@ def _fake_safari(monkeypatch):
     """Live (non-dry) reply path with every Safari step succeeding: the
     Replied store is only claimed when a Reply really ships."""
     import src.x.twitter_client as tc
+    from src.x import safari
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(tc, "_run_applescript", lambda *a, **k: True)
-    monkeypatch.setattr(tc, "_paste_text", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
-    monkeypatch.setattr(tc, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
 
@@ -573,31 +574,31 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
     A non-allowlisted profile must return [] BEFORE any Safari work, and the
     allowlist env must be read at call time (side-effect-gate rule)."""
-    from src.x import twitter_client as tc
+    from src.x import scraper, twitter_client as tc
     from src.core.config import BOT_HANDLE
 
     monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
     monkeypatch.setattr(
         tc.webbrowser, "open",
         lambda *a, **k: pytest.fail("Safari was opened for a blocked profile"))
-    assert tc.scrape_profile_tweets("unusual_whales") == []
-    assert tc.scrape_profile_tweets("karpathy") == []
+    assert scraper.scrape_profile_tweets("unusual_whales") == []
+    assert scraper.scrape_profile_tweets("karpathy") == []
     tc.visit_profile_and_like("unusual_whales")  # must not open Safari either
 
     # Allowlist semantics (pure check, no Safari). Defaults: the two
     # reply-everything friends (operator 2026-06-07).
-    assert tc._profile_visit_allowed(BOT_HANDLE)
-    assert tc._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
-    assert tc._profile_visit_allowed("TheBTCTherapist")
-    assert tc._profile_visit_allowed("@thebtctherapist")
-    assert tc._profile_visit_allowed("Graphseo")
-    assert not tc._profile_visit_allowed("zerohedge")
-    assert not tc._profile_visit_allowed("")
+    assert scraper._profile_visit_allowed(BOT_HANDLE)
+    assert scraper._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
+    assert scraper._profile_visit_allowed("TheBTCTherapist")
+    assert scraper._profile_visit_allowed("@thebtctherapist")
+    assert scraper._profile_visit_allowed("Graphseo")
+    assert not scraper._profile_visit_allowed("zerohedge")
+    assert not scraper._profile_visit_allowed("")
 
     # Env read at CALL time — a live edit takes effect without restart.
     monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
-    assert not tc._profile_visit_allowed("graphseo")
-    assert tc._profile_visit_allowed("thebtctherapist")
+    assert not scraper._profile_visit_allowed("graphseo")
+    assert scraper._profile_visit_allowed("thebtctherapist")
 
 
 def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
@@ -669,15 +670,16 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     import src.replies.direct_reply as dr
 
     # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
-    # LOCALLY from twitter_client — patch THERE, not on direct_reply.
+    # LOCALLY from scraper / twitter_client — patch THERE, not on direct_reply.
     # (First version of this test patched dr.* — the real Safari fired and
     # posted live replies to @TheBTCTherapist mid-test. conftest's
     # _no_safari wall now makes that mistake fail loudly instead.)
     import src.x.twitter_client as tc
+    from src.x import scraper
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
-    monkeypatch.setattr(tc, "scrape_x_search",
+    monkeypatch.setattr(scraper, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
@@ -996,7 +998,7 @@ def test_state_files_resolve_to_the_repo_root():
 
 
 def test_tests_cannot_spawn_osascript(monkeypatch):
-    """twitter_client, safari_hygiene and several jobs call osascript through
+    """twitter_client, scraper, safari_hygiene and several jobs call osascript through
     subprocess.run directly, past the _run_applescript wall: the conftest
     wall refuses those processes too."""
     import subprocess
@@ -1010,6 +1012,37 @@ def test_tests_cannot_spawn_osascript(monkeypatch):
                  ["pkill", "-x", "Safari"], "osascript -e 'return 1'"):
         with pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"):
             subprocess.run(argv, shell=isinstance(argv, str))
+
+
+def test_every_browser_path_goes_through_the_conftest_walls():
+    """conftest walls `_run_applescript` and `_paste_text` off in src.x.safari,
+    which defines them, and `webbrowser.open` and `subprocess.Popen` on their
+    modules. A module that binds one by name (`from .safari import
+    _run_applescript`, `from subprocess import Popen`) keeps the real object
+    past the wall, so twitter_client, scraper and the jobs reach them through
+    their module (#118)."""
+    import ast
+    from pathlib import Path
+    from src.x import safari
+
+    walled = {"_run_applescript", "_paste_text"}
+    for name in walled:
+        with pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"):
+            getattr(safari, name)("return 1")
+
+    root = Path(__file__).resolve().parent.parent
+    problems = []
+    for path in sorted([root / "main.py", *(root / "src").rglob("*.py"), *(root / "bin").glob("*.py")]):
+        for node in ast.walk(ast.parse(path.read_text())):
+            if isinstance(node, ast.ImportFrom):
+                for alias in node.names:
+                    if (alias.name in walled or node.module == "webbrowser"
+                            or (node.module == "subprocess" and alias.name == "Popen")):
+                        problems.append(f"{path.relative_to(root)}:{node.lineno}: imports {alias.name}")
+            elif (isinstance(node, ast.FunctionDef) and node.name in walled
+                  and path != Path(safari.__file__)):
+                problems.append(f"{path.relative_to(root)}:{node.lineno}: defines {node.name}")
+    assert not problems, "Browser primitive bound past the conftest walls:\n  " + "\n  ".join(problems)
 
 
 def test_burned_catchphrases_blocked_at_chokepoint():
@@ -1521,31 +1554,31 @@ def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
     wedged Safari — a true wedge blanks EVERY page, so the restart needs
     >=2 distinct labels among the consecutive blanks."""
     import time as _time
-    from src.x import twitter_client as tc
+    from src.x import scraper
     from src.x import safari_hygiene as sh
 
     restarts = []
     monkeypatch.setattr(sh, "restart_safari", lambda reason="": restarts.append(reason) or True)
 
     # (1) grace: blanks right after a restart don't count
-    tc._reset_blank_page_count()
+    scraper._reset_blank_page_count()
     monkeypatch.setattr(sh, "_last_run_ts", lambda: _time.time())
     for _ in range(5):
-        tc._record_blank_page(label="search 'x'")
+        scraper._record_blank_page(label="search 'x'")
     assert restarts == [], "blanks during post-restart grace must not restart Safari"
 
     # (2) out of grace: same-label loop holds, diverse labels restart
     monkeypatch.setattr(sh, "_last_run_ts", lambda: _time.time() - 3600)
-    tc._reset_blank_page_count()
+    scraper._reset_blank_page_count()
     for _ in range(4):
-        tc._record_blank_page(label="following feed")
+        scraper._record_blank_page(label="following feed")
     assert restarts == [], "single-page empty loop is not a wedge — no restart"
-    tc._reset_blank_page_count()
-    tc._record_blank_page(label="following feed")
-    tc._record_blank_page(label="search 'ai'")
-    tc._record_blank_page(label="@TheAIShrink")
+    scraper._reset_blank_page_count()
+    scraper._record_blank_page(label="following feed")
+    scraper._record_blank_page(label="search 'ai'")
+    scraper._record_blank_page(label="@TheAIShrink")
     assert restarts == ["black_screen_recovery"], "diverse-label blanks = wedge = restart"
-    tc._reset_blank_page_count()
+    scraper._reset_blank_page_count()
 
 
 def test_safari_warmup_verifies_render_and_retries_blank(monkeypatch):
@@ -1627,14 +1660,14 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     refused turn leaves the tweet unmarked, and the cap is read at call time."""
     from src.guards import action_guard as ag
     from src.guards import content_guard as cg
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
-    monkeypatch.setattr(tc, "_run_applescript", lambda *a: True)
-    monkeypatch.setattr(tc, "_paste_text", lambda *a: True)
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
+    monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
-    monkeypatch.setattr(tc, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "2")
@@ -1660,7 +1693,7 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     import contextlib
     from src.guards import action_guard as ag
     from src.guards import content_guard as cg
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
@@ -1671,7 +1704,7 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     def contended_lock():
         ag.record(ag.DEBATE_TURN, target="challenger")  # the other thread won
         yield
-    monkeypatch.setattr(tc, "_safari_lock", contended_lock())
+    monkeypatch.setattr(safari, "_safari_lock", contended_lock())
     # _run_applescript stays walled off by conftest: reaching Safari fails.
     url = "https://x.com/challenger/status/7"
     assert not tc.reply_to_tweet(url, "Batching changes the cost curve.", debate_turn=True)
@@ -1834,18 +1867,18 @@ def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     assert ok, f"non-rationed opener must pass: {why}"
 
     # Mentions never count toward blank-page restarts
-    from src.x import twitter_client as tc
+    from src.x import scraper
     from src.x import safari_hygiene as sh
     import time as _time
     restarts = []
     monkeypatch.setattr(sh, "restart_safari", lambda reason="": restarts.append(reason) or True)
     monkeypatch.setattr(sh, "_last_run_ts", lambda: _time.time() - 3600)
-    tc._reset_blank_page_count()
+    scraper._reset_blank_page_count()
     for _ in range(6):
-        tc._record_blank_page(label="mentions")
-    assert restarts == [] and tc._blank_page_count == 0, \
+        scraper._record_blank_page(label="mentions")
+    assert restarts == [] and scraper._blank_page_count == 0, \
         "legit-empty mentions tab must never count as a blank page"
-    tc._reset_blank_page_count()
+    scraper._reset_blank_page_count()
 
 
 def test_scheduler_build_has_no_startup_publishing(monkeypatch):

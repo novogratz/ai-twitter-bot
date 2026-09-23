@@ -72,7 +72,7 @@ def _harvest_active_authors(tweets: list) -> None:
 
 def run_feed_sweep_cycle():
     """Sweep BOTH For You and Following every cycle — the primary loop."""
-    from ..x.twitter_client import scrape_home_feed, scrape_following_feed
+    from ..x.scraper import scrape_home_feed, scrape_following_feed
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
         _sweep_one_feed(source, scraper)
 

@@ -292,7 +292,7 @@ def safe_run_periodic_warmup():
     Takes the safari lock so it doesn't race with active scrape cycles.
     """
     try:
-        from .twitter_client import _safari_lock
+        from .safari import _safari_lock
         log.info("[HYGIENE] Periodic SW warmup — clearing x.com service workers.")
         with _safari_lock:
             ok = _warm_up_xcom()
