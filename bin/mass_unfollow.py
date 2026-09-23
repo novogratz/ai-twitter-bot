@@ -8,9 +8,9 @@ loads, repeats until the list is exhausted (or --max is hit).
 Safety:
   - The protected keep-set is the CURRENT whitelist.json (all tiers +
     seeds[] handles — the 2026-06-07 spec's curated follow list). Those
-    are never unfollowed: they're the accounts marquee_follow_bot is
-    meant to be following, and recording their unfollow would block the
-    re-follow for 30 days via the anti-churn ledger.
+    are never unfollowed: they're the accounts the follow policy may
+    follow, and recording their unfollow would block the re-follow for
+    30 days via the anti-churn ledger.
     `--keep legacy` restores the old wide keep-set (respect_list +
     engage/early-bird/mega target lists) for a gentler prune.
   - Every confirmed unfollow is recorded into action_ledger.json (30-day
@@ -92,8 +92,16 @@ def _whitelist_keep_set() -> set:
 
 
 def _legacy_keep_set() -> set:
-    from src.smart_unfollow_bot import _build_keep_set
-    return _build_keep_set() | _whitelist_keep_set()
+    """The wide keep-set of the retired smart_unfollow job, plus the whitelist."""
+    from src import respect_list
+    from src.early_bird_bot import EARLY_BIRD_ACCOUNTS
+    from src.engage_bot import TARGET_ACCOUNTS
+    from src.mega_watch_bot import MEGA_ACCOUNTS
+    keep = {h.lower() for h in respect_list.load()}
+    for handles in (TARGET_ACCOUNTS, EARLY_BIRD_ACCOUNTS, MEGA_ACCOUNTS):
+        keep |= {h.lower() for h in handles}
+    wl = action_guard.load_whitelist()
+    return keep | wl["tier1"] | wl["tier2"] | _whitelist_keep_set()
 
 
 # NOTE: plain JS here — run_js() escapes backslashes + double quotes once

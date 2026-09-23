@@ -18,9 +18,6 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Belt: make absolutely sure no test can spawn the self-heal subprocess.
-os.environ.setdefault("ENABLE_SELF_HEAL", "0")
-
 
 def pytest_configure(config):
     from src.logger import setup_logging

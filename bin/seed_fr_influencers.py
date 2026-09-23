@@ -7,10 +7,7 @@ francophones on twitter related to ia ai crypto ou bourse investissements,
 add them, follow them, and reshare their news + reply to those all day long"
 
 After this runs:
-  - All 30+ bots that merge dynamic_accounts.json will see these handles.
   - The bot will follow them once (best-effort via twitter_client).
-  - retweet_bot will pull them as candidates (when scout_agent reinforces).
-  - direct_reply will visit them as PROFILE-FR cycles.
 
 Run: python3 bin/seed_fr_influencers.py
 """

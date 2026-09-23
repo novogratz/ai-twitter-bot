@@ -13,19 +13,10 @@ tag, computed deterministically from the outgoing text (no LLM call):
   other         — fallback
 
 Classification is heuristic and cheap on purpose: it runs on every write at
-the engagement-log chokepoint. Tags are stable identifiers — the analyzer
-and the weekly review aggregate on them, so never rename without migrating.
+the engagement-log chokepoint. Tags are stable identifiers stored in
+engagement_log.csv, so never rename without migrating.
 """
 import re
-
-PILLARS = (
-    "market_trauma",
-    "ai_vs_btc",
-    "meme_reaction",
-    "reply_bait",
-    "ai_news_take",
-    "other",
-)
 
 # Word-boundary vocab per signal. Lowercase; matched with \b regexes.
 _THERAPY_WORDS = (
@@ -99,27 +90,3 @@ def classify(text: str, action_type: str = "", source: str = "") -> str:
     if market:
         return "market_trauma" if "?" not in t else "reply_bait"
     return "other"
-
-
-# ---------------------------------------------------------------------------
-# Measured pillar priority (2026-06-07, scraped own-metrics): market_trauma
-# therapist one-liners average 29.8 likes vs 13.1 for plain ai_news_take and
-# 9.1 for "other" — 2.3x. Injected into the slot original surfaces (hotake +
-# spicy) so the proven winner is the DEFAULT format, not one option among six.
-# ---------------------------------------------------------------------------
-_MARKET_TRAUMA_PRIORITY_BLOCK = """\
-==================================================
-PILLAR PRIORITY — MEASURED ON THIS ACCOUNT (not a guess)
-==================================================
-market_trauma therapist one-liners average 29.8 likes vs 13.1 for plain
-AI-news takes (2.3x). DEFAULT FORMAT for this post: the therapist one-liner —
-name the investor fear (drawdown panic, FOMO, bag-holding, panic-sold the
-bottom, AI-capex anxiety), validate it in half a sentence, then the
-savage-calm reframe anchored on ONE exact number. Therapize the news, don't
-report it. Ship a plain news take ONLY if the story is so big the number
-alone carries it — otherwise the trauma angle wins."""
-
-
-def market_trauma_priority_block() -> str:
-    """Render the measured-priority directive for generation prompts."""
-    return _MARKET_TRAUMA_PRIORITY_BLOCK

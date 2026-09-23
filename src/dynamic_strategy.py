@@ -1,20 +1,15 @@
-"""Append-only stores for the autonomous strategy agent.
+"""Append-only store of accounts harvested from the feeds.
 
-The strategy agent (src/strategy_agent.py) reads engagement_log.csv to compute
-per-source ROI, then proposes new search queries and accounts to monitor.
-Approved additions land in two JSON files that direct_reply / engage / reply
-agents merge with their static lists at runtime.
-
-Removals are NEVER auto-applied — only humans should prune. This keeps the
-self-improvement loop safe: a bad scoring pass can only ADD noise, never
-silently delete a hand-picked target.
+`feed_sweeper_bot` appends the accounts it discovers to
+`dynamic_accounts.json`. Removals are NEVER auto-applied — only humans should
+prune, so a bad pass can only ADD noise, never silently delete a hand-picked
+target.
 """
 import json
 import os
 from datetime import datetime
 from .config import _PROJECT_ROOT
 
-DYNAMIC_QUERIES_FILE = os.path.join(_PROJECT_ROOT, "dynamic_queries.json")
 DYNAMIC_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "dynamic_accounts.json")
 
 
@@ -33,41 +28,10 @@ def _save(path: str, obj):
         json.dump(obj, f, indent=2)
 
 
-def get_dynamic_queries() -> dict:
-    """Returns {"live": [str], "hot": [str]}."""
-    data = _load(DYNAMIC_QUERIES_FILE, {})
-    return {"live": data.get("live", []), "hot": data.get("hot", [])}
-
-
 def get_dynamic_accounts() -> dict:
     """Returns {"fr": [handle], "en": [handle]}."""
     data = _load(DYNAMIC_ACCOUNTS_FILE, {})
     return {"fr": data.get("fr", []), "en": data.get("en", [])}
-
-
-def add_dynamic_queries(live: list = None, hot: list = None) -> int:
-    """Append new queries (dedup). Returns number of new entries written."""
-    data = _load(DYNAMIC_QUERIES_FILE, {"live": [], "hot": [], "history": []})
-    data.setdefault("live", [])
-    data.setdefault("hot", [])
-    data.setdefault("history", [])
-    added = 0
-    today = datetime.now().strftime("%Y-%m-%d")
-    for q in (live or []):
-        q = q.strip()
-        if q and q not in data["live"]:
-            data["live"].append(q)
-            data["history"].append({"kind": "live", "value": q, "added": today})
-            added += 1
-    for q in (hot or []):
-        q = q.strip()
-        if q and q not in data["hot"]:
-            data["hot"].append(q)
-            data["history"].append({"kind": "hot", "value": q, "added": today})
-            added += 1
-    if added:
-        _save(DYNAMIC_QUERIES_FILE, data)
-    return added
 
 
 def _is_valid_handle(h: str) -> bool:

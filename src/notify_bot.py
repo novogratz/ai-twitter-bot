@@ -1,9 +1,7 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
-import json
-import os
 import re
 import traceback
-from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
+from .config import BLOCKLIST, BOT_HANDLE
 from .logger import log
 from .state_errors import StateUnreadable
 from .twitter_client import (
@@ -215,26 +213,6 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
 
     if visited:
         log.info(f"[RECIPROCATE] Engaged back with {visited} engager(s).")
-
-
-# No job boosts any more; legacy boost_recycler_bot still imports these two.
-_BOOST_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "boost_history.json")
-
-
-def _load_boost_history() -> set:
-    if os.path.exists(_BOOST_HISTORY_FILE):
-        try:
-            with open(_BOOST_HISTORY_FILE, "r") as f:
-                return set(json.load(f))
-        except (json.JSONDecodeError, IOError):
-            pass
-    return set()
-
-
-def _save_boost_history(s: set):
-    with open(_BOOST_HISTORY_FILE, "w") as f:
-        # Cap at 500 — far above any realistic 90-day window.
-        json.dump(list(s)[-500:], f)
 
 
 def safe_run_notify_cycle():
