@@ -46,6 +46,8 @@ The top level of `src/` holds only packages.
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
+| Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
+| Safari lock, AppleScript, paste, tab and scroll primitives | `src/x/safari.py` |
 | Voice, operator-managed | `core_identity.md` |
 
 ## Invariants
@@ -68,7 +70,7 @@ Each one is a bug that shipped live. The full incident stories are in
   it refuse its own caller.
 - **Handles come from URLs.** The scraper's `author` field is the display
   name. Use `x_urls.author` on the `/status/` URL, or
-  `twitter_client.is_own_post` on a scraped tweet, never
+  `scraper.is_own_post` on a scraped tweet, never
   `author == BOT_HANDLE`.
 - **Side-effect switches are read at call time.** An env var gating a post,
   a subprocess or a network write is read inside the function, never as a
@@ -90,9 +92,10 @@ uv run --with-requirements requirements.txt python main.py --dry-run  # jobs + p
 ```
 
 CI runs the same suite on every PR. `tests/conftest.py` walls tests off from
-Safari, `bot.log` and production state files; patch browser primitives at the
-`twitter_client` level, because function-local imports bypass mocks placed on
-the caller's module. A guard change ships with a test pinning it.
+Safari, `bot.log` and production state files; patch browser primitives in
+`src/x/safari.py` and scrapes in `src/x/scraper.py`, the modules that define
+them, because function-local imports bypass mocks placed on the caller's
+module. A guard change ships with a test pinning it.
 
 ## Live bot and state
 
