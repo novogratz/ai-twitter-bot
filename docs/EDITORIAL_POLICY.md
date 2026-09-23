@@ -56,7 +56,11 @@ slot needs news from the last six hours and an exceptional-value approval.
   per-author debate turns protect conversation quality. Every answer to
   someone who answered the account is a debate turn, whichever job sends it.
   The per-tweet dedup store fails closed: while it is unreadable, no reply
-  ships.
+  ships. The gap after each reply is `MIN_SECONDS_BETWEEN_REPLIES` plus a
+  jitter drawn once per reply, the same for every caller: retrying cannot
+  shorten it. The direct-reply and feed-sweep pipeline waits out that gap
+  before sending instead of discarding a paid generation; the chokepoint
+  still judges, and the wait ends on a stop request or at 22:00.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
