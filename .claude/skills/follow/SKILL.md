@@ -13,12 +13,11 @@ Follow @$username. Only on an explicit operator request.
    `pgrep -if "python.*main\.py"` prints nothing and
    `uv run python -c "from src.active_hours import is_active; print(is_active())"`
    prints `True`.
-3. Run `uv run python -c "from src import config; from src.twitter_client import follow_account; print(follow_account('$username'), 'dry_run' if config.dry_run() else 'live')"`
+3. Run `uv run python -c "from src.twitter_client import follow_account; print(follow_account('$username'))"`
    - `follow_account` applies the follow policy: whitelist-only, daily cap,
      spacing, total-following ceiling, 30-day anti-churn, quality gate. A
      refusal is logged as `[FOLLOW] policy refuses …` in `bot.log`.
-   - Under `DRY_RUN=1` it returns `True` without following anyone (#123).
-4. Only if it printed `True live`, add the handle to `followed_accounts.json`
-   if not already there. `False`, or `True dry_run`, means nothing shipped:
-   write nothing.
+4. Only if it printed `True`, add the handle to `followed_accounts.json`
+   if not already there. `False` or `DRY_RUN_RECORDED` means nothing
+   shipped: write nothing.
 5. Report the result and, on refusal, the reason from `bot.log`.

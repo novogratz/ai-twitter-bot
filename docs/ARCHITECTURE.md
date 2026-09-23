@@ -151,10 +151,13 @@ Every write that should count goes through a function in
 `reply_to_tweet_in_thread`, `follow_account`, `like_tweet`. `post_tweet`,
 the reply functions and `follow_account` return `True` when they submitted the
 action, `False` when a rule refused it or an AppleScript step failed, and
-callers log or count only on `True`. No ledger row is written on `False`. Two
-limits: `True` means `osascript` ran the keystrokes, not that X confirmed
-them, and under `DRY_RUN` these functions also return `True`. `like_tweet`
-returns nothing.
+callers log or count only on `True`. No ledger row is written on `False`.
+Under `DRY_RUN` these functions write a dry-run ledger row and return
+`DRY_RUN_RECORDED`, which is falsy: a caller that persists on a truthy
+result persists nothing after a dry run, and one that must tell a dry run
+from a refusal compares with `is` (`follow_engagers_bot`). One limit:
+`True` means `osascript` ran the keystrokes, not that X confirmed them.
+`like_tweet` returns nothing.
 
 Three modules sit behind them:
 
