@@ -134,7 +134,7 @@ def run_replyback_cycle():
         if not verdict:
             if verdict.refusal.definitive:
                 _skipped.add(reply_url)
-            log.info(f"[REPLYBACK] Not admitted ({verdict.refusal.name}: {verdict.reason}) - skipping.")
+            log.info(f"[REPLYBACK] Not admitted ({verdict.refusal.value}: {verdict.reason}) - skipping.")
             continue
         handle = verdict.author
 

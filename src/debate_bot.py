@@ -107,7 +107,7 @@ def run_debate_cycle():
             continue
         verdict = judge_parent(url, debate_turn=True)
         if not verdict:
-            skips[verdict.refusal.name.lower()] += 1
+            skips[verdict.refusal.value] += 1
             if verdict.refusal.definitive:
                 _skipped.add(url)
             continue
