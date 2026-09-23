@@ -176,19 +176,24 @@ def spacing_ok(action: str, min_seconds: int) -> bool:
     return seconds_since_last(action) >= min_seconds
 
 
+# action -> (minimum gap, jitter) as config attribute names, read at call time.
+_SPACING = {
+    REPLY: ("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS"),
+    POST: ("MIN_SECONDS_BETWEEN_POSTS", "POST_JITTER_SECONDS"),
+    FOLLOW: ("MIN_SECONDS_BETWEEN_FOLLOWS", "FOLLOW_SPACING_JITTER_SECONDS"),
+}
+
+
 def spacing_gap(action: str) -> float:
     """The gap the next write of `action` needs after the previous one.
 
-    The jitter is drawn once per previous write, seeded on its ledger
-    timestamp: every caller sees the same gap, so a job waiting it out is
-    admitted when the wait ends, and retrying cannot fish for a small draw.
+    The jitter is drawn once per previous write of that action, seeded on its
+    ledger timestamp: every caller sees the same gap, so a job waiting it out
+    is admitted when the wait ends, and retrying cannot fish for a small draw.
     """
-    if action == REPLY:
-        base, jitter = config.MIN_SECONDS_BETWEEN_REPLIES, config.REPLY_JITTER_SECONDS
-    elif action == POST:
-        base, jitter = config.MIN_SECONDS_BETWEEN_POSTS, config.POST_JITTER_SECONDS
-    else:
+    if action not in _SPACING:
         raise ValueError(f"no write spacing for {action!r}")
+    base, jitter = (getattr(config, name) for name in _SPACING[action])
     last = _last_write(action)
     seed = f"{action}:{last.isoformat() if last else ''}"
     return base + random.Random(seed).uniform(0, jitter)
@@ -363,8 +368,7 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
     if follows_today >= config.MAX_FOLLOWS_PER_DAY:
         return (False, f"daily follow cap reached ({config.MAX_FOLLOWS_PER_DAY})")
     # Never burst-follow: >=10-min jittered gap between follows (spec Part 1).
-    gap = config.MIN_SECONDS_BETWEEN_FOLLOWS + random.uniform(
-        0, config.FOLLOW_SPACING_JITTER_SECONDS)
+    gap = spacing_gap(FOLLOW)
     if not spacing_ok(FOLLOW, gap):
         return (False, f"too soon since last follow (need ~{int(gap)}s gap)")
     # Hard total-following ceiling — never exceed 300; ~150 while followers
@@ -415,12 +419,10 @@ def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tup
             return False, "daily profile publication cap reached (7)"
         if count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
             return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
-        gap = spacing_gap(POST)
-    elif action == REPLY:
-        # No daily reply limit; retain spacing and per-tweet dedup.
-        gap = spacing_gap(REPLY)
-    else:
+    elif action != REPLY:
         return True, ""
+    # No daily reply limit; replies retain spacing and per-tweet dedup.
+    gap = spacing_gap(action)
     if not spacing_ok(action, gap):
         return False, f"too soon since last {action} (need ~{int(gap)}s gap)"
     return True, ""

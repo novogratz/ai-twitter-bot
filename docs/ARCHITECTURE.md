@@ -200,10 +200,13 @@ Three modules sit behind them:
   timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. A
   corrupt ledger refuses the write. Quotes and retweets are always refused;
   replies only need their spacing (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter).
-  `spacing_gap` draws the jitter of the reply and original gaps once per
-  write, seeded on the last ledger row's timestamp (dry runs excluded): every
-  caller sees the same gap, and retrying cannot fish for a smaller draw.
-  `seconds_until_allowed` returns what is left of it.
+  `spacing_gap` draws the jitter of the reply, original and follow gaps once
+  per write, seeded on the timestamp of the last write of that action (dry
+  runs excluded): every caller sees the same gap, and retrying cannot fish
+  for a smaller draw. `seconds_until_allowed` returns what is left of it,
+  capped at one gap so that a ledger row stamped in the future (clock set
+  back, copied ledger) cannot park a waiting job; `can_post` still refuses
+  until the spacing clears.
   No active job calls `unfollow_account`, and `MAX_UNFOLLOWS_PER_DAY`
   defaults to 0.
 - `src/guards/content_guard.py` validates text before publication: near-term

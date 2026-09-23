@@ -595,7 +595,7 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]
 
 
-# --- Reply spacing, drawn once per Reply (#131) ------------------------------
+# --- Write spacing, drawn once per write (#131) ------------------------------
 
 def _ledger_clock(monkeypatch):
     """A Toronto noon clock shared by the ledger and the Waking hours check."""
@@ -698,3 +698,35 @@ def test_original_gap_is_drawn_once_per_original(monkeypatch):
     now[0] += timedelta(seconds=2)
     assert ag.seconds_until_allowed(ag.POST) == 0
     assert ag.can_post(ag.POST) == (True, "")
+
+
+def test_follow_gap_is_drawn_once_per_follow(monkeypatch):
+    """follow_engagers pre-checks can_follow and follow_account judges it
+    again: both must see one gap, or each cycle retries for a small draw."""
+    from datetime import timedelta
+    from src.core import config
+    from src.guards import action_guard as ag
+
+    now = _ledger_clock(monkeypatch)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
+    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 300)
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
+    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
+    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", False)
+    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    ag.record(ag.FOLLOW, "fan1")
+    gap = ag.spacing_gap(ag.FOLLOW)
+    assert 600 <= gap <= 900
+    assert ag.seconds_until_allowed(ag.FOLLOW) == gap
+
+    ag.record(ag.FOLLOW, "fan2", dry_run=True)
+    ag.record(ag.UNFOLLOW, "fan3")
+    assert ag.spacing_gap(ag.FOLLOW) == gap, "only shipped follows draw a gap"
+
+    now[0] += timedelta(seconds=gap - 1)
+    assert {ag.can_follow("fan4") for _ in range(50)} == \
+        {(False, f"too soon since last follow (need ~{int(gap)}s gap)")}, \
+        "retrying cannot fish for a smaller draw"
+    now[0] += timedelta(seconds=2)
+    assert ag.seconds_until_allowed(ag.FOLLOW) == 0
+    assert ag.can_follow("fan4") == (True, "")
