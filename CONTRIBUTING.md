@@ -53,7 +53,7 @@ If you change behaviour visible to operators or other contributors, also update:
 - [`docs/OPERATIONS.md`](docs/OPERATIONS.md) — runbook + state file table
 - [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) — env var reference
 - [`README.md`](README.md) — top-level overview
-- [`CLAUDE.md`](CLAUDE.md) + [`CODEX.md`](CODEX.md) — keep in sync
+- [`AGENTS.md`](AGENTS.md) — agent context (`CLAUDE.md` imports it)
 
 The pre-commit hook will warn if you change source code without touching the docs. Either update the docs or — if the change is genuinely doc-irrelevant — note it in the commit message.
 

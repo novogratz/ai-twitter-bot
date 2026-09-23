@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Reminder: Make sure CLAUDE.md and README.md are updated if you changed bot behavior.'"
+            "command": "echo 'Reminder: Make sure AGENTS.md and README.md are updated if you changed bot behavior.'"
           }
         ]
       }

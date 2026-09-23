@@ -213,7 +213,7 @@ CONTENT_LANG_PRIMARY=en
 
 ---
 
-## 2026-06-07 additions (viral focus / quality barbell — see CLAUDE.md CURRENT mandate)
+## 2026-06-07 additions (viral focus / quality barbell — see HISTORY.md)
 
 The live values are in `.env` (which overrides everything above; treat the
 older tables on this page as historical defaults).
