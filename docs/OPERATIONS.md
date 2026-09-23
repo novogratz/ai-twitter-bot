@@ -116,9 +116,8 @@ real account from a second process. Before any of them:
 3. No supervisor restarts it during the run: see [Supervisors](#supervisors).
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.active_hours import is_active; print(is_active())"`
-   prints `True`. The `twitter_client` chokepoints refuse writes Overnight;
-   `bin/mass_unfollow.py` does not (issue #122), so the `unfollow` skill adds
-   a start cutoff and a bound.
+   prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
+   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 22:00.
 
 ## Watching
 
@@ -260,9 +259,11 @@ can be deleted.
   `ENABLE_CODEX_OPERATOR=1` or `ENABLE_AI_MAINTENANCE=1`.
 - `bin/mass_unfollow.py` unfollows by hand from `/following`. It refuses to
   run while the bot runs, unless `--force`, and records each unfollow in the
-  ledger. It drives `osascript` directly, does not check Waking hours,
-  defaults `--max` to 10**6 and never aborts on a rate limit (issue #122):
-  run it only within the `unfollow` skill's bound and start cutoff.
+  ledger. It drives `osascript` directly but checks the bot's Toronto clock:
+  it refuses to start Overnight and stops before its next unfollow at 22:00
+  or on SIGTERM. `--max` defaults to 150. A rate limit triggers a cooldown,
+  never an abort. `mass_unfollow_results.json` is rewritten after every
+  unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 
 ## Skills
