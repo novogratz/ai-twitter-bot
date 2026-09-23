@@ -11,7 +11,7 @@ from src.guards import action_guard as ag
 from src.guards import replied_store as rs
 from src.core import config
 from src.core.state_errors import StateUnreadable
-from tests.helpers import OWN_BEST, TORONTO, _pin_rows, _stop_requested, _url, clock
+from tests.helpers import OWN_BEST, TORONTO, pin_rows, stop_requested, numbered_url, clock
 
 
 # --- one reply per tweet, EVER (double-reply incident, 2026-06-05) -------------
@@ -82,7 +82,7 @@ def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
     with open(config.REPLIED_FILE, "w") as f:
         f.write("[")
     with pytest.raises(StateUnreadable):
-        tc.reply_to_tweet(_url(1), "Batching is the whole margin story: utilisation decides the price.")
+        tc.reply_to_tweet(numbered_url(1), "Batching is the whole margin story: utilisation decides the price.")
     assert recorded == [], "nothing ships on an unreadable store"
 
 
@@ -357,7 +357,7 @@ def _live_browser(monkeypatch, failing_step=None):
     monkeypatch.setattr(safari, "_run_applescript", run_applescript)
     def paste(text):
         if failing_step == "stop_at_submit":
-            _stop_requested(monkeypatch)
+            stop_requested(monkeypatch)
         return failing_step != "paste"
 
     monkeypatch.setattr(safari, "_paste_text", paste)
@@ -869,5 +869,5 @@ def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, steps, shipped):
     _scripted_pin_js(monkeypatch, steps)
 
     assert tc.pin_own_tweet(OWN_BEST) is shipped
-    assert [r["target"] for r in _pin_rows()] == ([OWN_BEST.lower()] if shipped else [])
+    assert [r["target"] for r in pin_rows()] == ([OWN_BEST.lower()] if shipped else [])
     assert action_guard.profile_count_today() == 0

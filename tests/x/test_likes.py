@@ -7,7 +7,7 @@ import subprocess
 
 import pytest
 
-from tests.helpers import FRESH, SearchPage, _stop_requested
+from tests.helpers import FRESH, SearchPage, stop_requested
 
 
 POST = "https://x.com/thebtctherapist/status/2063500000000000101"
@@ -357,7 +357,7 @@ def test_like_click_refuses_osascript_after_stop(monkeypatch):
 
     ran = []
     monkeypatch.setattr(twitter_client.subprocess, "run", lambda *a, **k: ran.append(a))
-    _stop_requested(monkeypatch)
+    stop_requested(monkeypatch)
 
     with pytest.raises(OutsideActiveHours):
         twitter_client._run_page_js("1")

@@ -6,7 +6,7 @@ import pytest
 
 from src.core import config
 from src.guards import action_guard as ag
-from tests.helpers import TORONTO, _stop_requested, clock
+from tests.helpers import TORONTO, stop_requested, clock
 
 
 # --- daily budget and caps ----------------------------------------------------
@@ -67,7 +67,7 @@ def test_can_post_refuses_after_stop(monkeypatch):
     from src.guards import action_guard
 
     assert action_guard.can_post(action_guard.REPLY)[0] is True
-    _stop_requested(monkeypatch)
+    stop_requested(monkeypatch)
 
     ok, why = action_guard.can_post(action_guard.REPLY)
     assert not ok and "stop" in why

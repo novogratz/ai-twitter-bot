@@ -4,7 +4,7 @@ from datetime import datetime
 import pytest
 
 from src.guards import action_guard as ag, active_hours as hours
-from tests.helpers import TORONTO, _stop_requested, clock
+from tests.helpers import TORONTO, stop_requested, clock
 
 
 @pytest.mark.parametrize("when,awake", [
@@ -36,7 +36,7 @@ def test_awake_job_starts_nothing_after_stop(monkeypatch):
 
     ran = []
     job = awake_job(lambda: ran.append(True))
-    _stop_requested(monkeypatch)
+    stop_requested(monkeypatch)
 
     assert job() is None
     assert ran == []
@@ -45,7 +45,7 @@ def test_awake_job_starts_nothing_after_stop(monkeypatch):
 def test_is_active_ignores_stop_for_the_scheduler_loop(monkeypatch):
     from src.guards import active_hours
 
-    _stop_requested(monkeypatch)
+    stop_requested(monkeypatch)
 
     assert active_hours.is_active() is True
     assert active_hours.may_act() is False

@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from tests.helpers import FRESH, OWN_BEST, SearchPage, _pin_rows, _stop_requested, fresh
+from tests.helpers import FRESH, OWN_BEST, SearchPage, pin_rows, stop_requested, fresh
 
 
 # --- 2026-06-07 PM: self-curated tracking ----------------------------------
@@ -171,7 +171,7 @@ def test_like_clicks_refused_after_stop(monkeypatch, tmp_path):
     from src.guards.active_hours import OutsideActiveHours
 
     requested = _stub_like_browser(monkeypatch, tmp_path)
-    _stop_requested(monkeypatch)
+    stop_requested(monkeypatch)
 
     with pytest.raises(OutsideActiveHours):
         like_bot.run_like_cycle()
@@ -449,7 +449,7 @@ def test_pin_job_dry_run_records_a_dry_run_row_without_spending_the_attempt(pin_
                         lambda *a, **k: pytest.fail("scraped again the same day"))
     pin_bot.run_pin_cycle()
 
-    rows = _pin_rows()
+    rows = pin_rows()
     assert [(r["target"], r["dry_run"]) for r in rows] == [(OWN_BEST.lower(), True)]
     assert action_guard.count_today(action_guard.PIN) == 0
     assert pin_bot._load_history().get("pinned", []) == []
