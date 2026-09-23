@@ -93,12 +93,14 @@ the caller's module. A guard change ships with a test pinning it.
   rules, recovery, reach target.
 - [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): the top table is current;
   the rest documents legacy env vars.
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
-  [`docs/OPERATIONS.md`](docs/OPERATIONS.md): the pre-September ~30-bot
-  system. Trust `main.py` where they disagree.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): process, jobs, editorial
+  pipeline, write path, known gaps. Trust `main.py` where they disagree.
+- [`docs/OPERATIONS.md`](docs/OPERATIONS.md): start, stop, supervisors,
+  recovery, state files.
 - [`docs/HISTORY.md`](docs/HISTORY.md): dated mandates and incidents,
   June–September 2026.
 
 `CLAUDE.md` imports this file; edit `AGENTS.md` only. A behaviour change
-updates this file, `README.md` and the policy in the same commit; the
+updates this file, `README.md` and the policy in the same commit; adding or
+removing a job also updates the jobs table in `docs/ARCHITECTURE.md`. The
 incident narrative goes to `docs/HISTORY.md`.

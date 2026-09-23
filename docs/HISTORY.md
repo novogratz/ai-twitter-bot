@@ -2493,7 +2493,7 @@ For the full module catalog see [`docs/ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Adding a new bot
 
-See [`docs/ARCHITECTURE.md#6-adding-a-new-bot`](ARCHITECTURE.md#6-adding-a-new-bot).
+See [`docs/ARCHITECTURE.md#adding-a-job`](ARCHITECTURE.md#adding-a-job).
 
 Mandatory invariants:
 
