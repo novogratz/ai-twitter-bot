@@ -13,7 +13,6 @@ No new Safari scraping: the data source is the action ledger.
 """
 import json
 import os
-import re
 import traceback
 from datetime import date, timedelta
 
@@ -26,8 +25,6 @@ from .logger import log
 # of the ledger's 90 days; delete this fallback and the file after 2026-12-22.
 FROZEN_REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
 STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_engagers_state.json")
-
-_HANDLE_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/")
 
 # Big-media accounts get Debate turns too (we reply back under news posts)
 # — following @business back is pointless for follow-backs.
@@ -63,11 +60,10 @@ def _frozen_engager_handles() -> list:
     if not isinstance(urls, list):
         return []
     handles = []
-    for u in reversed(urls):
-        m = _HANDLE_RE.search(str(u))
-        age = x_urls.age(str(u))
-        if m and age is not None and age <= timedelta(days=90):
-            handles.append(m.group(1).lower())
+    for u in map(str, reversed(urls)):
+        handle, age = x_urls.author(u), x_urls.age(u)
+        if handle and age is not None and age <= timedelta(days=90):
+            handles.append(handle)
     return handles
 
 
