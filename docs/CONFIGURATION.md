@@ -16,7 +16,7 @@ supersede the historical surfaces listed below:
 | `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job`, `replyback_job` and `babysit_job`; read at call time |
 | `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers |
-| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP` | Environment only, read at each like cycle; `live_strategy.json` cannot raise them |
+| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; environment only, read at each like cycle; `live_strategy.json` cannot raise them |
 | `DRY_RUN` | `1` logs every write instead of sending it; read at each call through `config.dry_run()` |
 
 Legacy profile job caps do not add posting slots. `get_live_cap` cannot lift the
@@ -94,8 +94,9 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `LIKE_BOT_PER_CYCLE` | `22` | Bulk Like-button clicks per cycle. |
-| `LIKE_BOT_DAILY_CAP` | `1800` | Daily circuit breaker for bulk Like-button clicks. |
+| `LIKE_BOT_PER_CYCLE` | `10` | Search posts `like_job` hands to `like_tweet` per cycle; at most that many likes. |
+| `LIKE_BOT_DAILY_CAP` | `500` | Daily circuit breaker on the likes `like_job` clicked: `LIKED` plus `UNCONFIRMED`, a click the page did not confirm. |
+| `LIKE_BOT_CYCLE_SECONDS` | `30` | Seconds after `like_job` takes the Safari lock past which it starts no like; bounds how long it holds the browser. |
 | `FOLLOWBACK_CAP` | `8` | Follow-back attempts per cycle. |
 | `EARLY_BIRD_MAX_REPLIES_PER_CYCLE` | `4` | Early-bird replies per cycle. |
 
@@ -166,8 +167,8 @@ MAX_REPLIES_PER_CYCLE=8
 DIRECT_REPLY_MAX_PER_CYCLE=32
 DIRECT_REPLY_MAX_EN_PER_CYCLE=5
 
-LIKE_BOT_PER_CYCLE=22
-LIKE_BOT_DAILY_CAP=1800
+LIKE_BOT_PER_CYCLE=10
+LIKE_BOT_DAILY_CAP=500
 
 ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0

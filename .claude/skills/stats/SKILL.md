@@ -6,7 +6,7 @@ allowed-tools: Bash Read Glob
 
 Show engagement stats, read-only:
 
-1. `action_ledger.json` - counted writes (`post`, `reply`, `follow`, `like`,
+1. `action_ledger.json` - counted writes (`post`, `reply`, `follow`, `like`, `pin`,
    `debate_turn`…) with Toronto timestamps; skip rows with `dry_run: true`
 2. `editorial_state.json` - today's slots and the recent `published` originals
 3. `editorial_review.jsonl` - approvals and rejection reasons of recent drafts

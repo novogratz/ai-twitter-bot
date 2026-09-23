@@ -4,19 +4,21 @@ import json
 
 def _stub_like_browser(monkeypatch, tmp_path):
     from src.account import like_bot
+    from src.x import safari, twitter_client
 
+    monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
-    monkeypatch.setattr(like_bot.webbrowser, "open", lambda *a, **k: None)
-    monkeypatch.setattr(like_bot, "_scroll_page", lambda: None)
-    monkeypatch.setattr(like_bot, "close_front_tab", lambda: None)
-    monkeypatch.setattr(like_bot.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(twitter_client.time, "sleep", lambda *_: None)
     requested = []
 
-    def click(n):
+    def like_posts(n, wanted, page_ok, outcomes, deadline):
         requested.append(n)
-        return n
+        return outcomes
 
-    monkeypatch.setattr(like_bot, "_click_likes_on_page", click)
+    monkeypatch.setattr(twitter_client, "_like_posts_on_page", like_posts)
     return requested
 
 
@@ -119,18 +121,32 @@ def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path):
     assert sum(requested) == 4
 
 
-def test_like_clicks_refused_after_stop(monkeypatch):
+def test_like_clicks_refused_after_stop(monkeypatch, tmp_path):
     import pytest
     from src.account import like_bot
     from src.guards.active_hours import OutsideActiveHours
 
-    calls = []
-    monkeypatch.setattr(like_bot.subprocess, "run", lambda *a, **k: calls.append(a))
+    requested = _stub_like_browser(monkeypatch, tmp_path)
     _stop_requested(monkeypatch)
 
     with pytest.raises(OutsideActiveHours):
-        like_bot._click_likes_on_page(5)
-    assert calls == []
+        like_bot.run_like_cycle()
+    assert requested == []
+
+
+def test_like_click_refuses_osascript_after_stop(monkeypatch):
+    """The like click itself checks the stop before it reaches osascript."""
+    import pytest
+    from src.guards.active_hours import OutsideActiveHours
+    from src.x import twitter_client
+
+    ran = []
+    monkeypatch.setattr(twitter_client.subprocess, "run", lambda *a, **k: ran.append(a))
+    _stop_requested(monkeypatch)
+
+    with pytest.raises(OutsideActiveHours):
+        twitter_client._run_page_js("1")
+    assert ran == []
 
 
 def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
@@ -138,17 +154,16 @@ def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
     from src.guards.active_hours import OutsideActiveHours
     import pytest
 
+    from src.x import twitter_client
+
     _stub_like_browser(monkeypatch, tmp_path)
     monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "10")
-    batches = iter([5, OutsideActiveHours("stop")])
 
-    def click(n):
-        outcome = next(batches)
-        if isinstance(outcome, Exception):
-            raise outcome
-        return outcome
+    def like_posts(n, wanted, page_ok, outcomes, deadline):
+        outcomes.extend([twitter_client.LikeOutcome.LIKED] * 5)
+        raise OutsideActiveHours("stop")
 
-    monkeypatch.setattr(like_bot, "_click_likes_on_page", click)
+    monkeypatch.setattr(twitter_client, "_like_posts_on_page", like_posts)
 
     with pytest.raises(OutsideActiveHours):
         like_bot.run_like_cycle()
@@ -239,10 +254,11 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
     assert recorded == [{"dry_run": True}]
 
 
-def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_path):
-    """like_job, notify_job and pin_job clicked in Safari
-    whatever DRY_RUN said. conftest fails the test on webbrowser.open or
-    _run_applescript; direct osascript calls are walled off here."""
+def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
+    """Under DRY_RUN, like_job and notify's reply likes open nothing and
+    pin_own_tweet writes a dry-run ledger row instead of clicking.
+    conftest fails the test on webbrowser.open or _run_applescript; direct
+    osascript calls are walled off here."""
     from src.account import like_bot
     from src.x import twitter_client
 
@@ -250,7 +266,6 @@ def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_pa
         raise AssertionError("dry run reached osascript")
 
     monkeypatch.setattr(twitter_client.subprocess, "run", no_osascript)
-    monkeypatch.setattr(like_bot.subprocess, "run", no_osascript)
     monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
     opened = []
     monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: opened.append(a))
@@ -258,7 +273,8 @@ def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_pa
 
     like_bot.run_like_cycle()
     twitter_client.like_own_tweet_replies()
-    assert twitter_client.pin_own_tweet("https://x.com/TheAIShrink/status/2063500000000000103") is False
+    assert twitter_client.pin_own_tweet("https://x.com/TheAIShrink/status/2063500000000000103") \
+        is twitter_client.DRY_RUN_RECORDED
     assert opened == []
     assert not (tmp_path / "like_state.json").exists()
 

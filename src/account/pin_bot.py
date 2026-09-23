@@ -11,7 +11,9 @@ Strategy:
   - Pick the post with the highest like count from the last ~30 tweets
     (the visible profile window).
   - Skip if already pinned (track via pin_history.json).
-  - Pin via twitter_client.pin_own_tweet (best-effort JS menu click).
+  - Pin via twitter_client.pin_own_tweet (best-effort JS menu click), which
+    writes the ledger row. A dry run marks its own day and does not spend
+    the live attempt.
 """
 import json
 import os
@@ -19,10 +21,11 @@ import time
 import traceback
 from datetime import date
 
+from ..core import config
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, is_own_post
-from ..x.twitter_client import pin_own_tweet
+from ..x import twitter_client
 
 PIN_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "pin_history.json")
 PIN_STATE_FILE = os.path.join(_PROJECT_ROOT, "pin_daily_state.json")
@@ -51,26 +54,38 @@ def _save_history(h: dict):
         json.dump(h, f, indent=2)
 
 
-def _already_ran_today() -> bool:
+def _load_state() -> dict:
     if not os.path.exists(PIN_STATE_FILE):
-        return False
+        return {}
     try:
         with open(PIN_STATE_FILE, "r") as f:
             state = json.load(f)
     except (json.JSONDecodeError, IOError):
-        return False
-    return state.get("date") == date.today().isoformat()
+        return {}
+    return state if isinstance(state, dict) else {}
+
+
+def _day_key() -> str:
+    # A dry run keeps its own day: it never spends the live attempt, and it
+    # does not scrape the profile again every hour either.
+    return "dry_run_date" if config.dry_run() else "date"
+
+
+def _already_ran_today() -> bool:
+    return _load_state().get(_day_key()) == date.today().isoformat()
 
 
 def _mark_ran_today():
+    state = _load_state()
+    state[_day_key()] = date.today().isoformat()
     with open(PIN_STATE_FILE, "w") as f:
-        json.dump({"date": date.today().isoformat()}, f)
+        json.dump(state, f)
 
 
 def run_pin_cycle():
     """Pick the top own post of the recent window and pin it."""
     if _already_ran_today():
-        log.info("[PIN] Already attempted today. Skipping.")
+        log.info(f"[PIN] Already attempted today{' (dry run)' if config.dry_run() else ''}. Skipping.")
         return
 
     history = _load_history()
@@ -152,13 +167,16 @@ def run_pin_cycle():
 
     # Best-effort pin. The JS menu-click is fragile; if it fails we log and move on.
     try:
-        ok = pin_own_tweet(best["url"])
+        ok = twitter_client.pin_own_tweet(best["url"])
     except Exception:
         log.info("[PIN] pin_own_tweet raised:")
         traceback.print_exc()
         ok = False
 
     _mark_ran_today()
+    if ok is twitter_client.DRY_RUN_RECORDED:
+        log.info("[PIN][DRY_RUN] Dry-run pin recorded; the live attempt is not spent.")
+        return
 
     if ok:
         history.setdefault("pinned", []).append(best["url"])

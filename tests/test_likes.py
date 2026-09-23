@@ -114,9 +114,19 @@ def test_unconfirmed_click_is_not_a_like(browser):
     page = browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": False}])
     page.click_sticks = False
     outcome = tc.like_tweet(POST)
-    assert outcome is tc.LikeOutcome.FAILED and not outcome
+    assert outcome is tc.LikeOutcome.UNCONFIRMED and not outcome
     assert browser["recorded"] == []
     assert not tc._already_liked(POST)
+
+
+def test_walk_stops_at_an_unconfirmed_click(browser):
+    from src.x import twitter_client as tc
+
+    page = browser["page"] = FakePage(
+        posts=[{"url": POST, "liked": False}, {"url": NEXT, "liked": False}])
+    page.click_sticks = False
+    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=2) == [tc.LikeOutcome.UNCONFIRMED]
+    assert page.clicks == [POST]
 
 
 @pytest.mark.parametrize("page_url, url", [
@@ -248,7 +258,8 @@ def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     LikeOutcome = nb.LikeOutcome
 
     results = {"liker": [LikeOutcome.LIKED, LikeOutcome.ALREADY_LIKED],
-               "stale": [LikeOutcome.ALREADY_LIKED], "broken": [LikeOutcome.FAILED]}
+               "stale": [LikeOutcome.ALREADY_LIKED], "broken": [LikeOutcome.FAILED],
+               "unsure": [LikeOutcome.UNCONFIRMED]}
     monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: results[h])
     monkeypatch.setattr(nb.random, "random", lambda: 0.0)
     lines = []
@@ -258,6 +269,7 @@ def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     assert "[RECIPROCATE] Engaged back with 1 engager(s): 1 like(s)." in lines
     assert "[RECIPROCATE] Nothing liked on @stale." in lines
     assert "[RECIPROCATE] Nothing liked on @broken." in lines
+    assert "[RECIPROCATE] Nothing liked on @unsure." in lines
 
 
 def test_page_posts_fills_the_mode_and_target_and_parses_json(monkeypatch):

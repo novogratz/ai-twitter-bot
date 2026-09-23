@@ -80,10 +80,13 @@ an exceptional-value approval.
   refuses a post whose URL handle is a Blocked account with the same match.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
-- `DRY_RUN=1` stops every browser write, including the `like_job` likes and
-  the pins that bypass the ledger. The profile likes (`engage_job`, and
-  replyback's likes to Engagers) and the notify likes go through
-  `like_tweet` and its ledger: under `DRY_RUN` they open nothing. A
+- `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,
+  and replyback's likes to Engagers), the notify likes and the `like_job`
+  likes go through `like_tweet` and its ledger: under `DRY_RUN` they open
+  nothing. `like_job` likes at most 10 posts a cycle and 500 a day, and
+  starts no like 30 s after taking the browser. A dry-run pin writes a
+  dry-run ledger row through `pin_own_tweet` and leaves `pin_job`'s live
+  daily attempt unspent. A
   dry-run reply never marks the tweet as answered, and a dry-run follow
   never enters `followed_accounts.json` or the follow-engagers state.
 
