@@ -144,11 +144,11 @@ def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
 
 
 def _dry_run_reply_path(monkeypatch):
-    from src import action_guard, config
+    from src import action_guard
 
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: None)
-    monkeypatch.setattr(config, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
 
 
 def test_human_typo_text_is_the_validated_text(monkeypatch):
@@ -180,3 +180,21 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
     url = "https://x.com/typofriend/status/2063500000000000102"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is False
     assert url not in load_replied()
+
+
+def test_dry_run_is_read_at_call_time(monkeypatch):
+    from src import action_guard, config, twitter_client
+
+    assert not hasattr(config, "DRY_RUN"), "a frozen module constant must not come back"
+    monkeypatch.setenv("DRY_RUN", "0")
+    assert config.dry_run() is False
+    monkeypatch.setenv("DRY_RUN", "1")
+    assert config.dry_run() is True
+
+    # Set after every module is imported: the chokepoint must still see it
+    # and never reach Safari (conftest fails the test if it does).
+    monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
+    recorded = []
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(k))
+    assert twitter_client.post_tweet("A fresh original about inference costs.") is True
+    assert recorded == [{"dry_run": True}]

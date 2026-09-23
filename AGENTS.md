@@ -57,7 +57,7 @@ Each one is a bug that shipped live. The full incident stories are in
   `author == BOT_HANDLE`.
 - **Side-effect switches are read at call time.** An env var gating a post,
   a subprocess or a network write is read inside the function, never as a
-  module constant.
+  module constant. `DRY_RUN` is read through `config.dry_run()`.
 - **Keyboard shortcuts toggle.** A retweet keystroke on a retweeted post
   un-retweets it: know the state before pressing.
 - **Trim with `humanizer.smart_trim`.** A bare `[:N]` slice on outgoing

@@ -413,10 +413,10 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     """Two reply bots racing on the same tweet: the second write MUST be
     refused at the chokepoint regardless of which bot it came from."""
     import src.twitter_client as tc
-    from src import action_guard, config
+    from src import action_guard
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    monkeypatch.setattr(config, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
     monkeypatch.setattr(action_guard, "can_post", lambda action: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
@@ -1484,12 +1484,11 @@ def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
     and False on the dedup skip — callers gate log_reply on this."""
     from src import twitter_client as tc
     from src import action_guard as ag
-    from src import config as cfg
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
-    monkeypatch.setattr(cfg, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
 
     url = "https://x.com/foo/status/2063500000000000042"
     text = "Naming the fear is step one. The number says 40 billion in capex."
@@ -1551,13 +1550,12 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     reply path, even ones that skip humanize()."""
     from src import twitter_client as tc
     from src import action_guard as ag
-    from src import config as cfg
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     recorded = {}
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
-    monkeypatch.setattr(cfg, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
     logged = []
     monkeypatch.setattr(tc, "log", type(tc.log)(tc.log.name)) if False else None
     # Capture the final text via the DRY_RUN log line is brittle — instead
@@ -1640,13 +1638,12 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     retry). SKIPPED-variant leaks are also pinned here."""
     from src import twitter_client as tc
     from src import action_guard as ag
-    from src import config as cfg
     from src import content_guard as cg
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
-    monkeypatch.setattr(cfg, "DRY_RUN", True)
+    monkeypatch.setenv("DRY_RUN", "1")
 
     url = "https://x.com/Graphseo/status/2063500000000000099"
     english = "The market just told you what your conviction is worth this week."
@@ -1971,7 +1968,7 @@ def test_core_identity_keeps_warmth_and_honest_criticism():
     assert "honest criticism" in text and "uncertainty" in text
 
 
-def test_post_tweet_returns_bool_for_skip_vs_ship():
+def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     """2026-06-09: the same hotake appeared 5x in engagement_log though dedup
     blocked the reposts — bot.py logged log_post/log_hotake unconditionally
     because post_tweet returned None on a skip. post_tweet must return False
@@ -1980,7 +1977,6 @@ def test_post_tweet_returns_bool_for_skip_vs_ship():
     from src import twitter_client as tc
     from src import action_guard as ag
     from src import content_guard as cg
-    from src import config as cfg
 
     # Dedup skip → False (and no Safari).
     monkeypatch_targets = []
@@ -1988,12 +1984,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship():
     orig_canpost = ag.can_post
     orig_validate = cg.validate
     orig_isdup = cg.is_duplicate
-    orig_dry = cfg.DRY_RUN
+    monkeypatch.setenv("DRY_RUN", "1")  # never touch Safari even if it didn't dedup
     try:
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
         cg.is_duplicate = lambda text, threshold=None: True   # force dup
-        cfg.DRY_RUN = True  # never touch Safari even if it didn't dedup
         assert tc.post_tweet("AI capex is the new rent again") is False, \
             "a near-duplicate post must return False, not None"
         # Not a dup, DRY_RUN → recorded ship → True
@@ -2003,7 +1998,6 @@ def test_post_tweet_returns_bool_for_skip_vs_ship():
         ag.can_post = orig_canpost
         cg.validate = orig_validate
         cg.is_duplicate = orig_isdup
-        cfg.DRY_RUN = orig_dry
 
 
 def test_hotake_dedup_block_english_no_space():

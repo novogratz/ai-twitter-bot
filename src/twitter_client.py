@@ -412,7 +412,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     if _review_mode():
         _queue_for_review("post", {"text": text, "image_path": image_path or ""})
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
         return True
@@ -617,7 +617,7 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     if _review_mode():
         _queue_for_review("post_gif", {"text": text, "gif_query": gif_query})
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[POST][DRY_RUN] would post with GIF {gif_query!r}: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
         return True
@@ -685,7 +685,7 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_valu
     if _review_mode():
         _queue_for_review("quote_gif", {"text": comment, "tweet_url": tweet_url, "gif_query": gif_query})
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[QUOTE][DRY_RUN] would GIF-quote {tweet_url} ({gif_query!r}): {comment[:160]!r}")
         action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
         return True
@@ -922,7 +922,7 @@ def like_tweet(tweet_url: str = ""):
         log.info(f"[LIKE] already liked {tweet_url[-50:]} — skipping (would toggle OFF).")
         return
     from . import action_guard, config as _cfg
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:] if tweet_url else '(open tweet)'}.")
         action_guard.record(action_guard.LIKE, target=tweet_url, dry_run=True)
         return
@@ -1054,7 +1054,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     if not replied_store.claim(tweet_url):
         log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
         action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
         if debate_turn:
@@ -1175,7 +1175,7 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False, urgent: 
     if _review_mode():
         _queue_for_review("quote", {"text": comment, "tweet_url": tweet_url})
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[QUOTE][DRY_RUN] would quote {tweet_url}: {comment[:160]!r}")
         action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
         return True
@@ -1226,7 +1226,7 @@ def unfollow_account(username: str) -> bool:
     if not ok:
         log.info(f"[UNFOLLOW] policy refuses @{username} ({why}).")
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[UNFOLLOW][DRY_RUN] would unfollow @{username}.")
         action_guard.record(action_guard.UNFOLLOW, target=username, dry_run=True)
         return True
@@ -1488,7 +1488,7 @@ def follow_account(username: str, reciprocal: bool = False,
     if _quality_reject_recent(username):
         log.info(f"[FOLLOW] @{username} in quality-reject cache — skipping.")
         return False
-    if _cfg.DRY_RUN:
+    if _cfg.dry_run():
         log.info(f"[FOLLOW][DRY_RUN] would follow @{username}.")
         action_guard.record(action_guard.FOLLOW, target=username, dry_run=True)
         return True
