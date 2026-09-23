@@ -1616,9 +1616,11 @@ def test_bare_dash_replacement_keeps_spacing():
     """2026-06-07: '—' → ',' produced 'angle,conviction' in a live reply.
     Bare dashes must become ', ' with normalized spacing, in humanize AND
     at the reply chokepoint."""
-    from src.humanizer import humanize
+    from src.humanizer import humanize, strip_dashes
     out = humanize("The angle—conviction through crashes—is generic and it shows badly.")
     assert ",conviction" not in out and ", conviction" in out
+    # Reply admission shares the same cleanup for paths that skip humanize.
+    assert strip_dashes("The angle—conviction — is generic") == "The angle, conviction. is generic"
 
 
 def test_reply_queries_are_ai_first():

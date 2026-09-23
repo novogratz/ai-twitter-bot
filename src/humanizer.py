@@ -399,6 +399,17 @@ def smart_trim(text: str, limit: int) -> str:
     return cut.strip()
 
 
+def strip_dashes(text: str) -> str:
+    """Em/en dashes are an AI tell (Operator, 2026-06-07). A spaced dash ends
+    the sentence; a bare one becomes ", ", since a bare "," published
+    "angle,conviction" in a live reply."""
+    text = text or ""
+    for pattern, replacement in _DASH_PAIRS:
+        text = text.replace(pattern, replacement)
+    text = text.replace("—", ", ").replace("–", ", ")
+    return re.sub(r" {2,}", " ", text).replace(" ,", ",")
+
+
 def humanize(text: str) -> str:
     """Deterministic cleanup: strip AI artifacts, fix punctuation.
     No LLM call — fast and free. Returns original on short/empty input."""
@@ -431,12 +442,7 @@ def humanize(text: str) -> str:
         flags=re.IGNORECASE | re.MULTILINE,
     )
 
-    # Strip em/en dashes
-    for pat, rep in _DASH_PAIRS:
-        result = result.replace(pat, rep)
-    # Bare (unspaced) dashes get ", " — a bare "," produced "angle,conviction"
-    # in a live reply (2026-06-07). The double-space cleanup below normalizes.
-    result = result.replace("—", ", ").replace("–", ", ")
+    result = strip_dashes(result)
 
     # 2026-05-22 PM: strip markdown bold/italic. X doesn't render
     # markdown for most users — "**700 M$**" shows literally. Replace
