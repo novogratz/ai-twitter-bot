@@ -965,15 +965,21 @@ def test_tests_cannot_write_production_state(tmp_path):
 def test_state_files_resolve_to_the_repo_root():
     """config, llm_client and twitter_client moved under src/core and src/x
     (#114): a path computed from __file__ gains a level, and the bot would then
-    read .env and write its state files under src/."""
+    read .env and write its state files under src/. The guards and editorial
+    modules followed under src/guards and src/editorial (#115)."""
     from pathlib import Path
     from src.core import config, llm_client
+    from src.editorial import editorial_bot, reach_report
+    from src.guards import action_guard, respect_list
     from src.x import twitter_client
 
     repo = Path(__file__).resolve().parent.parent
     assert Path(config._PROJECT_ROOT).resolve() == repo
-    assert Path(llm_client._CODEX_LOCKOUT_FILE).resolve().parent == repo
-    assert Path(twitter_client._FOLLOW_REJECTS_FILE).resolve().parent == repo
+    for state_file in (llm_client._CODEX_LOCKOUT_FILE, twitter_client._FOLLOW_REJECTS_FILE,
+                       action_guard._FOLLOWING_COUNT_FILE, respect_list.RESPECT_FILE,
+                       editorial_bot.STATE_FILE, editorial_bot.AUDIT_FILE,
+                       reach_report.REPORT_FILE, reach_report.REPORT_MARKDOWN):
+        assert Path(state_file).resolve().parent == repo, state_file
 
 
 def test_tests_cannot_spawn_osascript(monkeypatch):
