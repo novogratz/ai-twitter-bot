@@ -244,6 +244,9 @@ Files written by active jobs:
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart |
 
 Most other JSON files at the root belong to legacy jobs and no longer change.
+No active job reads `retweeted.json`, `stock_promo_config.json` or
+`boost_history.json` since the quote, repost,
+promo and boost branches left the live jobs (issue #107).
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
 to the replied store and the Engager list to the ledger's debate turns.
 `follow_engagers_job` still reads it until its entries age out of the

@@ -48,7 +48,7 @@ def _tweet_age_minutes(tweet_url: str) -> int:
     age = datetime.now(tz=timezone.utc) - tweet_time
     return int(age.total_seconds() / 60)
 from .reply_agent import generate_replies
-from .twitter_client import reply_to_tweet, retweet_post, refresh_feed
+from .twitter_client import reply_to_tweet, refresh_feed
 from .history import get_recent_tweets
 from .engagement_log import log_reply
 from .humanizer import humanize
@@ -138,6 +138,9 @@ def run_reply_cycle():
     for data in replies:
         url = data["tweet_url"]
         action_type = data.get("type", "reply")
+        if action_type == "quote":
+            log.info(f"[REPLY] Quote action disabled - skipping {url}")
+            continue
 
         # Skip tweets we already replied to (final safety net)
         if url in replied:
@@ -176,13 +179,8 @@ def run_reply_cycle():
         replied.add(url)  # in-memory only: no same-cycle retry
 
         try:
-            if action_type == "quote":
-                log.info("[REPLY] Quote action disabled; plain-reposting instead.")
-                retweet_post(url)
-                action_type = "retweet"
-            else:
-                if not reply_to_tweet(url, reply_text):
-                    continue  # chokepoint skip — nothing posted, no phantom log
+            if not reply_to_tweet(url, reply_text):
+                continue  # chokepoint skip — nothing posted, no phantom log
             posted_count += 1
             log_reply(url, data["reply"], action_type, pattern_id=data.get("pattern", ""))
             # Wait between replies so browser can catch up
@@ -194,7 +192,7 @@ def run_reply_cycle():
             traceback.print_exc()
 
     save_replied(replied)
-    log.info(f"[REPLY] Posted {posted_count} replies/quotes this cycle.")
+    log.info(f"[REPLY] Posted {posted_count} replies this cycle.")
 
 
 def safe_run_reply_cycle():

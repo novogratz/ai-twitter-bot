@@ -1,14 +1,13 @@
 """Direct reply: visits influencer profiles, scrapes tweets, generates replies, posts them."""
-import json
 import os
 import re
 import random
 import time
 import traceback
-from datetime import date as _date, timedelta
+from datetime import timedelta
 from . import x_urls
 from .logger import log
-from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER, _PROJECT_ROOT
+from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_admission import judge_parent
@@ -28,9 +27,6 @@ _skipped: set = set()
 _FR_FORCED_HANDLES = {h.strip().lstrip("@").lower() for h in os.environ.get(
     "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
 _LLM_RATE_LIMITED = object()
-FAVORITE_REPOSTS_PER_CYCLE = int(os.environ.get("FAVORITE_REPOSTS_PER_CYCLE", "6"))
-FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEMENT", "2"))
-FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
     "TheBTCTherapist",  # model account — reply to + amplify everything he posts
@@ -241,56 +237,6 @@ HOT_TAB_QUERIES = [
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "7200"))
 
-_SPACE_KEYWORDS_RE = re.compile(
-    r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
-    r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
-    r"aerospace|launcher|mnts|momentus|spce|virgin.galactic|"
-    r"espace|exploration\s+spatiale|tourisme\s+spatial|new\s*space|"
-    r"orbitale?|fusée|lancement|satellite|constellation)\b",
-    re.IGNORECASE,
-)
-
-def _is_space_tweet(text: str) -> bool:
-    return bool(_SPACE_KEYWORDS_RE.search(text or ""))
-
-_STOCK_PROMO_CONFIG = os.path.join(_PROJECT_ROOT, "stock_promo_config.json")
-
-def _load_promo_cfg() -> dict:
-    try:
-        with open(_STOCK_PROMO_CONFIG) as f:
-            return json.load(f)
-    except (OSError, json.JSONDecodeError):
-        return {}
-
-def _promo_block(lang: str = "fr", tweet_text: str = "") -> str:
-    cfg = _load_promo_cfg()
-    if cfg.get("disabled"):
-        return ""
-    from .quote_tweet_bot import _pick_promo_ticker
-    ticker, company = _pick_promo_ticker(cfg)
-    end_str = cfg.get("end_date", "")
-    if not ticker or not end_str:
-        return ""
-    try:
-        end = _date.fromisoformat(end_str)
-    except ValueError:
-        return ""
-    if _date.today() > end:
-        return ""
-    if not _is_space_tweet(tweet_text) and f"${ticker}" not in (tweet_text or "").upper():
-        return ""
-    if lang == "fr":
-        return (
-            f"\n   *SMART PROMO (jusqu'au {end_str}, UNIQUEMENT si le sujet est spatial/finance):*"
-            f" Glisse ${ticker} ({company}) naturellement."
-            " 100% français, jamais de franglais."
-        )
-    return (
-        f"\n   *SMART PROMO (until {end_str}, ONLY if space or stock related):*"
-        f" Weave in ${ticker} ({company}) naturally —"
-        " one mention max, woven in naturally. Never forced."
-    )
-
 REPLY_PROMPT = """You are @TheAIShrink: an AI bot whose character is a woman, 45,
 and a mom who loves AI. A smart friend with warmth, curiosity and a clear point
 of view. Confident and occasionally flirty, never explicit. Knowledge comes first.
@@ -472,7 +418,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
     core_identity = personality_store.render_core_identity(lang=lang)
-    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], promo_block=_promo_block(lang, tweet_text))
+    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     if lang == "fr":
         base += "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords."
     elif lang == "en":
@@ -507,34 +453,6 @@ DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT"
 DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "25"))
 DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "20"))
 DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "20"))
-
-def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set) -> bool:
-    if not tweets: return False
-    try:
-        from .retweet_bot import _save_retweeted
-        from .twitter_client import retweet_post
-    except Exception: return False
-    username_lc = (username or "").lower().lstrip("@")
-    candidates = []
-    for t in tweets:
-        url = t.get("url") or ""
-        text = (t.get("text") or "").strip()
-        if not url or url in retweeted or not text: continue
-        if _is_reply_like_tweet(t, expected_author=username_lc): continue
-        if not _is_on_niche(text): continue
-        likes = int(t.get("likes") or 0)
-        engagement = likes + (2 * int(t.get("replies") or 0))
-        if engagement < FAVORITE_REPOST_MIN_ENGAGEMENT: continue
-        candidates.append((engagement, url, text))
-    if not candidates: return False
-    engagement, url, text = max(candidates)
-    retweeted.add(url)
-    _save_retweeted(retweeted)
-    try:
-        log.info(f"[FAVORITE-REPOST] Reposting @{username}: {text[:100]}")
-        retweet_post(url)
-        return True
-    except Exception: return False
 
 def _freshness_sort_key(tweet):
     """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load

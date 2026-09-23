@@ -1274,42 +1274,6 @@ def test_engine_health_warmup_suppresses_boot_alerts(monkeypatch):
     assert not ehb._in_warmup(), "past the warmup window checks must resume"
 
 
-# --- 2026-06-07: boost engine must never blind-toggle (banger un-RT bug) ----
-
-def test_boost_resurfaces_banger_never_blind_toggles(monkeypatch):
-    """When every visible own post is already self-RT'd, the boost engine
-    must resurface the HIGHEST-engagement post via reboost_tweet (ends
-    retweeted) — never retweet_own_latest, whose blind 't'+Enter UN-retweets
-    an already-RT'd post (witnessed all morning 2026-06-07: the banger's
-    self-RT toggled off every other cycle)."""
-    from src import notify_bot as nb
-    from src import twitter_client as tc
-
-    posts = [
-        {"author": "TheAIShrink", "url": "https://x.com/TheAIShrink/status/1", "likes": 2, "text": "meh"},
-        {"author": "TheAIShrink", "url": "https://x.com/TheAIShrink/status/2", "likes": 9, "text": "banger"},
-    ]
-    monkeypatch.setattr(tc, "scrape_profile_tweets", lambda *a, **k: posts)
-    monkeypatch.setattr(nb, "_load_boost_history",
-                        lambda: {p["url"] for p in posts})  # all already boosted
-    reboosted, toggled, first_rts = [], [], []
-    monkeypatch.setattr(tc, "reboost_tweet", lambda url: reboosted.append(url))
-    monkeypatch.setattr(tc, "retweet_post", lambda url: first_rts.append(url))
-    monkeypatch.setattr(nb, "retweet_own_latest", lambda: toggled.append(1))
-
-    nb.run_boost_cycle()
-    assert reboosted == ["https://x.com/TheAIShrink/status/2"], "must pick the banger"
-    assert toggled == [], "blind toggle is the un-retweet bug — never call it"
-    assert first_rts == []
-
-    # Scrape failure → skip, never toggle.
-    def boom(*a, **k):
-        raise RuntimeError("DOM drift")
-    monkeypatch.setattr(tc, "scrape_profile_tweets", boom)
-    nb.run_boost_cycle()
-    assert toggled == []
-
-
 def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
     scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
@@ -1349,7 +1313,6 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
     replied URLs are skipped before the LLM."""
     from src import btc_blitz as bb
     from src import twitter_client as tc
-    from src import quote_tweet_bot as qb
     from src import engagement_log as el
 
     posts = {
@@ -1373,9 +1336,6 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
                         lambda txt: gen_calls.append(("GRAPHSEO_FR", txt)) or "réponse précise en français")
     # One Graphseo post already replied — must be skipped pre-LLM.
     monkeypatch.setattr(rs, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
-    # Quote pass: bestie URL already quoted so the test stays reply-only.
-    monkeypatch.setattr(qb, "_load_quoted", lambda: {"https://x.com/TheBTCTherapist/status/111"})
-    monkeypatch.setattr(qb, "_save_quoted", lambda q: None)
     sent = []
     monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
     monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)

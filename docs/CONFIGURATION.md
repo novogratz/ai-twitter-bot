@@ -21,6 +21,12 @@ supersede the historical surfaces listed below:
 Legacy profile job caps do not add posting slots. `get_live_cap` cannot lift the
 hard ceiling, restore quotes/reposts, or impose a daily reply limit.
 
+The quote, repost and boost branches left the live jobs (issue #107), and no
+code reads the variables that gated them any more: `FAVORITE_REPOSTS_PER_CYCLE`, `FAVORITE_REPOST_MIN_ENGAGEMENT`,
+`FAVORITE_REPOST_MAX_AGE_MINUTES`, `FEED_SWEEP_QUOTE_MIN_LIKES`,
+`FEED_SWEEP_MAX_QUOTES_PER_CYCLE`, `FEED_SWEEP_BANGER_LIKES`,
+`BLITZ_MAX_QUOTES_PER_CYCLE`.
+
 ---
 
 ## Historical module configuration reference
@@ -118,9 +124,6 @@ Per-cycle quotas (not daily caps):
 | `RETWEET_MIN_LIKES` | `25` | Skip retweet candidates below this floor; niche/source/age gates carry quality. |
 | `RETWEET_MAX_AGE_HOURS` | `18` | Skip candidates older than this. |
 | `FEED_REPOST_MIN_ENGAGEMENT` | `5` | Minimum likes + 2×replies for feed-native reposts from For You / Following / search. |
-| `FAVORITE_REPOSTS_PER_CYCLE` | `3` | Best recent posts to repost while visiting favorite/VIP profiles. |
-| `FAVORITE_REPOST_MIN_ENGAGEMENT` | `3` | Minimum likes + 2×replies for favorite-profile reposts. |
-| `FAVORITE_REPOST_MAX_AGE_MINUTES` | `2880` | Max age for favorite-profile reposts. |
 | `RETWEET_FEED_SEARCHES_PER_CYCLE` | `12` | Targeted crypto / AI / bourse searches scraped by the retweet cycle, with extra FR searches before EN fallback. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | `1440` | Max age for direct replies. Keeps big-post search from commenting on old viral tweets. |
 | `X_FEED_SEARCHES_PER_CYCLE` | `2` | Targeted searches merged into `external_signal.json` for news generation. |
@@ -225,7 +228,7 @@ older tables on this page as historical defaults).
 |---|---|---|
 | `MAX_QUOTE_REPOSTS_PER_DAY` / `MAX_QUOTES_PER_DAY` | `100` | QRT quality lane — the focus surface. 50-like floor, screenshot-or-SKIP gate. |
 | `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
-| `QUOTE_MIN_LIKES` / `FEED_SWEEP_QUOTE_MIN_LIKES` | `50` / `100` | Mid-size analytical posts are the measured winners (not mega-virals). |
+| `QUOTE_MIN_LIKES` | `50` | Mid-size analytical posts are the measured winners (not mega-virals). |
 | `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
 | `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |
 | `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
@@ -238,4 +241,4 @@ older tables on this page as historical defaults).
 | `CURATOR_WINDOW_DAYS` / `CURATOR_DISCOVERED_PER_DAY` / `CURATOR_DISCOVERED_MAX` | `4` / `3` / `50` | Self-curated tracked list + whitelist `discovered`-tier promotion caps. |
 | `PINNED_TRACKED_HANDLES` | `TheBTCTherapist,Graphseo` | The only operator-pinned scan targets — everything else is earned. |
 | `SELF_WINNERS_MIN_LIKES` / `SELF_WINNERS_WINDOW_DAYS` / `SELF_WINNERS_MAX_VIEWS` | `3` / `4` / `100000` | Own-wins prompt bank: floor, therapist-era window, foreign-content guard. |
-| `BESTIE_HANDLE` / `BLITZ_MAX_QUOTES_PER_CYCLE` | `TheBTCTherapist` / `2` | Bestie blitz target + per-cycle QRT offer. |
+| `BESTIE_HANDLE` | `TheBTCTherapist` | Bestie blitz target. |

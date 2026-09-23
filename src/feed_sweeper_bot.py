@@ -1,26 +1,11 @@
 """Feed sweeper — useful replies to fresh AI posts in the For You / Following feed.
 
-Operator mandate 2026-06-05 ("it's simple"): scroll the main feed and engage
-with every post you see —
-  - GOOD post (viral / high-signal)  → QUOTE-retweet it with a clever take
-  - meh / weak post                  → REPLY with a substantive comment
-
-"Good" is decided deterministically by engagement velocity proxy (likes >=
-FEED_SWEEP_QUOTE_MIN_LIKES): viral posts get amplified with our angle on top
-(quote = we ride their reach), everything else gets a reply (reply = we farm
-the conversation). The LLM still gets the final word — a quote/reply that
-doesn't clear content_guard is skipped, and the action_guard chokepoints
-(caps + jittered spacing) gate total volume.
-
-2026-06-06 additions:
-  - GIF quotes: _generate_quote already asks the LLM for a [GIF: ...] tag;
-    we now extract it and call quote_tweet_with_gif() so GIFs actually post.
-  - Active author harvesting: authors of high-engagement feed posts are added
-    to dynamic_accounts.json so the engage_bot visits them instead of the old
-    static list.
+Scroll For You and Following and reply to every on-niche post. The quote
+lane that once amplified viral posts is gone (2026-09-20 policy: quotes are
+zero). Authors of high-engagement feed posts are added to
+dynamic_accounts.json so the engage_bot visits them.
 
 Hard rules preserved:
-  - ⛔ quotes obey the 48h REPOST_MAX_AGE_HOURS rule (via _too_old_to_quote)
   - replies obey DIRECT_REPLY_MAX_AGE_MINUTES (72h since 2026-06-05)
   - Reply admission (Blocked account, own post, already Replied) judges
     each post before generation, through direct_reply's pipeline
@@ -34,11 +19,8 @@ from .logger import log
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-FEED_SWEEP_QUOTE_MIN_LIKES = int(os.environ.get("FEED_SWEEP_QUOTE_MIN_LIKES", "50"))
 FEED_SWEEP_SCAN_LIMIT = int(os.environ.get("FEED_SWEEP_SCAN_LIMIT", "80"))
-FEED_SWEEP_MAX_QUOTES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_QUOTES_PER_CYCLE", "4"))
 FEED_SWEEP_MAX_REPLIES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", "8"))
-BANGER_LIKES = int(os.environ.get("FEED_SWEEP_BANGER_LIKES", "1000"))
 
 # Authors with at least this many likes on a post get added to dynamic_accounts.
 HARVEST_MIN_LIKES = int(os.environ.get("FEED_SWEEP_HARVEST_MIN_LIKES", "100"))
@@ -95,13 +77,9 @@ def run_feed_sweep_cycle():
 
 
 def _sweep_one_feed(source, scraper):
-    from .twitter_client import quote_tweet, quote_tweet_with_gif
-    from .humanizer import extract_gif_query
-    from .quote_tweet_bot import _load_quoted, _save_quoted, _generate_quote, _too_old_to_quote
     from .direct_reply import _reply_to_tweets, _is_on_niche, _is_reply_like_tweet
-    from . import content_guard, respect_list
 
-    log.info(f"[SWEEP] Sweeping {source} (quote >= {FEED_SWEEP_QUOTE_MIN_LIKES} likes, reply below, BOTH >= {BANGER_LIKES})...")
+    log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
     try:
         tweets = scraper(max_tweets=FEED_SWEEP_SCAN_LIMIT) or []
     except Exception:
@@ -115,9 +93,6 @@ def _sweep_one_feed(source, scraper):
     # Harvest active authors from this feed pass before filtering.
     _harvest_active_authors(tweets)
 
-    quoted = _load_quoted()
-
-    quote_candidates = []
     reply_candidates = []
     for t in tweets:
         url = t.get("url") or ""
@@ -128,13 +103,8 @@ def _sweep_one_feed(source, scraper):
             continue
         if not _is_on_niche(text):
             continue
-        # Every eligible item can receive a useful reply, including popular
-        # ones formerly diverted to the quote lane.
         reply_candidates.append(t)
 
-    quotes_done = 0
-
-    # --- REPLY to the meh ones --------------------------------------------
     # No shuffle: _reply_to_tweets orders fresh-and-rising first
     # (2026-06-07 spec — front-load <60-min climbers).
     replies_done = _reply_to_tweets(
@@ -145,7 +115,7 @@ def _sweep_one_feed(source, scraper):
         en_counter=[0],
         skipped=_skipped,
     )
-    log.info(f"[SWEEP] {source} done: {quotes_done} quotes, {replies_done} replies.")
+    log.info(f"[SWEEP] {source} done: {replies_done} replies.")
 
 
 def safe_run_feed_sweep_cycle():

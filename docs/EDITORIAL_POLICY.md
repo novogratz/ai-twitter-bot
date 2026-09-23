@@ -48,6 +48,8 @@ slot needs news from the last six hours and an exceptional-value approval.
   does not erase history or grant extra slots.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
   Thread and recycling browser paths are disabled. Feed sweeps now reply.
+  No scheduled job carries a quote, repost or thread branch, whatever the
+  caps say (issue #107); `tests/test_disabled_surfaces.py` pins it.
 - Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
   per-author debate turns protect conversation quality. Every answer to
   someone who answered the account is a debate turn, whichever job sends it.

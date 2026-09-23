@@ -175,6 +175,79 @@ def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeyp
     assert dr._skipped == set(), "each job keeps its own set"
 
 
+@pytest.fixture
+def disabled_writes(monkeypatch):
+    """The quote and repost chokepoints, recording any call (issue #107)."""
+    from src import twitter_client as tc
+
+    calls = []
+    for name in ("quote_tweet", "quote_tweet_with_gif", "retweet_post",
+                 "retweet_own_latest", "reboost_tweet"):
+        monkeypatch.setattr(tc, name, lambda *a, _name=name, **k: calls.append(_name) or True)
+    return calls
+
+
+def viral(handle, n):
+    return {"url": fresh(handle, n=n), "text": f"OpenAI ships a new model {n}",
+            "author": handle, "likes": 50_000, "replies": 900}
+
+
+def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch, disabled_writes):
+    from src import feed_sweeper_bot as fs
+    from src import twitter_client as tc
+
+    dr, generated, sent, _ = pipeline
+    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
+    feed = [viral("someone", 1), viral("other", 2)]
+    monkeypatch.setattr(tc, "scrape_home_feed", lambda **k: list(feed))
+    monkeypatch.setattr(tc, "scrape_following_feed", lambda **k: [])
+
+    fs.run_feed_sweep_cycle()
+
+    assert disabled_writes == []
+    assert sorted(sent) == sorted(t["url"] for t in feed)
+
+
+def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch, disabled_writes):
+    from src import btc_blitz
+    from src import twitter_client as tc
+
+    dr, generated, sent, _ = pipeline
+    vip, searched = viral("TheBTCTherapist", 1), viral("someone", 2)
+    monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
+    monkeypatch.setattr(tc, "scrape_x_search", lambda *a, **k: [vip])
+    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [searched])
+    monkeypatch.setattr(btc_blitz, "_gen", lambda *a, **k: DRAFT)
+    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+
+    dr.run_direct_reply_cycle()
+
+    assert disabled_writes == []
+    assert sent == [vip["url"], searched["url"]]
+
+
+def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch, disabled_writes):
+    from src import reply_bot as rb
+
+    quoted, answered = fresh("someone", n=1), fresh("other", n=2)
+    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
+    monkeypatch.setattr(rb, "refresh_feed", lambda: None)
+    monkeypatch.setattr(rb, "get_recent_tweets", lambda hours: [])
+    monkeypatch.setattr(rb, "generate_replies", lambda **k: [
+        {"tweet_url": quoted, "reply": DRAFT, "type": "quote"},
+        {"tweet_url": answered, "reply": DRAFT, "type": "reply"},
+    ])
+    monkeypatch.setattr(rb.time, "sleep", lambda *a: None)
+    sent, logged = [], []
+    monkeypatch.setattr(rb, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+    monkeypatch.setattr(rb, "log_reply", lambda url, *a, **k: logged.append(url))
+
+    rb.run_reply_cycle()
+
+    assert disabled_writes == []
+    assert sent == logged == [answered], "a quote item ships nothing and logs nothing"
+
+
 # --- early_bird and mega_watch (profile scans) ------------------------------
 
 @pytest.fixture(params=["early_bird", "mega_watch"])
