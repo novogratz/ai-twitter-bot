@@ -32,7 +32,8 @@ def _tweet_age_minutes(tweet_url: str) -> int:
     age = datetime.now(tz=timezone.utc) - tweet_time
     return int(age.total_seconds() / 60)
 from .reply_agent import generate_replies
-from ..x.twitter_client import reply_to_tweet, refresh_feed
+from ..x.scraper import refresh_feed
+from ..x.twitter_client import reply_to_tweet
 from ..core.history import get_recent_tweets
 from ..core.engagement_log import log_reply
 from ..core.humanizer import humanize

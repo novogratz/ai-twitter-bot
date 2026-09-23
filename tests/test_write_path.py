@@ -271,7 +271,7 @@ def _live_browser(monkeypatch, failing_step=None):
     stop at that point.
     """
     from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
     from src.guards.active_hours import OutsideActiveHours
 
     monkeypatch.setenv("DRY_RUN", "0")
@@ -289,19 +289,19 @@ def _live_browser(monkeypatch, failing_step=None):
             return failing_step != "submit"
         return True
 
-    monkeypatch.setattr(tc, "_run_applescript", run_applescript)
+    monkeypatch.setattr(safari, "_run_applescript", run_applescript)
     def paste(text):
         if failing_step == "stop_at_submit":
             _stop_requested(monkeypatch)
         return failing_step != "paste"
 
-    monkeypatch.setattr(tc, "_paste_text", paste)
+    monkeypatch.setattr(safari, "_paste_text", paste)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
     def close_front_tab():
         if failing_step == "stop_after_submit":
             raise OutsideActiveHours("stop")
 
-    monkeypatch.setattr(tc, "close_front_tab", close_front_tab)
+    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     return recorded
@@ -356,7 +356,7 @@ def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
     """Another thread takes the Engager's last turn while this one waits for
     the browser: admission, judged under the lock, refuses before the claim."""
     from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
     from src.guards.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
@@ -371,7 +371,7 @@ def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
         def __exit__(self, *exc):
             lock_held.clear()
 
-    monkeypatch.setattr(tc, "_safari_lock", ContendedLock())
+    monkeypatch.setattr(safari, "_safari_lock", ContendedLock())
     url = "https://x.com/someone/status/2063500000000000160"
 
     assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is False
@@ -384,11 +384,11 @@ def test_live_reply_pastes_the_validated_text(monkeypatch):
     dash cleanup included, never the raw draft."""
     from src.guards import content_guard
     from src.core import humanizer
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     _live_browser(monkeypatch)
     pasted, validated = [], []
-    monkeypatch.setattr(tc, "_paste_text", lambda text: pasted.append(text) or True)
+    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
     monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     real_validate = content_guard.validate
@@ -405,7 +405,7 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     """A Reply shipped by another thread while this one waited for the
     browser: the spacing check sees it and nothing is claimed."""
     from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
     from src.guards.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
@@ -420,7 +420,7 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
         def __exit__(self, *exc):
             lock_held.clear()
 
-    monkeypatch.setattr(tc, "_safari_lock", ContendedLock())
+    monkeypatch.setattr(safari, "_safari_lock", ContendedLock())
     url = "https://x.com/someone/status/2063500000000000166"
 
     assert tc.reply_to_tweet(url, REPLY) is False

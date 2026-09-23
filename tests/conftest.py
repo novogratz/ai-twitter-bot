@@ -58,18 +58,20 @@ def _no_safari(monkeypatch):
 
     def _blocked(*a, **k):
         raise AssertionError(
-            "TEST TRIED TO DRIVE SAFARI — mock at the twitter_client level "
+            "TEST TRIED TO DRIVE SAFARI — mock the primitive in src.x.safari "
             "(function-local imports bypass caller-module mocks)."
         )
 
     monkeypatch.setattr(_wb, "open", _blocked)
     # No try/except: an import that breaks (a moved module) must fail every
     # test, not silently drop the wall.
-    from src.x import twitter_client as _tc
-    monkeypatch.setattr(_tc, "_run_applescript", _blocked)
-    monkeypatch.setattr(_tc, "_paste_text", _blocked)
+    # The primitives live in src.x.safari; twitter_client and scraper call
+    # them through the module, so this patch reaches every src.x path.
+    from src.x import safari as _safari
+    monkeypatch.setattr(_safari, "_run_applescript", _blocked)
+    monkeypatch.setattr(_safari, "_paste_text", _blocked)
 
-    # twitter_client, safari_hygiene and several jobs call
+    # twitter_client, scraper, safari_hygiene and several jobs call
     # subprocess.run(["osascript", ...]) directly, past the helpers above.
     # subprocess.run/call/check_output all go through subprocess.Popen.
     import subprocess as _sp

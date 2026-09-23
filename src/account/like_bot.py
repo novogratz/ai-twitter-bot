@@ -27,7 +27,7 @@ from ..guards.active_hours import require_active
 from ..core import config
 from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
-from ..x.twitter_client import _safari_lock, close_front_tab, _scroll_page
+from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 
 LIKE_QUERIES = [
     "AI datacenter OR power demand lang:en min_faves:50",
@@ -55,7 +55,7 @@ def _daily_cap() -> int:
 def _click_likes_on_page(max_clicks: int) -> int:
     """JS: find unliked like buttons on the page and click them."""
     # This path runs osascript itself, so it must check the clock and the
-    # stop the way twitter_client._run_applescript does.
+    # stop the way safari._run_applescript does.
     require_active()
     js_code = f"""
     (function() {{

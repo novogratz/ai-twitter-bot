@@ -9,7 +9,8 @@ from ..x import x_urls
 from ..core.logger import log
 from ..core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
 from ..core.llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
-from ..x.twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
+from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
+from ..x.twitter_client import reply_to_tweet
 from ..guards.reply_admission import judge_parent
 from ..core.state_errors import StateUnreadable
 from ..core.humanizer import humanize, strip_agent_preamble
@@ -371,7 +372,8 @@ def _run_graphseo_scan(tried: set) -> int:
 
     `tried` holds the posts this cycle already tried, in memory only.
     """
-    from ..x.twitter_client import scrape_x_search, reply_to_tweet
+    from ..x.scraper import scrape_x_search
+    from ..x.twitter_client import reply_to_tweet
     from ..core.engagement_log import log_reply
 
     VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(

@@ -217,7 +217,7 @@ def _launch_safari() -> bool:
         )
         time.sleep(4)
         # Bring it to the front so subsequent AppleScript `front window`
-        # calls in twitter_client land on the right surface.
+        # calls in src/x land on the right surface.
         subprocess.run(
             ["osascript", "-e", 'tell application "Safari" to activate'],
             capture_output=True, text=True, timeout=10,
@@ -292,7 +292,7 @@ def safe_run_periodic_warmup():
     Takes the safari lock so it doesn't race with active scrape cycles.
     """
     try:
-        from .twitter_client import _safari_lock
+        from .safari import _safari_lock
         log.info("[HYGIENE] Periodic SW warmup — clearing x.com service workers.")
         with _safari_lock:
             ok = _warm_up_xcom()

@@ -41,7 +41,7 @@ def summarize(published, scraped, now=None):
 def safe_run_reach_report():
     try:
         require_active()
-        from ..x.twitter_client import scrape_profile_tweets
+        from ..x.scraper import scrape_profile_tweets
         published = _read_state().get("published", [])
         tweets = scrape_profile_tweets(config.BOT_HANDLE, max_tweets=60) if published else []
         report = summarize(published, tweets)

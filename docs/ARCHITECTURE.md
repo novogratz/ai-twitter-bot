@@ -45,9 +45,9 @@ pause/resume loop must not treat a stop as a wake-up boundary.
 Pausing the scheduler is not enough, because a job queued at 21:59 would still
 run. The check is repeated at each point where work leaves the process:
 
-- `twitter_client._AwakeSafariLock`, before and after acquiring the Safari lock;
-- `twitter_client._run_applescript` and each direct `osascript` call inside
-  `twitter_client`, and in `like_bot`'s like clicks. The read-only
+- `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
+- `safari._run_applescript` and each direct `osascript` call inside
+  `twitter_client` and `scraper`, and in `like_bot`'s like clicks. The read-only
   `osascript` calls in `followback_bot`, `follower_tracker_bot` and
   `safari_hygiene` are only covered by the lock check or by `awake_job`;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
@@ -150,6 +150,15 @@ which defaults to codex even when the variable is empty. `LLM_DISABLE_FALLBACK=1
 turns the fallback off.
 
 ## Write path and limits
+
+The browser layer is three modules in `src/x/`. `safari.py` holds the
+primitives: the Safari lock, `_run_applescript`, `_paste_text`, tab, scroll
+and keyboard moves. `scraper.py` reads pages: feeds, search, profiles,
+mentions, our latest post and its replies, and the blank-page recovery those
+reads trigger. `twitter_client.py` holds the write chokepoints. Writes use
+reading and primitives, reading uses primitives, never the other way. Both
+call a primitive through its module (`safari._run_applescript(...)`), never a
+`from` import, so the test walls reach every path.
 
 Every write that should count goes through a function in
 `src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
@@ -333,7 +342,7 @@ intra-project import, function-local or inside `try/except` included, names a
 missing module or an undefined name, imports a module under `src/` by its bare
 name instead of through its package, or crosses a package folder without
 `__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
-`main.py` reaches through imports, `twitter_client` included, defines or
+`main.py` reaches through imports, the three browser modules included, defines or
 names a quote, repost, thread or GIF write. It also fails when a
 module in any package under `src/` is not reached from `main.py`,
 function-local imports included, and when a package imports the job packages
@@ -343,10 +352,12 @@ above it: nothing outside `src/replies/` and `src/account/` imports them, and
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript`, `_paste_text` and any subprocess that runs `osascript`
 or aims `open`, `pkill` or `killall` at Safari raise (an import error on
-`src.x.twitter_client` fails every test rather than dropping the wall), the
+`src.x.safari` fails every test rather than dropping the wall), the
 logger writes to a temporary file, and the engagement log, tweet history, replied store, ledger and
 personality file point to `tmp_path`. A mock placed on a caller module misses
-function-local imports; patch the primitive in `twitter_client`.
+function-local imports; patch the primitive in `safari` and a scrape in
+`scraper`. `tests/test_guards.py` fails when a module binds a walled
+primitive, `webbrowser` or `subprocess.Popen` by name, past the wall.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and

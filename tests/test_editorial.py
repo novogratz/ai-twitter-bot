@@ -42,7 +42,7 @@ def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
 
 
 def test_browser_wait_rechecks_bedtime(monkeypatch):
-    from src.x.twitter_client import _AwakeSafariLock
+    from src.x.safari import _AwakeSafariLock
     clock(monkeypatch, datetime(2026, 9, 20, 21, 59, tzinfo=TORONTO))
     browser = _AwakeSafariLock()
     released = []
@@ -62,15 +62,15 @@ def test_browser_wait_rechecks_bedtime(monkeypatch):
 
 
 def test_submit_checks_bedtime_before_applescript(monkeypatch):
-    from src.x import twitter_client as tc
+    from src.x import safari
     # Use the real helper (the suite normally prevents Safari calls).
     import importlib
     from unittest.mock import patch
     with patch("subprocess.run") as run:
-        tc = importlib.reload(tc)
+        safari = importlib.reload(safari)
         clock(monkeypatch, datetime(2026, 9, 20, 22, tzinfo=TORONTO))
         with pytest.raises(hours.OutsideActiveHours):
-            tc._run_applescript("submission")
+            safari._run_applescript("submission")
         run.assert_not_called()
 
 
@@ -249,14 +249,14 @@ def test_failed_or_ambiguous_submission_does_not_log_success(monkeypatch, draft_
 def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(6):
         ag.record(ag.POST)
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
-    monkeypatch.setattr(tc, "_run_applescript", lambda *a: True)
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     barrier = Barrier(2)
