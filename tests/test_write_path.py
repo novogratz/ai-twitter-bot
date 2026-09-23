@@ -26,7 +26,7 @@ def test_live_strategy_cannot_raise_likes_per_cycle(monkeypatch, tmp_path):
     strategy = tmp_path / "live_strategy.json"
     strategy.write_text(json.dumps({"caps": {"LIKE_BOT_PER_CYCLE": 500}}))
     monkeypatch.setattr(config, "_LIVE_STRATEGY_FILE", str(strategy))
-    monkeypatch.setattr(like_bot, "LIKES_PER_CYCLE", 10)
+    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "10")
     requested = _stub_like_browser(monkeypatch, tmp_path)
 
     like_bot.run_like_cycle()
@@ -107,6 +107,18 @@ def test_is_active_ignores_stop_for_the_scheduler_loop(monkeypatch):
     assert active_hours.may_act() is False
 
 
+def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path):
+    from src import like_bot
+
+    requested = _stub_like_browser(monkeypatch, tmp_path)
+    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "6")
+    monkeypatch.setenv("LIKE_BOT_DAILY_CAP", "4")
+
+    like_bot.run_like_cycle()
+
+    assert sum(requested) == 4
+
+
 def test_like_clicks_refused_after_stop(monkeypatch):
     import pytest
     from src import like_bot
@@ -127,7 +139,7 @@ def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
     import pytest
 
     _stub_like_browser(monkeypatch, tmp_path)
-    monkeypatch.setattr(like_bot, "LIKES_PER_CYCLE", 10)
+    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "10")
     batches = iter([5, OutsideActiveHours("stop")])
 
     def click(n):
