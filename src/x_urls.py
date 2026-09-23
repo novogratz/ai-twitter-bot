@@ -1,9 +1,10 @@
 """What a tweet's status URL says: its author, its status ID, its age.
 
 The scraper's `author` field is a display name; the URL is the only
-reliable source for the handle (AGENTS.md: handles come from URLs). Every
-module that needs one of these reads it here, so the rules agree: an
-anonymous `/i/` URL has no author, whoever asks.
+reliable source for the handle (AGENTS.md: handles come from URLs). Reply
+admission and the Replied store read it here, so they agree: an anonymous
+`/i/` URL has no author. The reply jobs still parse URLs themselves until
+they call Reply admission (issue #100, PR B); new code reads them here.
 """
 import re
 from datetime import datetime, timedelta, timezone
