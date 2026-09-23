@@ -51,8 +51,8 @@ slot needs news from the last six hours and an exceptional-value approval.
 
 ## Inspection and recovery
 
-`uv run python main.py --dry-run` shows jobs and policy without browser/model
-calls. `editorial_review.jsonl` stores accepted and rejected draft decisions.
+`uv run --with-requirements requirements.txt python main.py --dry-run` shows
+jobs and policy without browser/model calls. `editorial_review.jsonl` stores accepted and rejected draft decisions.
 `editorial_state.json` stores attempts, slots and recent publication/source
 history. A `pending` slot means submission was interrupted or ambiguous: it is
 not automatically retried. Check the profile before clearing that slot manually.

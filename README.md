@@ -48,10 +48,10 @@ uv run python main.py
 ```
 
 ```bash
-uv run python main.py --dry-run     # print policy/jobs and exit; no browser or LLM
+uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM
 uv run python main.py --reply-only  # daytime conversations only
 uv run python main.py --post-only   # editorial originals only
-uv run python -m pytest tests/ -q
+uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
 ```
 
 `bot.log` contains runtime activity. `editorial_review.jsonl` records decisions;

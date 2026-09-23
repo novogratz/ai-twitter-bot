@@ -66,7 +66,7 @@ Each one is a bug that shipped live. The full incident stories are in
 
 ```bash
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
-uv run python main.py --dry-run   # jobs + policy, no browser, no model
+uv run --with-requirements requirements.txt python main.py --dry-run  # jobs + policy, no browser, no model
 ```
 
 CI runs the same suite on every PR. `tests/conftest.py` walls tests off from
