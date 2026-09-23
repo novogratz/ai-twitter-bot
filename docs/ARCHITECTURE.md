@@ -71,7 +71,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies. The quote branch is gone: `quotes_done` is hard-coded to 0. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to fresh posts from the top tracked handles. |
-| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, shared cap with `debate_job`), then likes their profiles and tries to follow up to 5 of them. |
+| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, shared cap with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
@@ -88,8 +88,8 @@ Two settings decide how much of the table does anything:
 
 - `PROFILE_VISIT_ALLOWLIST` (default `TheBTCTherapist,Graphseo`). Profile
   scrapes and profile likes return nothing for other handles, so
-  `early_bird_job`, `mega_watch_job` and the like step of `engage_job` only
-  act on allowlisted accounts.
+  `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
+  replyback profile likes only act on allowlisted accounts.
 - The follow policy in `action_guard.can_follow`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
   decides what actually passes.

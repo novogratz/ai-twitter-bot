@@ -12,7 +12,6 @@ from .twitter_client import (
     reply_to_tweet_in_thread,
     post_tweet,
     visit_profile_and_like,
-    follow_account,
     is_own_post as _is_own_post,
 )
 from .replyback_agent import generate_replyback
@@ -210,20 +209,16 @@ def run_replyback_cycle():
 
 
 def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
-    """Visit a few engagers' profiles and reciprocate (like + follow-back).
+    """Visit a few engagers' profiles and like their posts.
 
     Skip influencers (they don't need our reciprocity, and visiting them
-    doesn't move our follower count). Skip blocklist + self. 60% probability
-    per eligible engager so the pattern doesn't look mechanical (was 50%).
+    doesn't move our follower count). Skip blocklist + self. 85% probability
+    per eligible engager so the pattern doesn't look mechanical. Hard cap =
+    max_visits per cycle to stay under bot detection.
 
-    Follow-back loop: someone bothered to reply to us — that's the strongest
-    follow-back signal there is. Visiting + liking + following = max chance
-    they follow back. Hard cap = max_visits per cycle to stay under bot
-    detection. Persisted via engage_bot's followed_accounts.json.
+    No follow here: engager follows belong to follow_engagers_job, which
+    reads replied_back.json and passes engager=True (CONTEXT.md: Engager).
     """
-    from .engage_bot import _load_followed, _save_followed
-    followed = _load_followed()
-
     visited = 0
     seen_handles = set()
     candidates = list(replies)
@@ -245,27 +240,15 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
         if random.random() > 0.85:
             continue  # randomize so the pattern isn't mechanical
 
-        log.info(f"[RECIPROCATE] Visiting @{handle} (like + follow-back)...")
+        log.info(f"[RECIPROCATE] Visiting @{handle} (like)...")
         try:
             visit_profile_and_like(handle, like_count=2)
-            # Follow-back if not already following — they just engaged with us,
-            # this is the highest-conversion follow we can make.
-            if handle not in followed:
-                try:
-                    if follow_account(handle):
-                        followed.add(handle)
-                        log.info(f"[RECIPROCATE] Followed back @{handle}.")
-                    # If JS-click didn't fire, leave it out so we retry next reciprocity pass.
-                except Exception:
-                    log.info(f"[RECIPROCATE] Follow @{handle} failed:")
-                    traceback.print_exc()
             visited += 1
         except Exception:
             log.info(f"[RECIPROCATE] Failed to reciprocate @{handle}:")
             traceback.print_exc()
 
     if visited:
-        _save_followed(followed)
         log.info(f"[RECIPROCATE] Engaged back with {visited} engager(s).")
 
 

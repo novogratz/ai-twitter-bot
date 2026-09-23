@@ -3201,6 +3201,21 @@ def test_replyback_answers_are_debate_turns(monkeypatch, tmp_path):
     assert shipped == [(replies[1]["url"], {"debate_turn": True})]
 
 
+def test_replyback_reciprocity_never_follows(monkeypatch):
+    """Engager follows belong to follow_engagers_job (engager=True). The
+    replyback reciprocity pass only visits and likes; its old bare
+    follow_account call was refused by the Seed-account rule anyway."""
+    from src import notify_bot as nb
+
+    visited = []
+    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: visited.append(h))
+    monkeypatch.setattr(nb, "follow_account",
+                        lambda *a, **k: pytest.fail("replyback must not follow"), raising=False)
+    monkeypatch.setattr(nb.random, "random", lambda: 0.0)
+    nb._reciprocate_engagers([{"user": "Fresh @fresh", "url": "https://x.com/fresh/status/12"}], set())
+    assert visited == ["fresh"]
+
+
 def test_savvy_tech_mom_register_and_ai_primary_news_sources():
     """Operator 2026-07-19: 'bring more external news with updates on AI...
     comment and post more... be less a troll and more a savvy tech mom.'
