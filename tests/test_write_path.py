@@ -174,7 +174,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
     url = "https://x.com/typofriend/status/2063500000000000101"
-    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is True
+    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is twitter_client.DRY_RUN_RECORDED
     assert validated and validated[-1].endswith("(typo)")
 
 
@@ -192,7 +192,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
     url = "https://x.com/typofriend/status/2063500000000000103"
-    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is True
+    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is twitter_client.DRY_RUN_RECORDED
     assert judged and not judged[-1].endswith("(typo)")
     assert validated[-1].endswith("(typo)")
 
@@ -225,7 +225,7 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(k))
-    assert twitter_client.post_tweet("A fresh original about inference costs.") is True
+    assert twitter_client.post_tweet("A fresh original about inference costs.") is twitter_client.DRY_RUN_RECORDED
     assert recorded == [{"dry_run": True}]
 
 
@@ -440,7 +440,7 @@ def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
     url = "https://x.com/someone/status/2063500000000000170"
 
-    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is True
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is tc.DRY_RUN_RECORDED
     assert url not in load_replied()
     assert [k for _, k in recorded] == [{"target": url, "dry_run": True},
                                         {"target": "someone", "dry_run": True}]
@@ -519,3 +519,54 @@ def test_image_post_that_fails_records_nothing(monkeypatch, tmp_path):
     assert tc.post_tweet("Inference is getting cheaper faster than training.",
                          image_path=str(image)) is True
     assert len(recorded) == 1
+
+
+def _dry_run_follow_path(monkeypatch):
+    from src import action_guard, twitter_client as tc
+
+    monkeypatch.setenv("DRY_RUN", "1")
+    monkeypatch.setattr(action_guard, "can_follow", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(tc, "_quality_reject_recent", lambda *_: False)
+    recorded = []
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
+    return recorded
+
+
+def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tmp_path):
+    """#123: follow_account returned True on a dry run, so engage_bot stored
+    handles it never followed and no later live cycle followed them."""
+    from src import action_guard, engage_bot, evolution_store, twitter_client as tc
+
+    recorded = _dry_run_follow_path(monkeypatch)
+    followed_file = tmp_path / "followed_accounts.json"
+    followed_file.write_text(json.dumps(["already"]))
+    monkeypatch.setattr(engage_bot, "FOLLOWED_FILE", str(followed_file))
+    monkeypatch.setattr(engage_bot, "_build_pool", lambda: ["already", "newcomer", "other"])
+    monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
+    monkeypatch.setattr(engage_bot, "_profile_visit_allowed", lambda *_: False)
+    monkeypatch.setattr(engage_bot.time, "sleep", lambda *_: None)
+
+    engage_bot.run_engage_cycle()
+
+    assert set(json.loads(followed_file.read_text())) == {"already"}
+    assert sorted(k["target"] for a, k in recorded if a == (action_guard.FOLLOW,)) == ["newcomer", "other"]
+    assert all(k["dry_run"] for _, k in recorded)
+    assert not tc.DRY_RUN_RECORDED
+
+
+def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_path):
+    """A dry-run follow neither counts toward the day nor burns the Engager,
+    and still stops the cycle at its per-cycle bound."""
+    from src import follow_engagers_bot as fe
+
+    recorded = _dry_run_follow_path(monkeypatch)
+    state_file = tmp_path / "follow_engagers_state.json"
+    monkeypatch.setattr(fe, "STATE_FILE", str(state_file))
+    monkeypatch.setattr(fe, "_engager_handles", lambda: ["fan1", "fan2", "fan3"])
+    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "2")
+
+    fe.run_follow_engagers_cycle()
+
+    state = json.loads(state_file.read_text())
+    assert state["count_today"] == 0 and state["attempted"] == []
+    assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]

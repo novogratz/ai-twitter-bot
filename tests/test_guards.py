@@ -1521,7 +1521,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     monkeypatch.setattr(cg2, "validate", spy_validate)
 
     url = "https://x.com/foo/status/2063500000000000088"
-    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is True
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is tc.DRY_RUN_RECORDED
     assert "—" not in seen["text"]
     assert "conviction is the hard part" in seen["text"]
 
@@ -1603,7 +1603,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     # Post must stay UNMARKED — a later FR draft can still ship.
     assert url not in rs.load_replied()
     french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
-    assert tc.reply_to_tweet(url, french) is True
+    assert tc.reply_to_tweet(url, french) is tc.DRY_RUN_RECORDED
 
     # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.
     for leak in ("SKIPPED", "Skip.", "skipped", "SKIP — no source context"):
@@ -1941,9 +1941,9 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
         cg.is_duplicate = lambda text, threshold=None: True   # force dup
         assert tc.post_tweet("AI capex is the new rent again") is False, \
             "a near-duplicate post must return False, not None"
-        # Not a dup, DRY_RUN → recorded ship → True
+        # Not a dup, DRY_RUN → recorded, not shipped
         cg.is_duplicate = lambda text, threshold=None: False
-        assert tc.post_tweet("a genuinely fresh original take about AI") is True
+        assert tc.post_tweet("a genuinely fresh original take about AI") is tc.DRY_RUN_RECORDED
     finally:
         ag.can_post = orig_canpost
         cg.validate = orig_validate

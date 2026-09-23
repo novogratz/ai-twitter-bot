@@ -390,6 +390,23 @@ class ToolCallLeakError(Exception):
     """
 
 
+class _DryRunRecorded:
+    """What a write chokepoint returns when DRY_RUN wrote a dry-run ledger
+    row instead of acting. Falsy because nothing shipped, so a caller that
+    persists on a truthy result persists nothing (#123); `is
+    DRY_RUN_RECORDED` tells it apart from a refusal."""
+    __slots__ = ()
+
+    def __bool__(self):
+        return False
+
+    def __repr__(self):
+        return "DRY_RUN_RECORDED"
+
+
+DRY_RUN_RECORDED = _DryRunRecorded()
+
+
 def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
 
@@ -417,9 +434,9 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
     from . import action_guard, content_guard, config as _cfg
-    # Returns True only when the post actually shipped (or DRY_RUN-recorded),
-    # False on any skip (policy / content / dedup / review). ⛔ Callers MUST
-    # gate engagement logging on this bool — bot.py logged log_post/log_hotake
+    # Returns True only when the post actually shipped, DRY_RUN_RECORDED on a
+    # dry run, False on any skip (policy / content / dedup / review).
+    # ⛔ Callers MUST gate engagement logging on this result — bot.py logged log_post/log_hotake
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
     # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
     # ROI loop (2026-06-09; same family as the reply phantom-log bug).
@@ -440,7 +457,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     if _cfg.dry_run():
         log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
-        return True
+        return DRY_RUN_RECORDED
 
     with _safari_lock:
         # The initial check happens before waiting for Safari. Recheck under
@@ -646,7 +663,7 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     if _cfg.dry_run():
         log.info(f"[POST][DRY_RUN] would post with GIF {gif_query!r}: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
-        return True
+        return DRY_RUN_RECORDED
 
     with _safari_lock:
         if not action_guard.can_post(action_guard.POST)[0]:
@@ -715,7 +732,7 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_valu
     if _cfg.dry_run():
         log.info(f"[QUOTE][DRY_RUN] would GIF-quote {tweet_url} ({gif_query!r}): {comment[:160]!r}")
         action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
-        return True
+        return DRY_RUN_RECORDED
 
     with _safari_lock:
         log.info(f"[QUOTE] Composing GIF quote ({gif_query!r}) for: {tweet_url}")
@@ -983,8 +1000,8 @@ def like_tweet(tweet_url: str = ""):
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
     """Open a tweet, click reply, type the reply, and submit.
 
-    Returns True only when the reply actually shipped (or was DRY_RUN-
-    recorded), False when Reply admission refuses it or a Safari step fails.
+    Returns True only when the reply actually shipped, DRY_RUN_RECORDED on a
+    dry run, False when Reply admission refuses it or a Safari step fails.
     Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
@@ -1027,7 +1044,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
                 if debate_turn:
                     action_guard.record(action_guard.DEBATE_TURN, target=verdict.author, dry_run=True)
-                return True
+                return DRY_RUN_RECORDED
             # ONE reply per tweet, EVER (operator 2026-06-05). claim() checks
             # and marks under one lock; admission already read the store, this
             # is the atomic word on it.
@@ -1109,8 +1126,8 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False, urgent: 
     post, ≥ QUOTE_MEGA_VIRAL_LIKES) grants bonus slots beyond the daily cap so
     a top-tier viral is never blocked by the cap (learning 2026-06-08).
 
-    Returns True if the quote was actually published (or DRY_RUN-recorded),
-    False on a policy/content/dup skip — callers MUST check this before
+    Returns True if the quote was actually published, DRY_RUN_RECORDED on a
+    dry run, False on a policy/content/dup skip — callers MUST check this before
     marking the candidate as consumed. Bug 2026-06-05: quote_tweet_bot marked
     its best viral candidate as 'quoted' BEFORE calling here, so every cycle
     that fired inside the spacing window silently burned its top pick — a
@@ -1148,7 +1165,7 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False, urgent: 
     if _cfg.dry_run():
         log.info(f"[QUOTE][DRY_RUN] would quote {tweet_url}: {comment[:160]!r}")
         action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
-        return True
+        return DRY_RUN_RECORDED
 
     with _safari_lock:
         text = f"{comment}\n{tweet_url}"
@@ -1196,7 +1213,7 @@ def unfollow_account(username: str) -> bool:
     if _cfg.dry_run():
         log.info(f"[UNFOLLOW][DRY_RUN] would unfollow @{username}.")
         action_guard.record(action_guard.UNFOLLOW, target=username, dry_run=True)
-        return True
+        return DRY_RUN_RECORDED
     action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
     with _safari_lock:
@@ -1427,9 +1444,9 @@ def follow_account(username: str, reciprocal: bool = False,
     the quality gate skips its size/niche checks (behavior proves both)
     while keeping the English gate + every cap/spacing/churn rule.
 
-    Returns True only when the JS click actually fired (best-effort signal).
-    Callers MUST check the return value before marking a handle as followed,
-    otherwise transient AppleScript/Safari hiccups will pollute
+    Returns True only when the JS click actually fired (best-effort signal),
+    DRY_RUN_RECORDED on a dry run. Callers MUST check the return value
+    before marking a handle as followed, otherwise transient AppleScript/Safari hiccups will pollute
     followed_accounts.json with false-positives we never retry.
     """
     # Sanitize: strip whitespace + leading @, reject display-name garbage.
@@ -1458,7 +1475,7 @@ def follow_account(username: str, reciprocal: bool = False,
     if _cfg.dry_run():
         log.info(f"[FOLLOW][DRY_RUN] would follow @{username}.")
         action_guard.record(action_guard.FOLLOW, target=username, dry_run=True)
-        return True
+        return DRY_RUN_RECORDED
     action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
     with _safari_lock:
         profile_url = f"https://x.com/{username}"

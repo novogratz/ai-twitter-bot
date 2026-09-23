@@ -94,7 +94,7 @@ def run_follow_engagers_cycle():
     own = BOT_HANDLE.lower()
     followed = 0
 
-    from .twitter_client import follow_account
+    from .twitter_client import DRY_RUN_RECORDED, follow_account
     # 2026-07-28 fix: 262 candidates were burned into `attempted` by
     # TRANSIENT policy refusals (the 3500 total-following ceiling blocked
     # every follow for days). Pre-check the policy CHEAPLY: a transient
@@ -116,9 +116,15 @@ def run_follow_engagers_cycle():
             attempted.add(h)
             st["attempted"] = list(attempted)
             continue
+        result = follow_account(h, engager=True)
+        if result is DRY_RUN_RECORDED:
+            # Followed no one: the Engager stays fresh and uncounted, but
+            # the dry run still stops at the live per-cycle bound.
+            followed += 1
+            continue
         attempted.add(h)
         st["attempted"] = list(attempted)
-        if follow_account(h, engager=True):
+        if result:
             followed += 1
             st["count_today"] += 1
         _save_state(st)

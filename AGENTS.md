@@ -52,7 +52,8 @@ Each one is a bug that shipped live. The full incident stories are in
 - **Log only what shipped.** Write chokepoints return `True` only when the
   action happened. Callers log, count and consume a slot or candidate on
   `True` only. A failed AppleScript step is not a shipped action: return
-  `False` and write no ledger row.
+  `False` and write no ledger row. Neither is a dry run: it writes a
+  dry-run ledger row and returns the falsy `DRY_RUN_RECORDED`.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.
