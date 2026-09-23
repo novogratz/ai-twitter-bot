@@ -11,7 +11,7 @@ Follow @$username. Only on an explicit operator request.
 1. Strip @ if present
 2. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and
-   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`.
 3. Run `uv run python -c "from src.x.twitter_client import follow_account; print(follow_account('$username'))"`
    - `follow_account` applies the follow policy: whitelist-only, daily cap,

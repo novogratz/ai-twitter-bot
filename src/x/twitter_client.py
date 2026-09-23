@@ -12,7 +12,7 @@ import webbrowser
 from ..core.config import _PROJECT_ROOT, BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
-from ..active_hours import require_active, OutsideActiveHours
+from ..guards.active_hours import require_active, OutsideActiveHours
 
 # Global lock: only one bot can use Safari at a time.
 # Without this, the reply bot and engage bot type over each other. RLock is
@@ -433,7 +433,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     # Central write policy: originals daily cap + jittered spacing, then the
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
-    from .. import action_guard, content_guard
+    from ..guards import action_guard, content_guard
     from ..core import config as _cfg
     # Returns True only when the post actually shipped, DRY_RUN_RECORDED on a
     # dry run, False on any skip (policy / content / dedup / review).
@@ -596,7 +596,7 @@ def _load_liked_set():
     """Return a CanonReplied set of canonical IDs we've already liked.
     Cross-bot dedup via canonical status ID prevents the 'l' shortcut
     from toggling-OFF a like we set in an earlier cycle."""
-    from .. import replied_store
+    from ..guards import replied_store
     s = replied_store.CanonReplied()
     path = _liked_cache_path()
     if not os.path.exists(path):
@@ -614,7 +614,7 @@ def _load_liked_set():
 
 def _save_liked_set(s) -> None:
     """Persist liked set as ordered list, cap at 50k from the tail."""
-    from .. import replied_store
+    from ..guards import replied_store
     path = _liked_cache_path()
     existing = []
     existing_set = set()
@@ -669,7 +669,7 @@ def like_tweet(tweet_url: str = ""):
     if tweet_url and _already_liked(tweet_url):
         log.info(f"[LIKE] already liked {tweet_url[-50:]} — skipping (would toggle OFF).")
         return
-    from .. import action_guard
+    from ..guards import action_guard
     from ..core import config as _cfg
     if _cfg.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:] if tweet_url else '(open tweet)'}.")
@@ -699,7 +699,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
-    Reply admission (src/reply_admission.py) owns every rule: Blocked
+    Reply admission (src/guards/reply_admission.py) owns every rule: Blocked
     account, own post, one Reply per post, Debate turn cap, spacing, and the
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
@@ -716,7 +716,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     bot.log 'Reply posted!' said 140). The claim happens here, right before
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
-    from .. import action_guard, active_hours, replied_store, reply_admission
+    from ..guards import action_guard, active_hours, replied_store, reply_admission
     from ..core import config as _cfg
     # Not a second admission rule: _safari_lock raises OutsideActiveHours on
     # entry, so Overnight is turned into the False refusal callers expect
@@ -823,7 +823,7 @@ def unfollow_account(username: str) -> bool:
 
     # Prune policy: daily unfollow cap, 30-day anti-churn cooldown, never
     # unfollow a protected tier1/tier2 whitelist account, dry-run.
-    from .. import action_guard
+    from ..guards import action_guard
     from ..core import config as _cfg
     ok, why = action_guard.can_unfollow(username)
     if not ok:
@@ -1080,7 +1080,7 @@ def follow_account(username: str, reciprocal: bool = False,
     # Follow policy: whitelist-only (no strangers / no reciprocity), ratio
     # invariant (following < ceiling * followers), daily cap, 30-day
     # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
-    from .. import action_guard
+    from ..guards import action_guard
     from ..core import config as _cfg
     ok, why = action_guard.can_follow(username, reciprocal=reciprocal or engager)
     if not ok:
@@ -1104,7 +1104,7 @@ def follow_account(username: str, reciprocal: bool = False,
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
-        from ..action_guard import is_whitelisted
+        from ..guards.action_guard import is_whitelisted
         q = _scrape_profile_quality()
         ok, why = _follow_quality_decision(
             _parse_follower_count(q.get("followers", "")),

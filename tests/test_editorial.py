@@ -4,9 +4,9 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src import action_guard as ag, active_hours as hours
+from src.guards import action_guard as ag, active_hours as hours
 from src.core import config
-from src import editorial_bot as editorial
+from src.editorial import editorial_bot as editorial
 
 TORONTO = ZoneInfo("America/Toronto")
 
@@ -283,7 +283,7 @@ def test_source_dates_and_domains_are_checked():
 
 
 def test_reach_reports_missing_coverage_without_inventing_homepage_views():
-    from src.reach_report import summarize
+    from src.editorial.reach_report import summarize
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     posts = [dict(ts=now.isoformat(), text="A useful AI workflow", slot="08:00"),
              dict(ts=now.isoformat(), text="Another AI idea", slot="11:30")]

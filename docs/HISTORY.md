@@ -1,12 +1,18 @@
 # History — mandates and incidents, June to September 2026
 
 Archive of the former `CLAUDE.md` / `CODEX.md`, moved here on 2026-09-23.
-Everything below predates the editorial policy of 2026-09-20
+Everything below the line predates the editorial policy of 2026-09-20
 ([`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md)), which supersedes it: volumes,
 caps, schedules, personas and lifecycle instructions here are historical.
 Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
+
+> **2026-09-23 — root cleanup (issue #112):** git stopped tracking the root
+> files that only deleted modules wrote or read, and the tracked outputs
+> (`run.out`, `*_output.txt`, `reply.txt`…); git history keeps them. Pulling
+> that change deletes them from a checkout; a pull that meets one of them
+> modified stops, and goes through once the file is moved aside.
 
 ---
 

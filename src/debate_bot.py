@@ -28,7 +28,7 @@ from .core.config import REPLY_MODEL
 from .core.logger import log
 from .core.llm_client import run_llm, unwrap_text
 from .core.humanizer import humanize
-from .reply_admission import judge_parent
+from .guards.reply_admission import judge_parent
 
 # Mentions this job is done with until restart: definitive Reply admission
 # refusals, mentions the model declined, mentions answered.

@@ -27,19 +27,20 @@ change. The same holds for the operator-owned guardrails: `core_identity.md`,
 `main.py` is the whole scheduler: read `build_scheduler()` for the live jobs.
 Every module under `src/` is reached from `main.py`; a test fails on a module
 nothing imports, so wire new code into a job or delete it. `src/core/` holds
-the shared foundations (config, logger, LLM client, stores) and `src/x/` the
-browser layer.
+the shared foundations (config, logger, LLM client, history and engagement
+stores), `src/x/` the browser layer, `src/guards/` the clock, caps and
+admission checks, and `src/editorial/` the originals pipeline.
 
 | Concern | Where |
 |---|---|
-| Originals: sources, evidence, draft, separate review | `src/editorial_bot.py`, `src/editorial_schemas.py` |
-| Toronto clock, bedtime checks | `src/active_hours.py` |
-| Caps, pacing, write ledger, follow policy | `src/action_guard.py` |
-| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/reply_admission.py` |
+| Originals: sources, evidence, draft, separate review | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Toronto clock, bedtime checks | `src/guards/active_hours.py` |
+| Caps, pacing, write ledger, follow policy | `src/guards/action_guard.py` |
+| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
-| Replied store: one reply per tweet, keyed on status ID | `src/replied_store.py` |
+| Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/core/config.py` |
-| Pre-publish validation (price targets, dedup, truncation, violence) | `src/content_guard.py` |
+| Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
 | Voice, operator-managed | `core_identity.md` |
 

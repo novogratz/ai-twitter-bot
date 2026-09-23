@@ -14,7 +14,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src import action_guard, active_hours
+from src.guards import action_guard, active_hours
 from src.core import config
 
 SCRIPT = Path(__file__).resolve().parent.parent / "bin" / "mass_unfollow.py"
@@ -141,7 +141,8 @@ def test_sigterm_stops_before_the_next_unfollow(script):
 
 
 def test_legacy_keep_set_protects_respect_list_targets_and_seed_tiers(script, monkeypatch):
-    from src import engage_bot, respect_list
+    from src import engage_bot
+    from src.guards import respect_list
     monkeypatch.setattr(respect_list, "load", lambda: {"mistralai"})
     monkeypatch.setattr(action_guard, "load_whitelist",
                         lambda: {"tier1": {"thebtctherapist"}, "tier2": {"morganhousel"}})

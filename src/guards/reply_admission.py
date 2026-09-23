@@ -25,11 +25,11 @@ from . import (
     active_hours,
     content_guard,
     replied_store,
-    reply_language,
 )
-from .core import config, humanizer
-from .x import x_urls
-from .core.logger import log
+from .. import reply_language
+from ..core import config, humanizer
+from ..x import x_urls
+from ..core.logger import log
 
 
 class Refusal(Enum):

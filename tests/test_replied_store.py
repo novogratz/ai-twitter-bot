@@ -6,7 +6,7 @@ import threading
 import pytest
 
 from src.core import config
-from src import replied_store as rs
+from src.guards import replied_store as rs
 from src.core.state_errors import StateUnreadable
 
 
@@ -90,7 +90,7 @@ def test_failed_write_keeps_the_previous_store(monkeypatch):
 
 
 def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
-    from src import action_guard as ag
+    from src.guards import action_guard as ag
     from src.x import twitter_client as tc
     recorded = []
     monkeypatch.setattr(ag, "can_post", lambda kind: (True, ""))

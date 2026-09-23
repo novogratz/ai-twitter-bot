@@ -10,7 +10,7 @@ Only on an explicit operator request: it follows and likes on the real account.
 
 1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and
-   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. If the bot runs, suggest `/stop` first.
    Until #121 ships, its like pass can un-like the latest post of a
    `PROFILE_VISIT_ALLOWLIST` handle: tell the operator before running.

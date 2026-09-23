@@ -115,7 +115,7 @@ real account from a second process. Before any of them:
    [Stop](#stop).
 3. No supervisor restarts it during the run: see [Supervisors](#supervisors).
 4. Waking hours, on the bot's own Toronto clock:
-   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
    and `bin/mass_unfollow.py` refuses to start Overnight and stops at 22:00.
 
@@ -186,7 +186,7 @@ documentation pages always supplement the news, so a quiet news day alone
 does not block a post. Missed slots are not caught up.
 
 **Unwanted content.** Add the handle to the respect list
-(`python3 -c "from src.respect_list import add; add('handle', 'reason')"`,
+(`python3 -c "from src.guards.respect_list import add; add('handle', 'reason')"`,
 picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
 needed). Both are operator-managed. The respect list only reaches prompts that
 include the hard rules: debate and VIP replies ignore it (see
@@ -209,8 +209,8 @@ Changes to `.env` or code take effect at restart.
 What cannot be tuned from `.env` or `live_strategy.json`: the seven-post
 ceiling, the one-hour spacing floor between originals, quotes and reposts at
 zero, and waking hours. They live in `src/core/config.py` and
-`src/active_hours.py`; changing them needs an operator request and an update
-to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
+`src/guards/active_hours.py`; changing them needs an operator request and an
+update to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
 `live_strategy.json` any more.
 
 To stop one job, remove its `add(...)` line in `build_scheduler()` and
@@ -270,12 +270,10 @@ comment in the launchd plist) and `operator_prompt.md` (`operator_cycle.sh`).
 `live_strategy.json` stays because `AGENTS.md` and the `config` skill cite it,
 though no active job calls the `config.get_live_*` readers.
 
-Issue #112 removed from git the root files only deleted modules wrote or read,
-and the tracked outputs (`run.out`, `*_output.txt`, `reply.txt`…); git history
-keeps them. Pulling that change deletes them from the checkout: if
-`git status` shows one of them modified, the pull stops until it is moved
-aside. `debate_state.json` is untracked and unused since debate turns moved
-to the ledger; it can be deleted.
+Run `git status` before `git pull`: a pull that deletes a file modified in
+the checkout stops until that file is moved aside
+([2026-09-23 root cleanup](HISTORY.md)). `debate_state.json` is untracked
+and unused since debate turns moved to the ledger; it can be deleted.
 
 ## Legacy tools
 

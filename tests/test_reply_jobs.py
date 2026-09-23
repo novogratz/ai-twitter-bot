@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 import pytest
 
 from src.core import config
-from src import replied_store
+from src.guards import replied_store
 from src.x import x_urls
 from src.core.state_errors import StateUnreadable
 
@@ -437,7 +437,7 @@ def debate(monkeypatch, blocklist):
 
 
 def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monkeypatch):
-    from src import action_guard
+    from src.guards import action_guard
 
     db, mentions, outputs, generated, sent = debate
     logged = []
@@ -521,7 +521,7 @@ def replyback(monkeypatch, blocklist):
 
 
 def test_replyback_asks_admission_with_the_turn_cap_before_generating(replyback, monkeypatch):
-    from src import action_guard
+    from src.guards import action_guard
 
     nb, replies, _, generated, sent = replyback
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
@@ -562,7 +562,7 @@ def test_replyback_sets_aside_model_skips_but_replays_failed_calls(replyback):
 
 def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
     import json
-    from src import action_guard
+    from src.guards import action_guard
     from src import follow_engagers_bot as fe
 
     for author in ("oldfan", "newfan", "oldfan"):

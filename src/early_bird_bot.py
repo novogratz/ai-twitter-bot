@@ -19,7 +19,7 @@ from datetime import timedelta
 from .x import x_urls
 from .core.logger import log
 from .x.twitter_client import scrape_profile_tweets, reply_to_tweet
-from .reply_admission import judge_parent
+from .guards.reply_admission import judge_parent
 from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
 from .reply_language import looks_french
 from .core.engagement_log import log_reply

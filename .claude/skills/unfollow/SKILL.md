@@ -15,7 +15,7 @@ default).
 
 1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and
-   `uv run python -c "from src.active_hours import is_active; print(is_active())"`
+   `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. Never pass `--force`.
 2. `--max`: `$max` if the operator gave it, capped at 150, the default,
    which stays under X's unfollow quota of about 190 per window (the
