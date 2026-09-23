@@ -55,6 +55,8 @@ slot needs news from the last six hours and an exceptional-value approval.
   ships.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
+- `DRY_RUN=1` stops every browser write, including the likes and pins that
+  bypass the ledger.
 
 ## Inspection and recovery
 

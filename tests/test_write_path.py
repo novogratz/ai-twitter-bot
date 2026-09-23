@@ -198,3 +198,29 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(k))
     assert twitter_client.post_tweet("A fresh original about inference costs.") is True
     assert recorded == [{"dry_run": True}]
+
+
+def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_path):
+    """like_job, notify_job, pin_job and the self-reply clicked in Safari
+    whatever DRY_RUN said. conftest fails the test on webbrowser.open or
+    _run_applescript; direct osascript calls are walled off here."""
+    from src import like_bot, twitter_client
+
+    def no_osascript(*a, **k):
+        raise AssertionError("dry run reached osascript")
+
+    monkeypatch.setattr(twitter_client.subprocess, "run", no_osascript)
+    monkeypatch.setattr(like_bot.subprocess, "run", no_osascript)
+    monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
+    # reply_to_own_latest swallows every exception, so count browser opens
+    # instead of relying on conftest's AssertionError.
+    opened = []
+    monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: opened.append(a))
+    monkeypatch.setenv("DRY_RUN", "1")
+
+    like_bot.run_like_cycle()
+    twitter_client.like_own_tweet_replies()
+    assert twitter_client.pin_own_tweet("https://x.com/TheAIShrink/status/2063500000000000103") is False
+    assert twitter_client.reply_to_own_latest("Source: https://example.com/report") is False
+    assert opened == []
+    assert not (tmp_path / "like_state.json").exists()

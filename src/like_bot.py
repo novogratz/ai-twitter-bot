@@ -24,6 +24,7 @@ import urllib.parse
 import webbrowser
 
 from .active_hours import require_active
+from . import config
 from .config import _PROJECT_ROOT
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
@@ -126,6 +127,10 @@ def run_like_cycle():
     encoded = urllib.parse.quote(query)
     tab = "top" if random.random() < TOP_TAB_PROBABILITY else "live"
     url = f"https://x.com/search?q={encoded}&f={tab}"
+    if config.dry_run():
+        log.info(f"[LIKE][DRY_RUN] would like up to {min(LIKES_PER_CYCLE, remaining)} "
+                 f"tweets on '{query}' ({tab}).")
+        return
 
     with _safari_lock:
         log.info(f"[LIKE] Opening {tab} search: {query}")

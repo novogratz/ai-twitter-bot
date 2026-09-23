@@ -775,6 +775,10 @@ def reply_to_own_latest(reply_text: str, must_contain: str = "") -> bool:
     """
     if not reply_text or not reply_text.strip():
         return False
+    from . import config as _cfg
+    if _cfg.dry_run():
+        log.info(f"[SELF-REPLY][DRY_RUN] would self-reply: {reply_text[:160]!r}")
+        return False
     with _safari_lock:
         try:
             log.info(f"[SELF-REPLY] Opening own profile to find latest tweet")
@@ -2028,6 +2032,11 @@ def pin_own_tweet(tweet_url: str) -> bool:
     """
     import json as _json
     import tempfile
+    from . import config as _cfg
+
+    if _cfg.dry_run():
+        log.info(f"[PIN][DRY_RUN] would pin {tweet_url}.")
+        return False
 
     js_code = """
     (function() {
@@ -2128,6 +2137,10 @@ def retweet_own_latest():
 
 def like_own_tweet_replies():
     """Visit own profile, open latest tweet, and like replies to build loyalty."""
+    from . import config as _cfg
+    if _cfg.dry_run():
+        log.info("[NOTIFY][DRY_RUN] would like replies on our latest tweet.")
+        return
     with _safari_lock:
         log.info("[NOTIFY] Opening own profile...")
         webbrowser.open(BOT_PROFILE_URL)

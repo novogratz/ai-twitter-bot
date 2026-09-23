@@ -198,8 +198,10 @@ home-timeline attribution. It does not influence any cap.
 These are how the code behaves today, not design intent:
 
 - `like_job`, `notify_job` and `pin_job` click in Safari without going
-  through a chokepoint: no ledger entry, no `can_post`, and `DRY_RUN` does not
-  stop them. `notify_job` presses the `l` key, which toggles a like.
+  through a chokepoint: no ledger entry and no `can_post`. `DRY_RUN` stops
+  them without a dry-run ledger row; `pin_job` still spends its daily pin
+  attempt.
+  `notify_job` presses the `l` key, which toggles a like.
 - `follow_engagers_bot`, `like_bot` and `pin_bot` key their
   daily counters on `date.today()` (machine time), while the ledger uses the
   Toronto day.
