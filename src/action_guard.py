@@ -114,6 +114,13 @@ def debate_turns_today(author: str) -> int:
     return sum(1 for r in _rows_for_action_today(DEBATE_TURN) if r.get("target") == author)
 
 
+def debate_turn_authors() -> list:
+    """Every author answered by a Debate turn in the ledger's 90 days,
+    newest first: the Engagers the account conversed with."""
+    rows = [r for r in _load_ledger() if r.get("action") == DEBATE_TURN and not r.get("dry_run")]
+    return list(dict.fromkeys(r["target"] for r in reversed(rows) if r.get("target")))
+
+
 def can_debate_turn(author: str) -> Tuple[bool, str]:
     """Per-author daily cap on Debate turns, shared by every answering bot."""
     if not (author or "").strip().lstrip("@"):

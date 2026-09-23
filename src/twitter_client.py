@@ -980,12 +980,6 @@ def like_tweet(tweet_url: str = ""):
         log.info("Failed to like tweet, continuing...")
 
 
-def _status_author(url: str) -> str:
-    """Author handle from a /status/ URL; empty for X's anonymous /i/ paths."""
-    from .x_urls import author
-    return author(url)
-
-
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
     """Open a tweet, click reply, type the reply, and submit.
 
@@ -1025,7 +1019,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         with _safari_lock:
             verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
             if not verdict:
-                log.info(f"[REPLY] not admitted ({verdict.refusal.name}: {verdict.reason}): "
+                log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                          f"{tweet_url} {(reply_text or '')[:120]!r}")
                 return False
             if _cfg.dry_run():

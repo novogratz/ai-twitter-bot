@@ -2,9 +2,9 @@
 
 The scraper's `author` field is a display name; the URL is the only
 reliable source for the handle (AGENTS.md: handles come from URLs). Reply
-admission and the Replied store read it here, so they agree: an anonymous
-`/i/` URL has no author. The reply jobs still parse URLs themselves until
-they call Reply admission (issue #100, PR B); new code reads them here.
+admission, the Replied store and the reply jobs read it here, so they
+agree: an anonymous `/i/` URL has no author. Legacy modules still parse
+URLs through `reply_bot`.
 """
 import re
 from datetime import datetime, timedelta, timezone

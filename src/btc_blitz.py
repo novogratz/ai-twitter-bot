@@ -142,14 +142,17 @@ def _fresh_bestie_posts():
 
 
 def _gen(prompt_tpl: str, tweet_text: str, model: str, label: str, author: str = None):
+    """The model's text; "" when it declines (SKIP), None when the call fails."""
     prompt = prompt_tpl.format(author=author or BESTIE_HANDLE, tweet_text=(tweet_text or "")[:300])
     try:
         result = run_llm(prompt, model, label=label)
         if result.returncode != 0:
             return None
         text = strip_agent_preamble(unwrap_text(result.stdout)).strip()
-        if not text or text.upper().startswith("SKIP") or "skip" in text.lower()[:20]:
+        if not text:
             return None
+        if text.upper().startswith("SKIP") or "skip" in text.lower()[:20]:
+            return ""
         return text
     except Exception:
         return None

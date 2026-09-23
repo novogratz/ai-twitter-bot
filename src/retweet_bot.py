@@ -866,7 +866,8 @@ def _reply_after_repost(pick: dict, replied: set) -> None:
     if not url or url in replied:
         return
     try:
-        from .direct_reply import _generate_single_reply, _looks_french
+        from .direct_reply import _generate_single_reply
+        from .reply_language import looks_french
         from .humanizer import humanize
         from .twitter_client import reply_to_tweet
         from .engagement_log import log_reply as _log_reply
@@ -880,7 +881,7 @@ def _reply_after_repost(pick: dict, replied: set) -> None:
             return
         author = pick.get("author", "someone")
         text = (pick.get("text") or "")[:300]
-        lang = "fr" if _looks_french(text) else "en"
+        lang = "fr" if looks_french(text) else "en"
         reply = _generate_single_reply(author, text, lang=lang)
         if not reply:
             return

@@ -97,7 +97,8 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
-    text = _strip_dashes(draft)
+    # Every Reply loses its dashes here, including paths that skip humanize().
+    text = humanizer.strip_dashes(draft)
     if len(text) > content_guard.REPLY_MAX_CHARS:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
@@ -131,13 +132,3 @@ def _blocked(author: str) -> bool:
 
 def _handles_env(name: str, default: str) -> set:
     return {h.strip().lstrip("@").lower() for h in os.environ.get(name, default).split(",") if h.strip()}
-
-
-def _strip_dashes(text: str) -> str:
-    """Em/en dashes are an AI tell (Operator, 2026-06-07); every Reply loses
-    them here, including paths that skip humanize()."""
-    text = text or ""
-    for pattern, replacement in humanizer._DASH_PAIRS:
-        text = text.replace(pattern, replacement)
-    text = text.replace("—", ", ").replace("–", ", ")
-    return re.sub(r" {2,}", " ", text).replace(" ,", ",")

@@ -796,65 +796,6 @@ def test_self_heal_cooldown_env_is_read_at_call_time(monkeypatch, tmp_path):
     assert spawned == [], "cooldown env override must be honored at call time"
 
 
-# --- pre-LLM dedup re-check (operator 2026-06-07: 774 wasted reply LLM calls) ---
-
-def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_path):
-    """The chokepoint in twitter_client.reply_to_tweet has always blocked a
-    duplicate write, but only AFTER the ~17s ollama call. _reply_to_tweets must
-    re-read replied_tweets.json from disk JUST before generating, so a URL
-    another reply bot (direct_reply, feed_sweeper, retweet replyback) already
-    shipped in the same minute is skipped without burning an LLM call. Burned
-    ~3.6h of compute/day before the fix.
-    """
-    import src.direct_reply as dr
-
-    # Isolate the on-disk replied set so the test doesn't bleed real state.
-    monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-
-    # Two on-niche tweets the in-memory cycle-start snapshot thinks are fresh.
-    fresh_url = "https://x.com/some_ai_account/status/2063500000000000001"
-    racy_url = "https://x.com/some_ai_account/status/2063500000000000002"
-    tweets = [
-        {"url": fresh_url, "text": "openai just raised at 500B valuation", "author": "some_ai_account"},
-        {"url": racy_url, "text": "anthropic shipped a new tool — claude can now run terminals", "author": "some_ai_account"},
-    ]
-    cycle_snapshot = rs.load_replied()  # empty at start
-
-    # Simulate a concurrent reply bot writing `racy_url` to disk between the
-    # snapshot and the LLM call.
-    concurrent_snapshot = rs.load_replied()
-    concurrent_snapshot.add(racy_url)
-    rs.save_replied(concurrent_snapshot)
-
-    llm_calls: list[str] = []
-
-    def fake_generate(author, text, lang="fr"):
-        llm_calls.append(text)
-        return "named-emotion validated, calm reframe with the precise fact"
-
-    posted: list[tuple[str, str]] = []
-    monkeypatch.setattr(dr, "_generate_single_reply", fake_generate)
-    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, reply: posted.append((url, reply)))
-    # Bypass content-side gates that aren't under test here.
-    monkeypatch.setattr(dr, "humanize", lambda t: t)
-    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda url: 5)
-    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
-    monkeypatch.setattr(
-        dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0)
-    )
-
-    dr._reply_to_tweets(tweets, cycle_snapshot, "SEARCH-HOT", en_counter=[0])
-
-    # The racy URL must be skipped BEFORE _generate_single_reply runs, and
-    # propagated into the in-memory snapshot so the cycle never retries it.
-    assert llm_calls == ["openai just raised at 500B valuation"], (
-        "pre-LLM disk re-check must keep racy_url out of the LLM"
-    )
-    assert posted == [(fresh_url, "named-emotion validated, calm reframe with the precise fact")]
-    assert racy_url in cycle_snapshot
-
-
 # --- 2026-06-07 agent spec: follow policy (Part 1 hard constraints) ---------
 
 @pytest.fixture()
@@ -1460,7 +1401,7 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
     import src.direct_reply as dr
 
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    url = "https://x.com/some_ai_account/status/2063500000000000009"
+    url = _url_with_age(5)
     tweets = [{"url": url, "text": "nvidia margins at 75 percent again", "author": "some_ai_account"}]
 
     premarked_at_call = []
@@ -1473,21 +1414,20 @@ def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
     monkeypatch.setattr(dr, "reply_to_tweet", fake_reply)
     monkeypatch.setattr(dr, "humanize", lambda t: t)
     monkeypatch.setattr(dr, "log_reply", lambda *a, **k: logged.append(a))
-    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda u: 5)
     monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
     monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
 
-    n = dr._reply_to_tweets(tweets, rs.load_replied(), "SEARCH-HOT", en_counter=[0])
+    n = dr._reply_to_tweets(tweets, set(), "SEARCH-HOT", en_counter=[0])
     assert premarked_at_call == [False], \
         "caller premarked the store — the chokepoint would refuse its own reply"
     assert n == 1 and len(logged) == 1
 
     # Chokepoint refusal (False) → no phantom engagement_log row, posted=0.
     logged.clear()
-    url2 = "https://x.com/some_ai_account/status/2063500000000000010"
+    url2 = _url_with_age(6)
     tweets2 = [{"url": url2, "text": "tsmc capex at 40 billion now", "author": "some_ai_account"}]
     monkeypatch.setattr(dr, "reply_to_tweet", lambda u, t: False)
-    n2 = dr._reply_to_tweets(tweets2, rs.load_replied(), "SEARCH-HOT", en_counter=[0])
+    n2 = dr._reply_to_tweets(tweets2, set(), "SEARCH-HOT", en_counter=[0])
     assert n2 == 0 and logged == [], \
         "chokepoint skip must not produce a phantom engagement_log row"
 
@@ -1517,7 +1457,6 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
     never _generate_graphseo_reply; output passes through humanize."""
     import src.direct_reply as dr
-    import src.reply_bot as rb
     from src import btc_blitz as bb
 
     # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
@@ -1528,12 +1467,10 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     import src.twitter_client as tc
     monkeypatch.setattr("src.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
-    url = "https://x.com/TheBTCTherapist/status/2063500000000000077"
+    url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(tc, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
-    monkeypatch.setattr(rb, "_tweet_age_minutes", lambda u: 30)
-    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda u: 30)
 
     graphseo_calls = []
     monkeypatch.setattr(dr, "_generate_graphseo_reply",
@@ -1549,7 +1486,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
     monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
     monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
 
-    dr._run_graphseo_scan(rs.load_replied())
+    dr._run_graphseo_scan(set())
 
     assert graphseo_calls == [], "Graphseo FR generator must NEVER run for the bestie"
     assert gen_labels == [("VIP_REPLY/TheBTCTherapist", True)]
@@ -1616,9 +1553,11 @@ def test_bare_dash_replacement_keeps_spacing():
     """2026-06-07: '—' → ',' produced 'angle,conviction' in a live reply.
     Bare dashes must become ', ' with normalized spacing, in humanize AND
     at the reply chokepoint."""
-    from src.humanizer import humanize
+    from src.humanizer import humanize, strip_dashes
     out = humanize("The angle—conviction through crashes—is generic and it shows badly.")
     assert ",conviction" not in out and ", conviction" in out
+    # Reply admission shares the same cleanup for paths that skip humanize.
+    assert strip_dashes("The angle—conviction — is generic") == "The angle, conviction. is generic"
 
 
 def test_reply_queries_are_ai_first():
@@ -1710,16 +1649,14 @@ def test_startup_reply_warmup_is_bounded(monkeypatch):
         return [{"url": f"https://x.com/acct/status/{base+i}",
                  "text": "openai shipped a new reasoning model today", "author": "acct"}
                 for i in range(5)]
-    def fake_reply_block(tweets, replied, source, source_detail="", remaining=None, en_counter=None):
+    def fake_reply_block(tweets, tried, source, source_detail="", remaining=None, en_counter=None):
         # Honor the remaining budget like the real _reply_to_tweets.
         n = len(tweets) if remaining is None else min(len(tweets), remaining)
         calls["replies"] += n
         return n
     monkeypatch.setattr(dr, "scrape_x_search", fake_search)
     monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
-    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda replied: None)
-    monkeypatch.setattr(dr, "load_replied", lambda: set())
-    monkeypatch.setattr(dr, "save_replied", lambda s: None)
+    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried: None)
 
     dr.run_direct_reply_cycle(max_replies=12)
     assert calls["replies"] == 12, f"warmup must stop at the cap, got {calls['replies']}"
@@ -2117,7 +2054,7 @@ def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
 
     def fake_gen(author, text, lang="fr"):
         gen_calls.append(author)
-        if author == "b":
+        if author == "userb":
             second_gen_started.set()
         return f"a sharp, substantive take for {author} that passes every gate"
 
@@ -2134,25 +2071,24 @@ def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
 
     monkeypatch.setattr(dr, "_generate_single_reply", fake_gen)
     monkeypatch.setattr(dr, "reply_to_tweet", fake_post)
-    monkeypatch.setattr(dr, "load_replied", lambda: set())
     monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda url: 1)
     monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
     monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
     monkeypatch.setattr(dr, "humanize", lambda t: t)
 
     tweets = [
-        {"url": "https://x.com/usera/status/111", "text": "AI thing one", "author": "a"},
-        {"url": "https://x.com/userb/status/222", "text": "AI thing two", "author": "b"},
+        {"url": _url_with_age(1).replace("/someone/", "/usera/"), "text": "AI thing one", "author": "a"},
+        {"url": _url_with_age(2).replace("/someone/", "/userb/"), "text": "AI thing two", "author": "b"},
     ]
     posted = dr._reply_to_tweets(tweets, set(), "SEARCH-TEST")
     assert posted == 2, f"both candidates must ship (posted={posted})"
-    assert sorted(gen_calls) == ["a", "b"], "exactly one generation per candidate"
+    assert sorted(gen_calls) == ["usera", "userb"], \
+        "exactly one generation per candidate, for the URL handle"
     assert len(posts) == 2
 
     # remaining bound: with remaining=1, exactly one generation is submitted.
     gen_calls.clear(); posts.clear()
-    posted = dr._reply_to_tweets(list(tweets), set(), "SEARCH-TEST", remaining=1)
+    posted = dr._reply_to_tweets(list(tweets), set(), "SEARCH-TEST", remaining=1, skipped=set())
     assert posted == 1 and len(gen_calls) == 1, \
         "remaining=1 must bound generations AND posts to 1"
 
@@ -3085,61 +3021,6 @@ def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
     assert reply_row[7] == "codex", "reply surface must tag the AI_CLI default"
 
 
-def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_path):
-    """Operator 2026-07-19: 'more debates... reply to other people replies
-    and get her on a roll.' Pin the contracts: mentions flow through the
-    reply chokepoint (no caller premark), per-author daily turn cap holds,
-    own/blocklisted mentions are skipped, ship-gated logging only, and
-    ENABLE_DEBATES=0 short-circuits before any Safari work."""
-    import time as _time
-    from src import action_guard as ag
-    from src import debate_bot as db
-
-    fresh_id = (int(_time.time() * 1000) - db._TWITTER_EPOCH - 60_000) << 22
-    mentions = [
-        {"url": f"https://x.com/challenger/status/{fresh_id}", "text": "you're wrong about inference costs", "author": "Challenger"},
-        {"url": f"https://x.com/{'theaishrink'}/status/{fresh_id + 1}", "text": "own reply", "author": "The AI Therapist"},
-    ]
-    shipped = []
-    monkeypatch.setattr("src.twitter_client.scrape_mentions", lambda max_tweets=20: list(mentions))
-    def chokepoint(url, txt, **k):
-        # The real chokepoint records the Debate turn it ships.
-        assert k == {"debate_turn": True}, "mentions are Debate turns"
-        shipped.append(url)
-        ag.record(ag.DEBATE_TURN, target=db._handle_from_url(url))
-        return True
-    monkeypatch.setattr("src.twitter_client.reply_to_tweet", chokepoint)
-    monkeypatch.setattr("src.replied_store.load_replied", lambda: set())
-    logged = []
-    monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
-
-    class _R:
-        returncode = 0
-        stdout = "the H100 math says otherwise: 70% margins. what's your counter?"
-        stderr = ""
-    monkeypatch.setattr(db, "run_llm", lambda *a, **k: _R())
-    monkeypatch.setattr(db, "humanize", lambda t: t)
-    monkeypatch.setattr(db.time, "sleep", lambda s: None)
-
-    monkeypatch.setenv("ENABLE_DEBATES", "1")
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
-    db.run_debate_cycle()
-    assert shipped == [mentions[0]["url"]], "fresh non-own mention must ship via chokepoint"
-    assert len(logged) == 1, "log only on confirmed ship"
-
-    # Turn cap: same author again today -> skipped
-    shipped.clear()
-    db.run_debate_cycle()
-    assert shipped == [], "per-author daily turn cap must hold"
-
-    # Kill switch read at call time
-    scraped = []
-    monkeypatch.setattr("src.twitter_client.scrape_mentions", lambda max_tweets=20: scraped.append(1) or [])
-    monkeypatch.setenv("ENABLE_DEBATES", "0")
-    db.run_debate_cycle()
-    assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
-
-
 def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
@@ -3199,33 +3080,6 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     assert url not in rs.load_replied(), "the race loser was never claimed"
 
 
-def test_replyback_answers_are_debate_turns(monkeypatch, tmp_path):
-    """Replyback answers people who replied to the account: each answer is a
-    Debate turn, and an author at the cap is skipped before the model call."""
-    from src import action_guard as ag
-    from src import notify_bot as nb
-
-    monkeypatch.setattr(nb, "REPLIED_BACK_FILE", str(tmp_path / "replied_back.json"))
-    monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
-    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
-    monkeypatch.setattr(nb, "humanize", lambda t: t)
-    replies = [
-        {"user": "Capped @capped", "text": "hard disagree on that one", "url": "https://x.com/capped/status/11"},
-        {"user": "Fresh @fresh", "text": "so what should I test first?", "url": "https://x.com/fresh/status/12"},
-    ]
-    monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
-                        lambda: {"own_tweet": "our original", "replies": replies})
-    generated, shipped = [], []
-    monkeypatch.setattr(nb, "generate_replyback", lambda own, text: generated.append(text) or "Start with your real failure cases.")
-    monkeypatch.setattr(nb, "reply_to_tweet_in_thread",
-                        lambda url, text, **k: shipped.append((url, k)) or True)
-    monkeypatch.setattr(ag, "can_debate_turn", lambda author: (author != "capped", ""))
-
-    nb.run_replyback_cycle()
-    assert generated == [replies[1]["text"]], "capped author must be skipped before the LLM"
-    assert shipped == [(replies[1]["url"], {"debate_turn": True})]
-
-
 def test_replyback_reciprocity_never_follows(monkeypatch):
     """Engager follows belong to follow_engagers_job (engager=True). The
     replyback reciprocity pass only visits and likes; its old bare
@@ -3266,7 +3120,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     """2026-07-19 likes+follows push: (1) the engager quality path skips
     size/niche (behavior proves both; small engagers follow back at the
     highest rate) but KEEPS the English gate; (2) follow_engagers_bot pulls
-    handles from replied_back.json (newest first), never retries an
+    Engagers from the ledger's Debate turns (newest first), never retries an
     attempted handle, respects caps, and routes through follow_account
     with engager=True."""
     from src.twitter_client import _follow_quality_decision
@@ -3280,21 +3134,15 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     ok, _ = _follow_quality_decision(42, "just a person", "Sam", False)
     assert not ok, "non-engager path keeps the size gate"
 
-    import json
+    from src import action_guard as ag
     from src import follow_engagers_bot as fe
-    rb = tmp_path / "replied_back.json"
-    rb.write_text(json.dumps([
-        "https://x.com/oldguy/status/111",
-        "https://x.com/business/status/222",       # big-media skip
-        "https://x.com/freshfan/status/333",
-    ]))
-    monkeypatch.setattr(fe, "REPLIED_BACK_FILE", str(rb))
+    for engager in ("oldguy", "business", "freshfan"):  # business: big-media skip
+        ag.record(ag.DEBATE_TURN, target=engager)
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     followed = []
     monkeypatch.setattr("src.twitter_client.follow_account",
                         lambda h, engager=False: followed.append((h, engager)) or True)
-    monkeypatch.setattr("src.action_guard.can_follow",
-                        lambda h, reciprocal=False: (True, ""))
+    monkeypatch.setattr(ag, "can_follow", lambda h, reciprocal=False: (True, ""))
     monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
@@ -3404,11 +3252,9 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     from main import build_scheduler
     assert build_scheduler().get_job("pin_job") is not None
 
-    import json
+    from src import action_guard as ag
     from src import follow_engagers_bot as fe
-    rb = tmp_path / "replied_back.json"
-    rb.write_text(json.dumps(["https://x.com/somefan/status/111"]))
-    monkeypatch.setattr(fe, "REPLIED_BACK_FILE", str(rb))
+    ag.record(ag.DEBATE_TURN, target="somefan")
     monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     called = []
     monkeypatch.setattr("src.twitter_client.follow_account",

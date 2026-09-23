@@ -78,7 +78,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow a handful of accounts and likes their posts when profile visits are allowed. |
 | `followback_job` | 20 min | Follows back recent followers (`reciprocal=True`). |
-| `follow_engagers_job` | 50 min | Follows people who replied to us, from `replied_back.json`. |
+| `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). |
 | `like_job` | 4 min | Likes posts from niche searches. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
@@ -184,6 +184,16 @@ Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
 
+The six reply jobs (`direct_reply`, `feed_sweep`, `early_bird`,
+`mega_watch`, `debate`, `replyback`) call `judge_parent` before paying for
+a generation. `StateUnreadable` passes through their per-query and
+per-reply `except Exception` blocks, so an unreadable state file ends the
+cycle. They keep only their own selection filters: niche, age
+threshold, thread-reply shape, handle pools, per-cycle caps. Each keeps a
+module-level `_skipped` set, lost at restart, of posts refused definitively,
+declined by the model (SKIP) or answered. A temporary refusal or a failed
+model call leaves the post replayable.
+
 After admission, `reply_to_tweet` deduplicates through
 `src/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
 tweet already answered, and marks it just before writing, all under one lock.
@@ -192,9 +202,7 @@ The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
 instead of reading as empty. If the reply keystroke or the paste fails, or a
 stop or 22:00 interrupts the sequence before the submit keystroke, nothing
-was sent: `replied_store.release` removes the claim. A job that keeps its own
-loaded set, like `direct_reply`, saves the claim back at the end of its
-cycle, so the tweet may still go unanswered. If the submit keystroke fails,
+was sent: `replied_store.release` removes the claim. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 
@@ -233,6 +241,10 @@ These are how the code behaves today, not design intent:
   hard rules or the respect list.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
+- `reply_job` (`reply_bot`, only with `ENABLE_REPLY_SEARCH=1`) still keeps
+  its own filters and has defect 3 of issue #100: it marks candidates before
+  sending and saves them into `replied_tweets.json` at the end of the cycle,
+  and its `except Exception` swallows `StateUnreadable`.
 
 ## Legacy modules
 

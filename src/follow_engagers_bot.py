@@ -2,31 +2,32 @@
 
 Operator 2026-07-19 ("anything else to improve likes and follows?" → "do
 all of them"): the people most likely to follow us back are the ones who
-just engaged US. We already have them on disk for free: replied_back.json
-holds the URLs of replies we replied back to — each URL's author is a
-proven engager. This lane follows a small daily trickle of them through
-the full follow chokepoint with `engager=True` (size/niche gates skipped —
-their behavior proves both — English gate + caps + spacing + churn kept).
+just engaged US. We already have them on disk for free: every Debate turn
+the account shipped (replyback or debate) leaves a ledger row naming the
+Engager it answered. This lane follows a small daily trickle of them
+through the full follow chokepoint with `engager=True` (size/niche gates
+skipped — their behavior proves both — English gate + caps + spacing +
+churn kept).
 
-No new Safari scraping: the data source is a state file the replyback bot
-already maintains.
+No new Safari scraping: the data source is the action ledger.
 """
 import json
 import os
-import re
 import traceback
-from datetime import date
+from datetime import date, timedelta
 
+from . import action_guard, x_urls
 from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .logger import log
 
-REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
+# replied_back.json stopped being written on 2026-09-23 (issue #100): the
+# ledger's Debate turns replaced it. Its Engagers are read until they age out
+# of the ledger's 90 days; delete this fallback and the file after 2026-12-22.
+FROZEN_REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
 STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_engagers_state.json")
 
-_HANDLE_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/")
-
-# Big-media engager URLs sneak into replied_back (we reply back under news
-# posts too) — following @business back is pointless for follow-backs.
+# Big-media accounts get Debate turns too (we reply back under news posts)
+# — following @business back is pointless for follow-backs.
 _SKIP_HANDLES = {"business", "cnbc", "reuters", "wsj", "ft", "bloomberg",
                  "watcherguru", "zerohedge", "unusual_whales", "cointelegraph"}
 
@@ -48,26 +49,29 @@ def _save_state(st: dict) -> None:
         json.dump(st, f, indent=1)
 
 
-def _engager_handles(limit: int = 200) -> list:
-    """Newest-first engager handles from replied_back.json URLs."""
+def _frozen_engager_handles() -> list:
+    """Newest-first handles from the frozen replied_back.json URLs posted
+    within the ledger's 90 days, the same window as the Debate turns."""
     try:
-        with open(REPLIED_BACK_FILE) as f:
+        with open(FROZEN_REPLIED_BACK_FILE) as f:
             urls = json.load(f)
     except (OSError, json.JSONDecodeError):
         return []
     if not isinstance(urls, list):
         return []
-    handles, seen = [], set()
-    for u in reversed(urls[-limit:]):  # newest engagers first
-        m = _HANDLE_RE.search(str(u))
-        if not m:
-            continue
-        h = m.group(1).lower()
-        if h in seen:
-            continue
-        seen.add(h)
-        handles.append(h)
+    handles = []
+    for u in map(str, reversed(urls)):
+        handle, age = x_urls.author(u), x_urls.age(u)
+        if handle and age is not None and age <= timedelta(days=90):
+            handles.append(handle)
     return handles
+
+
+def _engager_handles(limit: int = 200) -> list:
+    """Newest-first Engagers: Debate turn authors from the ledger, then the
+    frozen replied_back.json."""
+    handles = dict.fromkeys(action_guard.debate_turn_authors() + _frozen_engager_handles())
+    return list(handles)[:limit]
 
 
 def run_follow_engagers_cycle():
@@ -91,7 +95,6 @@ def run_follow_engagers_cycle():
     followed = 0
 
     from .twitter_client import follow_account
-    from .action_guard import can_follow
     # 2026-07-28 fix: 262 candidates were burned into `attempted` by
     # TRANSIENT policy refusals (the 3500 total-following ceiling blocked
     # every follow for days). Pre-check the policy CHEAPLY: a transient
@@ -104,7 +107,7 @@ def run_follow_engagers_cycle():
             break
         if h == own or h in BLOCKLIST or h in _SKIP_HANDLES or h in attempted:
             continue
-        ok, why = can_follow(h, reciprocal=True)
+        ok, why = action_guard.can_follow(h, reciprocal=True)
         if not ok:
             if any(t in why for t in _TRANSIENT):
                 log.info(f"[FOLLOW-ENGAGERS] Policy transient ({why}) — ending cycle, candidates preserved.")

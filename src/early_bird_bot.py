@@ -8,25 +8,28 @@ consistently land top-5 on a fresh banger from sama / OpenAI / Mathieu.
 Strategy:
 - Every 5 min, pick a few mega accounts at random.
 - Scrape their latest tweets (existing scraper).
-- If any tweet is < 12 min old AND we haven't replied yet → reply NOW.
-- Hard cap 1 reply per cycle. Lock-before-post URL dedup. Same dead-tweet
-  filter as direct_reply (won't reply to tweets with 0 engagement YET — but
-  the threshold is loose because fresh tweets often have 0 likes).
+- If any tweet is < 18 min old and Reply admission lets it through → reply NOW.
+- One reply per scanned account per cycle; the chokepoint owns the dedup.
 - Source-tagged "EARLYBIRD/<handle>" so the strategy agent sees it.
 """
 import random
 import time
 import traceback
-from .config import BLOCKLIST, BOT_HANDLE
+from datetime import timedelta
+from . import x_urls
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
-from .replied_store import load_replied
-from .reply_bot import _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
-from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche, _looks_french
+from .reply_admission import judge_parent
+from .reply_bot import _is_reply_like_tweet
+from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
+from .reply_language import looks_french
 from .engagement_log import log_reply
 from .humanizer import humanize
+from .state_errors import StateUnreadable
 
-_OWN_HANDLE = BOT_HANDLE.lower()
+# Posts this job is done with until restart: definitive Reply admission
+# refusals, posts the model declined, posts answered.
+_skipped: set = set()
 
 # 2026-06-07 PM (operator): "stop going to the static accounts… develop
 # yourself the list of accounts you want to follow and track" — the static
@@ -53,7 +56,6 @@ EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 15
 
 def run_early_bird_cycle():
     """One scan: pick a few mega accounts, reply to ANY fresh tweet found."""
-    replied = load_replied()
     posted = 0
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
@@ -89,24 +91,17 @@ def run_early_bird_cycle():
         for tweet in tweets:
             url = tweet.get("url", "")
             text = tweet.get("text", "")
-            if not url or url in replied:
+            if not url or url in _skipped:
                 continue
             if _is_reply_like_tweet(tweet, expected_author=username):
                 log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
                 continue
 
-            # Block self + blocklisted
-            url_handle = _handle_from_url(url)
-            if url_handle in BLOCKLIST or url_handle == _OWN_HANDLE:
-                continue
-            if username.lower() in BLOCKLIST or username.lower() == _OWN_HANDLE:
-                continue
-
-            age = _tweet_age_minutes(url)
-            if age > EARLY_BIRD_AGE_MAX_MIN:
+            age = x_urls.age(url)
+            if age is None or age < timedelta(0):
+                continue  # no status ID / clock skew
+            if age > timedelta(minutes=EARLY_BIRD_AGE_MAX_MIN):
                 continue  # too late — drops down to standard reply bot territory
-            if age < 0 or age > 9000:
-                continue  # parse failure / clock skew
 
             # Niche gate — earlybird scans broad media accounts (BFMTV, France24,
             # unusual_whales, etc.), so fresh tweets are often off-mission
@@ -118,19 +113,26 @@ def run_early_bird_cycle():
                 log.info(f"[EARLYBIRD] Off-niche topic — skipping @{username}: {text[:60]}")
                 continue
 
-            log.info(f"[EARLYBIRD] FRESH ({age}min) @{username}: {text[:80]}...")
+            verdict = judge_parent(url)
+            if not verdict:
+                if verdict.refusal.definitive:
+                    _skipped.add(url)
+                continue
+
+            log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
             reply = _generate_single_reply(
                 username,
                 text,
-                lang="fr" if _looks_french(text) else "en",
+                lang="fr" if looks_french(text) else "en",
             )
             if reply is _LLM_RATE_LIMITED:
                 log.info("[EARLYBIRD] LLM budget reached; stopping this cycle before posting attempts.")
                 return
+            if reply is None:
+                continue  # failed call: replayable next cycle
             if not reply:
                 log.info(f"[EARLYBIRD] Generation returned SKIP for @{username}.")
-                # Don't add to replied — we want to retry next cycle if we generate
-                # a better take then. The 5-min cadence will catch it again.
+                _skipped.add(url)
                 continue
 
             from .pattern_tags import extract_pattern as _extract_pattern
@@ -141,11 +143,10 @@ def run_early_bird_cycle():
             # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
             # itself pre-post and refuses anything already in it (premark =
             # 100% silent self-skip, 2026-06-07 post-mortem).
-            replied.add(url)  # in-memory only: no same-cycle retry
-
             try:
                 if not reply_to_tweet(url, reply):
                     continue  # chokepoint skip — nothing posted, no phantom log
+                _skipped.add(url)
                 try:
                     log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}", pattern_id=_pattern_id or "")
                 except Exception:
@@ -153,6 +154,8 @@ def run_early_bird_cycle():
                 posted += 1
                 time.sleep(random.randint(5, 12))
                 break  # one reply per scanned account = move on
+            except StateUnreadable:
+                raise
             except Exception:
                 log.info(f"[EARLYBIRD] Post failed for {url}:")
                 traceback.print_exc()

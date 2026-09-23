@@ -121,15 +121,13 @@ def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
 
 def test_replyback_stops_on_unreadable_store(monkeypatch):
     """replyback catches reply errors per engager; an unreadable store must
-    end the cycle at the first engager instead of paying one generation each."""
+    end the cycle at the first engager, before paying for a generation."""
     from src import notify_bot as nb
     monkeypatch.setenv("DRY_RUN", "1")
     replies = [{"user": f"@fan{i}", "text": "what about inference margins?",
                 "url": f"https://x.com/fan{i}/status/20635000000000{i:05d}"} for i in range(3)]
     monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
                         lambda: {"own_tweet": "batching is the margin story", "replies": replies})
-    monkeypatch.setattr(nb, "_load_replied_back", lambda: set())
-    monkeypatch.setattr(nb, "_save_replied_back", lambda s: pytest.fail("cycle must not finish"))
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
     monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: pytest.fail("cycle must not finish"))
     monkeypatch.setattr(nb, "humanize", lambda t: t)
@@ -140,4 +138,4 @@ def test_replyback_stops_on_unreadable_store(monkeypatch):
         f.write("[")
     with pytest.raises(StateUnreadable):
         nb.run_replyback_cycle()
-    assert len(generations) == 1, "one generation, then the cycle stops"
+    assert generations == [], "Reply admission stops the cycle before the model call"

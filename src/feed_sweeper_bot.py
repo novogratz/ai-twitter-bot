@@ -22,8 +22,9 @@ doesn't clear content_guard is skipped, and the action_guard chokepoints
 Hard rules preserved:
   - ⛔ quotes obey the 48h REPOST_MAX_AGE_HOURS rule (via _too_old_to_quote)
   - replies obey DIRECT_REPLY_MAX_AGE_MINUTES (72h since 2026-06-05)
-  - blocklist / respect-list / own-handle filtered
-  - all writes go through the twitter_client chokepoints (dedup v2 included)
+  - Reply admission (Blocked account, own post, already Replied) judges
+    each post before generation, through direct_reply's pipeline
+  - all writes go through the twitter_client chokepoints
 """
 import os
 import traceback
@@ -42,12 +43,9 @@ BANGER_LIKES = int(os.environ.get("FEED_SWEEP_BANGER_LIKES", "1000"))
 # Authors with at least this many likes on a post get added to dynamic_accounts.
 HARVEST_MIN_LIKES = int(os.environ.get("FEED_SWEEP_HARVEST_MIN_LIKES", "100"))
 
-
-def _handle_from_url(url: str) -> str:
-    try:
-        return (url or "").split("x.com/")[1].split("/")[0].lower()
-    except (IndexError, AttributeError):
-        return ""
+# Posts this job is done with until restart: definitive Reply admission
+# refusals, posts the model declined, posts answered.
+_skipped: set = set()
 
 
 def _harvest_active_authors(tweets: list) -> None:
@@ -100,7 +98,7 @@ def _sweep_one_feed(source, scraper):
     from .twitter_client import quote_tweet, quote_tweet_with_gif
     from .humanizer import extract_gif_query
     from .quote_tweet_bot import _load_quoted, _save_quoted, _generate_quote, _too_old_to_quote
-    from .direct_reply import _reply_to_tweets, load_replied, _is_on_niche, _is_reply_like_tweet
+    from .direct_reply import _reply_to_tweets, _is_on_niche, _is_reply_like_tweet
     from . import content_guard, respect_list
 
     log.info(f"[SWEEP] Sweeping {source} (quote >= {FEED_SWEEP_QUOTE_MIN_LIKES} likes, reply below, BOTH >= {BANGER_LIKES})...")
@@ -118,20 +116,13 @@ def _sweep_one_feed(source, scraper):
     _harvest_active_authors(tweets)
 
     quoted = _load_quoted()
-    replied = load_replied()
 
     quote_candidates = []
     reply_candidates = []
     for t in tweets:
         url = t.get("url") or ""
         text = (t.get("text") or "").strip()
-        author = (t.get("author") or "").lower()
         if not url or not text:
-            continue
-        handle = _handle_from_url(url)
-        if handle == _OWN_HANDLE or author == _OWN_HANDLE:
-            continue
-        if handle in BLOCKLIST or author in BLOCKLIST:
             continue
         if _is_reply_like_tweet(t):
             continue
@@ -139,8 +130,7 @@ def _sweep_one_feed(source, scraper):
             continue
         # Every eligible item can receive a useful reply, including popular
         # ones formerly diverted to the quote lane.
-        if url not in replied:
-            reply_candidates.append(t)
+        reply_candidates.append(t)
 
     quotes_done = 0
 
@@ -149,10 +139,11 @@ def _sweep_one_feed(source, scraper):
     # (2026-06-07 spec — front-load <60-min climbers).
     replies_done = _reply_to_tweets(
         reply_candidates,
-        replied,
+        set(),
         f"FEED-SWEEP-{source}",
         remaining=FEED_SWEEP_MAX_REPLIES_PER_CYCLE,
         en_counter=[0],
+        skipped=_skipped,
     )
     log.info(f"[SWEEP] {source} done: {quotes_done} quotes, {replies_done} replies.")
 
