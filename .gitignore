@@ -71,6 +71,13 @@ editorial_review.jsonl
 editorial_reach.json
 editorial_reach.md
 
+# Scratch outputs of removed flows, untracked in issue #112
+run.out
+*_output.txt
+current_tweet.txt
+outgoing_tweet.txt
+reply.txt
+
 # Atomic-write temp files left by a killed process
 .replied_tweets.*.tmp
 action_ledger.json.tmp

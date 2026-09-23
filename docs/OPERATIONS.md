@@ -210,8 +210,8 @@ What cannot be tuned from `.env` or `live_strategy.json`: the seven-post
 ceiling, the one-hour spacing floor between originals, quotes and reposts at
 zero, and waking hours. They live in `src/config.py` and
 `src/active_hours.py`; changing them needs an operator request and an update
-to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). Among active jobs, only
-`like_job` still reads `live_strategy.json`.
+to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
+`live_strategy.json` any more.
 
 To stop one job, remove its `add(...)` line in `build_scheduler()` and
 restart.
@@ -238,22 +238,44 @@ Files written by active jobs:
 | `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried |
 | `like_bot_state.json` | `like_bot` | Daily like count |
+| `liked_tweets.json` | `like_tweet` | Tweets already liked |
+| `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers |
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds |
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart |
+| `autonomous_log.md` | `health` | One line per Safari recovery |
 
-Most other JSON files at the root belong to legacy jobs and no longer change.
-No active job reads `retweeted.json`, `stock_promo_config.json` or
-`boost_history.json` since the quote, repost,
-promo and boost branches left the live jobs (issue #107).
+Files active code reads but no active job writes:
+
+| File | Read by | Holds |
+|---|---|---|
+| `respect_list.json` | `respect_list` | Operator-managed respect list |
+| `whitelist.json` | `action_guard` | Tiered follow whitelist |
+| `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents |
+| `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote |
+| `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` |
+| `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights |
+| `replied_back.json` | `follow_engagers_bot` | Frozen Engager list, see below |
+
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
 to the replied store and the Engager list to the ledger's debate turns.
 `follow_engagers_job` still reads it until its entries age out of the
 ledger's 90 days; delete it, and the fallback in `follow_engagers_bot`,
 around 2026-12-22.
-`debate_state.json` is one of them since debate turns moved to the ledger; it
-can be deleted.
+
+The supervisors cite three more root files, kept for them:
+`engine_health_alerts.json` (`bin/auto_improve.sh`), `daily_state.json` (a
+comment in the launchd plist) and `operator_prompt.md` (`operator_cycle.sh`).
+`live_strategy.json` stays because `AGENTS.md` and the `config` skill cite it,
+though no active job calls the `config.get_live_*` readers.
+
+Issue #112 removed from git the root files only deleted modules wrote or read,
+and the tracked outputs (`run.out`, `*_output.txt`, `reply.txt`…); git history
+keeps them. Pulling that change deletes them from the checkout: if
+`git status` shows one of them modified, the pull stops until it is moved
+aside. `debate_state.json` is untracked and unused since debate turns moved
+to the ledger; it can be deleted.
 
 ## Legacy tools
 
