@@ -32,14 +32,15 @@ HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
 REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 
-# Operator policy (2026-09-20): six editorial posts, at most seven profile
-# publications per Toronto day, and uncapped replies while awake. These
+# Operator policy (2026-09-23): at least three editorial posts targeted, up
+# to eight profile publications per Toronto day, and uncapped replies while awake. These
 # ceilings cannot be raised by stale .env files or autonomous strategy data.
 BOT_TIMEZONE = "America/Toronto"
+MIN_TARGET_POSTS_PER_DAY = 3
 TARGET_POSTS_PER_DAY = 6
-MAX_PROFILE_POSTS_PER_DAY = 7
-MAX_NEWS_PER_DAY = 7
-MAX_HOTAKES_PER_DAY = 7
+MAX_PROFILE_POSTS_PER_DAY = 8
+MAX_NEWS_PER_DAY = 8
+MAX_HOTAKES_PER_DAY = 8
 MAX_QUOTES_PER_DAY = 0
 MAX_RETWEETS_PER_DAY = 0
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
@@ -137,8 +138,8 @@ def dry_run() -> bool:
     return os.environ.get("DRY_RUN", "0") == "1"
 
 # All original surfaces share the same ceiling and at least one hour of
-# spacing. The editorial scheduler normally spaces posts by 2.5–3.5 hours.
-MAX_ORIGINALS_PER_DAY = min(7, int(os.environ.get("MAX_ORIGINALS_PER_DAY", "7")))
+# spacing. The editorial scheduler normally spaces posts by roughly 2 hours.
+MAX_ORIGINALS_PER_DAY = min(8, int(os.environ.get("MAX_ORIGINALS_PER_DAY", "8")))
 MIN_SECONDS_BETWEEN_POSTS = max(3600, int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", "3600")))
 POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", "0"))
 
@@ -234,7 +235,7 @@ def get_live_cap(name: str, default: int) -> int:
         "MAX_QUOTES_PER_DAY": 0, "MAX_QUOTE_REPOSTS_PER_DAY": 0,
         "MAX_RETWEETS_PER_DAY": 0, "MAX_REPLIES_PER_DAY": 0,
         "MAX_ORIGINALS_PER_DAY": MAX_ORIGINALS_PER_DAY,
-        "MAX_NEWS_PER_DAY": 7, "MAX_HOTAKES_PER_DAY": 7,
+        "MAX_NEWS_PER_DAY": 8, "MAX_HOTAKES_PER_DAY": 8,
     }
     if name in fixed:
         return fixed[name]

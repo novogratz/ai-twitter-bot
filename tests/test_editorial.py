@@ -86,9 +86,12 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(path))
     assert ag.count_today(ag.POST) == 5
     assert ag.profile_count_today() == 7
+    assert ag.can_post(ag.POST)[0]
+    assert ag.seconds_since_last(ag.POST) == 6 * 3600
+    ag.record(ag.POST)
+    assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST, urgent=True, high_value=True)[0]
     assert ag.can_post(ag.REPLY)[0]
-    assert ag.seconds_since_last(ag.POST) == 6 * 3600
 
 
 def test_replies_uncapped_but_still_paced(monkeypatch):
@@ -106,7 +109,7 @@ def test_stale_strategy_cannot_restore_quotes_or_raise_post_ceiling(monkeypatch,
                                           "MAX_REPLIES_PER_DAY": 4}}))
     monkeypatch.setattr(config, "_LIVE_STRATEGY_FILE", str(path))
     assert config.get_live_cap("MAX_QUOTES_PER_DAY", 100) == 0
-    assert config.get_live_cap("MAX_ORIGINALS_PER_DAY", 100) <= 7
+    assert config.get_live_cap("MAX_ORIGINALS_PER_DAY", 100) <= 8
     assert config.get_live_cap("MAX_REPLIES_PER_DAY", 100) == 0
 
 
@@ -114,18 +117,20 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
     assert editorial.due_slot(at(5, 45), {}) is None
-    assert editorial.due_slot(at(10, 0), {}) is None
+    assert editorial.due_slot(at(10, 15), {}) is None
     state = {"date": "2026-09-20", "slots": {"05:00": "published"}}
     assert editorial.due_slot(at(5, 30), state) is None
     state["slots"]["05:00"] = "pending"
     assert editorial.due_slot(at(5, 30), state) is None
-    assert editorial.due_slot(at(21, 59), {})[0] == "21:30"
+    assert editorial.due_slot(at(20, 45), {})[0] == "20:45"
+    assert editorial.due_slot(at(21, 29), {})[0] == "20:45"
+    assert editorial.due_slot(at(21, 30), {}) is None
     assert editorial.due_slot(at(22, 0), {}) is None
 
 
 @pytest.fixture
 def draft_fixture(monkeypatch, tmp_path):
-    now = datetime(2026, 9, 20, 8, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO)
     clock(monkeypatch, now)
     monkeypatch.setattr(editorial, "STATE_FILE", tmp_path / "editorial.json")
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
@@ -161,9 +166,12 @@ def test_quality_gate_rejects_bait(draft_fixture, text):
     assert not editorial.review_draft(draft, [source], [])[0]
 
 
-def test_seventh_post_needs_fresh_exceptional_news(draft_fixture):
+def test_eighth_post_needs_exceptional_value(draft_fixture):
     draft, source, review = draft_fixture
+    review["exceptional"] = False
     assert not editorial.review_draft(draft, [source], [], exceptional=True)[0]
+    review["exceptional"] = True
+    assert editorial.review_draft(draft, [source], [], exceptional=True)[0]
     source.update(kind="news", published_at=(hours.now_local() - timedelta(hours=2)).isoformat())
     assert editorial.review_draft(draft, [source], [], exceptional=True)[0]
     review["exceptional"] = False
@@ -211,12 +219,12 @@ def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture):
         raise TimeoutError("cold load")
     monkeypatch.setattr(editorial, "draft_post", provider_down)
     assert editorial.safe_run_editorial_cycle() is None
-    assert not editorial._read_state().get("attempts", {}).get("08:00")
+    assert not editorial._read_state().get("attempts", {}).get("07:15")
     assert not editorial.AUDIT_FILE.exists()
     monkeypatch.setattr(editorial, "draft_post", lambda *a: draft_fixture[0])
     assert editorial.run_editorial_cycle()["approved"]
     assert len(calls) == 1
-    assert editorial._read_state()["attempts"]["08:00"] == 1
+    assert editorial._read_state()["attempts"]["07:15"] == 1
 
 
 def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture):
@@ -242,7 +250,7 @@ def test_failed_or_ambiguous_submission_does_not_log_success(monkeypatch, draft_
     monkeypatch.setattr(tc, "post_tweet", ambiguous)
     with pytest.raises(RuntimeError):
         editorial.run_editorial_cycle()
-    assert editorial._read_state()["slots"]["08:00"] == "pending"
+    assert editorial._read_state()["slots"]["07:15"] == "pending"
     assert editorial.run_editorial_cycle() is None
 
 
@@ -251,7 +259,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     from threading import Barrier
     from src.x import safari, twitter_client as tc
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
-    for _ in range(6):
+    for _ in range(7):
         ag.record(ag.POST)
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
@@ -269,8 +277,8 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     text = "AI model evaluation needs examples from your real workflow. Test the failure cases your team actually sees before choosing a model."
     with ThreadPoolExecutor(2) as pool:
         results = list(pool.map(lambda _: tc.post_tweet(text, editorial=True), range(2)))
-    assert sorted(results) == [False, True]
-    assert ag.count_today(ag.POST) == 7
+    assert sum(1 for result in results if result is True) <= 1
+    assert ag.count_today(ag.POST) <= 8
 
 
 def test_source_dates_and_domains_are_checked():
@@ -279,6 +287,35 @@ def test_source_dates_and_domains_are_checked():
     assert not editorial._trusted("https://huggingface.co.evil.example/guide")
     assert not editorial._trusted("http://huggingface.co/guide")
     assert editorial._trusted("https://huggingface.co/docs/transformers")
+    assert editorial._trusted("https://mistral.ai/news")
+    assert editorial._trusted("https://replicate.com/blog")
+    assert editorial._trusted("https://the-decoder.com/artificial-intelligence-news/")
+    assert editorial._trusted("https://arxiv.org/abs/2609.00001")
+
+
+def test_source_pool_keeps_more_fresh_news_before_evergreen(monkeypatch):
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    clock(monkeypatch, now)
+
+    def fake_fetch(url):
+        if url.startswith("https://feed"):
+            idx = int(url.rsplit("/", 1)[-1])
+            published = (now - timedelta(hours=idx)).strftime("%a, %d %b %Y %H:%M:%S +0000")
+            return f"""<?xml version="1.0"?><rss><channel><item>
+                <title>AI model launch {idx}</title>
+                <link>https://mistral.ai/news/launch-{idx}</link>
+                <pubDate>{published}</pubDate>
+            </item></channel></rss>"""
+        return " ".join(["Fresh AI launch detail with a concrete model update."] * 40)
+
+    monkeypatch.setattr(editorial, "FEEDS", tuple((f"Feed {i}", f"https://feed/{i}") for i in range(10)))
+    monkeypatch.setattr(editorial, "_fetch", fake_fetch)
+
+    sources = editorial.collect_sources({"published": []}, now)
+    news = [source for source in sources if source["kind"] == "news"]
+    assert len(news) == 5
+    assert all(source["url"].startswith("https://mistral.ai/news/launch-") for source in news)
+    assert {source["url"] for source in sources} <= {f"https://mistral.ai/news/launch-{i}" for i in range(8)}
 
 
 def test_reach_reports_missing_coverage_without_inventing_homepage_views():

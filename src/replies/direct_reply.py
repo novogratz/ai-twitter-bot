@@ -360,7 +360,7 @@ def generate_vip_reply(prompt_tpl: str, tweet_text: str, model: str, label: str,
         return None
 
 
-def _run_graphseo_scan(tried: set) -> int:
+def _run_graphseo_scan(tried: set, remaining=None) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
     Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
@@ -380,6 +380,8 @@ def _run_graphseo_scan(tried: set) -> int:
         "VIP_SCAN_HANDLES", "Graphseo,TheBTCTherapist").split(",") if h.strip()]
     posted = 0
     for handle in VIP_SCAN_HANDLES:
+        if remaining is not None and posted >= remaining:
+            break
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         try:
             tweets = scrape_x_search(f"from:{handle}", max_tweets=20, tab="latest")
@@ -388,6 +390,8 @@ def _run_graphseo_scan(tried: set) -> int:
             traceback.print_exc()
             continue
         for t in tweets:
+            if remaining is not None and posted >= remaining:
+                break
             url = t.get("url", "")
             text = t.get("text", "")
             if not url or not text or url in tried or url in _skipped:
@@ -475,9 +479,10 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         return reply
     except Exception: return None
 
-# No per-cycle budget cap — reply to everything good on the live feed.
-# Individual rate limits (jitter, LLM hourly cap, dedup) still apply.
-DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "9999"))
+# Bound each scheduled pass so it finishes before the next interval. Reply
+# volume comes from frequent cycles plus the other reply jobs, not one cycle
+# holding Safari long enough for APScheduler to skip runs.
+DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "3"))
 MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "9999"))
 DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "150"))
 DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "25"))
@@ -664,20 +669,24 @@ def _queries_for_cycle(all_queries: list) -> list:
 def run_direct_reply_cycle(max_replies=None):
     """Reply cycle — feed-first, no profile visits.
 
-    `max_replies` (operator 2026-06-07): when set, the cycle STOPS after that
-    many replies and returns. Used by the STARTUP warmup — an unbounded
-    warmup looped all 21 queries replying to everything, ran 20+ min, and
-    BLOCKED main()'s scheduler.start() (and thus the AI-viral quote job)
-    from ever running (15:43 boot: zero quotes 20 min in, Safari 100%
-    reply-held). Steady-state job calls with None = unbounded.
+    `max_replies` bounds the cycle and returns Safari to the scheduler. When
+    omitted, the steady-state default is DIRECT_REPLY_MAX_PER_CYCLE; pass 0
+    or a negative value only in a manual/debug call to make it unbounded.
     """
+    if max_replies is None:
+        max_replies = DIRECT_REPLY_MAX_PER_CYCLE
+    elif max_replies <= 0:
+        max_replies = None
     tried = set()  # posts tried this cycle; the Replied store is the chokepoint's
     total, en_counter = 0, [0]
     remaining = max_replies  # None = unbounded
 
     # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
     try:
-        _run_graphseo_scan(tried)
+        vip_posted = _run_graphseo_scan(tried, remaining=remaining)
+        if remaining is not None:
+            remaining -= vip_posted
+        total += vip_posted
     except StateUnreadable:
         raise
     except Exception:
@@ -699,8 +708,7 @@ def run_direct_reply_cycle(max_replies=None):
     random.shuffle(cycle_queries)
     for query in cycle_queries:
         if remaining is not None and remaining <= 0:
-            log.info(f"[DIRECT] Startup budget reached ({max_replies}) — yielding "
-                     f"Safari so the scheduler + quote lane can start.")
+            log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
         try:
             tweets = scrape_x_search(query, max_tweets=25, tab="top")

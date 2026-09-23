@@ -204,9 +204,9 @@ Changes to `.env` or code take effect at restart.
   `FOLLOWBACK_CAP`, `FOLLOW_ENGAGERS_*`.
 - Models: `REPLY_LLM_PROVIDER`, `PROFILE_LLM_PROVIDER`,
   `EDITORIAL_OLLAMA_MODEL`, `EDITORIAL_LLM_TIMEOUT_SECONDS`.
-- Lowering `MAX_ORIGINALS_PER_DAY` below 7.
+- Lowering `MAX_ORIGINALS_PER_DAY` below 8.
 
-What cannot be tuned from `.env` or `live_strategy.json`: the seven-post
+What cannot be tuned from `.env` or `live_strategy.json`: the eight-post
 ceiling, the one-hour spacing floor between originals, quotes and reposts at
 zero, and waking hours. They live in `src/core/config.py` and
 `src/guards/active_hours.py`; changing them needs an operator request and an

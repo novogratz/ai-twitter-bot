@@ -1,4 +1,4 @@
-# Active editorial settings (September 20, 2026)
+# Active editorial settings (September 23, 2026)
 
 The current policy is [documented here](EDITORIAL_POLICY.md). These settings
 supersede the historical surfaces listed below:
@@ -6,9 +6,10 @@ supersede the historical surfaces listed below:
 | Setting | Effective value |
 |---|---|
 | Working hours | 04:30–22:00 America/Toronto, DST aware |
+| `MIN_TARGET_POSTS_PER_DAY` | 3 |
 | `TARGET_POSTS_PER_DAY` | 6 |
-| `MAX_PROFILE_POSTS_PER_DAY` | 7, hard combined ceiling |
-| `MAX_ORIGINALS_PER_DAY` | 7 maximum; environment may lower it |
+| `MAX_PROFILE_POSTS_PER_DAY` | 8, hard combined ceiling |
+| `MAX_ORIGINALS_PER_DAY` | 8 maximum; environment may lower it |
 | `MAX_QUOTES_PER_DAY`, `MAX_QUOTE_REPOSTS_PER_DAY`, `MAX_RETWEETS_PER_DAY` | 0, hard disabled |
 | `MAX_REPLIES_PER_DAY` | 0 means unlimited |
 | `MIN_SECONDS_BETWEEN_POSTS` | At least 3600 |
@@ -82,7 +83,7 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 | `MAX_QUOTES_PER_DAY` | `300` | Bot-level cap for the quote bot (the chokepoint cap `MAX_QUOTE_REPOSTS_PER_DAY`=150 is the binding one). |
 | `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
 | `MAX_REPLIES_PER_CYCLE` | `3` | Broad reply-bot cap per cycle. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | `2` | High-value profile/feed reply cap per cycle; cadence targets 20-50/day. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | `3` | Direct search/VIP reply cap per cycle; keeps the 2-minute job from overlapping itself. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | `5` | English reply cap inside one direct-reply cycle. |
 
 ---

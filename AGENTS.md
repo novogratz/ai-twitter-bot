@@ -7,11 +7,11 @@ real account. Setup and run commands live in [`README.md`](README.md).
 ## Current policy — the ceiling you never lift
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(2026-09-20) and supersedes every older mandate. It encodes:
+(2026-09-23) and supersedes every older mandate. It encodes:
 
 - Active 04:30–22:00 America/Toronto only; nothing external happens overnight.
-- Six sourced AI originals targeted a day, a seventh only in the exceptional
-  slot; seven combined profile publications at most.
+- At least three sourced AI originals targeted a day, six planned, and eight
+  combined profile publications at most.
 - Quotes, reposts, self-recycling, threads and startup bursts stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.

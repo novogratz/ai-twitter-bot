@@ -1,8 +1,9 @@
-# Editorial policy — September 20, 2026
+# Editorial policy — September 23, 2026
 
-The operator requested 5–7 valuable posts a day, uncapped replies, a more natural
-voice, and a working day from 04:30 to 22:00. The schedule aims for six originals,
-with one optional exceptional-news slot. Quality can reduce the actual count.
+The operator requested at least three valuable AI posts a day, up to eight
+profile posts, uncapped replies, a more natural voice, and a working day from
+04:30 to 22:00. The schedule aims for six originals, with two additional
+opportunities when the source is strong enough. Quality can reduce the actual count.
 There is no guarantee of virality or a minimum post count on a day with weak
 sources or service failures.
 
@@ -25,10 +26,13 @@ missing/malformed approval, rejection, stale item, duplicate or provider error
 skips publishing. An LLM review reduces risk but is not proof that a claim is true.
 The checked draft and its source link survive publishing without random rewrites.
 
-First-party lab feeds supply news no older than 48 hours. On quiet days, curated
-AI documentation supplies practical, evergreen topics, without calling them new
-announcements. Used source URLs are rested for seven days. The optional seventh
-slot needs news from the last six hours and an exceptional-value approval.
+Trusted AI feeds supply news and articles no older than 48 hours: first-party
+labs, model/tool launch blogs, The Decoder and arXiv. Fresh launches, methods,
+projects and sharp recent articles are preferred; on quiet days, curated AI
+documentation supplies practical, evergreen topics, without calling them new
+announcements. Used source URLs are rested for seven days. The optional eighth
+slot needs news from the last twelve hours or a useful AI teaching source, plus
+an exceptional-value approval.
 
 ## Runtime rules
 
@@ -38,12 +42,12 @@ slot needs news from the last six hours and an exceptional-value approval.
   remote work can finish; it cannot authorize a later out-of-hours submission.
   A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
   write is admitted after it.
-- Slots: 05:00, 08:00, 11:30, 14:30, 17:30, 20:30, optional 21:30.
+- Slots: 05:00, 07:15, 09:30, 11:45, 14:00, 16:15, 18:30, optional 20:45.
 - A slot permits at most three attempts over 45 minutes (the last ends at 22:00).
   An attempt is a draft submitted to the editor; a pass without a draft
   spends none.
   There is no backlog catchup. At least one hour separates originals.
-- Seven profile publications per local day is absolute. The ledger includes
+- Eight profile publications per local day is absolute. The ledger includes
   originals, quotes and reposts already made that day. Deploying this change
   does not erase history or grant extra slots.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
@@ -65,7 +69,7 @@ slot needs news from the last six hours and an exceptional-value approval.
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
   ignored on both sides), when the parent is the account's own post, or
-  when the URL carries no author handle. The six scheduled reply jobs ask
+  when the URL carries no author handle. The scheduled reply jobs ask
   the same admission before paying for a generation and keep no copy of
   these rules (issue #100). The legacy `reply_job`
   (`ENABLE_REPLY_SEARCH=1`) finds and drafts in one model call, so it asks
