@@ -167,8 +167,9 @@ def _escape_for_applescript(text: str) -> str:
     return text.replace("\\", "\\\\").replace('"', '\\"')
 
 
-def _paste_text(text: str):
-    """Copy text to clipboard and paste it. Handles accented characters correctly."""
+def _paste_text(text: str) -> bool:
+    """Copy text to clipboard and paste it. Handles accented characters correctly.
+    Returns True when the AppleScript ran."""
     escaped = _escape_for_applescript(text)
     script = f'''
     set the clipboard to "{escaped}"
@@ -177,7 +178,31 @@ def _paste_text(text: str):
         keystroke "v" using command down
     end tell
     '''
-    _run_applescript(script)
+    return _run_applescript(script)
+
+
+_SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
+
+
+def _paste_or_abort(text: str, tag: str) -> bool:
+    """Paste into the open composer. On failure nothing was sent: close the
+    tab and return False."""
+    if _paste_text(text):
+        return True
+    log.info(f"[{tag}] Paste failed; nothing sent.")
+    close_front_tab()
+    return False
+
+
+def _submit_or_abort(tag: str, target: str = "") -> bool:
+    """Press Cmd+Return in the open composer. On failure the outcome is
+    unknown: close the tab, record nothing, return False."""
+    if _run_applescript(_SUBMIT_KEYSTROKE):
+        return True
+    log.warning(f"[{tag}] Submit keystroke failed; outcome unknown, nothing recorded"
+                f"{': ' + target if target else '.'}")
+    close_front_tab()
+    return False
 
 
 def _navigate_to_first_tweet():
@@ -425,7 +450,8 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
             log.info("[POST] policy skip after browser wait (%s).", why)
             return False
         if image_path:
-            _post_tweet_with_image(text, image_path)
+            if not _post_tweet_with_image(text, image_path):
+                return False
             action_guard.record(action_guard.POST)
             content_guard.note_posted(text)
             _record_posted(text)
@@ -436,13 +462,8 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
         webbrowser.open(url)
         time.sleep(4)
 
-        script = '''
-        tell application "System Events"
-            keystroke return using command down
-        end tell
-        '''
         log.info("Auto-clicking Post...")
-        if not _run_applescript(script):
+        if not _submit_or_abort("POST"):
             return False
         action_guard.record(action_guard.POST)
         log.info("Tweet submitted!")
@@ -470,8 +491,9 @@ def _record_posted(text: str):
         log.info(f"[POST] history record failed (non-fatal): {e}")
 
 
-def _post_tweet_with_image(text: str, image_path: str):
-    """Compose a tweet with an attached image. Caller must already hold _safari_lock."""
+def _post_tweet_with_image(text: str, image_path: str) -> bool:
+    """Compose a tweet with an attached image. Caller must already hold _safari_lock.
+    Returns True only when the submit keystroke ran."""
     import os as _os
     if not _os.path.exists(image_path):
         log.info(f"[POST] Image not found at {image_path} — falling back to text-only.")
@@ -479,17 +501,19 @@ def _post_tweet_with_image(text: str, image_path: str):
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         webbrowser.open(url)
         time.sleep(4)
-        _run_applescript('tell application "System Events" to keystroke return using command down')
+        if not _submit_or_abort("POST"):
+            return False
         time.sleep(2)
         close_front_tab()
-        return
+        return True
 
     log.info(f"[POST] Composing tweet with image {image_path}...")
     webbrowser.open("https://x.com/compose/post")
     time.sleep(6)  # composer needs a moment to fully render
 
     # Step 1: paste the text (focus is auto on the textarea on /compose/post)
-    _paste_text(text)
+    if not _paste_or_abort(text, "POST"):
+        return False
     time.sleep(1)
 
     # Step 2: copy the image to the clipboard, then Cmd+V to attach.
@@ -506,10 +530,12 @@ def _post_tweet_with_image(text: str, image_path: str):
         time.sleep(3)  # X needs a few seconds to upload + render the image preview
 
     # Step 3: submit
-    _run_applescript('tell application "System Events" to keystroke return using command down')
+    if not _submit_or_abort("POST"):
+        return False
     time.sleep(3)
     log.info("[POST] Tweet with image posted!")
     close_front_tab()
+    return True
 
 
 def _click_testid(testid: str) -> str:
@@ -628,10 +654,11 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
         log.info(f"[POST] Composing tweet with GIF ({gif_query!r})...")
         webbrowser.open("https://x.com/compose/post")
         time.sleep(6)
-        _paste_text(text)
+        if not _paste_or_abort(text, "POST"):
+            return False
         time.sleep(1)
         _attach_native_gif(gif_query)  # best-effort; text-only on failure
-        if not _run_applescript('tell application "System Events" to keystroke return using command down'):
+        if not _submit_or_abort("POST"):
             return False
         action_guard.record(action_guard.POST)
         log.info("[POST] Tweet (with GIF) submitted!")
@@ -694,10 +721,12 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_valu
         log.info(f"[QUOTE] Composing GIF quote ({gif_query!r}) for: {tweet_url}")
         webbrowser.open("https://x.com/compose/post")
         time.sleep(6)
-        _paste_text(f"{comment}\n{tweet_url}")
+        if not _paste_or_abort(f"{comment}\n{tweet_url}", "QUOTE"):
+            return False
         time.sleep(2)  # quote card needs a beat to render from the URL
         _attach_native_gif(gif_query)  # best-effort; quote still ships on failure
-        _run_applescript('tell application "System Events" to keystroke return using command down')
+        if not _submit_or_abort("QUOTE", target=tweet_url):
+            return False
         time.sleep(3)
         log.info(f"[QUOTE] GIF quote posted: {tweet_url}")
         action_guard.record(action_guard.QUOTE, target=tweet_url)
@@ -821,11 +850,16 @@ def reply_to_own_latest(reply_text: str, must_contain: str = "") -> bool:
                     close_front_tab()
                     return False
             # Press 'r' to open reply composer.
-            _run_applescript('tell application "System Events" to keystroke "r"')
+            if not _run_applescript('tell application "System Events" to keystroke "r"'):
+                log.info("[SELF-REPLY] Reply keystroke failed; nothing sent.")
+                close_front_tab()
+                return False
             time.sleep(3)
-            _paste_text(reply_text)
+            if not _paste_or_abort(reply_text, "SELF-REPLY"):
+                return False
             time.sleep(2)
-            _run_applescript('tell application "System Events" to keystroke return using command down')
+            if not _submit_or_abort("SELF-REPLY"):
+                return False
             time.sleep(3)
             log.info(f"[SELF-REPLY] Posted: {reply_text[:80]}")
             close_front_tab()
@@ -1065,67 +1099,79 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             action_guard.record(action_guard.DEBATE_TURN, target=_debate_author, dry_run=True)
         return True
 
-    with _safari_lock:
-        # Re-check under the lock that also records the turn: two threads
-        # answering the same Engager cannot both take the last turn. The
-        # race loser stays marked replied; the early check above keeps the
-        # common refusal fresh.
-        if debate_turn:
-            ok, why = action_guard.can_debate_turn(_debate_author)
-            if not ok:
-                log.info(f"[REPLY] debate skip under lock ({why}): {tweet_url}")
+    # Every exit before the submit keystroke sent nothing: a failed step, a
+    # stop or 22:00 releases the claim so a later cycle may answer. The debate
+    # race loser keeps it (see below).
+    release_claim = True
+    try:
+        with _safari_lock:
+            # Re-check under the lock that also records the turn: two threads
+            # answering the same Engager cannot both take the last turn. The
+            # race loser stays marked replied; the early check above keeps the
+            # common refusal fresh.
+            if debate_turn:
+                ok, why = action_guard.can_debate_turn(_debate_author)
+                if not ok:
+                    log.info(f"[REPLY] debate skip under lock ({why}): {tweet_url}")
+                    release_claim = False
+                    return False
+            # Make sure Safari is focused first
+            _run_applescript('''
+            tell application "Safari" to activate
+            ''')
+            time.sleep(0.5)
+
+            log.info(f"Opening tweet: {tweet_url}")
+            webbrowser.open(tweet_url)
+            # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
+            # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
+            time.sleep(6)
+
+            # Make sure Safari is in front
+            _run_applescript('''
+            tell application "Safari" to activate
+            ''')
+            time.sleep(0.5)
+
+            # Like the parent only SOMETIMES (operator 2026-06-15: liking every
+            # tweet we reply to was the automation flag). Idempotent like stays
+            # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
+            _maybe_like_parent(tweet_url, "REPLY_LIKE_PARENT_PROB", 0.12)
+            time.sleep(1)
+
+            log.info("Clicking reply...")
+            if not _run_applescript('''
+            tell application "System Events"
+                keystroke "r"
+            end tell
+            '''):
+                log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
+                close_front_tab()
                 return False
-        # Make sure Safari is focused first
-        _run_applescript('''
-        tell application "Safari" to activate
-        ''')
-        time.sleep(0.5)
+            time.sleep(3)  # Wait for reply box to open
 
-        log.info(f"Opening tweet: {tweet_url}")
-        webbrowser.open(tweet_url)
-        # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
-        # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
-        time.sleep(6)
+            # Paste the reply (clipboard handles accents correctly)
+            log.info("Pasting reply...")
+            if not _paste_or_abort(reply_text, "REPLY"):
+                return False
+            time.sleep(2)  # Wait for paste to complete
 
-        # Make sure Safari is in front
-        _run_applescript('''
-        tell application "Safari" to activate
-        ''')
-        time.sleep(0.5)
-
-        # Like the parent only SOMETIMES (operator 2026-06-15: liking every
-        # tweet we reply to was the automation flag). Idempotent like stays
-        # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
-        _maybe_like_parent(tweet_url, "REPLY_LIKE_PARENT_PROB", 0.12)
-        time.sleep(1)
-
-        # Click reply
-        log.info("Clicking reply...")
-        _run_applescript('''
-        tell application "System Events"
-            keystroke "r"
-        end tell
-        ''')
-        time.sleep(3)  # Wait for reply box to open
-
-        # Paste the reply (clipboard handles accents correctly)
-        log.info("Pasting reply...")
-        _paste_text(reply_text)
-        time.sleep(2)  # Wait for paste to complete
-
-        # Submit with Cmd+Enter
-        log.info("Submitting reply...")
-        _run_applescript('''
-        tell application "System Events"
-            keystroke return using command down
-        end tell
-        ''')
-        time.sleep(2)  # Wait for submission
-        log.info("Reply posted!")
-        action_guard.record(action_guard.REPLY, target=tweet_url)
-        if debate_turn:
-            action_guard.record(action_guard.DEBATE_TURN, target=_debate_author)
-        close_front_tab()
+            log.info("Submitting reply...")
+            require_active()  # last point where a stop still means nothing sent
+            # From here X may hold the reply: a failed submit keeps the claim
+            # so the tweet never gets a second one.
+            release_claim = False
+            if not _submit_or_abort("REPLY", target=tweet_url):
+                return False
+            time.sleep(2)  # Wait for submission
+            log.info("Reply posted!")
+            action_guard.record(action_guard.REPLY, target=tweet_url)
+            if debate_turn:
+                action_guard.record(action_guard.DEBATE_TURN, target=_debate_author)
+            close_front_tab()
+    finally:
+        if release_claim:
+            replied_store.release(tweet_url)
     return True
 
 
@@ -1190,11 +1236,8 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False, urgent: 
         log.info(f"[QUOTE] Opening quote composer for: {tweet_url}")
         webbrowser.open(url)
         time.sleep(4)
-        _run_applescript('''
-        tell application "System Events"
-            keystroke return using command down
-        end tell
-        ''')
+        if not _submit_or_abort("QUOTE", target=tweet_url):
+            return False
         time.sleep(2)
         log.info(f"[QUOTE] Quote posted: {tweet_url}")
         action_guard.record(action_guard.QUOTE, target=tweet_url)

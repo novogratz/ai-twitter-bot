@@ -150,10 +150,11 @@ Every write that should count goes through a function in
 `src/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
 `reply_to_tweet_in_thread`, `follow_account`, `like_tweet`. `post_tweet`,
 the reply functions and `follow_account` return `True` when they submitted the
-action, `False` when a rule refused it, and callers log or count only on
-`True`. Two limits: `True` means the keystrokes were sent, not that X
-confirmed them, and under `DRY_RUN` these functions also return `True`.
-`like_tweet` returns nothing.
+action, `False` when a rule refused it or an AppleScript step failed, and
+callers log or count only on `True`. No ledger row is written on `False`. Two
+limits: `True` means `osascript` ran the keystrokes, not that X confirmed
+them, and under `DRY_RUN` these functions also return `True`. `like_tweet`
+returns nothing.
 
 Three modules sit behind them:
 
@@ -176,7 +177,13 @@ Three modules sit behind them:
 tweet already answered, and marks it just before writing, all under one lock.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty.
+instead of reading as empty. If the reply keystroke or the paste fails, or a
+stop or 22:00 interrupts the sequence before the submit keystroke, nothing
+was sent: `replied_store.release` removes the claim. A job that keeps its own
+loaded set, like `direct_reply`, saves the claim back at the end of its
+cycle, so the tweet may still go unanswered. If the submit keystroke fails,
+the outcome is unknown: the claim stays, so the tweet never gets a second
+reply.
 
 `personality_store.hard_rules_block()` renders the hard rules and the respect
 list from `respect_list.json`. The editorial prompt, the replyback prompt and

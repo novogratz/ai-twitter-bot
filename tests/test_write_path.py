@@ -169,7 +169,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
 
 def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
     from src import content_guard, humanizer, twitter_client
-    from src.reply_bot import load_replied
+    from src.replied_store import load_replied
 
     _dry_run_reply_path(monkeypatch)
     monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
@@ -224,3 +224,167 @@ def test_dry_run_stops_writes_outside_the_ledger_chokepoints(monkeypatch, tmp_pa
     assert twitter_client.reply_to_own_latest("Source: https://example.com/report") is False
     assert opened == []
     assert not (tmp_path / "like_state.json").exists()
+
+
+def _live_browser(monkeypatch, failing_step=None):
+    """Live (non-dry) write path with a scripted AppleScript outcome.
+
+    failing_step: "reply_key", "paste" or "submit" makes that step fail;
+    "stop_before_submit", "stop_at_submit" and "stop_after_submit" request a
+    stop at that point.
+    """
+    from src import action_guard, twitter_client as tc
+    from src.active_hours import OutsideActiveHours
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(action_guard, "can_debate_turn", lambda *a, **k: (True, ""))
+    recorded = []
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
+
+    def run_applescript(script, *a, **k):
+        if 'keystroke "r"' in script:
+            if failing_step == "stop_before_submit":
+                raise OutsideActiveHours("stop")
+            return failing_step != "reply_key"
+        if "keystroke return using command down" in script:
+            return failing_step != "submit"
+        return True
+
+    monkeypatch.setattr(tc, "_run_applescript", run_applescript)
+    def paste(text):
+        if failing_step == "stop_at_submit":
+            _stop_requested(monkeypatch)
+        return failing_step != "paste"
+
+    monkeypatch.setattr(tc, "_paste_text", paste)
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    def close_front_tab():
+        if failing_step == "stop_after_submit":
+            raise OutsideActiveHours("stop")
+
+    monkeypatch.setattr(tc, "close_front_tab", close_front_tab)
+    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+    return recorded
+
+
+REPLY = "Batching is where inference margins are won or lost."
+
+
+def test_reply_ships_and_records_when_every_step_runs(monkeypatch):
+    from src import twitter_client as tc
+    from src.replied_store import load_replied
+
+    recorded = _live_browser(monkeypatch)
+    url = "https://x.com/someone/status/2063500000000000110"
+
+    assert tc.reply_to_tweet(url, REPLY) is True
+    assert len(recorded) == 1
+    assert url in load_replied()
+
+
+def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monkeypatch):
+    from src import twitter_client as tc
+    from src.replied_store import load_replied, save_replied
+
+    other = "https://x.com/else/status/2063500000000000119"
+    save_replied({other})
+    for n, step in enumerate(("reply_key", "paste")):
+        for debate_turn in (False, True):
+            recorded = _live_browser(monkeypatch, failing_step=step)
+            url = f"https://x.com/someone/status/20635000000000001{n}{int(debate_turn)}"
+
+            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is False, step
+            assert recorded == [], step
+            assert url not in load_replied(), step
+    assert other in load_replied()
+
+
+def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
+    from src import twitter_client as tc
+    from src.replied_store import load_replied
+
+    for n, debate_turn in enumerate((False, True)):
+        recorded = _live_browser(monkeypatch, failing_step="submit")
+        url = f"https://x.com/someone/status/206350000000000013{n}"
+
+        assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is False
+        assert recorded == []
+        assert url in load_replied()
+
+
+def test_debate_race_loser_keeps_its_claim(monkeypatch):
+    """The in-lock debate re-check refuses after the claim: that tweet stays
+    taken, only earlier refusals leave it fresh."""
+    from src import action_guard, twitter_client as tc
+    from src.replied_store import load_replied
+
+    recorded = _live_browser(monkeypatch)
+    answers = iter([(True, ""), (False, "turn cap reached")])
+    monkeypatch.setattr(action_guard, "can_debate_turn", lambda *a, **k: next(answers))
+    url = "https://x.com/someone/status/2063500000000000160"
+
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is False
+    assert recorded == []
+    assert url in load_replied()
+
+def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch):
+    import pytest
+    from src import twitter_client as tc
+    from src.active_hours import OutsideActiveHours
+    from src.replied_store import load_replied
+
+    _live_browser(monkeypatch, failing_step="stop_before_submit")
+    before = "https://x.com/someone/status/2063500000000000140"
+    with pytest.raises(OutsideActiveHours):
+        tc.reply_to_tweet(before, REPLY)
+    assert before not in load_replied()
+
+    _live_browser(monkeypatch, failing_step="stop_at_submit")
+    at = "https://x.com/someone/status/2063500000000000142"
+    with pytest.raises(OutsideActiveHours):
+        tc.reply_to_tweet(at, REPLY)
+    assert at not in load_replied()
+
+    import threading
+    from src import active_hours
+    monkeypatch.setattr(active_hours, "_STOP", threading.Event())
+    recorded = _live_browser(monkeypatch, failing_step="stop_after_submit")
+    after = "https://x.com/someone/status/2063500000000000141"
+    with pytest.raises(OutsideActiveHours):
+        tc.reply_to_tweet(after, REPLY)
+    assert after in load_replied()
+    assert len(recorded) == 1
+
+
+def test_release_drops_only_the_claimed_tweet(monkeypatch):
+    from src import config, replied_store
+
+    keep, drop = "2063500000000000150", "2063500000000000151"
+    with open(config.REPLIED_FILE, "w") as f:
+        json.dump({"urls": [f"https://x.com/a/status/{keep}", drop]}, f)
+
+    replied_store.release(f"https://x.com/b/status/{drop}")
+
+    assert json.load(open(config.REPLIED_FILE)) == [f"https://x.com/a/status/{keep}"]
+
+
+def test_image_post_that_fails_records_nothing(monkeypatch, tmp_path):
+    from src import content_guard, twitter_client as tc
+
+    image = tmp_path / "chart.png"
+    image.write_bytes(b"png")
+    monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
+    noted = []
+    monkeypatch.setattr(content_guard, "note_posted", noted.append)
+    for step in ("paste", "submit"):
+        recorded = _live_browser(monkeypatch, failing_step=step)
+        assert tc.post_tweet("Inference is getting cheaper faster than training.",
+                             image_path=str(image)) is False, step
+        assert recorded == [] and noted == [], step
+
+    recorded = _live_browser(monkeypatch)
+    assert tc.post_tweet("Inference is getting cheaper faster than training.",
+                         image_path=str(image)) is True
+    assert len(recorded) == 1

@@ -3139,7 +3139,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(tc, "_run_applescript", lambda *a: True)
-    monkeypatch.setattr(tc, "_paste_text", lambda *a: None)
+    monkeypatch.setattr(tc, "_paste_text", lambda *a: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
     monkeypatch.setattr(tc, "close_front_tab", lambda: None)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)

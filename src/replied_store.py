@@ -144,3 +144,18 @@ def claim(url: str) -> bool:
             return False
         _write_entries(entries)
     return True
+
+
+def release(url: str) -> None:
+    """Drop `url` from the store after a claim that sent nothing.
+
+    Only reply_to_tweet calls this, when its Safari sequence stopped before
+    the submit keystroke. A job that holds the claim in its own loaded set
+    may save it back later: the tweet then stays taken, the safe side.
+    """
+    cid = canonical_tweet_id(url)
+    with _write_lock:
+        entries = _read_entries()
+        kept = [u for u in entries if canonical_tweet_id(u) != cid]
+        if len(kept) != len(entries):
+            _write_entries(kept)
