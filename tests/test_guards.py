@@ -976,6 +976,23 @@ def test_state_files_resolve_to_the_repo_root():
     assert Path(twitter_client._FOLLOW_REJECTS_FILE).resolve().parent == repo
 
 
+def test_tests_cannot_spawn_osascript(monkeypatch):
+    """twitter_client, safari_hygiene and several jobs call osascript through
+    subprocess.run directly, past the _run_applescript wall: the conftest
+    wall refuses those processes too."""
+    import subprocess
+
+    def _leak(*a, **k):
+        raise RuntimeError("the conftest wall let a Safari process through")
+    monkeypatch.setattr(subprocess, "_fork_exec", _leak, raising=False)
+    monkeypatch.setattr(os, "posix_spawn", _leak)
+
+    for argv in (["osascript", "-e", "return 1"], ["open", "-a", "Safari"],
+                 ["pkill", "-x", "Safari"], "osascript -e 'return 1'"):
+        with pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"):
+            subprocess.run(argv, shell=isinstance(argv, str))
+
+
 def test_burned_catchphrases_blocked_at_chokepoint():
     """2026-06-09: the prompts quoted exemplar phrases ("we are so early",
     "okay this is genuinely...") and the model parroted them — 6+ posts in

@@ -296,8 +296,10 @@ module under `src/`, packages such as `src/core/` and `src/x/` included, is
 not reached from `main.py`, function-local imports included.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
-`_run_applescript` and `_paste_text` raise, the logger writes to a temporary
-file, and the engagement log, tweet history, replied store, ledger and
+`_run_applescript`, `_paste_text` and any subprocess that runs `osascript`
+or aims `open`, `pkill` or `killall` at Safari raise (an import error on
+`src.x.twitter_client` fails every test rather than dropping the wall), the
+logger writes to a temporary file, and the engagement log, tweet history, replied store, ledger and
 personality file point to `tmp_path`. A mock placed on a caller module misses
 function-local imports; patch the primitive in `twitter_client`.
 

@@ -63,12 +63,33 @@ def _no_safari(monkeypatch):
         )
 
     monkeypatch.setattr(_wb, "open", _blocked)
-    try:
-        from src.x import twitter_client as _tc
-        monkeypatch.setattr(_tc, "_run_applescript", _blocked)
-        monkeypatch.setattr(_tc, "_paste_text", _blocked)
-    except Exception:
-        pass
+    # No try/except: an import that breaks (a moved module) must fail every
+    # test, not silently drop the wall.
+    from src.x import twitter_client as _tc
+    monkeypatch.setattr(_tc, "_run_applescript", _blocked)
+    monkeypatch.setattr(_tc, "_paste_text", _blocked)
+
+    # twitter_client, safari_hygiene and several jobs call
+    # subprocess.run(["osascript", ...]) directly, past the helpers above.
+    # subprocess.run/call/check_output all go through subprocess.Popen.
+    import subprocess as _sp
+
+    def _drives_safari(argv):
+        argv = [str(a) for a in argv] if isinstance(argv, (list, tuple)) else str(argv).split()
+        if not argv:
+            return False
+        program = os.path.basename(argv[0])
+        return program == "osascript" or (
+            program in ("open", "pkill", "killall")
+            and any("Safari" in a or "WebKit" in a for a in argv[1:]))
+
+    class _WalledPopen(_sp.Popen):
+        def __init__(self, args, *a, **k):
+            if _drives_safari(args):
+                _blocked()
+            super().__init__(args, *a, **k)
+
+    monkeypatch.setattr(_sp, "Popen", _WalledPopen)
     yield
 
 
