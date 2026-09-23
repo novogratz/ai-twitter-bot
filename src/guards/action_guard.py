@@ -416,7 +416,7 @@ def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tup
         return False, "automatic quote/repost cap is 0 (editorial originals only)"
     if action == POST:
         if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
-            return False, "daily profile publication cap reached (7)"
+            return False, f"daily profile publication cap reached ({config.MAX_PROFILE_POSTS_PER_DAY})"
         if count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
             return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
     elif action != REPLY:

@@ -845,11 +845,41 @@ def test_startup_reply_warmup_is_bounded(monkeypatch):
         return n
     monkeypatch.setattr(dr, "scrape_x_search", fake_search)
     monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
-    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried: None)
+    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried, remaining=None: 0)
 
     dr.run_direct_reply_cycle(max_replies=12)
     assert calls["replies"] == 12, f"warmup must stop at the cap, got {calls['replies']}"
     assert calls["queries"] < 21, "must stop scanning queries once the budget is spent"
+
+
+def test_direct_reply_default_cycle_is_bounded(monkeypatch):
+    """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
+    outlive its 2-minute interval. The steady-state call must use the per-cycle
+    cap, not the old unbounded None behavior."""
+    import src.replies.direct_reply as dr
+
+    calls = {"replies": 0, "queries": 0}
+
+    def fake_search(q, max_tweets=25, tab="top"):
+        calls["queries"] += 1
+        base = 2063900000000001000 + calls["queries"] * 100
+        return [{"url": f"https://x.com/acct/status/{base+i}",
+                 "text": "openai shipped a useful model update today", "author": "acct"}
+                for i in range(5)]
+
+    def fake_reply_block(tweets, tried, source, source_detail="", remaining=None, en_counter=None):
+        n = len(tweets) if remaining is None else min(len(tweets), remaining)
+        calls["replies"] += n
+        return n
+
+    monkeypatch.setattr(dr, "DIRECT_REPLY_MAX_PER_CYCLE", 3)
+    monkeypatch.setattr(dr, "scrape_x_search", fake_search)
+    monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
+    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried, remaining=None: 0)
+
+    dr.run_direct_reply_cycle()
+    assert calls["replies"] == 3
+    assert calls["queries"] < 21
 
 
 def test_positive_only_subjects_in_hard_rules():
@@ -1159,8 +1189,8 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
 def test_core_identity_carries_editorial_strategy():
     from pathlib import Path
     text = Path("core_identity.md").read_text().lower()
-    assert "six original ai posts" in text
-    assert "seven is the absolute ceiling" in text
+    assert "at least three original ai posts" in text
+    assert "eight is the absolute ceiling" in text
     assert "no automated quote tweets" in text
     assert "replies remain uncapped" in text
 
@@ -1780,7 +1810,7 @@ def test_evening_slots_stay_inside_waking_hours():
     hours, inside Waking hours."""
     from src.editorial.editorial_bot import SLOTS
     assert all("04:30" <= clock < "22:00" for clock, _ in SLOTS)
-    assert "20:30" in dict(SLOTS)
+    assert "20:45" in dict(SLOTS)
 
 
 def test_spicy_dial_suggestive_never_explicit():

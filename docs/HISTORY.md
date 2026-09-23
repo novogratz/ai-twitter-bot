@@ -8,6 +8,14 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-23 — direct reply overlap + editorial floor:** APScheduler was
+> skipping `direct_reply_job` because the steady-state cycle ignored
+> `DIRECT_REPLY_MAX_PER_CYCLE` and could outlive its 2-minute interval. The
+> VIP lane now shares the same per-cycle budget and the default direct cap is
+> 3. The same operator request raised the profile publication ceiling from 7
+> to 8, added three priority original-post slots, and changed the editorial
+> grid to 05:00, 07:15, 09:30, 11:45, 14:00, 16:15, 18:30 and optional 20:45.
+
 > **2026-09-23 — root cleanup (issue #112):** git stopped tracking the root
 > files that only deleted modules wrote or read, and the tracked outputs
 > (`run.out`, `*_output.txt`, `reply.txt`…); git history keeps them. Pulling

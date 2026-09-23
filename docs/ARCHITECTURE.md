@@ -73,7 +73,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, through the `direct_reply_job` pipeline. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
@@ -105,18 +105,20 @@ Two settings decide how much of the table does anything:
 `src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
 lock.
 
-1. **Slot.** `SLOTS` lists 05:00, 08:00, 11:30, 14:30, 17:30, 20:30 and an
-   optional 21:30. A slot is due for 45 minutes, never past 22:00, and only if
+1. **Slot.** `SLOTS` lists 05:00, 07:15, 09:30, 11:45, 14:00, 16:15, 18:30
+   and an optional 20:45. A slot is due for 45 minutes, never past 22:00, and only if
    `editorial_state.json` has no entry for it. A missed slot is not caught up.
 2. **Attempts.** Three per slot per day, restarts included. An attempt is a
    draft submitted to review: the counter is saved once a draft exists and
    before review. A pass with no source, a draft model error or an explicit
    skip spends none; the 45-minute window bounds those passes.
-3. **Sources.** Six first-party feeds (OpenAI, Google AI, DeepMind, Hugging
-   Face, NVIDIA, Microsoft Research) supply AI news under 48 hours old; the
-   three newest are kept. Twelve Hugging Face documentation pages rotate daily
-   as evergreen topics. URLs used in the last seven days are skipped. Each page
-   is fetched over HTTPS from an allowed host, 12-second timeout, 1 MB read.
+3. **Sources.** Ten trusted feeds (OpenAI, Google AI, DeepMind, Hugging Face,
+   NVIDIA, Microsoft Research, Mistral AI, Replicate, The Decoder and arXiv
+   cs.AI) supply AI news/articles under 48 hours old; the eight newest are
+   tried before evergreen. Twelve Hugging Face documentation pages rotate daily
+   as backup teaching topics. URLs used in the last seven days are skipped.
+   Each page is fetched over HTTPS from an allowed host, 12-second timeout,
+   1 MB read.
 4. **Draft.** The model sees `core_identity.md`, the hard rules, the slot
    brief, the last rejection reason for this slot, recent posts and numbered
    evidence sentences from each source. It returns JSON matching
@@ -124,9 +126,9 @@ lock.
 5. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
    1–3 evidence ids that resolve to sentences found in the source text, then
-   `content_guard.validate` and `is_duplicate`. The 21:30 slot needs news under
-   six hours old. A second model call (`REVIEW_SCHEMA`) must approve all six
-   criteria, plus `exceptional` at 21:30.
+   `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
+   twelve hours old or a useful AI teaching source. A second model call
+   (`REVIEW_SCHEMA`) must approve all six criteria, plus `exceptional` at 20:45.
 6. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
    next attempt. Nothing is written when `can_post` refuses (spacing or
@@ -207,8 +209,8 @@ self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 Three modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that neither `.env` nor
-  `live_strategy.json` can lift: seven profile publications a day, quote and
-  repost caps at 0, originals capped at 7 and spaced by at least 3600 seconds,
+  `live_strategy.json` can lift: eight profile publications a day, quote and
+  repost caps at 0, originals capped at 8 and spaced by at least 3600 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
 - `src/guards/action_guard.py` keeps `action_ledger.json` (90 days, Toronto
@@ -239,7 +241,7 @@ Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
 
-The six reply jobs (`direct_reply`, `feed_sweep`, `early_bird`,
+The reply jobs (`direct_reply`, `feed_sweep`, `early_bird`,
 `mega_watch`, `debate`, `replyback`) call `judge_parent` before paying for
 a generation. `StateUnreadable` passes through their per-query and
 per-reply `except Exception` blocks, so an unreadable state file ends the

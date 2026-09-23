@@ -107,7 +107,10 @@ def main():
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
     if args.dry_run:
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": "04:30–22:00",
-                          "target_posts": 6, "max_profile_posts": 7, "replies": "unlimited",
+                          "min_target_posts": config.MIN_TARGET_POSTS_PER_DAY,
+                          "target_posts": config.TARGET_POSTS_PER_DAY,
+                          "max_profile_posts": config.MAX_PROFILE_POSTS_PER_DAY,
+                          "replies": "unlimited",
                           "quotes": 0, "reposts": 0, "slots": SLOTS,
                           "jobs": [job.id for job in scheduler.get_jobs()]}, indent=2))
         return
@@ -125,7 +128,7 @@ def main():
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
     scheduler.start(paused=True)
     was_active = None
-    log.info("Bot started: six useful AI originals (max seven); replies unlimited; Toronto 04:30–22:00.")
+    log.info("Bot started: at least three useful AI originals targeted (max eight); replies unlimited; Toronto 04:30–22:00.")
     try:
         while not stop.is_set():
             active = is_active()

@@ -7,7 +7,7 @@ every post and respond naturally in conversations.
 ## Current publishing policy
 
 - **Active daily: 04:30–22:00 America/Toronto**, with daylight saving handled automatically.
-- **Six original posts planned; seven is the hard daily ceiling.** Weak drafts are skipped.
+- **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
@@ -16,8 +16,9 @@ every post and respond naturally in conversations.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **No automatic quote tweets, reposts, self-recycling, startup bursts, or burst threads.**
-- Every scheduled original uses a fetched primary source, a specific takeaway,
-  duplicate checks, and a separate editorial review before publishing.
+- Every scheduled original uses a fetched trusted source, prefers fresh AI
+  launches/articles when available, carries a specific takeaway, duplicate
+  checks, and a separate editorial review before publishing.
 - The 500,000-view target is tracked using observed views of originals published
   in the last seven days. Public view counters cannot identify home-timeline views.
 
@@ -29,13 +30,14 @@ a new action after 22:00. An already-issued request may still finish remotely.
 
 | Toronto time | Reader value |
 |---|---|
-| 05:00 | An AI update worth understanding |
-| 08:00 | A practical AI workflow |
-| 11:30 | A clear explanation of an AI concept |
-| 14:30 | A model or tool update and its consequences |
-| 17:30 | An informed take on an AI tradeoff |
-| 20:30 | An idea worth saving or sharing |
-| 21:30 | Optional seventh post, only for an exceptional update from the last six hours |
+| 05:00 | Priority AI update worth understanding |
+| 07:15 | A practical AI workflow |
+| 09:30 | Priority AI article or model update with a sharp consequence |
+| 11:45 | A clear explanation of an AI concept |
+| 14:00 | A model or tool update and its consequences |
+| 16:15 | Priority informed take on an AI tradeoff |
+| 18:30 | An idea worth saving or sharing |
+| 20:45 | Optional eighth post for an exceptional update or unusually useful source |
 
 Each slot has a short retry window. Restarts do not trigger a backlog of posts.
 Originals have their own scheduler worker so reply scans cannot starve them.
@@ -80,7 +82,7 @@ from `src/x/twitter_client.py` (issue #111), and the scheduled jobs carry no
 such branch.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
-`.env` or strategy values cannot lift the seven-post ceiling or restore quotes.
+`.env` or strategy values cannot lift the eight-post ceiling or restore quotes.
 The configured reply provider and browser pacing still apply.
 
 ## License
