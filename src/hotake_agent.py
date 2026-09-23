@@ -46,7 +46,7 @@ def _url_publication_date(url: str) -> Optional[datetime]:
         return None
 
 
-# Content-farm rejectlist (per CLAUDE.md): the prompt tells the agent to
+# Content-farm rejectlist: the prompt tells the agent to
 # avoid these, but the LLM keeps slipping them through (saw cryptonews.net
 # land in a hot take on 2026-04-27). This is the deterministic Python-side
 # gate: any URL hosted on these domains → SKIP, no exceptions.
@@ -91,7 +91,7 @@ _REJECTED_SOURCE_DOMAINS = (
 
 
 def _is_rejected_source(url: str) -> bool:
-    """True if `url` is hosted on a content-farm rejected by CLAUDE.md."""
+    """True if `url` is hosted on a domain in `_REJECTED_SOURCE_DOMAINS`."""
     if not url:
         return False
     u = url.lower()
@@ -497,7 +497,7 @@ Write more like your best tweets. Avoid the patterns of your worst ones."""
     url_match = _HOTAKE_URL_RE.search(tweet)
     if url_match:
         url = url_match.group(0)
-        # Source rejectlist (CLAUDE.md content-farm list). Prompt-side rule
+        # Source rejectlist (`_REJECTED_SOURCE_DOMAINS`). Prompt-side rule
         # leaks ~once a day, so this is the deterministic backstop.
         if _is_rejected_source(url):
             log.info(f"[HOTAKE] Source on content-farm rejectlist — SKIPPING: {url}")

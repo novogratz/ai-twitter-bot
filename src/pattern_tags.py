@@ -18,7 +18,7 @@ safety bucket for outputs that don't cleanly fit any of them.
 import re
 from typing import Optional
 
-# Canonical pattern IDs. Mirror the 6 in CLAUDE.md / personality / prompts.
+# Canonical pattern IDs. Mirror the 6 in docs/HISTORY.md / personality / prompts.
 PATTERN_IDS = {
     "REPETITION",      # 1. kill repetition ("OpenAI raised. Then raised.")
     "DIALOGUE",        # 2. two-line dialogue (investor/founder, médecin/syndicat)
