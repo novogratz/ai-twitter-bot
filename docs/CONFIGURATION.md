@@ -15,6 +15,7 @@ supersede the historical surfaces listed below:
 | `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job`, `replyback_job` and `babysit_job`; read at call time |
 | `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers |
+| `LIKE_BOT_PER_CYCLE` | Environment only; `live_strategy.json` cannot raise it |
 
 Legacy profile job caps do not add posting slots. `get_live_cap` cannot lift the
 hard ceiling, restore quotes/reposts, or impose a daily reply limit.

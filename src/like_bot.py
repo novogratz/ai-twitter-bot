@@ -23,7 +23,7 @@ import traceback
 import urllib.parse
 import webbrowser
 
-from .config import _PROJECT_ROOT, get_live_cap
+from .config import _PROJECT_ROOT
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
@@ -39,6 +39,7 @@ LIKE_QUERIES = [
 ]
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
 
+# Environment only: live_strategy.json must not raise likes per cycle.
 LIKES_PER_CYCLE = int(os.environ.get("LIKE_BOT_PER_CYCLE", "40"))
 LIKE_BOT_DAILY_CAP = int(os.environ.get("LIKE_BOT_DAILY_CAP", "3000"))
 LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
@@ -136,7 +137,7 @@ def run_like_cycle():
         # Pause briefly between batches so the action doesn't burst.
         clicked_total = 0
         # Two batches of half so we space out the JS clicks slightly.
-        cycle_cap = min(get_live_cap("LIKE_BOT_PER_CYCLE", LIKES_PER_CYCLE), remaining)
+        cycle_cap = min(LIKES_PER_CYCLE, remaining)
         first = cycle_cap // 2 + cycle_cap % 2
         second = cycle_cap - first
         clicked_total += _click_likes_on_page(first)
