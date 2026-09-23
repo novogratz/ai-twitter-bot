@@ -61,9 +61,38 @@ capped per day.
 _Avoid_: comment, response
 
 **Debate turn**:
-A Reply in an ongoing exchange with one author who answered the account;
-capped per author per day.
+A Reply to an Engager, in answer to what they said to the account; capped per
+Engager per day.
 _Avoid_: rally, round, comeback
+
+### Accounts
+
+**Engager**:
+Someone who replied to or mentioned the account.
+_Avoid_: commenter, fan
+
+**Seed account**:
+An account the Operator lists as worth following; the only kind the account
+follows without a prior relationship, and never unfollows.
+_Avoid_: whitelisted account, tier, discovered account
+
+**Follow-back**:
+Following an account that already follows this one.
+_Avoid_: reciprocal follow, reciprocity
+
+**Stranger**:
+An account that is neither a Seed account, a follower, nor an Engager; never
+followed.
+_Avoid_: discovered account, feed account
+
+**Blocked account**:
+An account the Operator bars from any interaction.
+_Avoid_: banned, blacklisted
+
+**Respected account**:
+An account engaged normally but never criticised or named in the account's
+own commentary.
+_Avoid_: protected account, influencer
 
 ### Time and people
 
