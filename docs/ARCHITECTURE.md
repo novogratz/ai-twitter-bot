@@ -240,6 +240,10 @@ These are how the code behaves today, not design intent:
   hard rules or the respect list.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
+- `reply_job` (`reply_bot`, only with `ENABLE_REPLY_SEARCH=1`) still keeps
+  its own filters and has defect 3 of issue #100: it marks candidates before
+  sending and saves them into `replied_tweets.json` at the end of the cycle,
+  and its `except Exception` swallows `StateUnreadable`.
 
 ## Legacy modules
 
