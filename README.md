@@ -42,10 +42,13 @@ Requires macOS, Safari with JavaScript from Apple Events enabled, Python 3.12+,
 (`EDITORIAL_OLLAMA_MODEL`); replies use the existing reply model.
 
 ```bash
-pip install -r requirements.txt
+uv venv && uv pip install -r requirements.txt
 cp .env.example .env
 uv run python main.py
 ```
+
+`.env.example` still carries the old handle and `CONTENT_LANG_PRIMARY=fr`;
+fix both before the first run ([setup](docs/OPERATIONS.md#setup)).
 
 ```bash
 uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM
