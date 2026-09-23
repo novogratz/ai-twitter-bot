@@ -8,6 +8,7 @@ import threading
 import time
 import urllib.parse
 from datetime import datetime
+from enum import Enum
 import webbrowser
 from ..core.config import _PROJECT_ROOT, BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
 from ..core.json_safety import sanitize_for_json
@@ -626,40 +627,156 @@ def _mark_liked(url: str) -> None:
     _save_liked_set(s)
 
 
-def like_tweet(tweet_url: str = ""):
-    """Like the currently open tweet using the 'l' keyboard shortcut.
+class LikeOutcome(Enum):
+    """What `like_tweet` did. Truthy only for LIKED, so a caller that tests
+    the result counts only the likes that shipped."""
+    LIKED = "liked"
+    ALREADY_LIKED = "already_liked"
+    FAILED = "failed"
 
-    The 'l' shortcut TOGGLES — pressing it on an already-liked tweet
-    will UNLIKE. User incident 2026-05-18: bot retweeted+liked a tweet
-    on one cycle, then replied to it later and the reply path's like
-    call un-liked the original.
+    def __bool__(self):
+        return self is LikeOutcome.LIKED
 
-    Fix: if tweet_url is provided AND it's already in our liked-cache,
-    skip the press. Callers should pass the URL whenever known.
+
+# The article is identified before anything is clicked: the post with status
+# ID __TARGET_ID__, else the focused post, else the status page's own post.
+# Only a data-testid="like" button is clicked, never "unlike", so a like can
+# neither toggle off nor land on another post. Mode "read" clicks nothing;
+# "list" returns the status URL of every post on the page.
+_POSTS_JS = r"""
+(function(mode, targetId) {
+    var SEL = 'article[data-testid="tweet"]';
+    function statusId(href) {
+        var m = (href || '').match(/\/status\/(\d+)/);
+        return m ? m[1] : '';
+    }
+    // The post's own timestamp link comes before a quoted post's.
+    function statusLink(art) {
+        var t = art.querySelector('a[href*="/status/"] time');
+        var a = t && t.closest('a');
+        return a ? a.href : '';
+    }
+    var all = document.querySelectorAll(SEL);
+    var i;
+    if (mode === 'list') {
+        var posts = [];
+        for (i = 0; i < all.length; i++) posts.push(statusLink(all[i]));
+        return JSON.stringify({page: location.href, posts: posts});
+    }
+    var art = null, id = targetId;
+    if (!id) {
+        var el = document.activeElement;
+        if (el && el !== document.body && el !== document.documentElement) {
+            art = el.closest ? el.closest(SEL) : null;
+        } else {
+            id = statusId(location.pathname);
+        }
+    }
+    for (i = 0; id && !art && i < all.length; i++) {
+        if (statusId(statusLink(all[i])) === id) art = all[i];
+    }
+    var url = art ? statusLink(art) : '';
+    if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
+    if (art.querySelector('[data-testid="unlike"]')) {
+        return JSON.stringify({url: url, result: 'already_liked'});
+    }
+    var button = art.querySelector('[data-testid="like"]');
+    if (!button) return JSON.stringify({url: url, result: 'failed'});
+    if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
+    button.click();
+    return JSON.stringify({url: url, result: 'clicked'});
+})("__MODE__", "__TARGET_ID__")
+"""
+
+
+def _run_page_js(js: str) -> str:
+    """Run `js` in Safari's front tab and return its result, "" when the
+    osascript call fails."""
+    import tempfile as _tf
+    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+    tmp.write(js)
+    tmp.close()
+    try:
+        require_active()
+        res = subprocess.run(["osascript", "-e", f'''
+        set jsCode to (read POSIX file "{tmp.name}")
+        tell application "Safari"
+            do JavaScript jsCode in current tab of front window
+        end tell
+        '''], capture_output=True, text=True, timeout=10)
+        return (res.stdout or "").strip()
+    except OutsideActiveHours:
+        raise
+    except Exception:
+        return ""
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+
+
+def _page_posts(mode: str, target_id: str = "") -> dict:
+    """Run `_POSTS_JS` in `mode` ("list", "read" or "press") on the post
+    with status ID `target_id`; {} when the page gave no answer."""
+    js = _POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
+    try:
+        data = json.loads(_run_page_js(js) or "null")
+    except ValueError:
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def like_tweet(tweet_url: str = "") -> "LikeOutcome | _DryRunRecorded":
+    """Like one post of the open page: `tweet_url`'s when given, else the
+    focused post, else the open status page's own post.
+
+    The 'l' shortcut toggles and acts on X's own selection, so it is never
+    pressed: the post is found by its status ID and only its "like" button
+    is clicked. LIKED is returned once the page shows the post liked; the
+    liked cache and the ledger then carry the URL read on the page. A post
+    in the liked cache or shown as liked is left alone. DRY_RUN writes a
+    dry-run ledger row and returns DRY_RUN_RECORDED.
     """
     if tweet_url and _already_liked(tweet_url):
-        log.info(f"[LIKE] already liked {tweet_url[-50:]} — skipping (would toggle OFF).")
-        return
+        log.info(f"[LIKE] already liked {tweet_url[-50:]}; skipping.")
+        return LikeOutcome.ALREADY_LIKED
     from ..guards import action_guard
     from ..core import config as _cfg
+    from . import x_urls
     if _cfg.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:] if tweet_url else '(open tweet)'}.")
         action_guard.record(action_guard.LIKE, target=tweet_url, dry_run=True)
-        return
-    script = '''
-    tell application "System Events"
-        keystroke "l"
-    end tell
-    '''
-    log.info("Liking tweet...")
-    if _run_applescript(script):
-        time.sleep(1)
-        log.info("Tweet liked!")
-        if tweet_url:
-            _mark_liked(tweet_url)
-        action_guard.record(action_guard.LIKE, target=tweet_url)
-    else:
-        log.info("Failed to like tweet, continuing...")
+        return DRY_RUN_RECORDED
+    target = x_urls.status_id(tweet_url)
+    if tweet_url and not target:
+        log.info(f"[LIKE] {tweet_url} carries no status ID; nothing clicked.")
+        return LikeOutcome.FAILED
+    if not target:
+        post = _page_posts("read")
+        target = x_urls.status_id(post.get("url") or "")
+        if not target:
+            log.info("[LIKE] No identifiable post on the open page; nothing clicked.")
+            return LikeOutcome.FAILED
+        if post.get("result") == "already_liked" or _already_liked(post["url"]):
+            log.info(f"[LIKE] already liked {post['url']}; skipping.")
+            return LikeOutcome.ALREADY_LIKED
+    pressed = _page_posts("press", target)
+    url = pressed.get("url") or ""
+    if pressed.get("result") == "already_liked":
+        log.info(f"[LIKE] already liked {url}; skipping.")
+        return LikeOutcome.ALREADY_LIKED
+    if pressed.get("result") != "clicked":
+        log.info(f"[LIKE] Post {target} or its like button not found on the page; nothing clicked.")
+        return LikeOutcome.FAILED
+    time.sleep(1)
+    if _page_posts("read", target).get("result") != "already_liked":
+        log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked; nothing recorded.")
+        return LikeOutcome.FAILED
+    log.info(f"[LIKE] Liked {url}")
+    _mark_liked(url)
+    action_guard.record(action_guard.LIKE, target=url)
+    return LikeOutcome.LIKED
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
@@ -1162,38 +1279,66 @@ def follow_account(username: str, reciprocal: bool = False,
         return ok
 
 
-def visit_profile_and_like(username: str, like_count: int = 2):
-    """Visit a user's profile and like their latest tweets for reciprocity.
+def _like_posts_on_page(count: int, wanted, page_ok=lambda page: True) -> list[LikeOutcome]:
+    """Like up to `count` posts of the open page, in page order, whose
+    status URL `wanted` accepts, never our own. Every like goes through
+    `like_tweet` with the post's URL; the walk stops at the first failure.
+    [FAILED] when the page cannot be listed or `page_ok` refuses its URL."""
+    from . import x_urls
+    listing = _page_posts("list")
+    page = listing.get("page") or ""
+    if not isinstance(listing.get("posts"), list) or not page_ok(page):
+        log.info(f"[LIKE] Could not list the expected posts on {page or 'the open page'}; nothing clicked.")
+        return [LikeOutcome.FAILED]
+    outcomes = []
+    for url in listing["posts"]:
+        if len(outcomes) >= count:
+            break
+        if (not isinstance(url, str) or not x_urls.status_id(url)
+                or is_own_post({"url": url}) or not wanted(url)):
+            continue
+        outcome = like_tweet(url)
+        outcomes.append(outcome)
+        if outcome is LikeOutcome.FAILED:
+            break
+    return outcomes
+
+
+def _like_summary(outcomes: list[LikeOutcome]) -> str:
+    return ", ".join(f"{sum(o is kind for o in outcomes)} {kind.value}" for kind in LikeOutcome)
+
+
+def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutcome]:
+    """Visit a user's profile and like up to `like_count` of the posts it
+    shows, their own only (reposts of others are skipped). Returns one
+    LikeOutcome per post handled; `like_count=0` and DRY_RUN open nothing.
 
     Gated by `_profile_visit_allowed` (2026-06-07 home/search-only mandate):
     reciprocity likes happen when we meet people on feeds/search, not by
     visiting their profile."""
     if not _profile_visit_allowed(username):
         log.info(f"[LIKE] profile visit blocked (home/search-only mandate): @{username}")
-        return
+        return []
+    if like_count <= 0:
+        return []
+    from ..core import config as _cfg
+    from . import x_urls
+    if _cfg.dry_run():
+        log.info(f"[LIKE][DRY_RUN] would like up to {like_count} posts of @{username}.")
+        return []
+    handle = username.strip().lstrip("@").lower()
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
-        time.sleep(5)
-
-        log.info(f"Opening latest tweet and liking {like_count} tweets...")
-        _navigate_to_first_tweet()
-        time.sleep(3)
-
-        like_tweet()
-        for _ in range(like_count - 1):
+        try:
+            time.sleep(5)
+            outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
+            log.info(f"[LIKE] @{username}: {_like_summary(outcomes)}.")
             time.sleep(1)
-            _run_applescript('''
-            tell application "System Events"
-                keystroke "j"
-            end tell
-            ''')
-            time.sleep(1)
-            like_tweet()
-
-        time.sleep(1)
-        close_front_tab()
+            return outcomes
+        finally:
+            close_front_tab()
 
 
 def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
@@ -1647,43 +1792,40 @@ def pin_own_tweet(tweet_url: str) -> bool:
         return step3 in ("CONFIRMED", "NO_CONFIRM")
 
 
-def like_own_tweet_replies():
-    """Visit own profile, open latest tweet, and like replies to build loyalty."""
+def like_own_tweet_replies() -> list[LikeOutcome]:
+    """Visit own profile, open latest tweet, and like the replies under it,
+    never our own posts, to build loyalty. Returns one LikeOutcome per post
+    handled; DRY_RUN opens nothing."""
     from ..core import config as _cfg
     if _cfg.dry_run():
         log.info("[NOTIFY][DRY_RUN] would like replies on our latest tweet.")
-        return
+        return []
+    # Cooled down 8→3 (operator 2026-06-15: too many likes tripped the
+    # automation flag). Liking our own engagers is the most defensible
+    # like, but fewer is calmer. Env-tunable.
+    try:
+        _n_like = max(0, int(os.environ.get("NOTIFY_LIKE_REPLIES_COUNT", "3")))
+    except (TypeError, ValueError):
+        _n_like = 3
+    if _n_like == 0:
+        return []
     with _safari_lock:
         log.info("[NOTIFY] Opening own profile...")
         webbrowser.open(BOT_PROFILE_URL)
-        time.sleep(5)
-
-        log.info("[NOTIFY] Opening latest tweet...")
-        _navigate_to_first_tweet()
-        time.sleep(4)
-
-        # Cooled down 8→3 (operator 2026-06-15: too many likes tripped the
-        # automation flag). Liking our own engagers is the most defensible
-        # like, but fewer is calmer. Env-tunable.
         try:
-            _n_like = max(0, int(os.environ.get("NOTIFY_LIKE_REPLIES_COUNT", "3")))
-        except (TypeError, ValueError):
-            _n_like = 3
-        log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
-        if _n_like > 0:
-            _run_applescript(f'''
-            tell application "System Events"
-                repeat {_n_like} times
-                    keystroke "j"
-                    delay 0.5
-                    keystroke "l"
-                    delay 0.8
-                end repeat
-            end tell
-            ''')
-        time.sleep(2)
-        log.info(f"[NOTIFY] Liked up to {_n_like} replies!")
-        close_front_tab()
+            time.sleep(5)
+            log.info("[NOTIFY] Opening latest tweet...")
+            _navigate_to_first_tweet()
+            time.sleep(4)
+            log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
+            # Off our own status page, "not ours" would match any post.
+            outcomes = _like_posts_on_page(_n_like, lambda url: True,
+                                           page_ok=lambda page: is_own_post({"url": page}))
+            log.info(f"[NOTIFY] Replies: {_like_summary(outcomes)}.")
+            time.sleep(2)
+            return outcomes
+        finally:
+            close_front_tab()
 
 
 def scrape_own_tweet_and_replies():

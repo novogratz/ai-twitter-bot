@@ -1686,7 +1686,7 @@ def test_replyback_reciprocity_never_follows(monkeypatch):
     from src.replies import notify_bot as nb
 
     visited = []
-    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: visited.append(h))
+    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: visited.append(h) or [])
     monkeypatch.setattr(nb, "follow_account",
                         lambda *a, **k: pytest.fail("replyback must not follow"), raising=False)
     monkeypatch.setattr(nb.random, "random", lambda: 0.0)

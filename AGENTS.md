@@ -62,6 +62,7 @@ Each one is a bug that shipped live. The full incident stories are in
   `True` only. A failed AppleScript step is not a shipped action: return
   `False` and write no ledger row. Neither is a dry run: it writes a
   dry-run ledger row and returns the falsy `DRY_RUN_RECORDED`.
+  `like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.
@@ -73,7 +74,9 @@ Each one is a bug that shipped live. The full incident stories are in
   a subprocess or a network write is read inside the function, never as a
   module constant. `DRY_RUN` is read through `config.dry_run()`.
 - **Keyboard shortcuts toggle.** A retweet keystroke on a retweeted post
-  un-retweets it: know the state before pressing.
+  un-retweets it: know the state before pressing. A shortcut also acts on
+  X's own selection, not on the post you read: likes click the `like`
+  button of an article found by status ID instead.
 - **Trim with `humanizer.smart_trim`.** A bare `[:N]` slice on outgoing
   text once published a reply cut mid-word.
 - **Fix the family.** When a bug ships, grep every surface for the same

@@ -14,7 +14,7 @@ import time
 import traceback
 from ..core.logger import log
 from ..core.config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
-from ..x.twitter_client import visit_profile_and_like, follow_account, _profile_visit_allowed
+from ..x.twitter_client import visit_profile_and_like, follow_account, _profile_visit_allowed, LikeOutcome
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
@@ -104,6 +104,7 @@ def run_engage_cycle():
     picks = (vip_picks + rest)[:count]
 
     log.info(f"[ENGAGE] Visiting {len(picks)} profiles (pool size: {len(pool)})...")
+    liked = 0
     for username in picks:
         try:
             if username not in followed:
@@ -126,14 +127,15 @@ def run_engage_cycle():
             # tripped the automation flag).
             like_count = 2 if username in VIP_ACCOUNTS else 1
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
-            visit_profile_and_like(username, like_count=like_count)
+            outcomes = visit_profile_and_like(username, like_count=like_count)
+            liked += sum(o is LikeOutcome.LIKED for o in outcomes)
             time.sleep(random.randint(3, 5))
         except Exception:
             log.info(f"[ENGAGE] Failed to engage with @{username}:")
             traceback.print_exc()
 
     _save_followed(followed)
-    log.info(f"[ENGAGE] Done. Engaged with {len(picks)} accounts.")
+    log.info(f"[ENGAGE] Done. Visited {len(picks)} accounts, liked {liked} posts.")
 
 
 def safe_run_engage_cycle():

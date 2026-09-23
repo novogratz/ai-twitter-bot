@@ -71,10 +71,11 @@ slot needs news from the last six hours and an exceptional-value approval.
   identity. The replyback profile likes still check both.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
-- `DRY_RUN=1` stops every browser write, including the likes and pins that
-  bypass the ledger. A dry-run reply never marks the tweet as answered, and
-  a dry-run follow never enters `followed_accounts.json` or the
-  follow-engagers state.
+- `DRY_RUN=1` stops every browser write, including the `like_job` likes and
+  the pins that bypass the ledger. The reciprocity and notify likes go
+  through `like_tweet` and its ledger: under `DRY_RUN` they open nothing. A
+  dry-run reply never marks the tweet as answered, and a dry-run follow
+  never enters `followed_accounts.json` or the follow-engagers state.
 
 ## Inspection and recovery
 
