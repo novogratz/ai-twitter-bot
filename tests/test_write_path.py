@@ -179,6 +179,24 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
     assert validated and validated[-1].endswith("(typo)")
 
 
+def test_language_check_judges_the_text_before_the_typo(monkeypatch):
+    from src import content_guard, direct_reply, humanizer, twitter_client
+
+    _dry_run_reply_path(monkeypatch)
+    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", "typofriend")
+    monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
+    judged, validated = [], []
+    monkeypatch.setattr(direct_reply, "_looks_english", lambda text: judged.append(text) or False)
+    real_validate = content_guard.validate
+    monkeypatch.setattr(content_guard, "validate",
+                        lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
+
+    url = "https://x.com/typofriend/status/2063500000000000103"
+    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is True
+    assert judged and not judged[-1].endswith("(typo)")
+    assert validated[-1].endswith("(typo)")
+
 def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
     from src import content_guard, humanizer, twitter_client
     from src.replied_store import load_replied

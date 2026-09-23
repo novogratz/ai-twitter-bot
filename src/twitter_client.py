@@ -1038,18 +1038,31 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         reply_text = trimmed
     from .humanizer import casualize
     reply_text = casualize(reply_text)  # human texture (2026-06-10)
-    # Operator mandate 2026-06-05: replies to @Graphseo (and ONLY him) always
-    # carry exactly ONE human-looking keyboard typo — he tweeted that spelling
-    # mistakes are the only proof of humanity. Enforced here so every reply
-    # path obeys, whichever bot generated the text. Injected before validate
-    # so the text that ships is the text that was checked, and before the
-    # dedup mark so a refused reply leaves the tweet fresh.
-    _typo_handles = {h.strip().lower() for h in os.environ.get(
-        "HUMAN_TYPO_HANDLES", "").split(",") if h.strip()}
+    # FR-forced parents (operator 2026-06-07: "i saw some english on Julien
+    # response"). Chokepoint gate, BEFORE the dedup mark below: an English
+    # reply to an always-French friend never ships, and the post stays
+    # unmarked so a later cycle can retry it with the FR generator.
     try:
         _parent_handle = tweet_url.split("x.com/")[1].split("/")[0].lower()
     except (IndexError, AttributeError):
         _parent_handle = ""
+    _fr_forced = {h.strip().lstrip("@").lower() for h in os.environ.get(
+        "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
+    if _parent_handle in _fr_forced:
+        from .direct_reply import _looks_english
+        if _looks_english(reply_text):
+            log.info(f"[REPLY] FR-forced parent @{_parent_handle} but reply looks "
+                     f"English — refusing (post stays fresh): {reply_text[:80]!r}")
+            return False
+    # Operator mandate 2026-06-05: replies to @Graphseo (and ONLY him) always
+    # carry exactly ONE human-looking keyboard typo — he tweeted that spelling
+    # mistakes are the only proof of humanity. Enforced here so every reply
+    # path obeys, whichever bot generated the text. Injected after the
+    # language check, which must judge the text as written, and before
+    # validate, so the text that ships is the text that was checked. Every
+    # refusal comes before the claim, so a refused reply leaves the tweet fresh.
+    _typo_handles = {h.strip().lower() for h in os.environ.get(
+        "HUMAN_TYPO_HANDLES", "").split(",") if h.strip()}
     if _parent_handle in _typo_handles:
         from .humanizer import inject_human_typo
         reply_text = inject_human_typo(reply_text)
@@ -1058,22 +1071,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
         return False
-    # FR-forced parents (operator 2026-06-07: "i saw some english on Julien
-    # response"). Chokepoint gate, BEFORE the dedup mark below: an English
-    # reply to an always-French friend never ships, and the post stays
-    # unmarked so a later cycle can retry it with the FR generator.
-    try:
-        _fr_parent = tweet_url.split("x.com/")[1].split("/")[0].lower()
-    except (IndexError, AttributeError):
-        _fr_parent = ""
-    _fr_forced = {h.strip().lstrip("@").lower() for h in os.environ.get(
-        "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
-    if _fr_parent in _fr_forced:
-        from .direct_reply import _looks_english
-        if _looks_english(reply_text):
-            log.info(f"[REPLY] FR-forced parent @{_fr_parent} but reply looks "
-                     f"English — refusing (post stays fresh): {reply_text[:80]!r}")
-            return False
     # Debate turn cap, BEFORE the dedup mark: a capped turn stays fresh.
     _debate_author = _status_author(tweet_url) if debate_turn else ""
     if debate_turn:
