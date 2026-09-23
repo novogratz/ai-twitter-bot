@@ -275,6 +275,9 @@ boundaries, bedtime checks at the lock and before AppleScript, the daily
 budget, slot timing and retries, source evidence, review rejection, ambiguous
 submissions, dry-run isolation and reach accounting. `tests/test_guards.py`
 pins the chokepoint guards, including those of legacy modules.
+`tests/test_imports.py` reads `main.py`, `src/`, `bin/`, `scripts/` and
+`tests/` with `ast` and fails when an intra-project import, function-local or
+inside `try/except` included, names a missing module or an undefined name.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript` and `_paste_text` raise, the logger writes to a temporary
