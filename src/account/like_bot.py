@@ -1,34 +1,32 @@
-"""Like-aggressive bot — bulk-like AI infra / asymmetric investing tweets every cycle.
+"""Like-aggressive bot — like AI infra / asymmetric investing tweets every cycle.
 
 Why: a like is the cheapest social signal on X. Each like sends a
 notification → the recipient checks their notifs → many click through
-to /TheAIShrink. With ~20 likes per cycle and ~4 cycles per hour, that's
-~80 outbound notifications/hour.
+to /TheAIShrink.
 
 Strategy:
-  - Every 15 min, pick a niche search query (rotating).
+  - Every 4 min, pick a niche search query (rotating).
   - Open /search?q=... in live or top mode.
-  - Like up to N listed posts through twitter_client._like_posts_on_page,
-    so each like goes through like_tweet: liked cache, Blocked accounts,
-    click then confirmation, ledger row.
+  - Like up to LIKE_BOT_PER_CYCLE listed posts through
+    twitter_client.like_search_posts, so each like goes through like_tweet:
+    liked cache, Blocked accounts, click then confirmation, ledger row.
+    No like starts after LIKE_BOT_CYCLE_SECONDS, so the Safari lock is
+    released for the reply jobs.
   - No replies, no follows — pure engagement noise. Cheap and effective.
 
-Rate-conscious: 15-20 likes/cycle × 4 cycles/hour = ~80/hour. X soft-rate
-on likes is ~1000/hour. We're far below.
+Rate-conscious: 10 likes per cycle by default, at most LIKE_BOT_DAILY_CAP
+(500) a day.
 """
 import os
 import random
-import time
 import traceback
 import urllib.parse
-import webbrowser
 
 from ..core import config
 from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
-from ..guards import action_guard
 from ..x import twitter_client
-from ..x.safari import _safari_lock, close_front_tab, _scroll_page
+from ..x.twitter_client import LikeOutcome
 
 LIKE_QUERIES = [
     "AI datacenter OR power demand lang:en min_faves:50",
@@ -46,11 +44,15 @@ LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
 
 def _likes_per_cycle() -> int:
     # Environment only, read each cycle: live_strategy.json must not raise it.
-    return int(os.environ.get("LIKE_BOT_PER_CYCLE", "40"))
+    return int(os.environ.get("LIKE_BOT_PER_CYCLE", "10"))
 
 
 def _daily_cap() -> int:
-    return int(os.environ.get("LIKE_BOT_DAILY_CAP", "3000"))
+    return int(os.environ.get("LIKE_BOT_DAILY_CAP", "500"))
+
+
+def _cycle_seconds() -> float:
+    return float(os.environ.get("LIKE_BOT_CYCLE_SECONDS", "30"))
 
 
 def _load_daily_state() -> dict:
@@ -77,7 +79,7 @@ def _save_daily_state(state: dict) -> None:
 
 def run_like_cycle():
     """Open a niche search, scroll, like up to N listed posts through
-    `like_tweet`. The daily count adds the LIKED outcomes only."""
+    `like_tweet`. The daily count adds the LIKED and UNCONFIRMED outcomes."""
     state = _load_daily_state()
     daily_cap = _daily_cap()
     remaining = max(0, daily_cap - int(state.get("count") or 0))
@@ -94,36 +96,22 @@ def run_like_cycle():
                  f"tweets on '{query}' ({tab}).")
         return
 
-    with _safari_lock:
-        log.info(f"[LIKE] Opening {tab} search: {query}")
-        webbrowser.open(url)
-        time.sleep(7)
+    log.info(f"[LIKE] {tab} search: {query}")
+    outcomes = []
+    try:
+        twitter_client.like_search_posts(url, cycle_cap, _cycle_seconds(), outcomes)
+    finally:
+        # The walk fills `outcomes` as it goes, so a stop mid-walk still
+        # counts what it clicked. An unconfirmed click may have landed on X:
+        # it counts toward the cap though it has no ledger row.
+        clicked = sum(o in (LikeOutcome.LIKED, LikeOutcome.UNCONFIRMED) for o in outcomes)
+        state["count"] = int(state.get("count") or 0) + clicked
+        _save_daily_state(state)
 
-        # Scroll twice to populate ~20-30 articles.
-        _scroll_page()
-        time.sleep(1)
-        _scroll_page()
-        time.sleep(1)
-
-        outcomes = []
-        liked_before = action_guard.count_today(action_guard.LIKE)
-        try:
-            outcomes = twitter_client._like_posts_on_page(
-                cycle_cap, lambda post: True,
-                page_ok=lambda page: urllib.parse.urlparse(page).path == "/search")
-        finally:
-            # like_tweet writes one ledger row per LIKED and the Safari lock
-            # keeps every other like out, so the ledger delta still counts the
-            # likes that shipped when a stop interrupts the walk.
-            liked = max(0, action_guard.count_today(action_guard.LIKE) - liked_before)
-            state["count"] = int(state.get("count") or 0) + liked
-            _save_daily_state(state)
-
-        close_front_tab()
-
+    liked = sum(o is LikeOutcome.LIKED for o in outcomes)
     log.info(
         f"[LIKE] Liked {liked} tweets on '{query}' ({tab}) "
-        f"[{twitter_client._like_summary(outcomes)}] "
+        f"[{twitter_client.like_summary(outcomes)}] "
         f"({state['count']}/{daily_cap} today)."
     )
 

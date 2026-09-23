@@ -421,11 +421,13 @@ def _mark_liked(url: str) -> None:
 
 class LikeOutcome(Enum):
     """What `like_tweet` did. Truthy only for LIKED, so a caller that tests
-    the result counts only the likes that shipped."""
+    the result counts only the likes that shipped. UNCONFIRMED: the click
+    went out but the page never showed the post liked."""
     LIKED = "liked"
     ALREADY_LIKED = "already_liked"
     BLOCKED = "blocked"
     FAILED = "failed"
+    UNCONFIRMED = "unconfirmed"
 
     def __bool__(self):
         return self is LikeOutcome.LIKED
@@ -529,9 +531,10 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | _DryRunRecorded":
     matched as Reply admission does) returns BLOCKED; nothing is clicked or
     recorded. LIKED is returned once
     the page shows the post liked; the liked cache and the ledger then carry
-    the URL read on the page. A post in the liked cache or shown as liked is
-    left alone. DRY_RUN writes a dry-run ledger row and returns
-    DRY_RUN_RECORDED.
+    the URL read on the page. A click the page does not confirm returns
+    UNCONFIRMED and records nothing. A post in the liked cache or shown as
+    liked is left alone. The page is read and clicked under the Safari lock.
+    DRY_RUN writes a dry-run ledger row and returns DRY_RUN_RECORDED.
     """
     from ..guards import action_guard, reply_admission
     from ..core import config as _cfg
@@ -551,22 +554,23 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | _DryRunRecorded":
     if not target:
         log.info(f"[LIKE] {tweet_url or '(no URL)'} carries no status ID; nothing clicked.")
         return LikeOutcome.FAILED
-    pressed = _page_posts("press", target)
-    url = pressed.get("url") or ""
-    if pressed.get("result") == "already_liked":
-        log.info(f"[LIKE] already liked {url}; skipping.")
-        return LikeOutcome.ALREADY_LIKED
-    if pressed.get("result") != "clicked":
-        log.info(f"[LIKE] Post {target} or its like button not found on the page; nothing clicked.")
-        return LikeOutcome.FAILED
-    time.sleep(1)
-    if _page_posts("read", target).get("result") != "already_liked":
-        log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked; nothing recorded.")
-        return LikeOutcome.FAILED
-    log.info(f"[LIKE] Liked {url}")
-    _mark_liked(url)
-    action_guard.record(action_guard.LIKE, target=url)
-    return LikeOutcome.LIKED
+    with safari._safari_lock:
+        pressed = _page_posts("press", target)
+        url = pressed.get("url") or ""
+        if pressed.get("result") == "already_liked":
+            log.info(f"[LIKE] already liked {url}; skipping.")
+            return LikeOutcome.ALREADY_LIKED
+        if pressed.get("result") != "clicked":
+            log.info(f"[LIKE] Post {target} or its like button not found on the page; nothing clicked.")
+            return LikeOutcome.FAILED
+        time.sleep(1)
+        if _page_posts("read", target).get("result") != "already_liked":
+            log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked; nothing recorded.")
+            return LikeOutcome.UNCONFIRMED
+        log.info(f"[LIKE] Liked {url}")
+        _mark_liked(url)
+        action_guard.record(action_guard.LIKE, target=url)
+        return LikeOutcome.LIKED
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
@@ -1026,33 +1030,76 @@ def follow_account(username: str, reciprocal: bool = False,
         return ok
 
 
-def _like_posts_on_page(count: int, wanted, page_ok=lambda page: True) -> list[LikeOutcome]:
+def _like_posts_on_page(count: int, wanted, page_ok=lambda page: True,
+                        outcomes: list | None = None, deadline: float | None = None) -> list[LikeOutcome]:
     """Like up to `count` posts of the open page, in page order, whose
     status URL `wanted` accepts, never our own. Every like goes through
-    `like_tweet` with the post's URL; the walk stops at the first failure.
-    [FAILED] when the page cannot be listed or `page_ok` refuses its URL."""
+    `like_tweet` with the post's URL; the walk stops at the first FAILED or
+    UNCONFIRMED, and starts no like once `time.monotonic()` reaches
+    `deadline`. Outcomes are appended to `outcomes` as they come, so a
+    caller keeps them when a stop raises mid-walk. [FAILED] when the page
+    cannot be listed or `page_ok` refuses its URL."""
     from . import x_urls
+    outcomes = [] if outcomes is None else outcomes
     listing = _page_posts("list")
     page = listing.get("page") or ""
     if not isinstance(listing.get("posts"), list) or not page_ok(page):
         log.info(f"[LIKE] Could not list the expected posts on {page or 'the open page'}; nothing clicked.")
-        return [LikeOutcome.FAILED]
-    outcomes = []
+        outcomes.append(LikeOutcome.FAILED)
+        return outcomes
+    handled = 0
     for url in listing["posts"]:
-        if len(outcomes) >= count:
+        if handled >= count:
             break
         if (not isinstance(url, str) or not x_urls.status_id(url)
                 or scraper.is_own_post({"url": url}) or not wanted(url)):
             continue
+        if deadline is not None and time.monotonic() >= deadline:
+            log.info("[LIKE] Cycle time is up; no more likes on this page.")
+            break
         outcome = like_tweet(url)
         outcomes.append(outcome)
-        if outcome is LikeOutcome.FAILED:
+        handled += 1
+        if outcome in (LikeOutcome.FAILED, LikeOutcome.UNCONFIRMED):
             break
     return outcomes
 
 
-def _like_summary(outcomes: list[LikeOutcome]) -> str:
+def like_summary(outcomes: list[LikeOutcome]) -> str:
     return ", ".join(f"{sum(o is kind for o in outcomes)} {kind.value}" for kind in LikeOutcome)
+
+
+def like_search_posts(url: str, count: int, seconds: float,
+                      outcomes: list | None = None) -> list[LikeOutcome]:
+    """Open the X search `url`, scroll, and like up to `count` of the posts
+    it lists, never our own, each through `like_tweet`. No like starts once
+    `seconds` have passed since the Safari lock was taken, and nothing is
+    clicked unless the open tab is a search page. Outcomes are appended to
+    `outcomes` as they come, so a caller keeps them when a stop raises
+    mid-walk; the tab is closed even then. DRY_RUN opens nothing."""
+    from ..core import config as _cfg
+    outcomes = [] if outcomes is None else outcomes
+    if _cfg.dry_run():
+        log.info(f"[LIKE][DRY_RUN] would like up to {count} posts of {url}.")
+        return outcomes
+    with safari._safari_lock:
+        deadline = time.monotonic() + seconds
+        log.info(f"[LIKE] Opening search: {url}")
+        webbrowser.open(url)
+        try:
+            time.sleep(7)
+            # Scroll twice to populate ~20-30 articles.
+            safari._scroll_page()
+            time.sleep(1)
+            safari._scroll_page()
+            time.sleep(1)
+            _like_posts_on_page(
+                count, lambda post: True,
+                page_ok=lambda page: urllib.parse.urlparse(page).path == "/search",
+                outcomes=outcomes, deadline=deadline)
+        finally:
+            safari.close_front_tab()
+    return outcomes
 
 
 def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutcome]:
@@ -1081,7 +1128,7 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
         try:
             time.sleep(5)
             outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
-            log.info(f"[LIKE] @{username}: {_like_summary(outcomes)}.")
+            log.info(f"[LIKE] @{username}: {like_summary(outcomes)}.")
             time.sleep(1)
             return outcomes
         finally:
@@ -1094,9 +1141,10 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
     Best-effort. X's tweet-action menu DOM is stable but the wording of the
     'Pin' item varies (FR: 'Épingler à votre profil' / EN: 'Pin to your
     profile'). We click via JS by matching either string. Returns True and
-    writes a ledger row if the pin appeared to succeed (menu item found +
-    clicked + confirm dialog handled), False and no row otherwise. DRY_RUN
-    writes a dry-run ledger row and returns DRY_RUN_RECORDED.
+    writes a ledger row only when the menu item was clicked and the confirm
+    dialog's button was clicked; False and no row otherwise, a missing
+    confirm dialog included. DRY_RUN writes a dry-run ledger row and returns
+    DRY_RUN_RECORDED.
 
     Note: X surfaces a confirmation modal on first pin per session; we
     handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
@@ -1196,9 +1244,11 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
 
         step3 = _exec_js(js_confirm)
         log.info(f"[PIN] Confirm modal: {step3}")
-        shipped = step3 in ("CONFIRMED", "NO_CONFIRM")
+        shipped = step3 == "CONFIRMED"
         if shipped:
             action_guard.record(action_guard.PIN, target=tweet_url)
+        elif step3 == "NO_CONFIRM":
+            log.info(f"[PIN] No confirm dialog after the Pin click; not counted as a pin: {tweet_url}")
         # Whether the confirm modal appeared or not, we leave the page.
         time.sleep(1)
         safari.close_front_tab()
@@ -1234,7 +1284,7 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
             # Off our own status page, "not ours" would match any post.
             outcomes = _like_posts_on_page(_n_like, lambda url: True,
                                            page_ok=lambda page: scraper.is_own_post({"url": page}))
-            log.info(f"[NOTIFY] Replies: {_like_summary(outcomes)}.")
+            log.info(f"[NOTIFY] Replies: {like_summary(outcomes)}.")
             time.sleep(2)
             return outcomes
         finally:

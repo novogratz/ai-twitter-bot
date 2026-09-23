@@ -28,6 +28,18 @@ their order in the file is not strictly chronological.
 > and returns a `LikeOutcome`; the walks list the page's articles instead
 > of pressing `j`. Guards: `tests/test_likes.py`.
 
+> **2026-09-23 — `like_job` and `pin_job` through their chokepoints
+> (issue #142):** `like_job` ran its own JavaScript that clicked the first
+> N like buttons of the tab, with no liked cache, Blocked account check,
+> confirmation or ledger row, and `pin_job` wrote no ledger row. Both now
+> write through `like_tweet` and `pin_own_tweet`. A like through
+> `like_tweet` costs two `osascript` calls and a second of confirmation, so
+> the old defaults (40 a cycle, 3000 a day) would have held the Safari lock
+> for about two minutes every 4 min. Operator decision: `like_job` drops to 10 a
+> cycle and 500 a day, and starts no like 30 s after taking the lock. A pin
+> counts only once X's confirm dialog was clicked. Guards:
+> `tests/test_like_pin_jobs.py`.
+
 ---
 
 > **You'll hate me until I'm right.**

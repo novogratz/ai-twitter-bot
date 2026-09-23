@@ -237,10 +237,10 @@ Files written by active jobs:
 | `followed_accounts.json` | follow paths | Accounts followed by the bot |
 | `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried |
-| `like_bot_state.json` | `like_bot` | Daily like count |
+| `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included |
 | `liked_tweets.json` | `like_tweet` | Tweets already liked |
 | `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers |
-| `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day |
+| `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds |
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart |

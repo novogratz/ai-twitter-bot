@@ -2,9 +2,10 @@
 
 Single chokepoint for rate-limits, daily caps, anti-churn and the follow
 policy. Wired into the lowest-level write functions in twitter_client
-(post_tweet / reply_* / follow_account / unfollow_account / like / pin) so every
+(post_tweet / reply_* / follow_account / unfollow_account) so every
 caller — whichever of the ~30 bots — is governed by the same rules without
-rewriting each bot.
+rewriting each bot. Likes and pins are recorded in the ledger, not
+governed: no cap or spacing applies to them here.
 
 This bot is Safari/AppleScript driven (no X API), so "respect API rate limits
 / back off on 429" maps to Safari write-pacing: per-action daily caps, a

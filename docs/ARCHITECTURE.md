@@ -171,7 +171,8 @@ Under `DRY_RUN` these functions write a dry-run ledger row and return
 `DRY_RUN_RECORDED`, which is falsy: a caller that persists on a truthy
 result persists nothing after a dry run, and one that must tell a dry run
 from a refusal compares with `is` (`follow_engagers_bot`). One limit:
-`True` means `osascript` ran the keystrokes, not that X confirmed them.
+`True` means `osascript` ran the keystrokes, not that X confirmed them;
+`pin_own_tweet` returns `True` only once it clicked X's confirm dialog.
 `unfollow_account`, which no active job calls, reads both page answers and
 returns `True`, with its ledger row, only once the page reported the click on
 X's confirmation sheet. If `_run_js` times out (15 s) after that click, the
@@ -188,20 +189,30 @@ never `unlike`. A post in `liked_tweets.json` or shown as liked returns
 `ALREADY_LIKED`; a post not found returns `FAILED`. After the click it
 reads the article again and returns `LIKED` only once the button shows
 `unlike`; the ledger row and the cache entry then carry the URL read on the
-page. That read, about a second after the click, sees X's optimistic
+page. A click the page does not show returns `UNCONFIRMED`, falsy, with no
+ledger row or cache entry. `like_tweet` reads and clicks under the Safari
+lock, which is reentrant, so a caller that already holds it is unchanged. That read, about a second after the click, sees X's optimistic
 interface: it proves the page shows the like, not that X accepted it.
-`visit_profile_and_like`, `like_own_tweet_replies` and `like_job` list the
-articles on the page and call it with each post's URL: the profile's own
-posts for the first, the replies under our latest post for the second, the
-posts of a niche search for `like_job`, never our own posts. A `BLOCKED`
-post is skipped and the walk goes on; a `FAILED` one stops it. All three
-open nothing under `DRY_RUN`; the first two close their tab even when a
-like raises. `like_job` adds to its daily count the likes the ledger
-recorded during its walk, so a stop mid-walk still counts them.
+`visit_profile_and_like`, `like_own_tweet_replies` and `like_search_posts`
+list the articles on the page and call it with each post's URL: the
+profile's own posts for the first, the replies under our latest post for
+the second, the posts of a niche search for `like_job` for the third, never
+our own posts. A `BLOCKED` post is skipped and the walk goes on; a `FAILED`
+or `UNCONFIRMED` one stops it. All three open nothing under `DRY_RUN` and
+close their tab even when a like raises. `like_search_posts` starts no like
+once `LIKE_BOT_CYCLE_SECONDS` (30 s) have passed since it took the Safari
+lock, and fills the caller's outcome list as it goes: `like_job` adds the
+`LIKED` and `UNCONFIRMED` outcomes to its daily count, so a stop mid-walk
+still counts them, and a click that may have landed on X counts toward the
+cap without a ledger row.
 
-`pin_own_tweet` writes a `pin` ledger row when the pin went through, and a
-dry-run row under `DRY_RUN`, after which `pin_job` keeps its daily attempt
-unspent. A `pin` row is not a profile publication.
+`pin_own_tweet` writes a `pin` ledger row and returns `True` only when it
+clicked X's confirm dialog. With no confirm dialog (`NO_CONFIRM`) it logs
+it, writes no row and returns `False`: `pin_job` then spends its daily
+attempt and leaves its pin history unchanged. Under `DRY_RUN` it writes a
+dry-run row; `pin_job` marks the day under `dry_run_date` in
+`pin_daily_state.json`, which stops further dry runs that day without
+spending the live attempt. A `pin` row is not a profile publication.
 
 No write function exists for quotes, reposts, threads, GIF posts or
 self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
