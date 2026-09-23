@@ -616,6 +616,7 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
 
 
 _SPACING_WAIT_SLICE_SECONDS = 1.0
+_sleep = time.sleep
 
 
 def _wait_out_reply_spacing(source_name: str) -> None:
@@ -632,7 +633,7 @@ def _wait_out_reply_spacing(source_name: str) -> None:
     while remaining > 0:
         require_active()
         step = min(remaining, _SPACING_WAIT_SLICE_SECONDS)
-        time.sleep(step)
+        _sleep(step)
         remaining -= step
 
 

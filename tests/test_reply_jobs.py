@@ -245,7 +245,7 @@ def spacing(pipeline, monkeypatch):
         s.gap_after_send.append(ag.spacing_gap(ag.REPLY))
         return True
 
-    monkeypatch.setattr(dr, "time", SimpleNamespace(sleep=sleep))
+    monkeypatch.setattr(dr, "_sleep", sleep)
     monkeypatch.setattr(dr, "reply_to_tweet", chokepoint)
     return s
 
@@ -285,7 +285,12 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
     s = spacing
     monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)  # every gap is exactly the minimum
     ag.record(ag.REPLY, fresh("earlier"))
-    s.on_sleep = lambda: len(s.slept) == 1 and ag.record(ag.REPLY, fresh("elsewhere", n=9))
+
+    def another_job_replies_after_the_first_slice():
+        if len(s.slept) == 1:
+            ag.record(ag.REPLY, fresh("elsewhere", n=9))
+
+    s.on_sleep = another_job_replies_after_the_first_slice
     verdicts = []
     judge = reply_admission.judge_reply
     monkeypatch.setattr(reply_admission, "judge_reply",
@@ -302,8 +307,8 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
     assert url in tried, "tried again next cycle, with a new generation"
 
 
-@pytest.mark.parametrize("cut", ["stop", "bedtime"])
-def test_the_spacing_wait_ends_on_a_stop_request_and_at_bedtime(spacing, monkeypatch, cut):
+@pytest.mark.parametrize("cut", ["stop", "overnight"])
+def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypatch, cut):
     import threading
     from src.guards import action_guard as ag, active_hours
 
