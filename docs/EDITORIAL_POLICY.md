@@ -58,8 +58,11 @@ slot needs news from the last six hours and an exceptional-value approval.
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
   ignored on both sides), when the parent is the account's own post, or
   when the URL carries no author handle. This moves the blocklist to the
-  chokepoint without relaxing it; the jobs' own filters stay until they
-  call the admission themselves (issue #100).
+  chokepoint without relaxing it. `direct_reply`, `feed_sweep`,
+  `early_bird` and `mega_watch` ask the same admission before generating;
+  `mega_watch` no longer matches `BLOCKLIST` against the scraper's display
+  name, which is not an identity. `debate` and `replyback` keep their own
+  filters until they call the admission themselves (issue #100).
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write, including the likes and pins that

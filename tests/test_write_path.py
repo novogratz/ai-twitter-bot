@@ -48,7 +48,6 @@ def test_mega_watch_skips_posts_older_than_max_age(monkeypatch):
     fresh = _status_url("bigai", 1)
     stale = _status_url("bigai", 30)
     monkeypatch.setattr(mw, "_watch_pool", lambda: ["bigai"])
-    monkeypatch.setattr(mw, "load_replied", lambda: set())
     monkeypatch.setattr(mw, "scrape_profile_tweets", lambda *a, **k: [
         {"url": stale, "author": "bigai", "text": "GPU clusters are the new power plants"},
         {"url": fresh, "author": "bigai", "text": "GPU clusters are the new power plants"},

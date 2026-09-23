@@ -126,6 +126,6 @@ def _fresh_job_memory(monkeypatch):
     """Each reply job keeps the posts it dropped in a module-level set for
     the life of the process; every test starts with empty ones."""
     import importlib
-    for name in ("direct_reply", "feed_sweeper_bot"):
+    for name in ("direct_reply", "feed_sweeper_bot", "early_bird_bot", "mega_watch_bot"):
         monkeypatch.setattr(importlib.import_module(f"src.{name}"), "_skipped", set())
     yield

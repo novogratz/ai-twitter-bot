@@ -153,3 +153,75 @@ def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeyp
     assert sent == [named_like_us]
     assert fs._skipped == {blocked}
     assert dr._skipped == set(), "each job keeps its own set"
+
+
+# --- early_bird and mega_watch (profile scans) ------------------------------
+
+@pytest.fixture(params=["early_bird", "mega_watch"])
+def profile_job(request, monkeypatch, blocklist):
+    """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
+    from src import direct_reply as dr
+    from src import early_bird_bot as eb
+    from src import evolution_store
+    from src import mega_watch_bot as mw
+
+    module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
+                   "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
+    profiles = {}
+    monkeypatch.setattr(eb, "_scan_pool", lambda: list(profiles))
+    monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
+    monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])
+    monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
+    monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
+    monkeypatch.setattr(module, "_is_on_niche", lambda text: True)
+    monkeypatch.setattr(module, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(module.time, "sleep", lambda *a: None)
+    generated, sent = [], []
+    drafts = {}
+
+    def generate(author, tweet_text, lang="fr"):
+        generated.append(tweet_text)
+        return drafts.get(tweet_text, DRAFT)
+
+    monkeypatch.setattr(module, "_generate_single_reply", generate)
+    monkeypatch.setattr(module, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+    return module, run, profiles, generated, sent, drafts
+
+
+def post(handle, text, n=0):
+    return {"url": fresh(handle, minutes=1, n=n), "text": text, "author": handle}
+
+
+def test_profile_jobs_ask_admission_before_generating(profile_job):
+    module, run, profiles, generated, sent, _ = profile_job
+    blocked, admitted = post("pgm_pm", "blocked", n=1), post("someone", "admitted", n=2)
+    profiles.update({"pgm_pm": [blocked], "someone": [admitted]})
+
+    run()
+
+    assert generated == ["admitted"]
+    assert sent == [admitted["url"]]
+    assert module._skipped == {blocked["url"]}
+
+
+def test_profile_jobs_set_aside_model_skips(profile_job):
+    module, run, profiles, generated, sent, drafts = profile_job
+    declined = post("someone", "declined")
+    profiles["someone"] = [declined]
+    drafts["declined"] = None
+
+    run()
+    run()
+
+    assert generated == ["declined"], "a SKIP is not paid twice"
+    assert sent == []
+    assert module._skipped == {declined["url"]}
+
+
+def test_profile_jobs_stop_on_unreadable_store(profile_job):
+    module, run, profiles, generated, _, _ = profile_job
+    profiles["someone"] = [post("someone", "post")]
+    corrupt_replied_store()
+    with pytest.raises(StateUnreadable):
+        run()
+    assert generated == []
