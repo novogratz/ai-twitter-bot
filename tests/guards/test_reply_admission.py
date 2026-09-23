@@ -2,7 +2,7 @@
 no model. conftest points the Replied store and the ledger at tmp_path and
 fixes the clock at noon Toronto."""
 import threading
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -14,47 +14,16 @@ from src.guards import (
     replied_store,
 )
 from src.core import config, humanizer
-from src.x import x_urls
 from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
+from tests.helpers import url
+
 
 TEXT = "Batching is where inference margins are won or lost."
 
 
-def url(author, n=2063500000000000200):
-    return f"https://x.com/{author}/status/{n}"
-
-
-# --- x_urls -----------------------------------------------------------------
-
-def test_author_comes_from_the_url_handle():
-    assert x_urls.author("https://x.com/SomeOne/status/1?s=20") == "someone"
-    assert x_urls.author("https://x.com/i/web/status/1") == ""
-    assert x_urls.author("https://x.com/someone") == ""
-    assert x_urls.author("") == ""
-
-
-def test_status_id_and_snowflake_age():
-    posted = datetime(2026, 9, 23, 12, 0, tzinfo=timezone.utc)
-    sid = (int(posted.timestamp() * 1000) - x_urls._TWITTER_EPOCH_MS) << 22
-    link = url("someone", sid)
-    assert x_urls.status_id(link) == str(sid)
-    assert x_urls.age(link, now=posted + timedelta(minutes=5)) == timedelta(minutes=5)
-    assert x_urls.age("https://x.com/someone") is None
-
-
-def test_reply_like_tweet_is_a_nested_reply_or_someone_elses_post():
-    assert x_urls.is_reply_like_tweet({"url": url("someone"), "text": "@a hi"})
-    assert x_urls.is_reply_like_tweet({"url": url("someone"), "text": "hi", "is_reply": True})
-    assert not x_urls.is_reply_like_tweet({"url": url("someone"), "text": "hi"})
-    own = {"url": url("SomeOne"), "text": "hi", "author": "someone"}
-    assert not x_urls.is_reply_like_tweet(own, expected_author="@someone")
-    assert x_urls.is_reply_like_tweet(own, expected_author="other")
-    assert x_urls.is_reply_like_tweet({**own, "author": "Some One"}, expected_author="someone")
-    assert not x_urls.is_reply_like_tweet({**own, "author": "unknown"}, expected_author="someone")
-
-
 # --- rules on the post ------------------------------------------------------
+
 
 @pytest.mark.parametrize("handle,token", [
     ("pgm_pm", "pgm_pm"),
@@ -120,6 +89,7 @@ def test_unreadable_store_raises_instead_of_admitting():
 
 
 # --- spacing and text -------------------------------------------------------
+
 
 def test_spacing_waits_for_the_reply_not_the_parent(monkeypatch):
     """A Reply that just shipped must not refuse every candidate before

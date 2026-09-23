@@ -34,7 +34,7 @@ their order in the file is not strictly chronological.
 > press could target different posts. `like_tweet` now clicks the `like`
 > button of an article found by status ID, confirms `unlike` afterwards,
 > and returns a `LikeOutcome`; the walks list the page's articles instead
-> of pressing `j`. Guards: `tests/test_likes.py`.
+> of pressing `j`. Guards: `tests/x/test_likes.py`.
 
 > **2026-09-23 — `like_job` and `pin_job` through their chokepoints
 > (issue #142):** `like_job` ran its own JavaScript that clicked the first
@@ -46,7 +46,7 @@ their order in the file is not strictly chronological.
 > for about two minutes every 4 min. Operator decision: `like_job` drops to 10 a
 > cycle and 500 a day, and starts no like 30 s after taking the lock. A pin
 > counts only once X's confirm dialog was clicked. Guards:
-> `tests/test_like_pin_jobs.py`.
+> `tests/account/test_account_jobs.py` and `tests/x/test_write_path.py`.
 
 ---
 

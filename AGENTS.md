@@ -96,7 +96,9 @@ Safari, `bot.log` and production state files. Patch a name where it is looked
 up: browser primitives in `src/x/safari.py`, and a scrape or write in its
 defining module (`src/x/scraper.py`, `src/x/twitter_client.py`) when the
 caller imports it inside a function, but on the caller when it imports it at
-module level. A guard change ships with a test pinning it.
+module level. A guard change ships with a test pinning it. Tests mirror
+`src/`: a test goes under `tests/<package>/`, with the module that owns the
+rule; cross-cutting invariants stay at the root of `tests/`.
 
 ## Live bot and state
 

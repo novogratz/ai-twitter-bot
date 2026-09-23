@@ -7,11 +7,24 @@ import subprocess
 
 import pytest
 
+from tests.helpers import FRESH, SearchPage, stop_requested
+
+
 POST = "https://x.com/thebtctherapist/status/2063500000000000101"
+
+
 NEXT = "https://x.com/thebtctherapist/status/2063500000000000102"
+
+
 REPOST = "https://x.com/someoneelse/status/2063500000000000103"
+
+
 OWN = "https://x.com/TheAIShrink/status/2063500000000000104"
+
+
 REPLY = "https://x.com/engager/status/2063500000000000105"
+
+
 BLOCKED = "https://x.com/BlockedOne/status/2063500000000000107"
 
 
@@ -143,6 +156,30 @@ def test_nothing_clicked_when_the_post_is_not_identified(browser, page_url, url)
     assert page.clicks == [] and browser["recorded"] == []
 
 
+def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch):
+    """like_tweet takes the Safari lock itself, so a caller that forgot it
+    cannot interleave its click with another job's browser work."""
+    from src.x import safari, twitter_client as tc
+
+    held = []
+
+    class RecordingLock:
+        def __enter__(self):
+            held.append(True)
+
+        def __exit__(self, *exc):
+            held.pop()
+
+    monkeypatch.setattr(safari, "_safari_lock", RecordingLock())
+    page = like_job["page"] = SearchPage([{"url": FRESH, "liked": False}])
+    seen = []
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: seen.append(bool(held)) or page(*a))
+
+    assert tc.like_tweet(FRESH) is tc.LikeOutcome.LIKED
+    assert seen == [True, True]
+    assert held == []
+
+
 def test_dry_run_like_returns_dry_run_recorded_and_reads_nothing(browser, monkeypatch):
     """Log only what shipped: a dry-run like writes a dry-run ledger row and
     returns the falsy DRY_RUN_RECORDED, like every other chokepoint."""
@@ -153,6 +190,31 @@ def test_dry_run_like_returns_dry_run_recorded_and_reads_nothing(browser, monkey
     monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
     assert tc.like_tweet(POST) is tc.DRY_RUN_RECORDED
     assert browser["recorded"] == [((action_guard.LIKE,), {"target": POST, "dry_run": True})]
+
+
+def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
+    """Under DRY_RUN, like_job and notify's reply likes open nothing and
+    pin_own_tweet writes a dry-run ledger row instead of clicking.
+    conftest fails the test on webbrowser.open or _run_applescript; direct
+    osascript calls are walled off here."""
+    from src.account import like_bot
+    from src.x import twitter_client
+
+    def no_osascript(*a, **k):
+        raise AssertionError("dry run reached osascript")
+
+    monkeypatch.setattr(twitter_client.subprocess, "run", no_osascript)
+    monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
+    opened = []
+    monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: opened.append(a))
+    monkeypatch.setenv("DRY_RUN", "1")
+
+    like_bot.run_like_cycle()
+    twitter_client.like_own_tweet_replies()
+    assert twitter_client.pin_own_tweet("https://x.com/TheAIShrink/status/2063500000000000103") \
+        is twitter_client.DRY_RUN_RECORDED
+    assert opened == []
+    assert not (tmp_path / "like_state.json").exists()
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
@@ -253,25 +315,6 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     assert browser["closed"] == 2
 
 
-def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
-    from src.replies import notify_bot as nb
-    LikeOutcome = nb.LikeOutcome
-
-    results = {"liker": [LikeOutcome.LIKED, LikeOutcome.ALREADY_LIKED],
-               "stale": [LikeOutcome.ALREADY_LIKED], "broken": [LikeOutcome.FAILED],
-               "unsure": [LikeOutcome.UNCONFIRMED]}
-    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: results[h])
-    monkeypatch.setattr(nb.random, "random", lambda: 0.0)
-    lines = []
-    monkeypatch.setattr(nb.log, "info", lambda msg, *a, **k: lines.append(msg))
-    replies = [{"user": f"@{h}", "url": f"https://x.com/{h}/status/1"} for h in results]
-    nb._reciprocate_engagers(replies, set())
-    assert "[RECIPROCATE] Engaged back with 1 engager(s): 1 like(s)." in lines
-    assert "[RECIPROCATE] Nothing liked on @stale." in lines
-    assert "[RECIPROCATE] Nothing liked on @broken." in lines
-    assert "[RECIPROCATE] Nothing liked on @unsure." in lines
-
-
 def test_page_posts_fills_the_mode_and_target_and_parses_json(monkeypatch):
     from src.x import twitter_client as tc
 
@@ -304,6 +347,21 @@ def test_run_page_js_logs_failures_and_returns_empty(monkeypatch):
     monkeypatch.setattr(tc.subprocess, "run", timeout)
     assert tc._run_page_js("1") == ""
     assert lines[-1].startswith("[LIKE] Page JavaScript failed: TimeoutExpired(")
+
+
+def test_like_click_refuses_osascript_after_stop(monkeypatch):
+    """The like click itself checks the stop before it reaches osascript."""
+    import pytest
+    from src.guards.active_hours import OutsideActiveHours
+    from src.x import twitter_client
+
+    ran = []
+    monkeypatch.setattr(twitter_client.subprocess, "run", lambda *a, **k: ran.append(a))
+    stop_requested(monkeypatch)
+
+    with pytest.raises(OutsideActiveHours):
+        twitter_client._run_page_js("1")
+    assert ran == []
 
 
 # The JavaScript itself, run by node against a minimal fake DOM that knows
@@ -391,6 +449,8 @@ console.log(JSON.stringify({{out: JSON.parse(out), clicks: clicks}}));
 
 
 POST_ID = "2063500000000000101"
+
+
 NEXT_ID = "2063500000000000102"
 
 
