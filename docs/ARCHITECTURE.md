@@ -159,6 +159,12 @@ from a refusal compares with `is` (`follow_engagers_bot`). One limit:
 `True` means `osascript` ran the keystrokes, not that X confirmed them.
 `like_tweet` returns nothing.
 
+No write function exists for quotes, reposts, threads, GIF posts or
+self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
+`retweet_post`, `retweet_own_latest`, `reboost_tweet`, `post_thread`,
+`reply_to_own_latest` and `reply_to_reply` were removed with their helpers
+(issue #111). The zero caps below stay as a second line.
+
 Three modules sit behind them:
 
 - `src/config.py` holds the ceilings that neither `.env` nor
@@ -284,8 +290,8 @@ intra-project import, function-local or inside `try/except` included, names a
 missing module or an undefined name, imports a module under `src/` by its bare
 name instead of through its package, or crosses a package folder without
 `__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
-`main.py` reaches through imports names a quote, repost or thread write;
-only `twitter_client`, which defines them, is exempt. It also fails when a
+`main.py` reaches through imports, `twitter_client` included, defines or
+names a quote, repost, thread or GIF write. It also fails when a
 module under `src/` is not reached from `main.py`, function-local imports
 included.
 

@@ -175,24 +175,12 @@ def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeyp
     assert dr._skipped == set(), "each job keeps its own set"
 
 
-@pytest.fixture
-def disabled_writes(monkeypatch):
-    """The quote and repost chokepoints, recording any call (issue #107)."""
-    from src import twitter_client as tc
-
-    calls = []
-    for name in ("quote_tweet", "quote_tweet_with_gif", "retweet_post",
-                 "retweet_own_latest", "reboost_tweet"):
-        monkeypatch.setattr(tc, name, lambda *a, _name=name, **k: calls.append(_name) or True)
-    return calls
-
-
 def viral(handle, n):
     return {"url": fresh(handle, n=n), "text": f"OpenAI ships a new model {n}",
             "author": handle, "likes": 50_000, "replies": 900}
 
 
-def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch, disabled_writes):
+def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
     from src import feed_sweeper_bot as fs
     from src import twitter_client as tc
 
@@ -204,11 +192,10 @@ def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch, disa
 
     fs.run_feed_sweep_cycle()
 
-    assert disabled_writes == []
     assert sorted(sent) == sorted(t["url"] for t in feed)
 
 
-def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch, disabled_writes):
+def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
     from src import twitter_client as tc
 
     dr, generated, sent, _ = pipeline
@@ -221,11 +208,10 @@ def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch, 
 
     dr.run_direct_reply_cycle()
 
-    assert disabled_writes == []
     assert sent == [vip["url"], searched["url"]]
 
 
-def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch, disabled_writes):
+def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
     from src import reply_bot as rb
 
     quoted, answered = fresh("someone", n=1), fresh("other", n=2)
@@ -243,7 +229,6 @@ def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch, disabl
 
     rb.run_reply_cycle()
 
-    assert disabled_writes == []
     assert sent == logged == [answered], "a quote item ships nothing and logs nothing"
 
 

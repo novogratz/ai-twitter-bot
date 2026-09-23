@@ -1107,23 +1107,6 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
         "reply must not unconditionally like the parent"
 
 
-def test_scrape_own_replies_surfaces_seasoned_window():
-    """2026-06-18 — the bank was empty for 3 days because scrape_own_replies
-    only scrolled twice on /with_replies, surfacing 6-9 articles per cycle
-    (live log evidence). At 30-40 replies/hr today that's the freshest ~15
-    min of replies, none of them seasoned for likes. The fix scrolls
-    `OWN_REPLIES_SCROLL_DEPTH` (default 6) times so the older end of the
-    window has had time to accumulate likes. Pinned in the source so the
-    fix can't silently regress back to the 2-scroll window."""
-    import inspect
-    from src import twitter_client
-
-    src = inspect.getsource(twitter_client.scrape_own_replies)
-    assert "OWN_REPLIES_SCROLL_DEPTH" in src
-    # Loop, not two literal _scroll_page() calls (the original shape).
-    assert "for _ in range" in src
-
-
 def test_uppercase_metadata_tag_stripped_at_chokepoint():
     """2026-06-14: qwen shipped '[SIGNS: yes]' live at the end of a post.
     The scrubber must strip any bracketed UPPERCASE-label + colon tag the
@@ -1227,28 +1210,16 @@ def test_burned_structure_contrast_reframe_blocked():
 
 def test_qrt_playbook_setup_colon_and_dotdot_texture():
     """2026-06-10 QRT playbook (operator: model the human meme account):
-    (1) a GIF quote/post ending with a setup-colon ("[actor] watching X:")
-    is a deliberate shape — the GIF chokepoints must validate the text
-    MINUS the trailing colon (bare-text quotes ending in ':' stay refused
-    as truncated); (2) humanize() must preserve the human ".." / "..."
-    texture (only 4+ dots is an artifact); (3) casualize() never strips a
-    ".." ending."""
-    import inspect
-    from src import content_guard, twitter_client
+    (1) a text ending with a setup-colon ("[actor] watching X:") is refused
+    as truncated (the GIF chokepoints that allowed it are removed, #111);
+    (2) humanize() must preserve the human ".." / "..." texture (only 4+
+    dots is an artifact); (3) casualize() never strips a ".." ending."""
+    from src import content_guard
     from src.humanizer import humanize, casualize
 
     setup = "Goldman Sachs watching retail buy the dip at 110x revenue:"
-    # Bare-text surfaces still refuse the colon ending (real truncation).
     ok, why = content_guard.validate(setup, kind="quote")
     assert not ok and "truncated" in why
-    # The GIF path validates minus the colon — that text must pass.
-    ok, why = content_guard.validate(setup[:-1].rstrip(), kind="quote")
-    assert ok, why
-    # Structural pin: both GIF chokepoints carry the colon-strip.
-    for fn in (twitter_client.quote_tweet_with_gif,
-               twitter_client.post_tweet_with_gif):
-        src = inspect.getsource(fn)
-        assert 'endswith(":")' in src, f"{fn.__name__} lost the setup-colon strip"
 
     assert humanize("MFs will see this and still not take profit btw..") \
         .endswith("btw..")

@@ -47,9 +47,11 @@ slot needs news from the last six hours and an exceptional-value approval.
   originals, quotes and reposts already made that day. Deploying this change
   does not erase history or grant extra slots.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
-  Thread and recycling browser paths are disabled. Feed sweeps now reply.
-  No scheduled job carries a quote, repost or thread branch, whatever the
-  caps say (issue #107); `tests/test_disabled_surfaces.py` pins it.
+  Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
+  write functions are removed from `src/twitter_client.py` (issue #111), and
+  no scheduled job carries such a branch (issue #107):
+  `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
+  code and an operator request, not a config change.
 - Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
   per-author debate turns protect conversation quality. Every answer to
   someone who answered the account is a debate turn, whichever job sends it.
