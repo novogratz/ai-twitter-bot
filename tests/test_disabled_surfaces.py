@@ -124,6 +124,24 @@ def test_every_src_module_is_reached_from_main():
         "them into a job or delete them:\n  " + "\n  ".join(unreached))
 
 
+# Jobs sit on top: no package below them imports them, and account jobs
+# never import reply jobs (#116). A shared helper goes down to core.
+_MAY_IMPORT = {"replies": {"replies", "account"}, "account": {"account"}}
+
+
+def test_packages_never_import_the_job_packages_above_them():
+    problems = []
+    for name in sorted(src_module_names()):
+        package = name.split(".")[0]
+        for target in sorted(_imported_src_modules(_file(name))):
+            above = target.split(".")[0]
+            if above in _MAY_IMPORT and above not in _MAY_IMPORT.get(package, set()):
+                problems.append(f"{_file(name).relative_to(ROOT)} imports {target}")
+    assert not problems, (
+        "A lower package imports a job package; move the shared code down to "
+        "src/core:\n  " + "\n  ".join(problems))
+
+
 def _private_reply_bot_imports(path):
     for node in ast.walk(ast.parse(path.read_text())):
         if (isinstance(node, ast.ImportFrom)

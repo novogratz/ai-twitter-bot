@@ -36,7 +36,7 @@ The top level of `src/` holds only packages.
 | Concern | Where |
 |---|---|
 | Originals: sources, evidence, draft, separate review | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
-| Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, notify | `src/replies/` |
+| Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
 | Caps, pacing, write ledger, follow policy | `src/guards/action_guard.py` |

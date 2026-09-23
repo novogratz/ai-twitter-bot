@@ -301,7 +301,9 @@ name instead of through its package, or crosses a package folder without
 `main.py` reaches through imports, `twitter_client` included, defines or
 names a quote, repost, thread or GIF write. It also fails when a
 module in any package under `src/` is not reached from `main.py`,
-function-local imports included.
+function-local imports included, and when a package imports the job packages
+above it: nothing outside `src/replies/` and `src/account/` imports them, and
+`src/account/` never imports `src/replies/`.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript`, `_paste_text` and any subprocess that runs `osascript`
