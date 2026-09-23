@@ -14,11 +14,10 @@ other's entries. Recovery: docs/OPERATIONS.md#recovery.
 """
 import json
 import os
-import re
 import tempfile
 import threading
 
-from . import config
+from . import config, x_urls
 from .state_errors import StateUnreadable
 
 _REPLIED_CAP = 50000
@@ -39,10 +38,7 @@ def canonical_tweet_id(url: str) -> str:
     """
     if not url:
         return ""
-    m = re.search(r"/status/(\d+)", url)
-    if m:
-        return m.group(1)
-    return url.strip().lower()
+    return x_urls.status_id(url) or url.strip().lower()
 
 
 class CanonReplied(set):

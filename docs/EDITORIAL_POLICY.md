@@ -53,10 +53,17 @@ slot needs news from the last six hours and an exceptional-value approval.
   someone who answered the account is a debate turn, whichever job sends it.
   The per-tweet dedup store fails closed: while it is unreadable, no reply
   ships.
+- Reply admission (`src/reply_admission.py`) runs at the reply chokepoint
+  for every job: a reply is refused when the author handle in the parent's
+  URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
+  ignored on both sides), when the parent is the account's own post, or
+  when the URL carries no author handle. This moves the blocklist to the
+  chokepoint without relaxing it; the jobs' own filters stay until they
+  call the admission themselves (issue #100).
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write, including the likes and pins that
-  bypass the ledger.
+  bypass the ledger. A dry-run reply never marks the tweet as answered.
 
 ## Inspection and recovery
 

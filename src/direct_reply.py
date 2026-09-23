@@ -134,21 +134,9 @@ _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 def _is_on_niche(text: str) -> bool:
     return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
 
-_FR_MARKERS = re.compile(r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|faire|faut|peut|encore|selon|même|après|avant|bien|sans|je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|enfin|ptdr|mdr|franchement|grave|voila|voilà|jours|délivrance|refait|marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b", re.IGNORECASE)
-_FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
-_EN_MARKERS = re.compile(r"\b(the|this|that|with|from|just|was|were|are|is|you|your|market|portfolio|ride|ticket|line|bug|beta|test|rug|deliverance|original|inevitable|called|expected)\b", re.IGNORECASE)
-
-def _looks_french(text: str) -> bool:
-    if not text: return False
-    markers = len(_FR_MARKERS.findall(text))
-    if markers >= 2: return True
-    if markers >= 1 and _FR_ACCENT_RE.search(text): return True
-    if re.search(r"\b(ptdr|mdr|wesh|frerot|frérot|voila|voilà|délivrance|refait)\b", text, re.IGNORECASE): return True
-    return False
-
-def _looks_english(text: str) -> bool:
-    if not text: return False
-    return len(_EN_MARKERS.findall(text)) >= 2 and not _looks_french(text)
+# Language detection moved to reply_language, which Reply admission shares;
+# the jobs keep these names until they import it themselves.
+from .reply_language import looks_english as _looks_english, looks_french as _looks_french
 
 def _is_fr_or_en(text: str) -> bool:
     if not text: return True

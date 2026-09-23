@@ -172,9 +172,22 @@ Three modules sit behind them:
 - `src/content_guard.py` validates text before publication: near-term price
   targets, duplicates, truncation, violence, skip rationales.
 
-`reply_to_tweet` also owns reply deduplication through
+`reply_to_tweet` takes every rule from `src/reply_admission.py` (Reply
+admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
+handle from the URL (`src/x_urls.py`), Blocked account, own post, already
+answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
+those rules, adds the reply spacing, then builds the exact text that ships
+(dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
+validates it last. `reply_to_tweet` calls `judge_reply` once under the
+Safari lock, the lock that also records the reply, so the spacing and the
+Debate turn cap cannot move between the check and the write. Each refusal
+says whether it is definitive for the post or temporary. Neither judgement
+writes anything.
+
+After admission, `reply_to_tweet` deduplicates through
 `src/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
 tweet already answered, and marks it just before writing, all under one lock.
+A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
 instead of reading as empty. If the reply keystroke or the paste fails, or a

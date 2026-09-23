@@ -982,136 +982,65 @@ def like_tweet(tweet_url: str = ""):
 
 def _status_author(url: str) -> str:
     """Author handle from a /status/ URL; empty for X's anonymous /i/ paths."""
-    m = re.search(r"x\.com/([A-Za-z0-9_]{1,15})/status/", url or "")
-    return m.group(1).lower() if m and m.group(1).lower() != "i" else ""
+    from .x_urls import author
+    return author(url)
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
-    """Open a tweet, like it, click reply, type the reply, and submit.
+    """Open a tweet, click reply, type the reply, and submit.
 
     Returns True only when the reply actually shipped (or was DRY_RUN-
-    recorded), False on every skip (policy, content_guard, dedup). Raises
-    StateUnreadable when the ledger or the replied store cannot be
+    recorded), False when Reply admission refuses it or a Safari step fails.
+    Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
-    `debate_turn=True` marks an answer to someone who answered the account
-    (CONTEXT.md). The per-author daily cap is checked and counted here, so
-    every answering bot shares one count.
+    Reply admission (src/reply_admission.py) owns every rule: Blocked
+    account, own post, one Reply per post, Debate turn cap, spacing, and the
+    final text. It runs once under the Safari lock, which also records the
+    Reply, so no other thread can take the last Debate turn or the spacing
+    slot between the check and the write. `debate_turn=True` marks an answer
+    to someone who answered the account (CONTEXT.md).
 
     ⛔ CALLERS MUST NOT write the replied store before calling this — the
-    chokepoint below loads the on-disk canonical set and REFUSES anything
-    already in it. Bug 2026-06-07: five bots "locked the URL in BEFORE
-    posting" (direct_reply/_reply_to_tweets, early_bird, mega_watch,
-    reply_bot, roast) → the chokepoint saw their own premark and silently
-    skipped 100% of their replies since 2026-06-05 17:46, while their
-    unconditional log_reply() calls kept writing phantom rows into
-    engagement_log (the "941 replies" day was mostly fiction; bot.log
-    'Reply posted!' said 140). Crash-safety is the chokepoint's job: it
-    marks the store itself right before the Safari write."""
-    # Central write policy: replies daily cap + jittered spacing, no near-term
-    # price target (language is matched to the parent upstream, so no French
-    # gate here), dry-run kill switch.
-    from . import action_guard, content_guard, config as _cfg
-    ok, why = action_guard.can_post(action_guard.REPLY)
-    if not ok:
-        log.info(f"[REPLY] policy skip ({why}).")
+    claim below REFUSES anything already in it. Bug 2026-06-07: five bots
+    "locked the URL in BEFORE posting" (direct_reply/_reply_to_tweets,
+    early_bird, mega_watch, reply_bot, roast) → the chokepoint saw their own
+    premark and silently skipped 100% of their replies since 2026-06-05
+    17:46, while their unconditional log_reply() calls kept writing phantom
+    rows into engagement_log (the "941 replies" day was mostly fiction;
+    bot.log 'Reply posted!' said 140). The claim happens here, right before
+    the Safari write; a dry run never claims, so the store only ever holds
+    Replies that shipped."""
+    from . import action_guard, active_hours, config as _cfg, replied_store, reply_admission
+    # Not a second admission rule: _safari_lock raises OutsideActiveHours on
+    # entry, so Overnight is turned into the False refusal callers expect
+    # before the lock. judge_reply still judges Waking hours under it.
+    if not active_hours.may_act():
+        log.info(f"[REPLY] Overnight or stop requested — skipping: {tweet_url}")
         return False
-    # Em/en-dash backstop for EVERY reply path (operator 2026-06-07: an em
-    # dash is an AI tell — "what a shame"). humanize() strips them, but a
-    # path that skips humanize (the VIP lane did) must not ship one.
-    from .humanizer import _DASH_PAIRS
-    for _pat, _rep in _DASH_PAIRS:
-        reply_text = (reply_text or "").replace(_pat, _rep)
-    reply_text = reply_text.replace("—", ", ").replace("–", ", ")
-    reply_text = re.sub(r" {2,}", " ", reply_text).replace(" ,", ",")
-    # Over-length replies get a sentence-boundary trim instead of a discard
-    # (2026-06-07): the LLM generation is already paid for — content_guard
-    # used to reject >278-char replies outright, several/day. smart_trim
-    # ends on terminal punctuation so the trimmed text also passes the
-    # looks_truncated check; if it still can't be salvaged, validate below
-    # rejects as before.
-    if len(reply_text or "") > 278:
-        from .humanizer import smart_trim
-        trimmed = smart_trim(reply_text, 278)
-        log.info(f"[REPLY] over-length ({len(reply_text)} chars) — smart-trimmed "
-                 f"to {len(trimmed)}.")
-        reply_text = trimmed
-    from .humanizer import casualize
-    reply_text = casualize(reply_text)  # human texture (2026-06-10)
-    # FR-forced parents (operator 2026-06-07: "i saw some english on Julien
-    # response"). Chokepoint gate, BEFORE the dedup mark below: an English
-    # reply to an always-French friend never ships, and the post stays
-    # unmarked so a later cycle can retry it with the FR generator.
-    try:
-        _parent_handle = tweet_url.split("x.com/")[1].split("/")[0].lower()
-    except (IndexError, AttributeError):
-        _parent_handle = ""
-    _fr_forced = {h.strip().lstrip("@").lower() for h in os.environ.get(
-        "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
-    if _parent_handle in _fr_forced:
-        from .direct_reply import _looks_english
-        if _looks_english(reply_text):
-            log.info(f"[REPLY] FR-forced parent @{_parent_handle} but reply looks "
-                     f"English — refusing (post stays fresh): {reply_text[:80]!r}")
-            return False
-    # Operator mandate 2026-06-05: replies to @Graphseo (and ONLY him) always
-    # carry exactly ONE human-looking keyboard typo — he tweeted that spelling
-    # mistakes are the only proof of humanity. Enforced here so every reply
-    # path obeys, whichever bot generated the text. Injected after the
-    # language check, which must judge the text as written, and before
-    # validate, so the text that ships is the text that was checked. Every
-    # refusal comes before the claim, so a refused reply leaves the tweet fresh.
-    _typo_handles = {h.strip().lower() for h in os.environ.get(
-        "HUMAN_TYPO_HANDLES", "").split(",") if h.strip()}
-    if _parent_handle in _typo_handles:
-        from .humanizer import inject_human_typo
-        reply_text = inject_human_typo(reply_text)
-        log.info(f"[REPLY] human-typo injected for @{_parent_handle}.")
-    ok, why = content_guard.validate(reply_text, kind="reply")
-    if not ok:
-        log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
-        return False
-    # Debate turn cap, BEFORE the dedup mark: a capped turn stays fresh.
-    _debate_author = _status_author(tweet_url) if debate_turn else ""
-    if debate_turn:
-        ok, why = action_guard.can_debate_turn(_debate_author)
-        if not ok:
-            log.info(f"[REPLY] debate skip ({why}): {tweet_url}")
-            return False
-    # ONE reply per tweet, EVER — enforced at the chokepoint (operator
-    # 2026-06-05: "never send 2 replies on same tweet"). Each reply bot
-    # loads replied_tweets.json at cycle start, so two bots racing within
-    # minutes both think the tweet is fresh; re-checking the on-disk
-    # canonical set here right before the write kills the race for ALL
-    # reply paths at once. claim() checks and marks under one lock, and
-    # raises on an unreadable store rather than letting duplicates through.
-    from . import replied_store
-    if not replied_store.claim(tweet_url):
-        log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
-        return False
-    if _cfg.dry_run():
-        log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
-        action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
-        if debate_turn:
-            action_guard.record(action_guard.DEBATE_TURN, target=_debate_author, dry_run=True)
-        return True
-
     # Every exit before the submit keystroke sent nothing: a failed step, a
-    # stop or 22:00 releases the claim so a later cycle may answer. The debate
-    # race loser keeps it (see below).
-    release_claim = True
+    # stop or 22:00 releases the claim so a later cycle may answer.
+    release_claim = False
     try:
         with _safari_lock:
-            # Re-check under the lock that also records the turn: two threads
-            # answering the same Engager cannot both take the last turn. The
-            # race loser stays marked replied; the early check above keeps the
-            # common refusal fresh.
-            if debate_turn:
-                ok, why = action_guard.can_debate_turn(_debate_author)
-                if not ok:
-                    log.info(f"[REPLY] debate skip under lock ({why}): {tweet_url}")
-                    release_claim = False
-                    return False
+            verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
+            if not verdict:
+                log.info(f"[REPLY] not admitted ({verdict.refusal.name}: {verdict.reason}): "
+                         f"{tweet_url} {(reply_text or '')[:120]!r}")
+                return False
+            if _cfg.dry_run():
+                log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {verdict.text[:160]!r}")
+                action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
+                if debate_turn:
+                    action_guard.record(action_guard.DEBATE_TURN, target=verdict.author, dry_run=True)
+                return True
+            # ONE reply per tweet, EVER (operator 2026-06-05). claim() checks
+            # and marks under one lock; admission already read the store, this
+            # is the atomic word on it.
+            if not replied_store.claim(tweet_url):
+                log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
+                return False
+            release_claim = True
             # Make sure Safari is focused first
             _run_applescript('''
             tell application "Safari" to activate
@@ -1149,7 +1078,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             # Paste the reply (clipboard handles accents correctly)
             log.info("Pasting reply...")
-            if not _paste_or_abort(reply_text, "REPLY"):
+            if not _paste_or_abort(verdict.text, "REPLY"):
                 return False
             time.sleep(2)  # Wait for paste to complete
 
@@ -1164,7 +1093,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             log.info("Reply posted!")
             action_guard.record(action_guard.REPLY, target=tweet_url)
             if debate_turn:
-                action_guard.record(action_guard.DEBATE_TURN, target=_debate_author)
+                action_guard.record(action_guard.DEBATE_TURN, target=verdict.author)
             close_front_tab()
     finally:
         if release_claim:
