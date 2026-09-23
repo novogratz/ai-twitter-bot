@@ -10,7 +10,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
 (2026-09-20) and supersedes every older mandate. It encodes:
 
 - Active 04:30–22:00 America/Toronto only; nothing external happens overnight.
-- Six sourced AI originals a day, seven combined profile publications at most.
+- Six sourced AI originals targeted a day, a seventh only in the exceptional
+  slot; seven combined profile publications at most.
 - Quotes, reposts, self-recycling, threads and startup bursts stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet.
 
@@ -90,6 +91,8 @@ the caller's module. A guard change ships with a test pinning it.
 
 ## Documentation
 
+- [`CONTEXT.md`](CONTEXT.md): domain glossary. Use its terms in code, logs
+  and docs, and update it when a term changes meaning.
 - [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md): current publishing
   rules, recovery, reach target.
 - [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): the top table is current;
