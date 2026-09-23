@@ -23,10 +23,10 @@ import time
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
 
-from . import config
-from .logger import log
+from .core import config
+from .core.logger import log
 from .active_hours import is_active, now_local, stop_requested
-from .state_errors import StateUnreadable
+from .core.state_errors import StateUnreadable
 from zoneinfo import ZoneInfo
 
 _LOCK = threading.Lock()

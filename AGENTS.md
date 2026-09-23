@@ -19,14 +19,16 @@ real account. Setup and run commands live in [`README.md`](README.md).
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
 change. The same holds for the operator-owned guardrails: `core_identity.md`,
-`BLOCKLIST` and the 48-hour `REPOST_MAX_AGE_HOURS` clamp in `src/config.py`,
+`BLOCKLIST` and the 48-hour `REPOST_MAX_AGE_HOURS` clamp in `src/core/config.py`,
 `respect_list.json`, and `personality_store.HARD_RULES_BLOCK`.
 
 ## Active code
 
 `main.py` is the whole scheduler: read `build_scheduler()` for the live jobs.
 Every module under `src/` is reached from `main.py`; a test fails on a module
-nothing imports, so wire new code into a job or delete it.
+nothing imports, so wire new code into a job or delete it. `src/core/` holds
+the shared foundations (config, logger, LLM client, stores) and `src/x/` the
+browser layer.
 
 | Concern | Where |
 |---|---|
@@ -34,11 +36,11 @@ nothing imports, so wire new code into a job or delete it.
 | Toronto clock, bedtime checks | `src/active_hours.py` |
 | Caps, pacing, write ledger, follow policy | `src/action_guard.py` |
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/reply_admission.py` |
-| Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x_urls.py` |
+| Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/replied_store.py` |
-| Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/config.py` |
+| Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/content_guard.py` |
-| Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/twitter_client.py` |
+| Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
 | Voice, operator-managed | `core_identity.md` |
 
 ## Invariants

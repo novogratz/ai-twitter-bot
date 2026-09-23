@@ -6,9 +6,9 @@ specific, more absurd before giving up. Therapist energy (2026-06-05): they
 replied to their coach — reward them, never roast them.
 """
 from typing import Optional
-from .config import REPLY_MODEL
-from .logger import log
-from .llm_client import run_llm, unwrap_text
+from .core.config import REPLY_MODEL
+from .core.logger import log
+from .core.llm_client import run_llm, unwrap_text
 
 REPLYBACK_PROMPT = """You are @TheAIShrink — a woman, 45, therapist and mom, the sharpest AI mind on the timeline (her voice: warm, wry, zero bro-speak). Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
 
@@ -113,7 +113,7 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
     """Generate a witty reply-back to someone who replied to our tweet.
     `author` is the @handle of the person we're replying to — used to load
     their personality dossier so the response is personal."""
-    from . import personality_store
+    from .core import personality_store
     base = REPLYBACK_PROMPT.format(
         original_tweet=original_tweet[:200],
         their_reply=their_reply[:200],

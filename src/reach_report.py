@@ -3,10 +3,10 @@ import json
 from datetime import timedelta
 from pathlib import Path
 
-from . import config
+from .core import config
 from .active_hours import now_local, require_active
 from .editorial_bot import _read_state, _stamp
-from .logger import log
+from .core.logger import log
 
 REPORT_FILE = Path(config._PROJECT_ROOT) / "editorial_reach.json"
 REPORT_MARKDOWN = Path(config._PROJECT_ROOT) / "editorial_reach.md"
@@ -41,7 +41,7 @@ def summarize(published, scraped, now=None):
 def safe_run_reach_report():
     try:
         require_active()
-        from .twitter_client import scrape_profile_tweets
+        from .x.twitter_client import scrape_profile_tweets
         published = _read_state().get("published", [])
         tweets = scrape_profile_tweets(config.BOT_HANDLE, max_tweets=60) if published else []
         report = summarize(published, tweets)

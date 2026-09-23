@@ -10,7 +10,9 @@ functions at all (issue #111): bringing one back takes new code.
 No live module borrows a private helper from `reply_bot` (issue #108), and
 every module under `src/` is reached from `main.py`, so legacy code cannot
 pile up again (issue #110). The walk follows function-local imports too:
-`reply_bot` is reached only through the `ENABLE_REPLY_SEARCH` branch.
+`reply_bot` is reached only through the `ENABLE_REPLY_SEARCH` branch. It
+enters the packages under `src/` (`core`, `x`…): modules are named by their
+dotted path below `src`, such as `x.twitter_client`.
 """
 import ast
 from pathlib import Path
@@ -25,26 +27,47 @@ DISABLED_WRITES = {
 }
 
 
+def _file(name):
+    """Source file of the module or package `name`, dotted below `src`."""
+    path = SRC.joinpath(*name.split("."))
+    return path / "__init__.py" if path.is_dir() else path.with_suffix(".py")
+
+
+def src_module_names():
+    names = set()
+    for path in SRC.rglob("*.py"):
+        parts = path.relative_to(SRC).with_suffix("").parts
+        if "__pycache__" in parts:
+            continue
+        if parts[-1] == "__init__":
+            parts = parts[:-1]
+        if parts:
+            names.add(".".join(parts))
+    return names
+
+
 def _imported_src_modules(path):
+    package = list(path.relative_to(SRC).parts[:-1]) if SRC in path.parents else None
     found = set()
     for node in ast.walk(ast.parse(path.read_text())):
         if isinstance(node, ast.ImportFrom):
-            in_src = node.level == 1 or (not node.level and (node.module or "").split(".")[0] == "src")
-            if not in_src:
-                continue
-            parts = (node.module or "").split(".")
-            if not node.level:
-                parts = parts[1:]
-            if parts and parts[0]:
-                found.add(parts[0])
+            if node.level:
+                if package is None:
+                    continue
+                parts = package[: len(package) - (node.level - 1)]
+                parts = parts + (node.module.split(".") if node.module else [])
+            elif (node.module or "").split(".")[0] == "src":
+                parts = node.module.split(".")[1:]
             else:
-                found.update(alias.name for alias in node.names)
+                continue
+            found.update(".".join(parts[:i]) for i in range(1, len(parts) + 1))
+            found.update(".".join(parts + [alias.name]) for alias in node.names)
         elif isinstance(node, ast.Import):
             for alias in node.names:
                 parts = alias.name.split(".")
-                if parts[0] == "src" and len(parts) > 1:
-                    found.add(parts[1])
-    return {name for name in found if (SRC / f"{name}.py").is_file()}
+                if parts[0] == "src":
+                    found.update(".".join(parts[1:i]) for i in range(2, len(parts) + 1))
+    return {name for name in found if name and _file(name).is_file()}
 
 
 def live_modules():
@@ -53,7 +76,7 @@ def live_modules():
         name = todo.pop()
         if name not in seen:
             seen.add(name)
-            todo += _imported_src_modules(SRC / f"{name}.py")
+            todo += _imported_src_modules(_file(name))
     return seen
 
 
@@ -74,24 +97,25 @@ def _disabled_write_references(path):
 def test_live_modules_never_reference_a_disabled_write():
     modules = live_modules()
     assert {"direct_reply", "feed_sweeper_bot", "notify_bot", "reply_bot"} <= modules
-    assert "twitter_client" in modules
-    problems = [f"src/{name}.py:{line}: {ref}"
+    assert {"x.twitter_client", "x.safari_hygiene", "core.llm_client"} <= modules
+    problems = [f"{_file(name).relative_to(ROOT)}:{line}: {ref}"
                 for name in sorted(modules)
-                for line, ref in _disabled_write_references(SRC / f"{name}.py")]
+                for line, ref in _disabled_write_references(_file(name))]
     assert not problems, (
         "A module reached from main.py defines or names a quote, repost, "
         "thread or GIF write (2026-09-20 policy: zero):\n  " + "\n  ".join(problems))
 
 
 def test_twitter_client_exposes_no_disabled_write():
-    from src import twitter_client
+    from src.x import twitter_client
 
     present = sorted(name for name in DISABLED_WRITES if hasattr(twitter_client, name))
     assert not present, f"twitter_client still exposes {present}"
 
 
 def test_every_src_module_is_reached_from_main():
-    modules = {path.stem for path in SRC.glob("*.py")} - {"__init__"}
+    modules = src_module_names()
+    assert {"core", "core.config", "x", "x.twitter_client", "direct_reply"} <= modules
     unreached = sorted(modules - live_modules())
     assert not unreached, (
         "Modules under src/ that no import chain from main.py reaches; wire "
@@ -108,9 +132,9 @@ def _private_reply_bot_imports(path):
 
 
 def test_live_modules_never_borrow_a_private_reply_bot_helper():
-    problems = [f"src/{name}.py:{line}: {ref}"
+    problems = [f"{_file(name).relative_to(ROOT)}:{line}: {ref}"
                 for name in sorted(live_modules() - {"reply_bot"})
-                for line, ref in _private_reply_bot_imports(SRC / f"{name}.py")]
+                for line, ref in _private_reply_bot_imports(_file(name))]
     assert not problems, (
         "A live module imports a private reply_bot helper; move it to the "
         "module that owns its concern:\n  " + "\n  ".join(problems))

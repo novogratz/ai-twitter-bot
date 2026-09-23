@@ -40,12 +40,12 @@ HOTAKE_MODEL=ollama/qwen3-coder:30b
 ./bin/run.sh
 ```
 
-This runs the APScheduler-based bot from `main.py`. All LLM calls go through `src/llm_client.py` which now speaks opencode.
+This runs the APScheduler-based bot from `main.py`. All LLM calls go through `src/core/llm_client.py` which now speaks opencode.
 
 ## Automatic fallback
 
 When the primary provider fails, times out, is missing, or returns empty output,
-`src/llm_client.py` automatically retries the same prompt through OpenCode:
+`src/core/llm_client.py` automatically retries the same prompt through OpenCode:
 
 ```env
 LLM_FALLBACK_CLI=opencode
@@ -81,7 +81,7 @@ Or via a direct Qwen API endpoint if available.
 
 ## How it works
 
-`src/llm_client.py` builds the CLI command:
+`src/core/llm_client.py` builds the CLI command:
 
 ```
 opencode run --model <model> [--format json] [--dangerously-skip-permissions] "<prompt>"
@@ -110,5 +110,5 @@ openai/gpt-4o
 |---|---|
 | `Provider: codex` in logs | Set `AI_CLI=opencode` in `.env` only for OpenCode test runs |
 | Slow generations | Use `opencode/ring-2.6-1t-free` for reply/quote surfaces |
-| Raw JSON appears in generated text | Keep `src/llm_client.py` current; `unwrap_text()` parses OpenCode JSON events before falling back to raw text |
+| Raw JSON appears in generated text | Keep `src/core/llm_client.py` current; `unwrap_text()` parses OpenCode JSON events before falling back to raw text |
 | `command not found: opencode` | Run `brew install opencode` |

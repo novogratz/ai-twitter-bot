@@ -25,8 +25,8 @@ import os
 import re
 from typing import Callable, Optional, Tuple
 
-from .config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES, _PROJECT_ROOT
-from .logger import log
+from .core.config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES, _PROJECT_ROOT
+from .core.logger import log
 
 # X composer limit for replies and quotes; Reply admission trims to it.
 REPLY_MAX_CHARS = 278
@@ -454,7 +454,7 @@ def _rationed_shape_overused(text: str) -> bool:
         return False
     window_h = int(os.environ.get("RATIONED_SHAPE_WINDOW_HOURS", "6"))
     try:
-        from .history import get_recent_tweets
+        from .core.history import get_recent_tweets
         recent = get_recent_tweets(hours=window_h)
     except Exception:
         return False

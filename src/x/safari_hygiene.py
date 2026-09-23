@@ -32,8 +32,8 @@ import traceback
 import tempfile
 from datetime import datetime
 
-from .config import _PROJECT_ROOT
-from .logger import log
+from ..core.config import _PROJECT_ROOT
+from ..core.logger import log
 
 HYGIENE_STATE_FILE = os.path.join(_PROJECT_ROOT, "safari_hygiene_state.json")
 
@@ -273,7 +273,7 @@ def safe_run_session_refresh():
     actual restart attempts. This avoids the preventive scheduler tripping
     the failure counter when it's working as designed.
     """
-    from . import health
+    from ..core import health
     try:
         result = run_session_refresh()
         if result.get("restarted"):

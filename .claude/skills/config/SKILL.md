@@ -6,10 +6,10 @@ allowed-tools: Read Edit
 
 Show and edit config:
 
-1. Read `src/config.py` and `docs/CONFIGURATION.md` (its top table is
+1. Read `src/core/config.py` and `docs/CONFIGURATION.md` (its top table is
    current; the rest documents legacy env vars) - display the settings
 2. Show which env vars can override them (`.env`)
-3. If the operator wants changes, edit `.env` or `src/config.py`
+3. If the operator wants changes, edit `.env` or `src/core/config.py`
 4. Remind that changes take effect at restart
 
 Hard ceilings cannot be lifted from `.env` or `live_strategy.json`, and are

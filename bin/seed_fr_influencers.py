@@ -20,9 +20,9 @@ import random
 # Make src/ importable.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.config import _PROJECT_ROOT
-from src.logger import log
-from src.twitter_client import follow_account
+from src.core.config import _PROJECT_ROOT
+from src.core.logger import log
+from src.x.twitter_client import follow_account
 from src.engage_bot import _load_followed, _save_followed
 
 # 50+ francophone handles, IA / Crypto / Bourse / Macro / Tech press.

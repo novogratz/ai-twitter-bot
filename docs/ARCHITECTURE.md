@@ -147,7 +147,7 @@ turns the fallback off.
 ## Write path and limits
 
 Every write that should count goes through a function in
-`src/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
+`src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
 `reply_to_tweet_in_thread`, `follow_account`, `like_tweet`. `post_tweet`,
 the reply functions and `follow_account` return `True` when they submitted the
 action, `False` when a rule refused it or an AppleScript step failed, and
@@ -167,7 +167,7 @@ self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 
 Three modules sit behind them:
 
-- `src/config.py` holds the ceilings that neither `.env` nor
+- `src/core/config.py` holds the ceilings that neither `.env` nor
   `live_strategy.json` can lift: seven profile publications a day, quote and
   repost caps at 0, originals capped at 7 and spaced by at least 3600 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
@@ -183,7 +183,7 @@ Three modules sit behind them:
 
 `reply_to_tweet` takes every rule from `src/reply_admission.py` (Reply
 admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
-handle from the URL (`src/x_urls.py`), Blocked account, own post, already
+handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
 answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
 (dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
@@ -292,8 +292,8 @@ name instead of through its package, or crosses a package folder without
 `__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
 `main.py` reaches through imports, `twitter_client` included, defines or
 names a quote, repost, thread or GIF write. It also fails when a
-module under `src/` is not reached from `main.py`, function-local imports
-included.
+module under `src/`, packages such as `src/core/` and `src/x/` included, is
+not reached from `main.py`, function-local imports included.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
 `_run_applescript` and `_paste_text` raise, the logger writes to a temporary

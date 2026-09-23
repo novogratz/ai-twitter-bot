@@ -4,7 +4,8 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src import action_guard as ag, active_hours as hours, config
+from src import action_guard as ag, active_hours as hours
+from src.core import config
 from src import editorial_bot as editorial
 
 TORONTO = ZoneInfo("America/Toronto")
@@ -41,7 +42,7 @@ def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
 
 
 def test_browser_wait_rechecks_bedtime(monkeypatch):
-    from src.twitter_client import _AwakeSafariLock
+    from src.x.twitter_client import _AwakeSafariLock
     clock(monkeypatch, datetime(2026, 9, 20, 21, 59, tzinfo=TORONTO))
     browser = _AwakeSafariLock()
     released = []
@@ -61,7 +62,7 @@ def test_browser_wait_rechecks_bedtime(monkeypatch):
 
 
 def test_submit_checks_bedtime_before_applescript(monkeypatch):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     # Use the real helper (the suite normally prevents Safari calls).
     import importlib
     from unittest.mock import patch
@@ -170,7 +171,7 @@ def test_seventh_post_needs_fresh_exceptional_news(draft_fixture):
 
 
 def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_fixture):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     calls = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append((text, k)) or True)
     assert editorial.run_editorial_cycle(preview=True)["approved"]
@@ -183,7 +184,7 @@ def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_
 
 
 def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixture):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     draft_fixture[2]["adds_value"] = False
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("weak draft published"))
     for _ in range(3):
@@ -195,7 +196,7 @@ def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixtu
 def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture):
     """An Attempt is a Draft submitted to the Editor (CONTEXT.md). A feed
     outage, a generator error or an explicit skip must not burn the Slot."""
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     calls = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append(text) or True)
     monkeypatch.setattr(editorial, "collect_sources", lambda *a: [])
@@ -219,7 +220,7 @@ def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture):
 
 
 def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("expired draft published"))
     draft = draft_fixture[0]
     def slow(*args):
@@ -231,7 +232,7 @@ def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, dra
 
 
 def test_failed_or_ambiguous_submission_does_not_log_success(monkeypatch, draft_fixture):
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: False)
     editorial.run_editorial_cycle()
     assert not editorial._read_state()["slots"]
@@ -248,7 +249,7 @@ def test_failed_or_ambiguous_submission_does_not_log_success(monkeypatch, draft_
 def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
-    from src import twitter_client as tc
+    from src.x import twitter_client as tc
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(6):
         ag.record(ag.POST)
@@ -302,7 +303,7 @@ def test_reply_only_still_registers_the_reply_engine():
 
 
 def test_structured_editorial_json_preserves_text_and_evidence():
-    from src.llm_client import unwrap_text
+    from src.core.llm_client import unwrap_text
     draft = {"text": "A useful post", "source_id": "1", "evidence": ["source quote"]}
     assert json.loads(unwrap_text(json.dumps(draft), structured_output=True)) == draft
 
@@ -322,7 +323,7 @@ def test_corrupt_ledger_cannot_grant_extra_posts(monkeypatch, tmp_path):
 
 def test_editorial_requests_use_dedicated_model_and_strict_schema(monkeypatch):
     import urllib.request
-    from src import llm_client as llm
+    from src.core import llm_client as llm
     requests = []
 
     class Response:

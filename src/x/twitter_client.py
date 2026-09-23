@@ -9,10 +9,10 @@ import time
 import urllib.parse
 from datetime import datetime
 import webbrowser
-from .config import BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
-from .json_safety import sanitize_for_json
-from .logger import log
-from .active_hours import require_active, OutsideActiveHours
+from ..core.config import _PROJECT_ROOT, BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
+from ..core.json_safety import sanitize_for_json
+from ..core.logger import log
+from ..active_hours import require_active, OutsideActiveHours
 
 # Global lock: only one bot can use Safari at a time.
 # Without this, the reply bot and engage bot type over each other. RLock is
@@ -254,7 +254,7 @@ def _scrub_metadata_leaks(text: str) -> str:
         return text
     # Tool-call XML — strip first because the URL extractor and other
     # downstream sanitizers will fish bogus URLs out of these blocks.
-    from .llm_client import strip_tool_calls
+    from ..core.llm_client import strip_tool_calls
     text = strip_tool_calls(text)
 
     # Whole-line metadata tags
@@ -295,7 +295,7 @@ def _scrub_metadata_leaks(text: str) -> str:
     # only 4 bots call extract_pattern, and the rules above need the "PATTERN"
     # keyword. Strip every occurrence of a bracketed canonical ID here so all
     # post paths are covered.
-    from .pattern_tags import PATTERN_IDS
+    from ..core.pattern_tags import PATTERN_IDS
     _pat_alt = "|".join(sorted(PATTERN_IDS))
     text = re.sub(
         rf"\[\s*(?:{_pat_alt})(?:\s*[|/+,]\s*(?:{_pat_alt}))*\s*\]",
@@ -365,7 +365,7 @@ def _queue_for_review(kind: str, payload: dict) -> None:
     """Human-in-the-loop queue (REVIEW_MODE=1): drafts land in
     review_queue.json instead of publishing. Nothing ships them; see #124."""
     import json as _json
-    from .config import _PROJECT_ROOT as _PR
+    from ..core.config import _PROJECT_ROOT as _PR
     path = os.path.join(_PR, "review_queue.json")
     try:
         queue = []
@@ -417,7 +417,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     text = _scrub_metadata_leaks(text)
     if not editorial:
         text = _strip_post_urls(text)
-        from .humanizer import casualize
+        from ..core.humanizer import casualize
         text = casualize(text)
     # Editorial wording and its checked source link must survive unchanged.
 
@@ -425,7 +425,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
     # / 2026-05-14 ("<function=bash>" and `{"type":"step_start",...}`).
-    from .llm_client import contains_post_unsafe_leak
+    from ..core.llm_client import contains_post_unsafe_leak
     if contains_post_unsafe_leak(text):
         log.error(f"[POST] Unsafe leak detected after scrub — refusing to post. Text: {text[:200]!r}")
         raise ToolCallLeakError("tool-call / stream-envelope markup in tweet text")
@@ -433,7 +433,8 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     # Central write policy: originals daily cap + jittered spacing, then the
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
-    from . import action_guard, content_guard, config as _cfg
+    from .. import action_guard, content_guard
+    from ..core import config as _cfg
     # Returns True only when the post actually shipped, DRY_RUN_RECORDED on a
     # dry run, False on any skip (policy / content / dedup / review).
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged log_post/log_hotake
@@ -502,7 +503,7 @@ def _record_posted(text: str):
     'GPU supply / power bill' take twice because its posts never landed in
     the on-disk history the dedup reads after a restart."""
     try:
-        from .history import save_tweet
+        from ..core.history import save_tweet
         save_tweet(text)
     except Exception as e:
         log.info(f"[POST] history record failed (non-fatal): {e}")
@@ -590,7 +591,7 @@ LIKED_TWEETS_FILE = os.path.join(_PROJECT_ROOT, "liked_tweets.json") if "_PROJEC
 
 def _liked_cache_path() -> str:
     """Lazy-resolve the liked_tweets.json path to avoid import-order issues."""
-    from .config import _PROJECT_ROOT as _PR
+    from ..core.config import _PROJECT_ROOT as _PR
     return os.path.join(_PR, "liked_tweets.json")
 
 
@@ -598,7 +599,7 @@ def _load_liked_set():
     """Return a CanonReplied set of canonical IDs we've already liked.
     Cross-bot dedup via canonical status ID prevents the 'l' shortcut
     from toggling-OFF a like we set in an earlier cycle."""
-    from . import replied_store
+    from .. import replied_store
     s = replied_store.CanonReplied()
     path = _liked_cache_path()
     if not os.path.exists(path):
@@ -616,7 +617,7 @@ def _load_liked_set():
 
 def _save_liked_set(s) -> None:
     """Persist liked set as ordered list, cap at 50k from the tail."""
-    from . import replied_store
+    from .. import replied_store
     path = _liked_cache_path()
     existing = []
     existing_set = set()
@@ -671,7 +672,8 @@ def like_tweet(tweet_url: str = ""):
     if tweet_url and _already_liked(tweet_url):
         log.info(f"[LIKE] already liked {tweet_url[-50:]} — skipping (would toggle OFF).")
         return
-    from . import action_guard, config as _cfg
+    from .. import action_guard
+    from ..core import config as _cfg
     if _cfg.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:] if tweet_url else '(open tweet)'}.")
         action_guard.record(action_guard.LIKE, target=tweet_url, dry_run=True)
@@ -717,7 +719,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     bot.log 'Reply posted!' said 140). The claim happens here, right before
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
-    from . import action_guard, active_hours, config as _cfg, replied_store, reply_admission
+    from .. import action_guard, active_hours, replied_store, reply_admission
+    from ..core import config as _cfg
     # Not a second admission rule: _safari_lock raises OutsideActiveHours on
     # entry, so Overnight is turned into the False refusal callers expect
     # before the lock. judge_reply still judges Waking hours under it.
@@ -823,7 +826,8 @@ def unfollow_account(username: str) -> bool:
 
     # Prune policy: daily unfollow cap, 30-day anti-churn cooldown, never
     # unfollow a protected tier1/tier2 whitelist account, dry-run.
-    from . import action_guard, config as _cfg
+    from .. import action_guard
+    from ..core import config as _cfg
     ok, why = action_guard.can_unfollow(username)
     if not ok:
         log.info(f"[UNFOLLOW] policy refuses @{username} ({why}).")
@@ -891,8 +895,7 @@ def unfollow_account(username: str) -> bool:
 # clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
 # bad candidate never burns a second profile visit. -------------------------
 
-_FOLLOW_REJECTS_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                    "follow_quality_rejects.json")
+_FOLLOW_REJECTS_FILE = os.path.join(_PROJECT_ROOT, "follow_quality_rejects.json")
 
 _NICHE_BIO_RE = re.compile(
     r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|"
@@ -1080,7 +1083,8 @@ def follow_account(username: str, reciprocal: bool = False,
     # Follow policy: whitelist-only (no strangers / no reciprocity), ratio
     # invariant (following < ceiling * followers), daily cap, 30-day
     # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
-    from . import action_guard, config as _cfg
+    from .. import action_guard
+    from ..core import config as _cfg
     ok, why = action_guard.can_follow(username, reciprocal=reciprocal or engager)
     if not ok:
         log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
@@ -1103,7 +1107,7 @@ def follow_account(username: str, reciprocal: bool = False,
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
-        from .action_guard import is_whitelisted
+        from ..action_guard import is_whitelisted
         q = _scrape_profile_quality()
         ok, why = _follow_quality_decision(
             _parse_follower_count(q.get("followers", "")),
@@ -1408,7 +1412,7 @@ def is_own_post(tweet: dict) -> bool:
     own posts and own QRTs live under /BOT_HANDLE/status/; retweets of
     others on our profile carry the ORIGINAL author's URL and are correctly
     excluded."""
-    from .config import BOT_HANDLE
+    from ..core.config import BOT_HANDLE
     url = (tweet.get("url") or "").lower()
     return f"x.com/{BOT_HANDLE.lower()}/status/" in url
 
@@ -1419,7 +1423,7 @@ def _profile_visit_allowed(username: str) -> bool:
     Home feed (For You + Following tab), and search terms. Our own profile
     stays visitable (boost/pin/metrics/with_replies callers need it). Env
     read at CALL time (side-effect gate — never an import-time constant)."""
-    from .config import BOT_HANDLE
+    from ..core.config import BOT_HANDLE
     base = (username or "").strip().lstrip("@").split("/")[0].lower()
     if not base:
         return False
@@ -1578,7 +1582,7 @@ def pin_own_tweet(tweet_url: str) -> bool:
     """
     import json as _json
     import tempfile
-    from . import config as _cfg
+    from ..core import config as _cfg
 
     if _cfg.dry_run():
         log.info(f"[PIN][DRY_RUN] would pin {tweet_url}.")
@@ -1677,7 +1681,7 @@ def pin_own_tweet(tweet_url: str) -> bool:
 
 def like_own_tweet_replies():
     """Visit own profile, open latest tweet, and like replies to build loyalty."""
-    from . import config as _cfg
+    from ..core import config as _cfg
     if _cfg.dry_run():
         log.info("[NOTIFY][DRY_RUN] would like replies on our latest tweet.")
         return

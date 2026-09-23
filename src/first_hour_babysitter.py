@@ -16,8 +16,8 @@ import os
 import traceback
 from datetime import datetime
 
-from .config import _PROJECT_ROOT
-from .logger import log
+from .core.config import _PROJECT_ROOT
+from .core.logger import log
 
 HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
 BABYSIT_WINDOW_MINUTES = float(os.environ.get("BABYSIT_WINDOW_MINUTES", "60"))
@@ -45,7 +45,7 @@ def run_babysit_cycle():
 
 def safe_run_babysit_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
+    from .core import health
     try:
         run_babysit_cycle()
         health.record_success("babysitter")

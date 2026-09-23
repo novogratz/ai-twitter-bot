@@ -24,9 +24,9 @@ import tempfile
 import time
 import traceback
 
-from .config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
-from .logger import log
-from .twitter_client import follow_account, _safari_lock, close_front_tab, _run_applescript, _scroll_page
+from .core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
+from .core.logger import log
+from .x.twitter_client import follow_account, _safari_lock, close_front_tab, _run_applescript, _scroll_page
 
 import webbrowser
 
@@ -170,7 +170,7 @@ def run_followback_cycle():
 
 def safe_run_followback_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
+    from .core import health
     try:
         run_followback_cycle()
         health.record_success("followback")

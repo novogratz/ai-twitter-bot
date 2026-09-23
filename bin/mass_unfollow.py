@@ -43,7 +43,8 @@ import threading
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
-from src import action_guard, active_hours, config  # noqa: E402
+from src import action_guard, active_hours  # noqa: E402
+from src.core import config  # noqa: E402
 
 # Stays under X's unfollow quota of about 190 per window; at pace `normal`
 # (~480/h) a run ends in about 27 minutes.

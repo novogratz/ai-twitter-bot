@@ -48,7 +48,7 @@ slot needs news from the last six hours and an exceptional-value approval.
   does not erase history or grant extra slots.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
   Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
-  write functions are removed from `src/twitter_client.py` (issue #111), and
+  write functions are removed from `src/x/twitter_client.py` (issue #111), and
   no scheduled job carries such a branch (issue #107):
   `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
   code and an operator request, not a config change.
@@ -87,7 +87,7 @@ retried automatically; clear it by hand as described in
 fails closed and is reported in the log.
 
 The active scheduler omits autonomous code/prompt rewriting and older profile
-publishing jobs. Hard caps in `src/config.py` also override stale strategy data.
+publishing jobs. Hard caps in `src/core/config.py` also override stale strategy data.
 Reply pacing remains configurable. Restart after changing code or configuration.
 
 ## Reach target

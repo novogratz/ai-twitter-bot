@@ -1,10 +1,10 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
 import re
 import traceback
-from .config import BLOCKLIST, BOT_HANDLE
-from .logger import log
-from .state_errors import StateUnreadable
-from .twitter_client import (
+from .core.config import BLOCKLIST, BOT_HANDLE
+from .core.logger import log
+from .core.state_errors import StateUnreadable
+from .x.twitter_client import (
     like_own_tweet_replies,
     scrape_own_tweet_and_replies,
     reply_to_tweet_in_thread,
@@ -13,7 +13,7 @@ from .twitter_client import (
     is_own_post as _is_own_post,
 )
 from .replyback_agent import generate_replyback
-from .humanizer import humanize
+from .core.humanizer import humanize
 from .reply_admission import judge_parent
 import random
 
@@ -217,7 +217,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
 
 def safe_run_notify_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
+    from .core import health
     try:
         run_notify_cycle()
         health.record_success("notify")
@@ -229,7 +229,7 @@ def safe_run_notify_cycle():
 
 def safe_run_replyback_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
-    from . import health
+    from .core import health
     try:
         run_replyback_cycle()
         health.record_success("replyback")
