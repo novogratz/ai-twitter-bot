@@ -713,6 +713,11 @@ their order in the file is not strictly chronological.
 > `review_queue.json` instead of publishing; the `/approve` skill ships them.
 > Default OFF (operator judged the voice dialed in 2026-06-05).
 >
+> **Removed (2026-09-23, #124):** once `/approve` was deleted (#113),
+> nothing shipped the queue and each editorial slot burned its attempts on
+> queued drafts. The flag and `review_queue.json` writes are gone; `DRY_RUN`
+> is the no-publish switch.
+>
 > **Monetization roadmap:** 3–5K followers → media kit + sponsor outreach
 > (trading apps, brokers, AI tools); 5–10K → X Subscriptions ("exclusive
 > therapy sessions"); ongoing → newsletter funnel. Engagement rate >2–3%

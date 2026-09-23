@@ -305,22 +305,25 @@ def test_hashtags_stripped_at_chokepoint():
     assert "#" not in out and "therapy" in out
 
 
-def test_review_mode_queues_instead_of_posting(monkeypatch, tmp_path):
-    import json, os
+def test_stale_review_mode_does_not_divert_post_to_a_queue(monkeypatch, tmp_path):
+    """REVIEW_MODE queued drafts into review_queue.json that nothing shipped,
+    so every editorial slot burned its attempts (#124). A leftover
+    REVIEW_MODE=1 in .env must not hold drafts any more: DRY_RUN is the
+    only no-publish switch."""
+    import os
     import src.x.twitter_client as tc
     from src.guards import action_guard
-    monkeypatch.setenv("REVIEW_MODE", "1")
     import src.core.config as config
+    monkeypatch.setenv("REVIEW_MODE", "1")
+    monkeypatch.setenv("DRY_RUN", "1")
     monkeypatch.setattr(config, "_PROJECT_ROOT", str(tmp_path))
     monkeypatch.setattr(action_guard, "can_post", lambda a: (True, ""))
     recorded = []
-    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
-    tc.post_tweet("a sponsor-clean original take about the market needing a therapist today")
-    qpath = os.path.join(str(tmp_path), "review_queue.json")
-    assert os.path.exists(qpath)
-    q = json.load(open(qpath))
-    assert len(q) == 1 and q[0]["kind"] == "post"
-    assert recorded == []  # nothing published
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
+    assert tc.post_tweet("a sponsor-clean original take about the market needing a therapist today") is tc.DRY_RUN_RECORDED
+    assert recorded == [((action_guard.POST,), {"dry_run": True})]
+    assert not os.path.exists(os.path.join(str(tmp_path), "review_queue.json"))
+    assert not hasattr(tc, "_queue_for_review")
 
 
 # --- 2026-06-07 agent spec: follow policy (Part 1 hard constraints) ---------

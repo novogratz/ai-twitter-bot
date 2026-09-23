@@ -255,7 +255,6 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
         ag.record(ag.POST)
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
-    monkeypatch.setattr(tc, "_review_mode", lambda: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
     monkeypatch.setattr(tc, "_run_applescript", lambda *a: True)
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)
