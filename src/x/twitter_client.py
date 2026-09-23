@@ -357,32 +357,6 @@ def _strip_post_urls(text: str) -> str:
     return stripped
 
 
-def _review_mode() -> bool:
-    return os.environ.get("REVIEW_MODE", "0") == "1"
-
-
-def _queue_for_review(kind: str, payload: dict) -> None:
-    """Human-in-the-loop queue (REVIEW_MODE=1): drafts land in
-    review_queue.json instead of publishing. Nothing ships them; see #124."""
-    import json as _json
-    from ..core.config import _PROJECT_ROOT as _PR
-    path = os.path.join(_PR, "review_queue.json")
-    try:
-        queue = []
-        if os.path.exists(path):
-            with open(path) as f:
-                queue = _json.load(f)
-        if not isinstance(queue, list):
-            queue = []
-        payload = dict(payload, kind=kind, queued_at=datetime.now().isoformat())
-        queue.append(payload)
-        with open(path, "w") as f:
-            _json.dump(queue[-100:], f, indent=2, ensure_ascii=False)
-        log.info(f"[REVIEW] {kind} queued for approval ({len(queue)} pending).")
-    except Exception as e:
-        log.info(f"[REVIEW] queue write failed: {e}")
-
-
 class ToolCallLeakError(Exception):
     """Raised when a tweet still contains tool-call markup after scrubbing.
 
@@ -436,7 +410,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     from ..guards import action_guard, content_guard
     from ..core import config as _cfg
     # Returns True only when the post actually shipped, DRY_RUN_RECORDED on a
-    # dry run, False on any skip (policy / content / dedup / review).
+    # dry run, False on any skip (policy / content / dedup).
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged log_post/log_hotake
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
     # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
@@ -451,9 +425,6 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
         return False
     if content_guard.is_duplicate(text):
         log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
-        return False
-    if _review_mode():
-        _queue_for_review("post", {"text": text, "image_path": image_path or ""})
         return False
     if _cfg.dry_run():
         log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
