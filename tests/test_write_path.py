@@ -141,3 +141,42 @@ def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
     with pytest.raises(OutsideActiveHours):
         like_bot.run_like_cycle()
     assert like_bot._load_daily_state()["count"] == 5
+
+
+def _dry_run_reply_path(monkeypatch):
+    from src import action_guard, config
+
+    monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: None)
+    monkeypatch.setattr(config, "DRY_RUN", True)
+
+
+def test_human_typo_text_is_the_validated_text(monkeypatch):
+    from src import content_guard, humanizer, twitter_client
+
+    _dry_run_reply_path(monkeypatch)
+    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
+    validated = []
+    real_validate = content_guard.validate
+    monkeypatch.setattr(content_guard, "validate",
+                        lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
+
+    url = "https://x.com/typofriend/status/2063500000000000101"
+    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is True
+    assert validated and validated[-1].endswith("(typo)")
+
+
+def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
+    from src import content_guard, humanizer, twitter_client
+    from src.reply_bot import load_replied
+
+    _dry_run_reply_path(monkeypatch)
+    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
+    monkeypatch.setattr(content_guard, "validate",
+                        lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
+
+    url = "https://x.com/typofriend/status/2063500000000000102"
+    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is False
+    assert url not in load_replied()

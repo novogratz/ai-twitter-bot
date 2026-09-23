@@ -1000,6 +1000,22 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         reply_text = trimmed
     from .humanizer import casualize
     reply_text = casualize(reply_text)  # human texture (2026-06-10)
+    # Operator mandate 2026-06-05: replies to @Graphseo (and ONLY him) always
+    # carry exactly ONE human-looking keyboard typo — he tweeted that spelling
+    # mistakes are the only proof of humanity. Enforced here so every reply
+    # path obeys, whichever bot generated the text. Injected before validate
+    # so the text that ships is the text that was checked, and before the
+    # dedup mark so a refused reply leaves the tweet fresh.
+    _typo_handles = {h.strip().lower() for h in os.environ.get(
+        "HUMAN_TYPO_HANDLES", "").split(",") if h.strip()}
+    try:
+        _parent_handle = tweet_url.split("x.com/")[1].split("/")[0].lower()
+    except (IndexError, AttributeError):
+        _parent_handle = ""
+    if _parent_handle in _typo_handles:
+        from .humanizer import inject_human_typo
+        reply_text = inject_human_typo(reply_text)
+        log.info(f"[REPLY] human-typo injected for @{_parent_handle}.")
     ok, why = content_guard.validate(reply_text, kind="reply")
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
@@ -1038,21 +1054,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     if not replied_store.claim(tweet_url):
         log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
         return False
-
-    # Operator mandate 2026-06-05: replies to @Graphseo (and ONLY him) always
-    # carry exactly ONE human-looking keyboard typo — he tweeted that spelling
-    # mistakes are the only proof of humanity. Enforced here so every reply
-    # path obeys, whichever bot generated the text.
-    _typo_handles = {h.strip().lower() for h in os.environ.get(
-        "HUMAN_TYPO_HANDLES", "").split(",") if h.strip()}
-    try:
-        _parent_handle = tweet_url.split("x.com/")[1].split("/")[0].lower()
-    except (IndexError, AttributeError):
-        _parent_handle = ""
-    if _parent_handle in _typo_handles:
-        from .humanizer import inject_human_typo
-        reply_text = inject_human_typo(reply_text)
-        log.info(f"[REPLY] human-typo injected for @{_parent_handle}.")
     if _cfg.DRY_RUN:
         log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
         action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
