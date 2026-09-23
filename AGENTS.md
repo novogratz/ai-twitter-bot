@@ -92,10 +92,11 @@ uv run --with-requirements requirements.txt python main.py --dry-run  # jobs + p
 ```
 
 CI runs the same suite on every PR. `tests/conftest.py` walls tests off from
-Safari, `bot.log` and production state files; patch browser primitives in
-`src/x/safari.py` and scrapes in `src/x/scraper.py`, the modules that define
-them, because function-local imports bypass mocks placed on the caller's
-module. A guard change ships with a test pinning it.
+Safari, `bot.log` and production state files. Patch a name where it is looked
+up: browser primitives in `src/x/safari.py`, and a scrape or write in its
+defining module (`src/x/scraper.py`, `src/x/twitter_client.py`) when the
+caller imports it inside a function, but on the caller when it imports it at
+module level. A guard change ships with a test pinning it.
 
 ## Live bot and state
 

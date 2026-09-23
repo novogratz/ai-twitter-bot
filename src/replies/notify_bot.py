@@ -4,11 +4,10 @@ import traceback
 from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
-from ..x.scraper import scrape_own_tweet_and_replies, is_own_post as _is_own_post
+from ..x.scraper import scrape_own_tweet_and_replies
 from ..x.twitter_client import (
     like_own_tweet_replies,
     reply_to_tweet_in_thread,
-    post_tweet,
     visit_profile_and_like,
     LikeOutcome,
 )

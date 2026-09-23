@@ -217,7 +217,7 @@ def _launch_safari() -> bool:
         )
         time.sleep(4)
         # Bring it to the front so subsequent AppleScript `front window`
-        # calls in twitter_client land on the right surface.
+        # calls in src/x land on the right surface.
         subprocess.run(
             ["osascript", "-e", 'tell application "Safari" to activate'],
             capture_output=True, text=True, timeout=10,

@@ -1,8 +1,9 @@
 """Safari and AppleScript primitives shared by the X reading and write
 modules: the Safari lock, AppleScript runs, paste, tab and keyboard moves.
 
-Other modules call these through the module (`safari._run_applescript(...)`),
-never through a `from` import, so the test walls patched here reach them."""
+Other modules call the walled primitives (`_run_applescript`, `_paste_text`)
+through the module (`safari._run_applescript(...)`), never through a `from`
+import, so the test walls patched here reach them."""
 import subprocess
 import threading
 import time

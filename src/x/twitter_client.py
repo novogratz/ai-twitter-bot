@@ -1,5 +1,7 @@
-"""Write chokepoints for X via Safari + AppleScript (macOS only): every post,
-reply, like, follow, unfollow and pin goes through one function here."""
+"""Write chokepoints for X via Safari + AppleScript (macOS only): each post,
+reply, like, follow, unfollow and pin has one function here that owns its
+rules. Known gap: `like_job` (`src/account/like_bot.py`) still clicks likes
+with its own JavaScript, outside `like_tweet`."""
 import json
 import os
 import random
