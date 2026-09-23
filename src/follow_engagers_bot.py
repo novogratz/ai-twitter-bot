@@ -15,15 +15,15 @@ import json
 import os
 import re
 import traceback
-from datetime import date
+from datetime import date, timedelta
 
-from . import action_guard
+from . import action_guard, x_urls
 from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .logger import log
 
 # replied_back.json stopped being written on 2026-09-23 (issue #100): the
-# ledger's Debate turns replaced it. Its Engagers are still read until they
-# age out of the ledger's 90 days; delete this fallback around 2026-12-22.
+# ledger's Debate turns replaced it. Its Engagers are read until they age out
+# of the ledger's 90 days; delete this fallback and the file after 2026-12-22.
 FROZEN_REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
 STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_engagers_state.json")
 
@@ -53,7 +53,8 @@ def _save_state(st: dict) -> None:
 
 
 def _frozen_engager_handles() -> list:
-    """Newest-first handles from the frozen replied_back.json URLs."""
+    """Newest-first handles from the frozen replied_back.json URLs posted
+    within the ledger's 90 days, the same window as the Debate turns."""
     try:
         with open(FROZEN_REPLIED_BACK_FILE) as f:
             urls = json.load(f)
@@ -61,7 +62,13 @@ def _frozen_engager_handles() -> list:
         return []
     if not isinstance(urls, list):
         return []
-    return [m.group(1).lower() for u in reversed(urls) if (m := _HANDLE_RE.search(str(u)))]
+    handles = []
+    for u in reversed(urls):
+        m = _HANDLE_RE.search(str(u))
+        age = x_urls.age(str(u))
+        if m and age is not None and age <= timedelta(days=90):
+            handles.append(m.group(1).lower())
+    return handles
 
 
 def _engager_handles(limit: int = 200) -> list:

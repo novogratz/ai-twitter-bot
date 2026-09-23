@@ -367,6 +367,8 @@ def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
     action_guard.record(action_guard.DEBATE_TURN, target="simulated", dry_run=True)
     action_guard.record(action_guard.REPLY, target=fresh("replied_to"))
     with open(fe.FROZEN_REPLIED_BACK_FILE, "w") as f:
-        json.dump(["https://x.com/frozenfan/status/1", "text:no url", "https://x.com/newfan/status/2"], f)
+        json.dump([fresh("agedout", minutes=91 * 24 * 60), fresh("frozenfan", n=1), "text:no url",
+                   fresh("newfan", n=2)], f)
 
-    assert fe._engager_handles() == ["oldfan", "newfan", "frozenfan"]
+    assert fe._engager_handles() == ["oldfan", "newfan", "frozenfan"], \
+        "the frozen file ages out with the ledger's 90 days"
