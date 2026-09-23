@@ -1012,6 +1012,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
     from . import action_guard, active_hours, config as _cfg, replied_store, reply_admission
+    # Not a second admission rule: _safari_lock raises OutsideActiveHours on
+    # entry, so Overnight is turned into the False refusal callers expect
+    # before the lock. judge_reply still judges Waking hours under it.
     if not active_hours.may_act():
         log.info(f"[REPLY] Overnight or stop requested — skipping: {tweet_url}")
         return False

@@ -416,6 +416,19 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     assert url not in load_replied()
 
 
+def test_overnight_reply_is_refused_not_raised(monkeypatch):
+    """_safari_lock raises OutsideActiveHours on entry; the chokepoint must
+    refuse with False before it, like any other skip."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from src import active_hours, config, twitter_client as tc
+
+    _live_browser(monkeypatch)
+    monkeypatch.setattr(active_hours, "now_local",
+                        lambda: datetime(2026, 9, 23, 23, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+    assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is False
+
+
 def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     """A simulated Reply writes a dry_run ledger row only: the Replied store
     holds Replies that shipped, so going live later can still answer it."""
