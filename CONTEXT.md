@@ -65,6 +65,11 @@ A Reply to an Engager, in answer to what they said to the account; capped per
 Engager per day.
 _Avoid_: rally, round, comeback
 
+**Replied store**:
+The record of every post the account has Replied to, keyed on the post's
+status ID: one Reply per post, ever. While it is unreadable, no Reply ships.
+_Avoid_: replied set, replied cache, dedup file
+
 ### Accounts
 
 **Engager**:
