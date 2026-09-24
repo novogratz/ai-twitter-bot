@@ -262,7 +262,11 @@ of unrelated commits. Git tracks some of them, including `action_ledger.json`,
 issue #147. A ledger in the former format, one JSON list like the committed
 copy, is still read, and the first write after a restart converts it in place
 without dropping a row (`[LEDGER] Converted N rows` in `bot.log`); the same
-write then drops the rows past 90 days.
+write then drops the rows past 90 days. The bot indexes the rows it has read
+and, at each check, reads only the lines added since; a restored copy or a
+file cut shorter is read again in full. An edit in place that keeps every
+line's length can go unseen until the next restart: edit the ledger with the
+bot stopped.
 Files written by active jobs:
 
 | File | Written by | Holds |
@@ -270,7 +274,7 @@ Files written by active jobs:
 | `editorial_state.json` | `editorial_bot` | Slots, attempts, feedback, published originals, used sources |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report |
-| `action_ledger.json` | `action_guard` | Counted writes and debate turns per author, one JSON object per line, 90 days |
+| `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days |
 | `following_count.json` | `action_guard` | Following count used by the follow ceiling |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus |
