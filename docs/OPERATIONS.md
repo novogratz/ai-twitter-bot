@@ -155,10 +155,12 @@ by hand, keeping today's entries, or restore a copy taken today. Never delete
 the ledger or restore it from git: the committed `action_ledger.json` dates
 from July 2026, and either move resets today's count and grants extra posts.
 
-The ledger holds one JSON object per line. A last line cut short by an
-interrupted write, with no final newline, is skipped with a `[LEDGER]` warning
-in `bot.log` and dropped by the next write; the rows before it still count.
-Any other bad line, an empty file or a file holding no complete line refuses
+The ledger holds one JSON object per line, each with a text `ts`. A last line
+without its final newline still counts when it reads as a row, and the next
+write adds the newline, so a hand edit may leave it out. A last line cut short
+by an interrupted write is skipped with a `[LEDGER]` warning in `bot.log` and
+dropped by the next write; the rows before it still count. Any other bad line,
+a row without a text `ts`, and a file holding no row (empty or blank) refuse
 every write. With the bot stopped, list the bad lines, fix or delete those
 lines only, keeping today's rows, then restart:
 
@@ -166,12 +168,26 @@ lines only, keeping today's rows, then restart:
 python3 - <<'EOF'
 import json
 for n, line in enumerate(open("action_ledger.json"), 1):
+    if not line.strip():
+        continue
     try:
-        assert not line.strip() or isinstance(json.loads(line), dict)
+        row = json.loads(line)
+        assert isinstance(row, dict) and isinstance(row.get("ts"), str)
     except (ValueError, AssertionError):
         print(n, line[:80].rstrip())
 EOF
 ```
+
+**Rolling back past issue #147.** Older code reads the ledger as one JSON
+list and refuses every write on the per-line format. With the bot stopped,
+turn the ledger back into a list before deploying the older code:
+
+```bash
+jq -s . action_ledger.json > /tmp/ledger.json && mv /tmp/ledger.json action_ledger.json
+```
+
+On a bad line `jq` stops with a parse error and the ledger stays as it was:
+repair the line as above, then run the command again.
 
 **Corrupt `replied_tweets.json`.** The store fails closed: `reply_to_tweet`
 and the reply cycles that read it raise `StateUnreadable` until it is
@@ -306,7 +322,8 @@ and unused since debate turns moved to the ledger; it can be deleted.
   `ENABLE_CODEX_OPERATOR=1` or `ENABLE_AI_MAINTENANCE=1`.
 - `bin/mass_unfollow.py` unfollows by hand from `/following`. It refuses to
   run while the bot runs, unless `--force`, and records each unfollow in the
-  ledger. It drives `osascript` directly but checks the bot's Toronto clock:
+  ledger. Keep the bot stopped even with `--force`: the ledger has a single
+  writer, and a row written beside the running bot can be lost. It drives `osascript` directly but checks the bot's Toronto clock:
   it refuses to start Overnight and stops before its next unfollow at 22:00
   or on SIGTERM. `--max` defaults to 150. A rate limit triggers a cooldown,
   never an abort. `mass_unfollow_results.json` is rewritten after every

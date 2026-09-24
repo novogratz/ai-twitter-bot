@@ -3,6 +3,7 @@ each write, read incrementally, compacted at most once a day, and converted in
 place from the former single JSON list."""
 import json
 import os
+import stat
 from datetime import datetime, timedelta
 
 import pytest
@@ -105,6 +106,32 @@ def test_cut_short_last_line_is_ignored_then_dropped_by_the_next_write(ledger):
     assert ag.count_today(ag.POST) == 2
 
 
+def test_last_row_without_final_newline_counts_and_the_next_write_adds_it(ledger):
+    today = _now().isoformat()
+    ledger.write_text(_jsonl([_row(ag.LIKE, today)]) + json.dumps(_row(ag.POST, today)))
+
+    assert [r["action"] for r in ag._load_ledger()] == [ag.LIKE, ag.POST]
+    assert ag.count_today(ag.POST) == 1
+
+    ag.record(ag.LIKE)
+
+    lines = ledger.read_text().splitlines()
+    assert [json.loads(line)["action"] for line in lines] == [ag.LIKE, ag.POST, ag.LIKE]
+    assert ag.count_today(ag.POST) == 1
+
+
+def test_bytes_glued_to_a_row_without_newline_are_not_read_incrementally(ledger):
+    today = _now().isoformat()
+    ledger.write_text(_jsonl([_row(ag.LIKE, today)]) + json.dumps(_row(ag.POST, today)))
+    assert ag.count_today(ag.POST) == 1
+
+    with open(ledger, "a") as f:
+        f.write(json.dumps(_row(ag.POST, today)) + "\n")
+
+    with pytest.raises(StateUnreadable):
+        ag.count_today(ag.POST)
+
+
 @pytest.mark.parametrize("content", [
     ('{"action": "post", "ts": "2026-09-20T06:00:00"}\n{broken\n'
      '{"action": "post", "ts": "2026-09-20T07:00:00"}\n'),
@@ -112,8 +139,14 @@ def test_cut_short_last_line_is_ignored_then_dropped_by_the_next_write(ledger):
     '{"action": "post", "ts": "2026-09-20T06:00:00"}\n5\n',
     '{"action": "post", "ts": "2026-09-20T06:00:00"',
     "",
+    "\n",
+    "   \n\n",
     "[{broken",
-], ids=["middle", "complete-last-line", "not-an-object", "fragment-only", "empty", "legacy-cut"])
+    '{"action": "post", "ts": "2026-09-20T06:00:00"}\n{"action": "post"}\n',
+    '{"action": "post", "ts": "2026-09-20T06:00:00"}\n{"action": "post", "ts": 5}\n',
+    '[{"action": "post", "ts": null}]',
+], ids=["middle", "complete-last-line", "not-an-object", "fragment-only", "empty",
+        "newline-only", "blank-lines", "legacy-cut", "no-ts", "ts-not-text", "legacy-ts-not-text"])
 def test_corrupt_ledger_refuses_reads_and_writes(ledger, content):
     ledger.write_text(content)
 
@@ -122,6 +155,67 @@ def test_corrupt_ledger_refuses_reads_and_writes(ledger, content):
     with pytest.raises(StateUnreadable):
         ag.record(ag.POST)
     assert ledger.read_text() == content
+
+
+def test_failed_rewrite_leaves_the_ledger_and_no_temporary_file(ledger, monkeypatch):
+    raw = json.dumps([_row(ag.POST, _now().isoformat())])
+    ledger.write_text(raw)
+
+    def refuse(fd):
+        raise OSError("disk full")
+
+    monkeypatch.setattr(ag, "_fsync", refuse)
+    with pytest.raises(StateUnreadable, match="could not be saved"):
+        ag.record(ag.LIKE)
+
+    assert ledger.read_text() == raw
+    assert not os.path.exists(str(ledger) + ".tmp")
+
+
+def test_rewrite_flushes_the_file_then_its_directory(ledger, monkeypatch):
+    flushed = []
+    fsync = ag._fsync
+
+    def spy(fd):
+        flushed.append("dir" if stat.S_ISDIR(os.fstat(fd).st_mode) else "file")
+        fsync(fd)
+
+    monkeypatch.setattr(ag, "_fsync", spy)
+    ledger.write_text(json.dumps([_row(ag.POST, _now().isoformat())]))
+
+    ag.record(ag.LIKE)
+
+    # Conversion: the temporary file, then the directory; then the append.
+    assert flushed == ["file", "dir", "file"]
+
+
+def test_fsync_falls_back_when_full_fsync_is_refused(monkeypatch, tmp_path):
+    synced = []
+    monkeypatch.setattr(ag.fcntl, "F_FULLFSYNC", 51, raising=False)
+
+    def refuse(fd, cmd):
+        raise OSError("not supported")
+
+    monkeypatch.setattr(ag.fcntl, "fcntl", refuse)
+    monkeypatch.setattr(ag.os, "fsync", synced.append)
+    with open(tmp_path / "f", "wb") as f:
+        ag._fsync(f.fileno())
+        assert synced == [f.fileno()]
+
+
+def test_cache_notices_a_same_size_rewrite_that_keeps_the_mtime(ledger):
+    today = _now().isoformat()
+    ledger.write_text(_jsonl([_row(ag.POST, today), _row(ag.REPLY, today)]))
+    assert ag.count_today(ag.POST) == 1
+    before = os.stat(ledger)
+
+    ledger.write_text(_jsonl([_row(ag.LIKE, today), _row(ag.REPLY, today)]))
+    os.utime(ledger, ns=(before.st_atime_ns, before.st_mtime_ns))
+    after = os.stat(ledger)
+    assert (after.st_ino, after.st_size, after.st_mtime_ns) == (
+        before.st_ino, before.st_size, before.st_mtime_ns)
+
+    assert ag.count_today(ag.POST) == 0
 
 
 def test_cache_follows_writes_made_by_another_process(ledger):
