@@ -26,7 +26,7 @@ Public API:
   render_block() -> str — for prompt injection.
 
 The file is guarded: while respect_list.json is unreadable, every function
-that reads it raises StateUnreadable except render_block, and nothing
+that reads it raises StateUnreadable, render_block included, and nothing
 overwrites it.
 """
 import os
@@ -194,17 +194,14 @@ def scrub_text_or_skip(text: str) -> Tuple[Optional[str], str]:
     return text, ""
 
 
-def render_block() -> str:
+def render_block(defaults: bool = False) -> str:
     """Prompt block injected into HARD rules. Names are present so the
     model sees them up-front rather than relying on post-hoc scrub.
 
-    An unreadable file renders the defaults and stays untouched:
-    personality_store renders this block at import, and swallows its errors
-    on every prompt, so raising here would drop the block from prompts."""
-    try:
-        handles = sorted(load())
-    except StateUnreadable:
-        handles = sorted(_DEFAULTS)
+    Raises StateUnreadable while the file is unreadable. `defaults` renders
+    the default handles without reading the file: personality_store's
+    render at import only."""
+    handles = sorted(_DEFAULTS) if defaults else sorted(load())
     if not handles:
         return ""
     sample = ", ".join(f"@{h}" for h in handles[:30])

@@ -26,6 +26,7 @@ from typing import Callable, Optional, Tuple
 
 from ..core.config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES
 from ..core.logger import log
+from ..core.state_errors import StateUnreadable
 
 # X composer limit for replies and quotes; Reply admission trims to it.
 REPLY_MAX_CHARS = 278
@@ -450,6 +451,8 @@ def _rationed_shape_overused(text: str) -> bool:
     try:
         from ..core.history import get_recent_tweets
         recent = get_recent_tweets(hours=window_h)
+    except StateUnreadable:
+        raise  # an unreadable history is a refusal, not "no recent shape"
     except Exception:
         return False
     for prior in recent:

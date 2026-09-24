@@ -62,7 +62,9 @@ def _load_followed() -> set:
 
 
 def _save_followed(followed: set):
-    FOLLOWED.write(list(followed))
+    # engage_job and followback_job each hold a copy read at cycle start:
+    # merge with the disk, never replace it, or one erases the other's follows.
+    FOLLOWED.update(lambda on_disk: sorted(set(on_disk) | set(followed)))
 
 
 def run_engage_cycle():

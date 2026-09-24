@@ -41,6 +41,7 @@ from datetime import datetime
 from typing import Optional
 
 from .config import _PROJECT_ROOT
+from .logger import log
 from .state_store import GUARDED, StateFile
 
 # Guarded: a corrupt file used to read as empty, and the next save erased
@@ -96,27 +97,31 @@ _BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
 Everything else is negotiable — voice, style, targets, mood."""
 
 
-def _render_hard_rules() -> str:
+def _render_hard_rules(*, at_import: bool = False) -> str:
     """Compose the base hard rules + the dynamic respect list block.
 
     Renders fresh on every prompt assembly so the respect list updates
-    take effect immediately without restart.
+    take effect immediately without restart. An unreadable respect list
+    raises (StateUnreadable) so the job that needs the prompt refuses; only
+    the render at import falls back to the default handles, so main.py
+    still starts.
     """
-    out = _BASE_HARD_RULES
+    from ..guards import respect_list
     try:
-        from ..guards import respect_list
         block = respect_list.render_block()
-        if block:
-            out = out + "\n\n" + block
-    except Exception:
-        pass
-    return out
+    except Exception as exc:
+        if not at_import:
+            raise
+        log.error(f"[PERSONALITY] respect list not rendered at import ({exc}): "
+                  f"HARD_RULES_BLOCK names the default handles.")
+        block = respect_list.render_block(defaults=True)
+    return _BASE_HARD_RULES + "\n\n" + block if block else _BASE_HARD_RULES
 
 
 # Module-level constant kept for backwards-compat with code that imports
 # the bare string. Prefer `hard_rules_block()` for fresh-rendered content
 # (it includes the respect list dynamically).
-HARD_RULES_BLOCK = _render_hard_rules()
+HARD_RULES_BLOCK = _render_hard_rules(at_import=True)
 
 
 def _normalize(handle: str) -> str:
@@ -161,7 +166,14 @@ def upsert_account(handle: str, **updates) -> dict:
     key = _normalize(handle)
     if not key:
         return {}
-    data = load()
+    # Every Reply job bumps a dossier after shipping: change the file under
+    # its lock, or two jobs erase each other's bumps.
+    return PERSONALITY.update(lambda data: _apply_updates(data, key, updates))["accounts"][key]
+
+
+def _apply_updates(data: dict, key: str, updates: dict) -> dict:
+    data.setdefault("accounts", {})
+    data.setdefault("topics", {})
     dossier = data["accounts"].get(key, dict(DEFAULT_ACCOUNT))
     today = datetime.now().strftime("%Y-%m-%d")
     if not dossier.get("first_seen"):
@@ -202,8 +214,7 @@ def upsert_account(handle: str, **updates) -> dict:
             dossier[k] = v
 
     data["accounts"][key] = dossier
-    save(data)
-    return dossier
+    return data
 
 
 def record_interaction(handle: str, kind: str = "reply") -> None:

@@ -17,7 +17,6 @@ ANY mix of bots is the trigger, since they all share Safari.
 """
 import os
 import sys
-import threading
 import time
 from datetime import datetime
 from .config import _PROJECT_ROOT
@@ -29,8 +28,6 @@ from ..guards.active_hours import OutsideActiveHours
 HEALTH = StateFile("safari_health.json",
                    {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0},
                    DISPOSABLE)
-# Every scheduler thread reports here: one read-modify-write at a time.
-_LOCK = threading.Lock()
 AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
 
 RECOVERY_THRESHOLD = 3      # consecutive cycle failures before we restart
@@ -39,12 +36,12 @@ COOLDOWN_SECONDS = 600      # don't restart Safari more than once per 10 min
 
 def record_success(label: str = ""):
     """Reset the failure counter. Call from any cycle that completed normally."""
-    with _LOCK:
-        data = HEALTH.read()
+    def reset(data):
         if data.get("consecutive_failures", 0) > 0:
             log.info(f"[HEALTH] {label or 'cycle'} OK — resetting failure counter (was {data['consecutive_failures']}).")
         data["consecutive_failures"] = 0
-        HEALTH.write(data)
+        return data
+    HEALTH.update(reset)
 
 
 def record_failure(label: str = "") -> bool:
@@ -66,37 +63,33 @@ def record_failure(label: str = "") -> bool:
         log.error(f"[HEALTH] {label or 'cycle'} halted: {exc}. Not a Safari failure, "
                   f"no restart; repair the file (docs/OPERATIONS.md#recovery).")
         return False
-    with _LOCK:
-        data = HEALTH.read()
+    claimed = []
+
+    def count(data):
         data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
         log.info(f"[HEALTH] {label or 'cycle'} FAILED — consecutive = {data['consecutive_failures']}.")
-
         if data["consecutive_failures"] < RECOVERY_THRESHOLD:
-            HEALTH.write(data)
-            return False
-
+            return data
         now = time.time()
         if now - data.get("last_recovery_ts", 0) < COOLDOWN_SECONDS:
             log.info(f"[HEALTH] Recovery already fired in last {COOLDOWN_SECONDS}s — skipping.")
-            HEALTH.write(data)
-            return False
-
+            return data
         # Claimed before the restart, which runs outside the lock: a second
         # failing thread meanwhile finds the cooldown and skips.
         data["last_recovery_ts"] = now
         data["total_recoveries"] = data.get("total_recoveries", 0) + 1
-        HEALTH.write(data)
-        total_recoveries = data["total_recoveries"]
+        claimed.append(data["total_recoveries"])
+        return data
+    HEALTH.update(count)
+    if not claimed:
+        return False
 
     log.warning(f"[HEALTH] {RECOVERY_THRESHOLD}+ consecutive failures — restarting Safari.")
     ok = _restart_safari()
     if ok:
         # Reset on successful recovery so the next cycle starts clean.
-        with _LOCK:
-            data = HEALTH.read()
-            data["consecutive_failures"] = 0
-            HEALTH.write(data)
-    _append_autonomous_flag(label, total_recoveries, ok)
+        HEALTH.update(lambda data: {**data, "consecutive_failures": 0})
+    _append_autonomous_flag(label, claimed[0], ok)
     return ok
 
 

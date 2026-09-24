@@ -16,6 +16,7 @@ from ..core import config
 from ..guards.active_hours import is_active, now_local, require_active
 from ..core.llm_client import run_llm, unwrap_text
 from ..core.logger import log
+from ..core.history import load_history
 from ..core.state_store import GUARDED, StateFile
 
 # Guarded: it holds the Pending slots and the spent Attempts.
@@ -339,6 +340,9 @@ def run_editorial_cycle(preview=False):
     try:
         require_active()
         state = _read_state()
+        # The review dedups against it: unreadable, refuse before a Draft
+        # spends an Attempt.
+        load_history()
         slot = due_slot(state=state)
         if not slot or not action_guard.can_post(action_guard.POST)[0]:
             return None

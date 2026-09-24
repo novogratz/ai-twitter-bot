@@ -184,18 +184,20 @@ Safari restart, and nothing writes over the file:
 
 | File | Stops |
 |---|---|
-| `tweet_history.json` | Originals (`post_tweet` dedup), `babysit_job` |
+| `tweet_history.json` | `editorial_job` before any Draft, `post_tweet` (dedup and rationed openers), `babysit_job`, `reply_job` when enabled |
 | `followed_accounts.json` | `engage_job`, `followback_job` |
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
-| `personality.json` | Replies drafted by `direct_reply._generate_single_reply`, which read the author's dossier: each draft fails, so none ships. Replybacks read no dossier and continue; the dossier bump after a Reply is skipped |
+| `personality.json` | The Reply cycles drafting through `direct_reply._generate_single_reply` (`direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`), which read the author's dossier: the cycle stops at its first draft, so none ships. Replybacks read no dossier and continue; the dossier bump after a Reply is skipped |
 | `whitelist.json` | `account_curator` promotions (`action_guard` reads it itself) |
-| `respect_list.json` | `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
+| `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
-An unreadable `respect_list.json` still protects the default handles in
-prompts: the hard-rules block renders the defaults until the file is
-repaired. With the bot stopped, repair the JSON by hand (usually a truncated
+An unreadable `respect_list.json` stops every Original and most Replies
+until it is repaired; `main.py` still starts, because the hard-rules block
+computed at import names the default handles. A process killed mid-write
+can leave a `.<name>.<random>.tmp` file beside a state file: `.gitignore`
+covers it, and it can be deleted once the bot is stopped. With the bot stopped, repair the JSON by hand (usually a truncated
 tail), check its top-level type (a list for `tweet_history.json` and
 `followed_accounts.json`, an object for the others), then restart. Do not
 delete a guarded file: a missing file restarts from empty, which resets a
@@ -294,7 +296,9 @@ bot stopped.
 The JSON files in `src/` go through the state store
 (`src/core/state_store.py`), except the action ledger, the Replied store and
 the files `twitter_client` and `action_guard` handle themselves. The store
-writes atomically (temp file, fsync, rename) and gives each file one policy.
+writes atomically (temp file, full fsync, rename, directory flush), changes a
+file shared by several jobs under that file's lock, and gives each file one
+policy.
 A missing file reads as empty or default under both policies. A *guarded*
 file that does not parse, or whose top-level JSON type is wrong, raises
 `StateUnreadable`: the job that needs it stops, `bot.log` gets a `[STATE]`
@@ -324,7 +328,7 @@ Files written by active jobs:
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart | disposable |
-| `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past | disposable |
+| `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past or unreadable | disposable |
 | `autonomous_log.md` | `health` | One line per Safari recovery | append-only, outside the store |
 
 Files active code reads but no active job writes:

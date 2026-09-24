@@ -13,7 +13,7 @@ def test_state_files_resolve_to_the_repo_root(unwalled):
     from src.account import (account_curator, engage_bot, follow_engagers_bot,
                              follower_tracker_bot, like_bot, pin_bot)
     from src.core import (config, dynamic_strategy, evolution_store, health, history,
-                          llm_client, personality_store, state_store)
+                          live_strategy, llm_client, personality_store, state_store)
     from src.editorial import editorial_bot, reach_report
     from src.guards import action_guard, respect_list
     from src.x import safari_hygiene, twitter_client
@@ -24,7 +24,7 @@ def test_state_files_resolve_to_the_repo_root(unwalled):
 
     modules = (account_curator, engage_bot, follow_engagers_bot, follower_tracker_bot,
                like_bot, pin_bot, dynamic_strategy, evolution_store, health, history,
-               llm_client, personality_store, editorial_bot, reach_report, respect_list,
+               live_strategy, llm_client, personality_store, editorial_bot, reach_report, respect_list,
                safari_hygiene)
     stored = [v for m in modules for v in vars(m).values() if isinstance(v, state_store.StateFile)]
     assert stored

@@ -323,9 +323,11 @@ list from `respect_list.json`. The editorial prompt, the replyback prompt and
 `direct_reply._generate_single_reply` (shared by the search, feed-sweep,
 early-bird and mega-watch replies) include it; the debate prompt and the VIP generators do
 not (see [Known gaps](#known-gaps)). No chokepoint applies the respect list to
-outgoing text. While `respect_list.json` is unreadable the block lists the
-default handles: `hard_rules_block` swallows errors, so a refusal would drop
-the block from prompts.
+outgoing text. While `respect_list.json` is unreadable, `hard_rules_block`
+raises `StateUnreadable`: the editorial cycle and the Reply cycles that
+build these prompts stop before the model call, and nothing ships. Only
+`HARD_RULES_BLOCK`, computed when `personality_store` is imported, falls back
+to the default handles, so `main.py` still starts.
 
 ## State store
 
@@ -333,15 +335,22 @@ the block from prompts.
 except the action ledger, the Replied store and the files `twitter_client`
 and `action_guard` handle themselves. A module declares each file once as a
 `StateFile(name, default, policy)`; paths resolve at call time under
-`state_store.ROOT`, the repo root. Every write goes through a temp file in
-the same directory, fsync and `os.replace`. A missing file reads as the
+`state_store.ROOT`, the repo root. Every write goes through
+`atomic_write_bytes`: a temp file `.<name>.<random>.tmp` in the same
+directory, flushed with `F_FULLFSYNC` where available, `os.replace`, then a
+flush of the directory. A missing file reads as the
 default. An unreadable file (bad JSON, wrong top-level type) under the
 *guarded* policy raises `StateUnreadable` on read and on write, so it is
 never replaced; under the *disposable* policy it reads as the default and
-the next write replaces it. `tweet_history.json` has one reader,
+the next write replaces it. Each file has one lock, and
+`StateFile.update(fn)` reads, changes and writes under it. The files that
+several scheduler threads change go through it: `followed_accounts.json`
+(`engage_job` and `followback_job` merge their follows into the file),
+`tweet_history.json`, `safari_health.json` and `personality.json` (the
+dossier bump after every Reply). `tweet_history.json` has one reader,
 `history.load_history`, for the dedup, the rationed openers and the
-babysitter. `health` serialises its read-modify-write with a lock. The
-policy of each file is in the
+babysitter; the editorial cycle reads it before any Draft, so an unreadable
+history spends no Attempt. The policy of each file is in the
 [OPERATIONS.md](OPERATIONS.md#state-files) tables.
 
 ## Reach report
@@ -369,6 +378,8 @@ These are how the code behaves today, not design intent:
   hard rules or the respect list.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
+- The state store lock is per process: `bin/seed_fr_influencers.py` saving
+  `followed_accounts.json` while the bot runs can still lose a follow.
 - The ledger lock is per process, and `FileLedger` assumes the bot is the
   only writer while it runs. A row another process writes while the bot
   rewrites the file (conversion or daily retention pass) or drops an

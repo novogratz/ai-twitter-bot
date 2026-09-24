@@ -356,10 +356,11 @@ def _read_codex_lockout() -> Optional[datetime]:
     try:
         end = datetime.fromisoformat(_CODEX_LOCKOUT.read().get("locked_until", ""))
     except (ValueError, TypeError):
-        return None
-    if end > datetime.now():
+        end = None
+    if end is not None and end > datetime.now():
         return end
-    # Lockout window passed — clean up the stale file.
+    # Lockout window passed, or the file is unreadable: it is disposable,
+    # remove it so the next LLM call does not warn again.
     try:
         os.remove(_CODEX_LOCKOUT.path)
     except OSError:

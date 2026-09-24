@@ -221,9 +221,8 @@ ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")
 # Bots use get_live_cap(name) instead of the static env values so the
 # agent's strategic decisions actually flex behavior.
 def _live_strategy() -> dict:
-    # Disposable: the fixed ceilings below apply whatever the file holds.
-    from .state_store import DISPOSABLE, StateFile
-    return StateFile("live_strategy.json", {}, DISPOSABLE).read()
+    from .live_strategy import LIVE_STRATEGY
+    return LIVE_STRATEGY.read()
 
 
 def get_live_cap(name: str, default: int) -> int:

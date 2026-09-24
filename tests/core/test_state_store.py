@@ -159,6 +159,12 @@ def _babysit(monkeypatch):
     first_hour_babysitter.run_babysit_cycle()
 
 
+def _validate(monkeypatch):
+    from src.guards import content_guard
+    content_guard.validate("Me reading the model card twice before trusting any benchmark "
+                           "table, because the eval setup decides the score.", kind="original")
+
+
 def _personality(monkeypatch):
     from src.core import personality_store
     personality_store.render_account_block("someone")
@@ -174,6 +180,7 @@ def _personality(monkeypatch):
     ("editorial_state.json", _editorial),
     ("tweet_history.json", _post),
     ("tweet_history.json", _babysit),
+    ("tweet_history.json", _validate),
     ("personality.json", _personality),
 ])
 def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypatch, tmp_path):
@@ -184,6 +191,24 @@ def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypat
     path = _corrupt(tmp_path, name)
     with pytest.raises(StateUnreadable):
         job(monkeypatch)
+    assert path.read_text() == CORRUPT
+
+
+def test_an_unreadable_history_stops_the_editorial_cycle_before_a_draft(monkeypatch, tmp_path):
+    """The review dedups the Draft against tweet_history.json: read after
+    the Draft, an unreadable history spent the Attempt for nothing."""
+    from datetime import datetime
+    from src.editorial import editorial_bot as editorial
+    from tests.helpers import TORONTO, clock
+    path = _corrupt(tmp_path, "tweet_history.json")
+    clock(monkeypatch, datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO))
+    monkeypatch.setattr(editorial, "collect_sources", lambda *a: pytest.fail("sources fetched"))
+    monkeypatch.setattr(editorial, "draft_post", lambda *a: pytest.fail("drafted"))
+
+    with pytest.raises(StateUnreadable):
+        editorial.run_editorial_cycle()
+
+    assert not editorial._read_state().get("attempts")
     assert path.read_text() == CORRUPT
 
 
@@ -204,6 +229,58 @@ def test_an_interaction_never_erases_unreadable_dossiers(tmp_path):
     assert path.read_text() == CORRUPT
 
 
+def test_two_jobs_saving_followed_accounts_keep_each_others_follows(monkeypatch, tmp_path):
+    """engage_job and followback_job each read followed_accounts.json at the
+    start of their cycle and saved their copy at the end: the last one to
+    save erased the handles the other had followed. Both read here before
+    either writes, unless the file's lock serialises them."""
+    from src.account import engage_bot
+    both_read = threading.Barrier(2, timeout=0.3)
+    real_read = engage_bot.FOLLOWED.read
+
+    def read_then_wait():
+        value = real_read()
+        try:
+            both_read.wait()
+        except threading.BrokenBarrierError:
+            pass  # serialised: the other thread waits on the lock
+        return value
+    monkeypatch.setattr(engage_bot.FOLLOWED, "read", read_then_wait)
+
+    threads = [threading.Thread(target=engage_bot._save_followed, args=({handle},))
+               for handle in ("fromengage", "fromfollowback")]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert set(json.loads((tmp_path / "followed_accounts.json").read_text())) == {
+        "fromengage", "fromfollowback"}
+
+
+def test_a_save_merges_with_the_follows_on_disk(tmp_path):
+    from src.account import engage_bot
+    started_with = engage_bot._load_followed()
+    engage_bot._save_followed({"fromfollowback"})
+    engage_bot._save_followed(started_with | {"fromengage"})
+    assert engage_bot._load_followed() == {"fromengage", "fromfollowback"}
+
+
+def test_a_write_flushes_the_file_then_the_directory(monkeypatch, tmp_path):
+    """The rename lives in the directory: without flushing it, a crash can
+    bring the old file back."""
+    import stat
+    steps = []
+    real_replace = state_store.os.replace
+    monkeypatch.setattr(state_store, "_fsync", lambda fd: steps.append(
+        "dir" if stat.S_ISDIR(os.fstat(fd).st_mode) else "file"))
+    monkeypatch.setattr(state_store.os, "replace", lambda *a: steps.append("replace") or real_replace(*a))
+
+    state_store.atomic_write_bytes(str(tmp_path / "x.json"), b"{}")
+
+    assert steps == ["file", "replace", "dir"]
+    assert (tmp_path / "x.json").read_bytes() == b"{}"
+
+
 # --- respect_list.json ---------------------------------------------------------
 
 
@@ -215,19 +292,69 @@ def test_a_missing_respect_list_is_seeded_with_the_defaults(tmp_path):
 
 def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
     """It used to be replaced by the seed, losing every handle the Operator
-    added. Changes refuse; the prompt block and the block computed when
-    personality_store is imported fall back to the defaults, without writing."""
+    added. Every read refuses, the prompt block included; only the block
+    computed when personality_store is imported falls back to the defaults,
+    so main.py still starts. Nothing writes the file."""
     from src.core import personality_store
     from src.guards import respect_list
     path = _corrupt(tmp_path, "respect_list.json")
 
-    for change in (lambda: respect_list.add("newhandle"), lambda: respect_list.remove("micode"),
-                   respect_list.load, lambda: respect_list.is_protected("micode")):
+    for read in (lambda: respect_list.add("newhandle"), lambda: respect_list.remove("micode"),
+                 respect_list.load, lambda: respect_list.is_protected("micode"),
+                 respect_list.render_block, personality_store._render_hard_rules,
+                 personality_store.hard_rules_block):
         with pytest.raises(StateUnreadable):
-            change()
-    assert "@micode" in respect_list.render_block()
-    assert "@micode" in personality_store._render_hard_rules()
-    assert "@micode" in personality_store.hard_rules_block()
+            read()
+    assert "@micode" in personality_store._render_hard_rules(at_import=True)
+    assert path.read_text() == CORRUPT
+
+
+def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_path, caplog):
+    """The Reply prompt carries the respect list: no prompt, no Reply. The
+    cycle stops at the first candidate instead of trying the next ones."""
+    from src.core import health
+    from src.replies import direct_reply as dr
+    from tests.helpers import fresh
+    path = _corrupt(tmp_path, "respect_list.json")
+    scraped = []
+    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda *a, **k: 0)
+    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [
+        {"url": fresh("someone", n=i), "text": "post"} for i in range(3)])
+    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
+    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
+    monkeypatch.setattr(dr, "run_llm", lambda *a, **k: pytest.fail("model called"))
+    monkeypatch.setattr(dr, "reply_to_tweet", lambda *a, **k: pytest.fail("replied"))
+    monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
+
+    dr.safe_run_direct_reply_cycle()
+
+    assert len(scraped) == 1, "the cycle stops, it does not move to the next query"
+    assert "respect_list.json is unreadable" in caplog.text
+    assert "direct_reply halted" in caplog.text
+    assert path.read_text() == CORRUPT
+
+
+def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_path, caplog):
+    """The Draft prompt carries the respect list: the cycle stops before the
+    model call, and no Attempt is spent."""
+    from datetime import datetime
+    from src.editorial import editorial_bot as editorial
+    from src.x import twitter_client
+    from tests.helpers import TORONTO, clock
+    path = _corrupt(tmp_path, "respect_list.json")
+    clock(monkeypatch, datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO))
+    monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
+    monkeypatch.setattr(editorial, "collect_sources", lambda *a: [dict(
+        id="0", title="t", url="https://huggingface.co/docs", publisher="p",
+        body="A source sentence long enough to be evidence for a post.", kind="knowledge",
+        published_at="")])
+    monkeypatch.setattr(editorial, "_json_call", lambda *a: pytest.fail("model called"))
+    monkeypatch.setattr(twitter_client, "post_tweet", lambda *a, **k: pytest.fail("posted"))
+
+    assert editorial.safe_run_editorial_cycle() is None
+
+    assert not editorial._read_state().get("attempts")
+    assert "respect_list.json is unreadable" in caplog.text
     assert path.read_text() == CORRUPT
 
 
@@ -253,3 +380,44 @@ def test_health_updates_are_serialised(monkeypatch):
     for t in threads:
         t.join()
     assert real_read()["consecutive_failures"] == 40
+
+
+def test_a_failure_during_a_safari_restart_does_not_restart_it_again(monkeypatch):
+    from src.core import health
+    monkeypatch.setattr(health, "RECOVERY_THRESHOLD", 1)
+    monkeypatch.setattr(health, "_append_autonomous_flag", lambda *a: None)
+    restarting, release = threading.Event(), threading.Event()
+    restarts = []
+
+    def blocked_restart():
+        restarts.append(1)
+        restarting.set()
+        release.wait(5)
+        return True
+    monkeypatch.setattr(health, "_restart_safari", blocked_restart)
+
+    first = threading.Thread(target=health.record_failure, args=("first",))
+    first.start()
+    try:
+        assert restarting.wait(5)
+        assert health.record_failure("second") is False
+    finally:
+        release.set()
+        first.join()
+    assert restarts == [1]
+
+
+# --- codex_lockout.json ----------------------------------------------------------
+
+
+def test_an_unreadable_codex_lockout_is_removed_after_one_warning(monkeypatch, tmp_path):
+    from src.core import llm_client
+    path = _corrupt(tmp_path, "codex_lockout.json")
+    warnings = []
+    monkeypatch.setattr(state_store.log, "warning", lambda msg, *a, **k: warnings.append(msg))
+
+    assert llm_client._read_codex_lockout() is None
+    assert llm_client._read_codex_lockout() is None
+
+    assert not path.exists()
+    assert len(warnings) == 1
