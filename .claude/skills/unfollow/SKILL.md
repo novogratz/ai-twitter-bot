@@ -33,7 +33,8 @@ default).
    record to `action_ledger.json` (30-day anti-churn) and decrement
    `following_count.json`. It stops at `--max`, at 22:00 Toronto, on
    SIGTERM, when the list is exhausted (empty after 3 reloads) or on
-   repeated JS errors. A rate-limit toast or 5 failed confirms trigger a
+   repeated JS errors (`JS err: OSAERR:…` lines; the osascript error is in
+   `bot.log` under `[MASS_UNFOLLOW]`). A rate-limit toast or 5 failed confirms trigger a
    cooldown, never an abort: if the log shows repeated `COOLDOWN` lines, X
    is blocking the action; tell the operator.
 5. Keep-set (`--keep`): default `whitelist` = current `whitelist.json` tiers +

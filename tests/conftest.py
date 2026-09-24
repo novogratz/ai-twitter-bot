@@ -83,9 +83,9 @@ def _no_safari(monkeypatch):
     monkeypatch.setattr(_safari, "_run_js", _blocked)
     monkeypatch.setattr(_safari, "_paste_text", _blocked)
 
-    # safari.py itself, the Safari quit and relaunch in safari_hygiene and
-    # bin/mass_unfollow.py call subprocess.run(["osascript", ...]) (or `open`,
-    # `pkill`) directly, past the helpers above.
+    # safari.py itself and the Safari quit and relaunch in safari_hygiene
+    # call subprocess.run(["osascript", ...]) (or `open`, `pkill`) directly,
+    # past the helpers above.
     # subprocess.run/call/check_output all go through subprocess.Popen.
     import subprocess as _sp
 

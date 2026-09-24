@@ -21,6 +21,9 @@ Safety:
     cooldown, never an abort.
   - Refuses to start Overnight and stops before the next unfollow once
     Waking hours end (22:00 America/Toronto) or on SIGTERM/SIGINT.
+    Safari is driven only through the src.x.safari primitives, which refuse
+    to start a page script at that point: a click left unconfirmed keeps
+    the modal open, and nothing is unfollowed or recorded.
   - Stops after --max unfollows, 150 by default.
   - Refuses to run while the bot scheduler is up (Safari lock conflict);
     override with --force.
@@ -45,10 +48,13 @@ sys.path.insert(0, ROOT)
 
 from src.guards import action_guard, active_hours  # noqa: E402
 from src.core import config  # noqa: E402
+from src.x import safari  # noqa: E402
 
 # Stays under X's unfollow quota of about 190 per window; at pace `normal`
 # (~480/h) a run ends in about 27 minutes.
 DEFAULT_MAX = 150
+
+LOG_PREFIX = "[MASS_UNFOLLOW]"
 
 _STOP = threading.Event()
 
@@ -63,13 +69,16 @@ def _pause(seconds: float) -> None:
     _STOP.wait(seconds)
 
 
+def _stop_reason() -> str:
+    return ("stop signal" if active_hours.stop_requested()
+            else "Waking hours ended (22:00 America/Toronto)")
+
+
 def _must_stop() -> bool:
     """Overnight or a stop signal: no further unfollow."""
     if active_hours.may_act():
         return False
-    reason = ("stop signal" if active_hours.stop_requested()
-              else "Waking hours ended (22:00 America/Toronto)")
-    print("STOP: %s" % reason, flush=True)
+    print("STOP: %s" % _stop_reason(), flush=True)
     return True
 
 
@@ -105,8 +114,7 @@ def _legacy_keep_set() -> set:
     return keep | wl["tier1"] | wl["tier2"] | _whitelist_keep_set()
 
 
-# NOTE: plain JS here — run_js() escapes backslashes + double quotes once
-# when embedding into the AppleScript string.
+# NOTE: plain JS here — safari._run_js() reads it from a file, unescaped.
 PICK_JS_TEMPLATE = (
     """
 (function(){
@@ -160,21 +168,10 @@ CLEAR_TAGS_JS = """
 
 
 def run_js(js: str) -> str:
-    escaped = js.replace("\\", "\\\\").replace('"', '\\"')
-    osa = (
-        'tell application "Safari" to do JavaScript "%s" '
-        "in current tab of front window" % escaped
-    )
-    try:
-        r = subprocess.run(
-            ["osascript", "-e", osa], capture_output=True, text=True, timeout=30
-        )
-        out = (r.stdout or "").strip()
-        if not out and r.stderr:
-            return "OSAERR:" + r.stderr.strip()[:200]
-        return out
-    except subprocess.TimeoutExpired:
-        return "OSAERR:timeout"
+    """The page answer, or an `OSAERR:` string when Safari gave none; the
+    osascript error itself goes to bot.log under the `[MASS_UNFOLLOW]` tag."""
+    return (safari._run_js(js, 30, log_prefix=LOG_PREFIX)
+            or "OSAERR:no answer (see bot.log %s)" % LOG_PREFIX)
 
 
 def _bot_is_running() -> bool:
@@ -185,35 +182,36 @@ def _bot_is_running() -> bool:
 
 
 def _reload_page() -> None:
-    subprocess.run(
-        ["osascript", "-e",
-         'tell application "Safari" to do JavaScript "location.reload(); '
-         "'RELOADED'\" in current tab of front window"],
-        capture_output=True, text=True, timeout=15,
-    )
+    safari._run_js("location.reload(); 'RELOADED'", log_prefix=LOG_PREFIX)
     _pause(8)
 
 
 def _ensure_following_page() -> None:
     """Navigate the front tab to /following if it isn't there already."""
-    r = subprocess.run(
-        ["osascript", "-e",
-         'tell application "Safari" to get URL of current tab of front window'],
-        capture_output=True, text=True, timeout=15,
-    )
-    url = (r.stdout or "").strip()
+    url = safari._run_js("location.href", log_prefix=LOG_PREFIX)
     target = f"https://x.com/{config.BOT_HANDLE}/following"
     if "/following" not in url:
         print(f"navigating to {target}", flush=True)
-        subprocess.run(
-            ["osascript", "-e",
-             f'tell application "Safari" to set URL of current tab of front window to "{target}"'],
-            capture_output=True, text=True, timeout=15,
-        )
+        safari._run_applescript(
+            f'tell application "Safari" to set URL of current tab of front window to "{target}"',
+            timeout_s=15)
         _pause(6)
 
 
 def main() -> None:
+    unfollowed = []
+    try:
+        _run(unfollowed)
+    except active_hours.OutsideActiveHours:
+        # Raised by a safari primitive before its osascript starts: the page
+        # script did not run. Between a click and its confirm, the modal
+        # stays open and nothing is unfollowed or recorded.
+        print("STOP: %s" % _stop_reason(), flush=True)
+    _save_results(unfollowed)
+    print("TOTAL unfollowed: %d" % len(unfollowed), flush=True)
+
+
+def _run(unfollowed: list) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--max", type=int, default=DEFAULT_MAX,
                     help="stop after N unfollows (default %(default)s)")
@@ -269,7 +267,6 @@ def main() -> None:
     _ensure_following_page()
     run_js(CLEAR_TAGS_JS)
 
-    unfollowed = []
     empty_rounds = 0
     noconfirm_streak = 0
     limit_hits = 0
@@ -358,9 +355,6 @@ def main() -> None:
                 print("ABORT: repeated JS errors", flush=True)
                 break
             _pause(3)
-
-    _save_results(unfollowed)
-    print("TOTAL unfollowed: %d" % len(unfollowed), flush=True)
 
 
 if __name__ == "__main__":
