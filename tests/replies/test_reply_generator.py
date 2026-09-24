@@ -3,6 +3,7 @@ its interface, with the one fake LLM of tests/replies/fakes.py."""
 import pytest
 
 from src.core.llm_client import LLMResult
+from src.x.confirmed_write import WriteOutcome
 from tests.helpers import fresh
 
 EN = "OpenAI just shipped a new reasoning model and the market is going wild"
@@ -27,7 +28,7 @@ def jobs(monkeypatch, llm, chokepoint):
     from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
     from src.x import scraper
 
-    chokepoint.answer = False
+    chokepoint.answer = WriteOutcome.REFUSED
     for module in (dr, eb, mw, fs):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])

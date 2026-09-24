@@ -58,7 +58,7 @@ def corrupt_replied_store():
 
 
 @pytest.mark.parametrize("pipelined", MODES)
-def test_admission_comes_before_the_generation(llm, chokepoint, pipelined):
+def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, pipelined):
     answered = fresh("someone", n=1)
     replied_store.claim(answered)
     refused = {
@@ -133,7 +133,7 @@ def test_other_errors_leave_the_post_replayable(llm, chokepoint, monkeypatch, pi
     from src.replies import reply_generator
 
     broken_write, broken_prompt, ok = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
-    chokepoint.answer = lambda url: RuntimeError("Safari hiccup") if url == broken_write else True
+    chokepoint.answer = lambda url: RuntimeError("Safari hiccup") if url == broken_write else WriteOutcome.SHIPPED
     real = reply_generator.generate
 
     def generate(voice, *, text, **kwargs):
@@ -213,9 +213,10 @@ def test_a_scrape_lets_bedtime_and_unreadable_state_through(error):
 # --- Rate limit and budgets ------------------------------------------------------
 
 
-@pytest.mark.parametrize("pipelined, calls", [(False, 1), (True, 2)])
+@pytest.mark.parametrize("pipelined, calls", [(False, {1}), (True, {1, 2})])
 def test_the_rate_limit_ends_the_cycle(llm, chokepoint, pipelined, calls):
-    """Pipelined, the generation already submitted runs; no other starts."""
+    """Pipelined, the generation already submitted is cancelled if it has
+    not started yet, and left unread otherwise; no other starts."""
     llm.default = RATE_LIMITED
     cycle = rp.Cycle()
     candidates = [candidate(fresh("someone", n=i), f"post {i}") for i in range(4)]
@@ -223,7 +224,7 @@ def test_the_rate_limit_ends_the_cycle(llm, chokepoint, pipelined, calls):
     assert run(job(pipelined=pipelined), candidates, cycle) == 0
     assert run(job(pipelined=pipelined), candidates, cycle) == 0, "the next run of the cycle admits nothing"
 
-    assert len(llm.calls) == calls and cycle.rate_limited
+    assert len(llm.calls) in calls and cycle.rate_limited
     assert chokepoint.sent == [] and set_aside() == set(), "a rate-limited post stays replayable"
 
 
@@ -235,13 +236,82 @@ def test_budgets_bound_shipped_replies_or_generations(llm, chokepoint):
     chokepoint.answer = WriteOutcome.REFUSED
     assert run(job(), candidates, max_generations=2) == 0 and len(llm.calls) == 2
     llm.calls.clear()
-    chokepoint.answer = True
+    chokepoint.answer = WriteOutcome.SHIPPED
     assert run(job(pipelined=True), candidates, max_generations=1) == 1 and len(llm.calls) == 1
 
 
-def test_a_pipelined_job_takes_no_shipped_budget():
+def test_a_pipelined_job_bounds_its_shipped_replies(llm, chokepoint):
+    """The generation submitted while the last budgeted Reply posts is
+    dropped unsent; its post stays replayable."""
+    refused, *shipped = [fresh("someone", n=i) for i in range(4)]
+    chokepoint.answer = lambda url: WriteOutcome.REFUSED if url == refused else WriteOutcome.SHIPPED
+    candidates = [candidate(u, f"post {i}") for i, u in enumerate([refused, *shipped])]
+
+    assert run(job(pipelined=True), candidates, max_shipped=1) == 1
+
+    assert chokepoint.sent == [refused, shipped[0]], "a refused Reply does not use the budget"
+    assert set_aside() == {shipped[0]}
+    assert run(job(pipelined=True), candidates, max_shipped=0) == 0 and chokepoint.sent == [refused, shipped[0]]
+
+
+@pytest.mark.parametrize("stop", ["rate limit", "bedtime at the write"])
+def test_a_pipelined_stop_leaves_without_waiting_for_the_generation_in_flight(llm, chokepoint, monkeypatch, stop):
+    """At a rate limit or an error that ends the cycle, the run returns at
+    once; the generation in flight finishes later, unread: nothing is sent,
+    set aside or logged for its post."""
+    import threading
+
+    from src.replies import reply_generator
+
+    in_flight, release, finished = threading.Event(), threading.Event(), threading.Event()
+    first, second = fresh("someone", n=1), fresh("other", n=2)
+    llm.answers["post one"] = RATE_LIMITED if stop == "rate limit" else "a sharp take on post one"
+    llm.answers["post two"] = lambda prompt: in_flight.set() or release.wait(timeout=5) and "a sharp take on post two"
+    real = reply_generator.generate
+
+    def generate(*args, **kwargs):
+        try:
+            return real(*args, **kwargs)
+        finally:
+            if kwargs.get("text") == "post two":
+                finished.set()
+
+    monkeypatch.setattr(reply_generator, "generate", generate)
+    # The stop comes once the second generation runs, so it is in flight
+    # when the run leaves, not merely queued.
+    if stop == "rate limit":
+        stop_for_rate_limit = rp._stop_for_rate_limit
+        monkeypatch.setattr(rp, "_stop_for_rate_limit",
+                            lambda *a: in_flight.wait(timeout=5) and stop_for_rate_limit(*a))
+    else:
+        chokepoint.answer = lambda url: in_flight.wait(timeout=5) and OutsideActiveHours("22:00")
+    candidates = [candidate(first, "post one"), candidate(second, "post two")]
+
+    try:
+        if stop == "rate limit":
+            assert run(job(pipelined=True), candidates) == 0
+        else:
+            with pytest.raises(OutsideActiveHours):
+                run(job(pipelined=True), candidates)
+        assert in_flight.is_set() and not finished.is_set(), "the run left before the generation finished"
+    finally:
+        release.set()
+    assert finished.wait(timeout=5)
+
+    assert second not in chokepoint.sent and second not in set_aside()
+    assert logged() == [] and replied_store.load_replied() == set()
+
+
+def test_a_job_without_a_voice_takes_only_written_replies(llm, chokepoint):
+    """A voiceless job fed a candidate to generate for fails before any
+    admission, instead of failing on every candidate and replaying it forever."""
+    written = rp.Candidate(fresh("someone", n=1), "the parent", "", reply="Batching wins.")
+    cycle = rp.Cycle()
+
     with pytest.raises(ValueError):
-        run(job(pipelined=True), [], max_shipped=1)
+        run(job(voice=None), [written, candidate(fresh("other", n=2), "post")], cycle)
+
+    assert cycle.tried == set() and llm.calls == [] and chokepoint.sent == []
 
 
 # --- Sending and logging -------------------------------------------------------------
@@ -252,7 +322,7 @@ def test_a_shipped_reply_is_logged_once_with_its_source(llm, chokepoint):
 
     shipped, refused = fresh("someone", n=1), fresh("other", n=2)
     llm.default = "Batching is where margins live — not the model.\n[PATTERN: RENAME]"
-    chokepoint.answer = lambda url: True if url == shipped else WriteOutcome.UNCONFIRMED
+    chokepoint.answer = lambda url: WriteOutcome.SHIPPED if url == shipped else WriteOutcome.UNCONFIRMED
 
     run(job(), [candidate(shipped, "post one"), candidate(refused, "post two")])
 
@@ -267,7 +337,7 @@ def test_callers_never_premark_the_replied_store(llm, chokepoint):
     """2026-06-07 post-mortem: five bots wrote the URL into the Replied store
     before posting, and the chokepoint refused its own caller every time."""
     url = fresh("someone")
-    chokepoint.answer = lambda u: u in replied_store.load_replied()
+    chokepoint.answer = lambda u: WriteOutcome.SHIPPED if u in replied_store.load_replied() else WriteOutcome.REFUSED
 
     run(job(), [candidate(url, "post")])
 
@@ -297,7 +367,7 @@ def test_the_job_pace_follows_each_shipped_reply(llm, chokepoint, monkeypatch):
     slept = []
     monkeypatch.setattr(rp, "_sleep", slept.append)
     shipped = [fresh("someone", n=1), fresh("other", n=2)]
-    chokepoint.answer = lambda url: url in shipped
+    chokepoint.answer = lambda url: WriteOutcome.SHIPPED if url in shipped else WriteOutcome.REFUSED
     candidates = [candidate(u, f"post {i}") for i, u in enumerate(shipped + [fresh("third", n=3)])]
 
     run(job(pause=(5, 12)), candidates)
@@ -316,7 +386,7 @@ def test_pipelined_generation_overlaps_posting(llm, chokepoint):
     def post(url):
         if not chokepoint.calls[:-1]:
             assert second_started.wait(timeout=5), "the second generation never started during the first post"
-        return True
+        return WriteOutcome.SHIPPED
 
     chokepoint.answer = post
     candidates = [candidate(fresh("usera", n=1), "post one"), candidate(fresh("userb", n=2), "post two")]
@@ -352,7 +422,7 @@ def spacing(llm, chokepoint, monkeypatch, memory_ledger):
         ag.record(ag.REPLY, url)
         # The clock stands still: the whole gap is left to wait.
         s.gap_after_send.append(ag.seconds_until_allowed(ag.REPLY))
-        return True
+        return WriteOutcome.SHIPPED
 
     monkeypatch.setattr(rp, "_sleep", sleep)
     chokepoint.answer = ship

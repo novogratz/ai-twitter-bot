@@ -26,17 +26,93 @@ def set_aside(name):
     return reply_pipeline._skipped.get(name, set())
 
 
+REPLIES = "src.replies"
+
+
+def _private(name):
+    return name.startswith("_") and not (name.startswith("__") and name.endswith("__"))
+
+
+def private_borrows(source, module):
+    """The names `module`, a module of src/replies, takes from another
+    reply module that start with an underscore: imported by name (relative
+    at any level, or absolute), or read as an attribute of an imported
+    sibling module."""
+    package = module.split(".")[:-1]
+    bound, problems = {}, set()
+
+    def borrow(lineno, dotted):
+        parts = dotted.split(".")
+        if dotted.startswith(REPLIES + ".") and not dotted.startswith(module + ".") \
+                and any(_private(p) for p in parts[2:]):
+            problems.add(f"{lineno}: {dotted}")
+
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                if a.asname:
+                    bound[a.asname] = a.name
+                else:
+                    head = a.name.split(".")[0]
+                    bound[head] = head
+        elif isinstance(node, ast.ImportFrom):
+            if node.level:
+                if node.level - 1 > len(package):
+                    continue
+                base = package[:len(package) - (node.level - 1)]
+                target = ".".join(base + (node.module.split(".") if node.module else []))
+            else:
+                target = node.module or ""
+            for a in node.names:
+                dotted = f"{target}.{a.name}"
+                borrow(node.lineno, dotted)
+                bound[a.asname or a.name] = dotted
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute):
+            chain, base = [], node
+            while isinstance(base, ast.Attribute):
+                chain.append(base.attr)
+                base = base.value
+            if isinstance(base, ast.Name) and base.id in bound:
+                borrow(node.lineno, ".".join([bound[base.id], *reversed(chain)]))
+    return sorted(problems)
+
+
+@pytest.mark.parametrize("source", [
+    "from .direct_reply import _skipped",
+    "from . import direct_reply\ndirect_reply._skipped.clear()",
+    "from . import direct_reply as dr\ndr._sleep(1)",
+    "from ..replies.direct_reply import _skipped",
+    "from ..replies import direct_reply\ndirect_reply._skipped",
+    "from .. import replies\nreplies.direct_reply._skipped",
+    "from src.replies.direct_reply import _skipped",
+    "from src.replies import direct_reply\ndirect_reply._skipped",
+    "import src.replies.direct_reply as dr\ndr._skipped",
+    "import src.replies.direct_reply\nsrc.replies.direct_reply._skipped",
+    "def run():\n    from . import reply_pipeline\n    return reply_pipeline._skipped",
+])
+def test_the_private_borrow_guard_catches_every_import_form(source):
+    assert private_borrows(source, "src.replies.example_bot")
+
+
+@pytest.mark.parametrize("source", [
+    "from .direct_reply import is_on_niche",
+    "from . import direct_reply\ndirect_reply.is_on_niche(direct_reply.__name__)",
+    "from ..core.config import _PROJECT_ROOT",
+    "from . import example_bot\nexample_bot._own_helper",
+])
+def test_the_private_borrow_guard_lets_public_names_through(source):
+    assert private_borrows(source, "src.replies.example_bot") == []
+
+
 def test_reply_jobs_never_borrow_each_others_privates():
-    """Issue #156: a job imports what another reply module exposes, never
-    its underscored helpers."""
+    """Issue #156: a job uses what another reply module exposes, never its
+    underscored helpers."""
     root = Path(__file__).resolve().parents[2] / "src" / "replies"
-    problems = []
-    for path in sorted(root.glob("*.py")):
-        for node in ast.walk(ast.parse(path.read_text())):
-            if isinstance(node, ast.ImportFrom) and node.level == 1:
-                problems += [f"{path.name}:{node.lineno}: {a.name}" for a in node.names
-                             if a.name.startswith("_")]
-    assert not problems, "private imports across src/replies:\n  " + "\n  ".join(problems)
+    problems = [f"{path.name}:{p}" for path in sorted(root.glob("*.py"))
+                for p in private_borrows(path.read_text(), f"{REPLIES}.{path.stem}")]
+    assert not problems, "private borrows across src/replies:\n  " + "\n  ".join(problems)
 
 
 # --- direct_reply: the VIP scan, then the search lane -------------------------
@@ -261,7 +337,7 @@ def target(url, kind="reply"):
     return {"tweet_url": url, "reply": REPLY_TEXT, "type": kind, "pattern": "RENAME"}
 
 
-def test_reply_search_sends_admitted_targets_once(reply_search):
+def test_reply_search_sends_admitted_targets_once(reply_search, blocked_pgm_pm):
     rb, batch, searched, chokepoint = reply_search
     answered = fresh("someone", n=1)
     replied_store.claim(answered)
@@ -447,7 +523,7 @@ def replyback(monkeypatch, llm, chokepoint):
     return nb, replies, llm, chokepoint
 
 
-def test_replyback_answers_engagers_in_thread_and_logs_it(replyback):
+def test_replyback_answers_engagers_in_thread_and_logs_it(replyback, blocked_pgm_pm):
     """Issue #156: replyback logs its shipped Replies like every other job."""
     nb, replies, llm, chokepoint = replyback
     admitted = fresh("someone", n=1)

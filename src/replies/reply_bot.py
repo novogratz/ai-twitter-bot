@@ -38,7 +38,7 @@ from ..guards.replied_store import load_replied
 
 # The model call that finds the posts also writes their replies: the
 # candidates carry their text, and no voice is needed.
-JOB = reply_pipeline.Job("reply_search", "REPLY", pause=(15, 15))
+JOB = reply_pipeline.Job("reply_search", "REPLY", voice=None, pause=(15, 15))
 
 
 def _reply_search_enabled() -> bool:

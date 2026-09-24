@@ -2,6 +2,7 @@
 from types import SimpleNamespace
 
 from src.core.llm_client import LLMResult
+from src.x.confirmed_write import WriteOutcome
 
 REPLY_TEXT = "Batching is where inference margins are won or lost, not in the model."
 
@@ -43,12 +44,12 @@ class FakeLlm:
 
 class FakeChokepoint:
     """Stands in for twitter_client.reply_to_tweet. Records every call and
-    answers `answer`: a result, an exception to raise, or a function of the
-    URL returning one of those. True (shipped) by default."""
+    answers `answer`: a WriteOutcome, an exception to raise, or a function of
+    the URL returning one of those. SHIPPED by default, as the real one."""
 
     def __init__(self):
         self.calls = []
-        self.answer = True
+        self.answer = WriteOutcome.SHIPPED
 
     def __call__(self, url, text, *, debate_turn=False):
         self.calls.append(SimpleNamespace(url=url, text=text, debate_turn=debate_turn))

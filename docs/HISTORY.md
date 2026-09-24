@@ -22,8 +22,12 @@ their order in the file is not strictly chronological.
 > next candidate or scrape, instead of walking the remaining candidates
 > into Overnight refusals; an unexpected error in `direct_reply` ends its
 > cycle and reaches `health`. A write that raises on debate, or a
-> generation that raises on any job in turn, is now logged and the post
-> replayed later, where it used to end the cycle. The VIP prompt names the
+> generation that raises on early_bird, mega_watch, debate or replyback, is
+> now logged and the post replayed later, where it used to end the cycle;
+> on the VIP lane, such a generation used to end the VIP lane only, and the
+> search lane still ran. A pipelined job stopped by a rate limit, bedtime or
+> an unreadable state file returns without waiting for the generation in
+> flight, which finishes unread. The VIP prompt names the
 > author as the status URL spells it, lowercase, and a VIP post is marked
 > tried when admitted, so the search lane no longer retries a failed VIP
 > generation in the same cycle. The disabled reply search sets aside what

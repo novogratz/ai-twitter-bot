@@ -38,8 +38,9 @@ class Job:
     # Jobs with the same name share the posts they set aside.
     name: str
     label: str  # the log prefix, "EARLYBIRD", "SEARCH-HOT"…
-    # The voice for the author Reply admission read from the status URL.
-    voice: Callable[[str], Voice] | None = None
+    # The voice for the author Reply admission read from the status URL;
+    # None for a job whose candidates carry their reply text.
+    voice: Callable[[str], Voice] | None
     debate_turn: bool = False
     # Generate the next candidate while this one posts, and wait out the
     # Reply spacing before each send (#131). Sequential jobs never wait: the
@@ -85,12 +86,15 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
     """Answer `candidates` in order; returns the Replies shipped.
 
     `max_generations` bounds the candidates admitted (the generations paid),
-    `max_shipped` the Replies shipped; a pipelined job takes the first only.
-    Nothing is admitted once `cycle.rate_limited` is set."""
+    `max_shipped` the Replies shipped. Nothing is admitted once
+    `cycle.rate_limited` is set. A job without a voice takes only
+    candidates that carry their reply: ValueError before any admission."""
+    if job.voice is None:
+        candidates = list(candidates)
+        if any(not c.reply for c in candidates):
+            raise ValueError(f"[{job.label}] a job without a voice needs candidates that carry their reply")
     if job.pipelined:
-        if max_shipped is not None:
-            raise ValueError(f"[{job.label}] a pipelined job bounds its generations, not its Replies")
-        return _run_pipelined(job, iter(candidates), cycle, max_generations)
+        return _run_pipelined(job, iter(candidates), cycle, max_generations, max_shipped)
     shipped = generations = 0
     for candidate in candidates:
         if cycle.rate_limited or _reached(generations, max_generations) or _reached(shipped, max_shipped):
@@ -131,8 +135,10 @@ def _reached(count: int, bound: int | None) -> bool:
 
 
 def _set_aside(job: Job) -> set:
-    # setdefault is atomic: replyback_job and babysit_job share this set
-    # from two scheduler threads.
+    # replyback_job and babysit_job share this set from two scheduler
+    # threads, and a post can pass both check-then-add races. Tolerated:
+    # reply_to_tweet claims the Replied store and refuses the second Reply,
+    # so the worst case is one generation paid twice.
     return _skipped.setdefault(job.name, set())
 
 
@@ -210,7 +216,8 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     return 1
 
 
-def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | None) -> int:
+def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | None,
+                   max_shipped: int | None) -> int:
     """Reply N+1 generates (worker thread, no Safari lock) while reply N
     posts (2026-06-09, operator: "BOT REALLY SLOW... ACCELERATE"): a cycle
     takes about max(generation, post) per Reply instead of their sum."""
@@ -220,7 +227,7 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
 
     def next_generation(pool):
         nonlocal submitted
-        if cycle.rate_limited or _reached(submitted, max_generations):
+        if cycle.rate_limited or _reached(submitted, max_generations) or _reached(shipped, max_shipped):
             return None
         for candidate in candidates:
             author = _admit(job, candidate, cycle)
@@ -236,9 +243,12 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
             return candidate, author, future
         return None
 
-    with ThreadPoolExecutor(max_workers=1) as pool:
+    pool = ThreadPoolExecutor(max_workers=1)
+    try:
         pending = next_generation(pool)
-        while pending is not None:
+        # The budget check here too: the generation submitted before the
+        # last budgeted Reply shipped is dropped unsent.
+        while pending is not None and not _reached(shipped, max_shipped):
             candidate, author, future = pending
             # Submit the next generation before blocking on Safari for this
             # one: this line is what buys the overlap.
@@ -253,11 +263,18 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
                 continue
             if generation.outcome is Outcome.RATE_LIMITED:
                 _stop_for_rate_limit(job, cycle)
-                break  # the generation already submitted runs; its post stays replayable
+                break
             # No sleep after a ship: the spacing is waited out before the
             # next send, for the gap action_guard drew.
             shipped += _send(job, candidate, author, generation)
             pending = upcoming
+    finally:
+        # Leave without waiting for the generation in flight: at a rate
+        # limit, bedtime or an unreadable state file it would cost one more
+        # model call and delay the stop. Only this thread sends and sets
+        # posts aside, so its result is never read and its post stays
+        # replayable.
+        pool.shutdown(wait=False, cancel_futures=True)
     return shipped
 
 

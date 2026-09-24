@@ -350,6 +350,9 @@ one-second slices and raises `OutsideActiveHours` on a stop request or at
 22:00. The chokepoint still judges: when another job's reply lands during
 the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
 post stays replayable in a later cycle, at the cost of a new generation.
+On a rate limit, bedtime or an unreadable state file the pipelined job
+returns at once: the generation in flight finishes in the worker thread,
+unread, and its post stays replayable.
 The other jobs answer their candidates in turn and never wait: a Reply they
 send too early is refused on spacing and stays replayable.
 
