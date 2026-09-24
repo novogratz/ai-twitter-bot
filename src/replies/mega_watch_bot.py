@@ -14,25 +14,19 @@ Cap: MAX_REPLIES_PER_CYCLE, to avoid burst-following the same account
 when it tweets a thread. Reply admission judges each post before generation.
 """
 import random
-import time
 import traceback
 from datetime import timedelta
 
 from ..x import x_urls
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
-from ..x.twitter_client import reply_to_tweet
-from ..guards.reply_admission import judge_parent
-from .direct_reply import _is_on_niche, reply_voice
-from . import reply_generator
-from .reply_generator import LanguageRule, Outcome
-from ..core.engagement_log import log_reply
-from ..core.humanizer import humanize
-from ..core.state_errors import StateUnreadable
+from . import reply_pipeline
+from .direct_reply import is_on_niche, reply_voice
+from .reply_generator import LanguageRule
 
-# Posts this job is done with until restart: definitive Reply admission
-# refusals, posts the model declined, posts answered.
-_skipped: set = set()
+# No FR-forced override on this job (pinned in the tests).
+JOB = reply_pipeline.Job("mega_watch", "MEGA", voice=lambda author: reply_voice(author, LanguageRule.PARENT),
+                         pause=(8, 14), text_bounds=(10, 270))
 
 # 2026-06-07 PM (operator): static list GONE — the ≤4-min watcher scans the
 # TOP of the bot's own earned list (account_curator), pinned with
@@ -57,83 +51,42 @@ def run_mega_watch_cycle():
     sample = random.sample(pool, k=min(5, len(pool)))
     log.info(f"[MEGA] Polling: {sample}")
 
+    cycle = reply_pipeline.Cycle()
     for username in sample:
-        if posted >= MAX_REPLIES_PER_CYCLE:
+        if posted >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
             break
-        try:
-            tweets = scrape_profile_tweets(username, max_tweets=4)
-        except Exception:
-            log.info(f"[MEGA] Scrape failed for @{username}:")
-            traceback.print_exc()
-            continue
-
-        for t in tweets or []:
-            if posted >= MAX_REPLIES_PER_CYCLE:
-                break
-            url = t.get("url")
-            if not url or url in _skipped:
-                continue
-            text = (t.get("text") or "").strip()
-            if not text:
-                continue
-            if x_urls.is_reply_like_tweet(t, expected_author=username):
-                log.info(f"[MEGA] Looks like a thread reply — skipping {url}")
-                continue
-            # The status ID carries the post time; a URL without one is skipped.
-            age = x_urls.age(url)
-            if age is None or age > timedelta(minutes=MAX_AGE_MIN):
-                continue
-
-            # Niche gate — skip off-topic mega tweets (sama posting about
-            # his sandwich shouldn't fire a niche reply).
-            if not _is_on_niche(text):
-                continue
-
-            # Our own Reply in the watched thread (2026-05-16: the bot answered
-            # itself under @sama) is refused here by its URL handle.
-            verdict = judge_parent(url)
-            if not verdict:
-                if verdict.refusal.definitive:
-                    _skipped.add(url)
-                continue
-
-            # Source tagging happens in log_reply later.
-            # No FR-forced override on this job (pinned in the tests).
-            generation = reply_generator.generate(
-                reply_voice(verdict.author, LanguageRule.PARENT), author=verdict.author, text=text)
-            if generation.outcome is Outcome.RATE_LIMITED:
-                log.info("[MEGA] LLM rate limit reached; stopping this cycle before posting attempts.")
-                return
-            if generation.outcome is Outcome.DECLINED:
-                _skipped.add(url)  # the model declined
-                continue
-            if generation.outcome is not Outcome.WRITTEN:
-                continue  # failed call: replayable next cycle
-            reply_text = humanize(generation.text)
-            if len(reply_text) < 10 or len(reply_text) > 270:
-                continue
-
-            # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
-            # itself pre-post and refuses anything already in it (premark =
-            # 100% silent self-skip, 2026-06-07 post-mortem).
-            try:
-                if not reply_to_tweet(url, reply_text):
-                    continue  # chokepoint skip — nothing posted, no phantom log
-                _skipped.add(url)
-                try:
-                    log_reply(url, reply_text, action_type="reply", source=f"MEGA/{username}")
-                except Exception:
-                    pass
-                posted += 1
-                log.info(f"[MEGA] Posted top-5 reply to @{username}: {reply_text[:120]!r}")
-                time.sleep(random.randint(8, 14))
-            except StateUnreadable:
-                raise
-            except Exception:
-                log.info(f"[MEGA] Reply to {url} failed:")
-                traceback.print_exc()
+        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4)
+        posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
+                                     max_shipped=MAX_REPLIES_PER_CYCLE - posted)
 
     log.info(f"[MEGA] Cycle done: {posted} replies posted.")
+
+
+def _fresh_candidates(username: str, tweets: list) -> list:
+    candidates = []
+    for t in tweets:
+        url = t.get("url")
+        if not url:
+            continue
+        text = (t.get("text") or "").strip()
+        if not text:
+            continue
+        if x_urls.is_reply_like_tweet(t, expected_author=username):
+            log.info(f"[MEGA] Looks like a thread reply — skipping {url}")
+            continue
+        # The status ID carries the post time; a URL without one is skipped.
+        age = x_urls.age(url)
+        if age is None or age > timedelta(minutes=MAX_AGE_MIN):
+            continue
+
+        # Niche gate — skip off-topic mega tweets (sama posting about
+        # his sandwich shouldn't fire a niche reply).
+        if not is_on_niche(text):
+            continue
+        # Our own Reply in the watched thread (2026-05-16: the bot answered
+        # itself under @sama) is refused by Reply admission on its URL handle.
+        candidates.append(reply_pipeline.Candidate(url, text, f"MEGA/{username}"))
+    return candidates
 
 
 def safe_run_mega_watch_cycle():

@@ -13,24 +13,20 @@ Strategy:
 - Source-tagged "EARLYBIRD/<handle>" so the strategy agent sees it.
 """
 import random
-import time
 import traceback
 from datetime import timedelta
 from ..x import x_urls
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
-from ..x.twitter_client import reply_to_tweet
-from ..guards.reply_admission import judge_parent
-from .direct_reply import _is_on_niche, reply_voice
-from . import reply_generator
-from .reply_generator import LanguageRule, Outcome
-from ..core.engagement_log import log_reply
-from ..core.humanizer import humanize
-from ..core.state_errors import StateUnreadable
+from . import reply_pipeline
+from .direct_reply import is_on_niche, reply_voice
+from .reply_generator import LanguageRule
 
-# Posts this job is done with until restart: definitive Reply admission
-# refusals, posts the model declined, posts answered.
-_skipped: set = set()
+# The author Reply admission read from the status URL names the parent in
+# the prompt, not the scanned handle. No FR-forced override on this job
+# (pinned in the tests).
+JOB = reply_pipeline.Job("early_bird", "EARLYBIRD",
+                         voice=lambda author: reply_voice(author, LanguageRule.PARENT), pause=(5, 12))
 
 # 2026-06-07 PM (operator): "stop going to the static accounts… develop
 # yourself the list of accounts you want to follow and track" — the static
@@ -73,98 +69,54 @@ def run_early_bird_cycle():
     random_picks = random.sample(filler, k=min(3, len(filler)))
     picks = list(dict.fromkeys(priority_picks + random_picks))
 
+    cycle = reply_pipeline.Cycle()
     for username in picks:
-        if posted >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE:
+        if posted >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
             break
 
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")
-        try:
-            # Only the top 3 tweets — anything older isn't fresh anyway.
-            tweets = scrape_profile_tweets(username, max_tweets=3)
-        except Exception:
-            log.info(f"[EARLYBIRD] Scrape failed for @{username}:")
-            traceback.print_exc()
-            continue
-
-        if not tweets:
-            continue
-
-        for tweet in tweets:
-            url = tweet.get("url", "")
-            text = tweet.get("text", "")
-            if not url or url in _skipped:
-                continue
-            if x_urls.is_reply_like_tweet(tweet, expected_author=username):
-                log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
-                continue
-
-            age = x_urls.age(url)
-            if age is None or age < timedelta(0):
-                continue  # no status ID / clock skew
-            if age > timedelta(minutes=EARLY_BIRD_AGE_MAX_MIN):
-                continue  # too late — drops down to standard reply bot territory
-
-            # Niche gate — earlybird scans broad media accounts (BFMTV, France24,
-            # unusual_whales, etc.), so fresh tweets are often off-mission
-            # (aviation pricing, foreign politics, sports). The bot still produced
-            # OK punchlines but it drifts the account brand and burns cap budget on
-            # tweets that won't convert FR AI/crypto/bourse readers. Reuse the same
-            # word-boundary regex direct_reply uses for FOLLOWING/FEED.
-            if not _is_on_niche(text):
-                log.info(f"[EARLYBIRD] Off-niche topic — skipping @{username}: {text[:60]}")
-                continue
-
-            verdict = judge_parent(url)
-            if not verdict:
-                if verdict.refusal.definitive:
-                    _skipped.add(url)
-                continue
-
-            log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
-            # The author Reply admission read from the status URL, as in
-            # every other job, not the scanned handle.
-            # No FR-forced override on this job (pinned in the tests).
-            generation = reply_generator.generate(
-                reply_voice(verdict.author, LanguageRule.PARENT), author=verdict.author, text=text)
-            if generation.outcome is Outcome.RATE_LIMITED:
-                log.info("[EARLYBIRD] LLM rate limit reached; stopping this cycle before posting attempts.")
-                return
-            if generation.outcome is Outcome.DECLINED:
-                log.info(f"[EARLYBIRD] Generation returned SKIP for @{username}.")
-                _skipped.add(url)
-                continue
-            if generation.outcome is not Outcome.WRITTEN:
-                continue  # failed call: replayable next cycle
-
-            from ..core.pattern_tags import extract_pattern as _extract_pattern
-            reply, _pattern_id = _extract_pattern(generation.text)
-            reply = humanize(reply)
-            log.info(f"[EARLYBIRD] Reply ({len(reply)} chars): {reply}")
-
-            # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
-            # itself pre-post and refuses anything already in it (premark =
-            # 100% silent self-skip, 2026-06-07 post-mortem).
-            try:
-                if not reply_to_tweet(url, reply):
-                    continue  # chokepoint skip — nothing posted, no phantom log
-                _skipped.add(url)
-                try:
-                    log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}", pattern_id=_pattern_id or "")
-                except Exception:
-                    pass
-                posted += 1
-                time.sleep(random.randint(5, 12))
-                break  # one reply per scanned account = move on
-            except StateUnreadable:
-                raise
-            except Exception:
-                log.info(f"[EARLYBIRD] Post failed for {url}:")
-                traceback.print_exc()
+        # Only the top 3 tweets — anything older isn't fresh anyway.
+        tweets = reply_pipeline.scrape("EARLYBIRD", f"@{username}", scrape_profile_tweets, username,
+                                       max_tweets=3)
+        # One reply per scanned account, then move on.
+        posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle, max_shipped=1)
 
     if posted:
         log.info(f"[EARLYBIRD] Posted {posted} fresh reply this cycle.")
     else:
         log.info("[EARLYBIRD] No fresh tweets in window this cycle.")
+
+
+def _fresh_candidates(username: str, tweets: list) -> list:
+    candidates = []
+    for tweet in tweets:
+        url = tweet.get("url", "")
+        text = tweet.get("text", "")
+        if not url:
+            continue
+        if x_urls.is_reply_like_tweet(tweet, expected_author=username):
+            log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
+            continue
+
+        age = x_urls.age(url)
+        if age is None or age < timedelta(0):
+            continue  # no status ID / clock skew
+        if age > timedelta(minutes=EARLY_BIRD_AGE_MAX_MIN):
+            continue  # too late — drops down to standard reply bot territory
+
+        # Niche gate — earlybird scans broad media accounts (BFMTV, France24,
+        # unusual_whales, etc.), so fresh tweets are often off-mission
+        # (aviation pricing, foreign politics, sports). The bot still produced
+        # OK punchlines but it drifts the account brand and burns cap budget on
+        # tweets that won't convert FR AI/crypto/bourse readers. Reuse the same
+        # word-boundary regex direct_reply uses for its search lane.
+        if not is_on_niche(text):
+            log.info(f"[EARLYBIRD] Off-niche topic — skipping @{username}: {text[:60]}")
+            continue
+
+        log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
+        candidates.append(reply_pipeline.Candidate(url, text, f"EARLYBIRD/{username}"))
+    return candidates
 
 
 def safe_run_early_bird_cycle():

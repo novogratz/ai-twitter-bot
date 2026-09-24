@@ -38,6 +38,7 @@ The top level of `src/` holds only packages.
 | Originals: sources, evidence, draft, separate review | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes | `src/replies/reply_generator.py` |
+| Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
 | Caps, pacing, follow policy | `src/guards/action_guard.py` |
@@ -61,8 +62,9 @@ Each one is a bug that shipped live. The full incident stories are in
 
 - **Chokepoints own the rules.** Enforce a rule inside the `twitter_client`
   write function, so every caller inherits it; a per-bot check leaves the
-  other callers open. A reply job asks `reply_admission.judge_parent`
-  before generating instead of copying a rule.
+  other callers open. A reply job hands its candidates to the Reply
+  pipeline, which asks `reply_admission.judge_parent` before generating;
+  the job never copies a rule.
 - **Log only what shipped.** Write chokepoints run through
   `confirmed_write.run` and return a `WriteOutcome`, truthy only for
   `SHIPPED`. Callers log, count and consume a slot or candidate on a truthy

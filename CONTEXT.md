@@ -75,6 +75,13 @@ adds the hard rules to the prompt, picks the reply language, and reads the
 model's answer as reply text, a decline (SKIP), a failure or a rate limit.
 _Avoid_: reply drafter, reply writer
 
+**Reply pipeline**:
+The one path from a job's candidates to shipped Replies: Reply admission
+before the Reply generator, the write, then the engagement log for a Reply
+that shipped. It sets aside, until restart, the posts a job is done with
+(refused for good, declined, answered) and leaves the others replayable.
+_Avoid_: reply loop, reply engine
+
 **Debate turn**:
 A Reply to an Engager, in answer to what they said to the account; capped per
 Engager per day.

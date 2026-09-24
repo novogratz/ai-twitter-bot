@@ -1,434 +1,207 @@
-"""The reply jobs ask Reply admission before paying for a generation
-(issue #100). Tested through the jobs' cycles: the model is the fake LLM of
-tests/replies/conftest.py and the chokepoint a stub; the Reply generator,
-the Replied store, the ledger and BLOCKLIST are real. conftest points the
-state files at tmp_path, empties each job's `_skipped` set and fixes the
-clock at noon Toronto."""
-import math
-from datetime import datetime, timedelta
-from types import SimpleNamespace
-from zoneinfo import ZoneInfo
+"""Each Reply job's source and filters: what it scrapes, which posts it
+hands the Reply pipeline, with which budget and log tag. The pipeline's own
+rules (admission first, set-aside posts, rate limit, errors that end a
+cycle) are tested once in test_reply_pipeline.py. The model is the fake LLM
+and the chokepoint a stub, both from tests/replies/conftest.py."""
+import ast
+from pathlib import Path
 
 import pytest
 
 from src.core import config
 from src.core.llm_client import LLM_RATE_LIMIT_CODE, LLMResult
-from src.guards import replied_store
-from src.x import x_urls
 from src.core.state_errors import StateUnreadable
+from src.guards import replied_store
+from src.guards.active_hours import OutsideActiveHours
+from src.replies import reply_pipeline
+from src.x import x_urls
+from src.x.confirmed_write import WriteOutcome
 from tests.helpers import fresh
-from tests.replies.fakes import REPLY_TEXT
+from tests.replies.fakes import REPLY_TEXT, logged
 
-FAILED_CALL = LLMResult(1, "", "model down")
 RATE_LIMITED = LLMResult(LLM_RATE_LIMIT_CODE, "", "hourly budget")
 
 
-def corrupt_replied_store():
-    with open(config.REPLIED_FILE, "w") as f:
-        f.write("[")
+def set_aside(name):
+    return reply_pipeline._skipped.get(name, set())
+
+
+def test_reply_jobs_never_borrow_each_others_privates():
+    """Issue #156: a job imports what another reply module exposes, never
+    its underscored helpers."""
+    root = Path(__file__).resolve().parents[2] / "src" / "replies"
+    problems = []
+    for path in sorted(root.glob("*.py")):
+        for node in ast.walk(ast.parse(path.read_text())):
+            if isinstance(node, ast.ImportFrom) and node.level == 1:
+                problems += [f"{path.name}:{node.lineno}: {a.name}" for a in node.names
+                             if a.name.startswith("_")]
+    assert not problems, "private imports across src/replies:\n  " + "\n  ".join(problems)
+
+
+# --- direct_reply: the VIP scan, then the search lane -------------------------
 
 
 @pytest.fixture
-def blocklist(monkeypatch):
-    monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})
-
-
-# --- direct_reply and feed_sweeper (shared pipeline) ------------------------
-
-
-@pytest.fixture
-def pipeline(monkeypatch, blocklist, llm):
-    """direct_reply's pipeline with the fake model and a stub chokepoint."""
+def direct(monkeypatch, llm, chokepoint):
+    """direct_reply with one VIP handle; `vip` and `search` are what the two
+    lanes scrape."""
     from src.replies import direct_reply as dr
+    from src.x import scraper
 
-    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
-    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
-    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
-    sent = []
-
-    def chokepoint(url, text):
-        sent.append(url)
-        return True
-
-    monkeypatch.setattr(dr, "reply_to_tweet", chokepoint)
-    return dr, llm, sent
-
-
-def test_direct_reply_asks_admission_before_generating(pipeline):
-    dr, llm, sent = pipeline
-    answered = fresh("someone", n=1)
-    replied_store.claim(answered)
-    refused = {
-        fresh("pgm_pm", n=2): "post blocked",
-        fresh(config.BOT_HANDLE, n=3): "post own",
-        answered: "post answered",
-        "https://x.com/i/web/status/" + x_urls.status_id(fresh("x", n=4)): "post no author",
-    }
-    ok = fresh("someone", n=5)
-    tweets = [{"url": u, "text": t, "author": "Display Name"} for u, t in refused.items()]
-    tweets.append({"url": ok, "text": "post admitted", "author": "Display Name"})
-
-    assert dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 1
-    assert llm.parents("post admitted", *refused.values()) == ["post admitted"], \
-        "no generation for a post admission refuses"
-    assert sent == [ok]
-    assert dr._skipped == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
-
-
-def test_direct_reply_sets_aside_model_skips_but_replays_temporary_refusals(pipeline, monkeypatch):
-    dr, llm, sent = pipeline
-    declined, failed, bounced = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
-    llm.answers.update({"post declined": "SKIP", "post failed": FAILED_CALL})
-    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, text: sent.append(url) or False)
-    texts = ("post declined", "post failed", "post bounced")
-    tweets = [{"url": declined, "text": texts[0]}, {"url": failed, "text": texts[1]},
-              {"url": bounced, "text": texts[2]}]
-
-    for _cycle in range(2):
-        dr._reply_to_tweets(list(tweets), set(), "SEARCH-HOT")
-
-    assert llm.parents(*texts) == ["post declined", "post failed", "post bounced",
-                                   "post failed", "post bounced"], \
-        "a SKIP is not paid twice; a failed call or a chokepoint refusal is replayed"
-    assert dr._skipped == {declined}
-    assert replied_store.load_replied() == set(), "nothing shipped, nothing marked"
-
-
-def test_direct_reply_cycle_never_marks_unsent_candidates(pipeline, monkeypatch):
-    """Defect 3: the VIP lane and the pipeline both marked candidates that
-    never shipped, and the cycle saved them into the Replied store."""
-    from src.x import scraper, twitter_client as tc
-
-    dr, llm, sent = pipeline
-    vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
+    lanes = {"vip": [], "search": [], "queries": []}
     monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [{"url": vip, "text": "vip post"}])
-    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": searched, "text": "search post"}])
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
+
+    def search(query, **k):
+        lanes["queries"].append(query)
+        if isinstance(lanes["search"], BaseException):
+            raise lanes["search"]
+        return list(lanes["search"])
+
+    monkeypatch.setattr(dr, "scrape_x_search", search)
+    monkeypatch.setattr(dr, "is_on_niche", lambda text: "off-niche" not in text)
+    return dr, lanes, llm, chokepoint
+
+
+def test_direct_reply_lanes_share_the_cycle(direct):
+    """Defect 3: the VIP lane and the search lane both marked candidates that
+    never shipped. A post one lane tried is not tried again by the other."""
+    dr, lanes, llm, chokepoint = direct
+    vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
+    lanes["vip"] = [{"url": vip, "text": "vip post"}]
+    lanes["search"] = [{"url": searched, "text": "search post"}, {"url": vip, "text": "vip post"}]
     llm.answers["vip post"] = "réponse précise sur le trafic organique"
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or False)
-    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, text: sent.append(url) or False)
+    chokepoint.answer = WriteOutcome.REFUSED
 
     dr.run_direct_reply_cycle()
 
-    assert sent == [vip, searched], "each candidate tried once per cycle"
+    assert chokepoint.sent == [vip, searched], "each candidate tried once per cycle"
+    assert [c.label for c in llm.calls] == ["GRAPHSEO_VIP", "DIRECT_REPLY"]
     assert replied_store.load_replied() == set()
 
 
-def test_direct_reply_cycle_stops_on_unreadable_store(pipeline):
-    dr, llm, _ = pipeline
-    corrupt_replied_store()
-    with pytest.raises(StateUnreadable):
-        dr._reply_to_tweets([{"url": fresh("someone"), "text": "post"}], set(), "SEARCH-HOT")
-    assert llm.calls == []
+def test_direct_reply_search_keeps_fresh_on_niche_posts(direct):
+    dr, lanes, llm, chokepoint = direct
+    ok, off, old = fresh("someone", n=1), fresh("other", n=2), fresh("third", minutes=5 * 24 * 60 + 1, n=3)
+    lanes["search"] = [{"url": off, "text": "off-niche post"}, {"url": old, "text": "old post"},
+                       {"url": ok, "text": "post admitted"}, {"url": "https://x.com/nostatus", "text": "no id"}]
+
+    dr.run_direct_reply_cycle()
+
+    assert chokepoint.sent == [ok]
+    assert [(r.url, r.source.split("/")[0]) for r in logged()] == [(ok, "SEARCH-HOT")]
+    assert set_aside("direct_reply") == {ok}
 
 
-def test_direct_reply_vip_lane_does_not_swallow_unreadable_store(pipeline, monkeypatch):
-    from src.x import scraper, twitter_client as tc
+def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
+    dr, lanes, llm, chokepoint = direct
+    recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
+    lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
+    llm.default = "réponse précise sur le trafic organique"
 
-    dr, llm, _ = pipeline
-    searched = []
+    dr._run_graphseo_scan(reply_pipeline.Cycle())
 
-    def unreadable(url, text):
-        raise StateUnreadable("replied store unreadable")
-
-    monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [{"url": fresh("graphseo"), "text": "vip post"}])
-    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: searched.append(1) or [])
-    llm.answers["vip post"] = "réponse précise sur le trafic organique"
-    monkeypatch.setattr(tc, "reply_to_tweet", unreadable)
-    with pytest.raises(StateUnreadable):
-        dr.run_direct_reply_cycle()
-    assert searched == [], "the search lane never starts"
+    assert chokepoint.sent == [recent]
+    assert [r.source for r in logged()] == ["VIP/Graphseo"]
 
 
-def test_direct_reply_cycle_does_not_swallow_unreadable_store(pipeline, monkeypatch):
-    dr, llm, _ = pipeline
-    searched = []
-    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried, **k: 0)
-    monkeypatch.setattr(dr, "scrape_x_search",
-                        lambda *a, **k: searched.append(1) or [{"url": fresh("someone"), "text": "post"}])
-    corrupt_replied_store()
-    with pytest.raises(StateUnreadable):
-        dr.run_direct_reply_cycle()
-    assert searched == [1], "the cycle stops at the first query instead of scraping the rest"
-    assert llm.calls == []
-
-
-def test_direct_reply_cycle_stops_at_the_rate_limit(pipeline, monkeypatch):
-    """A rate limit ends the whole cycle, the search lane included."""
-    from src.x import scraper, twitter_client as tc
-
-    dr, llm, sent = pipeline
-    vip = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
-    searched = []
-    monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(vip))
-    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: searched.append(1) or [])
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
+    """A rate limit in the VIP lane ends the whole cycle, the search lane included."""
+    dr, lanes, llm, chokepoint = direct
+    lanes["vip"] = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
     llm.default = RATE_LIMITED
 
     dr.run_direct_reply_cycle()
 
-    assert len(llm.calls) == 1 and searched == [] and sent == []
-    assert dr._skipped == set(), "a rate-limited post stays replayable"
+    assert len(llm.calls) == 1 and lanes["queries"] == [] and chokepoint.sent == []
 
 
-def test_pipeline_stops_generating_at_the_rate_limit(pipeline):
-    dr, llm, sent = pipeline
-    tweets = [{"url": fresh("someone", n=i), "text": f"post {i}"} for i in range(4)]
-    llm.default = RATE_LIMITED
+@pytest.mark.parametrize("error", [StateUnreadable("replied store unreadable"), OutsideActiveHours("22:00")],
+                         ids=["unreadable", "bedtime"])
+def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
+    """Both lanes ran inside `except Exception`, which swallowed bedtime."""
+    dr, lanes, llm, chokepoint = direct
+    lanes["vip"] = [{"url": fresh("graphseo"), "text": "vip post"}]
+    chokepoint.answer = error
+    with pytest.raises(type(error)):
+        dr.run_direct_reply_cycle()
+    assert lanes["queries"] == [], "the search lane never starts"
 
-    assert dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 0
-
-    assert len(llm.calls) == 2, "the generation already submitted runs; no other starts"
-    assert sent == [] and dr._skipped == set()
-
-
-def test_pipeline_ends_on_a_stop_request_during_generation(pipeline):
-    """A stop request or 22:00 raised inside the generation ends the pass;
-    it is not a failed generation the loop steps over."""
-    from src.guards.active_hours import OutsideActiveHours
-
-    dr, llm, sent = pipeline
-    tweets = [{"url": fresh("someone", n=i), "text": f"post {i}"} for i in range(3)]
-    llm.default = OutsideActiveHours("stop requested")
-
-    with pytest.raises(OutsideActiveHours):
-        dr._reply_to_tweets(tweets, set(), "SEARCH-HOT")
-    assert sent == [] and dr._skipped == set()
+    lanes["vip"], lanes["search"] = [], error
+    with pytest.raises(type(error)):
+        dr.run_direct_reply_cycle()
+    assert len(lanes["queries"]) == 1, "the cycle stops at the first query instead of scraping the rest"
 
 
-def test_pipeline_steps_over_a_generation_that_raises(pipeline, monkeypatch):
-    from src.replies import reply_generator
+def test_direct_reply_cycle_is_bounded(direct, monkeypatch):
+    """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
+    outlive its 2-minute interval; the startup warm-up once ran 20+ minutes.
+    The cycle stops at its budget and yields Safari."""
+    import itertools
 
-    dr, llm, sent = pipeline
-    real = reply_generator.generate
+    dr, lanes, llm, chokepoint = direct
+    numbers = itertools.count()
 
-    def broken_for_first(voice, *, text, **kwargs):
-        if text == "post 0":
-            raise KeyError("template field")
-        return real(voice, text=text, **kwargs)
+    def fresh_posts(query, **k):
+        lanes["queries"].append(query)
+        return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
-    monkeypatch.setattr(reply_generator, "generate", broken_for_first)
-    tweets = [{"url": fresh("someone", n=i), "text": f"post {i}"} for i in range(2)]
-
-    assert dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 1
-    assert sent == [tweets[1]["url"]] and dr._skipped == {tweets[1]["url"]}, \
-        "the post whose generation raised stays replayable"
-
-
-def test_feed_sweep_stops_at_the_rate_limit(pipeline, monkeypatch):
-    from src.replies import feed_sweeper_bot as fs
-    from src.x import scraper
-
-    dr, llm, sent = pipeline
-    following = []
-    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh("someone"), "text": "feed post"}])
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: following.append(1) or [])
-    llm.default = RATE_LIMITED
-
-    fs.run_feed_sweep_cycle()
-
-    assert len(llm.calls) == 1 and following == [] and sent == []
-
-
-def test_feed_sweep_judges_the_url_handle_not_the_display_name(pipeline, monkeypatch):
-    from src.replies import feed_sweeper_bot as fs
-    from src.x import scraper
-
-    dr, llm, sent = pipeline
-    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
-    blocked = fresh("pgm_pm", n=1)
-    named_like_us = fresh("someone", n=2)
-    feed = [
-        {"url": blocked, "text": "blocked by handle", "author": "Friendly Name"},
-        {"url": named_like_us, "text": "post admitted", "author": config.BOT_HANDLE},
-    ]
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: list(feed))
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
-
-    fs.run_feed_sweep_cycle()
-
-    assert llm.parents("post admitted", "blocked by handle") == ["post admitted"]
-    assert sent == [named_like_us]
-    assert fs._skipped == {blocked, named_like_us}
-    assert dr._skipped == set(), "each job keeps its own set"
-
-
-def viral(handle, n):
-    return {"url": fresh(handle, n=n), "text": f"OpenAI ships a new model {n}",
-            "author": handle, "likes": 50_000, "replies": 900}
-
-
-def test_feed_sweep_only_replies_even_to_viral_posts(pipeline, monkeypatch):
-    from src.replies import feed_sweeper_bot as fs
-    from src.x import scraper
-
-    dr, _, sent = pipeline
-    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
-    feed = [viral("someone", 1), viral("other", 2)]
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: list(feed))
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
-
-    fs.run_feed_sweep_cycle()
-
-    assert sorted(sent) == sorted(t["url"] for t in feed)
-
-
-def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
-    from src.x import scraper, twitter_client as tc
-
-    dr, _, sent = pipeline
-    vip, searched = viral("TheBTCTherapist", 1), viral("someone", 2)
-    monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [vip])
-    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [searched])
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+    monkeypatch.setattr(dr, "scrape_x_search", fresh_posts)
+    monkeypatch.setattr(dr, "DIRECT_REPLY_MAX_PER_CYCLE", 3)
 
     dr.run_direct_reply_cycle()
+    assert len(chokepoint.sent) == 3 and len(lanes["queries"]) == 1
 
-    assert sent == [vip["url"], searched["url"]]
+    chokepoint.calls.clear()
+    lanes["queries"].clear()
+    dr.run_direct_reply_cycle(max_replies=12)
+    assert len(chokepoint.sent) == 12 and len(lanes["queries"]) == 3
 
 
-# --- Reply spacing in the pipeline (#131) -------------------------------------
+# --- feed_sweep -------------------------------------------------------------------
 
 
 @pytest.fixture
-def spacing(pipeline, monkeypatch, memory_ledger):
-    """The pipeline on a Toronto noon clock that its sleeps advance. The stub
-    chokepoint records each Reply in the ledger, as a ship would."""
-    from src.guards import action_guard as ag, active_hours
+def feed(monkeypatch, llm, chokepoint):
+    from src.replies import feed_sweeper_bot as fs
+    from src.x import scraper
 
-    dr, _, sent = pipeline
-    s = SimpleNamespace(dr=dr, sent=sent, slept=[], waited_at_send=[], gap_after_send=[],
-                        on_sleep=lambda: None, ledger=memory_ledger,
-                        now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
-    monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
-    monkeypatch.setattr(ag, "now_local", lambda: s.now)
-
-    def sleep(seconds):
-        s.slept.append(seconds)
-        # Round up like time.sleep, which never returns early.
-        s.now += timedelta(microseconds=math.ceil(seconds * 1_000_000))
-        s.on_sleep()
-
-    def chokepoint(url, text):
-        s.waited_at_send.append(sum(s.slept))
-        assert ag.seconds_until_allowed(ag.REPLY) == 0, "sent before the spacing cleared"
-        sent.append(url)
-        ag.record(ag.REPLY, url)
-        # The clock stands still: the whole gap is left to wait.
-        s.gap_after_send.append(ag.seconds_until_allowed(ag.REPLY))
-        return True
-
-    monkeypatch.setattr(dr, "_sleep", sleep)
-    monkeypatch.setattr(dr, "reply_to_tweet", chokepoint)
-    return s
+    feeds = {"FEED": [], "FOLLOWING": [], "read": []}
+    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
+    monkeypatch.setattr(scraper, "scrape_home_feed",
+                        lambda **k: feeds["read"].append("FEED") or list(feeds["FEED"]))
+    monkeypatch.setattr(scraper, "scrape_following_feed",
+                        lambda **k: feeds["read"].append("FOLLOWING") or list(feeds["FOLLOWING"]))
+    return fs, feeds, llm, chokepoint
 
 
-def test_pipeline_waits_out_the_spacing_after_its_own_reply(spacing):
-    """Generation N+1 is ready as Reply N ships: it waits out N's gap."""
-    s = spacing
-    tweets = [{"url": fresh("someone", n=1), "text": "one"}, {"url": fresh("other", n=2), "text": "two"}]
+def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
+    fs, feeds, llm, chokepoint = feed
+    ok, thread, off, old = (fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3),
+                            fresh("fourth", minutes=5 * 24 * 60 + 1, n=4))
+    feeds["FEED"] = [
+        {"url": thread, "text": "OpenAI ships a model", "is_reply": True},
+        {"url": off, "text": "my sandwich today"},
+        {"url": old, "text": "OpenAI ships an old model"},
+        {"url": ok, "text": "OpenAI ships a new model", "likes": 50_000, "replies": 900},
+    ]
 
-    assert s.dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 2
+    fs.run_feed_sweep_cycle()
 
-    assert s.waited_at_send == [0, pytest.approx(s.gap_after_send[0])]
-    assert all(0 < step <= 1.0 for step in s.slept), "short slices, so a stop cuts the wait"
-
-
-def test_pipeline_does_not_wait_when_the_spacing_is_clear(spacing):
-    from src.guards import action_guard as ag
-
-    s = spacing
-    ag.record(ag.REPLY, fresh("earlier"))
-    s.now += timedelta(seconds=60)
-    url = fresh("someone", n=1)
-
-    assert s.dr._reply_to_tweets([{"url": url, "text": "post"}], set(), "SEARCH-HOT") == 1
-
-    assert s.slept == [] and s.sent == [url]
+    assert chokepoint.sent == [ok], "only replies, even to a viral post"
+    assert [r.source for r in logged()] == ["FEED-SWEEP-FEED"]
+    assert set_aside("feed_sweep") == {ok} and set_aside("direct_reply") == set()
 
 
-def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing, monkeypatch):
-    """The chokepoint stays the judge: another job's Reply lands mid-wait,
-    the real reply_to_tweet refuses on spacing before Safari, writes no
-    ledger row, and the post stays replayable."""
-    from src.guards import action_guard as ag, reply_admission
-    from src.guards.reply_admission import Refusal
-    from src.x import twitter_client as tc
+def test_feed_sweep_stops_at_the_rate_limit(feed):
+    fs, feeds, llm, chokepoint = feed
+    feeds["FEED"] = [{"url": fresh("someone"), "text": "OpenAI ships a new model"}]
+    llm.default = RATE_LIMITED
 
-    s = spacing
-    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)  # every gap is exactly the minimum
-    ag.record(ag.REPLY, fresh("earlier"))
+    fs.run_feed_sweep_cycle()
 
-    def another_job_replies_after_the_first_slice():
-        if len(s.slept) == 1:
-            ag.record(ag.REPLY, fresh("elsewhere", n=9))
-
-    s.on_sleep = another_job_replies_after_the_first_slice
-    verdicts = []
-    judge = reply_admission.judge_reply
-    monkeypatch.setattr(reply_admission, "judge_reply",
-                        lambda *a, **k: verdicts.append(judge(*a, **k)) or verdicts[-1])
-    monkeypatch.setattr(s.dr, "reply_to_tweet", tc.reply_to_tweet)
-    url, tried = fresh("someone", n=1), set()
-
-    assert s.dr._reply_to_tweets([{"url": url, "text": "post"}], tried, "SEARCH-HOT") == 0
-
-    assert sum(s.slept) == config.MIN_SECONDS_BETWEEN_REPLIES
-    assert [v.refusal for v in verdicts] == [Refusal.SPACING]
-    assert s.ledger.count(ag.REPLY, s.now.date()) == 2, "only the earlier Reply and the other job's"
-    assert url not in s.dr._skipped and url not in replied_store.load_replied()
-    assert url in tried, "tried again next cycle, with a new generation"
-
-
-@pytest.mark.parametrize("cut", ["stop", "overnight"])
-def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypatch, cut):
-    import threading
-    from src.guards import action_guard as ag, active_hours
-
-    s = spacing
-    stop = threading.Event()
-    monkeypatch.setattr(active_hours, "_STOP", stop)
-
-    def cut_short():
-        if cut == "stop":
-            stop.set()
-        else:
-            s.now = s.now.replace(hour=22, minute=0, second=0)
-
-    ag.record(ag.REPLY, fresh("earlier"))
-    s.on_sleep = cut_short
-
-    with pytest.raises(active_hours.OutsideActiveHours):
-        s.dr._reply_to_tweets([{"url": fresh("someone", n=1), "text": "post"}], set(), "SEARCH-HOT")
-
-    assert len(s.slept) == 1, "the next slice sees the stop or 22:00"
-    assert s.sent == [], "nothing ships"
-    assert s.ledger.count(ag.REPLY, s.now.date()) == 1
-
-
-def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
-    from src.replies import reply_bot as rb
-
-    quoted, answered = fresh("someone", n=1), fresh("other", n=2)
-    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
-    monkeypatch.setattr(rb, "refresh_feed", lambda: None)
-    monkeypatch.setattr(rb, "get_recent_tweets", lambda hours: [])
-    monkeypatch.setattr(rb, "generate_replies", lambda **k: [
-        {"tweet_url": quoted, "reply": REPLY_TEXT, "type": "quote"},
-        {"tweet_url": answered, "reply": REPLY_TEXT, "type": "reply"},
-    ])
-    monkeypatch.setattr(rb.time, "sleep", lambda *a: None)
-    sent, logged = [], []
-    monkeypatch.setattr(rb, "reply_to_tweet", lambda url, text: sent.append(url) or True)
-    monkeypatch.setattr(rb, "log_reply", lambda url, *a, **k: logged.append(url))
-
-    rb.run_reply_cycle()
-
-    assert sent == logged == [answered], "a quote item ships nothing and logs nothing"
+    assert len(llm.calls) == 1 and feeds["read"] == ["FEED"] and chokepoint.sent == []
 
 
 # --- reply search (one model call finds and drafts) --------------------------
@@ -466,12 +239,11 @@ def test_reply_search_surface_disabled_by_default(monkeypatch):
 
 
 @pytest.fixture
-def reply_search(monkeypatch, blocklist):
-    """reply_bot with a stub search-and-draft model and a stub chokepoint;
-    the model returns `batch`."""
+def reply_search(monkeypatch, chokepoint):
+    """reply_bot with a stub search-and-draft model returning `batch`."""
     from src.replies import reply_bot as rb
 
-    batch, searched, sent, logged = [], [], [], []
+    batch, searched = [], []
 
     def generate(recent_topics=None, already_replied=None):
         searched.append(already_replied)
@@ -482,73 +254,43 @@ def reply_search(monkeypatch, blocklist):
     monkeypatch.setattr(rb, "refresh_feed", lambda: None)
     monkeypatch.setattr(rb, "get_recent_tweets", lambda hours: [])
     monkeypatch.setattr(rb, "generate_replies", generate)
-    monkeypatch.setattr(rb, "reply_to_tweet", lambda url, text: sent.append(url) or True)
-    monkeypatch.setattr(rb, "log_reply", lambda url, *a, **k: logged.append(url))
-    monkeypatch.setattr(rb.time, "sleep", lambda *a: None)
-    return rb, batch, searched, sent, logged
+    return rb, batch, searched, chokepoint
 
 
-def target(url, text=""):
-    return {"tweet_url": url, "reply": REPLY_TEXT, "type": "reply", "tweet_text": text}
+def target(url, kind="reply"):
+    return {"tweet_url": url, "reply": REPLY_TEXT, "type": kind, "pattern": "RENAME"}
 
 
-def test_reply_search_asks_admission_before_sending(reply_search):
-    rb, batch, searched, sent, logged = reply_search
+def test_reply_search_sends_admitted_targets_once(reply_search):
+    rb, batch, searched, chokepoint = reply_search
     answered = fresh("someone", n=1)
     replied_store.claim(answered)
-    ok = fresh("someone", n=5)
+    ok, quoted = fresh("someone", n=5), fresh("other", n=7)
     batch += [
         target(fresh("pgm_pm", n=2)),
-        target(fresh(config.BOT_HANDLE, n=3)),
         target(answered),
         target("https://x.com/i/web/status/" + x_urls.status_id(fresh("x", n=4))),
         target(fresh("someone", minutes=49 * 60, n=6)),
+        target(quoted, kind="quote"),
+        target(ok),
         target(ok),
     ]
 
     rb.run_reply_cycle()
 
     assert len(searched) == 1 and answered in searched[0], "the model is told which posts are answered"
-    assert sent == logged == [ok], "a post admission refuses never reaches the chokepoint"
+    assert chokepoint.sent == [ok], "no quote, nothing admission refuses, each target once"
+    assert [(r.url, r.pattern) for r in logged()] == [(ok, "RENAME")]
 
 
-def test_reply_search_never_writes_the_replied_store(reply_search, monkeypatch):
-    """Defect 3 of #100: the cycle marked candidates before sending and
-    saved them into the Replied store at the end, shipped or not."""
-    rb, batch, _, sent, logged = reply_search
-    refused, shipped = fresh("someone", n=1), fresh("other", n=2)
-    batch += [target(refused), target(shipped), target(refused)]
-    monkeypatch.setattr(rb, "reply_to_tweet", lambda url, text: sent.append(url) or url == shipped)
-
-    rb.run_reply_cycle()
-
-    assert sent == [refused, shipped], "each target tried once per cycle"
-    assert logged == [shipped], "log only what shipped"
-    assert replied_store.load_replied() == set(), "only the chokepoint marks the store"
-
-
-def test_reply_search_stops_on_unreadable_store(reply_search):
-    rb, batch, searched, sent, _ = reply_search
+def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
+    rb, batch, searched, chokepoint = reply_search
     batch.append(target(fresh("someone")))
-    corrupt_replied_store()
+    with open(config.REPLIED_FILE, "w") as f:
+        f.write("[")
     with pytest.raises(StateUnreadable):
         rb.run_reply_cycle()
-    assert searched == [], "the model is not paid on an unreadable store"
-    assert sent == []
-
-
-def test_reply_search_does_not_swallow_unreadable_store_at_the_chokepoint(reply_search, monkeypatch):
-    rb, batch, _, sent, _ = reply_search
-    batch += [target(fresh("someone", n=1)), target(fresh("other", n=2))]
-
-    def unreadable(url, text):
-        sent.append(url)
-        raise StateUnreadable("replied store unreadable")
-
-    monkeypatch.setattr(rb, "reply_to_tweet", unreadable)
-    with pytest.raises(StateUnreadable):
-        rb.run_reply_cycle()
-    assert len(sent) == 1, "the cycle stops at the first unreadable store"
+    assert searched == [] and chokepoint.sent == []
 
 
 # --- early_bird and mega_watch (profile scans) ------------------------------
@@ -571,44 +313,11 @@ def test_early_reply_targets_are_curator_driven():
     assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
 
 
-def _status_url(handle, minutes_ago):
-    from datetime import datetime, timezone
-    from src.replies.reply_bot import _TWITTER_EPOCH
-
-    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes_ago * 60_000
-    return f"https://x.com/{handle}/status/{(ms - _TWITTER_EPOCH) << 22}"
-
-
-def test_mega_watch_skips_posts_older_than_max_age(monkeypatch, llm):
-    from src.replies import mega_watch_bot as mw
-
-    fresh = _status_url("bigai", 1)
-    stale = _status_url("bigai", 30)
-    monkeypatch.setattr(mw, "_watch_pool", lambda: ["bigai"])
-    monkeypatch.setattr(mw, "scrape_profile_tweets", lambda *a, **k: [
-        {"url": stale, "author": "bigai", "text": "GPU clusters are the new power plants"},
-        {"url": fresh, "author": "bigai", "text": "GPU clusters are the new power plants"},
-    ])
-    monkeypatch.setattr(mw.x_urls, "is_reply_like_tweet", lambda *a, **k: False)
-    monkeypatch.setattr(mw, "_is_on_niche", lambda text: True)
-    monkeypatch.setattr(mw, "humanize", lambda text: text)
-    monkeypatch.setattr(mw, "log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(mw.time, "sleep", lambda *_: None)
-    replied_to = []
-    monkeypatch.setattr(mw, "reply_to_tweet", lambda url, text: replied_to.append(url) or True)
-
-    mw.run_mega_watch_cycle()
-
-    assert replied_to == [fresh]
-
-
 @pytest.fixture(params=["early_bird", "mega_watch"])
-def profile_job(request, monkeypatch, blocklist, llm):
+def profile_job(request, monkeypatch, llm, chokepoint):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
-    from src.replies import direct_reply as dr
-    from src.replies import early_bird_bot as eb
     from src.core import evolution_store
-    from src.replies import mega_watch_bot as mw
+    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
@@ -618,114 +327,98 @@ def profile_job(request, monkeypatch, blocklist, llm):
     monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
-    monkeypatch.setattr(module, "_is_on_niche", lambda text: True)
-    monkeypatch.setattr(module, "log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(module.time, "sleep", lambda *a: None)
-    sent = []
-    monkeypatch.setattr(module, "reply_to_tweet", lambda url, text: sent.append(url) or True)
-    return module, run, profiles, llm, sent
+    monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
+    return request.param, run, profiles, llm, chokepoint
 
 
-def post(handle, text, n=0):
-    return {"url": fresh(handle, minutes=1, n=n), "text": text, "author": handle}
+def post(handle, text, minutes=1, n=0, **fields):
+    return {"url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
 
 
-def test_profile_jobs_ask_admission_before_generating(profile_job):
-    module, run, profiles, llm, sent = profile_job
-    blocked, admitted = post("pgm_pm", "post blocked", n=1), post("someone", "post admitted", n=2)
-    profiles.update({"pgm_pm": [blocked], "someone": [admitted]})
+def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
+    name, run, profiles, llm, chokepoint = profile_job
+    max_minutes = {"early_bird": 18, "mega_watch": 4}[name]
+    ok = post("someone", "post fresh", minutes=max_minutes - 1, n=1)
+    profiles["someone"] = [
+        post("someone", "post stale", minutes=max_minutes + 1, n=2),
+        post("someone", "off-niche post", n=3),
+        post("someone", "post in a thread", n=4, is_reply=True),
+        {"url": "https://x.com/someone", "text": "no status ID"},
+        ok,
+    ]
+
+    run()
+
+    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread") == ["post fresh"]
+    assert chokepoint.sent == [ok["url"]]
+    tag = {"early_bird": "EARLYBIRD", "mega_watch": "MEGA"}[name]
+    assert [r.source for r in logged()] == [f"{tag}/someone"]
+    assert set_aside(name) == {ok["url"]}
+
+
+def test_profile_jobs_bound_their_replies(profile_job):
+    """Early bird: one Reply per scanned account. Mega watch: two per cycle."""
+    name, run, profiles, llm, chokepoint = profile_job
+    for handle in ("one", "two", "three"):
+        profiles[handle] = [post(handle, f"post {handle} {i}", n=i) for i in range(2)]
 
     run()
 
-    assert llm.parents("post admitted", "post blocked") == ["post admitted"]
-    assert sent == [admitted["url"]]
-    assert module._skipped == {blocked["url"], admitted["url"]}
-
-
-def test_profile_jobs_set_aside_model_skips_but_replay_failed_calls(profile_job):
-    module, run, profiles, llm, sent = profile_job
-    declined, failed = post("someone", "post declined", n=1), post("other", "post failed", n=2)
-    profiles.update({"someone": [declined], "other": [failed]})
-    llm.answers.update({"post declined": "SKIP", "post failed": FAILED_CALL})
-
-    run()
-    run()
-
-    assert sorted(llm.parents("post declined", "post failed")) == [
-        "post declined", "post failed", "post failed"], "a SKIP is not paid twice"
-    assert sent == []
-    assert module._skipped == {declined["url"]}
-
-
-def test_profile_jobs_stop_on_unreadable_store(profile_job):
-    module, run, profiles, llm, _ = profile_job
-    profiles["someone"] = [post("someone", "post")]
-    corrupt_replied_store()
-    with pytest.raises(StateUnreadable):
-        run()
-    assert llm.calls == []
-
-
-def test_profile_jobs_do_not_swallow_unreadable_store_at_the_chokepoint(profile_job, monkeypatch):
-    module, run, profiles, _, _ = profile_job
-    profiles["someone"] = [post("someone", "post")]
-
-    def unreadable(url, text):
-        raise StateUnreadable("replied store unreadable")
-
-    monkeypatch.setattr(module, "reply_to_tweet", unreadable)
-    with pytest.raises(StateUnreadable):
-        run()
+    per_account = {"early_bird": 3, "mega_watch": 2}[name]
+    assert len(chokepoint.sent) == per_account
+    if name == "early_bird":
+        assert len({x_urls.author(u) for u in chokepoint.sent}) == 3
 
 
 def test_profile_jobs_stop_at_the_rate_limit(profile_job):
-    module, run, profiles, llm, sent = profile_job
+    name, run, profiles, llm, chokepoint = profile_job
     profiles.update({"someone": [post("someone", "post one", n=1)], "other": [post("other", "post two", n=2)]})
     llm.default = RATE_LIMITED
 
     run()
 
-    assert len(llm.calls) == 1 and sent == [] and module._skipped == set()
+    assert len(llm.calls) == 1 and chokepoint.sent == []
+
+
+def test_mega_watch_sends_replies_of_10_to_270_characters(profile_job):
+    name, run, profiles, llm, chokepoint = profile_job
+    profiles["someone"] = [post("someone", "post", n=1)]
+    llm.default = "Yes."
+
+    run()
+
+    assert chokepoint.sent == ([] if name == "mega_watch" else [profiles["someone"][0]["url"]])
 
 
 # --- debate (mentions) ------------------------------------------------------
 
 
 @pytest.fixture
-def debate(monkeypatch, blocklist, llm):
+def debate(monkeypatch, llm, chokepoint):
     from src.replies import debate_bot as db
-    from src.x import scraper, twitter_client as tc
+    from src.x import scraper
 
     mentions = []
-    sent = []
-
     monkeypatch.setenv("ENABLE_DEBATES", "1")
     monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: list(mentions))
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text, **k: sent.append((url, k)) or True)
-    monkeypatch.setattr("src.core.engagement_log.log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(db.time, "sleep", lambda *a: None)
-    return db, mentions, llm, sent
+    return db, mentions, llm, chokepoint
 
 
-def test_debate_asks_admission_with_the_turn_cap_before_generating(debate, monkeypatch):
-    from src.guards import action_guard
-
-    db, mentions, llm, sent = debate
-    logged = []
-    monkeypatch.setattr("src.core.engagement_log.log_reply", lambda *a, **k: logged.append(a))
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
-    action_guard.record(action_guard.DEBATE_TURN, target="capped")
-    blocked, own = fresh("pgm_pm", n=1), fresh(config.BOT_HANDLE, n=2)
-    capped, admitted = fresh("capped", n=3), fresh("someone", n=4)
-    texts = ("mention blocked", "mention own", "mention capped", "mention admitted")
-    mentions += [{"url": u, "text": t} for u, t in zip((blocked, own, capped, admitted), texts)]
+def test_debate_answers_fresh_mentions_as_debate_turns(debate, monkeypatch):
+    db, mentions, llm, chokepoint = debate
+    monkeypatch.setenv("DEBATE_MAX_PER_CYCLE", "2")
+    monkeypatch.setenv("DEBATE_MAX_AGE_HOURS", "24")
+    old = fresh("old", minutes=25 * 60, n=1)
+    first, second, third = fresh("someone", n=2), fresh("other", minutes=10, n=3), fresh("third", minutes=20, n=4)
+    mentions += [{"url": third, "text": "mention three"}, {"url": old, "text": "mention old"},
+                 {"url": second, "text": "mention two"}, {"url": first, "text": "mention one"},
+                 {"url": fresh("empty", n=5), "text": "  "}]
 
     db.run_debate_cycle()
 
-    assert llm.parents(*texts) == ["mention admitted"]
-    assert sent == [(admitted, {"debate_turn": True})]
-    assert len(logged) == 1, "log only on a confirmed ship"
-    assert db._skipped == {blocked, own, admitted}, "the turn cap is temporary: capped stays replayable"
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(first, True), (second, True)], \
+        "freshest first, DEBATE_MAX_PER_CYCLE Replies"
+    assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
@@ -739,132 +432,48 @@ def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
     assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
 
 
-def test_debate_sets_aside_skips_but_replays_failed_generations(debate, monkeypatch):
-    db, mentions, llm, sent = debate
-    declined, failed, empty = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
-    texts = ("mention declined", "mention failed", "mention empty")
-    mentions += [{"url": u, "text": t} for u, t in zip((declined, failed, empty), texts)]
-    llm.answers.update({"mention declined": "SKIP. nothing to debate", "mention failed": FAILED_CALL,
-                        "mention empty": ""})
-    monkeypatch.setenv("DEBATE_MAX_PER_CYCLE", "5")
-
-    db.run_debate_cycle()
-    db.run_debate_cycle()
-
-    assert sorted(llm.parents(*texts)) == ["mention declined", "mention empty", "mention empty",
-                                           "mention failed", "mention failed"]
-    assert sent == []
-    assert db._skipped == {declined}
-
-
-def test_debate_stops_on_unreadable_store(debate):
-    db, mentions, llm, _ = debate
-    mentions.append({"url": fresh("someone"), "text": "post"})
-    corrupt_replied_store()
-    with pytest.raises(StateUnreadable):
-        db.run_debate_cycle()
-    assert llm.calls == []
-
-
-def test_debate_stops_at_the_rate_limit(debate):
-    db, mentions, llm, sent = debate
-    mentions += [{"url": fresh("someone", n=1), "text": "mention one"},
-                 {"url": fresh("other", n=2), "text": "mention two"}]
-    llm.default = RATE_LIMITED
-
-    db.run_debate_cycle()
-
-    assert len(llm.calls) == 1 and sent == [] and db._skipped == set()
-
-
 # --- replyback (replies under our latest post) ------------------------------
 
 
 @pytest.fixture
-def replyback(monkeypatch, blocklist, llm):
+def replyback(monkeypatch, llm, chokepoint):
     from src.replies import notify_bot as nb
 
     replies = []
-    sent = []
-
     monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
-                        lambda: {"own_tweet": "our post", "replies": list(replies)})
+                        lambda: {"own_tweet": "our post about GPUs", "replies": list(replies)})
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
     monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
-    monkeypatch.setattr(nb, "reply_to_tweet_in_thread",
-                        lambda url, text, **k: sent.append((url, k)) or True)
-    return nb, replies, llm, sent
+    return nb, replies, llm, chokepoint
 
 
-def test_replyback_asks_admission_with_the_turn_cap_before_generating(replyback, monkeypatch):
-    from src.guards import action_guard
-
-    nb, replies, llm, sent = replyback
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
-    action_guard.record(action_guard.DEBATE_TURN, target="capped")
-    blocked, own = fresh("pgm_pm", n=1), fresh(config.BOT_HANDLE, n=2)
-    capped, admitted = fresh("capped", n=3), fresh("someone", n=4)
+def test_replyback_answers_engagers_in_thread_and_logs_it(replyback):
+    """Issue #156: replyback logs its shipped Replies like every other job."""
+    nb, replies, llm, chokepoint = replyback
+    admitted = fresh("someone", n=1)
     replies += [
-        {"user": "Friendly @pgm_pm", "text": "blocked handle", "url": blocked},
-        {"user": "Us @TheAIShrink", "text": "our own reply", "url": own},
         {"user": "No link @nolink", "text": "no status URL", "url": ""},
-        {"user": "Capped @capped", "text": "hard disagree on that one", "url": capped},
+        {"user": "Brief @brief", "text": "ok", "url": fresh("brief", n=2)},
         {"user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
     ]
 
     nb.run_replyback_cycle()
 
-    texts = ("blocked handle", "our own reply", "no status URL", "hard disagree on that one",
-             "display name is not an identity")
-    assert llm.parents(*texts) == ["display name is not an identity"]
-    assert sent == [(admitted, {"debate_turn": True})]
-    assert nb._skipped == {blocked, own, admitted}, "the turn cap is temporary"
+    assert llm.parents("no status URL", "display name is not an identity") == ["display name is not an identity"]
+    assert "our post about GPUs" in llm.prompts[0], "the post they answered is in the prompt"
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
+    assert [(r.url, r.source) for r in logged()] == [(admitted, "REPLYBACK/someone")]
+    assert set_aside("replyback") == {admitted}
 
 
-def test_replyback_sets_aside_model_skips_but_replays_failed_calls(replyback):
-    nb, replies, llm, sent = replyback
-    declined, failed = fresh("someone", n=1), fresh("other", n=2)
-    replies += [{"user": "@someone", "text": "nothing to add", "url": declined},
-                {"user": "@other", "text": "model is down", "url": failed}]
-    llm.answers.update({"nothing to add": "SKIP. no debatable content", "model is down": FAILED_CALL})
-
-    nb.run_replyback_cycle()
-    nb.run_replyback_cycle()
-
-    assert llm.parents("nothing to add", "model is down") == [
-        "nothing to add", "model is down", "model is down"]
-    assert sent == []
-    assert nb._skipped == {declined}
-
-
-def test_replyback_stops_at_the_rate_limit(replyback):
-    nb, replies, llm, sent = replyback
-    replies += [{"user": "@someone", "text": "first engager", "url": fresh("someone", n=1)},
-                {"user": "@other", "text": "second engager", "url": fresh("other", n=2)}]
-    llm.default = RATE_LIMITED
+def test_replyback_answers_more_engagers_under_a_busier_post(replyback):
+    nb, replies, llm, chokepoint = replyback
+    replies += [{"user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
+                for i in range(12)]
 
     nb.run_replyback_cycle()
 
-    assert len(llm.calls) == 1 and sent == [] and nb._skipped == set()
-
-
-def test_replyback_stops_on_unreadable_store(monkeypatch, llm):
-    """replyback catches reply errors per engager; an unreadable store must
-    end the cycle at the first engager, before paying for a generation."""
-    from src.replies import notify_bot as nb
-    monkeypatch.setenv("DRY_RUN", "1")
-    replies = [{"user": f"@fan{i}", "text": "what about inference margins?",
-                "url": f"https://x.com/fan{i}/status/20635000000000{i:05d}"} for i in range(3)]
-    monkeypatch.setattr(nb, "scrape_own_tweet_and_replies",
-                        lambda: {"own_tweet": "batching is the margin story", "replies": replies})
-    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
-    monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: pytest.fail("cycle must not finish"))
-    monkeypatch.setattr(nb, "humanize", lambda t: t)
-    with open(config.REPLIED_FILE, "w") as f:
-        f.write("[")
-    with pytest.raises(StateUnreadable):
-        nb.run_replyback_cycle()
-    assert llm.calls == [], "Reply admission stops the cycle before the model call"
+    assert len(chokepoint.sent) == 9, "10 to 19 replies under the post: 9 answered"
 
 
 def test_replyback_reciprocity_never_follows(monkeypatch):

@@ -1,6 +1,5 @@
-"""src/replies/direct_reply: reply lane, candidate order, pipeline and the
-VIP scan."""
-from src.guards import replied_store as rs
+"""src/replies/direct_reply: reply lane, candidate order, query rotation and
+the VIP voices."""
 
 
 def _url_with_age(minutes: int) -> str:
@@ -15,12 +14,12 @@ def test_reply_candidates_sorted_fresh_and_rising_first():
     """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
     must beat a 60-hour-old tweet; unknown-age URLs go last; within the
     same freshness bucket, higher likes-per-hour wins."""
-    from src.replies.direct_reply import _freshness_sort_key
+    from src.replies.direct_reply import freshness_sort_key
     fresh_hot = {"url": _url_with_age(20), "likes": 400}
     fresh_cold = {"url": _url_with_age(25), "likes": 2}
     old = {"url": _url_with_age(60 * 60), "likes": 90000}
     unknown = {"url": "https://x.com/someone", "likes": 50}
-    ordered = sorted([unknown, old, fresh_cold, fresh_hot], key=_freshness_sort_key)
+    ordered = sorted([unknown, old, fresh_cold, fresh_hot], key=freshness_sort_key)
     assert ordered[0] is fresh_hot
     assert ordered[1] is fresh_cold
     assert ordered[2] is old
@@ -72,62 +71,21 @@ def test_prompts_are_english_only():
     assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
 
 
-def test_reply_callers_never_premark_store(monkeypatch, tmp_path, llm):
-    """2026-06-07 post-mortem: five bots 'locked the URL in BEFORE posting'
-    (save_replied premark) — the reply chokepoint (2026-06-05) loads that
-    same store and silently refused its OWN caller's reply, 100% of the
-    time, while unconditional log_reply calls wrote phantom rows into
-    engagement_log. Contract pinned here: (1) the on-disk store must NOT
-    contain the URL at the moment reply_to_tweet is invoked; (2) log_reply
-    fires ONLY when reply_to_tweet returns True."""
-    import src.replies.direct_reply as dr
-
-    monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    url = _url_with_age(5)
-    tweets = [{"url": url, "text": "nvidia margins at 75 percent again", "author": "some_ai_account"}]
-
-    premarked_at_call = []
-    def fake_reply(u, text):
-        premarked_at_call.append(u in rs.load_replied())
-        return True
-    logged = []
-    monkeypatch.setattr(dr, "reply_to_tweet", fake_reply)
-    monkeypatch.setattr(dr, "humanize", lambda t: t)
-    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: logged.append(a))
-    monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
-    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
-
-    n = dr._reply_to_tweets(tweets, set(), "SEARCH-HOT", en_counter=[0])
-    assert premarked_at_call == [False], \
-        "caller premarked the store — the chokepoint would refuse its own reply"
-    assert n == 1 and len(logged) == 1
-
-    # Chokepoint refusal (False) → no phantom engagement_log row, posted=0.
-    logged.clear()
-    url2 = _url_with_age(6)
-    tweets2 = [{"url": url2, "text": "tsmc capex at 40 billion now", "author": "some_ai_account"}]
-    monkeypatch.setattr(dr, "reply_to_tweet", lambda u, t: False)
-    n2 = dr._reply_to_tweets(tweets2, set(), "SEARCH-HOT", en_counter=[0])
-    assert n2 == 0 and logged == [], \
-        "chokepoint skip must not produce a phantom engagement_log row"
-
-
-def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path, llm):
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint):
     """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
     never the Graphseo voice (_graphseo_voice); output passes through humanize."""
     import src.replies.direct_reply as dr
+    from src.replies import reply_pipeline
 
-    # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
-    # LOCALLY from scraper / twitter_client — patch THERE, not on direct_reply.
-    # (First version of this test patched dr.* — the real Safari fired and
-    # posted live replies to @TheBTCTherapist mid-test. conftest's
-    # _no_safari wall now makes that mistake fail loudly instead.)
-    import src.x.twitter_client as tc
+    # ⚠️ The VIP scan imports scrape_x_search FUNCTION-LOCALLY from scraper:
+    # patch THERE, not on direct_reply. (First version of this test patched
+    # dr.* — the real Safari fired and posted live replies to
+    # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
+    # mistake fail loudly instead.)
     from src.x import scraper
-    monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(scraper, "scrape_x_search",
@@ -135,125 +93,14 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path, llm
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
-    sent = []
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda u, t: sent.append(t) or True)
-    import src.core.engagement_log as el
-    monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
 
-    dr._run_graphseo_scan(set())
+    dr._run_graphseo_scan(reply_pipeline.Cycle())
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
     assert llm.prompts[0].startswith(dr.BESTIE_REPLY_PROMPT.split("{author}")[0])
-    assert len(sent) == 1
-    assert "—" not in sent[0], "humanize must strip em dashes from VIP replies"
-
-
-def test_startup_reply_warmup_is_bounded(monkeypatch):
-    """Operator 2026-06-07: 'more quote retweet on AI'. Root cause was an
-    UNBOUNDED startup reply warmup that ran 20+ min and blocked
-    scheduler.start() — so the dedicated quote/AI-viral jobs never came
-    online (15:43 boot: 300+ replies, 0 quotes). run_direct_reply_cycle
-    must honor max_replies and STOP, yielding Safari."""
-    import src.replies.direct_reply as dr
-    # Every query returns 5 fresh on-niche tweets; without the cap the cycle
-    # would reply to all of them across all 21 queries.
-    calls = {"replies": 0, "queries": 0}
-    def fake_search(q, max_tweets=25, tab="top"):
-        calls["queries"] += 1
-        base = 2063900000000000000 + calls["queries"] * 100
-        return [{"url": f"https://x.com/acct/status/{base+i}",
-                 "text": "openai shipped a new reasoning model today", "author": "acct"}
-                for i in range(5)]
-    def fake_reply_block(tweets, tried, source, source_detail="", remaining=None, en_counter=None, **k):
-        # Honor the remaining budget like the real _reply_to_tweets.
-        n = len(tweets) if remaining is None else min(len(tweets), remaining)
-        calls["replies"] += n
-        return n
-    monkeypatch.setattr(dr, "scrape_x_search", fake_search)
-    monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
-    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried, remaining=None, **k: 0)
-
-    dr.run_direct_reply_cycle(max_replies=12)
-    assert calls["replies"] == 12, f"warmup must stop at the cap, got {calls['replies']}"
-    assert calls["queries"] < 21, "must stop scanning queries once the budget is spent"
-
-
-def test_direct_reply_default_cycle_is_bounded(monkeypatch):
-    """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
-    outlive its 2-minute interval. The steady-state call must use the per-cycle
-    cap, not the old unbounded None behavior."""
-    import src.replies.direct_reply as dr
-
-    calls = {"replies": 0, "queries": 0}
-
-    def fake_search(q, max_tweets=25, tab="top"):
-        calls["queries"] += 1
-        base = 2063900000000001000 + calls["queries"] * 100
-        return [{"url": f"https://x.com/acct/status/{base+i}",
-                 "text": "openai shipped a useful model update today", "author": "acct"}
-                for i in range(5)]
-
-    def fake_reply_block(tweets, tried, source, source_detail="", remaining=None, en_counter=None, **k):
-        n = len(tweets) if remaining is None else min(len(tweets), remaining)
-        calls["replies"] += n
-        return n
-
-    monkeypatch.setattr(dr, "DIRECT_REPLY_MAX_PER_CYCLE", 3)
-    monkeypatch.setattr(dr, "scrape_x_search", fake_search)
-    monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
-    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda tried, remaining=None, **k: 0)
-
-    dr.run_direct_reply_cycle()
-    assert calls["replies"] == 3
-    assert calls["queries"] < 21
-
-
-def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch, llm):
-    """2026-06-09 (operator: 'BOT REALLY SLOW... ACCELERATE'): the reply loop
-    serialized a ~30-50s LLM call THEN ~20s of Safari per reply. The pipeline
-    must START generating reply N+1 while reply N is still posting — and keep
-    the contracts: one gen + one post per candidate, log only on ship."""
-    import threading
-    from src.replies import direct_reply as dr
-
-    second_gen_started = threading.Event()
-    llm.answers["Author: @userb"] = lambda prompt: second_gen_started.set() or \
-        "a sharp, substantive take for userb that passes every gate"
-
-    posts = []
-
-    def fake_post(url, reply):
-        if not posts:
-            # The pipeline guarantee: while the FIRST reply is posting, the
-            # SECOND generation has already started.
-            assert second_gen_started.wait(timeout=5), \
-                "gen of candidate 2 never started during posting of candidate 1 (pipeline broken)"
-        posts.append(url)
-        return True
-
-    monkeypatch.setattr(dr, "reply_to_tweet", fake_post)
-    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
-    monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
-    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
-    monkeypatch.setattr(dr, "humanize", lambda t: t)
-
-    tweets = [
-        {"url": _url_with_age(1).replace("/someone/", "/usera/"), "text": "AI thing one", "author": "a"},
-        {"url": _url_with_age(2).replace("/someone/", "/userb/"), "text": "AI thing two", "author": "b"},
-    ]
-    posted = dr._reply_to_tweets(tweets, set(), "SEARCH-TEST")
-    assert posted == 2, f"both candidates must ship (posted={posted})"
-    assert sorted(llm.parents("Author: @usera", "Author: @userb")) == ["Author: @usera", "Author: @userb"], \
-        "exactly one generation per candidate, for the URL handle"
-    assert len(posts) == 2
-
-    # remaining bound: with remaining=1, exactly one generation is submitted.
-    llm.calls.clear(); posts.clear()
-    posted = dr._reply_to_tweets(list(tweets), set(), "SEARCH-TEST", remaining=1, skipped=set())
-    assert posted == 1 and len(llm.calls) == 1, \
-        "remaining=1 must bound generations AND posts to 1"
+    assert len(chokepoint.calls) == 1
+    assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 
 
 def test_direct_reply_scans_rotating_query_subset(monkeypatch):

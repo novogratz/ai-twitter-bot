@@ -12,13 +12,13 @@ response from them is a new mention, so the rally continues naturally —
 bounded by the per-author daily Debate turn cap, counted at the reply
 chokepoint and shared with replyback, so no thread spirals.
 
-Contracts honored: Reply admission judges each mention, Debate turn cap
-included, before the model call; the reply_to_tweet chokepoint judges it
-again with the text — NO caller-side premark; log only on a confirmed
-ship; Safari work only inside the client primitives.
+Contracts honored in the Reply pipeline: Reply admission judges each
+mention, Debate turn cap included, before the model call; the
+reply_to_tweet chokepoint judges it again with the text — NO caller-side
+premark; log only on a confirmed ship; Safari work only inside the client
+primitives.
 """
 import os
-import time
 import traceback
 from collections import Counter
 from datetime import timedelta
@@ -26,14 +26,8 @@ from datetime import timedelta
 from ..x import x_urls
 from ..core.config import REPLY_MODEL
 from ..core.logger import log
-from ..core.humanizer import humanize
-from ..guards.reply_admission import judge_parent
-from . import reply_generator
-from .reply_generator import Outcome, Voice
-
-# Mentions this job is done with until restart: definitive Reply admission
-# refusals, mentions the model declined, mentions answered.
-_skipped: set = set()
+from . import reply_pipeline
+from .reply_generator import Voice
 
 
 DEBATE_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. A woman, 45, a practicing
@@ -70,6 +64,7 @@ Output ONLY the reply text, or exactly SKIP."""
 # identity=False keeps the prompt as it was, plus the hard rules: whether
 # core identity and the dossier join it is the Operator's call.
 VOICE = Voice(DEBATE_PROMPT, REPLY_MODEL, "DEBATE", identity=False, text_limit=500)
+JOB = reply_pipeline.Job("debate", "DEBATE", voice=lambda _author: VOICE, debate_turn=True, pause=(3, 3))
 
 
 def _debates_enabled() -> bool:
@@ -86,23 +81,20 @@ def run_debate_cycle():
     max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
 
     from ..x.scraper import scrape_mentions
-    from ..x.twitter_client import reply_to_tweet
     mentions = scrape_mentions(max_tweets=20)
     if not mentions:
         log.info("[DEBATE] No mentions scraped this cycle.")
         return
 
-    posted = 0
     skips = Counter()
 
     # Freshest first — a debate is won in the first minutes.
     mentions.sort(key=lambda t: x_urls.age(t.get("url") or "") or timedelta.max)
 
+    candidates = []
     for t in mentions:
-        if posted >= max_per_cycle:
-            break
         url = t.get("url") or ""
-        if not url or url in _skipped:
+        if not url:
             continue
         age = x_urls.age(url)
         if age is None or age > timedelta(hours=max_age_hours):
@@ -111,34 +103,11 @@ def run_debate_cycle():
         text = (t.get("text") or "").strip()
         if not text:
             continue
-        verdict = judge_parent(url, debate_turn=True)
-        if not verdict:
-            skips[verdict.refusal.value] += 1
-            if verdict.refusal.definitive:
-                _skipped.add(url)
-            continue
-        author = verdict.author
+        candidates.append(reply_pipeline.Candidate(url, text, f"DEBATE/{x_urls.author(url)}"))
 
-        generation = reply_generator.generate(VOICE, author=author, text=text)
-        if generation.outcome is Outcome.RATE_LIMITED:
-            log.info("[DEBATE] LLM rate limit reached; stopping this cycle.")
-            break
-        if generation.outcome is Outcome.DECLINED:
-            _skipped.add(url)
-            continue
-        if generation.outcome is not Outcome.WRITTEN:
-            continue  # a failed call is retried next cycle
-        reply = humanize(generation.text)
-
-        # No premark — the chokepoint owns the replied store. Ship-gated
-        # bookkeeping only (phantom-log family).
-        if reply_to_tweet(url, reply, debate_turn=True):
-            _skipped.add(url)
-            posted += 1
-            from ..core.engagement_log import log_reply
-            log_reply(url, reply, "reply", source=f"DEBATE/{author}")
-            time.sleep(3)
-
+    cycle = reply_pipeline.Cycle()
+    posted = reply_pipeline.run(JOB, candidates, cycle, max_shipped=max_per_cycle)
+    skips.update(cycle.refusals)
     log.info(f"[DEBATE] Cycle done: {posted} debate replies posted "
              f"(skips: {', '.join(f'{k}={v}' for k, v in skips.items())}).")
 

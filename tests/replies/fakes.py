@@ -39,3 +39,38 @@ class FakeLlm:
             assert len(hits) == 1, f"ambiguous parent texts {hits} in a prompt"
             found.append(hits[0])
         return found
+
+
+class FakeChokepoint:
+    """Stands in for twitter_client.reply_to_tweet. Records every call and
+    answers `answer`: a result, an exception to raise, or a function of the
+    URL returning one of those. True (shipped) by default."""
+
+    def __init__(self):
+        self.calls = []
+        self.answer = True
+
+    def __call__(self, url, text, *, debate_turn=False):
+        self.calls.append(SimpleNamespace(url=url, text=text, debate_turn=debate_turn))
+        answer = self.answer(url) if callable(self.answer) else self.answer
+        if isinstance(answer, BaseException):
+            raise answer
+        return answer
+
+    @property
+    def sent(self):
+        return [c.url for c in self.calls]
+
+
+def logged():
+    """The engagement log rows written so far: (target URL, source, text, pattern)."""
+    import csv
+    import os
+
+    from src.core import config
+
+    if not os.path.exists(config.ENGAGEMENT_LOG_FILE):
+        return []
+    with open(config.ENGAGEMENT_LOG_FILE, newline="") as f:
+        rows = list(csv.reader(f))[1:]
+    return [SimpleNamespace(url=r[3], source=r[4], text=r[2], pattern=r[5]) for r in rows]
