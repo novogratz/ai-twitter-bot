@@ -28,12 +28,15 @@ default).
    ```
 3. To stop it early: `pkill -f bin/mass_unfollow.py`. It stops before its
    next unfollow and prints `TOTAL unfollowed:`.
-4. What it does per unfollow: pick the first visible `Following` button not
-   in the keep-set, click it, confirm the `confirmationSheetConfirm` modal,
-   record to `action_ledger.json` (30-day anti-churn) and decrement
+4. Before its first pick it cancels a confirm modal left open by an
+   interrupted run. What it does per unfollow: pick the first visible
+   `Following` button not in the keep-set, click it, confirm the
+   `confirmationSheetConfirm` modal, record to `action_ledger.json` (30-day anti-churn) and decrement
    `following_count.json`. It stops at `--max`, at 22:00 Toronto, on
    SIGTERM, when the list is exhausted (empty after 3 reloads) or on
-   repeated JS errors. A rate-limit toast or 5 failed confirms trigger a
+   repeated JS errors (`JS err: OSAERR:no answer from Safari` lines; the
+   osascript error, if any, follows in `/tmp/mass_unfollow.log` under
+   `[MASS_UNFOLLOW]`). A rate-limit toast or 5 failed confirms trigger a
    cooldown, never an abort: if the log shows repeated `COOLDOWN` lines, X
    is blocking the action; tell the operator.
 5. Keep-set (`--keep`): default `whitelist` = current `whitelist.json` tiers +

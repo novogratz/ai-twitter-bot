@@ -21,6 +21,12 @@ Safety:
     cooldown, never an abort.
   - Refuses to start Overnight and stops before the next unfollow once
     Waking hours end (22:00 America/Toronto) or on SIGTERM/SIGINT.
+    Safari is driven only through the src.x.safari primitives, which refuse
+    to start a page script at that point: a click left unconfirmed keeps
+    the modal open, and nothing is unfollowed or recorded. The next run
+    cancels that modal before its first pick.
+  - A page script without answer prints `JS err: OSAERR:...`, and the
+    osascript error follows under `[MASS_UNFOLLOW]` (also in bot.log).
   - Stops after --max unfollows, 150 by default.
   - Refuses to run while the bot scheduler is up (Safari lock conflict);
     override with --force.
@@ -32,6 +38,7 @@ Usage:
 """
 import argparse
 import json
+import logging
 import os
 import random
 import re
@@ -45,10 +52,14 @@ sys.path.insert(0, ROOT)
 
 from src.guards import action_guard, active_hours  # noqa: E402
 from src.core import config  # noqa: E402
+from src.core.logger import log  # noqa: E402
+from src.x import safari  # noqa: E402
 
 # Stays under X's unfollow quota of about 190 per window; at pace `normal`
 # (~480/h) a run ends in about 27 minutes.
 DEFAULT_MAX = 150
+
+LOG_PREFIX = "[MASS_UNFOLLOW]"
 
 _STOP = threading.Event()
 
@@ -63,13 +74,16 @@ def _pause(seconds: float) -> None:
     _STOP.wait(seconds)
 
 
+def _stop_reason() -> str:
+    return ("stop signal" if active_hours.stop_requested()
+            else "Waking hours ended (22:00 America/Toronto)")
+
+
 def _must_stop() -> bool:
     """Overnight or a stop signal: no further unfollow."""
     if active_hours.may_act():
         return False
-    reason = ("stop signal" if active_hours.stop_requested()
-              else "Waking hours ended (22:00 America/Toronto)")
-    print("STOP: %s" % reason, flush=True)
+    print("STOP: %s" % _stop_reason(), flush=True)
     return True
 
 
@@ -105,8 +119,7 @@ def _legacy_keep_set() -> set:
     return keep | wl["tier1"] | wl["tier2"] | _whitelist_keep_set()
 
 
-# NOTE: plain JS here — run_js() escapes backslashes + double quotes once
-# when embedding into the AppleScript string.
+# NOTE: plain JS here — safari._run_js() reads it from a file, unescaped.
 PICK_JS_TEMPLATE = (
     """
 (function(){
@@ -158,23 +171,36 @@ CLEAR_TAGS_JS = """
 })()
 """
 
+CLOSE_MODAL_JS = """
+(function(){
+  var c = document.querySelector('[data-testid="confirmationSheetCancel"]');
+  if (c) { c.click(); return 'CLOSED'; }
+  return 'NONE';
+})()
+"""
 
-def run_js(js: str) -> str:
-    escaped = js.replace("\\", "\\\\").replace('"', '\\"')
-    osa = (
-        'tell application "Safari" to do JavaScript "%s" '
-        "in current tab of front window" % escaped
-    )
-    try:
-        r = subprocess.run(
-            ["osascript", "-e", osa], capture_output=True, text=True, timeout=30
-        )
-        out = (r.stdout or "").strip()
-        if not out and r.stderr:
-            return "OSAERR:" + r.stderr.strip()[:200]
-        return out
-    except subprocess.TimeoutExpired:
-        return "OSAERR:timeout"
+
+def _page_answer(js: str) -> str:
+    """The answer of a page script the run acts on, or an `OSAERR:` string
+    when Safari gave none; `_run_js` logs the osascript error under
+    `[MASS_UNFOLLOW]`. The reload and the URL read call `_run_js` directly:
+    their empty answer needs no report."""
+    return (safari._run_js(js, 30, log_prefix=LOG_PREFIX)
+            or "OSAERR:no answer from Safari")
+
+
+def _echo_log_to_stdout():
+    """Copy the `[MASS_UNFOLLOW]` log lines to stdout, which the skill's
+    nohup run keeps; None when a logger handler already prints to a
+    terminal, so a foreground run shows each line once."""
+    for h in log.handlers:
+        stream = getattr(h, "stream", None)
+        if stream is not None and stream.isatty():
+            return None
+    echo = logging.StreamHandler(sys.stdout)
+    echo.addFilter(lambda record: record.getMessage().startswith(LOG_PREFIX))
+    log.addHandler(echo)
+    return echo
 
 
 def _bot_is_running() -> bool:
@@ -185,31 +211,19 @@ def _bot_is_running() -> bool:
 
 
 def _reload_page() -> None:
-    subprocess.run(
-        ["osascript", "-e",
-         'tell application "Safari" to do JavaScript "location.reload(); '
-         "'RELOADED'\" in current tab of front window"],
-        capture_output=True, text=True, timeout=15,
-    )
+    safari._run_js("location.reload(); 'RELOADED'", log_prefix=LOG_PREFIX)
     _pause(8)
 
 
 def _ensure_following_page() -> None:
     """Navigate the front tab to /following if it isn't there already."""
-    r = subprocess.run(
-        ["osascript", "-e",
-         'tell application "Safari" to get URL of current tab of front window'],
-        capture_output=True, text=True, timeout=15,
-    )
-    url = (r.stdout or "").strip()
+    url = safari._run_js("location.href", log_prefix=LOG_PREFIX)
     target = f"https://x.com/{config.BOT_HANDLE}/following"
     if "/following" not in url:
         print(f"navigating to {target}", flush=True)
-        subprocess.run(
-            ["osascript", "-e",
-             f'tell application "Safari" to set URL of current tab of front window to "{target}"'],
-            capture_output=True, text=True, timeout=15,
-        )
+        safari._run_applescript(
+            f'tell application "Safari" to set URL of current tab of front window to "{target}"',
+            timeout_s=15)
         _pause(6)
 
 
@@ -266,99 +280,113 @@ def main() -> None:
               "Stop it first (/stop) or pass --force.", flush=True)
         sys.exit(1)
 
-    _ensure_following_page()
-    run_js(CLEAR_TAGS_JS)
-
     unfollowed = []
-    empty_rounds = 0
-    noconfirm_streak = 0
-    limit_hits = 0
-    reload_attempts = 0
-
-    def cooldown(reason: str) -> None:
-        nonlocal noconfirm_streak, limit_hits
-        limit_hits += 1
-        mins = min(args.cooldown_mins * (1.5 ** (limit_hits - 1)),
-                   args.cooldown_mins * 4)
-        print("COOLDOWN %.1f min (#%d): %s" % (mins, limit_hits, reason), flush=True)
-        _pause(mins * 60)
-        noconfirm_streak = 0
-        run_js(CLEAR_TAGS_JS)  # re-arm cells whose click never confirmed
-
-    while len(unfollowed) < args.max:
-        if _must_stop():
-            break
-        res = run_js(pick_js)
-        if res.startswith("CLICK:"):
-            empty_rounds = 0
-            h = res[6:] or "unknown"
+    echo = _echo_log_to_stdout()
+    try:
+        _ensure_following_page()
+        # A run stopped between a click and its confirm left the modal open:
+        # close it, or the first CONFIRM_JS would confirm that older click.
+        if _page_answer(CLOSE_MODAL_JS) == "CLOSED":
+            print("closed a confirm modal left open by an earlier run", flush=True)
             _pause(confirm_wait)
-            if _must_stop():  # the modal stays open: nothing unfollowed
-                break
-            c = run_js(CONFIRM_JS)
-            confirmed = c.startswith("CONFIRMED")
-            toast = c.split("|TOAST:", 1)[1] if "|TOAST:" in c else ""
-            if toast and _LIMIT_TOAST_RE.search(toast):
-                print("rate-limit toast: %s" % toast.strip(), flush=True)
-                cooldown("rate-limit toast")
-                continue
-            if confirmed:
-                noconfirm_streak = 0
-                reload_attempts = 0
-                if limit_hits and len(unfollowed) % 50 == 0:
-                    limit_hits = 0  # healthy streak → reset backoff
-                unfollowed.append(h)
-                _save_results(unfollowed)
-                try:
-                    action_guard.record(action_guard.UNFOLLOW, target=h)
-                    action_guard.adjust_following(-1)
-                except Exception as e:  # ledger best-effort, never stop the run
-                    print("ledger err:", e, flush=True)
-                print("[%d] unfollowed @%s" % (len(unfollowed), h), flush=True)
-            else:
-                noconfirm_streak += 1
-                print("no confirm for @%s (%s, streak %d)"
-                      % (h, c, noconfirm_streak), flush=True)
-                if noconfirm_streak >= 5:
-                    cooldown("5 consecutive failed confirms")
-                    continue
-                _pause(3)
-            _pause(random.uniform(gap_lo, gap_hi))
-            if unfollowed and len(unfollowed) % breather_every == 0:
-                p = random.uniform(breather_lo, breather_hi)
-                print("breather %.0fs" % p, flush=True)
-                _pause(p)
-        elif res == "NONE":
-            empty_rounds += 1
-            if empty_rounds >= 6:
-                # An empty viewport is ambiguous: list exhausted, OR the
-                # rate-limit froze the list API so scrolling loads nothing
-                # (false DONE observed 2026-06-07 at 190/~4K). Reload and
-                # re-verify before believing it.
-                reload_attempts += 1
-                if reload_attempts >= 3:
-                    print("DONE: no unfollow buttons after %d reloads — list "
-                          "exhausted" % reload_attempts, flush=True)
-                    break
-                print("empty viewport — reload + re-verify (%d/3)"
-                      % reload_attempts, flush=True)
-                _pause(args.cooldown_mins * 60)
-                if _must_stop():
-                    break
-                _reload_page()
-                run_js(CLEAR_TAGS_JS)
-                empty_rounds = 0
-                continue
-            run_js(SCROLL_JS)
-            _pause(2.5)
-        else:
-            empty_rounds += 1
-            print("JS err:", res[:200], flush=True)
-            if empty_rounds >= 6:
-                print("ABORT: repeated JS errors", flush=True)
-                break
-            _pause(3)
+        _page_answer(CLEAR_TAGS_JS)
 
+        empty_rounds = 0
+        noconfirm_streak = 0
+        limit_hits = 0
+        reload_attempts = 0
+
+        def cooldown(reason: str) -> None:
+            nonlocal noconfirm_streak, limit_hits
+            limit_hits += 1
+            mins = min(args.cooldown_mins * (1.5 ** (limit_hits - 1)),
+                       args.cooldown_mins * 4)
+            print("COOLDOWN %.1f min (#%d): %s" % (mins, limit_hits, reason), flush=True)
+            _pause(mins * 60)
+            noconfirm_streak = 0
+            _page_answer(CLEAR_TAGS_JS)  # re-arm cells whose click never confirmed
+
+        while len(unfollowed) < args.max:
+            if _must_stop():
+                break
+            res = _page_answer(pick_js)
+            if res.startswith("CLICK:"):
+                empty_rounds = 0
+                h = res[6:] or "unknown"
+                _pause(confirm_wait)
+                if _must_stop():  # the modal stays open: nothing unfollowed
+                    break
+                c = _page_answer(CONFIRM_JS)
+                confirmed = c.startswith("CONFIRMED")
+                toast = c.split("|TOAST:", 1)[1] if "|TOAST:" in c else ""
+                if toast and _LIMIT_TOAST_RE.search(toast):
+                    print("rate-limit toast: %s" % toast.strip(), flush=True)
+                    cooldown("rate-limit toast")
+                    continue
+                if confirmed:
+                    noconfirm_streak = 0
+                    reload_attempts = 0
+                    if limit_hits and len(unfollowed) % 50 == 0:
+                        limit_hits = 0  # healthy streak → reset backoff
+                    unfollowed.append(h)
+                    _save_results(unfollowed)
+                    try:
+                        action_guard.record(action_guard.UNFOLLOW, target=h)
+                        action_guard.adjust_following(-1)
+                    except Exception as e:  # ledger best-effort, never stop the run
+                        print("ledger err:", e, flush=True)
+                    print("[%d] unfollowed @%s" % (len(unfollowed), h), flush=True)
+                else:
+                    noconfirm_streak += 1
+                    print("no confirm for @%s (%s, streak %d)"
+                          % (h, c, noconfirm_streak), flush=True)
+                    if noconfirm_streak >= 5:
+                        cooldown("5 consecutive failed confirms")
+                        continue
+                    _pause(3)
+                _pause(random.uniform(gap_lo, gap_hi))
+                if unfollowed and len(unfollowed) % breather_every == 0:
+                    p = random.uniform(breather_lo, breather_hi)
+                    print("breather %.0fs" % p, flush=True)
+                    _pause(p)
+            elif res == "NONE":
+                empty_rounds += 1
+                if empty_rounds >= 6:
+                    # An empty viewport is ambiguous: list exhausted, OR the
+                    # rate-limit froze the list API so scrolling loads nothing
+                    # (false DONE observed 2026-06-07 at 190/~4K). Reload and
+                    # re-verify before believing it.
+                    reload_attempts += 1
+                    if reload_attempts >= 3:
+                        print("DONE: no unfollow buttons after %d reloads — list "
+                              "exhausted" % reload_attempts, flush=True)
+                        break
+                    print("empty viewport — reload + re-verify (%d/3)"
+                          % reload_attempts, flush=True)
+                    _pause(args.cooldown_mins * 60)
+                    if _must_stop():
+                        break
+                    _reload_page()
+                    _page_answer(CLEAR_TAGS_JS)
+                    empty_rounds = 0
+                    continue
+                _page_answer(SCROLL_JS)
+                _pause(2.5)
+            else:
+                empty_rounds += 1
+                print("JS err:", res[:200], flush=True)
+                if empty_rounds >= 6:
+                    print("ABORT: repeated JS errors", flush=True)
+                    break
+                _pause(3)
+    except active_hours.OutsideActiveHours:
+        # Raised by a safari primitive before its osascript starts: the page
+        # script did not run. Between a click and its confirm, the modal
+        # stays open and nothing is unfollowed or recorded.
+        print("STOP: %s" % _stop_reason(), flush=True)
+    finally:
+        if echo:
+            log.removeHandler(echo)
     _save_results(unfollowed)
     print("TOTAL unfollowed: %d" % len(unfollowed), flush=True)
 

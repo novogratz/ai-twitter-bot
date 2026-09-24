@@ -324,11 +324,18 @@ and unused since debate turns moved to the ledger; it can be deleted.
 - `bin/mass_unfollow.py` unfollows by hand from `/following`. It refuses to
   run while the bot runs, unless `--force`, and records each unfollow in the
   ledger. Keep the bot stopped even with `--force`: the ledger has a single
-  writer, and a row written beside the running bot can be lost. It drives `osascript` directly but checks the bot's Toronto clock:
+  writer, and a row written beside the running bot can be lost. It drives
+  Safari through the `safari` primitives and checks the bot's Toronto clock:
   it refuses to start Overnight and stops before its next unfollow at 22:00
-  or on SIGTERM. `--max` defaults to 150. A rate limit triggers a cooldown,
-  never an abort. `mass_unfollow_results.json` is rewritten after every
-  unfollow.
+  or on SIGTERM. A primitive also refuses to start a page script at that
+  point; between a click and its confirm, the run then ends with the modal
+  open and nothing unfollowed or recorded, and the next run cancels that
+  modal before its first pick. A page script that gets no answer prints
+  `JS err: OSAERR:no answer from Safari`; the osascript error, when there is
+  one, follows in the same output under `[MASS_UNFOLLOW]` and is also in
+  `bot.log`. `--max` defaults
+  to 150. A rate limit triggers a cooldown, never an abort.
+  `mass_unfollow_results.json` is rewritten after every unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 
 ## Skills

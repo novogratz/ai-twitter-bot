@@ -161,8 +161,8 @@ that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 Every page JavaScript in `src/` goes through `_run_js`, with the caller's
 timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
-AppleScript escaping. Only `safari.py`, the Safari quit in `safari_hygiene`
-and `bin/mass_unfollow.py` spawn `osascript` themselves.
+AppleScript escaping. Only `safari.py` and the Safari quit in
+`safari_hygiene` spawn `osascript` themselves.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 `twitter_client.py` holds the write chokepoints. Writes use
@@ -419,7 +419,7 @@ on a caller module misses function-local imports; patch the primitive in
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
 past the wall, and when a module other than `safari.py` runs `do JavaScript`
 or spawns `osascript` itself, docstrings aside; the Safari quit in
-`safari_hygiene` and `bin/mass_unfollow.py` are the listed exceptions.
+`safari_hygiene` is the listed exception.
 `tests/x/test_page_js.py` pins each page script's timeout, log prefix and
 answer on failure, and checks that a test which forgets to mock `_run_js`
 fails on the wall. Every test also starts with fresh process memories: the
