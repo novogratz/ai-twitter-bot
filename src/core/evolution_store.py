@@ -9,29 +9,15 @@
 No job writes these files any more: they hold what the evolution agent last
 proposed, and the selection code reads them at runtime.
 """
-import json
 import os
 from datetime import datetime
 from .config import _PROJECT_ROOT
+from .state_store import DISPOSABLE, StateFile
 
 DIRECTIVES_FILE = os.path.join(_PROJECT_ROOT, "directives.md")
-PRUNED_FILE = os.path.join(_PROJECT_ROOT, "pruned_accounts.json")
-REINFORCED_FILE = os.path.join(_PROJECT_ROOT, "reinforced_accounts.json")
-
-
-def _load_json(path: str, default):
-    if not os.path.exists(path):
-        return default
-    try:
-        with open(path, "r") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return default
-
-
-def _save_json(path: str, data):
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
+# Disposable: selection weights, not guardrails; BLOCKLIST bars accounts.
+PRUNED = StateFile("pruned_accounts.json", {"entries": []}, DISPOSABLE)
+REINFORCED = StateFile("reinforced_accounts.json", {"entries": []}, DISPOSABLE)
 
 
 # ---------- DIRECTIVES (loaded by generation agents) ----------
@@ -56,7 +42,7 @@ def get_directives_block() -> str:
 
 def get_pruned_handles() -> set:
     """Return lowercase set of currently-pruned handles, with TTL cleanup."""
-    data = _load_json(PRUNED_FILE, {"entries": []})
+    data = PRUNED.read()
     entries = data.get("entries", [])
     now = datetime.now()
 
@@ -73,7 +59,7 @@ def get_pruned_handles() -> set:
 
     # Rewrite if any expired (cheap, keeps file from growing forever)
     if len(fresh) != len(entries):
-        _save_json(PRUNED_FILE, {"entries": fresh})
+        PRUNED.write({"entries": fresh})
 
     pruned.discard("")
     return pruned
@@ -83,7 +69,7 @@ def get_pruned_handles() -> set:
 
 def get_reinforced_handles() -> set:
     """Return lowercase set of currently-reinforced handles."""
-    data = _load_json(REINFORCED_FILE, {"entries": []})
+    data = REINFORCED.read()
     return {e.get("handle", "").lower() for e in data.get("entries", []) if e.get("handle")}
 
 

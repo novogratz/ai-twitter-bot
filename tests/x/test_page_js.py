@@ -160,14 +160,13 @@ def test_bedtime_through_a_job_is_not_a_safari_failure(monkeypatch, browser, tmp
     from src.account import follower_tracker_bot
     from src.core import health
 
-    monkeypatch.setattr(health, "HEALTH_FILE", str(tmp_path / "safari_health.json"))
     restarts = []
     monkeypatch.setattr(health, "_restart_safari", lambda: restarts.append(1) or True)
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         browser(OutsideActiveHours("Bot asleep"))
         follower_tracker_bot.safe_run_follower_tracker_cycle()
     assert restarts == []
-    assert not os.path.exists(health.HEALTH_FILE), "the failure counter is left alone"
+    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
 
 
 # The answer each caller falls back on when the page answer does not parse.

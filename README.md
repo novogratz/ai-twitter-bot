@@ -68,7 +68,11 @@ uv run --with pytest --with-requirements requirements.txt python -m pytest tests
 `bot.log` contains runtime activity. `editorial_review.jsonl` records decisions;
 `editorial_state.json` persists attempts, completed slots and source history;
 `editorial_reach.md` shows measured reach and missing coverage. These are local
-runtime files and are not committed to Git.
+runtime files and are not committed to Git. The JSON state files go through
+`src/core/state_store.py`, which writes them atomically; an unreadable
+guarded file, such as `respect_list.json` or `personality.json`, stops the
+job that needs it and is never overwritten
+([recovery](docs/OPERATIONS.md#recovery)).
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
 handles source selection, drafting and review. `src/guards/active_hours.py`

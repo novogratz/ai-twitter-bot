@@ -16,8 +16,10 @@ from ..core import config
 from ..guards.active_hours import is_active, now_local, require_active
 from ..core.llm_client import run_llm, unwrap_text
 from ..core.logger import log
+from ..core.state_store import GUARDED, StateFile
 
-STATE_FILE = Path(config._PROJECT_ROOT) / "editorial_state.json"
+# Guarded: it holds the Pending slots and the spent Attempts.
+STATE = StateFile("editorial_state.json", {}, GUARDED)
 AUDIT_FILE = Path(config._PROJECT_ROOT) / "editorial_review.jsonl"
 _CYCLE_LOCK = threading.Lock()
 
@@ -74,18 +76,11 @@ _BAIT = re.compile(r"\b(thoughts\??|agree\??|who.?s with me|game.?changer|"
 
 
 def _read_state() -> dict:
-    try:
-        data = json.loads(STATE_FILE.read_text())
-        return data if isinstance(data, dict) else {}
-    except FileNotFoundError:
-        return {}
-    # Corrupt state must fail closed: it may contain already-published slots.
+    return STATE.read()
 
 
 def _save_state(data: dict) -> None:
-    temp = STATE_FILE.with_suffix(".tmp")
-    temp.write_text(json.dumps(data, indent=2, ensure_ascii=False))
-    temp.replace(STATE_FILE)
+    STATE.write(data)
 
 
 def due_slot(now=None, state=None):

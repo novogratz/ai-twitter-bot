@@ -23,8 +23,8 @@ import traceback
 import urllib.parse
 
 from ..core import config
-from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
+from ..core.state_store import GUARDED, StateFile
 from ..x import twitter_client
 from ..x.twitter_client import LikeOutcome
 
@@ -39,7 +39,8 @@ LIKE_QUERIES = [
     "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
 ]
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
-LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
+# Guarded: the only record of the daily like cap.
+LIKE_BOT_STATE = StateFile("like_bot_state.json", {}, GUARDED)
 
 
 def _likes_per_cycle() -> int:
@@ -56,25 +57,16 @@ def _cycle_seconds() -> float:
 
 
 def _load_daily_state() -> dict:
-    import json
     from datetime import date
     today = date.today().isoformat()
-    if not os.path.exists(LIKE_BOT_STATE_FILE):
-        return {"date": today, "count": 0}
-    try:
-        with open(LIKE_BOT_STATE_FILE, "r") as f:
-            state = json.load(f) or {}
-    except (OSError, json.JSONDecodeError):
-        return {"date": today, "count": 0}
+    state = LIKE_BOT_STATE.read()
     if state.get("date") != today:
         return {"date": today, "count": 0}
     return {"date": today, "count": int(state.get("count") or 0)}
 
 
 def _save_daily_state(state: dict) -> None:
-    import json
-    with open(LIKE_BOT_STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    LIKE_BOT_STATE.write(state)
 
 
 def run_like_cycle():

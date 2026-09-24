@@ -7,11 +7,8 @@ from src.core import config
 from src.guards import replied_store as rs
 
 
-def test_save_tweet_idempotent(monkeypatch, tmp_path):
+def test_save_tweet_idempotent():
     import src.core.history as history
-    import src.core.config as config
-    hist_file = str(tmp_path / "hist.json")
-    monkeypatch.setattr(history, "HISTORY_FILE", hist_file)
     history.save_tweet("same text")
     history.save_tweet("same text")
     assert len(history.load_history()) == 1
@@ -58,7 +55,6 @@ def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
 
 def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
     from src.core import health
-    monkeypatch.setattr(health, "HEALTH_FILE", str(tmp_path / "safari_health.json"))
     restarts = []
     monkeypatch.setattr(health, "_restart_safari", lambda: restarts.append(1) or True)
     with open(config.REPLIED_FILE, "w") as f:
@@ -69,4 +65,4 @@ def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
         except Exception:
             assert health.record_failure("direct_reply") is False
     assert restarts == [], "a corrupt store is not a Safari failure"
-    assert not os.path.exists(health.HEALTH_FILE), "the failure counter is left alone"
+    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"

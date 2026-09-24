@@ -36,14 +36,16 @@ Tout le reste est strategie mutable que le bot peut faire evoluer
 lui-meme via le reflection_agent et l'evolution_agent.
 """
 
-import json
 import os
 from datetime import datetime
 from typing import Optional
 
 from .config import _PROJECT_ROOT
+from .state_store import GUARDED, StateFile
 
-PERSONALITY_FILE = os.path.join(_PROJECT_ROOT, "personality.json")
+# Guarded: a corrupt file used to read as empty, and the next save erased
+# every dossier.
+PERSONALITY = StateFile("personality.json", {"accounts": {}, "topics": {}}, GUARDED)
 # Hand-curated ideological core. Loaded into EVERY generation prompt so the
 # bot's takes stay coherent across news, hot takes, replies, replybacks and
 # direct replies. NEVER overwritten by any agent — only the human edits it.
@@ -122,21 +124,14 @@ def _normalize(handle: str) -> str:
 
 
 def load() -> dict:
-    if not os.path.exists(PERSONALITY_FILE):
-        return {"accounts": {}, "topics": {}}
-    try:
-        with open(PERSONALITY_FILE, "r") as f:
-            data = json.load(f)
-        data.setdefault("accounts", {})
-        data.setdefault("topics", {})
-        return data
-    except Exception:
-        return {"accounts": {}, "topics": {}}
+    data = PERSONALITY.read()
+    data.setdefault("accounts", {})
+    data.setdefault("topics", {})
+    return data
 
 
 def save(data: dict) -> None:
-    with open(PERSONALITY_FILE, "w") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    PERSONALITY.write(data)
 
 
 def get_account(handle: str) -> Optional[dict]:

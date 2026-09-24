@@ -323,7 +323,26 @@ list from `respect_list.json`. The editorial prompt, the replyback prompt and
 `direct_reply._generate_single_reply` (shared by the search, feed-sweep,
 early-bird and mega-watch replies) include it; the debate prompt and the VIP generators do
 not (see [Known gaps](#known-gaps)). No chokepoint applies the respect list to
-outgoing text.
+outgoing text. While `respect_list.json` is unreadable the block lists the
+default handles: `hard_rules_block` swallows errors, so a refusal would drop
+the block from prompts.
+
+## State store
+
+`src/core/state_store.py` reads and writes the JSON state files of `src/`,
+except the action ledger, the Replied store and the files `twitter_client`
+and `action_guard` handle themselves. A module declares each file once as a
+`StateFile(name, default, policy)`; paths resolve at call time under
+`state_store.ROOT`, the repo root. Every write goes through a temp file in
+the same directory, fsync and `os.replace`. A missing file reads as the
+default. An unreadable file (bad JSON, wrong top-level type) under the
+*guarded* policy raises `StateUnreadable` on read and on write, so it is
+never replaced; under the *disposable* policy it reads as the default and
+the next write replaces it. `tweet_history.json` has one reader,
+`history.load_history`, for the dedup, the rationed openers and the
+babysitter. `health` serialises its read-modify-write with a lock. The
+policy of each file is in the
+[OPERATIONS.md](OPERATIONS.md#state-files) tables.
 
 ## Reach report
 
@@ -426,8 +445,8 @@ above it: nothing outside `src/replies/` and `src/account/` imports them, and
 `_run_applescript`, `_run_js`, `_paste_text` and any subprocess that runs
 `osascript` or aims `open`, `pkill` or `killall` at Safari raise (an import
 error on `src.x.safari` fails every test rather than dropping the wall), the
-logger writes to a temporary file, and the engagement log, tweet history,
-replied store, ledger and personality file point to `tmp_path`. A mock placed
+logger writes to a temporary file, and the state store root, the engagement
+log, the replied store and the ledger point to `tmp_path`. A mock placed
 on a caller module misses function-local imports; patch the primitive in
 `safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,

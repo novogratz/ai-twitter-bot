@@ -1,14 +1,12 @@
-import json
-import os
 from datetime import datetime, timedelta
-from .config import HISTORY_FILE
+from .state_store import GUARDED, StateFile
+
+# The dedup corpus of published originals: losing it lets a repeat through.
+HISTORY = StateFile("tweet_history.json", [], GUARDED)
 
 
 def load_history() -> list[dict]:
-    if os.path.exists(HISTORY_FILE):
-        with open(HISTORY_FILE, "r") as f:
-            return json.load(f)
-    return []
+    return HISTORY.read()
 
 
 def save_tweet(tweet: str):
@@ -22,9 +20,7 @@ def save_tweet(tweet: str):
             return
     history.append({"text": tweet, "timestamp": datetime.now().isoformat()})
     # Keep only the last 500 entries to avoid file bloat
-    history = history[-500:]
-    with open(HISTORY_FILE, "w") as f:
-        json.dump(history, f, indent=2, ensure_ascii=False)
+    HISTORY.write(history[-500:])
 
 
 def get_recent_tweets(hours: int = 24) -> list[str]:

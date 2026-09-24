@@ -44,6 +44,7 @@ The top level of `src/` holds only packages.
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
+| JSON state files: one root, atomic writes, guarded or disposable | `src/core/state_store.py` |
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
@@ -109,6 +110,10 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   counts toward today's ceiling: keep it across deploys, and leave unrelated
   state files out of your commits. It holds one JSON object per line, not a
   JSON list: read it line by line or through `action_guard`.
+- A JSON state file goes through `state_store.StateFile`, declared once with
+  its policy. An unreadable guarded file stops the job that needs it and is
+  never overwritten: repair it by hand, never delete it
+  ([recovery](docs/OPERATIONS.md#recovery)).
 - An editorial slot in `pending` state was submitted ambiguously; it is never
   retried automatically. Check the profile before clearing it
   ([recovery](docs/OPERATIONS.md#recovery)).

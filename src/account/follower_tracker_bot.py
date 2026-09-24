@@ -7,20 +7,20 @@ header via JS, and appends to follower_history.json.
 
 No LLM, just one Safari visit + JS extraction.
 """
-import json
-import os
 import re
 import time
 import traceback
 import webbrowser
 from datetime import datetime
 
-from ..core.config import _PROJECT_ROOT, BOT_HANDLE
+from ..core.config import BOT_HANDLE
 from ..core.logger import log
+from ..core.state_store import DISPOSABLE, StateFile
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab
 
-FOLLOWER_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "follower_history.json")
+# Disposable: growth samples; a fresh sample matters more than the series.
+FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
 
 
 def _parse_count(s: str) -> int:
@@ -77,20 +77,12 @@ def _scrape_follower_count() -> int:
 
 
 def _load_history() -> list:
-    if not os.path.exists(FOLLOWER_HISTORY_FILE):
-        return []
-    try:
-        with open(FOLLOWER_HISTORY_FILE, "r") as f:
-            return json.load(f) or []
-    except Exception:
-        return []
+    return FOLLOWER_HISTORY.read()
 
 
 def _save_history(arr: list):
     # Keep last 1500 samples — at 30 min cadence that's ~31 days.
-    arr = arr[-1500:]
-    with open(FOLLOWER_HISTORY_FILE, "w") as f:
-        json.dump(arr, f, indent=2)
+    FOLLOWER_HISTORY.write(arr[-1500:])
 
 
 def run_follower_tracker_cycle():

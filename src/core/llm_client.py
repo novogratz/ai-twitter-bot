@@ -13,8 +13,8 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Optional, Sequence
 
-from .config import _PROJECT_ROOT
 from .logger import log
+from .state_store import DISPOSABLE, StateFile
 
 
 # Tool-call markup that codex (and occasionally other CLIs) leak into raw
@@ -321,7 +321,7 @@ DEFAULT_LLM_TIMEOUT_SECONDS = int(os.environ.get("LLM_TIMEOUT_SECONDS", "180"))
 # we cache that timestamp and skip codex entirely until it passes — going
 # straight to the opencode fallback. Avoids paying the 6+ min ladder cost
 # every cycle when codex is locked out for days.
-_CODEX_LOCKOUT_FILE = os.path.join(_PROJECT_ROOT, "codex_lockout.json")
+_CODEX_LOCKOUT = StateFile("codex_lockout.json", {}, DISPOSABLE)
 _CODEX_USAGE_LIMIT_RE = re.compile(
     r"try again at (\w+)\s+(\d+)\w*,\s+(\d{4})\s+(\d+):(\d+)\s*([APap][Mm])",
 )
@@ -354,35 +354,25 @@ def _parse_codex_lockout_end(text: str) -> Optional[datetime]:
 def _read_codex_lockout() -> Optional[datetime]:
     """Return datetime when codex lockout expires (future), or None."""
     try:
-        with open(_CODEX_LOCKOUT_FILE) as f:
-            data = json.load(f)
-        end = datetime.fromisoformat(data.get("locked_until", ""))
-    except (FileNotFoundError, json.JSONDecodeError, ValueError, TypeError):
+        end = datetime.fromisoformat(_CODEX_LOCKOUT.read().get("locked_until", ""))
+    except (ValueError, TypeError):
         return None
     if end > datetime.now():
         return end
     # Lockout window passed — clean up the stale file.
     try:
-        os.remove(_CODEX_LOCKOUT_FILE)
+        os.remove(_CODEX_LOCKOUT.path)
     except OSError:
         pass
     return None
 
 
 def _write_codex_lockout(end: datetime, reason: str = "usage_limit") -> None:
-    try:
-        with open(_CODEX_LOCKOUT_FILE, "w") as f:
-            json.dump(
-                {
-                    "locked_until": end.isoformat(),
-                    "reason": reason,
-                    "stamped_at": datetime.now().isoformat(),
-                },
-                f,
-                indent=2,
-            )
-    except OSError:
-        pass
+    _CODEX_LOCKOUT.write({
+        "locked_until": end.isoformat(),
+        "reason": reason,
+        "stamped_at": datetime.now().isoformat(),
+    })
 
 
 def _detect_codex_lockout(result: "LLMResult") -> Optional[datetime]:

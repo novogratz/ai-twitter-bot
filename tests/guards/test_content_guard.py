@@ -231,11 +231,9 @@ def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     when nobody mentioned us) must never count toward blank-page restarts."""
     import json
     from src.guards import content_guard as cg
-    from src.core import history as hist
     from datetime import datetime
 
     hfile = tmp_path / "tweet_history.json"
-    monkeypatch.setattr(hist, "HISTORY_FILE", str(hfile))
 
     # Empty window -> the shape passes
     hfile.write_text("[]")

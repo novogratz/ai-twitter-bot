@@ -7,17 +7,18 @@ Strategy (2026-06-06 operator mandate):
   - Blocked / pruned accounts are filtered out automatically.
   - No massive hardcoded follow list — we follow who the feed shows us.
 """
-import json
-import os
 import random
 import time
 import traceback
 from ..core.logger import log
-from ..core.config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
+from ..core.config import BLOCKLIST
+from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
+from ..core.state_store import GUARDED, StateFile
 from ..x.scraper import _profile_visit_allowed
 from ..x.twitter_client import visit_profile_and_like, follow_account, LikeOutcome
 
-FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
+# Guarded: the job follows every pool handle missing from it.
+FOLLOWED = StateFile("followed_accounts.json", [], GUARDED)
 
 # Compatibility shim — notify_bot and reply_agent import TARGET_ACCOUNTS.
 # Real pool is built dynamically from the feed; this satisfies the import.
@@ -29,35 +30,19 @@ VIP_ACCOUNTS = ["Graphseo"]
 
 def _load_discovered_handles() -> list:
     """Read autonomously-discovered handles from discovered_accounts.json."""
-    if not os.path.exists(DISCOVERED_ACCOUNTS_FILE):
-        return []
-    try:
-        with open(DISCOVERED_ACCOUNTS_FILE, "r") as f:
-            data = json.load(f)
-        if isinstance(data, list):
-            return [d.get("handle") for d in data
-                    if d.get("handle") and d["handle"].lower() not in BLOCKLIST]
-        return []
-    except (json.JSONDecodeError, IOError):
-        return []
+    return [d.get("handle") for d in DISCOVERED_ACCOUNTS.read()
+            if d.get("handle") and d["handle"].lower() not in BLOCKLIST]
 
 
 def _load_dynamic_handles() -> list:
     """Read handles from dynamic_accounts.json (populated by feed sweeper)."""
-    path = os.path.join(_PROJECT_ROOT, "dynamic_accounts.json")
-    if not os.path.exists(path):
-        return []
-    try:
-        with open(path, "r") as f:
-            data = json.load(f)
-        handles = []
-        for bucket in ("en", "fr"):
-            for h in data.get(bucket, []):
-                if h and h.lower() not in BLOCKLIST:
-                    handles.append(h)
-        return handles
-    except (json.JSONDecodeError, IOError):
-        return []
+    data = get_dynamic_accounts()
+    handles = []
+    for bucket in ("en", "fr"):
+        for h in data[bucket]:
+            if h and h.lower() not in BLOCKLIST:
+                handles.append(h)
+    return handles
 
 
 def _build_pool() -> list:
@@ -73,18 +58,11 @@ def _build_pool() -> list:
 
 
 def _load_followed() -> set:
-    if os.path.exists(FOLLOWED_FILE):
-        try:
-            with open(FOLLOWED_FILE, "r") as f:
-                return set(json.load(f))
-        except (json.JSONDecodeError, IOError):
-            pass
-    return set()
+    return set(FOLLOWED.read())
 
 
 def _save_followed(followed: set):
-    with open(FOLLOWED_FILE, "w") as f:
-        json.dump(list(followed), f, indent=2)
+    FOLLOWED.write(list(followed))
 
 
 def run_engage_cycle():

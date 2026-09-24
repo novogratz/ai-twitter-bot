@@ -204,7 +204,6 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
         raise AssertionError("dry run reached osascript")
 
     monkeypatch.setattr(safari.subprocess, "run", no_osascript)
-    monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
     opened = []
     monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: opened.append(a))
     monkeypatch.setenv("DRY_RUN", "1")
@@ -214,7 +213,7 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
     assert twitter_client.pin_own_tweet("https://x.com/TheAIShrink/status/2063500000000000103") \
         is twitter_client.DRY_RUN_RECORDED
     assert opened == []
-    assert not (tmp_path / "like_state.json").exists()
+    assert not (tmp_path / "like_bot_state.json").exists()
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])

@@ -20,12 +20,11 @@ Usage:
 validates, and on failure regenerates up to CONTENT_VALIDATION_RETRIES times.
 If it still fails it returns None and logs — a flagged draft is NEVER returned.
 """
-import json
 import os
 import re
 from typing import Callable, Optional, Tuple
 
-from ..core.config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES, _PROJECT_ROOT
+from ..core.config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES
 from ..core.logger import log
 
 # X composer limit for replies and quotes; Reply admission trims to it.
@@ -49,7 +48,6 @@ REPLY_MAX_CHARS = 278
 #      from the last DUP_TOPIC_WINDOW_HOURS — catches "Anthropic raise"
 #      covered 3× in one morning under different angles.
 
-_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
 _RECENT_NORM: list = []          # in-memory profiles of this run's posts
 _DUP_THRESHOLD = float(os.environ.get("DUP_JACCARD_THRESHOLD", "0.45"))
 _DUP_CONTAINMENT_THRESHOLD = float(os.environ.get("DUP_CONTAINMENT_THRESHOLD", "0.6"))
@@ -166,24 +164,20 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
 
 def _recent_profiles(limit: int = 40) -> list:
     from datetime import datetime
+    from ..core.history import load_history
     profiles = list(_RECENT_NORM[-limit:])
-    try:
-        with open(_HISTORY_FILE) as f:
-            hist = json.load(f)
-        now = datetime.now()
-        for entry in (hist[-limit:] if isinstance(hist, list) else []):
-            if not isinstance(entry, dict):
-                continue
-            age_h = 9999.0
-            try:
-                age_h = (now - datetime.fromisoformat(entry.get("timestamp", ""))).total_seconds() / 3600.0
-            except (TypeError, ValueError):
-                pass
-            p = _dup_profile(entry.get("text", ""), age_hours=age_h)
-            if p["words"]:
-                profiles.append(p)
-    except (OSError, json.JSONDecodeError):
-        pass
+    now = datetime.now()
+    for entry in load_history()[-limit:]:
+        if not isinstance(entry, dict):
+            continue
+        age_h = 9999.0
+        try:
+            age_h = (now - datetime.fromisoformat(entry.get("timestamp", ""))).total_seconds() / 3600.0
+        except (TypeError, ValueError):
+            pass
+        p = _dup_profile(entry.get("text", ""), age_hours=age_h)
+        if p["words"]:
+            profiles.append(p)
     return profiles
 
 

@@ -11,25 +11,22 @@ Outside the window it does nothing (near-zero Safari cost). All actual writes
 still flow through the reply chokepoint (caps, spacing, one-reply-per-tweet,
 truncation gate, @Graphseo typo).
 """
-import json
 import os
 import traceback
 from datetime import datetime
 
-from ..core.config import _PROJECT_ROOT
+from ..core.history import load_history
 from ..core.logger import log
 
-HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
 BABYSIT_WINDOW_MINUTES = float(os.environ.get("BABYSIT_WINDOW_MINUTES", "60"))
 
 
 def _latest_post_age_minutes() -> float:
+    hist = load_history()
     try:
-        with open(HISTORY_FILE) as f:
-            hist = json.load(f)
         ts = hist[-1].get("timestamp", "") if hist else ""
         return (datetime.now() - datetime.fromisoformat(ts)).total_seconds() / 60.0
-    except (OSError, json.JSONDecodeError, ValueError, IndexError, AttributeError):
+    except (ValueError, IndexError, AttributeError):
         return 999_999.0
 
 

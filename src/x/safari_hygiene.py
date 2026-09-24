@@ -24,19 +24,18 @@ This is intentionally a thin wrapper over the same restart logic that
 health.py uses, so callers can request a fresh Safari without going
 through the consecutive-failure counter.
 """
-import json
-import os
 import subprocess
 import time
 import traceback
 from datetime import datetime
 
-from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
+from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import may_act
 from . import safari
 
-HYGIENE_STATE_FILE = os.path.join(_PROJECT_ROOT, "safari_hygiene_state.json")
+# Disposable: losing it only allows one earlier Safari restart.
+HYGIENE_STATE = StateFile("safari_hygiene_state.json", {}, DISPOSABLE)
 
 # Don't restart Safari more than once in this window. The preventive
 # scheduler tick is every ~2h; reactive recovery has its own cooldown
@@ -45,24 +44,17 @@ MIN_GAP_SECONDS = 30 * 60  # 30 min
 
 
 def _last_run_ts() -> float:
-    if not os.path.exists(HYGIENE_STATE_FILE):
-        return 0.0
     try:
-        with open(HYGIENE_STATE_FILE, "r") as f:
-            return float(json.load(f).get("last_run_ts", 0) or 0)
-    except (json.JSONDecodeError, OSError, ValueError):
+        return float(HYGIENE_STATE.read().get("last_run_ts", 0) or 0)
+    except (TypeError, ValueError):
         return 0.0
 
 
 def _mark_ran():
-    try:
-        with open(HYGIENE_STATE_FILE, "w") as f:
-            json.dump({
-                "last_run": datetime.now().isoformat(),
-                "last_run_ts": time.time(),
-            }, f)
-    except OSError:
-        pass
+    HYGIENE_STATE.write({
+        "last_run": datetime.now().isoformat(),
+        "last_run_ts": time.time(),
+    })
 
 
 def _quit_safari() -> bool:

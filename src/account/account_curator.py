@@ -26,19 +26,22 @@ operator tiers, every add logged. All follow chokepoint rules (20/day,
 10-min gaps, 300/150 ceiling, 30d churn) still govern actual follows.
 """
 import csv
-import json
 import os
 import re
 import traceback
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
-from ..core.config import (_PROJECT_ROOT, BLOCKLIST, BOT_HANDLE,
-                     ENGAGEMENT_LOG_FILE, WHITELIST_FILE)
+from ..core.config import BLOCKLIST, BOT_HANDLE, ENGAGEMENT_LOG_FILE
 from ..core.logger import log
+from ..core.state_store import DISPOSABLE, GUARDED, StateFile
 
-TRACKED_FILE = os.path.join(_PROJECT_ROOT, "tracked_accounts.json")
-TARGETS_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_targets_log.json")
+# Disposable: recomputed every run from the engagement log.
+TRACKED = StateFile("tracked_accounts.json", {}, DISPOSABLE)
+TARGETS_LOG = StateFile("engagement_targets_log.json", {}, DISPOSABLE)
+# Guarded: the Operator's follow whitelist; a corrupt file stops the cycle
+# before any promotion.
+WHITELIST = StateFile("whitelist.json", {}, GUARDED)
 
 PINNED = tuple(h.strip() for h in os.environ.get(
     "PINNED_TRACKED_HANDLES", "TheBTCTherapist,Graphseo,Mindset4Money_X").split(",") if h.strip())
@@ -91,20 +94,14 @@ def _author_engagements(window_days: int = WINDOW_DAYS) -> dict:
 def _conversion_weights() -> dict:
     """{author_lc: weight} from engagement_targets_log (conversion-bumped)."""
     try:
-        with open(TARGETS_LOG_FILE) as f:
-            doc = json.load(f) or {}
         return {a.lower(): float(v.get("weight", 1.0))
-                for a, v in (doc.get("authors") or {}).items()}
-    except (OSError, json.JSONDecodeError, ValueError, TypeError):
+                for a, v in (TARGETS_LOG.read().get("authors") or {}).items()}
+    except (AttributeError, ValueError, TypeError):
         return {}
 
 
 def _load_tracked_doc() -> dict:
-    try:
-        with open(TRACKED_FILE) as f:
-            return json.load(f) or {}
-    except (OSError, json.JSONDecodeError):
-        return {}
+    return TRACKED.read()
 
 
 def tracked_handles(limit: int = 30) -> list:
@@ -148,11 +145,7 @@ def _promote_to_whitelist(candidates: list, doc: dict) -> int:
     budget = DISCOVERED_PER_DAY - int(meta.get("count", 0))
     if budget <= 0:
         return 0
-    try:
-        with open(WHITELIST_FILE) as f:
-            wl = json.load(f) or {}
-    except (OSError, json.JSONDecodeError):
-        return 0
+    wl = WHITELIST.read()
     tiers = wl.setdefault("tiers", {})
     discovered = tiers.setdefault("discovered", [])
     existing = {str(h).lower() for t in tiers.values() for h in (t or [])}
@@ -171,11 +164,7 @@ def _promote_to_whitelist(candidates: list, doc: dict) -> int:
                  f"weight {cand['weight']}).")
     if added:
         meta["count"] = int(meta.get("count", 0)) + added
-        try:
-            with open(WHITELIST_FILE, "w") as f:
-                json.dump(wl, f, indent=2)
-        except OSError:
-            return 0
+        WHITELIST.write(wl)
     return added
 
 
@@ -198,13 +187,7 @@ def run_curator_cycle() -> None:
     doc["pinned"] = list(PINNED)
     doc["updated"] = datetime.now().isoformat()
     promoted = _promote_to_whitelist(tracked[:10], doc)
-    try:
-        with open(TRACKED_FILE, "w") as f:
-            json.dump(doc, f, indent=2)
-    except OSError:
-        log.info("[CURATOR] write failed:")
-        traceback.print_exc()
-        return
+    TRACKED.write(doc)
     top = ", ".join(f"@{r['handle']}({r['score']})" for r in tracked[:5])
     log.info(f"[CURATOR] {len(tracked)} tracked (top: {top}); "
              f"{promoted} promoted to whitelist discovered tier.")
