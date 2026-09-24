@@ -6,12 +6,16 @@ fake browser that checks Waking hours first, as the real ones do, so no test
 reaches Safari.
 """
 import importlib.util
+import io
 import json
+import logging
 import signal
+import subprocess
 import sys
 import threading
 from datetime import datetime
 from pathlib import Path
+from types import SimpleNamespace
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -38,6 +42,7 @@ class FakeBrowser:
         self.url = "https://x.com/%s/following" % config.BOT_HANDLE
         self.picks = 0
         self.confirms = 0
+        self.modal_open = False
         self.calls = []
         self.applescripts = []
         self.before_js = lambda js: None
@@ -48,6 +53,10 @@ class FakeBrowser:
         self.before_js(js)
         active_hours.require_active()
         self.calls.append((js, timeout_s, log_prefix))
+        if js == self.script.CLOSE_MODAL_JS:
+            answer = "CLOSED" if self.modal_open else "NONE"
+            self.modal_open = False
+            return answer
         if js == self.script.CONFIRM_JS:
             self.confirms += 1
             self.on_confirm()
@@ -216,9 +225,67 @@ def test_a_page_script_without_answer_is_reported_as_osaerr(script, monkeypatch,
     script.main()
     assert script.ledger == []
     out = capsys.readouterr().out
-    assert out.count("JS err: OSAERR:no answer (see bot.log [MASS_UNFOLLOW])") == 6
+    assert out.count("JS err: OSAERR:no answer from Safari") == 6
     assert "ABORT: repeated JS errors" in out
     assert "TOTAL unfollowed: 0" in out
+
+
+def test_osascript_error_detail_reaches_stdout_when_not_a_tty(script, monkeypatch, capsys, unwalled):
+    """The /unfollow skill runs the tool under nohup into a log file: the
+    osascript error `_run_js` logs must land there, next to `JS err:`."""
+    from src.core.logger import log
+
+    def osascript_fails(argv, **kwargs):
+        return SimpleNamespace(returncode=1, stdout="",
+                               stderr="execution error: Safari got an error (-1728)\n")
+
+    monkeypatch.setattr(safari, "_run_js", unwalled["_run_js"])
+    monkeypatch.setattr(safari, "subprocess", SimpleNamespace(
+        run=osascript_fails, SubprocessError=subprocess.SubprocessError,
+        TimeoutExpired=subprocess.TimeoutExpired))
+    handlers = list(log.handlers)
+    script.main()
+    out = capsys.readouterr().out
+    assert ("[MASS_UNFOLLOW] Page JavaScript failed (osascript exit 1): "
+            "execution error: Safari got an error (-1728)") in out
+    assert "JS err: OSAERR:no answer from Safari" in out
+    assert "ABORT: repeated JS errors" in out
+    assert log.handlers == handlers, "the stdout echo outlived the run"
+
+
+def test_no_stdout_echo_when_the_logger_already_prints_to_a_terminal(script, monkeypatch, capsys):
+    """In a foreground run the logger's console handler already shows the
+    line: echoing it to stdout would print it twice."""
+    from src.core.logger import log
+
+    class Terminal(io.StringIO):
+        def isatty(self):
+            return True
+
+    terminal = Terminal()
+    monkeypatch.setattr(log, "handlers", [logging.StreamHandler(terminal)])
+    script.browser.on_pick = lambda: log.info("[MASS_UNFOLLOW] probe")
+    monkeypatch.setattr(sys, "argv", ["mass_unfollow.py", "--max", "1"])
+    script.main()
+    assert terminal.getvalue() == "[MASS_UNFOLLOW] probe\n"
+    assert "probe" not in capsys.readouterr().out
+
+
+def test_a_modal_left_open_is_cancelled_before_the_first_pick(script, monkeypatch, capsys):
+    """A run stopped between a click and its confirm leaves the modal open;
+    the next run cancels it before any pick, so CONFIRM_JS never confirms
+    that older click."""
+    script.browser.modal_open = True
+    open_at_pick = []
+    script.browser.on_pick = lambda: open_at_pick.append(script.browser.modal_open)
+    monkeypatch.setattr(sys, "argv", ["mass_unfollow.py", "--max", "1"])
+    script.main()
+    scripts = [js for js, _, _ in script.browser.calls]
+    first_pick = next(i for i, js in enumerate(scripts) if "var keep" in js)
+    assert scripts.index(script.CLOSE_MODAL_JS) < first_pick
+    assert open_at_pick == [False]
+    assert script.ledger == ["user1"]
+    assert "closed a confirm modal left open by an earlier run" in capsys.readouterr().out
 
 
 def test_navigates_to_following_through_run_applescript(script, monkeypatch, capsys):
