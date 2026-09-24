@@ -1,7 +1,4 @@
 """Cross-cutting: every package resolves its state files to the repo root."""
-import pytest
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def test_state_files_resolve_to_the_repo_root():

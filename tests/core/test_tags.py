@@ -1,9 +1,5 @@
 """src/core/pattern_tags and src/core/pillar_tags."""
-import pytest
-
 from src.core import pattern_tags
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def test_pattern_tag_stripped():

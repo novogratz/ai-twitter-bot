@@ -1,5 +1,4 @@
 """Cross-cutting: the jobs `main.build_scheduler()` registers."""
-import pytest
 
 
 def test_reply_only_still_registers_the_reply_engine():
@@ -10,7 +9,6 @@ def test_reply_only_still_registers_the_reply_engine():
     assert scheduler.get_job("editorial_job") is None
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_scheduler_build_has_no_startup_publishing(monkeypatch):
     import main
     def forbidden(*a, **k):

@@ -1,7 +1,4 @@
 """src/core/personality_store: the hard-rules block."""
-import pytest
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def test_positive_only_subjects_in_hard_rules():

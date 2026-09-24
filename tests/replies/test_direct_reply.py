@@ -1,10 +1,6 @@
 """src/replies/direct_reply: reply lane, candidate order, pipeline and the
 VIP scan."""
-import pytest
-
 from src.guards import replied_store as rs
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def _url_with_age(minutes: int) -> str:
@@ -285,7 +281,6 @@ def test_direct_reply_scans_rotating_query_subset(monkeypatch):
     from src.replies import direct_reply as dr
     monkeypatch.setenv("DIRECT_REPLY_QUERIES_PER_CYCLE", "8")
     qs = [f"q{i}" for i in range(26)]
-    dr._QUERY_ROTATION_OFFSET[0] = 0
     slices = [dr._queries_for_cycle(qs) for _ in range(4)]
     assert all(len(s) == 8 for s in slices), "cycle must pay for K scrapes only"
     assert slices[0] != slices[1], "consecutive cycles must rotate"

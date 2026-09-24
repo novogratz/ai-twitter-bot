@@ -1,8 +1,5 @@
 """Cross-cutting: the voice in core_identity.md and the reply prompts that
 carry it."""
-import pytest
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def test_core_identity_has_ai_fan_voice():

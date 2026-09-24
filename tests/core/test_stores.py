@@ -3,13 +3,10 @@ safety, Safari health counter."""
 import json
 import os
 
-import pytest
-
 from src.core import config
 from src.guards import replied_store as rs
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_save_tweet_idempotent(monkeypatch, tmp_path):
     import src.core.history as history
     import src.core.config as config
@@ -20,7 +17,6 @@ def test_save_tweet_idempotent(monkeypatch, tmp_path):
     assert len(history.load_history()) == 1
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     from src.core.json_safety import sanitize_for_json
 
@@ -39,7 +35,6 @@ def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     assert "AI math  signal" in out.read_text(encoding="utf-8")
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
     """2026-07-19 (all-ollama switch): every engagement_log row must carry
     the provider configured for its surface at write time, so provider

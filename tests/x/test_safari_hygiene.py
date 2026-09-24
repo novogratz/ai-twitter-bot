@@ -1,7 +1,4 @@
 """src/x/safari_hygiene: dark-screen recovery."""
-import pytest
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def test_safari_warmup_verifies_render_and_retries_blank(monkeypatch):

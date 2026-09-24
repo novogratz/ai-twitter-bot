@@ -1,10 +1,6 @@
 """src/guards/content_guard: dedup, price targets, language, truncation,
 burned phrases and shapes, violence."""
-import pytest
-
 from src.guards import content_guard as cg
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 # --- dedup v2 -------------------------------------------------------------

@@ -48,7 +48,6 @@ def test_corrupt_ledger_cannot_grant_extra_posts(monkeypatch, tmp_path):
         ag.can_post(ag.POST)
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_mega_viral_quote_cannot_bypass_editorial_policy(monkeypatch):
     from src.guards import action_guard as ag
     monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
@@ -56,7 +55,6 @@ def test_mega_viral_quote_cannot_bypass_editorial_policy(monkeypatch):
         assert not ag.can_post(ag.QUOTE, high_value=True, urgent=urgent)[0]
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_urgent_quote_obeys_editorial_policy(monkeypatch):
     from src.guards import action_guard as ag
     monkeypatch.setattr(ag, "count_today", lambda a: 0)
@@ -110,7 +108,6 @@ def follow_env(monkeypatch, tmp_path):
     ag._WL_MTIME = 0.0
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_whitelist_loads_tier4(follow_env):
     ag = follow_env
     wl = ag.load_whitelist()
@@ -119,7 +116,6 @@ def test_whitelist_loads_tier4(follow_env):
     assert ag.is_whitelisted("balajis")
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_blocked_at_low_phase_ceiling(follow_env, monkeypatch):
     """While followers are low (<300), total following must stay under ~150."""
     ag = follow_env
@@ -128,7 +124,6 @@ def test_follow_blocked_at_low_phase_ceiling(follow_env, monkeypatch):
     assert not ok and "ceiling" in why
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch):
     ag = follow_env
     monkeypatch.setattr(ag, "current_counts", lambda: (100, 149))
@@ -136,7 +131,6 @@ def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch):
     assert ok, why
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch):
     """Even with a big follower count, total following is hard-capped at 300."""
     ag = follow_env
@@ -148,7 +142,6 @@ def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch):
     assert ok, why
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatch):
     """Once followers exceed 300, following must stay <= followers."""
     ag = follow_env
@@ -161,7 +154,6 @@ def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatc
     assert ok, why  # 280+1 <= min(300, 320)
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_spacing_blocks_burst(follow_env, monkeypatch):
     """Never burst-follow: a follow within the 10-min gap is refused."""
     from src.core import config
@@ -173,7 +165,6 @@ def test_follow_spacing_blocks_burst(follow_env, monkeypatch):
     assert not ok and "too soon" in why
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_rejects_non_whitelisted(follow_env, monkeypatch):
     ag = follow_env
     monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
@@ -181,7 +172,6 @@ def test_follow_rejects_non_whitelisted(follow_env, monkeypatch):
     assert not ok and "whitelist" in why
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_unfollow_protects_all_whitelist_tiers(follow_env):
     """No churn on seeds: tier3/tier4 are protected from unfollow too."""
     ag = follow_env
@@ -190,7 +180,6 @@ def test_unfollow_protects_all_whitelist_tiers(follow_env):
         assert not ok and "protected" in why, (handle, why)
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_growth_mode_unties_ceiling_from_followers(monkeypatch):
     """2026-06-11 operator: "go back on following people and following back".
     Growth mode must untie the following ceiling from the followers count
@@ -213,7 +202,6 @@ def test_follow_growth_mode_unties_ceiling_from_followers(monkeypatch):
         "legacy mode keeps following <= followers"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
     """Self-improve #3 (2026-06-24): followback was dead — whitelist-only
     blocked following people who engage with us. reciprocal=True bypasses ONLY

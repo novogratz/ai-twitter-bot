@@ -1,29 +1,23 @@
 """src/core/llm_client: output unwrapping and request routing."""
 import json
 
-import pytest
-
 from src.core.llm_client import unwrap_text, contains_post_unsafe_leak
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_structured_output_json_array_survives():
     arr = json.dumps([{"tweet_url": "https://x.com/a/status/1", "reply": "calm take"}])
     assert unwrap_text(arr, structured_output=True).startswith("[")
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_unstructured_json_array_blocked():
     arr = json.dumps([{"type": "step_start", "sessionID": "x"}])
     assert unwrap_text(arr) == ""
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_plain_text_passes_unwrap():
     assert unwrap_text("just a tweet") == "just a tweet"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_post_unsafe_leak_detection():
     assert contains_post_unsafe_leak('{"type":"step_start","x":1}')
     assert not contains_post_unsafe_leak("a normal tweet about GPUs")
