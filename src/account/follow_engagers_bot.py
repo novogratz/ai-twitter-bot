@@ -11,21 +11,24 @@ churn kept).
 
 No new Safari scraping: the data source is the action ledger.
 """
-import json
 import os
 import traceback
 from datetime import date, timedelta
 
 from ..guards import action_guard
 from ..x import x_urls
-from ..core.config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
+from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
+from ..core.state_store import DISPOSABLE, GUARDED, StateFile
 
 # replied_back.json stopped being written on 2026-09-23 (issue #100): the
 # ledger's Debate turns replaced it. Its Engagers are read until they age out
 # of the ledger's 90 days; delete this fallback and the file after 2026-12-22.
-FROZEN_REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
-STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_engagers_state.json")
+# Disposable: read only, and an empty list only follows fewer Engagers.
+FROZEN_REPLIED_BACK = StateFile("replied_back.json", [], DISPOSABLE)
+# Guarded: it alone holds this job's daily cap and the handles already tried.
+STATE = StateFile("follow_engagers_state.json",
+                  {"date": "", "count_today": 0, "attempted": []}, GUARDED)
 
 # Big-media accounts get Debate turns too (we reply back under news posts)
 # — following @business back is pointless for follow-backs.
@@ -34,34 +37,19 @@ _SKIP_HANDLES = {"business", "cnbc", "reuters", "wsj", "ft", "bloomberg",
 
 
 def _load_state() -> dict:
-    try:
-        with open(STATE_FILE) as f:
-            st = json.load(f)
-        if isinstance(st, dict):
-            return st
-    except (OSError, json.JSONDecodeError):
-        pass
-    return {"date": "", "count_today": 0, "attempted": []}
+    return STATE.read()
 
 
 def _save_state(st: dict) -> None:
     st["attempted"] = st.get("attempted", [])[-2000:]
-    with open(STATE_FILE, "w") as f:
-        json.dump(st, f, indent=1)
+    STATE.write(st)
 
 
 def _frozen_engager_handles() -> list:
     """Newest-first handles from the frozen replied_back.json URLs posted
     within the ledger's 90 days, the same window as the Debate turns."""
-    try:
-        with open(FROZEN_REPLIED_BACK_FILE) as f:
-            urls = json.load(f)
-    except (OSError, json.JSONDecodeError):
-        return []
-    if not isinstance(urls, list):
-        return []
     handles = []
-    for u in map(str, reversed(urls)):
+    for u in map(str, reversed(FROZEN_REPLIED_BACK.read())):
         handle, age = x_urls.author(u), x_urls.age(u)
         if handle and age is not None and age <= timedelta(days=90):
             handles.append(handle)

@@ -27,8 +27,7 @@ _load_dotenv()
 BOT_HANDLE = os.environ.get("BOT_HANDLE", "TheAIShrink")
 BOT_PROFILE_URL = f"https://x.com/{BOT_HANDLE}"
 
-# Data file paths
-HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
+# Data file paths outside the state store (src/core/state_store.py)
 REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 
@@ -61,9 +60,6 @@ BLOCKLIST = {
     "capetlevrai",
     "mathieul1",
 }
-
-# Discovered accounts file (autonomous influencer discovery)
-DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
 # CLI/provider selection. Default is local Ollama; set AI_CLI=codex / gemini /
 # opencode at the env level to switch. Claude is no longer a default route.
@@ -224,7 +220,9 @@ ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")
 # Live strategy reader — read dynamic caps written by meta_strategy_agent.
 # Bots use get_live_cap(name) instead of the static env values so the
 # agent's strategic decisions actually flex behavior.
-_LIVE_STRATEGY_FILE = os.path.join(_PROJECT_ROOT, "live_strategy.json")
+def _live_strategy() -> dict:
+    from .live_strategy import LIVE_STRATEGY
+    return LIVE_STRATEGY.read()
 
 
 def get_live_cap(name: str, default: int) -> int:
@@ -239,13 +237,8 @@ def get_live_cap(name: str, default: int) -> int:
     }
     if name in fixed:
         return fixed[name]
-    if not os.path.exists(_LIVE_STRATEGY_FILE):
-        return default
     try:
-        import json as _j
-        with open(_LIVE_STRATEGY_FILE, "r") as f:
-            d = _j.load(f) or {}
-        v = (d.get("caps") or {}).get(name)
+        v = (_live_strategy().get("caps") or {}).get(name)
         return int(v) if v is not None else default
     except Exception:
         return default
@@ -254,13 +247,8 @@ def get_live_cap(name: str, default: int) -> int:
 def get_live_cadence_factor(default: float = 1.0) -> float:
     """Live cadence multiplier (1.0 = neutral). Bots multiply their
     sleep/interval by this. < 1 = faster, > 1 = slower."""
-    if not os.path.exists(_LIVE_STRATEGY_FILE):
-        return default
     try:
-        import json as _j
-        with open(_LIVE_STRATEGY_FILE, "r") as f:
-            d = _j.load(f) or {}
-        v = d.get("cadence_factor")
+        v = _live_strategy().get("cadence_factor")
         return float(v) if v is not None else default
     except Exception:
         return default
@@ -269,13 +257,8 @@ def get_live_cadence_factor(default: float = 1.0) -> float:
 def get_live_topic_focus() -> list:
     """Top topics the meta-strategy agent says we should lean into.
     Empty list if agent hasn't run yet."""
-    if not os.path.exists(_LIVE_STRATEGY_FILE):
-        return []
     try:
-        import json as _j
-        with open(_LIVE_STRATEGY_FILE, "r") as f:
-            d = _j.load(f) or {}
-        v = d.get("topic_focus") or []
+        v = _live_strategy().get("topic_focus") or []
         return [str(t) for t in v][:5]
     except Exception:
         return []

@@ -57,7 +57,8 @@ _UNWALLED = {}
 
 @_pytest.fixture
 def unwalled():
-    """The real safari primitives, for tests that fake subprocess themselves."""
+    """The real safari primitives, for tests that fake subprocess themselves,
+    and the real state root under "state_root"."""
     return _UNWALLED
 
 
@@ -118,30 +119,24 @@ def _no_safari(monkeypatch):
 # "diagnosed" a live repetition bug from its own test pollution.
 # Every test gets per-test tmp copies of the measurement/state stores; a test
 # that needs a specific path still patches it itself (monkeypatch runs after).
+# Every JSON state file of the state store resolves under one root: moving
+# it moves them all, personality.json and the frozen replied_back.json
+# included (both leaked or read live before, 2026-07-19 and #100).
 # ---------------------------------------------------------------------------
 @_pytest.fixture(autouse=True)
 def _no_prod_state(monkeypatch, tmp_path):
-    hist = str(tmp_path / "tweet_history.json")
+    from src.core import state_store as _store
+    _UNWALLED.setdefault("state_root", _store.ROOT)
+    monkeypatch.setattr(_store, "ROOT", str(tmp_path))
+    # The action ledger, the Replied store and the engagement log live
+    # outside the store.
     from src.core import config as _cfg
     monkeypatch.setattr(_cfg, "ENGAGEMENT_LOG_FILE", str(tmp_path / "engagement_log.csv"))
-    monkeypatch.setattr(_cfg, "HISTORY_FILE", hist)
     monkeypatch.setattr(_cfg, "REPLIED_FILE", str(tmp_path / "replied_tweets.json"))
     monkeypatch.setattr(_cfg, "ACTION_LEDGER_FILE", str(tmp_path / "action_ledger.json"))
     # from-imports bind at import time — patch every namespace that copied one.
     from src.core import engagement_log as _el
     monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
-    from src.core import history as _hist
-    monkeypatch.setattr(_hist, "HISTORY_FILE", hist)
-    from src.guards import content_guard as _cg
-    monkeypatch.setattr(_cg, "_HISTORY_FILE", hist)
-    # personality.json: log_reply -> personality_store.record_interaction
-    # writes dossiers — a test author leaked into prod 2026-07-19 (same
-    # family as the 2026-06-09 fixture pollution).
-    from src.core import personality_store as _ps
-    monkeypatch.setattr(_ps, "PERSONALITY_FILE", str(tmp_path / "personality.json"))
-    # The frozen Engager list is tracked in git: never read the live one.
-    from src.account import follow_engagers_bot as _fe
-    monkeypatch.setattr(_fe, "FROZEN_REPLIED_BACK_FILE", str(tmp_path / "replied_back.json"))
     yield
 
 
@@ -186,14 +181,12 @@ def memory_ledger(monkeypatch):
 @_pytest.fixture
 def like_job(monkeypatch, tmp_path, memory_ledger):
     """Live like_job on a scripted search page; the real walk and like_tweet run."""
-    from src.account import like_bot
     from src.x import safari, twitter_client as tc
     from tests.helpers import SearchPage
 
     monkeypatch.setenv("DRY_RUN", "0")
     for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS"):
         monkeypatch.delenv(name, raising=False)
-    monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)

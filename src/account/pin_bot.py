@@ -15,20 +15,21 @@ Strategy:
     writes the ledger row. A dry run marks its own day and does not spend
     the live attempt.
 """
-import json
 import os
 import time
 import traceback
 from datetime import date
 
 from ..core import config
-from ..core.config import _PROJECT_ROOT, BOT_HANDLE
+from ..core.config import BOT_HANDLE
 from ..core.logger import log
+from ..core.state_store import GUARDED, StateFile
 from ..x.scraper import scrape_profile_tweets, is_own_post
 from ..x import twitter_client
 
-PIN_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "pin_history.json")
-PIN_STATE_FILE = os.path.join(_PROJECT_ROOT, "pin_daily_state.json")
+# Guarded: they alone hold one attempt per day and the posts already pinned.
+PIN_HISTORY = StateFile("pin_history.json", {"pinned": []}, GUARDED)
+PIN_STATE = StateFile("pin_daily_state.json", {}, GUARDED)
 
 # Minimum likes to bother pinning. If the best post of the week didn't
 # clear this floor, the pinned slot is more honest staying empty.
@@ -38,31 +39,17 @@ MIN_LIKES_TO_PIN = int(os.environ.get("PIN_MIN_LIKES", "2"))
 
 
 def _load_history() -> dict:
-    if os.path.exists(PIN_HISTORY_FILE):
-        try:
-            with open(PIN_HISTORY_FILE, "r") as f:
-                return json.load(f)
-        except (json.JSONDecodeError, IOError):
-            pass
-    return {"pinned": []}
+    return PIN_HISTORY.read()
 
 
 def _save_history(h: dict):
-    with open(PIN_HISTORY_FILE, "w") as f:
-        # Cap history to last 30 pin URLs so the file doesn't grow unbounded.
-        h["pinned"] = h.get("pinned", [])[-30:]
-        json.dump(h, f, indent=2)
+    # Cap history to last 30 pin URLs so the file doesn't grow unbounded.
+    h["pinned"] = h.get("pinned", [])[-30:]
+    PIN_HISTORY.write(h)
 
 
 def _load_state() -> dict:
-    if not os.path.exists(PIN_STATE_FILE):
-        return {}
-    try:
-        with open(PIN_STATE_FILE, "r") as f:
-            state = json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return {}
-    return state if isinstance(state, dict) else {}
+    return PIN_STATE.read()
 
 
 def _day_key() -> str:
@@ -78,8 +65,7 @@ def _already_ran_today() -> bool:
 def _mark_ran_today():
     state = _load_state()
     state[_day_key()] = date.today().isoformat()
-    with open(PIN_STATE_FILE, "w") as f:
-        json.dump(state, f)
+    PIN_STATE.write(state)
 
 
 def run_pin_cycle():

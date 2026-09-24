@@ -80,4 +80,5 @@ reply.txt
 
 # Atomic-write temp files left by a killed process
 .replied_tweets.*.tmp
+.*.json.*.tmp
 action_ledger.json.tmp

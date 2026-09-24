@@ -178,6 +178,31 @@ for n, line in enumerate(open("action_ledger.json"), 1):
 EOF
 ```
 
+**A guarded state file is unreadable.** `bot.log` names it in a `[STATE]`
+error. The job that needs it stops each cycle without counting toward a
+Safari restart, and nothing writes over the file:
+
+| File | Stops |
+|---|---|
+| `tweet_history.json` | `editorial_job` before any Draft, `post_tweet` (dedup and rationed openers), `babysit_job`, `reply_job` when enabled |
+| `followed_accounts.json` | `engage_job`, `followback_job` |
+| `like_bot_state.json` | `like_job` |
+| `pin_history.json`, `pin_daily_state.json` | `pin_job` |
+| `follow_engagers_state.json` | `follow_engagers_job` |
+| `personality.json` | The Reply cycles drafting through `direct_reply._generate_single_reply` (`direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`), which read the author's dossier: the cycle stops at its first draft, so none ships. Replybacks read no dossier and continue; the dossier bump after a Reply is skipped |
+| `whitelist.json` | `account_curator` promotions (`action_guard` reads it itself) |
+| `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
+
+An unreadable `respect_list.json` stops every Original and most Replies
+until it is repaired; `main.py` still starts, because the hard-rules block
+computed at import names the default handles. A process killed mid-write
+can leave a `.<name>.<random>.tmp` file beside a state file: `.gitignore`
+covers it, and it can be deleted once the bot is stopped. With the bot stopped, repair the JSON by hand (usually a truncated
+tail), check its top-level type (a list for `tweet_history.json` and
+`followed_accounts.json`, an object for the others), then restart. Do not
+delete a guarded file: a missing file restarts from empty, which resets a
+daily cap, forgets follows and pins, or drops the Operator's lists.
+
 **Rolling back past issue #147.** Older code reads the ledger as one JSON
 list and refuses every write on the per-line format. With the bot stopped,
 turn the ledger back into a list before deploying the older code:
@@ -267,41 +292,58 @@ and, at each check, reads only the lines added since; a restored copy or a
 file cut shorter is read again in full. An edit in place that keeps every
 line's length can go unseen until the next restart: edit the ledger with the
 bot stopped.
+
+The JSON files in `src/` go through the state store
+(`src/core/state_store.py`), except the action ledger, the Replied store and
+the files `twitter_client` and `action_guard` handle themselves. The store
+writes atomically (temp file, full fsync, rename, directory flush), changes a
+file shared by several jobs under that file's lock, and gives each file one
+policy.
+A missing file reads as empty or default under both policies. A *guarded*
+file that does not parse, or whose top-level JSON type is wrong, raises
+`StateUnreadable`: the job that needs it stops, `bot.log` gets a `[STATE]`
+error, and the store never writes over the file (see
+[Recovery](#recovery)). A *disposable* file in that state reads as empty,
+with a `[STATE]` warning, and its next write replaces it.
+
 Files written by active jobs:
 
-| File | Written by | Holds |
-|---|---|---|
-| `editorial_state.json` | `editorial_bot` | Slots, attempts, feedback, published originals, used sources |
-| `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts |
-| `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report |
-| `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days |
-| `following_count.json` | `action_guard` | Following count used by the follow ceiling |
-| `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID |
-| `tweet_history.json` | `twitter_client` | Published originals, dedup corpus |
-| `engagement_log.csv` | `engagement_log` | Append-only action log |
-| `followed_accounts.json` | follow paths | Accounts followed by the bot |
-| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days |
-| `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried |
-| `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included |
-| `liked_tweets.json` | `like_tweet` | Tweets already liked |
-| `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers |
-| `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` |
-| `follower_history.json` | `follower_tracker_bot` | Follower count samples |
-| `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds |
-| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart |
-| `autonomous_log.md` | `health` | One line per Safari recovery |
+| File | Written by | Holds | Policy |
+|---|---|---|---|
+| `editorial_state.json` | `editorial_bot` | Slots, attempts, feedback, published originals, used sources | guarded |
+| `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
+| `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
+| `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
+| `following_count.json` | `action_guard` | Following count used by the follow ceiling | own |
+| `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
+| `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
+| `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
+| `followed_accounts.json` | follow paths | Accounts followed by the bot | guarded |
+| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days | own |
+| `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
+| `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
+| `liked_tweets.json` | `like_tweet` | Tweets already liked | own |
+| `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers | guarded |
+| `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
+| `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
+| `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |
+| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart | disposable |
+| `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past or unreadable | disposable |
+| `autonomous_log.md` | `health` | One line per Safari recovery | append-only, outside the store |
 
 Files active code reads but no active job writes:
 
-| File | Read by | Holds |
-|---|---|---|
-| `respect_list.json` | `respect_list` | Operator-managed respect list |
-| `whitelist.json` | `action_guard` | Tiered follow whitelist |
-| `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents |
-| `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote |
-| `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` |
-| `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights |
-| `replied_back.json` | `follow_engagers_bot` | Frozen Engager list, see below |
+| File | Read by | Holds | Policy |
+|---|---|---|---|
+| `respect_list.json` | `respect_list` | Operator-managed respect list | guarded |
+| `whitelist.json` | `action_guard`, `account_curator` | Tiered follow whitelist | guarded in the store; `action_guard` reads it itself |
+| `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
+| `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
+| `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
+| `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
+| `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
+| `replied_back.json` | `follow_engagers_bot` | Frozen Engager list, see below | disposable |
+| `live_strategy.json` | `config.get_live_*`, not called | Strategy caps under the fixed ceilings | disposable |
 
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
 to the replied store and the Engager list to the ledger's debate turns.
@@ -314,6 +356,12 @@ The supervisors cite three more root files, kept for them:
 comment in the launchd plist) and `operator_prompt.md` (`operator_cycle.sh`).
 `live_strategy.json` stays because `AGENTS.md` and the `config` skill cite it,
 though no active job calls the `config.get_live_*` readers.
+
+A module declares a new state file once, as a `StateFile` with its default
+and its policy. Guarded suits a guardrail, or a record that alone stops a
+write action from repeating or exceeding a cap; disposable suits what the
+bot can lose without acting more. Tests redirect `state_store.ROOT` to a
+temp directory, so a declared file never reaches the live one.
 
 Run `git status` before `git pull`: a pull that deletes a file modified in
 the checkout stops until that file is moved aside

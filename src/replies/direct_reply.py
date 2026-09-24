@@ -590,6 +590,8 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
             nxt = _next_submission(pool)
             try:
                 reply = fut.result()
+            except StateUnreadable:
+                raise  # no prompt can be built: the next candidates would fail too
             except Exception:
                 traceback.print_exc()
                 reply = None

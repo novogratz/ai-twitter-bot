@@ -24,17 +24,21 @@ Public API:
        handle, returns (None, "names protected handle @x"). Caller
        should SKIP the post.
   render_block() -> str — for prompt injection.
+
+The file is guarded: while respect_list.json is unreadable, every function
+that reads it raises StateUnreadable, render_block included, and nothing
+overwrites it.
 """
-import json
 import os
 import re
 from datetime import datetime
 from typing import Optional, Tuple
 
-from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
+from ..core.state_errors import StateUnreadable
+from ..core.state_store import GUARDED, StateFile
 
-RESPECT_FILE = os.path.join(_PROJECT_ROOT, "respect_list.json")
+RESPECT = StateFile("respect_list.json", {}, GUARDED)
 
 # Sensible defaults — high-traction FR accounts we engage with regularly.
 # We'd rather under-include and add manually than offend them by accident.
@@ -82,27 +86,21 @@ _DEFAULTS = {
 
 
 def _load_raw() -> dict:
-    if os.path.exists(RESPECT_FILE):
-        try:
-            with open(RESPECT_FILE, "r") as f:
-                return json.load(f)
-        except (json.JSONDecodeError, OSError):
-            pass
+    if os.path.exists(RESPECT.path):
+        return RESPECT.read()
     # First-time init — seed with defaults.
     seed = {
         "handles": {h: {"reason": r, "added": datetime.now().isoformat()} for h, r in _DEFAULTS.items()},
     }
     try:
-        with open(RESPECT_FILE, "w") as f:
-            json.dump(seed, f, indent=2, ensure_ascii=False)
-    except OSError:
+        RESPECT.write(seed)
+    except StateUnreadable:
         pass
     return seed
 
 
 def _save_raw(d: dict):
-    with open(RESPECT_FILE, "w") as f:
-        json.dump(d, f, indent=2, ensure_ascii=False)
+    RESPECT.write(d)
 
 
 def load() -> set:
@@ -196,10 +194,14 @@ def scrub_text_or_skip(text: str) -> Tuple[Optional[str], str]:
     return text, ""
 
 
-def render_block() -> str:
+def render_block(defaults: bool = False) -> str:
     """Prompt block injected into HARD rules. Names are present so the
-    model sees them up-front rather than relying on post-hoc scrub."""
-    handles = sorted(load())
+    model sees them up-front rather than relying on post-hoc scrub.
+
+    Raises StateUnreadable while the file is unreadable. `defaults` renders
+    the default handles without reading the file: personality_store's
+    render at import only."""
+    handles = sorted(_DEFAULTS) if defaults else sorted(load())
     if not handles:
         return ""
     sample = ", ".join(f"@{h}" for h in handles[:30])

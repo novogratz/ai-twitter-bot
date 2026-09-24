@@ -132,3 +132,18 @@ _Avoid_: article, story
 A curated AI documentation page used for teaching on quiet news days, never
 presented as new.
 _Avoid_: knowledge doc, knowledge source, curated documentation
+
+### State
+
+**Guarded state file**:
+A JSON state file the bot cannot lose without acting more or dropping an
+Operator list: a guardrail, a cap counter, a record of what already shipped.
+While it is unreadable, the job that needs it refuses and nothing overwrites
+it.
+_Avoid_: critical file, protected file, strict file
+
+**Disposable state file**:
+A JSON state file the bot can lose without acting more: a cache, a report,
+a harvested list. Unreadable, it reads as its default and the next write
+replaces it.
+_Avoid_: cache file, temp file, optional file

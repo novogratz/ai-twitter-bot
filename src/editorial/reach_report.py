@@ -1,5 +1,4 @@
 """Observed reach of editorial originals, with a visible 500k-view target."""
-import json
 from datetime import timedelta
 from pathlib import Path
 
@@ -7,8 +6,10 @@ from ..core import config
 from ..guards.active_hours import now_local, require_active
 from .editorial_bot import _read_state, _stamp
 from ..core.logger import log
+from ..core.state_store import DISPOSABLE, StateFile
 
-REPORT_FILE = Path(config._PROJECT_ROOT) / "editorial_reach.json"
+# Disposable: rebuilt from the profile every hour.
+REPORT = StateFile("editorial_reach.json", {}, DISPOSABLE)
 REPORT_MARKDOWN = Path(config._PROJECT_ROOT) / "editorial_reach.md"
 TARGET_VIEWS = 500_000
 
@@ -45,7 +46,7 @@ def safe_run_reach_report():
         published = _read_state().get("published", [])
         tweets = scrape_profile_tweets(config.BOT_HANDLE, max_tweets=60) if published else []
         report = summarize(published, tweets)
-        REPORT_FILE.write_text(json.dumps(report, indent=2, ensure_ascii=False))
+        REPORT.write(report)
         REPORT_MARKDOWN.write_text(
             f"# AI original-post reach\n\nUpdated: {report['as_of']}\n\n"
             f"**{report['views']:,} observed views / {TARGET_VIEWS:,} target**\n\n"

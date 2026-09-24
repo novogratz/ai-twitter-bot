@@ -15,7 +15,6 @@ The counter resets on any successful cycle. By design this is per-bot
 (across reply / engage / post / etc.) — three failed cycles in a row from
 ANY mix of bots is the trigger, since they all share Safari.
 """
-import json
 import os
 import sys
 import time
@@ -23,40 +22,26 @@ from datetime import datetime
 from .config import _PROJECT_ROOT
 from .logger import log
 from .state_errors import StateUnreadable
+from .state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import OutsideActiveHours
 
-HEALTH_FILE = os.path.join(_PROJECT_ROOT, "safari_health.json")
+HEALTH = StateFile("safari_health.json",
+                   {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0},
+                   DISPOSABLE)
 AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
 
 RECOVERY_THRESHOLD = 3      # consecutive cycle failures before we restart
 COOLDOWN_SECONDS = 600      # don't restart Safari more than once per 10 min
 
 
-def _load() -> dict:
-    if not os.path.exists(HEALTH_FILE):
-        return {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0}
-    try:
-        with open(HEALTH_FILE, "r") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0}
-
-
-def _save(data: dict):
-    try:
-        with open(HEALTH_FILE, "w") as f:
-            json.dump(data, f, indent=2)
-    except IOError:
-        pass
-
-
 def record_success(label: str = ""):
     """Reset the failure counter. Call from any cycle that completed normally."""
-    data = _load()
-    if data.get("consecutive_failures", 0) > 0:
-        log.info(f"[HEALTH] {label or 'cycle'} OK — resetting failure counter (was {data['consecutive_failures']}).")
-    data["consecutive_failures"] = 0
-    _save(data)
+    def reset(data):
+        if data.get("consecutive_failures", 0) > 0:
+            log.info(f"[HEALTH] {label or 'cycle'} OK — resetting failure counter (was {data['consecutive_failures']}).")
+        data["consecutive_failures"] = 0
+        return data
+    HEALTH.update(reset)
 
 
 def record_failure(label: str = "") -> bool:
@@ -78,29 +63,33 @@ def record_failure(label: str = "") -> bool:
         log.error(f"[HEALTH] {label or 'cycle'} halted: {exc}. Not a Safari failure, "
                   f"no restart; repair the file (docs/OPERATIONS.md#recovery).")
         return False
-    data = _load()
-    data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
-    log.info(f"[HEALTH] {label or 'cycle'} FAILED — consecutive = {data['consecutive_failures']}.")
+    claimed = []
 
-    if data["consecutive_failures"] < RECOVERY_THRESHOLD:
-        _save(data)
-        return False
-
-    now = time.time()
-    if now - data.get("last_recovery_ts", 0) < COOLDOWN_SECONDS:
-        log.info(f"[HEALTH] Recovery already fired in last {COOLDOWN_SECONDS}s — skipping.")
-        _save(data)
+    def count(data):
+        data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
+        log.info(f"[HEALTH] {label or 'cycle'} FAILED — consecutive = {data['consecutive_failures']}.")
+        if data["consecutive_failures"] < RECOVERY_THRESHOLD:
+            return data
+        now = time.time()
+        if now - data.get("last_recovery_ts", 0) < COOLDOWN_SECONDS:
+            log.info(f"[HEALTH] Recovery already fired in last {COOLDOWN_SECONDS}s — skipping.")
+            return data
+        # Claimed before the restart, which runs outside the lock: a second
+        # failing thread meanwhile finds the cooldown and skips.
+        data["last_recovery_ts"] = now
+        data["total_recoveries"] = data.get("total_recoveries", 0) + 1
+        claimed.append(data["total_recoveries"])
+        return data
+    HEALTH.update(count)
+    if not claimed:
         return False
 
     log.warning(f"[HEALTH] {RECOVERY_THRESHOLD}+ consecutive failures — restarting Safari.")
     ok = _restart_safari()
-    data["last_recovery_ts"] = now
-    data["total_recoveries"] = data.get("total_recoveries", 0) + 1
     if ok:
         # Reset on successful recovery so the next cycle starts clean.
-        data["consecutive_failures"] = 0
-    _save(data)
-    _append_autonomous_flag(label, data["total_recoveries"], ok)
+        HEALTH.update(lambda data: {**data, "consecutive_failures": 0})
+    _append_autonomous_flag(label, claimed[0], ok)
     return ok
 
 

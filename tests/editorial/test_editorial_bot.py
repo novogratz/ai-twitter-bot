@@ -1,5 +1,6 @@
 """src/editorial/editorial_bot: slots, sources, evidence, the separate
 review, bounded attempts and ambiguous submissions."""
+import os
 from datetime import datetime, timedelta
 
 import pytest
@@ -36,7 +37,6 @@ def test_evening_slots_stay_inside_waking_hours():
 def draft_fixture(monkeypatch, tmp_path):
     now = datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    monkeypatch.setattr(editorial, "STATE_FILE", tmp_path / "editorial.json")
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
     monkeypatch.setenv("CONTENT_LANG_PRIMARY", "en")
     monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
@@ -87,7 +87,7 @@ def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_
     calls = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append((text, k)) or True)
     assert editorial.run_editorial_cycle(preview=True)["approved"]
-    assert not calls and not editorial.STATE_FILE.exists() and not editorial.AUDIT_FILE.exists()
+    assert not calls and not os.path.exists(editorial.STATE.path) and not editorial.AUDIT_FILE.exists()
     assert editorial.run_editorial_cycle()["approved"]
     assert len(calls) == 1 and calls[0][1] == {"editorial": True}
     assert calls[0][0].endswith(draft_fixture[1]["url"])

@@ -16,12 +16,13 @@ def test_tests_cannot_write_production_state(tmp_path):
     must redirect every measurement/state store to per-test tmp files."""
     import os
     from src.core import config as cfg
-    from src.core import engagement_log as el, history as hist
-    from src.guards import content_guard as cg
+    from src.core import engagement_log as el, history as hist, state_store
 
     repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    for mod, attr in ((el, "ENGAGEMENT_LOG_FILE"), (hist, "HISTORY_FILE"),
-                      (cg, "_HISTORY_FILE"), (cfg, "ACTION_LEDGER_FILE"),
+    assert not os.path.abspath(state_store.ROOT).startswith(repo + os.sep) \
+        and os.path.abspath(state_store.ROOT) != repo, \
+        f"the state store root is the repo during tests: {state_store.ROOT}"
+    for mod, attr in ((el, "ENGAGEMENT_LOG_FILE"), (cfg, "ACTION_LEDGER_FILE"),
                       (cfg, "REPLIED_FILE")):
         path = getattr(mod, attr)
         assert not os.path.abspath(path).startswith(repo + os.sep), \

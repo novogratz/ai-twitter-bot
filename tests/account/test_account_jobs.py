@@ -25,10 +25,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
         rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
-    monkeypatch.setattr(ac, "TARGETS_LOG_FILE", str(tmp_path / "none.json"))
-    monkeypatch.setattr(ac, "WHITELIST_FILE", str(tmp_path / "wl.json"))
-    monkeypatch.setattr(ac, "TRACKED_FILE", str(tmp_path / "tracked.json"))
-    (tmp_path / "wl.json").write_text(json.dumps({"tiers": {}}))
+    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {}}))
 
     ac.run_curator_cycle()
     handles = ac.tracked_handles(limit=10)
@@ -98,7 +95,6 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
     recorded = _dry_run_follow_path(monkeypatch)
     followed_file = tmp_path / "followed_accounts.json"
     followed_file.write_text(json.dumps(["already"]))
-    monkeypatch.setattr(engage_bot, "FOLLOWED_FILE", str(followed_file))
     monkeypatch.setattr(engage_bot, "_build_pool", lambda: ["already", "newcomer", "other"])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
     monkeypatch.setattr(engage_bot, "_profile_visit_allowed", lambda *_: False)
@@ -120,7 +116,6 @@ def _stub_like_browser(monkeypatch, tmp_path):
     from src.x import safari, twitter_client
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(like_bot, "LIKE_BOT_STATE_FILE", str(tmp_path / "like_state.json"))
     monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
@@ -136,12 +131,10 @@ def _stub_like_browser(monkeypatch, tmp_path):
 
 
 def test_live_strategy_cannot_raise_likes_per_cycle(monkeypatch, tmp_path):
-    from src.core import config
     from src.account import like_bot
 
     strategy = tmp_path / "live_strategy.json"
     strategy.write_text(json.dumps({"caps": {"LIKE_BOT_PER_CYCLE": 500}}))
-    monkeypatch.setattr(config, "_LIVE_STRATEGY_FILE", str(strategy))
     monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "10")
     requested = _stub_like_browser(monkeypatch, tmp_path)
 
@@ -400,8 +393,6 @@ def pin_job(monkeypatch, tmp_path):
     """pin_job with a scripted profile scrape and its state in tmp_path."""
     from src.account import pin_bot
 
-    monkeypatch.setattr(pin_bot, "PIN_HISTORY_FILE", str(tmp_path / "pin_history.json"))
-    monkeypatch.setattr(pin_bot, "PIN_STATE_FILE", str(tmp_path / "pin_daily_state.json"))
     monkeypatch.setattr(pin_bot.time, "sleep", lambda *_: None)
     monkeypatch.setattr(pin_bot, "scrape_profile_tweets", lambda *a, **k: [
         {"url": OWN_OTHER, "likes": 3, "replies": 0, "text": "other post"},
@@ -481,7 +472,7 @@ def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
         action_guard.record(action_guard.DEBATE_TURN, target=author)
     action_guard.record(action_guard.DEBATE_TURN, target="simulated", dry_run=True)
     action_guard.record(action_guard.REPLY, target=fresh("replied_to"))
-    with open(fe.FROZEN_REPLIED_BACK_FILE, "w") as f:
+    with open(fe.FROZEN_REPLIED_BACK.path, "w") as f:
         json.dump([fresh("agedout", minutes=91 * 24 * 60), fresh("frozenfan", n=1), "text:no url",
                    fresh("i", n=3), fresh("newfan", n=2)], f)
 
@@ -511,7 +502,6 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     from src.account import follow_engagers_bot as fe
     for engager in ("oldguy", "business", "freshfan"):  # business: big-media skip
         ag.record(ag.DEBATE_TURN, target=engager)
-    monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     followed = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h, engager=False: followed.append((h, engager)) or True)
@@ -533,7 +523,6 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
 
     recorded = _dry_run_follow_path(monkeypatch)
     state_file = tmp_path / "follow_engagers_state.json"
-    monkeypatch.setattr(fe, "STATE_FILE", str(state_file))
     monkeypatch.setattr(fe, "_engager_handles", lambda: ["fan1", "fan2", "fan3"])
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "2")
 
@@ -558,7 +547,6 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     from src.guards import action_guard as ag
     from src.account import follow_engagers_bot as fe
     ag.record(ag.DEBATE_TURN, target="somefan")
-    monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
     called = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h, engager=False: called.append(h) or True)

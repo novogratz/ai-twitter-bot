@@ -5,32 +5,18 @@
 prune, so a bad pass can only ADD noise, never silently delete a hand-picked
 target.
 """
-import json
-import os
 from datetime import datetime
-from .config import _PROJECT_ROOT
+from .state_store import DISPOSABLE, StateFile
 
-DYNAMIC_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "dynamic_accounts.json")
-
-
-def _load(path: str, default):
-    if not os.path.exists(path):
-        return default
-    try:
-        with open(path, "r") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return default
-
-
-def _save(path: str, obj):
-    with open(path, "w") as f:
-        json.dump(obj, f, indent=2)
+# Disposable: harvested lists that only widen the pools of targets.
+DYNAMIC_ACCOUNTS = StateFile("dynamic_accounts.json", {"fr": [], "en": [], "history": []}, DISPOSABLE)
+# Handles the removed discovery agents found; nothing writes it any more.
+DISCOVERED_ACCOUNTS = StateFile("discovered_accounts.json", [], DISPOSABLE)
 
 
 def get_dynamic_accounts() -> dict:
     """Returns {"fr": [handle], "en": [handle]}."""
-    data = _load(DYNAMIC_ACCOUNTS_FILE, {})
+    data = DYNAMIC_ACCOUNTS.read()
     return {"fr": data.get("fr", []), "en": data.get("en", [])}
 
 
@@ -43,7 +29,7 @@ def _is_valid_handle(h: str) -> bool:
 
 def add_dynamic_accounts(fr: list = None, en: list = None, known: set = None) -> int:
     """Append new account handles (dedup against `known` and existing entries)."""
-    data = _load(DYNAMIC_ACCOUNTS_FILE, {"fr": [], "en": [], "history": []})
+    data = DYNAMIC_ACCOUNTS.read()
     data.setdefault("fr", [])
     data.setdefault("en", [])
     data.setdefault("history", [])
@@ -67,5 +53,5 @@ def add_dynamic_accounts(fr: list = None, en: list = None, known: set = None) ->
             data["history"].append({"lang": "en", "handle": h, "added": today})
             added += 1
     if added:
-        _save(DYNAMIC_ACCOUNTS_FILE, data)
+        DYNAMIC_ACCOUNTS.write(data)
     return added

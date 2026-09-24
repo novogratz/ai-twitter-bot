@@ -5,12 +5,12 @@ Language strategy: prioritize French tweets, but reply in the tweet's own langua
 the person. Make influencers laugh with us, not feel attacked.
 """
 import json
-import os
 import re
 from datetime import datetime
 from typing import Optional
 from ..core.logger import log
-from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
+from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST
+from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
 from ..core.llm_client import run_llm, unwrap_text
 
 # Core influencers — AI + Space + Robotics + Investment, French priority
@@ -81,15 +81,8 @@ TARGET_ACCOUNTS = [
 
 def _load_discovered_handles(limit: int = 10) -> list:
     """Read the autonomously-discovered handles, latest first, capped at `limit`."""
-    if not os.path.exists(DISCOVERED_ACCOUNTS_FILE):
-        return []
-    try:
-        with open(DISCOVERED_ACCOUNTS_FILE, "r") as f:
-            data = json.load(f)
-        handles = [d.get("handle") for d in data if d.get("handle")]
-        return handles[-limit:]
-    except (json.JSONDecodeError, IOError):
-        return []
+    handles = [d.get("handle") for d in DISCOVERED_ACCOUNTS.read() if d.get("handle")]
+    return handles[-limit:]
 
 
 REPLY_PROMPT_TEMPLATE = """Tu es @TheAIShrink — 🚀 The AI & Space Decoder ⚡.
