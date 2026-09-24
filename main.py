@@ -8,8 +8,8 @@ import signal
 import threading
 
 from src.core import config
-from src.guards.active_hours import awake_job, is_active, next_wake
-from src.editorial.editorial_bot import SLOTS, safe_run_editorial_cycle
+from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
+from src.editorial.editorial_bot import SLOTS, TREND_SLOTS, open_startup_window, safe_run_editorial_cycle
 from src.core.logger import log
 
 _SINGLETON_LOCK_HANDLE = None
@@ -106,16 +106,21 @@ def main():
     args = parser.parse_args()
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
     if args.dry_run:
-        print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": "04:30–22:00",
+        print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "min_target_posts": config.MIN_TARGET_POSTS_PER_DAY,
                           "target_posts": config.TARGET_POSTS_PER_DAY,
                           "max_profile_posts": config.MAX_PROFILE_POSTS_PER_DAY,
                           "replies": "unlimited",
                           "quotes": 0, "reposts": 0, "slots": SLOTS,
-                          "jobs": [job.id for job in scheduler.get_jobs()]}, indent=2))
+                          "trend_slots": sorted(TREND_SLOTS),
+                          "startup_post": "every start in waking hours, restarts included",
+                          "jobs": [job.id for job in scheduler.get_jobs()]}, indent=2, ensure_ascii=False))
         return
 
     _acquire_singleton_lock()
+    if not args.reply_only:
+        # The editorial job publishes it, after every restart too.
+        open_startup_window()
     stop = threading.Event()
 
     def shutdown(signum, frame):
@@ -128,7 +133,7 @@ def main():
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
     scheduler.start(paused=True)
     was_active = None
-    log.info("Bot started: at least three useful AI originals targeted (max eight); replies unlimited; Toronto 04:30–22:00.")
+    log.info(f"Bot started: at least three useful AI originals targeted (max eight); replies unlimited; active {window_label()}.")
     try:
         while not stop.is_set():
             active = is_active()

@@ -14,7 +14,8 @@ Show and edit config:
 
 Hard ceilings cannot be lifted from `.env` or `live_strategy.json`, and are
 not edited without an explicit operator request that also updates
-`docs/EDITORIAL_POLICY.md` in the same change: the seven-post ceiling
-(`MAX_ORIGINALS_PER_DAY` can only go lower), the one-hour spacing between
-originals, quotes and reposts at zero, waking hours, `BLOCKLIST` and the
-48-hour `REPOST_MAX_AGE_HOURS` clamp.
+`docs/EDITORIAL_POLICY.md` in the same change: the eight-post ceiling
+(`MAX_ORIGINALS_PER_DAY` can only go lower), the twenty-minute spacing
+between originals (`MIN_SECONDS_BETWEEN_POSTS` can only go higher), quotes
+and reposts at zero, waking hours, `BLOCKLIST` and the 48-hour
+`REPOST_MAX_AGE_HOURS` clamp.

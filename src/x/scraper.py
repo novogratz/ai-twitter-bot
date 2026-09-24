@@ -156,8 +156,9 @@ def _scrape_profile_quality() -> dict:
     return {}
 
 
-def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
-    """Run JS on the current Safari page to extract tweets. Returns list of dicts."""
+def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int = 200):
+    """Run JS on the current Safari page to extract tweets. Returns list of
+    dicts; each `text` is cut to `text_limit` characters."""
     import json as _json
 
     js_code = """
@@ -222,12 +223,12 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             var views = 0;
             var an = a.querySelector('a[href*="/analytics"]');
             if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
     })()
-    """.replace("MAX_TWEETS", str(max_tweets))
+    """.replace("MAX_TWEETS", str(max_tweets)).replace("TEXT_LIMIT", str(int(text_limit)))
 
     # Activate Safari first. Without this, "current tab of front window" can
     # block waiting on a different app being frontmost — that was causing the
@@ -418,8 +419,8 @@ def scrape_following_feed(max_tweets: int = 15):
         return tweets
 
 
-def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top"):
-    """Search X and scrape results.
+def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200):
+    """Search X and scrape results, each text cut to `text_limit` characters.
 
     tab: "live" = chronological (default, current behavior), "top" = X's hot/algorithmic
     ranking. Use "top" to surface tweets that ALREADY have engagement (avoids the
@@ -435,7 +436,7 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top"):
         safari._scroll_page()
         safari._scroll_page()
 
-        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets)
+        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
         safari.close_front_tab()
         return tweets
 

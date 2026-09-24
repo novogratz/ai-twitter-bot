@@ -167,6 +167,17 @@ def _fresh_job_memory(monkeypatch):
     yield
 
 
+@_pytest.fixture(autouse=True)
+def _fresh_editorial_memory(monkeypatch):
+    """The Startup post window opened by main() and the trending posts
+    cached for a Slot's retries live for the life of the process; every test
+    starts with neither."""
+    from src.editorial import editorial_bot as _eb, trending as _tr
+    monkeypatch.setattr(_eb, "_startup_opened_at", None)
+    monkeypatch.setattr(_tr, "_trend_cache", {})
+    yield
+
+
 @_pytest.fixture
 def memory_ledger(monkeypatch):
     """An in-memory action ledger in place of the file, for tests that read it."""

@@ -1,4 +1,5 @@
 """Cross-cutting: the jobs `main.build_scheduler()` registers."""
+import pytest
 
 
 def test_reply_only_still_registers_the_reply_engine():
@@ -9,11 +10,35 @@ def test_reply_only_still_registers_the_reply_engine():
     assert scheduler.get_job("editorial_job") is None
 
 
-def test_scheduler_build_has_no_startup_publishing(monkeypatch):
+def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
+    """Building the scheduler publishes nothing: the Startup post goes
+    through the editorial job, inside its window and the daily ceiling."""
     import main
     def forbidden(*a, **k):
-        raise AssertionError("Startup must not execute an editorial cycle")
+        raise AssertionError("Building the scheduler must not execute an editorial cycle")
     monkeypatch.setattr(main, "safe_run_editorial_cycle", forbidden)
     scheduler = main.build_scheduler()
     assert scheduler.get_job("editorial_job") is not None
     assert not any("quote" in j.id or "boost" in j.id or "thread" in j.id for j in scheduler.get_jobs())
+
+
+@pytest.mark.parametrize("flags, opened", [(["--reply-only"], False), ([], True), (["--post-only"], True)])
+def test_only_a_run_with_the_editorial_job_opens_a_startup_post(monkeypatch, flags, opened):
+    import sys
+    import main
+
+    class Started(Exception):
+        pass
+
+    class Scheduler:
+        def start(self, paused):
+            raise Started
+    calls = []
+    monkeypatch.setattr(sys, "argv", ["main.py", *flags])
+    monkeypatch.setattr(main, "_acquire_singleton_lock", lambda: None)
+    monkeypatch.setattr(main, "build_scheduler", lambda **k: Scheduler())
+    monkeypatch.setattr(main, "open_startup_window", lambda: calls.append(True))
+    monkeypatch.setattr(main.signal, "signal", lambda *a: None)
+    with pytest.raises(Started):
+        main.main()
+    assert calls == ([True] if opened else [])

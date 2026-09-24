@@ -58,7 +58,7 @@ def test_restart_safari_does_nothing_outside_waking_hours(monkeypatch, when):
     from src.x import safari_hygiene as sh
 
     if when == "night":
-        clock(monkeypatch, datetime(2026, 9, 20, 23, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
     elif when == "stop":
         stop_requested(monkeypatch)
     touched = []

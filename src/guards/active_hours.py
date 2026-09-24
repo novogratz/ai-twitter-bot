@@ -8,6 +8,9 @@ from ..core import config
 from ..core.logger import log
 
 
+WAKE = time(4, 30)
+BEDTIME = time(23, 30)
+
 _STOP = threading.Event()
 
 
@@ -19,13 +22,17 @@ class OutsideActiveHours(RuntimeError):
     """A running cycle reached bedtime; it must stop doing external work."""
 
 
+def window_label() -> str:
+    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+
+
 def now_local() -> datetime:
     return datetime.now(ZoneInfo(config.BOT_TIMEZONE))
 
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    return time(4, 30) <= local.time().replace(tzinfo=None) < time(22, 0)
+    return WAKE <= local.time().replace(tzinfo=None) < BEDTIME
 
 
 def stop_requested() -> bool:
@@ -43,17 +50,17 @@ def may_act(now: datetime | None = None) -> bool:
 
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    wake = local.replace(hour=4, minute=30, second=0, microsecond=0)
+    wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
     return wake if local < wake else wake + timedelta(days=1)
 
 
 def require_active() -> None:
     if not may_act():
-        raise OutsideActiveHours("Bot asleep: active 04:30–22:00 America/Toronto")
+        raise OutsideActiveHours(f"Bot asleep: active {window_label()}")
 
 
 def awake_job(fn):
-    """Also gate queued jobs and work that crossed the 22:00 boundary."""
+    """Also gate queued jobs and work that crossed the BEDTIME boundary."""
     @wraps(fn)
     def run(*args, **kwargs):
         if not may_act():
@@ -66,6 +73,11 @@ def awake_job(fn):
     return run
 
 
+def bedtime(now: datetime) -> datetime:
+    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
+    return now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+
+
 def seconds_until_bedtime() -> float:
     now = now_local()
-    return max(0.0, (now.replace(hour=22, minute=0, second=0, microsecond=0) - now).total_seconds())
+    return max(0.0, (bedtime(now) - now).total_seconds())

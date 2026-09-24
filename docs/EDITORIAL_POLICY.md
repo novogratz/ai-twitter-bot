@@ -2,8 +2,11 @@
 
 The operator requested at least three valuable AI posts a day, up to eight
 profile posts, uncapped replies, a more natural voice, and a working day from
-04:30 to 22:00. The schedule aims for six originals, with two additional
-opportunities when the source is strong enough. Quality can reduce the actual count.
+04:30 to 23:30 (22:00 until 2026-09-23; the later bedtime added no slot and
+changed no cap or pacing). The schedule aims for six originals, with more opportunities
+than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
+The same day the operator added three trend slots and a Startup post on every
+start; they compete for the same eight publications (see below).
 There is no guarantee of virality or a minimum post count on a day with weak
 sources or service failures.
 
@@ -30,9 +33,39 @@ Trusted AI feeds supply news and articles no older than 48 hours: first-party
 labs, model/tool launch blogs, The Decoder and arXiv. Fresh launches, methods,
 projects and sharp recent articles are preferred; on quiet days, curated AI
 documentation supplies practical, evergreen topics, without calling them new
-announcements. Used source URLs are rested for seven days. The optional eighth
+announcements. Used source URLs are rested for seven days. The optional 20:45
 slot needs news from the last twelve hours or a useful AI teaching source, plus
 an exceptional-value approval.
+
+## Trend slots and the Startup post
+
+The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from
+X. Two Top-tab searches for AI and "artificial intelligence" supply posts from
+the last 24 hours; the five with the most likes per minute are kept. Own posts,
+Blocked accounts, nested replies, posts without AI vocabulary and crypto or
+ticker posts are dropped. Handles, mentions and links, with or without a
+scheme, are stripped before the text reaches the model. Fewer than three usable posts skips the pass.
+
+The trending posts choose the topic and never supply a fact. The generator must
+write from a fresh news article from the trusted feeds that covers their shared
+topic, with the usual evidence and source link; evergreen documentation is not
+offered. The draft carries no @mention. The editor must also approve
+`trending`: the published text covers the topic the trending posts share. No
+covering article, no post.
+
+The Startup post (operator, 2026-09-23) is a trend slot opened for 45 minutes
+each time the bot starts in waking hours, restarts included: a crash, a
+watchdog relaunch or a deploy each opens one. It has its own three attempts
+and pending guard per start, goes before a slot whose window is open, and
+obeys the waking hours, the eight-publication ceiling and the post spacing. A
+pass that gives it no draft falls through to the open slots in the same pass,
+so a restart never hides a slot. A start overnight opens nothing, even just
+before 04:30. A restart loop in daytime therefore publishes
+up to one post every twenty minutes until the daily ceiling, at the expense of
+later slots. An ambiguous submission counts as a publication for that: the
+next Startup post waits twenty minutes after it, the day's pending submissions
+count toward the eight, and its text is a recent post the next draft and review
+must not repeat.
 
 ## Runtime rules
 
@@ -42,14 +75,22 @@ an exceptional-value approval.
   remote work can finish; it cannot authorize a later out-of-hours submission.
   A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
   write is admitted after it.
-- Slots: 05:00, 07:15, 09:30, 11:45, 14:00, 16:15, 18:30, optional 20:45.
-- A slot permits at most three attempts over 45 minutes (the last ends at 22:00).
+- Slots: 05:00, 07:15, 09:30, 10:00 (trend), 11:45, 13:00 (trend), 14:00,
+  15:00 (trend), 16:15, 18:30, optional 20:45, plus the Startup post.
+  Eleven slots and the Startup post compete for eight publications: on a full
+  day the evening slots are the ones left out.
+- A slot permits at most three attempts over 45 minutes, and no window runs
+  past 23:30: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
   An attempt is a draft submitted to the editor; a pass without a draft
-  spends none.
-  There is no backlog catchup. At least one hour separates originals.
+  spends none. A slot out of attempts, or one whose pass yields no draft, no
+  longer holds an overlapping one; a pass still submits once at most.
+  There is no backlog catchup. At least twenty minutes separate originals.
 - Eight profile publications per local day is absolute. The ledger includes
   originals, quotes and reposts already made that day. Deploying this change
-  does not erase history or grant extra slots.
+  does not erase history or grant extra slots. A `pending` submission, whose
+  outcome was ambiguous, has no ledger row: it counts toward the day's eight
+  and toward the twenty-minute spacing until the operator clears it, and so
+  does a slot the operator marked published after a check.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
   Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
   write functions are removed from `src/x/twitter_client.py` (issue #111), and
@@ -64,7 +105,7 @@ an exceptional-value approval.
   jitter drawn once per reply, the same for every caller: retrying cannot
   shorten it. The direct-reply and feed-sweep pipeline waits out that gap
   before sending instead of discarding a paid generation; the chokepoint
-  still judges, and the wait ends on a stop request or at 22:00.
+  still judges, and the wait ends on a stop request or at 23:30.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores

@@ -19,10 +19,11 @@ REVIEW_SCHEMA = {
     "type": "object",
     "properties": {
         **{key: {"type": "boolean"} for key in (
-            "approved", "grounded", "ai_relevant", "adds_value", "natural_voice", "novel", "exceptional")},
+            "approved", "grounded", "ai_relevant", "adds_value", "natural_voice", "novel", "exceptional",
+            "trending")},
         "reason": {"type": "string", "maxLength": 600},
     },
     "required": ["approved", "grounded", "ai_relevant", "adds_value",
-                 "natural_voice", "novel", "exceptional", "reason"],
+                 "natural_voice", "novel", "exceptional", "trending", "reason"],
     "additionalProperties": False,
 }

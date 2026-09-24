@@ -19,15 +19,18 @@ There is no X API client.
 other job). Reply scans cannot starve the editorial job of a thread, but all
 browser work shares `_safari_lock`, so a post can still wait behind a reply.
 Every job is an `IntervalTrigger` registered through the local `add()` helper,
-which wraps it in `active_hours.awake_job`. There are no cron triggers, no
-startup bursts and no warmup phase.
+which wraps it in `active_hours.awake_job`. There are no cron triggers and
+no warmup phase. The Startup post is not a job: `main()` opens its window and
+`editorial_job` publishes it.
 
 At start, `main()`:
 
 1. takes `bot.lock` with `fcntl.flock` and exits if another instance holds it;
 2. installs SIGTERM/SIGINT handlers that call `active_hours.request_stop()`;
-3. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at the 04:30 and 22:00 boundaries.
+3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
+   `--reply-only`;
+4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
+   pauses or resumes it at the 04:30 and 23:30 boundaries.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
@@ -35,14 +38,15 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 22:00, DST
-handled by `zoneinfo`. `require_active()` raises `OutsideActiveHours` outside
+`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 23:30, DST
+handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
+`window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
 next `require_active()`. `is_active()` reads the clock only: the scheduler's
 pause/resume loop must not treat a stop as a wake-up boundary.
 
-Pausing the scheduler is not enough, because a job queued at 21:59 would still
+Pausing the scheduler is not enough, because a job queued at 23:29 would still
 run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
@@ -53,11 +57,11 @@ run. The check is repeated at each point where work leaves the process:
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
-  also capped at the time left before 22:00;
+  also capped at the time left before 23:30;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
   `editorial_bot` before fetching a source and again before publishing.
 
-A request already sent to X or to a model can finish after 22:00; it cannot
+A request already sent to X or to a model can finish after 23:30; it cannot
 authorize a new action.
 
 ## Jobs
@@ -106,37 +110,69 @@ Two settings decide how much of the table does anything:
 `src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
 lock.
 
-1. **Slot.** `SLOTS` lists 05:00, 07:15, 09:30, 11:45, 14:00, 16:15, 18:30
-   and an optional 20:45. A slot is due for 45 minutes, never past 22:00, and only if
-   `editorial_state.json` has no entry for it. A missed slot is not caught up.
+1. **Slot.** `SLOTS` lists 05:00, 07:15, 09:30, 10:00, 11:45, 13:00, 14:00,
+   15:00, 16:15, 18:30 and an optional 20:45; `TREND_SLOTS` marks 10:00, 13:00
+   and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
+   `editorial_state.json` has no entry for it and its attempts are not spent.
+   A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
+   by the process start time, is a trend slot due for 45 minutes after
+   `open_startup_window()`, which opens nothing outside waking hours. Each
+   pass tries the Startup post first, then every open grid Slot in order
+   (09:30 and 10:00 overlap), and moves on while a slot yields no draft; the
+   first draft ends the pass, so a pass submits once at most. Before any of
+   it, the pass stops when `can_post` refuses or when the pending
+   submissions forbid another (see Publish).
 2. **Attempts.** Three per slot per day, restarts included. An attempt is a
    draft submitted to review: the counter is saved once a draft exists and
    before review. A pass with no source, a draft model error or an explicit
    skip spends none; the 45-minute window bounds those passes.
-3. **Sources.** Ten trusted feeds (OpenAI, Google AI, DeepMind, Hugging Face,
+3. **Trend.** For a trend slot, `collect_trending_posts`
+   (`src/editorial/trending.py`) runs the two `TREND_QUERIES` in the Top tab
+   (`TREND_SEARCH_TWEETS` posts each, `text_limit=TREND_TEXT_LIMIT`),
+   keeps posts under 24 hours old by status ID, drops own posts
+   (`scraper.is_own_post`), Blocked accounts, nested replies, off-topic and
+   crypto posts, strips handles, mentions and links, with or without a
+   scheme (`t.co/x`, `site.com/page`), and keeps the five with the most
+   likes per minute. A
+   usable result is cached for the slot's retries; fewer than three posts
+   skips the pass without spending an attempt. Trend slots get news sources
+   only, never evergreen documentation.
+4. **Sources.** Ten trusted feeds (OpenAI, Google AI, DeepMind, Hugging Face,
    NVIDIA, Microsoft Research, Mistral AI, Replicate, The Decoder and arXiv
    cs.AI) supply AI news/articles under 48 hours old; the eight newest are
    tried before evergreen. Twelve Hugging Face documentation pages rotate daily
    as backup teaching topics. URLs used in the last seven days are skipped.
    Each page is fetched over HTTPS from an allowed host, 12-second timeout,
    1 MB read.
-4. **Draft.** The model sees `core_identity.md`, the hard rules, the slot
-   brief, the last rejection reason for this slot, recent posts and numbered
-   evidence sentences from each source. It returns JSON matching
+5. **Draft.** The model sees `core_identity_en.md`, the hard rules, the slot
+   brief, the last rejection reason for this slot, recent posts, numbered
+   evidence sentences from each source and, for a trend slot, the trending
+   posts as untrusted data that choose the topic. Recent posts include the
+   text of every pending submission, which may be live; the review sees the
+   same list. It returns JSON matching
    `editorial_schemas.DRAFT_SCHEMA`, or an explicit skip.
-5. **Review.** Deterministic checks first: 80–250 characters, trusted source,
+6. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
    1–3 evidence ids that resolve to sentences found in the source text, then
    `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
    twelve hours old or a useful AI teaching source. A second model call
-   (`REVIEW_SCHEMA`) must approve all six criteria, plus `exceptional` at 20:45.
-6. **Audit.** An attempt that reaches review appends a line to
+   (`REVIEW_SCHEMA`) must approve all six criteria, plus `exceptional` at 20:45
+   and `trending` for a trend slot, which also needs a news source and no `@`.
+7. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
-   next attempt. Nothing is written when `can_post` refuses (spacing or
-   ceiling), when the three attempts are spent, or when the pass yields no
-   draft.
-7. **Publish.** Waking hours and slot validity are checked again. The slot is
-   marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
+   next attempt. Nothing is written when `can_post` or the pending check
+   refuses (spacing or ceiling), when the three attempts are spent, or when
+   the pass yields no draft.
+8. **Publish.** Waking hours and the slot's window are checked again, then
+   the pending check: an `UNCONFIRMED` submission writes no ledger row, so
+   `can_post` cannot see it. Today's pending submissions (in `slots` or in
+   `pending_sources`), plus the published count (the ledger's, or today's
+   `published` slots when the operator marked more after a check), must stay
+   under the ceiling, and the newest pending or published timestamp must be
+   `MIN_SECONDS_BETWEEN_POSTS` plus `POST_JITTER_SECONDS` old. A pending
+   submission counts until the operator clears it. The slot is
+   marked `pending` and saved with its source URL, text and time in
+   `pending_sources`, then `post_tweet(text, editorial=True)` sends
    the draft plus the source URL. `SHIPPED` marks it `published`. `REFUSED`,
    `FAILED` and `DRY_RUN` sent nothing and free the slot. `UNCONFIRMED` (the
    submit keystroke failed, so the post may be live), any other result and an
@@ -269,7 +305,7 @@ Four modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that neither `.env` nor
   `live_strategy.json` can lift: eight profile publications a day, quote and
-  repost caps at 0, originals capped at 8 and spaced by at least 3600 seconds,
+  repost caps at 0, originals capped at 8 and spaced by at least 1200 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
 - `src/guards/action_guard.py` decides `can_post`, `can_follow` and
@@ -347,7 +383,7 @@ generates reply N+1 while reply N is posted, so its text is ready as soon
 as reply N's ledger row is written. Before calling `reply_to_tweet`,
 outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
 one-second slices and raises `OutsideActiveHours` on a stop request or at
-22:00. The chokepoint still judges: when another job's reply lands during
+23:30. The chokepoint still judges: when another job's reply lands during
 the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
 post stays replayable in a later cycle, at the cost of a new generation.
 On a rate limit, bedtime or an unreadable state file the pipelined job
@@ -363,7 +399,7 @@ A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
 instead of reading as empty. If the reply keystroke or the paste fails, or a
-stop or 22:00 interrupts the sequence before the submit keystroke, nothing
+stop or 23:30 interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second
@@ -428,6 +464,10 @@ home-timeline attribution. It does not influence any cap.
 
 These are how the code behaves today, not design intent:
 
+- Pending editorial submissions count toward the ceiling and the spacing in
+  the editorial cycle only (`_pending_refusal`): `post_tweet` and the ledger
+  do not see them. The editorial cycle is the only `post_tweet` caller; a new
+  caller would not count them.
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.

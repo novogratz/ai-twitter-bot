@@ -500,7 +500,7 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 

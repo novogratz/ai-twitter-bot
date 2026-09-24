@@ -9,10 +9,13 @@ real account. Setup and run commands live in [`README.md`](README.md).
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active 04:30–22:00 America/Toronto only; nothing external happens overnight.
+- Active 04:30–23:30 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
-  combined profile publications at most.
-- Quotes, reposts, self-recycling, threads and startup bursts stay at zero.
+  combined profile publications at most, twenty minutes apart at least.
+- Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
+  in waking hours take their topic from rising AI posts on X, and their facts
+  from a trusted article.
+- Quotes, reposts, self-recycling and threads stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
 
@@ -35,7 +38,8 @@ The top level of `src/` holds only packages.
 
 | Concern | Where |
 |---|---|
-| Originals: sources, evidence, draft, separate review | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes | `src/replies/reply_generator.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship | `src/replies/reply_pipeline.py` |
@@ -121,7 +125,8 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   never overwritten: repair it by hand, never delete it
   ([recovery](docs/OPERATIONS.md#recovery)).
 - An editorial slot in `pending` state was submitted ambiguously; it is never
-  retried automatically. Check the profile before clearing it
+  retried automatically, and it counts toward today's ceiling and the post
+  spacing until cleared. Check the profile before clearing it
   ([recovery](docs/OPERATIONS.md#recovery)).
 - `.claude/skills/` is the one skills source and matches the 2026-09-20
   policy. `.codex/skills` is a relative symlink to it; OpenCode reads

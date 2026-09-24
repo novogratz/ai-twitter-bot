@@ -20,7 +20,7 @@ Show engagement stats, read-only:
 
 Present a clean summary:
 - Today: originals published against the target of six (Profile
-  publications against the ceiling of seven), replies sent, follows, likes
+  publications against the ceiling of eight), replies sent, follows, likes
 - Last 7 days per day
 - Last 5 originals and last 5 replies
 - Reach against target, with the missing coverage the report states

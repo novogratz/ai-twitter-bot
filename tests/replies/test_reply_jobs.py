@@ -193,7 +193,7 @@ def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
     assert len(llm.calls) == 1 and lanes["queries"] == [] and chokepoint.sent == []
 
 
-@pytest.mark.parametrize("error", [StateUnreadable("replied store unreadable"), OutsideActiveHours("22:00")],
+@pytest.mark.parametrize("error", [StateUnreadable("replied store unreadable"), OutsideActiveHours("bedtime")],
                          ids=["unreadable", "bedtime"])
 def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     """Both lanes ran inside `except Exception`, which swallowed bedtime."""

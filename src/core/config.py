@@ -133,11 +133,13 @@ RETRY_DELAY_SECONDS = 5
 def dry_run() -> bool:
     return os.environ.get("DRY_RUN", "0") == "1"
 
-# All original surfaces share the same ceiling and at least one hour of
-# spacing. The editorial scheduler normally spaces posts by roughly 2 hours.
+# All original surfaces share the same ceiling and at least twenty minutes
+# of spacing (operator, 2026-09-23): the 09:30 and 10:00 slots sit thirty
+# minutes apart and the Startup post can land next to any slot.
 MAX_ORIGINALS_PER_DAY = min(8, int(os.environ.get("MAX_ORIGINALS_PER_DAY", "8")))
-MIN_SECONDS_BETWEEN_POSTS = max(3600, int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", "3600")))
-POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", "0"))
+MIN_SECONDS_BETWEEN_POSTS = max(1200, int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", "1200")))
+# A negative jitter would shorten the floor above.
+POST_JITTER_SECONDS = max(0, int(os.environ.get("POST_JITTER_SECONDS", "0")))
 
 # Automatic quotes, reposts and recycling are retired. Legacy callers still
 # encounter these hard limits, including urgent/mega-viral bypass attempts.

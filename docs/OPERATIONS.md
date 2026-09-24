@@ -59,7 +59,9 @@ only to `bot.log`, while stdout and tracebacks reach both the terminal and
 `bot.log`. Follow `tail -F bot.log`.
 
 Flags for `main.py`: `--post-only`, `--reply-only`, `--dry-run`. There is no
-other mode; `--monthly-recap-now` and the startup bursts are gone.
+other mode; `--monthly-recap-now` is gone. Every start in waking hours opens
+a Startup post: a restart publishes one trend post within 45 minutes when the
+daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
 waits. Nothing external happens until 04:30 Toronto time.
@@ -98,7 +100,7 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
   paused scheduler logs almost nothing overnight, so this watchdog restarts
-  the bot roughly every 15 minutes between 22:00 and 04:30; each restart
+  the bot roughly every 15 minutes between 23:30 and 04:30; each restart
   comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
@@ -117,14 +119,14 @@ real account from a second process. Before any of them:
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
-   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 22:00.
+   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 23:30.
 
 ## Watching
 
 | Where | What it tells you |
 |---|---|
 | `bot.log` | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]` |
-| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published`, recent publications and used sources |
+| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
@@ -136,18 +138,23 @@ tail -n 5 editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' editorial_state.json
 ```
 
-Silence between 22:00 and 04:30 Toronto time is normal. There is no
+Silence between 23:30 and 04:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery
 
 **A slot is `pending`.** The submission was interrupted or its outcome was
-unclear, and the bot will not retry it. A failed submit keystroke logs
+unclear, and the bot will not retry it. Until you clear it, it counts toward
+today's eight publications and the twenty-minute spacing, and its text stays
+a recent post for later drafts. A failed submit keystroke logs
 `[EDITORIAL] <slot> stays pending` in `bot.log`. Check the profile first. If the post
 is live, set the slot to `"published"` in `editorial_state.json` and append
 a matching entry (`ts`, `text`, `source_url`, `angle`, `slot`) to
 `published`, so the source rests for seven days and the reach report counts
-the post. If it is not live, delete the slot entry. Do this with the bot
+the post; the published slot keeps counting toward today's ceiling. If it is
+not live, delete the slot entry. Either way, delete its entry (keyed
+`YYYY-MM-DD/<slot>`) from `pending_sources`: until then later drafts skip that
+source and text, across days too, and today's ceiling counts it. Do this with the bot
 stopped.
 
 **Corrupt `editorial_state.json` or `action_ledger.json`.** Both fail closed:
@@ -241,9 +248,10 @@ sleep 3 && open -a Safari
 
 **No original today.** Read `editorial_review.jsonl` for review rejections,
 then the `[EDITORIAL]` and `[POST]` lines of `bot.log` and `attempts` in
-`editorial_state.json`. Causes that leave no audit line: the one-hour spacing
+`editorial_state.json`. Causes that leave no audit line: the twenty-minute spacing
 or the daily ceiling, sources that could not be fetched, attempts spent, a
-model error. A pass that produces no draft spends no attempt. The evergreen
+model error, fewer than three trending posts for a trend slot. A pass that
+produces no draft spends no attempt. The evergreen
 documentation pages always supplement the news, so a quiet news day alone
 does not block a post. Missed slots are not caught up.
 
@@ -268,7 +276,7 @@ Changes to `.env` or code take effect at restart.
 - Lowering `MAX_ORIGINALS_PER_DAY` below 8.
 
 What cannot be tuned from `.env` or `live_strategy.json`: the eight-post
-ceiling, the one-hour spacing floor between originals, quotes and reposts at
+ceiling, the twenty-minute spacing floor between originals, quotes and reposts at
 zero, and waking hours. They live in `src/core/config.py` and
 `src/guards/active_hours.py`; changing them needs an operator request and an
 update to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
@@ -378,7 +386,7 @@ and unused since debate turns moved to the ledger; it can be deleted.
   ledger. Keep the bot stopped even with `--force`: the ledger has a single
   writer, and a row written beside the running bot can be lost. It drives
   Safari through the `safari` primitives and checks the bot's Toronto clock:
-  it refuses to start Overnight and stops before its next unfollow at 22:00
+  it refuses to start Overnight and stops before its next unfollow at 23:30
   or on SIGTERM. A primitive also refuses to start a page script at that
   point; between a click and its confirm, the run then ends with the modal
   open and nothing unfollowed or recorded, and the next run cancels that

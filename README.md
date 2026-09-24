@@ -6,7 +6,7 @@ every post and respond naturally in conversations.
 
 ## Current publishing policy
 
-- **Active daily: 04:30–22:00 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
@@ -16,7 +16,10 @@ every post and respond naturally in conversations.
   rules and respect list.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **No automatic quote tweets, reposts, self-recycling, startup bursts, or burst threads.**
+- **One Startup post each time the bot starts in waking hours**, restarts included,
+  within the daily ceiling and the twenty-minute spacing. A submission with an
+  ambiguous outcome counts toward both until the operator clears it.
+- **No automatic quote tweets, reposts, self-recycling, or burst threads.**
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.
@@ -25,7 +28,7 @@ every post and respond naturally in conversations.
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action after 22:00. An already-issued request may still finish remotely.
+a new action after 23:30. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 
@@ -34,13 +37,20 @@ a new action after 22:00. An already-issued request may still finish remotely.
 | 05:00 | Priority AI update worth understanding |
 | 07:15 | A practical AI workflow |
 | 09:30 | Priority AI article or model update with a sharp consequence |
+| 10:00 | Trend: the AI topic X is talking about, told from a trusted article |
 | 11:45 | A clear explanation of an AI concept |
+| 13:00 | Trend |
 | 14:00 | A model or tool update and its consequences |
+| 15:00 | Trend |
 | 16:15 | Priority informed take on an AI tradeoff |
 | 18:30 | An idea worth saving or sharing |
-| 20:45 | Optional eighth post for an exceptional update or unusually useful source |
+| 20:45 | Optional post for an exceptional update or unusually useful source |
 
-Each slot has a short retry window. Restarts do not trigger a backlog of posts.
+Each slot has a short retry window and missed slots are not caught up. Every
+start in waking hours opens one extra trend post, the Startup post. Eleven
+slots plus the Startup post compete for eight publications a day. Trend posts
+pick their topic from the five fastest-rising AI posts on X from the last 24
+hours; the facts and the link still come from a trusted article.
 Originals have their own scheduler worker so reply scans cannot starve them.
 See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details.
 

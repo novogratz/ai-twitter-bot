@@ -59,7 +59,7 @@ def test_already_replied_on_status_id_whatever_the_url_author():
 
 def test_definitive_rules_win_over_overnight(monkeypatch):
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})
     assert judge_parent(url("pgm_pm")).refusal is Refusal.BLOCKED_ACCOUNT
     overnight = judge_parent(url("someone"))

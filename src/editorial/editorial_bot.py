@@ -1,4 +1,7 @@
-"""Three-to-eight source-backed AI originals, with a separate editor."""
+"""Three-to-eight source-backed AI originals, with a separate editor.
+
+Trend slots and the Startup post pick their topic from the fastest-rising AI
+posts on X; their facts still come from a fresh article in FEEDS."""
 import json
 import os
 import re
@@ -9,34 +12,62 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
+from typing import NamedTuple
 from urllib.parse import urlsplit
 
 from ..guards import action_guard, content_guard
 from ..core import config
-from ..guards.active_hours import is_active, now_local, require_active
+from ..guards.active_hours import bedtime, is_active, now_local, require_active
 from ..core.llm_client import run_llm, unwrap_text
 from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import GUARDED, StateFile
+from .trending import AI_TOPIC, TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 # Guarded: it holds the Pending slots and the spent Attempts.
 STATE = StateFile("editorial_state.json", {}, GUARDED)
 AUDIT_FILE = Path(config._PROJECT_ROOT) / "editorial_review.jsonl"
 _CYCLE_LOCK = threading.Lock()
+SLOT_WINDOW = timedelta(minutes=45)
+MAX_ATTEMPTS = 3
 
 # One opportunity per window. Retries stay inside the window; no backlog burst.
 # Priority slots are the daily floor target: if the feed is quiet, evergreen AI
 # teaching topics are still valid, but factual review and dedup stay in force.
-SLOTS = (
+# Trend slots (operator, 2026-09-23): the topic is the common thread of the
+# five fastest-rising AI posts on X from the last 24 hours; a fresh article
+# from FEEDS supplies every fact. No covering article, no post.
+TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
+TREND_SLOTS = frozenset({"10:00", "13:00", "15:00"})
+EXCEPTIONAL_SLOT = "20:45"
+
+
+class Slot(NamedTuple):
+    clock: str
+    purpose: str
+
+    @property
+    def trend(self) -> bool:
+        return is_startup(self.clock) or self.clock in TREND_SLOTS
+
+    @property
+    def exceptional(self) -> bool:
+        return self.clock == EXCEPTIONAL_SLOT
+
+
+SLOTS = tuple(Slot(*slot) for slot in (
     ("05:00", "Priority: the AI update worth understanding this morning"),
     ("07:15", "A useful AI workflow with a concrete first step"),
     ("09:30", "Priority: an AI article or model update with a sharp consequence"),
+    ("10:00", TREND_PURPOSE),
     ("11:45", "An AI concept explained through a clear example"),
+    ("13:00", TREND_PURPOSE),
     ("14:00", "A model or tool update and what changes for its users"),
+    ("15:00", TREND_PURPOSE),
     ("16:15", "Priority: an evidence-backed take on an AI tradeoff"),
     ("18:30", "A practical AI idea worth saving or sharing"),
-    ("20:45", "Optional: an exceptional fresh AI update or unusually useful source"),
-)
+    (EXCEPTIONAL_SLOT, "Optional: an exceptional fresh AI update or unusually useful source"),
+))
 FEEDS = (
     ("OpenAI", "https://openai.com/news/rss.xml"),
     ("Google AI", "https://blog.google/technology/ai/rss/"),
@@ -68,9 +99,11 @@ KNOWLEDGE = (
 _HOSTS = {"openai.com", "blog.google", "deepmind.google", "huggingface.co",
           "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
           "replicate.com", "the-decoder.com", "arxiv.org"}
-_AI = re.compile(r"\b(ai|artificial intelligence|model|llm|agent|machine learning|"
-                 r"openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|"
-                 r"transformer|inference|training|neural|diffusion|gpu)\b", re.I)
+# Startup post (operator, 2026-09-23): every start in waking hours opens a
+# trend Slot for 45 minutes, restarts included. Its key carries the start
+# time, so each process gets its own Attempts and pending guard.
+STARTUP = "startup"
+_startup_opened_at = None
 _BAIT = re.compile(r"\b(thoughts\??|agree\??|who.?s with me|game.?changer|"
                    r"we are so early|you won't believe|mind.?blowing|"
                    r"like and share|follow for more|retweet if|repost if)\b", re.I)
@@ -84,21 +117,76 @@ def _save_state(data: dict) -> None:
     STATE.write(data)
 
 
-def due_slot(now=None, state=None):
+def _local(now=None):
     from zoneinfo import ZoneInfo
-    now = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    return (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+
+
+def _in_window(clock: str, now) -> bool:
+    """45-minute window of a Slot, or of the Startup post from the moment
+    the bot started; every window ends at bedtime."""
+    if is_startup(clock):
+        start = _startup_opened_at
+        if start is None or clock != startup_key():
+            return False
+    else:
+        hour, mins = map(int, clock.split(":"))
+        start = now.replace(hour=hour, minute=mins, second=0, microsecond=0)
+    return start <= now < min(start + SLOT_WINDOW, bedtime(now))
+
+
+def _open(clock: str, now, state: dict) -> bool:
+    """In its window, neither published/pending nor out of Attempts today."""
+    today = state if state.get("date") == now.date().isoformat() else {}
+    return (_in_window(clock, now) and clock not in today.get("slots", {})
+            and today.get("attempts", {}).get(clock, 0) < MAX_ATTEMPTS)
+
+
+def open_slots(now=None, state=None) -> list:
+    """Every grid Slot open now, earliest first. Windows overlap (09:30 and
+    10:00): a spent or silent Slot must not hold the next."""
+    now = _local(now)
     if not is_active(now):
+        return []
+    state = _read_state() if state is None else state
+    return [slot for slot in SLOTS if _open(slot.clock, now, state)]
+
+
+def due_slot(now=None, state=None):
+    return next(iter(open_slots(now, state)), None)
+
+
+def open_startup_window(now=None) -> None:
+    """main() calls this once when the bot starts. A start overnight opens
+    nothing: the watchdog relaunches the bot at night, and a window left open
+    across 04:30 would publish at wake."""
+    global _startup_opened_at
+    now = _local(now)
+    _startup_opened_at = now if is_active(now) else None
+
+
+def startup_key():
+    """This process's Startup post key, e.g. "startup@11:10:05"."""
+    return f"{STARTUP}@{_startup_opened_at:%H:%M:%S}" if _startup_opened_at else None
+
+
+def is_startup(clock: str) -> bool:
+    return clock.startswith(f"{STARTUP}@")
+
+
+def startup_slot(now=None, state=None):
+    now = _local(now)
+    key = startup_key()
+    if not key or not is_active(now):
         return None
     state = _read_state() if state is None else state
-    completed = state.get("slots", {}) if state.get("date") == now.date().isoformat() else {}
-    minute = now.hour * 60 + now.minute
-    for clock, purpose in SLOTS:
-        hour, mins = map(int, clock.split(":"))
-        # 45-minute retry window; last slot ends before bedtime.
-        if hour * 60 + mins <= minute < min(hour * 60 + mins + 45, 22 * 60):
-            if clock not in completed:
-                return clock, purpose
-    return None
+    return Slot(key, TREND_PURPOSE) if _open(key, now, state) else None
+
+
+def next_slot(now=None, state=None):
+    """The Startup post first, then the Slot grid."""
+    state = _read_state() if state is None else state
+    return startup_slot(now, state) or due_slot(now, state)
 
 
 def _trusted(url: str) -> bool:
@@ -164,11 +252,13 @@ def _stamp(raw: str):
     return dt.astimezone(timezone.utc) if dt.tzinfo else None
 
 
-def collect_sources(state: dict, now=None) -> list:
+def collect_sources(state: dict, now=None, news_only=False) -> list:
     now = now or now_local()
     used = {r["source_url"] for r in state.get("published", [])
             if (_stamp(r.get("ts", "")) or datetime.min.replace(tzinfo=timezone.utc))
             > now - timedelta(days=7)}
+    # An ambiguous submission may be live: a restart must not reuse its source.
+    used |= {pending["url"] for pending in state.get("pending_sources", {}).values()}
     candidates = []
     for publisher, feed in FEEDS:
         try:
@@ -186,7 +276,7 @@ def collect_sources(state: dict, now=None) -> list:
                 stamp = _stamp(field("pubDate") or field("published") or field("updated"))
                 title = field("title")
                 if (not stamp or not now - timedelta(hours=48) <= stamp <= now
-                        or not _trusted(link) or link in used or not _AI.search(title)):
+                        or not _trusted(link) or link in used or not AI_TOPIC.search(title)):
                     continue
                 candidates.append(dict(title=title, url=link, publisher=publisher,
                                        published_at=stamp.isoformat(), kind="news"))
@@ -196,7 +286,8 @@ def collect_sources(state: dict, now=None) -> list:
     candidates = candidates[:8]  # fresh launches/articles first; evergreen fills quiet slots
     # Rotate evergreen topics daily, so quiet days still offer useful teaching.
     offset = now.date().toordinal() % len(KNOWLEDGE) if KNOWLEDGE else 0
-    for topic, title, url in KNOWLEDGE[offset:] + KNOWLEDGE[:offset]:
+    evergreen = () if news_only else KNOWLEDGE[offset:] + KNOWLEDGE[:offset]
+    for topic, title, url in evergreen:
         if url not in used:
             candidates.append(dict(title=title, url=url, publisher="Hugging Face docs",
                                    published_at="", kind="knowledge", topic=topic))
@@ -238,7 +329,7 @@ def source_evidence(source):
     return {str(i): sentence for i, sentence in enumerate(sentences[:40])}
 
 
-def draft_post(slot, sources, recent, feedback=""):
+def draft_post(slot, sources, recent, feedback="", trending=None):
     from ..core.personality_store import render_core_identity, hard_rules_block
     language = "French" if os.environ.get("CONTENT_LANG_PRIMARY", "en") == "fr" else "English"
     evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
@@ -269,13 +360,13 @@ Return ONLY JSON: {{"source_id":"0", "text":"...", "angle":"...",
 "takeaway":"...", "evidence_ids":["0"]}}.
 Select 1–3 evidence IDs from the chosen source. These are exact source
 sentences supplied by the application. Never make up IDs or quotations.
-Set "skip":true (with empty text/evidence_ids) if no strong post is possible.
+Set "skip":true (with empty text/evidence_ids) if no strong post is possible.{trend_block(trending)}
 RECENT POSTS: {json.dumps(recent[-12:], ensure_ascii=False)}
 SOURCES: {json.dumps(evidence_sources, ensure_ascii=False)}"""
     return _json_call(prompt, "EDITORIAL_DRAFT")
 
 
-def review_draft(draft, sources, recent, exceptional=False):
+def review_draft(draft, sources, recent, exceptional=False, trending=None):
     """Deterministic evidence checks, then a separate factual/value editor."""
     if not isinstance(draft, dict) or draft.get("skip") is True:
         return False, "malformed draft", None
@@ -286,6 +377,8 @@ def review_draft(draft, sources, recent, exceptional=False):
         return False, "missing substance, source, or invalid length", source
     if _BAIT.search(text) or re.search(r"https?://|#|\[|\]", text):
         return False, "bait or publishing scaffolding", source
+    if trending and ("@" in text or source.get("kind") != "news"):
+        return False, "trend post needs a fresh news source and no @mention", source
     if "evidence_ids" in draft:
         ids = draft["evidence_ids"]
         snippets = source_evidence(source)
@@ -321,8 +414,9 @@ as reader value. Novel means different from the recent posts, not a new
 scientific discovery. A useful teaching post need not invent a prediction,
 performance claim, or recommended numeric setting to earn approval.
 Return JSON only with boolean fields: approved, grounded, ai_relevant,
-adds_value, natural_voice, novel, exceptional; and a short reason.
+adds_value, natural_voice, novel, exceptional, trending; and a short reason.
 exceptional means a consequential fresh update or unusually useful AI teaching source.
+{trend_rule(trending)}
 Do not rewrite or rubber-stamp. Quality beats filling a quota.
 DRAFT: {json.dumps(draft, ensure_ascii=False)}
 SOURCE: {json.dumps(source, ensure_ascii=False)}
@@ -331,7 +425,38 @@ RECENT: {json.dumps(recent[-12:], ensure_ascii=False)}""", "EDITORIAL_REVIEW")
     ok = all(review.get(key) is True for key in fields)
     if exceptional:
         ok = ok and review.get("exceptional") is True
+    if trending:
+        ok = ok and review.get("trending") is True
     return ok, review.get("reason", "editor did not return a complete approval"), source
+
+
+_NO_DRAFT = object()
+
+
+def _pending_refusal(state, now) -> str:
+    """Why the pending submissions forbid another one now, or "".
+
+    An ambiguous submission writes no ledger row, so `can_post` never sees
+    it. Each one counts toward today's ceiling and the post spacing until
+    the operator clears it; a Slot the operator marked published after a
+    check counts too, since its post has no ledger row either."""
+    today = now.date().isoformat()
+    pending = state.get("pending_sources", {})
+    slots = state.get("slots", {}) if state.get("date") == today else {}
+    pending_today = {key for key in pending if key.startswith(f"{today}/")}
+    pending_today |= {f"{today}/{clock}" for clock, mark in slots.items() if mark == "pending"}
+    published = sum(1 for mark in slots.values() if mark == "published")
+    used = max(action_guard.profile_count_today(), published) + len(pending_today)
+    cap = min(config.MAX_PROFILE_POSTS_PER_DAY, config.MAX_ORIGINALS_PER_DAY)
+    if used >= cap:
+        return f"daily ceiling reached with pending submissions ({used}/{cap})"
+    stamps = [_stamp(entry.get("ts", "")) for entry in (*pending.values(), *state.get("published", []))]
+    last = max((stamp for stamp in stamps if stamp), default=None)
+    # The jitter's upper bound: every draw action_guard can make is shorter.
+    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
+    if last and (now - last).total_seconds() < gap:
+        return f"too soon since the last submission (need ~{gap}s gap)"
+    return ""
 
 
 def run_editorial_cycle(preview=False):
@@ -343,75 +468,115 @@ def run_editorial_cycle(preview=False):
         # The review dedups against it: unreadable, refuse before a Draft
         # spends an Attempt.
         load_history()
-        slot = due_slot(state=state)
-        if not slot or not action_guard.can_post(action_guard.POST)[0]:
-            return None
         today = now_local().date().isoformat()
         if state.get("date") != today:
-            state = {"date": today, "slots": {}, "published": state.get("published", [])[-90:]}
-        # At most three Attempts in this window, including process restarts.
-        attempts = state.setdefault("attempts", {})
-        if attempts.get(slot[0], 0) >= 3:
+            state = {"date": today, "slots": {}, "published": state.get("published", [])[-90:],
+                     "pending_sources": state.get("pending_sources", {})}
+        if not action_guard.can_post(action_guard.POST)[0] or _pending_refusal(state, _local()):
             return None
-        sources = collect_sources(state)
-        if not sources:
-            return None
-        recent = [p["text"] for p in state.get("published", [])]
-        draft = draft_post(slot, sources, recent, state.get("feedback", {}).get(slot[0], ""))
-        # No Draft (provider error, malformed JSON, explicit skip), no
-        # Attempt: the 45-minute window already bounds these passes.
-        if not isinstance(draft, dict) or not draft or draft.get("skip") is True:
-            log.info("[EDITORIAL] No draft for %s this pass.", slot[0])
-            return None
-        if not preview:
-            # Counted before review, so a crash mid-review still spends it.
-            attempts[slot[0]] = attempts.get(slot[0], 0) + 1
-            _save_state(state)
-        ok, reason, source = review_draft(draft, sources, recent, exceptional=slot[0] == "20:45")
-        audit = dict(ts=now_local().isoformat(), slot=slot[0], approved=ok,
-                     reason=reason, draft=draft, source_url=source["url"] if source else "")
-        if preview:
-            return audit
-        with AUDIT_FILE.open("a") as f:
-            f.write(json.dumps(audit, ensure_ascii=False) + "\n")
-        if not ok:
-            state.setdefault("feedback", {})[slot[0]] = str(reason)[:500]
-            _save_state(state)
-            log.info("[EDITORIAL] Skipped %s: %s", slot[0], reason)
-            return audit
-        require_active()
-        # A slow source/model call must not publish an expired slot.
-        if due_slot(state=state) != slot:
-            return audit
-        from ..x.confirmed_write import WriteOutcome
-        from ..x.twitter_client import post_tweet
-        text = draft["text"].strip() + "\n\n" + source["url"]
-        if config.dry_run():
-            log.info("[EDITORIAL][DRY_RUN] %s", text)
-            return audit
-        # Reserve before submitting. An interrupted/ambiguous submission must
-        # never cause a duplicate after a restart. Only an outcome that sent
-        # nothing releases it.
-        state.setdefault("slots", {})[slot[0]] = "pending"
-        _save_state(state)
-        outcome = post_tweet(text, editorial=True)
-        if outcome:
-            state["slots"][slot[0]] = "published"
-            state["published"].append(dict(ts=now_local().isoformat(), text=draft["text"],
-                                           source_url=source["url"], angle=draft["angle"],
-                                           slot=slot[0]))
-            _save_state(state)
-            log.info("[EDITORIAL] Published %s (%d/%d profile posts today).",
-                     slot[0], action_guard.profile_count_today(), config.MAX_PROFILE_POSTS_PER_DAY)
-        elif outcome in (WriteOutcome.REFUSED, WriteOutcome.FAILED, WriteOutcome.DRY_RUN):
-            del state["slots"][slot[0]]
-            _save_state(state)
-        else:
-            log.warning("[EDITORIAL] %s stays pending: the submit may have reached X (%s). "
-                        "Check the profile before clearing it.", slot[0], outcome)
-        return audit
+        # The Startup post goes first, then every open Slot of the grid. A
+        # pass that gives a Slot no Draft moves on to the next one, so a
+        # restart or a silent 09:30 never hides a Slot; the first Draft ends
+        # the pass, so a pass publishes once at most.
+        for slot in (startup_slot(state=state), *open_slots(state=state)):
+            if slot:
+                result = _run_slot(slot, state, preview)
+                if result is not _NO_DRAFT:
+                    return result
+        return None
     finally:
         _CYCLE_LOCK.release()
+
+
+def _run_slot(slot, state, preview):
+    """One pass for `slot`: its audit, or _NO_DRAFT when no Draft reached
+    the Editor and no Attempt was spent."""
+    # At most three Attempts in this window, including process restarts.
+    attempts = state.setdefault("attempts", {})
+    if attempts.get(slot.clock, 0) >= MAX_ATTEMPTS:
+        return _NO_DRAFT
+    trending = None
+    if slot.trend:
+        trending = collect_trending_posts(slot)
+        if len(trending) < TREND_MIN_POSTS:
+            log.info("[EDITORIAL] Too few trending AI posts for %s this pass.", slot.clock)
+            return _NO_DRAFT
+        sources = collect_sources(state, news_only=True)
+    else:
+        sources = collect_sources(state)
+    if not sources:
+        return _NO_DRAFT
+    # A pending submission may be live: later Drafts and the Editor treat
+    # its text as a recent post.
+    recent = [p["text"] for p in state.get("published", [])]
+    recent += [p["text"] for p in state.get("pending_sources", {}).values()]
+    draft = draft_post(slot, sources, recent, state.get("feedback", {}).get(slot.clock, ""),
+                       trending)
+    # No Draft (provider error, malformed JSON, explicit skip), no
+    # Attempt: the 45-minute window already bounds these passes.
+    if not isinstance(draft, dict) or not draft or draft.get("skip") is True:
+        log.info("[EDITORIAL] No draft for %s this pass.", slot.clock)
+        return _NO_DRAFT
+    if not preview:
+        # Counted before review, so a crash mid-review still spends it.
+        attempts[slot.clock] = attempts.get(slot.clock, 0) + 1
+        _save_state(state)
+    ok, reason, source = review_draft(draft, sources, recent, exceptional=slot.exceptional,
+                                      trending=trending)
+    audit = dict(ts=now_local().isoformat(), slot=slot.clock, approved=ok,
+                 reason=reason, draft=draft, source_url=source["url"] if source else "")
+    if preview:
+        return audit
+    with AUDIT_FILE.open("a") as f:
+        f.write(json.dumps(audit, ensure_ascii=False) + "\n")
+    if not ok:
+        state.setdefault("feedback", {})[slot.clock] = str(reason)[:500]
+        _save_state(state)
+        log.info("[EDITORIAL] Skipped %s: %s", slot.clock, reason)
+        return audit
+    require_active()
+    # A slow source/model call must not publish an expired slot.
+    now = _local()
+    if not _in_window(slot.clock, now):
+        return audit
+    refusal = _pending_refusal(state, now)
+    if refusal:
+        log.info("[EDITORIAL] %s not submitted: %s.", slot.clock, refusal)
+        return audit
+    from ..x.confirmed_write import WriteOutcome
+    from ..x.twitter_client import post_tweet
+    text = draft["text"].strip() + "\n\n" + source["url"]
+    if config.dry_run():
+        log.info("[EDITORIAL][DRY_RUN] %s", text)
+        return audit
+    # Reserve before submitting. An interrupted/ambiguous submission must
+    # never cause a duplicate after a restart. Only an outcome that sent
+    # nothing releases it; until then its source and text stay out of later
+    # Drafts, and it counts toward the ceiling and the spacing.
+    # Keyed by day too: tomorrow's same Slot must not overwrite it.
+    pending_key = f"{state['date']}/{slot.clock}"
+    state.setdefault("slots", {})[slot.clock] = "pending"
+    state.setdefault("pending_sources", {})[pending_key] = dict(
+        url=source["url"], text=draft["text"], ts=now_local().isoformat())
+    _save_state(state)
+    outcome = post_tweet(text, editorial=True)
+    if outcome:
+        del state["pending_sources"][pending_key]
+        state["slots"][slot.clock] = "published"
+        state["published"].append(dict(ts=now_local().isoformat(), text=draft["text"],
+                                       source_url=source["url"], angle=draft["angle"],
+                                       slot=slot.clock))
+        _save_state(state)
+        log.info("[EDITORIAL] Published %s (%d/%d profile posts today).",
+                 slot.clock, action_guard.profile_count_today(), config.MAX_PROFILE_POSTS_PER_DAY)
+    elif outcome in (WriteOutcome.REFUSED, WriteOutcome.FAILED, WriteOutcome.DRY_RUN):
+        del state["slots"][slot.clock]
+        del state["pending_sources"][pending_key]
+        _save_state(state)
+    else:
+        log.warning("[EDITORIAL] %s stays pending: the submit may have reached X (%s). "
+                    "Check the profile before clearing it.", slot.clock, outcome)
+    return audit
 
 
 def safe_run_editorial_cycle():

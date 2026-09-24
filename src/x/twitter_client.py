@@ -602,7 +602,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def steps():
         # Every exit before the submit keystroke sent nothing: a failed step, a
-        # stop or 22:00 releases the claim so a later cycle may answer.
+        # stop or bedtime releases the claim so a later cycle may answer.
         sent = False
         try:
             # Make sure Safari is focused first

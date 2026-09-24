@@ -9,12 +9,12 @@ converses through replies, within a ceiling set by the operator.
 
 **Original**:
 A top-level post the account writes itself from a source, carrying the source
-link. Six are targeted per day, seven at most.
+link. At least three are targeted per day, six planned, eight at most.
 _Avoid_: post, tweet, profile post
 
 **Profile publication**:
 Anything that appears on the account's profile timeline as its own: Originals,
-quotes and reposts. Seven per Toronto calendar day, all kinds combined.
+quotes and reposts. Eight per Toronto calendar day, all kinds combined.
 _Avoid_: profile post, post
 
 **Slot**:
@@ -23,13 +23,30 @@ published.
 _Avoid_: window, schedule entry
 
 **Exceptional slot**:
-The optional seventh Slot, reserved for news under six hours old that the
-Editor judges exceptional.
-_Avoid_: seventh post, breaking slot
+The optional 20:45 Slot, reserved for news under twelve hours old or a useful
+teaching source that the Editor judges exceptional.
+_Avoid_: eighth post, breaking slot
+
+**Trend slot**:
+A Slot whose topic is the common thread of the Trending posts, told from a
+fresh trusted article: 10:00, 13:00, 15:00 and the Startup post.
+_Avoid_: viral slot, hot take
+
+**Trending posts**:
+The five fastest-rising AI posts on X from the last 24 hours, stripped of
+handles, mentions and links. They choose a Trend slot's topic and never supply
+a fact.
+_Avoid_: top tweets, viral posts
+
+**Startup post**:
+A Trend slot opened for 45 minutes each time the bot starts in waking hours,
+restarts included, keyed by the start time.
+_Avoid_: startup burst, boot post
 
 **Pending slot**:
 A Slot whose Original was submitted without a definite outcome; it is never
-retried until the operator clears it.
+retried until the operator clears it, and until then it counts as a Profile
+publication for the day's ceiling and the post spacing.
 
 **Write outcome**:
 What one write to X (post, Reply, follow, unfollow, like, pin) came to:
@@ -131,8 +148,8 @@ _Avoid_: protected account, influencer
 ### Time and people
 
 **Waking hours**:
-The only period when the account acts externally, 04:30 to 22:00 Toronto
-time.
+The only period when the account acts externally, 04:30 to 23:30 Toronto
+time. `active_hours.WAKE` and `active_hours.BEDTIME` hold the two bounds.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:

@@ -8,6 +8,20 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-23 — bedtime moves from 22:00 to 23:30 (operator request):**
+> Waking hours now run 04:30–23:30 America/Toronto. The clock, the
+> timeout cap on model calls and every refusal message read
+> `active_hours.WAKE` and `BEDTIME`, where `seconds_until_bedtime` used to
+> hard-code the hour and ignore the minutes. The slot grid is unchanged:
+> no slot was added, 20:45 stays the Exceptional slot, and caps, pacing,
+> spacing and the Toronto calendar day budget are as before. The extra 90
+> minutes carry replies and the other waking jobs, and a Startup post when
+> the bot starts in them: its window still closes at 23:30. The overnight
+> watchdog restarts now fall between 23:30 and 04:30. Guard:
+> `tests/guards/test_active_hours.py` pins the bounds, DST days included,
+> and fails if a hard-coded 22:00 bedtime comes back under `src/`, `bin/`
+> or `main.py`.
+
 > **2026-09-23 — one Reply pipeline (issue #156):** seven reply paths
 > repeated admission, generation, write and log, each with its own set of
 > posts set aside, its own `StateUnreadable` handler and its own rate-limit
@@ -46,6 +60,29 @@ their order in the file is not strictly chronological.
 > which sent nothing, free the slot now; `UNCONFIRMED` leaves it `pending`
 > for the operator. Guards: `tests/x/test_write_order.py`,
 > `tests/editorial/test_editorial_bot.py`.
+
+> **2026-09-23 — pending submissions count toward the ceiling (PR #165
+> review):** an `UNCONFIRMED` submit writes no ledger row, so `can_post` saw
+> neither it nor the spacing after it. Simulated with every submit
+> unconfirmed, one process made 12 submissions in a day (eleven slots and the
+> Startup post), and a crash every 20 minutes made 63, some a minute apart,
+> each restart retrying the same story from another article. The editorial
+> cycle now counts today's pending submissions, and the slots the operator
+> marked published after a check, toward the eight, measures the
+> twenty-minute spacing from the last pending or published one too, before
+> drafting and again right before the submit, and hands pending texts to the
+> draft and the review as recent posts. A silent 09:30 no longer hides 10:00,
+> and a negative `POST_JITTER_SECONDS` reads as 0. Guards:
+> `tests/editorial/test_editorial_bot.py` (crash loop, single process),
+> `tests/core/test_config.py`.
+
+> **2026-09-23 — trend slots and Startup post:** at the operator's request,
+> three trend slots (10:00, 13:00, 15:00) joined the grid and every start in
+> waking hours now opens a Startup post; the operator chose a post on every
+> restart over one a day. Trend posts pick their topic from the five
+> fastest-rising AI posts on X from the last 24 hours and their facts from a
+> trusted article. The post spacing floor went from 3600 to 1200 seconds so
+> 09:30 and 10:00 both fit. The eight-publication ceiling did not move.
 
 > **2026-09-23 — direct reply overlap + editorial floor:** APScheduler was
 > skipping `direct_reply_job` because the steady-state cycle ignored
