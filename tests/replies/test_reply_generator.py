@@ -199,12 +199,10 @@ def test_voices_without_identity_only_gain_the_hard_rules(jobs, job, author, tex
 
 @pytest.fixture
 def dossier():
-    import json
     from src.core import personality_store
 
-    with open(personality_store.PERSONALITY_FILE, "w") as f:
-        json.dump({"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}},
-                   "topics": {}}, f)
+    personality_store.PERSONALITY.write(
+        {"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}}, "topics": {}})
     return "# Memoire personnelle: ce que tu sais de @someone"
 
 
