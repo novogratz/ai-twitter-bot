@@ -9,6 +9,7 @@ from ..core.logger import log
 
 
 _STOP = threading.Event()
+BEDTIME = time(22, 0)
 
 
 def request_stop():
@@ -66,6 +67,11 @@ def awake_job(fn):
     return run
 
 
+def bedtime(now: datetime) -> datetime:
+    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
+    return now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+
+
 def seconds_until_bedtime() -> float:
     now = now_local()
-    return max(0.0, (now.replace(hour=22, minute=0, second=0, microsecond=0) - now).total_seconds())
+    return max(0.0, (bedtime(now) - now).total_seconds())

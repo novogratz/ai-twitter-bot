@@ -116,17 +116,23 @@ lock.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
    `open_startup_window()`, which opens nothing outside waking hours. Each
-   pass tries the Startup post first and falls through to the grid Slot when
-   that yields no draft.
+   pass tries the Startup post first, then every open grid Slot in order
+   (09:30 and 10:00 overlap), and moves on while a slot yields no draft; the
+   first draft ends the pass, so a pass submits once at most. Before any of
+   it, the pass stops when `can_post` refuses or when the pending
+   submissions forbid another (see Publish).
 2. **Attempts.** Three per slot per day, restarts included. An attempt is a
    draft submitted to review: the counter is saved once a draft exists and
    before review. A pass with no source, a draft model error or an explicit
    skip spends none; the 45-minute window bounds those passes.
-3. **Trend.** For a trend slot, `collect_trending_posts` runs the two
-   `TREND_QUERIES` in the Top tab (`scrape_x_search(..., text_limit=600)`),
-   keeps posts under 24 hours old by status ID, drops own posts, Blocked
-   accounts, nested replies, off-topic and crypto posts, strips handles,
-   mentions and links, and keeps the five with the most likes per minute. A
+3. **Trend.** For a trend slot, `collect_trending_posts`
+   (`src/editorial/trending.py`) runs the two `TREND_QUERIES` in the Top tab
+   (`TREND_SEARCH_TWEETS` posts each, `text_limit=TREND_TEXT_LIMIT`),
+   keeps posts under 24 hours old by status ID, drops own posts
+   (`scraper.is_own_post`), Blocked accounts, nested replies, off-topic and
+   crypto posts, strips handles, mentions and links, with or without a
+   scheme (`t.co/x`, `site.com/page`), and keeps the five with the most
+   likes per minute. A
    usable result is cached for the slot's retries; fewer than three posts
    skips the pass without spending an attempt. Trend slots get news sources
    only, never evergreen documentation.
@@ -140,7 +146,9 @@ lock.
 5. **Draft.** The model sees `core_identity_en.md`, the hard rules, the slot
    brief, the last rejection reason for this slot, recent posts, numbered
    evidence sentences from each source and, for a trend slot, the trending
-   posts as untrusted data that choose the topic. It returns JSON matching
+   posts as untrusted data that choose the topic. Recent posts include the
+   text of every pending submission, which may be live; the review sees the
+   same list. It returns JSON matching
    `editorial_schemas.DRAFT_SCHEMA`, or an explicit skip.
 6. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
@@ -151,11 +159,19 @@ lock.
    and `trending` for a trend slot, which also needs a news source and no `@`.
 7. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
-   next attempt. Nothing is written when `can_post` refuses (spacing or
-   ceiling), when the three attempts are spent, or when the pass yields no
-   draft.
-8. **Publish.** Waking hours and the slot's window are checked again. The slot is
-   marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
+   next attempt. Nothing is written when `can_post` or the pending check
+   refuses (spacing or ceiling), when the three attempts are spent, or when
+   the pass yields no draft.
+8. **Publish.** Waking hours and the slot's window are checked again, then
+   the pending check: an `UNCONFIRMED` submission writes no ledger row, so
+   `can_post` cannot see it. Today's pending submissions (in `slots` or in
+   `pending_sources`), plus the published count (the ledger's, or today's
+   `published` slots when the operator marked more after a check), must stay
+   under the ceiling, and the newest pending or published timestamp must be
+   `MIN_SECONDS_BETWEEN_POSTS` plus `POST_JITTER_SECONDS` old. A pending
+   submission counts until the operator clears it. The slot is
+   marked `pending` and saved with its source URL, text and time in
+   `pending_sources`, then `post_tweet(text, editorial=True)` sends
    the draft plus the source URL. `SHIPPED` marks it `published`. `REFUSED`,
    `FAILED` and `DRY_RUN` sent nothing and free the slot. `UNCONFIRMED` (the
    submit keystroke failed, so the post may be live), any other result and an
@@ -447,6 +463,10 @@ home-timeline attribution. It does not influence any cap.
 
 These are how the code behaves today, not design intent:
 
+- Pending editorial submissions count toward the ceiling and the spacing in
+  the editorial cycle only (`_pending_refusal`): `post_tweet` and the ledger
+  do not see them. The editorial cycle is the only `post_tweet` caller; a new
+  caller would not count them.
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.

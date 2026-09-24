@@ -29,3 +29,14 @@ def test_post_spacing_floor_is_twenty_minutes():
         return int(out.stdout.strip().splitlines()[-1])
     assert floor("60") == 1200
     assert floor("3600") == 3600
+
+
+def test_a_negative_post_jitter_cannot_shorten_the_spacing_floor():
+    import os
+    import subprocess
+    import sys
+    code = "from src.core import config; print(config.POST_JITTER_SECONDS)"
+    env = {**os.environ, "POST_JITTER_SECONDS": "-900"}
+    out = subprocess.run([sys.executable, "-c", code], env=env, check=True,
+                         capture_output=True, text=True, cwd=config._PROJECT_ROOT)
+    assert int(out.stdout.strip().splitlines()[-1]) == 0

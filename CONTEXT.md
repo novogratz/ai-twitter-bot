@@ -9,7 +9,7 @@ converses through replies, within a ceiling set by the operator.
 
 **Original**:
 A top-level post the account writes itself from a source, carrying the source
-link. Six are targeted per day, seven at most.
+link. At least three are targeted per day, six planned, eight at most.
 _Avoid_: post, tweet, profile post
 
 **Profile publication**:
@@ -45,7 +45,8 @@ _Avoid_: startup burst, boot post
 
 **Pending slot**:
 A Slot whose Original was submitted without a definite outcome; it is never
-retried until the operator clears it.
+retried until the operator clears it, and until then it counts as a Profile
+publication for the day's ceiling and the post spacing.
 
 **Write outcome**:
 What one write to X (post, Reply, follow, unfollow, like, pin) came to:

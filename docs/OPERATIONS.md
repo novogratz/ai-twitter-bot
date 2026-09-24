@@ -126,7 +126,7 @@ real account from a second process. Before any of them:
 | Where | What it tells you |
 |---|---|
 | `bot.log` | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]` |
-| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), the source of each pending slot (`pending_sources`, keyed `YYYY-MM-DD/<slot>`, skipped by later drafts), recent publications and used sources |
+| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
@@ -144,14 +144,17 @@ heartbeat line.
 ## Recovery
 
 **A slot is `pending`.** The submission was interrupted or its outcome was
-unclear, and the bot will not retry it. A failed submit keystroke logs
+unclear, and the bot will not retry it. Until you clear it, it counts toward
+today's eight publications and the twenty-minute spacing, and its text stays
+a recent post for later drafts. A failed submit keystroke logs
 `[EDITORIAL] <slot> stays pending` in `bot.log`. Check the profile first. If the post
 is live, set the slot to `"published"` in `editorial_state.json` and append
 a matching entry (`ts`, `text`, `source_url`, `angle`, `slot`) to
 `published`, so the source rests for seven days and the reach report counts
-the post. If it is not live, delete the slot entry. Either way, delete its
-entry (keyed `YYYY-MM-DD/<slot>`) from `pending_sources`: until then later
-drafts skip that source, across days too. Do this with the bot
+the post; the published slot keeps counting toward today's ceiling. If it is
+not live, delete the slot entry. Either way, delete its entry (keyed
+`YYYY-MM-DD/<slot>`) from `pending_sources`: until then later drafts skip that
+source and text, across days too, and today's ceiling counts it. Do this with the bot
 stopped.
 
 **Corrupt `editorial_state.json` or `action_ledger.json`.** Both fail closed:
@@ -273,7 +276,7 @@ Changes to `.env` or code take effect at restart.
 - Lowering `MAX_ORIGINALS_PER_DAY` below 8.
 
 What cannot be tuned from `.env` or `live_strategy.json`: the eight-post
-ceiling, the one-hour spacing floor between originals, quotes and reposts at
+ceiling, the twenty-minute spacing floor between originals, quotes and reposts at
 zero, and waking hours. They live in `src/core/config.py` and
 `src/guards/active_hours.py`; changing them needs an operator request and an
 update to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads

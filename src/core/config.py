@@ -138,7 +138,8 @@ def dry_run() -> bool:
 # minutes apart and the Startup post can land next to any slot.
 MAX_ORIGINALS_PER_DAY = min(8, int(os.environ.get("MAX_ORIGINALS_PER_DAY", "8")))
 MIN_SECONDS_BETWEEN_POSTS = max(1200, int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", "1200")))
-POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", "0"))
+# A negative jitter would shorten the floor above.
+POST_JITTER_SECONDS = max(0, int(os.environ.get("POST_JITTER_SECONDS", "0")))
 
 # Automatic quotes, reposts and recycling are retired. Legacy callers still
 # encounter these hard limits, including urgent/mega-viral bypass attempts.

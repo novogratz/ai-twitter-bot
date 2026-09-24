@@ -11,7 +11,8 @@ Quick health check, read-only:
 2. Toronto time: `TZ=America/Toronto date "+%F %T %Z"`, and Waking hours:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`.
    Silence Overnight is normal.
-3. Today's Profile publications against the ceiling of seven:
+3. Today's Profile publications against the ceiling of eight; this ledger
+   count leaves out today's `pending` slots (step 4), which count too:
    `uv run python -c "from src.guards import action_guard; print(action_guard.profile_count_today())"`
 4. Editorial slots: `jq '{date, slots, attempts}' editorial_state.json`.
    A `pending` slot is never retried: see `docs/OPERATIONS.md#recovery`.

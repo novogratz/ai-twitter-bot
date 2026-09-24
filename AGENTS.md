@@ -38,7 +38,8 @@ The top level of `src/` holds only packages.
 
 | Concern | Where |
 |---|---|
-| Originals: sources, evidence, draft, separate review | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes | `src/replies/reply_generator.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship | `src/replies/reply_pipeline.py` |
@@ -124,7 +125,8 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   never overwritten: repair it by hand, never delete it
   ([recovery](docs/OPERATIONS.md#recovery)).
 - An editorial slot in `pending` state was submitted ambiguously; it is never
-  retried automatically. Check the profile before clearing it
+  retried automatically, and it counts toward today's ceiling and the post
+  spacing until cleared. Check the profile before clearing it
   ([recovery](docs/OPERATIONS.md#recovery)).
 - `.claude/skills/` is the one skills source and matches the 2026-09-20
   policy. `.codex/skills` is a relative symlink to it; OpenCode reads

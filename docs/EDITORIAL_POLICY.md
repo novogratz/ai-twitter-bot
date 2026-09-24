@@ -42,8 +42,8 @@ The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from
 X. Two Top-tab searches for AI and "artificial intelligence" supply posts from
 the last 24 hours; the five with the most likes per minute are kept. Own posts,
 Blocked accounts, nested replies, posts without AI vocabulary and crypto or
-ticker posts are dropped. Handles, mentions and links are stripped before the
-text reaches the model. Fewer than three usable posts skips the pass.
+ticker posts are dropped. Handles, mentions and links, with or without a
+scheme, are stripped before the text reaches the model. Fewer than three usable posts skips the pass.
 
 The trending posts choose the topic and never supply a fact. The generator must
 write from a fresh news article from the trusted feeds that covers their shared
@@ -57,11 +57,14 @@ each time the bot starts in waking hours, restarts included: a crash, a
 watchdog relaunch or a deploy each opens one. It has its own three attempts
 and pending guard per start, goes before a slot whose window is open, and
 obeys the waking hours, the eight-publication ceiling and the post spacing. A
-pass that gives it no draft falls through to the open slot in the same pass,
+pass that gives it no draft falls through to the open slots in the same pass,
 so a restart never hides a slot. A start overnight opens nothing, even just
 before 04:30. A restart loop in daytime therefore publishes
 up to one post every twenty minutes until the daily ceiling, at the expense of
-later slots.
+later slots. An ambiguous submission counts as a publication for that: the
+next Startup post waits twenty minutes after it, the day's pending submissions
+count toward the eight, and its text is a recent post the next draft and review
+must not repeat.
 
 ## Runtime rules
 
@@ -77,11 +80,15 @@ later slots.
   day the evening slots are the ones left out.
 - A slot permits at most three attempts over 45 minutes (the last ends at 22:00).
   An attempt is a draft submitted to the editor; a pass without a draft
-  spends none. A slot out of attempts no longer holds an overlapping one.
+  spends none. A slot out of attempts, or one whose pass yields no draft, no
+  longer holds an overlapping one; a pass still submits once at most.
   There is no backlog catchup. At least twenty minutes separate originals.
 - Eight profile publications per local day is absolute. The ledger includes
   originals, quotes and reposts already made that day. Deploying this change
-  does not erase history or grant extra slots.
+  does not erase history or grant extra slots. A `pending` submission, whose
+  outcome was ambiguous, has no ledger row: it counts toward the day's eight
+  and toward the twenty-minute spacing until the operator clears it, and so
+  does a slot the operator marked published after a check.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
   Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
   write functions are removed from `src/x/twitter_client.py` (issue #111), and

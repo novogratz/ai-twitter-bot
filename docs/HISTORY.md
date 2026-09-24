@@ -47,6 +47,21 @@ their order in the file is not strictly chronological.
 > for the operator. Guards: `tests/x/test_write_order.py`,
 > `tests/editorial/test_editorial_bot.py`.
 
+> **2026-09-23 — pending submissions count toward the ceiling (PR #165
+> review):** an `UNCONFIRMED` submit writes no ledger row, so `can_post` saw
+> neither it nor the spacing after it. Simulated with every submit
+> unconfirmed, one process made 12 submissions in a day (eleven slots and the
+> Startup post), and a crash every 20 minutes made 63, some a minute apart,
+> each restart retrying the same story from another article. The editorial
+> cycle now counts today's pending submissions, and the slots the operator
+> marked published after a check, toward the eight, measures the
+> twenty-minute spacing from the last pending or published one too, before
+> drafting and again right before the submit, and hands pending texts to the
+> draft and the review as recent posts. A silent 09:30 no longer hides 10:00,
+> and a negative `POST_JITTER_SECONDS` reads as 0. Guards:
+> `tests/editorial/test_editorial_bot.py` (crash loop, single process),
+> `tests/core/test_config.py`.
+
 > **2026-09-23 — trend slots and Startup post:** at the operator's request,
 > three trend slots (10:00, 13:00, 15:00) joined the grid and every start in
 > waking hours now opens a Startup post; the operator chose a post on every

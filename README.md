@@ -17,7 +17,8 @@ every post and respond naturally in conversations.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
-  within the daily ceiling and the twenty-minute spacing.
+  within the daily ceiling and the twenty-minute spacing. A submission with an
+  ambiguous outcome counts toward both until the operator clears it.
 - **No automatic quote tweets, reposts, self-recycling, or burst threads.**
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
