@@ -1,7 +1,6 @@
 """Reply bot: finds AI tweets and posts troll replies."""
 import os
 import re
-import time
 import traceback
 from datetime import datetime, timedelta, timezone
 from ..x import x_urls
@@ -31,15 +30,15 @@ def _tweet_age_minutes(tweet_url: str) -> int:
     tweet_time = datetime.fromtimestamp(timestamp_ms / 1000, tz=timezone.utc)
     age = datetime.now(tz=timezone.utc) - tweet_time
     return int(age.total_seconds() / 60)
+from . import reply_pipeline
 from .reply_agent import generate_replies
 from ..x.scraper import refresh_feed
-from ..x.twitter_client import reply_to_tweet
 from ..core.history import get_recent_tweets
-from ..core.engagement_log import log_reply
-from ..core.humanizer import humanize
 from ..guards.replied_store import load_replied
-from ..guards.reply_admission import judge_parent
-from ..core.state_errors import StateUnreadable
+
+# The model call that finds the posts also writes their replies: the
+# candidates carry their text, and no voice is needed.
+JOB = reply_pipeline.Job("reply_search", "REPLY", voice=None, pause=(15, 15))
 
 
 def _reply_search_enabled() -> bool:
@@ -89,17 +88,12 @@ def run_reply_cycle():
     # Growth push: the model already ranked the batch; ship more good targets
     # per scan while MAX_REPLIES_PER_CYCLE still controls the hard ceiling.
     limit = min(20, MAX_REPLIES_PER_CYCLE)
-    tried = set()  # in memory only: no same-cycle retry
-    posted_count = 0
-
+    candidates = []
     for data in replies:
-        if len(tried) >= limit:
-            break
         url = data.get("tweet_url", "")
-        if not url or url in tried:
+        if not url or not data.get("reply"):
             continue
-        action_type = data.get("type", "reply")
-        if action_type == "quote":
+        if data.get("type", "reply") == "quote":
             log.info(f"[REPLY] Quote action disabled - skipping {url}")
             continue
         if x_urls.is_reply_like_tweet({"url": url, "text": data.get("tweet_text") or data.get("text") or ""}):
@@ -112,34 +106,12 @@ def run_reply_cycle():
         if age is None or age > timedelta(hours=48):
             log.info(f"[REPLY] No status ID or older than 48h - skipping: {url}")
             continue
+        candidates.append(reply_pipeline.Candidate(
+            url, data.get("tweet_text") or data.get("text") or "", "", reply=data["reply"],
+            pattern=data.get("pattern", "")))
 
-        verdict = judge_parent(url)
-        if not verdict:
-            log.info(f"[REPLY] Not admitted ({verdict.refusal.value}: {verdict.reason}) - skipping {url}")
-            continue
-
-        tried.add(url)
-        reply_text = humanize(data["reply"])
-        log.info(f"[REPLY] Target: {url}")
-        log.info(f"[REPLY] {action_type.upper()} ({len(reply_text)} chars): {reply_text}")
-
-        # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
-        # itself right before the Safari write (that IS the crash-safety);
-        # a caller-side premark makes the chokepoint refuse its own reply
-        # (100% silent self-skip, 2026-06-07 post-mortem).
-        try:
-            if not reply_to_tweet(url, reply_text):
-                continue  # chokepoint skip — nothing posted, no phantom log
-            posted_count += 1
-            log_reply(url, data["reply"], action_type, pattern_id=data.get("pattern", ""))
-            log.info("[REPLY] Waiting 15 seconds before next action...")
-            time.sleep(15)
-        except StateUnreadable:
-            raise
-        except Exception:
-            log.info(f"[REPLY] Failed to {action_type} {url}:")
-            traceback.print_exc()
-
+    # The limit counts the targets Reply admission lets through.
+    posted_count = reply_pipeline.run(JOB, candidates, reply_pipeline.Cycle(), max_generations=limit)
     log.info(f"[REPLY] Posted {posted_count} replies this cycle.")
 
 

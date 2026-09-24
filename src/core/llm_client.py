@@ -388,11 +388,6 @@ def _detect_codex_lockout(result: "LLMResult") -> Optional[datetime]:
     return datetime.now() + timedelta(hours=24)
 
 
-def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
-    """Compatibility shim: LLM budget limits are disabled."""
-    return False, 0, 0, 0
-
-
 def _provider() -> str:
     requested = os.environ.get("AI_CLI", "ollama").strip().lower()
     if requested in {"ollama", "opencode"}:

@@ -8,6 +8,34 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-23 — one Reply pipeline (issue #156):** seven reply paths
+> repeated admission, generation, write and log, each with its own set of
+> posts set aside, its own `StateUnreadable` handler and its own rate-limit
+> stop, and they had drifted: replyback never called `log_reply`, and
+> `direct_reply` swallowed `OutsideActiveHours` in its VIP scan and search
+> loop. They now run through `src/replies/reply_pipeline.py`; caps,
+> budgets, spacing, pacing and the Debate turn cap are unchanged, and only
+> the search lane and the feed sweep generate while posting or wait out the
+> spacing, as before. Assumed changes: replyback writes an engagement log
+> row (`REPLYBACK/<author>`) and bumps the Engager's dossier after each
+> shipped Reply. Bedtime and a stop request end every reply cycle at the
+> next candidate or scrape, instead of walking the remaining candidates
+> into Overnight refusals; an unexpected error in `direct_reply` ends its
+> cycle and reaches `health`. A write that raises on debate, or a
+> generation that raises on early_bird, mega_watch, debate or replyback, is
+> now logged and the post replayed later, where it used to end the cycle;
+> on the VIP lane, such a generation used to end the VIP lane only, and the
+> search lane still ran. A pipelined job stopped by a rate limit, bedtime or
+> an unreadable state file returns without waiting for the generation in
+> flight, which finishes unread. The VIP prompt names the
+> author as the status URL spells it, lowercase, and a VIP post is marked
+> tried when admitted, so the search lane no longer retries a failed VIP
+> generation in the same cycle. The disabled reply search sets aside what
+> it answered or admission refused for good, and logs the humanized text.
+> Every job strips a `[PATTERN: …]` tag. Guards:
+> `tests/replies/test_reply_pipeline.py` and
+> `tests/replies/test_reply_jobs.py`.
+
 > **2026-09-23 — typed write outcomes keep an unclear editorial slot
 > pending (issue #157):** the six write chokepoints now run one sequence,
 > `confirmed_write.run`, and return a typed outcome instead of `True` /

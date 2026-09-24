@@ -8,16 +8,18 @@ dynamic_accounts.json so the engage_bot visits them.
 Hard rules preserved:
   - replies obey DIRECT_REPLY_MAX_AGE_MINUTES (72h since 2026-06-05)
   - Reply admission (Blocked account, own post, already Replied) judges
-    each post before generation, through direct_reply's pipeline
+    each post before generation, in the Reply pipeline
   - all writes go through the twitter_client chokepoints
 """
 import os
-import threading
 import traceback
+from datetime import timedelta
 
 from ..x import x_urls
 from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
+from . import reply_pipeline
+from .direct_reply import DIRECT_REPLY_MAX_AGE_MINUTES, freshness_sort_key, is_on_niche, reply_voice
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -26,10 +28,6 @@ FEED_SWEEP_MAX_REPLIES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_REPLIES_PE
 
 # Authors with at least this many likes on a post get added to dynamic_accounts.
 HARVEST_MIN_LIKES = int(os.environ.get("FEED_SWEEP_HARVEST_MIN_LIKES", "100"))
-
-# Posts this job is done with until restart: definitive Reply admission
-# refusals, posts the model declined, posts answered.
-_skipped: set = set()
 
 
 def _harvest_active_authors(tweets: list) -> None:
@@ -74,23 +72,16 @@ def _harvest_active_authors(tweets: list) -> None:
 def run_feed_sweep_cycle():
     """Sweep BOTH For You and Following every cycle — the primary loop."""
     from ..x.scraper import scrape_home_feed, scrape_following_feed
-    rate_limited = threading.Event()
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
-        if rate_limited.is_set():
+        cycle = reply_pipeline.Cycle()
+        _sweep_one_feed(source, scraper, cycle)
+        if cycle.rate_limited:
             break
-        _sweep_one_feed(source, scraper, rate_limited)
 
 
-def _sweep_one_feed(source, scraper, rate_limited):
-    from .direct_reply import _reply_to_tweets, _is_on_niche
-
+def _sweep_one_feed(source, scraper, cycle):
     log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
-    try:
-        tweets = scraper(max_tweets=FEED_SWEEP_SCAN_LIMIT) or []
-    except Exception:
-        log.info(f"[SWEEP] {source} scrape failed:")
-        traceback.print_exc()
-        return
+    tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=FEED_SWEEP_SCAN_LIMIT)
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
         return
@@ -98,29 +89,28 @@ def _sweep_one_feed(source, scraper, rate_limited):
     # Harvest active authors from this feed pass before filtering.
     _harvest_active_authors(tweets)
 
+    max_age = timedelta(minutes=DIRECT_REPLY_MAX_AGE_MINUTES)
+    label = f"FEED-SWEEP-{source}"
     reply_candidates = []
-    for t in tweets:
+    # No shuffle: fresh-and-rising first (2026-06-07 spec — front-load
+    # <60-min climbers).
+    for t in sorted(tweets, key=freshness_sort_key):
         url = t.get("url") or ""
         text = (t.get("text") or "").strip()
         if not url or not text:
             continue
         if x_urls.is_reply_like_tweet(t):
             continue
-        if not _is_on_niche(text):
+        if not is_on_niche(text):
             continue
-        reply_candidates.append(t)
+        age = x_urls.age(url)
+        if age is None or age > max_age:
+            continue
+        reply_candidates.append(reply_pipeline.Candidate(url, t["text"], label))
 
-    # No shuffle: _reply_to_tweets orders fresh-and-rising first
-    # (2026-06-07 spec — front-load <60-min climbers).
-    replies_done = _reply_to_tweets(
-        reply_candidates,
-        set(),
-        f"FEED-SWEEP-{source}",
-        remaining=FEED_SWEEP_MAX_REPLIES_PER_CYCLE,
-        en_counter=[0],
-        skipped=_skipped,
-        rate_limited=rate_limited,
-    )
+    job = reply_pipeline.Job("feed_sweep", label, voice=reply_voice, pipelined=True)
+    replies_done = reply_pipeline.run(job, reply_candidates, cycle,
+                                      max_generations=FEED_SWEEP_MAX_REPLIES_PER_CYCLE)
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")
 
 

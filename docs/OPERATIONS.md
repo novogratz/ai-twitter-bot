@@ -190,7 +190,7 @@ Safari restart, and nothing writes over the file:
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
-| `personality.json` | The Reply cycles drafting through `direct_reply._generate_single_reply` (`direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`), which read the author's dossier: the cycle stops at its first draft, so none ships. Replybacks read no dossier and continue; the dossier bump after a Reply is skipped |
+| `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
 | `whitelist.json` | `account_curator` promotions (`action_guard` reads it itself) |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 

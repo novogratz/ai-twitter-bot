@@ -75,7 +75,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, through the `direct_reply_job` pipeline. |
+| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
 | `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
@@ -323,27 +323,38 @@ Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
 
-The reply jobs (`direct_reply`, `feed_sweep`, `early_bird`,
-`mega_watch`, `debate`, `replyback`) call `judge_parent` before paying for
-a generation. `StateUnreadable` passes through their per-query and
-per-reply `except Exception` blocks, so an unreadable state file ends the
-cycle. They keep only their own selection filters: niche, age
-threshold, thread-reply shape, handle pools, per-cycle caps. Each keeps a
-module-level `_skipped` set, lost at restart, of posts refused definitively,
-declined by the model (SKIP) or answered. A temporary refusal or a failed
-model call leaves the post replayable. A model rate limit ends the job's
-generations for the cycle, with the post left replayable; in
-`direct_reply` it also stops the search lane, in `feed_sweep` the
-Following pass.
+Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
+`mega_watch`, `debate`, `replyback` and `babysit`, the disabled reply
+search) hands its candidates to the Reply pipeline,
+`src/replies/reply_pipeline.py`. A job keeps its source and its selection
+filters (niche, age threshold, thread-reply shape, handle pools), its
+budgets, its voice, its pace after a shipped Reply and its log tag. The
+pipeline alone calls `judge_parent` before paying for a generation, writes
+through `twitter_client.reply_to_tweet`, and calls
+`engagement_log.log_reply` after a shipped Reply only. It keeps, per job and
+lost at restart, the posts refused definitively, declined by the model
+(SKIP) or answered; `direct_reply`'s VIP and search lanes share theirs. A
+temporary refusal, a failed generation or a failed write leaves the post
+replayable. A model rate limit ends the job's generations for the cycle,
+with the post left replayable; in `direct_reply` it also stops the search
+lane, in `feed_sweep` the Following pass. `StateUnreadable` and
+`OutsideActiveHours` end the cycle from any step, a job's scrape included;
+any other error in a scrape, a generation or a write is logged and the
+cycle moves on.
 
-The `direct_reply` pipeline, shared with `feed_sweep`, generates reply N+1
-while reply N is posted, so its text is ready as soon as reply N's ledger row
-is written. Before calling `reply_to_tweet`, outside the Safari lock, it
-sleeps `seconds_until_allowed(REPLY)` in one-second slices and raises
-`OutsideActiveHours` on a stop request or at 22:00. The chokepoint still
-judges: when another job's reply lands during the wait, `reply_to_tweet`
-refuses on spacing, writes no ledger row, and the post stays replayable in a
-later cycle, at the cost of a new generation.
+The `direct_reply` search lane and `feed_sweep` run pipelined: the pipeline
+generates reply N+1 while reply N is posted, so its text is ready as soon
+as reply N's ledger row is written. Before calling `reply_to_tweet`,
+outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
+one-second slices and raises `OutsideActiveHours` on a stop request or at
+22:00. The chokepoint still judges: when another job's reply lands during
+the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
+post stays replayable in a later cycle, at the cost of a new generation.
+On a rate limit, bedtime or an unreadable state file the pipelined job
+returns at once: the generation in flight finishes in the worker thread,
+unread, and its post stays replayable.
+The other jobs answer their candidates in turn and never wait: a Reply they
+send too early is refused on spacing and stays replayable.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
@@ -434,6 +445,10 @@ These are how the code behaves today, not design intent:
   ("est") selects the French core identity.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
+- Only the pipelined Reply jobs wait out the reply spacing. A Reply that
+  `early_bird`, `mega_watch`, `debate`, replyback or the VIP lane generates
+  inside the gap is refused on spacing, and its generation is paid again in
+  a later cycle.
 - The state store lock is per process: `bin/seed_fr_influencers.py` saving
   `followed_accounts.json` while the bot runs can still lose a follow.
 - The ledger lock is per process, and `FileLedger` assumes the bot is the
@@ -525,7 +540,7 @@ or spawns `osascript` itself, docstrings aside; the Safari quit in
 `tests/x/test_page_js.py` pins each page script's timeout, log prefix and
 answer on failure, and checks that a test which forgets to mock `_run_js`
 fails on the wall. Every test also starts with fresh process memories: the
-reply jobs' `_skipped` sets, the direct reply's query rotation cursor and the
+posts the Reply pipeline set aside, the direct reply's query rotation cursor and the
 content guard's dedup memory of this run's posts.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python

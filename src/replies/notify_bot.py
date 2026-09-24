@@ -3,24 +3,21 @@ import re
 import traceback
 from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
-from ..core.state_errors import StateUnreadable
+from ..x import x_urls
 from ..x.scraper import scrape_own_tweet_and_replies
 from ..x.twitter_client import (
     like_own_tweet_replies,
-    reply_to_tweet_in_thread,
     visit_profile_and_like,
     LikeOutcome,
 )
-from . import reply_generator, replyback_agent
-from .reply_generator import Outcome
-from ..core.humanizer import humanize
-from ..guards.reply_admission import judge_parent
+from . import reply_pipeline, replyback_agent
 import random
 
 _OWN_HANDLE = BOT_HANDLE.lower()
-# Replies this job is done with until restart: definitive Reply admission
-# refusals, replies the model declined, replies answered.
-_skipped: set = set()
+# Answering someone who answered us is a Debate turn. The babysitter's
+# extra sweeps run this job too, on the same set-aside posts.
+REPLYBACK_JOB = reply_pipeline.Job("replyback", "REPLYBACK", voice=lambda _author: replyback_agent.VOICE,
+                                   debate_turn=True)
 _HANDLE_RE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
 _MENTION_RE = re.compile(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])")
 
@@ -74,8 +71,8 @@ def run_notify_cycle():
 
 def run_replyback_cycle():
     """Scrape replies on own tweets and reply back to create conversation threads.
-    Threads boost both tweets in the algorithm. Influencer replies get nested
-    in-thread responses (lands UNDER their reply); others get a standalone @mention.
+    Threads boost both tweets in the algorithm. Every Reply is nested
+    in-thread, under the engager's reply.
     """
     log.info("[REPLYBACK] Scanning for replies to engage with...")
 
@@ -87,7 +84,6 @@ def run_replyback_cycle():
     own_tweet = data["own_tweet"]
     replies = data["replies"]
     influencers = _influencer_handles()
-    count = 0
 
     # Conversation depth: when our parent tweet gets replies, the algo is
     # rewarding it. Sustained back-and-forth pumps it further and converts
@@ -105,6 +101,7 @@ def run_replyback_cycle():
         cycle_cap = 7
     log.info(f"[REPLYBACK] Parent has {incoming} replies — cap {cycle_cap} this cycle.")
 
+    candidates = []
     for reply_info in replies[:cycle_cap]:
         user = reply_info.get("user", "")
         text = reply_info.get("text", "")
@@ -118,54 +115,18 @@ def run_replyback_cycle():
         if not reply_url:
             log.info(f"[REPLYBACK] No reply_url for user={user!r} — skipping (in-thread-only rule).")
             continue
-        if reply_url in _skipped:
-            continue
 
         # Skip very short or empty replies
         if len(text) < 5:
             continue
 
-        # Answering someone who answered us is a Debate turn. Admission
-        # reads the author from the URL, never from the display name.
-        verdict = judge_parent(reply_url, debate_turn=True)
-        if not verdict:
-            if verdict.refusal.definitive:
-                _skipped.add(reply_url)
-            log.info(f"[REPLYBACK] Not admitted ({verdict.refusal.value}: {verdict.reason}) - skipping.")
-            continue
-        handle = verdict.author
+        # The reply's own status URL puts it in focus, so the Reply lands
+        # nested under theirs. Admission reads the author from that URL,
+        # never from the display name.
+        candidates.append(reply_pipeline.Candidate(reply_url, text, f"REPLYBACK/{x_urls.author(reply_url)}",
+                                                   context=own_tweet))
 
-        is_influencer = handle in influencers
-        log.info(
-            f"[REPLYBACK] {'[INFLUENCER] ' if is_influencer else ''}"
-            f"Replying to @{handle}: {text[:60]}..."
-        )
-        generation = reply_generator.generate(replyback_agent.VOICE, author=handle, text=text,
-                                              context=own_tweet)
-        if generation.outcome is Outcome.RATE_LIMITED:
-            log.info("[REPLYBACK] LLM rate limit reached; no more generations this cycle.")
-            break
-        if generation.outcome is Outcome.DECLINED:
-            _skipped.add(reply_url)  # the model declined
-            continue
-        if generation.outcome is not Outcome.WRITTEN:
-            continue  # failed call: replayable next cycle
-
-        reply = humanize(generation.text)
-        log.info(f"[REPLYBACK] Reply ({len(reply)} chars): {reply}")
-
-        try:
-            # All reply-backs are nested in-thread now (influencer or not).
-            if not reply_to_tweet_in_thread(reply_url, reply, debate_turn=True):
-                continue  # chokepoint skip — stays fresh, no phantom count
-            _skipped.add(reply_url)
-            count += 1
-        except StateUnreadable:
-            raise  # no reply can ship: stop paying for generations
-        except Exception:
-            log.info(f"[REPLYBACK] Failed to reply back:")
-            traceback.print_exc()
-
+    count = reply_pipeline.run(REPLYBACK_JOB, candidates, reply_pipeline.Cycle())
     log.info(f"[REPLYBACK] Replied back to {count} people.")
 
     # Reciprocity loop: for non-influencer engagers, visit their profile and

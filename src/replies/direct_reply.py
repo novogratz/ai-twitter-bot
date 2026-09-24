@@ -1,29 +1,20 @@
-"""Direct reply: visits influencer profiles, scrapes tweets, generates replies, posts them."""
+"""Direct reply: the VIP scan and the search lane. Its voice, niche filter
+and candidate order also serve the feed sweep, early bird and mega watch."""
 import os
 import re
 import random
-import threading
-import time
 import traceback
 from datetime import timedelta
 from ..x import x_urls
 from ..core.logger import log
 from ..core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
-from ..core.llm_client import llm_hourly_limit_status
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
-from ..x.twitter_client import reply_to_tweet
-from ..guards.reply_admission import judge_parent
-from ..core.state_errors import StateUnreadable
-from ..core.humanizer import humanize
-from ..core.engagement_log import log_reply
-from ..guards.active_hours import OutsideActiveHours
-from . import reply_generator
-from .reply_generator import LanguageRule, Outcome, Voice
+from . import reply_pipeline
+from .reply_generator import LanguageRule, Voice
 
-# Posts this job is done with until restart: definitive Reply admission
-# refusals, posts the model declined, posts answered. Temporary refusals and
-# failed model calls stay replayable.
-_skipped: set = set()
+# The VIP scan and the search lane set aside the same posts.
+JOB_NAME = "direct_reply"
+
 
 VIP_REPLY_ACCOUNTS = [
     "TheBTCTherapist",  # model account — reply to + amplify everything he posts
@@ -123,7 +114,7 @@ _NICHE_PATTERN = re.compile(
 )
 _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 
-def _is_on_niche(text: str) -> bool:
+def is_on_niche(text: str) -> bool:
     return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
 
 SEARCH_QUERIES = [
@@ -344,7 +335,16 @@ def _vip_voice(handle: str) -> Voice:
                  text_limit=300, strip_preamble=True, skip_window=20)
 
 
-def _run_graphseo_scan(tried: set, remaining=None, rate_limited=None) -> int:
+def _vip_job(handle: str) -> reply_pipeline.Job:
+    return reply_pipeline.Job(JOB_NAME, "VIP", voice=lambda _author: _vip_voice(handle))
+
+
+def _fresh_enough(url: str, limit: timedelta) -> bool:
+    age = x_urls.age(url)
+    return age is not None and age <= limit
+
+
+def _run_graphseo_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
     Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
@@ -354,71 +354,24 @@ def _run_graphseo_scan(tried: set, remaining=None, rate_limited=None) -> int:
     Each handle is a cheap `from:` search, no profile visit; the 6h
     btc_blitz converges full coverage, this lane keeps pickup fast.
 
-    `tried` holds the posts this cycle already tried, in memory only.
-    `rate_limited` is set when the model is rate limited.
+    `remaining` bounds the Replies shipped; `cycle` is shared with the
+    search lane.
     """
     from ..x.scraper import scrape_x_search
-    from ..x.twitter_client import reply_to_tweet
-    from ..core.engagement_log import log_reply
 
     VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(
         "VIP_SCAN_HANDLES", "Graphseo,TheBTCTherapist").split(",") if h.strip()]
     posted = 0
     for handle in VIP_SCAN_HANDLES:
-        if remaining is not None and posted >= remaining:
+        if cycle.rate_limited or (remaining is not None and posted >= remaining):
             break
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
-        try:
-            tweets = scrape_x_search(f"from:{handle}", max_tweets=20, tab="latest")
-        except Exception:
-            log.info(f"[VIP] Search failed for @{handle}.")
-            traceback.print_exc()
-            continue
-        for t in tweets:
-            if remaining is not None and posted >= remaining:
-                break
-            url = t.get("url", "")
-            text = t.get("text", "")
-            if not url or not text or url in tried or url in _skipped:
-                continue
-            age = x_urls.age(url)
-            if age is None or age > timedelta(hours=48):
-                continue
-            verdict = judge_parent(url)
-            if not verdict:
-                if verdict.refusal.definitive:
-                    _skipped.add(url)
-                continue
-            generation = reply_generator.generate(_vip_voice(handle), author=handle, text=text)
-            if generation.outcome is Outcome.RATE_LIMITED:
-                log.info("[VIP] LLM rate limit reached; stopping this cycle.")
-                if rate_limited is not None:
-                    rate_limited.set()
-                return posted
-            if generation.outcome is Outcome.DECLINED:
-                _skipped.add(url)
-                continue
-            if generation.outcome is not Outcome.WRITTEN:
-                continue  # failed call: replayable
-            reply = humanize(generation.text)  # em-dash strip + AI-artifact cleanup
-            log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
-            tried.add(url)
-            try:
-                shipped = reply_to_tweet(url, reply)
-            except StateUnreadable:
-                raise
-            except Exception:
-                log.info(f"[VIP] Reply failed for @{handle}:")
-                traceback.print_exc()
-                continue
-            if not shipped:
-                continue  # chokepoint skip — don't log a phantom reply
-            _skipped.add(url)
-            try:
-                log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
-            except Exception:
-                pass
-            posted += 1
+        tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
+                                       max_tweets=20, tab="latest")
+        candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
+                      if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))]
+        posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
+                                     max_shipped=None if remaining is None else remaining - posted)
         log.info(f"[VIP] @{handle} done.")
     log.info(f"[VIP] Total VIP replies posted: {posted}.")
     return posted
@@ -444,7 +397,8 @@ DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_
 DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "20"))
 DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "20"))
 
-def _freshness_sort_key(tweet):
+
+def freshness_sort_key(tweet):
     """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
     to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
 
@@ -463,144 +417,17 @@ def _freshness_sort_key(tweet):
     return (bucket, -velocity, minutes)
 
 
-def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=None, en_counter=None,
-                     skipped=None, rate_limited=None):
-    """Reply to candidates with PIPELINED generation (2026-06-09, operator:
-    "BOT REALLY SLOW... ACCELERATE"). The old loop serialized a ~30-50s LLM
-    call THEN ~20s of Safari per reply (~65s/reply — each resource idle
-    while the other worked). Now reply N+1 GENERATES (worker thread, no
-    Safari lock) while reply N POSTS (Safari) — cycle ≈ max(gen, post),
-    close to 2x throughput. Contracts: cheap job filters → Reply admission
-    just before the LLM call → log_reply only on a confirmed ship.
-
-    `tried` holds the posts this cycle already tried, in memory only.
-    `skipped` is the calling job's set of posts it is done with until
-    restart (direct_reply's own by default). `rate_limited` is set when the
-    model is rate limited; nothing is generated once it is."""
-    from concurrent.futures import ThreadPoolExecutor
-
-    if skipped is None:
-        skipped = _skipped
-    if rate_limited is None:
-        rate_limited = threading.Event()
-
-    posted = 0
-    submitted = 0
-    is_feed = source_name.startswith(("FEED", "FOLLOWING"))
-    tweets = sorted(tweets, key=_freshness_sort_key)
-    candidates = iter(tweets)
-
-    def _next_submission(pool):
-        """Advance to the next eligible candidate and submit its LLM
-        generation. Returns (url, author, future) or None when
-        exhausted / hourly-limited / rate-limited / remaining-bound."""
-        nonlocal submitted
-        if rate_limited.is_set() or (remaining is not None and submitted >= remaining):
-            return None
-        for tweet in candidates:
-            from ..guards.active_hours import require_active
-            require_active()
-            url, text = tweet["url"], tweet["text"]
-            if url in tried or url in skipped: continue
-            # Age gate everywhere — never reply to posts older than 5 days.
-            age = x_urls.age(url)
-            if age is None or age > timedelta(minutes=DIRECT_REPLY_MAX_AGE_MINUTES): continue
-            # Niche filter only for search (broad queries) — feeds get no filter.
-            if not is_feed and not _is_on_niche(text): continue
-            limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
-            if limited: return None
-            # Reply admission JUST before the expensive LLM call: it re-reads
-            # the Replied store, so a post another job answered since the
-            # scrape is dropped here, not ~17s of generation later at the
-            # chokepoint (774 such wasted calls across 06-06+07).
-            verdict = judge_parent(url)
-            if not verdict:
-                if verdict.refusal.definitive:
-                    skipped.add(url)
-                continue
-            author = verdict.author
-            # In memory only: the chokepoint claims the Replied store itself
-            # and refuses anything already in it (2026-06-05 premark bug).
-            tried.add(url)
-            log.info(f"[{source_name}] Generating reply for @{author}...")
-            try:
-                fut = pool.submit(reply_generator.generate, reply_voice(author), author=author, text=text)
-            except RuntimeError:
-                # Interpreter/executor shutting down (SIGTERM mid-cycle) —
-                # end the stream cleanly instead of crashing the cycle.
-                return None
-            submitted += 1
-            return (url, author, fut)
-        return None
-
-    with ThreadPoolExecutor(max_workers=1) as pool:
-        pending = _next_submission(pool)
-        while pending is not None:
-            url, author, fut = pending
-            # Submit the NEXT generation BEFORE blocking on Safari for this
-            # one — this single line is what buys the overlap.
-            nxt = _next_submission(pool)
-            try:
-                generation = fut.result()
-            except (OutsideActiveHours, StateUnreadable):
-                raise  # bedtime, or no prompt can be built: the next candidates would fail too
-            except Exception:
-                traceback.print_exc()  # a failed generation: the post stays replayable
-                pending = nxt
-                continue
-            if generation.outcome is Outcome.RATE_LIMITED:
-                log.info(f"[{source_name}] LLM rate limit reached; stopping this cycle.")
-                rate_limited.set()
-                break  # the generation already submitted runs; its post stays replayable
-            if generation.outcome is Outcome.DECLINED:
-                skipped.add(url)  # the model declined: not paid again
-            elif generation.outcome is Outcome.WRITTEN:
-                from ..core.pattern_tags import extract_pattern as _extract_pattern
-                reply, _pattern_id = _extract_pattern(generation.text)
-                reply = humanize(reply)
-                _wait_out_reply_spacing(source_name)
-                log.info(f"[{source_name}] Replying to @{author}...")
-                try:
-                    shipped = reply_to_tweet(url, reply)
-                except StateUnreadable:
-                    raise
-                except Exception:
-                    traceback.print_exc()
-                    shipped = False
-                if shipped:
-                    skipped.add(url)
-                    # Include the query (source_detail) in the tag so per-query
-                    # conversion is measurable (2026-06-08).
-                    _src = f"{source_name}/{source_detail[:60]}" if source_detail else source_name
-                    log_reply(url, reply, action_type="reply", source=_src, pattern_id=_pattern_id or "")
-                    posted += 1
-                    if generation.language == "en" and en_counter: en_counter[0] += 1
-                    # No sleep after a ship: the spacing is waited out before
-                    # the next reply_to_tweet, for the gap action_guard drew.
-            pending = nxt
-    return posted
+SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", voice=reply_voice, pipelined=True)
 
 
-_SPACING_WAIT_SLICE_SECONDS = 1.0
-_sleep = time.sleep
-
-
-def _wait_out_reply_spacing(source_name: str) -> None:
-    """Wait, outside the Safari lock, for the Reply spacing action_guard will
-    require: the next generation is often ready 0-2 s after the last Reply
-    and would be refused on spacing, its model call wasted. The chokepoint
-    still judges: a Reply from another job during the wait makes it refuse.
-    Short slices so a stop request or 22:00 raises OutsideActiveHours."""
-    from ..guards import action_guard
-    from ..guards.active_hours import require_active
-    remaining = action_guard.seconds_until_allowed(action_guard.REPLY)
-    if remaining > 0:
-        log.info(f"[{source_name}] Waiting {remaining:.1f}s for Reply spacing...")
-    while remaining > 0:
-        require_active()
-        step = min(remaining, _SPACING_WAIT_SLICE_SECONDS)
-        _sleep(step)
-        remaining -= step
+def _search_candidates(tweets: list, query: str) -> list:
+    """Search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the niche
+    (queries are broad), fresh and rising first. The query joins the log
+    tag so per-query conversion is measurable (2026-06-08)."""
+    limit = timedelta(minutes=DIRECT_REPLY_MAX_AGE_MINUTES)
+    return [reply_pipeline.Candidate(t["url"], t.get("text") or "", f"SEARCH-HOT/{query[:60]}")
+            for t in sorted(tweets, key=freshness_sort_key)
+            if t.get("url") and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
 
 
 # Rotation cursor for the per-cycle query slice. Process-lifetime state:
@@ -636,22 +463,13 @@ def run_direct_reply_cycle(max_replies=None):
         max_replies = DIRECT_REPLY_MAX_PER_CYCLE
     elif max_replies <= 0:
         max_replies = None
-    tried = set()  # posts tried this cycle; the Replied store is the chokepoint's
-    total, en_counter = 0, [0]
+    cycle = reply_pipeline.Cycle()  # a post tried by one lane is not retried by the other
     remaining = max_replies  # None = unbounded
-    rate_limited = threading.Event()
 
     # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
-    try:
-        vip_posted = _run_graphseo_scan(tried, remaining=remaining, rate_limited=rate_limited)
-        if remaining is not None:
-            remaining -= vip_posted
-        total += vip_posted
-    except StateUnreadable:
-        raise
-    except Exception:
-        log.info("[GRAPHSEO] Scan error:")
-        traceback.print_exc()
+    total = _run_graphseo_scan(cycle, remaining=remaining)
+    if remaining is not None:
+        remaining -= total
 
     # 2. SEARCH — primary reply engine for direct_reply.
     #    Feed sweeper owns For You / Following; this cycle owns search so
@@ -667,26 +485,23 @@ def run_direct_reply_cycle(max_replies=None):
     cycle_queries = _queries_for_cycle(all_queries)
     random.shuffle(cycle_queries)
     for query in cycle_queries:
-        if rate_limited.is_set():
+        if cycle.rate_limited:
             break
         if remaining is not None and remaining <= 0:
             log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
-        try:
-            tweets = scrape_x_search(query, max_tweets=25, tab="top")
-            if tweets:
-                n = _reply_to_tweets(tweets, tried, "SEARCH-HOT", source_detail=query,
-                                     remaining=remaining, en_counter=en_counter,
-                                     rate_limited=rate_limited)
-                total += n
-                if remaining is not None:
-                    remaining -= n
-        except StateUnreadable:
-            raise
-        except Exception:
-            traceback.print_exc()
+        tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
+                                       max_tweets=25, tab="top")
+        # The budget bounds each query's generations; only the Replies
+        # shipped come off it.
+        n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query), cycle,
+                               max_generations=remaining)
+        total += n
+        if remaining is not None:
+            remaining -= n
 
     log.info(f"[DIRECT] Posted {total} replies this cycle.")
+
 
 def safe_run_direct_reply_cycle(max_replies=None):
     from ..core import health

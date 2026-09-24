@@ -3,6 +3,7 @@ its interface, with the one fake LLM of tests/replies/fakes.py."""
 import pytest
 
 from src.core.llm_client import LLMResult
+from src.x.confirmed_write import WriteOutcome
 from tests.helpers import fresh
 
 EN = "OpenAI just shipped a new reasoning model and the market is going wild"
@@ -19,33 +20,35 @@ def language(prompt):
 
 
 @pytest.fixture
-def jobs(monkeypatch, llm):
+def jobs(monkeypatch, llm, chokepoint):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
+    from src.replies import reply_pipeline
     from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
-    from src.replies import debate_bot as db, notify_bot as nb, reply_agent as ra
-    from src.x import scraper, twitter_client as tc
+    from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
+    from src.x import scraper
 
-    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
-    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, text: False)
-    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text, **k: False)
+    chokepoint.answer = WriteOutcome.REFUSED
+    for module in (dr, eb, mw, fs):
+        monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
-    for module in (eb, mw):
-        monkeypatch.setattr(module, "_is_on_niche", lambda text: True)
-        monkeypatch.setattr(module, "reply_to_tweet", lambda url, text: False)
-        monkeypatch.setattr(module.time, "sleep", lambda *a: None)
     monkeypatch.setenv("ENABLE_DEBATES", "1")
-    monkeypatch.setattr(db.time, "sleep", lambda *a: None)
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
     monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
-    monkeypatch.setattr(nb, "reply_to_tweet_in_thread", lambda url, text, **k: False)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
+    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
 
-    def pipeline(source):
-        def run(author, text):
-            dr._reply_to_tweets([{"url": fresh(author), "text": text}], set(), source, skipped=set())
-        return run
+    def search(author, text):
+        url = fresh(author)  # every query of the cycle finds the same post
+        monkeypatch.setenv("VIP_SCAN_HANDLES", "")
+        monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": url, "text": text}])
+        dr.run_direct_reply_cycle()
+
+    def feed(author, text):
+        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh(author), "text": text}])
+        monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
+        fs.run_feed_sweep_cycle()
 
     def profile(module, pool, cycle):
         def run(handle, text):
@@ -58,7 +61,7 @@ def jobs(monkeypatch, llm):
     def vip(handle, text):
         monkeypatch.setenv("VIP_SCAN_HANDLES", handle)
         monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
-        dr._run_graphseo_scan(set())
+        dr._run_graphseo_scan(reply_pipeline.Cycle())
 
     def debate(author, text):
         monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: [{"url": fresh(author), "text": text}])
@@ -74,8 +77,8 @@ def jobs(monkeypatch, llm):
         ra.generate_replies()
 
     runs = {
-        "search": pipeline("SEARCH-HOT"),
-        "feed": pipeline("FEED-SWEEP-FEED"),
+        "search": search,
+        "feed": feed,
         "early_bird": profile(eb, "_scan_pool", eb.run_early_bird_cycle),
         "mega_watch": profile(mw, "_watch_pool", mw.run_mega_watch_cycle),
         "vip": vip,
@@ -268,17 +271,12 @@ VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}
 
 
 @pytest.fixture
-def decision(jobs, llm, monkeypatch):
+def decision(jobs, llm, chokepoint, monkeypatch):
     """What a job did with one model answer: "sent" when it handed the reply
     text to its chokepoint, else the generation's outcome."""
-    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
-    from src.replies import notify_bot as nb, reply_generator
-    from src.x import twitter_client as tc
+    from src.replies import reply_generator
 
-    sent, outcomes = [], []
-    for module, name in ((dr, "reply_to_tweet"), (eb, "reply_to_tweet"), (mw, "reply_to_tweet"),
-                         (tc, "reply_to_tweet"), (nb, "reply_to_tweet_in_thread")):
-        monkeypatch.setattr(module, name, lambda url, text, **k: sent.append(text) and False)
+    outcomes = []
     real = reply_generator.generate
 
     def spy(*args, **kwargs):
@@ -289,12 +287,12 @@ def decision(jobs, llm, monkeypatch):
     monkeypatch.setattr(reply_generator, "generate", spy)
 
     def decide(job, author, text, answer):
-        sent.clear()
+        chokepoint.calls.clear()
         outcomes.clear()
         llm.default = answer
         jobs(job, author, text)
         assert len(outcomes) == 1
-        return "sent" if sent else outcomes[0].name
+        return "sent" if chokepoint.calls else outcomes[0].name
 
     return decide
 
