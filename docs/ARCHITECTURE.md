@@ -410,9 +410,10 @@ logger writes to a temporary file, and the engagement log, tweet history,
 replied store, ledger and personality file point to `tmp_path`. A mock placed
 on a caller module misses function-local imports; patch the primitive in
 `safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when a module binds a walled
-primitive, `webbrowser` or `subprocess.Popen` by name, past the wall. The
-`isolate_dedup` fixture, opted into with `pytest.mark.usefixtures`, also
-empties the content guard's dedup corpus.
+primitive, `webbrowser` or `subprocess.Popen` by name, past the wall. Every
+test also starts with fresh process memories: the reply jobs' `_skipped` sets,
+the direct reply's query rotation cursor and the content guard's dedup memory
+of this run's posts.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and

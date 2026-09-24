@@ -4,8 +4,6 @@ import os
 
 import pytest
 
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
-
 
 def test_tests_cannot_write_production_state(tmp_path):
     """2026-06-09: a guard test mocked post_tweet but bot.py's bookkeeping

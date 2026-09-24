@@ -158,23 +158,19 @@ def _daylight_default(monkeypatch):
 
 @_pytest.fixture(autouse=True)
 def _fresh_job_memory(monkeypatch):
-    """Each reply job keeps the posts it dropped in a module-level set for
-    the life of the process; every test starts with empty ones."""
+    """Each reply job keeps the posts it dropped in a module-level set, the
+    direct reply its query rotation cursor, and the content guard the posts
+    of this run in its dedup memory, for the life of the process; every test
+    starts with fresh ones."""
     import importlib
     for name in ("direct_reply", "feed_sweeper_bot", "early_bird_bot", "mega_watch_bot", "debate_bot",
                  "notify_bot"):
         monkeypatch.setattr(importlib.import_module(f"src.replies.{name}"), "_skipped", set())
+    from src.replies import direct_reply as _dr
+    monkeypatch.setattr(_dr, "_QUERY_ROTATION_OFFSET", [0])
+    from src.guards import content_guard as _cg
+    monkeypatch.setattr(_cg, "_RECENT_NORM", [])
     yield
-
-
-@_pytest.fixture()
-def isolate_dedup(monkeypatch, tmp_path):
-    """Each test gets an empty dedup corpus (no real tweet_history bleed)."""
-    from src.guards import content_guard as cg
-    monkeypatch.setattr(cg, "_HISTORY_FILE", str(tmp_path / "none.json"))
-    cg._RECENT_NORM.clear()
-    yield
-    cg._RECENT_NORM.clear()
 
 
 @_pytest.fixture

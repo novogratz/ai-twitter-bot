@@ -355,7 +355,6 @@ def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
 # --- reply search (one model call finds and drafts) --------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_reply_search_surface_disabled_by_default(monkeypatch):
     """2026-07-19: the LLM-web-search reply surface (reply_bot -> reply_agent)
     is retired by default. Web search cannot index <=24h x.com tweets, so the
@@ -476,7 +475,6 @@ def test_reply_search_does_not_swallow_unreadable_store_at_the_chokepoint(reply_
 # --- early_bird and mega_watch (profile scans) ------------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_early_reply_targets_are_curator_driven():
     """2026-06-07 PM operator mandate: NO static target lists — the scan
     pools come from account_curator.tracked_handles(), pinned with the only
@@ -785,7 +783,6 @@ def test_replyback_stops_on_unreadable_store(monkeypatch):
     assert generations == [], "Reply admission stops the cycle before the model call"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_replyback_reciprocity_never_follows(monkeypatch):
     """Engager follows belong to follow_engagers_job (engager=True). The
     replyback reciprocity pass only visits and likes; its old bare

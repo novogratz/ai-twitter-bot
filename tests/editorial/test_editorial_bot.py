@@ -24,7 +24,6 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     assert editorial.due_slot(at(22, 0), {}) is None
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_evening_slots_stay_inside_waking_hours():
     """2026-07-19: the post-slot grid covers the measured best evening
     hours, inside Waking hours."""
@@ -201,7 +200,6 @@ def test_article_extraction_prioritizes_content_over_navigation():
     assert editorial._plain(html) == "Useful AI facts here."
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_profile_surfaces_force_capable_provider():
     """Profile generators must pass force_provider=PROFILE_LLM_PROVIDER so
     profile/reply routing can be changed independently from AI_CLI."""

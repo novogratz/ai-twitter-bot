@@ -31,7 +31,6 @@ def _fake_safari(monkeypatch):
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     """Two reply bots racing on the same tweet: the second write MUST be
     refused at the chokepoint regardless of which bot it came from."""
@@ -53,7 +52,6 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     assert len(recorded) == 1  # exactly ONE reply ever reached the write
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
     """reply_to_tweet must return True when the reply ships and False on the
     dedup skip — callers gate log_reply on this."""
@@ -86,7 +84,6 @@ def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
     assert recorded == [], "nothing ships on an unreadable store"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     """Operator 2026-06-07: an em dash in a published reply is an AI tell
     ('what a shame'). The chokepoint must strip em/en dashes for EVERY
@@ -119,7 +116,6 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     assert "conviction is the hard part" in seen["text"]
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     """Operator 2026-06-07: 'i saw some english on Julien response'.
     @Graphseo is always-French; the chokepoint refuses an English reply to
@@ -148,7 +144,6 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
         assert not ok, f"{leak!r} must never publish"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
     """2026-06-15 (operator: "hit by automation flag — cool down likes").
     Liking the parent of EVERY reply (743/day) was the automation
@@ -176,7 +171,6 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
         "reply must not unconditionally like the parent"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
@@ -211,7 +205,6 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
         "a turn without a URL handle fails closed"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     """Another thread can ship the Engager's last turn while this one waits
     for the browser: admission, judged under the lock, refuses before Safari."""
@@ -574,7 +567,6 @@ def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch
 # --- posts -------------------------------------------------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_stale_review_mode_does_not_divert_post_to_a_queue(monkeypatch, tmp_path):
     """REVIEW_MODE queued drafts into review_queue.json that nothing shipped,
     so every editorial slot burned its attempts (#124). A leftover
@@ -596,7 +588,6 @@ def test_stale_review_mode_does_not_divert_post_to_a_queue(monkeypatch, tmp_path
     assert not hasattr(tc, "_queue_for_review")
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     """2026-06-09: the same hotake appeared 5x in engagement_log though dedup
     blocked the reposts — bot.py logged log_post/log_hotake unconditionally
@@ -680,7 +671,6 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
 # --- follows -----------------------------------------------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     """2026-06-12 operator: "the accounts you follow are trash, very small
     ... not related to AI or investment or crypto". The follow chokepoint
@@ -718,7 +708,6 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_gate_english_only(monkeypatch):
     """Operator 2026-07-19: 'follow US / english accounts not foreigner
     langage follows' — the quality gate (rides EVERY follow path via the

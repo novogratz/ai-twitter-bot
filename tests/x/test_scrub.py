@@ -1,8 +1,5 @@
 """src/x/twitter_client: metadata, URL, hashtag and header scrubbing at the
 write chokepoint."""
-import pytest
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def test_bare_pattern_tag_scrubbed_at_chokepoint():

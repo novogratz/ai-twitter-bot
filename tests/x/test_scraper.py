@@ -1,8 +1,6 @@
 """src/x/scraper: profile-visit allowlist and blank-page restarts."""
 import pytest
 
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
-
 
 def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     """Operator mandate 2026-06-07 PM: NO profile visits for discovery —

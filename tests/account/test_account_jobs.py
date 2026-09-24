@@ -9,7 +9,6 @@ from tests.helpers import FRESH, OWN_BEST, SearchPage, pin_rows, stop_requested,
 # --- 2026-06-07 PM: self-curated tracking ----------------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
     """Only ON-LANE engagements count as evidence (FR-era rows classify
     'other' and are ignored); pinned handles always lead the tracked list."""
@@ -38,7 +37,6 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_curator_promotion_quality_bar():
     """Following is a higher bar than tracking: spam-pattern handles (long
     digit runs) and thin evidence never reach the whitelist."""
@@ -51,7 +49,6 @@ def test_curator_promotion_quality_bar():
 # --- engage_bot ----------------------------------------------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
     """2026-06-17: engage_bot's reciprocity-like step calls
     visit_profile_and_like, which is gated by PROFILE_VISIT_ALLOWLIST
@@ -377,7 +374,6 @@ def test_like_job_dry_run_opens_nothing(like_job, monkeypatch):
 # --- pin_bot -------------------------------------------------------------------
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_pin_rotation_url_ground_truth_and_stale_override():
     """2026-07-19: the pin never rotated. Root cause = 4th hit of the
     display-name-vs-handle family: pin_bot compared scraper `author` (the
@@ -492,7 +488,6 @@ def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
         "the frozen file ages out with the ledger's 90 days; an /i/ URL names nobody"
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     """2026-07-19 likes+follows push: (1) the engager quality path skips
     size/niche (behavior proves both; small engagers follow back at the
@@ -548,7 +543,6 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]
 
 
-@pytest.mark.usefixtures("isolate_dedup")
 def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path):
     """2026-07-28 nine-day health read — shipped features were dead:
     (1) pin_bot was the DEAD-IMPORT family again (imported + in the

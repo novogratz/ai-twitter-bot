@@ -1,9 +1,5 @@
 """src/core/humanizer: trimming, typos, dashes and casual texture."""
-import pytest
-
 from src.guards import content_guard as cg
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 # --- truncation guard (the "botched ChatGPT paste" callout, 2026-06-05) -------

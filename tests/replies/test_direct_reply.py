@@ -1,10 +1,6 @@
 """src/replies/direct_reply: reply lane, candidate order, pipeline and the
 VIP scan."""
-import pytest
-
 from src.guards import replied_store as rs
-
-pytestmark = pytest.mark.usefixtures("isolate_dedup")
 
 
 def _url_with_age(minutes: int) -> str:
