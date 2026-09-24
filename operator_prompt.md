@@ -1,6 +1,6 @@
 # Current operator policy — 2026-09-23
 
-Only work 04:30–22:00 America/Toronto. Target at least three, and plan six,
+Only work 04:30–23:30 America/Toronto. Target at least three, and plan six,
 high-value original AI posts per day; eight total profile publications is the
 hard ceiling, twenty minutes apart at least. Three trend slots and one Startup
 post on each start in waking hours take their topic from rising AI posts on X

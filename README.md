@@ -6,7 +6,7 @@ every post and respond naturally in conversations.
 
 ## Current publishing policy
 
-- **Active daily: 04:30–22:00 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
@@ -28,7 +28,7 @@ every post and respond naturally in conversations.
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action after 22:00. An already-issued request may still finish remotely.
+a new action after 23:30. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 

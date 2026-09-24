@@ -201,7 +201,7 @@ def test_a_scrape_that_fails_reads_as_nothing_found():
     assert rp.scrape("TEST", "@someone", lambda: None) == []
 
 
-@pytest.mark.parametrize("error", [StateUnreadable("ledger unreadable"), OutsideActiveHours("22:00")])
+@pytest.mark.parametrize("error", [StateUnreadable("ledger unreadable"), OutsideActiveHours("bedtime")])
 def test_a_scrape_lets_bedtime_and_unreadable_state_through(error):
     def scrape():
         raise error
@@ -284,7 +284,7 @@ def test_a_pipelined_stop_leaves_without_waiting_for_the_generation_in_flight(ll
         monkeypatch.setattr(rp, "_stop_for_rate_limit",
                             lambda *a: in_flight.wait(timeout=5) and stop_for_rate_limit(*a))
     else:
-        chokepoint.answer = lambda url: in_flight.wait(timeout=5) and OutsideActiveHours("22:00")
+        chokepoint.answer = lambda url: in_flight.wait(timeout=5) and OutsideActiveHours("bedtime")
     candidates = [candidate(first, "post one"), candidate(second, "post two")]
 
     try:
@@ -514,7 +514,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
         if cut == "stop":
             stop.set()
         else:
-            s.now = s.now.replace(hour=22, minute=0, second=0)
+            s.now = s.now.replace(hour=23, minute=30, second=0)
 
     ag.record(ag.REPLY, fresh("earlier"))
     s.on_sleep = cut_short
@@ -522,6 +522,6 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
     with pytest.raises(active_hours.OutsideActiveHours):
         run(job(pipelined=True), [candidate(fresh("someone", n=1), "post")])
 
-    assert len(s.slept) == 1, "the next slice sees the stop or 22:00"
+    assert len(s.slept) == 1, "the next slice sees the stop or bedtime"
     assert s.chokepoint.sent == [], "nothing ships"
     assert s.ledger.count(ag.REPLY, s.now.date()) == 1

@@ -283,7 +283,7 @@ def _wait_out_reply_spacing(label: str) -> None:
     require: the next generation is often ready 0-2 s after the last Reply
     and would be refused on spacing, its model call wasted. The chokepoint
     still judges: a Reply from another job during the wait makes it refuse.
-    Short slices so a stop request or 22:00 raises OutsideActiveHours."""
+    Short slices so a stop request or bedtime raises OutsideActiveHours."""
     remaining = action_guard.seconds_until_allowed(action_guard.REPLY)
     if remaining > 0:
         log.info(f"[{label}] Waiting {remaining:.1f}s for Reply spacing...")

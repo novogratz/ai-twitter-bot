@@ -148,8 +148,8 @@ _Avoid_: protected account, influencer
 ### Time and people
 
 **Waking hours**:
-The only period when the account acts externally, 04:30 to 22:00 Toronto
-time.
+The only period when the account acts externally, 04:30 to 23:30 Toronto
+time. `active_hours.WAKE` and `active_hours.BEDTIME` hold the two bounds.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:

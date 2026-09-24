@@ -5,7 +5,7 @@ supersede the historical surfaces listed below:
 
 | Setting | Effective value |
 |---|---|
-| Working hours | 04:30–22:00 America/Toronto, DST aware |
+| Working hours | 04:30–23:30 America/Toronto, DST aware (`active_hours.WAKE`, `BEDTIME`) |
 | `MIN_TARGET_POSTS_PER_DAY` | 3 |
 | `TARGET_POSTS_PER_DAY` | 6 |
 | `MAX_PROFILE_POSTS_PER_DAY` | 8, hard combined ceiling |

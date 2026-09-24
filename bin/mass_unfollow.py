@@ -20,7 +20,7 @@ Safety:
   - A rate-limit toast or 5 consecutive failed confirm modals trigger a
     cooldown, never an abort.
   - Refuses to start Overnight and stops before the next unfollow once
-    Waking hours end (22:00 America/Toronto) or on SIGTERM/SIGINT.
+    Waking hours end (bedtime, America/Toronto) or on SIGTERM/SIGINT.
     Safari is driven only through the src.x.safari primitives, which refuse
     to start a page script at that point: a click left unconfirmed keeps
     the modal open, and nothing is unfollowed or recorded. The next run
@@ -76,7 +76,7 @@ def _pause(seconds: float) -> None:
 
 def _stop_reason() -> str:
     return ("stop signal" if active_hours.stop_requested()
-            else "Waking hours ended (22:00 America/Toronto)")
+            else "Waking hours ended (%s)" % active_hours.window_label())
 
 
 def _must_stop() -> bool:
@@ -252,7 +252,7 @@ def main() -> None:
     args = ap.parse_args()
 
     if not active_hours.may_act():
-        print("ABORT: Overnight. Waking hours are 04:30–22:00 America/Toronto.",
+        print("ABORT: Overnight. Waking hours are %s." % active_hours.window_label(),
               flush=True)
         sys.exit(1)
     signal.signal(signal.SIGTERM, _on_signal)

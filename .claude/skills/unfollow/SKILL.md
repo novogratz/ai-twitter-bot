@@ -10,7 +10,7 @@ Mass-unfollow accounts directly on https://x.com/$BOT_HANDLE/following in Safari
 Only on an explicit operator request.
 
 The script refuses to start Overnight, stops before its next unfollow at
-22:00 Toronto or on SIGTERM, and stops after `--max` unfollows (150 by
+23:30 Toronto or on SIGTERM, and stops after `--max` unfollows (150 by
 default).
 
 1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
@@ -21,7 +21,7 @@ default).
    which stays under X's unfollow quota of about 190 per window (the
    script's help). Keep pace `normal` (the default): about 5–9 s per
    unfollow and a 20–40 s breather every 25 (≈480/h), so 150 take about
-   27 minutes. A run started close to 22:00 stops short of `--max`.
+   27 minutes. A run started close to 23:30 stops short of `--max`.
    ```bash
    nohup .venv/bin/python bin/mass_unfollow.py --max N >/tmp/mass_unfollow.log 2>&1 &
    tail -f /tmp/mass_unfollow.log
@@ -32,7 +32,7 @@ default).
    interrupted run. What it does per unfollow: pick the first visible
    `Following` button not in the keep-set, click it, confirm the
    `confirmationSheetConfirm` modal, record to `action_ledger.json` (30-day anti-churn) and decrement
-   `following_count.json`. It stops at `--max`, at 22:00 Toronto, on
+   `following_count.json`. It stops at `--max`, at 23:30 Toronto, on
    SIGTERM, when the list is exhausted (empty after 3 reloads) or on
    repeated JS errors (`JS err: OSAERR:no answer from Safari` lines; the
    osascript error, if any, follows in `/tmp/mass_unfollow.log` under

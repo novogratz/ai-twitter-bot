@@ -2,7 +2,8 @@
 
 The operator requested at least three valuable AI posts a day, up to eight
 profile posts, uncapped replies, a more natural voice, and a working day from
-04:30 to 22:00. The schedule aims for six originals, with more opportunities
+04:30 to 23:30 (22:00 until 2026-09-23; the later bedtime added no slot and
+changed no cap or pacing). The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
 start; they compete for the same eight publications (see below).
@@ -78,7 +79,8 @@ must not repeat.
   15:00 (trend), 16:15, 18:30, optional 20:45, plus the Startup post.
   Eleven slots and the Startup post compete for eight publications: on a full
   day the evening slots are the ones left out.
-- A slot permits at most three attempts over 45 minutes (the last ends at 22:00).
+- A slot permits at most three attempts over 45 minutes, and no window runs
+  past 23:30: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
   An attempt is a draft submitted to the editor; a pass without a draft
   spends none. A slot out of attempts, or one whose pass yields no draft, no
   longer holds an overlapping one; a pass still submits once at most.
@@ -103,7 +105,7 @@ must not repeat.
   jitter drawn once per reply, the same for every caller: retrying cannot
   shorten it. The direct-reply and feed-sweep pipeline waits out that gap
   before sending instead of discarding a paid generation; the chokepoint
-  still judges, and the wait ends on a stop request or at 22:00.
+  still judges, and the wait ends on a stop request or at 23:30.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores

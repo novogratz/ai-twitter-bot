@@ -9,7 +9,7 @@ real account. Setup and run commands live in [`README.md`](README.md).
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active 04:30–22:00 America/Toronto only; nothing external happens overnight.
+- Active 04:30–23:30 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start

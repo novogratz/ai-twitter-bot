@@ -8,6 +8,20 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-23 — bedtime moves from 22:00 to 23:30 (operator request):**
+> Waking hours now run 04:30–23:30 America/Toronto. The clock, the
+> timeout cap on model calls and every refusal message read
+> `active_hours.WAKE` and `BEDTIME`, where `seconds_until_bedtime` used to
+> hard-code the hour and ignore the minutes. The slot grid is unchanged:
+> no slot was added, 20:45 stays the Exceptional slot, and caps, pacing,
+> spacing and the Toronto calendar day budget are as before. The extra 90
+> minutes carry replies and the other waking jobs, and a Startup post when
+> the bot starts in them: its window still closes at 23:30. The overnight
+> watchdog restarts now fall between 23:30 and 04:30. Guard:
+> `tests/guards/test_active_hours.py` pins the bounds, DST days included,
+> and fails if a hard-coded 22:00 bedtime comes back under `src/`, `bin/`
+> or `main.py`.
+
 > **2026-09-23 — one Reply pipeline (issue #156):** seven reply paths
 > repeated admission, generation, write and log, each with its own set of
 > posts set aside, its own `StateUnreadable` handler and its own rate-limit

@@ -10,7 +10,7 @@ Preview what the bot would do. Nothing here touches the browser.
    `uv run --with-requirements requirements.txt python main.py --dry-run`
    Its `slots` list is the Slot table (`SLOTS` in
    `src/editorial/editorial_bot.py`), the last one the Exceptional slot. Each Slot runs 45 minutes from its
-   start, cut at 22:00 (`due_slot`).
+   start, cut at bedtime, 23:30 (`due_slot`).
 2. Optional, only while a Slot from that list is open: draft and review the
    original the next pass would submit. Calls the models, writes no
    editorial state and spends no Attempt:

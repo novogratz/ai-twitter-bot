@@ -100,7 +100,7 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
   paused scheduler logs almost nothing overnight, so this watchdog restarts
-  the bot roughly every 15 minutes between 22:00 and 04:30; each restart
+  the bot roughly every 15 minutes between 23:30 and 04:30; each restart
   comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
@@ -119,7 +119,7 @@ real account from a second process. Before any of them:
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
-   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 22:00.
+   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 23:30.
 
 ## Watching
 
@@ -138,7 +138,7 @@ tail -n 5 editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' editorial_state.json
 ```
 
-Silence between 22:00 and 04:30 Toronto time is normal. There is no
+Silence between 23:30 and 04:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery
@@ -386,7 +386,7 @@ and unused since debate turns moved to the ledger; it can be deleted.
   ledger. Keep the bot stopped even with `--force`: the ledger has a single
   writer, and a row written beside the running bot can be lost. It drives
   Safari through the `safari` primitives and checks the bot's Toronto clock:
-  it refuses to start Overnight and stops before its next unfollow at 22:00
+  it refuses to start Overnight and stops before its next unfollow at 23:30
   or on SIGTERM. A primitive also refuses to start a page script at that
   point; between a click and its confirm, the run then ends with the modal
   open and nothing unfollowed or recorded, and the next run cancels that

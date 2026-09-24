@@ -26,14 +26,18 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     assert editorial.due_slot(at(21, 29), {})[0] == "20:45"
     assert editorial.due_slot(at(21, 30), {}) is None
     assert editorial.due_slot(at(22, 0), {}) is None
+    assert editorial.due_slot(at(23, 0), {}) is None
+    assert editorial.due_slot(at(23, 30), {}) is None
 
 
 def test_evening_slots_stay_inside_waking_hours():
     """2026-07-19: the post-slot grid covers the measured best evening
-    hours, inside Waking hours."""
+    hours, inside Waking hours. Moving bedtime to 23:30 on 2026-09-23
+    added no slot: 20:45 stays the last one, the exceptional one."""
     from src.editorial.editorial_bot import SLOTS
-    assert all("04:30" <= clock < "22:00" for clock, _ in SLOTS)
-    assert "20:45" in dict(SLOTS)
+    wake, bedtime = f"{hours.WAKE:%H:%M}", f"{hours.BEDTIME:%H:%M}"
+    assert all(wake <= clock < bedtime for clock, _ in SLOTS)
+    assert max(clock for clock, _ in SLOTS) == "20:45"
 
 
 @pytest.fixture
@@ -451,11 +455,11 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
 
 def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    editorial.open_startup_window(at(21, 40))
+    editorial.open_startup_window(at(23, 10))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(21, 59), {})[0] == key
-    assert not editorial._in_window(key, at(22, 0))
-    assert editorial.startup_slot(at(22, 0), {}) is None
+    assert editorial.startup_slot(at(23, 29), {})[0] == key
+    assert not editorial._in_window(key, at(23, 30))
+    assert editorial.startup_slot(at(23, 30), {}) is None
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):
