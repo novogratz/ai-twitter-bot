@@ -250,9 +250,8 @@ does not block a post. Missed slots are not caught up.
 **Unwanted content.** Add the handle to the respect list
 (`python3 -c "from src.guards.respect_list import add; add('handle', 'reason')"`,
 picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
-needed). Both are operator-managed. The respect list only reaches prompts that
-include the hard rules: debate and VIP replies ignore it (see
-[ARCHITECTURE.md](ARCHITECTURE.md#known-gaps)).
+needed). Both are operator-managed. The respect list reaches every Reply
+prompt and the editorial prompt, through the hard rules.
 
 ## What can be tuned
 

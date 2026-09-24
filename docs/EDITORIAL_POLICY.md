@@ -78,6 +78,10 @@ an exceptional-value approval.
   no longer match it against the scraper's display name, which is not an
   identity. The replyback profile likes still check both. `like_tweet`
   refuses a post whose URL handle is a Blocked account with the same match.
+- Every Reply prompt, in every job, carries the hard rules and the respect
+  list (`personality_store.hard_rules_block()`): `src/replies/reply_generator.py`
+  assembles them all (issue #155). A model SKIP sets the post aside for good;
+  a model rate limit ends the job's generations for the cycle.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,

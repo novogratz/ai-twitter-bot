@@ -331,7 +331,10 @@ cycle. They keep only their own selection filters: niche, age
 threshold, thread-reply shape, handle pools, per-cycle caps. Each keeps a
 module-level `_skipped` set, lost at restart, of posts refused definitively,
 declined by the model (SKIP) or answered. A temporary refusal or a failed
-model call leaves the post replayable.
+model call leaves the post replayable. A model rate limit ends the job's
+generations for the cycle, with the post left replayable; in
+`direct_reply` it also stops the search lane, in `feed_sweep` the
+Following pass.
 
 The `direct_reply` pipeline, shared with `feed_sweep`, generates reply N+1
 while reply N is posted, so its text is ready as soon as reply N's ledger row
@@ -355,16 +358,25 @@ is released, so a thread waiting for the lock never sees it. If the submit keyst
 the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 
-`personality_store.hard_rules_block()` renders the hard rules and the respect
-list from `respect_list.json`. The editorial prompt, the replyback prompt and
-`direct_reply._generate_single_reply` (shared by the search, feed-sweep,
-early-bird and mega-watch replies) include it; the debate prompt and the VIP generators do
-not (see [Known gaps](#known-gaps)). No chokepoint applies the respect list to
-outgoing text. While `respect_list.json` is unreadable, `hard_rules_block`
-raises `StateUnreadable`: the editorial cycle and the Reply cycles that
-build these prompts stop before the model call, and nothing ships. Only
-`HARD_RULES_BLOCK`, computed when `personality_store` is imported, falls back
-to the default handles, so `main.py` still starts.
+Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
+passes its voice (template, model, label, language rule) and the parent
+post; `generate` returns a `Generation`: a draft, a decline (the model said
+SKIP), a replayable failure, or a rate limit. The generator always appends
+`personality_store.hard_rules_block()`, which renders the hard rules and the
+respect list from `respect_list.json`; voices with `identity` also get
+`core_identity.md` (French or English) and the author's dossier from
+`personality.json`. It decides the language in one place, `_language`: the
+search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
+parent's words; early-bird and mega-watch the parent's words only;
+replyback a word test on the Engager's reply; the reply search English. One
+rule reads the answer: "skip" in its first 20 characters, after quotes are
+stripped, is a decline. The editorial prompt carries the hard rules too. No
+chokepoint applies the respect list to outgoing text.
+While `respect_list.json` is unreadable, `hard_rules_block` raises
+`StateUnreadable`: the editorial cycle and the Reply cycles stop before the
+model call, and nothing ships. Only `HARD_RULES_BLOCK`, computed when
+`personality_store` is imported, falls back to the default handles, so
+`main.py` still starts.
 
 ## State store
 
@@ -410,9 +422,13 @@ These are how the code behaves today, not design intent:
   Toronto day.
 - `session_refresh_job` and the `health` recovery restart Safari without
   taking `_safari_lock`.
-- `debate_bot` (`DEBATE_PROMPT`) and the VIP generators in `direct_reply`
-  (`generate_vip_reply`, `_generate_graphseo_reply`) build prompts without the
-  hard rules or the respect list.
+- The debate, VIP and Graphseo voices (`identity=False`) carry the hard rules
+  but neither `core_identity.md` nor the author's dossier.
+- `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
+  English-looking post from @Graphseo gets an English draft, which
+  `judge_reply` then refuses.
+- The replyback language test matches substrings, so "honestly" or "best"
+  ("est") selects the French core identity.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
 - The state store lock is per process: `bin/seed_fr_influencers.py` saving
@@ -462,6 +478,8 @@ module owning the rule it pins: a chokepoint rule under `tests/x/`, a job's
 use of it under the job's package. Every test folder has an `__init__.py`,
 so two packages can hold files of the same name. Helpers shared by several
 packages live in `tests/helpers.py`, fixtures in `tests/conftest.py`.
+The reply tests share one fake model, `tests/replies/fakes.py`, which the
+`llm` fixture puts behind the Reply generator's `run_llm`.
 
 The current policy is pinned across packages: Toronto and DST boundaries in
 `tests/guards/test_active_hours.py`, bedtime checks at the lock and before

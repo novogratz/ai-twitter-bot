@@ -5,15 +5,13 @@ If you can't -> SKIP. But try harder first: make the joke warmer, more
 specific, more absurd before giving up. Therapist energy (2026-06-05): they
 replied to their coach — reward them, never roast them.
 """
-from typing import Optional
 from ..core.config import REPLY_MODEL
-from ..core.logger import log
-from ..core.llm_client import run_llm, unwrap_text
+from .reply_generator import Language, Voice
 
 REPLYBACK_PROMPT = """You are @TheAIShrink — a woman, 45, therapist and mom, the sharpest AI mind on the timeline (her voice: warm, wry, zero bro-speak). Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
 
 Your original tweet: "{original_tweet}"
-Their reply: "{their_reply}"
+Their reply: "{tweet_text}"
 
 🤝 100% AGREE WITH THEM — non-negotiable:
 Your reply must read like you're on THEIR side, riffing together on the joke.
@@ -109,37 +107,6 @@ OUTPUT RULES:
 Output ONLY the reply text, or SKIP."""
 
 
-def generate_replyback(original_tweet: str, their_reply: str, author: str = "") -> Optional[str]:
-    """Generate a witty reply-back to someone who replied to our tweet.
-    `author` is the @handle of the person we're replying to — used to load
-    their personality dossier so the response is personal."""
-    from ..core import personality_store
-    base = REPLYBACK_PROMPT.format(
-        original_tweet=original_tweet[:200],
-        their_reply=their_reply[:200],
-    )
-    extras = []
-    persona_block = personality_store.render_account_block(author) if author else ""
-    if persona_block:
-        extras.append(persona_block)
-    # Hand-curated ideological core — voice anchor. Detect lang from their_reply.
-    _reply_lang = "en" if any(w in (their_reply or "") for w in ["the", "this", "that", "and", "for"]) and not any(w in (their_reply or "") for w in ["le", "la", "les", "un", "une", "est", "dans"]) else "fr"
-    core_identity = personality_store.render_core_identity(lang=_reply_lang)
-    if core_identity:
-        extras.append(core_identity)
-    extras.append(personality_store.hard_rules_block())
-    prompt = base + "\n\n" + "\n\n".join(extras)
-    result = run_llm(prompt, REPLY_MODEL, label="REPLYBACK")
-    if result.returncode != 0:
-        log.info(f"[REPLYBACK] CLI error: {result.stderr[:200]}")
-        return None
-
-    reply = unwrap_text(result.stdout)
-    if not reply:
-        return None
-
-    # Strip quotes if wrapped
-    if reply.startswith('"') and reply.endswith('"'):
-        reply = reply[1:-1]
-
-    return reply
+# The core identity follows the Engager's reply, by a word test that
+# matches substrings ("est" in "best" reads as French).
+VOICE = Voice(REPLYBACK_PROMPT, REPLY_MODEL, "REPLYBACK", language=Language.ENGAGER_WORDS)

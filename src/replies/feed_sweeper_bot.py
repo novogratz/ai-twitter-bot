@@ -12,6 +12,7 @@ Hard rules preserved:
   - all writes go through the twitter_client chokepoints
 """
 import os
+import threading
 import traceback
 
 from ..x import x_urls
@@ -73,11 +74,14 @@ def _harvest_active_authors(tweets: list) -> None:
 def run_feed_sweep_cycle():
     """Sweep BOTH For You and Following every cycle — the primary loop."""
     from ..x.scraper import scrape_home_feed, scrape_following_feed
+    rate_limited = threading.Event()
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
-        _sweep_one_feed(source, scraper)
+        if rate_limited.is_set():
+            break
+        _sweep_one_feed(source, scraper, rate_limited)
 
 
-def _sweep_one_feed(source, scraper):
+def _sweep_one_feed(source, scraper, rate_limited):
     from .direct_reply import _reply_to_tweets, _is_on_niche
 
     log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
@@ -115,6 +119,7 @@ def _sweep_one_feed(source, scraper):
         remaining=FEED_SWEEP_MAX_REPLIES_PER_CYCLE,
         en_counter=[0],
         skipped=_skipped,
+        rate_limited=rate_limited,
     )
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")
 
