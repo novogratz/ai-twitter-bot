@@ -11,6 +11,7 @@ from src.guards import action_guard as ag
 from src.guards import replied_store as rs
 from src.core import config
 from src.core.state_errors import StateUnreadable
+from src.x.confirmed_write import WriteOutcome as W
 from tests.helpers import OWN_BEST, TORONTO, pin_rows, stop_requested, numbered_url, clock
 
 
@@ -52,9 +53,9 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     assert len(recorded) == 1  # exactly ONE reply ever reached the write
 
 
-def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
-    """reply_to_tweet must return True when the reply ships and False on the
-    dedup skip — callers gate log_reply on this."""
+def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
+    """reply_to_tweet must return the truthy SHIPPED when the reply ships and
+    a falsy REFUSED on the dedup skip — callers gate log_reply on this."""
     from src.x import twitter_client as tc
     from src.guards import action_guard as ag
 
@@ -65,9 +66,9 @@ def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
 
     url = "https://x.com/foo/status/2063500000000000042"
     text = "Naming the fear is step one. The number says 40 billion in capex."
-    assert tc.reply_to_tweet(url, text) is True
+    assert tc.reply_to_tweet(url, text) is W.SHIPPED
     # Store was marked by the chokepoint itself — second attempt refuses.
-    assert tc.reply_to_tweet(url, text) is False
+    assert tc.reply_to_tweet(url, text) is W.REFUSED
 
 
 def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
@@ -111,7 +112,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     monkeypatch.setattr(cg2, "validate", spy_validate)
 
     url = "https://x.com/foo/status/2063500000000000088"
-    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is W.DRY_RUN
     assert "—" not in seen["text"]
     assert "conviction is the hard part" in seen["text"]
 
@@ -132,11 +133,11 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
 
     url = "https://x.com/Graphseo/status/2063500000000000099"
     english = "The market just told you what your conviction is worth this week."
-    assert tc.reply_to_tweet(url, english) is False
+    assert tc.reply_to_tweet(url, english) is W.REFUSED
     # Post must stay UNMARKED — a later FR draft can still ship.
     assert url not in rs.load_replied()
     french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
-    assert tc.reply_to_tweet(url, french) is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(url, french) is W.DRY_RUN
 
     # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.
     for leak in ("SKIPPED", "Skip.", "skipped", "SKIP — no source context"):
@@ -257,7 +258,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
     url = "https://x.com/typofriend/status/2063500000000000101"
-    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is twitter_client.DRY_RUN_RECORDED
+    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
     assert validated and validated[-1].endswith("(typo)")
 
 
@@ -278,7 +279,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
     url = "https://x.com/typofriend/status/2063500000000000103"
-    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is twitter_client.DRY_RUN_RECORDED
+    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
     assert validated[-1].endswith("(typo)")
 
@@ -296,7 +297,7 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
                         lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
 
     url = "https://x.com/typofriend/status/2063500000000000102"
-    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is False
+    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.REFUSED
     assert url not in load_replied()
 
 
@@ -316,7 +317,7 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(k))
-    assert twitter_client.post_tweet("A fresh original about inference costs.") is twitter_client.DRY_RUN_RECORDED
+    assert twitter_client.post_tweet("A fresh original about inference costs.") is W.DRY_RUN
     assert recorded == [{"dry_run": True}]
 
 
@@ -377,7 +378,7 @@ def test_reply_ships_and_records_when_every_step_runs(monkeypatch):
     recorded = _live_browser(monkeypatch)
     url = "https://x.com/someone/status/2063500000000000110"
 
-    assert tc.reply_to_tweet(url, REPLY) is True
+    assert tc.reply_to_tweet(url, REPLY) is W.SHIPPED
     assert len(recorded) == 1
     assert url in load_replied()
 
@@ -393,7 +394,7 @@ def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monk
             recorded = _live_browser(monkeypatch, failing_step=step)
             url = f"https://x.com/someone/status/20635000000000001{n}{int(debate_turn)}"
 
-            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is False, step
+            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is W.FAILED, step
             assert recorded == [], step
             assert url not in load_replied(), step
     assert other in load_replied()
@@ -407,7 +408,7 @@ def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
         recorded = _live_browser(monkeypatch, failing_step="submit")
         url = f"https://x.com/someone/status/206350000000000013{n}"
 
-        assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is False
+        assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is W.UNCONFIRMED
         assert recorded == []
         assert url in load_replied()
 
@@ -434,7 +435,7 @@ def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
     monkeypatch.setattr(safari, "_safari_lock", ContendedLock())
     url = "https://x.com/someone/status/2063500000000000160"
 
-    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is False
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is W.REFUSED
     assert recorded == []
     assert url not in load_replied()
 
@@ -456,7 +457,7 @@ def test_live_reply_pastes_the_validated_text(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
     url = "https://x.com/typofriend/status/2063500000000000165"
 
-    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is True
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is W.SHIPPED
     assert pasted == [validated[-1]]
     assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
 
@@ -483,7 +484,7 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     monkeypatch.setattr(safari, "_safari_lock", ContendedLock())
     url = "https://x.com/someone/status/2063500000000000166"
 
-    assert tc.reply_to_tweet(url, REPLY) is False
+    assert tc.reply_to_tweet(url, REPLY) is W.REFUSED
     assert recorded == []
     assert url not in load_replied()
 
@@ -500,7 +501,7 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
                         lambda: datetime(2026, 9, 23, 23, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
-    assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is False
+    assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 
 def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
@@ -515,7 +516,7 @@ def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
     url = "https://x.com/someone/status/2063500000000000170"
 
-    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is W.DRY_RUN
     assert url not in load_replied()
     assert [k for _, k in recorded] == [{"target": url, "dry_run": True},
                                         {"target": "someone", "dry_run": True}]
@@ -534,7 +535,7 @@ def test_refused_reply_never_reaches_safari(monkeypatch):
     for url in ("https://x.com/La_Pique_Off/status/2063500000000000180",
                 f"https://x.com/{config.BOT_HANDLE}/status/2063500000000000181",
                 "https://x.com/i/web/status/2063500000000000182"):
-        assert tc.reply_to_tweet(url, REPLY) is False, url
+        assert tc.reply_to_tweet(url, REPLY) is W.REFUSED, url
 
 
 def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch):
@@ -560,8 +561,7 @@ def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch
     monkeypatch.setattr(active_hours, "_STOP", threading.Event())
     recorded = _live_browser(monkeypatch, failing_step="stop_after_submit")
     after = "https://x.com/someone/status/2063500000000000141"
-    with pytest.raises(OutsideActiveHours):
-        tc.reply_to_tweet(after, REPLY)
+    assert tc.reply_to_tweet(after, REPLY) is W.SHIPPED, "a stop at the final close hides no Reply"
     assert after in load_replied()
     assert len(recorded) == 1
 
@@ -584,7 +584,7 @@ def test_stale_review_mode_does_not_divert_post_to_a_queue(monkeypatch, tmp_path
     monkeypatch.setattr(action_guard, "can_post", lambda a: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
-    assert tc.post_tweet("a sponsor-clean original take about the market needing a therapist today") is tc.DRY_RUN_RECORDED
+    assert tc.post_tweet("a sponsor-clean original take about the market needing a therapist today") is W.DRY_RUN
     assert recorded == [((action_guard.POST,), {"dry_run": True})]
     assert not os.path.exists(os.path.join(str(tmp_path), "review_queue.json"))
     assert not hasattr(tc, "_queue_for_review")
@@ -611,11 +611,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
         cg.is_duplicate = lambda text, threshold=None: True   # force dup
-        assert tc.post_tweet("AI capex is the new rent again") is False, \
-            "a near-duplicate post must return False, not None"
+        assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \
+            "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
         cg.is_duplicate = lambda text, threshold=None: False
-        assert tc.post_tweet("a genuinely fresh original take about AI") is tc.DRY_RUN_RECORDED
+        assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost
         cg.validate = orig_validate
@@ -631,15 +631,15 @@ def test_image_post_that_fails_records_nothing(monkeypatch, tmp_path):
     monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
     noted = []
     monkeypatch.setattr(content_guard, "note_posted", noted.append)
-    for step in ("paste", "submit"):
+    for step, outcome in (("paste", W.FAILED), ("submit", W.UNCONFIRMED)):
         recorded = _live_browser(monkeypatch, failing_step=step)
         assert tc.post_tweet("Inference is getting cheaper faster than training.",
-                             image_path=str(image)) is False, step
+                             image_path=str(image)) is outcome, step
         assert recorded == [] and noted == [], step
 
     recorded = _live_browser(monkeypatch)
     assert tc.post_tweet("Inference is getting cheaper faster than training.",
-                         image_path=str(image)) is True
+                         image_path=str(image)) is W.SHIPPED
     assert len(recorded) == 1
 
 
@@ -667,7 +667,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     text = "AI model evaluation needs examples from your real workflow. Test the failure cases your team actually sees before choosing a model."
     with ThreadPoolExecutor(2) as pool:
         results = list(pool.map(lambda _: tc.post_tweet(text, editorial=True), range(2)))
-    assert sum(1 for result in results if result is True) <= 1
+    assert sum(1 for result in results if result is W.SHIPPED) <= 1
     assert ag.profile_count_today() <= 8
 
 
@@ -782,7 +782,7 @@ def unfollow_env(monkeypatch, tmp_path, memory_ledger):
 def test_missing_following_button_records_nothing(unfollow_env, answer):
     unfollow_env.answers.append(answer)
 
-    assert unfollow_env.tc.unfollow_account("someaccount") is False
+    assert unfollow_env.tc.unfollow_account("someaccount") is W.FAILED
 
     assert len(unfollow_env.scripts) == 1, "no confirm without a Following click"
     assert unfollow_env.ledger() == []
@@ -794,7 +794,7 @@ def test_missing_following_button_records_nothing(unfollow_env, answer):
 def test_missing_confirmation_records_nothing(unfollow_env, answer):
     unfollow_env.answers.extend(["CLICKED", answer])
 
-    assert unfollow_env.tc.unfollow_account("someaccount") is False
+    assert unfollow_env.tc.unfollow_account("someaccount") is W.UNCONFIRMED
 
     assert unfollow_env.ledger() == []
     assert unfollow_env.following() == 100
@@ -804,7 +804,7 @@ def test_missing_confirmation_records_nothing(unfollow_env, answer):
 def test_confirmed_unfollow_records_one_row(unfollow_env):
     unfollow_env.answers.extend(["CLICKED", "CONFIRMED"])
 
-    assert unfollow_env.tc.unfollow_account("@SomeAccount") is True
+    assert unfollow_env.tc.unfollow_account("@SomeAccount") is W.SHIPPED
 
     rows = unfollow_env.ledger()
     assert [(r["action"], r["target"], r["dry_run"]) for r in rows] == [
@@ -817,7 +817,7 @@ def test_confirmed_unfollow_records_one_row(unfollow_env):
 def test_dry_run_records_a_dry_row_without_the_browser(unfollow_env, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
 
-    assert unfollow_env.tc.unfollow_account("someaccount") is unfollow_env.tc.DRY_RUN_RECORDED
+    assert unfollow_env.tc.unfollow_account("someaccount") is W.DRY_RUN
 
     assert unfollow_env.opened == [] and unfollow_env.scripts == []
     rows = unfollow_env.ledger()
@@ -841,14 +841,14 @@ def _scripted_pin_js(monkeypatch, steps):
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))
 
 
-@pytest.mark.parametrize("steps, shipped", [
-    (["MORE_CLICKED", "PIN_CLICKED", "CONFIRMED"], True),
-    (["MORE_CLICKED", "PIN_CLICKED", "NO_CONFIRM"], False),
-    (["MORE_CLICKED", "PIN_NOT_FOUND_4"], False),
-    (["NO_ARTICLE"], False),
-    (["MORE_CLICKED", "PIN_CLICKED", ""], False),
+@pytest.mark.parametrize("steps, outcome", [
+    (["MORE_CLICKED", "PIN_CLICKED", "CONFIRMED"], W.SHIPPED),
+    (["MORE_CLICKED", "PIN_CLICKED", "NO_CONFIRM"], W.UNCONFIRMED),
+    (["MORE_CLICKED", "PIN_NOT_FOUND_4"], W.FAILED),
+    (["NO_ARTICLE"], W.FAILED),
+    (["MORE_CLICKED", "PIN_CLICKED", ""], W.UNCONFIRMED),
 ])
-def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, memory_ledger, steps, shipped):
+def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, memory_ledger, steps, outcome):
     """Log only what shipped: one ledger row when the confirm dialog was
     clicked, none when a step failed or no confirm dialog appeared. A pin
     is not a profile publication."""
@@ -857,6 +857,6 @@ def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, memory_ledger, st
 
     _scripted_pin_js(monkeypatch, steps)
 
-    assert tc.pin_own_tweet(OWN_BEST) is shipped
-    assert [r["target"] for r in pin_rows(memory_ledger)] == ([OWN_BEST.lower()] if shipped else [])
+    assert tc.pin_own_tweet(OWN_BEST) is outcome
+    assert [r["target"] for r in pin_rows(memory_ledger)] == ([OWN_BEST.lower()] if outcome else [])
     assert action_guard.profile_count_today() == 0

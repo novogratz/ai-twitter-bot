@@ -12,6 +12,7 @@ from types import SimpleNamespace
 import pytest
 
 from src.guards.active_hours import OutsideActiveHours
+from src.x.confirmed_write import WriteOutcome
 
 OWN_POST = "https://x.com/TheAIShrink/status/2063500000000000103"
 
@@ -117,8 +118,8 @@ def _warm_up(monkeypatch):
 # when osascript failed
 CALLERS = {
     "like": (_like_js, (10, "[LIKE]", False), ""),
-    "follow": (_follow, (15, "[FOLLOW]", True), False),
-    "pin": (_pin, (15, "[PIN]", True), False),
+    "follow": (_follow, (15, "[FOLLOW]", True), WriteOutcome.FAILED),
+    "pin": (_pin, (15, "[PIN]", True), WriteOutcome.FAILED),
     "profile_quality": (_profile_quality, (15, "[SCRAPE]", False), {}),
     "tweets": (_tweets, (30, "[SCRAPE]", True), []),
     "following_tab": (_following_tab, (8, "[SCRAPE]", False), []),
@@ -239,11 +240,11 @@ def test_follow_ships_only_on_a_clicked_answer(monkeypatch, browser):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
     monkeypatch.setattr(action_guard, "adjust_following", lambda *a: None)
     browser("CLICKED")
-    assert _follow(monkeypatch) is True
+    assert _follow(monkeypatch) is WriteOutcome.SHIPPED
     assert recorded == [(action_guard.FOLLOW,)]
 
     browser("ALREADY")
-    assert _follow(monkeypatch) is False
+    assert _follow(monkeypatch) is WriteOutcome.REFUSED
     assert len(recorded) == 1
 
 

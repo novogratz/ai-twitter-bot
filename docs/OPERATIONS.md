@@ -142,7 +142,8 @@ heartbeat line.
 ## Recovery
 
 **A slot is `pending`.** The submission was interrupted or its outcome was
-unclear, and the bot will not retry it. Check the profile first. If the post
+unclear, and the bot will not retry it. A failed submit keystroke logs
+`[EDITORIAL] <slot> stays pending` in `bot.log`. Check the profile first. If the post
 is live, set the slot to `"published"` in `editorial_state.json` and append
 a matching entry (`ts`, `text`, `source_url`, `angle`, `slot`) to
 `published`, so the source rests for seven days and the reach report counts

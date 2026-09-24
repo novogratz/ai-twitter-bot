@@ -31,6 +31,15 @@ _Avoid_: seventh post, breaking slot
 A Slot whose Original was submitted without a definite outcome; it is never
 retried until the operator clears it.
 
+**Write outcome**:
+What one write to X (post, Reply, follow, unfollow, like, pin) came to:
+shipped, refused, failed before anything was sent, unconfirmed (it may have
+reached X, the page never showed it), or dry run. Only a shipped write is
+recorded in the ledger or counted by a job. A like names its outcomes
+finely: liked is its shipped write, already liked and blocked are its
+refusals; failed, unconfirmed and dry run keep their meaning.
+_Avoid_: success, result, ok
+
 ### Drafting and review
 
 **Draft**:

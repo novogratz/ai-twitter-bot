@@ -17,7 +17,8 @@ Follow @$username. Only on an explicit operator request.
    - `follow_account` applies the follow policy: whitelist-only, daily cap,
      spacing, total-following ceiling, 30-day anti-churn, quality gate. A
      refusal is logged as `[FOLLOW] policy refuses …` in `bot.log`.
-4. Only if it printed `True`, add the handle to `followed_accounts.json`
-   if not already there. `False` or `DRY_RUN_RECORDED` means nothing
-   shipped: write nothing.
+4. Only if it printed `WriteOutcome.SHIPPED`, add the handle to
+   `followed_accounts.json` if not already there. `WriteOutcome.REFUSED`,
+   `WriteOutcome.FAILED` or `WriteOutcome.DRY_RUN` means nothing shipped:
+   write nothing.
 5. Report the result and, on refusal, the reason from `bot.log`.
