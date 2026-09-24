@@ -47,6 +47,14 @@ their order in the file is not strictly chronological.
 > for the operator. Guards: `tests/x/test_write_order.py`,
 > `tests/editorial/test_editorial_bot.py`.
 
+> **2026-09-23 — trend slots and Startup post:** at the operator's request,
+> three trend slots (10:00, 13:00, 15:00) joined the grid and every start in
+> waking hours now opens a Startup post; the operator chose a post on every
+> restart over one a day. Trend posts pick their topic from the five
+> fastest-rising AI posts on X from the last 24 hours and their facts from a
+> trusted article. The post spacing floor went from 3600 to 1200 seconds so
+> 09:30 and 10:00 both fit. The eight-publication ceiling did not move.
+
 > **2026-09-23 — direct reply overlap + editorial floor:** APScheduler was
 > skipping `direct_reply_job` because the steady-state cycle ignored
 > `DIRECT_REPLY_MAX_PER_CYCLE` and could outlive its 2-minute interval. The

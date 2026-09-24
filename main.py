@@ -9,7 +9,7 @@ import threading
 
 from src.core import config
 from src.guards.active_hours import awake_job, is_active, next_wake
-from src.editorial.editorial_bot import SLOTS, safe_run_editorial_cycle
+from src.editorial.editorial_bot import SLOTS, TREND_SLOTS, open_startup_window, safe_run_editorial_cycle
 from src.core.logger import log
 
 _SINGLETON_LOCK_HANDLE = None
@@ -112,10 +112,15 @@ def main():
                           "max_profile_posts": config.MAX_PROFILE_POSTS_PER_DAY,
                           "replies": "unlimited",
                           "quotes": 0, "reposts": 0, "slots": SLOTS,
+                          "trend_slots": sorted(TREND_SLOTS),
+                          "startup_post": "every start in waking hours, restarts included",
                           "jobs": [job.id for job in scheduler.get_jobs()]}, indent=2))
         return
 
     _acquire_singleton_lock()
+    if not args.reply_only:
+        # The editorial job publishes it, after every restart too.
+        open_startup_window()
     stop = threading.Event()
 
     def shutdown(signum, frame):

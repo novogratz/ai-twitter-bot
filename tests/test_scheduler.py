@@ -9,10 +9,12 @@ def test_reply_only_still_registers_the_reply_engine():
     assert scheduler.get_job("editorial_job") is None
 
 
-def test_scheduler_build_has_no_startup_publishing(monkeypatch):
+def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
+    """Building the scheduler publishes nothing: the Startup post goes
+    through the editorial job, inside its window and the daily ceiling."""
     import main
     def forbidden(*a, **k):
-        raise AssertionError("Startup must not execute an editorial cycle")
+        raise AssertionError("Building the scheduler must not execute an editorial cycle")
     monkeypatch.setattr(main, "safe_run_editorial_cycle", forbidden)
     scheduler = main.build_scheduler()
     assert scheduler.get_job("editorial_job") is not None

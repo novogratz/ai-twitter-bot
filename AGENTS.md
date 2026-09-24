@@ -11,8 +11,11 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 - Active 04:30–22:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
-  combined profile publications at most.
-- Quotes, reposts, self-recycling, threads and startup bursts stay at zero.
+  combined profile publications at most, twenty minutes apart at least.
+- Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
+  in waking hours take their topic from rising AI posts on X, and their facts
+  from a trusted article.
+- Quotes, reposts, self-recycling and threads stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
 

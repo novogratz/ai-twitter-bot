@@ -59,7 +59,9 @@ only to `bot.log`, while stdout and tracebacks reach both the terminal and
 `bot.log`. Follow `tail -F bot.log`.
 
 Flags for `main.py`: `--post-only`, `--reply-only`, `--dry-run`. There is no
-other mode; `--monthly-recap-now` and the startup bursts are gone.
+other mode; `--monthly-recap-now` is gone. Every start in waking hours opens
+a Startup post: a restart publishes one trend post within 45 minutes when the
+daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
 waits. Nothing external happens until 04:30 Toronto time.
@@ -124,7 +126,7 @@ real account from a second process. Before any of them:
 | Where | What it tells you |
 |---|---|
 | `bot.log` | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]` |
-| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published`, recent publications and used sources |
+| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), the source of each pending slot (`pending_sources`, keyed `YYYY-MM-DD/<slot>`, skipped by later drafts), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
@@ -147,7 +149,9 @@ unclear, and the bot will not retry it. A failed submit keystroke logs
 is live, set the slot to `"published"` in `editorial_state.json` and append
 a matching entry (`ts`, `text`, `source_url`, `angle`, `slot`) to
 `published`, so the source rests for seven days and the reach report counts
-the post. If it is not live, delete the slot entry. Do this with the bot
+the post. If it is not live, delete the slot entry. Either way, delete its
+entry (keyed `YYYY-MM-DD/<slot>`) from `pending_sources`: until then later
+drafts skip that source, across days too. Do this with the bot
 stopped.
 
 **Corrupt `editorial_state.json` or `action_ledger.json`.** Both fail closed:
@@ -241,9 +245,10 @@ sleep 3 && open -a Safari
 
 **No original today.** Read `editorial_review.jsonl` for review rejections,
 then the `[EDITORIAL]` and `[POST]` lines of `bot.log` and `attempts` in
-`editorial_state.json`. Causes that leave no audit line: the one-hour spacing
+`editorial_state.json`. Causes that leave no audit line: the twenty-minute spacing
 or the daily ceiling, sources that could not be fetched, attempts spent, a
-model error. A pass that produces no draft spends no attempt. The evergreen
+model error, fewer than three trending posts for a trend slot. A pass that
+produces no draft spends no attempt. The evergreen
 documentation pages always supplement the news, so a quiet news day alone
 does not block a post. Missed slots are not caught up.
 

@@ -15,7 +15,8 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
     assert editorial.due_slot(at(5, 45), {}) is None
-    assert editorial.due_slot(at(10, 15), {}) is None
+    assert editorial.due_slot(at(10, 15), {})[0] == "10:00"
+    assert editorial.due_slot(at(10, 45), {}) is None
     state = {"date": "2026-09-20", "slots": {"05:00": "published"}}
     assert editorial.due_slot(at(5, 30), state) is None
     state["slots"]["05:00"] = "pending"
@@ -267,3 +268,217 @@ def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
                         "<article>" + "A useful AI model update with sourced details. " * 10 + "</article>")
     sources = editorial.collect_sources({}, now)
     assert [s["url"] for s in sources] == ["https://openai.com/fresh"]
+
+
+def test_a_spent_slot_does_not_hold_the_overlapping_next_one():
+    """09:30 and 10:00 overlap: a published or spent 09:30 frees 10:00."""
+    at = datetime(2026, 9, 20, 10, 5, tzinfo=TORONTO)
+    assert editorial.due_slot(at, {})[0] == "09:30"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "slots": {"09:30": "published"}})[0] == "10:00"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "attempts": {"09:30": 3}})[0] == "10:00"
+    assert editorial.due_slot(at, {"date": "2026-09-19", "attempts": {"09:30": 3}})[0] == "09:30"
+
+
+def test_trend_slots_sit_in_the_grid():
+    assert editorial.TREND_SLOTS == {"10:00", "13:00", "15:00"}
+    assert editorial.TREND_SLOTS <= set(dict(editorial.SLOTS))
+
+
+@pytest.fixture
+def no_startup(monkeypatch):
+    monkeypatch.setattr(editorial, "_startup_opened_at", None)
+    monkeypatch.setattr(editorial, "_trend_cache", {})
+
+
+def test_startup_window_opens_on_every_waking_start(no_startup):
+    at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
+    assert editorial.startup_slot(at(11, 10), {}) is None
+    editorial.open_startup_window(at(11, 10))
+    key = editorial.startup_key()
+    assert key == "startup@11:10:00"
+    assert editorial.startup_slot(at(11, 20), {}) == (key, editorial.TREND_PURPOSE)
+    assert editorial.startup_slot(at(11, 55), {}) is None
+    assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "slots": {key: "pending"}}) is None
+    assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "attempts": {key: 3}}) is None
+    # A restart the same day opens a fresh window, even after a published one.
+    editorial.open_startup_window(at(11, 30))
+    done = {"date": "2026-09-20", "slots": {key: "published"}}
+    assert editorial.startup_slot(at(11, 31), done)[0] == "startup@11:30:00"
+    # Nothing overnight: the watchdog relaunches at night, and a 04:20 start
+    # must not publish at 04:30.
+    editorial.open_startup_window(at(4, 20))
+    assert editorial.startup_key() is None
+    assert editorial.startup_slot(at(4, 35), {}) is None
+    assert editorial.next_slot(at(4, 35), {}) is None
+
+
+def test_startup_post_goes_before_an_open_slot(no_startup):
+    at = datetime(2026, 9, 20, 10, 20, tzinfo=TORONTO)
+    assert editorial.next_slot(at, {})[0] == "10:00"
+    editorial.open_startup_window(at)
+    assert editorial.next_slot(at, {})[0] == "startup@10:20:00"
+
+
+TRENDING = [dict(text=f"AI model story {i}", likes=100, views=1000, age_minutes=60,
+                 likes_per_minute=1.6) for i in range(5)]
+
+
+@pytest.fixture
+def trend_fixture(monkeypatch, draft_fixture, no_startup):
+    draft, source, review = draft_fixture
+    source.update(kind="news", published_at="2026-09-20T09:00:00-04:00")
+    review["trending"] = True
+    calls = dict(sources=[], drafts=[])
+    def sources(state, now=None, news_only=False):
+        calls["sources"].append(news_only)
+        return [source]
+    def drafted(*args):
+        calls["drafts"].append(args)
+        return draft
+    monkeypatch.setattr(editorial, "collect_sources", sources)
+    monkeypatch.setattr(editorial, "draft_post", drafted)
+    monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: TRENDING)
+    return calls
+
+
+def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture):
+    from src.x import twitter_client as tc
+    posted = []
+    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
+    clock(monkeypatch, datetime(2026, 9, 20, 11, 10, tzinfo=TORONTO))
+    editorial.open_startup_window()
+    assert editorial.run_editorial_cycle()["approved"]
+    assert len(posted) == 1
+    assert trend_fixture["sources"] == [True]
+    assert trend_fixture["drafts"][0][4] == TRENDING
+    assert editorial._read_state()["slots"]["startup@11:10:00"] == "published"
+    assert editorial._read_state()["pending_sources"] == {}
+    # Same process: the window is spent.
+    assert editorial.run_editorial_cycle() is None
+    assert len(posted) == 1
+    # A restart publishes again.
+    clock(monkeypatch, datetime(2026, 9, 20, 11, 40, tzinfo=TORONTO))
+    editorial.open_startup_window()
+    assert editorial.run_editorial_cycle()["approved"]
+    assert len(posted) == 2
+
+
+def test_trend_slot_without_enough_trending_posts_spends_no_attempt(monkeypatch, trend_fixture):
+    from src.x import twitter_client as tc
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("posted without a trend"))
+    clock(monkeypatch, datetime(2026, 9, 20, 13, 5, tzinfo=TORONTO))
+    monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: TRENDING[:2])
+    assert editorial.run_editorial_cycle() is None
+    assert not editorial._read_state().get("attempts", {}).get("13:00")
+    assert not trend_fixture["drafts"]
+
+
+def test_trend_slot_drafts_from_news_only(monkeypatch, trend_fixture):
+    from src.x import twitter_client as tc
+    posted = []
+    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
+    clock(monkeypatch, datetime(2026, 9, 20, 13, 5, tzinfo=TORONTO))
+    assert editorial.run_editorial_cycle()["approved"]
+    assert trend_fixture["sources"] == [True]
+    assert editorial._read_state()["slots"]["13:00"] == "published"
+
+
+def test_trend_review_needs_news_no_mention_and_editor_trend_approval(draft_fixture):
+    draft, source, review = draft_fixture
+    review["trending"] = True
+    assert not editorial.review_draft(draft, [source], [], trending=TRENDING)[0]  # knowledge doc
+    source.update(kind="news")
+    assert editorial.review_draft(draft, [source], [], trending=TRENDING)[0]
+    review["trending"] = False
+    assert not editorial.review_draft(draft, [source], [], trending=TRENDING)[0]
+    assert editorial.review_draft(draft, [source], [])[0]
+    review["trending"] = True
+    draft["text"] = "@sama " + draft["text"][:200]
+    assert not editorial.review_draft(draft, [source], [], trending=TRENDING)[0]
+
+
+def test_trending_posts_are_fresh_ranked_anonymous_and_cached(monkeypatch, no_startup):
+    from src.core import config
+    from src.x import scraper
+    from tests.helpers import fresh
+    monkeypatch.setattr(config, "BLOCKLIST", {"blockedguy"})
+    def tweet(handle, minutes, likes, text, n):
+        return dict(url=fresh(handle, minutes, n), text=text, likes=likes, views=likes * 10)
+    # (age in minutes, likes): likes per minute 10, 6, 4, 3, 2, 1. The
+    # fastest is not the newest, and the order below is shuffled.
+    speed = [(300, 3000), (100, 600), (200, 800), (50, 150), (30, 60), (20, 20)]
+    good = [tweet(f"writer{i}", speed[i][0], speed[i][1], f"New AI model {i} from @lab https://t.co/x", i)
+            for i in (3, 5, 0, 4, 1, 2)]
+    noise = [
+        tweet(config.BOT_HANDLE, 30, 900, "Our AI model take", 10),
+        tweet("blockedguy", 30, 900, "An AI model rant", 11),
+        tweet("oldtimer", 30 * 60, 9000, "Old AI model news", 12),
+        tweet("replier", 30, 900, "@someone the AI model is fine", 13),
+        tweet("shill", 30, 900, "AI agent token airdrop today", 14),
+        tweet("chef", 30, 900, "A great pasta recipe", 15),
+    ]
+    searches = []
+    def search(query, **k):
+        searches.append((query, k))
+        return good + noise
+    monkeypatch.setattr(scraper, "scrape_x_search", search)
+    now = datetime.now(TORONTO)
+    posts = editorial.collect_trending_posts(("10:00", "x"), now)
+    assert [p["text"] for p in posts] == [f"New AI model {i} from" for i in range(5)]
+    assert all(k["tab"] == "top" and k["text_limit"] > 200 for _, k in searches)
+    assert len(searches) == len(editorial.TREND_QUERIES)
+    assert editorial.collect_trending_posts(("10:00", "x"), now) == posts
+    assert len(searches) == len(editorial.TREND_QUERIES)
+
+
+def test_a_restart_after_an_ambiguous_submission_skips_its_source(monkeypatch):
+    """A crash mid-submission leaves the Startup post pending under the old
+    process key; the next process's Startup post must not reuse the source."""
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    feed = "https://openai.com/news/rss.xml"
+    monkeypatch.setattr(editorial, "FEEDS", (("OpenAI", feed),))
+    monkeypatch.setattr(editorial, "KNOWLEDGE", ())
+    xml = ("<rss><channel><item><title>AI model launch</title><link>https://openai.com/launch</link>"
+           "<pubDate>2026-09-20T10:00:00-04:00</pubDate></item></channel></rss>")
+    monkeypatch.setattr(editorial, "_fetch", lambda url: xml if url == feed else
+                        "<article>" + "A useful AI model update with sourced details. " * 10 + "</article>")
+    assert editorial.collect_sources({}, now)
+    state = {"date": "2026-09-20", "slots": {"startup@11:10:00": "pending"},
+             "pending_sources": {"2026-09-20/startup@11:10:00": "https://openai.com/launch"}}
+    assert editorial.collect_sources(state, now) == []
+
+
+def test_pending_source_is_released_only_when_nothing_was_sent(monkeypatch, draft_fixture):
+    from src.x import twitter_client as tc
+    url = draft_fixture[1]["url"]
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.FAILED)
+    editorial.run_editorial_cycle()
+    assert editorial._read_state()["pending_sources"] == {}
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.UNCONFIRMED)
+    editorial.run_editorial_cycle()
+    assert editorial._read_state()["pending_sources"] == {"2026-09-20/07:15": url}
+    # Kept across the day reset, and not overwritten by tomorrow's 07:15:
+    # the post may be live.
+    clock(monkeypatch, datetime(2026, 9, 21, 7, 30, tzinfo=TORONTO))
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.FAILED)
+    seen = []
+    source = draft_fixture[1]
+    monkeypatch.setattr(editorial, "collect_sources",
+                        lambda state, *a, **k: seen.append(dict(state.get("pending_sources", {}))) or [source])
+    editorial.run_editorial_cycle()
+    assert seen == [{"2026-09-20/07:15": url}]
+    assert editorial._read_state()["pending_sources"] == {"2026-09-20/07:15": url}
+
+
+def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, trend_fixture):
+    """A restart at 05:00 with no usable trend must not hide the 05:00 Slot."""
+    from src.x import twitter_client as tc
+    posted = []
+    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
+    clock(monkeypatch, datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO))
+    editorial.open_startup_window()
+    monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: [])
+    assert editorial.run_editorial_cycle()["slot"] == "05:00"
+    assert editorial._read_state()["slots"] == {"05:00": "published"}
+    assert trend_fixture["sources"] == [False]
+    assert len(posted) == 1

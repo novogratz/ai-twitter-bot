@@ -19,14 +19,17 @@ There is no X API client.
 other job). Reply scans cannot starve the editorial job of a thread, but all
 browser work shares `_safari_lock`, so a post can still wait behind a reply.
 Every job is an `IntervalTrigger` registered through the local `add()` helper,
-which wraps it in `active_hours.awake_job`. There are no cron triggers, no
-startup bursts and no warmup phase.
+which wraps it in `active_hours.awake_job`. There are no cron triggers and
+no warmup phase. The Startup post is not a job: `main()` opens its window and
+`editorial_job` publishes it.
 
 At start, `main()`:
 
 1. takes `bot.lock` with `fcntl.flock` and exits if another instance holds it;
 2. installs SIGTERM/SIGINT handlers that call `active_hours.request_stop()`;
-3. starts the scheduler paused, then checks `is_active()` every 15 seconds and
+3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
+   `--reply-only`;
+4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
    pauses or resumes it at the 04:30 and 22:00 boundaries.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
@@ -106,36 +109,52 @@ Two settings decide how much of the table does anything:
 `src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
 lock.
 
-1. **Slot.** `SLOTS` lists 05:00, 07:15, 09:30, 11:45, 14:00, 16:15, 18:30
-   and an optional 20:45. A slot is due for 45 minutes, never past 22:00, and only if
-   `editorial_state.json` has no entry for it. A missed slot is not caught up.
+1. **Slot.** `SLOTS` lists 05:00, 07:15, 09:30, 10:00, 11:45, 13:00, 14:00,
+   15:00, 16:15, 18:30 and an optional 20:45; `TREND_SLOTS` marks 10:00, 13:00
+   and 15:00. A slot is due for 45 minutes, never past 22:00, only if
+   `editorial_state.json` has no entry for it and its attempts are not spent.
+   A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
+   by the process start time, is a trend slot due for 45 minutes after
+   `open_startup_window()`, which opens nothing outside waking hours. Each
+   pass tries the Startup post first and falls through to the grid Slot when
+   that yields no draft.
 2. **Attempts.** Three per slot per day, restarts included. An attempt is a
    draft submitted to review: the counter is saved once a draft exists and
    before review. A pass with no source, a draft model error or an explicit
    skip spends none; the 45-minute window bounds those passes.
-3. **Sources.** Ten trusted feeds (OpenAI, Google AI, DeepMind, Hugging Face,
+3. **Trend.** For a trend slot, `collect_trending_posts` runs the two
+   `TREND_QUERIES` in the Top tab (`scrape_x_search(..., text_limit=600)`),
+   keeps posts under 24 hours old by status ID, drops own posts, Blocked
+   accounts, nested replies, off-topic and crypto posts, strips handles,
+   mentions and links, and keeps the five with the most likes per minute. A
+   usable result is cached for the slot's retries; fewer than three posts
+   skips the pass without spending an attempt. Trend slots get news sources
+   only, never evergreen documentation.
+4. **Sources.** Ten trusted feeds (OpenAI, Google AI, DeepMind, Hugging Face,
    NVIDIA, Microsoft Research, Mistral AI, Replicate, The Decoder and arXiv
    cs.AI) supply AI news/articles under 48 hours old; the eight newest are
    tried before evergreen. Twelve Hugging Face documentation pages rotate daily
    as backup teaching topics. URLs used in the last seven days are skipped.
    Each page is fetched over HTTPS from an allowed host, 12-second timeout,
    1 MB read.
-4. **Draft.** The model sees `core_identity.md`, the hard rules, the slot
-   brief, the last rejection reason for this slot, recent posts and numbered
-   evidence sentences from each source. It returns JSON matching
+5. **Draft.** The model sees `core_identity_en.md`, the hard rules, the slot
+   brief, the last rejection reason for this slot, recent posts, numbered
+   evidence sentences from each source and, for a trend slot, the trending
+   posts as untrusted data that choose the topic. It returns JSON matching
    `editorial_schemas.DRAFT_SCHEMA`, or an explicit skip.
-5. **Review.** Deterministic checks first: 80–250 characters, trusted source,
+6. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
    1–3 evidence ids that resolve to sentences found in the source text, then
    `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
    twelve hours old or a useful AI teaching source. A second model call
-   (`REVIEW_SCHEMA`) must approve all six criteria, plus `exceptional` at 20:45.
-6. **Audit.** An attempt that reaches review appends a line to
+   (`REVIEW_SCHEMA`) must approve all six criteria, plus `exceptional` at 20:45
+   and `trending` for a trend slot, which also needs a news source and no `@`.
+7. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
    next attempt. Nothing is written when `can_post` refuses (spacing or
    ceiling), when the three attempts are spent, or when the pass yields no
    draft.
-7. **Publish.** Waking hours and slot validity are checked again. The slot is
+8. **Publish.** Waking hours and the slot's window are checked again. The slot is
    marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
    the draft plus the source URL. `SHIPPED` marks it `published`. `REFUSED`,
    `FAILED` and `DRY_RUN` sent nothing and free the slot. `UNCONFIRMED` (the
@@ -269,7 +288,7 @@ Four modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that neither `.env` nor
   `live_strategy.json` can lift: eight profile publications a day, quote and
-  repost caps at 0, originals capped at 8 and spaced by at least 3600 seconds,
+  repost caps at 0, originals capped at 8 and spaced by at least 1200 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
 - `src/guards/action_guard.py` decides `can_post`, `can_follow` and
