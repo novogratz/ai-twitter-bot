@@ -7,6 +7,7 @@ import pytest
 
 from src.guards import active_hours as hours
 from src.editorial import editorial_bot as editorial
+from src.x.confirmed_write import WriteOutcome
 from tests.helpers import TORONTO, clock
 
 
@@ -143,12 +144,30 @@ def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, dra
     assert not editorial._read_state().get("slots")
 
 
-def test_failed_or_ambiguous_submission_does_not_log_success(monkeypatch, draft_fixture):
+@pytest.mark.parametrize("outcome", [WriteOutcome.REFUSED, WriteOutcome.FAILED, WriteOutcome.DRY_RUN])
+def test_a_write_that_sent_nothing_frees_the_slot(monkeypatch, draft_fixture, outcome):
     from src.x import twitter_client as tc
-    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: False)
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: outcome)
     editorial.run_editorial_cycle()
     assert not editorial._read_state()["slots"]
     assert not editorial._read_state()["published"]
+
+
+def test_an_unconfirmed_submit_keeps_the_slot_pending(monkeypatch, draft_fixture):
+    """The submit keystroke may have reached X: the slot is never retried
+    automatically, the operator checks the profile first."""
+    from src.x import twitter_client as tc
+    calls = []
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: calls.append(a) or WriteOutcome.UNCONFIRMED)
+    editorial.run_editorial_cycle()
+    assert editorial._read_state()["slots"]["07:15"] == "pending"
+    assert not editorial._read_state()["published"]
+    assert editorial.run_editorial_cycle() is None
+    assert len(calls) == 1
+
+
+def test_an_interrupted_submission_keeps_the_slot_pending(monkeypatch, draft_fixture):
+    from src.x import twitter_client as tc
     def ambiguous(*a, **k):
         raise RuntimeError("connection interrupted after submission")
     monkeypatch.setattr(tc, "post_tweet", ambiguous)

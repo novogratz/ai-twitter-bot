@@ -105,7 +105,7 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
     assert set(json.loads(followed_file.read_text())) == {"already"}
     assert sorted(k["target"] for a, k in recorded if a == (action_guard.FOLLOW,)) == ["newcomer", "other"]
     assert all(k["dry_run"] for _, k in recorded)
-    assert not tc.DRY_RUN_RECORDED
+    assert not tc.WriteOutcome.DRY_RUN
 
 
 # --- like_bot ------------------------------------------------------------------

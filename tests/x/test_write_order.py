@@ -13,7 +13,7 @@ from src.guards import content_guard as cg
 from src.guards import replied_store as rs
 from src.guards import reply_admission as ra
 from src.guards.active_hours import OutsideActiveHours
-from src.x import safari, scraper
+from src.x import confirmed_write, safari, scraper
 from src.x import twitter_client as tc
 from src.x.confirmed_write import WriteOutcome as W
 
@@ -22,7 +22,7 @@ QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Ja
 
 
 def _script_kind(script):
-    if "keystroke return using command down" in script:
+    if script == tc._SUBMIT_KEYSTROKE:
         return "submit"
     if 'keystroke "r"' in script:
         return "reply_key"
@@ -178,7 +178,7 @@ def test_image_post_failed_paste_records_nothing(trace, tmp_path):
 
 def test_post_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.post_tweet(TEXT, editorial=True) is tc.DRY_RUN_RECORDED
+    assert tc.post_tweet(TEXT, editorial=True) is W.DRY_RUN
     assert trace.events == ["guard:can_post", "dry:post"]
     assert _dry_run_line(trace, "POST")
 
@@ -231,7 +231,7 @@ def test_reply_stop_mid_steps_releases_claim_and_lock(trace):
 
 def test_reply_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is W.DRY_RUN
     assert trace.events == ["lock", "judge", "dry:reply", "dry:debate_turn", "unlock"]
     assert _dry_run_line(trace, "REPLY")
 
@@ -270,7 +270,7 @@ def test_follow_without_a_click_records_nothing(trace, answer, outcome):
 
 def test_follow_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.follow_account("someone") is tc.DRY_RUN_RECORDED
+    assert tc.follow_account("someone") is W.DRY_RUN
     assert trace.events == ["guard:can_follow", "dry:follow"]
     assert _dry_run_line(trace, "FOLLOW")
 
@@ -306,7 +306,7 @@ def test_unfollow_unconfirmed_records_nothing(trace):
 
 def test_unfollow_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.unfollow_account("someone") is tc.DRY_RUN_RECORDED
+    assert tc.unfollow_account("someone") is W.DRY_RUN
     assert trace.events == ["guard:can_unfollow", "dry:unfollow"]
     assert _dry_run_line(trace, "UNFOLLOW")
 
@@ -339,7 +339,7 @@ def test_like_without_status_id_never_takes_the_lock(trace):
 
 def test_like_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.like_tweet(POST_URL) is tc.DRY_RUN_RECORDED
+    assert tc.like_tweet(POST_URL) is tc.LikeOutcome.DRY_RUN
     assert trace.events == ["dry:like"]
     assert _dry_run_line(trace, "LIKE")
 
@@ -368,7 +368,7 @@ def test_pin_not_confirmed_records_nothing(trace, answers, steps, outcome):
 
 def test_pin_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.pin_own_tweet(POST_URL) is tc.DRY_RUN_RECORDED
+    assert tc.pin_own_tweet(POST_URL) is W.DRY_RUN
     assert trace.events == ["dry:pin"]
     assert _dry_run_line(trace, "PIN")
 
@@ -378,7 +378,20 @@ def test_pin_dry_run(trace, monkeypatch):
 
 def test_only_a_shipped_write_is_truthy():
     assert [o for o in W if o] == [W.SHIPPED]
-    assert tc.DRY_RUN_RECORDED is W.DRY_RUN
+    assert [o for o in tc.LikeOutcome if o] == [tc.LikeOutcome.LIKED]
+
+
+@pytest.mark.parametrize("before_lock, under_lock", [
+    ((), ()),
+    ((confirmed_write.DRY_RUN_EXIT,), (confirmed_write.DRY_RUN_EXIT,)),
+])
+def test_a_write_without_exactly_one_dry_run_exit_never_runs(trace, before_lock, under_lock):
+    """Without its DRY_RUN_EXIT a chokepoint would act live under DRY_RUN."""
+    with pytest.raises(ValueError):
+        confirmed_write.run("TEST", W, would=lambda: "test", rows=lambda: [],
+                            steps=lambda: trace.events.append("steps") or W.SHIPPED,
+                            before_lock=before_lock, under_lock=under_lock)
+    assert trace.events == []
 
 
 def test_stop_at_the_final_close_never_hides_a_shipped_write(trace):
@@ -412,12 +425,22 @@ def test_a_stop_during_the_page_steps_records_nothing_and_releases_the_lock(trac
     assert not [e for e in trace.events if e.startswith("record:")]
 
 
-def test_refusal_and_failure_read_apart_in_the_log(trace):
+def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):
+    """A refusal keeps the guard's line alone; a failure adds the outcome
+    line, and the refusal's outcome line goes to debug."""
+    debug = []
+    monkeypatch.setattr(log, "debug", lambda msg, *a, **k: debug.append(str(msg)))
     trace.refuse.add("can_follow")
     tc.follow_account("someone")
     trace.refuse.clear()
     trace.js.append("NO_BTN")
     tc.follow_account("someone")
-    outcomes = [line for line in trace.logs if line.startswith("[FOLLOW] Write ")]
-    assert outcomes == ["[FOLLOW] Write refused; nothing recorded.",
-                        "[FOLLOW] Write failed; nothing recorded."]
+    assert [line for line in trace.logs if line.startswith("[FOLLOW] Write ")] == [
+        "[FOLLOW] Write failed; nothing recorded."]
+    assert debug == ["[FOLLOW] Write refused; nothing recorded."]
+
+
+def test_a_like_walk_skipping_liked_posts_logs_one_line_each(trace, monkeypatch):
+    monkeypatch.setattr(tc, "_already_liked", lambda url: True)
+    assert tc.like_tweet(POST_URL) is tc.LikeOutcome.ALREADY_LIKED
+    assert trace.logs == [f"[LIKE] already liked {POST_URL[-50:]}; skipping."]

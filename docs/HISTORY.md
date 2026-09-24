@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-23 — typed write outcomes keep an unclear editorial slot
+> pending (issue #157):** the six write chokepoints now run one sequence,
+> `confirmed_write.run`, and return a typed outcome instead of `True` /
+> `False`. The editorial cycle freed its slot on any falsy result, a failed
+> submit keystroke included, although that keystroke may have reached X and
+> a `pending` slot is never retried automatically: a retry could have
+> published the same Original twice. Only `REFUSED`, `FAILED` and `DRY_RUN`,
+> which sent nothing, free the slot now; `UNCONFIRMED` leaves it `pending`
+> for the operator. Guards: `tests/x/test_write_order.py`,
+> `tests/editorial/test_editorial_bot.py`.
+
 > **2026-09-23 — direct reply overlap + editorial floor:** APScheduler was
 > skipping `direct_reply_job` because the steady-state cycle ignored
 > `DIRECT_REPLY_MAX_PER_CYCLE` and could outlive its 2-minute interval. The

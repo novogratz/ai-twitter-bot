@@ -137,9 +137,11 @@ lock.
    draft.
 7. **Publish.** Waking hours and slot validity are checked again. The slot is
    marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
-   the draft plus the source URL. `SHIPPED` marks it `published`; any other
-   outcome frees the slot; an exception leaves it `pending`, which is never retried
-   automatically. With `DRY_RUN` set, the text is logged and nothing is marked.
+   the draft plus the source URL. `SHIPPED` marks it `published`. `REFUSED`,
+   `FAILED` and `DRY_RUN` sent nothing and free the slot. `UNCONFIRMED` (the
+   submit keystroke failed, so the post may be live), any other result and an
+   exception leave it `pending`, which is never retried automatically. With
+   `DRY_RUN` set, the text is logged and nothing is marked.
 
 `editorial=True` skips the URL stripping and the random casualization other
 posts get, so the reviewed text ships unchanged. `post_tweet` checks
@@ -175,7 +177,11 @@ Every write that should count goes through a function in
 `reply_to_tweet_in_thread`, `follow_account`, `unfollow_account`,
 `like_tweet`, `pin_own_tweet`. Each runs one sequence, written once in
 `src/x/confirmed_write.py`. The chokepoint supplies its guards, its page
-steps and its ledger rows; `confirmed_write.run` owns the order:
+steps and its ledger rows; `confirmed_write.run` owns the order. The guards
+come in two sequences, `before_lock` and `under_lock`, and
+`confirmed_write.DRY_RUN_EXIT` sits exactly once among them: the guards
+before it run in a dry run too, the guards after it run live only. A
+chokepoint without it, or with two, raises before any guard runs.
 
 1. Admission before the Safari lock: `can_post` and the content checks,
    `can_follow`, `can_unfollow`, the handle check, the Blocked-account and
@@ -200,12 +206,14 @@ The chokepoints return a `WriteOutcome`: `SHIPPED`, `REFUSED` (a guard, or
 the page state, left nothing to write), `FAILED` (a step failed before
 anything was sent), `UNCONFIRMED` (the write may have reached X; the page
 never confirmed it) or `DRY_RUN`. Only `SHIPPED` is truthy: callers log or
-count on a truthy result, and no ledger row is written otherwise. Every
-other live outcome logs `[TAG] Write <outcome>; nothing recorded.`, so a
-refusal and a failure read apart in `bot.log`. `DRY_RUN_RECORDED` is
-`WriteOutcome.DRY_RUN`: a caller that persists on a truthy result persists
-nothing after a dry run, and one that must tell a dry run from a refusal
-compares with `is` (`follow_engagers_bot`, `pin_job`). One limit: `SHIPPED`
+count on a truthy result, and no ledger row is written otherwise. A
+`FAILED` or `UNCONFIRMED` write logs `[TAG] Write <outcome>; nothing
+recorded.` after the failed step's own line. A refusal keeps the guard's
+line alone, its outcome line going to debug, so a refusal and a failure
+read apart in `bot.log` and a like walk logs one line per post it skips. A
+caller that persists on a truthy result persists nothing after a dry run,
+and one that must tell a dry run from a refusal compares with `is
+WriteOutcome.DRY_RUN` (`follow_engagers_bot`, `pin_job`). One limit: `SHIPPED`
 for a post or a Reply means `osascript` ran the submit keystroke, not that X
 confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
 `follow_account` ships on the Follow click; an account already followed is
@@ -215,7 +223,8 @@ reported the click on X's confirmation sheet. If `_run_js` times out (15 s) afte
 unfollow may have shipped unrecorded.
 
 `like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
-only for `LIKED`, or `DRY_RUN_RECORDED`. It never presses the `l` shortcut, which
+only for `LIKED`, which also carries `FAILED`, `UNCONFIRMED` and
+`DRY_RUN`. It never presses the `l` shortcut, which
 toggles and acts on X's own selection. A post whose URL handle is a
 Blocked account, matched as Reply admission matches it, returns `BLOCKED`
 before anything is read, clicked or recorded. One JavaScript step finds the

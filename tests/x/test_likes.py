@@ -180,15 +180,15 @@ def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch
     assert held == []
 
 
-def test_dry_run_like_returns_dry_run_recorded_and_reads_nothing(browser, monkeypatch):
+def test_dry_run_like_returns_dry_run_and_reads_nothing(browser, monkeypatch):
     """Log only what shipped: a dry-run like writes a dry-run ledger row and
-    returns the falsy DRY_RUN_RECORDED, like every other chokepoint."""
+    returns the falsy LikeOutcome.DRY_RUN, like every other chokepoint."""
     from src.guards import action_guard
     from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "1")
     monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
-    assert tc.like_tweet(POST) is tc.DRY_RUN_RECORDED
+    assert tc.like_tweet(POST) is tc.LikeOutcome.DRY_RUN
     assert browser["recorded"] == [((action_guard.LIKE,), {"target": POST, "dry_run": True})]
 
 
@@ -211,7 +211,7 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
     like_bot.run_like_cycle()
     twitter_client.like_own_tweet_replies()
     assert twitter_client.pin_own_tweet("https://x.com/TheAIShrink/status/2063500000000000103") \
-        is twitter_client.DRY_RUN_RECORDED
+        is twitter_client.WriteOutcome.DRY_RUN
     assert opened == []
     assert not (tmp_path / "like_bot_state.json").exists()
 

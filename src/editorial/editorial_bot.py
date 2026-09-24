@@ -383,16 +383,19 @@ def run_editorial_cycle(preview=False):
         # A slow source/model call must not publish an expired slot.
         if due_slot(state=state) != slot:
             return audit
+        from ..x.confirmed_write import WriteOutcome
         from ..x.twitter_client import post_tweet
         text = draft["text"].strip() + "\n\n" + source["url"]
         if config.dry_run():
             log.info("[EDITORIAL][DRY_RUN] %s", text)
             return audit
         # Reserve before submitting. An interrupted/ambiguous submission must
-        # never cause a duplicate after a restart. A definite skip releases it.
+        # never cause a duplicate after a restart. Only an outcome that sent
+        # nothing releases it.
         state.setdefault("slots", {})[slot[0]] = "pending"
         _save_state(state)
-        if post_tweet(text, editorial=True):
+        outcome = post_tweet(text, editorial=True)
+        if outcome:
             state["slots"][slot[0]] = "published"
             state["published"].append(dict(ts=now_local().isoformat(), text=draft["text"],
                                            source_url=source["url"], angle=draft["angle"],
@@ -400,9 +403,12 @@ def run_editorial_cycle(preview=False):
             _save_state(state)
             log.info("[EDITORIAL] Published %s (%d/%d profile posts today).",
                      slot[0], action_guard.profile_count_today(), config.MAX_PROFILE_POSTS_PER_DAY)
-        else:
+        elif outcome in (WriteOutcome.REFUSED, WriteOutcome.FAILED, WriteOutcome.DRY_RUN):
             del state["slots"][slot[0]]
             _save_state(state)
+        else:
+            log.warning("[EDITORIAL] %s stays pending: the submit may have reached X (%s). "
+                        "Check the profile before clearing it.", slot[0], outcome)
         return audit
     finally:
         _CYCLE_LOCK.release()

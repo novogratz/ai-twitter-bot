@@ -67,8 +67,9 @@ Each one is a bug that shipped live. The full incident stories are in
   `SHIPPED`. Callers log, count and consume a slot or candidate on a truthy
   result only. A failed AppleScript step is not a shipped action: it returns
   `FAILED` or `UNCONFIRMED` and writes no ledger row. Neither is a dry run:
-  it writes a dry-run ledger row and returns the falsy `DRY_RUN_RECORDED`.
-  `like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`.
+  it writes a dry-run ledger row and returns the falsy `DRY_RUN`.
+  `like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`, with the
+  same `FAILED`, `UNCONFIRMED` and `DRY_RUN`.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.

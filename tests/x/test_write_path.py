@@ -112,7 +112,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     monkeypatch.setattr(cg2, "validate", spy_validate)
 
     url = "https://x.com/foo/status/2063500000000000088"
-    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is W.DRY_RUN
     assert "—" not in seen["text"]
     assert "conviction is the hard part" in seen["text"]
 
@@ -137,7 +137,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     # Post must stay UNMARKED — a later FR draft can still ship.
     assert url not in rs.load_replied()
     french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
-    assert tc.reply_to_tweet(url, french) is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(url, french) is W.DRY_RUN
 
     # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.
     for leak in ("SKIPPED", "Skip.", "skipped", "SKIP — no source context"):
@@ -258,7 +258,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
     url = "https://x.com/typofriend/status/2063500000000000101"
-    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is twitter_client.DRY_RUN_RECORDED
+    assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
     assert validated and validated[-1].endswith("(typo)")
 
 
@@ -279,7 +279,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch):
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
     url = "https://x.com/typofriend/status/2063500000000000103"
-    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is twitter_client.DRY_RUN_RECORDED
+    assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
     assert validated[-1].endswith("(typo)")
 
@@ -317,7 +317,7 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(k))
-    assert twitter_client.post_tweet("A fresh original about inference costs.") is twitter_client.DRY_RUN_RECORDED
+    assert twitter_client.post_tweet("A fresh original about inference costs.") is W.DRY_RUN
     assert recorded == [{"dry_run": True}]
 
 
@@ -516,7 +516,7 @@ def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
     url = "https://x.com/someone/status/2063500000000000170"
 
-    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is tc.DRY_RUN_RECORDED
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is W.DRY_RUN
     assert url not in load_replied()
     assert [k for _, k in recorded] == [{"target": url, "dry_run": True},
                                         {"target": "someone", "dry_run": True}]
@@ -584,7 +584,7 @@ def test_stale_review_mode_does_not_divert_post_to_a_queue(monkeypatch, tmp_path
     monkeypatch.setattr(action_guard, "can_post", lambda a: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
-    assert tc.post_tweet("a sponsor-clean original take about the market needing a therapist today") is tc.DRY_RUN_RECORDED
+    assert tc.post_tweet("a sponsor-clean original take about the market needing a therapist today") is W.DRY_RUN
     assert recorded == [((action_guard.POST,), {"dry_run": True})]
     assert not os.path.exists(os.path.join(str(tmp_path), "review_queue.json"))
     assert not hasattr(tc, "_queue_for_review")
@@ -615,7 +615,7 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
             "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
         cg.is_duplicate = lambda text, threshold=None: False
-        assert tc.post_tweet("a genuinely fresh original take about AI") is tc.DRY_RUN_RECORDED
+        assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost
         cg.validate = orig_validate
@@ -817,7 +817,7 @@ def test_confirmed_unfollow_records_one_row(unfollow_env):
 def test_dry_run_records_a_dry_row_without_the_browser(unfollow_env, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
 
-    assert unfollow_env.tc.unfollow_account("someaccount") is unfollow_env.tc.DRY_RUN_RECORDED
+    assert unfollow_env.tc.unfollow_account("someaccount") is W.DRY_RUN
 
     assert unfollow_env.opened == [] and unfollow_env.scripts == []
     rows = unfollow_env.ledger()

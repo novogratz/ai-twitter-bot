@@ -26,6 +26,7 @@ from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 from ..x.scraper import scrape_profile_tweets, is_own_post
 from ..x import twitter_client
+from ..x.confirmed_write import WriteOutcome
 
 # Guarded: they alone hold one attempt per day and the posts already pinned.
 PIN_HISTORY = StateFile("pin_history.json", {"pinned": []}, GUARDED)
@@ -160,7 +161,7 @@ def run_pin_cycle():
         ok = False
 
     _mark_ran_today()
-    if ok is twitter_client.DRY_RUN_RECORDED:
+    if ok is WriteOutcome.DRY_RUN:
         log.info("[PIN][DRY_RUN] Dry-run pin recorded; the live attempt is not spent.")
         return
 

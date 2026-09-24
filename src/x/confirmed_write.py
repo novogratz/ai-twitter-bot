@@ -3,12 +3,12 @@
 for a confirmed write only, tab cleanup. A chokepoint supplies its guards,
 its page steps and its ledger rows; the order lives here once.
 
-Hooks return None to go on, or the outcome that ends the write. `steps`
+A guard returns None to go on, or the outcome that ends the write. `steps`
 opens the page first thing and returns the outcome of the write; ledger
 rows are written only when that outcome is truthy, which only a shipped
 write is."""
 from enum import Enum
-from typing import Callable
+from typing import Callable, Sequence, TypeVar
 
 from ..core import config
 from ..core.logger import log
@@ -30,70 +30,61 @@ class WriteOutcome(Enum):
         return self is WriteOutcome.SHIPPED
 
 
-Hook = Callable[[], Enum | None]
+# An outcome enum: `WriteOutcome`, or `LikeOutcome` for the like. Both are
+# truthy only for the shipped write and both carry DRY_RUN, FAILED and
+# UNCONFIRMED.
+O = TypeVar("O", bound=Enum)
+
 Rows = Callable[[], list[tuple[str, str | None]]]
 
 
-def _go_on() -> None:
-    return None
+class _DryRunExit:
+    def __repr__(self):
+        return "DRY_RUN_EXIT"
 
 
-def _record(rows: list[tuple[str, str | None]], dry_run: bool = False) -> None:
-    for action, target in rows:
-        kwargs = {} if target is None else {"target": target}
-        if dry_run:
-            kwargs["dry_run"] = True
-        action_guard.record(action, **kwargs)
+# Where, in a chokepoint's guards, a dry run stops: every guard before it
+# runs in a dry run too, every guard after it runs live only.
+DRY_RUN_EXIT = _DryRunExit()
+
+Guards = Sequence[Callable[[], O | None] | _DryRunExit]
+
+# Outcomes that sent nothing because of a failure, or may have reached X:
+# they get their own log line. A refusal already has the guard's line.
+_FAILURES = ("FAILED", "UNCONFIRMED")
 
 
-def _stopped(tag: str, outcome: Enum) -> Enum:
-    log.info(f"[{tag}] Write {outcome.value}; nothing recorded.")
-    return outcome
+def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
+        steps: Callable[[], O], before_lock: Guards[O] = (), under_lock: Guards[O] = (),
+        after_record: Callable[[], None] | None = None, close_tab: bool = True) -> O:
+    """Run one write of `outcomes`, in this order:
 
+    1. `before_lock`, in order.
+    2. Take the Safari lock, released on every path.
+    3. `under_lock`, in order.
+    4. `steps`: the page steps, opening the page first.
+    5. On a truthy outcome only: `rows()` in the ledger, then `after_record`.
+    6. With `close_tab`, close the tab `steps` opened. A stop raised there
+       never hides a shipped write.
 
-def run(tag: str, *, would: Callable[[], str], rows: Rows, steps: Callable[[], Enum],
-        admit: Hook = _go_on, before_lock: Hook = _go_on, admit_under_lock: Hook | None = None,
-        recheck_under_lock: Hook = _go_on, reserve: Hook = _go_on,
-        after_record: Callable[[], None] = _go_on, close_tab: bool = True) -> Enum:
-    """Run one write, in this order:
-
-    1. `admit`, before the Safari lock.
-    2. The dry-run exit, when there is no `admit_under_lock`: log
-       "[TAG][DRY_RUN] would <would()>", write `rows()` as dry-run rows.
-    3. `before_lock`: a pause or a last check that needs no browser.
-    4. Take the Safari lock, released on every path.
-    5. `admit_under_lock`, then the dry-run exit when admission ends here.
-    6. `recheck_under_lock`: the admission again, live only, against what
-       other threads shipped while this one waited for the browser.
-    7. `reserve`: claim the target; `steps` release it if they send nothing.
-    8. `steps`: the page steps, opening the page first.
-    9. On a truthy outcome only: `rows()` in the ledger, then `after_record`.
-    10. With `close_tab`, close the tab `steps` opened. A stop raised there
-        never hides a shipped write.
+    `DRY_RUN_EXIT` sits exactly once in `before_lock` or `under_lock`. When
+    DRY_RUN is on there, the write logs "[TAG][DRY_RUN] would <would()>",
+    writes `rows()` as dry-run rows and returns `outcomes.DRY_RUN`.
     """
-    outcome = admit()
+    if sum(isinstance(guard, _DryRunExit) for guard in (*before_lock, *under_lock)) != 1:
+        raise ValueError(f"[{tag}] needs exactly one DRY_RUN_EXIT among its guards")
+    outcome = _admit(tag, outcomes, would, rows, before_lock)
     if outcome is not None:
-        return _stopped(tag, outcome)
-    if admit_under_lock is None and config.dry_run():
-        return _dry_run(tag, would, rows)
-    outcome = before_lock()
-    if outcome is not None:
-        return _stopped(tag, outcome)
+        return outcome
     with safari._safari_lock:
-        if admit_under_lock is not None:
-            outcome = admit_under_lock()
-            if outcome is not None:
-                return _stopped(tag, outcome)
-            if config.dry_run():
-                return _dry_run(tag, would, rows)
-        for hook in (recheck_under_lock, reserve):
-            outcome = hook()
-            if outcome is not None:
-                return _stopped(tag, outcome)
+        outcome = _admit(tag, outcomes, would, rows, under_lock)
+        if outcome is not None:
+            return outcome
         outcome = steps()
         if outcome:
             _record(rows())
-            after_record()
+            if after_record is not None:
+                after_record()
         if close_tab:
             try:
                 safari.close_front_tab()
@@ -103,7 +94,31 @@ def run(tag: str, *, would: Callable[[], str], rows: Rows, steps: Callable[[], E
     return outcome if outcome else _stopped(tag, outcome)
 
 
-def _dry_run(tag: str, would: Callable[[], str], rows: Rows) -> WriteOutcome:
-    log.info(f"[{tag}][DRY_RUN] would {would()}")
-    _record(rows(), dry_run=True)
-    return WriteOutcome.DRY_RUN
+def _admit(tag: str, outcomes: type[O], would: Callable[[], str], rows: Rows,
+           guards: Guards[O]) -> O | None:
+    for guard in guards:
+        if isinstance(guard, _DryRunExit):
+            if config.dry_run():
+                log.info(f"[{tag}][DRY_RUN] would {would()}")
+                _record(rows(), dry_run=True)
+                return outcomes["DRY_RUN"]
+            continue
+        outcome = guard()
+        if outcome is not None:
+            return _stopped(tag, outcome)
+    return None
+
+
+def _record(rows: list[tuple[str, str | None]], dry_run: bool = False) -> None:
+    flags = {"dry_run": True} if dry_run else {}
+    for action, target in rows:
+        if target is None:
+            action_guard.record(action, **flags)
+        else:
+            action_guard.record(action, target=target, **flags)
+
+
+def _stopped(tag: str, outcome: O) -> O:
+    log_line = log.info if outcome.name in _FAILURES else log.debug
+    log_line(f"[{tag}] Write {outcome.value}; nothing recorded.")
+    return outcome

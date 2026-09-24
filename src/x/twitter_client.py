@@ -33,7 +33,7 @@ def _submit_or_abort(tag: str, target: str = "") -> bool:
     unknown: return False, and the write is UNCONFIRMED."""
     if safari._run_applescript(_SUBMIT_KEYSTROKE):
         return True
-    log.warning(f"[{tag}] Submit keystroke failed; outcome unknown, nothing recorded"
+    log.warning(f"[{tag}] Submit keystroke failed; outcome unknown"
                 f"{': ' + target if target else '.'}")
     return False
 
@@ -164,13 +164,6 @@ class ToolCallLeakError(Exception):
     """
 
 
-# What a write chokepoint returns when DRY_RUN wrote dry-run ledger rows
-# instead of acting. Falsy because nothing shipped, so a caller that persists
-# on a truthy result persists nothing (#123); `is DRY_RUN_RECORDED` tells it
-# apart from a refusal.
-DRY_RUN_RECORDED = WriteOutcome.DRY_RUN
-
-
 def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) -> WriteOutcome:
     """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
 
@@ -180,8 +173,8 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) ->
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content or dedup skip, FAILED when a step before the submit failed,
-    UNCONFIRMED when the submit keystroke failed, DRY_RUN_RECORDED on a dry
-    run. Only SHIPPED is truthy.
+    UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
+    Only SHIPPED is truthy.
     """
     text = _scrub_metadata_leaks(text)
     if not editorial:
@@ -250,8 +243,10 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) ->
         _record_posted(text)
 
     return confirmed_write.run(
-        "POST", would=lambda: f"post: {text[:200]!r}", rows=lambda: [(action_guard.POST, None)],
-        admit=admit, recheck_under_lock=recheck, steps=steps, after_record=after_record)
+        "POST", WriteOutcome, would=lambda: f"post: {text[:200]!r}",
+        rows=lambda: [(action_guard.POST, None)],
+        before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(recheck,),
+        steps=steps, after_record=after_record)
 
 
 def _record_posted(text: str):
@@ -408,12 +403,14 @@ def _mark_liked(url: str) -> None:
 class LikeOutcome(Enum):
     """What `like_tweet` did. Truthy only for LIKED, so a caller that tests
     the result counts only the likes that shipped. UNCONFIRMED: the click
-    went out but the page never showed the post liked."""
+    went out but the page never showed the post liked. DRY_RUN: a dry-run
+    ledger row, nothing clicked."""
     LIKED = "liked"
     ALREADY_LIKED = "already_liked"
     BLOCKED = "blocked"
     FAILED = "failed"
     UNCONFIRMED = "unconfirmed"
+    DRY_RUN = "dry_run"
 
     def __bool__(self):
         return self is LikeOutcome.LIKED
@@ -482,7 +479,7 @@ def _page_posts(mode: str, target_id: str = "") -> dict:
     return data if isinstance(data, dict) else {}
 
 
-def like_tweet(tweet_url: str) -> "LikeOutcome | WriteOutcome":
+def like_tweet(tweet_url: str) -> LikeOutcome:
     """Like the post of the open page whose status ID `tweet_url` carries.
 
     The 'l' shortcut toggles and acts on X's own selection, so it is never
@@ -494,12 +491,12 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | WriteOutcome":
     the URL read on the page. A click the page does not confirm returns
     UNCONFIRMED and records nothing. A post in the liked cache or shown as
     liked is left alone. The page is read and clicked under the Safari lock.
-    DRY_RUN writes a dry-run ledger row and returns DRY_RUN_RECORDED.
+    DRY_RUN writes a dry-run ledger row and returns DRY_RUN.
     """
     from ..guards import action_guard, reply_admission
     from . import x_urls
     target = x_urls.status_id(tweet_url)
-    liked = {"url": tweet_url}
+    liked_url = tweet_url
 
     def admit():
         handle = x_urls.author(tweet_url)
@@ -511,13 +508,14 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | WriteOutcome":
             return LikeOutcome.ALREADY_LIKED
         return None
 
-    def before_lock():
+    def check_status_id():
         if not target:
             log.info(f"[LIKE] {tweet_url or '(no URL)'} carries no status ID; nothing clicked.")
             return LikeOutcome.FAILED
         return None
 
     def steps():
+        nonlocal liked_url
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
         if pressed.get("result") == "already_liked":
@@ -528,25 +526,26 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | WriteOutcome":
             return LikeOutcome.FAILED
         time.sleep(1)
         if _page_posts("read", target).get("result") != "already_liked":
-            log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked; nothing recorded.")
+            log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked.")
             return LikeOutcome.UNCONFIRMED
         log.info(f"[LIKE] Liked {url}")
-        liked["url"] = url
+        liked_url = url
         _mark_liked(url)
         return LikeOutcome.LIKED
 
     # The post is on the open page: nothing to open, no tab to close.
     return confirmed_write.run(
-        "LIKE", would=lambda: f"like {tweet_url[-50:]}.",
-        rows=lambda: [(action_guard.LIKE, liked["url"])],
-        admit=admit, before_lock=before_lock, steps=steps, close_tab=False)
+        "LIKE", LikeOutcome, would=lambda: f"like {tweet_url[-50:]}.",
+        rows=lambda: [(action_guard.LIKE, liked_url)],
+        before_lock=(admit, confirmed_write.DRY_RUN_EXIT, check_status_id),
+        steps=steps, close_tab=False)
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
-    Returns SHIPPED only when the reply actually shipped, DRY_RUN_RECORDED
-    on a dry run, REFUSED when Reply admission or the replied store refuses
+    Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
+    run, REFUSED when Reply admission or the replied store refuses
     it, FAILED when a Safari step before the submit fails, UNCONFIRMED when
     the submit keystroke fails. Only SHIPPED is truthy.
     Raises StateUnreadable when the ledger or the replied store cannot be
@@ -570,7 +569,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
     from ..guards import action_guard, active_hours, replied_store, reply_admission
-    verdict = None
+    # Set by an admitting verdict: the exact text to send, and its author.
+    admitted_text = author = ""
 
     def admit():
         # Not a second admission rule: _safari_lock raises OutsideActiveHours on
@@ -582,12 +582,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         return None
 
     def judge():
-        nonlocal verdict
+        nonlocal admitted_text, author
         verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
         if not verdict:
             log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                      f"{tweet_url} {(reply_text or '')[:120]!r}")
             return WriteOutcome.REFUSED
+        admitted_text, author = verdict.text, verdict.author
         return None
 
     def claim():
@@ -640,7 +641,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             # Paste the reply (clipboard handles accents correctly)
             log.info("Pasting reply...")
-            if not _paste_or_abort(verdict.text, "REPLY"):
+            if not _paste_or_abort(admitted_text, "REPLY"):
                 return WriteOutcome.FAILED
             time.sleep(2)  # Wait for paste to complete
 
@@ -660,11 +661,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def rows():
         return [(action_guard.REPLY, tweet_url)] + (
-            [(action_guard.DEBATE_TURN, verdict.author)] if debate_turn else [])
+            [(action_guard.DEBATE_TURN, author)] if debate_turn else [])
 
+    # Admission needs the lock, so a dry run stops under it; it never claims.
     return confirmed_write.run(
-        "REPLY", would=lambda: f"reply to {tweet_url}: {verdict.text[:160]!r}", rows=rows,
-        admit=admit, admit_under_lock=judge, reserve=claim, steps=steps)
+        "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
+        rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
+        steps=steps)
 
 
 def unfollow_account(username: str) -> WriteOutcome:
@@ -693,7 +696,7 @@ def unfollow_account(username: str) -> WriteOutcome:
             return WriteOutcome.REFUSED
         return None
 
-    def before_lock():
+    def pause():
         action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
     def steps():
@@ -737,15 +740,15 @@ def unfollow_account(username: str) -> WriteOutcome:
         time.sleep(1.5)
         if result != "CONFIRMED":
             log.info(f"[UNFOLLOW] Confirmation not clicked for @{username} "
-                     f"({result or 'no answer'}) — nothing recorded.")
+                     f"({result or 'no answer'}).")
             return WriteOutcome.UNCONFIRMED
         log.info(f"[UNFOLLOW] Unfollowed @{username}.")
         return WriteOutcome.SHIPPED
 
     return confirmed_write.run(
-        "UNFOLLOW", would=lambda: f"unfollow @{username}.",
+        "UNFOLLOW", WriteOutcome, would=lambda: f"unfollow @{username}.",
         rows=lambda: [(action_guard.UNFOLLOW, username)],
-        admit=admit, before_lock=before_lock, steps=steps,
+        before_lock=(admit, confirmed_write.DRY_RUN_EXIT, pause), steps=steps,
         after_record=lambda: action_guard.adjust_following(-1))
 
 
@@ -883,7 +886,7 @@ def follow_account(username: str, reciprocal: bool = False,
     while keeping the English gate + every cap/spacing/churn rule.
 
     Returns SHIPPED only when the JS click actually fired (best-effort
-    signal), DRY_RUN_RECORDED on a dry run, REFUSED on a policy or quality
+    signal), DRY_RUN on a dry run, REFUSED on a policy or quality
     refusal or an account already followed, FAILED when no Follow button was
     clicked. Callers MUST check the return value
     before marking a handle as followed, otherwise transient AppleScript/Safari hiccups will pollute
@@ -917,7 +920,7 @@ def follow_account(username: str, reciprocal: bool = False,
             return WriteOutcome.REFUSED
         return None
 
-    def before_lock():
+    def pause():
         action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
     def steps():
@@ -985,9 +988,9 @@ def follow_account(username: str, reciprocal: bool = False,
         return WriteOutcome.FAILED
 
     return confirmed_write.run(
-        "FOLLOW", would=lambda: f"follow @{username}.",
+        "FOLLOW", WriteOutcome, would=lambda: f"follow @{username}.",
         rows=lambda: [(action_guard.FOLLOW, username)],
-        admit=admit, before_lock=before_lock, steps=steps,
+        before_lock=(admit, confirmed_write.DRY_RUN_EXIT, pause), steps=steps,
         after_record=lambda: action_guard.adjust_following(+1))
 
 
@@ -1027,7 +1030,9 @@ def _like_posts_on_page(count: int, wanted, page_ok=lambda page: True,
 
 
 def like_summary(outcomes: list[LikeOutcome]) -> str:
-    return ", ".join(f"{sum(o is kind for o in outcomes)} {kind.value}" for kind in LikeOutcome)
+    # A walk opens nothing on a dry run, so it never meets DRY_RUN.
+    return ", ".join(f"{sum(o is kind for o in outcomes)} {kind.value}" for kind in LikeOutcome
+                     if kind is not LikeOutcome.DRY_RUN)
 
 
 def like_search_posts(url: str, count: int, seconds: float,
@@ -1105,7 +1110,7 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
     writes a ledger row only when the menu item was clicked and the confirm
     dialog's button was clicked; no row otherwise: FAILED before the Pin
     click, UNCONFIRMED after it, a missing confirm dialog included. DRY_RUN
-    writes a dry-run ledger row and returns DRY_RUN_RECORDED.
+    writes a dry-run ledger row and returns DRY_RUN.
 
     Note: X surfaces a confirmation modal on first pin per session; we
     handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
@@ -1179,8 +1184,9 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
         return WriteOutcome.SHIPPED if step3 == "CONFIRMED" else WriteOutcome.UNCONFIRMED
 
     return confirmed_write.run(
-        "PIN", would=lambda: f"pin {tweet_url}.", rows=lambda: [(action_guard.PIN, tweet_url)],
-        steps=steps)
+        "PIN", WriteOutcome, would=lambda: f"pin {tweet_url}.",
+        rows=lambda: [(action_guard.PIN, tweet_url)],
+        before_lock=(confirmed_write.DRY_RUN_EXIT,), steps=steps)
 
 
 def like_own_tweet_replies() -> list[LikeOutcome]:
