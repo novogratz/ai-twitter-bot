@@ -77,3 +77,20 @@ def test_run_js_returns_the_page_answer_and_removes_its_temp_file(monkeypatch, u
     assert unwalled["_run_js"]("return 'é';") == expected
     assert seen["js"] == "return 'é';" and seen["utf8"]
     assert not os.path.exists(seen["path"])
+
+
+def test_run_applescript_counts_a_timeout_as_a_failed_attempt(monkeypatch, unwalled):
+    """A wedged Safari must not hang the caller: past timeout_s the run fails."""
+    import subprocess
+    from src.x import safari
+
+    seen = []
+
+    def run(argv, **kwargs):
+        seen.append(kwargs.get("timeout"))
+        raise subprocess.TimeoutExpired(argv, kwargs.get("timeout"))
+
+    monkeypatch.setattr(safari, "require_active", lambda: None)
+    monkeypatch.setattr(safari.subprocess, "run", run)
+    assert unwalled["_run_applescript"]("return 1", timeout_s=20) is False
+    assert seen == [20]

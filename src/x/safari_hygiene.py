@@ -33,7 +33,7 @@ from datetime import datetime
 
 from ..core.config import _PROJECT_ROOT
 from ..core.logger import log
-from ..guards.active_hours import OutsideActiveHours
+from ..guards.active_hours import may_act
 from . import safari
 
 HYGIENE_STATE_FILE = os.path.join(_PROJECT_ROOT, "safari_hygiene_state.json")
@@ -72,6 +72,8 @@ def _quit_safari() -> bool:
     across the restart. Only volatile WebKit process state is lost — which
     is the whole point.
     """
+    # Direct, not _run_applescript: the Safari being quit may be wedged, and
+    # only this timeout guarantees the pkill below still runs.
     try:
         subprocess.run(
             ["osascript", "-e", 'tell application "Safari" to quit'],
@@ -132,9 +134,7 @@ def _warm_up_xcom() -> bool:
     Prevents the 'black screen' where Safari restarts with stale SW cache
     and renders an empty app shell. Must run after Safari is fully up.
     """
-    try:
-        subprocess.run(
-            ["osascript", "-e", '''
+    safari._run_applescript('''
 tell application "Safari"
   activate
   if (count of windows) = 0 then make new document
@@ -142,47 +142,37 @@ tell application "Safari"
     set URL of current tab to "https://x.com/home"
   end tell
 end tell
-'''],
-            capture_output=True, text=True, timeout=20,
-        )
-        time.sleep(8)
+''', timeout_s=20)
+    time.sleep(8)
 
-        # A failure is logged by _run_js under [HYGIENE]; the render check
-        # below decides.
-        safari._run_js(_CLEAR_SW_AND_RELOAD_JS, 45, log_prefix="[HYGIENE]", activate=True)
-        time.sleep(12)
+    if not safari._run_js(_CLEAR_SW_AND_RELOAD_JS, 45, log_prefix="[HYGIENE]", activate=True):
+        log.warning("[HYGIENE] x.com SW clear JS failed; the render check decides.")
+    time.sleep(12)
 
-        for attempt in range(3):
-            status = safari._run_js(_RENDER_CHECK_JS, 20, log_prefix="[HYGIENE]", activate=True)
-            if status.startswith("READY:"):
-                log.info(f"[HYGIENE] x.com warmed up — service workers cleared, render verified ({status}).")
-                return True
-            if status == "LOGIN_REQUIRED":
-                log.warning("[HYGIENE] x.com warm-up reached login page; manual login may be required.")
-                return False
+    for attempt in range(3):
+        status = safari._run_js(_RENDER_CHECK_JS, 20, log_prefix="[HYGIENE]", activate=True)
+        if status.startswith("READY:"):
+            log.info(f"[HYGIENE] x.com warmed up — service workers cleared, render verified ({status}).")
+            return True
+        if status == "LOGIN_REQUIRED":
+            log.warning("[HYGIENE] x.com warm-up reached login page; manual login may be required.")
+            return False
 
-            log.warning(f"[HYGIENE] x.com still blank after warm-up attempt {attempt + 1}/3: {status[:200]}")
-            cache_bust = int(time.time())
-            subprocess.run(
-                ["osascript", "-e", f'''
+        log.warning(f"[HYGIENE] x.com still blank after warm-up attempt {attempt + 1}/3: "
+                    f"{status[:200] or 'no answer'}")
+        cache_bust = int(time.time())
+        safari._run_applescript(f'''
 tell application "Safari"
   activate
   tell window 1
     set URL of current tab to "https://x.com/home?bot_recover={cache_bust}"
   end tell
 end tell
-'''],
-                capture_output=True, text=True, timeout=20,
-            )
-            time.sleep(10)
+''', timeout_s=20)
+        time.sleep(10)
 
-        log.warning("[HYGIENE] x.com warm-up failed render verification after 3 attempts.")
-        return False
-    except OutsideActiveHours:
-        raise
-    except Exception as e:
-        log.warning(f"[HYGIENE] x.com warm-up failed (non-fatal): {e}")
-        return False
+    log.warning("[HYGIENE] x.com warm-up failed render verification after 3 attempts.")
+    return False
 
 
 def _launch_safari() -> bool:
@@ -194,10 +184,7 @@ def _launch_safari() -> bool:
         time.sleep(4)
         # Bring it to the front so subsequent AppleScript `front window`
         # calls in src/x land on the right surface.
-        subprocess.run(
-            ["osascript", "-e", 'tell application "Safari" to activate'],
-            capture_output=True, text=True, timeout=10,
-        )
+        safari._run_applescript('tell application "Safari" to activate', timeout_s=10)
         time.sleep(2)
         # Clear stale service workers and warm up x.com so the first scrape
         # hits a rendered page, not a black-screen app shell.
@@ -213,8 +200,12 @@ def restart_safari(reason: str = "") -> bool:
     Cooldown-guarded — refuses to bounce more than once per MIN_GAP_SECONDS,
     UNLESS reason is 'black_screen_recovery' which uses a shorter 5-min gap
     so reactive recovery isn't blocked by the 30-min preventive cooldown.
-    Login session survives because cookies live on disk.
+    Login session survives because cookies live on disk. Outside waking
+    hours, or once a stop was requested, it does nothing.
     """
+    if not may_act():
+        log.info(f"[HYGIENE] Skipping restart outside waking hours. reason={reason}")
+        return False
     last = _last_run_ts()
     gap = time.time() - last
     effective_gap = 5 * 60 if reason == "black_screen_recovery" else MIN_GAP_SECONDS

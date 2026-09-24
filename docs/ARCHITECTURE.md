@@ -47,10 +47,11 @@ run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
 - `safari._run_applescript` and `safari._run_js`, through which every page
-  JavaScript runs. A caller that falls back on any error still lets
-  `OutsideActiveHours` through. The direct `osascript` calls that quit,
-  relaunch and navigate Safari in `safari_hygiene` are only covered by
-  `awake_job`;
+  JavaScript runs. A caller that falls back on an unparsable answer still
+  lets `OutsideActiveHours` through, and `health.record_failure` does not
+  count it toward a Safari restart;
+- `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
+  relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
   also capped at the time left before 22:00;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
@@ -160,8 +161,8 @@ that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 Every page JavaScript in `src/` goes through `_run_js`, with the caller's
 timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
-AppleScript escaping. Only `safari.py` and the restart in `safari_hygiene`
-spawn `osascript` themselves.
+AppleScript escaping. Only `safari.py`, the Safari quit in `safari_hygiene`
+and `bin/mass_unfollow.py` spawn `osascript` themselves.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 `twitter_client.py` holds the write chokepoints. Writes use
@@ -329,8 +330,7 @@ These are how the code behaves today, not design intent:
   daily counters on `date.today()` (machine time), while the ledger uses the
   Toronto day.
 - `session_refresh_job` and the `health` recovery restart Safari without
-  taking `_safari_lock`. The job has no waking-hours check of its own; it only
-  runs while the scheduler is awake.
+  taking `_safari_lock`.
 - `debate_bot` (`DEBATE_PROMPT`) and the VIP generators in `direct_reply`
   (`generate_vip_reply`, `_generate_graphseo_reply`) build prompts without the
   hard rules or the respect list.
@@ -418,12 +418,13 @@ on a caller module misses function-local imports; patch the primitive in
 `safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
 past the wall, and when a module other than `safari.py` runs `do JavaScript`
-or spawns `osascript` itself; the Safari restart in `safari_hygiene` and
-`bin/mass_unfollow.py` are the listed exceptions. `tests/x/test_page_js.py`
-pins each page script's timeout, log prefix and answer on failure. Every
-test also starts with fresh process memories: the reply jobs' `_skipped` sets,
-the direct reply's query rotation cursor and the content guard's dedup memory
-of this run's posts.
+or spawns `osascript` itself, docstrings aside; the Safari quit in
+`safari_hygiene` and `bin/mass_unfollow.py` are the listed exceptions.
+`tests/x/test_page_js.py` pins each page script's timeout, log prefix and
+answer on failure, and checks that a test which forgets to mock `_run_js`
+fails on the wall. Every test also starts with fresh process memories: the
+reply jobs' `_skipped` sets, the direct reply's query rotation cursor and the
+content guard's dedup memory of this run's posts.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and

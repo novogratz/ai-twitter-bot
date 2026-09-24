@@ -17,7 +17,6 @@ from datetime import datetime
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
-from ..guards.active_hours import OutsideActiveHours
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab
 
@@ -68,19 +67,12 @@ def _scrape_follower_count() -> int:
         webbrowser.open(url)
         time.sleep(7)
 
+        raw = safari._run_js(js_code, 20, log_prefix="[FOLLOWER]", activate=True)
+        close_front_tab()
         try:
-            raw = safari._run_js(js_code, 20, log_prefix="[FOLLOWER]", activate=True)
-            close_front_tab()
             return _parse_count(raw)
-        except OutsideActiveHours:
-            raise
-        except Exception:
-            try:
-                close_front_tab()
-            except Exception:
-                pass
-            log.info("[FOLLOWER] Scrape exception:")
-            traceback.print_exc()
+        except ValueError:
+            log.info(f"[FOLLOWER] Unreadable follower count: {raw[:40]!r}")
             return 0
 
 

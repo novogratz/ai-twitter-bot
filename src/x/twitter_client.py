@@ -712,7 +712,7 @@ def unfollow_account(username: str) -> bool:
             return 'NO_FOLLOWING_BTN';
         })()
         """
-        result = safari._run_js(click_following)
+        result = safari._run_js(click_following, log_prefix="[UNFOLLOW]")
         if result != "CLICKED":
             log.info(f"[UNFOLLOW] Not following @{username} (or button not found: "
                      f"{result or 'no answer'}) — skipping.")
@@ -728,7 +728,7 @@ def unfollow_account(username: str) -> bool:
             return 'NO_CONFIRM';
         })()
         """
-        result = safari._run_js(click_confirm)
+        result = safari._run_js(click_confirm, log_prefix="[UNFOLLOW]")
         time.sleep(1.5)
         safari.close_front_tab()
         if result != "CONFIRMED":
@@ -962,14 +962,7 @@ def follow_account(username: str, reciprocal: bool = False,
             return 'CLICKED';
         })()
         """
-        status = ""
-        try:
-            status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
-        except OutsideActiveHours:
-            raise
-        except Exception as e:
-            log.info(f"[FOLLOW] osascript failed for @{username}: {e}")
-
+        status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
         ok = status == "CLICKED"
         if ok:
             time.sleep(2)
@@ -1151,12 +1144,7 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
     """
 
     def _exec_js(js: str, timeout_s: int = 15) -> str:
-        try:
-            return safari._run_js(js, timeout_s, log_prefix="[PIN]", activate=True)
-        except OutsideActiveHours:
-            raise
-        except Exception:
-            return "EXCEPTION"
+        return safari._run_js(js, timeout_s, log_prefix="[PIN]", activate=True)
 
     with safari._safari_lock:
         log.info(f"[PIN] Opening tweet to pin: {tweet_url}")

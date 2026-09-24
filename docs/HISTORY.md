@@ -48,6 +48,26 @@ their order in the file is not strictly chronological.
 > counts only once X's confirm dialog was clicked. Guards:
 > `tests/account/test_account_jobs.py` and `tests/x/test_write_path.py`.
 
+> **2026-09-23 — every page JavaScript through `safari._run_js`
+> (issue #144):** ten callers ran their own `osascript` + `do JavaScript`,
+> and nine wrapped it in `except Exception`, which also swallowed
+> `OutsideActiveHours`: the follow, pin, profile, tweet, Following-tab,
+> own-replies, followers and follower-count scripts, and the warm-up
+> after a Safari restart. They now go through `_run_js`, and three
+> changes are assumed. Bedtime reaches the jobs, whose `except Exception`
+> passed it to `health.record_failure`: three in a row would have restarted
+> Safari at night, so `record_failure` no longer counts it and
+> `safari_hygiene.restart_safari` does nothing outside waking hours. In
+> `_scrape_tweets_from_page`, an empty answer now means osascript failed and
+> is no longer counted as a blank page, since the page script always
+> answers; a disabled "JavaScript from Apple Events" no longer pushes Safari
+> toward a restart. `_run_js` reads the script as UTF-8 where the old
+> callers read MacRoman, so `épingler` in the pin script and
+> `En réponse à` / `Répond à` in the reply detection match for the first
+> time: with X in French, more scraped posts come back `is_reply`. Guards:
+> `tests/x/test_page_js.py`, `tests/x/test_safari_hygiene.py` and
+> `tests/test_conftest_walls.py`.
+
 ---
 
 > **You'll hate me until I'm right.**

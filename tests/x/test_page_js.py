@@ -1,6 +1,6 @@
 """Every page JavaScript runs through `safari._run_js` (issue #144): each
 caller keeps its timeout, its log prefix and its answer on failure, and
-lets `OutsideActiveHours` through."""
+lets `OutsideActiveHours` through without it counting as a Safari failure."""
 import json
 import os
 import shutil
@@ -110,8 +110,6 @@ def _follower_count(monkeypatch):
 
 def _warm_up(monkeypatch):
     from src.x import safari_hygiene
-    monkeypatch.setattr(safari_hygiene.subprocess, "run",
-                        lambda *a, **k: SimpleNamespace(returncode=0, stdout="", stderr=""))
     return safari_hygiene._warm_up_xcom()
 
 
@@ -156,21 +154,47 @@ def test_bedtime_reaches_the_job_through_every_caller(monkeypatch, browser, name
         run(monkeypatch)
 
 
-@pytest.mark.parametrize("name", SWALLOWED_BEFORE)
-def test_other_errors_keep_their_old_fallback(monkeypatch, browser, name):
-    run, _, on_failure = CALLERS[name]
-    browser(RuntimeError("page script crashed"))
-    assert run(monkeypatch) == on_failure
+def test_bedtime_through_a_job_is_not_a_safari_failure(monkeypatch, browser, tmp_path):
+    """Nine callers used to swallow bedtime; now it reaches the jobs'
+    `except Exception`, which must not count it toward a Safari restart."""
+    from src.account import follower_tracker_bot
+    from src.core import health
+
+    monkeypatch.setattr(health, "HEALTH_FILE", str(tmp_path / "safari_health.json"))
+    restarts = []
+    monkeypatch.setattr(health, "_restart_safari", lambda: restarts.append(1) or True)
+    for _ in range(health.RECOVERY_THRESHOLD + 1):
+        browser(OutsideActiveHours("Bot asleep"))
+        follower_tracker_bot.safe_run_follower_tracker_cycle()
+    assert restarts == []
+    assert not os.path.exists(health.HEALTH_FILE), "the failure counter is left alone"
 
 
-def test_pin_reports_an_exception_step_as_before(monkeypatch, browser):
-    from src.x import twitter_client as tc
+# The answer each caller falls back on when the page answer does not parse.
+UNPARSABLE = {
+    "profile_quality": ("{not json", {}),
+    "tweets": ("[{not json", []),
+    "own_replies": ("{not json", None),
+    "follower_count": ("1.2.3", 0),
+}
 
-    lines = []
-    monkeypatch.setattr(tc.log, "info", lambda msg, *a, **k: lines.append(msg))
-    browser(RuntimeError("page script crashed"))
-    assert _pin(monkeypatch) is False
-    assert "[PIN] More-menu open: EXCEPTION" in lines
+
+@pytest.mark.parametrize("name", UNPARSABLE)
+def test_an_unparsable_answer_keeps_its_old_fallback(monkeypatch, browser, name):
+    answer, on_failure = UNPARSABLE[name]
+    browser(answer)
+    assert CALLERS[name][0](monkeypatch) == on_failure
+
+
+# Every caller but the tweet scrape, whose `except Exception` also counts a
+# blank page, now catches nothing broader than a parse error.
+LOUD = [name for name in CALLERS if name != "tweets"]
+
+
+@pytest.mark.parametrize("name", LOUD)
+def test_a_test_that_forgets_to_mock_run_js_fails_on_the_wall(monkeypatch, browser, name):
+    with pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"):
+        CALLERS[name][0](monkeypatch)
 
 
 def test_scrape_timeouts_retry_once_then_count_as_a_blank(monkeypatch, browser):

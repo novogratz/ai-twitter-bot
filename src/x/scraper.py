@@ -151,9 +151,7 @@ def _scrape_profile_quality() -> dict:
         raw = safari._run_js(js, 15, log_prefix="[SCRAPE]")
         if raw:
             return json.loads(raw)
-    except OutsideActiveHours:
-        raise
-    except Exception:
+    except json.JSONDecodeError:
         pass
     return {}
 
@@ -408,12 +406,7 @@ def scrape_following_feed(max_tweets: int = 15):
             return 'NO_TAB';
         })()
         """
-        try:
-            safari._run_js(click_js, 8, log_prefix="[SCRAPE]")
-        except OutsideActiveHours:
-            raise
-        except Exception as e:
-            log.info(f"[SCRAPE] Could not click Following tab: {e}")
+        safari._run_js(click_js, 8, log_prefix="[SCRAPE]")
 
         time.sleep(4)
         # Scroll proportionally to the requested depth (same as home feed).
@@ -506,9 +499,7 @@ def scrape_own_tweet_and_replies():
                 log.info(f"[REPLYBACK] Found {len(data.get('replies', []))} replies on latest tweet")
                 safari.close_front_tab()
                 return data
-        except OutsideActiveHours:
-            raise
-        except Exception as e:
+        except json.JSONDecodeError as e:
             log.info(f"[REPLYBACK] Scraping failed: {e}")
 
         safari.close_front_tab()

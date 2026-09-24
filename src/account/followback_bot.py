@@ -24,7 +24,6 @@ import traceback
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from ..core.logger import log
-from ..guards.active_hours import OutsideActiveHours
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 from ..x.twitter_client import follow_account
@@ -74,18 +73,11 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
     })()
     """.replace("MAX", str(max_handles * 2))
 
-    try:
-        raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
-        if not raw:
-            return []
-        handles = [h for h in raw.split(",") if h]
-        return handles[:max_handles]
-    except OutsideActiveHours:
-        raise
-    except Exception:
-        log.info("[FOLLOWBACK] Scrape exception:")
-        traceback.print_exc()
+    raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
+    if not raw:
         return []
+    handles = [h for h in raw.split(",") if h]
+    return handles[:max_handles]
 
 
 def run_followback_cycle():

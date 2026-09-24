@@ -23,6 +23,7 @@ from datetime import datetime
 from .config import _PROJECT_ROOT
 from .logger import log
 from .state_errors import StateUnreadable
+from ..guards.active_hours import OutsideActiveHours
 
 HEALTH_FILE = os.path.join(_PROJECT_ROOT, "safari_health.json")
 AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
@@ -65,9 +66,14 @@ def record_failure(label: str = "") -> bool:
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
 
     Call it from the `except` block that caught the cycle's error: a
-    StateUnreadable in flight is logged and not counted.
+    StateUnreadable or an OutsideActiveHours in flight is logged and not
+    counted.
     """
     exc = sys.exc_info()[1]
+    if isinstance(exc, OutsideActiveHours):
+        log.info(f"[HEALTH] {label or 'cycle'} stopped for bedtime. Not a Safari failure, "
+                 f"no restart.")
+        return False
     if isinstance(exc, StateUnreadable):
         log.error(f"[HEALTH] {label or 'cycle'} halted: {exc}. Not a Safari failure, "
                   f"no restart; repair the file (docs/OPERATIONS.md#recovery).")

@@ -1,6 +1,8 @@
 """Cross-cutting: the conftest walls keep every test off Safari and off the
 production state files."""
+import ast
 import os
+from pathlib import Path
 
 import pytest
 
@@ -39,9 +41,10 @@ def test_tests_cannot_write_production_state(tmp_path):
 
 
 def test_tests_cannot_spawn_osascript(monkeypatch):
-    """twitter_client, scraper, safari_hygiene and several jobs call osascript through
-    subprocess.run directly, past the _run_applescript wall: the conftest
-    wall refuses those processes too."""
+    """Past the `_run_applescript` and `_run_js` walls, safari_hygiene still
+    quits Safari with subprocess.run(["osascript", ...]) and relaunches it
+    with `open` and `pkill`, and bin/mass_unfollow.py runs osascript itself:
+    the conftest wall refuses those processes too."""
     import subprocess
 
     def _leak(*a, **k):
@@ -55,6 +58,54 @@ def test_tests_cannot_spawn_osascript(monkeypatch):
             subprocess.run(argv, shell=isinstance(argv, str))
 
 
+WALLED = {"_run_applescript", "_run_js", "_paste_text"}
+SAFARI = "src/x/safari.py"
+# Direct osascript calls that stay, and why:
+# - safari_hygiene quits Safari itself: the Safari being quit may be wedged,
+#   and `_run_applescript` has no timeout, so the pkill that follows might
+#   never run;
+# - bin/mass_unfollow.py is an operator tool with its own waking-hours stop
+#   and error strings (follow-up: #152).
+OWN_OSASCRIPT = {"src/x/safari_hygiene.py", "bin/mass_unfollow.py"}
+OWN_PAGE_JS = {"bin/mass_unfollow.py"}
+
+
+def _docstrings(tree):
+    """The first statement of a module, class or function, when a string."""
+    found = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+            first = node.body[0] if node.body else None
+            if (isinstance(first, ast.Expr) and isinstance(first.value, ast.Constant)
+                    and isinstance(first.value.value, str)):
+                found.add(first.value)
+    return found
+
+
+def browser_path_problems(root, path):
+    """Every way `path` reaches Safari past the conftest walls."""
+    rel = path.relative_to(root).as_posix()
+    tree = ast.parse(path.read_text())
+    docstrings = _docstrings(tree)
+    problems = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            for alias in node.names:
+                if (alias.name in WALLED or node.module == "webbrowser"
+                        or (node.module == "subprocess" and alias.name == "Popen")):
+                    problems.append(f"{rel}:{node.lineno}: imports {alias.name}")
+        elif isinstance(node, ast.FunctionDef) and node.name in WALLED and rel != SAFARI:
+            problems.append(f"{rel}:{node.lineno}: defines {node.name}")
+        elif (isinstance(node, ast.Constant) and isinstance(node.value, str)
+              and rel != SAFARI and node not in docstrings):
+            words = node.value.split()
+            if "do javascript" in node.value.lower() and rel not in OWN_PAGE_JS:
+                problems.append(f"{rel}:{node.lineno}: runs do JavaScript past safari._run_js")
+            if words and os.path.basename(words[0]) == "osascript" and rel not in OWN_OSASCRIPT:
+                problems.append(f"{rel}:{node.lineno}: spawns osascript")
+    return problems
+
+
 def test_every_browser_path_goes_through_the_conftest_walls():
     """conftest walls `_run_applescript`, `_run_js` and `_paste_text` off in
     src.x.safari, which defines them, and `webbrowser.open` and
@@ -62,41 +113,71 @@ def test_every_browser_path_goes_through_the_conftest_walls():
     (`from .safari import _run_applescript`, `from subprocess import Popen`)
     keeps the real object past the wall, so twitter_client, scraper and the
     jobs reach them through their module (#118). Page JavaScript runs only
-    through `safari._run_js`, and only safari.py spawns `osascript` (#144)."""
-    import ast
-    from pathlib import Path
+    through `safari._run_js`, and only safari.py and the files in
+    OWN_OSASCRIPT spawn `osascript` (#144)."""
     from src.x import safari
 
-    # Direct osascript calls that stay, and why:
-    # - safari_hygiene quits, relaunches, activates and navigates Safari,
-    #   no page JavaScript;
-    # - bin/mass_unfollow.py is an operator tool with its own waking-hours
-    #   stop and error strings, not yet routed through _run_js.
-    own_osascript = {"src/x/safari_hygiene.py", "bin/mass_unfollow.py"}
-    own_page_js = {"bin/mass_unfollow.py"}
-
-    walled = {"_run_applescript", "_run_js", "_paste_text"}
-    for name in walled:
+    for name in WALLED:
         with pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"):
             getattr(safari, name)("return 1")
 
     root = Path(__file__).resolve().parent.parent
-    problems = []
-    for path in sorted([root / "main.py", *(root / "src").rglob("*.py"), *(root / "bin").glob("*.py")]):
-        for node in ast.walk(ast.parse(path.read_text())):
-            if isinstance(node, ast.ImportFrom):
-                for alias in node.names:
-                    if (alias.name in walled or node.module == "webbrowser"
-                            or (node.module == "subprocess" and alias.name == "Popen")):
-                        problems.append(f"{path.relative_to(root)}:{node.lineno}: imports {alias.name}")
-            elif (isinstance(node, ast.FunctionDef) and node.name in walled
-                  and path != Path(safari.__file__)):
-                problems.append(f"{path.relative_to(root)}:{node.lineno}: defines {node.name}")
-            elif (isinstance(node, ast.Constant) and isinstance(node.value, str)
-                  and path != Path(safari.__file__)):
-                rel = path.relative_to(root).as_posix()
-                if "do JavaScript" in node.value and rel not in own_page_js:
-                    problems.append(f"{rel}:{node.lineno}: runs do JavaScript past safari._run_js")
-                if node.value.split(" ")[0] == "osascript" and rel not in own_osascript:
-                    problems.append(f"{rel}:{node.lineno}: spawns osascript")
+    assert Path(safari.__file__) == root / SAFARI
+    paths = sorted([root / "main.py", *(root / "src").rglob("*.py"), *(root / "bin").glob("*.py")])
+    problems = [p for path in paths for p in browser_path_problems(root, path)]
     assert not problems, "Browser primitive bound past the conftest walls:\n  " + "\n  ".join(problems)
+
+
+# --- the detector itself, on synthetic files --------------------------------
+
+def _problems(tmp_path, rel, text):
+    target = tmp_path / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text)
+    return browser_path_problems(tmp_path, target)
+
+
+def test_osascript_is_matched_by_program_name(tmp_path):
+    problems = _problems(tmp_path, "src/job.py", (
+        "import subprocess\n"
+        "subprocess.run(['/usr/bin/osascript', '-e', 'return 1'])\n"
+        "subprocess.run('osascript\\t-e x', shell=True)\n"
+        "NAME = 'osascript'\n"
+        "LABEL = 'osascripts are slow'\n"
+        "EMPTY = ''\n"
+    ))
+    assert sorted(problems) == ["src/job.py:2: spawns osascript", "src/job.py:3: spawns osascript",
+                                "src/job.py:4: spawns osascript"]
+
+
+def test_do_javascript_is_matched_in_any_case(tmp_path):
+    problems = _problems(tmp_path, "src/job.py", (
+        "A = 'tell application \"Safari\" to do JavaScript js'\n"
+        "B = 'DO JAVASCRIPT js in current tab'\n"
+        "C = 'do javascript js'\n"
+        "D = 'do not run JavaScript'\n"
+    ))
+    assert sorted(problems) == [f"src/job.py:{n}: runs do JavaScript past safari._run_js"
+                                for n in (1, 2, 3)]
+
+
+def test_docstrings_are_not_browser_paths(tmp_path):
+    problems = _problems(tmp_path, "src/job.py", (
+        '"""osascript runs do JavaScript: a module docstring."""\n'
+        "class Job:\n"
+        '    """osascript, do JavaScript: a class docstring."""\n'
+        "    def run(self):\n"
+        '        """osascript, do JavaScript: a method docstring."""\n'
+        "        'osascript -e x'\n"
+        "async def later():\n"
+        '    """osascript: an async function docstring."""\n'
+    ))
+    assert problems == ["src/job.py:6: spawns osascript"]
+
+
+def test_safari_and_the_listed_exceptions_may_spawn_osascript(tmp_path):
+    body = "A = ['osascript', '-e', 'do JavaScript js']\n"
+    assert _problems(tmp_path, SAFARI, body) == []
+    assert _problems(tmp_path, "bin/mass_unfollow.py", body) == []
+    assert _problems(tmp_path, "src/x/safari_hygiene.py", body) == [
+        "src/x/safari_hygiene.py:1: runs do JavaScript past safari._run_js"]
