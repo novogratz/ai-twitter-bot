@@ -23,8 +23,9 @@ from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
 from ..x.twitter_client import reply_to_tweet
 from ..guards.reply_admission import judge_parent
-from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
-from ..core.reply_language import looks_french
+from .direct_reply import _is_on_niche, reply_voice
+from . import reply_generator
+from .reply_generator import LanguageRule, Outcome
 from ..core.engagement_log import log_reply
 from ..core.humanizer import humanize
 from ..core.state_errors import StateUnreadable
@@ -97,20 +98,18 @@ def run_mega_watch_cycle():
                 continue
 
             # Source tagging happens in log_reply later.
-            reply_text = _generate_single_reply(
-                author=verdict.author,
-                tweet_text=text,
-                lang="fr" if looks_french(text) else "en",
-            )
-            if reply_text is _LLM_RATE_LIMITED:
-                log.info("[MEGA] LLM budget reached; stopping this cycle before posting attempts.")
+            # No FR-forced override on this job (pinned in the tests).
+            generation = reply_generator.generate(
+                reply_voice(verdict.author, LanguageRule.PARENT), author=verdict.author, text=text)
+            if generation.outcome is Outcome.RATE_LIMITED:
+                log.info("[MEGA] LLM rate limit reached; stopping this cycle before posting attempts.")
                 return
-            if reply_text is None:
-                continue  # failed call: replayable next cycle
-            if not reply_text:
+            if generation.outcome is Outcome.DECLINED:
                 _skipped.add(url)  # the model declined
                 continue
-            reply_text = humanize(reply_text)
+            if generation.outcome is not Outcome.WRITTEN:
+                continue  # failed call: replayable next cycle
+            reply_text = humanize(generation.text)
             if len(reply_text) < 10 or len(reply_text) > 270:
                 continue
 

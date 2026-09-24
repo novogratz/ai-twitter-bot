@@ -26,9 +26,10 @@ from datetime import timedelta
 from ..x import x_urls
 from ..core.config import REPLY_MODEL
 from ..core.logger import log
-from ..core.llm_client import run_llm, unwrap_text
 from ..core.humanizer import humanize
 from ..guards.reply_admission import judge_parent
+from . import reply_generator
+from .reply_generator import Outcome, Voice
 
 # Mentions this job is done with until restart: definitive Reply admission
 # refusals, mentions the model declined, mentions answered.
@@ -65,6 +66,10 @@ RULES:
   with a small bonus insight is fine (that converts followers too).
 
 Output ONLY the reply text, or exactly SKIP."""
+
+# identity=False keeps the prompt as it was, plus the hard rules: whether
+# core identity and the dossier join it is the Operator's call.
+VOICE = Voice(DEBATE_PROMPT, REPLY_MODEL, "DEBATE", identity=False, text_limit=500)
 
 
 def _debates_enabled() -> bool:
@@ -114,17 +119,16 @@ def run_debate_cycle():
             continue
         author = verdict.author
 
-        prompt = DEBATE_PROMPT.format(author=author, tweet_text=text[:500])
-        result = run_llm(prompt, REPLY_MODEL, label="DEBATE")
-        if result.returncode != 0:
-            continue  # a failed call is retried next cycle
-        reply = unwrap_text(result.stdout).strip()
-        if not reply:
-            continue  # an empty answer is a failed call: replayable
-        if reply.upper().startswith("SKIP"):
+        generation = reply_generator.generate(VOICE, author=author, text=text)
+        if generation.outcome is Outcome.RATE_LIMITED:
+            log.info("[DEBATE] LLM rate limit reached; stopping this cycle.")
+            break
+        if generation.outcome is Outcome.DECLINED:
             _skipped.add(url)
             continue
-        reply = humanize(reply)
+        if generation.outcome is not Outcome.WRITTEN:
+            continue  # a failed call is retried next cycle
+        reply = humanize(generation.text)
 
         # No premark — the chokepoint owns the replied store. Ship-gated
         # bookkeeping only (phantom-log family).

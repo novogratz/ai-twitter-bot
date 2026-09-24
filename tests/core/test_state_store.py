@@ -322,7 +322,8 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_pa
         {"url": fresh("someone", n=i), "text": "post"} for i in range(3)])
     monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
-    monkeypatch.setattr(dr, "run_llm", lambda *a, **k: pytest.fail("model called"))
+    from src.replies import reply_generator
+    monkeypatch.setattr(reply_generator, "run_llm", lambda *a, **k: pytest.fail("model called"))
     monkeypatch.setattr(dr, "reply_to_tweet", lambda *a, **k: pytest.fail("replied"))
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
 

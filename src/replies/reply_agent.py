@@ -11,7 +11,8 @@ from typing import Optional
 from ..core.logger import log
 from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
-from ..core.llm_client import run_llm, unwrap_text
+from . import reply_generator
+from .reply_generator import LanguageRule, Outcome, Voice
 
 # Core influencers — AI + Space + Robotics + Investment, French priority
 TARGET_ACCOUNTS = [
@@ -583,33 +584,18 @@ def generate_replies(recent_topics=None, already_replied=None):
     if directives_block:
         discovered_section = (discovered_section or "") + directives_block
 
-    # Personality store — global mood + hard rules. Per-author dossiers are
-    # injected by direct_reply.py (which knows the author). This path searches
-    # broadly so we attach the global state of mind only.
+    # Global mood: this path searches broadly, so no author dossier. The
+    # generator appends the core identity and the hard rules.
     from ..core import personality_store
     mood = personality_store.render_global_mood()
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood
-    # Hand-curated ideological core (core_identity.md) — voice anchor.
-    # Reply agent is English-first (AI Decoder rebrand); identity in EN, but the
-    # prompt still tells it to reply in each tweet's own language.
-    core_identity = personality_store.render_core_identity(lang="en")
-    if core_identity:
-        discovered_section = (discovered_section or "") + "\n\n" + core_identity
-    discovered_section = (discovered_section or "") + "\n\n" + personality_store.hard_rules_block()
 
     from datetime import date, timedelta
     today = date.today()
     # since:YYYY-MM-DD on X = STRICTLY AFTER that day. So passing yesterday
     # captures yesterday + today (≤24h-ish) at search time.
     since_date = (today - timedelta(days=1)).isoformat()
-    prompt = REPLY_PROMPT_TEMPLATE.format(
-        dedup_section=dedup_section,
-        skip_urls_section=skip_urls_section,
-        discovered_section=discovered_section,
-        today=today.isoformat(),
-        since_date=since_date,
-    )
 
     log.info("[REPLY] Running LLM CLI (searching X)...")
     # cwd=/tmp: when Claude CLI is invoked from inside a project dir with
@@ -619,27 +605,28 @@ def generate_replies(recent_topics=None, already_replied=None):
     # between concurrent CLI sessions. Running from /tmp gives each call a
     # neutral CWD with no CLAUDE.md / git repo to leak in. Hit 7
     # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
-    result = run_llm(
-        prompt,
-        REPLY_MODEL,
-        label="REPLY_SEARCH",
-        allowed_tools=["WebSearch"],
-        cwd="/tmp",
-        structured_output=True,
-        # Must run on a tool-capable provider: ollama HTTP has no WebSearch
-        # tool and 503s, so this path produced zero replies (op 2026-06-24).
-        force_provider=REPLY_LLM_PROVIDER,
-    )
-    if result.returncode != 0:
-        log.info(f"[REPLY] CLI error: {result.stderr[:200]}")
-        return None
+    # Reply agent is English-first (AI Decoder rebrand): core identity in
+    # EN, but the prompt still tells it to reply in each tweet's language.
+    voice = Voice(REPLY_PROMPT_TEMPLATE, REPLY_MODEL, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
+                  llm_options={
+                      "allowed_tools": ["WebSearch"],
+                      "cwd": "/tmp",
+                      "structured_output": True,
+                      # Must run on a tool-capable provider: ollama HTTP has no WebSearch
+                      # tool and 503s, so this path produced zero replies (op 2026-06-24).
+                      "force_provider": REPLY_LLM_PROVIDER,
+                  })
+    generation = reply_generator.generate(voice, fields={
+        "dedup_section": dedup_section,
+        "skip_urls_section": skip_urls_section,
+        "discovered_section": discovered_section,
+        "today": today.isoformat(),
+        "since_date": since_date,
+    })
+    if generation.outcome is not Outcome.WRITTEN:
+        return None  # declined, failed or rate limited: nothing to post
 
-    # Extract the model's text from the --output-format json envelope
-    output = unwrap_text(result.stdout)
-
-    if not output or output.upper().startswith("SKIP"):
-        return None
-
+    output = generation.text
     cleaned = output
 
     # Try markdown code block first

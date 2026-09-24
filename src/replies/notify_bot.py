@@ -11,7 +11,8 @@ from ..x.twitter_client import (
     visit_profile_and_like,
     LikeOutcome,
 )
-from .replyback_agent import generate_replyback
+from . import reply_generator, replyback_agent
+from .reply_generator import Outcome
 from ..core.humanizer import humanize
 from ..guards.reply_admission import judge_parent
 import random
@@ -139,14 +140,18 @@ def run_replyback_cycle():
             f"[REPLYBACK] {'[INFLUENCER] ' if is_influencer else ''}"
             f"Replying to @{handle}: {text[:60]}..."
         )
-        reply = generate_replyback(own_tweet, text)
-        if not reply:
-            continue  # failed call: replayable next cycle
-        if reply.strip().upper().startswith("SKIP"):
+        generation = reply_generator.generate(replyback_agent.VOICE, author=handle, text=text,
+                                              context=own_tweet)
+        if generation.outcome is Outcome.RATE_LIMITED:
+            log.info("[REPLYBACK] LLM rate limit reached; no more generations this cycle.")
+            break
+        if generation.outcome is Outcome.DECLINED:
             _skipped.add(reply_url)  # the model declined
             continue
+        if generation.outcome is not Outcome.WRITTEN:
+            continue  # failed call: replayable next cycle
 
-        reply = humanize(reply)
+        reply = humanize(generation.text)
         log.info(f"[REPLYBACK] Reply ({len(reply)} chars): {reply}")
 
         try:

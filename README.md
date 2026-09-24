@@ -12,7 +12,8 @@ every post and respond naturally in conversations.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
-  author handle are refused.
+  author handle are refused. Every reply prompt carries the operator's hard
+  rules and respect list.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **No automatic quote tweets, reposts, self-recycling, startup bursts, or burst threads.**

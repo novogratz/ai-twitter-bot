@@ -21,8 +21,9 @@ from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
 from ..x.twitter_client import reply_to_tweet
 from ..guards.reply_admission import judge_parent
-from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
-from ..core.reply_language import looks_french
+from .direct_reply import _is_on_niche, reply_voice
+from . import reply_generator
+from .reply_generator import LanguageRule, Outcome
 from ..core.engagement_log import log_reply
 from ..core.humanizer import humanize
 from ..core.state_errors import StateUnreadable
@@ -120,23 +121,23 @@ def run_early_bird_cycle():
                 continue
 
             log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
-            reply = _generate_single_reply(
-                username,
-                text,
-                lang="fr" if looks_french(text) else "en",
-            )
-            if reply is _LLM_RATE_LIMITED:
-                log.info("[EARLYBIRD] LLM budget reached; stopping this cycle before posting attempts.")
+            # The author Reply admission read from the status URL, as in
+            # every other job, not the scanned handle.
+            # No FR-forced override on this job (pinned in the tests).
+            generation = reply_generator.generate(
+                reply_voice(verdict.author, LanguageRule.PARENT), author=verdict.author, text=text)
+            if generation.outcome is Outcome.RATE_LIMITED:
+                log.info("[EARLYBIRD] LLM rate limit reached; stopping this cycle before posting attempts.")
                 return
-            if reply is None:
-                continue  # failed call: replayable next cycle
-            if not reply:
+            if generation.outcome is Outcome.DECLINED:
                 log.info(f"[EARLYBIRD] Generation returned SKIP for @{username}.")
                 _skipped.add(url)
                 continue
+            if generation.outcome is not Outcome.WRITTEN:
+                continue  # failed call: replayable next cycle
 
             from ..core.pattern_tags import extract_pattern as _extract_pattern
-            reply, _pattern_id = _extract_pattern(reply)
+            reply, _pattern_id = _extract_pattern(generation.text)
             reply = humanize(reply)
             log.info(f"[EARLYBIRD] Reply ({len(reply)} chars): {reply}")
 

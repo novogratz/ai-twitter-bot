@@ -67,7 +67,13 @@ _Avoid_: try, cycle, poll
 **Reply**:
 A post answering someone else's post. Never a Profile publication, and no
 daily total applies to Replies.
-_Avoid_: comment, response
+_Avoid_: comment, response, draft (reserved for Originals)
+
+**Reply generator**:
+The one step that turns a post and a job's voice into reply text: it always
+adds the hard rules to the prompt, picks the reply language, and reads the
+model's answer as reply text, a decline (SKIP), a failure or a rate limit.
+_Avoid_: reply drafter, reply writer
 
 **Debate turn**:
 A Reply to an Engager, in answer to what they said to the account; capped per

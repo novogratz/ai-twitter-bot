@@ -120,8 +120,9 @@ def test_validate_allows_casual_unpunctuated_ending():
 def test_skip_rationale_never_publishes():
     """2026-06-07 live leak: the model wrote 'SKIP.' + its whole rationale
     ('The tweet is incomplete (cuts off mid-sentence)...') and an
-    exact-match SKIP check published it as a reply. Pin both layers:
-    generator-side prefix check and the content_guard chokepoint."""
+    exact-match SKIP check published it as a reply. Pinned here at the
+    content_guard chokepoint; the Reply generator's side is pinned in
+    tests/replies/test_reply_generator.py."""
     from src.guards import content_guard as cg
     ok, why = cg.validate("SKIP. The tweet is incomplete (cuts off mid-sentence at 'rema'), "
                           "and the angle is generic crypto psychology.", kind="reply")
@@ -131,13 +132,6 @@ def test_skip_rationale_never_publishes():
     # Legitimate text containing 'skip' mid-sentence still passes.
     ok, _ = cg.validate("Most investors skip the part where conviction gets tested.", kind="reply")
     assert ok
-    # Generator-side: prefix match, not exact match.
-    from src.replies import direct_reply as dr
-    import src.core.llm_client as llm
-    class R: returncode = 0; stdout = "SKIP. Here is why I refuse..."; stderr = ""
-    # _generate_single_reply path is LLM-bound; test the cheap invariant via
-    # the same predicate the code uses now:
-    assert R.stdout.upper().strip().startswith("SKIP")
 
 
 def test_burned_catchphrases_blocked_at_chokepoint():
