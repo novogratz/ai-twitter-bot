@@ -758,10 +758,11 @@ def unfollow_env(monkeypatch, tmp_path):
     following.write_text(json.dumps({"count": 100}))
     monkeypatch.setattr(ag, "_FOLLOWING_COUNT_FILE", str(following))
 
-    answers, scripts, opened, closed = [], [], [], []
+    answers, scripts, prefixes, opened, closed = [], [], [], [], []
 
-    def run_js(js):
+    def run_js(js, *, log_prefix=""):
         scripts.append(js)
+        prefixes.append(log_prefix)
         return answers.pop(0) if answers else ""
 
     monkeypatch.setattr(safari, "_run_js", run_js)
@@ -770,7 +771,8 @@ def unfollow_env(monkeypatch, tmp_path):
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
 
     return SimpleNamespace(
-        tc=tc, ag=ag, answers=answers, scripts=scripts, opened=opened, closed=closed,
+        tc=tc, ag=ag, answers=answers, scripts=scripts, prefixes=prefixes, opened=opened,
+        closed=closed,
         following=lambda: json.loads(following.read_text())["count"],
         ledger=ag._load_ledger)
 
@@ -808,6 +810,7 @@ def test_confirmed_unfollow_records_one_row(unfollow_env):
         (unfollow_env.ag.UNFOLLOW, "someaccount", False)]
     assert unfollow_env.following() == 99
     assert unfollow_env.closed
+    assert unfollow_env.prefixes == ["[UNFOLLOW]", "[UNFOLLOW]"]
 
 
 def test_dry_run_records_a_dry_row_without_the_browser(unfollow_env, monkeypatch):
@@ -830,15 +833,11 @@ def _scripted_pin_js(monkeypatch, steps):
 
     answers = iter(steps)
 
-    class Done:
-        def __init__(self, out):
-            self.stdout, self.returncode = out, 0
-
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(tc.subprocess, "run", lambda *a, **k: Done(next(answers)))
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))
 
 
 @pytest.mark.parametrize("steps, shipped", [

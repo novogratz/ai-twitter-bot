@@ -38,27 +38,35 @@ class _AwakeSafariLock:
 _safari_lock = _AwakeSafariLock()
 
 
-def _run_applescript(script: str, retries: int = 1) -> bool:
-    """Run an AppleScript command with optional retries. Returns True on success."""
+def _run_applescript(script: str, retries: int = 1,
+                     timeout_s: float | None = None) -> bool:
+    """Run an AppleScript command with optional retries. Returns True on success.
+    With `timeout_s`, a run that outlasts it counts as a failed attempt."""
     for attempt in range(retries):
         require_active()
         try:
             require_active()
             subprocess.run(["osascript", "-e", script], check=True,
-                           capture_output=True, text=True)
+                           capture_output=True, text=True, timeout=timeout_s)
             return True
-        except subprocess.CalledProcessError:
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
             if attempt < retries - 1:
                 log.warning(f"AppleScript failed (attempt {attempt + 1}/{retries}), retrying...")
                 time.sleep(RETRY_DELAY_SECONDS)
     return False
 
 
-def _run_js(js: str, timeout_s: int = 15) -> str:
+def _run_js(js: str, timeout_s: int = 15, *, log_prefix: str = "",
+            activate: bool = False, raise_timeout: bool = False) -> str:
     """Run `js` in Safari's front tab and return its result, "" when the
     osascript call fails. The script goes through a temp file, so `js` needs
-    no AppleScript escaping."""
+    no AppleScript escaping. `log_prefix` tags the failure line with the
+    caller's prefix, `activate` brings Safari to the front first, and
+    `raise_timeout` lets `subprocess.TimeoutExpired` reach a caller that
+    retries."""
     require_active()
+    prefix = f"{log_prefix} " if log_prefix else ""
+    activate_line = 'tell application "Safari" to activate' if activate else ""
     path = None
     try:
         with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=".js",
@@ -66,18 +74,24 @@ def _run_js(js: str, timeout_s: int = 15) -> str:
             path = tmp.name
             tmp.write(js)
         res = subprocess.run(["osascript", "-e", f'''
+        {activate_line}
         set jsCode to (read POSIX file "{path}" as «class utf8»)
         tell application "Safari"
             do JavaScript jsCode in current tab of front window
         end tell
         '''], capture_output=True, text=True, timeout=timeout_s)
         if res.returncode != 0:
-            log.info(f"Page JavaScript failed (osascript exit {res.returncode}): "
+            log.info(f"{prefix}Page JavaScript failed (osascript exit {res.returncode}): "
                      f"{(res.stderr or '').strip()[:300]}")
             return ""
         return (res.stdout or "").strip()
+    except subprocess.TimeoutExpired as e:
+        if raise_timeout:
+            raise
+        log.info(f"{prefix}Page JavaScript failed: {e!r}")
+        return ""
     except (OSError, subprocess.SubprocessError) as e:
-        log.info(f"Page JavaScript failed: {e!r}")
+        log.info(f"{prefix}Page JavaScript failed: {e!r}")
         return ""
     finally:
         if path:

@@ -5,7 +5,6 @@ import json
 import os
 import random
 import re
-import subprocess
 import time
 import urllib.parse
 from datetime import datetime
@@ -482,33 +481,7 @@ _POSTS_JS = r"""
 def _run_page_js(js: str) -> str:
     """Run `js` in Safari's front tab and return its result, "" when the
     osascript call fails."""
-    import tempfile as _tf
-    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
-    tmp.write(js)
-    tmp.close()
-    try:
-        require_active()
-        res = subprocess.run(["osascript", "-e", f'''
-        set jsCode to (read POSIX file "{tmp.name}")
-        tell application "Safari"
-            do JavaScript jsCode in current tab of front window
-        end tell
-        '''], capture_output=True, text=True, timeout=10)
-        if res.returncode != 0:
-            log.info(f"[LIKE] Page JavaScript failed (osascript exit {res.returncode}): "
-                     f"{(res.stderr or '').strip()[:300]}")
-            return ""
-        return (res.stdout or "").strip()
-    except OutsideActiveHours:
-        raise
-    except Exception as e:
-        log.info(f"[LIKE] Page JavaScript failed: {e!r}")
-        return ""
-    finally:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
+    return safari._run_js(js, 10, log_prefix="[LIKE]")
 
 
 def _page_posts(mode: str, target_id: str = "") -> dict:
@@ -739,7 +712,7 @@ def unfollow_account(username: str) -> bool:
             return 'NO_FOLLOWING_BTN';
         })()
         """
-        result = safari._run_js(click_following)
+        result = safari._run_js(click_following, log_prefix="[UNFOLLOW]")
         if result != "CLICKED":
             log.info(f"[UNFOLLOW] Not following @{username} (or button not found: "
                      f"{result or 'no answer'}) — skipping.")
@@ -755,7 +728,7 @@ def unfollow_account(username: str) -> bool:
             return 'NO_CONFIRM';
         })()
         """
-        result = safari._run_js(click_confirm)
+        result = safari._run_js(click_confirm, log_prefix="[UNFOLLOW]")
         time.sleep(1.5)
         safari.close_front_tab()
         if result != "CONFIRMED":
@@ -964,7 +937,6 @@ def follow_account(username: str, reciprocal: bool = False,
         # data-testid="<id>-follow" buttons + localized labels). Now: temp-file
         # JS (no quote hell), 3 selector strategies, and a REAL status return
         # so we only record a follow when the click actually fired.
-        import tempfile as _tf
         follow_js = """
         (function() {
             var btn = document.querySelector('button[data-testid$="-follow"]');
@@ -990,32 +962,7 @@ def follow_account(username: str, reciprocal: bool = False,
             return 'CLICKED';
         })()
         """
-        tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
-        tmp.write(follow_js)
-        tmp.close()
-        applescript = f'''
-        tell application "Safari" to activate
-        set jsCode to (read POSIX file "{tmp.name}")
-        tell application "Safari"
-            do JavaScript jsCode in current tab of front window
-        end tell
-        '''
-        status = ""
-        try:
-            require_active()
-            res = subprocess.run(["osascript", "-e", applescript],
-                                 capture_output=True, text=True, timeout=15)
-            status = (res.stdout or "").strip()
-            if res.returncode != 0:
-                log.info(f"[FOLLOW] JS error for @{username}: {res.stderr[:150]}")
-        except Exception as e:
-            log.info(f"[FOLLOW] osascript failed for @{username}: {e}")
-        finally:
-            try:
-                os.unlink(tmp.name)
-            except OSError:
-                pass
-
+        status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
         ok = status == "CLICKED"
         if ok:
             time.sleep(2)
@@ -1150,7 +1097,6 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
     handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
     """
     import json as _json
-    import tempfile
     from ..core import config as _cfg
     from ..guards import action_guard
 
@@ -1198,30 +1144,7 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
     """
 
     def _exec_js(js: str, timeout_s: int = 15) -> str:
-        tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-        tmp.write(js)
-        tmp.close()
-        applescript = f'''
-        tell application "Safari" to activate
-        set jsCode to (read POSIX file "{tmp.name}")
-        tell application "Safari"
-            set result to do JavaScript jsCode in current tab of front window
-        end tell
-        '''
-        try:
-            require_active()
-            r = subprocess.run(
-                ["osascript", "-e", applescript],
-                capture_output=True, text=True, timeout=timeout_s,
-            )
-            return (r.stdout or "").strip()
-        except Exception:
-            return "EXCEPTION"
-        finally:
-            try:
-                os.unlink(tmp.name)
-            except OSError:
-                pass
+        return safari._run_js(js, timeout_s, log_prefix="[PIN]", activate=True)
 
     with safari._safari_lock:
         log.info(f"[PIN] Opening tweet to pin: {tweet_url}")

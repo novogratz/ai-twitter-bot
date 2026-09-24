@@ -9,7 +9,7 @@ import webbrowser
 from ..core.config import BOT_PROFILE_URL
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
-from ..guards.active_hours import require_active
+from ..guards.active_hours import OutsideActiveHours
 from . import safari
 
 # Reactive black-screen recovery: track consecutive blank pages.
@@ -147,39 +147,19 @@ def _scrape_profile_quality() -> dict:
         return JSON.stringify(out);
     })()
     """
-    import tempfile as _tf
-    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
-    tmp.write(js)
-    tmp.close()
-    applescript = f'''
-    tell application "Safari"
-        set jsCode to (read POSIX file "{tmp.name}")
-        do JavaScript jsCode in current tab of front window
-    end tell
-    '''
     try:
-        require_active()
-        res = subprocess.run(["osascript", "-e", applescript],
-                             capture_output=True, text=True, timeout=15)
-        if res.returncode == 0 and res.stdout.strip():
-            return json.loads(res.stdout.strip())
-    except (Exception, json.JSONDecodeError):
+        raw = safari._run_js(js, 15, log_prefix="[SCRAPE]")
+        if raw:
+            return json.loads(raw)
+    except json.JSONDecodeError:
         pass
-    finally:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
     return {}
 
 
 def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
     """Run JS on the current Safari page to extract tweets. Returns list of dicts."""
     import json as _json
-    import tempfile
-    import os
 
-    # Write JS to temp file to avoid AppleScript quote escaping hell
     js_code = """
     (function() {
         function extractFromLabel(label) {
@@ -249,53 +229,37 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
     })()
     """.replace("MAX_TWEETS", str(max_tweets))
 
-    # Write JS to temp file
-    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-    tmp.write(js_code)
-    tmp.close()
-
     # Activate Safari first. Without this, "current tab of front window" can
     # block waiting on a different app being frontmost — that was causing the
     # 15s timeouts to dominate the entire engagement loop.
-    applescript = f'''
-    tell application "Safari" to activate
-    set jsCode to (read POSIX file "{tmp.name}")
-    tell application "Safari"
-        set result to do JavaScript jsCode in current tab of front window
-    end tell
-    '''
-
-    def _try_once(timeout_s: int):
-        require_active()
-        return subprocess.run(
-            ["osascript", "-e", applescript],
-            capture_output=True, text=True, timeout=timeout_s,
-        )
+    def _try_once(timeout_s: int) -> str:
+        return safari._run_js(js_code, timeout_s, log_prefix="[SCRAPE]",
+                              activate=True, raise_timeout=True)
 
     raw = ""
-    result = None
     try:
         # First attempt: 30s. Safari can be slow on first JS injection after
         # a fresh tab load (was 15s — too tight, dominant failure mode).
         try:
-            result = _try_once(30)
+            raw = _try_once(30)
         except subprocess.TimeoutExpired:
             # One retry: bring Safari to front explicitly, settle, try again.
             log.info(f"[SCRAPE] First JS attempt timed out for {label}; retrying after activate.")
             safari._run_applescript('tell application "Safari" to activate')
             time.sleep(2)
             try:
-                result = _try_once(30)
+                raw = _try_once(30)
             except subprocess.TimeoutExpired:
                 log.info(f"[SCRAPE] Both attempts timed out for {label}.")
                 _record_timed_out_scrape(label)
                 return []
 
-        raw = result.stdout.strip()
-        if result.returncode != 0:
-            log.info(f"[SCRAPE] JS failed for {label}: {result.stderr[:200]}")
+        # The page script always answers, so "" means osascript failed: the
+        # failure is logged by _run_js and is not a blank page.
+        if not raw:
+            log.info(f"[SCRAPE] JS failed for {label}.")
             return []
-        if not raw or raw == 'NO_ARTICLES':
+        if raw == 'NO_ARTICLES':
             log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
             _record_blank_page(is_home_feed="home feed" in label, label=label)
             return []
@@ -323,15 +287,12 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
         return tweets
+    except OutsideActiveHours:
+        raise
     except Exception as e:
         log.info(f"[SCRAPE] Exception for {label}: {e}")
         _record_blank_page(is_home_feed="home feed" in label, label=label)
         return []
-    finally:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
 
 
 def is_own_post(tweet: dict) -> bool:
@@ -431,9 +392,7 @@ def scrape_following_feed(max_tweets: int = 15):
         webbrowser.open("https://x.com/home")
         time.sleep(8)
 
-        # Click the "Following" tab. Written to a temp file to avoid AppleScript quote-hell.
-        import tempfile as _tf
-        import os as _os
+        # Click the "Following" tab.
         click_js = """
         (function() {
             var tabs = document.querySelectorAll('[role="tab"]');
@@ -447,26 +406,7 @@ def scrape_following_feed(max_tweets: int = 15):
             return 'NO_TAB';
         })()
         """
-        tmp = _tf.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-        tmp.write(click_js)
-        tmp.close()
-        applescript = f'''
-        set jsCode to (read POSIX file "{tmp.name}")
-        tell application "Safari"
-            do JavaScript jsCode in current tab of front window
-        end tell
-        '''
-        try:
-            require_active()
-            subprocess.run(["osascript", "-e", applescript],
-                           capture_output=True, text=True, timeout=8)
-        except Exception as e:
-            log.info(f"[SCRAPE] Could not click Following tab: {e}")
-        finally:
-            try:
-                _os.unlink(tmp.name)
-            except OSError:
-                pass
+        safari._run_js(click_js, 8, log_prefix="[SCRAPE]")
 
         time.sleep(4)
         # Scroll proportionally to the requested depth (same as home feed).
@@ -523,52 +463,43 @@ def scrape_own_tweet_and_replies():
         ''')
         time.sleep(2)
 
-        js_script = '''
-        tell application "Safari" to activate
-        tell application "Safari"
-            set result to do JavaScript "
-                (function() {
-                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
-                    if (articles.length < 2) return JSON.stringify({own_tweet: '', replies: []});
-                    var ownEl = articles[0].querySelector('[data-testid=\\"tweetText\\"]');
-                    var ownText = ownEl ? ownEl.textContent.trim() : '';
-                    var replies = [];
-                    for (var i = 1; i < Math.min(articles.length, 8); i++) {
-                        var a = articles[i];
-                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
-                        var text = textEl ? textEl.textContent.trim() : '';
-                        if (!text) continue;
-                        var userEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
-                        var user = userEl ? userEl.textContent.trim() : '';
-                        var url = '';
-                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
-                        for (var l of links) {
-                            var h = l.getAttribute('href');
-                            if (h && h.match(/\\\\/status\\\\/\\\\d+$/)) {
-                                url = 'https://x.com' + h;
-                                break;
-                            }
-                        }
-                        replies.push({user: user, text: text.substring(0, 200), url: url});
+        js_code = r"""
+        (function() {
+            var articles = document.querySelectorAll('article[data-testid="tweet"]');
+            if (articles.length < 2) return JSON.stringify({own_tweet: '', replies: []});
+            var ownEl = articles[0].querySelector('[data-testid="tweetText"]');
+            var ownText = ownEl ? ownEl.textContent.trim() : '';
+            var replies = [];
+            for (var i = 1; i < Math.min(articles.length, 8); i++) {
+                var a = articles[i];
+                var textEl = a.querySelector('[data-testid="tweetText"]');
+                var text = textEl ? textEl.textContent.trim() : '';
+                if (!text) continue;
+                var userEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
+                var user = userEl ? userEl.textContent.trim() : '';
+                var url = '';
+                var links = a.querySelectorAll('a[href*="/status/"]');
+                for (var l of links) {
+                    var h = l.getAttribute('href');
+                    if (h && h.match(/\/status\/\d+$/)) {
+                        url = 'https://x.com' + h;
+                        break;
                     }
-                    return JSON.stringify({own_tweet: ownText.substring(0, 200), replies: replies});
-                })()
-            " in current tab of front window
-        end tell
-        '''
+                }
+                replies.push({user: user, text: text.substring(0, 200), url: url});
+            }
+            return JSON.stringify({own_tweet: ownText.substring(0, 200), replies: replies});
+        })()
+        """
         import json
         try:
-            require_active()
-            result = subprocess.run(
-                ["osascript", "-e", js_script],
-                capture_output=True, text=True, timeout=30,
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                data = json.loads(result.stdout.strip())
+            raw = safari._run_js(js_code, 30, log_prefix="[REPLYBACK]", activate=True)
+            if raw:
+                data = json.loads(raw)
                 log.info(f"[REPLYBACK] Found {len(data.get('replies', []))} replies on latest tweet")
                 safari.close_front_tab()
                 return data
-        except Exception as e:
+        except json.JSONDecodeError as e:
             log.info(f"[REPLYBACK] Scraping failed: {e}")
 
         safari.close_front_tab()
