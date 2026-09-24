@@ -230,8 +230,17 @@ Three modules sit behind them:
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
 - `src/guards/action_guard.py` keeps `action_ledger.json` (90 days, Toronto
-  timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. A
-  corrupt ledger refuses the write. Quotes and retweets are always refused;
+  timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. The
+  ledger holds one JSON object per line: a write appends and fsyncs one line,
+  a check parses only the lines added since the previous read, and rows past
+  90 days go in an atomic rewrite at most once per Toronto day. A ledger still
+  in the former single-list format is read as is and converted in place at
+  the next write. A corrupt line, a row without a text `ts` or a file with
+  no row refuses the write. A last line without its final newline counts
+  when it reads as a row, and the next write adds the newline; an unreadable
+  one (an interrupted write) is skipped, and the next write drops it. The
+  append, the rewrite and its directory are flushed with `F_FULLFSYNC` where
+  the system has it. Quotes and retweets are always refused;
   replies only need their spacing (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter).
   `spacing_gap` draws the jitter of the reply, original and follow gaps once
   per write, seeded on the timestamp of the last write of that action (dry
@@ -321,6 +330,11 @@ These are how the code behaves today, not design intent:
   hard rules or the respect list.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
+- The ledger lock is per process, and `action_guard` assumes the bot is the
+  only writer while it runs. A row another process writes while the bot
+  rewrites the file (conversion or daily retention pass) or drops an
+  unreadable last line is lost: run `bin/mass_unfollow.py` with the bot
+  stopped, never with `--force` beside it.
 
 ## Legacy modules
 

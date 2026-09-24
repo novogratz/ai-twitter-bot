@@ -106,7 +106,8 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   (`./bin/run.sh`, `bin/stop_bot.sh`). Code and config take effect at restart.
 - JSON files at the repo root are live state. `action_ledger.json` already
   counts toward today's ceiling: keep it across deploys, and leave unrelated
-  state files out of your commits.
+  state files out of your commits. It holds one JSON object per line, not a
+  JSON list: read it line by line or through `action_guard`.
 - An editorial slot in `pending` state was submitted ambiguously; it is never
   retried automatically. Check the profile before clearing it
   ([recovery](docs/OPERATIONS.md#recovery)).
