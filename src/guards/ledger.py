@@ -86,8 +86,19 @@ def _stamp(ts) -> Optional[datetime]:
     try:
         dt = datetime.fromisoformat(ts)
         # Historical entries were recorded using the Toronto host's naive clock.
-        return dt.replace(tzinfo=ZoneInfo(config.BOT_TIMEZONE)) if dt.tzinfo is None else dt
-    except (ValueError, TypeError):
+        dt = dt.replace(tzinfo=ZoneInfo(config.BOT_TIMEZONE)) if dt.tzinfo is None else dt
+        dt.timestamp()
+        return dt
+    except (ValueError, TypeError, OverflowError, OSError):
+        return None
+
+
+def _day(stamp: datetime) -> Optional[date]:
+    """The Toronto day of `stamp`, None past the calendar's ends (a hand-edited
+    `9999-12-31T23:59:00-10:00`): no caller can ask for that day."""
+    try:
+        return stamp.astimezone(ZoneInfo(config.BOT_TIMEZONE)).date()
+    except (OverflowError, ValueError, OSError):
         return None
 
 
@@ -108,24 +119,30 @@ class _Index:
         self._targets: dict = {}  # action -> {target: None}, most recent last
 
     def add(self, rows: Iterable[dict]) -> None:
-        tz = ZoneInfo(config.BOT_TIMEZONE)
+        # Every key first: a row that fails leaves the index as it was.
+        keyed = []
         for row in rows:
-            self.rows.append(row)
             action, target, ts = _key(row.get("action")), _key(row.get("target")), row["ts"]
+            shipped = not row.get("dry_run")
+            stamp = _stamp(ts) if shipped else None
+            day = _day(stamp) if stamp is not None else None
+            keyed.append((row, action, target, ts, shipped, stamp, day))
+        for row, action, target, ts, shipped, stamp, day in keyed:
+            self.rows.append(row)
             if action in (FOLLOW, UNFOLLOW) and ts > self._touch.get(target, ""):
                 self._touch[target] = ts
-            if row.get("dry_run"):
+            if not shipped:
                 continue
-            stamp = _stamp(ts)
             if stamp is not None:
                 last = self._last.get(action)
                 # Strictly later: of two equal instants the first row wins.
                 if last is None or stamp.timestamp() > last.timestamp():
                     self._last[action] = stamp
-                key = (action, stamp.astimezone(tz).date())
+            if day is not None:
+                key = (action, day)
                 self._totals[key] = self._totals.get(key, 0) + 1
-                day = self._days.setdefault(key, {})
-                day[target] = day.get(target, 0) + 1
+                per_target = self._days.setdefault(key, {})
+                per_target[target] = per_target.get(target, 0) + 1
             if target:
                 seen = self._targets.setdefault(action, {})
                 seen.pop(target, None)
@@ -168,13 +185,12 @@ class _Queries:
 
 class MemoryLedger(_Queries):
     """A Ledger in memory, for tests: FileLedger's answers without its file,
-    retention or failure modes. `rows` seeds it with rows as the file would
+    lock, retention or failure modes. `rows` seeds it with rows as the file would
     hold them."""
 
     def __init__(self, rows: Iterable[dict] = ()):
         self._index = _Index()
         self._index.add([_checked(r) for r in rows])
-        self._lock = threading.Lock()
 
     @property
     def rows(self) -> list:
@@ -182,8 +198,7 @@ class MemoryLedger(_Queries):
         return list(self._index.rows)
 
     def append(self, action: str, target: str, dry_run: bool, at: datetime) -> None:
-        with self._lock:
-            self._index.add([_row(action, target, dry_run, at)])
+        self._index.add([_row(action, target, dry_run, at)])
 
     def _current(self) -> _Index:
         return self._index
@@ -343,6 +358,8 @@ class FileLedger(_Queries):
         self.path = path
         self._view: Optional[_View] = None
         self._compacted_on: Optional[date] = None  # Toronto day of the last retention pass
+        # Diagnostic: rows parsed from the file since this ledger was made.
+        self.rows_read = 0
 
     def append(self, action: str, target: str, dry_run: bool, at: datetime) -> None:
         with _LOCK:
@@ -382,7 +399,10 @@ class FileLedger(_Queries):
                             and (v.size, v.mtime_ns) == (fst.st_size, fst.st_mtime_ns)
                             and _fingerprints(f, v.offset) == v.prints):
                         return v
-                    self._view = _read(f, fst, _resume_offset(f, fst, v), v)
+                    start = _resume_offset(f, fst, v)
+                    kept = len(v.index.rows) if start else 0
+                    self._view = _read(f, fst, start, v)
+                    self.rows_read += len(self._view.index.rows) - kept
             except FileNotFoundError:
                 self._view = None
             except OSError as exc:

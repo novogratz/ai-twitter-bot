@@ -322,25 +322,17 @@ def test_write_and_check_on_a_large_ledger_parse_only_the_new_line(monkeypatch, 
     path.write_text(_jsonl(rows))
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(path))
     assert ag.can_post(ag.REPLY) == (True, "")
-
-    parsed = []
-    parse_lines = lg._parse_lines
-
-    def counting(data):
-        out = parse_lines(data)
-        parsed.append(len(out[0]))
-        return out
-
-    monkeypatch.setattr(lg, "_parse_lines", counting)
-    monkeypatch.setattr(lg, "_parse_list", lambda data: pytest.fail("full list parse"))
+    ledger = lg.file_ledger(str(path))
+    assert ledger.rows_read == 50_000
     inode = os.stat(path).st_ino
 
     ag.record(ag.LIKE, target="https://x.com/new/status/1")
     assert ag.can_post(ag.REPLY) == (True, "")
+    assert ledger.rows_read == 50_001
     ag.record(ag.REPLY, target="https://x.com/new/status/2")
     assert not ag.can_post(ag.REPLY)[0]
 
-    assert parsed == [1, 1]
+    assert ledger.rows_read == 50_002
     assert os.stat(path).st_ino == inode
     assert len(_lines(path)) == 50_002
 
@@ -425,6 +417,70 @@ def test_file_and_memory_adapters_answer_alike(path):
     }
     assert _answers(FileLedger(str(path))) == expected
     assert _answers(MemoryLedger(_ROWS)) == expected
+
+
+# A hand-edited stamp whose Toronto day falls past the calendar's ends.
+_PAST_THE_CALENDAR = ["9999-12-31T23:59:00-10:00", "0001-01-01T00:00:00+05:00"]
+
+
+def _past_the_calendar_rows(ts):
+    return [_row(ag.POST, ts), _row(ag.FOLLOW, ts, "alice"), _row(ag.DEBATE_TURN, ts, "fan")]
+
+
+def _answers_past_the_calendar(ledger, ts):
+    """What the former action_guard answered over _past_the_calendar_rows
+    and one post at noon: the stamp counts on no day (it raised
+    OverflowError there) and stays in every other answer."""
+    stamp = datetime.fromisoformat(ts)
+    noon = _TODAY_NOON
+    assert ledger.count(ag.POST, noon.date()) == 1
+    assert ledger.count(ag.DEBATE_TURN, noon.date(), "fan") == 0
+    assert ledger.count(ag.FOLLOW, noon.date()) == 0
+    assert ledger.last_write(ag.POST) == max(noon, stamp)
+    assert ledger.last_write(ag.FOLLOW) == stamp
+    assert ledger.last_touch("alice") == stamp
+    assert ledger.targets(ag.DEBATE_TURN) == ["fan"]
+
+
+@pytest.mark.parametrize("ts", _PAST_THE_CALENDAR)
+def test_a_stamp_past_the_calendar_counts_on_no_day(ts, path):
+    rows = [_row(ag.POST, _TODAY_NOON.isoformat())] + _past_the_calendar_rows(ts)
+    path.write_text(_jsonl(rows))
+
+    _answers_past_the_calendar(FileLedger(str(path)), ts)
+    _answers_past_the_calendar(MemoryLedger(rows), ts)
+
+
+@pytest.mark.parametrize("ts", _PAST_THE_CALENDAR)
+def test_a_stamp_past_the_calendar_appended_later_is_indexed_once(ts, path):
+    path.write_text(_jsonl([_row(ag.POST, _TODAY_NOON.isoformat())]))
+    ledger = FileLedger(str(path))
+    assert ledger.count(ag.POST, _TODAY_NOON.date()) == 1
+
+    with open(path, "a") as f:
+        f.write(_jsonl(_past_the_calendar_rows(ts)))
+    for _ in range(3):
+        _answers_past_the_calendar(ledger, ts)
+    assert ledger.rows_read == 4
+
+    _add(ledger, ag.POST, at=_TODAY_NOON)
+    assert ledger.count(ag.POST, _TODAY_NOON.date()) == 2
+
+
+@pytest.mark.parametrize("ts", _PAST_THE_CALENDAR)
+def test_a_stamp_past_the_calendar_leaves_the_policy_its_budget(ts, monkeypatch, path):
+    monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(path))
+    ag.record(ag.POST)
+    assert ag.profile_count_today() == 1
+
+    with open(path, "a") as f:
+        f.write(_jsonl(_past_the_calendar_rows(ts)))
+    assert [ag.profile_count_today() for _ in range(3)] == [1, 1, 1]
+
+    ag.record(ag.POST)
+    assert ag.profile_count_today() == 2
+    assert ag.can_debate_turn("fan") == (True, "")
+    assert ag.debate_turn_authors() == ["fan"]
 
 
 def test_memory_ledger_appends_rows_as_the_file_does(path):

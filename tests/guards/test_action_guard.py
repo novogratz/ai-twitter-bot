@@ -97,6 +97,15 @@ def follow_env(monkeypatch, tmp_path, memory_ledger):
     return ag
 
 
+def _counts(monkeypatch, tmp_path, followers, following):
+    """The account's counts as the follower tracker and the following
+    counter leave them on disk."""
+    monkeypatch.setattr(config, "_PROJECT_ROOT", str(tmp_path))
+    monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
+    (tmp_path / "follower_history.json").write_text(json.dumps([{"count": followers}]))
+    (tmp_path / "following_count.json").write_text(json.dumps({"count": following}))
+
+
 def test_whitelist_loads_tier4(follow_env):
     ag = follow_env
     wl = ag.load_whitelist()
@@ -105,58 +114,58 @@ def test_whitelist_loads_tier4(follow_env):
     assert ag.is_whitelisted("balajis")
 
 
-def test_follow_blocked_at_low_phase_ceiling(follow_env, monkeypatch):
+def test_follow_blocked_at_low_phase_ceiling(follow_env, monkeypatch, tmp_path):
     """While followers are low (<300), total following must stay under ~150."""
     ag = follow_env
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 150))
+    _counts(monkeypatch, tmp_path, 100, 150)
     ok, why = ag.can_follow("karpathy")
     assert not ok and "ceiling" in why
 
 
-def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch):
+def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch, tmp_path):
     ag = follow_env
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 149))
+    _counts(monkeypatch, tmp_path, 100, 149)
     ok, why = ag.can_follow("karpathy")
     assert ok, why
 
 
-def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch):
+def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch, tmp_path):
     """Even with a big follower count, total following is hard-capped at 300."""
     ag = follow_env
-    monkeypatch.setattr(ag, "current_counts", lambda: (10000, 300))
+    _counts(monkeypatch, tmp_path, 10000, 300)
     ok, why = ag.can_follow("saylor")
     assert not ok and "ceiling" in why
-    monkeypatch.setattr(ag, "current_counts", lambda: (10000, 299))
+    _counts(monkeypatch, tmp_path, 10000, 299)
     ok, why = ag.can_follow("saylor")
     assert ok, why
 
 
-def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatch):
+def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatch, tmp_path):
     """Once followers exceed 300, following must stay <= followers."""
     ag = follow_env
-    monkeypatch.setattr(ag, "current_counts", lambda: (220, 200))
+    _counts(monkeypatch, tmp_path, 220, 200)
     # followers=220 is still < FOLLOW_LOW_PHASE_FOLLOWERS → 150 ceiling rules
     ok, why = ag.can_follow("morganhousel")
     assert not ok and "ceiling" in why
-    monkeypatch.setattr(ag, "current_counts", lambda: (320, 280))
+    _counts(monkeypatch, tmp_path, 320, 280)
     ok, why = ag.can_follow("morganhousel")
     assert ok, why  # 280+1 <= min(300, 320)
 
 
-def test_follow_spacing_blocks_burst(follow_env, monkeypatch):
+def test_follow_spacing_blocks_burst(follow_env, monkeypatch, tmp_path):
     """Never burst-follow: a follow within the 10-min gap is refused."""
     from src.core import config
     ag = follow_env
     monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    _counts(monkeypatch, tmp_path, 100, 10)
     ag.record(ag.FOLLOW, target="TheBTCTherapist")
     ok, why = ag.can_follow("morganhousel")
     assert not ok and "too soon" in why
 
 
-def test_follow_rejects_non_whitelisted(follow_env, monkeypatch):
+def test_follow_rejects_non_whitelisted(follow_env, monkeypatch, tmp_path):
     ag = follow_env
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    _counts(monkeypatch, tmp_path, 100, 10)
     ok, why = ag.can_follow("randomspamaccount")
     assert not ok and "whitelist" in why
 
@@ -176,10 +185,10 @@ def _noon(monkeypatch):
 
 
 def test_anti_churn_counts_any_follow_or_unfollow_within_the_cooldown(follow_env, monkeypatch,
-                                                                     memory_ledger):
+                                                                     memory_ledger, tmp_path):
     ag = follow_env
     now = _noon(monkeypatch)
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    _counts(monkeypatch, tmp_path, 100, 10)
     cooldown = timedelta(days=config.CHURN_COOLDOWN_DAYS)
     memory_ledger.append(ag.FOLLOW, "karpathy", True, now - cooldown + timedelta(minutes=1))
     memory_ledger.append(ag.UNFOLLOW, "morganhousel", False, now - cooldown)
@@ -191,10 +200,11 @@ def test_anti_churn_counts_any_follow_or_unfollow_within_the_cooldown(follow_env
     assert ag.can_follow("saylor") == (True, ""), "a like is no touch"
 
 
-def test_follow_and_unfollow_caps_count_todays_shipped_rows(follow_env, monkeypatch, memory_ledger):
+def test_follow_and_unfollow_caps_count_todays_shipped_rows(follow_env, monkeypatch, memory_ledger,
+                                                            tmp_path):
     ag = follow_env
     now = _noon(monkeypatch)
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    _counts(monkeypatch, tmp_path, 100, 10)
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 2)
     monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 2)
@@ -229,7 +239,7 @@ def test_debate_turn_cap_counts_todays_shipped_turns_per_author(monkeypatch, mem
     assert ag.debate_turn_authors() == ["challenger", "other"]
 
 
-def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatch):
+def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatch, tmp_path):
     """2026-06-11 operator: "go back on following people and following back".
     Growth mode must untie the following ceiling from the followers count
     (following>followers mid-purge would block every follow), while
@@ -239,17 +249,17 @@ def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatc
     monkeypatch.setattr(config, "FOLLOW_TOTAL_CAP", 3000)
 
     monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", True)
-    monkeypatch.setattr(ag, "current_counts", lambda: (1423, 2999))  # followers, following
+    _counts(monkeypatch, tmp_path, 1423, 2999)  # followers, following
     assert ag.can_follow("karpathy") == (True, ""), \
         "growth mode: ceiling is FOLLOW_TOTAL_CAP, not the followers count"
-    monkeypatch.setattr(ag, "current_counts", lambda: (1423, 3000))
+    _counts(monkeypatch, tmp_path, 1423, 3000)
     ok, why = ag.can_follow("karpathy")
     assert not ok and "(3000 >= 3000)" in why
 
     monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
-    monkeypatch.setattr(ag, "current_counts", lambda: (1423, 1422))
+    _counts(monkeypatch, tmp_path, 1423, 1422)
     assert ag.can_follow("karpathy") == (True, "")
-    monkeypatch.setattr(ag, "current_counts", lambda: (1423, 1423))
+    _counts(monkeypatch, tmp_path, 1423, 1423)
     ok, why = ag.can_follow("karpathy")
     assert not ok and "(1423 >= 1423)" in why, "legacy mode keeps following <= followers"
 
@@ -374,7 +384,7 @@ def test_original_gap_is_drawn_once_per_original(monkeypatch):
     assert ag.can_post(ag.POST) == (True, "")
 
 
-def test_follow_gap_is_drawn_once_per_follow(monkeypatch):
+def test_follow_gap_is_drawn_once_per_follow(monkeypatch, tmp_path):
     """follow_engagers pre-checks can_follow and follow_account judges it
     again: both must see one gap, or each cycle retries for a small draw."""
     now = _ledger_clock(monkeypatch)
@@ -383,7 +393,7 @@ def test_follow_gap_is_drawn_once_per_follow(monkeypatch):
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
     monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", False)
-    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    _counts(monkeypatch, tmp_path, 100, 10)
     ag.record(ag.FOLLOW, "fan1")
     gap = ag.seconds_until_allowed(ag.FOLLOW)
     assert 600 <= gap <= 900

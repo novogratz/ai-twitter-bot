@@ -241,9 +241,9 @@ Four modules sit behind them:
   action ledger and never knows where the ledger stores. Quotes and
   retweets are always refused; replies only need their spacing
   (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
-  original and follow gaps is drawn once per write, seeded on the timestamp of the last write of that action (dry
-  runs excluded): every caller sees the same gap, and retrying cannot fish
-  for a smaller draw. `seconds_until_allowed` returns what is left of it,
+  original and follow gaps is drawn once per write, seeded on the
+  timestamp of the last write of that action (dry runs excluded): every
+  caller sees the same gap, and retrying cannot fish for a smaller draw. `seconds_until_allowed` returns what is left of it,
   capped at one gap so that a ledger row stamped in the future (clock set
   back, copied ledger) cannot park a waiting job; `can_post` still refuses
   until the spacing clears.

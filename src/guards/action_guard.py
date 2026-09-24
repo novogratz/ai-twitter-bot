@@ -182,7 +182,7 @@ def is_whitelisted(handle: str,
 
 # --- follower / following counts (best-effort, conservative) ---------------
 
-def current_counts() -> Tuple[Optional[int], Optional[int]]:
+def _current_counts() -> Tuple[Optional[int], Optional[int]]:
     """(followers, following). Followers from follower_history.json (latest).
     Following: optional override file / env, else the tracked followed set
     (which under-counts true following, so the ratio gate stays conservative).
@@ -261,7 +261,7 @@ def _following_ceiling() -> int:
     # (following > followers). Daily cap + spacing + anti-churn still apply.
     if config.FOLLOW_GROWTH_MODE:
         return config.FOLLOW_TOTAL_CAP
-    followers, _ = current_counts()
+    followers, _ = _current_counts()
     if followers is None or followers < config.FOLLOW_LOW_PHASE_FOLLOWERS:
         return min(config.FOLLOW_TOTAL_CAP, config.FOLLOW_LOW_PHASE_CEILING)
     return min(config.FOLLOW_TOTAL_CAP, followers)
@@ -293,14 +293,14 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
         return (False, f"too soon since last follow (need ~{int(gap)}s gap)")
     # Hard total-following ceiling — never exceed 300; ~150 while followers
     # are low; following <= followers once followers pass the low phase.
-    _, following = current_counts()
+    _, following = _current_counts()
     if following is not None:
         ceiling = _following_ceiling()
         if following + 1 > ceiling:
             return (False, f"total following ceiling reached ({following} >= {ceiling})")
     # Legacy net-negative ratio brake (kept behind FOLLOW_ENFORCE_RATIO).
     if config.FOLLOW_ENFORCE_RATIO:
-        followers, following = current_counts()
+        followers, following = _current_counts()
         if followers is not None and following is not None:
             over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
             if over_ceiling and follows_today >= _count_today(UNFOLLOW):
