@@ -106,7 +106,7 @@ def test_reply_prompt_jobs_follow_the_parent_language(jobs, job, text, lang):
                                        ("early_bird", "en"), ("mega_watch", "en")])
 def test_fr_forced_handles_override_only_the_search_and_feed_pipeline(jobs, job, lang):
     """The early_bird and mega_watch scans never applied the override: an
-    English-looking post from @Graphseo gets an English draft, which the
+    English-looking post from @Graphseo gets English reply text, which the
     chokepoint then refuses for an FR-forced parent."""
     assert language(jobs(job, "Graphseo", EN)) == (lang, lang)
 
@@ -139,6 +139,30 @@ def test_fr_forced_handles_are_read_at_call_time(jobs, monkeypatch):
     assert language(jobs("search", "someone", EN)) == ("fr", "fr")
 
 
+@pytest.mark.parametrize("env, author, forced", [
+    (None, "Graphseo", True), (None, "@graphseo", True), (None, "someone", False),
+    (" @SomeOne , other", "someone", True), ("", "graphseo", False), ("someone", "", False),
+])
+def test_one_reader_decides_fr_forced_parents(monkeypatch, env, author, forced):
+    """The generator and Reply admission share this reader: one default,
+    one handle normalisation."""
+    from src.core.reply_language import is_fr_forced
+
+    if env is None:
+        monkeypatch.delenv("FR_FORCED_REPLY_HANDLES", raising=False)
+    else:
+        monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", env)
+    assert is_fr_forced(author) is forced
+
+
+def test_early_bird_names_the_author_from_the_status_url(jobs):
+    """The scanned handle keeps the profile's casing; the prompt takes the
+    author Reply admission read from the status URL."""
+    prompt = jobs("early_bird", "SomeOne", EN)
+    assert "Author: @someone\n" in prompt
+    assert "@SomeOne" not in prompt
+
+
 # --- Hard rules and dossier ----------------------------------------------------
 
 EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird", "someone", EN),
@@ -150,14 +174,15 @@ EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird",
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
 def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monkeypatch):
     """Issue #155: debate and the VIP and Graphseo paths used to build their
-    prompts without the hard rules or the respect list."""
+    prompts without the hard rules or the respect list. They close every
+    prompt, the reply search's included."""
     from src.core import personality_store
     from src.guards import respect_list
 
     monkeypatch.setattr(respect_list, "render_block", lambda: "RESPECT LIST: never mock @kindperson")
     rules = personality_store.hard_rules_block()
     assert "RESPECT LIST: never mock @kindperson" in rules
-    assert rules in jobs(job, author, text)
+    assert jobs(job, author, text).endswith("\n\n" + rules)
 
 
 @pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
@@ -208,13 +233,22 @@ def generate(**options):
     '"SKIP"',
     "Skip.",
     "skipped: nothing to add",
-    "I'd skip this one, nothing here",
+    "« SKIP",
 ])
-def test_a_skip_is_a_definitive_decline(llm, stdout):
+def test_a_skip_prefix_is_a_definitive_decline(llm, stdout):
     from src.replies.reply_generator import Outcome
 
     llm.default = stdout
     assert generate().outcome is Outcome.DECLINED
+
+
+@pytest.mark.parametrize("stdout", ["You can skip the hype, the moat is data.", "I'd skip this one honestly."])
+def test_skip_inside_a_reply_is_reply_text_outside_the_vip_window(llm, stdout):
+    from src.replies.reply_generator import Outcome
+
+    llm.default = stdout
+    assert generate().outcome is Outcome.WRITTEN
+    assert generate(skip_window=20).outcome is Outcome.DECLINED
 
 
 def test_skip_after_a_leaked_preamble_is_a_decline(llm):
@@ -222,6 +256,60 @@ def test_skip_after_a_leaked_preamble_is_a_decline(llm):
 
     llm.default = "Parfait. Voici ma réponse.\n---\nSKIP"
     assert generate(strip_preamble=True).outcome is Outcome.DECLINED
+
+
+LEGIT = "You can skip the hype, the moat is data."
+HEDGE = "I'd skip this one honestly."
+SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
+PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
+         ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
+         ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
+# Only the bestie and buddy voices declined "skip" in the first 20
+# characters before issue #155; every other path read SKIP as a prefix.
+VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}
+
+
+@pytest.fixture
+def decision(jobs, llm, monkeypatch):
+    """What a job did with one model answer: "sent" when it handed the reply
+    text to its chokepoint, else the generation's outcome."""
+    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
+    from src.replies import notify_bot as nb, reply_generator
+    from src.x import twitter_client as tc
+
+    sent, outcomes = [], []
+    for module, name in ((dr, "reply_to_tweet"), (eb, "reply_to_tweet"), (mw, "reply_to_tweet"),
+                         (tc, "reply_to_tweet"), (nb, "reply_to_tweet_in_thread")):
+        monkeypatch.setattr(module, name, lambda url, text, **k: sent.append(text) and False)
+    real = reply_generator.generate
+
+    def spy(*args, **kwargs):
+        generation = real(*args, **kwargs)
+        outcomes.append(generation.outcome)
+        return generation
+
+    monkeypatch.setattr(reply_generator, "generate", spy)
+
+    def decide(job, author, text, answer):
+        sent.clear()
+        outcomes.clear()
+        llm.default = answer
+        jobs(job, author, text)
+        assert len(outcomes) == 1
+        return "sent" if sent else outcomes[0].name
+
+    return decide
+
+
+@pytest.mark.parametrize("job, author, text", PATHS)
+@pytest.mark.parametrize("answer", [LEGIT, HEDGE, *SKIPS])
+def test_each_job_decides_on_a_skip_as_before_the_generator(decision, job, author, text, answer):
+    """Issue #155 adds the hard rules and changes nothing else that ships.
+    Two deliberate exceptions, logged in docs/HISTORY.md 2026-09-23: a quoted
+    "SKIP" on debate and Graphseo used to reach the chokepoint, and is now a
+    definitive decline."""
+    declines = answer in SKIPS or author in VIP_WINDOW
+    assert decision(job, author, text, answer) == ("DECLINED" if declines else "sent")
 
 
 @pytest.mark.parametrize("answer", [LLMResult(1, "", "boom"), LLMResult(0, "", ""), LLMResult(0, '""', ""),
@@ -249,19 +337,19 @@ def test_a_stop_request_during_generation_ends_the_cycle(llm):
         generate()
 
 
-def test_a_draft_is_unquoted_and_trimmed_on_a_sentence(llm):
+def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
     from src.replies.reply_generator import Outcome
 
     llm.default = '"Short first sentence here. A second sentence runs on well past the cap."'
     generation = generate(max_chars=40)
-    assert generation.outcome is Outcome.DRAFT
+    assert generation.outcome is Outcome.WRITTEN
     assert generation.text == "Short first sentence here."
 
 
 def test_the_language_decided_for_the_prompt_comes_back(llm):
     from src.replies import reply_generator
-    from src.replies.reply_generator import Language, Voice
+    from src.replies.reply_generator import LanguageRule, Voice
 
-    french = Voice("{tweet_text}{language_override}", "model", "TEST", language=Language.PARENT)
+    french = Voice("{tweet_text}{language_override}", "model", "TEST", language=LanguageRule.PARENT)
     assert reply_generator.generate(french, author="someone", text=FR).language == "fr"
     assert "FRENCH ONLY" in llm.prompts[-1]

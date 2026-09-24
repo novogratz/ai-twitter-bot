@@ -23,7 +23,7 @@ from ..x.twitter_client import reply_to_tweet
 from ..guards.reply_admission import judge_parent
 from .direct_reply import _is_on_niche, reply_voice
 from . import reply_generator
-from .reply_generator import Language, Outcome
+from .reply_generator import LanguageRule, Outcome
 from ..core.engagement_log import log_reply
 from ..core.humanizer import humanize
 from ..core.state_errors import StateUnreadable
@@ -121,10 +121,11 @@ def run_early_bird_cycle():
                 continue
 
             log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
-            # The scanned handle, not the URL's: the prompt keeps its casing.
+            # The author Reply admission read from the status URL, as in
+            # every other job, not the scanned handle.
             # No FR-forced override on this job (pinned in the tests).
             generation = reply_generator.generate(
-                reply_voice(username, Language.PARENT), author=username, text=text)
+                reply_voice(verdict.author, LanguageRule.PARENT), author=verdict.author, text=text)
             if generation.outcome is Outcome.RATE_LIMITED:
                 log.info("[EARLYBIRD] LLM rate limit reached; stopping this cycle before posting attempts.")
                 return
@@ -132,7 +133,7 @@ def run_early_bird_cycle():
                 log.info(f"[EARLYBIRD] Generation returned SKIP for @{username}.")
                 _skipped.add(url)
                 continue
-            if not generation:
+            if generation.outcome is not Outcome.WRITTEN:
                 continue  # failed call: replayable next cycle
 
             from ..core.pattern_tags import extract_pattern as _extract_pattern

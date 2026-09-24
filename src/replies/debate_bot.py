@@ -126,7 +126,7 @@ def run_debate_cycle():
         if generation.outcome is Outcome.DECLINED:
             _skipped.add(url)
             continue
-        if not generation:
+        if generation.outcome is not Outcome.WRITTEN:
             continue  # a failed call is retried next cycle
         reply = humanize(generation.text)
 

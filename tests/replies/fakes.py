@@ -3,19 +3,19 @@ from types import SimpleNamespace
 
 from src.core.llm_client import LLMResult
 
-DRAFT = "Batching is where inference margins are won or lost, not in the model."
+REPLY_TEXT = "Batching is where inference margins are won or lost, not in the model."
 
 
 class FakeLlm:
     """Records every prompt and answers the first `answers` entry whose key
-    appears in the prompt, `default` (DRAFT) otherwise. An answer is the
+    appears in the prompt, `default` (REPLY_TEXT) otherwise. An answer is the
     model's stdout, an LLMResult, an exception to raise, or a function of
     the prompt returning one of those."""
 
     def __init__(self):
         self.calls = []
         self.answers = {}
-        self.default = DRAFT
+        self.default = REPLY_TEXT
 
     def __call__(self, prompt, model, **options):
         self.calls.append(SimpleNamespace(prompt=prompt, model=model, **options))

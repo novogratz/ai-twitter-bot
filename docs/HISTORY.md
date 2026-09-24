@@ -79,6 +79,23 @@ their order in the file is not strictly chronological.
 > `tests/x/test_page_js.py`, `tests/x/test_safari_hygiene.py` and
 > `tests/test_conftest_walls.py`.
 
+> **2026-09-23 — one Reply generator (issue #155):** debate, the VIP
+> voices and Graphseo built their prompts without the hard rules or the
+> respect list. Every Reply prompt now goes through
+> `src/replies/reply_generator.py`, which always appends them. The SKIP
+> rules stay per job: a prefix everywhere, plus "skip" in the first 20
+> characters on the bestie and buddy voices only, so "You can skip the
+> hype…" still ships from the other jobs. Three changes in how a post is
+> marked come with the move. A quoted `"SKIP"` on debate and Graphseo used
+> to reach the chokepoint, which refused it for the cycle; it is now a
+> decline, set aside until restart. An answer of two quotes (`""`) on the
+> search, feed-sweep, early-bird and mega-watch Replies read as a decline;
+> it is now a failed generation, replayed next cycle. An exception from the
+> model call on debate or replyback used to end the cycle, recorded as a
+> failure by `health`; it is now a failed generation for that post, and the
+> cycle moves on. Guards: `tests/replies/test_reply_generator.py` and
+> `tests/replies/test_reply_jobs.py`.
+
 ---
 
 > **You'll hate me until I'm right.**

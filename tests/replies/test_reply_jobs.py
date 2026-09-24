@@ -17,7 +17,7 @@ from src.guards import replied_store
 from src.x import x_urls
 from src.core.state_errors import StateUnreadable
 from tests.helpers import fresh
-from tests.replies.fakes import DRAFT
+from tests.replies.fakes import REPLY_TEXT
 
 FAILED_CALL = LLMResult(1, "", "model down")
 RATE_LIMITED = LLMResult(LLM_RATE_LIMIT_CODE, "", "hourly budget")
@@ -182,6 +182,39 @@ def test_pipeline_stops_generating_at_the_rate_limit(pipeline):
 
     assert len(llm.calls) == 2, "the generation already submitted runs; no other starts"
     assert sent == [] and dr._skipped == set()
+
+
+def test_pipeline_ends_on_a_stop_request_during_generation(pipeline):
+    """A stop request or 22:00 raised inside the generation ends the pass;
+    it is not a failed generation the loop steps over."""
+    from src.guards.active_hours import OutsideActiveHours
+
+    dr, llm, sent = pipeline
+    tweets = [{"url": fresh("someone", n=i), "text": f"post {i}"} for i in range(3)]
+    llm.default = OutsideActiveHours("stop requested")
+
+    with pytest.raises(OutsideActiveHours):
+        dr._reply_to_tweets(tweets, set(), "SEARCH-HOT")
+    assert sent == [] and dr._skipped == set()
+
+
+def test_pipeline_steps_over_a_generation_that_raises(pipeline, monkeypatch):
+    from src.replies import reply_generator
+
+    dr, llm, sent = pipeline
+    real = reply_generator.generate
+
+    def broken_for_first(voice, *, text, **kwargs):
+        if text == "post 0":
+            raise KeyError("template field")
+        return real(voice, text=text, **kwargs)
+
+    monkeypatch.setattr(reply_generator, "generate", broken_for_first)
+    tweets = [{"url": fresh("someone", n=i), "text": f"post {i}"} for i in range(2)]
+
+    assert dr._reply_to_tweets(tweets, set(), "SEARCH-HOT") == 1
+    assert sent == [tweets[1]["url"]] and dr._skipped == {tweets[1]["url"]}, \
+        "the post whose generation raised stays replayable"
 
 
 def test_feed_sweep_stops_at_the_rate_limit(pipeline, monkeypatch):
@@ -385,8 +418,8 @@ def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
     monkeypatch.setattr(rb, "refresh_feed", lambda: None)
     monkeypatch.setattr(rb, "get_recent_tweets", lambda hours: [])
     monkeypatch.setattr(rb, "generate_replies", lambda **k: [
-        {"tweet_url": quoted, "reply": DRAFT, "type": "quote"},
-        {"tweet_url": answered, "reply": DRAFT, "type": "reply"},
+        {"tweet_url": quoted, "reply": REPLY_TEXT, "type": "quote"},
+        {"tweet_url": answered, "reply": REPLY_TEXT, "type": "reply"},
     ])
     monkeypatch.setattr(rb.time, "sleep", lambda *a: None)
     sent, logged = [], []
@@ -456,7 +489,7 @@ def reply_search(monkeypatch, blocklist):
 
 
 def target(url, text=""):
-    return {"tweet_url": url, "reply": DRAFT, "type": "reply", "tweet_text": text}
+    return {"tweet_url": url, "reply": REPLY_TEXT, "type": "reply", "tweet_text": text}
 
 
 def test_reply_search_asks_admission_before_sending(reply_search):

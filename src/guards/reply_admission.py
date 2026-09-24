@@ -105,7 +105,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
         text = trimmed
     text = humanizer.casualize(text)
     # The language is judged on the text as written, before the typo.
-    if author in _handles_env("FR_FORCED_REPLY_HANDLES", "Graphseo") and reply_language.looks_english(text):
+    if reply_language.is_fr_forced(author) and reply_language.looks_english(text):
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
     if author in _handles_env("HUMAN_TYPO_HANDLES", ""):
         text = humanizer.inject_human_typo(text)

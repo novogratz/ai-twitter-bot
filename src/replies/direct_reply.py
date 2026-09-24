@@ -16,8 +16,9 @@ from ..guards.reply_admission import judge_parent
 from ..core.state_errors import StateUnreadable
 from ..core.humanizer import humanize
 from ..core.engagement_log import log_reply
+from ..guards.active_hours import OutsideActiveHours
 from . import reply_generator
-from .reply_generator import Generation, Language, Outcome, Voice
+from .reply_generator import LanguageRule, Outcome, Voice
 
 # Posts this job is done with until restart: definitive Reply admission
 # refusals, posts the model declined, posts answered. Temporary refusals and
@@ -340,7 +341,7 @@ def _vip_voice(handle: str) -> Voice:
     template = BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower() else BUDDY_REPLY_PROMPT
     # identity=False: see _graphseo_voice.
     return Voice(template, PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", identity=False,
-                 text_limit=300, strip_preamble=True)
+                 text_limit=300, strip_preamble=True, skip_window=20)
 
 
 def _run_graphseo_scan(tried: set, remaining=None, rate_limited=None) -> int:
@@ -397,7 +398,7 @@ def _run_graphseo_scan(tried: set, remaining=None, rate_limited=None) -> int:
             if generation.outcome is Outcome.DECLINED:
                 _skipped.add(url)
                 continue
-            if not generation:
+            if generation.outcome is not Outcome.WRITTEN:
                 continue  # failed call: replayable
             reply = humanize(generation.text)  # em-dash strip + AI-artifact cleanup
             log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
@@ -423,7 +424,7 @@ def _run_graphseo_scan(tried: set, remaining=None, rate_limited=None) -> int:
     return posted
 
 
-def reply_voice(author: str, language: Language = Language.PARENT_OR_FR_FORCED) -> Voice:
+def reply_voice(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_FORCED) -> Voice:
     """The voice of the search, feed-sweep, early-bird and mega-watch
     Replies; VIP authors get the priority model."""
     vip = (author or "").lower().lstrip("@") in _VIP_REPLY_ACCOUNTS_LC
@@ -541,18 +542,19 @@ def _reply_to_tweets(tweets, tried, source_name, source_detail="", remaining=Non
             nxt = _next_submission(pool)
             try:
                 generation = fut.result()
-            except StateUnreadable:
-                raise  # no prompt can be built: the next candidates would fail too
+            except (OutsideActiveHours, StateUnreadable):
+                raise  # bedtime, or no prompt can be built: the next candidates would fail too
             except Exception:
-                traceback.print_exc()
-                generation = Generation(Outcome.FAILED)
+                traceback.print_exc()  # a failed generation: the post stays replayable
+                pending = nxt
+                continue
             if generation.outcome is Outcome.RATE_LIMITED:
                 log.info(f"[{source_name}] LLM rate limit reached; stopping this cycle.")
                 rate_limited.set()
                 break  # the generation already submitted runs; its post stays replayable
             if generation.outcome is Outcome.DECLINED:
                 skipped.add(url)  # the model declined: not paid again
-            elif generation:
+            elif generation.outcome is Outcome.WRITTEN:
                 from ..core.pattern_tags import extract_pattern as _extract_pattern
                 reply, _pattern_id = _extract_pattern(generation.text)
                 reply = humanize(reply)

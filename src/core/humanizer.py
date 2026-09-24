@@ -249,9 +249,10 @@ def casualize(text: str, rng: "random.Random" = None) -> str:
 def smart_trim(text: str, limit: int) -> str:
     """Length-cap OUTGOING text at a sentence boundary, never mid-sentence.
 
-    Bug 2026-06-05: `_generate_graphseo_reply` blind-sliced `text[:220]` and
-    published "…la vraie question n" — a follower publicly called the account
-    out as a botched ChatGPT paste. A trim must end on a complete thought:
+    Bug 2026-06-05: the @Graphseo reply path (today
+    `direct_reply._graphseo_voice`) blind-sliced `text[:220]` and published
+    "…la vraie question n" — a follower publicly called the account out as
+    a botched ChatGPT paste. A trim must end on a complete thought:
       1. prefer the last sentence terminal (. ! ? …) within `limit`
       2. else the last word boundary, dropping any dangling 1-2 letter
          fragment and trailing connector punctuation (, : ; — « ").

@@ -148,7 +148,7 @@ def run_replyback_cycle():
         if generation.outcome is Outcome.DECLINED:
             _skipped.add(reply_url)  # the model declined
             continue
-        if not generation:
+        if generation.outcome is not Outcome.WRITTEN:
             continue  # failed call: replayable next cycle
 
         reply = humanize(generation.text)

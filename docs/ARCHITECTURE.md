@@ -360,17 +360,20 @@ reply.
 
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
 passes its voice (template, model, label, language rule) and the parent
-post; `generate` returns a `Generation`: a draft, a decline (the model said
-SKIP), a replayable failure, or a rate limit. The generator always appends
+post; `generate` returns a `Generation`: reply text, a decline (the model
+said SKIP), a replayable failure, or a rate limit. The generator always appends
 `personality_store.hard_rules_block()`, which renders the hard rules and the
 respect list from `respect_list.json`; voices with `identity` also get
 `core_identity.md` (French or English) and the author's dossier from
 `personality.json`. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;
-replyback a word test on the Engager's reply; the reply search English. One
-rule reads the answer: "skip" in its first 20 characters, after quotes are
-stripped, is a decline. The editorial prompt carries the hard rules too. No
+replyback a word test on the Engager's reply; the reply search English.
+`FR_FORCED_REPLY_HANDLES` is read by `reply_language.is_fr_forced`, shared
+with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
+is a decline; the bestie and buddy voices also decline "skip" anywhere in
+the first 20 characters (`skip_window`). The editorial prompt carries the
+hard rules too. No
 chokepoint applies the respect list to outgoing text.
 While `respect_list.json` is unreadable, `hard_rules_block` raises
 `StateUnreadable`: the editorial cycle and the Reply cycles stop before the
@@ -425,7 +428,7 @@ These are how the code behaves today, not design intent:
 - The debate, VIP and Graphseo voices (`identity=False`) carry the hard rules
   but neither `core_identity.md` nor the author's dossier.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
-  English-looking post from @Graphseo gets an English draft, which
+  English-looking post from @Graphseo gets English reply text, which
   `judge_reply` then refuses.
 - The replyback language test matches substrings, so "honestly" or "best"
   ("est") selects the French core identity.

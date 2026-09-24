@@ -117,7 +117,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path, llm
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
-    never _generate_graphseo_reply; output passes through humanize."""
+    never the Graphseo voice (_graphseo_voice); output passes through humanize."""
     import src.replies.direct_reply as dr
 
     # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-

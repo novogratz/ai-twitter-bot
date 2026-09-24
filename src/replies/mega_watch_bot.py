@@ -25,7 +25,7 @@ from ..x.twitter_client import reply_to_tweet
 from ..guards.reply_admission import judge_parent
 from .direct_reply import _is_on_niche, reply_voice
 from . import reply_generator
-from .reply_generator import Language, Outcome
+from .reply_generator import LanguageRule, Outcome
 from ..core.engagement_log import log_reply
 from ..core.humanizer import humanize
 from ..core.state_errors import StateUnreadable
@@ -100,14 +100,14 @@ def run_mega_watch_cycle():
             # Source tagging happens in log_reply later.
             # No FR-forced override on this job (pinned in the tests).
             generation = reply_generator.generate(
-                reply_voice(verdict.author, Language.PARENT), author=verdict.author, text=text)
+                reply_voice(verdict.author, LanguageRule.PARENT), author=verdict.author, text=text)
             if generation.outcome is Outcome.RATE_LIMITED:
                 log.info("[MEGA] LLM rate limit reached; stopping this cycle before posting attempts.")
                 return
             if generation.outcome is Outcome.DECLINED:
                 _skipped.add(url)  # the model declined
                 continue
-            if not generation:
+            if generation.outcome is not Outcome.WRITTEN:
                 continue  # failed call: replayable next cycle
             reply_text = humanize(generation.text)
             if len(reply_text) < 10 or len(reply_text) > 270:

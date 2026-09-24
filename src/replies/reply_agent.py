@@ -12,7 +12,7 @@ from ..core.logger import log
 from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
 from . import reply_generator
-from .reply_generator import Language, Voice
+from .reply_generator import LanguageRule, Outcome, Voice
 
 # Core influencers — AI + Space + Robotics + Investment, French priority
 TARGET_ACCOUNTS = [
@@ -429,7 +429,7 @@ EXEMPLES SAVAGE (sur l'idée/marché/hype, JAMAIS la personne):
 - "Nouveau modèle IA" -> "another model that 'changes everything'. comme les 47
   derniers. mais celui-là c'est le vrai. promis."
 
-{discovered_section}{anchors}
+{discovered_section}
 
 {dedup_section}
 
@@ -585,7 +585,7 @@ def generate_replies(recent_topics=None, already_replied=None):
         discovered_section = (discovered_section or "") + directives_block
 
     # Global mood: this path searches broadly, so no author dossier. The
-    # generator adds the core identity and the hard rules at {anchors}.
+    # generator appends the core identity and the hard rules.
     from ..core import personality_store
     mood = personality_store.render_global_mood()
     if mood:
@@ -607,7 +607,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
     # Reply agent is English-first (AI Decoder rebrand): core identity in
     # EN, but the prompt still tells it to reply in each tweet's language.
-    voice = Voice(REPLY_PROMPT_TEMPLATE, REPLY_MODEL, "REPLY_SEARCH", language=Language.ENGLISH,
+    voice = Voice(REPLY_PROMPT_TEMPLATE, REPLY_MODEL, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
                   llm_options={
                       "allowed_tools": ["WebSearch"],
                       "cwd": "/tmp",
@@ -623,8 +623,8 @@ def generate_replies(recent_topics=None, already_replied=None):
         "today": today.isoformat(),
         "since_date": since_date,
     })
-    if not generation:
-        return None
+    if generation.outcome is not Outcome.WRITTEN:
+        return None  # declined, failed or rate limited: nothing to post
 
     output = generation.text
     cleaned = output

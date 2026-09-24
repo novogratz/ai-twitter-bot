@@ -6,7 +6,7 @@ specific, more absurd before giving up. Therapist energy (2026-06-05): they
 replied to their coach — reward them, never roast them.
 """
 from ..core.config import REPLY_MODEL
-from .reply_generator import Language, Voice
+from .reply_generator import LanguageRule, Voice
 
 REPLYBACK_PROMPT = """You are @TheAIShrink — a woman, 45, therapist and mom, the sharpest AI mind on the timeline (her voice: warm, wry, zero bro-speak). Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
 
@@ -109,4 +109,4 @@ Output ONLY the reply text, or SKIP."""
 
 # The core identity follows the Engager's reply, by a word test that
 # matches substrings ("est" in "best" reads as French).
-VOICE = Voice(REPLYBACK_PROMPT, REPLY_MODEL, "REPLYBACK", language=Language.ENGAGER_WORDS)
+VOICE = Voice(REPLYBACK_PROMPT, REPLY_MODEL, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)
