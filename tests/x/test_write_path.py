@@ -171,7 +171,7 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
         "reply must not unconditionally like the parent"
 
 
-def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
+def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_ledger):
     """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
     share one count. Ordinary replies to the same author stay uncapped, a
@@ -180,7 +180,8 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     from src.guards import content_guard as cg
     from src.x import safari, twitter_client as tc
 
-    monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_REPLIES", 0)
+    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
@@ -198,14 +199,14 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch):
     assert url("challenger", 3) not in rs.load_replied(), "refused turn must stay fresh"
     assert tc.reply_to_tweet(url("challenger", 4), text), "plain replies stay uncapped"
     assert tc.reply_to_tweet(url("someone_else", 5), text, debate_turn=True)
-    assert ag.debate_turns_today("challenger") == 2
+    assert memory_ledger.count(ag.DEBATE_TURN, ag.now_local().date(), "challenger") == 2
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "3")
     assert tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
     assert not tc.reply_to_tweet("https://x.com/i/web/status/6", text, debate_turn=True), \
         "a turn without a URL handle fails closed"
 
 
-def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
+def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, memory_ledger):
     """Another thread can ship the Engager's last turn while this one waits
     for the browser: admission, judged under the lock, refuses before Safari."""
     import contextlib
@@ -213,7 +214,8 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     from src.guards import content_guard as cg
     from src.x import safari, twitter_client as tc
 
-    monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_REPLIES", 0)
+    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
@@ -226,7 +228,7 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch):
     # _run_applescript stays walled off by conftest: reaching Safari fails.
     url = "https://x.com/challenger/status/7"
     assert not tc.reply_to_tweet(url, "Batching changes the cost curve.", debate_turn=True)
-    assert ag.debate_turns_today("challenger") == 1
+    assert memory_ledger.count(ag.DEBATE_TURN, ag.now_local().date(), "challenger") == 1
     assert url not in rs.load_replied(), "the race loser was never claimed"
 
 
@@ -648,7 +650,8 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
-    monkeypatch.setattr(ag, "spacing_ok", lambda *a: True)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_POSTS", 0)
+    monkeypatch.setattr(config, "POST_JITTER_SECONDS", 0)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
@@ -665,7 +668,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     with ThreadPoolExecutor(2) as pool:
         results = list(pool.map(lambda _: tc.post_tweet(text, editorial=True), range(2)))
     assert sum(1 for result in results if result is True) <= 1
-    assert ag.count_today(ag.POST) <= 8
+    assert ag.profile_count_today() <= 8
 
 
 # --- follows -----------------------------------------------------------------
@@ -738,7 +741,7 @@ def test_follow_gate_english_only(monkeypatch):
 
 
 @pytest.fixture()
-def unfollow_env(monkeypatch, tmp_path):
+def unfollow_env(monkeypatch, tmp_path, memory_ledger):
     """Unfollow allowed by policy, browser stubbed; `answers` feeds the page
     JavaScript results in order."""
     from src.core import config
@@ -752,8 +755,6 @@ def unfollow_env(monkeypatch, tmp_path):
     wl = tmp_path / "whitelist.json"
     wl.write_text(json.dumps({"tiers": {"tier1": ["karpathy"]}}))
     monkeypatch.setattr(config, "WHITELIST_FILE", str(wl))
-    monkeypatch.setattr(ag, "_WL_CACHE", {})
-    monkeypatch.setattr(ag, "_WL_MTIME", 0.0)
     following = tmp_path / "following_count.json"
     following.write_text(json.dumps({"count": 100}))
     monkeypatch.setattr(ag, "_FOLLOWING_COUNT_FILE", str(following))
@@ -774,7 +775,7 @@ def unfollow_env(monkeypatch, tmp_path):
         tc=tc, ag=ag, answers=answers, scripts=scripts, prefixes=prefixes, opened=opened,
         closed=closed,
         following=lambda: json.loads(following.read_text())["count"],
-        ledger=ag._load_ledger)
+        ledger=lambda: memory_ledger.rows)
 
 
 @pytest.mark.parametrize("answer", ["NO_FOLLOWING_BTN", ""])
@@ -847,7 +848,7 @@ def _scripted_pin_js(monkeypatch, steps):
     (["NO_ARTICLE"], False),
     (["MORE_CLICKED", "PIN_CLICKED", ""], False),
 ])
-def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, steps, shipped):
+def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, memory_ledger, steps, shipped):
     """Log only what shipped: one ledger row when the confirm dialog was
     clicked, none when a step failed or no confirm dialog appeared. A pin
     is not a profile publication."""
@@ -857,5 +858,5 @@ def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, steps, shipped):
     _scripted_pin_js(monkeypatch, steps)
 
     assert tc.pin_own_tweet(OWN_BEST) is shipped
-    assert [r["target"] for r in pin_rows()] == ([OWN_BEST.lower()] if shipped else [])
+    assert [r["target"] for r in pin_rows(memory_ledger)] == ([OWN_BEST.lower()] if shipped else [])
     assert action_guard.profile_count_today() == 0

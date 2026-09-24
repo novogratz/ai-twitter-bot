@@ -229,35 +229,49 @@ self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 `reply_to_own_latest` and `reply_to_reply` were removed with their helpers
 (issue #111). The zero caps below stay as a second line.
 
-Three modules sit behind them:
+Four modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that neither `.env` nor
   `live_strategy.json` can lift: eight profile publications a day, quote and
   repost caps at 0, originals capped at 8 and spaced by at least 3600 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
-- `src/guards/action_guard.py` keeps `action_ledger.json` (90 days, Toronto
-  timestamps) and decides `can_post`, `can_follow` and `can_unfollow`. The
-  ledger holds one JSON object per line: a write appends and fsyncs one line,
-  a check parses only the lines added since the previous read, and rows past
-  90 days go in an atomic rewrite at most once per Toronto day. A ledger still
-  in the former single-list format is read as is and converted in place at
-  the next write. A corrupt line, a row without a text `ts` or a file with
-  no row refuses the write. A last line without its final newline counts
-  when it reads as a row, and the next write adds the newline; an unreadable
-  one (an interrupted write) is skipped, and the next write drops it. The
-  append, the rewrite and its directory are flushed with `F_FULLFSYNC` where
-  the system has it. Quotes and retweets are always refused;
-  replies only need their spacing (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter).
-  `spacing_gap` draws the jitter of the reply, original and follow gaps once
-  per write, seeded on the timestamp of the last write of that action (dry
-  runs excluded): every caller sees the same gap, and retrying cannot fish
-  for a smaller draw. `seconds_until_allowed` returns what is left of it,
+- `src/guards/action_guard.py` decides `can_post`, `can_follow` and
+  `can_unfollow`, and records every write through `record`. It asks the
+  action ledger and never knows where the ledger stores. Quotes and
+  retweets are always refused; replies only need their spacing
+  (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
+  original and follow gaps is drawn once per write, seeded on the
+  timestamp of the last write of that action (dry runs excluded): every
+  caller sees the same gap, and retrying cannot fish for a smaller draw. `seconds_until_allowed` returns what is left of it,
   capped at one gap so that a ledger row stamped in the future (clock set
   back, copied ledger) cannot park a waiting job; `can_post` still refuses
   until the spacing clears.
   No active job calls `unfollow_account`, and `MAX_UNFOLLOWS_PER_DAY`
   defaults to 0.
+- `src/guards/ledger.py` is that ledger (90 days, Toronto timestamps). Its
+  interface answers four questions: shipped rows of an action on a Toronto
+  day (per target for Debate turns), the last shipped write of an action,
+  the last follow or unfollow of a handle (dry runs included), and the
+  targets of an action newest first. An index kept up to date row by row
+  answers them, with no scan of the rows. Two adapters sit behind it:
+  `FileLedger` keeps `action_ledger.json`, `MemoryLedger` holds the rows in
+  memory. `action_guard.LEDGER` picks the adapter: `None`, the default,
+  stands for the file at `config.ACTION_LEDGER_FILE`, resolved at each call;
+  policy tests set a `MemoryLedger` through the `memory_ledger` fixture.
+  The file holds one JSON object per line: a write appends and fsyncs one
+  line, a check parses only the lines added since the previous read, so
+  rows another process appends (`bin/mass_unfollow.py`) count from the next
+  check on. A file rewritten or replaced (smaller, another inode, other
+  bytes at the head or before the last row read) is read again in full.
+  Rows past 90 days go in an atomic rewrite at most once per Toronto day. A
+  ledger still in the former single-list format is read as is and converted
+  in place at the next write. A corrupt line, a row without a text `ts` or a
+  file with no row refuses every check and every write. A last line without
+  its final newline counts when it reads as a row, and the next write adds
+  the newline; an unreadable one (an interrupted write) is skipped, and the
+  next write drops it. The append, the rewrite and its directory are flushed
+  with `F_FULLFSYNC` where the system has it.
 - `src/guards/content_guard.py` validates text before publication: near-term
   price targets, duplicates, truncation, violence, skip rationales.
 
@@ -336,7 +350,7 @@ These are how the code behaves today, not design intent:
   hard rules or the respect list.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
-- The ledger lock is per process, and `action_guard` assumes the bot is the
+- The ledger lock is per process, and `FileLedger` assumes the bot is the
   only writer while it runs. A row another process writes while the bot
   rewrites the file (conversion or daily retention pass) or drops an
   unreadable last line is lost: run `bin/mass_unfollow.py` with the bot

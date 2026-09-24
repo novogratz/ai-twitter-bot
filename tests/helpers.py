@@ -77,6 +77,5 @@ class SearchPage:
         return {"url": post["url"], "result": "clicked"}
 
 
-def pin_rows():
-    from src.guards import action_guard
-    return [r for r in action_guard._load_ledger() if r["action"] == action_guard.PIN]
+def pin_rows(ledger):
+    return [r for r in ledger.rows if r["action"] == ag.PIN]

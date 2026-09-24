@@ -206,9 +206,9 @@ OWN = "https://x.com/TheAIShrink/status/2063500000000000206"
 OWN_OTHER = "https://x.com/TheAIShrink/status/2063500000000000302"
 
 
-def _like_rows():
+def _like_rows(like_job):
     from src.guards import action_guard
-    return [r for r in action_guard._load_ledger() if r["action"] == action_guard.LIKE]
+    return [r for r in like_job["ledger"].rows if r["action"] == action_guard.LIKE]
 
 
 def test_like_job_likes_through_like_tweet_and_counts_only_liked(like_job, monkeypatch):
@@ -236,7 +236,7 @@ def test_like_job_likes_through_like_tweet_and_counts_only_liked(like_job, monke
 
     assert through == [BLOCKED, CACHED, SHOWN_LIKED, FRESH, FRESH_2]
     assert page.clicks == [FRESH, FRESH_2]
-    assert [r["target"] for r in _like_rows()] == [FRESH.lower(), FRESH_2.lower()]
+    assert [r["target"] for r in _like_rows(like_job)] == [FRESH.lower(), FRESH_2.lower()]
     assert like_bot._load_daily_state()["count"] == 2
 
 
@@ -253,7 +253,7 @@ def test_like_job_counts_an_unconfirmed_click_toward_its_cap_without_a_ledger_ro
     like_bot.run_like_cycle()
 
     assert page.clicks == [FRESH]
-    assert _like_rows() == []
+    assert _like_rows(like_job) == []
     assert like_bot._load_daily_state()["count"] == 1
 
 
@@ -290,7 +290,7 @@ def test_like_job_volume_stays_under_its_caps(like_job, monkeypatch, per_cycle, 
     like_bot.run_like_cycle()
 
     assert len(page.clicks) == expected
-    assert len(_like_rows()) == expected
+    assert len(_like_rows(like_job)) == expected
     assert like_bot._load_daily_state()["count"] == already_today + expected
 
 
@@ -335,7 +335,7 @@ def test_like_job_starts_no_like_after_its_cycle_deadline(like_job, monkeypatch,
     like_bot.run_like_cycle()
 
     assert len(page.clicks) == expected
-    assert len(_like_rows()) == expected
+    assert len(_like_rows(like_job)) == expected
     assert like_bot._load_daily_state()["count"] == expected
     assert like_job["closed"] == 1
 
@@ -368,7 +368,7 @@ def test_like_job_dry_run_opens_nothing(like_job, monkeypatch):
 
     like_bot.run_like_cycle()
 
-    assert _like_rows() == []
+    assert _like_rows(like_job) == []
 
 
 # --- pin_bot -------------------------------------------------------------------
@@ -430,7 +430,8 @@ def test_pin_job_pins_through_pin_own_tweet(pin_job, monkeypatch, shipped):
     assert (pin_bot._load_history().get("pinned") == [OWN_BEST]) is shipped
 
 
-def test_pin_job_dry_run_records_a_dry_run_row_without_spending_the_attempt(pin_job, monkeypatch):
+def test_pin_job_dry_run_records_a_dry_run_row_without_spending_the_attempt(pin_job, monkeypatch,
+                                                                           memory_ledger):
     """Criterion: a dry run writes a dry-run ledger row and leaves today's
     live attempt unspent. It marks its own day, so the next hourly run
     neither scrapes the profile nor records again. conftest fails the test
@@ -445,9 +446,9 @@ def test_pin_job_dry_run_records_a_dry_run_row_without_spending_the_attempt(pin_
                         lambda *a, **k: pytest.fail("scraped again the same day"))
     pin_bot.run_pin_cycle()
 
-    rows = pin_rows()
+    rows = pin_rows(memory_ledger)
     assert [(r["target"], r["dry_run"]) for r in rows] == [(OWN_BEST.lower(), True)]
-    assert action_guard.count_today(action_guard.PIN) == 0
+    assert memory_ledger.count(action_guard.PIN, action_guard.now_local().date()) == 0
     assert pin_bot._load_history().get("pinned", []) == []
     assert pin_bot._already_ran_today()
     monkeypatch.setenv("DRY_RUN", "0")

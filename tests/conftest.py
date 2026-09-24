@@ -175,7 +175,16 @@ def _fresh_job_memory(monkeypatch):
 
 
 @_pytest.fixture
-def like_job(monkeypatch, tmp_path):
+def memory_ledger(monkeypatch):
+    """An in-memory action ledger in place of the file, for tests that read it."""
+    from src.guards import action_guard, ledger
+    memory = ledger.MemoryLedger()
+    monkeypatch.setattr(action_guard, "LEDGER", memory)
+    return memory
+
+
+@_pytest.fixture
+def like_job(monkeypatch, tmp_path, memory_ledger):
     """Live like_job on a scripted search page; the real walk and like_tweet run."""
     from src.account import like_bot
     from src.x import safari, twitter_client as tc
@@ -189,7 +198,7 @@ def like_job(monkeypatch, tmp_path):
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
-    state = {"page": SearchPage([]), "closed": 0}
+    state = {"page": SearchPage([]), "closed": 0, "ledger": memory_ledger}
     monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
 
     def close_front_tab():

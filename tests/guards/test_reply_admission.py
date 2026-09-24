@@ -131,8 +131,8 @@ def test_refused_text_leaves_the_post_replayable(monkeypatch):
     assert judge_reply(url("Graphseo"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
 
 
-def test_judges_write_nothing(monkeypatch):
+def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     assert judge_reply(url("someone"), TEXT, debate_turn=True)
     assert url("someone") not in replied_store.load_replied()
-    assert action_guard.debate_turns_today("someone") == 0
+    assert memory_ledger.rows == []

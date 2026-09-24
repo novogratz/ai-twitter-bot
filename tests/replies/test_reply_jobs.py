@@ -217,14 +217,14 @@ def test_direct_reply_only_replies_on_favourite_profiles(pipeline, monkeypatch):
 
 
 @pytest.fixture
-def spacing(pipeline, monkeypatch):
+def spacing(pipeline, monkeypatch, memory_ledger):
     """The pipeline on a Toronto noon clock that its sleeps advance. The stub
-    chokepoint records each Reply in the real ledger, as a ship would."""
+    chokepoint records each Reply in the ledger, as a ship would."""
     from src.guards import action_guard as ag, active_hours
 
     dr, generated, sent, _ = pipeline
     s = SimpleNamespace(dr=dr, sent=sent, slept=[], waited_at_send=[], gap_after_send=[],
-                        on_sleep=lambda: None,
+                        on_sleep=lambda: None, ledger=memory_ledger,
                         now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
     monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
     monkeypatch.setattr(ag, "now_local", lambda: s.now)
@@ -240,7 +240,8 @@ def spacing(pipeline, monkeypatch):
         assert ag.seconds_until_allowed(ag.REPLY) == 0, "sent before the spacing cleared"
         sent.append(url)
         ag.record(ag.REPLY, url)
-        s.gap_after_send.append(ag.spacing_gap(ag.REPLY))
+        # The clock stands still: the whole gap is left to wait.
+        s.gap_after_send.append(ag.seconds_until_allowed(ag.REPLY))
         return True
 
     monkeypatch.setattr(dr, "_sleep", sleep)
@@ -300,7 +301,7 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
 
     assert sum(s.slept) == config.MIN_SECONDS_BETWEEN_REPLIES
     assert [v.refusal for v in verdicts] == [Refusal.SPACING]
-    assert ag.count_today(ag.REPLY) == 2, "only the earlier Reply and the other job's"
+    assert s.ledger.count(ag.REPLY, s.now.date()) == 2, "only the earlier Reply and the other job's"
     assert url not in s.dr._skipped and url not in replied_store.load_replied()
     assert url in tried, "tried again next cycle, with a new generation"
 
@@ -328,7 +329,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
 
     assert len(s.slept) == 1, "the next slice sees the stop or 22:00"
     assert s.sent == [], "nothing ships"
-    assert ag.count_today(ag.REPLY) == 1
+    assert s.ledger.count(ag.REPLY, s.now.date()) == 1
 
 
 def test_reply_search_skips_a_quote_action_without_any_write(monkeypatch):
