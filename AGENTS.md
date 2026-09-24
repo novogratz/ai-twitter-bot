@@ -48,6 +48,7 @@ The top level of `src/` holds only packages.
 | Hard ceilings that `.env` and `live_strategy.json` cannot lift | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
+| The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |
 | Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
 | Safari lock, AppleScript, paste, tab and scroll primitives | `src/x/safari.py` |
 | Voice, operator-managed | `core_identity.md` |
@@ -61,11 +62,12 @@ Each one is a bug that shipped live. The full incident stories are in
   write function, so every caller inherits it; a per-bot check leaves the
   other callers open. A reply job asks `reply_admission.judge_parent`
   before generating instead of copying a rule.
-- **Log only what shipped.** Write chokepoints return `True` only when the
-  action happened. Callers log, count and consume a slot or candidate on
-  `True` only. A failed AppleScript step is not a shipped action: return
-  `False` and write no ledger row. Neither is a dry run: it writes a
-  dry-run ledger row and returns the falsy `DRY_RUN_RECORDED`.
+- **Log only what shipped.** Write chokepoints run through
+  `confirmed_write.run` and return a `WriteOutcome`, truthy only for
+  `SHIPPED`. Callers log, count and consume a slot or candidate on a truthy
+  result only. A failed AppleScript step is not a shipped action: it returns
+  `FAILED` or `UNCONFIRMED` and writes no ledger row. Neither is a dry run:
+  it writes a dry-run ledger row and returns the falsy `DRY_RUN_RECORDED`.
   `like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes

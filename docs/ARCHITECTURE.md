@@ -137,8 +137,8 @@ lock.
    draft.
 7. **Publish.** Waking hours and slot validity are checked again. The slot is
    marked `pending` and saved, then `post_tweet(text, editorial=True)` sends
-   the draft plus the source URL. `True` marks it `published`; `False` frees
-   the slot; an exception leaves it `pending`, which is never retried
+   the draft plus the source URL. `SHIPPED` marks it `published`; any other
+   outcome frees the slot; an exception leaves it `pending`, which is never retried
    automatically. With `DRY_RUN` set, the text is logged and nothing is marked.
 
 `editorial=True` skips the URL stripping and the random casualization other
@@ -172,23 +172,50 @@ call a primitive through its module (`safari._run_applescript(...)`), never a
 
 Every write that should count goes through a function in
 `src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
-`reply_to_tweet_in_thread`, `follow_account`, `like_tweet`, `pin_own_tweet`. `post_tweet`,
-the reply functions, `follow_account` and `pin_own_tweet` return `True` when they submitted the
-action, `False` when a rule refused it or an AppleScript step failed, and
-callers log or count only on `True`. No ledger row is written on `False`.
-Under `DRY_RUN` these functions write a dry-run ledger row and return
-`DRY_RUN_RECORDED`, which is falsy: a caller that persists on a truthy
-result persists nothing after a dry run, and one that must tell a dry run
-from a refusal compares with `is` (`follow_engagers_bot`). One limit:
-`True` means `osascript` ran the keystrokes, not that X confirmed them;
-`pin_own_tweet` returns `True` only once it clicked X's confirm dialog.
-`unfollow_account`, which no active job calls, reads both page answers and
-returns `True`, with its ledger row, only once the page reported the click on
-X's confirmation sheet. If `_run_js` times out (15 s) after that click, the
+`reply_to_tweet_in_thread`, `follow_account`, `unfollow_account`,
+`like_tweet`, `pin_own_tweet`. Each runs one sequence, written once in
+`src/x/confirmed_write.py`. The chokepoint supplies its guards, its page
+steps and its ledger rows; `confirmed_write.run` owns the order:
+
+1. Admission before the Safari lock: `can_post` and the content checks,
+   `can_follow`, `can_unfollow`, the handle check, the Blocked-account and
+   liked-cache checks of `like_tweet`.
+2. The dry-run exit: under `DRY_RUN`, one `[TAG][DRY_RUN] would …` line and
+   the dry-run ledger rows; nothing is opened.
+3. A pause or a last check before the lock: the follow jitter,
+   `like_tweet`'s status-ID check.
+4. The Safari lock, released on every path. `reply_to_tweet` judges Reply
+   admission under it, and its dry-run exit follows that judgement;
+   `post_tweet` checks `can_post` again under it.
+5. `reply_to_tweet` claims the tweet in the Replied store.
+6. The page steps.
+7. Ledger rows only when the page steps return a shipped outcome, then the
+   chokepoint's bookkeeping: `adjust_following`, `note_posted`, tweet
+   history.
+8. One tab close, except for `like_tweet`, which acts on the open page. A
+   stop raised by that close is swallowed once the write shipped, so the
+   caller still learns it; after any other outcome it propagates.
+
+The chokepoints return a `WriteOutcome`: `SHIPPED`, `REFUSED` (a guard, or
+the page state, left nothing to write), `FAILED` (a step failed before
+anything was sent), `UNCONFIRMED` (the write may have reached X; the page
+never confirmed it) or `DRY_RUN`. Only `SHIPPED` is truthy: callers log or
+count on a truthy result, and no ledger row is written otherwise. Every
+other live outcome logs `[TAG] Write <outcome>; nothing recorded.`, so a
+refusal and a failure read apart in `bot.log`. `DRY_RUN_RECORDED` is
+`WriteOutcome.DRY_RUN`: a caller that persists on a truthy result persists
+nothing after a dry run, and one that must tell a dry run from a refusal
+compares with `is` (`follow_engagers_bot`, `pin_job`). One limit: `SHIPPED`
+for a post or a Reply means `osascript` ran the submit keystroke, not that X
+confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
+`follow_account` ships on the Follow click; an account already followed is
+`REFUSED`. `unfollow_account`, which no active job calls, reads both page
+answers and returns `SHIPPED`, with its ledger row, only once the page
+reported the click on X's confirmation sheet. If `_run_js` times out (15 s) after that click, the
 unfollow may have shipped unrecorded.
 
-`like_tweet` returns a `LikeOutcome`, truthy only for `LIKED`, and follows
-the same `DRY_RUN_RECORDED` rule. It never presses the `l` shortcut, which
+`like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
+only for `LIKED`, or `DRY_RUN_RECORDED`. It never presses the `l` shortcut, which
 toggles and acts on X's own selection. A post whose URL handle is a
 Blocked account, matched as Reply admission matches it, returns `BLOCKED`
 before anything is read, clicked or recorded. One JavaScript step finds the
@@ -215,9 +242,9 @@ lock, and fills the caller's outcome list as it goes: `like_job` adds the
 still counts them, and a click that may have landed on X counts toward the
 cap without a ledger row.
 
-`pin_own_tweet` writes a `pin` ledger row and returns `True` only when it
+`pin_own_tweet` writes a `pin` ledger row and returns `SHIPPED` only when it
 clicked X's confirm dialog. With no confirm dialog (`NO_CONFIRM`) it logs
-it, writes no row and returns `False`: `pin_job` then spends its daily
+it, writes no row and returns `UNCONFIRMED`: `pin_job` then spends its daily
 attempt and leaves its pin history unchanged. Under `DRY_RUN` it writes a
 dry-run row; `pin_job` marks the day under `dry_run_date` in
 `pin_daily_state.json`, which stops further dry runs that day without
@@ -314,7 +341,8 @@ The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
 instead of reading as empty. If the reply keystroke or the paste fails, or a
 stop or 22:00 interrupts the sequence before the submit keystroke, nothing
-was sent: `replied_store.release` removes the claim. If the submit keystroke fails,
+was sent: `replied_store.release` removes the claim before the Safari lock
+is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 

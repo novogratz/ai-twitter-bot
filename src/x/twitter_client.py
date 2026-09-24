@@ -1,6 +1,6 @@
 """Write chokepoints for X via Safari + AppleScript (macOS only): each post,
 reply, like, follow, unfollow and pin has one function here that owns its
-rules."""
+rules, and runs them through `confirmed_write`."""
 import json
 import os
 import random
@@ -12,30 +12,29 @@ from enum import Enum
 import webbrowser
 from ..core.config import _PROJECT_ROOT, BOT_PROFILE_URL
 from ..core.logger import log
-from ..guards.active_hours import require_active, OutsideActiveHours
-from . import safari, scraper
+from ..guards.active_hours import require_active
+from . import confirmed_write, safari, scraper
+from .confirmed_write import WriteOutcome
 
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
 
 
 def _paste_or_abort(text: str, tag: str) -> bool:
-    """Paste into the open composer. On failure nothing was sent: close the
-    tab and return False."""
+    """Paste into the open composer. On failure nothing was sent: return
+    False."""
     if safari._paste_text(text):
         return True
     log.info(f"[{tag}] Paste failed; nothing sent.")
-    safari.close_front_tab()
     return False
 
 
 def _submit_or_abort(tag: str, target: str = "") -> bool:
     """Press Cmd+Return in the open composer. On failure the outcome is
-    unknown: close the tab, record nothing, return False."""
+    unknown: return False, and the write is UNCONFIRMED."""
     if safari._run_applescript(_SUBMIT_KEYSTROKE):
         return True
     log.warning(f"[{tag}] Submit keystroke failed; outcome unknown, nothing recorded"
                 f"{': ' + target if target else '.'}")
-    safari.close_front_tab()
     return False
 
 
@@ -165,29 +164,24 @@ class ToolCallLeakError(Exception):
     """
 
 
-class _DryRunRecorded:
-    """What a write chokepoint returns when DRY_RUN wrote a dry-run ledger
-    row instead of acting. Falsy because nothing shipped, so a caller that
-    persists on a truthy result persists nothing (#123); `is
-    DRY_RUN_RECORDED` tells it apart from a refusal."""
-    __slots__ = ()
-
-    def __bool__(self):
-        return False
-
-    def __repr__(self):
-        return "DRY_RUN_RECORDED"
+# What a write chokepoint returns when DRY_RUN wrote dry-run ledger rows
+# instead of acting. Falsy because nothing shipped, so a caller that persists
+# on a truthy result persists nothing (#123); `is DRY_RUN_RECORDED` tells it
+# apart from a refusal.
+DRY_RUN_RECORDED = WriteOutcome.DRY_RUN
 
 
-DRY_RUN_RECORDED = _DryRunRecorded()
-
-
-def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
+def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) -> WriteOutcome:
     """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
 
     Without image: uses the lightweight intent URL (text only).
     With image: uses the full /compose/post composer + clipboard paste — the
     intent URL doesn't support media uploads.
+
+    Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
+    content or dedup skip, FAILED when a step before the submit failed,
+    UNCONFIRMED when the submit keystroke failed, DRY_RUN_RECORDED on a dry
+    run. Only SHIPPED is truthy.
     """
     text = _scrub_metadata_leaks(text)
     if not editorial:
@@ -209,44 +203,37 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
     from ..guards import action_guard, content_guard
-    from ..core import config as _cfg
-    # Returns True only when the post actually shipped, DRY_RUN_RECORDED on a
-    # dry run, False on any skip (policy / content / dedup).
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged log_post/log_hotake
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
     # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
     # ROI loop (2026-06-09; same family as the reply phantom-log bug).
-    ok, why = action_guard.can_post(action_guard.POST)
-    if not ok:
-        log.info(f"[POST] policy skip ({why}).")
-        return False
-    ok, why = content_guard.validate(text, kind="original")
-    if not ok:
-        log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
-        return False
-    if content_guard.is_duplicate(text):
-        log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
-        return False
-    if _cfg.dry_run():
-        log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
-        action_guard.record(action_guard.POST, dry_run=True)
-        return DRY_RUN_RECORDED
 
-    with safari._safari_lock:
+    def admit():
+        ok, why = action_guard.can_post(action_guard.POST)
+        if not ok:
+            log.info(f"[POST] policy skip ({why}).")
+            return WriteOutcome.REFUSED
+        ok, why = content_guard.validate(text, kind="original")
+        if not ok:
+            log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
+            return WriteOutcome.REFUSED
+        if content_guard.is_duplicate(text):
+            log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
+            return WriteOutcome.REFUSED
+        return None
+
+    def recheck():
         # The initial check happens before waiting for Safari. Recheck under
         # its lock so concurrent posts cannot both consume the last slot.
         ok, why = action_guard.can_post(action_guard.POST)
         if not ok:
             log.info("[POST] policy skip after browser wait (%s).", why)
-            return False
-        if image_path:
-            if not _post_tweet_with_image(text, image_path):
-                return False
-            action_guard.record(action_guard.POST)
-            content_guard.note_posted(text)
-            _record_posted(text)
-            return True
+            return WriteOutcome.REFUSED
+        return None
 
+    def steps():
+        if image_path:
+            return _post_tweet_with_image(text, image_path)
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
         webbrowser.open(url)
@@ -254,16 +241,17 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False):
 
         log.info("Auto-clicking Post...")
         if not _submit_or_abort("POST"):
-            return False
-        action_guard.record(action_guard.POST)
+            return WriteOutcome.UNCONFIRMED
         log.info("Tweet submitted!")
+        return WriteOutcome.SHIPPED
+
+    def after_record():
         content_guard.note_posted(text)
         _record_posted(text)
-        try:
-            safari.close_front_tab()
-        except OutsideActiveHours:
-            pass
-    return True
+
+    return confirmed_write.run(
+        "POST", would=lambda: f"post: {text[:200]!r}", rows=lambda: [(action_guard.POST, None)],
+        admit=admit, recheck_under_lock=recheck, steps=steps, after_record=after_record)
 
 
 def _record_posted(text: str):
@@ -281,9 +269,10 @@ def _record_posted(text: str):
         log.info(f"[POST] history record failed (non-fatal): {e}")
 
 
-def _post_tweet_with_image(text: str, image_path: str) -> bool:
-    """Compose a tweet with an attached image. Caller must already hold _safari_lock.
-    Returns True only when the submit keystroke ran."""
+def _post_tweet_with_image(text: str, image_path: str) -> WriteOutcome:
+    """Compose a tweet with an attached image: `post_tweet`'s page steps,
+    run by `confirmed_write` under the Safari lock, which closes the tab.
+    Returns SHIPPED only when the submit keystroke ran."""
     import os as _os
     if not _os.path.exists(image_path):
         log.info(f"[POST] Image not found at {image_path} — falling back to text-only.")
@@ -292,10 +281,9 @@ def _post_tweet_with_image(text: str, image_path: str) -> bool:
         webbrowser.open(url)
         time.sleep(4)
         if not _submit_or_abort("POST"):
-            return False
+            return WriteOutcome.UNCONFIRMED
         time.sleep(2)
-        safari.close_front_tab()
-        return True
+        return WriteOutcome.SHIPPED
 
     log.info(f"[POST] Composing tweet with image {image_path}...")
     webbrowser.open("https://x.com/compose/post")
@@ -303,7 +291,7 @@ def _post_tweet_with_image(text: str, image_path: str) -> bool:
 
     # Step 1: paste the text (focus is auto on the textarea on /compose/post)
     if not _paste_or_abort(text, "POST"):
-        return False
+        return WriteOutcome.FAILED
     time.sleep(1)
 
     # Step 2: copy the image to the clipboard, then Cmd+V to attach.
@@ -321,11 +309,10 @@ def _post_tweet_with_image(text: str, image_path: str) -> bool:
 
     # Step 3: submit
     if not _submit_or_abort("POST"):
-        return False
+        return WriteOutcome.UNCONFIRMED
     time.sleep(3)
     log.info("[POST] Tweet with image posted!")
-    safari.close_front_tab()
-    return True
+    return WriteOutcome.SHIPPED
 
 
 def _maybe_like_parent(tweet_url: str, env_key: str, default_prob: float) -> None:
@@ -495,7 +482,7 @@ def _page_posts(mode: str, target_id: str = "") -> dict:
     return data if isinstance(data, dict) else {}
 
 
-def like_tweet(tweet_url: str) -> "LikeOutcome | _DryRunRecorded":
+def like_tweet(tweet_url: str) -> "LikeOutcome | WriteOutcome":
     """Like the post of the open page whose status ID `tweet_url` carries.
 
     The 'l' shortcut toggles and acts on X's own selection, so it is never
@@ -510,24 +497,27 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | _DryRunRecorded":
     DRY_RUN writes a dry-run ledger row and returns DRY_RUN_RECORDED.
     """
     from ..guards import action_guard, reply_admission
-    from ..core import config as _cfg
     from . import x_urls
-    handle = x_urls.author(tweet_url)
-    if handle and reply_admission.is_blocked_account(handle):
-        log.info(f"[LIKE] @{handle} is a Blocked account; {tweet_url} not liked.")
-        return LikeOutcome.BLOCKED
-    if _already_liked(tweet_url):
-        log.info(f"[LIKE] already liked {tweet_url[-50:]}; skipping.")
-        return LikeOutcome.ALREADY_LIKED
-    if _cfg.dry_run():
-        log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:]}.")
-        action_guard.record(action_guard.LIKE, target=tweet_url, dry_run=True)
-        return DRY_RUN_RECORDED
     target = x_urls.status_id(tweet_url)
-    if not target:
-        log.info(f"[LIKE] {tweet_url or '(no URL)'} carries no status ID; nothing clicked.")
-        return LikeOutcome.FAILED
-    with safari._safari_lock:
+    liked = {"url": tweet_url}
+
+    def admit():
+        handle = x_urls.author(tweet_url)
+        if handle and reply_admission.is_blocked_account(handle):
+            log.info(f"[LIKE] @{handle} is a Blocked account; {tweet_url} not liked.")
+            return LikeOutcome.BLOCKED
+        if _already_liked(tweet_url):
+            log.info(f"[LIKE] already liked {tweet_url[-50:]}; skipping.")
+            return LikeOutcome.ALREADY_LIKED
+        return None
+
+    def before_lock():
+        if not target:
+            log.info(f"[LIKE] {tweet_url or '(no URL)'} carries no status ID; nothing clicked.")
+            return LikeOutcome.FAILED
+        return None
+
+    def steps():
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
         if pressed.get("result") == "already_liked":
@@ -541,16 +531,24 @@ def like_tweet(tweet_url: str) -> "LikeOutcome | _DryRunRecorded":
             log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked; nothing recorded.")
             return LikeOutcome.UNCONFIRMED
         log.info(f"[LIKE] Liked {url}")
+        liked["url"] = url
         _mark_liked(url)
-        action_guard.record(action_guard.LIKE, target=url)
         return LikeOutcome.LIKED
 
+    # The post is on the open page: nothing to open, no tab to close.
+    return confirmed_write.run(
+        "LIKE", would=lambda: f"like {tweet_url[-50:]}.",
+        rows=lambda: [(action_guard.LIKE, liked["url"])],
+        admit=admit, before_lock=before_lock, steps=steps, close_tab=False)
 
-def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> bool:
+
+def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
-    Returns True only when the reply actually shipped, DRY_RUN_RECORDED on a
-    dry run, False when Reply admission refuses it or a Safari step fails.
+    Returns SHIPPED only when the reply actually shipped, DRY_RUN_RECORDED
+    on a dry run, REFUSED when Reply admission or the replied store refuses
+    it, FAILED when a Safari step before the submit fails, UNCONFIRMED when
+    the submit keystroke fails. Only SHIPPED is truthy.
     Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
@@ -572,36 +570,40 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
     from ..guards import action_guard, active_hours, replied_store, reply_admission
-    from ..core import config as _cfg
-    # Not a second admission rule: _safari_lock raises OutsideActiveHours on
-    # entry, so Overnight is turned into the False refusal callers expect
-    # before the lock. judge_reply still judges Waking hours under it.
-    if not active_hours.may_act():
-        log.info(f"[REPLY] Overnight or stop requested — skipping: {tweet_url}")
-        return False
-    # Every exit before the submit keystroke sent nothing: a failed step, a
-    # stop or 22:00 releases the claim so a later cycle may answer.
-    release_claim = False
-    try:
-        with safari._safari_lock:
-            verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
-            if not verdict:
-                log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
-                         f"{tweet_url} {(reply_text or '')[:120]!r}")
-                return False
-            if _cfg.dry_run():
-                log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {verdict.text[:160]!r}")
-                action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
-                if debate_turn:
-                    action_guard.record(action_guard.DEBATE_TURN, target=verdict.author, dry_run=True)
-                return DRY_RUN_RECORDED
-            # ONE reply per tweet, EVER (operator 2026-06-05). claim() checks
-            # and marks under one lock; admission already read the store, this
-            # is the atomic word on it.
-            if not replied_store.claim(tweet_url):
-                log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
-                return False
-            release_claim = True
+    verdict = None
+
+    def admit():
+        # Not a second admission rule: _safari_lock raises OutsideActiveHours on
+        # entry, so Overnight is turned into the refusal callers expect before
+        # the lock. judge_reply still judges Waking hours under it.
+        if not active_hours.may_act():
+            log.info(f"[REPLY] Overnight or stop requested — skipping: {tweet_url}")
+            return WriteOutcome.REFUSED
+        return None
+
+    def judge():
+        nonlocal verdict
+        verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
+        if not verdict:
+            log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
+                     f"{tweet_url} {(reply_text or '')[:120]!r}")
+            return WriteOutcome.REFUSED
+        return None
+
+    def claim():
+        # ONE reply per tweet, EVER (operator 2026-06-05). claim() checks
+        # and marks under one lock; admission already read the store, this
+        # is the atomic word on it. A dry run never gets here.
+        if not replied_store.claim(tweet_url):
+            log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
+            return WriteOutcome.REFUSED
+        return None
+
+    def steps():
+        # Every exit before the submit keystroke sent nothing: a failed step, a
+        # stop or 22:00 releases the claim so a later cycle may answer.
+        sent = False
+        try:
             # Make sure Safari is focused first
             safari._run_applescript('''
             tell application "Safari" to activate
@@ -633,64 +635,68 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             end tell
             '''):
                 log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
-                safari.close_front_tab()
-                return False
+                return WriteOutcome.FAILED
             time.sleep(3)  # Wait for reply box to open
 
             # Paste the reply (clipboard handles accents correctly)
             log.info("Pasting reply...")
             if not _paste_or_abort(verdict.text, "REPLY"):
-                return False
+                return WriteOutcome.FAILED
             time.sleep(2)  # Wait for paste to complete
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
-            release_claim = False
+            sent = True
             if not _submit_or_abort("REPLY", target=tweet_url):
-                return False
+                return WriteOutcome.UNCONFIRMED
             time.sleep(2)  # Wait for submission
             log.info("Reply posted!")
-            action_guard.record(action_guard.REPLY, target=tweet_url)
-            if debate_turn:
-                action_guard.record(action_guard.DEBATE_TURN, target=verdict.author)
-            safari.close_front_tab()
-    finally:
-        if release_claim:
-            replied_store.release(tweet_url)
-    return True
+            return WriteOutcome.SHIPPED
+        finally:
+            if not sent:
+                replied_store.release(tweet_url)
+
+    def rows():
+        return [(action_guard.REPLY, tweet_url)] + (
+            [(action_guard.DEBATE_TURN, verdict.author)] if debate_turn else [])
+
+    return confirmed_write.run(
+        "REPLY", would=lambda: f"reply to {tweet_url}: {verdict.text[:160]!r}", rows=rows,
+        admit=admit, admit_under_lock=judge, reserve=claim, steps=steps)
 
 
-def unfollow_account(username: str) -> bool:
+def unfollow_account(username: str) -> WriteOutcome:
     """Visit a user's profile and click Following → confirm Unfollow.
 
-    Returns True, and records the unfollow, only once the page reported the
-    confirm click; False otherwise, with nothing recorded. No active job
-    calls it.
+    Returns SHIPPED, and records the unfollow, only once the page reported
+    the confirm click; REFUSED, FAILED (no Following button) or UNCONFIRMED
+    (the confirm click not reported) otherwise, with nothing recorded. No
+    active job calls it.
     """
     username = (username or "").strip().lstrip("@")
-    if not username or len(username) > 15 or not all(
-        c.isascii() and (c.isalnum() or c == "_") for c in username
-    ):
-        log.info(f"[UNFOLLOW] Invalid handle '{username}' — skipping.")
-        return False
-
     # Prune policy: daily unfollow cap, 30-day anti-churn cooldown, never
     # unfollow a protected tier1/tier2 whitelist account, dry-run.
     from ..guards import action_guard
     from ..core import config as _cfg
-    ok, why = action_guard.can_unfollow(username)
-    if not ok:
-        log.info(f"[UNFOLLOW] policy refuses @{username} ({why}).")
-        return False
-    if _cfg.dry_run():
-        log.info(f"[UNFOLLOW][DRY_RUN] would unfollow @{username}.")
-        action_guard.record(action_guard.UNFOLLOW, target=username, dry_run=True)
-        return DRY_RUN_RECORDED
-    action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
-    with safari._safari_lock:
+    def admit():
+        if not username or len(username) > 15 or not all(
+            c.isascii() and (c.isalnum() or c == "_") for c in username
+        ):
+            log.info(f"[UNFOLLOW] Invalid handle '{username}' — skipping.")
+            return WriteOutcome.REFUSED
+        ok, why = action_guard.can_unfollow(username)
+        if not ok:
+            log.info(f"[UNFOLLOW] policy refuses @{username} ({why}).")
+            return WriteOutcome.REFUSED
+        return None
+
+    def before_lock():
+        action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
+
+    def steps():
         profile_url = f"https://x.com/{username}"
         log.info(f"[UNFOLLOW] Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
@@ -716,8 +722,7 @@ def unfollow_account(username: str) -> bool:
         if result != "CLICKED":
             log.info(f"[UNFOLLOW] Not following @{username} (or button not found: "
                      f"{result or 'no answer'}) — skipping.")
-            safari.close_front_tab()
-            return False
+            return WriteOutcome.FAILED
         time.sleep(1.5)
 
         # Step 2: click the confirm in the modal.
@@ -730,15 +735,18 @@ def unfollow_account(username: str) -> bool:
         """
         result = safari._run_js(click_confirm, log_prefix="[UNFOLLOW]")
         time.sleep(1.5)
-        safari.close_front_tab()
         if result != "CONFIRMED":
             log.info(f"[UNFOLLOW] Confirmation not clicked for @{username} "
                      f"({result or 'no answer'}) — nothing recorded.")
-            return False
-        action_guard.record(action_guard.UNFOLLOW, target=username)
-        action_guard.adjust_following(-1)
+            return WriteOutcome.UNCONFIRMED
         log.info(f"[UNFOLLOW] Unfollowed @{username}.")
-        return True
+        return WriteOutcome.SHIPPED
+
+    return confirmed_write.run(
+        "UNFOLLOW", would=lambda: f"unfollow @{username}.",
+        rows=lambda: [(action_guard.UNFOLLOW, username)],
+        admit=admit, before_lock=before_lock, steps=steps,
+        after_record=lambda: action_guard.adjust_following(-1))
 
 
 # --- Follow quality gate (operator 2026-06-12: "the accounts you follow are
@@ -865,7 +873,7 @@ def _record_quality_reject(handle: str) -> None:
 
 
 def follow_account(username: str, reciprocal: bool = False,
-                   engager: bool = False) -> bool:
+                   engager: bool = False) -> WriteOutcome:
     """Visit a user's profile and click the Follow button.
 
     `reciprocal=True` marks a follow-back (someone who already engages with
@@ -874,8 +882,10 @@ def follow_account(username: str, reciprocal: bool = False,
     the quality gate skips its size/niche checks (behavior proves both)
     while keeping the English gate + every cap/spacing/churn rule.
 
-    Returns True only when the JS click actually fired (best-effort signal),
-    DRY_RUN_RECORDED on a dry run. Callers MUST check the return value
+    Returns SHIPPED only when the JS click actually fired (best-effort
+    signal), DRY_RUN_RECORDED on a dry run, REFUSED on a policy or quality
+    refusal or an account already followed, FAILED when no Follow button was
+    clicked. Callers MUST check the return value
     before marking a handle as followed, otherwise transient AppleScript/Safari hiccups will pollute
     followed_accounts.json with false-positives we never retry.
     """
@@ -884,31 +894,33 @@ def follow_account(username: str, reciprocal: bool = False,
     # accents, punctuation) is a scraper artifact like "aisha mansion" or
     # "caborashedzaborashedles" and would just burn a profile-visit + 5s sleep.
     username = (username or "").strip().lstrip("@")
-    if not username or len(username) > 15 or not all(
-        c.isascii() and (c.isalnum() or c == "_") for c in username
-    ):
-        log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
-        return False
-    # Follow policy: whitelist-only (no strangers / no reciprocity), ratio
-    # invariant (following < ceiling * followers), daily cap, 30-day
-    # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
     from ..guards import action_guard
     from ..core import config as _cfg
-    ok, why = action_guard.can_follow(username, reciprocal=reciprocal or engager)
-    if not ok:
-        log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
-        return False
-    # Quality-reject cache: a candidate already judged small/off-niche
-    # within 30 days never burns another profile visit.
-    if _quality_reject_recent(username):
-        log.info(f"[FOLLOW] @{username} in quality-reject cache — skipping.")
-        return False
-    if _cfg.dry_run():
-        log.info(f"[FOLLOW][DRY_RUN] would follow @{username}.")
-        action_guard.record(action_guard.FOLLOW, target=username, dry_run=True)
-        return DRY_RUN_RECORDED
-    action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
-    with safari._safari_lock:
+
+    def admit():
+        if not username or len(username) > 15 or not all(
+            c.isascii() and (c.isalnum() or c == "_") for c in username
+        ):
+            log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
+            return WriteOutcome.REFUSED
+        # Follow policy: whitelist-only (no strangers / no reciprocity), ratio
+        # invariant (following < ceiling * followers), daily cap, 30-day
+        # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
+        ok, why = action_guard.can_follow(username, reciprocal=reciprocal or engager)
+        if not ok:
+            log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
+            return WriteOutcome.REFUSED
+        # Quality-reject cache: a candidate already judged small/off-niche
+        # within 30 days never burns another profile visit.
+        if _quality_reject_recent(username):
+            log.info(f"[FOLLOW] @{username} in quality-reject cache — skipping.")
+            return WriteOutcome.REFUSED
+        return None
+
+    def before_lock():
+        action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
+
+    def steps():
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
@@ -927,8 +939,7 @@ def follow_account(username: str, reciprocal: bool = False,
         if not ok:
             log.info(f"[FOLLOW] quality gate refuses @{username} ({why}).")
             _record_quality_reject(username)
-            safari.close_front_tab()
-            return False
+            return WriteOutcome.REFUSED
 
         # 2026-06-05 fix: the old inline-quoted JS errored on every attempt
         # ("Could not follow @X via JS" 100% of the time) — quote-escaping
@@ -963,18 +974,21 @@ def follow_account(username: str, reciprocal: bool = False,
         })()
         """
         status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
-        ok = status == "CLICKED"
-        if ok:
+        if status == "CLICKED":
             time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
-            action_guard.record(action_guard.FOLLOW, target=username)
-            action_guard.adjust_following(+1)
-        elif status == "ALREADY":
+            return WriteOutcome.SHIPPED
+        if status == "ALREADY":
             log.info(f"[FOLLOW] Already following @{username}.")
-        else:
-            log.info(f"[FOLLOW] Could not follow @{username} (status={status or 'JS_FAIL'}), skipping.")
-        safari.close_front_tab()
-        return ok
+            return WriteOutcome.REFUSED
+        log.info(f"[FOLLOW] Could not follow @{username} (status={status or 'JS_FAIL'}), skipping.")
+        return WriteOutcome.FAILED
+
+    return confirmed_write.run(
+        "FOLLOW", would=lambda: f"follow @{username}.",
+        rows=lambda: [(action_guard.FOLLOW, username)],
+        admit=admit, before_lock=before_lock, steps=steps,
+        after_record=lambda: action_guard.adjust_following(+1))
 
 
 def _like_posts_on_page(count: int, wanted, page_ok=lambda page: True,
@@ -1082,28 +1096,21 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
             safari.close_front_tab()
 
 
-def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
+def pin_own_tweet(tweet_url: str) -> WriteOutcome:
     """Pin one of our own tweets to the profile via the More menu.
 
     Best-effort. X's tweet-action menu DOM is stable but the wording of the
     'Pin' item varies (FR: 'Épingler à votre profil' / EN: 'Pin to your
-    profile'). We click via JS by matching either string. Returns True and
+    profile'). We click via JS by matching either string. Returns SHIPPED and
     writes a ledger row only when the menu item was clicked and the confirm
-    dialog's button was clicked; False and no row otherwise, a missing
-    confirm dialog included. DRY_RUN writes a dry-run ledger row and returns
-    DRY_RUN_RECORDED.
+    dialog's button was clicked; no row otherwise: FAILED before the Pin
+    click, UNCONFIRMED after it, a missing confirm dialog included. DRY_RUN
+    writes a dry-run ledger row and returns DRY_RUN_RECORDED.
 
     Note: X surfaces a confirmation modal on first pin per session; we
     handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
     """
-    import json as _json
-    from ..core import config as _cfg
     from ..guards import action_guard
-
-    if _cfg.dry_run():
-        log.info(f"[PIN][DRY_RUN] would pin {tweet_url}.")
-        action_guard.record(action_guard.PIN, target=tweet_url, dry_run=True)
-        return DRY_RUN_RECORDED
 
     js_code = """
     (function() {
@@ -1146,7 +1153,7 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
     def _exec_js(js: str, timeout_s: int = 15) -> str:
         return safari._run_js(js, timeout_s, log_prefix="[PIN]", activate=True)
 
-    with safari._safari_lock:
+    def steps():
         log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
         webbrowser.open(tweet_url)
         time.sleep(7)
@@ -1154,28 +1161,26 @@ def pin_own_tweet(tweet_url: str) -> "bool | _DryRunRecorded":
         step1 = _exec_js(js_code)
         log.info(f"[PIN] More-menu open: {step1}")
         if step1 != "MORE_CLICKED":
-            safari.close_front_tab()
-            return False
+            return WriteOutcome.FAILED
         time.sleep(1.2)
 
         step2 = _exec_js(js_pin_item)
         log.info(f"[PIN] Pin item click: {step2}")
         if step2 != "PIN_CLICKED":
-            safari.close_front_tab()
-            return False
+            return WriteOutcome.FAILED
         time.sleep(1.5)
 
         step3 = _exec_js(js_confirm)
         log.info(f"[PIN] Confirm modal: {step3}")
-        shipped = step3 == "CONFIRMED"
-        if shipped:
-            action_guard.record(action_guard.PIN, target=tweet_url)
-        elif step3 == "NO_CONFIRM":
+        if step3 == "NO_CONFIRM":
             log.info(f"[PIN] No confirm dialog after the Pin click; not counted as a pin: {tweet_url}")
         # Whether the confirm modal appeared or not, we leave the page.
         time.sleep(1)
-        safari.close_front_tab()
-        return shipped
+        return WriteOutcome.SHIPPED if step3 == "CONFIRMED" else WriteOutcome.UNCONFIRMED
+
+    return confirmed_write.run(
+        "PIN", would=lambda: f"pin {tweet_url}.", rows=lambda: [(action_guard.PIN, tweet_url)],
+        steps=steps)
 
 
 def like_own_tweet_replies() -> list[LikeOutcome]:
