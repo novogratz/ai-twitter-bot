@@ -179,7 +179,7 @@ def post_tweet(text: str) -> WriteOutcome:
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
     from ..guards import action_guard, content_guard
-    # ⛔ Callers MUST gate engagement logging on this result — bot.py logged log_post/log_hotake
+    # ⛔ Callers MUST gate engagement logging on this result — bot.py logged its posts
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
     # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
     # ROI loop (2026-06-09; same family as the reply phantom-log bug).

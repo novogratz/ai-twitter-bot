@@ -23,14 +23,11 @@ export AI_CLI="${AI_CLI:-ollama}"
 export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4-mini}"
 export REPLY_MODEL="${REPLY_MODEL:-gpt-5.4-mini}"
 export PRIORITY_REPLY_MODEL="${PRIORITY_REPLY_MODEL:-gpt-5.4-mini}"
-export HOTAKE_MODEL="${HOTAKE_MODEL:-gpt-5.4-mini}"
 export QUOTE_MODEL="${QUOTE_MODEL:-gpt-5.4-mini}"
 export ROAST_MODEL="${ROAST_MODEL:-gpt-5.4-mini}"
 export LLM_MIN_SECONDS_BETWEEN_CALLS="${LLM_MIN_SECONDS_BETWEEN_CALLS:-900}"
 export LLM_MAX_CALLS_PER_HOUR="${LLM_MAX_CALLS_PER_HOUR:-4}"
 export LLM_MAX_CALLS_PER_DAY="${LLM_MAX_CALLS_PER_DAY:-20}"
-export ENABLE_AI_MAINTENANCE="${ENABLE_AI_MAINTENANCE:-0}"
-export ENABLE_AI_DISCOVERY="${ENABLE_AI_DISCOVERY:-0}"
 
 # Manual kill-switch: if /stop (or the user) created .bot_disabled, do
 # NOT restart. Otherwise the watchdog defeats /stop within 5 minutes.

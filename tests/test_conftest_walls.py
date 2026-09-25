@@ -29,7 +29,7 @@ def test_tests_cannot_write_production_state(tmp_path):
             f"{mod.__name__}.{attr} points INSIDE the repo during tests: {path}"
 
     # A write through the normal API must land in tmp, not the repo.
-    el.log_post("TEST-FIXTURE wall probe zz")
+    el.log_reply("", "TEST-FIXTURE wall probe zz")
     hist.save_tweet("TEST-FIXTURE wall probe zz")
     real_log = os.path.join(repo, "engagement_log.csv")
     if os.path.exists(real_log):

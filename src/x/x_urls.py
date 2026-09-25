@@ -3,9 +3,9 @@
 The scraper's `author` field is a display name; the URL is the only
 reliable source for the handle (AGENTS.md: handles come from URLs). Reply
 admission, the Replied store and the reply jobs read it here, so they
-agree: an anonymous `/i/` URL has no author. Legacy modules still parse
-URLs through `reply_bot`. `is_reply_like_tweet` tells the reply jobs which
-scraped tweets are nested replies they should not target.
+agree: an anonymous `/i/` URL has no author. `is_reply_like_tweet` tells
+the reply jobs which scraped tweets are nested replies they should not
+target.
 """
 import re
 from datetime import datetime, timedelta, timezone

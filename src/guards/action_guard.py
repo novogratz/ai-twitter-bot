@@ -136,8 +136,8 @@ def too_soon(action: str) -> str:
 
 # --- policy decisions -------------------------------------------------------
 
-def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tuple[bool, str]:
-    """Hard day budget and bedtime; legacy urgency flags grant no bypass."""
+def can_post(action: str) -> Tuple[bool, str]:
+    """Hard day budget and bedtime."""
     if stop_requested():
         return False, "stop requested"
     if not is_active():

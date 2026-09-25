@@ -1,35 +1,10 @@
 """Reply bot: finds AI tweets and posts troll replies."""
 import os
-import re
 import traceback
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 from ..x import x_urls
 from ..core.config import MAX_REPLIES_PER_CYCLE
 from ..core.logger import log
-
-
-# Legacy modules still import these two helpers; live code reads x_urls.
-def _handle_from_url(tweet_url: str) -> str:
-    """Extract @handle (lowercase, no @) from a tweet URL. Empty string if not found."""
-    m = re.search(r"x\.com/([^/]+)/status/", tweet_url)
-    return m.group(1).lower() if m else ""
-
-
-# Twitter snowflake epoch (ms since 2010-11-04T01:42:54.657Z)
-_TWITTER_EPOCH = 1288834974657
-
-
-def _tweet_age_minutes(tweet_url: str) -> int:
-    """Extract tweet age in minutes from the tweet ID (Twitter snowflake).
-    Returns 9999 if we can't parse it."""
-    match = re.search(r"/status/(\d+)", tweet_url)
-    if not match:
-        return 9999
-    tweet_id = int(match.group(1))
-    timestamp_ms = (tweet_id >> 22) + _TWITTER_EPOCH
-    tweet_time = datetime.fromtimestamp(timestamp_ms / 1000, tz=timezone.utc)
-    age = datetime.now(tz=timezone.utc) - tweet_time
-    return int(age.total_seconds() / 60)
 from . import reply_pipeline
 from .reply_agent import generate_replies
 from ..x.scraper import refresh_feed

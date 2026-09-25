@@ -278,12 +278,12 @@ Changes to `.env` or code take effect at restart.
   `EDITORIAL_OLLAMA_MODEL`, `EDITORIAL_LLM_TIMEOUT_SECONDS`.
 - Lowering `MAX_ORIGINALS_PER_DAY` below 8.
 
-What cannot be tuned from `.env` or `live_strategy.json`: the eight-post
+What cannot be tuned from `.env`: the eight-post
 ceiling, the twenty-minute spacing floor between originals, quotes and reposts at
-zero, and waking hours. They live in `src/core/config.py` and
-`src/guards/active_hours.py`; changing them needs an operator request and an
-update to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). No active job reads
-`live_strategy.json` any more.
+zero, and waking hours. They live in `src/core/config.py`,
+`src/guards/action_guard.py` and `src/guards/active_hours.py`; changing them
+needs an operator request and an update to
+[EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
 
 To stop one job, remove its `add(...)` line in `build_scheduler()` and
 restart.
@@ -354,7 +354,6 @@ Files active code reads but no active job writes:
 | `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
 | `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
 | `replied_back.json` | `follow_engagers_bot` | Frozen Engager list, see below | disposable |
-| `live_strategy.json` | `config.get_live_*`, not called | Strategy caps under the fixed ceilings | disposable |
 
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
 to the replied store and the Engager list to the ledger's debate turns.
@@ -365,8 +364,8 @@ around 2026-12-22.
 The supervisors cite three more root files, kept for them:
 `engine_health_alerts.json` (`bin/auto_improve.sh`), `daily_state.json` (a
 comment in the launchd plist) and `operator_prompt.md` (`operator_cycle.sh`).
-`live_strategy.json` stays because `AGENTS.md` and the `config` skill cite it,
-though no active job calls the `config.get_live_*` readers.
+No code reads `live_strategy.json` since issue #170: the operator can
+delete it.
 
 A module declares a new state file once, as a `StateFile` with its default
 and its policy. Guarded suits a guardrail, or a record that alone stops a

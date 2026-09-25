@@ -44,7 +44,6 @@ LIKE_BOT_STATE = StateFile("like_bot_state.json", {}, GUARDED)
 
 
 def _likes_per_cycle() -> int:
-    # Environment only, read each cycle: live_strategy.json must not raise it.
     return int(os.environ.get("LIKE_BOT_PER_CYCLE", "10"))
 
 

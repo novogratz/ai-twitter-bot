@@ -1,7 +1,7 @@
 """First-hour babysitter — reply velocity on our freshest post.
 
-X's algorithm weights replies in a post's first ~60 minutes ~15x vs likes
-(see live_strategy rationale). The replyback cycle already converses with
+X's algorithm weights replies in a post's first ~60 minutes ~15x vs likes.
+The replyback cycle already converses with
 engagers, but on its normal cadence a hot first hour can slip by.
 
 This bot runs every BABYSIT_CHECK_MINUTES: if our latest original post is

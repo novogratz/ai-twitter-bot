@@ -28,7 +28,7 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
-    assert not ag.can_post(ag.POST, urgent=True, high_value=True)[0]
+    assert not ag.can_post(ag.POST)[0]
     assert ag.can_post(ag.REPLY)[0]
 
 
@@ -40,16 +40,12 @@ def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
                              now - timedelta(hours=6, seconds=n))
     assert ag.can_post(ag.REPLY)[0]
     ag.record(ag.REPLY, "https://x.com/a/status/500")
-    assert not ag.can_post(ag.REPLY, urgent=True)[0]
+    assert not ag.can_post(ag.REPLY)[0]
 
 
-def test_mega_viral_quote_cannot_bypass_editorial_policy(memory_ledger):
-    for urgent in (False, True):
-        assert not ag.can_post(ag.QUOTE, high_value=True, urgent=urgent)[0]
-
-
-def test_urgent_quote_obeys_editorial_policy(memory_ledger):
-    assert not ag.can_post(ag.QUOTE, urgent=True)[0]
+def test_quotes_and_reposts_are_refused(memory_ledger):
+    assert not ag.can_post(ag.QUOTE)[0]
+    assert not ag.can_post(ag.RETWEET)[0]
 
 
 def test_can_post_refuses_after_stop(monkeypatch):

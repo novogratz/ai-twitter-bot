@@ -31,7 +31,6 @@ Set any model in `.env` per surface:
 AI_CLI=opencode
 NEWS_MODEL=ollama/qwen3-coder:30b
 REPLY_MODEL=ollama/qwen3-coder:30b
-HOTAKE_MODEL=ollama/qwen3-coder:30b
 ```
 
 ## Running the bot (Python scheduler)
