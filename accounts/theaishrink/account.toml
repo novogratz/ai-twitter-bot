@@ -200,8 +200,8 @@ big_fr = [
 # The engage job puts these in every cycle and likes two of their posts;
 # compared case-sensitively with the pool's handles.
 engage_vip = ["Graphseo"]
-# The replyback reciprocity likes skip the engagers of engage_targets and
-# reply_targets; bin/mass_unfollow.py never unfollows engage_targets.
+# The replyback reciprocity likes skip an engager listed in engage_targets
+# or reply_targets; bin/mass_unfollow.py never unfollows engage_targets.
 engage_targets = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
 reply_targets = [
     "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
