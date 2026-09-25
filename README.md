@@ -76,6 +76,8 @@ call and is logged at start, as is a fallback the code ignores.
 ```bash
 uv venv && uv pip install -r requirements.txt
 cp .env.example .env
+# A new install only; an existing checkout migrates (docs/OPERATIONS.md#deploying-issue-206).
+[ -e whitelist_discovered.json ] || echo '[]' > whitelist_discovered.json
 uv run python main.py
 ```
 
@@ -119,8 +121,8 @@ Account folder, versioned; the bot reads them and never writes them, and one
 missing or unreadable stops the job that needs it. While the following count
 (`following_count.json`, else `followed_accounts.json`) or the whitelist
 (`whitelist.json` in the Account folder, `whitelist_discovered.json` for the
-handles the curator promoted) is unreadable, every follow is refused; an
-unreadable whitelist also stops `bin/mass_unfollow.py`.
+handles the curator promoted) is missing or unreadable, every follow is
+refused; it also stops `bin/mass_unfollow.py`.
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
 handles source selection, drafting and review, from the Account that

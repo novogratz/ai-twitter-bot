@@ -73,6 +73,7 @@ def live(tmp_path, operator_folder):
     _write(operator_folder / "following_baseline.json",
            {k: OLD_COUNT[k] for k in ("baseline", "as_of", "note")})
     _write(tmp_path / "following_count.json", OLD_COUNT)
+    (tmp_path / "whitelist_discovered.json").unlink()
     return backup
 
 
@@ -115,6 +116,20 @@ def test_a_second_run_changes_nothing(script, live, tmp_path, operator_folder):
     assert _files(tmp_path, operator_folder) == after_first
     assert any("0 added from 3" in line for line in report)
     assert any("nothing to drop" in line for line in report)
+
+
+def test_an_old_whitelist_without_promotions_still_creates_the_file(script, live, tmp_path):
+    """The follow policy refuses while the file is missing: the migration
+    writes it even empty."""
+    old = json.loads(json.dumps(OLD_WHITELIST))
+    del old["tiers"]["discovered"]
+    _write(live / "whitelist.json", old)
+
+    report = script.migrate(str(live))
+
+    assert json.loads((tmp_path / "whitelist_discovered.json").read_text()) == []
+    assert any("0 added from 0" in line for line in report)
+    assert fp.relation("karpathy") is fp.Relation.SEED
 
 
 def test_a_promotion_since_the_backup_is_kept(script, live, tmp_path):

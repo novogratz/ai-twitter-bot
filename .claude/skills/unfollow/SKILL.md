@@ -44,11 +44,13 @@ default).
    handles of `whitelist_discovered.json` (the curated follow list; never unfollow what the follow policy
    may follow, or the 30-day anti-churn record would block the re-follow).
    `--keep legacy` adds respect_list + engage/early-bird/mega target lists
-   (gentle prune). A missing or unreadable `whitelist.json`, an unreadable
+   (gentle prune). A missing or unreadable `whitelist.json` or
    `whitelist_discovered.json`, or a missing or unreadable
    `respect_list.json` under `--keep legacy`, prints
    `ABORT: keep-set unreadable` and exits before Safari: report it to the
-   operator, never recreate or empty the file.
+   operator, never recreate or empty the file. A missing
+   `whitelist_discovered.json` means `bin/migrate_operator_data.py` has not
+   run (docs/OPERATIONS.md#deploying-issue-206).
 6. Report the final `TOTAL unfollowed:` count, the `STOP:` line if any, and
    the new ratio if available. Unfollowed handles are in
    `mass_unfollow_results.json`, rewritten after every unfollow.

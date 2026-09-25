@@ -15,11 +15,14 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
   the click: the quality gate, which caches what it rejects for 30 days.
 - `followed()` and `record_followed(handle)` are the record of the accounts
   followed; `adjust_following(delta)` keeps the following count.
+- `discovered()` and `add_discovered(handles)` are the handles
+  account_curator promoted to the whitelist.
 
 `follow_account` asks both judgements and names the refusal in its outcome,
 so a job acts on the cause without checking the rule again. The ledger
 facts (today's follows, spacing, last touch) come from `action_guard`.
 """
+import os
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -51,7 +54,8 @@ FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
 # never writes it. Missing or unreadable, it stops every follow.
 WHITELIST = OperatorFile("whitelist.json", dict)
 # Guarded: the handles account_curator promoted to the whitelist. Read as
-# empty, it would unprotect them from an unfollow.
+# empty, it would unprotect them from an unfollow and take their Seed
+# account status, so a missing file stops its readers too: see discovered().
 DISCOVERED = StateFile("whitelist_discovered.json", [], GUARDED)
 # Disposable: the quality gate reads the profile again before any click, so
 # a lost cache costs a profile visit, never a follow.
@@ -118,8 +122,8 @@ def load_whitelist() -> dict:
     "all": set} of lowercased handles: the Operator's tiers, then the
     handles account_curator promoted. tier4 (2026-06-07 spec:
     crypto/markets crossover seeds) is optional in the file. Raises
-    StateUnreadable while whitelist.json or whitelist_discovered.json
-    cannot be read."""
+    StateUnreadable while whitelist.json or whitelist_discovered.json is
+    missing or unreadable."""
     raw = WHITELIST.read()
 
     def _norm(seq):
@@ -133,9 +137,54 @@ def load_whitelist() -> dict:
     # "discovered" tier: curator-promoted handles (2026-06-07 operator grant
     # — the bot develops its own follow list). Same follow rights as seeds;
     # additions capped + logged in account_curator.
-    t5 = _norm(DISCOVERED.read())
+    t5 = _norm(discovered())
     return {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
             "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
+
+
+def _require_discovered() -> None:
+    # Before issue #206 the promoted handles sat in whitelist.json: until
+    # bin/migrate_operator_data.py carries them, the file is missing, and
+    # reading it as empty would drop them.
+    if not os.path.exists(DISCOVERED.path):
+        why = (f"{DISCOVERED.name} is missing: run bin/migrate_operator_data.py "
+               f"(docs/OPERATIONS.md#deploying-issue-206); a new install writes [] in it")
+        log.error(f"[FOLLOW] {why}: refusing.")
+        raise StateUnreadable(why)
+
+
+def discovered() -> list:
+    """The handles account_curator promoted, as written. Raises
+    StateUnreadable while whitelist_discovered.json is missing or
+    unreadable."""
+    _require_discovered()
+    return DISCOVERED.read()
+
+
+def add_discovered(handles, skip=(), max_added: int | None = None,
+                   max_total: int | None = None) -> list:
+    """Append to whitelist_discovered.json, in order, each handle it does
+    not hold yet nor `skip` lists, case ignored; stop after `max_added`
+    additions or once it holds `max_total` handles. Returns the handles
+    added. Raises StateUnreadable while the file is missing or unreadable."""
+    _require_discovered()
+    added = []
+
+    def add(on_disk):
+        known = {str(h).lower() for h in on_disk} | {str(h).lower() for h in skip}
+        for h in handles:
+            if max_added is not None and len(added) >= max_added:
+                break
+            if max_total is not None and len(on_disk) >= max_total:
+                break
+            if str(h).lower() in known:
+                continue
+            on_disk.append(h)
+            known.add(str(h).lower())
+            added.append(h)
+        return on_disk if added else None
+    DISCOVERED.update(add)
+    return added
 
 
 def is_whitelisted(handle: str,

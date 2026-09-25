@@ -105,9 +105,9 @@ Two settings decide how much of the table does anything:
 - The follow policy in `follow_policy.judge`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
   decides what actually passes. A following count that cannot be read
-  (`following_count.json`, else `followed_accounts.json`) or an unreadable
-  whitelist (the Account's `whitelist.json`, or `whitelist_discovered.json`)
-  refuses every follow and stops `bin/mass_unfollow.py`.
+  (`following_count.json`, else `followed_accounts.json`) or a missing or
+  unreadable whitelist (the Account's `whitelist.json`, or
+  `whitelist_discovered.json`) refuses every follow and stops `bin/mass_unfollow.py`.
   With `FOLLOW_ENFORCE_RATIO` on, an unknown follower count
   (`follower_history.json` empty or unreadable) refuses every follow.
 
@@ -442,7 +442,10 @@ Five modules sit behind them:
   `follow_quality_rejects.json`, `followers_seen.json` and the frozen
   `replied_back.json`. It reads the Operator's `whitelist.json` in the
   Account folder and never writes it; the handles `account_curator`
-  promotes go to `whitelist_discovered.json`. `relation(handle)` finds what
+  promotes go to `whitelist_discovered.json`, through `add_discovered`, and
+  a missing one stops its readers as an unreadable one does: before the
+  migration of issue #206 it would drop the handles still to carry.
+  `relation(handle)` finds what
   the handle is to the account, from its own sources, never from the
   caller: Seed account (the whitelist, both files), follower (`followers_seen.json`, which only the
   followers scrape writes, through `record_followers`), Engager (the

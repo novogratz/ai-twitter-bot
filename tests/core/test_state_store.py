@@ -60,14 +60,16 @@ def test_a_disposable_file_that_is_unreadable_reads_as_the_default_then_is_repla
 @pytest.mark.parametrize("policy", [GUARDED, DISPOSABLE])
 def test_writes_are_atomic_and_leave_no_temp_file(policy, tmp_path):
     state = _declare("atomic", [], policy)
+    before = set(os.listdir(tmp_path))
     state.write(["a", "é", "lone \ud835 surrogate"])
     state.write(["b"])
     assert state.read() == ["b"]
-    assert sorted(os.listdir(tmp_path)) == [state.name]
+    assert set(os.listdir(tmp_path)) - before == {state.name}
 
 
 def test_a_failed_write_keeps_the_previous_file(monkeypatch):
     state = _declare("failed_write", {}, GUARDED)
+    before = set(os.listdir(os.path.dirname(state.path)))
     state.write({"kept": True})
 
     def refuse(src, dst):
@@ -77,7 +79,7 @@ def test_a_failed_write_keeps_the_previous_file(monkeypatch):
     with pytest.raises(StateUnreadable):
         state.write({"kept": False})
     assert json.load(open(state.path)) == {"kept": True}
-    assert os.listdir(os.path.dirname(state.path)) == [state.name]
+    assert set(os.listdir(os.path.dirname(state.path))) - before == {state.name}
 
 
 def test_one_file_has_one_policy():

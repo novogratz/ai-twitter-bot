@@ -64,6 +64,7 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
     handle holding a blocked token could reach the whitelist."""
     from datetime import datetime
     from src.account import account_curator as ac
+    from src.guards import follow_policy
     from src.core import config
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     now = datetime.now().isoformat()
@@ -78,7 +79,7 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
     ac.run_curator_cycle()
 
     assert "la_pique_off" not in ac.tracked_handles(limit=10)
-    assert ac.DISCOVERED.read() == ["goodfinance"]
+    assert follow_policy.DISCOVERED.read() == ["goodfinance"]
     assert json.loads((operator_folder / "whitelist.json").read_text()) == {"tiers": {}}
 
 
@@ -101,6 +102,7 @@ def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_
     """#191: the daily promotion quota, stamped by either clock, stays spent
     until the next Toronto day."""
     from src.account import account_curator as ac
+    from src.guards import follow_policy
 
     settings_override(CURATOR_DISCOVERED_PER_DAY=3)
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
@@ -109,7 +111,7 @@ def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_
 
     ac._promote_to_whitelist([cand], doc)
 
-    assert ac.DISCOVERED.read() == promoted
+    assert follow_policy.DISCOVERED.read() == promoted
     assert doc["promotion_meta"] == {"date": "2026-10-14", "count": count if not promoted else 1}
 
 

@@ -322,15 +322,19 @@ def test_the_keep_set_reads_the_whitelist_tiers_seeds_and_promoted_handles(scrip
 
 @pytest.mark.parametrize("keep", ["whitelist", "legacy"])
 @pytest.mark.parametrize("content", ['{"tiers": {"tier1": ["karp', None])
+@pytest.mark.parametrize("name", ["whitelist.json", "whitelist_discovered.json"])
 def test_an_unreadable_or_missing_whitelist_aborts_before_any_unfollow(script, monkeypatch, capsys,
-                                                                       keep, content, operator_folder):
+                                                                       keep, content, name, tmp_path,
+                                                                       operator_folder):
     """#171: read as empty, the keep-set would unfollow every seed. A
     missing or unreadable whitelist.json stops the run before Safari, and
-    the file waits for the Operator."""
+    the file waits for the Operator. #206: so does a missing
+    whitelist_discovered.json, which the migration has not created yet:
+    the promoted handles it will carry would be unfollowed."""
     from src.guards import respect_list
     monkeypatch.setattr(respect_list, "load", lambda: set())
     monkeypatch.setattr(script, "_whitelist_keep_set", script.real_whitelist_keep_set)
-    path = operator_folder / "whitelist.json"
+    path = (operator_folder if name == "whitelist.json" else tmp_path) / name
     if content is None:
         path.unlink()
     else:
@@ -342,9 +346,12 @@ def test_an_unreadable_or_missing_whitelist_aborts_before_any_unfollow(script, m
 
     assert exit_.value.code == 1
     assert script.browser.calls == [] and script.ledger == []
-    assert "ABORT: keep-set unreadable" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "ABORT: keep-set unreadable" in out
     if content is None:
         assert not path.exists()
+        if name == "whitelist_discovered.json":
+            assert "bin/migrate_operator_data.py" in out
     else:
         assert path.read_text() == content
 

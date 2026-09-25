@@ -190,6 +190,40 @@ def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, set
     assert path.read_text() == '{"tiers": {"tier1": ["karp'
 
 
+@pytest.mark.parametrize("whitelist_only", [True, False])
+def test_a_missing_discovered_file_stops_every_follow(follow_env, monkeypatch, settings_override,
+                                                      tmp_path, whitelist_only):
+    """#206: until bin/migrate_operator_data.py carries the promoted handles
+    out of the old whitelist.json, their file is missing; read as empty, they
+    would lose their Seed account status. The follow policy and the curator
+    stop as on an unreadable file, and nothing creates it."""
+    settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only)
+    _counts(monkeypatch, tmp_path, 100, 10)
+    path = tmp_path / "whitelist_discovered.json"
+    path.unlink()
+
+    with pytest.raises(StateUnreadable, match="whitelist_discovered.json is missing"):
+        fp.judge("karpathy")
+    verdict = fp.judge_profile("karpathy", lambda: pytest.fail("profile read"))
+    assert verdict.refusal is Refusal.POLICY and "migrate_operator_data" in verdict.reason
+    with pytest.raises(StateUnreadable, match="whitelist_discovered.json is missing"):
+        fp.add_discovered(["deep_macro"])
+    assert not path.exists()
+
+
+def test_add_discovered_skips_known_handles_case_ignored_and_stops_at_its_limits(tmp_path):
+    (tmp_path / "whitelist_discovered.json").write_text(json.dumps(["Sama"]))
+
+    added = fp.add_discovered(["sama", "Karpathy", "new_one", "NEW_ONE", "other", "third"],
+                              skip={"karpathy"}, max_added=2, max_total=10)
+    assert added == ["new_one", "other"]
+    assert fp.DISCOVERED.read() == ["Sama", "new_one", "other"]
+
+    assert fp.add_discovered(["third", "fourth"], max_total=4) == ["third"]
+    assert fp.add_discovered(["sama"]) == []
+    assert fp.DISCOVERED.read() == ["Sama", "new_one", "other", "third"]
+
+
 def test_the_quality_gate_refuses_on_a_whitelist_unreadable_on_the_open_profile(
         follow_env, operator_folder):
     """On the open profile the gate refuses instead of raising, so

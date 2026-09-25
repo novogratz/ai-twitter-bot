@@ -135,6 +135,9 @@ def _no_prod_state(monkeypatch, tmp_path, tmp_path_factory):
     # from-imports bind at import time — patch every namespace that copied one.
     from src.core import engagement_log as _el
     monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
+    # A migrated install (#206): the follow policy refuses while the
+    # promoted handles' file is missing.
+    (tmp_path / "whitelist_discovered.json").write_text("[]")
     # The Operator files live in the versioned Account folder: every test
     # reads a copy of it, which `operator_folder` names.
     import shutil as _shutil

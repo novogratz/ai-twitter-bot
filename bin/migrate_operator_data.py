@@ -15,11 +15,11 @@ The script first checks, and writes nothing if a check fails:
   - the baseline, as_of and note still in following_count.json equal the
     Account's following_baseline.json.
 
-Then it adds the old discovered tier to whitelist_discovered.json, keeping
-the handles already there, and drops baseline, as_of and note from
-following_count.json, keeping count and updated. It never writes an Operator
-file, refuses to start while bot.lock is held, and a second run changes
-nothing.
+Then it creates whitelist_discovered.json when missing, even empty, adds the
+old discovered tier to it, keeping the handles already there, and drops
+baseline, as_of and note from following_count.json, keeping count and
+updated. It never writes an Operator file, refuses to start while bot.lock
+is held, and a second run changes nothing.
 """
 import argparse
 import copy
@@ -114,22 +114,13 @@ def _migrate(folder: str) -> list:
             raise Refused(f"{follow_policy.FOLLOWING_COUNT.name}: {', '.join(differ)} differ from "
                           f"{BASELINE.path}: carry them there and commit them, then run again")
 
-    added = []
-
-    def add(discovered):
-        known = {str(h).lower() for h in discovered}
-        for h in carried:
-            if str(h).lower() not in known:
-                discovered.append(h)
-                known.add(str(h).lower())
-                added.append(h)
-        return discovered if added else None
     if old_whitelist is not None:
-        follow_policy.DISCOVERED.update(add)
-        # Written even when the old tier is empty: a later run without the
-        # backup then knows the carry is done.
+        # Written even when the old tier is empty: the follow policy refuses
+        # while it is missing, and a later run without the backup knows the
+        # carry is done.
         if not os.path.exists(follow_policy.DISCOVERED.path):
             follow_policy.DISCOVERED.write([])
+        added = follow_policy.add_discovered(carried)
         report.append(f"{follow_policy.DISCOVERED.name}: {len(follow_policy.DISCOVERED.read())} "
                       f"handles, {len(added)} added from {len(carried)} in the old discovered tier")
 

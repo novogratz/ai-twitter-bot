@@ -15,7 +15,9 @@ Safety:
     `--keep legacy` restores the old wide keep-set (respect_list +
     engage/early-bird/mega target lists) for a gentler prune.
     A missing or unreadable whitelist.json or whitelist_discovered.json
-    aborts the run before any unfollow, and the file is left as is.
+    aborts the run before any unfollow, and the file is left as is: before
+    bin/migrate_operator_data.py carries the promoted handles into
+    whitelist_discovered.json, a keep-set without them would unfollow them.
   - Every confirmed unfollow is recorded into action_ledger.json (30-day
     anti-churn so follow bots don't re-follow) and decrements
     following_count.json.
@@ -99,13 +101,12 @@ def _save_results(unfollowed: list) -> None:
 def _whitelist_keep_set() -> set:
     """All whitelist tier handles, promoted handles included, + seeds[]
     handles (the curated follow list). Raises StateUnreadable when
-    whitelist.json is missing or unreadable, or whitelist_discovered.json
-    unreadable."""
+    whitelist.json or whitelist_discovered.json is missing or unreadable."""
     keep = set()
     wl = follow_policy.WHITELIST.read()
     for handles in (wl.get("tiers") or {}).values():
         keep |= {str(h).lower() for h in handles}
-    keep |= {str(h).lower() for h in follow_policy.DISCOVERED.read()}
+    keep |= {str(h).lower() for h in follow_policy.discovered()}
     for seed in wl.get("seeds") or []:
         h = (seed.get("handle") or "").strip().lstrip("@").lower()
         if h:

@@ -37,7 +37,7 @@ from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards import active_hours
 # A missing or corrupt whitelist stops the cycle before any promotion.
-from ..guards.follow_policy import DISCOVERED, WHITELIST
+from ..guards.follow_policy import WHITELIST, add_discovered
 from ..guards.reply_admission import is_blocked_account
 
 # Disposable: recomputed every run from the engagement log.
@@ -142,22 +142,10 @@ def _promote_to_whitelist(candidates: list, doc: dict) -> int:
         return 0
     tiers = WHITELIST.read().get("tiers") or {}
     operator_handles = {str(h).lower() for t in tiers.values() for h in (t or [])}
-    discovered_max = settings.get("CURATOR_DISCOVERED_MAX")
-    promoted = []
-
-    def promote(discovered):
-        existing = operator_handles | {str(h).lower() for h in discovered}
-        for cand in candidates:
-            if len(promoted) >= budget or len(discovered) >= discovered_max:
-                break
-            h = cand["handle"]
-            if h.lower() in existing:
-                continue
-            discovered.append(h)
-            existing.add(h.lower())
-            promoted.append(cand)
-        return discovered if promoted else None
-    DISCOVERED.update(promote)
+    by_handle = {c["handle"].lower(): c for c in candidates}
+    added = add_discovered([c["handle"] for c in candidates], skip=operator_handles,
+                           max_added=budget, max_total=settings.get("CURATOR_DISCOVERED_MAX"))
+    promoted = [by_handle[h.lower()] for h in added]
     for cand in promoted:
         log.info(f"[CURATOR] PROMOTED @{cand['handle']} to whitelist discovered tier "
                  f"(score {cand['score']:.1f}, {cand['engagements']} engagements, "
