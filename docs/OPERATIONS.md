@@ -35,7 +35,10 @@ launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
 `.env.example` describes @TheAIShrink with the policy values; every key is
-in [CONFIGURATION.md](CONFIGURATION.md). Set `LLM_FALLBACK_CLI=codex` only
+in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
+(`MAX_ORIGINALS_PER_DAY`, `LIKE_BOT_DAILY_CAP`…) stay commented: their
+default is the policy value, and a line set in `.env` wins over an Account's
+`[limits]`. Set `LLM_FALLBACK_CLI=codex` only
 to let a failed call fall back to the cloud. Blank, as in the example, there
 is no fallback and no call leaves the machine, except the Replies to
 @Graphseo: they run on the Claude CLI whenever it is installed (his
@@ -67,9 +70,10 @@ One process runs one Account: the Safari lock and `bot.lock` stay global,
 and the state goes to `state/<BOT_ACCOUNT>/`.
 `BOT_ACCOUNT`, in `.env` or the shell, names its folder under `accounts/`;
 unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
-the language of the Originals (`en` or `fr`), the Slots and their angles, the
-feeds, Evergreen topics and trusted hosts, the relevance filter, and the
-Relations; its comments describe each key. Next to it sit the Voice, the
+the language of the Originals (`en` or `fr`), the `domain` the editorial and
+Reply prompts name ("Write ONE original AI post"), the Slots and their
+angles, the feeds, Evergreen topics and trusted hosts, the relevance filter,
+and the Relations; its comments describe each key. Next to it sit the Voice, the
 Operator's `voice_fr.md` and `voice_en.md`, read on every prompt, and the
 Relations' prompts under `relations/`, read at start like `account.toml`. A
 Voice file missing or empty, a Relation's handle that is no X handle, an
@@ -102,7 +106,9 @@ each call, and compare a handle with the one read from a status URL.
   `big_fr`, makes the accounts `early_bird_job` scans first. `engage_vip`
   joins every `engage_job` cycle; the replyback reciprocity likes skip
   `engage_targets` and `reply_targets`; `follow_engagers_job` never follows
-  `follow_engagers_skip`. The optional `blocked_accounts` adds Blocked
+  `follow_engagers_skip`. The optional `fr_forced_reply` fills
+  `FR_FORCED_REPLY_HANDLES`, the authors always answered in French, which
+  `.env` still overrides. The optional `blocked_accounts` adds Blocked
   accounts to the engine's `BLOCKLIST`, matched the same way; no key removes
   one of the engine's, and an unknown key stops the start.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
@@ -111,7 +117,9 @@ each call, and compare a handle with the one read from a status URL.
   gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
-  it finds without the niche check.
+  it finds without the niche check; the Trend slots and the Startup post run
+  every `trending` query on the Top tab and keep what passes the relevance
+  filter.
 
 The folder also holds the Operator files, versioned, which the bot reads at
 each use and never writes:
@@ -128,6 +136,45 @@ guarded state file, and nothing recreates it with defaults
 ([Recovery](#recovery)). What the bot keeps beside them is state: the handles
 `account_curator` promotes go to `whitelist_discovered.json`, the live count to
 `following_count.json`.
+
+#### Creating an Account
+
+The engine names no Account: a new one is a folder, with no code change.
+`accounts/example/` is the template, a fictitious home vegetable gardener
+with no Relation, that never runs live.
+
+1. Copy `accounts/example/` to `accounts/<name>/`: lowercase letters,
+   digits, `-` and `_`.
+2. In `account.toml`, set the `handle`, the `language` and the `domain`,
+   the Slots, the feeds and the `trusted_hosts` each feed, source and
+   Evergreen topic is fetched from, the relevance filter, `[niche]` and
+   `[searches]` of the domain, `trending` included, and the `[network]`
+   handles. Every `[network]` list is required, empty or not;
+   `fr_forced_reply` and `blocked_accounts` are optional. `[limits]` may
+   tighten an engine bound, and `[relations]` is needed only for a handle
+   treated apart, or while `vip_scan` lists a handle without a prompt of
+   its own. `.env` wins over `[limits]`: a bounded setting set there, such
+   as `MAX_ORIGINALS_PER_DAY` or `LIKE_BOT_DAILY_CAP`, undoes the Account's
+   value, so leave them commented as `.env.example` does. The dry run shows
+   the values that hold under `bounded_settings`.
+   Some prompt text still speaks of AI whatever the domain: the editorial
+   draft's "model update, research method" and "a model generates text",
+   the review's "misleading benchmark comparisons", and the examples of the
+   replyback prompt (GPUs, the Fed, Bitcoin). The search Reply lane
+   (`ENABLE_REPLY_SEARCH`, off by default) runs an AI-only prompt with its
+   own searches: leave it off for another domain.
+3. The Operator writes `voice_en.md` and `voice_fr.md`, and fills
+   `whitelist.json`, `respect_list.json` and `following_baseline.json`.
+4. Check it without a browser or a model:
+   `BOT_ACCOUNT=<name> uv run --with-requirements requirements.txt python main.py --dry-run`
+   lists its Slots, jobs and bounded settings; an error names the file and
+   the key. Its state goes to `state/<name>/`, created at the first real
+   start; the dry run writes none. The start still refuses while a state
+   file from before issue #207 sits at the project root, whichever Account
+   runs ([Deploying issue #207](#deploying-issue-207)).
+5. Set `BOT_ACCOUNT=<name>` in `.env`, with Safari logged in to that X
+   account. `bot.lock` and the Safari lock are global: a checkout runs one
+   Account at a time.
 
 ## Start
 

@@ -2,7 +2,7 @@
 
 Without a follower-count time series we can't tell which days/cycles
 ACTUALLY drove growth vs. which just felt productive. This bot scrapes
-/TheAIShrink every 30 min, parses the follower count from the profile
+the Account's profile every 30 min, parses the follower count from the profile
 header via JS, and appends to follower_history.json.
 
 No LLM, just one Safari visit + JS extraction.
@@ -38,10 +38,10 @@ def _parse_count(s: str) -> int:
 
 
 def _scrape_follower_count() -> int:
-    """Open /TheAIShrink, JS-extract the number next to 'Followers' / 'Abonnés'."""
+    """Open the Account's profile, JS-extract the number next to 'Followers' / 'Abonnés'."""
     js_code = '''
     (function() {
-        // Followers link looks like /TheAIShrink/verified_followers or /followers.
+        // Followers link looks like /<handle>/verified_followers or /followers.
         var anchors = document.querySelectorAll('a[href$="/followers"], a[href$="/verified_followers"]');
         for (var a of anchors) {
             // The count is in the first child span (or a nested span with text).

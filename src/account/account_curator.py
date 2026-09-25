@@ -1,9 +1,9 @@
 """Self-curated account tracking (operator mandate 2026-06-07 PM).
 
-"Stop going to the static accounts we discussed in the past and develop
-yourself the list of accounts you want to follow and track their posts so
-you use it as content. The only ones you should continue: TheBTCTherapist
-and Graphseo."
+Operator, 2026-06-07 PM: "Stop going to the static accounts we discussed
+in the past and develop yourself the list of accounts you want to follow
+and track their posts so you use it as content. The only ones you should
+continue: TheBTCTherapist and Graphseo."
 
 Replaces the hand-curated EARLY_BIRD/MEGA lists with a list the bot earns
 from its OWN evidence, recomputed every 4h into `tracked_accounts.json`:
@@ -16,7 +16,8 @@ from its OWN evidence, recomputed every 4h into `tracked_accounts.json`:
       by conversion_attribution_bot when replying to that author actually
       produced followers (cap 3.0). Evidence of ROI, not just activity.
 
-PINNED_TRACKED_HANDLES (always tracked, never decay): TheBTCTherapist, Graphseo.
+PINNED_TRACKED_HANDLES (always tracked, never decay): the Account's
+network.pinned_tracked unless .env sets it.
 
 The curator may also PROMOTE its strongest finds into the whitelist's
 "discovered" tier, whitelist_discovered.json (operator-granted 2026-06-07:

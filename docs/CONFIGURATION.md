@@ -2,7 +2,8 @@
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
-`.env.example` is the starting point for @TheAIShrink.
+`.env.example` is the starting point for @TheAIShrink; its bounded settings
+stay commented, at their default, so that an Account's `[limits]` holds.
 What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 `accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
@@ -34,9 +35,9 @@ hold whatever `.env` says:
 | Rule | Where |
 |---|---|
 | Working hours 04:30–23:30 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
-| `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py` |
-| `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py` |
-| `MAX_ORIGINALS_PER_DAY` | Ceiling 8: `.env` may lower it only |
+| `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
+| `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
+| `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
@@ -93,7 +94,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
-| `BOT_HANDLE` | str | `TheAIShrink` |  | X handle the bot runs, without @; the Account's handle unless set. |
+| `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
 | `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
@@ -151,7 +152,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `LLM_FALLBACK_MODEL` | str | blank |  | Model of every fallback call; blank, the fallback CLI's own below. |
 | `CODEX_FALLBACK_MODEL` | str | `gpt-5.4-mini` |  | Codex model as the fallback; blank means this default. |
 | `GEMINI_FALLBACK_MODEL` | str | `gemini-2.0-flash` |  | Gemini model as the fallback; blank means this default. |
-| `FR_FORCED_REPLY_HANDLES` | str | `Graphseo` |  | Comma-separated handles whose posts always get French Replies. |
+| `FR_FORCED_REPLY_HANDLES` | str | blank |  | Comma-separated handles whose posts always get French Replies; the Account's network.fr_forced_reply unless set. |
 | `EDITORIAL_OLLAMA_MODEL` | str | `gemma4:31b` |  | Ollama model that drafts and reviews Originals. |
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |

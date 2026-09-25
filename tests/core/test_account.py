@@ -78,6 +78,11 @@ OLD = {
     "BOT_HANDLE": "TheAIShrink",
     "CONTENT_LANG_PRIMARY": "en",
 }
+# trending.TREND_QUERIES before #208 moved them to [searches] trending.
+OLD_TREND_QUERIES = [
+    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
+    'AI lang:en min_faves:200 -filter:replies',
+]
 
 
 def test_theaishrink_loads_the_old_constants():
@@ -95,6 +100,9 @@ def test_theaishrink_loads_the_old_constants():
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
+    # The prompts said "AI" in the code before #208.
+    assert loaded.domain == "AI"
+    assert list(loaded.searches.trending) == OLD_TREND_QUERIES
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -216,6 +224,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
     ('handle = "TheAIShrink"\n', "", "handle"),
+    ('domain = "AI"', "domain = 3", "domain"),
+    ('domain = "AI"', 'domain = " "', "domain is blank"),
+    ('domain = "AI"\n', "", "domain is missing"),
     ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
@@ -613,12 +624,27 @@ def test_the_follow_bio_niche_is_ai_only(bio, on_niche):
     assert bool(account.load("theaishrink").niche.bio.search(bio)) is on_niche
 
 
-def test_the_account_network_fills_three_settings_and_env_wins(accounts, fresh):
+def test_the_account_network_fills_four_settings_and_env_wins(accounts, fresh):
     accounts("theaishrink")
     fresh("VIP_SCAN_HANDLES=FromEnv\n")
     assert settings.get("PROFILE_VISIT_ALLOWLIST") == NETWORK["PROFILE_VISIT_ALLOWLIST"]
     assert settings.get("PINNED_TRACKED_HANDLES") == NETWORK["PINNED_TRACKED_HANDLES"]
     assert settings.get("VIP_SCAN_HANDLES") == "FromEnv"
+    # The engine default of FR_FORCED_REPLY_HANDLES before #208.
+    assert settings.get("FR_FORCED_REPLY_HANDLES") == "Graphseo"
+
+
+def test_fr_forced_reply_is_optional(accounts, fresh):
+    accounts("theaishrink", THEAISHRINK.replace('fr_forced_reply = ["Graphseo"]\n', ""))
+    fresh()
+    assert account.current().network.fr_forced_reply == ()
+    assert settings.get("FR_FORCED_REPLY_HANDLES") == ""
+
+
+def test_env_wins_over_fr_forced_reply(accounts, fresh):
+    accounts("theaishrink")
+    fresh("FR_FORCED_REPLY_HANDLES=FromEnv\n")
+    assert settings.get("FR_FORCED_REPLY_HANDLES") == "FromEnv"
 
 
 def test_the_jobs_read_the_loaded_account(accounts, fresh):
@@ -649,9 +675,13 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ('engage_vip = ["Graphseo"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
     ("blocked_accounts = []", 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
     ("blocked_accounts = []", "blocked_accounts = [3]", "network.blocked_accounts[0]"),
+    ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
+    ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = "Graphseo"', "network.fr_forced_reply"),
     ("[niche]", "[niche]\nticker = '('", "niche.ticker"),
     ("[niche]", "[niche]\nticker = 3", "niche.ticker"),
     ("likes = [", "likes = [\n    ' ',", "searches.likes[0]"),
+    ("trending = [", "trending = [\n    ' ',", "searches.trending[0]"),
+    ("trending = [", "trending_queries = [", "searches.trending_queries"),
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
     ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.

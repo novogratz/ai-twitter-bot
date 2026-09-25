@@ -6,7 +6,7 @@ niche. The existing reciprocity loop only fires when someone REPLIES
 to us — that misses 90% of new followers (lurkers + likers).
 
 Strategy:
-  - Once per ~2h, visit /TheAIShrink/followers via Safari + JS scrape.
+  - Once per ~2h, visit /<BOT_HANDLE>/followers via Safari + JS scrape.
   - Get the list of @handles currently following us.
   - Follow back any handle we haven't followed yet, capped at FOLLOW_CAP
     per cycle (don't burn the daily follow budget all at once).
@@ -112,7 +112,7 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
 
 
 def run_followback_cycle():
-    """Visit /TheAIShrink/followers and follow back fresh ones."""
+    """Visit the Account's followers page and follow back fresh ones."""
     followed = follow_policy.followed()
 
     with _safari_lock:

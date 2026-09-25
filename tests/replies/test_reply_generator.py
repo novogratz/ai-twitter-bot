@@ -166,14 +166,12 @@ def test_fr_forced_handles_are_read_at_call_time(jobs, settings_override):
     (" @SomeOne , other", "someone", True), ("", "graphseo", False), ("someone", "", False),
 ])
 def test_one_reader_decides_fr_forced_parents(settings_override, env, author, forced):
-    """The generator and Reply admission share this reader: one default,
-    one handle normalisation."""
-    from src.core import settings
+    """The generator and Reply admission share this reader: one value, the
+    Account's network.fr_forced_reply unless set, one handle normalisation."""
     from src.core.reply_language import is_fr_forced
 
-    if env is None:
-        env = settings.DECLARED["FR_FORCED_REPLY_HANDLES"].default
-    settings_override(FR_FORCED_REPLY_HANDLES=env)
+    if env is not None:
+        settings_override(FR_FORCED_REPLY_HANDLES=env)
     assert is_fr_forced(author) is forced
 
 

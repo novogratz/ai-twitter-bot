@@ -28,10 +28,12 @@ from .reply_generator import LanguageRule
 JOB = reply_pipeline.Job("mega_watch", "MEGA", reply_call=lambda author: reply_call(author, LanguageRule.PARENT),
                          pause=(8, 14), text_bounds=(10, 270))
 
-# 2026-06-07 PM (operator): static list GONE — the ≤4-min watcher scans the
-# TOP of the bot's own earned list (account_curator), pinned with
-# TheBTCTherapist + Graphseo. The tightest freshness window gets the
-# highest-conviction handles the curator has.
+# 2026-06-07 PM (operator): static list GONE.
+
+# The ≤4-min watcher scans the TOP of the bot's own earned list
+# (account_curator), with the Account's network.pinned_tracked always first.
+# The tightest freshness window gets the highest-conviction handles the
+# curator has.
 MEGA_ACCOUNTS: list = []  # intentionally empty — see _watch_pool()
 
 

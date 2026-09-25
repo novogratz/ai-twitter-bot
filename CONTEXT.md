@@ -38,7 +38,8 @@ fresh trusted article: 10:00, 13:00, 15:00 and the Startup post.
 _Avoid_: viral slot, hot take
 
 **Trending posts**:
-The five fastest-rising AI posts on X from the last 24 hours, stripped of
+The five fastest-rising posts of the Account's domain on X from the last 24
+hours, found by its `[searches] trending` queries, stripped of
 handles, mentions and links. They choose a Trend slot's topic and never supply
 a fact.
 _Avoid_: top tweets, viral posts
@@ -159,7 +160,7 @@ _Avoid_: replied set, replied cache, dedup file
 **Account**:
 The X account the bot runs, one per process, chosen at start by
 `BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
-handle and language, the Slots and their angles, the feeds, Evergreen
+handle and language, the domain its prompts name, the Slots and their angles, the feeds, Evergreen
 topics and trusted hosts, the relevance filter, its network and niche:
 the accounts the jobs answer, scan, visit or skip, the niche patterns and
 the X searches, and the Relations; and next to it the Voice files and the

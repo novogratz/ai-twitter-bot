@@ -1,7 +1,7 @@
 """The Account the bot runs: accounts/<BOT_ACCOUNT>/account.toml.
 
 The Account holds what the bot says and where it looks: its handle and
-language, its Slots and their angles, its feeds, Evergreen topics and trusted
+language, its domain as the prompts name it, its Slots and their angles, its feeds, Evergreen topics and trusted
 hosts, its relevance filter; its network (the accounts the jobs reply to,
 scan, visit or skip, and the Blocked accounts it adds to the engine's), its
 niche patterns, its X searches and its Relations. Its folder also holds the
@@ -74,6 +74,7 @@ class Account:
     file: str  # account.toml relative to the project root, for messages
     handle: str
     language: str
+    domain: str  # the domain the prompts name: "one original {domain} post"
     editorial: Editorial
     relevance: Relevance
     limits: dict  # engine setting name -> value, checked by settings
@@ -109,12 +110,14 @@ def load(name: str) -> Account:
 
 
 def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
-    top = _Table(shown, "", data, required={"handle": str, "language": str, "editorial": dict,
-                                             "relevance": dict, "network": dict, "niche": dict,
-                                             "searches": dict},
+    top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
+                                             "editorial": dict, "relevance": dict, "network": dict,
+                                             "niche": dict, "searches": dict},
                  optional={"limits": dict, "relations": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
+    if not top["domain"].strip():
+        top.fail("domain", "is blank")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list})
@@ -124,7 +127,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     network = _network(top)
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
-        editorial=_editorial(editorial), relevance=Relevance(
+        domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
         searches=_searches(top),
@@ -179,13 +182,14 @@ _HANDLE = re.compile(r"[A-Za-z0-9_]{1,15}")
 _NETWORK_HANDLES = ("profile_visits", "vip_scan", "pinned_tracked", "vip_reply", "big_ai_hype",
                     "mid_size_ai", "high_traction_reply", "big_fr", "engage_vip",
                     "engage_targets", "reply_targets", "follow_engagers_skip")
-_SEARCHES = ("replies", "hot_tab", "likes")
+_SEARCHES = ("replies", "hot_tab", "likes", "trending")
 
 
 @dataclass(frozen=True)
 class Network:
     """X handles as account.toml lists them: order, case and repeats kept."""
     blocked_accounts: tuple  # tokens added to config.BLOCKLIST, which none removes
+    fr_forced_reply: tuple  # authors always answered in French; empty when absent
     profile_visits: tuple
     vip_scan: tuple
     pinned_tracked: tuple
@@ -219,14 +223,15 @@ class Searches:
     replies: tuple
     hot_tab: tuple
     likes: tuple
+    trending: tuple  # the Top searches of the Trend slots and the Startup post
 
 
 def _network(top) -> Network:
     table = _Table(top.file, "network", top["network"],
                    required={key: list for key in _NETWORK_HANDLES},
-                   optional={"blocked_accounts": list})
-    for key in _NETWORK_HANDLES:
-        for i, handle in enumerate(table.items(key, str)):
+                   optional={"blocked_accounts": list, "fr_forced_reply": list})
+    for key in (*_NETWORK_HANDLES, "fr_forced_reply"):
+        for i, handle in enumerate(table.items(key, str) if key in table else []):
             if not _HANDLE.fullmatch(handle):
                 table.fail(f"{key}[{i}]", f"takes an X handle without @, not {handle!r}")
     blocked = table.items("blocked_accounts", str) if "blocked_accounts" in table else []
@@ -234,6 +239,7 @@ def _network(top) -> Network:
         if not re.search(r"[^\W_]", token):
             table.fail(f"blocked_accounts[{i}]", f"takes a handle or a display name, not {token!r}")
     return Network(blocked_accounts=tuple(blocked),
+                   fr_forced_reply=tuple(table.get("fr_forced_reply", [])),
                    **{key: tuple(table[key]) for key in _NETWORK_HANDLES})
 
 
@@ -297,7 +303,7 @@ def _kind(kind) -> str:
 # --- Relations: how the Replies treat particular accounts (#203) ---------------
 
 # The fields reply_generator fills in a Reply prompt.
-_PROMPT_FIELDS = frozenset({"author", "tweet_text", "original_tweet", "language_override"})
+_PROMPT_FIELDS = frozenset({"author", "tweet_text", "original_tweet", "language_override", "domain"})
 # The CLIs a Relation may name, as src/core/llm_client.ADAPTERS names them
 # (a test holds the two together): importing llm_client here would run before
 # settings.load() has finished.

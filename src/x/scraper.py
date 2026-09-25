@@ -310,11 +310,13 @@ def is_own_post(tweet: dict) -> bool:
 
 
 def _profile_visit_allowed(username: str) -> bool:
-    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
-    the only scrape surfaces are @TheBTCTherapist (the main account), the
-    Home feed (For You + Following tab), and search terms. Our own profile
-    stays visitable (boost/pin/metrics/with_replies callers need it). Env
-    read at CALL time (side-effect gate — never an import-time constant)."""
+    """Operator mandate 2026-06-07 PM: NO profile visits for discovery.
+
+    The only scrape surfaces are the profiles of PROFILE_VISIT_ALLOWLIST
+    (the Account's network.profile_visits unless .env sets it), the Home
+    feed (For You + Following tab), and search terms. Our own profile stays
+    visitable (boost/pin/metrics/with_replies callers need it). Env read at
+    CALL time (side-effect gate — never an import-time constant)."""
     from ..core.config import BOT_HANDLE
     base = (username or "").strip().lstrip("@").split("/")[0].lower()
     if not base:

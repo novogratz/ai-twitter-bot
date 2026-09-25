@@ -6,8 +6,8 @@ follow. If it's stale, they bounce. We post a lot — the pinned slot
 should rotate to whatever is currently working.
 
 Strategy:
-  - Once per day, scrape /TheAIShrink (main feed, posts only — NOT
-    /with_replies which mixes replies in).
+  - Once per day, scrape the Account's profile (main feed, posts only —
+    NOT /with_replies which mixes replies in).
   - Pick the post with the highest like count from the last ~30 tweets
     (the visible profile window).
   - Skip if already pinned (track via pin_history.json).
