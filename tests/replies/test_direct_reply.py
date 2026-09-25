@@ -136,10 +136,11 @@ def test_direct_reply_scans_rotating_query_subset(settings_override):
         "run_direct_reply_cycle must scan the rotating slice, not all queries"
 
 
-def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch, settings_override):
+def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     """#203 moved the relation prompts into the Account's Relations: each VIP
     ReplyCall keeps its label, limits and provider, and the engine names no
-    one. A Relation's provider is forced only when its CLI is installed."""
+    one. A Relation's provider is forced only when its CLI is installed; a
+    Relation with a prompt and no provider keeps the VIP scan's call."""
     import shutil
     from src.core import account, config
     from src.replies import direct_reply as dr
@@ -155,10 +156,31 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch, s
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("Graphseo").llm_options["force_provider"] is None
 
-    settings_override(BESTIE_HANDLE="SomeBestie")
-    bestie, buddy = dr._vip_call("somebestie"), dr._vip_call("vision_ia")
-    assert (bestie.template, bestie.label) == (relations.bestie, "VIP_REPLY/somebestie")
-    assert (buddy.template, buddy.label) == (relations.buddy, "VIP_REPLY/vision_ia")
+    bestie, buddy = dr._vip_call("thebtctherapist"), dr._vip_call("vision_ia")
+    assert (bestie.template, bestie.label) == (relations.get("TheBTCTherapist").prompt,
+                                               "VIP_REPLY/thebtctherapist")
+    assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.model, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
                 call.max_chars, call.llm_options) == (config.PRIORITY_REPLY_MODEL, False, 300, True, 20, None, {})
+
+
+def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings_override):
+    """An Account without a default prompt starts only while every
+    vip_scan handle has its own; a VIP_SCAN_HANDLES from .env past them
+    skips the handle instead of calling the model without a prompt."""
+    import dataclasses
+    from src.core import account
+    from src.replies import direct_reply as dr, reply_pipeline
+    from src.x import scraper
+
+    loaded = account.current()
+    bare = dataclasses.replace(loaded, relations=dataclasses.replace(loaded.relations, default=None))
+    monkeypatch.setattr(account, "current", lambda: bare)
+    settings_override(VIP_SCAN_HANDLES="vision_ia")
+    scraped = []
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: scraped.append(a) or [])
+
+    assert dr._vip_call("vision_ia") is None
+    assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
+    assert scraped == [] and llm.calls == []

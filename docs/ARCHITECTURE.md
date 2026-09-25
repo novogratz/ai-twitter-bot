@@ -691,8 +691,8 @@ state file resolves to the repo root), `test_state_untracked.py` (git
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (the Account's Voice files
 and the Voice block rendered from them), `test_engine_names_no_interlocutor.py`
-(no string of `src/` names Graphseo or TheBTCTherapist but the handle lists
-still waiting for #204 and #206), `test_mass_unfollow.py`
+(no string of `src/` names Graphseo or TheBTCTherapist but the few listed
+places, each with its ticket), `test_mass_unfollow.py`
 (`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`
 and `tests/`, subfolders included, with `ast`. It fails when an

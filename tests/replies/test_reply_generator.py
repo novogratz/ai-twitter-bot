@@ -423,14 +423,14 @@ REPLY_CALLS = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", 
 
 
 def job_reply_call(name):
-    from src.core import account, settings
+    from src.core import account
     from src.replies import debate_bot, direct_reply as dr, replyback_agent
 
     return {
         "search": lambda: dr.reply_call("someone"),
         "search VIP": lambda: dr.reply_call(sorted(account.current().network.vip_reply)[0]),
         "Graphseo": lambda: dr._vip_call("Graphseo"),
-        "bestie": lambda: dr._vip_call(settings.get("BESTIE_HANDLE")),
+        "bestie": lambda: dr._vip_call("TheBTCTherapist"),
         "buddy": lambda: dr._vip_call("vision_ia"),
         "debate": debate_bot.reply_call,
         "replyback": replyback_agent.reply_call,

@@ -7,26 +7,26 @@ VOICE_FR = ACCOUNT / "voice_fr.md"
 VOICE_EN = ACCOUNT / "voice_en.md"
 
 
-def test_core_identity_has_ai_fan_voice():
+def test_voice_has_ai_fan_voice():
     for path in (VOICE_FR, VOICE_EN):
         text = path.read_text().lower()
         assert "obsessed with ai" in text and "excited" in text
         assert "45-year-old woman and mom" in text
 
 
-def test_core_identity_prioritizes_reader_value():
+def test_voice_prioritizes_reader_value():
     text = VOICE_FR.read_text().lower()
     assert "reader takeaway" in text and "source" in text
     assert "never fill a quota with filler" in text
 
 
-def test_core_identity_keeps_warmth_and_honest_criticism():
+def test_voice_keeps_warmth_and_honest_criticism():
     text = VOICE_FR.read_text().lower()
     assert "kind and hopeful" in text and "never cruel" in text
     assert "honest criticism" in text and "uncertainty" in text
 
 
-def test_core_identity_carries_editorial_strategy():
+def test_voice_carries_editorial_strategy():
     text = VOICE_FR.read_text().lower()
     assert "at least three original ai posts" in text
     assert "eight is the absolute ceiling" in text
@@ -46,7 +46,7 @@ def test_persona_is_woman_mom_in_the_one_voice():
     assert "bro" in spine  # the no-bro-speak rule is stated
 
     from src.core import account
-    bestie_prompt = account.current().relations.bestie.lower()
+    bestie_prompt = account.current().relations.get("TheBTCTherapist").prompt.lower()
     assert "big sister" in bestie_prompt and "big brother" not in bestie_prompt
 
 
@@ -57,7 +57,7 @@ def test_relation_prompts_script_no_medical_metaphor():
     from src.replies import debate_bot, replyback_agent
 
     relations = account.current().relations
-    prompts = (relations.bestie, relations.buddy, relations.get("Graphseo").prompt,
+    prompts = (relations.get("TheBTCTherapist").prompt, relations.default, relations.get("Graphseo").prompt,
                debate_bot.DEBATE_PROMPT, replyback_agent.REPLYBACK_PROMPT)
     for prompt in prompts:
         low = prompt.lower()

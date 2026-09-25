@@ -22,9 +22,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
 change. The same holds for the operator-owned guardrails: the Account's
-Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`) and Relation prompts
-(`relations/`), which only the Operator edits,
-`BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
+Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
+edits, `BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
 `respect_list.json`, and `personality_store.hard_rules_block()`.
 
 ## Active code
@@ -127,11 +126,10 @@ rule; cross-cutting invariants stay at the root of `tests/`.
 - JSON files at the repo root are live state, ignored by git: a new state
   file goes in `.gitignore` in the same change, and a test fails on one git
   does not ignore. The Operator's files stay tracked: `respect_list.json`,
-  `whitelist.json`, and the Account's Voice files and Relation prompts
-  under `accounts/`. `action_ledger.json` already
-  counts toward today's ceiling and git holds no copy of it: keep it across
-  deploys. It holds one JSON object per line, not a JSON list: read it line
-  by line or through `action_guard`.
+  `whitelist.json` and the Account's Voice files under `accounts/`.
+  `action_ledger.json` already counts toward today's ceiling and git holds
+  no copy of it: keep it across deploys. It holds one JSON object per line,
+  not a JSON list: read it line by line or through `action_guard`.
 - A JSON state file goes through `state_store.StateFile`, declared once with
   its policy. An unreadable guarded file stops the job that needs it and is
   never overwritten: repair it by hand, never delete it

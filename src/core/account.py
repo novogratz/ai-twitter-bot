@@ -105,8 +105,8 @@ def load(name: str) -> Account:
 def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "editorial": dict,
                                              "relevance": dict, "network": dict, "niche": dict,
-                                             "searches": dict, "relations": dict},
-                 optional={"limits": dict})
+                                             "searches": dict},
+                 optional={"limits": dict, "relations": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     editorial = _Table(shown, "editorial", top["editorial"],
@@ -114,15 +114,17 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                                  "evergreen": list, "trusted_hosts": list})
     relevance = _Table(shown, "relevance", top["relevance"],
                        required={"topic": str, "off_topic": str})
+    _check_voice(folder, os.path.dirname(shown))
+    network = _network(top)
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
         editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
-        limits=dict(top.get("limits", {})), network=_network(top), niche=_niche(top),
+        limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
         searches=_searches(top),
-        relations=_relations(folder, _Table(shown, "relations", top["relations"],
-                                            required={"bestie": str, "buddy": str},
-                                            optional={"handles": dict})))
+        relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
+                                                     required={},
+                                                     optional={"default": str, "handles": dict})))
 
 
 def _editorial(table) -> Editorial:
@@ -309,17 +311,20 @@ class Relation:
 
 @dataclass(frozen=True)
 class Relations:
-    """The VIP scan's prompts, read at start: the bestie prompt for
-    BESTIE_HANDLE, a Relation's own prompt, the buddy prompt otherwise."""
-    bestie: str
-    buddy: str
+    """The VIP scan's prompts, read at start: a Relation's own prompt, the
+    default prompt for a handle without one."""
+    default: str | None
     handles: dict  # lowercased handle -> Relation
 
     def get(self, handle: str) -> Relation | None:
         return self.handles.get((handle or "").lower().lstrip("@").strip())
 
+    def vip_prompt(self, handle: str) -> str | None:
+        relation = self.get(handle)
+        return relation.prompt if relation and relation.prompt else self.default
 
-def _relations(folder, table) -> Relations:
+
+def _relations(folder, network, table) -> Relations:
     handles = {}
     for handle, raw in table.get("handles", {}).items():
         where = f"relations.handles.{handle}"
@@ -341,20 +346,54 @@ def _relations(folder, table) -> Relations:
         if "dossier" in entry:
             dossier_table = _Table(table.file, f"{where}.dossier", entry["dossier"], required={},
                                    optional=_DOSSIER)
+            if not dossier_table.values:
+                entry.fail("dossier", "is empty: a fixed dossier sets at least one field")
             if "notes" in dossier_table:
                 dossier_table.items("notes", str)
             dossier = dict(dossier_table.values)
         handles[handle.lower()] = Relation(
             handle=handle, prompt=_prompt(folder, entry, "prompt") if "prompt" in entry else None,
             provider=entry.get("provider", None), dossier=dossier)
-    return Relations(bestie=_prompt(folder, table, "bestie"), buddy=_prompt(folder, table, "buddy"),
-                     handles=handles)
+    default = _prompt(folder, table, "default") if "default" in table else None
+    if default is None:
+        for handle in network.vip_scan:
+            relation = handles.get(handle.lower())
+            if not (relation and relation.prompt):
+                table.fail("default", f"is missing: network.vip_scan lists {handle}, which has no "
+                                      f"Relation with its own prompt, so the VIP scan needs a default prompt")
+    return Relations(default=default, handles=handles)
+
+
+def _inside(folder, name) -> str | None:
+    """The real path of `name`, relative to `folder`, links resolved; None
+    when it lands outside the folder."""
+    real_folder = os.path.realpath(folder)
+    path = os.path.realpath(os.path.join(folder, name))
+    return path if os.path.commonpath([real_folder, path]) == real_folder else None
+
+
+VOICE_FILES = ("voice_en.md", "voice_fr.md")
+
+
+def _check_voice(folder, shown_folder):
+    for name in VOICE_FILES:
+        shown = os.path.join(shown_folder, name)
+        path = _inside(folder, name)
+        if path is None:
+            raise AccountError(f"{shown}: the Voice file links outside the Account's folder.")
+        try:
+            with open(path, encoding="utf-8") as f:
+                text = f.read().strip()
+        except OSError as exc:
+            raise AccountError(f"{shown}: the Voice file cannot be read ({exc.strerror}).") from None
+        if not text:
+            raise AccountError(f"{shown}: the Voice file is empty.")
 
 
 def _prompt(folder, table, key) -> str:
     """The prompt file `table[key]` names, relative to the Account's folder."""
-    path = os.path.normpath(os.path.join(folder, table[key]))
-    if os.path.commonpath([folder, path]) != folder:
+    path = _inside(folder, table[key])
+    if path is None:
         table.fail(key, f"names {table[key]!r}, outside the Account's folder")
     try:
         with open(path, encoding="utf-8") as f:

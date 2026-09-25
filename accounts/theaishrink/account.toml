@@ -131,13 +131,18 @@ off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|g
 # {original_tweet}, {language_override}); write a literal brace as {{ or }}.
 # The Voice opens the prompt and the hard rules close it, as for every Reply.
 [relations]
-# The VIP scan (VIP_SCAN_HANDLES) answers BESTIE_HANDLE's posts with the
-# bestie prompt, a handle below with its own prompt, any other with buddy.
-bestie = "relations/bestie.md"
-buddy = "relations/buddy.md"
+# The VIP scan (network.vip_scan) answers a handle below with its own
+# prompt, any other with this default one. Required only while a vip_scan
+# handle has no prompt of its own.
+default = "relations/buddy.md"
 
-# Graphseo's own VIP prompt, always in French, written by the Claude CLI
-# whenever it is installed, whatever REPLY_LLM_PROVIDER says.
+# A Relation's own VIP prompt, in place of the default one.
+[relations.handles.TheBTCTherapist]
+prompt = "relations/bestie.md"
+
+# Graphseo's own VIP prompt, always in French. A provider makes it his own
+# call: written by that CLI whenever it is installed, whatever
+# REPLY_LLM_PROVIDER says, under the GRAPHSEO_VIP label.
 [relations.handles.Graphseo]
 prompt = "relations/graphseo.md"
 provider = "claude"

@@ -151,7 +151,6 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `EDITORIAL_OLLAMA_MODEL` | str | `gemma4:31b` |  | Ollama model that drafts and reviews Originals. |
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
-| `BESTIE_HANDLE` | str | `TheBTCTherapist` |  | VIP account whose posts get the bestie prompt. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
@@ -196,6 +195,7 @@ sets them starts; delete them from it.
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
 | `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
+| `BESTIE_HANDLE` | str | blank |  | No effect: remove it from .env. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |
 | `DIRECT_REPLY_FEED_SCAN_LIMIT` | int | `150` |  | No effect: remove it from .env. |
 | `DIRECT_REPLY_PROFILE_SCAN_LIMIT` | int | `25` |  | No effect: remove it from .env. |

@@ -56,17 +56,19 @@ def _own_call(relation) -> ReplyCall:
                      llm_options={"output_json": False, "timeout": 60, "force_provider": force})
 
 
-def _vip_call(handle: str) -> ReplyCall:
+def _vip_call(handle: str) -> ReplyCall | None:
     """Per-handle relation prompt, from the Account's Relations (bug
     2026-06-07: one handle's French prompt went to another's English post).
-    A Relation with its own prompt keeps it; BESTIE_HANDLE gets the bestie
-    prompt, every other VIP the buddy prompt."""
+    A Relation with a provider gets its own call; any other VIP its
+    Relation's prompt or the Account's default one. None when there is
+    neither: a VIP_SCAN_HANDLES from .env past the Account's vip_scan."""
     relations = account.current().relations
     relation = relations.get(handle)
-    if relation and relation.prompt:
+    if relation and relation.provider:
         return _own_call(relation)
-    bestie = settings.get("BESTIE_HANDLE")
-    template = relations.bestie if handle.lower() == bestie.lower() else relations.buddy
+    template = relations.vip_prompt(handle)
+    if template is None:
+        return None
     # dossier=False: see _own_call.
     return ReplyCall(template, config.PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
                      text_limit=300, strip_preamble=True, skip_window=20)
@@ -102,6 +104,9 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     for handle in vip_scan_handles:
         if cycle.rate_limited or (remaining is not None and posted >= remaining):
             break
+        if _vip_call(handle) is None:
+            log.warning(f"[VIP] @{handle} skipped: no Relation prompt and no default prompt in the Account.")
+            continue
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
