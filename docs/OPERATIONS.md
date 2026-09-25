@@ -33,7 +33,10 @@ least:
   pipeline writes originals in French when it sees `fr`.
 - `LLM_FALLBACK_CLI=codex` only to let a failed call fall back to the
   cloud. Unset or empty, as in the example, there is no fallback and no
-  call leaves the machine.
+  call leaves the machine, except the Replies to @Graphseo: they run on
+  the Claude CLI whenever it is installed (`direct_reply._graphseo_voice`).
+  The start logs a fallback the code ignores, and `--dry-run` lists it
+  under `ignored_llm_fallbacks`.
 
 `src/core/config.py` loads `.env` without overriding variables already set in the
 shell. Check the setup without a browser or a model with the dry-run command

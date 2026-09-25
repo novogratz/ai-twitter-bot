@@ -28,8 +28,11 @@ their order in the file is not strictly chronological.
 > `_build_cmd` sent to Claude: a typo in `PROFILE_LLM_PROVIDER` would have
 > sent the Drafts to a cloud service. The Operator chose to align the code
 > on the doc: unset, there is no fallback; an unknown name fails the call
-> without running anything, and the start logs it. Guard:
-> `tests/core/test_llm_client.py`, with the Original and Reply cases in
+> without running anything, and the start logs it. The review found two
+> more substitutions: a fallback naming the primary became codex, installed
+> or not, and an uninstalled claude or gemini primary became codex. Both now
+> fail at the primary, and the start logs every fallback the code ignores.
+> Guard: `tests/core/test_llm_client.py`, with the Original and Reply cases in
 > `tests/editorial/test_editorial_bot.py` and
 > `tests/replies/test_reply_generator.py`.
 

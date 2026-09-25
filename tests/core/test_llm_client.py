@@ -69,6 +69,7 @@ def fallback(p, answer):
 
 
 def after_codex_lock(p, answer):
+    p.monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
     p.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
     p.ollama.answers = [answer]
     return "codex", ["codex", "ollama"]
@@ -232,6 +233,84 @@ def test_the_start_reports_each_provider_setting_that_names_no_adapter(monkeypat
     assert llm.unknown_providers() == []
 
 
+@pytest.mark.parametrize("primary, fallback", [("ollama", "ollama"), ("ollama", "opencode"),
+                                               ("gemini", "gemini"), ("codex", "codex")])
+def test_a_fallback_that_names_the_primary_without_a_model_is_none(providers, monkeypatch, primary, fallback):
+    """Review of #189: the code swapped in codex, or Ollama behind codex,
+    installed or not. Only the primary runs."""
+    monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+    result = ask(provider=primary)
+    assert [name for name, _ in providers.calls] == [primary]
+    assert (result.status, result.provider) == (LLMStatus.FAILED, primary)
+
+
+def test_a_fallback_model_keeps_the_same_cli_provider(providers, monkeypatch):
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "gemini")
+    monkeypatch.setenv("LLM_FALLBACK_MODEL", "gemini-2.5-pro")
+    providers.gemini.answers = [LLMResult(1, "", "gemini down"), TEXT]
+    result = ask(provider="gemini")
+    assert [(name, request.model) for name, request in providers.calls] == [
+        ("gemini", "cloud-model"), ("gemini", "gemini-2.5-pro")]
+    assert (result.stdout, result.provider, result.model) == (TEXT, "gemini", "gemini-2.5-pro")
+
+
+@pytest.mark.parametrize("setting", ["force_provider", "AI_CLI"])
+@pytest.mark.parametrize("cli", ["claude", "gemini", "codex"])
+def test_a_primary_cli_not_installed_fails_by_name_and_runs_nothing(monkeypatch, no_process, cli, setting):
+    """Review of #189: an uninstalled claude or gemini was swapped for codex."""
+    from src.core import llm_client as llm
+    monkeypatch.setattr(llm.shutil, "which", lambda name: None)
+    monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    monkeypatch.setenv("AI_CLI", cli)
+    force = cli if setting == "force_provider" else None
+    result = llm.run_llm("prompt", "cloud-model", label="TEST", force_provider=force)
+    assert (result.status, result.provider, result.stdout) == (LLMStatus.FAILED, cli, "")
+    assert f"{cli} is not installed; nothing was run" in result.stderr
+
+
+def test_a_primary_cli_not_installed_still_tries_the_explicit_fallback(providers, monkeypatch):
+    from src.core import llm_client as llm
+    monkeypatch.setitem(llm.ADAPTERS, "claude", llm._cli_adapter("claude"))
+    monkeypatch.setattr(llm.shutil, "which", lambda name: None if name == "claude" else f"/usr/local/bin/{name}")
+    providers.codex.answers = [TEXT]
+    result = ask()
+    assert [name for name, _ in providers.calls] == ["codex"]
+    assert (result.stdout, result.provider) == (TEXT, "codex")
+
+
+def test_the_start_reports_an_explicit_fallback_it_ignores(monkeypatch):
+    from src.core import config, llm_client as llm
+    monkeypatch.setattr(llm.shutil, "which", lambda name: None if name == "gemini" else f"/usr/local/bin/{name}")
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    monkeypatch.delenv("LLM_FALLBACK_MODEL", raising=False)
+    monkeypatch.setenv("AI_CLI", "codex")
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "ollama")
+    monkeypatch.setattr(config, "REPLY_LLM_PROVIDER", "ollama")
+
+    def ignored(fallback):
+        monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+        return llm.ignored_fallbacks()
+
+    assert ignored("claude") == ["LLM_FALLBACK_CLI='claude' behind AI_CLI='codex', PROFILE_LLM_PROVIDER='ollama', "
+                                 "REPLY_LLM_PROVIDER='ollama': claude is never a fallback"]
+    assert ignored("gemini") == ["LLM_FALLBACK_CLI='gemini' behind AI_CLI='codex', PROFILE_LLM_PROVIDER='ollama', "
+                                 "REPLY_LLM_PROVIDER='ollama': gemini is not installed"]
+    assert ignored("opencode") == ["LLM_FALLBACK_CLI='opencode' behind PROFILE_LLM_PROVIDER='ollama', "
+                                   "REPLY_LLM_PROVIDER='ollama': Ollama never falls back to itself"]
+    assert ignored("codex") == ["LLM_FALLBACK_CLI='codex' behind AI_CLI='codex': "
+                                "it names the primary, codex, without LLM_FALLBACK_MODEL"]
+    monkeypatch.setenv("LLM_FALLBACK_MODEL", "gpt-5.4")
+    assert ignored("codex") == []
+    assert ignored("codx") == [], "an unknown name is `unknown_providers`' to report"
+    monkeypatch.delenv("LLM_FALLBACK_CLI")
+    assert llm.ignored_fallbacks() == []
+
+
+def test_every_fallback_provider_has_an_adapter():
+    from src.core import llm_client as llm
+    assert llm.FALLBACKS <= llm.ADAPTERS.keys()
+
+
 @pytest.mark.parametrize("profile", [TEXT_PROFILE, draft_profile()], ids=["Reply", "Original"])
 def test_an_explicit_fallback_answers_as_before_and_is_named(providers, monkeypatch, profile):
     providers.codex.answers = [TEXT if profile is TEXT_PROFILE else json.dumps({"text": TEXT})]
@@ -275,7 +354,8 @@ def test_a_limit_at_every_rank_exhausts_the_call(providers, fallback_limit):
     assert (result.provider, result.model) == ("codex", "gpt-5.4-mini")
 
 
-def test_a_codex_usage_limit_then_an_ollama_limit_exhausts_the_call(providers):
+def test_a_codex_usage_limit_then_an_ollama_limit_exhausts_the_call(providers, monkeypatch):
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
     providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
     providers.ollama.answers = [RATE_LIMIT]
     assert ask(provider="codex").status is LLMStatus.EXHAUSTED
@@ -357,8 +437,9 @@ def test_the_prompt_echoed_on_stderr_is_no_usage_limit(providers, error, status)
     assert result.status is status
 
 
-def test_the_prompt_echoed_on_stderr_locks_no_codex_out(providers):
+def test_the_prompt_echoed_on_stderr_locks_no_codex_out(providers, monkeypatch):
     from src.core.llm_client import run_llm
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
     providers.codex.answers = [echoed("stream disconnected before completion"), TEXT]
     assert run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="codex").status is LLMStatus.FAILED
     assert run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="codex").stdout == TEXT
@@ -475,8 +556,8 @@ def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
 
     call("Review prompt", "EDITORIAL_REVIEW", "ollama", "ollama")
     call("Review prompt", "EDITORIAL_REVIEW", "claude", "ollama")  # "EDITORIAL_REVIEW (ollama fallback)"
-    call("Review prompt", "EDITORIAL_REVIEW", "codex", "codex")  # "EDITORIAL_REVIEW (codex locked)"
-    call("Review prompt", "EDITORIAL_REVIEW", "codex", "codex")  # cached lock: Ollama alone
+    call("Review prompt", "EDITORIAL_REVIEW", "codex", "ollama")  # "EDITORIAL_REVIEW (codex locked)"
+    call("Review prompt", "EDITORIAL_REVIEW", "codex", "ollama")  # cached lock: Ollama alone
     call("Review prompt", "DIRECT_REPLY", "ollama", "ollama")
     call("Draft prompt", "EDITORIAL_REVIEW", "ollama", "ollama", schemas.draft_profile())
     call("Reply prompt", "EDITORIAL_DRAFT", "ollama", "ollama", llm.TEXT_PROFILE)

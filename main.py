@@ -105,10 +105,13 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
     args = parser.parse_args()
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
-    from src.core.llm_client import unknown_providers
+    from src.core.llm_client import ignored_fallbacks, unknown_providers
     unknown = unknown_providers()
     for setting in unknown:
         log.error(f"[LLM] Unknown provider {setting}: every call it routes fails.")
+    ignored = ignored_fallbacks()
+    for note in ignored:
+        log.error(f"[LLM] Fallback ignored: {note}. A call that fails there fails.")
     if args.dry_run:
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "min_target_posts": config.MIN_TARGET_POSTS_PER_DAY,
@@ -119,6 +122,7 @@ def main():
                           "trend_slots": sorted(TREND_SLOTS),
                           "startup_post": "every start in waking hours, restarts included",
                           "unknown_llm_providers": unknown,
+                          "ignored_llm_fallbacks": ignored,
                           "jobs": [job.id for job in scheduler.get_jobs()]}, indent=2, ensure_ascii=False))
         return
 

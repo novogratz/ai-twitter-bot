@@ -382,19 +382,10 @@ def _detect_codex_lockout(result: "LLMResult", prompt: str) -> Optional[datetime
 
 
 def _provider() -> str:
+    """The provider AI_CLI names, opencode read as Ollama. An unknown or
+    uninstalled one comes back as is: its call fails by name."""
     requested = os.environ.get("AI_CLI", "").strip().lower() or "ollama"
-    if requested in {"ollama", "opencode"}:
-        return "ollama"
-    if requested not in {"claude", "codex", "gemini"}:
-        return requested  # unknown: its adapter refuses the call
-    if shutil.which(requested):
-        return requested
-    log.info(f"[LLM] Requested AI_CLI={requested!r} is not installed; selecting an available CLI.")
-    if shutil.which("codex"):
-        return "codex"
-    if shutil.which("gemini"):
-        return "gemini"
-    return "ollama"
+    return "ollama" if requested == "opencode" else requested
 
 
 def _build_cmd(
@@ -450,27 +441,28 @@ def _build_cmd(
     return cmd
 
 
-def _fallback_provider(primary_provider: str) -> Optional[str]:
-    """The fallback LLM_FALLBACK_CLI names, or None: unset, a failed call
-    fails. An unknown name comes back as is, and its adapter refuses the call."""
+def _fallback(primary: str) -> tuple[Optional[str], str]:
+    """The fallback LLM_FALLBACK_CLI names behind `primary`, opencode read
+    as Ollama, or None: unset, a failed call fails. None also when the named
+    one is ignored, with the reason; the start reports it. An unknown name
+    comes back as is, and its adapter refuses the call."""
     fallback = os.environ.get("LLM_FALLBACK_CLI", "").strip().lower()
-    if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
-        return None
-    if not fallback:
-        return None
+    if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1" or not fallback:
+        return None, ""
     if fallback == "opencode":
         fallback = "ollama"
     if fallback not in ADAPTERS:
-        return fallback
-    if fallback not in {"ollama", "codex", "gemini"}:
-        return None
+        return fallback, ""
+    if fallback not in FALLBACKS:
+        return None, f"{fallback} is never a fallback"
     if fallback != "ollama" and not shutil.which(fallback):
-        return None
-    # Avoid retrying the same provider as its own fallback unless the caller
-    # explicitly configured a different fallback model.
-    if fallback == primary_provider and not os.environ.get("LLM_FALLBACK_MODEL", "").strip():
-        fallback = "ollama" if primary_provider == "codex" else "codex"
-    return fallback
+        return None, f"{fallback} is not installed"
+    if fallback == primary == "ollama":
+        # Ollama's settings come from the profile: retrying it would ask the same.
+        return None, "Ollama never falls back to itself"
+    if fallback == primary and not os.environ.get("LLM_FALLBACK_MODEL", "").strip():
+        return None, f"it names the primary, {primary}, without LLM_FALLBACK_MODEL"
+    return fallback, ""
 
 
 def _fallback_model(primary_model: str, fallback_provider: str) -> str:
@@ -646,6 +638,8 @@ def _ollama_adapter(request: _Request) -> LLMResult:
 
 def _cli_adapter(provider: str) -> Callable[[_Request], LLMResult]:
     def run(request: _Request) -> LLMResult:
+        if not shutil.which(provider):
+            return LLMResult(127, "", f"{request.label}: {provider} is not installed; nothing was run.")
         cmd = _build_cmd(request.prompt, request.model, request.output_json,
                          request.allowed_tools, provider)
         return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=request.cwd)
@@ -658,6 +652,11 @@ ADAPTERS: dict[str, Callable[[_Request], LLMResult]] = {
     "ollama": _ollama_adapter,
     **{name: _cli_adapter(name) for name in ("codex", "gemini", "claude", "opencode")},
 }
+
+# What each provider may do: every one in ADAPTERS can be the primary, these
+# alone the fallback. Claude never is, and LLM_FALLBACK_CLI reads opencode as
+# Ollama.
+FALLBACKS = frozenset({"ollama", "codex", "gemini"})
 
 
 def _unknown_adapter(provider: str) -> Callable[[_Request], LLMResult]:
@@ -683,6 +682,29 @@ def unknown_providers() -> list[str]:
     }
     return [f"{name}={value!r}" for name, value in settings.items()
             if value.strip() and value.strip().lower() not in ADAPTERS]
+
+
+def ignored_fallbacks() -> list[str]:
+    """The fallback LLM_FALLBACK_CLI names when a configured primary ignores
+    it, with the primaries and the reason, for the start to report: a call
+    that fails there fails."""
+    from . import config
+    named = os.environ.get("LLM_FALLBACK_CLI", "").strip()
+    primaries = {
+        "AI_CLI": _provider(),
+        "PROFILE_LLM_PROVIDER": config.PROFILE_LLM_PROVIDER or "",
+        "REPLY_LLM_PROVIDER": config.REPLY_LLM_PROVIDER or "",
+    }
+    ignored: dict[str, list[str]] = {}
+    for setting, primary in primaries.items():
+        primary = primary.strip().lower()
+        if primary not in ADAPTERS:
+            continue  # unset, or unknown and reported by `unknown_providers`
+        _, reason = _fallback(primary)
+        if reason:
+            ignored.setdefault(reason, []).append(f"{setting}={primary!r}")
+    return [f"LLM_FALLBACK_CLI={named!r} behind {', '.join(settings)}: {reason}"
+            for reason, settings in ignored.items()]
 
 
 # A CLI's timeout ceiling as the primary (claude, codex and gemini only),
@@ -771,8 +793,9 @@ def run_llm(
     provider and model that answered, or failed last.
 
     The ladder: the primary provider (`force_provider`, else AI_CLI), then
-    the fallback LLM_FALLBACK_CLI names, if any. An unknown provider name
-    fails the call without running anything. A call fails when
+    the fallback LLM_FALLBACK_CLI names, if any and not ignored (`_fallback`).
+    An unknown provider name fails the call without running anything, and so
+    does, at its rank, a CLI that is not installed. A call fails when
     `_should_fallback` says so or when its answer reads empty. A codex usage
     limit seen on this call is cached and sends the call to the fallback; a
     cached one sends it to Ollama alone. When every provider tried hit its
@@ -809,9 +832,8 @@ def run_llm(
     if first.returncode == 0 or primary not in ADAPTERS:
         return first
 
-    fallback = _fallback_provider(primary)
-    # Ollama's settings come from the profile: retrying it would ask the same.
-    if fallback is None or fallback == primary == "ollama":
+    fallback, _ = _fallback(primary)
+    if fallback is None:
         return first
     fallback_request = replace(
         request,

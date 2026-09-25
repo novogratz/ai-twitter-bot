@@ -180,7 +180,8 @@ def _fresh_editorial_memory(monkeypatch):
 def providers(monkeypatch):
     """A fake adapter for every provider behind the real `run_llm`, each
     failing until a test gives it answers, every CLI installed, the
-    ladder's variables unset but an explicit codex fallback."""
+    ladder's variables unset but an explicit codex fallback. `monkeypatch`
+    lets a rank set its own."""
     from types import SimpleNamespace
     from src.core import llm_client as llm
     from tests.helpers import FakeAdapter
@@ -193,7 +194,7 @@ def providers(monkeypatch):
                 "CODEX_FALLBACK_MODEL"):
         monkeypatch.delenv(var, raising=False)
     monkeypatch.setenv("LLM_FALLBACK_CLI", "codex")
-    return SimpleNamespace(calls=calls, **fakes)
+    return SimpleNamespace(calls=calls, monkeypatch=monkeypatch, **fakes)
 
 
 @_pytest.fixture

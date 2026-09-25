@@ -134,7 +134,8 @@ must not repeat.
   explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
-  (issue #189).
+  (issue #189). One exception, pending the Operator's decision: the Replies
+  to @Graphseo run on the Claude CLI whenever it is installed.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,

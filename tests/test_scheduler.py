@@ -57,3 +57,23 @@ def test_the_start_reports_an_unknown_llm_provider(monkeypatch, capsys, caplog):
     main.main()
     assert json.loads(capsys.readouterr().out)["unknown_llm_providers"] == ["AI_CLI='olama'"]
     assert "Unknown provider AI_CLI='olama'" in caplog.text
+
+
+def test_the_start_reports_an_explicit_fallback_it_ignores(monkeypatch, capsys, caplog):
+    """Review of #189: LLM_FALLBACK_CLI=claude gave no fallback and said
+    nothing."""
+    import json
+    import sys
+    import main
+    from src.core import config
+
+    monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
+    monkeypatch.setenv("AI_CLI", "ollama")
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", None)
+    monkeypatch.setattr(config, "REPLY_LLM_PROVIDER", None)
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "claude")
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    main.main()
+    note = "LLM_FALLBACK_CLI='claude' behind AI_CLI='ollama': claude is never a fallback"
+    assert json.loads(capsys.readouterr().out)["ignored_llm_fallbacks"] == [note]
+    assert f"Fallback ignored: {note}" in caplog.text
