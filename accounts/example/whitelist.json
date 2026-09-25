@@ -1,0 +1,8 @@
+{
+  "_README": "Follow whitelist of the example Account: empty, so with FOLLOW_WHITELIST_ONLY=1 it follows no one but Follow-backs. A real Account lists its handles by tier.",
+  "tiers": {
+    "tier1": [],
+    "tier2": [],
+    "tier3": []
+  }
+}

@@ -1,4 +1,4 @@
-"""Central configuration for the @TheAIShrink Twitter bot.
+"""Central configuration for the X bot of the Account BOT_ACCOUNT names.
 
 The engine settings of src/core/settings.py keep their names here, but are
 no module globals: the module `__getattr__` (PEP 562) reads each one on

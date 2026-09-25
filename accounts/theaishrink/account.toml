@@ -182,6 +182,9 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 # handle, case, spaces, dashes and underscores ignored. An Account adds to
 # the engine's list and never removes from it: no key here unblocks anyone.
 blocked_accounts = []
+# Authors whose posts always get French Replies, whatever one short post
+# looks like: FR_FORCED_REPLY_HANDLES unless .env sets it. Optional.
+fr_forced_reply = ["Graphseo"]
 # Profiles the scraper may visit besides our own: PROFILE_VISIT_ALLOWLIST
 # unless .env sets it.
 profile_visits = ["TheBTCTherapist", "Graphseo"]

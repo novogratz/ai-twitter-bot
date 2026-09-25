@@ -9,7 +9,7 @@ younger than BABYSIT_WINDOW_MINUTES, it triggers an extra replyback sweep so
 every early commenter gets a fast, warm response while the algo is watching.
 Outside the window it does nothing (near-zero Safari cost). All actual writes
 still flow through the reply chokepoint (caps, spacing, one-reply-per-tweet,
-truncation gate, @Graphseo typo).
+truncation gate, human typo).
 """
 import traceback
 from datetime import datetime

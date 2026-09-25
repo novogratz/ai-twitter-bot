@@ -102,7 +102,9 @@ each call, and compare a handle with the one read from a status URL.
   `big_fr`, makes the accounts `early_bird_job` scans first. `engage_vip`
   joins every `engage_job` cycle; the replyback reciprocity likes skip
   `engage_targets` and `reply_targets`; `follow_engagers_job` never follows
-  `follow_engagers_skip`. The optional `blocked_accounts` adds Blocked
+  `follow_engagers_skip`. The optional `fr_forced_reply` fills
+  `FR_FORCED_REPLY_HANDLES`, the authors always answered in French, which
+  `.env` still overrides. The optional `blocked_accounts` adds Blocked
   accounts to the engine's `BLOCKLIST`, matched the same way; no key removes
   one of the engine's, and an unknown key stops the start.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
@@ -128,6 +130,35 @@ guarded state file, and nothing recreates it with defaults
 ([Recovery](#recovery)). What the bot keeps beside them is state: the handles
 `account_curator` promotes go to `whitelist_discovered.json`, the live count to
 `following_count.json`.
+
+#### Creating an Account
+
+The engine names no Account: a new one is a folder, with no code change.
+`accounts/example/` is the template, a fictitious home vegetable gardener
+with no Relation, that never runs live.
+
+1. Copy `accounts/example/` to `accounts/<name>/`: lowercase letters,
+   digits, `-` and `_`.
+2. In `account.toml`, set the `handle` and the `language`, the Slots, the
+   feeds and the `trusted_hosts` each feed, source and Evergreen topic is
+   fetched from, the relevance filter, `[niche]` and `[searches]` of the
+   domain, and the `[network]` handles. Every `[network]` list is required,
+   empty or not; `fr_forced_reply` and `blocked_accounts` are optional.
+   `[limits]` may tighten an engine bound, and `[relations]` is needed only
+   for a handle treated apart, or while `vip_scan` lists a handle without a
+   prompt of its own.
+3. The Operator writes `voice_en.md` and `voice_fr.md`, and fills
+   `whitelist.json`, `respect_list.json` and `following_baseline.json`.
+4. Check it without a browser or a model:
+   `BOT_ACCOUNT=<name> uv run --with-requirements requirements.txt python main.py --dry-run`
+   lists its Slots, jobs and bounded settings; an error names the file and
+   the key. Its state goes to `state/<name>/`, created at the first real
+   start; the dry run writes none. The start still refuses while a state
+   file from before issue #207 sits at the project root, whichever Account
+   runs ([Deploying issue #207](#deploying-issue-207)).
+5. Set `BOT_ACCOUNT=<name>` in `.env`, with Safari logged in to that X
+   account. `bot.lock` and the Safari lock are global: a checkout runs one
+   Account at a time.
 
 ## Start
 

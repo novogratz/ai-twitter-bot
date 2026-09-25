@@ -547,7 +547,8 @@ same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;
 replyback a word test on the Engager's reply; the reply search English.
-`FR_FORCED_REPLY_HANDLES` is read by `reply_language.is_fr_forced`, shared
+`FR_FORCED_REPLY_HANDLES`, the Account's `network.fr_forced_reply` unless
+`.env` sets it, is read by `reply_language.is_fr_forced`, shared
 with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
 is a decline; the bestie and buddy Reply calls also decline "skip" anywhere in
 the first 20 characters (`skip_window`). The editorial prompt carries the
@@ -712,9 +713,13 @@ state file resolves under `state/<BOT_ACCOUNT>/`), `test_migrate_state.py`
 (the move from the root and the start's refusal), `test_state_untracked.py` (git
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (the Account's Voice files
-and the Voice block rendered from them), `test_engine_names_no_interlocutor.py`
-(no string of `src/` names Graphseo or TheBTCTherapist but the few listed
-places, each with its ticket), `test_mass_unfollow.py`
+and the Voice block rendered from them), `test_engine_names_no_account.py`
+(no token of `main.py` or `src/` names TheAIShrink, Graphseo or
+TheBTCTherapist, save two listed values that name the theaishrink folder,
+and a comment or docstring only in a passage dated or numbered),
+`test_example_account.py` (the dry run of the fictitious `accounts/example/`,
+and theaishrink's jobs and ceilings as they were before #187),
+`test_mass_unfollow.py`
 (`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`
 and `tests/`, subfolders included, with `ast`. It fails when an

@@ -2,7 +2,7 @@
 
 Why: a like is the cheapest social signal on X. Each like sends a
 notification → the recipient checks their notifs → many click through
-to /TheAIShrink.
+to the Account's profile.
 
 Strategy:
   - Every 4 min, pick a niche search query (rotating).

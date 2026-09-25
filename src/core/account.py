@@ -186,6 +186,7 @@ _SEARCHES = ("replies", "hot_tab", "likes")
 class Network:
     """X handles as account.toml lists them: order, case and repeats kept."""
     blocked_accounts: tuple  # tokens added to config.BLOCKLIST, which none removes
+    fr_forced_reply: tuple  # authors always answered in French; empty when absent
     profile_visits: tuple
     vip_scan: tuple
     pinned_tracked: tuple
@@ -224,9 +225,9 @@ class Searches:
 def _network(top) -> Network:
     table = _Table(top.file, "network", top["network"],
                    required={key: list for key in _NETWORK_HANDLES},
-                   optional={"blocked_accounts": list})
-    for key in _NETWORK_HANDLES:
-        for i, handle in enumerate(table.items(key, str)):
+                   optional={"blocked_accounts": list, "fr_forced_reply": list})
+    for key in (*_NETWORK_HANDLES, "fr_forced_reply"):
+        for i, handle in enumerate(table.items(key, str) if key in table else []):
             if not _HANDLE.fullmatch(handle):
                 table.fail(f"{key}[{i}]", f"takes an X handle without @, not {handle!r}")
     blocked = table.items("blocked_accounts", str) if "blocked_accounts" in table else []
@@ -234,6 +235,7 @@ def _network(top) -> Network:
         if not re.search(r"[^\W_]", token):
             table.fail(f"blocked_accounts[{i}]", f"takes a handle or a display name, not {token!r}")
     return Network(blocked_accounts=tuple(blocked),
+                   fr_forced_reply=tuple(table.get("fr_forced_reply", [])),
                    **{key: tuple(table[key]) for key in _NETWORK_HANDLES})
 
 

@@ -1,4 +1,4 @@
-"""Run @TheAIShrink: thoughtful AI originals and active daytime conversations."""
+"""Run the Account BOT_ACCOUNT names: sourced Originals and active daytime conversations."""
 import argparse
 import fcntl
 import json

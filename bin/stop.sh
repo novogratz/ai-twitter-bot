@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Stop the @CryptoAIDecode bot cleanly.
+# Stop the bot cleanly.
 
 set -euo pipefail
 

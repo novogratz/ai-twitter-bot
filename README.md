@@ -104,6 +104,9 @@ missing Account, an unknown key or a badly typed value stops the start with a
 message naming the file and the key. Its `[limits]` may tighten an engine
 ceiling or floor, never lift it; a value past the bound is brought back to it
 with a `[SETTINGS]` warning. `.env` still wins over the Account.
+The engine names no account: `accounts/example/`, a fictitious gardener with
+no Relation, runs with `BOT_ACCOUNT=example` and serves as the template of a
+new Account ([Creating an Account](docs/OPERATIONS.md#creating-an-account)).
 
 ```bash
 uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs/bounded settings and exit; no browser or LLM

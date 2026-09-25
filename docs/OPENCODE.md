@@ -1,4 +1,4 @@
-# OpenCode + @CryptoAIDecode
+# OpenCode
 
 > Codex is the default provider. Use this page when explicitly switching to OpenCode for local-model testing.
 

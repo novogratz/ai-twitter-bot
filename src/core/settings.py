@@ -129,8 +129,10 @@ def _script_keys(*names):
 
 
 # ── #195 · src/core/config.py, and keys several lots share ──────────────────
+# A folder name, not an X account: a live .env that predates BOT_ACCOUNT
+# keeps starting on the Account it always ran.
 _declare("BOT_ACCOUNT", str, "theaishrink", "Account the bot runs: the folder accounts/<name>/ holding its account.toml.")
-_declare("BOT_HANDLE", str, "TheAIShrink", "X handle the bot runs, without @; the Account's handle unless set.")
+_declare("BOT_HANDLE", str, "", "X handle the bot runs, without @; the Account's handle unless set.")
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
 _declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")
 _declare("NEWS_MODEL", str, None, "CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
@@ -226,7 +228,7 @@ _declare("LLM_FALLBACK_MODEL", str, "", "Model of every fallback call; blank, th
 _declare("CODEX_FALLBACK_MODEL", str, "gpt-5.4-mini", "Codex model as the fallback; blank means this default.")
 _declare("GEMINI_FALLBACK_MODEL", str, "gemini-2.0-flash", "Gemini model as the fallback; blank means this default.")
 _declare_unused("OPENCODE_FALLBACK_MODEL", str, "opencode/big-pickle")
-_declare("FR_FORCED_REPLY_HANDLES", str, "Graphseo", "Comma-separated handles whose posts always get French Replies.")
+_declare("FR_FORCED_REPLY_HANDLES", str, "", "Comma-separated handles whose posts always get French Replies; the Account's network.fr_forced_reply unless set.")
 
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
 _declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts and reviews Originals.")
@@ -389,7 +391,8 @@ def _account_layer(name: str) -> tuple[dict, list[str]]:
     # The Account's network lists, as the comma-separated settings read them.
     layer.update({"PROFILE_VISIT_ALLOWLIST": ",".join(loaded.network.profile_visits),
                   "VIP_SCAN_HANDLES": ",".join(loaded.network.vip_scan),
-                  "PINNED_TRACKED_HANDLES": ",".join(loaded.network.pinned_tracked)})
+                  "PINNED_TRACKED_HANDLES": ",".join(loaded.network.pinned_tracked),
+                  "FR_FORCED_REPLY_HANDLES": ",".join(loaded.network.fr_forced_reply)})
     warnings = []
     for key, value in loaded.limits.items():
         setting = DECLARED.get(key)

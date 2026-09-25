@@ -93,7 +93,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
-| `BOT_HANDLE` | str | `TheAIShrink` |  | X handle the bot runs, without @; the Account's handle unless set. |
+| `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
 | `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
@@ -151,7 +151,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `LLM_FALLBACK_MODEL` | str | blank |  | Model of every fallback call; blank, the fallback CLI's own below. |
 | `CODEX_FALLBACK_MODEL` | str | `gpt-5.4-mini` |  | Codex model as the fallback; blank means this default. |
 | `GEMINI_FALLBACK_MODEL` | str | `gemini-2.0-flash` |  | Gemini model as the fallback; blank means this default. |
-| `FR_FORCED_REPLY_HANDLES` | str | `Graphseo` |  | Comma-separated handles whose posts always get French Replies. |
+| `FR_FORCED_REPLY_HANDLES` | str | blank |  | Comma-separated handles whose posts always get French Replies; the Account's network.fr_forced_reply unless set. |
 | `EDITORIAL_OLLAMA_MODEL` | str | `gemma4:31b` |  | Ollama model that drafts and reviews Originals. |
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |

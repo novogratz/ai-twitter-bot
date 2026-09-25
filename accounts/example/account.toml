@@ -1,0 +1,132 @@
+# An example Account, fictitious: a home vegetable gardener. It shows that an
+# Account on another domain than AI runs on the same engine, and serves as a
+# template for a new one (docs/OPERATIONS.md#account). BOT_ACCOUNT=example
+# picks this folder; its state goes to state/example/.
+#
+# Never run it live: the handle is invented, and the feeds, hosts and
+# searches are plausible, not checked. A real Account copies this folder,
+# sets its own handle, checks each feed and host, and fills its network.
+# src/core/account.py reads it once at start: an unknown key or a badly typed
+# value stops the start.
+
+handle = "ExampleGardener"
+# Language of the Originals: en or fr. Replies follow the parent's language.
+language = "en"
+
+[editorial]
+# The angle of every trend Slot and of the Startup post.
+trend_angle = "Trending: the gardening topic X is talking about right now, told from a trusted source"
+# Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
+# only news under twelve hours old or an unusually useful source.
+slots = [
+    { clock = "06:30", angle = "A task for the vegetable patch this week, with the first step" },
+    { clock = "09:00", angle = "A soil, compost or watering idea backed by a source" },
+    { clock = "10:00", trend = true },
+    { clock = "12:30", angle = "A crop explained: when to sow, what it needs, what goes wrong" },
+    { clock = "15:00", trend = true },
+    { clock = "17:30", angle = "A pest or disease and the least harmful way to handle it" },
+    { clock = "19:45", angle = "Optional: exceptional fresh gardening news or an unusually useful source", exceptional = true },
+]
+# News items: RSS or Atom feeds, read on a host of trusted_hosts only.
+feeds = [
+    { publisher = "The Guardian Gardens", url = "https://www.theguardian.com/lifeandstyle/gardens/rss" },
+    { publisher = "Gardeners' World", url = "https://www.gardenersworld.com/feed/" },
+]
+# The only hosts a source, a feed or a redirect may be fetched from, over https.
+trusted_hosts = ["www.theguardian.com", "www.gardenersworld.com", "www.rhs.org.uk"]
+
+# Evergreen topics fill quiet news days, rotated daily; never presented as new.
+[[editorial.evergreen]]
+topic = "composting"
+title = "What a compost heap needs to break down instead of rotting"
+url = "https://www.rhs.org.uk/soil-composts-mulches/composting"
+publisher = "Royal Horticultural Society"
+
+[[editorial.evergreen]]
+topic = "crop_rotation"
+title = "Why vegetable beds rotate their crops from year to year"
+url = "https://www.rhs.org.uk/vegetables/crop-rotation"
+publisher = "Royal Horticultural Society"
+
+[[editorial.evergreen]]
+topic = "mulching"
+title = "What a mulch does for the soil, and when to lay it"
+url = "https://www.rhs.org.uk/soil-composts-mulches/mulch"
+publisher = "Royal Horticultural Society"
+
+# Python regular expressions, matched case-insensitively. A news item's title
+# and a Trending post must match `topic`; a Trending post that matches
+# `off_topic` is dropped.
+[relevance]
+topic = '\b(garden\w*|allotment|vegetables?|seeds?|seedlings?|sow\w*|compost\w*|soil|mulch\w*|tomato\w*|potato\w*|harvest\w*|pruning|greenhouse|raised beds?|pests?|slugs?|horticultur\w*)\b'
+off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|giveaway|airdrop|presale|cannabis)\b'
+
+# No Relation: no account is treated apart, so no [relations] table and an
+# empty network.vip_scan. A Relation added later needs a prompt of its own,
+# or a [relations] default for the VIP scan.
+
+# An engine setting that has a ceiling or a floor in src/core/settings.py,
+# set stricter for this Account: a value past the engine's bound is brought
+# back to it, with a [SETTINGS] warning at start. .env still wins over it.
+[limits]
+MAX_ORIGINALS_PER_DAY = 4
+MAX_FOLLOWS_PER_DAY = 5
+LIKE_BOT_DAILY_CAP = 100
+
+# ── Network and niche: the accounts, searches and patterns the jobs use ──────
+# A handle here is compared with the handle read from a status URL, never with
+# a display name. Every list is empty: an example names no real account.
+
+[network]
+# Blocked accounts this Account adds to the engine's BLOCKLIST.
+blocked_accounts = []
+# Authors whose posts always get French Replies. Optional.
+fr_forced_reply = []
+# Profiles the scraper may visit besides our own.
+profile_visits = []
+# Accounts the direct_reply VIP scan searches: each needs a Relation prompt.
+vip_scan = []
+# Accounts the curator always tracks first.
+pinned_tracked = []
+# Replies to these authors run the priority model.
+vip_reply = []
+# early_bird scans vip_reply, then these four lists in this order. Their
+# names come from the first Account; any domain fills them.
+big_ai_hype = []
+mid_size_ai = []
+high_traction_reply = []
+big_fr = []
+# The engage job puts these in every cycle and likes two of their posts.
+engage_vip = []
+# The replyback reciprocity likes skip these engagers.
+engage_targets = []
+reply_targets = []
+# follow_engagers never follows these Engagers. Lowercase.
+follow_engagers_skip = []
+
+[niche]
+# A post a reply job finds is on the niche when `post` matches it,
+# case-insensitively.
+post = '\b(garden\w*|allotment|vegetable (?:patch|garden|beds?)|veg patch|seedlings?|sowing|compost\w*|mulch\w*|raised beds?|greenhouse|tomato plants?|potato plants?|companion planting|pruning|horticultur\w*|jardinage|potager|semis)\b'
+# The follow quality gate refuses a non-Engager whose name and bio do not
+# match `bio`, case-insensitively.
+bio = '\b(garden\w*|allotment|grower|horticultur\w*|permaculture|market garden\w*|potager|jardinier\w*|jardinage|maraîch\w*)\b'
+
+# X search queries.
+[searches]
+# direct_reply rotates through `replies` then `hot_tab`; a result must be on
+# the niche.
+replies = [
+    '"vegetable garden" OR allotment OR "raised bed" lang:en min_faves:30',
+    'compost OR mulch OR "no dig" gardening lang:en min_faves:30',
+    '"tomato plants" OR seedlings OR sowing lang:en min_faves:30',
+]
+hot_tab = [
+    'gardening OR allotment lang:en min_faves:300',
+]
+# like_job picks one per cycle and likes what it finds without the niche
+# check: the query is the only filter.
+likes = [
+    '"vegetable garden" lang:en min_faves:50',
+    'allotment harvest lang:en min_faves:50',
+]
