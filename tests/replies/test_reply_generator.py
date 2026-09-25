@@ -1,5 +1,7 @@
 """The Reply generator, tested through every job that calls it and through
 its interface, with the one fake LLM of tests/replies/fakes.py."""
+import json
+
 import pytest
 
 from src.core.llm_client import LLMResult
@@ -447,3 +449,32 @@ def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
     assert timeout == llm.DEFAULT_LLM_TIMEOUT_SECONDS
+
+
+FOUND = [{"tweet_url": "https://x.com/someone/status/1", "reply": "Batching decides the margin.",
+          "type": "reply", "pattern": "OTHER"}]
+
+
+@pytest.mark.parametrize("answer", [
+    json.dumps(FOUND, separators=(",", ":")),
+    f"Voici les replies :\n```json\n{json.dumps(FOUND)}\n```",
+    f"Here you go: {json.dumps(FOUND)} Enjoy.",
+])
+@pytest.mark.parametrize("route", ["ollama", "claude"])
+def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer):
+    """Issue #175: the Reply generator read every answer as post text, and a
+    compact array became a stream of no events, so the reply search found
+    nothing. The array now reaches it whole, from Ollama or from Claude's
+    envelope, prose around it or not."""
+    import urllib.request
+
+    from src.core import llm_client as llm
+    from src.replies import reply_agent as ra
+
+    envelope = json.dumps({"type": "result", "subtype": "success", "result": answer})
+    monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(0, envelope, ""))
+    monkeypatch.setattr(urllib.request, "urlopen", OllamaServer(answer))
+    monkeypatch.setattr(ra, "REPLY_LLM_PROVIDER", route)
+    monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
+
+    assert ra.generate_replies() == FOUND

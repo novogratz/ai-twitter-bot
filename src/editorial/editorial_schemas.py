@@ -5,7 +5,7 @@ Each limit below lives here only. The schemas, and editorial_bot's prompts and
 checks, read it at call time: changing one changes all three."""
 import os
 
-from ..core.llm_client import CallProfile
+from ..core.llm_client import CallProfile, Output
 
 TEXT_MAX_CHARS = 250
 # Exact source sentences offered as Evidence, and how many a Draft may cite.
@@ -60,6 +60,7 @@ def _profile(schema: dict, temperature: float) -> CallProfile:
         temperature=temperature,
         min_timeout=int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")),
         voice_prefix=False,
+        output=Output.JSON,
     )
 
 

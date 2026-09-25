@@ -11,6 +11,7 @@ from typing import Optional
 from ..core.logger import log
 from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
+from ..core.llm_client import CallProfile, Output
 from . import reply_generator
 from .reply_generator import LanguageRule, Outcome, Voice
 
@@ -611,7 +612,8 @@ def generate_replies(recent_topics=None, already_replied=None):
                   llm_options={
                       "allowed_tools": ["WebSearch"],
                       "cwd": "/tmp",
-                      "structured_output": True,
+                      # A Reply's profile, read as JSON: the answer is a JSON array.
+                      "profile": CallProfile(output=Output.JSON),
                       # Must run on a tool-capable provider: ollama HTTP has no WebSearch
                       # tool and 503s, so this path produced zero replies (op 2026-06-24).
                       "force_provider": REPLY_LLM_PROVIDER,
@@ -626,33 +628,16 @@ def generate_replies(recent_topics=None, already_replied=None):
     if generation.outcome is not Outcome.WRITTEN:
         return None  # declined, failed or rate limited: nothing to post
 
+    # run_llm already took the array out of any prose or code fence.
     output = generation.text
-    cleaned = output
-
-    # Try markdown code block first
-    if "```" in cleaned:
-        code_match = re.search(r"```(?:json)?\s*\n?(.*?)```", cleaned, re.DOTALL)
-        if code_match:
-            cleaned = code_match.group(1).strip()
-
-    # Find JSON array anywhere in text
-    if not cleaned.startswith("["):
-        bracket_start = cleaned.find("[")
-        if bracket_start != -1:
-            bracket_end = cleaned.rfind("]")
-            if bracket_end > bracket_start:
-                cleaned = cleaned[bracket_start:bracket_end + 1]
-
-    # Try parsing as-is first
-    for attempt_text in [cleaned, output]:
-        try:
-            data = json.loads(attempt_text)
-            if isinstance(data, list) and len(data) > 0:
-                valid = [d for d in data if "tweet_url" in d and "reply" in d]
-                if valid:
-                    return valid
-        except json.JSONDecodeError:
-            pass
+    try:
+        data = json.loads(output)
+        if isinstance(data, list) and len(data) > 0:
+            valid = [d for d in data if "tweet_url" in d and "reply" in d]
+            if valid:
+                return valid
+    except json.JSONDecodeError:
+        pass
 
     # Last resort: find all JSON objects individually with regex.
     # Two passes — with and without `pattern` field — so we still recover if
