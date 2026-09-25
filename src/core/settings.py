@@ -16,9 +16,13 @@ with a `SettingsError` naming the key. Changing a setting needs a restart.
 every model call sees `.env` whatever it imports first; a script or a test
 that reads a setting before that loads it on that first read.
 
-Read a setting with `get(name)`. A side-effect switch is a function that calls
-`get` when it runs, never a module constant, like `config.dry_run()`. Tests
-change settings only through the `settings_override` fixture
+Read a setting when it is used, inside the function: `settings.get("X")`, or
+`config.X` for a name src/core/config.py already serves, which it reads on
+every access. Never copy one at module level, `X = settings.get("X")` or
+`from ..core.config import X`: the copy keeps its import-time value and no
+`settings_override` reaches it. A side-effect switch is a function that calls
+`get` when it runs, like `config.dry_run()` or `config.follow_growth_mode()`.
+Tests change settings only through the `settings_override` fixture
 (tests/conftest.py), which restores them.
 
 Layout, for the migration lots of #187 working in parallel: one section per
@@ -28,6 +32,7 @@ section and drops those keys from its `_pending(...)` call there; #200 checks
 nothing is left pending.
 """
 import os
+import re
 from contextlib import contextmanager
 from dataclasses import dataclass
 
@@ -183,7 +188,6 @@ _pending(
     "GEMINI_FALLBACK_MODEL",
     "OPENCODE_FALLBACK_MODEL",
     "FR_FORCED_REPLY_HANDLES",
-    "REPOST_MAX_AGE_HOURS",
 )
 
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
@@ -233,8 +237,17 @@ _pending(
 # ── End of declarations ─────────────────────────────────────────────────────
 
 
+# Credentials and endpoints the model CLIs read from their own environment:
+# `.env` may carry them for the subprocesses, the bot itself never reads them.
+_CLI_PASSTHROUGH = re.compile(r"^(?:[A-Z0-9_]+_API_KEY|OLLAMA_HOST|(?:ANTHROPIC|OPENAI|GEMINI|GOOGLE|CODEX|OPENCODE)_[A-Z0-9_]+)$")
+
+
 def known_keys() -> set[str]:
     return set(DECLARED) | PENDING | SCRIPT_KEYS
+
+
+def _is_known(key: str) -> bool:
+    return key in known_keys() or bool(_CLI_PASSTHROUGH.match(key))
 
 
 def load(env_file: str | None = None, environ=None) -> None:
@@ -248,7 +261,7 @@ def load(env_file: str | None = None, environ=None) -> None:
         return
     environ = os.environ if environ is None else environ
     from_file = _read_env_file(ENV_FILE if env_file is None else env_file)
-    unknown = sorted(set(from_file) - known_keys())
+    unknown = sorted(k for k in from_file if not _is_known(k))
     if unknown:
         raise SettingsError(f"Unknown key in .env: {', '.join(unknown)}. Remove it, or declare it "
                             "in src/core/settings.py.")
@@ -283,6 +296,12 @@ def get(name: str):
     if _values is None:
         load()
     return _values[setting.name]
+
+
+def is_overridden(name: str) -> bool:
+    """Whether a `settings_override` holds `name`, for a setting read at call
+    time from the environment, like `config.dry_run()`."""
+    return _declared(name).name in _overrides
 
 
 def startup_warnings() -> list[str]:

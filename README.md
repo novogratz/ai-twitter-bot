@@ -74,7 +74,9 @@ uv run python main.py
 ```
 
 `.env.example` predates the current account: fix `.env` as described in
-[setup](docs/OPERATIONS.md#setup) before the first run.
+[setup](docs/OPERATIONS.md#setup) before the first run. `.env` is read once at
+start: a key the engine does not know, or a badly typed value, stops the start
+with a message naming the key, and `--dry-run` names the same keys.
 
 ```bash
 uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM

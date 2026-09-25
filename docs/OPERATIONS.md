@@ -38,9 +38,14 @@ least:
   The start logs a fallback the code ignores, and `--dry-run` lists it
   under `ignored_llm_fallbacks`.
 
-`src/core/config.py` loads `.env` without overriding variables already set in the
-shell. Check the setup without a browser or a model with the dry-run command
-from [`AGENTS.md#verification`](../AGENTS.md#verification).
+`main.py` reads `.env` once at start, through `src/core/settings.py`, without
+overriding variables already set in the shell. A key `settings.py` does not
+know, or a value its type rejects (a switch takes `0` or `1`, a number a
+number), stops the start with a message naming the key; a value past its
+ceiling or floor is brought back to it and logged as a `[SETTINGS]` warning.
+Check the setup without a browser or a model with the dry-run command from
+[`AGENTS.md#verification`](../AGENTS.md#verification): it stops on the same
+keys and names them.
 
 ## Start
 

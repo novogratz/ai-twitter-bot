@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from src.core import settings
+from src.core import config, settings
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -142,18 +142,77 @@ def test_main_logs_the_bound_warnings_at_startup(monkeypatch):
 # --- The override fixture ------------------------------------------------------
 
 
+def _read_by_the_code():
+    return (settings.get("MAX_FOLLOWS_PER_DAY"), settings.get("FOLLOW_GROWTH_MODE"),
+            config.MAX_FOLLOWS_PER_DAY, config.FOLLOW_WHITELIST_ONLY, config.dry_run())
+
+
 @pytest.fixture
 def restored_afterwards():
     """Set up before `settings_override`, so torn down after it."""
-    before = settings.get("MAX_FOLLOWS_PER_DAY"), settings.get("FOLLOW_GROWTH_MODE")
+    before = _read_by_the_code()
     yield
-    assert (settings.get("MAX_FOLLOWS_PER_DAY"), settings.get("FOLLOW_GROWTH_MODE")) == before
+    assert _read_by_the_code() == before
 
 
 def test_the_override_fixture_applies_then_restores(restored_afterwards, settings_override):
     settings_override(MAX_FOLLOWS_PER_DAY=3, FOLLOW_GROWTH_MODE=True)
     assert settings.get("MAX_FOLLOWS_PER_DAY") == 3
     assert settings.get("FOLLOW_GROWTH_MODE") is True
+
+
+def test_the_override_fixture_reaches_what_the_config_serves(restored_afterwards, settings_override):
+    settings_override(MAX_FOLLOWS_PER_DAY=3, FOLLOW_WHITELIST_ONLY=False, DRY_RUN=True)
+    assert config.MAX_FOLLOWS_PER_DAY == 3
+    assert config.FOLLOW_WHITELIST_ONLY is False
+    assert config.dry_run() is True
+
+
+def test_dry_run_reads_the_environment_at_call_time_unless_overridden(monkeypatch, settings_override):
+    monkeypatch.setenv("DRY_RUN", "1")
+    assert config.dry_run() is True
+    monkeypatch.setenv("DRY_RUN", "0")
+    assert config.dry_run() is False
+    settings_override(DRY_RUN=True)
+    assert config.dry_run() is True
+
+
+@pytest.mark.parametrize("switch, name, value, served", [
+    ("follow_whitelist_only", "FOLLOW_WHITELIST_ONLY", False, False),
+    ("followback_bypass_whitelist", "FOLLOWBACK_BYPASS_WHITELIST", False, False),
+    ("follow_enforce_ratio", "FOLLOW_ENFORCE_RATIO", True, True),
+    ("follow_growth_mode", "FOLLOW_GROWTH_MODE", True, True),
+    ("ban_short_term_price_targets", "BAN_SHORT_TERM_PRICE_TARGETS", False, False),
+    ("profile_llm_provider", "PROFILE_LLM_PROVIDER", " codex ", "codex"),
+    ("reply_llm_provider", "REPLY_LLM_PROVIDER", "  ", None),
+])
+def test_a_side_effect_switch_is_a_function_its_constant_calls(settings_override, switch, name, value, served):
+    settings_override(**{name: value})
+    assert getattr(config, switch)() == served
+    assert getattr(config, name) == served
+
+
+def test_a_setting_config_derives_follows_its_override(settings_override):
+    settings_override(BOT_HANDLE="Other", AI_CLI=" Codex ", REPLY_MODEL=None)
+    assert config.BOT_PROFILE_URL == "https://x.com/Other"
+    assert config.AI_CLI == "codex"
+    assert config.REPLY_MODEL == "gpt-5.4-mini"
+
+
+def test_undoing_a_config_monkeypatch_leaves_a_global_behind():
+    """Why tests/conftest.py drops these globals after every test: monkeypatch
+    sets back the value it read instead of deleting the attribute."""
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(config, "MAX_FOLLOWS_PER_DAY", 5)
+        assert config.MAX_FOLLOWS_PER_DAY == 5
+    assert vars(config)["MAX_FOLLOWS_PER_DAY"] == settings.get("MAX_FOLLOWS_PER_DAY")
+
+
+def test_no_test_starts_with_a_global_hiding_a_setting(settings_override):
+    """Runs after the test above, and after every test that patched config."""
+    assert not set(vars(config)) & set(config._READ_AT_ACCESS)
+    settings_override(MAX_FOLLOWS_PER_DAY=4)
+    assert config.MAX_FOLLOWS_PER_DAY == 4
 
 
 def test_an_override_ends_with_its_block_even_on_error():
@@ -270,9 +329,18 @@ def test_every_script_key_is_read_by_a_script_that_sources_env():
 
 
 def test_the_config_no_longer_reads_the_environment():
-    """Only config.dry_run() still does, at call time; #194 deletes the
-    REPOST_MAX_AGE_HOURS line."""
+    """Only config.dry_run() still does, at call time."""
     text = (ROOT / "src/core/config.py").read_text()
     reads = {a or b for a, b in _LITERAL_READ.findall(text)}
-    assert reads <= {"DRY_RUN", "REPOST_MAX_AGE_HOURS"}
+    assert reads <= {"DRY_RUN"}
     assert not _DYNAMIC_READ.search(text)
+
+
+def test_model_cli_credentials_in_env_file_do_not_stop_the_start(tmp_path):
+    """A key the model CLIs read from their environment (an API key, the
+    Ollama host) may sit in .env for the subprocesses; any other unknown key
+    still stops the start."""
+    from src.core import settings
+    for key in ("OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_BASE_URL", "OLLAMA_HOST"):
+        assert settings._is_known(key), key
+    assert not settings._is_known("MAX_BREAKOUTS_PER_DAY")
