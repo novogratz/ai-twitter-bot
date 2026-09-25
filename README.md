@@ -20,9 +20,8 @@ English prompts): every post and reply prompt carries it as one block.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Replies, likes and follows keep to AI** (Operator, 2026-09-25): the niche
-  patterns, searches and account lists of `account.toml` leave crypto, markets
-  and space out; the accounts the Operator picked by hand stay.
+- **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
+  in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.

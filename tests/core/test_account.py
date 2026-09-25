@@ -371,23 +371,34 @@ NETWORK = {
         "watcherguru", "wsj", "zerohedge",
     ],
     "NICHE_PATTERN": (
-        r"\b(ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|"
-        r"deepseek|huggingface|deepmind|artificial\s+intelligence|intelligence\s+artificielle|"
-        r"machine\s*learning|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|"
-        r"altman|ml|deep\s*learning|neural|datacenter|codex|copilot|cursor|windsurf|replit)\b",
+        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|"
+        r"llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|"
+        r"xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|"
+        r"(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|"
+        r"machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|"
+        r"reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|"
+        r"(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|"
+        r"humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b",
         34),
     "NICHE_BIO_RE": (
-        r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|nvidia)\b", 34),
+        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|"
+        r"chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|"
+        r"artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|"
+        r"deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|"
+        r"(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b",
+        34),
     "SEARCH_QUERIES": [
-        '"why would" OR "why is" OR "what am I missing" (Nvidia OR AI) lang:en min_faves:30',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
         "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
         '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
         '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
         'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
         'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
-        'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
-        'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30',
+        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
         '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
     ],
     "HOT_TAB_QUERIES": [
@@ -397,10 +408,10 @@ NETWORK = {
         'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
     ],
     "LIKE_QUERIES": [
-        "AI datacenter OR power demand lang:en min_faves:50",
-        "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50",
-        "Nvidia OR GPU OR compute cluster lang:en min_faves:50",
-        "robotics OR humanoid robots OR frontier tech lang:en min_faves:50",
+        "AI datacenter OR AI power demand lang:en min_faves:50",
+        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
+        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
+        "robotics OR humanoid robots lang:en min_faves:50",
     ],
 }
 
@@ -452,12 +463,25 @@ REMOVED_205 = {
         "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
     ],
 }
-# Queries #205 kept with their AI terms only: before -> after.
+# Queries #205 kept with their AI terms only, a company or energy word
+# paired with AI: before -> after.
 NARROWED_205 = {
     '"why would" OR "why is" OR "what am I missing" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30':
-        '"why would" OR "why is" OR "what am I missing" (Nvidia OR AI) lang:en min_faves:30',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'Nvidia OR NVDA OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50':
         'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
+    'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30':
+        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+    'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30':
+        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
+    "AI datacenter OR power demand lang:en min_faves:50":
+        "AI datacenter OR AI power demand lang:en min_faves:50",
+    "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50":
+        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
+    "Nvidia OR GPU OR compute cluster lang:en min_faves:50":
+        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
+    "robotics OR humanoid robots OR frontier tech lang:en min_faves:50":
+        "robotics OR humanoid robots lang:en min_faves:50",
 }
 
 
@@ -501,7 +525,7 @@ def test_the_removed_accounts_and_queries_are_gone():
     for key in ("replies", "hot_tab", "likes"):
         assert not set(REMOVED_205[key]) & queries, key
     for before, after in NARROWED_205.items():
-        assert before not in queries and after in searches.replies
+        assert before not in queries and after in queries
 
 
 @pytest.mark.parametrize("text", [
@@ -512,6 +536,20 @@ def test_the_removed_accounts_and_queries_are_gone():
     "Le CAC 40 recule, la BCE maintient ses taux",
     "SpaceX Starship reached orbit and Starlink passed 8,000 satellites",
     "NASA picked a new rocket for the Moon landing",
+    # The French verb avoir is not AI.
+    "J'ai acheté du Bitcoin ce matin",
+    "J’ai acheté du Bitcoin ce matin",
+    "Le CAC 40 recule, j'ai renforcé mes positions",
+    "J'AI TOUT VENDU",
+    "Ai-je raté le rallye ?",
+    "Je vous ai dit que le marché allait monter",
+    "J'en ai marre de la Fed",
+    # Too broad alone.
+    "Real estate agent, 20 years in Miami",
+    "Agent immobilier à Lyon",
+    "FBI agents raided the office",
+    "Meta and Google beat on earnings, Apple lagged",
+    "This token is up 40% today",
 ])
 def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     from src.replies import direct_reply
@@ -525,6 +563,24 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Artificial intelligence is changing radiology faster than expected",
     "L'IA générative change le travail des traducteurs",
     "Bitcoin miners are turning their sites into AI datacenters",
+    "L’IA va remplacer les traducteurs",
+    "AI-powered search is here",
+    "ai agents are overhyped",
+    "l'AI Act entre en vigueur",
+    "A.I. will not replace radiologists",
+    "Apple Intelligence is late",
+    "Meta's Llama 4 is out",
+    "Google's Veo 3 makes the best videos",
+    "Meta superintelligence lab poached another researcher",
+    "1M token context window",
+    "vibe coding is a trap",
+    "Qwen3 beats everything on coding",
+    "LLMs still cannot count letters",
+    "GPUs are sold out until next year",
+    "open-weights models are catching up",
+    "Sora and Midjourney are eating stock photography",
+    "GenAI budgets are exploding",
+    "Agentic workflows need evals",
 ])
 def test_an_ai_post_is_on_the_niche(text):
     from src.replies import direct_reply
@@ -539,6 +595,19 @@ def test_an_ai_post_is_on_the_niche(text):
     ("AI researcher, ex-DeepMind", True),
     ("Building LLM tools for lawyers", True),
     ("Machine learning engineer at a robotics startup", True),
+    ("Research engineer @AnthropicAI", True),
+    ("Deep learning engineer", True),
+    ("Computer vision engineer", True),
+    ("LLMs engineer", True),
+    ("GenAI founder", True),
+    ("Robotics engineer @Figure", True),
+    ("Building agents @ startup", True),
+    ("Ingénieur IA", True),
+    ("Chercheur en IA", True),
+    ("J'ai 30 ans, investisseur", False),
+    ("Real estate agent, dad of 3", False),
+    ("Software engineer, founder, tech", False),
+    ("Claude Dupont, investisseur", False),
 ])
 def test_the_follow_bio_niche_is_ai_only(bio, on_niche):
     assert bool(account.load("theaishrink").niche.bio.search(bio)) is on_niche

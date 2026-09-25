@@ -107,7 +107,8 @@ each call, and compare a handle with the one read from a status URL.
   `bio` must match the name and bio of a non-Engager the follow quality
   gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
-  `replies` then `hot_tab`; `like_job` picks one of `likes`.
+  `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
+  it finds without the niche check.
 
 The folder also holds the Operator files, versioned, which the bot reads at
 each use and never writes:

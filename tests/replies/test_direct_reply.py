@@ -52,6 +52,79 @@ def test_reply_and_like_queries_are_ai_only():
         assert banned not in joined, f"{banned!r} is off the AI niche"
 
 
+def _query_clauses(query: str, and_first: bool) -> list:
+    """The alternatives of an X search query, each the list of terms a
+    matching post holds. X's precedence of implicit AND and OR is not pinned,
+    so the caller reads the query both ways."""
+    import re
+    tokens = [t for t in re.findall(r'"[^"]*"|\(|\)|[^\s()]+', query)
+              if not re.fullmatch(r"\w+:\S+", t)]
+    pos = 0
+
+    def atom():
+        nonlocal pos
+        tok = tokens[pos]
+        pos += 1
+        if tok == "(":
+            inner = expr()
+            pos += 1
+            return inner
+        return [[tok.strip('"')]]
+
+    def conj(parts):
+        clauses = [[]]
+        for part in parts:
+            clauses = [c + p for c in clauses for p in part]
+        return clauses
+
+    def more():
+        return pos < len(tokens) and tokens[pos] != ")"
+
+    def expr():
+        nonlocal pos
+        if and_first:
+            alternatives = []
+            while True:
+                parts = [atom()]
+                while more() and tokens[pos] != "OR":
+                    parts.append(atom())
+                alternatives += conj(parts)
+                if not more():
+                    return alternatives
+                pos += 1
+        parts = []
+        while more():
+            alternatives = atom()
+            while more() and tokens[pos] == "OR":
+                pos += 1
+                alternatives = alternatives + atom()
+            parts.append(alternatives)
+        return conj(parts)
+
+    return expr()
+
+
+def test_every_reply_and_like_query_finds_posts_on_the_niche():
+    """#205: a query alternative `post` rejects sends the reply jobs posts
+    they drop, and the like job, which has no niche check, likes them."""
+    from src.core import account
+    from src.replies.direct_reply import is_on_niche
+    replies, hot_tab = _searches()
+    for query in replies + hot_tab + list(account.current().searches.likes):
+        for and_first in (True, False):
+            for clause in _query_clauses(query, and_first):
+                assert is_on_niche(" ".join(clause)), f"{clause} of {query!r}"
+
+
+def test_the_query_reader_splits_alternatives_both_ways():
+    assert _query_clauses("a b OR c lang:en min_faves:5", True) == [["a", "b"], ["c"]]
+    assert _query_clauses("a b OR c", False) == [["a", "b"], ["a", "c"]]
+    assert _query_clauses('("x y" OR z) (n OR m)', True) == [
+        ["x y", "n"], ["x y", "m"], ["z", "n"], ["z", "m"]]
+    assert _query_clauses('("x y" OR z) (n OR m)', False) == [
+        ["x y", "n"], ["x y", "m"], ["z", "n"], ["z", "m"]]
+
+
 def test_prompts_are_english_only():
     """Operator 2026-06-09: 'we are english only bro'. The reply lane must
     not seek French posts."""

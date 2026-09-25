@@ -255,29 +255,35 @@ follow_engagers_skip = [
 ]
 
 # Python regular expressions. AI only (Operator, 2026-09-25): no crypto,
-# markets, space or general tech term.
+# markets, space or general tech term, and no word too broad alone (token,
+# coding, agent, meta, google, apple). AI in capitals always matches; any
+# other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b(ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|deepseek|huggingface|deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|altman|ml|deep\s*learning|neural|datacenter|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
-# match `bio`, case-insensitively.
-bio = '\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|nvidia)\b'
+# match `bio`, case-insensitively. The AI terms of `post`, less the model
+# and tool names that are also first names or common words (Claude, Sora,
+# Gemini, Cursor…): the name is part of what `bio` reads.
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
 # X search queries.
 [searches]
+# Every alternative of a query, read with AND before OR or OR before AND,
+# finds posts `post` keeps: a company or energy word goes with AI.
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
-    '"why would" OR "why is" OR "what am I missing" (Nvidia OR AI) lang:en min_faves:30',
+    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
     '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
     '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
     'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
     'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
-    'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
-    'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30',
+    'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+    'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
 ]
 hot_tab = [
@@ -286,10 +292,11 @@ hot_tab = [
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
-# like_job picks one per cycle, on the Top or the Latest tab.
+# like_job picks one per cycle, on the Top or the Latest tab, and likes
+# what it finds without the niche check: the query is the only filter.
 likes = [
-    'AI datacenter OR power demand lang:en min_faves:50',
-    'megawatt OR gigawatt OR nuclear AI lang:en min_faves:50',
-    'Nvidia OR GPU OR compute cluster lang:en min_faves:50',
-    'robotics OR humanoid robots OR frontier tech lang:en min_faves:50',
+    'AI datacenter OR AI power demand lang:en min_faves:50',
+    'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',
+    'Nvidia OR GPU OR AI compute cluster lang:en min_faves:50',
+    'robotics OR humanoid robots lang:en min_faves:50',
 ]
