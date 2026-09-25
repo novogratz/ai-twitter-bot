@@ -163,8 +163,8 @@ stopped.
 **Corrupt `editorial_state.json` or `action_ledger.json`.** Both fail closed:
 the editorial cycle errors out and the ledger refuses writes. Repair the JSON
 by hand, keeping today's entries, or restore a copy taken today. Never delete
-the ledger or restore it from git: the committed `action_ledger.json` dates
-from July 2026, and either move resets today's count and grants extra posts.
+the ledger: git holds no copy since issue #193, and a missing ledger resets
+today's count and grants extra posts.
 
 The ledger holds one JSON object per line, each with a text `ts`. A last line
 without its final newline still counts when it reads as a row, and the next
@@ -294,10 +294,13 @@ restart.
 
 ## State files
 
-JSON files at the repo root are live state. Keep them across deploys and out
-of unrelated commits. Git tracks some of them, including `action_ledger.json`,
-`following_count.json` and `respect_list.json`, with stale copies: a
-`git checkout`, `reset` or `pull` that touches them overwrites live state.
+JSON files at the repo root are live state. Since issue #193 git ignores
+every state file, so a `git checkout`, `reset` or `pull` never touches them,
+and `tests/test_state_untracked.py` fails on a declared state file git does
+not ignore. A new state file goes in `.gitignore` in the same change. The
+Operator's files stay tracked: `respect_list.json`, `whitelist.json` (until
+issue #206 splits it) and `core_identity*.md`; git still refuses a pull
+that changes one of them while it holds a local edit.
 `action_ledger.json` keeps its name but holds one JSON object per line since
 issue #147. A ledger in the former format, one JSON list like the committed
 copy, is still read, and the first write after a restart converts it in place
@@ -366,11 +369,10 @@ The follow policy still reads it until its entries age out of the
 ledger's 90 days; delete it, and the fallback in `follow_policy`,
 around 2026-12-22.
 
-The supervisors cite three more root files, kept for them:
-`engine_health_alerts.json` (`bin/auto_improve.sh`), `daily_state.json` (a
-comment in the launchd plist) and `operator_prompt.md` (`operator_cycle.sh`).
-No code reads `live_strategy.json` since issue #170: the operator can
-delete it.
+`operator_prompt.md` stays tracked for `operator_cycle.sh`. Issue #193
+deleted the root files no code read any more: `daily_state.json`,
+`engine_health_alerts.json`, `growth_strategies.md`, `live_strategy.json`
+and `suggestions_applied.log`.
 
 A module declares a new state file once, as a `StateFile` with its default
 and its policy. Guarded suits a guardrail, or a record that alone stops a
@@ -382,6 +384,50 @@ Run `git status` before `git pull`: a pull that deletes a file modified in
 the checkout stops until that file is moved aside
 ([2026-09-23 root cleanup](HISTORY.md)). `debate_state.json` is untracked
 and unused since debate turns moved to the ledger; it can be deleted.
+
+### Deploying issue #193
+
+The commit that takes the state files out of the index deletes them from
+every checkout that pulls it, the live one included, and a missing file
+reads as empty: the ledger would reset today's ceiling. Git refuses that
+pull while a state file differs from its committed copy, which is always
+the case live. Deploy it once, from the live checkout:
+
+1. Stop the bot and its supervisor ([Stop](#stop),
+   [Supervisors](#supervisors)); `pgrep -if "python.*main\.py"` prints
+   nothing.
+2. `git fetch origin`, then `git status --short`: only state files show
+   up as modified or untracked. Set anything else aside first.
+3. Copy the state, with the script from the incoming commit, since the
+   checkout does not have it yet. The backup directory is new and outside
+   the checkout:
+
+   ```bash
+   git show origin/main:bin/carry_state.sh > /tmp/carry_state.sh
+   B=~/ai-twitter-bot-state-$(date +%Y-%m-%d-%H%M)
+   bash /tmp/carry_state.sh save "$B" origin/main
+   ```
+
+   It lists the files the pull deletes and writes their SHA-256 to
+   `$B/SHA256SUMS`.
+4. Put back the committed copies, so git accepts the pull, then pull:
+
+   ```bash
+   git checkout HEAD -- $(awk '{print $2}' "$B/SHA256SUMS")
+   git pull --ff-only origin main
+   ```
+
+5. Restore: `bin/carry_state.sh restore "$B"`. It copies back every saved
+   file git now ignores, refuses to overwrite one that differs, and checks
+   each against its checksum; it ends with `restored N files; N match the
+   backup`. The five orphans above are `left out` and stay deleted.
+6. `git status --short` prints nothing for the state files. Restart the
+   bot only on the Operator's request.
+
+If a step fails, the state is still in `$B`: copy it back by hand with the
+bot stopped, and check the copies from the checkout with
+`shasum -a 256 -c "$B/SHA256SUMS"` before restarting; only the orphans may
+report missing.
 
 ## Legacy tools
 

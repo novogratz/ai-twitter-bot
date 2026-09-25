@@ -119,10 +119,13 @@ rule; cross-cutting invariants stay at the root of `tests/`.
 
 - Start, stop and restart only on an explicit operator request
   (`./bin/run.sh`, `bin/stop_bot.sh`). Code and config take effect at restart.
-- JSON files at the repo root are live state. `action_ledger.json` already
-  counts toward today's ceiling: keep it across deploys, and leave unrelated
-  state files out of your commits. It holds one JSON object per line, not a
-  JSON list: read it line by line or through `action_guard`.
+- JSON files at the repo root are live state, ignored by git: a new state
+  file goes in `.gitignore` in the same change, and a test fails on one git
+  does not ignore. The Operator's files stay tracked: `respect_list.json`,
+  `whitelist.json` and `core_identity*.md`. `action_ledger.json` already
+  counts toward today's ceiling and git holds no copy of it: keep it across
+  deploys. It holds one JSON object per line, not a JSON list: read it line
+  by line or through `action_guard`.
 - A JSON state file goes through `state_store.StateFile`, declared once with
   its policy. An unreadable guarded file stops the job that needs it and is
   never overwritten: repair it by hand, never delete it

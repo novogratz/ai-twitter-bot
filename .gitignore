@@ -12,7 +12,6 @@ engagement_log.csv
 tweet_history.json
 replied_tweets.json
 followed_accounts.json
-daily_state.json
 performance_log.json
 learnings.json
 bot.log
@@ -77,6 +76,29 @@ run.out
 current_tweet.txt
 outgoing_tweet.txt
 reply.txt
+
+# Live state at the repo root, untracked in issue #193: a pull never
+# overwrites it. Deploy that change with docs/OPERATIONS.md#deploying-issue-193.
+action_ledger.json
+autonomous_log.md
+codex_lockout.json
+discovered_accounts.json
+engagement_targets_log.json
+follow_engagers_state.json
+follow_quality_rejects.json
+follower_history.json
+followers_seen.json
+following_count.json
+like_bot_state.json
+liked_tweets.json
+mass_unfollow_results.json
+personality.json
+pin_daily_state.json
+pin_history.json
+replied_back.json
+safari_health.json
+safari_hygiene_state.json
+tracked_accounts.json
 
 # Atomic-write temp files left by a killed process
 .replied_tweets.*.tmp
