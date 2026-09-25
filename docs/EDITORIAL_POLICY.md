@@ -60,6 +60,12 @@ topic is still to be confirmed by the Operator. The VIP scan still answers
 Graphseo's and TheBTCTherapist's posts without the niche filter, and
 answers to Engagers still follow the conversation.
 
+The search lane, the feed sweep, early bird and mega watch answer root
+posts only: a post X marks as a reply, or whose text opens on a mention,
+never reaches the model, which would see it without the post it answers
+(issue #241). The VIP scan still answers everything its accounts post,
+their replies included.
+
 The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
 artificial intelligence, machine and deep learning, computer vision,
 superintelligence, agentic, context windows, open weights, vibe coding),

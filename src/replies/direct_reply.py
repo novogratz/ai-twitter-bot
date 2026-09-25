@@ -132,13 +132,16 @@ SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, p
 
 
 def _search_candidates(tweets: list, query: str) -> list:
-    """Search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the niche
-    (queries are broad), fresh and rising first. The query joins the log
-    tag so per-query conversion is measurable (2026-06-08)."""
+    """Root search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the
+    niche (queries are broad), fresh and rising first. A nested reply is
+    skipped, as in the feed sweep: the model would see it without its root
+    post (issue #241, lost in 3857e1ba). The query joins the log tag so
+    per-query conversion is measurable (2026-06-08)."""
     limit = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
     return [reply_pipeline.Candidate(t["url"], t.get("text") or "", f"SEARCH-HOT/{query[:60]}")
             for t in sorted(tweets, key=freshness_sort_key)
-            if t.get("url") and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
+            if t.get("url") and not x_urls.is_reply_like_tweet(t)
+            and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
 
 
 # Rotation cursor for the per-cycle query slice. Process-lifetime state:
