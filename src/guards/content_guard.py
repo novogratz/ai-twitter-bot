@@ -454,7 +454,10 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
 
     Originals must be in CONTENT_LANG_PRIMARY; replies are language-matched
     to the parent elsewhere. Returns (ok, reason); reason is "" when ok.
+    Raises ValueError on any other kind: it would match no surface gate.
     """
+    if kind not in ("original", "reply"):
+        raise ValueError(f"unknown content kind: {kind!r}")
     if not text or not text.strip():
         return (False, "empty")
 
@@ -509,7 +512,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         # Hard X limit for replies — an over-limit draft gets cut by
         # the composer mid-sentence, which reads as a botched AI paste.
         if len(text) > REPLY_MAX_CHARS:
-            return (False, f"too long for a {kind} ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
+            return (False, f"too long for a reply ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 

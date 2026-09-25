@@ -1,5 +1,7 @@
 """src/guards/content_guard: dedup, price targets, language, truncation,
 burned phrases and shapes, violence."""
+import pytest
+
 from src.guards import content_guard as cg
 
 
@@ -112,6 +114,14 @@ def test_validate_rejects_overlong_reply():
 def test_validate_allows_casual_unpunctuated_ending():
     ok, _ = cg.validate("screenshot this. we'll talk about it in 6 months", kind="reply")
     assert ok
+
+
+def test_validate_refuses_unknown_kind():
+    """A retired kind such as "quote" matches no surface gate: it would skip
+    the language and length checks in silence, so it must raise instead."""
+    for kind in ("quote", "post", ""):
+        with pytest.raises(ValueError, match="unknown content kind"):
+            cg.validate("a sharp take on the benchmark gap", kind=kind)
 
 
 # --- skips, burned phrases and shapes, violence ------------------------------

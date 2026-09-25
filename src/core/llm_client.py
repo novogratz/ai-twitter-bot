@@ -64,9 +64,8 @@ def strip_tool_calls(text: str) -> str:
 def _contains_tool_call_leak(text: str) -> bool:
     """Returns True if the text looks like it still contains tool-call markup.
 
-    Use as a post-scrub guard — if this returns True after strip_tool_calls,
-    the safest action is to reject the post entirely rather than ship
-    half-stripped garbage.
+    One of the shapes contains_post_unsafe_leak refuses: markup that survives
+    strip_tool_calls rejects the whole post rather than ship it half-stripped.
     """
     if not text:
         return False

@@ -77,9 +77,9 @@ def test_bare_dash_replacement_keeps_spacing():
     assert strip_dashes("The angle—conviction — is generic") == "The angle, conviction. is generic"
 
 
-def test_qrt_playbook_setup_colon_and_dotdot_texture():
-    """2026-06-10 QRT playbook (operator: model the human meme account):
-    (1) a text ending with a setup-colon ("[actor] watching X:") is refused
+def test_setup_colon_refused_and_dotdot_texture_kept():
+    """Meme-account texture, introduced 2026-06-10:
+    (1) a reply ending with a setup-colon ("[actor] watching X:") is refused
     as truncated (the GIF chokepoints that allowed it are removed, #111);
     (2) humanize() must preserve the human ".." / "..." texture (only 4+
     dots is an artifact); (3) casualize() never strips a ".." ending."""
