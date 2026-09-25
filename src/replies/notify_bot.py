@@ -1,5 +1,4 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
-import re
 import traceback
 from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
@@ -18,8 +17,6 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # extra sweeps run this job too, on the same set-aside posts.
 REPLYBACK_JOB = reply_pipeline.Job("replyback", "REPLYBACK", voice=lambda _author: replyback_agent.VOICE,
                                    debate_turn=True)
-_HANDLE_RE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
-_MENTION_RE = re.compile(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])")
 
 
 def _influencer_handles() -> set:
@@ -27,19 +24,6 @@ def _influencer_handles() -> set:
     from ..account.engage_bot import TARGET_ACCOUNTS as ENGAGE_TARGETS
     from .reply_agent import TARGET_ACCOUNTS as REPLY_TARGETS
     return {h.lower() for h in list(ENGAGE_TARGETS) + list(REPLY_TARGETS)}
-
-
-def _extract_handle(user_string: str) -> str:
-    """Extract @handle (lowercase, no @) from a User-Name text blob."""
-    if not user_string:
-        return ""
-    mentions = _MENTION_RE.findall(user_string)
-    if mentions:
-        return mentions[-1].lower()
-    handle = user_string.strip().lstrip("@").lower()
-    if _HANDLE_RE.fullmatch(handle):
-        return handle
-    return ""
 
 
 def _is_blocklisted(user_string: str, handle: str) -> bool:
@@ -158,7 +142,9 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
         if visited >= max_visits:
             break
         user_str = r.get("user", "")
-        handle = _extract_handle(user_str)
+        # `user` is the display name: a one-word name read as a handle
+        # visited, and liked, another account's profile.
+        handle = x_urls.author(r.get("url", ""))
         if not handle or handle in seen_handles:
             continue
         seen_handles.add(handle)

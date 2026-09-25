@@ -34,8 +34,9 @@ def _harvest_active_authors(tweets: list) -> None:
     """Add authors of high-engagement feed posts to dynamic_accounts.json.
 
     This is the main way the engage_bot discovers NEW profiles to visit — it
-    no longer relies on the old hardcoded list. Only handles with a valid X
-    format (1-15 alphanumeric/_) are stored.
+    no longer relies on the old hardcoded list. The handle comes from the
+    status URL: the scraped `author` is a display name, and a one-word name
+    ("Claude", "Tesla") once landed in the pool as another account's handle.
     """
     if not tweets:
         return
@@ -51,14 +52,11 @@ def _harvest_active_authors(tweets: list) -> None:
             likes = int(t.get("likes") or 0)
             if likes < HARVEST_MIN_LIKES:
                 continue
-            author = (t.get("author") or "").lstrip("@").strip()
-            if not author or author.lower() in known:
+            handle = x_urls.author(t.get("url") or "")
+            if not handle or handle in known:
                 continue
-            # Only keep valid X handles (1-15 chars, alphanumeric/_).
-            if len(author) > 15 or not all(c.isascii() and (c.isalnum() or c == "_") for c in author):
-                continue
-            new_handles.append(author)
-            known.add(author.lower())
+            new_handles.append(handle)
+            known.add(handle)
 
         if new_handles:
             added = add_dynamic_accounts(en=new_handles)

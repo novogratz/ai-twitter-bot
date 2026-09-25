@@ -28,5 +28,13 @@ def test_reply_like_tweet_is_a_nested_reply_or_someone_elses_post():
     own = {"url": url("SomeOne"), "text": "hi", "author": "someone"}
     assert not x_urls.is_reply_like_tweet(own, expected_author="@someone")
     assert x_urls.is_reply_like_tweet(own, expected_author="other")
-    assert x_urls.is_reply_like_tweet({**own, "author": "Some One"}, expected_author="someone")
-    assert not x_urls.is_reply_like_tweet({**own, "author": "unknown"}, expected_author="someone")
+
+
+def test_reply_like_tweet_ignores_the_display_name():
+    """Issue #162: the scraped `author` is a display name. "Sam Altman" on
+    @sama's own post is still @sama's post; a one-word name matching the
+    scanned handle does not make someone else's post ours."""
+    sama = {"url": url("sama"), "text": "hi", "author": "Sam Altman"}
+    assert not x_urls.is_reply_like_tweet(sama, expected_author="sama")
+    reposted = {"url": url("someone"), "text": "hi", "author": "sama"}
+    assert x_urls.is_reply_like_tweet(reposted, expected_author="sama")
