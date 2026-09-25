@@ -50,8 +50,8 @@ def test_failures_in_a_row_restart_safari(restarts):
 
 @pytest.mark.parametrize("error", [StateUnreadable("replied_tweets.json is unreadable"),
                                    OutsideActiveHours("Bot asleep")],
-                         ids=["state_unreadable", "bedtime"])
-def test_an_unreadable_state_or_bedtime_is_not_a_safari_failure(restarts, error):
+                         ids=["state_unreadable", "overnight"])
+def test_an_unreadable_state_or_the_overnight_is_not_a_safari_failure(restarts, error):
     job = health.wrap_job(_raises(error), "direct_reply")
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         job()
@@ -64,6 +64,31 @@ def test_an_unreadable_state_is_logged_as_a_halt(restarts, caplog):
     health.wrap_job(_raises(StateUnreadable("replied_tweets.json is unreadable")), "direct_reply")()
 
     assert "direct_reply halted: replied_tweets.json is unreadable" in caplog.text
+
+
+@pytest.mark.parametrize("error", [StateUnreadable("replied_tweets.json is unreadable"),
+                                   OutsideActiveHours("Bot asleep")],
+                         ids=["state_unreadable", "overnight"])
+def test_the_wrapper_and_record_failure_log_the_same_line(restarts, caplog, error):
+    health.wrap_job(_raises(error), "direct_reply")()
+    health.record_failure("direct_reply", error)
+
+    first, second = caplog.messages
+    assert first == second
+    assert first.startswith("[HEALTH] direct_reply ")
+    assert "no restart" in first
+
+
+@pytest.mark.parametrize("error", [StateUnreadable("slots.json is unreadable"),
+                                   OutsideActiveHours("Bot asleep")],
+                         ids=["state_unreadable", "overnight"])
+def test_an_unwatched_job_does_not_speak_of_safari_health(restarts, caplog, error):
+    health.wrap_job(_raises(error), "editorial", safari_health=False)()
+
+    [message] = caplog.messages
+    assert message.startswith("[editorial] ")
+    assert "[HEALTH]" not in message
+    assert "Safari" not in message and "restart" not in message
 
 
 def test_the_traceback_is_in_the_log(restarts, caplog):
@@ -82,7 +107,7 @@ def test_the_traceback_is_in_the_log(restarts, caplog):
 @pytest.mark.parametrize("run", [lambda: None, _raises(RuntimeError("model timed out")),
                                  _raises(StateUnreadable("slots.json is unreadable")),
                                  _raises(OutsideActiveHours("Bot asleep"))],
-                         ids=["success", "failure", "state_unreadable", "bedtime"])
+                         ids=["success", "failure", "state_unreadable", "overnight"])
 def test_an_unwatched_job_never_touches_the_health_file(restarts, run):
     job = health.wrap_job(run, "editorial", safari_health=False)
     for _ in range(health.RECOVERY_THRESHOLD + 1):
@@ -108,7 +133,7 @@ def test_the_wrapper_keeps_the_job_name():
 
 @pytest.mark.parametrize("error", [StateUnreadable("replied_tweets.json is unreadable"),
                                    OutsideActiveHours("Bot asleep")],
-                         ids=["state_unreadable", "bedtime"])
+                         ids=["state_unreadable", "overnight"])
 def test_record_failure_judges_the_exception_it_is_handed(restarts, error):
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         assert health.record_failure("direct_reply", error) is False
