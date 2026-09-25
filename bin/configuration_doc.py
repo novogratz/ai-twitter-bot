@@ -41,9 +41,9 @@ def _default(setting) -> str:
 def _bounds(setting) -> str:
     bounds = []
     if setting.floor is not None:
-        bounds.append(f"floor `{setting.floor}`")
+        bounds.append(f"floor `{settings._show(setting, setting.floor)}`")
     if setting.ceiling is not None:
-        bounds.append(f"ceiling `{setting.ceiling}`")
+        bounds.append(f"ceiling `{settings._show(setting, setting.ceiling)}`")
     return ", ".join(bounds)
 
 

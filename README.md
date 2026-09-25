@@ -103,7 +103,7 @@ ceiling or floor, never lift it; a value past the bound is brought back to it
 with a `[SETTINGS]` warning. `.env` still wins over the Account.
 
 ```bash
-uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM
+uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs/bounded settings and exit; no browser or LLM
 uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
 uv run --with-requirements requirements.txt python main.py --post-only   # editorial originals only
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q

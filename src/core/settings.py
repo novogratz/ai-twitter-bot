@@ -57,7 +57,8 @@ class Setting:
     type: type
     default: object
     description: str
-    floor: float | None = None
+    # A switch that must stay on takes floor=True: 0 is brought back to 1.
+    floor: float | bool | None = None
     ceiling: float | None = None
 
 
@@ -88,12 +89,20 @@ def _check(setting: Setting, value):
     return value
 
 
+def _show(setting: Setting, value) -> str:
+    """`value` as `.env` writes it: a switch as 0 or 1."""
+    return str(int(value)) if setting.type is bool else str(value)
+
+
 def _bound(setting: Setting, value):
     """`value` brought back within the bounds, and a warning if it moved."""
+    shown = _show(setting, value)
     if setting.ceiling is not None and value > setting.ceiling:
-        return setting.ceiling, f"{setting.name}={value} is above its ceiling: using {setting.ceiling}."
+        return setting.ceiling, (f"{setting.name}={shown} is above its ceiling: "
+                                 f"using {_show(setting, setting.ceiling)}.")
     if setting.floor is not None and value < setting.floor:
-        return setting.floor, f"{setting.name}={value} is below its floor: using {setting.floor}."
+        return setting.floor, (f"{setting.name}={shown} is below its floor: "
+                               f"using {_show(setting, setting.floor)}.")
     return value, None
 
 
@@ -139,22 +148,23 @@ _declare("DRY_RUN", bool, False, "1 logs every write instead of doing it; config
 _declare("MAX_ORIGINALS_PER_DAY", int, 8, "Originals per Toronto day.", ceiling=8)
 _declare("MIN_SECONDS_BETWEEN_POSTS", int, 1200, "Minimum gap between two Profile publications.", floor=1200)
 _declare("POST_JITTER_SECONDS", int, 0, "Random delay added to the post spacing.", floor=0)
-_declare("MIN_SECONDS_BETWEEN_REPLIES", int, 8, "Minimum gap between two Replies.")
-_declare("REPLY_JITTER_SECONDS", int, 7, "Random delay added to the Reply spacing.")
+_declare("MIN_SECONDS_BETWEEN_REPLIES", int, 8, "Minimum gap between two Replies.", floor=8)
+_declare("REPLY_JITTER_SECONDS", int, 7, "Random delay added to the Reply spacing.", floor=0)
 _declare("FOLLOW_WHITELIST_ONLY", bool, True, "Follow only whitelisted accounts.")
 _declare("FOLLOWBACK_BYPASS_WHITELIST", bool, True, "Let Follow-backs past the whitelist.")
 _declare("FOLLOW_ENFORCE_RATIO", bool, False, "Keep following under FOLLOW_RATIO_CEILING x followers.")
 _declare("FOLLOW_RATIO_CEILING", float, 0.8, "Following-to-followers ratio when the ratio is enforced.")
-_declare("FOLLOW_TOTAL_CAP", int, 300, "Accounts followed in total.")
+_declare("FOLLOW_TOTAL_CAP", int, 300, "Accounts followed in total.", ceiling=3500)
 _declare("FOLLOW_GROWTH_MODE", bool, False, "Untie the following ceiling from the followers count.")
 _declare("FOLLOW_LOW_PHASE_CEILING", int, 150, "Following ceiling while followers are under FOLLOW_LOW_PHASE_FOLLOWERS.")
 _declare("FOLLOW_LOW_PHASE_FOLLOWERS", int, 300, "Followers count that ends the low phase.")
 _declare("MIN_SECONDS_BETWEEN_FOLLOWS", int, 600, "Minimum gap between two follows.")
 _declare("FOLLOW_SPACING_JITTER_SECONDS", int, 300, "Random delay added to the follow spacing.")
-_declare("MAX_FOLLOWS_PER_DAY", int, 20, "Follows per day.")
+_declare("MAX_FOLLOWS_PER_DAY", int, 20, "Follows per day.", ceiling=20)
 _declare("CHURN_COOLDOWN_DAYS", int, 30, "Days before an account followed or unfollowed may be touched again.")
 _declare("FOLLOW_ACTION_JITTER_SECONDS", int, 45, "Random pause around a follow action.")
-_declare("BAN_SHORT_TERM_PRICE_TARGETS", bool, True, "Refuse text carrying a short-term price target.")
+_declare("BAN_SHORT_TERM_PRICE_TARGETS", bool, True, "Refuse text carrying a short-term price target; always on.",
+         floor=True)
 _declare("ENABLE_REPLY_SEARCH", bool, False, "Schedule the search reply job (main.py, src/replies/reply_bot.py).")
 _declare("CONTENT_LANG_PRIMARY", str, "en", "Primary content language, en or fr (content_guard, editorial_bot); the Account's language unless set.")
 
@@ -172,14 +182,19 @@ _script_keys(
 )
 
 # ── #196 · src/guards, src/x ────────────────────────────────────────────────
-_declare("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", int, 4, "Debate turns per Engager per Toronto day.")
-_declare("DUP_JACCARD_THRESHOLD", float, 0.45, "Content-word Jaccard that makes an Original a duplicate.")
-_declare("DUP_CONTAINMENT_THRESHOLD", float, 0.6, "Content-word containment that makes an Original a duplicate.")
-_declare("DUP_SHARED_BIGRAMS", int, 3, "Shared content bigrams that make an Original a duplicate.")
-_declare("DUP_TOPIC_WINDOW_HOURS", float, 24.0, "Hours a post counts for the same-story check.")
-_declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-entity post that make a same story.")
-_declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.")
-_declare("REPLY_MIN_CHARS", int, 25, "Shortest Reply content_guard accepts.")
+_declare("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", int, 4, "Debate turns per Engager per Toronto day.", ceiling=4)
+# The duplicate check may only get stricter: a lower threshold or count, or a
+# longer window, catches more duplicates (content_guard.is_duplicate).
+_declare("DUP_JACCARD_THRESHOLD", float, 0.45, "Content-word Jaccard that makes an Original a duplicate.",
+         ceiling=0.45)
+_declare("DUP_CONTAINMENT_THRESHOLD", float, 0.6, "Content-word containment that makes an Original a duplicate.",
+         ceiling=0.6)
+_declare("DUP_SHARED_BIGRAMS", int, 3, "Shared content bigrams that make an Original a duplicate.", ceiling=3)
+_declare("DUP_TOPIC_WINDOW_HOURS", float, 24.0, "Hours a post counts for the same-story check.", floor=24.0)
+_declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-entity post that make a same story.",
+         ceiling=3)
+_declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.", floor=48.0)
+_declare("REPLY_MIN_CHARS", int, 25, "Shortest Reply content_guard accepts.", floor=25)
 _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")
@@ -238,13 +253,14 @@ _declare("CURATOR_PROMOTE_MIN_ENGAGEMENTS", int, 5, "On-lane engagements an auth
 _declare("PIN_MIN_LIKES", int, 2, "Likes an own post needs before pin_job may pin it.")
 _declare("PIN_MAX_AGE_DAYS", int, 7, "Days after which a pin no longer defends its slot with the 1.3x rule.")
 _declare("LIKE_TOP_TAB_PROBABILITY", float, 0.55, "Probability like_job searches the Top tab instead of Live.")
-_declare("LIKE_BOT_PER_CYCLE", int, 10, "Search posts like_job hands to like_tweet per cycle.")
-_declare("LIKE_BOT_DAILY_CAP", int, 500, "Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED.")
+_declare("LIKE_BOT_PER_CYCLE", int, 10, "Search posts like_job hands to like_tweet per cycle.", ceiling=10)
+_declare("LIKE_BOT_DAILY_CAP", int, 500, "Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED.",
+         ceiling=500)
 _declare("LIKE_BOT_CYCLE_SECONDS", float, 30.0, "Seconds after taking the Safari lock past which like_job starts no like.")
-_declare("FOLLOWBACK_CAP", int, 8, "Follow-back attempts per followback_job cycle.")
+_declare("FOLLOWBACK_CAP", int, 8, "Follow-back attempts per followback_job cycle.", ceiling=8)
 _declare("ENABLE_FOLLOW_ENGAGERS", bool, True, "Run follow_engagers_job.")
-_declare("FOLLOW_ENGAGERS_PER_DAY", int, 10, "Engagers follow_engagers_job follows per Toronto day.")
-_declare("FOLLOW_ENGAGERS_PER_CYCLE", int, 2, "Engagers follow_engagers_job follows per cycle.")
+_declare("FOLLOW_ENGAGERS_PER_DAY", int, 10, "Engagers follow_engagers_job follows per Toronto day.", ceiling=10)
+_declare("FOLLOW_ENGAGERS_PER_CYCLE", int, 2, "Engagers follow_engagers_job follows per cycle.", ceiling=2)
 
 # ── End of declarations ─────────────────────────────────────────────────────
 
@@ -319,6 +335,18 @@ def is_overridden(name: str) -> bool:
 def startup_warnings() -> list[str]:
     """The values `load()` brought back to a bound."""
     return list(_warnings)
+
+
+def bounded() -> dict:
+    """Each setting with a floor or a ceiling: its effective value and its
+    bounds, for `main.py --dry-run`."""
+    report = {}
+    for name, setting in DECLARED.items():
+        bounds = {key: bound for key, bound in (("floor", setting.floor), ("ceiling", setting.ceiling))
+                  if bound is not None}
+        if bounds:
+            report[name] = {"value": get(name), **bounds}
+    return report
 
 
 @contextmanager

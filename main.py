@@ -131,6 +131,8 @@ def main():
                           "startup_post": "every start in waking hours, restarts included",
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
+                          "bounded_settings": settings.bounded(),
+                          "settings_warnings": settings.startup_warnings(),
                           "jobs": [job.id for job in scheduler.get_jobs()]}, indent=2, ensure_ascii=False))
         return
 

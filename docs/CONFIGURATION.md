@@ -40,12 +40,16 @@ hold whatever `.env` says:
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` plus `REPLY_JITTER_SECONDS` space them |
+| Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
-`DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, the like, follow and Reply spacing
-settings carry no bound yet (issue #201): raising one past its default needs
-an operator request and an update to the policy.
+The Debate turn, Reply spacing, like, follow, price-target and duplicate
+settings, and `REPLY_MIN_CHARS`, carry the Operator's bounds of 2026-09-25
+(issue #201), listed in
+[EDITORIAL_POLICY.md](EDITORIAL_POLICY.md#bounds-on-volume-and-check-settings)
+and in the Bounds column below. `BAN_SHORT_TERM_PRICE_TARGETS` has floor `1`:
+`0` reads as `1`. `main.py --dry-run` prints each bounded setting's effective
+value under `bounded_settings`, and the warnings under `settings_warnings`.
 
 ## Models and providers
 
@@ -101,32 +105,32 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
-| `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` |  | Minimum gap between two Replies. |
-| `REPLY_JITTER_SECONDS` | int | `7` |  | Random delay added to the Reply spacing. |
+| `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
+| `REPLY_JITTER_SECONDS` | int | `7` | floor `0` | Random delay added to the Reply spacing. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
 | `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |
 | `FOLLOW_RATIO_CEILING` | float | `0.8` |  | Following-to-followers ratio when the ratio is enforced. |
-| `FOLLOW_TOTAL_CAP` | int | `300` |  | Accounts followed in total. |
+| `FOLLOW_TOTAL_CAP` | int | `300` | ceiling `3500` | Accounts followed in total. |
 | `FOLLOW_GROWTH_MODE` | 0 or 1 | `0` |  | Untie the following ceiling from the followers count. |
 | `FOLLOW_LOW_PHASE_CEILING` | int | `150` |  | Following ceiling while followers are under FOLLOW_LOW_PHASE_FOLLOWERS. |
 | `FOLLOW_LOW_PHASE_FOLLOWERS` | int | `300` |  | Followers count that ends the low phase. |
 | `MIN_SECONDS_BETWEEN_FOLLOWS` | int | `600` |  | Minimum gap between two follows. |
 | `FOLLOW_SPACING_JITTER_SECONDS` | int | `300` |  | Random delay added to the follow spacing. |
-| `MAX_FOLLOWS_PER_DAY` | int | `20` |  | Follows per day. |
+| `MAX_FOLLOWS_PER_DAY` | int | `20` | ceiling `20` | Follows per day. |
 | `CHURN_COOLDOWN_DAYS` | int | `30` |  | Days before an account followed or unfollowed may be touched again. |
 | `FOLLOW_ACTION_JITTER_SECONDS` | int | `45` |  | Random pause around a follow action. |
-| `BAN_SHORT_TERM_PRICE_TARGETS` | 0 or 1 | `1` |  | Refuse text carrying a short-term price target. |
+| `BAN_SHORT_TERM_PRICE_TARGETS` | 0 or 1 | `1` | floor `1` | Refuse text carrying a short-term price target; always on. |
 | `ENABLE_REPLY_SEARCH` | 0 or 1 | `0` |  | Schedule the search reply job (main.py, src/replies/reply_bot.py). |
 | `CONTENT_LANG_PRIMARY` | str | `en` |  | Primary content language, en or fr (content_guard, editorial_bot); the Account's language unless set. |
-| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | int | `4` |  | Debate turns per Engager per Toronto day. |
-| `DUP_JACCARD_THRESHOLD` | float | `0.45` |  | Content-word Jaccard that makes an Original a duplicate. |
-| `DUP_CONTAINMENT_THRESHOLD` | float | `0.6` |  | Content-word containment that makes an Original a duplicate. |
-| `DUP_SHARED_BIGRAMS` | int | `3` |  | Shared content bigrams that make an Original a duplicate. |
-| `DUP_TOPIC_WINDOW_HOURS` | float | `24.0` |  | Hours a post counts for the same-story check. |
-| `DUP_TOPIC_SHARED_WORDS` | int | `3` |  | Content words shared with a same-entity post that make a same story. |
-| `DUP_TEXT_WINDOW_HOURS` | float | `48.0` |  | Hours a post counts for the text-similarity checks. |
-| `REPLY_MIN_CHARS` | int | `25` |  | Shortest Reply content_guard accepts. |
+| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | int | `4` | ceiling `4` | Debate turns per Engager per Toronto day. |
+| `DUP_JACCARD_THRESHOLD` | float | `0.45` | ceiling `0.45` | Content-word Jaccard that makes an Original a duplicate. |
+| `DUP_CONTAINMENT_THRESHOLD` | float | `0.6` | ceiling `0.6` | Content-word containment that makes an Original a duplicate. |
+| `DUP_SHARED_BIGRAMS` | int | `3` | ceiling `3` | Shared content bigrams that make an Original a duplicate. |
+| `DUP_TOPIC_WINDOW_HOURS` | float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
+| `DUP_TOPIC_SHARED_WORDS` | int | `3` | ceiling `3` | Content words shared with a same-entity post that make a same story. |
+| `DUP_TEXT_WINDOW_HOURS` | float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
+| `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
@@ -171,13 +175,13 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PIN_MIN_LIKES` | int | `2` |  | Likes an own post needs before pin_job may pin it. |
 | `PIN_MAX_AGE_DAYS` | int | `7` |  | Days after which a pin no longer defends its slot with the 1.3x rule. |
 | `LIKE_TOP_TAB_PROBABILITY` | float | `0.55` |  | Probability like_job searches the Top tab instead of Live. |
-| `LIKE_BOT_PER_CYCLE` | int | `10` |  | Search posts like_job hands to like_tweet per cycle. |
-| `LIKE_BOT_DAILY_CAP` | int | `500` |  | Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED. |
+| `LIKE_BOT_PER_CYCLE` | int | `10` | ceiling `10` | Search posts like_job hands to like_tweet per cycle. |
+| `LIKE_BOT_DAILY_CAP` | int | `500` | ceiling `500` | Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED. |
 | `LIKE_BOT_CYCLE_SECONDS` | float | `30.0` |  | Seconds after taking the Safari lock past which like_job starts no like. |
-| `FOLLOWBACK_CAP` | int | `8` |  | Follow-back attempts per followback_job cycle. |
+| `FOLLOWBACK_CAP` | int | `8` | ceiling `8` | Follow-back attempts per followback_job cycle. |
 | `ENABLE_FOLLOW_ENGAGERS` | 0 or 1 | `1` |  | Run follow_engagers_job. |
-| `FOLLOW_ENGAGERS_PER_DAY` | int | `10` |  | Engagers follow_engagers_job follows per Toronto day. |
-| `FOLLOW_ENGAGERS_PER_CYCLE` | int | `2` |  | Engagers follow_engagers_job follows per cycle. |
+| `FOLLOW_ENGAGERS_PER_DAY` | int | `10` | ceiling `10` | Engagers follow_engagers_job follows per Toronto day. |
+| `FOLLOW_ENGAGERS_PER_CYCLE` | int | `2` | ceiling `2` | Engagers follow_engagers_job follows per cycle. |
 
 ### `MODEL_DEFAULTS`: the model of a CLI when its setting is unset
 

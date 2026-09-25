@@ -688,7 +688,7 @@ def _follow_engagers_on(monkeypatch, settings_override, outcomes):
 
     answers = iter(outcomes)
     asked = []
-    settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=3)
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=2)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1", "fan2", "fan3"])
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h: asked.append(h) or next(answers))

@@ -18,6 +18,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Quotes, reposts, self-recycling and threads stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
+- Likes, follows, Reply spacing, Debate turns and the content checks carry
+  the Operator's bounds (2026-09-25) in their `src/core/settings.py`
+  declarations; `.env` and `account.toml` may only tighten them.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same

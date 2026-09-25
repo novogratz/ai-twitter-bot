@@ -195,7 +195,7 @@ def test_main_stops_on_an_unknown_bot_account():
     ('[relevance]', '[relevance]\nniche = "ai"', "relevance.niche"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DA = 6', "limits.MAX_ORIGINALS_PER_DA"),
     # A setting without a bound is the engine's, not the Account's.
-    ('[limits]', '[limits]\nMAX_FOLLOWS_PER_DAY = 5', "limits.MAX_FOLLOWS_PER_DAY"),
+    ('[limits]', '[limits]\nMIN_SECONDS_BETWEEN_FOLLOWS = 900', "limits.MIN_SECONDS_BETWEEN_FOLLOWS"),
 ])
 def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -246,6 +246,12 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     ("MAX_ORIGINALS_PER_DAY = 12", "MAX_ORIGINALS_PER_DAY", 8),
     ("MIN_SECONDS_BETWEEN_POSTS = 60", "MIN_SECONDS_BETWEEN_POSTS", 1200),
     ("POST_JITTER_SECONDS = -30", "POST_JITTER_SECONDS", 0),
+    # The Operator's bounds of #201.
+    ("FOLLOW_TOTAL_CAP = 5000", "FOLLOW_TOTAL_CAP", 3500),
+    ("LIKE_BOT_DAILY_CAP = 1800", "LIKE_BOT_DAILY_CAP", 500),
+    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 8),
+    ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
+    ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
 ])
 def test_an_account_value_past_an_engine_bound_is_brought_back_to_it(accounts, fresh, limit, name, bound):
     accounts("theaishrink", THEAISHRINK.replace("[limits]", f"[limits]\n{limit}"))
@@ -261,6 +267,16 @@ def test_a_stricter_account_value_holds_under_the_defaults_and_env_wins_over_it(
     fresh("MIN_SECONDS_BETWEEN_POSTS=2400\n")
     assert settings.get("MAX_ORIGINALS_PER_DAY") == 5
     assert settings.get("MIN_SECONDS_BETWEEN_POSTS") == 2400
+    assert settings.startup_warnings() == []
+
+
+def test_a_stricter_account_value_holds_for_the_operator_bounds(accounts, fresh):
+    accounts("theaishrink", THEAISHRINK.replace(
+        "[limits]", "[limits]\nLIKE_BOT_DAILY_CAP = 200\nDUP_JACCARD_THRESHOLD = 0.3\nREPLY_MIN_CHARS = 40"))
+    fresh()
+    assert settings.get("LIKE_BOT_DAILY_CAP") == 200
+    assert settings.get("DUP_JACCARD_THRESHOLD") == 0.3
+    assert settings.get("REPLY_MIN_CHARS") == 40
     assert settings.startup_warnings() == []
 
 
