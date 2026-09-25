@@ -169,7 +169,7 @@ def run_curator_cycle() -> None:
         scored.append({"handle": a, "engagements": n, "weight": w,
                        "score": round(n * w, 2)})
     scored.sort(key=lambda r: r["score"], reverse=True)
-    tracked = scored[:settings.get("CURATOR_TRACKED_MAX")]
+    tracked = scored[:max(0, settings.get("CURATOR_TRACKED_MAX"))]  # never scored[:-1]
 
     doc = _load_tracked_doc()
     doc["tracked"] = tracked

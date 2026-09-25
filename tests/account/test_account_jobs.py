@@ -59,6 +59,25 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
 
+def test_a_negative_tracked_max_tracks_nobody(monkeypatch, tmp_path, settings_override):
+    """#201: CURATOR_TRACKED_MAX has no floor, so an Account cannot set it in
+    [limits]; a negative value read as scored[:-1] tracked all but one."""
+    from datetime import datetime
+    from src.account import account_curator as ac
+    settings_override(CURATOR_TRACKED_MAX=-1)
+    now = datetime.now().isoformat()
+    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
+            f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
+            for author in ("goodfinance", "otherfinance") for i in range(6)]
+    log_file = tmp_path / "log.csv"
+    log_file.write_text("\n".join(rows) + "\n")
+    monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
+    ac.run_curator_cycle()
+
+    handles = ac.tracked_handles(limit=10)
+    assert "goodfinance" not in handles and "otherfinance" not in handles
+
+
 def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path, operator_folder):
     """#188: the curator compared the BLOCKLIST by exact equality, so a
     handle holding a blocked token could reach the whitelist."""

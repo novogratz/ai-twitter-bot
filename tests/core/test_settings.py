@@ -59,6 +59,30 @@ def test_a_badly_typed_value_in_the_process_environment_stops_the_start_too(fres
         fresh("", {"MAX_FOLLOWS_PER_DAY": "lots"})
 
 
+FLOAT_SETTINGS = sorted(name for name, setting in settings.DECLARED.items() if setting.type is float)
+
+
+@pytest.mark.parametrize("name", FLOAT_SETTINGS)
+@pytest.mark.parametrize("raw", ["nan", "inf", "-inf", "NaN"])
+def test_a_non_finite_float_stops_the_start_like_a_bad_type(fresh, name, raw):
+    """nan passes every bound check: DUP_JACCARD_THRESHOLD=nan once turned
+    the duplicate check off without a warning."""
+    with pytest.raises(settings.SettingsError, match=f"{name}='{raw}' \\(expected finite float\\)"):
+        fresh(f"{name}={raw}\n")
+
+
+@pytest.mark.parametrize("raw", ["nan", "inf"])
+def test_a_non_finite_float_in_the_process_environment_stops_the_start_too(fresh, raw):
+    with pytest.raises(settings.SettingsError, match="DUP_CONTAINMENT_THRESHOLD"):
+        fresh("", {"DUP_CONTAINMENT_THRESHOLD": raw})
+
+
+@pytest.mark.parametrize("value", [float("nan"), float("inf")])
+def test_an_override_refuses_a_non_finite_float(settings_override, value):
+    with pytest.raises(TypeError, match="DUP_JACCARD_THRESHOLD takes finite float"):
+        settings_override(DUP_JACCARD_THRESHOLD=value)
+
+
 def test_keys_the_shell_scripts_read_are_accepted(fresh):
     keys = sorted(settings.SCRIPT_KEYS)
     environ = fresh("".join(f"{key}=1\n" for key in keys))
@@ -161,8 +185,7 @@ def test_an_operator_bound_brings_env_back_to_it_with_a_warning(fresh, name, pas
 
 @pytest.mark.parametrize("name, past, bound, stricter", OPERATOR_BOUNDS)
 def test_a_value_stricter_than_the_default_is_kept(fresh, name, past, bound, stricter):
-    shown = int(stricter) if type(stricter) is bool else stricter
-    fresh(f"{name}={shown}\n")
+    fresh(f"{name}={settings.show(settings.DECLARED[name], stricter)}\n")
     assert settings.get(name) == stricter
     assert settings.startup_warnings() == []
 
@@ -171,6 +194,36 @@ def test_a_value_stricter_than_the_default_is_kept(fresh, name, past, bound, str
 def test_an_override_cannot_pass_an_operator_bound(settings_override, name, past, bound, stricter):
     settings_override(**{name: settings._parse(settings.DECLARED[name], past)})
     assert settings.get(name) == bound
+
+
+# Volume and count settings with a floor, and the floor a negative is brought
+# back to: FOLLOWBACK_CAP=-1 once sliced 49 candidates out of 50.
+COUNT_FLOORS = [
+    ("MAX_ORIGINALS_PER_DAY", 0),
+    ("FOLLOW_TOTAL_CAP", 0),
+    ("MAX_FOLLOWS_PER_DAY", 0),
+    ("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", 0),
+    # At 0, any recent Original would make every new one a duplicate.
+    ("DUP_SHARED_BIGRAMS", 1),
+    ("DUP_TOPIC_SHARED_WORDS", 0),
+    ("LIKE_BOT_PER_CYCLE", 0),
+    ("LIKE_BOT_DAILY_CAP", 0),
+    ("FOLLOWBACK_CAP", 0),
+    ("FOLLOW_ENGAGERS_PER_DAY", 0),
+    ("FOLLOW_ENGAGERS_PER_CYCLE", 0),
+]
+
+
+@pytest.mark.parametrize("name, floor", COUNT_FLOORS)
+def test_a_negative_count_is_brought_back_to_its_floor_with_a_warning(fresh, name, floor):
+    fresh(f"{name}=-1\n")
+    assert settings.get(name) == floor
+    assert settings.startup_warnings() == [f"{name}=-1 is below its floor: using {floor}."]
+
+
+def test_every_int_setting_with_a_ceiling_has_a_floor():
+    assert [name for name, setting in settings.DECLARED.items()
+            if setting.type is int and setting.ceiling is not None and setting.floor is None] == []
 
 
 def test_the_price_target_ban_stays_on_and_says_so(fresh):
@@ -203,7 +256,7 @@ def test_the_dry_run_shows_every_bounded_value_and_the_warnings(monkeypatch, set
     assert set(bounded) == {s.name for s in settings.DECLARED.values()
                             if s.floor is not None or s.ceiling is not None}
     assert {name for name, *_ in OPERATOR_BOUNDS} <= set(bounded)
-    assert bounded["LIKE_BOT_DAILY_CAP"] == {"value": 200, "ceiling": 500}
+    assert bounded["LIKE_BOT_DAILY_CAP"] == {"value": 200, "floor": 0, "ceiling": 500}
     assert bounded["MIN_SECONDS_BETWEEN_REPLIES"] == {"value": 30, "floor": 8}
     assert bounded["BAN_SHORT_TERM_PRICE_TARGETS"] == {"value": True, "floor": True}
     assert shown["settings_warnings"] == ["LIKE_BOT_DAILY_CAP=1800 is above its ceiling: using 500."]
@@ -553,12 +606,10 @@ def test_the_configuration_reference_lists_every_setting_with_its_default_and_bo
         if setting.name in settings.MODEL_DEFAULTS:
             assert "MODEL_DEFAULTS" in cells[2]
         elif setting.default not in (None, ""):
-            shown = int(setting.default) if setting.type is bool else setting.default
-            assert cells[2] == f"`{shown}`", setting.name
+            assert cells[2] == f"`{settings.show(setting, setting.default)}`", setting.name
         for bound in (setting.floor, setting.ceiling):
             if bound is not None:
-                shown = int(bound) if setting.type is bool else bound
-                assert f"`{shown}`" in cells[3], setting.name
+                assert f"`{settings.show(setting, bound)}`" in cells[3], setting.name
     for name, table in settings.MODEL_DEFAULTS.items():
         row = next(line for line in rendered.splitlines()
                    if line.startswith(f"| `{name}` |") and "MODEL_DEFAULTS" not in line)

@@ -252,6 +252,8 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 8),
     ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
     ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
+    ("FOLLOWBACK_CAP = -1", "FOLLOWBACK_CAP", 0),
+    ("DUP_SHARED_BIGRAMS = 0", "DUP_SHARED_BIGRAMS", 1),
 ])
 def test_an_account_value_past_an_engine_bound_is_brought_back_to_it(accounts, fresh, limit, name, bound):
     accounts("theaishrink", THEAISHRINK.replace("[limits]", f"[limits]\n{limit}"))
@@ -259,6 +261,16 @@ def test_an_account_value_past_an_engine_bound_is_brought_back_to_it(accounts, f
     assert settings.get(name) == bound
     assert [w for w in settings.startup_warnings()
             if w.startswith(os.path.join(account.ACCOUNTS_DIR, "theaishrink", "account.toml")) and name in w]
+
+
+@pytest.mark.parametrize("name", ["DUP_JACCARD_THRESHOLD", "DUP_CONTAINMENT_THRESHOLD",
+                                  "DUP_TOPIC_WINDOW_HOURS", "DUP_TEXT_WINDOW_HOURS"])
+@pytest.mark.parametrize("value", ["nan", "inf", "-inf"])
+def test_a_non_finite_float_limit_stops_the_start(accounts, fresh, name, value):
+    """TOML reads nan and inf as floats; nan would pass every bound."""
+    accounts("theaishrink", THEAISHRINK.replace("[limits]", f"[limits]\n{name} = {value}"))
+    with pytest.raises(account.AccountError, match=re.escape(f"limits.{name} takes finite float")):
+        fresh()
 
 
 def test_a_stricter_account_value_holds_under_the_defaults_and_env_wins_over_it(accounts, fresh):

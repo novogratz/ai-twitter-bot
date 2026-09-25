@@ -102,7 +102,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for profile surfaces; blank means none. |
 | `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for Replies; blank means none. |
 | `DRY_RUN` | 0 or 1 | `0` |  | 1 logs every write instead of doing it; config.dry_run() reads it at call time. |
-| `MAX_ORIGINALS_PER_DAY` | int | `8` | ceiling `8` | Originals per Toronto day. |
+| `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
 | `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
@@ -110,26 +110,26 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
 | `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |
-| `FOLLOW_RATIO_CEILING` | float | `0.8` |  | Following-to-followers ratio when the ratio is enforced. |
-| `FOLLOW_TOTAL_CAP` | int | `300` | ceiling `3500` | Accounts followed in total. |
+| `FOLLOW_RATIO_CEILING` | finite float | `0.8` |  | Following-to-followers ratio when the ratio is enforced. |
+| `FOLLOW_TOTAL_CAP` | int | `300` | floor `0`, ceiling `3500` | Accounts followed in total. |
 | `FOLLOW_GROWTH_MODE` | 0 or 1 | `0` |  | Untie the following ceiling from the followers count. |
 | `FOLLOW_LOW_PHASE_CEILING` | int | `150` |  | Following ceiling while followers are under FOLLOW_LOW_PHASE_FOLLOWERS. |
 | `FOLLOW_LOW_PHASE_FOLLOWERS` | int | `300` |  | Followers count that ends the low phase. |
 | `MIN_SECONDS_BETWEEN_FOLLOWS` | int | `600` |  | Minimum gap between two follows. |
 | `FOLLOW_SPACING_JITTER_SECONDS` | int | `300` |  | Random delay added to the follow spacing. |
-| `MAX_FOLLOWS_PER_DAY` | int | `20` | ceiling `20` | Follows per day. |
+| `MAX_FOLLOWS_PER_DAY` | int | `20` | floor `0`, ceiling `20` | Follows per day. |
 | `CHURN_COOLDOWN_DAYS` | int | `30` |  | Days before an account followed or unfollowed may be touched again. |
 | `FOLLOW_ACTION_JITTER_SECONDS` | int | `45` |  | Random pause around a follow action. |
 | `BAN_SHORT_TERM_PRICE_TARGETS` | 0 or 1 | `1` | floor `1` | Refuse text carrying a short-term price target; always on. |
 | `ENABLE_REPLY_SEARCH` | 0 or 1 | `0` |  | Schedule the search reply job (main.py, src/replies/reply_bot.py). |
 | `CONTENT_LANG_PRIMARY` | str | `en` |  | Primary content language, en or fr (content_guard, editorial_bot); the Account's language unless set. |
-| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | int | `4` | ceiling `4` | Debate turns per Engager per Toronto day. |
-| `DUP_JACCARD_THRESHOLD` | float | `0.45` | ceiling `0.45` | Content-word Jaccard that makes an Original a duplicate. |
-| `DUP_CONTAINMENT_THRESHOLD` | float | `0.6` | ceiling `0.6` | Content-word containment that makes an Original a duplicate. |
-| `DUP_SHARED_BIGRAMS` | int | `3` | ceiling `3` | Shared content bigrams that make an Original a duplicate. |
-| `DUP_TOPIC_WINDOW_HOURS` | float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
-| `DUP_TOPIC_SHARED_WORDS` | int | `3` | ceiling `3` | Content words shared with a same-entity post that make a same story. |
-| `DUP_TEXT_WINDOW_HOURS` | float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
+| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | int | `4` | floor `0`, ceiling `4` | Debate turns per Engager per Toronto day. |
+| `DUP_JACCARD_THRESHOLD` | finite float | `0.45` | ceiling `0.45` | Content-word Jaccard that makes an Original a duplicate. |
+| `DUP_CONTAINMENT_THRESHOLD` | finite float | `0.6` | ceiling `0.6` | Content-word containment that makes an Original a duplicate. |
+| `DUP_SHARED_BIGRAMS` | int | `3` | floor `1`, ceiling `3` | Shared content bigrams that make an Original a duplicate. |
+| `DUP_TOPIC_WINDOW_HOURS` | finite float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
+| `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
+| `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
 | `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
@@ -139,7 +139,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
 | `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |
-| `REPLY_LIKE_PARENT_PROB` | float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
+| `REPLY_LIKE_PARENT_PROB` | finite float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
 | `NOTIFY_LIKE_REPLIES_COUNT` | int | `3` |  | Replies under our latest post the notify job likes. |
 | `OLLAMA_MODEL` | str | `qwen3.6:35b-a3b` |  | Ollama model of a call profile that names none; bin/run.sh pre-warms it. |
 | `OLLAMA_BASE_URL` | str | `http://localhost:11434` |  | Ollama HTTP endpoint; bin/run.sh pre-warms there. |
@@ -160,8 +160,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
-| `DEBATE_MAX_AGE_HOURS` | float | `24.0` |  | Oldest mention the debate job answers. |
-| `BABYSIT_WINDOW_MINUTES` | float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
+| `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
+| `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
@@ -174,14 +174,14 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `CURATOR_PROMOTE_MIN_ENGAGEMENTS` | int | `5` |  | On-lane engagements an author needs to be promoted to the whitelist. |
 | `PIN_MIN_LIKES` | int | `2` |  | Likes an own post needs before pin_job may pin it. |
 | `PIN_MAX_AGE_DAYS` | int | `7` |  | Days after which a pin no longer defends its slot with the 1.3x rule. |
-| `LIKE_TOP_TAB_PROBABILITY` | float | `0.55` |  | Probability like_job searches the Top tab instead of Live. |
-| `LIKE_BOT_PER_CYCLE` | int | `10` | ceiling `10` | Search posts like_job hands to like_tweet per cycle. |
-| `LIKE_BOT_DAILY_CAP` | int | `500` | ceiling `500` | Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED. |
-| `LIKE_BOT_CYCLE_SECONDS` | float | `30.0` |  | Seconds after taking the Safari lock past which like_job starts no like. |
-| `FOLLOWBACK_CAP` | int | `8` | ceiling `8` | Follow-back attempts per followback_job cycle. |
+| `LIKE_TOP_TAB_PROBABILITY` | finite float | `0.55` |  | Probability like_job searches the Top tab instead of Live. |
+| `LIKE_BOT_PER_CYCLE` | int | `10` | floor `0`, ceiling `10` | Search posts like_job hands to like_tweet per cycle. |
+| `LIKE_BOT_DAILY_CAP` | int | `500` | floor `0`, ceiling `500` | Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED. |
+| `LIKE_BOT_CYCLE_SECONDS` | finite float | `30.0` |  | Seconds after taking the Safari lock past which like_job starts no like. |
+| `FOLLOWBACK_CAP` | int | `8` | floor `0`, ceiling `8` | Follow-back attempts per followback_job cycle. |
 | `ENABLE_FOLLOW_ENGAGERS` | 0 or 1 | `1` |  | Run follow_engagers_job. |
-| `FOLLOW_ENGAGERS_PER_DAY` | int | `10` | ceiling `10` | Engagers follow_engagers_job follows per Toronto day. |
-| `FOLLOW_ENGAGERS_PER_CYCLE` | int | `2` | ceiling `2` | Engagers follow_engagers_job follows per cycle. |
+| `FOLLOW_ENGAGERS_PER_DAY` | int | `10` | floor `0`, ceiling `10` | Engagers follow_engagers_job follows per Toronto day. |
+| `FOLLOW_ENGAGERS_PER_CYCLE` | int | `2` | floor `0`, ceiling `2` | Engagers follow_engagers_job follows per cycle. |
 
 ### `MODEL_DEFAULTS`: the model of a CLI when its setting is unset
 

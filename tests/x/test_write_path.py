@@ -638,11 +638,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     try:
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
-        cg.is_duplicate = lambda text, threshold=None: True   # force dup
+        cg.is_duplicate = lambda text: True   # force dup
         assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \
             "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
-        cg.is_duplicate = lambda text, threshold=None: False
+        cg.is_duplicate = lambda text: False
         assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost

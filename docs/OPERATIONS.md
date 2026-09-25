@@ -363,23 +363,32 @@ Every change to `.env`, `account.toml`, a setting or the code takes effect at re
 only then. The settings, their defaults and bounds are in
 [CONFIGURATION.md](CONFIGURATION.md).
 
-- Reply pacing and scope: `MIN_SECONDS_BETWEEN_REPLIES`,
-  `REPLY_JITTER_SECONDS`, `DIRECT_REPLY_QUERIES_PER_CYCLE`,
-  `VIP_SCAN_HANDLES`, `PROFILE_VISIT_ALLOWLIST`, the `DEBATE_*` and
-  `FEED_SWEEP_*` variables; the Account's `[network]`, `[niche]` and
-  `[searches]`.
-- Follows: `FOLLOW_WHITELIST_ONLY`, `FOLLOW_TOTAL_CAP`, `FOLLOW_GROWTH_MODE`,
-  `FOLLOWBACK_CAP`, `FOLLOW_ENGAGERS_*`.
+A setting with a floor or a ceiling moves only within it: `.env` and an
+Account's `[limits]` may tighten it, and a value past it is brought back with
+a `[SETTINGS]` warning at start. The bounds are listed in
+[EDITORIAL_POLICY.md](EDITORIAL_POLICY.md#bounds-on-volume-and-check-settings).
+
+- Reply pacing and scope: `MIN_SECONDS_BETWEEN_REPLIES` and
+  `REPLY_JITTER_SECONDS` above their floors,
+  `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` and `MAX_REPLIES_PER_CYCLE` within
+  their bounds; freely `DIRECT_REPLY_QUERIES_PER_CYCLE`, `VIP_SCAN_HANDLES`,
+  `PROFILE_VISIT_ALLOWLIST`, the other `DEBATE_*` and the `FEED_SWEEP_*`
+  variables; the Account's `[network]`, `[niche]` and `[searches]`.
+- Follows: freely `FOLLOW_WHITELIST_ONLY` and `FOLLOW_GROWTH_MODE`; within
+  their bounds `FOLLOW_TOTAL_CAP`, `MAX_FOLLOWS_PER_DAY`, `FOLLOWBACK_CAP`
+  and `FOLLOW_ENGAGERS_PER_DAY` / `FOLLOW_ENGAGERS_PER_CYCLE`.
+- Likes: `LIKE_BOT_PER_CYCLE` and `LIKE_BOT_DAILY_CAP` within their bounds.
+- Originals: `MAX_ORIGINALS_PER_DAY` from 0 to 8, the spacing above its
+  floor, the `DUP_*` duplicate check only stricter.
 - Models: `REPLY_LLM_PROVIDER`, `PROFILE_LLM_PROVIDER`,
   `EDITORIAL_OLLAMA_MODEL`, `EDITORIAL_LLM_TIMEOUT_SECONDS`.
-- Lowering `MAX_ORIGINALS_PER_DAY` below 8.
 
-What cannot be tuned from `.env`: the eight-post
-ceiling, the twenty-minute spacing floor between originals, quotes and reposts at
-zero, and waking hours. They live in `src/core/config.py`,
-`src/guards/action_guard.py` and `src/guards/active_hours.py`; changing them
-needs an operator request and an update to
-[EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
+What cannot be tuned from `.env` or `account.toml`: any bound of that list,
+the price-target ban, quotes and reposts at zero, and waking hours. The bounds
+live in the declarations of `src/core/settings.py`, the rest in
+`src/core/config.py`, `src/guards/action_guard.py` and
+`src/guards/active_hours.py`; changing them needs an operator request and an
+update to [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
 
 To stop one job, remove its `add(...)` line in `build_scheduler()` and
 restart.
