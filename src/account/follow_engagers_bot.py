@@ -16,7 +16,7 @@ import os
 import traceback
 
 from ..guards import active_hours, follow_policy
-from ..core.config import BLOCKLIST, BOT_HANDLE
+from ..core.config import BOT_HANDLE
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 
@@ -73,7 +73,7 @@ def run_follow_engagers_cycle():
     for h in follow_policy.engagers()[:200]:
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
-        if h == own or h in BLOCKLIST or h in _SKIP_HANDLES or h in attempted:
+        if h == own or h in _SKIP_HANDLES or h in attempted:
             continue
         result = follow_account(h)
         if result.is_budget_refusal:

@@ -19,7 +19,9 @@ Strategy:
     policy admits a Follow-back on that record, never on this job's word.
 
 Safety: handle whitelist heuristic — skip obvious bots (handle made of
-random alphanumerics with no vowels, length=15) and BLOCKLIST entries.
+random alphanumerics with no vowels, length=15) and Blocked accounts, so
+they take no pick of the cycle. follow_account refuses a Blocked account
+all the same.
 """
 import json
 import os
@@ -28,10 +30,11 @@ import re
 import time
 import traceback
 
-from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
+from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
 from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
+from ..guards.reply_admission import is_blocked_account
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 from ..x.twitter_client import follow_account
@@ -41,12 +44,12 @@ FOLLOW_BACK_CAP_PER_CYCLE = int(os.environ.get("FOLLOWBACK_CAP", "8"))
 
 
 def _looks_like_real_handle(handle: str) -> bool:
-    """Cheap bot-handle filter, after the policy's handle check, so an
-    invalid handle never takes a pick of the cycle."""
+    """Cheap bot-handle filter, after the policy's handle and Blocked
+    account checks, so neither an invalid handle nor a Blocked account ever
+    takes a pick of the cycle."""
     if not follow_policy.valid_handle(handle):
         return False
-    h = handle.lower()
-    if h in BLOCKLIST:
+    if is_blocked_account(handle):
         return False
     # Pure-alphanumeric with no vowels = likely a bot (e.g., xkprz9821).
     if not re.search(r"[aeiouAEIOU]", handle):

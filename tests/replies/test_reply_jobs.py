@@ -294,6 +294,22 @@ def test_feed_sweep_harvests_the_handle_from_the_status_url():
     assert get_dynamic_accounts()["en"] == ["sama", "someone"]
 
 
+def test_feed_sweep_never_harvests_a_blocked_account(monkeypatch):
+    """#188: the harvest compared the BLOCKLIST by exact equality, so a
+    handle holding a blocked token joined dynamic_accounts.json."""
+    from src.core import config
+    from src.core.dynamic_strategy import get_dynamic_accounts
+    from src.replies import feed_sweeper_bot as fs
+    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
+
+    fs._harvest_active_authors([
+        {"url": "https://x.com/La_Pique_Off/status/1", "author": "La Pique", "likes": 500},
+        {"url": "https://x.com/sama/status/2", "author": "Sam Altman", "likes": 500},
+    ])
+
+    assert get_dynamic_accounts()["en"] == ["sama"]
+
+
 # --- reply search (one model call finds and drafts) --------------------------
 
 

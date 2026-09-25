@@ -152,8 +152,9 @@ declares it.
 _Avoid_: discovered account, feed account
 
 **Follow refusal**:
-The named cause of a follow the follow policy stops before the click: too
-soon (the follow spacing), cap reached (the daily cap, the following
+The named cause of a follow the follow policy stops before the click:
+Blocked account (matched as Reply admission and likes match it), too soon
+(the follow spacing), cap reached (the daily cap, the following
 ceiling or the ratio brake, reached or unreadable), quality rejected (the
 quality gate, on the profile or within 30 days), or refused (every other
 rule: handle, Stranger, whitelist, anti-churn). Too soon and cap reached concern the
