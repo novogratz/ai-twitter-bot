@@ -65,7 +65,7 @@ def browser(monkeypatch, tmp_path):
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: None)
     state = {"page": FakePage(), "recorded": [], "closed": 0}
     monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
@@ -195,7 +195,7 @@ def test_dry_run_like_returns_dry_run_and_reads_nothing(browser, monkeypatch):
 def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
     """Under DRY_RUN, like_job and notify's reply likes open nothing and
     pin_own_tweet writes a dry-run ledger row instead of clicking.
-    conftest fails the test on webbrowser.open or _run_applescript; direct
+    conftest fails the test on safari.open_url or _run_applescript; direct
     osascript calls are walled off here."""
     from src.account import like_bot
     from src.x import safari, twitter_client
@@ -205,7 +205,7 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
 
     monkeypatch.setattr(safari.subprocess, "run", no_osascript)
     opened = []
-    monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: opened.append(a))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: opened.append(a))
     monkeypatch.setenv("DRY_RUN", "1")
 
     like_bot.run_like_cycle()
@@ -267,7 +267,7 @@ def test_profile_visit_likes_their_own_posts_and_reports_each(browser):
 def test_profile_visit_opens_nothing_for_zero_likes_or_dry_run(monkeypatch, dry_run, like_count):
     from src.x import twitter_client as tc
 
-    # conftest fails the test on any webbrowser.open or _run_applescript.
+    # conftest fails the test on any safari.open_url or _run_applescript.
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
     assert tc.visit_profile_and_like("TheBTCTherapist", like_count=like_count) == []

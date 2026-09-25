@@ -7,12 +7,12 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
     A non-allowlisted profile must return [] BEFORE any Safari work, and the
     allowlist env must be read at call time (side-effect-gate rule)."""
-    from src.x import scraper, twitter_client as tc
+    from src.x import safari, scraper, twitter_client as tc
     from src.core.config import BOT_HANDLE
 
     monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
     monkeypatch.setattr(
-        tc.webbrowser, "open",
+        safari, "open_url",
         lambda *a, **k: pytest.fail("Safari was opened for a blocked profile"))
     assert scraper.scrape_profile_tweets("unusual_whales") == []
     assert scraper.scrape_profile_tweets("karpathy") == []

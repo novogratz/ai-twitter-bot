@@ -28,7 +28,7 @@ def _fake_safari(monkeypatch):
     monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
 
 
@@ -188,7 +188,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_le
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "2")
 
@@ -363,7 +363,7 @@ def _live_browser(monkeypatch, failing_step=None):
             raise OutsideActiveHours("stop")
 
     monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     return recorded
 
@@ -655,7 +655,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a: True)
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     barrier = Barrier(2)
     original_validate = editorial.content_guard.validate
@@ -768,7 +768,7 @@ def unfollow_env(monkeypatch, tmp_path, memory_ledger):
 
     monkeypatch.setattr(safari, "_run_js", run_js)
     monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
-    monkeypatch.setattr(tc.webbrowser, "open", lambda url, *a, **k: opened.append(url) or True)
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
 
     return SimpleNamespace(
@@ -835,7 +835,7 @@ def _scripted_pin_js(monkeypatch, steps):
     answers = iter(steps)
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))

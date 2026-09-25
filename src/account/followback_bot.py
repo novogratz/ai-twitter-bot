@@ -28,7 +28,6 @@ from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 from ..x.twitter_client import follow_account
 
-import webbrowser
 
 FOLLOW_BACK_CAP_PER_CYCLE = int(os.environ.get("FOLLOWBACK_CAP", "8"))
 
@@ -89,7 +88,7 @@ def run_followback_cycle():
     with _safari_lock:
         url = f"https://x.com/{BOT_HANDLE}/followers"
         log.info(f"[FOLLOWBACK] Opening {url}")
-        webbrowser.open(url)
+        safari.open_url(url)
         time.sleep(8)
         # Scroll twice to load 30-50 followers.
         _scroll_page()

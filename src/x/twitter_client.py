@@ -9,7 +9,6 @@ import time
 import urllib.parse
 from datetime import datetime
 from enum import Enum
-import webbrowser
 from ..core.config import _PROJECT_ROOT, BOT_PROFILE_URL
 from ..core.logger import log
 from ..guards.active_hours import require_active
@@ -229,7 +228,7 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) ->
             return _post_tweet_with_image(text, image_path)
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
-        webbrowser.open(url)
+        safari.open_url(url)
         time.sleep(4)
 
         log.info("Auto-clicking Post...")
@@ -273,7 +272,7 @@ def _post_tweet_with_image(text: str, image_path: str) -> WriteOutcome:
         log.info(f"[POST] Image not found at {image_path} — falling back to text-only.")
         # Fall back to text-only via the intent flow
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
-        webbrowser.open(url)
+        safari.open_url(url)
         time.sleep(4)
         if not _submit_or_abort("POST"):
             return WriteOutcome.UNCONFIRMED
@@ -281,7 +280,7 @@ def _post_tweet_with_image(text: str, image_path: str) -> WriteOutcome:
         return WriteOutcome.SHIPPED
 
     log.info(f"[POST] Composing tweet with image {image_path}...")
-    webbrowser.open("https://x.com/compose/post")
+    safari.open_url("https://x.com/compose/post")
     time.sleep(6)  # composer needs a moment to fully render
 
     # Step 1: paste the text (focus is auto on the textarea on /compose/post)
@@ -612,7 +611,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             time.sleep(0.5)
 
             log.info(f"Opening tweet: {tweet_url}")
-            webbrowser.open(tweet_url)
+            safari.open_url(tweet_url)
             # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
             # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
             time.sleep(6)
@@ -702,7 +701,7 @@ def unfollow_account(username: str) -> WriteOutcome:
     def steps():
         profile_url = f"https://x.com/{username}"
         log.info(f"[UNFOLLOW] Visiting profile: {profile_url}")
-        webbrowser.open(profile_url)
+        safari.open_url(profile_url)
         time.sleep(5)
 
         # Step 1: click the "Following" button. Try multiple selectors since
@@ -926,7 +925,7 @@ def follow_account(username: str, reciprocal: bool = False,
     def steps():
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
-        webbrowser.open(profile_url)
+        safari.open_url(profile_url)
         time.sleep(5)
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
@@ -1051,7 +1050,7 @@ def like_search_posts(url: str, count: int, seconds: float,
     with safari._safari_lock:
         deadline = time.monotonic() + seconds
         log.info(f"[LIKE] Opening search: {url}")
-        webbrowser.open(url)
+        safari.open_url(url)
         try:
             time.sleep(7)
             # Scroll twice to populate ~20-30 articles.
@@ -1090,7 +1089,7 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
     with safari._safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
-        webbrowser.open(profile_url)
+        safari.open_url(profile_url)
         try:
             time.sleep(5)
             outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
@@ -1160,7 +1159,7 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
 
     def steps():
         log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
-        webbrowser.open(tweet_url)
+        safari.open_url(tweet_url)
         time.sleep(7)
 
         step1 = _exec_js(js_code)
@@ -1208,7 +1207,7 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
         return []
     with safari._safari_lock:
         log.info("[NOTIFY] Opening own profile...")
-        webbrowser.open(BOT_PROFILE_URL)
+        safari.open_url(BOT_PROFILE_URL)
         try:
             time.sleep(5)
             log.info("[NOTIFY] Opening latest tweet...")

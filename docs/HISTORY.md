@@ -8,6 +8,21 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-24 — pages opened in the default browser, not Safari:** every
+> page the bot read or wrote opened through `webbrowser.open`, which follows
+> the macOS default browser. On a Mac where Firefox is the default, X
+> searches, feeds, profiles and composers opened in Firefox while
+> `safari._run_js` read, and System Events typed into, Safari's front tab:
+> wrong or blank pages, blank-page Safari restarts, and keystrokes aimed at
+> whatever Safari showed. The operator's Mac never showed it because Safari
+> was its default. All 20 call sites now go through `safari.open_url`,
+> which names Safari. `BROWSER=safari` was no workaround: Python looks for
+> a `safari` executable, finds none and falls back to the default browser.
+> Guard: `tests/x/test_safari.py` pins the Safari target, conftest walls
+> `open_url` like the other primitives, and
+> `tests/test_conftest_walls.py` fails on any `webbrowser` import under
+> `src/`, `bin/` or `main.py`.
+
 > **2026-09-23 — bedtime moves from 22:00 to 23:30 (operator request):**
 > Waking hours now run 04:30–23:30 America/Toronto. The clock, the
 > timeout cap on model calls and every refusal message read

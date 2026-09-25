@@ -75,7 +75,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(safari, "_run_js",
                         lambda js, *a, **k: step(f"js:{_js_kind(js)}", t.js.pop(0) if t.js else ""))
     monkeypatch.setattr(safari, "close_front_tab", lambda: step("close"))
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: step("open", True))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: step("open", True))
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))

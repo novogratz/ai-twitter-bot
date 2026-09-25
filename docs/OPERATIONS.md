@@ -10,7 +10,8 @@ operator asks.
 ## Setup
 
 Requirements: macOS, Safari logged in to x.com with **Develop → Allow
-JavaScript from Apple Events** enabled, Python 3.12+,
+JavaScript from Apple Events** enabled (Safari need not be the default
+browser: the bot opens every page in Safari by name), Python 3.12+,
 [uv](https://docs.astral.sh/uv/), and a local Ollama with the reply model and
 `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) pulled.
 
