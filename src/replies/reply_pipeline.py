@@ -1,7 +1,9 @@
 """Reply pipeline: a job's candidates in, shipped Replies out.
 
-A job keeps its source (scrape, selection filters, order, budgets) and its
-ReplyCall. Everything between a candidate and a logged Reply happens here, the
+A job keeps its sub-sources (what it scrapes), its declaration to the Reply
+source (`reply_source`), which selects its candidates among the scraped posts,
+its budgets and its ReplyCall; the jobs not yet moved to the Reply source
+still select their candidates themselves. Everything between a candidate and a logged Reply happens here, the
 same way for every job: Reply admission before the model call, the posts
 each job sets aside until restart, the rate-limit stop, the spacing wait of
 the pipelined jobs, the write through `twitter_client.reply_to_tweet`, and
