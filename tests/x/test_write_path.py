@@ -705,6 +705,17 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
 
 
+def test_an_unreadable_quality_reject_cache_reads_empty_and_is_replaced(tmp_path):
+    from src.x import twitter_client as tc
+
+    path = tmp_path / "follow_quality_rejects.json"
+    path.write_text('{"half')
+    assert not tc._quality_reject_recent("SmallAccount")
+    tc._record_quality_reject("SmallAccount")
+    assert tc._quality_reject_recent("smallaccount")
+    assert list(json.loads(path.read_text())) == ["smallaccount"]
+
+
 def test_follow_gate_english_only(monkeypatch):
     """Operator 2026-07-19: 'follow US / english accounts not foreigner
     langage follows' — the quality gate (rides EVERY follow path via the

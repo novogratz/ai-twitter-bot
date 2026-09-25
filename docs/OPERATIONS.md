@@ -306,7 +306,7 @@ bot stopped.
 
 The JSON files in `src/` go through the state store
 (`src/core/state_store.py`), except the action ledger, the Replied store and
-the files `twitter_client` and `action_guard` handle themselves. The store
+`whitelist.json`, which `action_guard` reads itself. The store
 writes atomically (temp file, full fsync, rename, directory flush), changes a
 file shared by several jobs under that file's lock, and gives each file one
 policy.
@@ -330,10 +330,10 @@ Files written by active jobs:
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | follow paths | Accounts followed by the bot | guarded |
-| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days | own |
+| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days | disposable |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
-| `liked_tweets.json` | `like_tweet` | Tweets already liked | own |
+| `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |
 | `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers | guarded |
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |

@@ -57,13 +57,12 @@ class FakePage:
 
 
 @pytest.fixture
-def browser(monkeypatch, tmp_path):
+def browser(monkeypatch):
     """Live write path on a scripted page; ledger rows and tab closes recorded."""
     from src.guards import action_guard
     from src.x import safari, twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: None)
@@ -98,6 +97,17 @@ def test_cached_like_is_never_clicked_even_if_the_page_says_not_liked(browser):
     page = browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": False}])
     assert tc.like_tweet(POST) is tc.LikeOutcome.ALREADY_LIKED
     assert page.clicks == []
+
+
+def test_an_unreadable_liked_cache_reads_empty_and_is_replaced(tmp_path):
+    from src.x import twitter_client as tc
+
+    path = tmp_path / "liked_tweets.json"
+    path.write_text('["half')
+    assert not tc._already_liked(POST)
+    tc._mark_liked(POST)
+    tc._mark_liked(POST)
+    assert json.loads(path.read_text()) == ["2063500000000000101"]
 
 
 def test_like_clicks_the_identified_post_once_and_records_the_read_url(browser):

@@ -9,8 +9,9 @@ import time
 import urllib.parse
 from datetime import datetime
 from enum import Enum
-from ..core.config import _PROJECT_ROOT, BOT_PROFILE_URL
+from ..core.config import BOT_PROFILE_URL
 from ..core.logger import log
+from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
 from . import confirmed_write, safari, scraper
 from .confirmed_write import WriteOutcome
@@ -265,59 +266,17 @@ def _maybe_like_parent(tweet_url: str, env_key: str, default_prob: float) -> Non
         log.info(f"[LIKE] parent-like skipped ({e}).")
 
 
-def _liked_cache_path() -> str:
-    """Lazy-resolve the liked_tweets.json path to avoid import-order issues."""
-    from ..core.config import _PROJECT_ROOT as _PR
-    return os.path.join(_PR, "liked_tweets.json")
+# Disposable: a like clicks only a "like" button, never "unlike", so a lost
+# cache costs a page read, never an un-like or a second like.
+LIKED = StateFile("liked_tweets.json", [], DISPOSABLE)
 
 
 def _load_liked_set():
-    """Return a CanonReplied set of canonical IDs we've already liked.
-    Cross-bot dedup via canonical status ID prevents the 'l' shortcut
-    from toggling-OFF a like we set in an earlier cycle."""
+    """Return a CanonReplied set of canonical IDs we've already liked."""
     from ..guards import replied_store
     s = replied_store.CanonReplied()
-    path = _liked_cache_path()
-    if not os.path.exists(path):
-        return s
-    try:
-        with open(path) as f:
-            data = json.load(f)
-        for u in (data if isinstance(data, list) else []):
-            if isinstance(u, str):
-                s.add(u)
-    except (json.JSONDecodeError, OSError):
-        pass
+    s.update(u for u in LIKED.read() if isinstance(u, str))
     return s
-
-
-def _save_liked_set(s) -> None:
-    """Persist liked set as ordered list, cap at 50k from the tail."""
-    from ..guards import replied_store
-    path = _liked_cache_path()
-    existing = []
-    existing_set = set()
-    if os.path.exists(path):
-        try:
-            with open(path) as f:
-                data = json.load(f)
-            if isinstance(data, list):
-                existing = [str(u) for u in data if isinstance(u, str)]
-                existing_set = set(existing)
-        except (json.JSONDecodeError, OSError):
-            pass
-    for u in s:
-        cid = replied_store.canonical_tweet_id(u)
-        if cid and cid not in existing_set:
-            existing.append(cid)
-            existing_set.add(cid)
-    if len(existing) > 50000:
-        existing = existing[-50000:]
-    try:
-        with open(path, "w") as f:
-            json.dump(existing, f, indent=2)
-    except OSError as e:
-        log.info(f"[LIKE] save failed: {e}")
 
 
 def _already_liked(url: str) -> bool:
@@ -327,11 +286,17 @@ def _already_liked(url: str) -> bool:
 
 
 def _mark_liked(url: str) -> None:
-    if not url:
+    """Append the status ID of `url` to the liked cache, capped at 50k from
+    the tail."""
+    from ..guards import replied_store
+    cid = replied_store.canonical_tweet_id(url)
+    if not cid:
         return
-    s = _load_liked_set()
-    s.add(url)
-    _save_liked_set(s)
+
+    def add(ids):
+        ids = [u for u in ids if isinstance(u, str)]
+        return None if cid in ids else (ids + [cid])[-50000:]
+    LIKED.update(add)
 
 
 class LikeOutcome(Enum):
@@ -611,7 +576,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 # clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
 # bad candidate never burns a second profile visit. -------------------------
 
-_FOLLOW_REJECTS_FILE = os.path.join(_PROJECT_ROOT, "follow_quality_rejects.json")
+# Disposable: the quality gate reads the profile again before any click, so
+# a lost cache costs a profile visit, never a follow.
+FOLLOW_QUALITY_REJECTS = StateFile("follow_quality_rejects.json", {}, DISPOSABLE)
 
 _NICHE_BIO_RE = re.compile(
     r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|"
@@ -704,27 +671,16 @@ def _follow_quality_decision(followers: int, bio: str, name: str,
 
 
 def _quality_reject_recent(handle: str, days: int = 30) -> bool:
+    ts = FOLLOW_QUALITY_REJECTS.read().get((handle or "").lower(), "")
     try:
-        with open(_FOLLOW_REJECTS_FILE) as f:
-            doc = json.load(f)
-        ts = doc.get((handle or "").lower(), "")
         return bool(ts) and (datetime.now() - datetime.fromisoformat(ts)).days < days
-    except (OSError, json.JSONDecodeError, ValueError):
+    except (TypeError, ValueError):
         return False
 
 
 def _record_quality_reject(handle: str) -> None:
-    try:
-        try:
-            with open(_FOLLOW_REJECTS_FILE) as f:
-                doc = json.load(f)
-        except (OSError, json.JSONDecodeError):
-            doc = {}
-        doc[(handle or "").lower()] = datetime.now().isoformat()
-        with open(_FOLLOW_REJECTS_FILE, "w") as f:
-            json.dump(doc, f, indent=1)
-    except OSError:
-        pass
+    FOLLOW_QUALITY_REJECTS.update(
+        lambda doc: {**doc, (handle or "").lower(): datetime.now().isoformat()})
 
 
 def follow_account(username: str, reciprocal: bool = False,
