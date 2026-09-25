@@ -240,14 +240,16 @@ def memory_ledger(monkeypatch):
 
 
 @_pytest.fixture
-def like_job(monkeypatch, memory_ledger):
-    """Live like_job on a scripted search page; the real walk and like_tweet run."""
+def like_job(monkeypatch, memory_ledger, settings_override):
+    """Live like_job on a scripted search page, its caps at their declared
+    defaults; the real walk and like_tweet run."""
+    from src.core import settings
     from src.x import safari, twitter_client as tc
     from tests.helpers import SearchPage
 
     monkeypatch.setenv("DRY_RUN", "0")
-    for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS"):
-        monkeypatch.delenv(name, raising=False)
+    settings_override(**{name: settings.DECLARED[name].default
+                         for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS")})
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)

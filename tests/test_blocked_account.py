@@ -26,7 +26,7 @@ def _followback(monkeypatch, follow, tmp_path):
     chokepoint must refuse it all the same."""
     from src.account import followback_bot as fb
     monkeypatch.setattr(fb, "is_blocked_account", lambda handle: False)
-    page = json.dumps({"path": f"/{fb.BOT_HANDLE}/followers", "handles": [HANDLE]})
+    page = json.dumps({"path": f"/{config.BOT_HANDLE}/followers", "handles": [HANDLE]})
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: page)
     monkeypatch.setattr(fb, "_scroll_page", lambda: None)
     monkeypatch.setattr(fb, "close_front_tab", lambda: None)
@@ -36,7 +36,6 @@ def _followback(monkeypatch, follow, tmp_path):
 
 def _follow_engagers(monkeypatch, follow, tmp_path):
     from src.account import follow_engagers_bot as fe
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     monkeypatch.setattr(follow_policy, "engagers", lambda: [HANDLE])
     monkeypatch.setattr(tc, "follow_account", follow)
     fe.run_follow_engagers_cycle()
@@ -67,8 +66,9 @@ def _seed_script(monkeypatch, follow, tmp_path):
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 @pytest.mark.parametrize("caller", [_followback, _follow_engagers, _engage, _seed_script])
 def test_every_follow_caller_meets_the_blocked_account_refusal(monkeypatch, tmp_path, memory_ledger,
-                                                               caller, dry_run):
+                                                               settings_override, caller, dry_run):
     monkeypatch.setenv("DRY_RUN", dry_run)
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     monkeypatch.setattr(time, "sleep", lambda *_: None)
     # A Seed account, so that engage and the seeding script ask to follow it.

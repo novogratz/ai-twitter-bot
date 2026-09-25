@@ -12,11 +12,10 @@ followers page showed is a follower to the policy, and gets the full gate.
 
 No new Safari scraping: the data source is the action ledger.
 """
-import os
 import traceback
 
 from ..guards import active_hours, follow_policy
-from ..core.config import BOT_HANDLE
+from ..core import config, settings
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 
@@ -40,11 +39,11 @@ def _save_state(st: dict) -> None:
 
 
 def run_follow_engagers_cycle():
-    if os.environ.get("ENABLE_FOLLOW_ENGAGERS", "1") != "1":
+    if not settings.get("ENABLE_FOLLOW_ENGAGERS"):
         log.info("[FOLLOW-ENGAGERS] Disabled. Skipping.")
         return
-    per_day = int(os.environ.get("FOLLOW_ENGAGERS_PER_DAY", "10"))
-    per_cycle = int(os.environ.get("FOLLOW_ENGAGERS_PER_CYCLE", "2"))
+    per_day = settings.get("FOLLOW_ENGAGERS_PER_DAY")
+    per_cycle = settings.get("FOLLOW_ENGAGERS_PER_CYCLE")
 
     st = _load_state()
     today = active_hours.today_iso()
@@ -60,7 +59,7 @@ def run_follow_engagers_cycle():
         return
 
     attempted = set(st.get("attempted", []))
-    own = BOT_HANDLE.lower()
+    own = config.BOT_HANDLE.lower()
     followed = 0
 
     from ..x.twitter_client import FollowOutcome, follow_account

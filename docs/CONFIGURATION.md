@@ -19,7 +19,7 @@ supersede the historical surfaces listed below:
 | `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers, `ollama` by default. An unknown name fails every call it routes without running anything; the start logs it and `--dry-run` lists it under `unknown_llm_providers` |
 | `LLM_FALLBACK_CLI` | Unset: no fallback, a failed call fails, Originals and Replies alike. `codex` (or `gemini`, `ollama`) opts into one; an unknown name fails the fallback without running anything. Ignored, and logged at start and listed by `--dry-run` under `ignored_llm_fallbacks`: `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself without `LLM_FALLBACK_MODEL`. Two calls leave the configured provider without it: the Replies to @Graphseo run on the Claude CLI whenever it is installed, and a codex primary under a cached usage lockout (`codex_lockout.json`) goes to local Ollama |
 | `FR_FORCED_REPLY_HANDLES` | `Graphseo`: parents always answered in French by the search and feed-sweep Replies; `judge_reply` refuses an English-looking reply to them; read at call time |
-| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; environment only, read at each like cycle |
+| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; declared in `src/core/settings.py`, read at each like cycle |
 | `DRY_RUN` | `1` logs every write instead of sending it; read at each call through `config.dry_run()` |
 
 Legacy profile job caps do not add posting slots.

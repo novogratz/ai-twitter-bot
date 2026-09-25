@@ -15,13 +15,11 @@ Strategy:
     writes the ledger row. A dry run marks its own day and does not spend
     the live attempt.
 """
-import os
 import time
 import traceback
 from datetime import date
 
-from ..core import config
-from ..core.config import BOT_HANDLE
+from ..core import config, settings
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 from ..guards import active_hours
@@ -32,12 +30,6 @@ from ..x.confirmed_write import WriteOutcome
 # Guarded: they alone hold one attempt per day and the posts already pinned.
 PIN_HISTORY = StateFile("pin_history.json", {"pinned": []}, GUARDED)
 PIN_STATE = StateFile("pin_daily_state.json", {}, GUARDED)
-
-# Minimum likes to bother pinning. If the best post of the week didn't
-# clear this floor, the pinned slot is more honest staying empty.
-# 2 (was 5, 2026-07-19): we self-like at publish, so 2 = 1 external like.
-# A floor of 5 froze the slot for weeks at this account size.
-MIN_LIKES_TO_PIN = int(os.environ.get("PIN_MIN_LIKES", "2"))
 
 
 def _load_history() -> dict:
@@ -86,9 +78,10 @@ def run_pin_cycle():
     history = _load_history()
     pinned_urls = set(history.get("pinned", []))
 
-    log.info(f"[PIN] Scraping @{BOT_HANDLE} main feed for top own post...")
+    handle = config.BOT_HANDLE
+    log.info(f"[PIN] Scraping @{handle} main feed for top own post...")
     try:
-        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=20)
+        tweets = scrape_profile_tweets(handle, max_tweets=20)
     except Exception:
         log.info("[PIN] Scrape failed:")
         traceback.print_exc()
@@ -103,6 +96,11 @@ def run_pin_cycle():
     # `author` is the DISPLAY NAME ("The AI Therapist"), never the @handle, so
     # comparing it to BOT_HANDLE filtered EVERY candidate — the pin could
     # never rotate. URL is ground truth: is_own_post().
+    # Minimum likes to bother pinning. If the best post of the week didn't
+    # clear this floor, the pinned slot is more honest staying empty.
+    # 2 (was 5, 2026-07-19): we self-like at publish, so 2 = 1 external like.
+    # A floor of 5 froze the slot for weeks at this account size.
+    min_likes = settings.get("PIN_MIN_LIKES")
     own = []
     for t in tweets:
         url = t.get("url") or ""
@@ -111,7 +109,7 @@ def run_pin_cycle():
         if url in pinned_urls:
             continue
         likes = int(t.get("likes") or 0)
-        if likes < MIN_LIKES_TO_PIN:
+        if likes < min_likes:
             continue
         own.append({
             "url": url,
@@ -122,7 +120,7 @@ def run_pin_cycle():
 
     if not own:
         log.info(
-            f"[PIN] No fresh own post clears MIN_LIKES_TO_PIN={MIN_LIKES_TO_PIN}. "
+            f"[PIN] No fresh own post clears PIN_MIN_LIKES={min_likes}. "
             "Skipping (better empty than stale)."
         )
         _mark_ran_today()
@@ -140,7 +138,7 @@ def run_pin_cycle():
     # Staleness override (2026-07-19): a pin older than PIN_MAX_AGE_DAYS no
     # longer defends its slot with the 1.3x beat rule — a fresh good post
     # converts profile visits better than a stale banger.
-    max_age_days = int(os.environ.get("PIN_MAX_AGE_DAYS", "7"))
+    max_age_days = settings.get("PIN_MAX_AGE_DAYS")
     pinned_at = last.get("pinned_at") or ""
     pin_is_stale = True
     if pinned_at:
@@ -148,7 +146,7 @@ def run_pin_cycle():
             pin_is_stale = (active_hours.now_local().date() - date.fromisoformat(pinned_at[:10])).days >= max_age_days
         except ValueError:
             pin_is_stale = True
-    if last_likes and not pin_is_stale and             best["likes"] < max(MIN_LIKES_TO_PIN, int(last_likes * 1.3)):
+    if last_likes and not pin_is_stale and             best["likes"] < max(min_likes, int(last_likes * 1.3)):
         log.info(
             f"[PIN] Best candidate ({best['likes']} likes) doesn't beat the "
             f"current pin ({last_likes} likes x1.3) — keeping the existing pin."
