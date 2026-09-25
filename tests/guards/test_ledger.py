@@ -185,7 +185,7 @@ def test_corrupt_ledger_refuses_the_policy_and_the_write(monkeypatch, path):
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
 
     for check in (lambda: ag.can_post(ag.POST), lambda: ag.can_post(ag.REPLY),
-                  lambda: fp.judge("karpathy", reciprocal=True),
+                  lambda: fp.judge("karpathy"),
                   lambda: ag.can_debate_turn("someone"), lambda: ag.record(ag.LIKE)):
         with pytest.raises(StateUnreadable, match="ledger unreadable"):
             check()
@@ -274,6 +274,7 @@ def test_two_ledgers_on_one_file_see_each_others_rows(path):
 def test_the_next_policy_check_sees_a_row_another_process_appended(monkeypatch, path):
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(path))
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
+    fp.record_followers(["someone"])
     assert ag.can_post(ag.REPLY) == (True, "")
     assert "anti-churn" not in fp.judge("someone").reason
 

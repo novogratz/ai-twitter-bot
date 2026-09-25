@@ -7,6 +7,7 @@ import pytest
 
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag
+from src.guards import follow_policy
 from src.guards import replied_store as rs
 from src.core import config
 from src.core.state_errors import StateUnreadable
@@ -684,6 +685,7 @@ def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, 
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
     monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
+    follow_policy.record_followers(["someaccount"])
     followed = tmp_path / "followed_accounts.json"
     followed.write_text('["half')
 

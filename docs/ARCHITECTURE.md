@@ -86,8 +86,8 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
-| `engage_job` | 8 min | Tries to follow a handful of accounts and likes their posts when profile visits are allowed. |
-| `followback_job` | 20 min | Follows back recent followers missing from the followed accounts (`reciprocal=True`); a too-soon or cap-reached refusal ends the cycle. |
+| `engage_job` | 8 min | Tries to follow a handful of pool accounts and likes their posts when profile visits are allowed. The pool comes from the feeds: the follow policy refuses its Strangers, so it follows only the Seed accounts, followers or Engagers the pool holds. |
+| `followback_job` | 20 min | Scrapes the primary column of the followers page, records those followers in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from niche searches. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
@@ -412,12 +412,21 @@ Five modules sit behind them:
   price targets, duplicates, truncation, violence, skip rationales.
 - `src/guards/follow_policy.py` is the follow policy and owns the follow
   files: `followed_accounts.json`, `following_count.json`,
-  `follower_history.json`, `whitelist.json` and
-  `follow_quality_rejects.json`. `judge(handle)` checks, before the profile
-  opens, the handle (the one check of `[A-Za-z0-9_]{1,15}`), the
-  whitelist, anti-churn, the daily cap, the spacing, the following ceiling
-  and ratio brake, then the quality-reject cache. `judge_profile` runs the
-  quality gate on the open profile and caches a reject for 30 days. Each
+  `follower_history.json`, `whitelist.json`,
+  `follow_quality_rejects.json`, `followers_seen.json` and the frozen
+  `replied_back.json`. `relation(handle)` finds what the handle is to the
+  account, from its own sources, never from the caller: Seed account
+  (`whitelist.json`), Engager (the ledger's Debate turns, then
+  `replied_back.json`), follower (`followers_seen.json`, which only the
+  followers scrape writes, through `record_followers`), else Stranger.
+  `judge(handle)` checks, before the profile opens, the handle (the one
+  check of `[A-Za-z0-9_]{1,15}`), the relation (a Stranger is refused in
+  every mode), the whitelist (a follower or an Engager passes it while
+  `FOLLOWBACK_BYPASS_WHITELIST` is on), anti-churn, the daily cap, the
+  spacing, the following ceiling and ratio brake, then the quality-reject
+  cache. `judge_profile` runs the quality gate on the open profile, by
+  relation (a Seed account is exempt, an Engager skips the size and niche
+  checks), and caches a reject for 30 days. Each
   returns a `Verdict` whose `Refusal` names the cause; `follow_account`
   turns it into its `FollowOutcome`, and the jobs act on that outcome
   without checking a rule again. `followed()` reads the followed accounts
@@ -528,6 +537,7 @@ the next write replaces it. Each file has one lock, and
 several scheduler threads change go through it: `followed_accounts.json`
 (`follow_account` merges each follow into the file, whichever job asked),
 `following_count.json`, `liked_tweets.json`, `follow_quality_rejects.json`,
+`followers_seen.json`,
 `tweet_history.json`, `safari_health.json` and `personality.json` (the
 dossier bump after every Reply). `tweet_history.json` has one reader,
 `history.load_history`, for the dedup, the rationed openers and the

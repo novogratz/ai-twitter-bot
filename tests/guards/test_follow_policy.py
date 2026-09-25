@@ -168,7 +168,7 @@ def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, tmp
     path.write_text('{"tiers": {"tier1": ["karp')
 
     with pytest.raises(StateUnreadable, match="whitelist.json"):
-        fp.judge("karpathy", reciprocal=True)
+        fp.judge("karpathy")
     assert path.read_text() == '{"tiers": {"tier1": ["karp'
 
 
@@ -178,7 +178,7 @@ def test_the_quality_gate_refuses_on_a_whitelist_unreadable_on_the_open_profile(
     follow_account still closes its tab."""
     (tmp_path / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
     verdict = fp.judge_profile("karpathy", lambda: pytest.fail("profile read"))
-    assert verdict.refusal is Refusal.POLICY and "whitelist unreadable" in verdict.reason
+    assert verdict.refusal is Refusal.POLICY and "whitelist.json is unreadable" in verdict.reason
 
 
 @pytest.mark.parametrize("handle, valid", [("karpathy", True), ("a_1", True), ("x" * 15, True),
@@ -244,14 +244,15 @@ def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, memory_l
     _counts(monkeypatch, tmp_path, 100, 10)
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 2)
+    fp.record_followers(["fan"])
     memory_ledger.append(ag.FOLLOW, "yesterday", False, now - timedelta(days=1))
     memory_ledger.append(ag.FOLLOW, "dry", True, now)
     memory_ledger.append(ag.FOLLOW, "today", False, now - timedelta(hours=1))
-    assert fp.judge("stranger") == ADMITTED
+    assert fp.judge("fan") == ADMITTED
 
     ag.record(ag.FOLLOW, "another")
 
-    assert fp.judge("stranger") == Verdict(Refusal.CAP_REACHED, "daily follow cap reached (2)")
+    assert fp.judge("fan") == Verdict(Refusal.CAP_REACHED, "daily follow cap reached (2)")
 
 
 def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatch, tmp_path):
@@ -279,20 +280,80 @@ def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatc
         "legacy mode keeps following <= followers"
 
 
-def test_reciprocal_followback_bypasses_whitelist(monkeypatch, memory_ledger):
+def test_a_follower_or_an_engager_passes_the_whitelist_gate_while_the_bypass_is_on(
+        follow_env, monkeypatch, tmp_path):
     """Self-improve #3 (2026-06-24): followback was dead — whitelist-only
-    blocked following people who engage with us. reciprocal=True bypasses ONLY
-    the whitelist gate (when FOLLOWBACK_BYPASS_WHITELIST), never the other
-    gates. Pin: a non-whitelisted handle is whitelist-blocked normally but
-    NOT for a reciprocal follow-back."""
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
+    blocked following people who engage with us. #173: the policy finds the
+    relation itself; FOLLOWBACK_BYPASS_WHITELIST lets a follower or an
+    Engager through the whitelist gate ONLY, never the other gates."""
+    _counts(monkeypatch, tmp_path, 100, 10)
     monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", True)
-    monkeypatch.setattr(fp, "is_whitelisted", lambda h, **k: False)
-    assert "not on whitelist" in fp.judge("randomstranger9").reason
-    assert "not on whitelist" not in fp.judge("randomstranger9", reciprocal=True).reason
-    # kill switch: bypass off => reciprocal blocked again
+    fp.record_followers(["somefollower"])
+    ag.record(ag.DEBATE_TURN, "someengager")
+    assert fp.judge("somefollower") == ADMITTED
+    assert fp.judge("someengager") == ADMITTED
+    ag.record(ag.FOLLOW, "somefollower")
+    assert "anti-churn" in fp.judge("somefollower").reason
+
     monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", False)
-    assert "not on whitelist" in fp.judge("randomstranger9", reciprocal=True).reason
+    assert fp.judge("someengager") == Verdict(
+        Refusal.POLICY, "not on whitelist (whitelist-only mode; Engager not exempt)")
+    assert fp.judge("karpathy") == ADMITTED, "a Seed account needs no bypass"
+
+
+@pytest.mark.parametrize("whitelist_only", [True, False])
+@pytest.mark.parametrize("bypass", [True, False])
+def test_a_stranger_is_never_followed(follow_env, monkeypatch, tmp_path, whitelist_only, bypass):
+    """#173: a Stranger is refused whatever the mode, before any profile
+    opens and on the open profile, without the profile being read."""
+    _counts(monkeypatch, tmp_path, 100, 10)
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
+    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", bypass)
+    ag.record(ag.REPLY, "https://x.com/repliedto/status/2063500000000000201")
+    stranger = Verdict(Refusal.POLICY, "Stranger: not on the whitelist, not a follower, not an Engager")
+
+    assert fp.relation("repliedto") is fp.Relation.STRANGER, "a Reply we sent is no relation"
+    assert fp.judge("repliedto") == stranger
+    assert fp.judge_profile("repliedto", lambda: pytest.fail("profile read")) == stranger
+    assert not (tmp_path / "follow_quality_rejects.json").exists()
+
+
+def test_the_relation_comes_from_the_policys_own_sources(follow_env, monkeypatch, tmp_path):
+    from tests.helpers import fresh
+
+    fp.record_followers(["FanOne", "bad handle"])
+    ag.record(ag.DEBATE_TURN, "Debater")
+    ag.record(ag.DEBATE_TURN, "simulated", dry_run=True)
+    (tmp_path / "replied_back.json").write_text(json.dumps([fresh("FrozenFan")]))
+    fp.record_followers(["Debater", "karpathy"])
+
+    assert fp.relation("KARPATHY") is fp.Relation.SEED
+    assert fp.relation("debater") is fp.Relation.ENGAGER, "an Engager who follows stays an Engager"
+    assert fp.relation("frozenfan") is fp.Relation.ENGAGER
+    assert fp.relation("fanone") is fp.Relation.FOLLOWER
+    assert fp.relation("simulated") is fp.Relation.STRANGER, "a dry-run Debate turn proves nothing"
+    assert fp.relation("bad handle") is fp.Relation.STRANGER
+
+
+def test_a_follower_unseen_for_the_memory_window_becomes_a_stranger(tmp_path):
+    old = (datetime.now() - timedelta(days=fp.FOLLOWER_MEMORY_DAYS, minutes=1)).isoformat()
+    path = tmp_path / "followers_seen.json"
+    path.write_text(json.dumps({"gone": old, "kept": datetime.now().isoformat()}))
+    assert not fp.is_follower("gone") and fp.is_follower("kept")
+
+    fp.record_followers(["New"])
+
+    assert set(json.loads(path.read_text())) == {"kept", "new"}
+
+
+def test_an_unreadable_followers_record_reads_empty_and_is_replaced(tmp_path):
+    """Disposable: lost, a follower reads as a Stranger until the next
+    scrape, which replaces the file."""
+    path = tmp_path / "followers_seen.json"
+    path.write_text('{"half')
+    assert fp.relation("fan") is fp.Relation.STRANGER
+    fp.record_followers(["fan"])
+    assert fp.relation("fan") is fp.Relation.FOLLOWER
 
 
 def test_follow_gap_is_drawn_once_per_follow(monkeypatch, tmp_path):
@@ -310,6 +371,7 @@ def test_follow_gap_is_drawn_once_per_follow(monkeypatch, tmp_path):
     monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
     monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", False)
     _counts(monkeypatch, tmp_path, 100, 10)
+    fp.record_followers(["fan4"])
     ag.record(ag.FOLLOW, "fan1")
     gap = ag.seconds_until_allowed(ag.FOLLOW)
     assert 600 <= gap <= 900
@@ -400,6 +462,7 @@ def test_a_profile_rejected_by_the_gate_is_refused_before_the_next_visit(follow_
     quality refusal before the profile opens, for 30 days."""
     _counts(monkeypatch, tmp_path, 100, 10)
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
+    fp.record_followers(["smallaccount"])
     assert fp.judge("smallaccount") == ADMITTED
 
     verdict = fp.judge_profile("SmallAccount", lambda: SMALL)
@@ -409,11 +472,17 @@ def test_a_profile_rejected_by_the_gate_is_refused_before_the_next_visit(follow_
         Refusal.QUALITY_REJECTED, "rejected by the quality gate within 30 days")
 
 
-def test_the_gate_admits_a_seed_and_skips_size_for_an_engager(follow_env):
+def test_the_gate_admits_a_seed_and_skips_size_for_an_engager_only(follow_env):
+    """#173: the gate reads the relation itself; a follower gets the full
+    gate, as a Follow-back always did."""
+    small_fan = {"followers": "12", "bio": "hi", "name": "Sam"}
+    ag.record(ag.DEBATE_TURN, "smallfan")
+    fp.record_followers(["smallfollower"])
     assert fp.judge_profile("karpathy", lambda: SMALL) == ADMITTED
-    assert fp.judge_profile("smallfan", lambda: {"followers": "12", "bio": "hi", "name": "Sam"},
-                            engager=True) == ADMITTED
+    assert fp.judge_profile("smallfan", lambda: small_fan) == ADMITTED
     assert not fp._quality_reject_recent("smallfan")
+    verdict = fp.judge_profile("smallfollower", lambda: small_fan)
+    assert verdict.refusal is Refusal.QUALITY_REJECTED and "too small" in verdict.reason
 
 
 def test_the_gate_reads_no_profile_while_the_whitelist_is_unreadable(tmp_path):
@@ -421,7 +490,7 @@ def test_the_gate_reads_no_profile_while_the_whitelist_is_unreadable(tmp_path):
 
     verdict = fp.judge_profile("someone", lambda: pytest.fail("profile read"))
 
-    assert verdict.refusal is Refusal.POLICY and "whitelist unreadable" in verdict.reason
+    assert verdict.refusal is Refusal.POLICY and "whitelist.json is unreadable" in verdict.reason
     assert not (tmp_path / "follow_quality_rejects.json").exists()
 
 

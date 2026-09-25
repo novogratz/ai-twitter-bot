@@ -128,8 +128,8 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
     max_visits per cycle to stay under bot detection.
 
     No follow here: engager follows belong to follow_engagers_job, which
-    reads the ledger's Debate turns and passes engager=True (CONTEXT.md:
-    Engager).
+    reads the ledger's Debate turns, where the follow policy finds them
+    Engagers (CONTEXT.md: Engager).
     """
     visited = 0  # visits attempted, the cap
     engaged = 0  # engagers with at least one like that shipped

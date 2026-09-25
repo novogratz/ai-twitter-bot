@@ -5,7 +5,9 @@ Strategy (2026-06-06 operator mandate):
     sweeper (dynamic_accounts.json "en"/"fr" buckets) + legacy discovered.json.
   - VIP: Graphseo always included every cycle.
   - Blocked / pruned accounts are filtered out automatically.
-  - No massive hardcoded follow list — we follow who the feed shows us.
+  - The follow policy decides each follow from the account's relation: a
+    pool account that is not a Seed account, a follower or an Engager is a
+    Stranger, refused before its profile opens.
 """
 import random
 import time

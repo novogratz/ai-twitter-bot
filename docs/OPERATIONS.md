@@ -331,6 +331,7 @@ Files written by active jobs:
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | `follow_policy.record_followed` (`follow_account`) | Accounts followed by the bot or found already followed | guarded |
 | `follow_quality_rejects.json` | `follow_policy` quality gate (`follow_account`) | Handles refused by the quality gate, 30 days | disposable |
+| `followers_seen.json` | `follow_policy.record_followers` (`followback_job` scrape) | Followers the followers page showed, last seen, 30 days; the proof of a Follow-back | disposable |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
 | `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |
@@ -353,12 +354,12 @@ Files active code reads but no active job writes:
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
 | `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
 | `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
-| `replied_back.json` | `follow_engagers_bot` | Frozen Engager list, see below | disposable |
+| `replied_back.json` | `follow_policy` (`follow_account`, `follow_engagers_job`) | Frozen Engager list, see below | disposable |
 
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
 to the replied store and the Engager list to the ledger's debate turns.
-`follow_engagers_job` still reads it until its entries age out of the
-ledger's 90 days; delete it, and the fallback in `follow_engagers_bot`,
+The follow policy still reads it until its entries age out of the
+ledger's 90 days; delete it, and the fallback in `follow_policy`,
 around 2026-12-22.
 
 The supervisors cite three more root files, kept for them:

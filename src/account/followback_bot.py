@@ -12,6 +12,10 @@ Strategy:
     per cycle (don't burn the daily follow budget all at once).
   - Skip the accounts in followed_accounts.json, which follow_account keeps
     for a follow that shipped or an account found already followed.
+  - The scrape reads the page's primary column only, so suggested accounts
+    ("Who to follow") never pass for followers, and records what it read
+    with follow_policy.record_followers: the policy admits a Follow-back on
+    that record, never on this job's word.
 
 Safety: handle whitelist heuristic — skip obvious bots (handle made of
 random alphanumerics with no vowels, length=15) and BLOCKLIST entries.
@@ -54,12 +58,15 @@ def _looks_like_real_handle(handle: str) -> bool:
 
 
 def _scrape_followers_list(max_handles: int = 30) -> list[str]:
-    """Open /TheAIShrink/followers and scrape the @handles visible on the page."""
+    """Scrape the @handles of the open followers page's primary column, and
+    record them as followers."""
     js_code = """
     (function() {
         var handles = [];
         var seen = {};
-        var anchors = document.querySelectorAll('a[role="link"][href^="/"]');
+        var column = document.querySelector('[data-testid="primaryColumn"]');
+        if (!column) return '';
+        var anchors = column.querySelectorAll('a[role="link"][href^="/"]');
         for (var i = 0; i < anchors.length && handles.length < MAX; i++) {
             var h = anchors[i].getAttribute('href') || '';
             var m = h.match(/^\\/([A-Za-z0-9_]+)$/);
@@ -79,8 +86,10 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
     raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
     if not raw:
         return []
-    handles = [h for h in raw.split(",") if h]
-    return handles[:max_handles]
+    handles = [h for h in raw.split(",") if h and h.lower() != BOT_HANDLE.lower()]
+    handles = handles[:max_handles]
+    follow_policy.record_followers(handles)
+    return handles
 
 
 def run_followback_cycle():
@@ -130,7 +139,7 @@ def run_followback_cycle():
     shipped = 0
     for h in pick:
         try:
-            result = follow_account(h, reciprocal=True)  # follow-back: bypass whitelist gate
+            result = follow_account(h)
             if result.is_budget_refusal:
                 log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
                 break

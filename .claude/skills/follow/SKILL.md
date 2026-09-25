@@ -14,7 +14,9 @@ Follow @$username. Only on an explicit operator request.
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`.
 3. Run `uv run python -c "from src.x.twitter_client import follow_account; print(follow_account('$username'))"`
-   - `follow_account` applies the follow policy: whitelist-only, daily cap,
+   - `follow_account` applies the follow policy: a Stranger (not on the
+     whitelist, not a follower the followers page showed, not an Engager of
+     a Debate turn) is always refused; then whitelist-only, daily cap,
      spacing, total-following ceiling, 30-day anti-churn, quality gate. A
      refusal is logged as `[FOLLOW] policy refuses …` in `bot.log`.
 4. Write nothing yourself: `follow_account` adds the handle to

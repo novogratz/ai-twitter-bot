@@ -145,7 +145,8 @@ _Avoid_: reciprocal follow, reciprocity
 
 **Stranger**:
 An account that is neither a Seed account, a follower, nor an Engager; never
-followed.
+followed, whoever asks. The follow policy finds the relation itself; no job
+declares it.
 _Avoid_: discovered account, feed account
 
 **Follow refusal**:
@@ -153,7 +154,7 @@ The named cause of a follow the follow policy stops before the click: too
 soon (the follow spacing), cap reached (the daily cap, the following
 ceiling or the ratio brake, reached or unreadable), quality rejected (the
 quality gate, on the profile or within 30 days), or refused (every other
-rule: handle, whitelist, anti-churn). Too soon and cap reached concern the
+rule: handle, Stranger, whitelist, anti-churn). Too soon and cap reached concern the
 account's follow budget, so a later cycle may follow the same account. A
 whitelist unreadable before the profile opens is no refusal: it stops the
 job, and no account is marked tried.
