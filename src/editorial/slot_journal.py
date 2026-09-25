@@ -20,7 +20,7 @@ The file, `editorial_state.json`, keeps its format:
      "pending_sources": {"YYYY-MM-DD/<slot>": {"url", "text", "ts"}}}
 
 A Startup post's slot is `startup@HH:MM:SS`. Keys the journal does not
-know are kept as they are.
+know are kept within the day; a new day drops them.
 
 Two adapters: `FileJournal` reads the guarded file once when made and
 writes it whole at each change; `MemoryJournal` holds it in memory for
@@ -179,8 +179,9 @@ class SlotJournal:
         return max((s for s in (stamp(e.get("ts", "")) for e in entries) if s), default=None)
 
     def get(self, key, default=None):
-        """One key of the file format, read only: the tests that still read
-        the state as a dict (#232 moves them to the journal)."""
+        """One key of the file format, read only: the `collect_sources`
+        stand-in of test_pending_source_is_released_only_when_nothing_was_sent
+        still reads the state as a dict (#232 moves it to the journal)."""
         return self._data.get(key, default)
 
 
