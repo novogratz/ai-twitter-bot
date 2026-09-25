@@ -103,7 +103,11 @@ Two settings decide how much of the table does anything:
   replyback profile likes only act on allowlisted accounts.
 - The follow policy in `action_guard.can_follow`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
-  decides what actually passes.
+  decides what actually passes. A following count that cannot be read
+  (`following_count.json`, else `followed_accounts.json`) or an unreadable
+  `whitelist.json` refuses every follow and stops `bin/mass_unfollow.py`.
+  With `FOLLOW_ENFORCE_RATIO` on, an unknown follower count
+  (`follower_history.json` empty or unreadable) refuses every follow.
 
 ## Editorial pipeline
 
@@ -432,9 +436,8 @@ model call, and nothing ships. Only `HARD_RULES_BLOCK`, computed when
 ## State store
 
 `src/core/state_store.py` reads and writes the JSON state files of `src/`,
-except the action ledger, the Replied store and the files `twitter_client`
-and `action_guard` handle themselves. A module declares each file once as a
-`StateFile(name, default, policy)`; paths resolve at call time under
+except the action ledger and the Replied store. A module declares each file
+once as a `StateFile(name, default, policy)`; paths resolve at call time under
 `state_store.ROOT`, the repo root. Every write goes through
 `atomic_write_bytes`: a temp file `.<name>.<random>.tmp` in the same
 directory, flushed with `F_FULLFSYNC` where available, `os.replace`, then a
@@ -446,6 +449,7 @@ the next write replaces it. Each file has one lock, and
 `StateFile.update(fn)` reads, changes and writes under it. The files that
 several scheduler threads change go through it: `followed_accounts.json`
 (`engage_job` and `followback_job` merge their follows into the file),
+`following_count.json`, `liked_tweets.json`, `follow_quality_rejects.json`,
 `tweet_history.json`, `safari_health.json` and `personality.json` (the
 dossier bump after every Reply). `tweet_history.json` has one reader,
 `history.load_history`, for the dedup, the rationed openers and the

@@ -194,12 +194,13 @@ Safari restart, and nothing writes over the file:
 | File | Stops |
 |---|---|
 | `tweet_history.json` | `editorial_job` before any Draft, `post_tweet` (dedup and rationed openers), `babysit_job`, `reply_job` when enabled |
-| `followed_accounts.json` | `engage_job`, `followback_job` |
+| `followed_accounts.json` | `engage_job`, `followback_job`; every follow while `following_count.json` holds no count, as below |
+| `following_count.json` | Every follow: `can_follow` refuses the unreadable following ceiling and `follow_account` returns `REFUSED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
-| `whitelist.json` | `account_curator` promotions (`action_guard` reads it itself) |
+| `whitelist.json` | Every follow: `can_follow` refuses, and `follow_account` returns `REFUSED` before opening the profile. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
@@ -210,7 +211,8 @@ covers it, and it can be deleted once the bot is stopped. With the bot stopped, 
 tail), check its top-level type (a list for `tweet_history.json` and
 `followed_accounts.json`, an object for the others), then restart. Do not
 delete a guarded file: a missing file restarts from empty, which resets a
-daily cap, forgets follows and pins, or drops the Operator's lists.
+daily cap, forgets follows and pins, drops the following count the follow
+ceiling reads, or drops the Operator's lists.
 
 **Rolling back past issue #147.** Older code reads the ledger as one JSON
 list and refuses every write on the per-line format. With the bot stopped,
@@ -303,8 +305,8 @@ line's length can go unseen until the next restart: edit the ledger with the
 bot stopped.
 
 The JSON files in `src/` go through the state store
-(`src/core/state_store.py`), except the action ledger, the Replied store and
-the files `twitter_client` and `action_guard` handle themselves. The store
+(`src/core/state_store.py`), except the action ledger and the Replied store,
+which keep their own implementations. The store
 writes atomically (temp file, full fsync, rename, directory flush), changes a
 file shared by several jobs under that file's lock, and gives each file one
 policy.
@@ -323,15 +325,15 @@ Files written by active jobs:
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
-| `following_count.json` | `action_guard` | Following count used by the follow ceiling | own |
+| `following_count.json` | `action_guard.adjust_following` | Following count used by the follow ceiling | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | follow paths | Accounts followed by the bot | guarded |
-| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days | own |
+| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days | disposable |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
-| `liked_tweets.json` | `like_tweet` | Tweets already liked | own |
+| `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |
 | `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers | guarded |
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
@@ -345,7 +347,7 @@ Files active code reads but no active job writes:
 | File | Read by | Holds | Policy |
 |---|---|---|---|
 | `respect_list.json` | `respect_list` | Operator-managed respect list | guarded |
-| `whitelist.json` | `action_guard`, `account_curator` | Tiered follow whitelist | guarded in the store; `action_guard` reads it itself |
+| `whitelist.json` | `action_guard`, `account_curator` | Tiered follow whitelist | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
 | `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
@@ -395,7 +397,10 @@ and unused since debate turns moved to the ledger; it can be deleted.
   `JS err: OSAERR:no answer from Safari`; the osascript error, when there is
   one, follows in the same output under `[MASS_UNFOLLOW]` and is also in
   `bot.log`. `--max` defaults
-  to 150. A rate limit triggers a cooldown, never an abort.
+  to 150. A rate limit triggers a cooldown, never an abort. A missing or
+  unreadable `whitelist.json`, or an unreadable `respect_list.json` with
+  `--keep legacy`, aborts the run before Safari; a missing
+  `respect_list.json` reads as empty.
   `mass_unfollow_results.json` is rewritten after every unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 

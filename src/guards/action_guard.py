@@ -17,22 +17,36 @@ Every executed (or dry-run) write is recorded in the action ledger
 for today's counts, the last write of an action and the last follow or
 unfollow of a handle, and never knows where it stores them.
 """
-import json
 import os
 import random
-import threading
 import time
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
 
 from ..core import config
+from ..core.logger import log
+from ..core.state_errors import StateUnreadable
+from ..core.state_store import DISPOSABLE, GUARDED, StateFile
 from .active_hours import is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
 from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW
 
-# Guards following_count.json.
-_LOCK = threading.Lock()
+# The follow ceiling's inputs, declared here once; the jobs that write them
+# import them from here.
+# Guarded: engage_job follows every pool handle missing from it, and the
+# ceiling counts it when following_count.json holds no count.
+FOLLOWED = StateFile("followed_accounts.json", [], GUARDED)
+# Guarded: the ceiling's count; the followed list under-counts the real
+# following, so falling back to it would admit follows past the ceiling.
+FOLLOWING_COUNT = StateFile("following_count.json", {}, GUARDED)
+# Disposable: growth samples, where a fresh sample matters more than the
+# series; without them the ceiling takes its lowest value and the ratio
+# brake refuses, so losing them never admits a follow.
+FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
+# Guarded: the Operator's follow whitelist, which account_curator extends.
+# Read as empty, it would unprotect every seed from an unfollow.
+WHITELIST = StateFile("whitelist.json", {}, GUARDED)
 
 
 # --- ledger ----------------------------------------------------------------
@@ -130,30 +144,12 @@ def seconds_until_allowed(action: str) -> float:
 
 # --- whitelist --------------------------------------------------------------
 
-_WL_CACHE: dict = {}
-_WL_KEY: tuple = ()  # (path, mtime) of the file _WL_CACHE was read from
-
-
-_WL_EMPTY = {"tier1": set(), "tier2": set(), "tier3": set(), "tier4": set(),
-             "discovered": set(), "all": set()}
-
-
 def load_whitelist() -> dict:
     """Return {"tier1": set, ..., "tier4": set, "all": set} of lowercased
-    handles. Cached, reloads when the file changes. tier4 (2026-06-07 spec:
-    crypto/markets crossover seeds) is optional in the file."""
-    global _WL_CACHE, _WL_KEY
-    try:
-        key = (config.WHITELIST_FILE, os.path.getmtime(config.WHITELIST_FILE))
-    except OSError:
-        return dict(_WL_EMPTY)
-    if _WL_CACHE and key == _WL_KEY:
-        return _WL_CACHE
-    try:
-        with open(config.WHITELIST_FILE) as f:
-            raw = json.load(f)
-    except (OSError, json.JSONDecodeError):
-        return dict(_WL_EMPTY)
+    handles. tier4 (2026-06-07 spec: crypto/markets crossover seeds) is
+    optional in the file. Raises StateUnreadable while whitelist.json
+    cannot be read."""
+    raw = WHITELIST.read()
 
     def _norm(seq):
         return {str(h).lower().lstrip("@") for h in (seq or [])}
@@ -167,14 +163,13 @@ def load_whitelist() -> dict:
     # — the bot develops its own follow list). Same follow rights as seeds;
     # additions capped + logged in account_curator.
     t5 = _norm(tiers.get("discovered"))
-    _WL_CACHE = {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
-                 "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
-    _WL_KEY = key
-    return _WL_CACHE
+    return {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
+            "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
 
 
 def is_whitelisted(handle: str,
                    tiers=("tier1", "tier2", "tier3", "tier4", "discovered")) -> bool:
+    """Raises StateUnreadable while whitelist.json cannot be read."""
     h = (handle or "").lower().lstrip("@")
     wl = load_whitelist()
     return any(h in wl[t] for t in tiers)
@@ -182,39 +177,28 @@ def is_whitelisted(handle: str,
 
 # --- follower / following counts (best-effort, conservative) ---------------
 
-def _current_counts() -> Tuple[Optional[int], Optional[int]]:
-    """(followers, following). Followers from follower_history.json (latest).
-    Following: optional override file / env, else the tracked followed set
-    (which under-counts true following, so the ratio gate stays conservative).
+def _current_counts() -> Tuple[Optional[int], int]:
+    """(followers, following). Followers from follower_history.json (latest),
+    None when unknown. Following: the env override, else following_count.json,
+    else the tracked followed set (which under-counts true following).
+    Raises StateUnreadable when following_count.json or the followed set
+    cannot be read.
     """
     followers = None
+    hist = FOLLOWER_HISTORY.read()
     try:
-        with open(os.path.join(config._PROJECT_ROOT, "follower_history.json")) as f:
-            hist = json.load(f)
-        if isinstance(hist, list) and hist:
+        if hist:
             followers = int(hist[-1].get("count"))
-    except (OSError, json.JSONDecodeError, ValueError, TypeError, KeyError):
+    except (AttributeError, ValueError, TypeError):
         pass
 
-    following = None
     override = os.environ.get("FOLLOWING_COUNT_OVERRIDE")
     if override and override.isdigit():
-        following = int(override)
-    else:
-        try:
-            with open(os.path.join(config._PROJECT_ROOT, "following_count.json")) as f:
-                following = int(json.load(f).get("count"))
-        except (OSError, json.JSONDecodeError, ValueError, TypeError, KeyError):
-            try:
-                with open(os.path.join(config._PROJECT_ROOT, "followed_accounts.json")) as f:
-                    fa = json.load(f)
-                following = len(fa) if isinstance(fa, (list, dict)) else None
-            except (OSError, json.JSONDecodeError):
-                following = None
-    return followers, following
-
-
-_FOLLOWING_COUNT_FILE = os.path.join(config._PROJECT_ROOT, "following_count.json")
+        return followers, int(override)
+    try:
+        return followers, int(FOLLOWING_COUNT.read().get("count"))
+    except (ValueError, TypeError):
+        return followers, len(FOLLOWED.read())
 
 
 def adjust_following(delta: int) -> None:
@@ -227,28 +211,25 @@ def adjust_following(delta: int) -> None:
     """
     if config.dry_run():
         return
-    with _LOCK:
-        try:
-            with open(_FOLLOWING_COUNT_FILE) as f:
-                doc = json.load(f)
-        except (OSError, json.JSONDecodeError):
-            doc = {}
+
+    def adjust(doc):
         cur = doc.get("count")
         if not isinstance(cur, int):
-            return  # no baseline set — don't fabricate one
-        doc["count"] = max(0, cur + delta)
-        doc["updated"] = datetime.now().isoformat()
-        try:
-            with open(_FOLLOWING_COUNT_FILE, "w") as f:
-                json.dump(doc, f)
-        except OSError:
-            pass
+            return None  # no baseline set — don't fabricate one
+        return {**doc, "count": max(0, cur + delta), "updated": datetime.now().isoformat()}
+    # Runs after a shipped write: raising would hide it from the caller. The
+    # file stays as it is, and can_follow refuses while it is unreadable.
+    try:
+        FOLLOWING_COUNT.update(adjust)
+    except StateUnreadable as exc:
+        log.error(f"[FOLLOW] following count not adjusted by {delta:+d}: {exc}")
 
 
 # --- policy decisions -------------------------------------------------------
 
-def _following_ceiling() -> int:
-    """Max total following allowed right now (2026-06-07 spec, Part 1).
+def _following_ceiling(followers: Optional[int]) -> int:
+    """Max total following allowed right now (2026-06-07 spec, Part 1),
+    given the latest follower count, None when unknown.
 
     Hard constraints, never violated: total following cap 300; while
     followers are low (< FOLLOW_LOW_PHASE_FOLLOWERS) stay under the credible
@@ -261,7 +242,6 @@ def _following_ceiling() -> int:
     # (following > followers). Daily cap + spacing + anti-churn still apply.
     if config.FOLLOW_GROWTH_MODE:
         return config.FOLLOW_TOTAL_CAP
-    followers, _ = _current_counts()
     if followers is None or followers < config.FOLLOW_LOW_PHASE_FOLLOWERS:
         return min(config.FOLLOW_TOTAL_CAP, config.FOLLOW_LOW_PHASE_CEILING)
     return min(config.FOLLOW_TOTAL_CAP, followers)
@@ -279,8 +259,14 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
     h = (handle or "").lower().lstrip("@")
     if not h:
         return (False, "empty handle")
+    # follow_account's quality gate reads the whitelist too: an unreadable
+    # one admits no follow, whitelist-only mode or not.
+    try:
+        whitelisted = is_whitelisted(h)
+    except StateUnreadable as exc:
+        return (False, f"whitelist unreadable ({exc})")
     _wl_exempt = reciprocal and config.FOLLOWBACK_BYPASS_WHITELIST
-    if config.FOLLOW_WHITELIST_ONLY and not is_whitelisted(h) and not _wl_exempt:
+    if config.FOLLOW_WHITELIST_ONLY and not whitelisted and not _wl_exempt:
         return (False, "not on whitelist (whitelist-only mode; no strangers, no reciprocity)")
     if _within_churn_cooldown(h):
         return (False, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")
@@ -293,20 +279,23 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
         return (False, f"too soon since last follow (need ~{int(gap)}s gap)")
     # Hard total-following ceiling — never exceed 300; ~150 while followers
     # are low; following <= followers once followers pass the low phase.
-    _, following = _current_counts()
-    if following is not None:
-        ceiling = _following_ceiling()
-        if following + 1 > ceiling:
-            return (False, f"total following ceiling reached ({following} >= {ceiling})")
+    # A ceiling that cannot be read admits no follow.
+    try:
+        followers, following = _current_counts()
+    except StateUnreadable as exc:
+        return (False, f"following ceiling unreadable ({exc})")
+    ceiling = _following_ceiling(followers)
+    if following + 1 > ceiling:
+        return (False, f"total following ceiling reached ({following} >= {ceiling})")
     # Legacy net-negative ratio brake (kept behind FOLLOW_ENFORCE_RATIO).
     if config.FOLLOW_ENFORCE_RATIO:
-        followers, following = _current_counts()
-        if followers is not None and following is not None:
-            over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
-            if over_ceiling and follows_today >= _count_today(UNFOLLOW):
-                return (False, f"over ratio ceiling (following {following} vs "
-                               f"{config.FOLLOW_RATIO_CEILING}*{followers}); day not net-negative "
-                               f"(follows {follows_today} >= unfollows {_count_today(UNFOLLOW)})")
+        if followers is None:
+            return (False, "follower count unknown: ratio brake cannot be checked")
+        over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
+        if over_ceiling and follows_today >= _count_today(UNFOLLOW):
+            return (False, f"over ratio ceiling (following {following} vs "
+                           f"{config.FOLLOW_RATIO_CEILING}*{followers}); day not net-negative "
+                           f"(follows {follows_today} >= unfollows {_count_today(UNFOLLOW)})")
     return (True, "")
 
 

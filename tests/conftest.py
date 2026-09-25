@@ -186,7 +186,7 @@ def memory_ledger(monkeypatch):
 
 
 @_pytest.fixture
-def like_job(monkeypatch, tmp_path, memory_ledger):
+def like_job(monkeypatch, memory_ledger):
     """Live like_job on a scripted search page; the real walk and like_tweet run."""
     from src.x import safari, twitter_client as tc
     from tests.helpers import SearchPage
@@ -197,7 +197,6 @@ def like_job(monkeypatch, tmp_path, memory_ledger):
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
     state = {"page": SearchPage([]), "closed": 0, "ledger": memory_ledger}
     monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
 

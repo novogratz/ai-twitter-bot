@@ -8,6 +8,7 @@ from types import SimpleNamespace
 import pytest
 
 from src.core.logger import log
+from src.core.state_errors import StateUnreadable
 from src.guards import action_guard as ag
 from src.guards import content_guard as cg
 from src.guards import replied_store as rs
@@ -237,6 +238,17 @@ def test_follow_quality_refusal_closes_without_clicking(trace, monkeypatch):
     assert tc.follow_account("someone") is W.REFUSED
     assert trace.events == ["guard:can_follow", "jitter", "lock", "open", "quality", "quality_reject",
                             "close", "unlock"]
+
+
+def test_follow_refused_when_the_whitelist_turns_unreadable_after_admission(trace, monkeypatch):
+    """The quality gate reads the whitelist on the open profile: unreadable
+    by then, the follow stops before the page is scored, without a click
+    or a quality reject."""
+    def unreadable(handle):
+        raise StateUnreadable("whitelist.json is unreadable")
+    monkeypatch.setattr(ag, "is_whitelisted", unreadable)
+    assert tc.follow_account("someone") is W.REFUSED
+    assert trace.events == ["guard:can_follow", "jitter", "lock", "open", "close", "unlock"]
 
 
 @pytest.mark.parametrize("answer, outcome", [("ALREADY", W.REFUSED), ("NO_BTN", W.FAILED), ("", W.FAILED)])

@@ -14,12 +14,9 @@ from datetime import datetime
 
 from ..core.config import BOT_HANDLE
 from ..core.logger import log
-from ..core.state_store import DISPOSABLE, StateFile
+from ..guards.action_guard import FOLLOWER_HISTORY
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab
-
-# Disposable: growth samples; a fresh sample matters more than the series.
-FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
 
 
 def _parse_count(s: str) -> int:
