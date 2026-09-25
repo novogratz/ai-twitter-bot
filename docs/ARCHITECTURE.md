@@ -120,10 +120,19 @@ at start by `src/core/account.py` and read at each call. The reply, like and
 follow jobs read the same way the Account's `[network]` handle lists,
 `[niche]` patterns and `[searches]` queries.
 
+The day's editorial state belongs to the Slot journal,
+`src/editorial/slot_journal.py`: the day change, Attempts and feedback,
+the Pending slot reserved, confirmed or released, the closed Slots, the used
+source URLs, the recent texts, the day's submissions and the latest one.
+`FileJournal` keeps `editorial_state.json` (guarded, same format as
+before); `MemoryJournal` holds it in memory for tests. Each pass reads the
+file once, keeps the state in memory and saves it whole at each change; a
+new Toronto day is saved with the pass's first change.
+
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
    exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
-   `editorial_state.json` has no entry for it and its attempts are not spent.
+   the Slot journal has not closed it today and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
    `open_startup_window()`, which opens nothing outside waking hours. Each
@@ -192,11 +201,11 @@ follow jobs read the same way the Account's `[network]` handle lists,
    `published` slots when the operator marked more after a check), must stay
    under the ceiling, and the newest pending or published timestamp must be
    `MIN_SECONDS_BETWEEN_POSTS` plus `POST_JITTER_SECONDS` old. A pending
-   submission counts until the operator clears it. The slot is
-   marked `pending` and saved with its source URL, text and time in
-   `pending_sources`, then `post_tweet(text)` sends
-   the draft plus the source URL. `SHIPPED` marks it `published`. `REFUSED`,
-   `FAILED` and `DRY_RUN` sent nothing and free the slot. `UNCONFIRMED` (the
+   submission counts until the operator clears it. The Slot journal
+   reserves the slot: marked `pending` and saved with its source URL, text
+   and time in `pending_sources`. Then `post_tweet(text)` sends
+   the draft plus the source URL. `SHIPPED` confirms it `published`. `REFUSED`,
+   `FAILED` and `DRY_RUN` sent nothing and release the slot. `UNCONFIRMED` (the
    submit keystroke failed, so the post may be live), any other result and an
    exception leave it `pending`, which is never retried automatically. With
    `DRY_RUN` set, the text is logged and nothing is marked.
@@ -636,8 +645,8 @@ reading as a default, so nothing recreates it.
 
 ## Reach report
 
-`src/editorial/reach_report.py` matches the originals recorded in
-`editorial_state.json` over the last seven days against a scrape of our own
+`src/editorial/reach_report.py` matches the originals the Slot journal
+recorded (`editorial_state.json`) over the last seven days against a scrape of our own
 profile, sums their public view counts and compares the total with the
 500,000-view target. It reports missing coverage and never claims
 home-timeline attribution. It does not influence any cap.

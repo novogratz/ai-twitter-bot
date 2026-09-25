@@ -523,7 +523,7 @@ root:
 
 | File | Written by | Holds | Policy |
 |---|---|---|---|
-| `editorial_state.json` | `editorial_bot` | Slots, attempts, feedback, published originals, used sources | guarded |
+| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
