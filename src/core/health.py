@@ -19,6 +19,7 @@ import os
 import sys
 import time
 from datetime import datetime
+from functools import wraps
 from .config import _PROJECT_ROOT
 from .logger import log
 from .state_errors import StateUnreadable
@@ -44,24 +45,61 @@ def record_success(label: str = ""):
     HEALTH.update(reset)
 
 
-def record_failure(label: str = "") -> bool:
+def wrap_job(run, label: str, *, safari_health: bool = True):
+    """The scheduler's wrapper around a job's `run_*`: it never raises.
+
+    An error is logged at ERROR with its traceback in bot.log. A job with
+    `safari_health` resets the failure counter on success and hands its
+    error to `record_failure`; without it, the job never touches the
+    health file. StateUnreadable and OutsideActiveHours are never failures.
+    """
+    @wraps(run)
+    def job():
+        try:
+            run()
+        except Exception as exc:
+            if _not_a_failure(label, exc, safari_health):
+                return
+            log.exception(f"[{label}] Cycle failed.")
+            if safari_health:
+                record_failure(label, exc)
+            return
+        if safari_health:
+            record_success(label)
+    return job
+
+
+def _not_a_failure(label: str, exc: BaseException | None, safari_health: bool) -> bool:
+    """Log a StateUnreadable or an OutsideActiveHours, never a cycle failure,
+    and say whether `exc` was one. Only a job with `safari_health` is told
+    that Safari is not restarted."""
+    if isinstance(exc, OutsideActiveHours):
+        say, event, advice = log.info, "stopped for the Overnight", ""
+    elif isinstance(exc, StateUnreadable):
+        say, event = log.error, f"halted: {exc}"
+        advice = " Repair the file (docs/OPERATIONS.md#recovery)."
+    else:
+        return False
+    if safari_health:
+        say(f"[HEALTH] {label} {event}. Not a Safari failure, no restart.{advice}")
+    else:
+        say(f"[{label}] {event}.{advice}")
+    return True
+
+
+def record_failure(label: str = "", exc: BaseException | None = None) -> bool:
     """Increment the failure counter. Returns True if recovery was triggered.
 
     Recovery = quit + relaunch Safari. Idempotent and rate-limited via
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
 
-    Call it from the `except` block that caught the cycle's error: a
-    StateUnreadable or an OutsideActiveHours in flight is logged and not
-    counted.
+    `exc` is the cycle's error: a StateUnreadable or an OutsideActiveHours is
+    logged and not counted. Without it, the error in flight is read, for the
+    `safe_run_*` still calling it from their `except` block (#234).
     """
-    exc = sys.exc_info()[1]
-    if isinstance(exc, OutsideActiveHours):
-        log.info(f"[HEALTH] {label or 'cycle'} stopped for bedtime. Not a Safari failure, "
-                 f"no restart.")
-        return False
-    if isinstance(exc, StateUnreadable):
-        log.error(f"[HEALTH] {label or 'cycle'} halted: {exc}. Not a Safari failure, "
-                  f"no restart; repair the file (docs/OPERATIONS.md#recovery).")
+    if exc is None:
+        exc = sys.exc_info()[1]
+    if _not_a_failure(label or "cycle", exc, safari_health=True):
         return False
     claimed = []
 

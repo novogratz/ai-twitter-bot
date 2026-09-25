@@ -28,7 +28,6 @@ touching the Operator's whitelist.json, every add logged. All follow chokepoint 
 """
 import csv
 import re
-import traceback
 from collections import defaultdict
 from datetime import datetime, timedelta
 
@@ -181,13 +180,3 @@ def run_curator_cycle() -> None:
     log.info(f"[CURATOR] {len(tracked)} tracked (top: {top}); "
              f"{promoted} promoted to whitelist discovered tier.")
 
-
-def safe_run_curator_cycle() -> None:
-    from ..core import health
-    try:
-        run_curator_cycle()
-        health.record_success("account_curator")
-    except Exception:
-        log.info("[CURATOR] outer error:")
-        traceback.print_exc()
-        health.record_failure("account_curator")
