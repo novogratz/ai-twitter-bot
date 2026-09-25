@@ -180,6 +180,7 @@ def _personality(monkeypatch):
 @pytest.mark.parametrize("name, job", [
     ("followed_accounts.json", _engage),
     ("followed_accounts.json", _followback),
+    ("followed_accounts.json", _follow_engagers),
     ("like_bot_state.json", _like),
     ("pin_daily_state.json", _pin),
     ("pin_history.json", _pin),

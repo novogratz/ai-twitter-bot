@@ -88,7 +88,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
-| `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; any other outcome marks it tried. |
+| `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
@@ -346,6 +346,24 @@ meaning. A follow that shipped writes its ledger row, joins the followed
 accounts and adds one to the following count; an account already
 followed joins the followed accounts, with no ledger row and no count
 change.
+
+`src/account/follow_run.py` runs one cycle's follows for a job. The
+`FollowRun` reads the followed accounts when it starts, and raises
+`StateUnreadable` while they cannot be read. `fresh(handles)` drops the
+followed accounts and the handles the run tried, whatever the case and a
+leading `@`;
+`follow(handle)` asks `follow_account` and returns its outcome, or `None`
+with nothing asked for a handle `fresh` would drop. Once `follow_account`
+returned `CAP_REACHED`, the run returns it again without asking: the
+daily cap, the ceiling and the ratio brake do not come back within a
+cycle, whereas a `TOO_SOON` may elapse. `OutsideActiveHours` and
+`StateUnreadable` propagate; any other error is logged with its traceback
+and returns `None`, and the job goes on. `failed` counts those picks, which
+`follow_engagers_job` counts in its per-cycle bound, and
+`raise_failure()` raises the last one's error: the job calls it once its
+state is saved, so the cycle reaches `health.record_failure`. The caps, the
+order and the persistent memory of tried handles stay in the job. `follow_engagers_job`
+uses it; `followback_job` and `engage_job` still run their own loop.
 
 `like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
 only for `LIKED`, which also carries `FAILED`, `UNCONFIRMED` and

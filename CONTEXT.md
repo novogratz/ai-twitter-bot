@@ -214,8 +214,19 @@ _Avoid_: policy transient, follow error, skip
 
 **Followed accounts**:
 The record of the accounts the account followed, or found already followed,
-kept by the follow chokepoint alone; the follow jobs read it to skip them.
+kept by the follow chokepoint alone; the follow jobs read it to skip them,
+whatever the case of the handle once they go through a Follow run. While it
+is unreadable, those jobs stop.
 _Avoid_: followed list, registry, follow cache
+
+**Follow run**:
+One cycle of a follow job, from its candidates to the follow chokepoint:
+it skips the Followed accounts and the accounts it already tried, asks
+nothing more once the follow budget's cap is reached, and hands each
+outcome back to the job, which keeps its own caps. Bedtime or an
+unreadable state file ends it; any other error costs one pick, which the
+job counts in its per-cycle bound and reports as a failed cycle.
+_Avoid_: follow loop, follow batch
 
 **Blocked account**:
 An account the Operator bars from any interaction: a token of the engine's
