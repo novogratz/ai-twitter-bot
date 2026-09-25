@@ -41,16 +41,12 @@ def age(url: str, now: datetime | None = None) -> timedelta | None:
 
 
 def is_reply_like_tweet(tweet: dict, expected_author: str = "") -> bool:
-    """Return True for nested replies/thread comments we should not target."""
+    """Return True for nested replies/thread comments we should not target,
+    and, on a scanned profile, for posts whose URL names another author.
+    The scraped display name is never compared to `expected_author`."""
     text = (tweet.get("text") or "").lstrip()
     if text.startswith("@") or bool(tweet.get("is_reply")):
         return True
     expected = (expected_author or "").lower().lstrip("@")
-    if expected:
-        url_handle = author(tweet.get("url") or "")
-        name = (tweet.get("author") or "").lower().lstrip("@")
-        if url_handle and url_handle != expected:
-            return True
-        if name and name not in {"unknown", expected}:
-            return True
-    return False
+    url_handle = author(tweet.get("url") or "")
+    return bool(expected and url_handle and url_handle != expected)

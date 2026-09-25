@@ -280,6 +280,23 @@ def test_feed_sweep_stops_at_the_rate_limit(feed):
     assert len(llm.calls) == 1 and feeds["read"] == ["FEED"] and chokepoint.sent == []
 
 
+def test_feed_sweep_harvests_the_handle_from_the_status_url():
+    """Issue #162: the scraped `author` is a display name. One-word names
+    ("Claude") landed in dynamic_accounts.json as other accounts' handles."""
+    from src.core.dynamic_strategy import get_dynamic_accounts
+    from src.replies import feed_sweeper_bot as fs
+
+    fs._harvest_active_authors([
+        {"url": "https://x.com/sama/status/1", "author": "Sam Altman", "likes": 500},
+        {"url": "https://x.com/someone/status/2", "author": "Claude", "likes": 500},
+        {"url": "https://x.com/i/web/status/3", "author": "Tesla", "likes": 500},
+        {"url": "https://x.com/pgm_pm/status/4", "author": "Friendly", "likes": 500},
+        {"url": "https://x.com/quiet/status/5", "author": "quiet", "likes": 1},
+    ])
+
+    assert get_dynamic_accounts()["en"] == ["sama", "someone"]
+
+
 # --- reply search (one model call finds and drafts) --------------------------
 
 
@@ -565,6 +582,23 @@ def test_replyback_reciprocity_never_follows(monkeypatch):
     monkeypatch.setattr(nb.random, "random", lambda: 0.0)
     nb._reciprocate_engagers([{"user": "Fresh @fresh", "url": "https://x.com/fresh/status/12"}], set())
     assert visited == ["fresh"]
+
+
+def test_replyback_reciprocity_visits_the_handle_from_the_status_url(monkeypatch):
+    """Issue #162, same family: `user` is the display name. A one-word name
+    ("Claude") was read as a handle and sent the likes to x.com/claude."""
+    from src.replies import notify_bot as nb
+
+    visited = []
+    monkeypatch.setattr(nb, "visit_profile_and_like", lambda h, **k: visited.append(h) or [])
+    monkeypatch.setattr(nb.random, "random", lambda: 0.0)
+    nb._reciprocate_engagers([
+        {"user": "Claude", "url": "https://x.com/someone/status/12"},
+        {"user": "Sam Altman", "url": "https://x.com/sama/status/13"},
+        {"user": "Anonymous", "url": "https://x.com/i/web/status/14"},
+        {"user": "Friendly", "url": "https://x.com/pgm_pm/status/15"},
+    ], set())
+    assert sorted(visited) == ["sama", "someone"]
 
 
 def test_engager_likes_count_only_likes_that_shipped(monkeypatch):

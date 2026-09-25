@@ -8,6 +8,23 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-24 — display names read as handles (issue #162):** three
+> paths took a handle from the scraper's display name. The feed sweep's
+> author harvest stored one-word names (`Claude`, `Tesla`, `Ted`…) in
+> `dynamic_accounts.json`, so `engage_bot` visited another account or a
+> blank profile, and `BLOCKLIST` was matched against the name. The
+> replyback reciprocity pass read the same kind of name as the Engager's
+> handle and liked posts on that other profile. `is_reply_like_tweet`
+> set aside every post of a scanned profile whose display name differed
+> from its handle ("Sam Altman" for `sama`) since 2026-05-25, so
+> early_bird and mega_watch could not reply to those tracked accounts; no
+> surviving log measures how often. All three now read the handle from
+> the status URL; `is_reply_like_tweet` keeps only the URL handle check.
+> The wrong entries already in `dynamic_accounts.json` stay
+> until the operator prunes them. Guard: `tests/replies/test_reply_jobs.py`
+> and `tests/x/test_x_urls.py` pin a display name that differs from the
+> handle.
+
 > **2026-09-24 — the Editor's review lost its schema on a fallback (issue #174):**
 > `llm_client` picked the Ollama model, JSON schema, temperature and
 > timeout from the call's label: "starts with EDITORIAL", "equals

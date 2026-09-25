@@ -117,8 +117,12 @@ must not repeat.
   admission for each target before sending (issue #109). `BLOCKLIST` is matched on the URL
   handle only: `direct_reply`, `feed_sweep`, `mega_watch` and `replyback`
   no longer match it against the scraper's display name, which is not an
-  identity. The replyback profile likes still check both. `like_tweet`
+  identity. The replyback profile likes read the Engager's handle from
+  the reply's URL and still check both. `like_tweet`
   refuses a post whose URL handle is a Blocked account with the same match.
+  `early_bird` and `mega_watch` keep a watched account's post when its URL
+  handle is that account, whatever its display name: comparing the display
+  name dropped every account whose name differs from its handle (#162).
 - Every Reply prompt, in every job, carries the hard rules and the respect
   list (`personality_store.hard_rules_block()`): `src/replies/reply_generator.py`
   assembles them all (issue #155). A model SKIP sets the post aside for good;
