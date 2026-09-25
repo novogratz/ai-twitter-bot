@@ -14,7 +14,7 @@ Quick health check, read-only:
 3. Today's Profile publications against the ceiling of eight; this ledger
    count leaves out today's `pending` slots (step 4), which count too:
    `uv run python -c "from src.guards import action_guard; print(action_guard.profile_count_today())"`
-4. Editorial slots: `jq '{date, slots, attempts}' editorial_state.json`.
+4. Editorial slots: `jq '{date, slots, attempts}' state/theaishrink/editorial_state.json`.
    A `pending` slot is never retried: see `docs/OPERATIONS.md#recovery`.
 5. Last 30 lines of `bot.log`: last `[EDITORIAL]`/`[POST]` and `[REPLY]`
    lines, errors, `[HEALTH]` Safari restarts.

@@ -6,6 +6,13 @@
 # Both commands refuse to start while bot.lock is held or a main.py runs
 # from this checkout.
 #
+# Since issue #207 the state lives under state/<BOT_ACCOUNT>/, which git
+# ignores as a whole, so no pull deletes it. The script still works on the
+# root only: `restore` puts the files back there, for bin/migrate_state.py
+# to move (docs/OPERATIONS.md#deploying-issue-207). main.py refuses to start
+# while one of them is missing from state/theaishrink/ or differs from its
+# copy there.
+#
 #   bin/carry_state.sh save [--force] <backup-dir> <ref>
 #       Copies every root file that moving from HEAD to <ref> deletes and
 #       that exists here, with its SHA-256 in <backup-dir>/SHA256SUMS.
@@ -116,6 +123,9 @@ restore() {
     [ -n "$checked" ] || { echo "nothing to restore"; return; }
     printf '%s' "$checked" | shasum -a 256 -c --quiet
     echo "restored ${#restored[@]} files; $(printf '%s' "$checked" | wc -l | tr -d ' ') match the backup"
+    if [ ${#restored[@]} -gt 0 ] && [ -f bin/migrate_state.py ]; then
+        echo "they are at the root: move them to state/ with bin/migrate_state.py before starting the bot"
+    fi
 }
 
 command="${1:-}"

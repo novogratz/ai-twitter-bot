@@ -570,7 +570,16 @@ model call, and nothing ships. Nothing renders the block at import, so
 `src/core/state_store.py` reads and writes the JSON state files of `src/`,
 except the action ledger and the Replied store. A module declares each file
 once as a `StateFile(name, default, policy)`; paths resolve at call time under
-`state_store.ROOT`, the repo root. Every write goes through
+`state_store.root()`, `state/<BOT_ACCOUNT>/`, the one place that knows it
+(issue #207). The files it does not read or write, the action ledger, the
+Replied store, the engagement log, the editorial audit and the reach report,
+are declared as a `StatePath(name)`, resolved there too. The state of before
+#207 at the project root is `state_store.LEGACY_ACCOUNT`'s, `theaishrink`:
+`main.py` refuses to start, whichever Account runs, while one of its files is
+missing from `state/theaishrink/` or differs from its copy there
+(`state_store.require_migrated()`); `bin/migrate_state.py` moves it there.
+`bot.log`, `bot.lock` and `autonomous_log.md` belong to the process and stay
+at the root. Every write goes through
 `atomic_write_bytes`: a temp file `.<name>.<random>.tmp` in the same
 directory, flushed with `F_FULLFSYNC` where available, `os.replace`, then a
 flush of the directory. A missing file reads as the
@@ -699,7 +708,8 @@ reach accounting under `tests/editorial/`.
 
 The files at the top of `tests/` pin cross-cutting invariants:
 `test_conftest_walls.py` (the walls below), `test_state_file_paths.py` (every
-state file resolves to the repo root), `test_state_untracked.py` (git
+state file resolves under `state/<BOT_ACCOUNT>/`), `test_migrate_state.py`
+(the move from the root and the start's refusal), `test_state_untracked.py` (git
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (the Account's Voice files
 and the Voice block rendered from them), `test_engine_names_no_interlocutor.py`

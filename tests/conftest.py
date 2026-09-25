@@ -58,7 +58,7 @@ _UNWALLED = {}
 @_pytest.fixture
 def unwalled():
     """The real safari primitives, for tests that fake subprocess themselves,
-    and the real state root under "state_root"."""
+    and the real `state_store.root` under "state_root"."""
     return _UNWALLED
 
 
@@ -117,24 +117,18 @@ def _no_safari(monkeypatch):
 # "diagnosed" a live repetition bug from its own test pollution.
 # Every test gets per-test tmp copies of the measurement/state stores; a test
 # that needs a specific path still patches it itself (monkeypatch runs after).
-# Every JSON state file of the state store resolves under one root: moving
-# it moves them all, personality.json and the frozen replied_back.json
-# included (both leaked or read live before, 2026-07-19 and #100).
+# Every state file resolves through state_store.root(), the StateFiles and
+# the StatePaths (ledger, Replied store, engagement log...) alike: moving it
+# moves them all, personality.json and the frozen replied_back.json included
+# (both leaked or read live before, 2026-07-19 and #100). The project root,
+# where the state lived before #207, becomes an empty folder too.
 # ---------------------------------------------------------------------------
 @_pytest.fixture(autouse=True)
 def _no_prod_state(monkeypatch, tmp_path, tmp_path_factory):
     from src.core import state_store as _store
-    _UNWALLED.setdefault("state_root", _store.ROOT)
-    monkeypatch.setattr(_store, "ROOT", str(tmp_path))
-    # The action ledger, the Replied store and the engagement log live
-    # outside the store.
-    from src.core import config as _cfg
-    monkeypatch.setattr(_cfg, "ENGAGEMENT_LOG_FILE", str(tmp_path / "engagement_log.csv"))
-    monkeypatch.setattr(_cfg, "REPLIED_FILE", str(tmp_path / "replied_tweets.json"))
-    monkeypatch.setattr(_cfg, "ACTION_LEDGER_FILE", str(tmp_path / "action_ledger.json"))
-    # from-imports bind at import time — patch every namespace that copied one.
-    from src.core import engagement_log as _el
-    monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
+    _UNWALLED.setdefault("state_root", _store.root)
+    monkeypatch.setattr(_store, "root", lambda: str(tmp_path))
+    monkeypatch.setattr(_store, "LEGACY_DIR", str(tmp_path_factory.mktemp("legacy_root")))
     # A migrated install (#206): the follow policy refuses while the
     # promoted handles' file is missing.
     (tmp_path / "whitelist_discovered.json").write_text("[]")

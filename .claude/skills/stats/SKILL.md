@@ -4,7 +4,8 @@ description: Show the engagement stats dashboard - originals, replies, follows, 
 allowed-tools: Bash Read Glob
 ---
 
-Show engagement stats, read-only:
+Show engagement stats, read-only, from the Account's state folder
+`state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
 
 1. `action_ledger.json` - counted writes (`post`, `reply`, `follow`, `like`, `pin`,
    `debate_turn`…) with Toronto timestamps, one JSON object per line (`jq -c`

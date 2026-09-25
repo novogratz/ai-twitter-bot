@@ -13,7 +13,7 @@ two provider switches also keep a constant of the same name, which calls it.
 """
 import os
 
-from . import settings
+from . import settings, state_store
 
 _PROJECT_ROOT = settings.PROJECT_ROOT
 
@@ -48,9 +48,10 @@ def __getattr__(name):
 _served("BOT_HANDLE")
 _served_as("BOT_PROFILE_URL")(lambda: f"https://x.com/{settings.get('BOT_HANDLE')}")
 
-# Data file paths outside the state store (src/core/state_store.py)
-REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
-ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
+# State files outside the state store, under state/<BOT_ACCOUNT>/
+# (src/core/state_store.py)
+REPLIED_FILE = state_store.StatePath("replied_tweets.json")
+ENGAGEMENT_LOG_FILE = state_store.StatePath("engagement_log.csv")
 
 # Operator policy (2026-09-23): at least three editorial posts targeted, up
 # to eight profile publications per Toronto day, and uncapped replies while awake. These
@@ -196,4 +197,4 @@ def ban_short_term_price_targets() -> bool:
     return settings.get("BAN_SHORT_TERM_PRICE_TARGETS")
 
 # Persistent, timestamped ledger of every write action (anti-churn + audit).
-ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")
+ACTION_LEDGER_FILE = state_store.StatePath("action_ledger.json")

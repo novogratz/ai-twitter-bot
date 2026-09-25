@@ -4,7 +4,8 @@ description: View and manage the accounts the bot engages with and may follow
 allowed-tools: Read Write Bash Edit
 ---
 
-Manage target accounts:
+Manage target accounts. The bot's own lists are in the Account's state
+folder, `state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
 
 1. Engage pool (`engage_job`), built at each cycle, not a static list:
    `network.engage_vip` in `accounts/<BOT_ACCOUNT>/account.toml`, plus the

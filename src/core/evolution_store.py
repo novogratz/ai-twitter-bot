@@ -11,10 +11,9 @@ proposed, and the selection code reads them at runtime.
 """
 import os
 from datetime import datetime
-from .config import _PROJECT_ROOT
-from .state_store import DISPOSABLE, StateFile
+from .state_store import DISPOSABLE, StateFile, StatePath
 
-DIRECTIVES_FILE = os.path.join(_PROJECT_ROOT, "directives.md")
+DIRECTIVES_FILE = StatePath("directives.md")
 # Disposable: selection weights, not guardrails; BLOCKLIST bars accounts.
 PRUNED = StateFile("pruned_accounts.json", {"entries": []}, DISPOSABLE)
 REINFORCED = StateFile("reinforced_accounts.json", {"entries": []}, DISPOSABLE)

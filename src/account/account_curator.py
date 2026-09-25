@@ -32,7 +32,6 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 
 from ..core import config, settings
-from ..core.config import ENGAGEMENT_LOG_FILE
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards import active_hours
@@ -67,7 +66,7 @@ def _author_engagements(window_days: int | None = None) -> dict:
     counts: dict = defaultdict(int)
     own = (config.BOT_HANDLE or "").lower()
     try:
-        with open(ENGAGEMENT_LOG_FILE, newline="") as f:
+        with open(config.ENGAGEMENT_LOG_FILE, newline="") as f:
             for row in csv.reader(f):
                 if len(row) < 4 or row[0] < cutoff:
                     continue

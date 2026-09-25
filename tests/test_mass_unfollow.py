@@ -122,6 +122,20 @@ def test_refuses_to_start_overnight(script, now):
     assert not script.results.exists()
 
 
+def test_refuses_while_the_state_waits_at_the_project_root(script, monkeypatch, tmp_path_factory):
+    """Issue #207: a run beside an unmigrated ledger would start one anew,
+    without the anti-churn rows."""
+    from src.core import state_store
+    legacy = tmp_path_factory.mktemp("legacy")
+    (legacy / "action_ledger.json").write_text('{"ts": "2026-09-25T09:00:00", "action": "follow"}\n')
+    monkeypatch.setattr(state_store, "LEGACY_DIR", str(legacy))
+    with pytest.raises(SystemExit) as exit_:
+        script.main()
+    assert exit_.value.code == 1
+    assert script.browser.picks == 0
+    assert not script.results.exists()
+
+
 def test_stops_between_two_unfollows_when_waking_hours_end(script):
     script.clock["now"] = _toronto(23, 29, 50)
 

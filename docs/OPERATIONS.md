@@ -19,14 +19,16 @@ browser: the bot opens every page in Safari by name), Python 3.12+,
 uv venv
 uv pip install -r requirements.txt
 cp .env.example .env
-[ -e whitelist_discovered.json ] || echo '[]' > whitelist_discovered.json
+mkdir -p state/theaishrink
+[ -e state/theaishrink/whitelist_discovered.json ] || echo '[]' > state/theaishrink/whitelist_discovered.json
 ```
 
-`whitelist_discovered.json` holds the handles `account_curator` promotes to
-the whitelist. Every follow stops while it is missing, so that a checkout
-not migrated yet never runs without them: a new install starts it empty, as
-above, and a checkout from before issue #206 runs
-[the migration](#deploying-issue-206) instead.
+The state of the Account lives in `state/<BOT_ACCOUNT>/` ([State files](#state-files)).
+`whitelist_discovered.json` there holds the handles `account_curator`
+promotes to the whitelist. Every follow stops while it is missing, so that a
+checkout not migrated yet never runs without them: a new install starts it
+empty, as above, and a checkout from before issue #206 or #207 runs
+[the migrations](#deploying-issue-207) instead.
 
 The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
@@ -61,7 +63,8 @@ keys and names them.
 
 ### Account
 
-One process runs one Account: the Safari lock and `bot.lock` stay global.
+One process runs one Account: the Safari lock and `bot.lock` stay global,
+and the state goes to `state/<BOT_ACCOUNT>/`.
 `BOT_ACCOUNT`, in `.env` or the shell, names its folder under `accounts/`;
 unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
 the language of the Originals (`en` or `fr`), the Slots and their angles, the
@@ -213,23 +216,48 @@ real account from a second process. Before any of them:
 
 | Where | What it tells you |
 |---|---|
-| `bot.log` | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]` |
-| `editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
+| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]` |
+| `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
 
+The other files of the table are in the same `state/<account>/` folder,
+`state/theaishrink/` for `BOT_ACCOUNT=theaishrink`:
+
 ```bash
+S=state/theaishrink
 tail -F bot.log | grep -E '\[(HOURS|EDITORIAL|POST)\]'
-jq -c 'select(.action == "post" and .dry_run != true)' action_ledger.json | tail -n 5
-tail -n 5 editorial_review.jsonl | jq '{ts, slot, approved, reason}'
-jq '{date, slots, attempts}' editorial_state.json
+jq -c 'select(.action == "post" and .dry_run != true)' $S/action_ledger.json | tail -n 5
+tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
+jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
 Silence between 23:30 and 04:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery
+
+The state files named below are in `state/<BOT_ACCOUNT>/`
+([State files](#state-files)), the Operator files in `accounts/<BOT_ACCOUNT>/`.
+
+**The bot refuses to start: `state files still at the project root`.** The
+checkout still holds state from before issue #207 at the root, and its new
+place, `state/theaishrink/` whichever Account runs, is empty: started, the
+bot would read it as empty, and an empty ledger resets today's ceiling. With
+the bot stopped, run the migration of
+[Deploying issue #207](#deploying-issue-207); `--dry-run` stops on the same
+files.
+
+**The bot refuses to start: `state files both at the project root and in
+state/theaishrink/, with different bytes`.** A partial rollback, or a
+`bin/carry_state.sh restore` on a migrated checkout, put a root copy back
+beside the one in `state/theaishrink/`, and the root one may hold today's
+rows. With the bot stopped, compare each named pair by hand, keep the right
+one in `state/theaishrink/` (for the ledger, the one holding today's rows),
+and move the other outside the checkout. A root copy identical to its copy
+there only logs a `[STATE]` warning at start; `bin/migrate_state.py`
+removes it.
 
 **A slot is `pending`.** The submission was interrupted or its outcome was
 unclear, and the bot will not retry it. Until you clear it, it counts toward
@@ -263,7 +291,7 @@ lines only, keeping today's rows, then restart:
 ```bash
 python3 - <<'EOF'
 import json
-for n, line in enumerate(open("action_ledger.json"), 1):
+for n, line in enumerate(open("state/theaishrink/action_ledger.json"), 1):
     if not line.strip():
         continue
     try:
@@ -309,7 +337,7 @@ list and refuses every write on the per-line format. With the bot stopped,
 turn the ledger back into a list before deploying the older code:
 
 ```bash
-jq -s . action_ledger.json > /tmp/ledger.json && mv /tmp/ledger.json action_ledger.json
+jq -s . state/theaishrink/action_ledger.json > /tmp/ledger.json && mv /tmp/ledger.json state/theaishrink/action_ledger.json
 ```
 
 On a bad line `jq` stops with a parse error and the ledger stays as it was:
@@ -396,10 +424,25 @@ restart.
 
 ## State files
 
-JSON files at the repo root are live state. Since issue #193 git ignores
-every state file, so a `git checkout`, `reset` or `pull` never touches them,
-and `tests/test_state_untracked.py` fails on a declared state file git does
-not ignore. A new state file goes in `.gitignore` in the same change. The
+The live state of an Account is in `state/<BOT_ACCOUNT>/`, `state/theaishrink/`
+by default, since issue #207; before it, at the repo root. Every path
+resolves through `state_store.root()`, the JSON files of the store and the
+files outside it alike. Git ignores `state/` as a whole, so a
+`git checkout`, `reset` or `pull` never touches it, and
+`tests/test_state_untracked.py` fails on a state file git does not ignore.
+`.gitignore` still lists the former root names, for a checkout not migrated
+yet. Those root files belong to `theaishrink`, the only Account before
+issue #207 (`state_store.LEGACY_ACCOUNT`). `main.py` refuses to start,
+`--dry-run` included and whichever Account runs, while one of them has no
+copy in `state/theaishrink/` or differs from its copy there, and so do
+`bin/migrate_operator_data.py`, `bin/mass_unfollow.py` and
+`bin/seed_fr_influencers.py`: see [Deploying issue #207](#deploying-issue-207).
+
+`bot.log`, `bot.lock`, `autonomous_log.md`, `.bot_disabled` and
+`.watchdog_off` stay at the root: they belong to the process and its
+supervisors, not to an Account. `bin/run.sh` tees into `bot.log` and the
+watchdog reads its age, one `bot.lock` guards the one Safari, and
+`autonomous_log.md` is also the journal `operator_prompt.md` keeps. The
 Operator's files stay tracked: the Account's Voice files and the Operator
 files of the Account folder ([Account](#account)); git still refuses a pull
 that changes one of them while it holds a local edit. Since issue #206 the bot
@@ -428,7 +471,8 @@ error, and the store never writes over the file (see
 [Recovery](#recovery)). A *disposable* file in that state reads as empty,
 with a `[STATE]` warning, and its next write replaces it.
 
-Files written by active jobs:
+Files written by active jobs, in `state/<BOT_ACCOUNT>/` but the one marked
+root:
 
 | File | Written by | Holds | Policy |
 |---|---|---|---|
@@ -452,9 +496,10 @@ Files written by active jobs:
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |
 | `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart | disposable |
 | `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past or unreadable | disposable |
-| `autonomous_log.md` | `health` | One line per Safari recovery | append-only, outside the store |
+| `autonomous_log.md` (root) | `health` | One line per Safari recovery | append-only, outside the store |
 
-Files active code reads but no active job writes:
+Files active code reads but no active job writes, in `state/<BOT_ACCOUNT>/`
+too:
 
 | File | Read by | Holds | Policy |
 |---|---|---|---|
@@ -480,8 +525,9 @@ and `suggestions_applied.log`.
 A module declares a new state file once, as a `StateFile` with its default
 and its policy. Guarded suits a guardrail, or a record that alone stops a
 write action from repeating or exceeding a cap; disposable suits what the
-bot can lose without acting more. Tests redirect `state_store.ROOT` to a
-temp directory, so a declared file never reaches the live one.
+bot can lose without acting more. Tests redirect `state_store.root()` to a
+temp directory, and the former root location to an empty one, so a state
+file never reaches the live one.
 
 Run `git status` before `git pull`: a pull that deletes a file modified in
 the checkout stops until that file is moved aside
@@ -551,7 +597,10 @@ The commit moves `whitelist.json` and `respect_list.json` from the root to
 `accounts/theaishrink/`, the whitelist without its `discovered` tier, and
 adds `following_baseline.json` there. The pull deletes both root files; the
 live whitelist may hold handles the curator promoted since its last commit.
-Deploy it once, from the live checkout, the bot stopped:
+Deploy it once, from the live checkout, the bot stopped. Pulled together
+with issue #207, run `bin/migrate_state.py` between steps 1 and 2
+([Deploying issue #207](#deploying-issue-207)): the script of step 2
+refuses while the state waits at the root.
 
 1. Save the two files and pull, as in [Deploying issue #193](#deploying-issue-193)
    but with a backup directory of its own. Stop the bot and its supervisor
@@ -632,7 +681,83 @@ The handles promoted after that commit are in `bot.log`, on the
 hand, with the bot stopped.
 
 A new install, with no old whitelist to carry, writes `[]` in
-`whitelist_discovered.json` before its first start ([Setup](#setup)).
+`state/theaishrink/whitelist_discovered.json` before its first start
+([Setup](#setup)).
+
+### Deploying issue #207
+
+The commit moves the state from the repo root to `state/<BOT_ACCOUNT>/`,
+`state/theaishrink/` for the live Account. The pull deletes no state file,
+git ignoring them since issue #193, but the new code reads them in the new
+folder only, where a missing file reads as empty and an empty ledger resets
+today's ceiling. The root state is `theaishrink`'s, the only Account before
+the commit, so it goes to `state/theaishrink/` whatever `BOT_ACCOUNT` names.
+`main.py` refuses to start, `--dry-run` included and whichever Account runs,
+while a state file sits at the root and not in `state/theaishrink/`, or
+differs from its copy there, and names it.
+Deploy it once, from the live checkout:
+
+1. Stop the bot and its supervisor ([Stop](#stop),
+   [Supervisors](#supervisors)); `pgrep -if "python.*main\.py"` prints
+   nothing. A supervisor left running restarts the new code into the same
+   refusal, again and again.
+2. `git fetch origin`, then `git status --short`: nothing but untracked
+   files. Check that the pull deletes no live file, with the incoming
+   script:
+
+   ```bash
+   git show origin/main:bin/carry_state.sh > /tmp/carry_state.sh
+   B=~/ai-twitter-bot-state-207
+   bash /tmp/carry_state.sh save "$B" origin/main
+   ```
+
+   With #193 and #206 deployed, it prints `moving to origin/main deletes no
+   root file here: nothing to save`. If it saves files, the checkout is
+   older: instead of step 3, finish step 1 of
+   [Deploying issue #206](#deploying-issue-206) with this `$B` (checkout of
+   the saved files, pull, restore), then run step 4 here, step 2 of #206
+   with `--from "$B"`, and step 5 here.
+3. `git pull --ff-only origin main`.
+4. Move the state to `state/theaishrink/`, whatever `BOT_ACCOUNT` names:
+
+   ```bash
+   uv run --with-requirements requirements.txt python bin/migrate_state.py
+   ```
+
+   It refuses to start while `bot.lock` is held. It checks every file
+   before it moves any, and moves nothing if a check fails: each state file
+   at the root must be a regular file, and one already in
+   `state/theaishrink/` must hold the same bytes. It then moves each file
+   under the same name, with a hard link checked against the root file's
+   SHA-256 before the root name goes: nothing is rewritten, parsed or
+   created with defaults, and the Operator files of `accounts/theaishrink/`
+   are never touched. It prints the destination first, then one line per
+   file, such as
+   `action_ledger.json: moved to state/theaishrink/, sha256 c01b14a2a6cd`,
+   then `moved N files, 0 already there`. A file already there and
+   identical only loses its root copy, which finishes a run cut short; a
+   second run prints `nothing to move`.
+5. Before restarting, `main.py --dry-run` must exit 0, `ls *.json` at the
+   root lists no state file, and `git status --short` prints nothing.
+   Restart the bot only on the Operator's request.
+
+A refusal for a destination that differs means both places hold a copy,
+and `main.py` refuses to start on it too: compare them by hand, keep the
+right one (for the ledger, the one holding today's rows), move the other
+outside the checkout, and run step 4 again.
+`.<name>.<random>.tmp` files left at the root by a killed process are not
+moved; delete them once the bot is stopped. `tests/test_migrate_state.py`
+replays the move on fixtures shaped like the live files.
+
+Rolling back past #207, with the bot stopped, puts the files back at the
+root without overwriting any, before deploying the older code:
+
+```bash
+mv -n state/theaishrink/* . && rmdir state/theaishrink
+```
+
+`rmdir` fails while a file is left, because the root holds one of the same
+name: compare them by hand.
 
 ## Legacy tools
 
@@ -659,7 +784,8 @@ A new install, with no old whitelist to carry, writes `[]` in
   `bin/migrate_operator_data.py` has run
   ([Deploying issue #206](#deploying-issue-206)), and a keep-set without
   the handles it carries would unfollow them.
-  `mass_unfollow_results.json` is rewritten after every unfollow.
+  `state/<account>/mass_unfollow_results.json` is rewritten after every
+  unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 
 ## Skills

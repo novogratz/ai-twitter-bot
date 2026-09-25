@@ -63,7 +63,7 @@ The top level of `src/` holds only packages.
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
-| JSON state files: one root, atomic writes, guarded or disposable | `src/core/state_store.py` |
+| State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |
 | Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides; the only reader of the environment with `config.dry_run()` | `src/core/settings.py` |
 | Settings reference of `docs/CONFIGURATION.md`, generated from the declarations | `bin/configuration_doc.py` |
 | Settings served under their old names and read on every access, side-effect switches as functions; fixed ceilings and `BLOCKLIST` that `.env` cannot touch | `src/core/config.py` |
@@ -131,9 +131,16 @@ rule; cross-cutting invariants stay at the root of `tests/`.
 
 - Start, stop and restart only on an explicit operator request
   (`./bin/run.sh`, `bin/stop_bot.sh`). Code and config take effect at restart.
-- JSON files at the repo root are live state, ignored by git: a new state
-  file goes in `.gitignore` in the same change, and a test fails on one git
-  does not ignore. The Operator's files stay tracked, all in the Account
+- The live state is in `state/<BOT_ACCOUNT>/` (issue #207), which git
+  ignores as a whole; every path to it goes through `state_store.root()`,
+  a `StateFile` or a `StatePath`, never a path built by hand. `bot.log`,
+  `bot.lock` and `autonomous_log.md` stay at the root with the process.
+  The root state of before #207 is theaishrink's: `main.py` refuses to
+  start, whichever Account runs, while one of its files sits at the root
+  and not in `state/theaishrink/`, or differs from its copy there. Move it
+  with `bin/migrate_state.py`, bot stopped, never by recreating it
+  ([Deploying issue #207](docs/OPERATIONS.md#deploying-issue-207)). The
+  Operator's files stay tracked, all in the Account
   folder: the Voice files, `whitelist.json`, `respect_list.json` and
   `following_baseline.json`. The bot reads the three JSON files through
   `account.OperatorFile`, which has no write: a missing one stops its

@@ -151,3 +151,26 @@ def test_save_refuses_while_a_main_py_runs_from_the_checkout(checkout, tmp_path)
 
     assert saved.returncode != 0
     assert f"PID {bot.pid}" in saved.stderr
+
+
+def test_a_restore_on_a_migrated_checkout_stops_the_start(checkout, tmp_path, monkeypatch):
+    """Since #207 the state lives in state/theaishrink/: a restore puts the
+    saved copies back at the root, and the start must see the one that
+    differs from its copy there."""
+    from src.core import state_store
+    backup = tmp_path / "backup"
+    assert _carry(checkout, "save", str(backup), "origin/main").returncode == 0
+    _put_back_committed_copies(checkout, backup)
+    _git(checkout, "pull", "-q", "--ff-only", "origin", "main")
+    migrated = checkout / "state" / "theaishrink"
+    migrated.mkdir(parents=True)
+    (migrated / "action_ledger.json").write_text(LIVE["action_ledger.json"] + '{"action": "post"}\n')
+    (migrated / "following_count.json").write_text(LIVE["following_count.json"])
+
+    restored = _carry(checkout, "restore", str(backup))
+
+    assert restored.returncode == 0, restored.stderr
+    monkeypatch.setattr(state_store, "PROJECT_ROOT", str(checkout))
+    monkeypatch.setattr(state_store, "LEGACY_DIR", str(checkout))
+    with pytest.raises(state_store.Unmigrated, match=r"different bytes: action_ledger\.json\. "):
+        state_store.require_migrated()

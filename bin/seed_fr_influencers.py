@@ -20,7 +20,7 @@ import random
 # Make src/ importable.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.core.config import _PROJECT_ROOT
+from src.core import state_store
 from src.core.logger import log
 from src.guards import follow_policy
 from src.x.twitter_client import follow_account
@@ -51,7 +51,7 @@ SEED_HANDLES = [
     "FrenchWeb", "AgnesLaszczyk",
 ]
 
-DYNAMIC_FILE = os.path.join(_PROJECT_ROOT, "dynamic_accounts.json")
+DYNAMIC_FILE = state_store.StatePath("dynamic_accounts.json")
 
 
 def _load_dynamic():
@@ -73,6 +73,11 @@ def _save_dynamic(d):
 
 
 def main():
+    try:
+        state_store.require_migrated()
+    except state_store.Unmigrated as exc:
+        sys.exit(f"[SEED] ABORT: {exc}")
+    state_store.ensure_root()
     print(f"[SEED] Loading {DYNAMIC_FILE}...")
     dyn = _load_dynamic()
     existing = {h.lower() for h in dyn["fr"]}

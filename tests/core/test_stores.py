@@ -38,9 +38,9 @@ def test_engagement_log_records_the_provider_and_model_it_is_given(monkeypatch, 
     provider is no guess at it: the Replies force their own, and a fallback
     answers under another."""
     import csv
-    from src.core import engagement_log as el
+    from src.core import config, engagement_log as el
     p = tmp_path / "engagement_log.csv"
-    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(p))
+    monkeypatch.setattr(config, "ENGAGEMENT_LOG_FILE", str(p))
     settings_override(AI_CLI="claude", PROFILE_LLM_PROVIDER="gemini")
     el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST",
                  provider="codex", model="gpt-5.4-mini")

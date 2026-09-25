@@ -35,8 +35,10 @@ Safety:
   - Stops after --max unfollows, 150 by default.
   - Refuses to run while the bot scheduler is up (Safari lock conflict);
     override with --force.
-  - mass_unfollow_results.json is rewritten after every unfollow, so an
-    interrupted run still reports.
+  - state/<BOT_ACCOUNT>/mass_unfollow_results.json is rewritten after every
+    unfollow, so an interrupted run still reports.
+  - Refuses to start while the state waits at the project root for
+    bin/migrate_state.py (issue #207).
 
 Usage:
   .venv/bin/python bin/mass_unfollow.py [--max N] [--force]
@@ -56,7 +58,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from src.guards import action_guard, active_hours, follow_policy  # noqa: E402
-from src.core import config  # noqa: E402
+from src.core import config, state_store  # noqa: E402
 from src.core.logger import log  # noqa: E402
 from src.core.state_errors import StateUnreadable  # noqa: E402
 from src.x import safari  # noqa: E402
@@ -66,6 +68,7 @@ from src.x import safari  # noqa: E402
 DEFAULT_MAX = 150
 
 LOG_PREFIX = "[MASS_UNFOLLOW]"
+RESULTS = state_store.StatePath("mass_unfollow_results.json")
 
 _STOP = threading.Event()
 
@@ -94,7 +97,7 @@ def _must_stop() -> bool:
 
 
 def _save_results(unfollowed: list) -> None:
-    with open(os.path.join(ROOT, "mass_unfollow_results.json"), "w") as f:
+    with open(RESULTS, "w") as f:
         json.dump(unfollowed, f)
 
 
@@ -259,6 +262,11 @@ def main() -> None:
                          "and resumes — the run never aborts on a rate limit")
     args = ap.parse_args()
 
+    try:
+        state_store.require_migrated()
+    except state_store.Unmigrated as exc:
+        print(f"ABORT: {exc}", flush=True)
+        sys.exit(1)
     if not active_hours.may_act():
         print("ABORT: Overnight. Waking hours are %s." % active_hours.window_label(),
               flush=True)

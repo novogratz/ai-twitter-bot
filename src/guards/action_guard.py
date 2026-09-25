@@ -18,6 +18,7 @@ Every executed (or dry-run) write is recorded in the action ledger
 for today's counts, the last write of an action and the last follow or
 unfollow of a handle, and never knows where it stores them.
 """
+import os
 import random
 import time
 from datetime import timedelta
@@ -37,7 +38,7 @@ LEDGER: Optional[Ledger] = None
 
 
 def _ledger() -> Ledger:
-    return LEDGER if LEDGER is not None else file_ledger(config.ACTION_LEDGER_FILE)
+    return LEDGER if LEDGER is not None else file_ledger(os.fspath(config.ACTION_LEDGER_FILE))
 
 
 def record(action: str, target: str = "", dry_run: bool = False) -> None:

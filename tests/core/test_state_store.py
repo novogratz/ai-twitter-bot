@@ -93,7 +93,7 @@ def test_paths_follow_the_root_at_call_time(monkeypatch, tmp_path):
     state = _declare("root", {}, DISPOSABLE)
     moved = tmp_path / "moved"
     moved.mkdir()
-    monkeypatch.setattr(state_store, "ROOT", str(moved))
+    monkeypatch.setattr(state_store, "root", lambda: str(moved))
     state.write({"here": True})
     assert (moved / state.name).exists()
 
