@@ -21,6 +21,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
+- Replies, likes and follows keep to AI (2026-09-25): the Account's niche
+  patterns and searches look for AI, and its lists drop crypto, markets and
+  space accounts, save those the Operator picked by hand and a few still to
+  confirm. The patterns' known false positives are listed in the policy.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same

@@ -44,6 +44,42 @@ announcements. Used source URLs are rested for seven days. The optional 20:45
 slot needs news from the last twelve hours or a useful AI teaching source, plus
 an exceptional-value approval.
 
+## Niche of Replies, likes and follows
+
+Operator, 2026-09-25: AI only, like the Originals. The Account's `[niche]`
+patterns, `[searches]` queries and `[network]` lists in
+`accounts/theaishrink/account.toml` keep to AI (issue #205). A post that
+speaks only of crypto, markets or space is off the niche for the search
+lane, the feed sweep, early bird and mega watch; the follow quality gate
+refuses a non-Engager whose bio shows no AI term; the reply and like
+searches look for AI posts only. Crypto, markets and space accounts left
+the reply and scan lists. The accounts the Operator picked by hand stay
+whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
+Mindset4Money_X in the curator's pins, and so do the few handles whose
+topic is still to be confirmed by the Operator. The VIP scan still answers
+Graphseo's and TheBTCTherapist's posts without the niche filter, and
+answers to Engagers still follow the conversation.
+
+The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
+artificial intelligence, machine and deep learning, computer vision,
+superintelligence, agentic, context windows, open weights, vibe coding),
+its labs and models (OpenAI, Anthropic, DeepMind, Mistral, Llama, Qwen,
+Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
+TPUs, data centers) and robotics. Some words no longer suffice alone:
+`token`, `coding`, `agent`, `meta`, `google`, `apple`, `software`, `tech`,
+`engineer`, `founder`; a post or bio needs an AI term beside them (AI
+agents, coding agents, Meta AI). `ai` in lower or mixed case skips the
+French verb (j'ai, J’ai, je vous ai, ai-je); AI in capitals always counts.
+`bio` leaves out the model names that are also first names or common
+words (Claude, Sora, Gemini, Cursor), since it reads the display name too.
+Known false positives, kept: Nvidia, an AI hardware maker, keeps its stock
+and earnings chatter on the niche, and `robot` keeps a trading robot.
+
+Every reply and like query finds posts `post` keeps, read with AND before
+OR or OR before AND: a company or energy word goes with AI (TSMC AI,
+CoreWeave AI, megawatt AI). The like job checks no niche, so its queries
+are its only filter.
+
 ## Trend slots and the Startup post
 
 The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from

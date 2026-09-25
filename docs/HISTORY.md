@@ -8,6 +8,18 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — the reply, like and follow niche narrowed to AI (issue #205):**
+> the policy had limited the account to AI, but the niche of the Replies,
+> likes and follows still took crypto, markets, space and general tech: a
+> post naming only Bitcoin, the Fed or SpaceX was on the niche, the reply
+> searches seeded finance accounts (`from:morganhousel`, `from:saylor`) and
+> market-trauma queries, and the scan lists carried the FR crypto and
+> markets accounts of June. The Operator chose AI only. `account.toml` lost
+> its crypto, markets and space terms and its `$TICKER` pattern, nine reply
+> queries, three hot-tab queries, four like queries and the crypto, markets
+> and space accounts; the accounts the Operator picked by hand stayed
+> (Graphseo, TheBTCTherapist, McnallieM, Mindset4Money_X).
+
 > **2026-09-25 — configuration reference generated from the code (issue #200):**
 > `docs/CONFIGURATION.md` had drifted: 59 keys the code read were missing,
 > 8 documented defaults differed from the code (`PIN_MIN_LIKES` 5 against

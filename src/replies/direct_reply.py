@@ -21,7 +21,7 @@ def always_reply_accounts() -> tuple:
 
 def is_on_niche(text: str) -> bool:
     niche = account.current().niche
-    return bool(niche.post.search(text) or niche.ticker.search(text))
+    return bool(niche.post.search(text) or (niche.ticker and niche.ticker.search(text)))
 
 
 REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,

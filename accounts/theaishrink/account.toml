@@ -173,6 +173,10 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 # a display name, and case-insensitively unless a comment says otherwise.
 
 [network]
+# AI only (Operator, 2026-09-25): the lists below hold AI accounts, the
+# accounts the Operator picked by hand whatever their topic (Graphseo,
+# TheBTCTherapist, McnallieM, Mindset4Money_X) and handles still to
+# confirm, never a crypto, markets or space account.
 # Blocked accounts this Account adds to the engine's BLOCKLIST
 # (src/core/config.py), matched the same way: the token anywhere in the
 # handle, case, spaces, dashes and underscores ignored. An Account adds to
@@ -189,11 +193,9 @@ vip_scan = ["Graphseo", "TheBTCTherapist"]
 pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
 # Replies to these authors run the priority model.
 vip_reply = [
-    "TheBTCTherapist", "Graphseo", "RodolpheSteffan", "vision_ia",
-    "FinTales_", "novogratz", "jbelizaireCEO", "FlasheurInvest", "ylecun",
+    "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun",
     "arthurmensch", "GuillaumeLample", "fchollet", "karpathy",
-    "demishassabis", "sama", "VitalikButerin", "saylor", "brian_armstrong",
-    "cz_binance", "SpaceX",
+    "demishassabis", "sama",
 ]
 # early_bird scans the always-reply accounts first: vip_reply, then the four
 # lists below in this order, a handle listed twice kept at its first place.
@@ -218,46 +220,32 @@ mid_size_ai = [
     "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
 ]
 high_traction_reply = [
-    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
-    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
-    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai", "Dark_Emi_",
-    "Divs_King", "MathieuL1", "NCheron_bourse", "ABaradez", "Phil_RX",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet",
-    "MistralAI",
+    "Dark_Emi_", "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample",
+    "GaelVaroquaux", "fchollet", "MistralAI",
 ]
 big_fr = [
     "Korben", "micode", "Underscore_", "presse_citron", "numerama",
     "siecledigital", "BFMTech", "frandroid", "journaldugeek",
     "FlavienChervet", "MistralAI", "arthurmensch", "GuillaumeLample",
-    "Heu7reka", "Yoann_Lopez_", "Finary", "ZonebourseFR", "BFMBourse",
-    "latribune", "Capital", "LesEchos", "boursorama", "GoodValYou",
-    "Zonebourse", "Investir", "SnowballEcho", "Hasheur", "cryptodiffusion",
-    "Cointribune", "BFMcrypto", "PowerHasheur", "LeJournalDuCoin",
-    "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
+    "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
 ]
 # The engage job puts these in every cycle and likes two of their posts;
 # compared case-sensitively with the pool's handles.
 engage_vip = ["Graphseo"]
 # The replyback reciprocity likes skip an engager listed in engage_targets
 # or reply_targets; bin/mass_unfollow.py never unfollows engage_targets.
-engage_targets = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
+engage_targets = ["Graphseo", "XFenaux"]
 reply_targets = [
-    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
-    "jbelizaireCEO", "FlasheurInvest", "McnallieM", "sama", "OpenAI",
+    "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI",
     "AnthropicAI", "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun",
     "fchollet", "demishassabis", "MistralAI", "arthurmensch",
     "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
-    "IREN_Ltd", "LambdaAPI", "applied_dc", "KobeissiLetter", "unusual_whales",
-    "SpaceX", "Tesla", "BostonDynamics", "Figure_robot", "ID_AA_Carmack",
-    "drfeifei", "NCheron_bourse", "ABaradez", "IVTrading", "Yoann_Lopez_",
-    "SnowballEcho", "GoodValYou", "Finary", "LesEchos", "BFMBusiness",
-    "BFMBourse", "Capital_fr", "latribune", "CafeDelaBourse", "ZoneBourse",
-    "FlasheurInvest", "DereeperVivre", "Phil_RX", "Korben", "underscore_",
-    "MichaelBenabou", "presse_citron", "siecledigital", "usine_digitale",
-    "numerama", "01net", "frandroid", "LesNumeriques", "FrenchWeb",
-    "MaddyNess", "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
-    "vision_ia", "PowerHasheur", "Capetlevrai", "CoinAcademy_FR", "saylor",
-    "MicroStrategy", "VitalikButerin", "CoinDesk", "blockworks_", "Palantir",
+    "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
+    "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho",
+    "DereeperVivre", "Phil_RX", "Korben", "underscore_", "MichaelBenabou",
+    "presse_citron", "siecledigital", "usine_digitale", "numerama", "01net",
+    "frandroid", "LesNumeriques", "FrenchWeb", "MaddyNess", "arthurmensch",
+    "GuillaumeLample", "GaelVaroquaux", "vision_ia", "Palantir",
 ]
 # follow_engagers never follows these Engagers: media accounts do not follow
 # back. Lowercase, compared with the ledger's lowercase handles.
@@ -266,58 +254,49 @@ follow_engagers_skip = [
     "zerohedge", "unusual_whales", "cointelegraph",
 ]
 
-# Python regular expressions.
+# Python regular expressions. AI only (Operator, 2026-09-25): no crypto,
+# markets, space or general tech term, and no word too broad alone (token,
+# coding, agent, meta, google, apple). AI in capitals always matches; any
+# other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
-# case-insensitively, or `ticker` does, case-sensitively.
-post = '\b(ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|altman|musk|ml|deep\s*learning|neural|saas|software|cloud|datacenter|codex|copilot|cursor|windsurf|replit|programmeur|coding|coder|développeur|ide|api|sdk|crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|blockchain|defi|stablecoin|token|altcoin|memecoin|nft|wallet|binance|coinbase|kraken|satoshi|web3|dao|staking|yield|dex|cex|space|espace|spatial|spacex|starship|starlink|rocket|fusée|fusee|satellite|nasa|esa|ariane|arianegroup|blue\s*origin|orbite|orbit|astéroïde|exploration|mars|lune|moon|cosmos|bourse|action|actions|stock|stocks|marché|trading|trader|invest|investir|portefeuille|etf|pea|cto|cac|cac40|nasdaq|fed|bce|taux|powell|lagarde|rendement|dividendes|ipo|valuation|per|fcf|roe|roic|livret|assurance|levée|fund|funding|vc|venture|startup|banque|fintech|néobanque|paiement|virement|swift|sepa|immo|immobilier|inflation|récession|earnings|acquisition|merger|m&a|finance|cotation|pétrole|xau|commodity|semi.?conducteur|bullish|bearish|oversold|resistance|support|volatility|krach|goldman|jpmorgan|morgan\s*stanley|dette|deficit|fiscal|impot|budget|deflation|monetaire|souverain|oat|spread|notation|moody|tesla|meta|microsoft|google|amazon|apple|netflix|alphabet|spotify|uber|airbnb|palantir|shopify|stripe|databricks|snowflake|datadog|cloudflare)\b'
-ticker = '\$[A-Z]{1,5}\b'
+# case-insensitively, or the optional `ticker` does, case-sensitively.
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
-# match `bio`, case-insensitively.
-bio = '\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|crypto|bitcoin|btc|eth|web3|defi|blockchain|token|invest|investor|investing|trader|trading|markets?|stocks?|equit|finance|financial|fintech|macro|quant|hedge|portfolio|capital|wealth|analyst|founder|builder|startup|venture|\bvc\b|tech|software|engineer|nvidia|bourse|économie|economy)\b'
+# match `bio`, case-insensitively. The AI terms of `post`, less the model
+# and tool names that are also first names or common words (Claude, Sora,
+# Gemini, Cursor…): the name is part of what `bio` reads.
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
 # X search queries.
 [searches]
+# Every alternative of a query, read with AND before OR or OR before AND,
+# finds posts `post` keeps: a company or energy word goes with AI.
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
-    'from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5',
-    'from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5',
-    'from:Mindset4Money_X min_faves:2',
-    '"why would" OR "why is" OR "what am I missing" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30',
-    '"would you buy" OR "would you rather" OR "do you own" (stock OR $NVDA OR AI OR Bitcoin OR ETF) lang:en min_faves:30',
+    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
     '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
     '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
     'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
-    'Nvidia OR NVDA OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
-    'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
-    'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30',
-    'Palantir OR "AI stock" OR "AI bubble" OR "AI valuation" lang:en min_faves:50',
+    'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
+    'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+    'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
-    '"panic sold" OR "bought the top" OR "portfolio is down" OR drawdown lang:en min_faves:30',
-    'Bitcoin OR BTC OR "crypto crash" OR "BTC ETF" lang:en min_faves:100',
-    'Nvidia OR Palantir OR "AI trade" OR "AI capex" OR "AI datacenter" earnings lang:en min_faves:100',
-    '"AI crypto" OR "AI token" OR "decentralized AI" OR "AI agents" crypto lang:en min_faves:50',
 ]
 hot_tab = [
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
-    'Palantir OR "AI stock" OR "AI bubble" lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
-    '"market crash" OR "sell off" OR "sell-off" OR VIX lang:en min_faves:500',
-    'Bitcoin OR "BTC ETF" OR crypto lang:en min_faves:300',
 ]
-# like_job picks one per cycle, on the Top or the Latest tab.
+# like_job picks one per cycle, on the Top or the Latest tab, and likes
+# what it finds without the niche check: the query is the only filter.
 likes = [
-    'AI datacenter OR power demand lang:en min_faves:50',
-    'megawatt OR gigawatt OR nuclear AI lang:en min_faves:50',
-    'CoreWeave OR CRWV OR APLD lang:en min_faves:50',
-    'IREN OR HIVE OR TeraWulf OR WULF lang:en min_faves:50',
-    'TAO OR Bittensor OR decentralized compute lang:en min_faves:50',
-    'Nvidia OR GPU OR compute cluster lang:en min_faves:50',
-    'robotics OR humanoid robots OR frontier tech lang:en min_faves:50',
-    'SpaceX OR Starlink OR space infrastructure lang:en min_faves:50',
+    'AI datacenter OR AI power demand lang:en min_faves:50',
+    'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',
+    'Nvidia OR GPU OR AI compute cluster lang:en min_faves:50',
+    'robotics OR humanoid robots lang:en min_faves:50',
 ]

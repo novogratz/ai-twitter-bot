@@ -504,7 +504,7 @@ def _quality_decision(followers: int, bio: str, name: str,
     if not engager and settings.get("FOLLOW_REQUIRE_NICHE"):
         blob = f"{name or ''} {bio or ''}"
         if not account.current().niche.bio.search(blob):
-            return (False, "off-niche bio (no AI/markets/crypto signal)")
+            return (False, "off-niche bio (no match for the Account's niche.bio)")
     return (True, "")
 
 
