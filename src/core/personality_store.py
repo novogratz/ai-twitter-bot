@@ -41,7 +41,6 @@ from datetime import datetime
 from typing import Optional
 
 from .config import _PROJECT_ROOT
-from .logger import log
 from .state_store import GUARDED, StateFile
 
 # Guarded: a corrupt file used to read as empty, and the next save erased
@@ -97,31 +96,16 @@ _BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
 Everything else is negotiable — voice, style, targets, mood."""
 
 
-def _render_hard_rules(*, at_import: bool = False) -> str:
+def _render_hard_rules() -> str:
     """Compose the base hard rules + the dynamic respect list block.
 
     Renders fresh on every prompt assembly so the respect list updates
     take effect immediately without restart. An unreadable respect list
-    raises (StateUnreadable) so the job that needs the prompt refuses; only
-    the render at import falls back to the default handles, so main.py
-    still starts.
+    raises (StateUnreadable) so the job that needs the prompt refuses.
     """
     from ..guards import respect_list
-    try:
-        block = respect_list.render_block()
-    except Exception as exc:
-        if not at_import:
-            raise
-        log.error(f"[PERSONALITY] respect list not rendered at import ({exc}): "
-                  f"HARD_RULES_BLOCK names the default handles.")
-        block = respect_list.render_block(defaults=True)
+    block = respect_list.render_block()
     return _BASE_HARD_RULES + "\n\n" + block if block else _BASE_HARD_RULES
-
-
-# Module-level constant kept for backwards-compat with code that imports
-# the bare string. Prefer `hard_rules_block()` for fresh-rendered content
-# (it includes the respect list dynamically).
-HARD_RULES_BLOCK = _render_hard_rules(at_import=True)
 
 
 def _normalize(handle: str) -> str:

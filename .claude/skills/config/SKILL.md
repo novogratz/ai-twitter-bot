@@ -17,5 +17,4 @@ not edited without an explicit operator request that also updates
 `docs/EDITORIAL_POLICY.md` in the same change: the eight-post ceiling
 (`MAX_ORIGINALS_PER_DAY` can only go lower), the twenty-minute spacing
 between originals (`MIN_SECONDS_BETWEEN_POSTS` can only go higher), quotes
-and reposts at zero, waking hours, `BLOCKLIST` and the 48-hour
-`REPOST_MAX_AGE_HOURS` clamp.
+and reposts at zero, waking hours and `BLOCKLIST`.

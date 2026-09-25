@@ -194,14 +194,12 @@ def scrub_text_or_skip(text: str) -> Tuple[Optional[str], str]:
     return text, ""
 
 
-def render_block(defaults: bool = False) -> str:
+def render_block() -> str:
     """Prompt block injected into HARD rules. Names are present so the
     model sees them up-front rather than relying on post-hoc scrub.
 
-    Raises StateUnreadable while the file is unreadable. `defaults` renders
-    the default handles without reading the file: personality_store's
-    render at import only."""
-    handles = sorted(_DEFAULTS) if defaults else sorted(load())
+    Raises StateUnreadable while the file is unreadable."""
+    handles = sorted(load())
     if not handles:
         return ""
     sample = ", ".join(f"@{h}" for h in handles[:30])

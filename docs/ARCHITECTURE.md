@@ -516,8 +516,7 @@ hard rules too. No
 chokepoint applies the respect list to outgoing text.
 While `respect_list.json` is unreadable, `hard_rules_block` raises
 `StateUnreadable`: the editorial cycle and the Reply cycles stop before the
-model call, and nothing ships. Only `HARD_RULES_BLOCK`, computed when
-`personality_store` is imported, falls back to the default handles, so
+model call, and nothing ships. Nothing renders the block at import, so
 `main.py` still starts.
 
 ## State store

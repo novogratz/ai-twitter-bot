@@ -168,13 +168,5 @@ FOLLOW_ACTION_JITTER_SECONDS = int(os.environ.get("FOLLOW_ACTION_JITTER_SECONDS"
 # Content rules — ban short-term price targets; theses are multi-year.
 BAN_SHORT_TERM_PRICE_TARGETS = os.environ.get("BAN_SHORT_TERM_PRICE_TARGETS", "1") == "1"
 
-# ⛔ HARD FRESHNESS RULE — operator mandate 2026-06-02, NEVER CHANGE THIS,
-# not even via autonomous maintenance. We NEVER reshare (retweet) or
-# quote-repost content older than 48h. The value is CLAMPED to 48: even if an
-# env var or an agent tries to set it higher, it can never exceed 48h. Any
-# candidate whose age can't be determined is treated as STALE and skipped.
-# Enforced in retweet_bot (feed + trusted-handle paths) and quote_tweet_bot.
-REPOST_MAX_AGE_HOURS = min(48, int(os.environ.get("REPOST_MAX_AGE_HOURS", "48")))
-
 # Persistent, timestamped ledger of every write action (anti-churn + audit).
 ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")

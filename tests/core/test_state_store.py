@@ -291,9 +291,8 @@ def test_a_missing_respect_list_is_seeded_with_the_defaults(tmp_path):
 
 def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
     """It used to be replaced by the seed, losing every handle the Operator
-    added. Every read refuses, the prompt block included; only the block
-    computed when personality_store is imported falls back to the defaults,
-    so main.py still starts. Nothing writes the file."""
+    added. Every read refuses, the prompt block included; nothing renders
+    the block at import, so main.py still starts. Nothing writes the file."""
     from src.core import personality_store
     from src.guards import respect_list
     path = _corrupt(tmp_path, "respect_list.json")
@@ -304,7 +303,6 @@ def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
                  personality_store.hard_rules_block):
         with pytest.raises(StateUnreadable):
             read()
-    assert "@micode" in personality_store._render_hard_rules(at_import=True)
     assert path.read_text() == CORRUPT
 
 

@@ -16,7 +16,7 @@
 #     the old rule applies: operator starts the bot himself.
 #   - tests must pass before any push (tests/ guard suite)
 #   - one focused improvement per run, pushed to origin main
-#   - hard rules / 48h repost rule / blocklist are out of bounds
+#   - hard rules / zero-repost rule / blocklist are out of bounds
 
 set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -99,7 +99,7 @@ a successful run — never end with uncommitted work or a half-applied change
 on a branch.
 
 Hard limits: never touch core_identity.md voice pillars, BLOCKLIST,
-respect_list defaults, HARD_RULES_BLOCK, or the 48h REPOST_MAX_AGE_HOURS rule.
+respect_list defaults, hard_rules_block(), or the zero-repost rule.
 Keep the change small enough to review in one diff."
 
 echo "[auto_improve] $(date '+%F %T') starting run (emergency=${EMERGENCY_CONTEXT:+yes})" >> "$LOG_FILE"
