@@ -98,7 +98,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
-    assert llm.prompts[0].startswith(dr.BESTIE_REPLY_PROMPT.split("{author}")[0])
+    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
     assert len(chokepoint.calls) == 1
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 

@@ -1,7 +1,8 @@
 """Reply generator: a parent post and a job's voice in, a typed Generation out.
 
 Every Reply prompt is assembled here, so none reaches the model without
-`personality_store.hard_rules_block()`. The generator also picks the reply
+the Voice (`personality_store.render_voice`) before the template and
+`personality_store.hard_rules_block()` after it. The generator also picks the reply
 language (one decision point, `_language`) and reads the model's answer
 into reply text or a decline. The model stays behind `run_llm`, which hands
 back the answer already read in the output mode of the call profile the
@@ -37,7 +38,7 @@ class Generation:
 
 
 class LanguageRule(Enum):
-    """How a voice picks the reply language, for the core identity and the
+    """How a voice picks the reply language, for the Voice file and the
     template's `{language_override}` line."""
     PARENT = "parent"  # looks_french on the parent text
     PARENT_OR_FR_FORCED = "parent or FR-forced"  # FR_FORCED_REPLY_HANDLES first
@@ -48,14 +49,15 @@ class LanguageRule(Enum):
 @dataclass(frozen=True)
 class Voice:
     """A job's prompt template and model call. The template may use
-    {author}, {tweet_text}, {original_tweet} and {language_override}; the
-    anchors (dossier, core identity, hard rules) close the prompt."""
+    {author}, {tweet_text}, {original_tweet} and {language_override}. The
+    template holds the job's instructions, never the persona: the Voice
+    opens the prompt, the dossier and the hard rules close it."""
     template: str
     model: str
     label: str
     language: LanguageRule = LanguageRule.PARENT
-    # Core identity and the author's dossier. The hard rules come regardless.
-    identity: bool = True
+    # The author's dossier. The Voice and the hard rules come regardless.
+    dossier: bool = True
     text_limit: int = 200
     strip_preamble: bool = False
     # The VIP rule: "skip" anywhere in the first N characters declines too,
@@ -128,9 +130,8 @@ def _language(voice: Voice, author: str, text: str) -> Literal["fr", "en"]:
 
 def _prompt(voice: Voice, author: str, text: str, context: str, language: str, fields: dict) -> str:
     anchors = [personality_store.hard_rules_block()]
-    if voice.identity:
-        anchors = [personality_store.render_account_block(author),
-                   personality_store.render_core_identity(lang=language)] + anchors
+    if voice.dossier:
+        anchors = [personality_store.render_account_block(author)] + anchors
     prompt = voice.template.format(**{
         **fields,
         "author": author,
@@ -138,4 +139,4 @@ def _prompt(voice: Voice, author: str, text: str, context: str, language: str, f
         "original_tweet": context[:voice.text_limit],
         "language_override": _LANGUAGE_OVERRIDE[language],
     })
-    return prompt + "\n\n" + "\n\n".join(filter(None, anchors))
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, *anchors]))

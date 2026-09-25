@@ -59,7 +59,6 @@ def _profile(schema: dict, temperature: float) -> CallProfile:
         schema=schema,
         temperature=temperature,
         min_timeout=int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")),
-        voice_prefix=False,
         output=Output.JSON,
     )
 

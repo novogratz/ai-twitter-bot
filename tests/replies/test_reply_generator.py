@@ -10,19 +10,33 @@ from tests.helpers import fresh
 
 EN = "OpenAI just shipped a new reasoning model and the market is going wild"
 FR = "OpenAI vient de sortir un nouveau modèle et le marché est en feu"
+FR_VOICE_FILE = "Voice file core_identity.md"
+EN_VOICE_FILE = "Voice file core_identity_en.md"
 
 
 def language(prompt):
-    """(core identity language, target language line) a prompt carries."""
-    identity = ("fr" if "IDENTITE NOYAU" in prompt
-                else "en" if "CORE IDENTITY (NON-NEGOTIABLE" in prompt else None)
+    """(Voice file language, target language line) a prompt carries: the
+    French-reply Voice renders core_identity.md, the English one
+    core_identity_en.md (see the `jobs` fixture)."""
+    identity = ("fr" if FR_VOICE_FILE in prompt else "en" if EN_VOICE_FILE in prompt else None)
     override = ("fr" if "TARGET LANGUAGE OVERRIDE: FRENCH ONLY" in prompt
                 else "en" if "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in prompt else None)
     return identity, override
 
 
 @pytest.fixture
-def jobs(monkeypatch, llm, chokepoint):
+def voice_files(monkeypatch, tmp_path):
+    """The Operator's Voice files, replaced by two marked stand-ins."""
+    from src.core import personality_store
+
+    for attr, text in (("CORE_IDENTITY_FILE", FR_VOICE_FILE), ("CORE_IDENTITY_EN_FILE", EN_VOICE_FILE)):
+        path = tmp_path / f"{attr}.md"
+        path.write_text(text)
+        monkeypatch.setattr(personality_store, attr, str(path))
+
+
+@pytest.fixture
+def jobs(monkeypatch, llm, chokepoint, voice_files):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
     from src.replies import reply_pipeline
@@ -116,14 +130,16 @@ def test_fr_forced_handles_override_only_the_search_and_feed_pipeline(jobs, job,
     assert language(jobs(job, "Graphseo", EN)) == (lang, lang)
 
 
-@pytest.mark.parametrize("handle, text", [("TheBTCTherapist", EN), ("vision_ia", FR), ("Graphseo", EN)])
-def test_vip_prompts_leave_the_language_to_their_template(jobs, handle, text):
-    assert language(jobs("vip", handle, text)) == (None, None)
+@pytest.mark.parametrize("handle, text, lang", [("TheBTCTherapist", EN, "en"), ("vision_ia", FR, "fr"),
+                                               ("Graphseo", EN, "en")])
+def test_vip_prompts_leave_the_language_line_to_their_template(jobs, handle, text, lang):
+    """They carry the Voice of the parent's language, and no override line."""
+    assert language(jobs("vip", handle, text)) == (lang, None)
 
 
-@pytest.mark.parametrize("text", [EN, FR])
-def test_debate_prompt_leaves_the_language_to_its_template(jobs, text):
-    assert language(jobs("debate", "someone", text)) == (None, None)
+@pytest.mark.parametrize("text, lang", [(EN, "en"), (FR, "fr")])
+def test_debate_prompt_leaves_the_language_line_to_its_template(jobs, text, lang):
+    assert language(jobs("debate", "someone", text)) == (lang, None)
 
 
 @pytest.mark.parametrize("text, lang", [
@@ -131,11 +147,11 @@ def test_debate_prompt_leaves_the_language_to_its_template(jobs, text):
     ("c'est la vraie question", "fr"),
     ("the best take", "fr"),  # "est" inside "best": the word test matches substrings
 ])
-def test_replyback_picks_the_core_identity_by_its_word_test(jobs, text, lang):
+def test_replyback_picks_the_voice_file_by_its_word_test(jobs, text, lang):
     assert language(jobs("replyback", "someone", text)) == (lang, None)
 
 
-def test_reply_search_carries_the_english_core_identity(jobs):
+def test_reply_search_carries_the_english_voice_file(jobs):
     assert language(jobs("reply_search", "", "")) == ("en", None)
 
 
@@ -192,14 +208,59 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
 
 @pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
                                                ("vip", "Graphseo", FR), ("debate", "someone", EN)])
-def test_voices_without_identity_only_gain_the_hard_rules(jobs, job, author, text, llm):
-    """Adding core identity or the dossier to these prompts is the
-    Operator's call: they end on the template, then the hard rules."""
+def test_voices_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
+    """Adding the dossier to these prompts is the Operator's call: they end
+    on the template, then the hard rules."""
     from src.core import personality_store
 
     prompt = jobs(job, author, text)
     assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
-    assert "Memoire personnelle" not in prompt
+    assert "Personal memory" not in prompt
+
+
+# The persona as the prompts used to hard-code it (issue #192).
+PERSONA = ("you are @", "tu es @", "theaishrink", "a woman", "woman, 45", "45-year-old", "therapist and mom",
+           "practicing therapist", "ai & space decoder", "analyste quant", "sharpest ai mind")
+
+
+@pytest.mark.parametrize("job, author, text", EVERY_PATH)
+def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, monkeypatch):
+    """Issue #192: the persona reaches every Reply prompt through one Voice
+    block, rendered from the Operator's Voice file under the configured
+    handle; no template describes it again."""
+    from src.core import config, personality_store
+
+    monkeypatch.setattr(config, "BOT_HANDLE", "SomeOtherBot")
+    prompt = jobs(job, author, text)
+    voice = personality_store.render_voice(language(prompt)[0])
+    assert prompt.startswith(voice + "\n\n")
+    assert "VOICE (NON-NEGOTIABLE): you are @SomeOtherBot\n" in voice
+    assert prompt.count("VOICE (NON-NEGOTIABLE)") == 1
+    rest = prompt[len(voice):].lower()
+    assert [marker for marker in PERSONA if marker in rest] == []
+
+
+def test_the_respect_list_block_is_in_english(monkeypatch):
+    from src.guards import respect_list
+
+    monkeypatch.setattr(respect_list, "load", lambda: {"kindperson"})
+    block = respect_list.render_block()
+    assert "RESPECT LIST — accounts you must NEVER criticize BY NAME" in block
+    assert "criticize the IDEA,\nnever the person. When in doubt -> SKIP." in block
+    assert block.endswith("Current list: @kindperson.\n")
+
+
+def test_the_dossier_block_is_in_english(dossier):
+    from src.core import personality_store
+
+    personality_store.upsert_account("someone", stance="fond", feelings="warm", do="tease", dont="dunk",
+                                     predictions_to_add=[{"outcome": "right"}])
+    block = personality_store.render_account_block("someone")
+    assert block.startswith(dossier)
+    for line in ("- Category: builder", "- Stance: fond", "- Feeling: warm", "- Accumulated observations:",
+                 "- Prediction track record: 1 right / 0 wrong", "- What works with them: tease",
+                 "- What to avoid with them: dunk", "React FROM this memory."):
+        assert line in block
 
 
 @pytest.fixture
@@ -208,7 +269,7 @@ def dossier():
 
     personality_store.PERSONALITY.write(
         {"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}}, "topics": {}})
-    return "# Memoire personnelle: ce que tu sais de @someone"
+    return "# Personal memory: what you know about @someone"
 
 
 @pytest.mark.parametrize("job", ["replyback", "search", "early_bird", "mega_watch"])
@@ -222,7 +283,7 @@ def test_reply_prompts_render_the_author_dossier(jobs, dossier, job):
 
 def voice(**options):
     from src.replies.reply_generator import Voice
-    return Voice("Parent: {tweet_text}", "model", "TEST", identity=False, **options)
+    return Voice("Parent: {tweet_text}", "model", "TEST", dossier=False, **options)
 
 
 def generate(**options):
@@ -397,14 +458,30 @@ def reply_voice(name):
     }[name]()
 
 
+def caller_prompts(monkeypatch):
+    """The prompts the Reply generator hands to `run_llm`, recorded on the way."""
+    from src.replies import reply_generator
+
+    prompts = []
+    real = reply_generator.run_llm
+
+    def recording(prompt, *args, **kwargs):
+        prompts.append(prompt)
+        return real(prompt, *args, **kwargs)
+
+    monkeypatch.setattr(reply_generator, "run_llm", recording)
+    return prompts
+
+
 @pytest.mark.parametrize("route", ["ollama", "claude"])
 @pytest.mark.parametrize("name", REPLY_VOICES)
 def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, route):
     """Issue #174 moved the Ollama settings from the label to a call profile
     the caller declares. A Reply declares none and keeps what it had: the
-    reply model, the voice prefix, no schema, temperature 1.0 and its own
-    timeout floored at the default, whether Ollama answers first or after a
-    failed cloud call."""
+    reply model, no schema, temperature 1.0 and its own timeout floored at
+    the default, whether Ollama answers first or after a failed cloud call.
+    Issue #192: the prompt is the generator's, behind the /no_think
+    directive alone; the engine adds no voice of its own."""
     import dataclasses
     import urllib.request
 
@@ -419,13 +496,14 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     monkeypatch.setattr(urllib.request, "urlopen", ollama)
     voice = reply_voice(name)
     voice = dataclasses.replace(voice, llm_options={**voice.llm_options, "force_provider": route})
+    sent = caller_prompts(monkeypatch)
 
     generation = reply_generator.generate(voice, author="someone", text=EN)
 
     assert generation.outcome is reply_generator.Outcome.WRITTEN
     [(request, timeout)] = ollama.requests
     assert request["model"] == "reply-model"
-    assert request["prompt"].startswith(llm._FUNNY_FORCER + "/no_think\n\n")
+    assert request["prompt"] == "/no_think\n\n" + sent[-1]
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
     assert timeout == max(voice.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)
@@ -494,10 +572,12 @@ def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch
     ollama = OllamaServer(json.dumps(found))
     monkeypatch.setattr(urllib.request, "urlopen", ollama)
 
+    sent = caller_prompts(monkeypatch)
+
     ra.generate_replies()
     [(request, timeout)] = ollama.requests
     assert request["model"] == "reply-model"
-    assert request["prompt"].startswith(llm._FUNNY_FORCER + "/no_think\n\n")
+    assert request["prompt"] == "/no_think\n\n" + sent[-1]
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
     assert timeout == llm.DEFAULT_LLM_TIMEOUT_SECONDS

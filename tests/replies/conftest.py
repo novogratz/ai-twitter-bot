@@ -1,4 +1,6 @@
 """Fixtures of the reply job tests."""
+import threading
+
 import pytest
 
 from tests.replies.fakes import FakeChokepoint, FakeLlm
@@ -10,7 +12,14 @@ def llm(monkeypatch):
 
     fake = FakeLlm()
     monkeypatch.setattr(reply_generator, "run_llm", fake)
-    return fake
+    before = set(threading.enumerate())
+    yield fake
+    # A pipelined cycle leaves without waiting for the generation in flight:
+    # let it reach this fake before the real run_llm comes back, or it calls
+    # a provider during the next test.
+    for thread in set(threading.enumerate()) - before:
+        if thread.name.startswith("ThreadPoolExecutor"):
+            thread.join(timeout=5)
 
 
 @pytest.fixture

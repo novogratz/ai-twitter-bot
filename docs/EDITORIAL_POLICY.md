@@ -18,6 +18,11 @@ She explains a consequence, teaches something, or offers a useful action. A
 question, joke, emoji or flirty line is optional. Forced formulas, engagement
 bait, stale numbers, copied headlines and fabricated lived experience are out.
 The AI identity remains honest; the therapist name is a brand persona.
+That character is the Voice, written only in `core_identity.md`
+(`core_identity_en.md` for English prompts). Every
+Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
+their task instructions and the per-person relations (Graphseo, bestie,
+buddy) but no copy of the persona, and the model client adds none (#192).
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
@@ -125,9 +130,9 @@ must not repeat.
   `early_bird` and `mega_watch` keep a watched account's post when its URL
   handle is that account, whatever its display name: comparing the display
   name dropped every account whose name differs from its handle (#162).
-- Every Reply prompt, in every job, carries the hard rules and the respect
-  list (`personality_store.hard_rules_block()`): `src/replies/reply_generator.py`
-  assembles them all (issue #155). A model SKIP sets the post aside for good;
+- Every Reply prompt, in every job, opens on the Voice and carries the hard
+  rules and the respect list (`personality_store.hard_rules_block()`):
+  `src/replies/reply_generator.py` assembles them all (issues #155, #192). A model SKIP sets the post aside for good;
   a model rate limit, every provider at its usage limit, ends the job's
   generations for the cycle. The prompt names every Respected account.
 - Model calls stay on their configured provider, Ollama by default. Only an

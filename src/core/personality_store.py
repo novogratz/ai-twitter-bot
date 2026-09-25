@@ -39,15 +39,16 @@ lui-meme via le reflection_agent et l'evolution_agent.
 import os
 from typing import Optional
 
+from . import config
 from .config import _PROJECT_ROOT
 from .state_store import GUARDED, StateFile
 
 # Guarded: a corrupt file used to read as empty, and the next save erased
 # every dossier.
 PERSONALITY = StateFile("personality.json", {"accounts": {}, "topics": {}}, GUARDED)
-# Hand-curated ideological core. Loaded into EVERY generation prompt so the
-# bot's takes stay coherent across news, hot takes, replies, replybacks and
-# direct replies. NEVER overwritten by any agent — only the human edits it.
+# The Voice: the Operator's persona, rendered into EVERY generation prompt
+# by render_voice, its only reader. NEVER overwritten by any agent — only
+# the human edits it.
 CORE_IDENTITY_FILE = os.path.join(_PROJECT_ROOT, "core_identity.md")
 CORE_IDENTITY_EN_FILE = os.path.join(_PROJECT_ROOT, "core_identity_en.md")
 
@@ -212,51 +213,53 @@ def record_interaction(handle: str, kind: str = "reply") -> None:
 
 
 def render_account_block(handle: str) -> str:
-    """Prompt-ready FR block describing what we know about @handle.
+    """Prompt-ready block describing what we know about @handle.
     Empty string if no dossier — agent treats them as a fresh face."""
     d = get_account(handle)
     if not d:
         return ""
     h = _normalize(handle)
-    lines = [f"# Memoire personnelle: ce que tu sais de @{h}"]
+    lines = [f"# Personal memory: what you know about @{h}"]
     cat = d.get("category")
     if cat and cat != "unknown":
-        lines.append(f"- Categorie: {cat}")
+        lines.append(f"- Category: {cat}")
     st = d.get("stance")
     if st and st != "neutral":
-        lines.append(f"- Position: {st}")
+        lines.append(f"- Stance: {st}")
     if d.get("feelings"):
-        lines.append(f"- Ressenti: {d['feelings']}")
+        lines.append(f"- Feeling: {d['feelings']}")
     ic = d.get("interaction_count", 0)
     if ic:
-        lines.append(f"- Interactions passees: {ic}")
+        lines.append(f"- Past interactions: {ic}")
     notes = d.get("notes") or []
     if notes:
-        lines.append("- Observations accumulees:")
+        lines.append("- Accumulated observations:")
         for n in notes[-8:]:
             lines.append(f"  - {n}")
     preds = d.get("predictions") or []
     right = sum(1 for p in preds if p.get("outcome") == "right")
     wrong = sum(1 for p in preds if p.get("outcome") == "wrong")
     if right or wrong:
-        lines.append(f"- Track record predictions: {right} justes / {wrong} fausses")
+        lines.append(f"- Prediction track record: {right} right / {wrong} wrong")
     if d.get("do"):
-        lines.append(f"- Avec lui ca marche: {d['do']}")
+        lines.append(f"- What works with them: {d['do']}")
     if d.get("dont"):
-        lines.append(f"- Avec lui evite: {d['dont']}")
+        lines.append(f"- What to avoid with them: {d['dont']}")
     lines.append("")
     lines.append(
-        "Reagis A PARTIR de cette memoire. Tu n'es pas neutre face a lui — tu as une "
-        "histoire. Que ton ressenti soit chaud ou froid, le tweet vise toujours "
-        "l'IDEE, le SYSTEME, le CLAIM. Pas la personne."
+        "React FROM this memory. You are not neutral about them: you share a "
+        "history. Whether your feeling is warm or cold, the post always targets "
+        "the IDEA, the SYSTEM, the CLAIM. Never the person."
     )
     return "\n".join(lines)
 
 
-def render_core_identity(lang: str = "fr") -> str:
-    """Load the hand-curated ideological core for the given language and wrap it
-    so the model treats it as ground truth. Empty string if the file is
-    missing — the bot still runs, just without the curated voice anchor."""
+def render_voice(lang: str = "en") -> str:
+    """The Voice block: the Operator's persona from core_identity.md, or
+    core_identity_en.md for "en", under a header naming BOT_HANDLE. Every
+    generation prompt carries it, and no prompt describes the persona
+    itself. Empty string if the file is missing — the bot still runs, just
+    without the curated voice anchor."""
     path = CORE_IDENTITY_EN_FILE if lang == "en" else CORE_IDENTITY_FILE
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -265,21 +268,12 @@ def render_core_identity(lang: str = "fr") -> str:
         return ""
     if not raw:
         return ""
-    if lang == "en":
-        return (
-            "==================================================\n"
-            "CORE IDENTITY (NON-NEGOTIABLE — who you are)\n"
-            "==================================================\n"
-            "These opinions and this tone are stable. When a topic below\n"
-            "lands on the table, you already have a stance. Drop it.\n\n"
-            + raw
-        )
     return (
         "==================================================\n"
-        "IDENTITE NOYAU (NON NEGOCIABLE — c'est qui tu es)\n"
+        f"VOICE (NON-NEGOTIABLE): you are @{config.BOT_HANDLE}\n"
         "==================================================\n"
-        "Ces opinions et ce ton sont stables. Quand un sujet ci-dessous\n"
-        "tombe sur la table, tu as deja un avis. Tu le balances.\n\n"
+        "This is who writes every post and reply, and how they sound. The\n"
+        "task below only says what to write this time.\n\n"
         + raw
     )
 
@@ -306,14 +300,14 @@ def render_global_mood() -> str:
         key=lambda x: x[1].get("interaction_count", 0),
         reverse=True,
     )[:5]
-    lines = ["# Etat d'esprit global (memoire accumulee du bot)"]
-    lines.append(f"- Comptes en memoire: {len(accs)}")
+    lines = ["# Global state of mind (the bot's accumulated memory)"]
+    lines.append(f"- Accounts in memory: {len(accs)}")
     if top_builders:
         names = ", ".join(f"@{h}" for h, _ in top_builders)
-        lines.append(f"- Builders respectes: {names}")
+        lines.append(f"- Respected builders: {names}")
     if top_predators:
         names = ", ".join(f"@{h}" for h, _ in top_predators)
-        lines.append(f"- Patterns predateurs surveilles (cible: leurs systemes): {names}")
+        lines.append(f"- Predatory patterns watched (target: their systems): {names}")
     return "\n".join(lines)
 
 

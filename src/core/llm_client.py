@@ -158,17 +158,6 @@ OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
-_FUNNY_FORCER = (
-    "Voice: a confident, warm, witty 45-year-old woman and mom who loves AI. "
-    "Write a natural response to this particular conversation in its language. "
-    "Bring a useful detail or a clear opinion; a joke is optional. "
-    "Use contractions, varied sentence lengths and ordinary words. "
-    "No automatic question ending, catchphrase, forced punchline, fake typo, "
-    "engagement bait, bro-speak or invented personal experience. "
-    "Occasional subtle flirtation is fine when welcome; keep the AI insight central.\n\n"
-)
-
-
 class Output(Enum):
     """How `run_llm` reads the model's answer."""
     TEXT = "text"  # post text: the leak guard empties anything unsafe to post
@@ -185,7 +174,6 @@ class CallProfile:
     schema: Optional[dict] = None  # sent as Ollama's `format`
     temperature: float = 1.0
     min_timeout: int = 0  # floor on the requested timeout, still capped by bedtime
-    voice_prefix: bool = True  # _FUNNY_FORCER opens the prompt
     output: Output = Output.TEXT
 
 
@@ -205,9 +193,10 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
     via that path (80 tokens generated, all stripped — model doesn't
     speak the chat template correctly). /api/generate is reliable.
 
-    `profile` sets the model, schema, temperature and voice prefix; the
-    default one front-loads the comedy forcer at temperature 1.0 for
-    sharper outputs. num_predict caps generation at ~600 chars so the model doesn't
+    `profile` sets the model, schema and temperature; the default one runs
+    at temperature 1.0 for sharper outputs. The caller's prompt goes out as
+    written, after the /no_think directive: the Voice is the caller's to
+    render. num_predict caps generation at ~600 chars so the model doesn't
     ramble for minutes when codex/claude are unavailable. `timeout` is final:
     `_timeout` computed it.
     """
@@ -215,7 +204,7 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
     import urllib.error
     from ..guards.active_hours import require_active
     require_active()
-    full_prompt = (_FUNNY_FORCER if profile.voice_prefix else "") + "/no_think\n\n" + prompt
+    full_prompt = "/no_think\n\n" + prompt
     payload = json.dumps({
         "model": _ollama_model(profile),
         "prompt": full_prompt,

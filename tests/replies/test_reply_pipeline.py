@@ -32,7 +32,7 @@ MODES = [pytest.param(False, id="in-turn"), pytest.param(True, id="pipelined")]
 def job(**options):
     from src.replies.reply_generator import Voice
 
-    voice = Voice("Parent: {tweet_text}", "model", "TEST", identity=False)
+    voice = Voice("Parent: {tweet_text}", "model", "TEST", dossier=False)
     options.setdefault("voice", lambda author: voice)
     return rp.Job(options.pop("name", "test_job"), "TEST", **options)
 
@@ -258,7 +258,7 @@ def cloud_job(**options):
     """A job whose voice runs on Claude through the real `run_llm`."""
     from src.replies.reply_generator import Voice
 
-    voice = Voice("Parent: {tweet_text}", "cloud-model", "TEST", identity=False,
+    voice = Voice("Parent: {tweet_text}", "cloud-model", "TEST", dossier=False,
                   llm_options={"force_provider": "claude"})
     return job(voice=lambda author: voice, **options)
 

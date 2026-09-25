@@ -527,9 +527,10 @@ class OllamaServer:
 
 
 def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
-    """Issue #174: the caller's profile sets the model, schema, temperature,
-    timeout floor and voice prefix; the label only names the call, the
-    suffixes the ladder adds to it included."""
+    """Issue #174: the caller's profile sets the model, schema, temperature
+    and timeout floor; the label only names the call, the suffixes the
+    ladder adds to it included. Issue #192: no profile adds a voice, so
+    every call sends the caller's prompt behind /no_think alone."""
     import urllib.request
     from src.core import llm_client as llm
     from src.editorial import editorial_schemas as schemas
@@ -573,7 +574,8 @@ def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
     assert draft["format"] == schemas.draft_schema() and draft["options"]["temperature"] == 0.65
     assert reply["model"] == "reply-model" and "format" not in reply
     assert reply_timeout == llm.DEFAULT_LLM_TIMEOUT_SECONDS
-    assert reply["prompt"].startswith(llm._FUNNY_FORCER)
+    assert reply["prompt"] == "/no_think\n\nReply prompt"
+    assert draft["prompt"] == "/no_think\n\nDraft prompt"
 
 
 def test_core_imports_nothing_from_the_editorial_package():

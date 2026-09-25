@@ -33,13 +33,12 @@ def test_core_identity_carries_editorial_strategy():
     assert "replies remain uncapped" in text
 
 
-def test_persona_is_woman_mom_therapist_across_surfaces():
+def test_persona_is_woman_mom_in_the_one_voice():
     """Operator 2026-07-19: 'she is a mom, a 35-40yo therapist... make her
     sound like a woman' + 'the sharpest AI therapist that knows AI more than
-    anyone else'. The persona must be pinned in the spine (core_identity,
-    injected into every prompt) AND in the per-surface prompt openers that
-    define their own identity — so no surface drifts back to the neutral/
-    male voice. Also pins that the bestie bit moved big brother -> sister."""
+    anyone else'. The persona is pinned in the spine (core_identity), which
+    the Voice block carries into every prompt (issue #192: no surface keeps
+    its own copy). Also pins that the bestie bit moved big brother -> sister."""
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     spine = open(os.path.join(root, "core_identity.md")).read().lower()
@@ -48,10 +47,17 @@ def test_persona_is_woman_mom_therapist_across_surfaces():
     assert "bro" in spine  # the no-bro-speak rule is stated
 
     from src.replies import direct_reply
-    assert "a woman, 45" in direct_reply.REPLY_PROMPT.lower()
-    assert "mom" in direct_reply.REPLY_PROMPT.lower()
     bestie_prompt = direct_reply.BESTIE_REPLY_PROMPT.lower()
     assert "big sister" in bestie_prompt and "big brother" not in bestie_prompt
+
+
+def test_the_voice_renders_the_operators_files_verbatim():
+    """Issue #192: one reader, render_voice, and the Operator's text as is."""
+    from pathlib import Path
+    from src.core import personality_store
+    for lang, path in (("fr", "core_identity.md"), ("en", "core_identity_en.md")):
+        voice = personality_store.render_voice(lang)
+        assert voice.endswith("\n\n" + Path(path).read_text().strip())
 
 
 def test_savvy_tech_mom_register():
@@ -81,7 +87,8 @@ def test_spicy_dial_suggestive_never_explicit():
     assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
     assert "smart is the sexy" in spine, "authority must ride with the heat"
 
-    from src.replies import direct_reply
-    low = direct_reply.REPLY_PROMPT.lower()
-    assert "flirt" in low and "never explicit" in low, \
-        "surface prompts must carry the dial WITH its guardrail"
+    from src.core import personality_store
+    for lang in ("fr", "en"):
+        low = personality_store.render_voice(lang).lower()
+        assert "flirt" in low and "never explicit" in low, \
+            "the Voice every prompt carries must hold the dial WITH its guardrail"
