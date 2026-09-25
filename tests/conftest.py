@@ -189,6 +189,15 @@ def _fresh_editorial_memory(monkeypatch):
 
 
 @_pytest.fixture
+def settings_override():
+    """`settings_override(NAME=value, ...)`: the one way a test changes a
+    setting of src/core/settings.py. Every value comes back after the test."""
+    from src.core import settings
+    with settings.overriding() as override:
+        yield override
+
+
+@_pytest.fixture
 def providers(monkeypatch):
     """A fake adapter for every provider behind the real `run_llm`, each
     failing until a test gives it answers, every CLI installed, the

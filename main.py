@@ -7,6 +7,12 @@ import os
 import signal
 import threading
 
+from src.core import settings
+
+# Before any other project import: every module, and every model call, sees
+# .env whichever module reads it first. A bad .env stops the start here.
+settings.load()
+
 from src.core import config
 from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
 from src.editorial.editorial_bot import SLOTS, TREND_SLOTS, open_startup_window, safe_run_editorial_cycle
@@ -72,7 +78,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(safe_run_mega_watch_cycle, 2, "mega_watch_job")
         add(safe_run_babysit_cycle, 5, "babysit_job")
         add(safe_run_notify_cycle, 20, "notify_job")
-        if os.environ.get("ENABLE_REPLY_SEARCH", "0") == "1":
+        if settings.get("ENABLE_REPLY_SEARCH"):
             from src.replies.reply_bot import safe_run_reply_cycle
             add(safe_run_reply_cycle, 3, "reply_job")
 
@@ -104,6 +110,8 @@ def main():
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
     args = parser.parse_args()
+    for warning in settings.startup_warnings():
+        log.warning(f"[SETTINGS] {warning}")
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
     from src.core.llm_client import ignored_fallbacks, unknown_providers
     unknown = unknown_providers()
