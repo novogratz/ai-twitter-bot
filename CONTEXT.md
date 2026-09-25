@@ -131,7 +131,9 @@ _Avoid_: replied set, replied cache, dedup file
 ### Accounts
 
 **Engager**:
-Someone who replied to or mentioned the account.
+Someone who replied to or mentioned the account. The follow policy knows
+narrower: only the authors the account answered with a Debate turn (and,
+until about 2026-12-22, the frozen `replied_back.json`).
 _Avoid_: commenter, fan
 
 **Seed account**:
@@ -156,8 +158,8 @@ ceiling or the ratio brake, reached or unreadable), quality rejected (the
 quality gate, on the profile or within 30 days), or refused (every other
 rule: handle, Stranger, whitelist, anti-churn). Too soon and cap reached concern the
 account's follow budget, so a later cycle may follow the same account. A
-whitelist unreadable before the profile opens is no refusal: it stops the
-job, and no account is marked tried.
+whitelist or action ledger unreadable before the profile opens is no
+refusal: it stops the job, and no account is marked tried.
 _Avoid_: policy transient, follow error, skip
 
 **Followed accounts**:

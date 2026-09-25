@@ -86,8 +86,8 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
-| `engage_job` | 8 min | Tries to follow a handful of pool accounts and likes their posts when profile visits are allowed. The pool comes from the feeds: the follow policy refuses its Strangers, so it follows only the Seed accounts, followers or Engagers the pool holds. |
-| `followback_job` | 20 min | Scrapes the primary column of the followers page, records those followers in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
+| `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
+| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from niche searches. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
@@ -416,9 +416,9 @@ Five modules sit behind them:
   `follow_quality_rejects.json`, `followers_seen.json` and the frozen
   `replied_back.json`. `relation(handle)` finds what the handle is to the
   account, from its own sources, never from the caller: Seed account
-  (`whitelist.json`), Engager (the ledger's Debate turns, then
-  `replied_back.json`), follower (`followers_seen.json`, which only the
-  followers scrape writes, through `record_followers`), else Stranger.
+  (`whitelist.json`), follower (`followers_seen.json`, which only the
+  followers scrape writes, through `record_followers`), Engager (the
+  ledger's Debate turns, then `replied_back.json`), else Stranger.
   `judge(handle)` checks, before the profile opens, the handle (the one
   check of `[A-Za-z0-9_]{1,15}`), the relation (a Stranger is refused in
   every mode), the whitelist (a follower or an Engager passes it while

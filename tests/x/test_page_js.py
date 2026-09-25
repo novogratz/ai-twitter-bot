@@ -172,6 +172,7 @@ UNPARSABLE = {
     "profile_quality": ("{not json", {}),
     "tweets": ("[{not json", []),
     "own_replies": ("{not json", None),
+    "followers_list": ("{not json", []),
     "follower_count": ("1.2.3", 0),
 }
 

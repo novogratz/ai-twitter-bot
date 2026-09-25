@@ -318,6 +318,38 @@ def test_a_stranger_is_never_followed(follow_env, monkeypatch, tmp_path, whiteli
     assert not (tmp_path / "follow_quality_rejects.json").exists()
 
 
+# Before #173 the job declared the relation: followback_job passed
+# reciprocal=True (full quality gate), follow_engagers_job engager=True
+# (size and niche skipped), and either passed the whitelist-only gate only
+# while FOLLOWBACK_BYPASS_WHITELIST was on. The policy must be no wider for
+# any relation it finds.
+@pytest.mark.parametrize("whitelist_only", [True, False])
+@pytest.mark.parametrize("bypass", [True, False])
+@pytest.mark.parametrize("handle, passes_whitelist_gate, small_profile_passes", [
+    ("karpathy", True, True),          # Seed account: gate exempt
+    ("somefollower", False, False),    # follower: the full gate
+    ("someengager", False, True),      # Engager: size and niche skipped
+    ("bothfan", False, False),         # follower and Engager: the full gate
+])
+def test_each_relation_is_judged_no_wider_than_its_old_flag(
+        follow_env, monkeypatch, tmp_path, whitelist_only, bypass, handle,
+        passes_whitelist_gate, small_profile_passes):
+    _counts(monkeypatch, tmp_path, 100, 10)
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
+    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", bypass)
+    fp.record_followers(["somefollower", "bothfan"])
+    ag.record(ag.DEBATE_TURN, "someengager")
+    ag.record(ag.DEBATE_TURN, "bothfan")
+    small_fan = {"followers": "12", "bio": "hi", "name": "Sam"}
+
+    admitted = passes_whitelist_gate or not whitelist_only or bypass
+    verdict = fp.judge(handle)
+    assert bool(verdict) is admitted, verdict
+    if not admitted:
+        assert "not on whitelist" in verdict.reason
+    assert bool(fp.judge_profile(handle, lambda: small_fan)) is small_profile_passes
+
+
 def test_the_relation_comes_from_the_policys_own_sources(follow_env, monkeypatch, tmp_path):
     from tests.helpers import fresh
 
@@ -328,7 +360,8 @@ def test_the_relation_comes_from_the_policys_own_sources(follow_env, monkeypatch
     fp.record_followers(["Debater", "karpathy"])
 
     assert fp.relation("KARPATHY") is fp.Relation.SEED
-    assert fp.relation("debater") is fp.Relation.ENGAGER, "an Engager who follows stays an Engager"
+    assert fp.relation("debater") is fp.Relation.FOLLOWER, \
+        "an Engager who follows is a follower: a follow-back always got the full gate"
     assert fp.relation("frozenfan") is fp.Relation.ENGAGER
     assert fp.relation("fanone") is fp.Relation.FOLLOWER
     assert fp.relation("simulated") is fp.Relation.STRANGER, "a dry-run Debate turn proves nothing"

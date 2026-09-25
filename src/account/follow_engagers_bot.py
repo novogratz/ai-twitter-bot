@@ -7,7 +7,8 @@ the account shipped (replyback or debate) leaves a ledger row naming the
 Engager it answered. This lane follows a small daily trickle of them
 through the full follow chokepoint, which finds them Engagers in the same
 ledger (follow_policy.engagers): size/niche gates skipped — their behavior
-proves both — English gate + caps + spacing + churn kept.
+proves both — English gate + caps + spacing + churn kept. An Engager the
+followers page showed is a follower to the policy, and gets the full gate.
 
 No new Safari scraping: the data source is the action ledger.
 """
@@ -39,11 +40,6 @@ def _save_state(st: dict) -> None:
     STATE.write(st)
 
 
-def _engager_handles(limit: int = 200) -> list:
-    """Newest-first Engagers, as the follow policy knows them."""
-    return follow_policy.engagers()[:limit]
-
-
 def run_follow_engagers_cycle():
     if os.environ.get("ENABLE_FOLLOW_ENGAGERS", "1") != "1":
         log.info("[FOLLOW-ENGAGERS] Disabled. Skipping.")
@@ -71,7 +67,7 @@ def run_follow_engagers_cycle():
     # cap, total ceiling) ends the cycle WITHOUT burning the candidate; any
     # other outcome marks the handle attempted. An unreadable whitelist
     # raises out of the cycle, before any candidate is marked.
-    for h in _engager_handles():
+    for h in follow_policy.engagers()[:200]:
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
         if h == own or h in BLOCKLIST or h in _SKIP_HANDLES or h in attempted:

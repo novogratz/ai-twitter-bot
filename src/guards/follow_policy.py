@@ -2,8 +2,9 @@
 files it reads and keeps (CONTEXT.md: Follow refusal).
 
 - `relation(handle)` says what the handle is to the account, from the
-  policy's own sources: Seed account (the whitelist), Engager (the Debate
-  turns), follower (the followers page, `record_followers`), else Stranger.
+  policy's own sources: Seed account (the whitelist), follower (the
+  followers page, `record_followers`), Engager (the Debate turns), else
+  Stranger.
   No caller declares a relation.
 - `judge(handle)` runs before the profile opens: the handle, the relation
   (a Stranger is never followed), the whitelist, anti-churn, the daily cap,
@@ -64,6 +65,8 @@ FROZEN_REPLIED_BACK = StateFile("replied_back.json", [], DISPOSABLE)
 FOLLOWER_MEMORY_DAYS = 30
 
 _HANDLE_RE = re.compile(r"[A-Za-z0-9_]{1,15}")
+
+_STRANGER = "Stranger: not on the whitelist, not a follower, not an Engager"
 
 
 class Relation(Enum):
@@ -180,17 +183,20 @@ def is_follower(handle: str) -> bool:
 
 
 def relation(handle: str) -> Relation:
-    """Seed account when whitelist.json lists the handle, Engager when a
-    Debate turn answered it, follower when the followers page showed it,
-    else Stranger. Raises StateUnreadable while whitelist.json or the
-    action ledger cannot be read."""
+    """Seed account when whitelist.json lists the handle, follower when the
+    followers page showed it, Engager when a Debate turn answered it, else
+    Stranger. Raises StateUnreadable while whitelist.json or the action
+    ledger cannot be read.
+
+    A follower who is also an Engager is a follower: an Engager skips part
+    of the quality gate, and a follow-back never did."""
     h = (handle or "").lower().lstrip("@")
     if is_whitelisted(h):
         return Relation.SEED
-    if h in {e.lower() for e in engagers()}:
-        return Relation.ENGAGER
     if is_follower(h):
         return Relation.FOLLOWER
+    if h in {e.lower() for e in engagers()}:
+        return Relation.ENGAGER
     return Relation.STRANGER
 
 
@@ -310,8 +316,7 @@ def judge(handle: str) -> Verdict:
     h = handle.lower()
     rel = relation(h)
     if rel is Relation.STRANGER:
-        return Verdict(Refusal.POLICY,
-                       "Stranger: not on the whitelist, not a follower, not an Engager")
+        return Verdict(Refusal.POLICY, _STRANGER)
     exempt = config.FOLLOWBACK_BYPASS_WHITELIST
     if config.FOLLOW_WHITELIST_ONLY and rel is not Relation.SEED and not exempt:
         return Verdict(Refusal.POLICY,
@@ -477,8 +482,7 @@ def judge_profile(handle: str, read_profile: Callable[[], dict]) -> Verdict:
     except StateUnreadable as exc:
         return Verdict(Refusal.POLICY, f"relation unreadable ({exc})")
     if rel is Relation.STRANGER:
-        return Verdict(Refusal.POLICY,
-                       "Stranger: not on the whitelist, not a follower, not an Engager")
+        return Verdict(Refusal.POLICY, _STRANGER)
     profile = read_profile()
     ok, why = _quality_decision(
         _parse_follower_count(profile.get("followers", "")),
