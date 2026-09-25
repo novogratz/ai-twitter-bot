@@ -89,6 +89,7 @@ def script(monkeypatch, tmp_path):
     monkeypatch.setattr(safari, "_run_applescript", browser.run_applescript)
     monkeypatch.setattr(mod.subprocess, "run", no_browser)
     monkeypatch.setattr(mod, "_bot_is_running", lambda: False)
+    mod.real_whitelist_keep_set = mod._whitelist_keep_set
     monkeypatch.setattr(mod, "_whitelist_keep_set", set)
     monkeypatch.setattr(mod, "_pause", lambda seconds: None)
     monkeypatch.setattr(mod, "ROOT", str(tmp_path))
@@ -308,6 +309,41 @@ def test_an_empty_list_is_reloaded_through_run_js_before_done(script, monkeypatc
     reloads = [c for c in script.browser.calls if c[0] == "location.reload(); 'RELOADED'"]
     assert len(reloads) == 2
     assert "DONE: no unfollow buttons after 3 reloads" in capsys.readouterr().out
+
+
+def test_the_keep_set_reads_the_whitelist_tiers_and_seeds(script, monkeypatch, tmp_path):
+    (tmp_path / "whitelist.json").write_text(json.dumps({
+        "tiers": {"tier1": ["Karpathy"], "discovered": ["sama"]},
+        "seeds": [{"handle": "@Saylor"}]}))
+    assert script.real_whitelist_keep_set() == {"karpathy", "sama", "saylor"}
+
+
+@pytest.mark.parametrize("keep", ["whitelist", "legacy"])
+@pytest.mark.parametrize("content", ['{"tiers": {"tier1": ["karp', None])
+def test_an_unreadable_or_missing_whitelist_aborts_before_any_unfollow(script, monkeypatch,
+                                                                       tmp_path, capsys,
+                                                                       keep, content):
+    """#171: read as empty, the keep-set would unfollow every seed. A
+    missing or unreadable whitelist.json stops the run before Safari, and
+    the file waits for the Operator."""
+    from src.guards import respect_list
+    monkeypatch.setattr(respect_list, "load", lambda: set())
+    monkeypatch.setattr(script, "_whitelist_keep_set", script.real_whitelist_keep_set)
+    path = tmp_path / "whitelist.json"
+    if content is not None:
+        path.write_text(content)
+    monkeypatch.setattr(sys, "argv", ["mass_unfollow.py", "--keep", keep])
+
+    with pytest.raises(SystemExit) as exit_:
+        script.main()
+
+    assert exit_.value.code == 1
+    assert script.browser.calls == [] and script.ledger == []
+    assert "ABORT: keep-set unreadable" in capsys.readouterr().out
+    if content is None:
+        assert not path.exists()
+    else:
+        assert path.read_text() == content
 
 
 def test_legacy_keep_set_protects_respect_list_targets_and_seed_tiers(script, monkeypatch):

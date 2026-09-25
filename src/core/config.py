@@ -208,10 +208,6 @@ BAN_SHORT_TERM_PRICE_TARGETS = os.environ.get("BAN_SHORT_TERM_PRICE_TARGETS", "1
 # Enforced in retweet_bot (feed + trusted-handle paths) and quote_tweet_bot.
 REPOST_MAX_AGE_HOURS = min(48, int(os.environ.get("REPOST_MAX_AGE_HOURS", "48")))
 
-# Whitelist of curated accounts (tiered). Seeded manually / from curated
-# lists; the bot may SUGGEST additions for human approval but must NEVER
-# auto-add. Also the source list for quote-reposts + engagement targeting.
-WHITELIST_FILE = os.path.join(_PROJECT_ROOT, "whitelist.json")
 # Persistent, timestamped ledger of every write action (anti-churn + audit).
 ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")
 

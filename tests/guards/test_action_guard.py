@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from src.core import config
+from src.core.state_store import StateFile
 from src.guards import action_guard as ag
 from src.guards.ledger import MemoryLedger
 from tests.helpers import TORONTO, stop_requested, clock
@@ -74,14 +75,12 @@ def follow_env(monkeypatch, tmp_path, memory_ledger):
     from src.guards import action_guard as ag
     from src.core import config
 
-    wl = tmp_path / "whitelist.json"
-    wl.write_text(json.dumps({"tiers": {
+    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {
         "tier1": ["TheBTCTherapist"],
         "tier2": ["morganhousel"],
         "tier3": ["karpathy"],
         "tier4": ["saylor", "balajis"],
     }}))
-    monkeypatch.setattr(config, "WHITELIST_FILE", str(wl))
     # Spec pacing defaults, but zeroed spacing unless a test re-enables it.
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
     monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 20)
@@ -177,6 +176,53 @@ def test_an_unreadable_follower_history_leaves_the_lowest_ceiling(follow_env, mo
     (tmp_path / "follower_history.json").write_text('[{"count": 1')
     ok, why = ag.can_follow("karpathy")
     assert not ok and "(150 >= 150)" in why
+
+
+@pytest.mark.parametrize("history", ['[{"count": 1', "[]"])
+def test_the_ratio_brake_refuses_while_the_follower_count_is_unknown(follow_env, monkeypatch,
+                                                                    tmp_path, history):
+    """#171: the ratio brake skipped itself when follower_history.json
+    held no sample, so losing the disposable file admitted follows the
+    brake would refuse."""
+    ag = follow_env
+    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", True)
+    _counts(monkeypatch, tmp_path, 100, 10)
+    assert ag.can_follow("karpathy") == (True, "")
+
+    (tmp_path / "follower_history.json").write_text(history)
+
+    assert ag.can_follow("karpathy") == (
+        False, "follower count unknown: ratio brake cannot be checked")
+
+
+def test_a_follow_decision_reads_each_count_file_once(follow_env, monkeypatch, tmp_path):
+    ag = follow_env
+    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", True)
+    _counts(monkeypatch, tmp_path, 100, 10)
+    reads = []
+    real_read = StateFile.read
+    monkeypatch.setattr(StateFile, "read", lambda self: reads.append(self.name) or real_read(self))
+
+    assert ag.can_follow("karpathy") == (True, "")
+
+    assert sorted(reads) == ["follower_history.json", "following_count.json", "whitelist.json"]
+
+
+@pytest.mark.parametrize("whitelist_only", [True, False])
+def test_an_unreadable_whitelist_refuses_every_follow(follow_env, monkeypatch, tmp_path,
+                                                      whitelist_only):
+    """#171: an unreadable whitelist.json read as empty. Guarded now, it
+    refuses the follow (the follow_account quality gate reads it too), and
+    the file waits for the Operator."""
+    ag = follow_env
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
+    _counts(monkeypatch, tmp_path, 100, 10)
+    path = tmp_path / "whitelist.json"
+    path.write_text('{"tiers": {"tier1": ["karp')
+
+    ok, why = ag.can_follow("karpathy", reciprocal=True)
+    assert not ok and "whitelist unreadable" in why
+    assert path.read_text() == '{"tiers": {"tier1": ["karp'
 
 
 def test_adjust_following_keeps_the_baseline_and_never_overwrites_an_unreadable_count(

@@ -104,8 +104,10 @@ Two settings decide how much of the table does anything:
 - The follow policy in `action_guard.can_follow`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
   decides what actually passes. A following count that cannot be read
-  (`following_count.json`, else `followed_accounts.json`) refuses every
-  follow.
+  (`following_count.json`, else `followed_accounts.json`) or an unreadable
+  `whitelist.json` refuses every follow and stops `bin/mass_unfollow.py`.
+  With `FOLLOW_ENFORCE_RATIO` on, an unknown follower count
+  (`follower_history.json` empty or unreadable) refuses every follow.
 
 ## Editorial pipeline
 
@@ -434,9 +436,8 @@ model call, and nothing ships. Only `HARD_RULES_BLOCK`, computed when
 ## State store
 
 `src/core/state_store.py` reads and writes the JSON state files of `src/`,
-except the action ledger, the Replied store and `whitelist.json`, which
-`action_guard` reads itself. A module declares each file once as a
-`StateFile(name, default, policy)`; paths resolve at call time under
+except the action ledger and the Replied store. A module declares each file
+once as a `StateFile(name, default, policy)`; paths resolve at call time under
 `state_store.ROOT`, the repo root. Every write goes through
 `atomic_write_bytes`: a temp file `.<name>.<random>.tmp` in the same
 directory, flushed with `F_FULLFSYNC` where available, `os.replace`, then a

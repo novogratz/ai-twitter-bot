@@ -200,7 +200,7 @@ Safari restart, and nothing writes over the file:
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
-| `whitelist.json` | `account_curator` promotions (`action_guard` reads it itself) |
+| `whitelist.json` | Every follow: `can_follow` refuses, and `follow_account` returns `REFUSED` before opening the profile. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
@@ -305,8 +305,8 @@ line's length can go unseen until the next restart: edit the ledger with the
 bot stopped.
 
 The JSON files in `src/` go through the state store
-(`src/core/state_store.py`), except the action ledger, the Replied store and
-`whitelist.json`, which `action_guard` reads itself. The store
+(`src/core/state_store.py`), except the action ledger and the Replied store,
+which keep their own implementations. The store
 writes atomically (temp file, full fsync, rename, directory flush), changes a
 file shared by several jobs under that file's lock, and gives each file one
 policy.
@@ -347,7 +347,7 @@ Files active code reads but no active job writes:
 | File | Read by | Holds | Policy |
 |---|---|---|---|
 | `respect_list.json` | `respect_list` | Operator-managed respect list | guarded |
-| `whitelist.json` | `action_guard`, `account_curator` | Tiered follow whitelist | guarded in the store; `action_guard` reads it itself |
+| `whitelist.json` | `action_guard`, `account_curator` | Tiered follow whitelist | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
 | `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
@@ -397,7 +397,9 @@ and unused since debate turns moved to the ledger; it can be deleted.
   `JS err: OSAERR:no answer from Safari`; the osascript error, when there is
   one, follows in the same output under `[MASS_UNFOLLOW]` and is also in
   `bot.log`. `--max` defaults
-  to 150. A rate limit triggers a cooldown, never an abort.
+  to 150. A rate limit triggers a cooldown, never an abort. A missing or
+  unreadable keep-set (`whitelist.json`, or `respect_list.json` with
+  `--keep legacy`) aborts the run before Safari.
   `mass_unfollow_results.json` is rewritten after every unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 

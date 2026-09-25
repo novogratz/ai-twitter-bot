@@ -34,14 +34,13 @@ from datetime import date, datetime, timedelta
 
 from ..core.config import BLOCKLIST, BOT_HANDLE, ENGAGEMENT_LOG_FILE
 from ..core.logger import log
-from ..core.state_store import DISPOSABLE, GUARDED, StateFile
+from ..core.state_store import DISPOSABLE, StateFile
+# Guarded: a corrupt whitelist stops the cycle before any promotion.
+from ..guards.action_guard import WHITELIST
 
 # Disposable: recomputed every run from the engagement log.
 TRACKED = StateFile("tracked_accounts.json", {}, DISPOSABLE)
 TARGETS_LOG = StateFile("engagement_targets_log.json", {}, DISPOSABLE)
-# Guarded: the Operator's follow whitelist; a corrupt file stops the cycle
-# before any promotion.
-WHITELIST = StateFile("whitelist.json", {}, GUARDED)
 
 PINNED = tuple(h.strip() for h in os.environ.get(
     "PINNED_TRACKED_HANDLES", "TheBTCTherapist,Graphseo,Mindset4Money_X").split(",") if h.strip())

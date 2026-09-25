@@ -11,6 +11,7 @@ from datetime import datetime
 from enum import Enum
 from ..core.config import BOT_PROFILE_URL
 from ..core.logger import log
+from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
 from . import confirmed_write, safari, scraper
@@ -740,11 +741,16 @@ def follow_account(username: str, reciprocal: bool = False,
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
         from ..guards.action_guard import is_whitelisted
+        try:
+            whitelisted = is_whitelisted(username)
+        except StateUnreadable as exc:
+            log.info(f"[FOLLOW] whitelist unreadable, @{username} not followed ({exc}).")
+            return WriteOutcome.REFUSED
         q = scraper._scrape_profile_quality()
         ok, why = _follow_quality_decision(
             _parse_follower_count(q.get("followers", "")),
             q.get("bio", ""), q.get("name", ""),
-            whitelisted=is_whitelisted(username),
+            whitelisted=whitelisted,
             engager=engager,
         )
         if not ok:

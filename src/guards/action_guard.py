@@ -17,7 +17,6 @@ Every executed (or dry-run) write is recorded in the action ledger
 for today's counts, the last write of an action and the last follow or
 unfollow of a handle, and never knows where it stores them.
 """
-import json
 import os
 import random
 import time
@@ -42,9 +41,12 @@ FOLLOWED = StateFile("followed_accounts.json", [], GUARDED)
 # following, so falling back to it would admit follows past the ceiling.
 FOLLOWING_COUNT = StateFile("following_count.json", {}, GUARDED)
 # Disposable: growth samples, where a fresh sample matters more than the
-# series; without them the ceiling takes its lowest value, so losing them
-# never admits a follow.
+# series; without them the ceiling takes its lowest value and the ratio
+# brake refuses, so losing them never admits a follow.
 FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
+# Guarded: the Operator's follow whitelist, which account_curator extends.
+# Read as empty, it would unprotect every seed from an unfollow.
+WHITELIST = StateFile("whitelist.json", {}, GUARDED)
 
 
 # --- ledger ----------------------------------------------------------------
@@ -142,30 +144,12 @@ def seconds_until_allowed(action: str) -> float:
 
 # --- whitelist --------------------------------------------------------------
 
-_WL_CACHE: dict = {}
-_WL_KEY: tuple = ()  # (path, mtime) of the file _WL_CACHE was read from
-
-
-_WL_EMPTY = {"tier1": set(), "tier2": set(), "tier3": set(), "tier4": set(),
-             "discovered": set(), "all": set()}
-
-
 def load_whitelist() -> dict:
     """Return {"tier1": set, ..., "tier4": set, "all": set} of lowercased
-    handles. Cached, reloads when the file changes. tier4 (2026-06-07 spec:
-    crypto/markets crossover seeds) is optional in the file."""
-    global _WL_CACHE, _WL_KEY
-    try:
-        key = (config.WHITELIST_FILE, os.path.getmtime(config.WHITELIST_FILE))
-    except OSError:
-        return dict(_WL_EMPTY)
-    if _WL_CACHE and key == _WL_KEY:
-        return _WL_CACHE
-    try:
-        with open(config.WHITELIST_FILE) as f:
-            raw = json.load(f)
-    except (OSError, json.JSONDecodeError):
-        return dict(_WL_EMPTY)
+    handles. tier4 (2026-06-07 spec: crypto/markets crossover seeds) is
+    optional in the file. Raises StateUnreadable while whitelist.json
+    cannot be read."""
+    raw = WHITELIST.read()
 
     def _norm(seq):
         return {str(h).lower().lstrip("@") for h in (seq or [])}
@@ -179,14 +163,13 @@ def load_whitelist() -> dict:
     # — the bot develops its own follow list). Same follow rights as seeds;
     # additions capped + logged in account_curator.
     t5 = _norm(tiers.get("discovered"))
-    _WL_CACHE = {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
-                 "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
-    _WL_KEY = key
-    return _WL_CACHE
+    return {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
+            "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
 
 
 def is_whitelisted(handle: str,
                    tiers=("tier1", "tier2", "tier3", "tier4", "discovered")) -> bool:
+    """Raises StateUnreadable while whitelist.json cannot be read."""
     h = (handle or "").lower().lstrip("@")
     wl = load_whitelist()
     return any(h in wl[t] for t in tiers)
@@ -244,8 +227,9 @@ def adjust_following(delta: int) -> None:
 
 # --- policy decisions -------------------------------------------------------
 
-def _following_ceiling() -> int:
-    """Max total following allowed right now (2026-06-07 spec, Part 1).
+def _following_ceiling(followers: Optional[int]) -> int:
+    """Max total following allowed right now (2026-06-07 spec, Part 1),
+    given the latest follower count, None when unknown.
 
     Hard constraints, never violated: total following cap 300; while
     followers are low (< FOLLOW_LOW_PHASE_FOLLOWERS) stay under the credible
@@ -258,7 +242,6 @@ def _following_ceiling() -> int:
     # (following > followers). Daily cap + spacing + anti-churn still apply.
     if config.FOLLOW_GROWTH_MODE:
         return config.FOLLOW_TOTAL_CAP
-    followers, _ = _current_counts()
     if followers is None or followers < config.FOLLOW_LOW_PHASE_FOLLOWERS:
         return min(config.FOLLOW_TOTAL_CAP, config.FOLLOW_LOW_PHASE_CEILING)
     return min(config.FOLLOW_TOTAL_CAP, followers)
@@ -276,8 +259,14 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
     h = (handle or "").lower().lstrip("@")
     if not h:
         return (False, "empty handle")
+    # follow_account's quality gate reads the whitelist too: an unreadable
+    # one admits no follow, whitelist-only mode or not.
+    try:
+        whitelisted = is_whitelisted(h)
+    except StateUnreadable as exc:
+        return (False, f"whitelist unreadable ({exc})")
     _wl_exempt = reciprocal and config.FOLLOWBACK_BYPASS_WHITELIST
-    if config.FOLLOW_WHITELIST_ONLY and not is_whitelisted(h) and not _wl_exempt:
+    if config.FOLLOW_WHITELIST_ONLY and not whitelisted and not _wl_exempt:
         return (False, "not on whitelist (whitelist-only mode; no strangers, no reciprocity)")
     if _within_churn_cooldown(h):
         return (False, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")
@@ -293,13 +282,15 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
     # A ceiling that cannot be read admits no follow.
     try:
         followers, following = _current_counts()
-        ceiling = _following_ceiling()
     except StateUnreadable as exc:
         return (False, f"following ceiling unreadable ({exc})")
+    ceiling = _following_ceiling(followers)
     if following + 1 > ceiling:
         return (False, f"total following ceiling reached ({following} >= {ceiling})")
     # Legacy net-negative ratio brake (kept behind FOLLOW_ENFORCE_RATIO).
-    if config.FOLLOW_ENFORCE_RATIO and followers is not None:
+    if config.FOLLOW_ENFORCE_RATIO:
+        if followers is None:
+            return (False, "follower count unknown: ratio brake cannot be checked")
         over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
         if over_ceiling and follows_today >= _count_today(UNFOLLOW):
             return (False, f"over ratio ceiling (following {following} vs "

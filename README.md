@@ -85,8 +85,9 @@ runtime files and are not committed to Git. The JSON state files go through
 guarded file, such as `respect_list.json` or `personality.json`, stops the
 job that needs it and is never overwritten
 ([recovery](docs/OPERATIONS.md#recovery)). While the following count
-(`following_count.json`, else `followed_accounts.json`) is unreadable, every
-follow is refused.
+(`following_count.json`, else `followed_accounts.json`) or `whitelist.json`
+is unreadable, every follow is refused; an unreadable `whitelist.json` also
+stops `bin/mass_unfollow.py`.
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
 handles source selection, drafting and review. `src/guards/active_hours.py`

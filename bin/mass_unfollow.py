@@ -13,6 +13,8 @@ Safety:
     30 days via the anti-churn ledger.
     `--keep legacy` restores the old wide keep-set (respect_list +
     engage/early-bird/mega target lists) for a gentler prune.
+    A missing or unreadable whitelist.json aborts the run before any
+    unfollow, and the file is left as is.
   - Every confirmed unfollow is recorded into action_ledger.json (30-day
     anti-churn so follow bots don't re-follow) and decrements
     following_count.json.
@@ -53,6 +55,7 @@ sys.path.insert(0, ROOT)
 from src.guards import action_guard, active_hours  # noqa: E402
 from src.core import config  # noqa: E402
 from src.core.logger import log  # noqa: E402
+from src.core.state_errors import StateUnreadable  # noqa: E402
 from src.x import safari  # noqa: E402
 
 # Stays under X's unfollow quota of about 190 per window; at pace `normal`
@@ -93,10 +96,14 @@ def _save_results(unfollowed: list) -> None:
 
 
 def _whitelist_keep_set() -> set:
-    """All whitelist tier handles + seeds[] handles (the curated follow list)."""
+    """All whitelist tier handles + seeds[] handles (the curated follow list).
+    Raises StateUnreadable when whitelist.json is missing or unreadable."""
     keep = set()
-    with open(os.path.join(ROOT, "whitelist.json")) as f:
-        wl = json.load(f)
+    # The store reads a missing file as empty: here that would unfollow
+    # every seed.
+    if not os.path.exists(action_guard.WHITELIST.path):
+        raise StateUnreadable("whitelist.json is missing")
+    wl = action_guard.WHITELIST.read()
     for handles in (wl.get("tiers") or {}).values():
         keep |= {str(h).lower() for h in handles}
     for seed in wl.get("seeds") or []:
@@ -271,7 +278,12 @@ def main() -> None:
         confirm_wait, gap_lo, gap_hi = 1.2, 3.5, 7.0
         breather_every, breather_lo, breather_hi = 25, 20, 40
 
-    keep = _whitelist_keep_set() if args.keep == "whitelist" else _legacy_keep_set()
+    try:
+        keep = _whitelist_keep_set() if args.keep == "whitelist" else _legacy_keep_set()
+    except StateUnreadable as exc:
+        print("ABORT: keep-set unreadable (%s). Repair the file "
+              "(docs/OPERATIONS.md#recovery); nothing was unfollowed." % exc, flush=True)
+        sys.exit(1)
     pick_js = PICK_JS_TEMPLATE % json.dumps(sorted(keep))
     print("keep-set: %d handles (%s mode)" % (len(keep), args.keep), flush=True)
 
