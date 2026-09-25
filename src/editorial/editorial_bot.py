@@ -10,24 +10,22 @@ import re
 import threading
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta, timezone
-from email.utils import parsedate_to_datetime
+from datetime import timedelta
 from html.parser import HTMLParser
 from typing import NamedTuple
 from urllib.parse import urlsplit
 
 from ..guards import action_guard, content_guard, respect_list
 from ..core import account, config, settings
-from ..guards.active_hours import bedtime, is_active, now_local, require_active, today_iso
+from ..guards.active_hours import bedtime, is_active, now_local, require_active
 from ..core.llm_client import CallProfile, LLMStatus, run_llm
 from ..core.logger import log
 from ..core.history import load_history
-from ..core.state_store import GUARDED, StateFile, StatePath
+from ..core.state_store import StatePath
 from . import editorial_schemas as schemas
+from .slot_journal import STATE, FileJournal, MemoryJournal, SlotJournal, stamp as _stamp
 from .trending import TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
-# Guarded: it holds the Pending slots and the spent Attempts.
-STATE = StateFile("editorial_state.json", {}, GUARDED)
 AUDIT_FILE = StatePath("editorial_review.jsonl")
 _CYCLE_LOCK = threading.Lock()
 SLOT_WINDOW = timedelta(minutes=45)
@@ -79,6 +77,14 @@ def _save_state(data: dict) -> None:
     STATE.write(data)
 
 
+def _journal(journal) -> SlotJournal:
+    """`journal`, or the file's when None. A dict in the file's format reads
+    as a journal of it, for the tests that still pass one (#232)."""
+    if journal is None:
+        return FileJournal()
+    return journal if isinstance(journal, SlotJournal) else MemoryJournal(journal)
+
+
 def _local(now=None):
     from zoneinfo import ZoneInfo
     return (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
@@ -97,25 +103,25 @@ def _in_window(clock: str, now) -> bool:
     return start <= now < min(start + SLOT_WINDOW, bedtime(now))
 
 
-def _open(clock: str, now, state: dict) -> bool:
+def _open(clock: str, now, journal: SlotJournal) -> bool:
     """In its window, neither published/pending nor out of Attempts today."""
-    today = state if state.get("date") == now.date().isoformat() else {}
-    return (_in_window(clock, now) and clock not in today.get("slots", {})
-            and today.get("attempts", {}).get(clock, 0) < MAX_ATTEMPTS)
+    day = now.date()
+    return (_in_window(clock, now) and not journal.closed(clock, day)
+            and journal.attempts(clock, day) < MAX_ATTEMPTS)
 
 
-def open_slots(now=None, state=None) -> list:
+def open_slots(now=None, journal=None) -> list:
     """Every grid Slot open now, earliest first. Windows overlap (09:30 and
     10:00): a spent or silent Slot must not hold the next."""
     now = _local(now)
     if not is_active(now):
         return []
-    state = _read_state() if state is None else state
-    return [slot for slot in slots() if _open(slot.clock, now, state)]
+    journal = _journal(journal)
+    return [slot for slot in slots() if _open(slot.clock, now, journal)]
 
 
-def due_slot(now=None, state=None):
-    return next(iter(open_slots(now, state)), None)
+def due_slot(now=None, journal=None):
+    return next(iter(open_slots(now, journal)), None)
 
 
 def open_startup_window(now=None) -> None:
@@ -136,19 +142,19 @@ def is_startup(clock: str) -> bool:
     return clock.startswith(f"{STARTUP}@")
 
 
-def startup_slot(now=None, state=None):
+def startup_slot(now=None, journal=None):
     now = _local(now)
     key = startup_key()
     if not key or not is_active(now):
         return None
-    state = _read_state() if state is None else state
-    return Slot(key, account.current().editorial.trend_angle) if _open(key, now, state) else None
+    journal = _journal(journal)
+    return Slot(key, account.current().editorial.trend_angle) if _open(key, now, journal) else None
 
 
-def next_slot(now=None, state=None):
+def next_slot(now=None, journal=None):
     """The Startup post first, then the Slot grid."""
-    state = _read_state() if state is None else state
-    return startup_slot(now, state) or due_slot(now, state)
+    journal = _journal(journal)
+    return startup_slot(now, journal) or due_slot(now, journal)
 
 
 def _trusted(url: str) -> bool:
@@ -204,24 +210,10 @@ def _plain(html: str) -> str:
     return " ".join(" ".join(parser.parts).split())
 
 
-def _stamp(raw: str):
-    try:
-        dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
-    except (ValueError, TypeError):
-        try:
-            dt = parsedate_to_datetime(raw)
-        except (ValueError, TypeError):
-            return None
-    return dt.astimezone(timezone.utc) if dt.tzinfo else None
-
-
-def collect_sources(state: dict, now=None, news_only=False) -> list:
+def collect_sources(journal, now=None, news_only=False) -> list:
     now = now or now_local()
-    used = {r["source_url"] for r in state.get("published", [])
-            if (_stamp(r.get("ts", "")) or datetime.min.replace(tzinfo=timezone.utc))
-            > now - timedelta(days=7)}
     # An ambiguous submission may be live: a restart must not reuse its source.
-    used |= {pending["url"] for pending in state.get("pending_sources", {}).values()}
+    used = _journal(journal).used_urls(now)
     candidates = []
     loaded = account.current()
     for publisher, feed in loaded.editorial.feeds:
@@ -399,25 +391,20 @@ RECENT: {json.dumps(recent[-12:], ensure_ascii=False)}""", "EDITORIAL_REVIEW", s
 _NO_DRAFT = object()
 
 
-def _pending_refusal(state, now) -> str:
+def _pending_refusal(journal, now) -> str:
     """Why the pending submissions forbid another one now, or "".
 
     An ambiguous submission writes no ledger row, so `can_post` never sees
     it. Each one counts toward today's ceiling and the post spacing until
     the operator clears it; a Slot the operator marked published after a
     check counts too, since its post has no ledger row either."""
-    today = now.date().isoformat()
-    pending = state.get("pending_sources", {})
-    slots = state.get("slots", {}) if state.get("date") == today else {}
-    pending_today = {key for key in pending if key.startswith(f"{today}/")}
-    pending_today |= {f"{today}/{clock}" for clock, mark in slots.items() if mark == "pending"}
-    published = sum(1 for mark in slots.values() if mark == "published")
-    used = max(action_guard.profile_count_today(), published) + len(pending_today)
+    journal = _journal(journal)
+    submitted = journal.submissions(now.date())
+    used = max(action_guard.profile_count_today(), submitted.published) + submitted.pending
     cap = config.posts_ceiling()
     if used >= cap:
         return f"daily ceiling reached with pending submissions ({used}/{cap})"
-    stamps = [_stamp(entry.get("ts", "")) for entry in (*pending.values(), *state.get("published", []))]
-    last = max((stamp for stamp in stamps if stamp), default=None)
+    last = journal.last_submission()
     # The jitter's upper bound: every draw action_guard can make is shorter.
     gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
     if last and (now - last).total_seconds() < gap:
@@ -430,23 +417,21 @@ def run_editorial_cycle(preview=False):
         return None
     try:
         require_active()
-        state = _read_state()
+        journal = FileJournal()
         # The review dedups against it: unreadable, refuse before a Draft
         # spends an Attempt.
         load_history()
-        today = today_iso()
-        if state.get("date") != today:
-            state = {"date": today, "slots": {}, "published": state.get("published", [])[-90:],
-                     "pending_sources": state.get("pending_sources", {})}
-        if not action_guard.can_post(action_guard.POST)[0] or _pending_refusal(state, _local()):
+        today = _local().date()
+        journal.roll_to(today)
+        if not action_guard.can_post(action_guard.POST)[0] or _pending_refusal(journal, _local()):
             return None
         # The Startup post goes first, then every open Slot of the grid. A
         # pass that gives a Slot no Draft moves on to the next one, so a
         # restart or a silent 09:30 never hides a Slot; the first Draft ends
         # the pass, so a pass publishes once at most.
-        for slot in (startup_slot(state=state), *open_slots(state=state)):
+        for slot in (startup_slot(journal=journal), *open_slots(journal=journal)):
             if slot:
-                result = _run_slot(slot, state, preview)
+                result = _run_slot(slot, journal, today, preview)
                 if result is not _NO_DRAFT:
                     return result
         return None
@@ -454,12 +439,11 @@ def run_editorial_cycle(preview=False):
         _CYCLE_LOCK.release()
 
 
-def _run_slot(slot, state, preview):
-    """One pass for `slot`: its audit, or _NO_DRAFT when no Draft reached
-    the Editor and no Attempt was spent."""
+def _run_slot(slot, journal, today, preview):
+    """One pass for `slot` on `today`: its audit, or _NO_DRAFT when no Draft
+    reached the Editor and no Attempt was spent."""
     # At most three Attempts in this window, including process restarts.
-    attempts = state.setdefault("attempts", {})
-    if attempts.get(slot.clock, 0) >= MAX_ATTEMPTS:
+    if journal.attempts(slot.clock, today) >= MAX_ATTEMPTS:
         return _NO_DRAFT
     trending = None
     if slot.trend:
@@ -468,17 +452,15 @@ def _run_slot(slot, state, preview):
             log.info("[EDITORIAL] Too few trending %s posts for %s this pass.",
                      account.current().domain, slot.clock)
             return _NO_DRAFT
-        sources = collect_sources(state, news_only=True)
+        sources = collect_sources(journal, news_only=True)
     else:
-        sources = collect_sources(state)
+        sources = collect_sources(journal)
     if not sources:
         return _NO_DRAFT
     # A pending submission may be live: later Drafts and the Editor treat
     # its text as a recent post.
-    recent = [p["text"] for p in state.get("published", [])]
-    recent += [p["text"] for p in state.get("pending_sources", {}).values()]
-    draft = draft_post(slot, sources, recent, state.get("feedback", {}).get(slot.clock, ""),
-                       trending)
+    recent = journal.recent_texts()
+    draft = draft_post(slot, sources, recent, journal.feedback(slot.clock, today), trending)
     # No Draft (provider error, malformed JSON, explicit skip), no
     # Attempt: the 45-minute window already bounds these passes.
     if not isinstance(draft, dict) or not draft or draft.get("skip") is True:
@@ -486,8 +468,7 @@ def _run_slot(slot, state, preview):
         return _NO_DRAFT
     if not preview:
         # Counted before review, so a crash mid-review still spends it.
-        attempts[slot.clock] = attempts.get(slot.clock, 0) + 1
-        _save_state(state)
+        journal.spend_attempt(slot.clock)
     ok, reason, source = review_draft(draft, sources, recent, exceptional=slot.exceptional,
                                       trending=trending)
     audit = dict(ts=now_local().isoformat(), slot=slot.clock, approved=ok,
@@ -497,8 +478,7 @@ def _run_slot(slot, state, preview):
     with open(AUDIT_FILE, "a") as f:
         f.write(json.dumps(audit, ensure_ascii=False) + "\n")
     if not ok:
-        state.setdefault("feedback", {})[slot.clock] = str(reason)[:500]
-        _save_state(state)
+        journal.note_feedback(slot.clock, reason)
         log.info("[EDITORIAL] Skipped %s: %s", slot.clock, reason)
         return audit
     require_active()
@@ -506,7 +486,7 @@ def _run_slot(slot, state, preview):
     now = _local()
     if not _in_window(slot.clock, now):
         return audit
-    refusal = _pending_refusal(state, now)
+    refusal = _pending_refusal(journal, now)
     if refusal:
         log.info("[EDITORIAL] %s not submitted: %s.", slot.clock, refusal)
         return audit
@@ -525,26 +505,14 @@ def _run_slot(slot, state, preview):
     # never cause a duplicate after a restart. Only an outcome that sent
     # nothing releases it; until then its source and text stay out of later
     # Drafts, and it counts toward the ceiling and the spacing.
-    # Keyed by day too: tomorrow's same Slot must not overwrite it.
-    pending_key = f"{state['date']}/{slot.clock}"
-    state.setdefault("slots", {})[slot.clock] = "pending"
-    state.setdefault("pending_sources", {})[pending_key] = dict(
-        url=source["url"], text=draft["text"], ts=now_local().isoformat())
-    _save_state(state)
+    journal.reserve(slot.clock, source["url"], draft["text"], now_local())
     outcome = post_tweet(text)
     if outcome:
-        del state["pending_sources"][pending_key]
-        state["slots"][slot.clock] = "published"
-        state["published"].append(dict(ts=now_local().isoformat(), text=draft["text"],
-                                       source_url=source["url"], angle=draft["angle"],
-                                       slot=slot.clock))
-        _save_state(state)
+        journal.confirm(slot.clock, source["url"], draft["text"], draft["angle"], now_local())
         log.info("[EDITORIAL] Published %s (%d/%d profile posts today).",
                  slot.clock, action_guard.profile_count_today(), config.posts_ceiling())
     elif outcome in (WriteOutcome.REFUSED, WriteOutcome.FAILED, WriteOutcome.DRY_RUN):
-        del state["slots"][slot.clock]
-        del state["pending_sources"][pending_key]
-        _save_state(state)
+        journal.release(slot.clock)
     else:
         log.warning("[EDITORIAL] %s stays pending: the submit may have reached X (%s). "
                     "Check the profile before clearing it.", slot.clock, outcome)

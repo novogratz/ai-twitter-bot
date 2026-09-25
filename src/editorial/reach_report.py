@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ..core import account, config
 from ..guards.active_hours import now_local, require_active
-from .editorial_bot import _read_state, _stamp
+from .slot_journal import FileJournal, stamp
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile, StatePath
 
@@ -16,8 +16,8 @@ TARGET_VIEWS = 500_000
 
 def summarize(published, scraped, now=None):
     now = now or now_local()
-    originals = [p for p in published if (stamp := _stamp(p.get("ts", "")))
-                 and now - timedelta(days=7) <= stamp <= now]
+    originals = [p for p in published if (at := stamp(p.get("ts", "")))
+                 and now - timedelta(days=7) <= at <= now]
     observed = []
     for post in originals:
         prefix = " ".join(post["text"].split())[:100]
@@ -43,7 +43,7 @@ def safe_run_reach_report():
     try:
         require_active()
         from ..x.scraper import scrape_profile_tweets
-        published = _read_state().get("published", [])
+        published = FileJournal().published()
         tweets = scrape_profile_tweets(config.BOT_HANDLE, max_tweets=60) if published else []
         report = summarize(published, tweets)
         REPORT.write(report)

@@ -54,6 +54,15 @@ A Slot whose Original was submitted without a definite outcome; it is never
 retried until the operator clears it, and until then it counts as a Profile
 publication for the day's ceiling and the post spacing.
 
+**Slot journal**:
+The one owner of the Toronto day's editorial state, kept in
+`editorial_state.json`: the day change, each Slot's Attempts and the
+Editor's feedback, the Pending slot reserved, confirmed or released, the
+Slots closed for the day, the source URLs already used, the recent texts
+(published and pending), the day's submissions and the latest one. The
+editorial cycle and the reach report ask it; neither reads the file.
+_Avoid_: editorial state, state dict
+
 **Write outcome**:
 What one write to X (post, Reply, follow, like, pin) came to:
 shipped, refused, failed before anything was sent, unconfirmed (it may have
