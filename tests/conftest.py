@@ -151,6 +151,18 @@ def _daylight_default(monkeypatch):
 
 
 @_pytest.fixture(autouse=True)
+def _cli_installed(monkeypatch):
+    """Tests run the same whichever model CLIs the host has installed: every
+    CLI looks installed. A test of a missing CLI patches `which` itself."""
+    import shutil as _shutil
+    real = _shutil.which
+    model_clis = {"claude", "codex", "gemini", "opencode", "ollama"}
+    monkeypatch.setattr(_shutil, "which",
+                        lambda name, *a, **k: f"/usr/local/bin/{name}" if name in model_clis
+                        else real(name, *a, **k))
+
+
+@_pytest.fixture(autouse=True)
 def _fresh_job_memory(monkeypatch):
     """The Reply pipeline keeps the posts each job set aside, the direct
     reply its query rotation cursor, and the content guard the posts of this
