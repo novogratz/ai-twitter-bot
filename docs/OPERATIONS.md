@@ -398,8 +398,9 @@ and unused since debate turns moved to the ledger; it can be deleted.
   one, follows in the same output under `[MASS_UNFOLLOW]` and is also in
   `bot.log`. `--max` defaults
   to 150. A rate limit triggers a cooldown, never an abort. A missing or
-  unreadable keep-set (`whitelist.json`, or `respect_list.json` with
-  `--keep legacy`) aborts the run before Safari.
+  unreadable `whitelist.json`, or an unreadable `respect_list.json` with
+  `--keep legacy`, aborts the run before Safari; a missing
+  `respect_list.json` reads as empty.
   `mass_unfollow_results.json` is rewritten after every unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 
