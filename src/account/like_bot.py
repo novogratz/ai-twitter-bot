@@ -25,6 +25,7 @@ import urllib.parse
 from ..core import config
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
+from ..guards import active_hours
 from ..x import twitter_client
 from ..x.twitter_client import LikeOutcome
 
@@ -56,12 +57,16 @@ def _cycle_seconds() -> float:
 
 
 def _load_daily_state() -> dict:
-    from datetime import date
-    today = date.today().isoformat()
+    today = active_hours.today_iso()
     state = LIKE_BOT_STATE.read()
-    if state.get("date") != today:
+    if active_hours.is_past_day(state.get("date")):
         return {"date": today, "count": 0}
-    return {"date": today, "count": int(state.get("count") or 0)}
+    current = {"date": today, "count": int(state.get("count") or 0)}
+    if state.get("date") != today:
+        # Stamped today by the Mac's clock, ahead of Toronto's: restamp it,
+        # or tomorrow would start with today's count.
+        _save_daily_state(current)
+    return current
 
 
 def _save_daily_state(state: dict) -> None:

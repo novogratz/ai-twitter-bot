@@ -1,5 +1,5 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
-from datetime import datetime, time, timedelta
+from datetime import date, datetime, time, timedelta
 from functools import wraps
 import threading
 from zoneinfo import ZoneInfo
@@ -28,6 +28,23 @@ def window_label() -> str:
 
 def now_local() -> datetime:
     return datetime.now(ZoneInfo(config.BOT_TIMEZONE))
+
+
+def today_iso() -> str:
+    """Today's Toronto day, as YYYY-MM-DD."""
+    return now_local().date().isoformat()
+
+
+def is_past_day(stamped) -> bool:
+    """A stored day is over: before today in Toronto, or unreadable.
+
+    A later day was stamped by the Mac's clock ahead of Toronto's, before
+    issue #191: it counts as today, so a quota already spent stays spent.
+    """
+    try:
+        return date.fromisoformat(stamped) < now_local().date()
+    except (TypeError, ValueError):
+        return True
 
 
 def is_active(now: datetime | None = None) -> bool:

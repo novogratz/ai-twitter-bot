@@ -563,9 +563,6 @@ These are how the code behaves today, not design intent:
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.
-- `follow_engagers_bot`, `like_bot` and `pin_bot` key their
-  daily counters on `date.today()` (machine time), while the ledger uses the
-  Toronto day.
 - `session_refresh_job` and the `health` recovery restart Safari without
   taking `_safari_lock`.
 - The debate, VIP and Graphseo voices (`identity=False`) carry the hard rules

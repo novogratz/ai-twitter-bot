@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 
 from ..guards import action_guard, content_guard
 from ..core import config
-from ..guards.active_hours import bedtime, is_active, now_local, require_active
+from ..guards.active_hours import bedtime, is_active, now_local, require_active, today_iso
 from ..core.llm_client import CallProfile, LLMStatus, run_llm
 from ..core.logger import log
 from ..core.history import load_history
@@ -467,7 +467,7 @@ def run_editorial_cycle(preview=False):
         # The review dedups against it: unreadable, refuse before a Draft
         # spends an Attempt.
         load_history()
-        today = now_local().date().isoformat()
+        today = today_iso()
         if state.get("date") != today:
             state = {"date": today, "slots": {}, "published": state.get("published", [])[-90:],
                      "pending_sources": state.get("pending_sources", {})}

@@ -70,6 +70,41 @@ def test_no_hardcoded_bedtime_outside_the_constants():
     assert hits == []
 
 
+def test_every_day_comes_from_the_toronto_clock():
+    """Issue #191: the like, follow and pin counters took their day from the
+    Mac's clock, so a Mac in Europe opened a second quota in the Toronto
+    evening. No calendar day in src/ is read from the Mac's clock: neither
+    date.today(), datetime.now().date(), a strftime of the local time, nor
+    the first ten characters of a naive datetime.now().isoformat(). Naive
+    timestamps are out of scope."""
+    import re
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    pattern = re.compile(r"\b(date|datetime)\.today\(|datetime\.now\(\)\.(date|strftime)\("
+                         r"|datetime\.now\(\)\.isoformat\([^)]*\)\[:10\]|time\.strftime\(")
+    files = [*root.glob("src/**/*.py"), root / "main.py"]
+    hits = [f"{path.relative_to(root)}:{n}" for path in files
+            for n, line in enumerate(path.read_text().splitlines(), 1) if pattern.search(line)]
+    assert hits == []
+
+
+@pytest.mark.parametrize("stamped, past", [
+    ("2026-10-13", True),
+    ("2026-10-14", False),
+    ("2026-10-15", False),   # stamped by a Mac ahead of Toronto: still today
+    (None, True),
+    ("", True),
+    (20261014, True),
+    ("not a day", True),
+])
+def test_a_stored_day_is_over_before_today_in_toronto_or_when_unreadable(monkeypatch, stamped, past):
+    clock(monkeypatch, datetime(2026, 10, 14, 20, 30, tzinfo=TORONTO))
+
+    assert hours.today_iso() == "2026-10-14"
+    assert hours.is_past_day(stamped) is past
+
+
 def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
     called = []
