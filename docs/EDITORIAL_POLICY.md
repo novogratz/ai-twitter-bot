@@ -44,6 +44,22 @@ announcements. Used source URLs are rested for seven days. The optional 20:45
 slot needs news from the last twelve hours or a useful AI teaching source, plus
 an exceptional-value approval.
 
+## Niche of Replies, likes and follows
+
+Operator, 2026-09-25: AI only, like the Originals. The Account's `[niche]`
+patterns, `[searches]` queries and `[network]` lists in
+`accounts/theaishrink/account.toml` keep to AI (issue #205). A post that
+speaks only of crypto, markets or space is off the niche for the search
+lane, the feed sweep, early bird and mega watch; the follow quality gate
+refuses a non-Engager whose bio shows no AI term; the reply and like
+searches look for AI posts only. Crypto, markets and space accounts left
+the reply and scan lists. The accounts the Operator picked by hand stay
+whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
+Mindset4Money_X in the curator's pins, and so do the few handles whose
+topic is still to be confirmed by the Operator. The VIP scan still answers
+Graphseo's and TheBTCTherapist's posts without the niche filter, and
+answers to Engagers still follow the conversation.
+
 ## Trend slots and the Startup post
 
 The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from

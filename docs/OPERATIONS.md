@@ -102,10 +102,10 @@ each call, and compare a handle with the one read from a status URL.
   `follow_engagers_skip`. The optional `blocked_accounts` adds Blocked
   accounts to the engine's `BLOCKLIST`, matched the same way; no key removes
   one of the engine's, and an unknown key stops the start.
-- `[niche]`: Python regular expressions. `post` (case-insensitive) or
-  `ticker` (case-sensitive) must match a post the reply jobs find; `bio`
-  must match the name and bio of a non-Engager the follow quality gate
-  judges.
+- `[niche]`: Python regular expressions. `post` (case-insensitive) or the
+  optional `ticker` (case-sensitive) must match a post the reply jobs find;
+  `bio` must match the name and bio of a non-Engager the follow quality
+  gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes`.
 

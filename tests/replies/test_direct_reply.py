@@ -33,42 +33,23 @@ def _searches():
     return list(searches.replies), list(searches.hot_tab)
 
 
-def test_reply_queries_are_on_lane():
-    """Spec lane: AI x markets x psychology. NO space content; the tier1-2
-    seeds + foils must be scanned directly via from: queries."""
+def test_reply_and_like_queries_are_ai_only():
+    """Operator 2026-09-25: AI only, like the policy (#205). Every reply and
+    like query carries an AI term, and none looks for crypto, markets or
+    space posts."""
+    from src.core import account
     replies, hot_tab = _searches()
-    joined = " ".join(replies + hot_tab).lower()
-    for banned in ("spacex", "starship", "nasa", "satellite", "rocket lab", "orbit"):
-        assert banned not in joined, f"space term {banned!r} is off-persona"
-    for seed in ("from:thebtctherapist", "from:morganhousel", "from:saylor"):
-        assert seed in joined, f"missing seed scan {seed!r}"
-    # Market-trauma VOICE still represented (panic/drawdown reply targets),
-    # but trimmed to 1 query — operator 2026-06-08 "focus more on AI": the
-    # therapist voice frames AI replies; it's no longer a topic lane.
-    assert "panic" in joined, "market-trauma voice target missing"
-
-
-def test_reply_queries_are_ai_first():
-    """Operator 2026-06-07: 'bot needs to be more AI focused' / 'i want to
-    see more AI shit'. The reply lane must be majority-AI: at least half of
-    the search queries carry an AI term, BTC tail stays minimal (feud lane
-    only, ≤2 queries)."""
-    replies, hot_tab = _searches()
+    queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
-                "ai ", "\"ai", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "palantir", "cursor", "copilot", "tsmc", "humanoid", " ia ")
-    def is_ai(q):
-        ql = " " + q.lower()
-        return any(t in ql for t in ai_terms)
-    topic_queries = [q for q in replies if not q.startswith("from:")]
-    ai_count = sum(1 for q in topic_queries if is_ai(q))
-    assert ai_count * 2 >= len(topic_queries), \
-        f"AI queries must be the majority of the reply lane ({ai_count}/{len(topic_queries)})"
-    btc_only = [q for q in topic_queries
-                if ("bitcoin" in q.lower() or "btc" in q.lower()) and not is_ai(q)]
-    assert len(btc_only) <= 2, "BTC tail must stay minimal (feud lane only)"
-    hot_ai = sum(1 for q in hot_tab if is_ai(q))
-    assert hot_ai * 2 >= len(hot_tab)
+                "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
+                "cursor", "copilot", "humanoid", "robotics", " ia ")
+    for q in queries:
+        assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
+    joined = " ".join(queries).lower()
+    for banned in ("bitcoin", "btc", "crypto", "ethereum", "bittensor", "stock", "market",
+                   "earnings", "etf", "portfolio", "sell off", "vix", "spacex", "starlink",
+                   "starship", "nasa", "satellite", "orbit"):
+        assert banned not in joined, f"{banned!r} is off the AI niche"
 
 
 def test_prompts_are_english_only():

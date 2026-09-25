@@ -210,7 +210,7 @@ class Network:
 @dataclass(frozen=True)
 class Niche:
     post: re.Pattern
-    ticker: re.Pattern  # case-sensitive: a $TICKER, not any dollar word
+    ticker: re.Pattern | None  # case-sensitive: a $TICKER, not any dollar word; None when absent
     bio: re.Pattern
 
 
@@ -238,9 +238,10 @@ def _network(top) -> Network:
 
 
 def _niche(top) -> Niche:
-    table = _Table(top.file, "niche", top["niche"], required={"post": str, "ticker": str, "bio": str})
-    return Niche(post=_pattern(table, "post"), ticker=_pattern(table, "ticker", flags=0),
-                 bio=_pattern(table, "bio"))
+    table = _Table(top.file, "niche", top["niche"], required={"post": str, "bio": str},
+                   optional={"ticker": str})
+    ticker = _pattern(table, "ticker", flags=0) if "ticker" in table else None
+    return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"))
 
 
 def _searches(top) -> Searches:
