@@ -265,7 +265,8 @@ does not block a post. Missed slots are not caught up.
 picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
 needed). Both are operator-managed. The respect list reaches every Reply
 prompt and the editorial prompt, through the hard rules, and the write
-chokepoints refuse an Original or a Reply that names a Respected account.
+chokepoints refuse an Original or a Reply that names a Respected account,
+the `@handle` of the author a Reply answers excepted.
 
 ## What can be tuned
 

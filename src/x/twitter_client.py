@@ -444,7 +444,8 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         steps=steps, close_tab=False)
 
 
-def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> WriteOutcome:
+def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
+                   on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -459,7 +460,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
     slot between the check and the write. `debate_turn=True` marks an answer
-    to someone who answered the account (CONTEXT.md).
+    to someone who answered the account (CONTEXT.md). `on_refused`, when
+    given, receives the Refusal of a Reply admission refusal, dry run
+    included, so the caller can drop a post admission refused for good.
 
     ⛔ CALLERS MUST NOT write the replied store before calling this — the
     claim below REFUSES anything already in it. Bug 2026-06-07: five bots
@@ -490,6 +493,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         if not verdict:
             log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                      f"{tweet_url} {(reply_text or '')[:120]!r}")
+            if on_refused is not None:
+                on_refused(verdict.refusal)
             return WriteOutcome.REFUSED
         admitted_text, author = verdict.text, verdict.author
         return None

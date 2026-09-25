@@ -194,6 +194,25 @@ def test_a_write_that_sent_nothing_frees_the_slot(monkeypatch, draft_fixture, ou
     assert not editorial._read_state()["published"]
 
 
+def test_a_dry_run_judges_the_respect_list(monkeypatch, draft_fixture, caplog):
+    """Issue #190: a dry run never reaches post_tweet, so the editorial
+    judges the respect list itself; the neutral Draft is logged as usual."""
+    from src.x import twitter_client as tc
+    monkeypatch.setenv("DRY_RUN", "1")
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("posted in a dry run"))
+    draft = draft_fixture[0]
+    neutral = draft["text"]
+    draft["text"] = neutral + " As @graphseo keeps saying."
+
+    assert editorial.run_editorial_cycle()["approved"]
+    assert "07:15 refused: output names protected handle @graphseo" in caplog.text
+
+    caplog.clear()
+    draft["text"] = neutral
+    assert editorial.run_editorial_cycle()["approved"]
+    assert "refused" not in caplog.text and neutral in caplog.text
+
+
 def test_an_unconfirmed_submit_keeps_the_slot_pending(monkeypatch, draft_fixture):
     """The submit keystroke may have reached X: the slot is never retried
     automatically, the operator checks the profile first."""

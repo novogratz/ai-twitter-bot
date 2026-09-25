@@ -464,11 +464,14 @@ def test_live_reply_pastes_the_validated_text(monkeypatch):
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
-    """The respect list is judged before the dry-run exit: the Reply is
-    refused, nothing pasted, no ledger row, live or dry run."""
+    """The respect list is judged before the dry-run exit: a Reply naming
+    another Respected account is refused, nothing pasted, no ledger row, no
+    claim, live or dry run, and the caller hears the refusal. The @handle of
+    the author it answers ships."""
     from src.core import humanizer
     from src.guards import respect_list
     from src.guards.replied_store import load_replied
+    from src.guards.reply_admission import Refusal
     from src.x import safari, twitter_client as tc
 
     recorded = _live_browser(monkeypatch)
@@ -477,15 +480,19 @@ def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
     pasted = []
     monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
     respect_list.add("kindperson")
+    respect_list.add("otherperson")
     url = "https://x.com/kindperson/status/2063500000000000168"
+    refusals = []
 
-    assert tc.reply_to_tweet(url, f"@kindperson {REPLY}") is W.REFUSED
+    assert tc.reply_to_tweet(url, f"@otherperson {REPLY}", on_refused=refusals.append) is W.REFUSED
+    assert refusals == [Refusal.RESPECTED_ACCOUNT]
     assert recorded == [] and pasted == []
     assert url not in load_replied()
 
-    shipped = tc.reply_to_tweet(url, REPLY)
+    addressed = f"@kindperson {REPLY}"
+    shipped = tc.reply_to_tweet(url, addressed)
     assert shipped is (W.DRY_RUN if dry_run == "1" else W.SHIPPED)
-    assert pasted == ([] if dry_run == "1" else [REPLY])
+    assert pasted == ([] if dry_run == "1" else [addressed])
 
 
 def test_spacing_is_judged_under_the_safari_lock(monkeypatch):

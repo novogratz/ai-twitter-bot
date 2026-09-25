@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import NamedTuple
 from urllib.parse import urlsplit
 
-from ..guards import action_guard, content_guard
+from ..guards import action_guard, content_guard, respect_list
 from ..core import config
 from ..guards.active_hours import bedtime, is_active, now_local, require_active, today_iso
 from ..core.llm_client import CallProfile, LLMStatus, run_llm
@@ -546,7 +546,12 @@ def _run_slot(slot, state, preview):
     from ..x.twitter_client import post_tweet
     text = draft["text"].strip() + "\n\n" + source["url"]
     if config.dry_run():
-        log.info("[EDITORIAL][DRY_RUN] %s", text)
+        # post_tweet is never reached in a dry run: judge the respect list here.
+        _, why = respect_list.scrub_text_or_skip(text)
+        if why:
+            log.info("[EDITORIAL][DRY_RUN] %s refused: %s.", slot.clock, why)
+        else:
+            log.info("[EDITORIAL][DRY_RUN] %s", text)
         return audit
     # Reserve before submitting. An interrupted/ambiguous submission must
     # never cause a duplicate after a restart. Only an outcome that sent

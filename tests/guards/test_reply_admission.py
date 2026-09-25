@@ -131,17 +131,30 @@ def test_refused_text_leaves_the_post_replayable(monkeypatch):
     assert judge_reply(url("Graphseo"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
 
 
-@pytest.mark.parametrize("draft", [
-    "@kindperson batching is where inference margins are won or lost.",
-    "Kindperson calling batching a margin story is bullshit.",
+def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
+    """The respect list allows answering a Respected account on its content:
+    its own @handle in the Reply is the addressee, not a mention."""
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    draft = "@graphseo le support tient tant que les volumes suivent, pas plus."
+    verdict = judge_reply(url("GraphSEO"), draft)
+    assert verdict and verdict.text == draft
+
+
+@pytest.mark.parametrize("draft,named", [
+    ("@graphseo ton analyse du support est ridicule cette semaine.", "graphseo"),
+    ("@graphseo le support tient, @01net l'a bien montré hier.", "01net"),
+    ("@graphseo le support tient, @kindperson l'a bien montré hier.", "kindperson"),
+    ("Kindperson qui parle de support ici, c'est du bullshit.", "kindperson"),
 ])
-def test_a_reply_naming_a_respected_account_is_refused(monkeypatch, draft):
+def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, draft, named):
+    """Mockery of the addressee by name, or any other Respected account
+    named: refused for good, the post is dropped as after a model SKIP."""
     from src.guards import respect_list
     respect_list.add("kindperson")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    verdict = judge_reply(url("kindperson"), draft)
-    assert verdict.refusal is Refusal.RESPECTED_ACCOUNT and not verdict.refusal.definitive
-    assert "kindperson" in verdict.reason
+    verdict = judge_reply(url("graphseo"), draft)
+    assert verdict.refusal is Refusal.RESPECTED_ACCOUNT and verdict.refusal.definitive
+    assert named in verdict.reason
 
 
 def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch):

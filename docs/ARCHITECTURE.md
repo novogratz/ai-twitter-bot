@@ -527,7 +527,12 @@ the first 20 characters (`skip_window`). The editorial prompt carries the
 hard rules too. The write chokepoints apply the respect list to the
 outgoing text, before the dry-run exit: `post_tweet` refuses an Original
 and Reply admission a Reply (`RESPECTED_ACCOUNT`) that names a Respected
-account by `@handle`, or by its handle next to a derisive word.
+account by `@handle`, or by its handle in a sentence with a derisive word.
+The `@handle` of the author a Reply answers passes. `RESPECTED_ACCOUNT` is
+definitive: `reply_to_tweet` hands the refusal to the Reply pipeline
+(`on_refused`), which sets the post aside. A dry-run Original stops in the
+editorial before `post_tweet`, which judges its text with the same
+`respect_list.scrub_text_or_skip`.
 While `respect_list.json` is unreadable, `hard_rules_block` raises
 `StateUnreadable`: the editorial cycle and the Reply cycles stop before the
 model call, and nothing ships. Nothing renders the block at import, so

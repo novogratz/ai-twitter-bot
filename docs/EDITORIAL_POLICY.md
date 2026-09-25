@@ -137,9 +137,14 @@ must not repeat.
   (issue #189). One exception, pending the Operator's decision: the Replies
   to @Graphseo run on the Claude CLI whenever it is installed.
 - An outgoing text that names a Respected account, by `@handle` or by its
-  handle next to a derisive word, is refused at the write chokepoint, dry
-  run included: `post_tweet` for an Original, Reply admission for a Reply,
-  which leaves the post replayable with a new generation (issue #190).
+  handle in a sentence with a derisive word, is refused at the write
+  chokepoint, dry run included: `post_tweet` for an Original, Reply
+  admission for a Reply. A Reply may carry the `@handle` of the Respected
+  account it answers, never mock it by name nor name another one. A
+  refused Reply sets the post aside for good, as a model SKIP does, and
+  leaves the replied store unmarked. A dry-run Original never reaches
+  `post_tweet`: the editorial judges its text with the same check
+  (issue #190).
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,
