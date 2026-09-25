@@ -18,7 +18,7 @@ from urllib.parse import urlsplit
 from ..guards import action_guard, content_guard
 from ..core import config
 from ..guards.active_hours import bedtime, is_active, now_local, require_active
-from ..core.llm_client import CallProfile, run_llm, unwrap_text
+from ..core.llm_client import CallProfile, run_llm
 from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import GUARDED, StateFile
@@ -311,12 +311,12 @@ def collect_sources(state: dict, now=None, news_only=False) -> list:
 
 def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
     result = run_llm(prompt, config.NEWS_MODEL, label=label, profile=profile,
-                     force_provider=config.PROFILE_LLM_PROVIDER, structured_output=True)
+                     force_provider=config.PROFILE_LLM_PROVIDER)
     if result.returncode:
         log.info("[EDITORIAL] %s generation unavailable (code %s).", label, result.returncode)
         return {}
     try:
-        value = json.loads(unwrap_text(result.stdout, structured_output=True))
+        value = json.loads(result.stdout)
         return value if isinstance(value, dict) else {}
     except (ValueError, TypeError):
         log.info("[EDITORIAL] %s returned malformed JSON; skipping.", label)

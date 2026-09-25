@@ -56,8 +56,8 @@ run. The check is repeated at each point where work leaves the process:
   count it toward a Safari restart;
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
-- `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`, whose timeout is
-  also capped at the time left before 23:30;
+- `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
+  also caps every model call's timeout at the time left before 23:30;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
   `editorial_bot` before fetching a source and again before publishing.
 
@@ -209,9 +209,32 @@ Draft or review schema as `format`, temperature 0.65 or 0.2, no voice
 prefix, and a timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300)
 capped by bedtime. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, the voice prefix, no schema,
-temperature 1.0. The label only names the call in logs. When Ollama fails,
-`llm_client` falls back to `LLM_FALLBACK_CLI`, which defaults to codex even
-when the variable is empty. `LLM_DISABLE_FALLBACK=1` turns the fallback off.
+temperature 1.0. The reply search keeps those settings and only declares
+JSON output. The label only names the call in logs.
+
+Ollama over HTTP and the Codex, Gemini, Claude and OpenCode CLIs are
+adapters in `llm_client.ADAPTERS`. Each returns its provider's raw output;
+`run_llm` alone runs the fallback ladder and reads the answer. The ladder
+starts with the primary (`force_provider`, else `AI_CLI`), then tries at
+most one fallback, `LLM_FALLBACK_CLI`. That variable defaults to codex even
+when empty, and `LLM_DISABLE_FALLBACK=1` turns the fallback off. A call
+fails on an error, an empty answer, a limit or refusal message
+(`_should_fallback`), or an answer that reads empty. A codex usage limit is
+cached in `codex_lockout.json`: it sends the call to the fallback labelled
+`(codex locked)`, and later codex calls go to Ollama alone until it expires.
+`_timeout` computes every timeout: Ollama at least `LLM_TIMEOUT_SECONDS`
+(180) and the profile's floor, a CLI primary at most 360s, a CLI after
+Ollama at most 150s, a CLI after a CLI the requested timeout, all capped by
+bedtime.
+
+`run_llm` reads the answer once, in the output mode the profile declares,
+whatever the provider and the rank. It unwraps NDJSON events and CLI JSON
+envelopes and strips tool-call markup. `Output.TEXT` empties anything
+`contains_post_unsafe_leak` flags. `Output.JSON` returns the model's JSON
+value, whole or taken out of a code fence or surrounding prose. The Reply
+generator, the reply search and the editorial `_json_call` use the answer
+as it comes: text, or JSON for `json.loads`. A failure has a non-zero code
+and no text.
 
 ## Write path and limits
 
@@ -583,7 +606,9 @@ use of it under the job's package. Every test folder has an `__init__.py`,
 so two packages can hold files of the same name. Helpers shared by several
 packages live in `tests/helpers.py`, fixtures in `tests/conftest.py`.
 The reply tests share one fake model, `tests/replies/fakes.py`, which the
-`llm` fixture puts behind the Reply generator's `run_llm`.
+`llm` fixture puts behind the Reply generator's `run_llm`. The fallback
+ladder is tested in `tests/core/test_llm_client.py`, where a fake adapter
+replaces each provider in `llm_client.ADAPTERS`.
 
 The current policy is pinned across packages: Toronto and DST boundaries in
 `tests/guards/test_active_hours.py`, bedtime checks at the lock and before

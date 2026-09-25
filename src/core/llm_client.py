@@ -1,7 +1,9 @@
-"""Small CLI adapter for generation calls.
+"""The one door to the models.
 
-The bot can run against Claude Code, Codex CLI, Gemini CLI, or OpenCode CLI.
-Keep provider differences and local rate limiting here so agents only ask for text.
+Ollama over HTTP and the Codex, Gemini, Claude and OpenCode CLIs are adapters
+in `ADAPTERS`; `run_llm` puts them behind one fallback ladder and reads the
+answer once, in the output mode the caller's `CallProfile` declares. Callers
+get the model's text or its JSON, never a provider's output.
 """
 import json
 import os
@@ -9,9 +11,10 @@ import re
 import signal
 import shutil
 import subprocess
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timedelta
-from typing import Optional, Sequence
+from enum import Enum
+from typing import Callable, Optional, Sequence
 
 from .logger import log
 from .state_store import DISPOSABLE, StateFile
@@ -166,17 +169,24 @@ _FUNNY_FORCER = (
 )
 
 
+class Output(Enum):
+    """How `run_llm` reads the model's answer."""
+    TEXT = "text"  # post text: the leak guard empties anything unsafe to post
+    JSON = "json"  # a JSON value for json.loads, found inside prose or a code fence
+
+
 @dataclass(frozen=True)
 class CallProfile:
-    """What one kind of call asks of the local Ollama path, declared by its
-    caller. The label never selects any of it: it only names the call in
-    logs, fallback suffixes included. The default is the free-text call
-    the Replies make."""
+    """What one kind of call asks of the model, declared by its caller: the
+    output mode on every provider, the rest on the local Ollama path. The
+    label never selects any of it: it only names the call in logs, fallback
+    suffixes included. The default is the free-text call the Replies make."""
     ollama_model: Optional[str] = None  # None: OLLAMA_MODEL
     schema: Optional[dict] = None  # sent as Ollama's `format`
     temperature: float = 1.0
     min_timeout: int = 0  # floor on the requested timeout, still capped by bedtime
     voice_prefix: bool = True  # _FUNNY_FORCER opens the prompt
+    output: Output = Output.TEXT
 
 
 TEXT_PROFILE = CallProfile()
@@ -195,17 +205,16 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
     via that path (80 tokens generated, all stripped — model doesn't
     speak the chat template correctly). /api/generate is reliable.
 
-    `profile` sets the model, schema, temperature, timeout floor and voice
-    prefix; the default one front-loads the comedy forcer at temperature
-    1.0 for sharper outputs. num_predict caps generation at ~600 chars so the model doesn't
-    ramble for minutes when codex/claude are unavailable.
+    `profile` sets the model, schema, temperature and voice prefix; the
+    default one front-loads the comedy forcer at temperature 1.0 for
+    sharper outputs. num_predict caps generation at ~600 chars so the model doesn't
+    ramble for minutes when codex/claude are unavailable. `timeout` is final:
+    `_timeout` computed it.
     """
     import urllib.request
     import urllib.error
-    from ..guards.active_hours import require_active, seconds_until_bedtime
+    from ..guards.active_hours import require_active
     require_active()
-    timeout = max(timeout, profile.min_timeout)
-    timeout = min(timeout, max(1, int(seconds_until_bedtime())))
     full_prompt = (_FUNNY_FORCER if profile.voice_prefix else "") + "/no_think\n\n" + prompt
     payload = json.dumps({
         "model": _ollama_model(profile),
@@ -460,13 +469,12 @@ def _run_cmd(
     cmd: list[str],
     *,
     label: str,
-    timeout: Optional[int],
+    timeout: int,
     cwd: Optional[str],
 ) -> LLMResult:
-    from ..guards.active_hours import require_active, seconds_until_bedtime
+    """Run a provider CLI. `timeout` is final: `_timeout` computed it."""
+    from ..guards.active_hours import require_active
     require_active()
-    effective_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS,
-                            max(1, int(seconds_until_bedtime())))
     try:
         proc = subprocess.Popen(
             cmd,
@@ -478,7 +486,7 @@ def _run_cmd(
             start_new_session=True,  # isolate process group so children can be reaped
         )
         try:
-            stdout, stderr = proc.communicate(timeout=effective_timeout)
+            stdout, stderr = proc.communicate(timeout=timeout)
         except subprocess.TimeoutExpired:
             # Kill the entire process group (catches search/child workers that hold pipes)
             try:
@@ -486,7 +494,7 @@ def _run_cmd(
             except (ProcessLookupError, PermissionError):
                 proc.kill()
             proc.communicate()
-            return LLMResult(124, "", f"{label} timed out after {effective_timeout}s")
+            return LLMResult(124, "", f"{label} timed out after {timeout}s")
     except FileNotFoundError as exc:
         return LLMResult(127, "", f"{label} command not found: {exc.filename}")
     return LLMResult(proc.returncode, stdout or "", stderr or "")
@@ -546,6 +554,100 @@ def _should_fallback(result: LLMResult) -> bool:
     return False
 
 
+@dataclass(frozen=True)
+class _Request:
+    """One call as an adapter receives it. `timeout` is the caller's request
+    until `_call` replaces it with the one `_timeout` computed."""
+    prompt: str
+    model: str
+    label: str
+    timeout: Optional[int]
+    profile: CallProfile
+    output_json: bool  # the CLI's own JSON envelope, not the Output mode
+    allowed_tools: Optional[Sequence[str]]
+    cwd: Optional[str]
+
+
+def _ollama_adapter(request: _Request) -> LLMResult:
+    return _run_ollama_http(request.prompt, request.label, request.timeout, request.profile)
+
+
+def _cli_adapter(provider: str) -> Callable[[_Request], LLMResult]:
+    def run(request: _Request) -> LLMResult:
+        cmd = _build_cmd(request.prompt, request.model, request.output_json,
+                         request.allowed_tools, provider)
+        return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=request.cwd)
+    return run
+
+
+# Each adapter returns the provider's raw output; `run_llm` alone judges and
+# reads it. Tests swap entries for fakes.
+ADAPTERS: dict[str, Callable[[_Request], LLMResult]] = {
+    "ollama": _ollama_adapter,
+    **{name: _cli_adapter(name) for name in ("codex", "gemini", "claude", "opencode")},
+}
+
+
+def _adapter(provider: str) -> Callable[[_Request], LLMResult]:
+    # An unknown name still runs a CLI: `_build_cmd` sends it to Claude.
+    return ADAPTERS.get(provider) or _cli_adapter(provider)
+
+
+# A CLI's timeout ceiling as the primary (claude, codex and gemini only),
+# and as the fallback after Ollama. Any other primary CLI, and a CLI tried
+# after another CLI, keeps the caller's timeout: the historical ladder did,
+# and #175 changed no timeout.
+_CLI_PRIMARY_CAP = 360
+_CAPPED_PRIMARY_CLIS = ("claude", "codex", "gemini")
+_CLI_AFTER_OLLAMA_CAP = 150
+
+
+def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
+             after: Optional[str] = None) -> int:
+    """Every model call's timeout, computed here only. `after` names the
+    provider that failed before this call, None for the first call.
+
+    Ollama is floored at the default, then at the profile's floor: caller
+    timeouts tuned for codex's ~5s answers killed qwen3.6 mid-generation
+    (2026-05-15: 26 replies generated, 0 posted in an hour). Every timeout
+    stops at the time left before bedtime."""
+    from ..guards.active_hours import seconds_until_bedtime
+    if provider == "ollama":
+        seconds = max(requested or 0, DEFAULT_LLM_TIMEOUT_SECONDS, profile.min_timeout)
+    elif after is None and provider in _CAPPED_PRIMARY_CLIS:
+        seconds = min(requested or DEFAULT_LLM_TIMEOUT_SECONDS, _CLI_PRIMARY_CAP)
+    elif after == "ollama":
+        seconds = min(requested or DEFAULT_LLM_TIMEOUT_SECONDS, _CLI_AFTER_OLLAMA_CAP)
+    else:
+        seconds = requested or DEFAULT_LLM_TIMEOUT_SECONDS
+    return min(seconds, max(1, int(seconds_until_bedtime())))
+
+
+def _call(provider: str, request: _Request, after: Optional[str] = None) -> LLMResult:
+    timeout = _timeout(provider, request.timeout, request.profile, after)
+    return _adapter(provider)(replace(request, timeout=timeout))
+
+
+def _answer(provider: str, request: _Request, raw: LLMResult) -> LLMResult:
+    """One call's answer: the model's text read in the profile's mode, or a
+    failure, with a non-zero code and no text."""
+    if _should_fallback(raw):
+        reason = (raw.stderr or "").strip() or f"{request.label}: {provider} gave no usable answer"
+        return LLMResult(raw.returncode or 1, "", reason)
+    text = _read_answer(raw.stdout, request.profile.output)
+    if not text.strip():
+        raw_preview = re.sub(r"\s+", " ", (raw.stdout or "").strip())[:240]
+        return LLMResult(1, "", f"{request.label}: {provider} output became empty after "
+                                f"safety unwrap; raw_preview={raw_preview!r}")
+    return LLMResult(0, text, raw.stderr)
+
+
+def _describe(provider: str, request: _Request) -> str:
+    if provider == "ollama":
+        return f"ollama HTTP / {_ollama_model(request.profile)}"
+    return f"{provider}/{request.model}"
+
+
 def run_llm(
     prompt: str,
     model: str,
@@ -556,155 +658,66 @@ def run_llm(
     timeout: Optional[int] = None,
     cwd: Optional[str] = None,
     force_provider: Optional[str] = None,
-    structured_output: bool = False,
     profile: CallProfile = TEXT_PROFILE,
 ) -> LLMResult:
+    """The model's answer, read once in `profile.output` mode whichever
+    provider gave it: post text, or a JSON value ready for json.loads. A
+    failure has a non-zero return code and no text.
+
+    The ladder: the primary provider (`force_provider`, else AI_CLI), then
+    at most one fallback (LLM_FALLBACK_CLI). A call fails when
+    `_should_fallback` says so or when its answer reads empty. A codex usage
+    limit seen on this call is cached and sends the call to the fallback; a
+    cached one sends it to Ollama alone. `output_json` asks a CLI for its
+    JSON envelope; it does not set the output mode."""
     from ..guards.active_hours import require_active
     require_active()
-    provider = force_provider or _provider()
+    primary = force_provider or _provider()
+    request = _Request(prompt, model, label, timeout, profile, output_json, allowed_tools, cwd)
 
-    # When the user has set AI_CLI=ollama/opencode, route everything through
-    # the local Ollama HTTP path. The old opencode CLI subprocess path hung
-    # after generation, so opencode is now just a legacy alias for Ollama.
-    if provider == "ollama":
-        # Caller-side timeouts (e.g. direct_reply passes 45s for VIP, 30s
-        # for regular) were tuned for codex's ~5s response time and KILL
-        # the local model mid-generation. Floor at DEFAULT so qwen3.6 has
-        # enough room to actually finish. 2026-05-15: 26 replies generated,
-        # 0 posted in one hour because every call hit the 45s wall.
-        effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-        log.info(
-            f"[LLM] {label}: ollama primary → ollama HTTP / {_ollama_model(profile)} "
-            f"(requested timeout {effective_timeout}s)."
-        )
-        ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout,
-                                         profile=profile)
-        if not _should_fallback(ollama_result):
-            usable = unwrap_text(ollama_result.stdout, structured_output=structured_output)
-            if usable.strip():
-                return LLMResult(0, usable, ollama_result.stderr)
-            raw_preview = re.sub(r"\s+", " ", (ollama_result.stdout or "").strip())[:240]
-            ollama_result = LLMResult(
-                1,
-                "",
-                f"{label}: ollama output became empty after safety unwrap; raw_preview={raw_preview!r}",
-            )
-        # Ollama failed (empty response, timeout, error). Try the configured
-        # fallback so we don't lose the cycle.
-        fb_provider = _fallback_provider(provider)
-        if fb_provider and fb_provider != "ollama":
-            fb_model = _fallback_model(model, fb_provider)
-            log.info(
-                f"[LLM] {label}: ollama failed (rc={ollama_result.returncode}) → "
-                f"falling back to {fb_provider}/{fb_model}."
-            )
-            # Cloud fallback gets the standard 150s cap (already enforced
-            # for claude/codex/gemini in the cmd-runner branch below).
-            fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, fb_provider)
-            fb_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
-            fb_result = _run_cmd(fb_cmd, label=f"{label} ({fb_provider} fallback)", timeout=fb_timeout, cwd=cwd)
-            if not _should_fallback(fb_result):
-                return fb_result
-            combined_stderr = "\n".join(
-                part for part in [
-                    ollama_result.stderr.strip(),
-                    f"{label}: ollama failed; tried {fb_provider}/{fb_model}.",
-                    fb_result.stderr.strip(),
-                ] if part
-            )
-            return LLMResult(fb_result.returncode or 1, fb_result.stdout, combined_stderr)
-        return ollama_result
-
-    # Codex usage-limit bypass: if a prior cycle cached a lockout window,
-    # go straight to local Ollama HTTP.
-    if provider == "codex":
+    if primary == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
-            # Floor at DEFAULT — same reason as the opencode branch above.
-            effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
             log.info(
                 f"[LLM] {label}: codex locked until "
-                f"{lockout.isoformat(timespec='minutes')} — "
-                f"using ollama HTTP / {_ollama_model(profile)} (timeout {effective_timeout}s)."
+                f"{lockout.isoformat(timespec='minutes')} — using {_describe('ollama', request)}."
             )
-            return _run_ollama_http(prompt, label=label, timeout=effective_timeout,
-                                    profile=profile)
+            return _answer("ollama", request, _call("ollama", request))
 
-    # Claude lockout REMOVED (operator 2026-06-06: "WE ARE UNLIMITED TOKEN —
-    # remove this completely"). Claude is tried on EVERY call; if a single
-    # call errors, the normal per-call ollama fallback below handles just
-    # that call and the next call goes straight back to Claude.
-
-    # Per-provider timeout cap — 2026-05-22 PM (durable): 360s (6 min).
-    # User: "im ok to wait more bro... I just want it to work". The bot's
-    # big NEWS prompt needs real headroom. 6 min lets Claude finish.
-    # Ollama fallback at 30-90s catches the truly-stuck cases.
-    if provider in ("claude", "codex", "gemini"):
-        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 360)
-    else:
-        provider_timeout = timeout
-    cmd = _build_cmd(prompt, model, output_json, allowed_tools, provider)
-    result = _run_cmd(cmd, label=label, timeout=provider_timeout, cwd=cwd)
-
-    # If we actually ran codex this cycle and it returned a usage-limit
-    # error, cache the lockout window AND collapse this cycle to a single
-    # Ollama fallback call.
-    if provider == "codex":
-        end = _detect_codex_lockout(result)
-        if end is not None:
-            _write_codex_lockout(end)
-            log.info(
-                f"[LLM] Codex usage limit detected — locking out until "
-                f"{end.isoformat(timespec='minutes')}."
-            )
-            fb = _fallback_provider(provider)
-            if fb in {"ollama", "opencode"}:
-                effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-                return _run_ollama_http(prompt, label=f"{label} (codex locked)",
-                                        timeout=effective_timeout, profile=profile)
-            if fb:
-                fb_model = _fallback_model(model, fb)
-                fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, fb)
-                return _run_cmd(fb_cmd, label=f"{label} (codex locked)", timeout=timeout, cwd=cwd)
-
-    # (Claude lockout caching removed 2026-06-06 — a failed call just falls
-    # through to the per-call fallback below; Claude is retried next call.)
-
-    if not _should_fallback(result):
-        return result
-
-    fallback_provider = _fallback_provider(provider)
-    if not fallback_provider:
-        return result
-
-    # Ollama fallback uses the direct local HTTP path.
-    if fallback_provider in {"ollama", "opencode"}:
-        effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
+    log.info(f"[LLM] {label}: {primary} primary → {_describe(primary, request)}.")
+    raw = _call(primary, request)
+    locked_until = _detect_codex_lockout(raw) if primary == "codex" else None
+    if locked_until is not None:
+        _write_codex_lockout(locked_until)
         log.info(
-            f"[LLM] {label}: primary {provider}/{model} failed "
-            f"(exit {result.returncode}) — falling back to ollama HTTP / "
-            f"{_ollama_model(profile)} (timeout {effective_timeout}s)."
+            f"[LLM] Codex usage limit detected — locking out until "
+            f"{locked_until.isoformat(timespec='minutes')}."
         )
-        return _run_ollama_http(prompt, label=f"{label} (fallback)", timeout=effective_timeout,
-                                profile=profile)
+        first = LLMResult(raw.returncode or 1, "", f"{label}: codex usage limit.")
+    else:
+        first = _answer(primary, request, raw)
+    if first.returncode == 0:
+        return first
 
-    fallback_model = _fallback_model(model, fallback_provider)
-    fallback_cmd = _build_cmd(
-        prompt,
-        fallback_model,
-        output_json,
-        allowed_tools,
-        fallback_provider,
+    fallback = _fallback_provider(primary)
+    # Ollama's settings come from the profile: retrying it would ask the same.
+    if fallback is None or fallback == primary == "ollama":
+        return first
+    fallback_request = replace(
+        request,
+        model=_fallback_model(model, fallback),
+        label=f"{label} ({'codex locked' if locked_until else f'{fallback} fallback'})",
     )
-    fallback_result = _run_cmd(fallback_cmd, label=f"{label} fallback", timeout=timeout, cwd=cwd)
-    fallback_note = (
-        f"{label} primary {provider}/{model} failed "
-        f"(exit {result.returncode}); tried {fallback_provider}/{fallback_model}."
+    log.info(
+        f"[LLM] {label}: {primary} failed (rc={first.returncode}) → "
+        f"falling back to {_describe(fallback, fallback_request)}."
     )
-    combined_stderr = "\n".join(
-        part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
-    )
-    return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
+    second = _answer(fallback, fallback_request, _call(fallback, fallback_request, after=primary))
+    if second.returncode == 0:
+        return second
+    note = f"{label}: {primary}/{model} failed; tried {fallback}/{fallback_request.model}."
+    return LLMResult(second.returncode, "",
+                     "\n".join(part for part in (first.stderr, note, second.stderr) if part))
 
 
 def _text_from_event(obj: dict) -> str:
@@ -785,62 +798,67 @@ def _unwrap_ndjson(raw: str) -> str | None:
     return None
 
 
-def unwrap_text(stdout: str, structured_output: bool = False) -> str:
-    """Return model text from provider CLI output.
+def _provider_text(raw: str) -> str:
+    """The model's text inside a provider's output: NDJSON events (opencode
+    --format json), a JSON envelope (Gemini and Claude --output-format json),
+    or raw text (Codex, Ollama)."""
+    ndjson_result = _unwrap_ndjson(raw)
+    if ndjson_result is not None:
+        return ndjson_result
+    try:
+        envelope = json.loads(raw[raw.find("{"):] if "{" in raw else raw)
+    except (json.JSONDecodeError, TypeError):
+        return raw
+    if isinstance(envelope, dict):
+        event_text = _text_from_event(envelope)
+        if event_text:
+            return event_text.strip()
+        return str(envelope.get("response") or envelope.get("result") or raw).strip()
+    return raw
 
-    Handles NDJSON (opencode --format json), JSON envelopes
-    (Gemini --output-format json, Claude --output-format json),
-    and raw text (Codex, opencode default, pipe-through).
 
-    Always runs strip_tool_calls() before returning so codex tool-use
-    XML never leaks downstream into tweets.
-    """
+_ENVELOPE_KEYS = {"type", "result", "response", "choices", "content", "message"}
+_JSON_FENCE = re.compile(r"```(?:json)?\s*\n?(.*?)```", re.DOTALL)
+
+
+def _json_span(text: str) -> str:
+    """The JSON value in the model's text: all of it, a code fence's
+    content, or the span from the first bracket to the last matching one.
+    Unparsable JSON comes back as is, for the caller to refuse."""
+    fence = _JSON_FENCE.search(text)
+    if fence:
+        text = fence.group(1).strip()
+    try:
+        json.loads(text)
+        return text
+    except json.JSONDecodeError:
+        pass
+    starts = [i for i in (text.find("["), text.find("{")) if i != -1]
+    if not starts:
+        return text
+    start = min(starts)
+    end = text.rfind("]" if text[start] == "[" else "}")
+    return text[start:end + 1] if end > start else text
+
+
+def _read_answer(stdout: str, output: Output) -> str:
+    """The one reading of a provider's output. Tool-call markup is always
+    stripped. TEXT refuses, as empty, anything `contains_post_unsafe_leak`
+    flags: a stream envelope or JSON shipped as a tweet (2026-05-14). JSON
+    returns the model's JSON value as it stands."""
     raw = (stdout or "").strip()
     if not raw:
         return ""
-
-    # Structured-output callers (REPLY_SEARCH…) EXPECT a JSON array. Return it
-    # verbatim before the NDJSON unwrapper gets a chance to eat it. Bug
-    # 2026-06-05 (reply collapse 397→42/day): ollama returned the array on one
-    # line, _unwrap_ndjson parsed it, found a list instead of dict events, and
-    # returned "" — every search-reply cycle died with valid replies in hand.
-    if structured_output and raw.startswith(("[", "{")):
+    if output is Output.JSON:
+        # The model's own JSON, before the NDJSON reader mistakes it for
+        # events: a compact array read as a stream came back empty
+        # (2026-06-05, and the reply search again until #175).
         try:
             value = json.loads(raw)
-            envelope_keys = {"type", "result", "response", "choices", "content", "message"}
-            if isinstance(value, list) or (isinstance(value, dict) and not envelope_keys.intersection(value)):
-                # Editorial JSON contains a "text" key: the event unwrapper
-                # otherwise extracts just that string and drops the evidence.
-                return strip_tool_calls(raw)
         except json.JSONDecodeError:
-            pass
-
-    ndjson_result = _unwrap_ndjson(raw)
-    if ndjson_result is not None:
-        return strip_tool_calls(ndjson_result)
-
-    try:
-        if "{" in raw:
-            json_start = raw.find("{")
-            json_data = raw[json_start:]
-            envelope = json.loads(json_data)
-        else:
-            envelope = json.loads(raw)
-
-        if isinstance(envelope, dict):
-            event_text = _text_from_event(envelope)
-            if event_text:
-                return strip_tool_calls(event_text.strip())
-            return strip_tool_calls(
-                str(envelope.get("response") or envelope.get("result") or raw).strip()
-            )
-    except (json.JSONDecodeError, TypeError):
-        pass
-    cleaned = strip_tool_calls(raw)
-    # Final guard: if the raw looks like a stream envelope or starts with
-    # `{`/`[{`, refuse to return it — caller will treat as empty and skip
-    # rather than ship `{"type":"step_start",...}` as a tweet.
-    # Skip this guard when the caller expects structured JSON (e.g. REPLY_SEARCH).
-    if not structured_output and contains_post_unsafe_leak(cleaned):
-        return ""
-    return cleaned
+            value = None
+        if isinstance(value, list) or (isinstance(value, dict) and not _ENVELOPE_KEYS & value.keys()):
+            return strip_tool_calls(raw)
+        return strip_tool_calls(_json_span(_provider_text(raw).strip()))
+    text = strip_tool_calls(_provider_text(raw))
+    return "" if contains_post_unsafe_leak(text) else text

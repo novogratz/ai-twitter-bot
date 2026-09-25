@@ -3,8 +3,9 @@
 Every Reply prompt is assembled here, so none reaches the model without
 `personality_store.hard_rules_block()`. The generator also picks the reply
 language (one decision point, `_language`) and reads the model's answer
-into reply text or a decline. The model stays behind `run_llm`; tests fake
-that name.
+into reply text or a decline. The model stays behind `run_llm`, which hands
+back the answer already read in the output mode of the call profile the
+voice passes in `llm_options`; tests fake that name.
 """
 import re
 from dataclasses import dataclass, field
@@ -13,7 +14,7 @@ from typing import Literal
 
 from ..core import personality_store
 from ..core.humanizer import smart_trim, strip_agent_preamble
-from ..core.llm_client import LLM_RATE_LIMIT_CODE, run_llm, unwrap_text
+from ..core.llm_client import LLM_RATE_LIMIT_CODE, run_llm
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
@@ -94,7 +95,7 @@ def generate(voice: Voice, *, author: str = "", text: str = "", context: str = "
     if result.returncode != 0:
         log.info(f"[{voice.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
         return Generation(Outcome.FAILED, language=language)
-    reply = unwrap_text(result.stdout)
+    reply = result.stdout
     if voice.strip_preamble:
         reply = strip_agent_preamble(reply)
     reply = reply.strip()
