@@ -14,7 +14,11 @@ Read it when it is used, inside the function: `account.current().editorial.
 feeds`, never a module-level copy, so a test that swaps the Account reaches
 every reader. One Account per process: the Safari lock and `bot.lock` stay
 global.
+
+The folder also holds the Operator files (`OperatorFile`, at the end), which
+the bot reads and never writes.
 """
+import json
 import os
 import re
 import string
@@ -22,6 +26,8 @@ import tomllib
 from dataclasses import dataclass
 
 from . import settings
+from .logger import log
+from .state_errors import StateUnreadable
 
 # Relative to the project root; a test points it at an absolute folder.
 ACCOUNTS_DIR = "accounts"
@@ -411,3 +417,45 @@ def _prompt(folder, table, key) -> str:
         table.fail(key, f"names {table[key]!r}, whose {{{unknown[0]}}} is no Reply prompt field "
                         f"({', '.join(sorted(_PROMPT_FIELDS))})")
     return text
+
+
+# --- Operator files -----------------------------------------------------------
+
+
+class OperatorFile:
+    """A JSON file the Operator keeps in the Account folder, versioned with
+    it: `accounts/<BOT_ACCOUNT>/<name>`, read at each call. The bot never
+    writes it, so the class offers no write; what the bot keeps goes in a
+    `state_store.StateFile`.
+
+    `read` returns the parsed value. A missing file, bad JSON or a top-level
+    type other than `kind` logs and raises StateUnreadable: the job that
+    needs the file stops, and nothing recreates it with defaults."""
+
+    def __init__(self, name: str, kind: type):
+        self.name = name
+        self._kind = kind
+
+    @property
+    def path(self) -> str:
+        return os.path.join(current().folder, self.name)
+
+    def read(self):
+        shown = os.path.join(ACCOUNTS_DIR, current().name, self.name)
+        try:
+            with open(self.path, encoding="utf-8") as f:
+                value = json.load(f)
+        except FileNotFoundError:
+            return self._unreadable(f"{shown} is missing: the Operator's file is never "
+                                    f"recreated, restore it from git")
+        except (OSError, ValueError) as exc:
+            return self._unreadable(f"{shown} is unreadable ({exc})")
+        if not isinstance(value, self._kind):
+            return self._unreadable(f"{shown} is unreadable (top-level {type(value).__name__}, "
+                                    f"expected {self._kind.__name__})")
+        return value
+
+    @staticmethod
+    def _unreadable(why: str):
+        log.error(f"[OPERATOR] {why}: refusing (docs/OPERATIONS.md#recovery).")
+        raise StateUnreadable(why)

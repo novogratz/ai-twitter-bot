@@ -105,8 +105,9 @@ Two settings decide how much of the table does anything:
 - The follow policy in `follow_policy.judge`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
   decides what actually passes. A following count that cannot be read
-  (`following_count.json`, else `followed_accounts.json`) or an unreadable
-  `whitelist.json` refuses every follow and stops `bin/mass_unfollow.py`.
+  (`following_count.json`, else `followed_accounts.json`) or a missing or
+  unreadable whitelist (the Account's `whitelist.json`, or
+  `whitelist_discovered.json`) refuses every follow and stops `bin/mass_unfollow.py`.
   With `FOLLOW_ENFORCE_RATIO` on, an unknown follower count
   (`follower_history.json` empty or unreadable) refuses every follow.
 
@@ -437,11 +438,16 @@ Five modules sit behind them:
   price targets, duplicates, truncation, violence, skip rationales.
 - `src/guards/follow_policy.py` is the follow policy and owns the follow
   files: `followed_accounts.json`, `following_count.json`,
-  `follower_history.json`, `whitelist.json`,
+  `follower_history.json`, `whitelist_discovered.json`,
   `follow_quality_rejects.json`, `followers_seen.json` and the frozen
-  `replied_back.json`. `relation(handle)` finds what the handle is to the
-  account, from its own sources, never from the caller: Seed account
-  (`whitelist.json`), follower (`followers_seen.json`, which only the
+  `replied_back.json`. It reads the Operator's `whitelist.json` in the
+  Account folder and never writes it; the handles `account_curator`
+  promotes go to `whitelist_discovered.json`, through `add_discovered`, and
+  a missing one stops its readers as an unreadable one does: before the
+  migration of issue #206 it would drop the handles still to carry.
+  `relation(handle)` finds what
+  the handle is to the account, from its own sources, never from the
+  caller: Seed account (the whitelist, both files), follower (`followers_seen.json`, which only the
   followers scrape writes, through `record_followers`), Engager (the
   ledger's Debate turns, then `replied_back.json`), else Stranger.
   `judge(handle)` checks, before the profile opens, the handle (the one
@@ -536,7 +542,7 @@ with its instructions but no persona, then, for Reply calls with `dossier`, the
 author's dossier from `personality.json` (or the fixed dossier of the
 author's Relation), and always
 `personality_store.hard_rules_block()`, which renders the hard rules and
-the respect list from `respect_list.json`. The editorial Draft opens on the
+the respect list from the Account's `respect_list.json`. The editorial Draft opens on the
 same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;
@@ -554,7 +560,7 @@ definitive: `reply_to_tweet` hands the refusal to the Reply pipeline
 (`on_refused`), which sets the post aside. A dry-run Original stops in the
 editorial before `post_tweet`, which judges its text with the same
 `respect_list.scrub_text_or_skip`.
-While `respect_list.json` is unreadable, `hard_rules_block` raises
+While `respect_list.json` is missing or unreadable, `hard_rules_block` raises
 `StateUnreadable`: the editorial cycle and the Reply cycles stop before the
 model call, and nothing ships. Nothing renders the block at import, so
 `main.py` still starts.
@@ -583,6 +589,12 @@ dossier bump after every Reply). `tweet_history.json` has one reader,
 babysitter; the editorial cycle reads it before any Draft, so an unreadable
 history spends no Attempt. The policy of each file is in the
 [OPERATIONS.md](OPERATIONS.md#state-files) tables.
+
+The Operator files (`whitelist.json`, `respect_list.json`,
+`following_baseline.json`) are not state: they live in the Account folder,
+versioned, and `account.OperatorFile` reads them at each call. It has no
+write, and a missing or unreadable file raises `StateUnreadable` instead of
+reading as a default, so nothing recreates it.
 
 ## Reach report
 

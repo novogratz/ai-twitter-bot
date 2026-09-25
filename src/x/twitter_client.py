@@ -625,7 +625,7 @@ def follow_account(username: str) -> FollowOutcome:
     accounts and writes no ledger row. A refusal names its cause, FAILED
     means no Follow button was clicked, DRY_RUN that nothing was opened.
     Raises StateUnreadable, with nothing opened or recorded, while
-    whitelist.json or the action ledger cannot be read before the profile
+    the whitelist or the action ledger cannot be read before the profile
     opens.
 
     ⛔ Callers never add a handle to the followed accounts themselves: this

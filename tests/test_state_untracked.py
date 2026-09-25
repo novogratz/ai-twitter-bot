@@ -2,8 +2,9 @@
 
 A tracked state file is overwritten by the next `git checkout`, `reset` or
 `pull` in the live checkout, and a stale committed ledger once stood ready
-to reset today's ceiling (#193). The Operator's files stay tracked until
-their own tickets move them (#206 for whitelist.json).
+to reset today's ceiling (#193). The Operator's files stay tracked: the
+Voice at the root until its own ticket moves it, the Operator files in the
+Account folder (#206).
 """
 import importlib
 import os
@@ -15,8 +16,9 @@ import src
 
 REPO = Path(__file__).resolve().parent.parent
 
-OPERATOR_FILES = ("respect_list.json", "whitelist.json", "accounts/theaishrink/voice_fr.md",
-                  "accounts/theaishrink/voice_en.md")
+OPERATOR_FILES = ("accounts/theaishrink/respect_list.json", "accounts/theaishrink/whitelist.json",
+                  "accounts/theaishrink/following_baseline.json",
+                  "accounts/theaishrink/voice_fr.md", "accounts/theaishrink/voice_en.md")
 # Root files written outside src/, which the scan below cannot see.
 WRITTEN_BY_BIN = ("mass_unfollow_results.json",)
 

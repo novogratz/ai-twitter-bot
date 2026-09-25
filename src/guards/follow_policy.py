@@ -15,11 +15,14 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
   the click: the quality gate, which caches what it rejects for 30 days.
 - `followed()` and `record_followed(handle)` are the record of the accounts
   followed; `adjust_following(delta)` keeps the following count.
+- `discovered()` and `add_discovered(handles)` are the handles
+  account_curator promoted to the whitelist.
 
 `follow_account` asks both judgements and names the refusal in its outcome,
 so a job acts on the cause without checking the rule again. The ledger
 facts (today's follows, spacing, last touch) come from `action_guard`.
 """
+import os
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -27,6 +30,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 
 from ..core import account, config, settings
+from ..core.account import OperatorFile
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, GUARDED, StateFile
@@ -37,16 +41,22 @@ from . import action_guard, reply_admission
 # pool handle missing from it, and the ceiling counts it when
 # following_count.json holds no count.
 FOLLOWED = StateFile("followed_accounts.json", [], GUARDED)
-# Guarded: the ceiling's count; the followed list under-counts the real
-# following, so falling back to it would admit follows past the ceiling.
+# Guarded: the ceiling's count and its last update; the followed list
+# under-counts the real following, so falling back to it would admit follows
+# past the ceiling. The Operator's baseline it started from is in the Account
+# folder, following_baseline.json, which no code reads.
 FOLLOWING_COUNT = StateFile("following_count.json", {}, GUARDED)
 # Disposable: growth samples, where a fresh sample matters more than the
 # series; without them the ceiling takes its lowest value and the ratio
 # brake refuses, so losing them never admits a follow.
 FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
-# Guarded: the Operator's follow whitelist, which account_curator extends.
-# Read as empty, it would unprotect every seed from an unfollow.
-WHITELIST = StateFile("whitelist.json", {}, GUARDED)
+# The Operator's follow whitelist, in the Account folder: the bot reads it,
+# never writes it. Missing or unreadable, it stops every follow.
+WHITELIST = OperatorFile("whitelist.json", dict)
+# Guarded: the handles account_curator promoted to the whitelist. Read as
+# empty, it would unprotect them from an unfollow and take their Seed
+# account status, so a missing file stops its readers too: see discovered().
+DISCOVERED = StateFile("whitelist_discovered.json", [], GUARDED)
 # Disposable: the quality gate reads the profile again before any click, so
 # a lost cache costs a profile visit, never a follow.
 QUALITY_REJECTS = StateFile("follow_quality_rejects.json", {}, DISPOSABLE)
@@ -108,10 +118,12 @@ def valid_handle(handle: str | None) -> bool:
 # --- whitelist --------------------------------------------------------------
 
 def load_whitelist() -> dict:
-    """Return {"tier1": set, ..., "tier4": set, "all": set} of lowercased
-    handles. tier4 (2026-06-07 spec: crypto/markets crossover seeds) is
-    optional in the file. Raises StateUnreadable while whitelist.json
-    cannot be read."""
+    """Return {"tier1": set, ..., "tier4": set, "discovered": set,
+    "all": set} of lowercased handles: the Operator's tiers, then the
+    handles account_curator promoted. tier4 (2026-06-07 spec:
+    crypto/markets crossover seeds) is optional in the file. Raises
+    StateUnreadable while whitelist.json or whitelist_discovered.json is
+    missing or unreadable."""
     raw = WHITELIST.read()
 
     def _norm(seq):
@@ -125,14 +137,59 @@ def load_whitelist() -> dict:
     # "discovered" tier: curator-promoted handles (2026-06-07 operator grant
     # — the bot develops its own follow list). Same follow rights as seeds;
     # additions capped + logged in account_curator.
-    t5 = _norm(tiers.get("discovered"))
+    t5 = _norm(discovered())
     return {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
             "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
 
 
+def _require_discovered() -> None:
+    # Before issue #206 the promoted handles sat in whitelist.json: until
+    # bin/migrate_operator_data.py carries them, the file is missing, and
+    # reading it as empty would drop them.
+    if not os.path.exists(DISCOVERED.path):
+        why = (f"{DISCOVERED.name} is missing: run bin/migrate_operator_data.py "
+               f"(docs/OPERATIONS.md#deploying-issue-206); a new install writes [] in it")
+        log.error(f"[FOLLOW] {why}: refusing.")
+        raise StateUnreadable(why)
+
+
+def discovered() -> list:
+    """The handles account_curator promoted, as written. Raises
+    StateUnreadable while whitelist_discovered.json is missing or
+    unreadable."""
+    _require_discovered()
+    return DISCOVERED.read()
+
+
+def add_discovered(handles, skip=(), max_added: int | None = None,
+                   max_total: int | None = None) -> list:
+    """Append to whitelist_discovered.json, in order, each handle it does
+    not hold yet nor `skip` lists, case ignored; stop after `max_added`
+    additions or once it holds `max_total` handles. Returns the handles
+    added. Raises StateUnreadable while the file is missing or unreadable."""
+    _require_discovered()
+    added = []
+
+    def add(on_disk):
+        known = {str(h).lower() for h in on_disk} | {str(h).lower() for h in skip}
+        for h in handles:
+            if max_added is not None and len(added) >= max_added:
+                break
+            if max_total is not None and len(on_disk) >= max_total:
+                break
+            if str(h).lower() in known:
+                continue
+            on_disk.append(h)
+            known.add(str(h).lower())
+            added.append(h)
+        return on_disk if added else None
+    DISCOVERED.update(add)
+    return added
+
+
 def is_whitelisted(handle: str,
                    tiers=("tier1", "tier2", "tier3", "tier4", "discovered")) -> bool:
-    """Raises StateUnreadable while whitelist.json cannot be read."""
+    """Raises StateUnreadable while the whitelist cannot be read."""
     h = (handle or "").lower().lstrip("@")
     wl = load_whitelist()
     return any(h in wl[t] for t in tiers)
@@ -184,9 +241,9 @@ def is_follower(handle: str) -> bool:
 
 
 def relation(handle: str) -> Relation:
-    """Seed account when whitelist.json lists the handle, follower when the
+    """Seed account when the whitelist lists the handle, follower when the
     followers page showed it, Engager when a Debate turn answered it, else
-    Stranger. Raises StateUnreadable while whitelist.json or the action
+    Stranger. Raises StateUnreadable while the whitelist or the action
     ledger cannot be read.
 
     A follower who is also an Engager is a follower: an Engager skips part
@@ -309,7 +366,7 @@ def judge(handle: str) -> Verdict:
     handle: a later cycle may admit the same handle. A ceiling that cannot
     be read or checked counts as reached.
 
-    Raises StateUnreadable while whitelist.json or the action ledger cannot
+    Raises StateUnreadable while the whitelist or the action ledger cannot
     be read, whitelist-only mode or not: a refusal would let a job mark the
     handle tried, and both are the same for every handle, so the job stops
     instead.

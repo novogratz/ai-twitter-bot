@@ -24,7 +24,8 @@ needs an explicit operator request, and updates that policy file in the same
 change. The same holds for the operator-owned guardrails: the Account's
 Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
 edits, `BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
-`respect_list.json`, and `personality_store.hard_rules_block()`.
+`accounts/<BOT_ACCOUNT>/respect_list.json`, and
+`personality_store.hard_rules_block()`.
 
 ## Active code
 
@@ -125,11 +126,15 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   (`./bin/run.sh`, `bin/stop_bot.sh`). Code and config take effect at restart.
 - JSON files at the repo root are live state, ignored by git: a new state
   file goes in `.gitignore` in the same change, and a test fails on one git
-  does not ignore. The Operator's files stay tracked: `respect_list.json`,
-  `whitelist.json` and the Account's Voice files under `accounts/`.
-  `action_ledger.json` already counts toward today's ceiling and git holds
-  no copy of it: keep it across deploys. It holds one JSON object per line,
-  not a JSON list: read it line by line or through `action_guard`.
+  does not ignore. The Operator's files stay tracked, all in the Account
+  folder: the Voice files, `whitelist.json`, `respect_list.json` and
+  `following_baseline.json`. The bot reads the three JSON files through
+  `account.OperatorFile`, which has no write: a missing one stops its
+  reader, never comes back with defaults, and what the bot keeps beside it
+  goes in a state file. `action_ledger.json` already
+  counts toward today's ceiling and git holds no copy of it: keep it across
+  deploys. It holds one JSON object per line, not a JSON list: read it line
+  by line or through `action_guard`.
 - A JSON state file goes through `state_store.StateFile`, declared once with
   its policy. An unreadable guarded file stops the job that needs it and is
   never overwritten: repair it by hand, never delete it

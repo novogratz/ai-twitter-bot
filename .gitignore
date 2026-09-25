@@ -99,6 +99,8 @@ replied_back.json
 safari_health.json
 safari_hygiene_state.json
 tracked_accounts.json
+# Split from whitelist.json in issue #206: the handles account_curator promoted.
+whitelist_discovered.json
 
 # Atomic-write temp files left by a killed process
 .replied_tweets.*.tmp

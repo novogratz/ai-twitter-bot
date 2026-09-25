@@ -19,7 +19,14 @@ browser: the bot opens every page in Safari by name), Python 3.12+,
 uv venv
 uv pip install -r requirements.txt
 cp .env.example .env
+[ -e whitelist_discovered.json ] || echo '[]' > whitelist_discovered.json
 ```
+
+`whitelist_discovered.json` holds the handles `account_curator` promotes to
+the whitelist. Every follow stops while it is missing, so that a checkout
+not migrated yet never runs without them: a new install starts it empty, as
+above, and a checkout from before issue #206 runs
+[the migration](#deploying-issue-206) instead.
 
 The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
@@ -101,6 +108,22 @@ each call, and compare a handle with the one read from a status URL.
   judges.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes`.
+
+The folder also holds the Operator files, versioned, which the bot reads at
+each use and never writes:
+
+| File | Holds | Read by |
+|---|---|---|
+| `whitelist.json` | Follow whitelist: tiers, seeds, the spec's notes | `follow_policy`, `account_curator`, `bin/mass_unfollow.py` |
+| `respect_list.json` | Respected accounts, `{"handles": {handle: {reason, added}}}` | `respect_list`: the hard-rules prompt block, `post_tweet`, Reply admission, `bin/mass_unfollow.py --keep legacy` |
+| `following_baseline.json` | The following count the Operator stated on 2026-06-02, its date and note | no code; `following_count.json` holds the live count |
+
+Edit them by hand and commit them; a change is read at the next use, with no
+restart. A missing or unreadable one stops the jobs that need it, like a
+guarded state file, and nothing recreates it with defaults
+([Recovery](#recovery)). What the bot keeps beside them is state: the handles
+`account_curator` promotes go to `whitelist_discovered.json`, the live count to
+`following_count.json`.
 
 ## Start
 
@@ -263,10 +286,10 @@ Safari restart, and nothing writes over the file:
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose Reply call reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
-| `whitelist.json` | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. A whitelist or ledger unreadable once the profile is open is a policy refusal: `follow_account` closes the tab and returns `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
-| `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
+| `whitelist.json` (Account folder), `whitelist_discovered.json`, missing too | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. A whitelist or ledger unreadable once the profile is open is a policy refusal: `follow_account` closes the tab and returns `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing `whitelist.json` |
+| `respect_list.json` (Account folder, missing too) | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `bin/mass_unfollow.py --keep legacy` |
 
-An unreadable `respect_list.json` stops every Original and most Replies
+A missing or unreadable `respect_list.json` stops every Original and most Replies
 until it is repaired; `main.py` still starts, because nothing renders the
 hard-rules block at import. A process killed mid-write
 can leave a `.<name>.<random>.tmp` file beside a state file: `.gitignore`
@@ -275,7 +298,10 @@ tail), check its top-level type (a list for `tweet_history.json` and
 `followed_accounts.json`, an object for the others), then restart. Do not
 delete a guarded file: a missing file restarts from empty, which resets a
 daily cap, forgets follows and pins, drops the following count the follow
-ceiling reads, or drops the Operator's lists.
+ceiling reads, or drops the curator's promoted handles. An Operator file in
+`accounts/<name>/` is versioned: `git diff` shows what changed, and
+`git checkout -- accounts/<name>/<file>` puts back the committed copy,
+dropping any edit not yet committed.
 
 **Rolling back past issue #147.** Older code reads the ledger as one JSON
 list and refuses every write on the per-line format. With the bot stopped,
@@ -322,10 +348,11 @@ documentation pages always supplement the news, so a quiet news day alone
 does not block a post. Missed slots are not caught up.
 
 **Unwanted content.** Add the handle to the respect list
-(`python3 -c "from src.guards.respect_list import add; add('handle', 'reason')"`,
-picked up at the next prompt) or to the Account's `network.blocked_accounts`
+(`accounts/<name>/respect_list.json`, by hand: a lowercased handle without
+`@` under `handles`, with a `reason` and an `added` date; picked up at the
+next prompt, then committed) or to the Account's `network.blocked_accounts`
 in `account.toml` (restart needed); the base `BLOCKLIST` of
-`src/core/config.py` holds for every Account. Both are operator-managed.
+`src/core/config.py` holds for every Account. All are operator-managed.
 The respect list reaches every Reply prompt and the editorial prompt, through the hard rules, and the write
 chokepoints refuse an Original or a Reply that names a Respected account,
 the `@handle` of the author a Reply answers excepted.
@@ -363,10 +390,11 @@ JSON files at the repo root are live state. Since issue #193 git ignores
 every state file, so a `git checkout`, `reset` or `pull` never touches them,
 and `tests/test_state_untracked.py` fails on a declared state file git does
 not ignore. A new state file goes in `.gitignore` in the same change. The
-Operator's files stay tracked: `respect_list.json`, `whitelist.json` (until
-issue #206 splits it), and the Account's Voice files under `accounts/`;
-git still refuses a pull
-that changes one of them while it holds a local edit.
+Operator's files stay tracked: the Account's Voice files and the Operator
+files of the Account folder ([Account](#account)); git still refuses a pull
+that changes one of them while it holds a local edit. Since issue #206 the bot
+writes none of them: the promoted handles and the live following count,
+which shared a file with the Operator's data, are state files of their own.
 `action_ledger.json` keeps its name but holds one JSON object per line since
 issue #147. A ledger in the former format, one JSON list like the committed
 copy, is still read, and the first write after a restart converts it in place
@@ -398,7 +426,7 @@ Files written by active jobs:
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
-| `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling | guarded |
+| `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -420,8 +448,7 @@ Files active code reads but no active job writes:
 
 | File | Read by | Holds | Policy |
 |---|---|---|---|
-| `respect_list.json` | `respect_list` | Operator-managed respect list | guarded |
-| `whitelist.json` | `follow_policy`, `account_curator`, `bin/mass_unfollow.py` | Tiered follow whitelist | guarded |
+| `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written by `account_curator.run_curator_cycle`, not scheduled | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
 | `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
@@ -508,6 +535,95 @@ bot stopped, and check the copies from the checkout with
 report missing. `tests/test_carry_state.py` replays the procedure on a
 throwaway clone.
 
+### Deploying issue #206
+
+The commit moves `whitelist.json` and `respect_list.json` from the root to
+`accounts/theaishrink/`, the whitelist without its `discovered` tier, and
+adds `following_baseline.json` there. The pull deletes both root files; the
+live whitelist may hold handles the curator promoted since its last commit.
+Deploy it once, from the live checkout, the bot stopped:
+
+1. Save the two files and pull, as in [Deploying issue #193](#deploying-issue-193)
+   but with a backup directory of its own. Stop the bot and its supervisor
+   first; `pgrep -if "python.*main\.py"` prints nothing. `git fetch origin`,
+   then `git status --short` shows only state files and `whitelist.json`.
+   Then:
+
+   ```bash
+   git show origin/main:bin/carry_state.sh > /tmp/carry_state.sh
+   B=~/ai-twitter-bot-state-206
+   bash /tmp/carry_state.sh save "$B" origin/main
+   ```
+
+   `save` lists the live `whitelist.json` and `respect_list.json` among the
+   files the pull deletes, with the state files of #193 if that issue is
+   not deployed yet. It refuses a non-empty `$B`: a backup is already
+   there, go on with it. Only once it has printed `saved N files`:
+
+   ```bash
+   git checkout HEAD -- $(awk '{print $2}' "$B/SHA256SUMS")
+   git pull --ff-only origin main
+   bin/carry_state.sh restore "$B"
+   ```
+
+   `restore` reports both files `left out`: they stay in `$B` only, and it
+   ends with `nothing to restore`, or `restored N files` for the state
+   files of #193.
+2. Carry the values:
+
+   ```bash
+   uv run --with-requirements requirements.txt python bin/migrate_operator_data.py --from "$B"
+   ```
+
+   It refuses to start while `bot.lock` is held. It checks first, and writes
+   nothing if a check fails: the old whitelist outside its `discovered` tier
+   must equal `accounts/theaishrink/whitelist.json`, the old respect list
+   `accounts/theaishrink/respect_list.json`, and the `baseline`, `as_of` and
+   `note` still in `following_count.json` must equal
+   `following_baseline.json`. A difference is an edit the live file held
+   and the commit lacks: carry it into the Account's file by hand, commit
+   it, and run the script again. It then adds the old `discovered` tier to
+   `whitelist_discovered.json`, keeping any handle already there, and drops
+   `baseline`, `as_of` and `note` from `following_count.json`, keeping
+   `count` and `updated`. It prints one line per file, such as
+   `whitelist_discovered.json: 31 handles, 31 added from 31 in the old
+   discovered tier`. It writes no Operator file, and a second run changes
+   nothing (`0 added`, `nothing to drop`).
+3. Before restarting, `main.py --dry-run` must exit 0, and
+   `git status --short` prints nothing: `whitelist_discovered.json` is
+   ignored. Restart the bot only on the Operator's request.
+
+Given a directory without `whitelist.json`, the script refuses while
+`whitelist_discovered.json` does not exist yet. Until step 2 has created it,
+even empty, every follow stops as on an unreadable guarded file
+([Recovery](#recovery)), `account_curator` promotes nothing and
+`bin/mass_unfollow.py` aborts: read as empty, the file would take the
+promoted handles' Seed account standing and their protection from an
+unfollow. The old files stay in `$B`: `shasum -a 256 -c "$B/SHA256SUMS"`
+from the checkout reports these two missing.
+`tests/test_migrate_operator_data.py` replays the migration on fixtures
+shaped like the live files.
+
+A pull made without the backup, after a `git checkout HEAD --` of the two
+files, lost the live whitelist; its committed copy before #206 still holds
+the `discovered` tier as last committed. Take both files from the commit
+before the one that moved them, then run step 2:
+
+```bash
+B=~/ai-twitter-bot-state-206
+P=$(git log -1 --format=%H --diff-filter=D -- whitelist.json)^
+mkdir -p "$B"
+git show "$P:whitelist.json" > "$B/whitelist.json"
+git show "$P:respect_list.json" > "$B/respect_list.json"
+```
+
+The handles promoted after that commit are in `bot.log`, on the
+`[CURATOR] PROMOTED` lines: add them to `whitelist_discovered.json` by
+hand, with the bot stopped.
+
+A new install, with no old whitelist to carry, writes `[]` in
+`whitelist_discovered.json` before its first start ([Setup](#setup)).
+
 ## Legacy tools
 
 - `bin/auto_improve.sh` exits unless `AUTO_IMPROVE_FORCE=1`; its prompt
@@ -527,9 +643,12 @@ throwaway clone.
   one, follows in the same output under `[MASS_UNFOLLOW]` and is also in
   `bot.log`. `--max` defaults
   to 150. A rate limit triggers a cooldown, never an abort. A missing or
-  unreadable `whitelist.json`, or an unreadable `respect_list.json` with
-  `--keep legacy`, aborts the run before Safari; a missing
-  `respect_list.json` reads as empty.
+  unreadable `whitelist.json` or `whitelist_discovered.json`, or a missing
+  or unreadable `respect_list.json` with `--keep legacy`, aborts the run
+  before Safari: `whitelist_discovered.json` is missing until
+  `bin/migrate_operator_data.py` has run
+  ([Deploying issue #206](#deploying-issue-206)), and a keep-set without
+  the handles it carries would unfollow them.
   `mass_unfollow_results.json` is rewritten after every unfollow.
 - `bin/seed_fr_influencers.py` is a one-off from the French era.
 

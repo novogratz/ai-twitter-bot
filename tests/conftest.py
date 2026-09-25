@@ -122,7 +122,7 @@ def _no_safari(monkeypatch):
 # included (both leaked or read live before, 2026-07-19 and #100).
 # ---------------------------------------------------------------------------
 @_pytest.fixture(autouse=True)
-def _no_prod_state(monkeypatch, tmp_path):
+def _no_prod_state(monkeypatch, tmp_path, tmp_path_factory):
     from src.core import state_store as _store
     _UNWALLED.setdefault("state_root", _store.ROOT)
     monkeypatch.setattr(_store, "ROOT", str(tmp_path))
@@ -135,7 +135,43 @@ def _no_prod_state(monkeypatch, tmp_path):
     # from-imports bind at import time — patch every namespace that copied one.
     from src.core import engagement_log as _el
     monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
+    # A migrated install (#206): the follow policy refuses while the
+    # promoted handles' file is missing.
+    (tmp_path / "whitelist_discovered.json").write_text("[]")
+    # The Operator files live in the versioned Account folder: every test
+    # reads a copy of it, which `operator_folder` names.
+    import shutil as _shutil
+    from src.core import account as _account, settings as _settings
+    _UNWALLED.setdefault("accounts_dir", _account.ACCOUNTS_DIR)
+    name = _settings.get("BOT_ACCOUNT")
+    accounts = tmp_path_factory.mktemp("accounts")
+    _shutil.copytree(os.path.join(_settings.PROJECT_ROOT, _UNWALLED["accounts_dir"], name),
+                     accounts / name)
+    monkeypatch.setattr(_account, "ACCOUNTS_DIR", str(accounts))
     yield
+
+
+@_pytest.fixture
+def operator_folder():
+    """The test's copy of the Account folder, where the Operator files are
+    read (a pathlib.Path)."""
+    from pathlib import Path
+    from src.core import account
+    return Path(account.current().folder)
+
+
+@_pytest.fixture
+def respected(operator_folder):
+    """`respected("handle", ...)`: add Respected accounts to the test's copy
+    of the respect list."""
+    import json
+    path = operator_folder / "respect_list.json"
+
+    def add(*handles):
+        doc = json.loads(path.read_text())
+        doc["handles"].update({h: {"reason": "test"} for h in handles})
+        path.write_text(json.dumps(doc))
+    return add
 
 
 @_pytest.fixture(autouse=True)

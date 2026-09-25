@@ -60,14 +60,16 @@ def test_a_disposable_file_that_is_unreadable_reads_as_the_default_then_is_repla
 @pytest.mark.parametrize("policy", [GUARDED, DISPOSABLE])
 def test_writes_are_atomic_and_leave_no_temp_file(policy, tmp_path):
     state = _declare("atomic", [], policy)
+    before = set(os.listdir(tmp_path))
     state.write(["a", "é", "lone \ud835 surrogate"])
     state.write(["b"])
     assert state.read() == ["b"]
-    assert sorted(os.listdir(tmp_path)) == [state.name]
+    assert set(os.listdir(tmp_path)) - before == {state.name}
 
 
 def test_a_failed_write_keeps_the_previous_file(monkeypatch):
     state = _declare("failed_write", {}, GUARDED)
+    before = set(os.listdir(os.path.dirname(state.path)))
     state.write({"kept": True})
 
     def refuse(src, dst):
@@ -77,7 +79,7 @@ def test_a_failed_write_keeps_the_previous_file(monkeypatch):
     with pytest.raises(StateUnreadable):
         state.write({"kept": False})
     assert json.load(open(state.path)) == {"kept": True}
-    assert os.listdir(os.path.dirname(state.path)) == [state.name]
+    assert set(os.listdir(os.path.dirname(state.path))) - before == {state.name}
 
 
 def test_one_file_has_one_policy():
@@ -182,7 +184,7 @@ def _personality(monkeypatch):
     ("pin_daily_state.json", _pin),
     ("pin_history.json", _pin),
     ("follow_engagers_state.json", _follow_engagers),
-    ("whitelist.json", _curator),
+    ("whitelist_discovered.json", _curator),
     ("editorial_state.json", _editorial),
     ("tweet_history.json", _post),
     ("tweet_history.json", _babysit),
@@ -281,25 +283,31 @@ def test_a_write_flushes_the_file_then_the_directory(monkeypatch, tmp_path):
     assert (tmp_path / "x.json").read_bytes() == b"{}"
 
 
-# --- respect_list.json ---------------------------------------------------------
+# --- respect_list.json, an Operator file -----------------------------------------
 
 
-def test_a_missing_respect_list_is_seeded_with_the_defaults(tmp_path):
+def test_a_missing_respect_list_stops_its_readers_and_is_never_recreated(operator_folder):
+    """#206: a missing respect list was seeded with defaults, silently
+    replacing the Operator's list when its path changed."""
+    from src.core import personality_store
     from src.guards import respect_list
-    assert "micode" in respect_list.load()
-    assert "micode" in json.loads((tmp_path / "respect_list.json").read_text())["handles"]
+    (operator_folder / "respect_list.json").unlink()
+
+    for read in (respect_list.load, respect_list.render_block, personality_store.hard_rules_block):
+        with pytest.raises(StateUnreadable, match="respect_list.json is missing"):
+            read()
+    assert not (operator_folder / "respect_list.json").exists()
 
 
-def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
+def test_an_unreadable_respect_list_is_never_overwritten(operator_folder):
     """It used to be replaced by the seed, losing every handle the Operator
     added. Every read refuses, the prompt block included; nothing renders
     the block at import, so main.py still starts. Nothing writes the file."""
     from src.core import personality_store
     from src.guards import respect_list
-    path = _corrupt(tmp_path, "respect_list.json")
+    path = _corrupt(operator_folder, "respect_list.json")
 
-    for read in (lambda: respect_list.add("newhandle"), lambda: respect_list.remove("micode"),
-                 respect_list.load, lambda: respect_list.scrub_text_or_skip("@micode"),
+    for read in (respect_list.load, lambda: respect_list.scrub_text_or_skip("@micode"),
                  respect_list.render_block, personality_store._render_hard_rules,
                  personality_store.hard_rules_block):
         with pytest.raises(StateUnreadable):
@@ -307,13 +315,13 @@ def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
     assert path.read_text() == CORRUPT
 
 
-def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch, tmp_path):
+def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch, operator_folder):
     """main.py imports it at start: a block rendered at import would stop
     the process on an unreadable respect list."""
     import importlib
     from src.core import personality_store
     from src.guards import respect_list
-    path = _corrupt(tmp_path, "respect_list.json")
+    path = _corrupt(operator_folder, "respect_list.json")
     monkeypatch.setattr(respect_list, "render_block", lambda: pytest.fail("rendered at import"))
     saved = dict(vars(personality_store))
     try:
@@ -324,13 +332,13 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
     assert path.read_text() == CORRUPT
 
 
-def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_path, caplog):
+def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operator_folder, caplog):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
     cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health
     from src.replies import direct_reply as dr
     from tests.helpers import fresh
-    path = _corrupt(tmp_path, "respect_list.json")
+    path = _corrupt(operator_folder, "respect_list.json")
     scraped = []
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [
@@ -350,14 +358,15 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_pa
     assert path.read_text() == CORRUPT
 
 
-def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_path, caplog):
+def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_path, caplog,
+                                                                  operator_folder):
     """The Draft prompt carries the respect list: the cycle stops before the
     model call, and no Attempt is spent."""
     from datetime import datetime
     from src.editorial import editorial_bot as editorial
     from src.x import twitter_client
     from tests.helpers import TORONTO, clock
-    path = _corrupt(tmp_path, "respect_list.json")
+    path = _corrupt(operator_folder, "respect_list.json")
     clock(monkeypatch, datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO))
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
     monkeypatch.setattr(editorial, "collect_sources", lambda *a: [dict(

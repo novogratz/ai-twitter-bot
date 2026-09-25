@@ -18,11 +18,11 @@ from its OWN evidence, recomputed every 4h into `tracked_accounts.json`:
 
 PINNED_TRACKED_HANDLES (always tracked, never decay): TheBTCTherapist, Graphseo.
 
-The curator may also PROMOTE its strongest finds into whitelist.json under
-a dedicated "discovered" tier (operator-granted 2026-06-07: "develop
-yourself the list of accounts you want to follow") — hard-capped at
-CURATOR_DISCOVERED_PER_DAY adds/day and CURATOR_DISCOVERED_MAX total, never touching the
-operator tiers, every add logged. All follow chokepoint rules (20/day,
+The curator may also PROMOTE its strongest finds into the whitelist's
+"discovered" tier, whitelist_discovered.json (operator-granted 2026-06-07:
+"develop yourself the list of accounts you want to follow") — hard-capped at
+CURATOR_DISCOVERED_PER_DAY adds/day and CURATOR_DISCOVERED_MAX total, never
+touching the Operator's whitelist.json, every add logged. All follow chokepoint rules (20/day,
 10-min gaps, 300/150 ceiling, 30d churn) still govern actual follows.
 """
 import csv
@@ -36,8 +36,8 @@ from ..core.config import ENGAGEMENT_LOG_FILE
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards import active_hours
-# Guarded: a corrupt whitelist stops the cycle before any promotion.
-from ..guards.follow_policy import WHITELIST
+# A missing or corrupt whitelist stops the cycle before any promotion.
+from ..guards.follow_policy import WHITELIST, add_discovered
 from ..guards.reply_admission import is_blocked_account
 
 # Disposable: recomputed every run from the engagement log.
@@ -131,7 +131,7 @@ def _promotable(cand: dict) -> bool:
 
 
 def _promote_to_whitelist(candidates: list, doc: dict) -> int:
-    """Add top candidates to whitelist tiers["discovered"] (capped/logged)."""
+    """Add top candidates to the discovered tier (capped/logged)."""
     candidates = [c for c in candidates if _promotable(c)]
     meta = doc.setdefault("promotion_meta", {})
     if active_hours.is_past_day(meta.get("date")):
@@ -140,28 +140,19 @@ def _promote_to_whitelist(candidates: list, doc: dict) -> int:
     budget = settings.get("CURATOR_DISCOVERED_PER_DAY") - int(meta.get("count", 0))
     if budget <= 0:
         return 0
-    wl = WHITELIST.read()
-    tiers = wl.setdefault("tiers", {})
-    discovered = tiers.setdefault("discovered", [])
-    existing = {str(h).lower() for t in tiers.values() for h in (t or [])}
-    discovered_max = settings.get("CURATOR_DISCOVERED_MAX")
-    added = 0
-    for cand in candidates:
-        if added >= budget or len(discovered) >= discovered_max:
-            break
-        h = cand["handle"]
-        if h.lower() in existing:
-            continue
-        discovered.append(h)
-        existing.add(h.lower())
-        added += 1
-        log.info(f"[CURATOR] PROMOTED @{h} to whitelist discovered tier "
+    tiers = WHITELIST.read().get("tiers") or {}
+    operator_handles = {str(h).lower() for t in tiers.values() for h in (t or [])}
+    by_handle = {c["handle"].lower(): c for c in candidates}
+    added = add_discovered([c["handle"] for c in candidates], skip=operator_handles,
+                           max_added=budget, max_total=settings.get("CURATOR_DISCOVERED_MAX"))
+    promoted = [by_handle[h.lower()] for h in added]
+    for cand in promoted:
+        log.info(f"[CURATOR] PROMOTED @{cand['handle']} to whitelist discovered tier "
                  f"(score {cand['score']:.1f}, {cand['engagements']} engagements, "
                  f"weight {cand['weight']}).")
-    if added:
-        meta["count"] = int(meta.get("count", 0)) + added
-        WHITELIST.write(wl)
-    return added
+    if promoted:
+        meta["count"] = int(meta.get("count", 0)) + len(promoted)
+    return len(promoted)
 
 
 def run_curator_cycle() -> None:

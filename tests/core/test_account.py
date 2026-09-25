@@ -153,7 +153,8 @@ def test_the_account_folder_is_absolute_and_follows_accounts_dir(accounts, fresh
     assert account.current().folder == str(tmp_path / "accounts" / "other")
 
 
-def test_the_real_account_folder_holds_its_account_toml():
+def test_the_real_account_folder_holds_its_account_toml(monkeypatch, unwalled):
+    monkeypatch.setattr(account, "ACCOUNTS_DIR", unwalled["accounts_dir"])
     folder = account.load("theaishrink").folder
     assert os.path.isabs(folder)
     assert Path(folder).resolve() == ROOT / "accounts" / "theaishrink"

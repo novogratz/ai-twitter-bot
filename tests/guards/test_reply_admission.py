@@ -146,20 +146,19 @@ def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
     ("@graphseo le support tient, @kindperson l'a bien montré hier.", "kindperson"),
     ("Kindperson qui parle de support ici, c'est du bullshit.", "kindperson"),
 ])
-def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, draft, named):
+def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, draft, named,
+                                                                  respected):
     """Mockery of the addressee by name, or any other Respected account
     named: refused for good, the post is dropped as after a model SKIP."""
-    from src.guards import respect_list
-    respect_list.add("kindperson")
+    respected("kindperson")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     verdict = judge_reply(url("graphseo"), draft)
     assert verdict.refusal is Refusal.RESPECTED_ACCOUNT and verdict.refusal.definitive
     assert named in verdict.reason
 
 
-def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch):
-    from src.guards import respect_list
-    respect_list.add("kindperson")
+def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, respected):
+    respected("kindperson")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     verdict = judge_reply(url("kindperson"), TEXT)
     assert verdict and verdict.text == TEXT
