@@ -593,10 +593,12 @@ def _adapter(provider: str) -> Callable[[_Request], LLMResult]:
     return ADAPTERS.get(provider) or _cli_adapter(provider)
 
 
-# A CLI's timeout ceiling as the primary, and as the fallback after Ollama.
-# A CLI tried after another CLI keeps the caller's timeout: the historical
-# ladder did, and #175 changed no timeout.
+# A CLI's timeout ceiling as the primary (claude, codex and gemini only),
+# and as the fallback after Ollama. Any other primary CLI, and a CLI tried
+# after another CLI, keeps the caller's timeout: the historical ladder did,
+# and #175 changed no timeout.
 _CLI_PRIMARY_CAP = 360
+_CAPPED_PRIMARY_CLIS = ("claude", "codex", "gemini")
 _CLI_AFTER_OLLAMA_CAP = 150
 
 
@@ -612,7 +614,7 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
     from ..guards.active_hours import seconds_until_bedtime
     if provider == "ollama":
         seconds = max(requested or 0, DEFAULT_LLM_TIMEOUT_SECONDS, profile.min_timeout)
-    elif after is None:
+    elif after is None and provider in _CAPPED_PRIMARY_CLIS:
         seconds = min(requested or DEFAULT_LLM_TIMEOUT_SECONDS, _CLI_PRIMARY_CAP)
     elif after == "ollama":
         seconds = min(requested or DEFAULT_LLM_TIMEOUT_SECONDS, _CLI_AFTER_OLLAMA_CAP)

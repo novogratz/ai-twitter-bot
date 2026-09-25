@@ -639,7 +639,8 @@ def generate_replies(recent_topics=None, already_replied=None):
     except json.JSONDecodeError:
         pass
 
-    # Last resort: find all JSON objects individually with regex.
+    # Last resort, for malformed JSON only: `run_llm` already hands back the
+    # array, so this salvages items from a JSON the parser above rejects.
     # Two passes — with and without `pattern` field — so we still recover if
     # the model dropped the bandit tag (it's important but not load-bearing).
     try:

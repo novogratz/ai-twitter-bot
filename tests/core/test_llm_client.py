@@ -204,14 +204,16 @@ def test_the_fallback_can_be_turned_off(providers, monkeypatch):
 
 @pytest.mark.parametrize("provider, requested, profile_floor, expected", [
     # Ollama: floored at the default, then at the profile's floor.
-    # A CLI primary is capped at 360s; a CLI after Ollama at 150s; a CLI
-    # after a CLI keeps the requested timeout.
+    # A claude, codex or gemini primary is capped at 360s, any other CLI
+    # primary is not; a CLI after Ollama at 150s; a CLI after a CLI keeps
+    # the requested timeout.
     ("ollama", 30, 0, {"ollama": 180, "codex": 30}),
     ("ollama", 30, 300, {"ollama": 300, "codex": 30}),
     ("ollama", 400, 300, {"ollama": 400, "codex": 150}),
     ("ollama", None, 0, {"ollama": 180, "codex": 150}),
     ("claude", None, 0, {"claude": 180, "codex": 180}),
     ("claude", 500, 0, {"claude": 360, "codex": 500}),
+    ("opencode", 500, 0, {"opencode": 500, "codex": 500}),
 ])
 def test_each_adapter_gets_the_timeout_computed_for_its_rank(providers, monkeypatch, provider, requested,
                                                                profile_floor, expected):

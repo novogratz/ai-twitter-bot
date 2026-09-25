@@ -91,7 +91,7 @@ opencode run --model <model> [--format json] [--dangerously-skip-permissions] "<
 - `--format json` → NDJSON events, parsed by `_unwrap_ndjson()`
 - `--dangerously-skip-permissions` → headless, no approval prompts
 
-The `unwrap_text()` function handles OpenCode JSON events, NDJSON streams, JSON envelopes (Claude/Gemini), and raw text (Codex).
+`run_llm` reads every answer once, in `_read_answer`: it handles OpenCode JSON events, NDJSON streams, JSON envelopes (Claude/Gemini), and raw text (Codex).
 
 ## Model format
 
@@ -110,5 +110,5 @@ openai/gpt-4o
 |---|---|
 | `Provider: codex` in logs | Set `AI_CLI=opencode` in `.env` only for OpenCode test runs |
 | Slow generations | Use `opencode/ring-2.6-1t-free` for reply/quote surfaces |
-| Raw JSON appears in generated text | Keep `src/core/llm_client.py` current; `unwrap_text()` parses OpenCode JSON events before falling back to raw text |
+| Raw JSON appears in generated text | Keep `src/core/llm_client.py` current; `_read_answer` parses OpenCode JSON events before falling back to raw text |
 | `command not found: opencode` | Run `brew install opencode` |

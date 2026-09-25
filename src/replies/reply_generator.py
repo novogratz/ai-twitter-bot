@@ -4,8 +4,8 @@ Every Reply prompt is assembled here, so none reaches the model without
 `personality_store.hard_rules_block()`. The generator also picks the reply
 language (one decision point, `_language`) and reads the model's answer
 into reply text or a decline. The model stays behind `run_llm`, which hands
-back the answer already read in the voice's output mode; tests fake that
-name.
+back the answer already read in the output mode of the call profile the
+voice passes in `llm_options`; tests fake that name.
 """
 import re
 from dataclasses import dataclass, field
