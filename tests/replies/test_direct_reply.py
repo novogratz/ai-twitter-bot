@@ -1,5 +1,5 @@
 """src/replies/direct_reply: reply lane, candidate order, query rotation and
-the VIP voices."""
+the VIP ReplyCalls."""
 
 
 def _url_with_age(minutes: int) -> str:
@@ -76,7 +76,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
-    never the Graphseo voice (_graphseo_voice); output passes through humanize."""
+    never the Graphseo prompt (_graphseo_call); output passes through humanize."""
     import src.replies.direct_reply as dr
     from src.replies import reply_pipeline
 
@@ -98,7 +98,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
-    assert llm.prompts[0].startswith(dr.BESTIE_REPLY_PROMPT.split("{author}")[0])
+    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
     assert len(chokepoint.calls) == 1
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 

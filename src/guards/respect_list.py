@@ -195,14 +195,14 @@ def render_block() -> str:
     names = ", ".join(f"@{h}" for h in handles)
     return (
         "==================================================\n"
-        "RESPECT LIST — comptes a NE JAMAIS critiquer NOMMEMENT\n"
+        "RESPECT LIST — accounts you must NEVER criticize BY NAME\n"
         "==================================================\n"
-        "Tu peux engager (replies, likes) sur le contenu de ces comptes,\n"
-        "mais tu ne dois JAMAIS:\n"
-        "- les nommer dans une hot take, news, breakout, ou spicy take\n"
-        "- les quote-tweeter avec une observation critique\n"
-        "- les ridiculiser, ironiser sur leur personne, ou mocker leur travail\n"
-        "Si l'idee dans leur tweet est critiquable, tu critiques l'IDEE,\n"
-        "jamais la personne. En cas de doute -> SKIP.\n\n"
-        f"Liste actuelle: {names}.\n"
+        "You may engage (replies, likes) with these accounts' content,\n"
+        "but you must NEVER:\n"
+        "- name them in a hot take, news post, breakout or spicy take\n"
+        "- quote-tweet them with a critical observation\n"
+        "- ridicule them, be ironic about them as people, or mock their work\n"
+        "If the idea in their post deserves criticism, criticize the IDEA,\n"
+        "never the person. When in doubt -> SKIP.\n\n"
+        f"Current list: {names}.\n"
     )

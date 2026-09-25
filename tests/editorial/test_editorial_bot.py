@@ -399,6 +399,19 @@ def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, edito
     assert ok is approved
 
 
+def test_the_draft_prompt_opens_on_the_one_voice(monkeypatch, editor):
+    """Issue #192: an Original gets the persona from the Voice block alone,
+    under the configured handle."""
+    from src.core import config, personality_store
+    monkeypatch.setattr(config, "BOT_HANDLE", "SomeOtherBot")
+    draft_and_review(editor)
+    prompt = last_call(editor, "EDITORIAL_DRAFT").prompt
+    voice = personality_store.render_voice("en")
+    assert prompt.startswith(voice + "\n")
+    assert "VOICE (NON-NEGOTIABLE): you are @SomeOtherBot\n" in voice
+    assert "theaishrink" not in prompt[len(voice):].lower()
+
+
 def test_the_text_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
     assert draft_and_review(editor)[1][0]
     monkeypatch.setattr(schemas, "TEXT_MAX_CHARS", 120)

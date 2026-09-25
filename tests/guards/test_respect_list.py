@@ -14,6 +14,14 @@ def test_the_prompt_block_names_every_respected_account():
     assert all(f"@{h}" in block for h in handles)
 
 
+def test_the_prompt_block_is_in_english(monkeypatch):
+    monkeypatch.setattr(respect_list, "load", lambda: {"kindperson"})
+    block = respect_list.render_block()
+    assert "RESPECT LIST — accounts you must NEVER criticize BY NAME" in block
+    assert "criticize the IDEA,\nnever the person. When in doubt -> SKIP." in block
+    assert block.endswith("Current list: @kindperson.\n")
+
+
 def test_a_neutral_text_passes_unchanged():
     text = "Inference is getting cheaper faster than training."
     assert respect_list.scrub_text_or_skip(text) == (text, "")

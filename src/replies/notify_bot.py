@@ -16,8 +16,8 @@ import random
 _OWN_HANDLE = BOT_HANDLE.lower()
 # Answering someone who answered us is a Debate turn. The babysitter's
 # extra sweeps run this job too, on the same set-aside posts.
-REPLYBACK_JOB = reply_pipeline.Job("replyback", "REPLYBACK", voice=lambda _author: replyback_agent.VOICE,
-                                   debate_turn=True)
+REPLYBACK_JOB = reply_pipeline.Job("replyback", "REPLYBACK",
+                                   reply_call=lambda _author: replyback_agent.REPLY_CALL, debate_turn=True)
 
 
 def _influencer_handles() -> set:

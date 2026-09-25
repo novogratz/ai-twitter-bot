@@ -2,7 +2,9 @@
 
 A Safari-driven AI account with the voice of a confident, warm, playfully flirty
 45-year-old mom who loves AI. The bot aims to give readers something useful in
-every post and respond naturally in conversations.
+every post and respond naturally in conversations. That Voice lives only in
+`core_identity.md` (`core_identity_en.md` for English prompts): every post and
+reply prompt carries it as one block.
 
 ## Current publishing policy
 
@@ -12,10 +14,10 @@ every post and respond naturally in conversations.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
-  author handle are refused. Every reply prompt carries the operator's hard
-  rules and respect list, and a reply or original that names a Respected
-  account is refused at the write, dry run included; a reply may still
-  address the Respected account it answers by its `@handle`.
+  author handle are refused. Every reply prompt carries the Voice, the
+  operator's hard rules and the respect list, and a reply or original that
+  names a Respected account is refused at the write, dry run included; a
+  reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,

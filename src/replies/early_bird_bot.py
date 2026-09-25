@@ -19,14 +19,14 @@ from ..x import x_urls
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
-from .direct_reply import is_on_niche, reply_voice
+from .direct_reply import is_on_niche, reply_call
 from .reply_generator import LanguageRule
 
 # The author Reply admission read from the status URL names the parent in
 # the prompt, not the scanned handle. No FR-forced override on this job
 # (pinned in the tests).
 JOB = reply_pipeline.Job("early_bird", "EARLYBIRD",
-                         voice=lambda author: reply_voice(author, LanguageRule.PARENT), pause=(5, 12))
+                         reply_call=lambda author: reply_call(author, LanguageRule.PARENT), pause=(5, 12))
 
 # 2026-06-07 PM (operator): "stop going to the static accounts… develop
 # yourself the list of accounts you want to follow and track" — the static

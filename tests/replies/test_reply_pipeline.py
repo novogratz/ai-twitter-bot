@@ -30,10 +30,10 @@ MODES = [pytest.param(False, id="in-turn"), pytest.param(True, id="pipelined")]
 
 
 def job(**options):
-    from src.replies.reply_generator import Voice
+    from src.replies.reply_generator import ReplyCall
 
-    voice = Voice("Parent: {tweet_text}", "model", "TEST", identity=False)
-    options.setdefault("voice", lambda author: voice)
+    call = ReplyCall("Parent: {tweet_text}", "model", "TEST", dossier=False)
+    options.setdefault("reply_call", lambda author: call)
     return rp.Job(options.pop("name", "test_job"), "TEST", **options)
 
 
@@ -102,7 +102,7 @@ def test_each_job_sets_aside_its_own_posts(llm, chokepoint):
     run(job(name="one"), [candidate(url, "post")])
     run(job(name="other"), [candidate(url, "post")])
 
-    assert len(llm.calls) == 2, "a decline under one voice is not a decline under another"
+    assert len(llm.calls) == 2, "a decline under one ReplyCall is not a decline under another"
     assert set_aside("one") == set_aside("other") == {url}
 
 
@@ -162,10 +162,10 @@ def test_other_errors_leave_the_post_replayable(llm, chokepoint, monkeypatch, pi
     chokepoint.answer = lambda url: RuntimeError("Safari hiccup") if url == broken_write else WriteOutcome.SHIPPED
     real = reply_generator.generate
 
-    def generate(voice, *, text, **kwargs):
+    def generate(call, *, text, **kwargs):
         if text == "post broken":
             raise KeyError("template field")
-        return real(voice, text=text, **kwargs)
+        return real(call, text=text, **kwargs)
 
     monkeypatch.setattr(reply_generator, "generate", generate)
     candidates = [candidate(broken_write, "post one"), candidate(broken_prompt, "post broken"),
@@ -255,12 +255,12 @@ def test_the_rate_limit_ends_the_cycle(llm, chokepoint, pipelined, calls):
 
 
 def cloud_job(**options):
-    """A job whose voice runs on Claude through the real `run_llm`."""
-    from src.replies.reply_generator import Voice
+    """A job whose ReplyCall runs on Claude through the real `run_llm`."""
+    from src.replies.reply_generator import ReplyCall
 
-    voice = Voice("Parent: {tweet_text}", "cloud-model", "TEST", identity=False,
+    call = ReplyCall("Parent: {tweet_text}", "cloud-model", "TEST", dossier=False,
                   llm_options={"force_provider": "claude"})
-    return job(voice=lambda author: voice, **options)
+    return job(reply_call=lambda author: call, **options)
 
 
 @pytest.mark.parametrize("pipelined, generations", [(False, {1}), (True, {1, 2})])
@@ -387,14 +387,14 @@ def test_a_pipelined_stop_leaves_without_waiting_for_the_generation_in_flight(ll
     assert logged() == [] and replied_store.load_replied() == set()
 
 
-def test_a_job_without_a_voice_takes_only_written_replies(llm, chokepoint):
+def test_a_job_without_a_reply_call_takes_only_written_replies(llm, chokepoint):
     """A voiceless job fed a candidate to generate for fails before any
     admission, instead of failing on every candidate and replaying it forever."""
     written = rp.Candidate(fresh("someone", n=1), "the parent", "", reply="Batching wins.")
     cycle = rp.Cycle()
 
     with pytest.raises(ValueError):
-        run(job(voice=None), [written, candidate(fresh("other", n=2), "post")], cycle)
+        run(job(reply_call=None), [written, candidate(fresh("other", n=2), "post")], cycle)
 
     assert cycle.tried == set() and llm.calls == [] and chokepoint.sent == []
 
@@ -433,7 +433,7 @@ def test_a_written_reply_skips_the_generation(llm, chokepoint):
     url = fresh("someone")
     written = rp.Candidate(url, "the parent", "", reply="Batching wins.", pattern="RENAME")
 
-    assert run(job(voice=None), [written]) == 1
+    assert run(job(reply_call=None), [written]) == 1
 
     assert llm.calls == [] and chokepoint.calls[0].text == "Batching wins."
     assert [(r.source, r.pattern) for r in logged()] == [("", "RENAME")]
@@ -443,7 +443,7 @@ def test_a_written_reply_is_logged_under_the_provider_that_wrote_it(llm, chokepo
     written = rp.Candidate(fresh("someone"), "the parent", "", reply="Batching wins.",
                            provider="claude", model="sonnet")
 
-    assert run(job(voice=None), [written]) == 1
+    assert run(job(reply_call=None), [written]) == 1
 
     assert [(r.provider, r.model) for r in logged()] == [("claude", "sonnet")]
 

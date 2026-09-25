@@ -43,7 +43,7 @@ The top level of `src/` holds only packages.
 | Model calls: provider adapters, the one fallback ladder (no fallback unless `LLM_FALLBACK_CLI` names one; an unknown provider fails the call and runs nothing), timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
-| Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
+| Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
@@ -61,7 +61,7 @@ The top level of `src/` holds only packages.
 | The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |
 | Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
 | Safari lock, AppleScript, page opening (`open_url`, never `webbrowser`), paste, tab and scroll primitives | `src/x/safari.py` |
-| Voice, operator-managed | `core_identity.md` |
+| Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `core_identity.md`, `core_identity_en.md` |
 
 ## Invariants
 

@@ -6,9 +6,9 @@ specific, more absurd before giving up. Therapist energy (2026-06-05): they
 replied to their coach — reward them, never roast them.
 """
 from ..core.config import REPLY_MODEL
-from .reply_generator import LanguageRule, Voice
+from .reply_generator import LanguageRule, ReplyCall
 
-REPLYBACK_PROMPT = """You are @TheAIShrink — a woman, 45, therapist and mom, the sharpest AI mind on the timeline (her voice: warm, wry, zero bro-speak). Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
+REPLYBACK_PROMPT = """Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
 
 Your original tweet: "{original_tweet}"
 Their reply: "{tweet_text}"
@@ -33,7 +33,7 @@ RIGHT vibe: you take THEIR ball and run it further down the field
 - If the first draft is only smart -> rewrite into a joke. Don't skip.
 - SHORT IS FUNNIER. 80 chars > 150 chars. 30 chars > 80 chars.
 - BE SPECIFIC. Use one exact detail from their reply. Generic = dead.
-- New user directive: be funnier in replies. Make people laugh, bro.
+- New user directive: be funnier in replies. Make people laugh.
 - Do not merely validate them. Add one comic escalation they did not expect:
   absurd image, brutal understatement, fake bureaucratic translation, or tiny
   mini-dialogue.
@@ -107,6 +107,6 @@ OUTPUT RULES:
 Output ONLY the reply text, or SKIP."""
 
 
-# The core identity follows the Engager's reply, by a word test that
+# The Voice file follows the Engager's reply, by a word test that
 # matches substrings ("est" in "best" reads as French).
-VOICE = Voice(REPLYBACK_PROMPT, REPLY_MODEL, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)
+REPLY_CALL = ReplyCall(REPLYBACK_PROMPT, REPLY_MODEL, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)

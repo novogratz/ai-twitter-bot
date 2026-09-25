@@ -148,7 +148,7 @@ lock.
    as backup teaching topics. URLs used in the last seven days are skipped.
    Each page is fetched over HTTPS from an allowed host, 12-second timeout,
    1 MB read.
-5. **Draft.** The model sees `core_identity_en.md`, the hard rules, the slot
+5. **Draft.** The model sees the Voice (`core_identity_en.md`), the hard rules, the slot
    brief, the last rejection reason for this slot, recent posts, numbered
    evidence sentences from each source and, for a trend slot, the trending
    posts as untrusted data that choose the topic. Recent posts include the
@@ -205,11 +205,12 @@ Models: drafts and reviews go through `run_llm` with
 `editorial_schemas.draft_profile()` or `review_profile()`. The profile, not
 the label, sets what the call gets on Ollama, whether Ollama answers first
 or as a fallback: `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`), the
-Draft or review schema as `format`, temperature 0.65 or 0.2, no voice
-prefix, and a timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300)
-capped by bedtime. A call without a profile, every Reply, gets
-`llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, the voice prefix, no schema,
-temperature 1.0. The reply search keeps those settings and only declares
+Draft or review schema as `format`, temperature 0.65 or 0.2, and a
+timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
+bedtime. A call without a profile, every Reply, gets
+`llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, no schema, temperature 1.0.
+Ollama receives the caller's prompt behind the `/no_think` directive and
+nothing else: the client adds no voice of its own. The reply search keeps those settings and only declares
 JSON output. The label only names the call in logs.
 
 Ollama over HTTP and the Codex, Gemini, Claude and OpenCode CLIs are
@@ -463,7 +464,7 @@ Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
 search) hands its candidates to the Reply pipeline,
 `src/replies/reply_pipeline.py`. A job keeps its source and its selection
 filters (niche, age threshold, thread-reply shape, handle pools), its
-budgets, its voice, its pace after a shipped Reply and its log tag. The
+budgets, its Reply call, its pace after a shipped Reply and its log tag. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and
@@ -508,21 +509,25 @@ the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
-passes its voice (template, model, label, language rule) and the parent
-post; `generate` returns a `Generation`: reply text, a decline (the model
+passes its Reply call, a `ReplyCall` (template, model, label, language
+rule), and the parent post; `generate` returns a `Generation`: reply text, a decline (the model
 said SKIP), a replayable failure, or a rate limit when every provider is
 exhausted. Reply text comes with the provider and model that wrote it. The
-generator always appends `personality_store.hard_rules_block()`, which
-renders the hard rules and the
-respect list from `respect_list.json`; voices with `identity` also get
-`core_identity.md` (French or English) and the author's dossier from
-`personality.json`. It decides the language in one place, `_language`: the
+generator always opens the prompt on the Voice,
+`personality_store.render_voice`: the Operator's `core_identity.md`
+(`core_identity_en.md` for an English reply) under a header naming
+`BOT_HANDLE`, the one reader of those files. The job's template follows,
+with its instructions but no persona, then, for Reply calls with `dossier`, the
+author's dossier from `personality.json`, and always
+`personality_store.hard_rules_block()`, which renders the hard rules and
+the respect list from `respect_list.json`. The editorial Draft opens on the
+same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;
 replyback a word test on the Engager's reply; the reply search English.
 `FR_FORCED_REPLY_HANDLES` is read by `reply_language.is_fr_forced`, shared
 with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
-is a decline; the bestie and buddy voices also decline "skip" anywhere in
+is a decline; the bestie and buddy Reply calls also decline "skip" anywhere in
 the first 20 characters (`skip_window`). The editorial prompt carries the
 hard rules too. The write chokepoints apply the respect list to the
 outgoing text, before the dry-run exit: `post_tweet` refuses an Original
@@ -584,16 +589,16 @@ These are how the code behaves today, not design intent:
   own daily caps in their state files.
 - `session_refresh_job` and the `health` recovery restart Safari without
   taking `_safari_lock`.
-- The debate, VIP and Graphseo voices (`identity=False`) carry the hard rules
-  but neither `core_identity.md` nor the author's dossier.
-- The Graphseo voice forces the Claude CLI whenever it is installed
-  (`direct_reply._graphseo_voice`), whatever `REPLY_LLM_PROVIDER` says: the
+- The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
+  the hard rules but not the author's dossier.
+- The Graphseo Reply call forces the Claude CLI whenever it is installed
+  (`direct_reply._graphseo_call`), whatever `REPLY_LLM_PROVIDER` says: the
   one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which
   `judge_reply` then refuses.
 - The replyback language test matches substrings, so "honestly" or "best"
-  ("est") selects the French core identity.
+  ("est") selects the French Voice file.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
   can overlap.
 - Only the pipelined Reply jobs wait out the reply spacing. A Reply that
@@ -667,7 +672,7 @@ The files at the top of `tests/` pin cross-cutting invariants:
 state file resolves to the repo root), `test_state_untracked.py` (git
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (`core_identity.md` and the
-reply prompts that carry it), `test_mass_unfollow.py`
+Voice block rendered from it), `test_mass_unfollow.py`
 (`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`,
 `scripts/` and `tests/`, subfolders included, with `ast`. It fails when an

@@ -332,11 +332,11 @@ def source_evidence(source):
 
 
 def draft_post(slot, sources, recent, feedback="", trending=None):
-    from ..core.personality_store import render_core_identity, hard_rules_block
+    from ..core.personality_store import render_voice, hard_rules_block
     language = "French" if os.environ.get("CONTENT_LANG_PRIMARY", "en") == "fr" else "English"
     evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
                          "evidence": source_evidence(source)} for source in sources]
-    prompt = f"""{render_core_identity('en')}
+    prompt = f"""{render_voice('en')}
 {hard_rules_block()}
 Write ONE original AI post in {language}. Today's slot: {slot[1]}.
 Draft three different angles privately, then choose the most useful one.

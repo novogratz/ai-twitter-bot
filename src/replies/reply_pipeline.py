@@ -1,7 +1,7 @@
 """Reply pipeline: a job's candidates in, shipped Replies out.
 
 A job keeps its source (scrape, selection filters, order, budgets) and its
-voice. Everything between a candidate and a logged Reply happens here, the
+ReplyCall. Everything between a candidate and a logged Reply happens here, the
 same way for every job: Reply admission before the model call, the posts
 each job sets aside until restart, the rate-limit stop, the spacing wait of
 the pipelined jobs, the write through `twitter_client.reply_to_tweet`, and
@@ -29,7 +29,7 @@ from ..guards.active_hours import OutsideActiveHours, require_active
 from ..guards.reply_admission import judge_parent
 from ..x import twitter_client
 from . import reply_generator
-from .reply_generator import Generation, Outcome, Voice
+from .reply_generator import Generation, Outcome, ReplyCall
 
 
 @dataclass(frozen=True)
@@ -38,9 +38,9 @@ class Job:
     # Jobs with the same name share the posts they set aside.
     name: str
     label: str  # the log prefix, "EARLYBIRD", "SEARCH-HOT"…
-    # The voice for the author Reply admission read from the status URL;
+    # The ReplyCall for the author Reply admission read from the status URL;
     # None for a job whose candidates carry their reply text.
-    voice: Callable[[str], Voice] | None
+    reply_call: Callable[[str], ReplyCall] | None
     debate_turn: bool = False
     # Generate the next candidate while this one posts, and wait out the
     # Reply spacing before each send (#131). Sequential jobs never wait: the
@@ -90,12 +90,12 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
 
     `max_generations` bounds the candidates admitted (the generations paid),
     `max_shipped` the Replies shipped. Nothing is admitted once
-    `cycle.rate_limited` is set. A job without a voice takes only
+    `cycle.rate_limited` is set. A job without a ReplyCall takes only
     candidates that carry their reply: ValueError before any admission."""
-    if job.voice is None:
+    if job.reply_call is None:
         candidates = list(candidates)
         if any(not c.reply for c in candidates):
-            raise ValueError(f"[{job.label}] a job without a voice needs candidates that carry their reply")
+            raise ValueError(f"[{job.label}] a job without a ReplyCall needs candidates that carry their reply")
     if job.pipelined:
         return _run_pipelined(job, iter(candidates), cycle, max_generations, max_shipped)
     shipped = generations = 0
@@ -172,7 +172,7 @@ def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
-    return reply_generator.generate(job.voice(author), author=author, text=candidate.text,
+    return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
                                     context=candidate.context)
 
 

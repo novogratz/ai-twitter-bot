@@ -88,9 +88,22 @@ A post answering someone else's post. Never a Profile publication, and no
 daily total applies to Replies.
 _Avoid_: comment, response, draft (reserved for Originals)
 
+**Voice**:
+The account's persona, written by the Operator in `core_identity.md`
+(`core_identity_en.md` for English) and rendered as one block, under the
+configured handle, at the top of every Original and Reply prompt. A prompt
+says what to write; only the Voice says who writes it.
+_Avoid_: core identity, persona prompt, spine
+
+**Reply call**:
+What a Reply job asks of the model: its prompt template, model, log label,
+language rule and call options (`reply_generator.ReplyCall`). It says what
+to write; the Voice, never the Reply call, says who writes it.
+_Avoid_: voice (reserved for the persona)
+
 **Reply generator**:
-The one step that turns a post and a job's voice into reply text: it always
-adds the hard rules to the prompt, picks the reply language, and reads the
+The one step that turns a post and a job's Reply call into reply text: it always
+opens the prompt on the Voice and adds the hard rules, picks the reply language, and reads the
 model's answer as reply text, a decline (SKIP), a failure or a rate limit.
 Reply text comes with the provider and model that wrote it.
 _Avoid_: reply drafter, reply writer

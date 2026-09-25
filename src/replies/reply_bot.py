@@ -12,8 +12,8 @@ from ..core.history import get_recent_tweets
 from ..guards.replied_store import load_replied
 
 # The model call that finds the posts also writes their replies: the
-# candidates carry their text, and no voice is needed.
-JOB = reply_pipeline.Job("reply_search", "REPLY", voice=None, pause=(15, 15))
+# candidates carry their text, and no ReplyCall is needed.
+JOB = reply_pipeline.Job("reply_search", "REPLY", reply_call=None, pause=(15, 15))
 
 
 def _reply_search_enabled() -> bool:
