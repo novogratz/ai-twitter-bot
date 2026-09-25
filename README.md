@@ -117,8 +117,9 @@ lives in `state/<BOT_ACCOUNT>/`: there, `editorial_review.jsonl` records
 decisions; `editorial_state.json` persists attempts, completed slots and
 source history; `editorial_reach.md` shows measured reach and missing
 coverage. These are local runtime files and are not committed to Git; a
-checkout from before issue #207 moves its root copies there with
-`bin/migrate_state.py`, and `main.py` refuses to start until it has. The
+checkout from before issue #207 moves its root copies to
+`state/theaishrink/` with `bin/migrate_state.py`, and `main.py` refuses to
+start until it has. The
 JSON state files go through `src/core/state_store.py`, which writes them atomically; an unreadable
 guarded file, such as `personality.json`, stops the job that needs it and
 is never overwritten ([recovery](docs/OPERATIONS.md#recovery)). The

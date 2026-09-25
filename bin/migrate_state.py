@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-"""Move the bot's state from the project root to state/<BOT_ACCOUNT>/
+"""Move the bot's state from the project root to state/theaishrink/
 (issue #207), once, with the bot stopped: the whole procedure is in
 docs/OPERATIONS.md#deploying-issue-207.
 
     python3 bin/migrate_state.py
 
-Each file of `state_store.LEGACY_FILES` found at the root moves under the
-same name to state/<BOT_ACCOUNT>/, its bytes untouched: a hard link names it
-there, its SHA-256 is checked against the root file's, and only then is the
-root name removed. No file is created empty, rewritten or parsed, and the
-Operator files (accounts/<BOT_ACCOUNT>/) are never touched.
+The root state belongs to `state_store.LEGACY_ACCOUNT`, theaishrink, the only
+Account before issue #207: it goes to state/theaishrink/ whatever BOT_ACCOUNT
+names. Each file of `state_store.LEGACY_FILES` found at the root moves under
+the same name, its bytes untouched: a hard link names it there, its SHA-256
+is checked against the root file's, and only then is the root name removed.
+No file is created empty, rewritten or parsed, and the Operator files
+(accounts/) are never touched.
 
 It checks everything before it moves anything, and moves nothing if a check
 fails: bot.lock must be free, each root file a regular file, and a file
@@ -19,7 +21,6 @@ nothing to move.
 """
 import argparse
 import errno
-import fcntl
 import hashlib
 import os
 import shutil
@@ -28,7 +29,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
-from src.core import settings, state_store  # noqa: E402
+from src.core import state_store  # noqa: E402
 
 
 class Refused(Exception):
@@ -38,19 +39,6 @@ class Refused(Exception):
 class Stopped(Exception):
     """A moved file did not match its root copy: the files before it moved,
     that one and the ones after it did not."""
-
-
-def bot_holds_lock() -> bool:
-    """Same lock as main.py: flock on bot.lock, released when python exits."""
-    path = os.path.join(ROOT, "bot.lock")
-    if not os.path.exists(path):
-        return False
-    with open(path) as handle:
-        try:
-            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            return True
-    return False
 
 
 def _sha256(path: str) -> str:
@@ -113,13 +101,14 @@ def _fsync_dir(path: str) -> None:
 def migrate() -> list:
     """Check, then move. Returns the report lines; raises Refused, with
     nothing moved, when a check fails."""
-    target = state_store.root()
+    target = state_store.legacy_root()
     shown = os.path.relpath(target, state_store.PROJECT_ROOT)
     steps = _plan(target, shown)
     if not steps:
         return [f"nothing to move: no state file left at the project root, the state is in {shown}/"]
     os.makedirs(target, exist_ok=True)
-    report = []
+    report = [f"the root state is {state_store.LEGACY_ACCOUNT}'s, the only Account before issue "
+              f"#207: it goes to {shown}/, whatever BOT_ACCOUNT names"]
     for name, digest, already in steps:
         source = os.path.join(state_store.LEGACY_DIR, name)
         destination = os.path.join(target, name)
@@ -142,8 +131,7 @@ def migrate() -> list:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.parse_args()
-    settings.load()
-    if bot_holds_lock():
+    if state_store.bot_holds_lock(ROOT):
         print("bot.lock is held: stop the bot and its supervisor first", file=sys.stderr)
         sys.exit(1)
     try:

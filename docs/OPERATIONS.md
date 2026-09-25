@@ -243,10 +243,21 @@ The state files named below are in `state/<BOT_ACCOUNT>/`
 
 **The bot refuses to start: `state files still at the project root`.** The
 checkout still holds state from before issue #207 at the root, and its new
-place is empty: started, the bot would read it as empty, and an empty ledger
-resets today's ceiling. With the bot stopped, run the migration of
+place, `state/theaishrink/` whichever Account runs, is empty: started, the
+bot would read it as empty, and an empty ledger resets today's ceiling. With
+the bot stopped, run the migration of
 [Deploying issue #207](#deploying-issue-207); `--dry-run` stops on the same
 files.
+
+**The bot refuses to start: `state files both at the project root and in
+state/theaishrink/, with different bytes`.** A partial rollback, or a
+`bin/carry_state.sh restore` on a migrated checkout, put a root copy back
+beside the one in `state/theaishrink/`, and the root one may hold today's
+rows. With the bot stopped, compare each named pair by hand, keep the right
+one in `state/theaishrink/` (for the ledger, the one holding today's rows),
+and move the other outside the checkout. A root copy identical to its copy
+there only logs a `[STATE]` warning at start; `bin/migrate_state.py`
+removes it.
 
 **A slot is `pending`.** The submission was interrupted or its outcome was
 unclear, and the bot will not retry it. Until you clear it, it counts toward
@@ -420,8 +431,10 @@ files outside it alike. Git ignores `state/` as a whole, so a
 `git checkout`, `reset` or `pull` never touches it, and
 `tests/test_state_untracked.py` fails on a state file git does not ignore.
 `.gitignore` still lists the former root names, for a checkout not migrated
-yet. `main.py` refuses to start, `--dry-run` included, while one of those
-root files has no copy in `state/<BOT_ACCOUNT>/`, and so do
+yet. Those root files belong to `theaishrink`, the only Account before
+issue #207 (`state_store.LEGACY_ACCOUNT`). `main.py` refuses to start,
+`--dry-run` included and whichever Account runs, while one of them has no
+copy in `state/theaishrink/` or differs from its copy there, and so do
 `bin/migrate_operator_data.py`, `bin/mass_unfollow.py` and
 `bin/seed_fr_influencers.py`: see [Deploying issue #207](#deploying-issue-207).
 
@@ -677,8 +690,11 @@ The commit moves the state from the repo root to `state/<BOT_ACCOUNT>/`,
 `state/theaishrink/` for the live Account. The pull deletes no state file,
 git ignoring them since issue #193, but the new code reads them in the new
 folder only, where a missing file reads as empty and an empty ledger resets
-today's ceiling. So `main.py` refuses to start, `--dry-run` included, while
-a state file sits at the root and not in the new folder, and names it.
+today's ceiling. The root state is `theaishrink`'s, the only Account before
+the commit, so it goes to `state/theaishrink/` whatever `BOT_ACCOUNT` names.
+`main.py` refuses to start, `--dry-run` included and whichever Account runs,
+while a state file sits at the root and not in `state/theaishrink/`, or
+differs from its copy there, and names it.
 Deploy it once, from the live checkout:
 
 1. Stop the bot and its supervisor ([Stop](#stop),
@@ -702,8 +718,7 @@ Deploy it once, from the live checkout:
    the saved files, pull, restore), then run step 4 here, step 2 of #206
    with `--from "$B"`, and step 5 here.
 3. `git pull --ff-only origin main`.
-4. Move the state, with `BOT_ACCOUNT` unset or `theaishrink`, the Account
-   the root state belongs to:
+4. Move the state to `state/theaishrink/`, whatever `BOT_ACCOUNT` names:
 
    ```bash
    uv run --with-requirements requirements.txt python bin/migrate_state.py
@@ -716,7 +731,8 @@ Deploy it once, from the live checkout:
    under the same name, with a hard link checked against the root file's
    SHA-256 before the root name goes: nothing is rewritten, parsed or
    created with defaults, and the Operator files of `accounts/theaishrink/`
-   are never touched. It prints one line per file, such as
+   are never touched. It prints the destination first, then one line per
+   file, such as
    `action_ledger.json: moved to state/theaishrink/, sha256 c01b14a2a6cd`,
    then `moved N files, 0 already there`. A file already there and
    identical only loses its root copy, which finishes a run cut short; a
@@ -725,9 +741,10 @@ Deploy it once, from the live checkout:
    root lists no state file, and `git status --short` prints nothing.
    Restart the bot only on the Operator's request.
 
-A refusal for a destination that differs means both places hold a copy:
-compare them by hand, keep the right one (for the ledger, the one holding
-today's rows), move the other outside the checkout, and run step 4 again.
+A refusal for a destination that differs means both places hold a copy,
+and `main.py` refuses to start on it too: compare them by hand, keep the
+right one (for the ledger, the one holding today's rows), move the other
+outside the checkout, and run step 4 again.
 `.<name>.<random>.tmp` files left at the root by a killed process are not
 moved; delete them once the bot is stopped. `tests/test_migrate_state.py`
 replays the move on fixtures shaped like the live files.

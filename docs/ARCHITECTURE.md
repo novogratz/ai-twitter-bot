@@ -573,9 +573,11 @@ once as a `StateFile(name, default, policy)`; paths resolve at call time under
 `state_store.root()`, `state/<BOT_ACCOUNT>/`, the one place that knows it
 (issue #207). The files it does not read or write, the action ledger, the
 Replied store, the engagement log, the editorial audit and the reach report,
-are declared as a `StatePath(name)`, resolved there too. `main.py` refuses to
-start while a state file of before #207 sits at the project root and not in
-that folder (`state_store.unmigrated()`); `bin/migrate_state.py` moves it.
+are declared as a `StatePath(name)`, resolved there too. The state of before
+#207 at the project root is `state_store.LEGACY_ACCOUNT`'s, `theaishrink`:
+`main.py` refuses to start, whichever Account runs, while one of its files is
+missing from `state/theaishrink/` or differs from its copy there
+(`state_store.require_migrated()`); `bin/migrate_state.py` moves it there.
 `bot.log`, `bot.lock` and `autonomous_log.md` belong to the process and stay
 at the root. Every write goes through
 `atomic_write_bytes`: a temp file `.<name>.<random>.tmp` in the same

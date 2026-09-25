@@ -9,7 +9,9 @@
 # Since issue #207 the state lives under state/<BOT_ACCOUNT>/, which git
 # ignores as a whole, so no pull deletes it. The script still works on the
 # root only: `restore` puts the files back there, for bin/migrate_state.py
-# to move (docs/OPERATIONS.md#deploying-issue-207).
+# to move (docs/OPERATIONS.md#deploying-issue-207). main.py refuses to start
+# while one of them is missing from state/theaishrink/ or differs from its
+# copy there.
 #
 #   bin/carry_state.sh save [--force] <backup-dir> <ref>
 #       Copies every root file that moving from HEAD to <ref> deletes and

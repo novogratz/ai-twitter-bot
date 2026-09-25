@@ -135,9 +135,10 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   ignores as a whole; every path to it goes through `state_store.root()`,
   a `StateFile` or a `StatePath`, never a path built by hand. `bot.log`,
   `bot.lock` and `autonomous_log.md` stay at the root with the process.
-  `main.py` refuses to start while a state file of before #207 sits at the
-  root and not in `state/<BOT_ACCOUNT>/`: move it with
-  `bin/migrate_state.py`, bot stopped, never by recreating it
+  The root state of before #207 is theaishrink's: `main.py` refuses to
+  start, whichever Account runs, while one of its files sits at the root
+  and not in `state/theaishrink/`, or differs from its copy there. Move it
+  with `bin/migrate_state.py`, bot stopped, never by recreating it
   ([Deploying issue #207](docs/OPERATIONS.md#deploying-issue-207)). The
   Operator's files stay tracked, all in the Account
   folder: the Voice files, `whitelist.json`, `respect_list.json` and

@@ -24,7 +24,6 @@ is held or a state file waits at the project root for bin/migrate_state.py
 """
 import argparse
 import copy
-import fcntl
 import json
 import os
 import sys
@@ -43,19 +42,6 @@ BASELINE_KEYS = ("baseline", "as_of", "note")
 
 class Refused(Exception):
     """A check failed: nothing was written."""
-
-
-def bot_holds_lock() -> bool:
-    """Same lock as main.py: flock on bot.lock, released when python exits."""
-    path = os.path.join(ROOT, "bot.lock")
-    if not os.path.exists(path):
-        return False
-    with open(path) as handle:
-        try:
-            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            return True
-    return False
 
 
 def _old(folder: str, name: str):
@@ -142,7 +128,7 @@ def main() -> None:
     parser.add_argument("--from", dest="folder", required=True,
                         help="directory holding the old whitelist.json and respect_list.json")
     args = parser.parse_args()
-    if bot_holds_lock():
+    if state_store.bot_holds_lock(ROOT):
         print("bot.lock is held: stop the bot and its supervisor first", file=sys.stderr)
         sys.exit(1)
     try:

@@ -1,15 +1,19 @@
-"""Issue #207: the state moves from the project root to state/<BOT_ACCOUNT>/.
+"""Issue #207: the state moves from the project root to state/theaishrink/.
 
-bin/migrate_state.py moves each file without recreating it, on fixtures
-shaped like the live files; main.py and the scripts that write state refuse
-to start while a state file waits at the root and its new place is empty.
+The root state is theaishrink's, the only Account before #207, whichever
+Account BOT_ACCOUNT names. bin/migrate_state.py moves each file without
+recreating it, on fixtures shaped like the live files; main.py and the
+scripts that write state refuse to start while a state file waits at the
+root and its new place is empty or holds other bytes.
 """
 import fcntl
 import hashlib
 import importlib.util
 import json
 import os
+import shutil
 import sys
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -49,7 +53,7 @@ def script(monkeypatch, tmp_path):
 
 
 @pytest.fixture
-def checkout(monkeypatch, tmp_path):
+def checkout(monkeypatch, tmp_path, unwalled):
     """A checkout before #207: the state at the project root, state/ absent."""
     project = tmp_path / "project"
     project.mkdir()
@@ -59,8 +63,18 @@ def checkout(monkeypatch, tmp_path):
     target = project / "state" / "theaishrink"
     monkeypatch.setattr(state_store, "PROJECT_ROOT", str(project))
     monkeypatch.setattr(state_store, "LEGACY_DIR", str(project))
-    monkeypatch.setattr(state_store, "root", lambda: str(target))
+    monkeypatch.setattr(state_store, "root", unwalled["state_root"])
+    assert state_store.root() == str(target)
     return project, target
+
+
+@pytest.fixture
+def other_account(operator_folder, settings_override):
+    """BOT_ACCOUNT=autre, a second Account under accounts/."""
+    shutil.copytree(operator_folder, operator_folder.parent / "autre")
+    settings_override(BOT_ACCOUNT="autre")
+    assert state_store.root().endswith(os.path.join("state", "autre"))
+    return "autre"
 
 
 def test_each_file_moves_byte_for_byte_and_none_is_recreated(script, checkout):
@@ -79,6 +93,8 @@ def test_each_file_moves_byte_for_byte_and_none_is_recreated(script, checkout):
         assert moved.stat().st_ino == stat.st_ino
         assert moved.stat().st_mtime_ns == stat.st_mtime_ns
     assert (target / "action_ledger.json").stat().st_mode & 0o777 == 0o600
+    assert report[0] == ("the root state is theaishrink's, the only Account before issue #207: "
+                         "it goes to state/theaishrink/, whatever BOT_ACCOUNT names")
     assert report[-1] == f"moved {len(LIVE)} files, 0 already there; the root holds no state file"
     assert state_store.unmigrated() == []
 
@@ -157,6 +173,21 @@ def test_main_reports_each_move(script, checkout, monkeypatch, capsys):
     assert any(line.startswith("action_ledger.json: moved to state/theaishrink/, sha256 ") for line in out)
 
 
+def test_another_account_moves_the_root_state_to_theaishrink(script, checkout, other_account,
+                                                             monkeypatch, capsys):
+    """The root state is theaishrink's: run with BOT_ACCOUNT=autre, the move
+    must not hand theaishrink's ledger to autre."""
+    project, target = checkout
+    monkeypatch.setattr(sys, "argv", ["migrate_state.py"])
+
+    script.main()
+
+    out = capsys.readouterr().out
+    assert "it goes to state/theaishrink/, whatever BOT_ACCOUNT names" in out
+    assert sorted(os.listdir(target)) == sorted(LIVE)
+    assert not (project / "state" / "autre").exists()
+
+
 def test_the_respect_list_is_not_reinstalled(script, checkout, operator_folder):
     """The respect list was recreated with its defaults at import before
     #206: moving the state must neither bring a default back nor touch the
@@ -223,14 +254,74 @@ def test_the_start_goes_on_once_migrated(script, checkout, start, capsys):
         start()
 
 
-def test_a_file_in_both_places_does_not_stop_the_start(checkout, start, capsys):
-    """The new place wins; bin/migrate_state.py reports the root copy."""
+def test_another_account_does_not_start_beside_the_unmigrated_root(checkout, other_account,
+                                                                   start):
+    project, target = checkout
+    (project / "state" / "autre").mkdir(parents=True)
+    for name, data in LIVE.items():
+        (project / "state" / "autre" / name).write_bytes(data)
+
+    with pytest.raises(SystemExit) as exit_:
+        start("--dry-run")
+
+    message = str(exit_.value.code)
+    assert message.startswith("Refusing to start: state files still at the project root, "
+                              "missing from state/theaishrink/")
+    assert "action_ledger.json" in message and "bin/migrate_state.py" in message
+    assert not target.exists()
+
+
+def test_theaishrink_starts_on_its_ledger_after_a_move_run_as_another_account(
+        script, checkout, other_account, start, capsys, settings_override):
+    project, target = checkout
+    script.migrate()
+
+    settings_override(BOT_ACCOUNT="theaishrink")
+    start("--dry-run")
+
+    assert json.loads(capsys.readouterr().out)["jobs"]
+    from src.core import config
+    assert os.fspath(config.ACTION_LEDGER_FILE) == str(target / "action_ledger.json")
+    assert (target / "action_ledger.json").read_bytes() == LIVE["action_ledger.json"]
+    from src.guards import action_guard
+    assert action_guard._ledger().count(action_guard.POST, date(2026, 9, 25)) == 1
+    assert action_guard._ledger().count(action_guard.REPLY, date(2026, 9, 25)) == 1
+
+
+@pytest.mark.parametrize("flags", [("--dry-run",), ()])
+def test_a_file_in_both_places_with_other_bytes_stops_the_start(checkout, start, flags, caplog):
+    """A partial rollback, or carry_state.sh restore on a migrated checkout:
+    the root copy may hold today's rows."""
     project, target = checkout
     target.mkdir(parents=True)
     for name, data in LIVE.items():
         (target / name).write_bytes(data)
+    (project / "action_ledger.json").write_bytes(
+        LIVE["action_ledger.json"] + b'\n{"ts": "2026-09-25T10:00:00-04:00", "action": "post"}\n')
+
+    with pytest.raises(SystemExit) as exit_:
+        start(*flags)
+
+    message = str(exit_.value.code)
+    assert message.startswith("Refusing to start: state files both at the project root and in "
+                              "state/theaishrink/, with different bytes: action_ledger.json.")
+    assert "move the other outside the checkout" in message
+    assert "docs/OPERATIONS.md#deploying-issue-207" in message
+    assert "missing from" not in message
+    assert "[STATE] Refusing to start" in caplog.text
+
+
+def test_a_file_in_both_places_with_the_same_bytes_only_warns(checkout, start, capsys, caplog):
+    project, target = checkout
+    target.mkdir(parents=True)
+    for name, data in LIVE.items():
+        (target / name).write_bytes(data)
+
     start("--dry-run")
+
     assert json.loads(capsys.readouterr().out)["jobs"]
+    assert ("[STATE] action_ledger.json is both at the project root and in state/theaishrink/, "
+            "identical: bin/migrate_state.py removes the root copy.") in caplog.text
 
 
 def test_the_state_writing_scripts_refuse_too(checkout, monkeypatch, capsys, tmp_path):
