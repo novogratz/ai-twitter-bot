@@ -35,7 +35,6 @@ from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
 from ..guards.reply_admission import is_blocked_account
 from ..x import safari
-from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 from ..x.twitter_client import follow_account
 
 
@@ -115,19 +114,17 @@ def run_followback_cycle():
     """Visit the Account's followers page and follow back fresh ones."""
     followed = follow_policy.followed()
 
-    with _safari_lock:
+    with safari._safari_lock:
         url = f"https://x.com/{config.BOT_HANDLE}/followers"
         log.info(f"[FOLLOWBACK] Opening {url}")
         safari.open_url(url)
         time.sleep(8)
         # Scroll twice to load 30-50 followers.
-        _scroll_page()
-        time.sleep(2)
-        _scroll_page()
-        time.sleep(2)
+        safari._scroll_page()
+        safari._scroll_page()
 
         candidates = _scrape_followers_list(max_handles=50)
-        close_front_tab()
+        safari.close_front_tab()
 
     if not candidates:
         log.info("[FOLLOWBACK] No candidates scraped.")

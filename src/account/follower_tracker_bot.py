@@ -16,7 +16,6 @@ from ..core import config
 from ..core.logger import log
 from ..guards.follow_policy import FOLLOWER_HISTORY
 from ..x import safari
-from ..x.safari import _safari_lock, close_front_tab
 
 
 def _parse_count(s: str) -> int:
@@ -57,14 +56,14 @@ def _scrape_follower_count() -> int:
     })()
     '''
 
-    with _safari_lock:
+    with safari._safari_lock:
         url = f"https://x.com/{config.BOT_HANDLE}"
         log.info(f"[FOLLOWER] Opening {url}")
         safari.open_url(url)
         time.sleep(7)
 
         raw = safari._run_js(js_code, 20, log_prefix="[FOLLOWER]", activate=True)
-        close_front_tab()
+        safari.close_front_tab()
         try:
             return _parse_count(raw)
         except ValueError:

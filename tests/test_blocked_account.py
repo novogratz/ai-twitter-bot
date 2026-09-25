@@ -29,8 +29,8 @@ def _followback(monkeypatch, follow, tmp_path):
     monkeypatch.setattr(fb, "is_blocked_account", lambda handle: False)
     page = json.dumps({"path": f"/{config.BOT_HANDLE}/followers", "handles": [HANDLE]})
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: page)
-    monkeypatch.setattr(fb, "_scroll_page", lambda: None)
-    monkeypatch.setattr(fb, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(fb, "follow_account", follow)
     fb.run_followback_cycle()
 

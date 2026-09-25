@@ -745,7 +745,8 @@ log, the replied store and the ledger point to `tmp_path`. A mock placed
 on a caller module misses function-local imports; patch the primitive in
 `safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
-past the wall, and when a module other than `safari.py` runs `do JavaScript`
+past the wall, or binds `_safari_lock`, `_scroll_page` or `close_front_tab`
+by name, past the patches tests put on `safari`, and when a module other than `safari.py` runs `do JavaScript`
 or spawns `osascript` itself, docstrings aside; the Safari quit in
 `safari_hygiene` is the listed exception.
 `tests/x/test_page_js.py` pins each page script's timeout, log prefix and
