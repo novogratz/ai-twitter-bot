@@ -26,7 +26,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, GUARDED, StateFile
@@ -368,17 +368,8 @@ def judge(handle: str) -> Verdict:
 # algorithm". The gate rides the profile visit follow_account already
 # makes: scrape followers + bio from the loaded page, refuse before
 # clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
-# bad candidate never burns a second profile visit.
-
-_NICHE_BIO_RE = re.compile(
-    r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|"
-    r"crypto|bitcoin|btc|eth|web3|defi|blockchain|token|"
-    r"invest|investor|investing|trader|trading|markets?|stocks?|equit|finance|"
-    r"financial|fintech|macro|quant|hedge|portfolio|capital|wealth|analyst|"
-    r"founder|builder|startup|venture|\bvc\b|tech|software|engineer|nvidia|"
-    r"bourse|économie|economy)\b",
-    re.IGNORECASE,
-)
+# bad candidate never burns a second profile visit. The bio must match the
+# Account's niche.bio.
 
 
 def _parse_follower_count(text: str) -> int:
@@ -455,7 +446,7 @@ def _quality_decision(followers: int, bio: str, name: str,
             return (False, why)
     if not engager and settings.get("FOLLOW_REQUIRE_NICHE"):
         blob = f"{name or ''} {bio or ''}"
-        if not _NICHE_BIO_RE.search(blob):
+        if not account.current().niche.bio.search(blob):
             return (False, "off-niche bio (no AI/markets/crypto signal)")
     return (True, "")
 

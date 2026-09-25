@@ -26,11 +26,18 @@ def test_reply_candidates_sorted_fresh_and_rising_first():
     assert ordered[3] is unknown
 
 
+def _searches():
+    """The direct_reply queries of the loaded Account: search, then hot tab."""
+    from src.core import account
+    searches = account.current().searches
+    return list(searches.replies), list(searches.hot_tab)
+
+
 def test_reply_queries_are_on_lane():
     """Spec lane: AI x markets x psychology. NO space content; the tier1-2
     seeds + foils must be scanned directly via from: queries."""
-    from src.replies.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
-    joined = " ".join(SEARCH_QUERIES + HOT_TAB_QUERIES).lower()
+    replies, hot_tab = _searches()
+    joined = " ".join(replies + hot_tab).lower()
     for banned in ("spacex", "starship", "nasa", "satellite", "rocket lab", "orbit"):
         assert banned not in joined, f"space term {banned!r} is off-persona"
     for seed in ("from:thebtctherapist", "from:morganhousel", "from:saylor"):
@@ -46,29 +53,29 @@ def test_reply_queries_are_ai_first():
     see more AI shit'. The reply lane must be majority-AI: at least half of
     the search queries carry an AI term, BTC tail stays minimal (feud lane
     only, ≤2 queries)."""
-    from src.replies.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
+    replies, hot_tab = _searches()
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", "agi", "nvidia", "gpu", "llama", "deepseek",
                 "palantir", "cursor", "copilot", "tsmc", "humanoid", " ia ")
     def is_ai(q):
         ql = " " + q.lower()
         return any(t in ql for t in ai_terms)
-    topic_queries = [q for q in SEARCH_QUERIES if not q.startswith("from:")]
+    topic_queries = [q for q in replies if not q.startswith("from:")]
     ai_count = sum(1 for q in topic_queries if is_ai(q))
     assert ai_count * 2 >= len(topic_queries), \
         f"AI queries must be the majority of the reply lane ({ai_count}/{len(topic_queries)})"
     btc_only = [q for q in topic_queries
                 if ("bitcoin" in q.lower() or "btc" in q.lower()) and not is_ai(q)]
     assert len(btc_only) <= 2, "BTC tail must stay minimal (feud lane only)"
-    hot_ai = sum(1 for q in HOT_TAB_QUERIES if is_ai(q))
-    assert hot_ai * 2 >= len(HOT_TAB_QUERIES)
+    hot_ai = sum(1 for q in hot_tab if is_ai(q))
+    assert hot_ai * 2 >= len(hot_tab)
 
 
 def test_prompts_are_english_only():
     """Operator 2026-06-09: 'we are english only bro'. The reply lane must
     not seek French posts."""
-    from src.replies.direct_reply import SEARCH_QUERIES
-    assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
+    replies, _ = _searches()
+    assert not any("lang:fr" in q for q in replies), "FR reply query still present"
 
 
 def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):

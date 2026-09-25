@@ -10,76 +10,10 @@ from datetime import datetime
 from typing import Optional
 from ..core.logger import log
 from ..core import config
-from ..core.config import BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
 from ..core.llm_client import CallProfile, Output
 from . import reply_generator
 from .reply_generator import LanguageRule, Outcome, ReplyCall
-
-# Core influencers — AI + Space + Robotics + Investment, French priority
-TARGET_ACCOUNTS = [
-    # User VIPs (keep all)
-    "Graphseo",          # Julien Flot
-    "RodolpheSteffan",   # Rodolphe Steffan
-    "vision_ia",         # VISION IA
-    "FinTales_",         # FinTales
-    "novogratz",         # Mike Novogratz
-    "jbelizaireCEO",     # John Belizaire
-    "FlasheurInvest",    # Flasheur
-    "McnallieM",         # McNallie Money
-
-    # AI — global heavyweights
-    "sama", "OpenAI", "AnthropicAI", "GoogleDeepMind",
-    "elonmusk", "xAI", "karpathy", "ylecun", "fchollet",
-    "demishassabis", "MistralAI", "arthurmensch", "GuillaumeLample",
-    "GaelVaroquaux", "nvidia", "AMD", "intel",
-    "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc",
-    "KobeissiLetter", "unusual_whales",
-
-    # Space pruned 2026-06-05 (mandate 2026-06-04: no space content) —
-    # SpaceX kept: markets/IPO megastory + Musk-AI overlap.
-    "SpaceX",
-
-    # Robotics / frontier tech
-    "Tesla", "BostonDynamics", "Figure_robot",
-    "ID_AA_Carmack", "drfeifei",
-
-    # Investment / Bourse FR — HIGH PRIORITY for funny replies
-    "NCheron_bourse",    # Nicolas Chéron (gros compte bourse FR)
-    "ABaradez",          # Alexandre Baradez
-    "IVTrading",
-    "Yoann_Lopez_",      # Snowball
-    "SnowballEcho",
-    "GoodValYou",
-    "Finary",
-    "LesEchos", "BFMBusiness", "BFMBourse",
-    "Capital_fr", "latribune",
-    "CafeDelaBourse",
-    "ZoneBourse",
-    "FlasheurInvest",
-    "DereeperVivre",
-    "Phil_RX",
-
-    # AI / Tech FR — HIGH PRIORITY for funny replies
-    "Korben",
-    "underscore_",
-    "MichaelBenabou",
-    "presse_citron", "siecledigital", "usine_digitale", "numerama",
-    "01net", "frandroid", "LesNumeriques",
-    "FrenchWeb", "MaddyNess",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
-    "vision_ia",
-
-    # Crypto FR (pour les reply en mode investissement)
-    "PowerHasheur",
-    "Capetlevrai",
-    "CoinAcademy_FR",
-
-    # Crypto / investment EN
-    "saylor", "MicroStrategy", "VitalikButerin",
-    "CoinDesk", "blockworks_",
-    "Palantir",
-]
 
 
 def _load_discovered_handles(limit: int = 10) -> list:

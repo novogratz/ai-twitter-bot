@@ -70,6 +70,27 @@ ceiling or a floor in `src/core/settings.py`, such as
 logged as a `[SETTINGS]` warning, so an Account can tighten a guardrail and
 never lift it. Edit `account.toml` by hand, then restart.
 
+Three more tables hold the Account's network and niche; the jobs read them at
+each call, and compare a handle with the one read from a status URL.
+
+- `[network]`: X handles without `@`, checked as `[A-Za-z0-9_]{1,15}`.
+  `profile_visits`, `vip_scan` and `pinned_tracked` fill
+  `PROFILE_VISIT_ALLOWLIST`, `VIP_SCAN_HANDLES` and `PINNED_TRACKED_HANDLES`,
+  which `.env` still overrides. `vip_reply` gets the priority reply model and,
+  followed by `big_ai_hype`, `mid_size_ai`, `high_traction_reply` and
+  `big_fr`, makes the accounts `early_bird_job` scans first. `engage_vip`
+  joins every `engage_job` cycle; the replyback reciprocity likes skip
+  `engage_targets` and `reply_targets`; `follow_engagers_job` never follows
+  `follow_engagers_skip`. The optional `blocked_accounts` adds Blocked
+  accounts to the engine's `BLOCKLIST`, matched the same way; no key removes
+  one of the engine's, and an unknown key stops the start.
+- `[niche]`: Python regular expressions. `post` (case-insensitive) or
+  `ticker` (case-sensitive) must match a post the reply jobs find; `bio`
+  must match the name and bio of a non-Engager the follow quality gate
+  judges.
+- `[searches]`: X search queries. `direct_reply_job` rotates through
+  `replies` then `hot_tab`; `like_job` picks one of `likes`.
+
 ## Start
 
 ```bash
@@ -291,9 +312,10 @@ does not block a post. Missed slots are not caught up.
 
 **Unwanted content.** Add the handle to the respect list
 (`python3 -c "from src.guards.respect_list import add; add('handle', 'reason')"`,
-picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
-needed). Both are operator-managed. The respect list reaches every Reply
-prompt and the editorial prompt, through the hard rules, and the write
+picked up at the next prompt) or to the Account's `network.blocked_accounts`
+in `account.toml` (restart needed); the base `BLOCKLIST` of
+`src/core/config.py` holds for every Account. Both are operator-managed.
+The respect list reaches every Reply prompt and the editorial prompt, through the hard rules, and the write
 chokepoints refuse an Original or a Reply that names a Respected account,
 the `@handle` of the author a Reply answers excepted.
 
@@ -306,7 +328,8 @@ only then. The settings, their defaults and bounds are in
 - Reply pacing and scope: `MIN_SECONDS_BETWEEN_REPLIES`,
   `REPLY_JITTER_SECONDS`, `DIRECT_REPLY_QUERIES_PER_CYCLE`,
   `VIP_SCAN_HANDLES`, `PROFILE_VISIT_ALLOWLIST`, the `DEBATE_*` and
-  `FEED_SWEEP_*` variables.
+  `FEED_SWEEP_*` variables; the Account's `[network]`, `[niche]` and
+  `[searches]`.
 - Follows: `FOLLOW_WHITELIST_ONLY`, `FOLLOW_TOTAL_CAP`, `FOLLOW_GROWTH_MODE`,
   `FOLLOWBACK_CAP`, `FOLLOW_ENGAGERS_*`.
 - Models: `REPLY_LLM_PROVIDER`, `PROFILE_LLM_PROVIDER`,

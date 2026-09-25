@@ -57,9 +57,9 @@ def run_early_bird_cycle():
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     from ..core.evolution_store import filter_and_weight
-    from .direct_reply import ALWAYS_REPLY_ACCOUNTS
+    from .direct_reply import always_reply_accounts
     pool = filter_and_weight(_scan_pool())
-    always_pool = filter_and_weight(ALWAYS_REPLY_ACCOUNTS)
+    always_pool = filter_and_weight(always_reply_accounts())
 
     # Growth push: scan the always-reply accounts first, then fill with random
     # mega accounts. Early replies under big accounts are the highest upside

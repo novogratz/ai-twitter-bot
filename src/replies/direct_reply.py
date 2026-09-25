@@ -1,11 +1,10 @@
 """Direct reply: the VIP scan and the search lane. Its ReplyCall, niche filter
 and candidate order also serve the feed sweep, early bird and mega watch."""
-import re
 import random
 import traceback
 from datetime import timedelta
 from ..x import x_urls
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
@@ -15,175 +14,15 @@ from .reply_generator import LanguageRule, ReplyCall
 JOB_NAME = "direct_reply"
 
 
-VIP_REPLY_ACCOUNTS = [
-    "TheBTCTherapist",  # model account — reply to + amplify everything he posts
-    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
-    "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch",
-    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
-    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX"
-]
-_VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
+def always_reply_accounts() -> tuple:
+    """The accounts early_bird scans first, from the loaded Account."""
+    return account.current().network.always_reply
 
-HIGH_TRACTION_REPLY_ACCOUNTS = [
-    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
-    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
-    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai", "Dark_Emi_",
-    "Divs_King", "MathieuL1", "NCheron_bourse", "ABaradez", "Phil_RX",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI"
-]
-_FR_ACCOUNT_HINTS = ("_fr", "cryptoast", "coinacademy", "journalducoin", "fintales", "graphseo", "vision_ia")
-
-# 2026-06-02: BIG French accounts to reply to DAILY across the 5 verticals.
-# Being in the threads of large FR AI / bourse / crypto / investment / space
-# accounts is the #1 algo signal for reach + follower conversion. These are
-# fed into the PROFILE-ALWAYS reply path so each cycle pulls their latest
-# tweets and lands a sharp FR reply (subject to the 48h + caps + substance gate).
-BIG_FR_ACCOUNTS = [
-    # IA / Tech FR
-    "Korben", "micode", "Underscore_", "presse_citron", "numerama",
-    "siecledigital", "BFMTech", "frandroid", "journaldugeek", "FlavienChervet",
-    "MistralAI", "arthurmensch", "GuillaumeLample",
-    # Bourse / Investissement FR
-    "Heu7reka", "Yoann_Lopez_", "Finary", "ZonebourseFR", "BFMBourse",
-    "latribune", "Capital", "LesEchos", "boursorama", "GoodValYou",
-    "Zonebourse", "Investir", "SnowballEcho",
-    # Crypto FR
-    "Hasheur", "cryptodiffusion", "Cointribune", "BFMcrypto", "PowerHasheur",
-    "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
-    # Spatial FR
-    ]
-# BIG AI + HYPE accounts with large followings (operator 2026-06-23: "add
-# new accounts that talk about AI or hype stuff with lots of followers,
-# prioritize AI content"). Replying under these high-traction AI threads is
-# the #1 reach lever. English; the scout/discover bots add more over time.
-BIG_AI_HYPE_ACCOUNTS = [
-    # Lab leaders / founders (huge followings)
-    "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella",
-    "sundarpichai", "JensenHuang", "gdb", "miramurati", "AravSrinivas",
-    "karpathy", "ylecun", "AndrewYNg", "drfeifei", "lexfridman",
-    "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
-    # Lab / company accounts
-    "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai",
-    "MistralAI", "perplexity_ai", "nvidia", "Microsoft", "Meta",
-    "OpenAIDevs", "huggingface", "cursor_ai",
-    # AI news + hype engines (big, fast, AI-only)
-    "rowancheung", "TheRundownAI", "minchoi", "kimmonismus",
-    "slow_developer", "mreflow", "bentossell", "venturetwins",
-    "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq",
-    "GaryMarcus", "testingcatalog", "btibor91", "AISafetyMemes",
-    "amasad", "OfficialLoganK", "DrJimFan", "sytelus",
-]
-
-# MID-SIZE AI accounts (self-improve #5, 2026-06-24). Suggester's repeated #1
-# growth lever: replies under whales get buried; replies under mid-size
-# (~5k-100k) active AI builders/commentators show NEAR THE TOP -> they get
-# seen -> profile visits -> followers. Complements BIG_AI_HYPE (reach) with
-# visibility. All real, active, AI-focused; a stale handle is a harmless
-# no-op (search just returns nothing). English.
-MID_SIZE_AI_ACCOUNTS = [
-    "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt",
-    "Teknium1", "abacaj", "corbtt", "Yuchenj_UW", "nutlope", "skirano",
-    "steph_palazzolo", "saranormous", "packyM", "nearcyan", "giffmana",
-    "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
-    "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
-]
-
-ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(
-    VIP_REPLY_ACCOUNTS + BIG_AI_HYPE_ACCOUNTS + MID_SIZE_AI_ACCOUNTS
-    + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
-_BIG_FR_SET = {h for h in BIG_FR_ACCOUNTS}
-ALWAYS_REPLY_FR_ACCOUNTS = [
-    h for h in ALWAYS_REPLY_ACCOUNTS
-    if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in _BIG_FR_SET or h in {
-        "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "FlasheurInvest",
-        "ylecun", "arthurmensch", "GuillaumeLample", "fchollet"
-    } or any(hint in h.lower() for hint in _FR_ACCOUNT_HINTS)
-]
-ALWAYS_REPLY_EN_ACCOUNTS = [h for h in ALWAYS_REPLY_ACCOUNTS if h not in ALWAYS_REPLY_FR_ACCOUNTS]
-
-_NICHE_PATTERN = re.compile(
-    r"\b("
-    r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|altman|musk|ml|deep\s*learning|neural|saas|software|cloud|datacenter|"
-    r"codex|copilot|cursor|windsurf|replit|programmeur|coding|coder|développeur|ide|api|sdk|"
-    r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|blockchain|defi|stablecoin|token|altcoin|memecoin|nft|wallet|binance|coinbase|kraken|satoshi|web3|dao|staking|yield|dex|cex|"
-    r"space|espace|spatial|spacex|starship|starlink|rocket|fusée|fusee|satellite|nasa|esa|ariane|arianegroup|blue\s*origin|orbite|orbit|astéroïde|exploration|mars|lune|moon|cosmos|"
-    r"bourse|action|actions|stock|stocks|marché|trading|trader|invest|investir|portefeuille|etf|pea|cto|cac|cac40|nasdaq|fed|bce|taux|powell|lagarde|rendement|dividendes|ipo|valuation|per|fcf|roe|roic|livret|assurance|levée|fund|funding|vc|venture|startup|banque|fintech|néobanque|paiement|virement|swift|sepa|immo|immobilier|inflation|récession|earnings|acquisition|merger|m&a|finance|cotation|pétrole|xau|commodity|semi.?conducteur|bullish|bearish|oversold|resistance|support|volatility|krach|goldman|jpmorgan|morgan\s*stanley|dette|deficit|fiscal|impot|budget|deflation|monetaire|souverain|oat|spread|notation|moody|tesla|meta|microsoft|google|amazon|apple|netflix|alphabet|spotify|uber|airbnb|palantir|shopify|stripe|databricks|snowflake|datadog|cloudflare"
-    r")\b",
-    re.IGNORECASE,
-)
-_TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 
 def is_on_niche(text: str) -> bool:
-    return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
+    niche = account.current().niche
+    return bool(niche.post.search(text) or niche.ticker.search(text))
 
-SEARCH_QUERIES = [
-    # ===== 2026-06-07 AGENT SPEC lane: AI x markets x PSYCHOLOGY. =====
-    # Space queries REMOVED (persona: no space content). FR tail slimmed to
-    # one query (replies still match parent language when FR shows up).
-    #
-    # ===== SEEDS FIRST — tier1-2 reply targets + foils (spec: "Targets:
-    # ... from the follow whitelist (Tier 1-2 first)"). Low min_faves: we
-    # want their FRESH posts before they trend, freshness sort does the rest.
-    "from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5",
-    "from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5",
-    # Mindset4Money_X: measured 100-like / 13.3K-view reply conversion on
-    # his question QRT (2026-06-10, operator: "i want more things like
-    # this") — his fresh posts are a priority reply surface.
-    "from:Mindset4Money_X min_faves:2",
-    # ===== QUESTION HUNT (2026-06-10 winner lane): mid-size finance/AI
-    # accounts asking GENUINE questions — a question post is a reply farm
-    # and the sharpest plain answer harvests it (REPLY_PROMPT formula D). =====
-    "\"why would\" OR \"why is\" OR \"what am I missing\" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30",
-    "\"would you buy\" OR \"would you rather\" OR \"do you own\" (stock OR $NVDA OR AI OR Bitcoin OR ETF) lang:en min_faves:30",
-    # ===== AI FIRST (operator 2026-06-07: "bot needs to be more AI
-    # focused" — the identity is sharpest-in-the-room ON AI; psychology is
-    # the VOICE, AI is the LANE). 8 of 14 topic queries are AI. =====
-    # --- AI labs / models / agents ---
-    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50",
-    "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
-    "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang:en min_faves:30",
-    "\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" lang:en min_faves:30",
-    "Meta AI OR \"Apple Intelligence\" OR Microsoft Copilot OR \"Amazon AI\" OR Tesla AI lang:en min_faves:50",
-    # --- AI compute / chips / the money angle ---
-    "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:50",
-    "TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI energy\" lang:en min_faves:30",
-    # V2 2026-06-16 investing pillar — AI infra/power names by handle + topic.
-    "CoreWeave OR Nebius OR \"Applied Digital\" OR \"data center\" OR \"AI electricity\" lang:en min_faves:30",
-    "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
-    "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR \"open source AI\" OR DeepSeek lang:en min_faves:30",
-    # ===== INVESTOR PSYCHOLOGY — the VOICE (not the topic). Trimmed 3→1
-    # (operator "focus more on AI"): the therapist voice still frames every
-    # AI reply; this one query keeps the proven market-trauma reply targets. =====
-    "\"panic sold\" OR \"bought the top\" OR \"portfolio is down\" OR drawdown lang:en min_faves:30",
-    # ===== BITCOIN (one query — the AI-vs-BTC feud lane only) =====
-    "Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_faves:100",
-    # ===== AI-INVESTING THESIS 2026-06-08 (operator: "AI crypto stocks
-    # investment, focus on AI primarily" + "focus more"). The account is an
-    # AI-as-investing-theme account — NOT indie-builder/build-in-public.
-    # Pruned the AI-tools/vibe-coding/founder lane (off-thesis drift); kept
-    # the AI-crypto + AI-stocks lanes. Tagged via source so conversion is
-    # measurable. =====
-    # AI stocks / the AI trade (investment pillar, AI lens) — the core
-    "Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datacenter\" earnings lang:en min_faves:100",
-    # AI-crypto crossover (crypto pillar, AI lens)
-    "\"AI crypto\" OR \"AI token\" OR \"decentralized AI\" OR \"AI agents\" crypto lang:en min_faves:50",
-    # FR tail REMOVED 2026-06-09 (operator: "we are english only bro") — the
-    # account no longer seeks French tweets to reply to.
-]
-
-HOT_TAB_QUERIES = [
-    # Breaking AI news EN (high min_faves = viral) — AI-first (operator
-    # 2026-06-07): 5 of 7 hot queries are AI.
-    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
-    "Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:300",
-    "\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:300",
-    "Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300",
-    "ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_faves:500",
-    # Breaking market emotion — panic is the therapist's house call
-    "\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en min_faves:500",
-    # Breaking BTC (feud lane)
-    "Bitcoin OR \"BTC ETF\" OR crypto lang:en min_faves:300",
-]
 
 REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,
 answer, grounded observation or thoughtful disagreement. If it is a question,
@@ -367,7 +206,7 @@ def _run_graphseo_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
 def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_FORCED) -> ReplyCall:
     """The ReplyCall of the search, feed-sweep, early-bird and mega-watch
     Replies; VIP authors get the priority model."""
-    vip = (author or "").lower().lstrip("@") in _VIP_REPLY_ACCOUNTS_LC
+    vip = (author or "").lower().lstrip("@") in {h.lower() for h in account.current().network.vip_reply}
     # Force the reliable reply provider (claude haiku): the local ollama
     # qwen 503s and silently drops replies (operator 2026-06-24).
     return ReplyCall(REPLY_PROMPT, config.PRIORITY_REPLY_MODEL if vip else config.REPLY_MODEL,
@@ -462,7 +301,8 @@ def run_direct_reply_cycle(max_replies=None):
     #    replies/hr sagged to ~27 while search scrapes dominated. Full
     #    coverage still lands every ceil(N/K) cycles (~5 min); the freed
     #    Safari time goes to POSTING replies.
-    all_queries = SEARCH_QUERIES + HOT_TAB_QUERIES
+    searches = account.current().searches
+    all_queries = list(searches.replies + searches.hot_tab)
     cycle_queries = _queries_for_cycle(all_queries)
     random.shuffle(cycle_queries)
     for query in cycle_queries:

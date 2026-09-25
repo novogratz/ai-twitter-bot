@@ -3,7 +3,7 @@
 Strategy (2026-06-06 operator mandate):
   - Primary pool: handles captured from For You / Following feed by the feed
     sweeper (dynamic_accounts.json "en"/"fr" buckets) + legacy discovered.json.
-  - VIP: Graphseo always included every cycle.
+  - VIP: the Account's network.engage_vip, included every cycle.
   - Blocked / pruned accounts are filtered out automatically.
   - Only a Seed account of the pool is followed (issue #173): followers
     belong to followback_job and Engagers to follow_engagers_job, each with
@@ -12,6 +12,7 @@ Strategy (2026-06-06 operator mandate):
 import random
 import time
 import traceback
+from ..core import account
 from ..core.logger import log
 from ..core.state_store import StateUnreadable
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
@@ -20,12 +21,10 @@ from ..guards.reply_admission import is_blocked_account
 from ..x.scraper import _profile_visit_allowed
 from ..x.twitter_client import visit_profile_and_like, follow_account, LikeOutcome
 
-# Compatibility shim — notify_bot and reply_agent import TARGET_ACCOUNTS.
-# Real pool is built dynamically from the feed; this satisfies the import.
-TARGET_ACCOUNTS = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
 
-# Only VIP that is always in the rotation by request (operator 2026-06-06).
-VIP_ACCOUNTS = ["Graphseo"]
+def _vip_accounts() -> tuple:
+    """The Account's engage VIPs, always in the rotation (operator 2026-06-06)."""
+    return account.current().network.engage_vip
 
 
 def _load_discovered_handles() -> list:
@@ -49,7 +48,7 @@ def _build_pool() -> list:
     """VIPs + dynamic + discovered, deduped and blocklist-filtered."""
     seen = set()
     pool = []
-    for h in VIP_ACCOUNTS + _load_dynamic_handles() + _load_discovered_handles():
+    for h in [*_vip_accounts(), *_load_dynamic_handles(), *_load_discovered_handles()]:
         h_lower = h.lower() if h else ""
         if h and h_lower not in seen and not is_blocked_account(h):
             pool.append(h)
@@ -69,8 +68,9 @@ def run_engage_cycle():
 
     count = random.randint(8, 12)
     # Always include VIPs if they're in the pool.
-    vip_picks = [h for h in pool if h in VIP_ACCOUNTS]
-    rest = [h for h in pool if h not in VIP_ACCOUNTS]
+    vip = _vip_accounts()
+    vip_picks = [h for h in pool if h in vip]
+    rest = [h for h in pool if h not in vip]
     random.shuffle(rest)
     picks = (vip_picks + rest)[:count]
 
@@ -96,7 +96,7 @@ def run_engage_cycle():
                 continue
             # Cooled down 5/3→2/1 (operator 2026-06-15: too many likes
             # tripped the automation flag).
-            like_count = 2 if username in VIP_ACCOUNTS else 1
+            like_count = 2 if username in vip else 1
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
             outcomes = visit_profile_and_like(username, like_count=like_count)
             liked += sum(o is LikeOutcome.LIKED for o in outcomes)

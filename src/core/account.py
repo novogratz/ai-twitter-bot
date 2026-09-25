@@ -2,9 +2,11 @@
 
 The Account holds what the bot says and where it looks: its handle and
 language, its Slots and their angles, its feeds, Evergreen topics and trusted
-hosts, its relevance filter. `settings.load()` loads it at start, between the
-engine defaults and `.env`; a missing Account, an unknown key or a badly
-typed value stops the start with an `AccountError` naming the file.
+hosts, its relevance filter; its network (the accounts the jobs reply to,
+scan, visit or skip, and the Blocked accounts it adds to the engine's), its
+niche patterns and its X searches. `settings.load()` loads it at start,
+between the engine defaults and `.env`; a missing Account, an unknown key or
+a badly typed value stops the start with an `AccountError` naming the file.
 
 Read it when it is used, inside the function: `account.current().editorial.
 feeds`, never a module-level copy, so a test that swaps the Account reaches
@@ -66,6 +68,9 @@ class Account:
     editorial: Editorial
     relevance: Relevance
     limits: dict  # engine setting name -> value, checked by settings
+    network: "Network"
+    niche: "Niche"
+    searches: "Searches"
 
 
 def current() -> Account:
@@ -95,7 +100,8 @@ def load(name: str) -> Account:
 
 def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "editorial": dict,
-                                             "relevance": dict}, optional={"limits": dict})
+                                             "relevance": dict, "network": dict, "niche": dict,
+                                             "searches": dict}, optional={"limits": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     editorial = _Table(shown, "editorial", top["editorial"],
@@ -107,7 +113,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
         editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
-        limits=dict(top.get("limits", {})))
+        limits=dict(top.get("limits", {})), network=_network(top), niche=_niche(top),
+        searches=_searches(top))
 
 
 def _editorial(table) -> Editorial:
@@ -143,11 +150,90 @@ def _editorial(table) -> Editorial:
                      trusted_hosts=frozenset(table.items("trusted_hosts", str)))
 
 
-def _pattern(table, key) -> re.Pattern:
+def _pattern(table, key, flags=re.I) -> re.Pattern:
     try:
-        return re.compile(table[key], re.I)
+        return re.compile(table[key], flags)
     except re.error as exc:
         table.fail(key, f"is not a valid regular expression ({exc})")
+
+
+# ── Network and niche (#204): the accounts, searches and patterns the jobs use ──
+
+_HANDLE = re.compile(r"[A-Za-z0-9_]{1,15}")
+_NETWORK_HANDLES = ("profile_visits", "vip_scan", "pinned_tracked", "vip_reply", "big_ai_hype",
+                    "mid_size_ai", "high_traction_reply", "big_fr", "engage_vip",
+                    "engage_targets", "reply_targets", "follow_engagers_skip")
+_SEARCHES = ("replies", "hot_tab", "likes")
+
+
+@dataclass(frozen=True)
+class Network:
+    """X handles as account.toml lists them: order, case and repeats kept."""
+    blocked_accounts: tuple  # tokens added to config.BLOCKLIST, which none removes
+    profile_visits: tuple
+    vip_scan: tuple
+    pinned_tracked: tuple
+    vip_reply: tuple
+    big_ai_hype: tuple
+    mid_size_ai: tuple
+    high_traction_reply: tuple
+    big_fr: tuple
+    engage_vip: tuple
+    engage_targets: tuple
+    reply_targets: tuple
+    follow_engagers_skip: tuple
+
+    @property
+    def always_reply(self) -> tuple:
+        """The accounts early_bird scans first: vip_reply, then the four lists
+        after it, a handle listed twice kept at its first place."""
+        return tuple(dict.fromkeys(self.vip_reply + self.big_ai_hype + self.mid_size_ai
+                                   + self.high_traction_reply + self.big_fr))
+
+
+@dataclass(frozen=True)
+class Niche:
+    post: re.Pattern
+    ticker: re.Pattern  # case-sensitive: a $TICKER, not any dollar word
+    bio: re.Pattern
+
+
+@dataclass(frozen=True)
+class Searches:
+    replies: tuple
+    hot_tab: tuple
+    likes: tuple
+
+
+def _network(top) -> Network:
+    table = _Table(top.file, "network", top["network"],
+                   required={key: list for key in _NETWORK_HANDLES},
+                   optional={"blocked_accounts": list})
+    for key in _NETWORK_HANDLES:
+        for i, handle in enumerate(table.items(key, str)):
+            if not _HANDLE.fullmatch(handle):
+                table.fail(f"{key}[{i}]", f"takes an X handle without @, not {handle!r}")
+    blocked = table.items("blocked_accounts", str) if "blocked_accounts" in table else []
+    for i, token in enumerate(blocked):
+        if not re.search(r"[^\W_]", token):
+            table.fail(f"blocked_accounts[{i}]", f"takes a handle or a display name, not {token!r}")
+    return Network(blocked_accounts=tuple(blocked),
+                   **{key: tuple(table[key]) for key in _NETWORK_HANDLES})
+
+
+def _niche(top) -> Niche:
+    table = _Table(top.file, "niche", top["niche"], required={"post": str, "ticker": str, "bio": str})
+    return Niche(post=_pattern(table, "post"), ticker=_pattern(table, "ticker", flags=0),
+                 bio=_pattern(table, "bio"))
+
+
+def _searches(top) -> Searches:
+    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES})
+    for key in _SEARCHES:
+        for i, query in enumerate(table.items(key, str)):
+            if not query.strip():
+                table.fail(f"{key}[{i}]", "is blank")
+    return Searches(**{key: tuple(table[key]) for key in _SEARCHES})
 
 
 class _Table:

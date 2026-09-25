@@ -5,6 +5,7 @@ Each follow job and the seeding script run for real on a handle holding a
 blocklist token; `follow_account` is wrapped, never replaced, so the test
 sees the chokepoint's own outcome.
 """
+import dataclasses
 import importlib.util
 import json
 import time
@@ -12,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from src.core import config
+from src.core import account, config
 from src.guards import follow_policy, reply_admission
 from src.x import safari
 from src.x import twitter_client as tc
@@ -107,3 +108,46 @@ def test_reply_admission_likes_and_follows_share_one_blocklist_match(monkeypatch
         is reply_admission.Refusal.BLOCKED_ACCOUNT
     assert tc.like_tweet("https://x.com/anyone/status/2063500000000000202") is tc.LikeOutcome.BLOCKED
     assert follow_policy.judge("anyone").refusal is follow_policy.Refusal.BLOCKED_ACCOUNT
+
+
+# --- Blocked accounts an Account adds (#204) ----------------------------------------
+
+
+def _account_blocking(monkeypatch, *tokens):
+    """The loaded Account, its network.blocked_accounts set to `tokens`."""
+    loaded = account.current()
+    network = dataclasses.replace(loaded.network, blocked_accounts=tokens)
+    monkeypatch.setattr(account, "current", lambda: dataclasses.replace(loaded, network=network))
+
+
+def test_a_blocked_account_the_account_adds_is_refused_a_follow_and_a_reply(monkeypatch, memory_ledger):
+    monkeypatch.setenv("DRY_RUN", "0")
+    opened = []
+    monkeypatch.setattr(safari, "open_url", opened.append)
+    target = "https://x.com/Some_Troll_Bot/status/2063500000000000201"
+    assert not reply_admission.is_blocked_account("Some_Troll_Bot")
+    assert reply_admission.judge_parent(target).refusal is not reply_admission.Refusal.BLOCKED_ACCOUNT
+
+    _account_blocking(monkeypatch, "some troll")
+
+    assert tc.follow_account("Some_Troll_Bot") is tc.FollowOutcome.BLOCKED
+    assert reply_admission.judge_parent(target).refusal is reply_admission.Refusal.BLOCKED_ACCOUNT
+    assert memory_ledger.rows == [] and opened == []
+    # The engine's own tokens hold beside the Account's.
+    assert all(reply_admission.is_blocked_account(token) for token in config.BLOCKLIST)
+
+
+def test_an_account_cannot_unblock_one_of_the_engine_blocked_accounts(monkeypatch, memory_ledger):
+    """No key removes a token from config.BLOCKLIST (an unknown key stops the
+    start, tests/core/test_account.py): an Account with no Blocked account
+    of its own still meets every one of the engine's."""
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(safari, "open_url", lambda *_: pytest.fail("opened a Blocked account's page"))
+    _account_blocking(monkeypatch)
+    assert "pgm_pm" in config.BLOCKLIST
+    for token in config.BLOCKLIST:
+        assert reply_admission.is_blocked_account(token), token
+    assert tc.follow_account("pgm_pm") is tc.FollowOutcome.BLOCKED
+    assert reply_admission.judge_parent("https://x.com/pgm_pm/status/2063500000000000201").refusal \
+        is reply_admission.Refusal.BLOCKED_ACCOUNT
+    assert memory_ledger.rows == []

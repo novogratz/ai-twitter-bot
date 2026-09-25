@@ -38,7 +38,7 @@ The top level of `src/` holds only packages.
 
 | Concern | Where |
 |---|---|
-| Account: handle, language, Slots and angles, feeds, Evergreen topics, trusted hosts, relevance filter, stricter limits | `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked at start by `src/core/account.py` |
+| Account: handle, language, Slots and angles, feeds, Evergreen topics, trusted hosts, relevance filter, stricter limits; network handle lists, added Blocked accounts, niche patterns, X searches | `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked at start by `src/core/account.py` |
 | Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py` |
 | Draft and review limits, their JSON schemas and call profiles | `src/editorial/editorial_schemas.py` |
 | Model calls: provider adapters, the one fallback ladder (no fallback unless `LLM_FALLBACK_CLI` names one; an unknown provider fails the call and runs nothing), the CLI model a model setting gives the provider called, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |

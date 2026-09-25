@@ -47,7 +47,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     chokepoint.answer = WriteOutcome.REFUSED
     for module in (dr, eb, mw, fs):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
-    monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])
+    monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     settings_override(ENABLE_DEBATES=True)
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
@@ -422,12 +422,12 @@ REPLY_CALLS = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", 
 
 
 def job_reply_call(name):
-    from src.core import settings
+    from src.core import account, settings
     from src.replies import debate_bot, direct_reply as dr, replyback_agent
 
     return {
         "search": lambda: dr.reply_call("someone"),
-        "search VIP": lambda: dr.reply_call(sorted(dr.VIP_REPLY_ACCOUNTS)[0]),
+        "search VIP": lambda: dr.reply_call(sorted(account.current().network.vip_reply)[0]),
         "Graphseo": lambda: dr._vip_call("Graphseo"),
         "bestie": lambda: dr._vip_call(settings.get("BESTIE_HANDLE")),
         "buddy": lambda: dr._vip_call("vision_ia"),

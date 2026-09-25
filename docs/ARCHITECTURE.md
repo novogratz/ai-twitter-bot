@@ -80,7 +80,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
-| `early_bird_job` | 5 min | Replies to fresh posts from `ALWAYS_REPLY_ACCOUNTS` and the tracked-account list. |
+| `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
@@ -89,7 +89,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; any other outcome marks it tried. |
-| `like_job` | 4 min | Likes posts from niche searches. |
+| `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
 | `follower_tracker_job` | 30 min | Records the follower count in `follower_history.json`. |
@@ -97,7 +97,8 @@ exceptions; all but the editorial and reach-report jobs also report to
 
 Two settings decide how much of the table does anything:
 
-- `PROFILE_VISIT_ALLOWLIST` (default `TheBTCTherapist,Graphseo`). Profile
+- `PROFILE_VISIT_ALLOWLIST` (the Account's `network.profile_visits` unless
+  `.env` sets it: `TheBTCTherapist,Graphseo` for @TheAIShrink). Profile
   scrapes and profile likes return nothing for other handles, so
   `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
   replyback profile likes only act on allowlisted accounts.
@@ -114,7 +115,9 @@ Two settings decide how much of the table does anything:
 `src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
 lock. The Slots, feeds, Evergreen topics, trusted hosts and relevance filter
 are the Account's: `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked
-at start by `src/core/account.py` and read at each call.
+at start by `src/core/account.py` and read at each call. The reply, like and
+follow jobs read the same way the Account's `[network]` handle lists,
+`[niche]` patterns and `[searches]` queries.
 
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
@@ -444,13 +447,14 @@ Five modules sit behind them:
   `judge(handle)` checks, before the profile opens, the handle (the one
   check of `[A-Za-z0-9_]{1,15}`), the Blocked account (the match of
   `reply_admission.is_blocked_account`, the one Reply admission and
-  `like_tweet` use), the relation (a Stranger is refused in
+  `like_tweet` use, over the engine's `BLOCKLIST` and the Account's
+  `network.blocked_accounts`), the relation (a Stranger is refused in
   every mode), the whitelist (a follower or an Engager passes it while
   `FOLLOWBACK_BYPASS_WHITELIST` is on), anti-churn, the daily cap, the
   spacing, the following ceiling and ratio brake, then the quality-reject
   cache. `judge_profile` runs the quality gate on the open profile, by
   relation (a Seed account is exempt, an Engager skips the size and niche
-  checks), and caches a reject for 30 days. Each
+  checks; the niche is the Account's `niche.bio`), and caches a reject for 30 days. Each
   returns a `Verdict` whose `Refusal` names the cause; `follow_account`
   turns it into its `FollowOutcome`, and the jobs act on that outcome
   without checking a rule again. `followed()` reads the followed accounts

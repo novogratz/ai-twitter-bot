@@ -1,6 +1,6 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
 import traceback
-from ..core import config
+from ..core import account, config
 from ..guards.reply_admission import is_blocked_account
 from ..core.logger import log
 from ..x import x_urls
@@ -20,10 +20,9 @@ REPLYBACK_JOB = reply_pipeline.Job("replyback", "REPLYBACK",
 
 
 def _influencer_handles() -> set:
-    """Merge engage + reply-target lists into a single lowercase set."""
-    from ..account.engage_bot import TARGET_ACCOUNTS as ENGAGE_TARGETS
-    from .reply_agent import TARGET_ACCOUNTS as REPLY_TARGETS
-    return {h.lower() for h in list(ENGAGE_TARGETS) + list(REPLY_TARGETS)}
+    """The Account's engage and reply targets, lowercase."""
+    network = account.current().network
+    return {h.lower() for h in network.engage_targets + network.reply_targets}
 
 
 def _is_blocklisted(user_string: str, handle: str) -> bool:

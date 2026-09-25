@@ -87,7 +87,10 @@ the key, and `--dry-run` names the same keys.
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
 `accounts/<name>/account.toml`, which holds the handle, the language of the
 Originals, the Slots and their angles, the feeds, Evergreen topics, trusted
-hosts and the relevance filter. It is read once at start, like `.env`: a
+hosts and the relevance filter, and the network and niche the reply, like and
+follow jobs use: handle lists, niche patterns, X searches, and the Blocked
+accounts it adds to the engine's `BLOCKLIST`, which it can never shrink. It is
+read once at start, like `.env`: a
 missing Account, an unknown key or a badly typed value stops the start with a
 message naming the file and the key. Its `[limits]` may tighten an engine
 ceiling or floor, never lift it; a value past the bound is brought back to it

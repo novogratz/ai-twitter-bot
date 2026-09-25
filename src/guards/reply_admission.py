@@ -28,7 +28,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import config, humanizer, reply_language, settings
+from ..core import account, config, humanizer, reply_language, settings
 from ..x import x_urls
 from ..core.logger import log
 
@@ -130,9 +130,11 @@ def _normalise(handle: str) -> str:
 
 def is_blocked_account(author: str) -> bool:
     """A Blocked account token anywhere in the handle, both sides stripped of
-    case, spaces, dashes and underscores: "la pique" catches @la_pique_off."""
+    case, spaces, dashes and underscores: "la pique" catches @la_pique_off.
+    The tokens are the engine's BLOCKLIST and those the Account adds to it."""
     handle = _normalise(author)
-    return any(token and token in handle for token in map(_normalise, config.BLOCKLIST))
+    tokens = (*config.BLOCKLIST, *account.current().network.blocked_accounts)
+    return any(token and token in handle for token in map(_normalise, tokens))
 
 
 def _handles(name: str) -> set:

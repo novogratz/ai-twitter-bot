@@ -347,11 +347,11 @@ def test_an_unreadable_or_missing_whitelist_aborts_before_any_unfollow(script, m
 
 
 def test_legacy_keep_set_protects_respect_list_targets_and_seed_tiers(script, monkeypatch):
-    from src.account import engage_bot
+    from src.core import account
     from src.guards import respect_list
     monkeypatch.setattr(respect_list, "load", lambda: {"mistralai"})
     monkeypatch.setattr(follow_policy, "load_whitelist",
                         lambda: {"tier1": {"thebtctherapist"}, "tier2": {"morganhousel"}})
     keep = script._legacy_keep_set()
     assert {"mistralai", "thebtctherapist", "morganhousel"} <= keep
-    assert {h.lower() for h in engage_bot.TARGET_ACCOUNTS} <= keep
+    assert {h.lower() for h in account.current().network.engage_targets} <= keep
