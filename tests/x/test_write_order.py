@@ -93,6 +93,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(fp, "adjust_following", lambda delta: step(f"adjust:{delta:+d}"))
     monkeypatch.setattr(ag, "jitter_sleep", lambda *_: step("jitter"))
     monkeypatch.setattr(fp, "is_whitelisted", lambda handle: False)
+    monkeypatch.setattr(fp, "is_follower", lambda handle: True)
     monkeypatch.setattr(ag, "can_post", lambda *a, **k: (
         step("guard:can_post", (False, "refused") if "can_post" in t.refuse else (True, ""))))
     monkeypatch.setattr(fp, "judge", lambda *a, **k: step("guard:judge_follow", (

@@ -5,27 +5,22 @@ all of them"): the people most likely to follow us back are the ones who
 just engaged US. We already have them on disk for free: every Debate turn
 the account shipped (replyback or debate) leaves a ledger row naming the
 Engager it answered. This lane follows a small daily trickle of them
-through the full follow chokepoint with `engager=True` (size/niche gates
-skipped — their behavior proves both — English gate + caps + spacing +
-churn kept).
+through the full follow chokepoint, which finds them Engagers in the same
+ledger (follow_policy.engagers): size/niche gates skipped — their behavior
+proves both — English gate + caps + spacing + churn kept. An Engager the
+followers page showed is a follower to the policy, and gets the full gate.
 
 No new Safari scraping: the data source is the action ledger.
 """
 import os
 import traceback
-from datetime import date, timedelta
+from datetime import date
 
-from ..guards import action_guard
-from ..x import x_urls
+from ..guards import follow_policy
 from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
-from ..core.state_store import DISPOSABLE, GUARDED, StateFile
+from ..core.state_store import GUARDED, StateFile
 
-# replied_back.json stopped being written on 2026-09-23 (issue #100): the
-# ledger's Debate turns replaced it. Its Engagers are read until they age out
-# of the ledger's 90 days; delete this fallback and the file after 2026-12-22.
-# Disposable: read only, and an empty list only follows fewer Engagers.
-FROZEN_REPLIED_BACK = StateFile("replied_back.json", [], DISPOSABLE)
 # Guarded: it alone holds this job's daily cap and the handles already tried.
 STATE = StateFile("follow_engagers_state.json",
                   {"date": "", "count_today": 0, "attempted": []}, GUARDED)
@@ -43,24 +38,6 @@ def _load_state() -> dict:
 def _save_state(st: dict) -> None:
     st["attempted"] = st.get("attempted", [])[-2000:]
     STATE.write(st)
-
-
-def _frozen_engager_handles() -> list:
-    """Newest-first handles from the frozen replied_back.json URLs posted
-    within the ledger's 90 days, the same window as the Debate turns."""
-    handles = []
-    for u in map(str, reversed(FROZEN_REPLIED_BACK.read())):
-        handle, age = x_urls.author(u), x_urls.age(u)
-        if handle and age is not None and age <= timedelta(days=90):
-            handles.append(handle)
-    return handles
-
-
-def _engager_handles(limit: int = 200) -> list:
-    """Newest-first Engagers: Debate turn authors from the ledger, then the
-    frozen replied_back.json."""
-    handles = dict.fromkeys(action_guard.debate_turn_authors() + _frozen_engager_handles())
-    return list(handles)[:limit]
 
 
 def run_follow_engagers_cycle():
@@ -90,12 +67,12 @@ def run_follow_engagers_cycle():
     # cap, total ceiling) ends the cycle WITHOUT burning the candidate; any
     # other outcome marks the handle attempted. An unreadable whitelist
     # raises out of the cycle, before any candidate is marked.
-    for h in _engager_handles():
+    for h in follow_policy.engagers()[:200]:
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
         if h == own or h in BLOCKLIST or h in _SKIP_HANDLES or h in attempted:
             continue
-        result = follow_account(h, engager=True)
+        result = follow_account(h)
         if result.is_budget_refusal:
             log.info(f"[FOLLOW-ENGAGERS] Follow budget: {result.value} — ending cycle, candidates preserved.")
             break

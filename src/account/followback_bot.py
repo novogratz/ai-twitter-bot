@@ -12,6 +12,11 @@ Strategy:
     per cycle (don't burn the daily follow budget all at once).
   - Skip the accounts in followed_accounts.json, which follow_account keeps
     for a follow that shipped or an account found already followed.
+  - The scrape reads, on the followers page only, the profile link of each
+    user cell of the primary column, so suggested accounts ("Who to
+    follow") and the @mentions of a bio never pass for followers. It
+    records the handles it keeps with follow_policy.record_followers: the
+    policy admits a Follow-back on that record, never on this job's word.
 
 Safety: handle whitelist heuristic — skip obvious bots (handle made of
 random alphanumerics with no vowels, length=15) and BLOCKLIST entries.
@@ -54,33 +59,57 @@ def _looks_like_real_handle(handle: str) -> bool:
 
 
 def _scrape_followers_list(max_handles: int = 30) -> list[str]:
-    """Open /TheAIShrink/followers and scrape the @handles visible on the page."""
+    """Scrape the @handles of the open followers page's user cells, keep the
+    real-looking ones and record them as followers. Nothing is read or
+    recorded unless the tab shows our own followers page."""
     js_code = """
     (function() {
         var handles = [];
         var seen = {};
-        var anchors = document.querySelectorAll('a[role="link"][href^="/"]');
-        for (var i = 0; i < anchors.length && handles.length < MAX; i++) {
-            var h = anchors[i].getAttribute('href') || '';
-            var m = h.match(/^\\/([A-Za-z0-9_]+)$/);
-            if (!m) continue;
-            var u = m[1];
-            // Skip non-profile paths
-            if (['home','explore','notifications','messages','i','search',
-                 'compose','settings','intent','login','signup'].indexOf(u) !== -1) continue;
-            if (seen[u]) continue;
-            seen[u] = 1;
-            handles.push(u);
+        var column = document.querySelector('[data-testid="primaryColumn"]');
+        var cells = column ? column.querySelectorAll('[data-testid="UserCell"]') : [];
+        for (var i = 0; i < cells.length && handles.length < MAX; i++) {
+            // The cell's first profile link is its account; the links
+            // after it are the @mentions of its bio.
+            var anchors = cells[i].querySelectorAll('a[role="link"][href^="/"]');
+            for (var j = 0; j < anchors.length; j++) {
+                var m = (anchors[j].getAttribute('href') || '').match(/^\\/([A-Za-z0-9_]+)$/);
+                if (!m) continue;
+                if (!seen[m[1]]) {
+                    seen[m[1]] = 1;
+                    handles.push(m[1]);
+                }
+                break;
+            }
         }
-        return handles.join(',');
+        return JSON.stringify({path: location.pathname, handles: handles});
     })()
     """.replace("MAX", str(max_handles * 2))
 
     raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
-    if not raw:
+    try:
+        page = json.loads(raw or "null")
+    except ValueError:
         return []
-    handles = [h for h in raw.split(",") if h]
-    return handles[:max_handles]
+    if not isinstance(page, dict):
+        return []
+    path = str(page.get("path") or "").rstrip("/").lower()
+    if path != f"/{BOT_HANDLE}/followers".lower():
+        log.info(f"[FOLLOWBACK] Not on our followers page ({path or 'no page'}); nothing read.")
+        return []
+    handles = []
+    for h in page.get("handles") or []:
+        h = str(h)
+        if h.lower() == BOT_HANDLE.lower():
+            continue
+        if not _looks_like_real_handle(h):
+            log.info(f"[FOLLOWBACK] Skipping suspicious handle @{h}")
+            continue
+        handles.append(h)
+    handles = handles[:max_handles]
+    if handles:
+        follow_policy.record_followers(handles)
+    return handles
 
 
 def run_followback_cycle():
@@ -107,16 +136,7 @@ def run_followback_cycle():
 
     log.info(f"[FOLLOWBACK] Scraped {len(candidates)} follower handles. Filtering.")
 
-    fresh = []
-    for h in candidates:
-        if h.lower() == BOT_HANDLE.lower():
-            continue
-        if h in followed:
-            continue
-        if not _looks_like_real_handle(h):
-            log.info(f"[FOLLOWBACK] Skipping suspicious handle @{h}")
-            continue
-        fresh.append(h)
+    fresh = [h for h in candidates if h not in followed]
 
     if not fresh:
         log.info("[FOLLOWBACK] No fresh follow-back candidates after filtering.")
@@ -130,7 +150,7 @@ def run_followback_cycle():
     shipped = 0
     for h in pick:
         try:
-            result = follow_account(h, reciprocal=True)  # follow-back: bypass whitelist gate
+            result = follow_account(h)
             if result.is_budget_refusal:
                 log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
                 break

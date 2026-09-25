@@ -5,7 +5,9 @@ Strategy (2026-06-06 operator mandate):
     sweeper (dynamic_accounts.json "en"/"fr" buckets) + legacy discovered.json.
   - VIP: Graphseo always included every cycle.
   - Blocked / pruned accounts are filtered out automatically.
-  - No massive hardcoded follow list — we follow who the feed shows us.
+  - Only a Seed account of the pool is followed (issue #173): followers
+    belong to followback_job and Engagers to follow_engagers_job, each with
+    its own cap. The like pass is the same for every pool account.
 """
 import random
 import time
@@ -76,7 +78,8 @@ def run_engage_cycle():
     liked = 0
     for username in picks:
         try:
-            if username not in followed:
+            if (username not in followed
+                    and follow_policy.relation(username) is follow_policy.Relation.SEED):
                 log.info(f"[ENGAGE] Following + liking @{username}...")
                 follow_account(username)
                 time.sleep(random.randint(2, 4))

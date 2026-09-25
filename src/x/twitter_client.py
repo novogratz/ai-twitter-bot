@@ -604,16 +604,12 @@ _REFUSED = {follow_policy.Refusal.TOO_SOON: FollowOutcome.TOO_SOON,
             follow_policy.Refusal.POLICY: FollowOutcome.REFUSED}
 
 
-def follow_account(username: str, reciprocal: bool = False,
-                   engager: bool = False) -> FollowOutcome:
+def follow_account(username: str) -> FollowOutcome:
     """Visit a user's profile and click the Follow button.
 
-    `reciprocal=True` marks a follow-back (someone who already engages with
-    us) so the whitelist-only gate is bypassed for it (see
-    follow_policy.judge). `engager=True` (2026-07-19): the candidate
-    replied to our content — the quality gate skips its size/niche checks
-    (behavior proves both) while keeping the English gate + every
-    cap/spacing/churn rule.
+    The follow policy establishes the handle's relation with the account
+    itself (follow_policy.relation): a caller declares none, and a
+    Stranger is refused before the profile opens, whoever asks.
 
     Returns FOLLOWED only when the JS click actually fired (best-effort
     signal); the ledger row, the following count and the followed accounts
@@ -621,7 +617,8 @@ def follow_account(username: str, reciprocal: bool = False,
     accounts and writes no ledger row. A refusal names its cause, FAILED
     means no Follow button was clicked, DRY_RUN that nothing was opened.
     Raises StateUnreadable, with nothing opened or recorded, while
-    whitelist.json cannot be read before the profile opens.
+    whitelist.json or the action ledger cannot be read before the profile
+    opens.
 
     ⛔ Callers never add a handle to the followed accounts themselves: this
     function does, for a follow that shipped or was found done.
@@ -636,7 +633,7 @@ def follow_account(username: str, reciprocal: bool = False,
         return _REFUSED[verdict.refusal]
 
     def admit():
-        verdict = follow_policy.judge(username, reciprocal=reciprocal or engager)
+        verdict = follow_policy.judge(username)
         return None if verdict else refused(verdict)
 
     def pause():
@@ -650,8 +647,7 @@ def follow_account(username: str, reciprocal: bool = False,
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
-        verdict = follow_policy.judge_profile(
-            username, scraper._scrape_profile_quality, engager=engager)
+        verdict = follow_policy.judge_profile(username, scraper._scrape_profile_quality)
         if not verdict:
             return refused(verdict)
 

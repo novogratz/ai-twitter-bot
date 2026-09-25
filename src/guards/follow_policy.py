@@ -1,9 +1,15 @@
 """The follow policy: may the account follow this handle, and the follow
 files it reads and keeps (CONTEXT.md: Follow refusal).
 
-- `judge(handle)` runs before the profile opens: the handle, the whitelist,
-  anti-churn, the daily cap, the spacing, the following ceiling and ratio
-  brake, then the quality-reject cache.
+- `relation(handle)` says what the handle is to the account, from the
+  policy's own sources: Seed account (the whitelist), follower (the
+  followers page, `record_followers`), Engager (the Debate turns), else
+  Stranger.
+  No caller declares a relation.
+- `judge(handle)` runs before the profile opens: the handle, the relation
+  (a Stranger is never followed), the whitelist, anti-churn, the daily cap,
+  the spacing, the following ceiling and ratio brake, then the
+  quality-reject cache.
 - `judge_profile(handle, read_profile)` runs on the open profile, before
   the click: the quality gate, which caches what it rejects for 30 days.
 - `followed()` and `record_followed(handle)` are the record of the accounts
@@ -17,13 +23,14 @@ import os
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
 
 from ..core import config
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, GUARDED, StateFile
+from ..x import x_urls
 from . import action_guard
 
 # Guarded: the record of the accounts followed. engage_job follows every
@@ -43,8 +50,32 @@ WHITELIST = StateFile("whitelist.json", {}, GUARDED)
 # Disposable: the quality gate reads the profile again before any click, so
 # a lost cache costs a profile visit, never a follow.
 QUALITY_REJECTS = StateFile("follow_quality_rejects.json", {}, DISPOSABLE)
+# Disposable: the followers the followers page showed, handle -> last seen.
+# Lost, a follower reads as a Stranger until the next scrape: fewer follows,
+# never more.
+FOLLOWERS_SEEN = StateFile("followers_seen.json", {}, DISPOSABLE)
+# replied_back.json stopped being written on 2026-09-23 (issue #100): the
+# ledger's Debate turns replaced it. Its Engagers are read until they age out
+# of the ledger's 90 days; delete this fallback and the file after 2026-12-22.
+# Disposable: read only, and an empty list only makes fewer Engagers.
+FROZEN_REPLIED_BACK = StateFile("replied_back.json", [], DISPOSABLE)
+
+# A follower seen on the followers page stays one this long: the scrape reads
+# only the newest followers, and a follow-back may wait on the follow budget.
+FOLLOWER_MEMORY_DAYS = 30
 
 _HANDLE_RE = re.compile(r"[A-Za-z0-9_]{1,15}")
+
+_STRANGER = "Stranger: not on the whitelist, not a follower, not an Engager"
+
+
+class Relation(Enum):
+    """What a handle is to the account (CONTEXT.md: Seed account,
+    Follow-back, Engager, Stranger)."""
+    SEED = "Seed account"
+    ENGAGER = "Engager"
+    FOLLOWER = "follower"
+    STRANGER = "Stranger"
 
 
 class Refusal(Enum):
@@ -104,6 +135,69 @@ def is_whitelisted(handle: str,
     h = (handle or "").lower().lstrip("@")
     wl = load_whitelist()
     return any(h in wl[t] for t in tiers)
+
+
+# --- the relation with the account -----------------------------------------
+
+def _frozen_engagers() -> list:
+    """Newest-first handles from the frozen replied_back.json URLs posted
+    within the ledger's 90 days, the same window as the Debate turns."""
+    handles = []
+    for u in map(str, reversed(FROZEN_REPLIED_BACK.read())):
+        handle, age = x_urls.author(u), x_urls.age(u)
+        if handle and age is not None and age <= timedelta(days=90):
+            handles.append(handle)
+    return handles
+
+
+def engagers() -> list:
+    """Newest-first Engagers: the authors the ledger's Debate turns answered,
+    then the frozen replied_back.json. Raises StateUnreadable while the
+    ledger cannot be read."""
+    return list(dict.fromkeys(action_guard.debate_turn_authors() + _frozen_engagers()))
+
+
+def record_followers(handles) -> None:
+    """Note the handles the followers page showed as followers, and forget
+    those unseen for FOLLOWER_MEMORY_DAYS. Only the followers scrape calls
+    it: this record alone makes an account a follower."""
+    now = datetime.now()
+
+    def merge(doc):
+        kept = {h: ts for h, ts in doc.items() if _seen_within(ts, now)}
+        kept.update({h.lower(): now.isoformat() for h in handles if valid_handle(h)})
+        return kept
+    FOLLOWERS_SEEN.update(merge)
+
+
+def _seen_within(ts, now: datetime) -> bool:
+    try:
+        return now - datetime.fromisoformat(ts) < timedelta(days=FOLLOWER_MEMORY_DAYS)
+    except (TypeError, ValueError):
+        return False
+
+
+def is_follower(handle: str) -> bool:
+    ts = FOLLOWERS_SEEN.read().get((handle or "").lower().lstrip("@"), "")
+    return _seen_within(ts, datetime.now())
+
+
+def relation(handle: str) -> Relation:
+    """Seed account when whitelist.json lists the handle, follower when the
+    followers page showed it, Engager when a Debate turn answered it, else
+    Stranger. Raises StateUnreadable while whitelist.json or the action
+    ledger cannot be read.
+
+    A follower who is also an Engager is a follower: an Engager skips part
+    of the quality gate, and a follow-back never did."""
+    h = (handle or "").lower().lstrip("@")
+    if is_whitelisted(h):
+        return Relation.SEED
+    if is_follower(h):
+        return Relation.FOLLOWER
+    if h in {e.lower() for e in engagers()}:
+        return Relation.ENGAGER
+    return Relation.STRANGER
 
 
 # --- the record of the accounts followed -----------------------------------
@@ -197,32 +291,36 @@ def _following_ceiling(followers: int | None) -> int:
 
 # --- before the profile opens -----------------------------------------------
 
-def judge(handle: str, *, reciprocal: bool = False) -> Verdict:
+def judge(handle: str) -> Verdict:
     """2026-06-07 spec follow policy — whitelist-only seed/discovery list,
     hard total-following ceiling (300 cap / ~150 while followers are low),
     20/day pacing with >=10-min randomized gaps, 30-day anti-churn — then
     the quality-reject cache.
 
-    `reciprocal=True` (a follow-back of someone who already engages with us)
-    bypasses ONLY the whitelist-only gate when FOLLOWBACK_BYPASS_WHITELIST is
-    set — every other gate (churn, daily cap, spacing, ceiling) still applies.
+    A Stranger is refused whatever the mode or the caller. A follower or an
+    Engager passes the whitelist-only gate when FOLLOWBACK_BYPASS_WHITELIST
+    is set — every other gate (churn, daily cap, spacing, ceiling) still
+    applies.
 
     TOO_SOON and CAP_REACHED are about the account's follow budget, not the
     handle: a later cycle may admit the same handle. A ceiling that cannot
     be read or checked counts as reached.
 
-    Raises StateUnreadable while whitelist.json cannot be read, whitelist-only
-    mode or not: a refusal would let a job mark the handle tried, and the
-    whitelist is the same for every handle, so the job stops instead.
+    Raises StateUnreadable while whitelist.json or the action ledger cannot
+    be read, whitelist-only mode or not: a refusal would let a job mark the
+    handle tried, and both are the same for every handle, so the job stops
+    instead.
     """
     if not valid_handle(handle):
         return Verdict(Refusal.POLICY, f"invalid handle {handle!r}")
     h = handle.lower()
-    whitelisted = is_whitelisted(h)
-    exempt = reciprocal and config.FOLLOWBACK_BYPASS_WHITELIST
-    if config.FOLLOW_WHITELIST_ONLY and not whitelisted and not exempt:
+    rel = relation(h)
+    if rel is Relation.STRANGER:
+        return Verdict(Refusal.POLICY, _STRANGER)
+    exempt = config.FOLLOWBACK_BYPASS_WHITELIST
+    if config.FOLLOW_WHITELIST_ONLY and rel is not Relation.SEED and not exempt:
         return Verdict(Refusal.POLICY,
-                       "not on whitelist (whitelist-only mode; no strangers, no reciprocity)")
+                       f"not on whitelist (whitelist-only mode; {rel.value} not exempt)")
     if action_guard.within_churn_cooldown(h):
         return Verdict(Refusal.POLICY, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")
     follows_today = action_guard.count_today(action_guard.FOLLOW)
@@ -370,23 +468,26 @@ def _record_quality_reject(handle: str) -> None:
         lambda doc: {**doc, (handle or "").lower(): datetime.now().isoformat()})
 
 
-def judge_profile(handle: str, read_profile: Callable[[], dict], *,
-                  engager: bool = False) -> Verdict:
-    """The quality gate on the open profile. `read_profile` returns its
-    followers, bio and name; it runs only once the whitelist is read. A
-    rejected handle is cached for 30 days, where `judge` finds it.
+def judge_profile(handle: str, read_profile: Callable[[], dict]) -> Verdict:
+    """The quality gate on the open profile, by the handle's relation: a
+    Seed account passes, an Engager skips the size and niche checks, a
+    Stranger is refused. `read_profile` returns its followers, bio and
+    name; it runs only once the relation is known. A rejected handle is
+    cached for 30 days, where `judge` finds it.
 
-    A whitelist unreadable by now is a POLICY refusal, not a raise: the
+    A relation unreadable by now is a POLICY refusal, not a raise: the
     profile is open, and the refusal lets `follow_account` close its tab."""
     try:
-        whitelisted = is_whitelisted(handle)
+        rel = relation(handle)
     except StateUnreadable as exc:
-        return Verdict(Refusal.POLICY, f"whitelist unreadable ({exc})")
+        return Verdict(Refusal.POLICY, f"relation unreadable ({exc})")
+    if rel is Relation.STRANGER:
+        return Verdict(Refusal.POLICY, _STRANGER)
     profile = read_profile()
     ok, why = _quality_decision(
         _parse_follower_count(profile.get("followers", "")),
         profile.get("bio", ""), profile.get("name", ""),
-        whitelisted=whitelisted, engager=engager)
+        whitelisted=rel is Relation.SEED, engager=rel is Relation.ENGAGER)
     if not ok:
         _record_quality_reject(handle)
         return Verdict(Refusal.QUALITY_REJECTED, why)

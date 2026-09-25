@@ -48,7 +48,7 @@ The top level of `src/` holds only packages.
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
 | Caps, pacing, anti-churn; the ledger facts the follow policy reads | `src/guards/action_guard.py` |
-| Follow policy: handle, whitelist, caps, ceiling, quality gate, named Follow refusals, followed accounts and the other follow files | `src/guards/follow_policy.py` |
+| Follow policy: handle, the account's relation it finds itself (Seed account, follower, Engager; a Stranger never), whitelist, caps, ceiling, quality gate, named Follow refusals, followed accounts and the other follow files | `src/guards/follow_policy.py` |
 | Write ledger: today's counts, last write, last follow or unfollow; file and in-memory adapters | `src/guards/ledger.py` |
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |

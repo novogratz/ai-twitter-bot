@@ -87,12 +87,16 @@ def main():
         for h in new:
             print(f"  + {h}")
 
-    # Now follow them best-effort. Skip already-followed.
+    # Now follow them best-effort. Skip already-followed, and any handle
+    # whitelist.json does not list: follow_account also follows a follower
+    # or an Engager outside it, with a lighter gate for an Engager, which a
+    # seeding script has no business doing (#173).
     followed = follow_policy.followed()
-    targets = [h for h in SEED_HANDLES if h not in followed]
+    targets = [h for h in SEED_HANDLES if h not in followed
+               and follow_policy.relation(h) is follow_policy.Relation.SEED]
 
     if not targets:
-        print("[SEED] All seed handles already in followed_accounts.json.")
+        print("[SEED] No whitelisted seed handle left to follow.")
         return
 
     print(f"\n[SEED] Following {len(targets)} accounts (best-effort)...")

@@ -200,7 +200,7 @@ Safari restart, and nothing writes over the file:
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
-| `whitelist.json` | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job` ends its cycle as a failure with every Engager kept; `followback_job` and `engage_job` log the error for each pick and go on, `engage_job` without its like for that pick. A whitelist unreadable once the profile is open refuses the follow as `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
+| `whitelist.json` | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. A whitelist or ledger unreadable once the profile is open is a policy refusal: `follow_account` closes the tab and returns `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
@@ -331,6 +331,7 @@ Files written by active jobs:
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | `follow_policy.record_followed` (`follow_account`) | Accounts followed by the bot or found already followed | guarded |
 | `follow_quality_rejects.json` | `follow_policy` quality gate (`follow_account`) | Handles refused by the quality gate, 30 days | disposable |
+| `followers_seen.json` | `follow_policy.record_followers` (`followback_job` scrape) | Followers the followers page showed, last seen, 30 days; the proof of a Follow-back | disposable |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
 | `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |
@@ -353,12 +354,12 @@ Files active code reads but no active job writes:
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
 | `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
 | `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
-| `replied_back.json` | `follow_engagers_bot` | Frozen Engager list, see below | disposable |
+| `replied_back.json` | `follow_policy` (`follow_account`, `follow_engagers_job`) | Frozen Engager list, see below | disposable |
 
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
 to the replied store and the Engager list to the ledger's debate turns.
-`follow_engagers_job` still reads it until its entries age out of the
-ledger's 90 days; delete it, and the fallback in `follow_engagers_bot`,
+The follow policy still reads it until its entries age out of the
+ledger's 90 days; delete it, and the fallback in `follow_policy`,
 around 2026-12-22.
 
 The supervisors cite three more root files, kept for them:

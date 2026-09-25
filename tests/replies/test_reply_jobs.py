@@ -568,7 +568,7 @@ def test_replyback_answers_more_engagers_under_a_busier_post(replyback):
 
 
 def test_replyback_reciprocity_never_follows(monkeypatch):
-    """Engager follows belong to follow_engagers_job (engager=True). The
+    """Engager follows belong to follow_engagers_job. The
     replyback reciprocity pass only visits and likes; its old bare
     follow_account call was refused by the Seed-account rule anyway."""
     from src.replies import notify_bot as nb
