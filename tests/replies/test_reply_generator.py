@@ -36,7 +36,7 @@ def voice_files(monkeypatch, tmp_path):
 
 
 @pytest.fixture
-def jobs(monkeypatch, llm, chokepoint, voice_files):
+def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
     from src.replies import reply_pipeline
@@ -49,7 +49,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
-    monkeypatch.setenv("ENABLE_DEBATES", "1")
+    settings_override(ENABLE_DEBATES=True)
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
     monkeypatch.setattr(nb, "_reciprocate_engagers", lambda *a, **k: None)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
@@ -57,7 +57,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files):
 
     def search(author, text):
         url = fresh(author)  # every query of the cycle finds the same post
-        monkeypatch.setenv("VIP_SCAN_HANDLES", "")
+        settings_override(VIP_SCAN_HANDLES="")
         monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": url, "text": text}])
         dr.run_direct_reply_cycle()
 
@@ -75,7 +75,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files):
         return run
 
     def vip(handle, text):
-        monkeypatch.setenv("VIP_SCAN_HANDLES", handle)
+        settings_override(VIP_SCAN_HANDLES=handle)
         monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
         dr._run_graphseo_scan(reply_pipeline.Cycle())
 
@@ -224,13 +224,13 @@ PERSONA = ("you are @", "tu es @", "theaishrink", "a woman", "woman, 45", "45-ye
 
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
-def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, monkeypatch):
+def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, settings_override):
     """Issue #192: the persona reaches every Reply prompt through one Voice
     block, rendered from the Operator's Voice file under the configured
     handle; no template describes it again."""
-    from src.core import config, personality_store
+    from src.core import personality_store
 
-    monkeypatch.setattr(config, "BOT_HANDLE", "SomeOtherBot")
+    settings_override(BOT_HANDLE="SomeOtherBot")
     prompt = jobs(job, author, text)
     voice = personality_store.render_voice(language(prompt)[0])
     assert prompt.startswith(voice + "\n\n")
@@ -422,16 +422,17 @@ REPLY_CALLS = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", 
 
 
 def job_reply_call(name):
+    from src.core import settings
     from src.replies import debate_bot, direct_reply as dr, replyback_agent
 
     return {
         "search": lambda: dr.reply_call("someone"),
         "search VIP": lambda: dr.reply_call(sorted(dr.VIP_REPLY_ACCOUNTS)[0]),
         "Graphseo": lambda: dr._vip_call("Graphseo"),
-        "bestie": lambda: dr._vip_call(dr.BESTIE_HANDLE),
+        "bestie": lambda: dr._vip_call(settings.get("BESTIE_HANDLE")),
         "buddy": lambda: dr._vip_call("vision_ia"),
-        "debate": lambda: debate_bot.REPLY_CALL,
-        "replyback": lambda: replyback_agent.REPLY_CALL,
+        "debate": debate_bot.reply_call,
+        "replyback": replyback_agent.reply_call,
     }[name]()
 
 
@@ -528,7 +529,7 @@ def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, 
 
 
 @pytest.mark.parametrize("route", ["ollama", "claude"])
-def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch, route):
+def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch, route, settings_override):
     """The REPLY_SEARCH ReplyCall is built inside `reply_agent.generate_replies`,
     with WebSearch as an allowed tool and structured output. It declares no
     call profile either, so it reaches Ollama like every other Reply."""
@@ -542,7 +543,7 @@ def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch
     monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
     monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(1, "", "cloud down"))
-    monkeypatch.setattr(ra, "REPLY_LLM_PROVIDER", route)
+    settings_override(REPLY_LLM_PROVIDER=route)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
     found = [{"tweet_url": "https://x.com/someone/status/1", "reply": "Batching decides the margin.",
               "type": "reply", "pattern": "OTHER"}]
@@ -570,7 +571,7 @@ FOUND = [{"tweet_url": "https://x.com/someone/status/1", "reply": "Batching deci
     f"Here you go: {json.dumps(FOUND)} Enjoy.",
 ])
 @pytest.mark.parametrize("route", ["ollama", "claude"])
-def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer):
+def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, settings_override):
     """Issue #175: the Reply generator read every answer as post text, and a
     compact array became a stream of no events, so the reply search found
     nothing. The array now reaches it whole, from Ollama or from Claude's
@@ -578,14 +579,14 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer):
     provider and model that wrote its reply."""
     import urllib.request
 
-    from src.core import llm_client as llm
+    from src.core import config, llm_client as llm
     from src.replies import reply_agent as ra
 
     envelope = json.dumps({"type": "result", "subtype": "success", "result": answer})
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(0, envelope, ""))
     monkeypatch.setattr(urllib.request, "urlopen", OllamaServer(answer))
-    monkeypatch.setattr(ra, "REPLY_LLM_PROVIDER", route)
+    settings_override(REPLY_LLM_PROVIDER=route)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
 
-    model = llm.OLLAMA_MODEL if route == "ollama" else ra.REPLY_MODEL
+    model = llm.OLLAMA_MODEL if route == "ollama" else config.REPLY_MODEL
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]

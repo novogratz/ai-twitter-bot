@@ -44,11 +44,11 @@ def test_evening_slots_stay_inside_waking_hours():
 
 
 @pytest.fixture
-def draft_fixture(monkeypatch, tmp_path):
+def draft_fixture(monkeypatch, tmp_path, settings_override):
     now = datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO)
     clock(monkeypatch, now)
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
-    monkeypatch.setenv("CONTENT_LANG_PRIMARY", "en")
+    settings_override(CONTENT_LANG_PRIMARY="en")
     monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
     quote = "Chat templates convert conversations into the format expected by the model."
     source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
@@ -116,14 +116,13 @@ def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixtu
 
 
 @pytest.fixture
-def exhausted(monkeypatch, providers):
+def exhausted(monkeypatch, providers, settings_override):
     """Claude and its Codex fallback both at their usage limit, behind the
     real `_json_call`; nothing may reach X."""
-    from src.core import config
     from src.core.llm_client import LLMResult
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("published without a model answer"))
-    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "claude")
+    settings_override(PROFILE_LLM_PROVIDER="claude")
     monkeypatch.setattr(editorial, "_json_call", REAL_JSON_CALL)
     providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]
     providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
@@ -285,11 +284,11 @@ EVIDENCE = ("Chat templates convert conversations into the format expected by th
 
 
 @pytest.fixture
-def editor_source(monkeypatch):
+def editor_source(monkeypatch, settings_override):
     """A source of three Evidence passages, a Draft citing two of them and
     a full approval, for the real Draft and review calls."""
     from types import SimpleNamespace
-    monkeypatch.setenv("CONTENT_LANG_PRIMARY", "en")
+    settings_override(CONTENT_LANG_PRIMARY="en")
     monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
     source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
                   publisher="Hugging Face", body=" ".join(EVIDENCE), kind="knowledge", published_at="")
@@ -327,11 +326,11 @@ def last_call(editor, label):
     return [call for call in editor.calls if call.label == label][-1]
 
 
-def test_the_draft_and_the_review_run_on_the_profile_provider(monkeypatch, editor):
+def test_the_draft_and_the_review_run_on_the_profile_provider(settings_override, editor):
     """PROFILE_LLM_PROVIDER routes the Originals apart from AI_CLI, each
     call with its own profile."""
     from src.core import config
-    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "gemini")
+    settings_override(PROFILE_LLM_PROVIDER="gemini")
     assert draft_and_review(editor)[1][0]
     assert [(c.label, c.model, c.force_provider, c.profile) for c in editor.calls] == [
         ("EDITORIAL_DRAFT", config.NEWS_MODEL, "gemini", schemas.draft_profile()),
@@ -339,14 +338,14 @@ def test_the_draft_and_the_review_run_on_the_profile_provider(monkeypatch, edito
     ]
 
 
-def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch, editor_source):
+def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch, editor_source, settings_override):
     """Issue #174: the fallback renames the call "EDITORIAL_REVIEW
     (fallback)". When the label chose the schema, Ollama got the Draft's,
     answered a Draft, and the Editor rejected the Original without a word."""
     import io
     import urllib.request
-    from src.core import config, llm_client as llm
-    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "claude")
+    from src.core import llm_client as llm
+    settings_override(PROFILE_LLM_PROVIDER="claude")
     monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
     monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
     cloud = []
@@ -372,14 +371,14 @@ def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch,
 
 @pytest.mark.parametrize("fallback, cloud_calls, approved", [(None, [], False),
                                                           ("codex", ["EDITORIAL_REVIEW (codex fallback)"], True)])
-def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, editor_source, fallback,
-                                                              cloud_calls, approved):
+def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, settings_override, editor_source,
+                                                              fallback, cloud_calls, approved):
     """Issue #189: codex was the fallback by default. Without
     LLM_FALLBACK_CLI, a failed Ollama call fails the review."""
     import urllib.error
     import urllib.request
-    from src.core import config, llm_client as llm
-    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "ollama")
+    from src.core import llm_client as llm
+    settings_override(PROFILE_LLM_PROVIDER="ollama")
     monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
     if fallback is None:
         monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
@@ -399,11 +398,11 @@ def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, edito
     assert ok is approved
 
 
-def test_the_draft_prompt_opens_on_the_one_voice(monkeypatch, editor):
+def test_the_draft_prompt_opens_on_the_one_voice(settings_override, editor):
     """Issue #192: an Original gets the persona from the Voice block alone,
     under the configured handle."""
-    from src.core import config, personality_store
-    monkeypatch.setattr(config, "BOT_HANDLE", "SomeOtherBot")
+    from src.core import personality_store
+    settings_override(BOT_HANDLE="SomeOtherBot")
     draft_and_review(editor)
     prompt = last_call(editor, "EDITORIAL_DRAFT").prompt
     voice = personality_store.render_voice("en")

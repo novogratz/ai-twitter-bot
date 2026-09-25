@@ -71,7 +71,7 @@ def test_prompts_are_english_only():
     assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
 
 
-def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint):
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):
     """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
@@ -86,7 +86,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
     # mistake fail loudly instead.)
     from src.x import scraper
-    monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
+    settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(scraper, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
@@ -103,24 +103,24 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 
 
-def test_direct_reply_scans_rotating_query_subset(monkeypatch):
+def test_direct_reply_scans_rotating_query_subset(settings_override):
     """2026-07-10 reply throughput ("you used to be around 900/day now only
     600"): direct_reply scanned ALL ~26 search queries EVERY 1-2 min cycle —
     the same query scraped 4x/hour mostly yields dedup-skips, and search
     scrapes ate the Safari time replies needed for POSTING (~27/hr). Pin the
     contract: each cycle scans a bounded rotating slice, consecutive cycles
     rotate (no slice starvation), full coverage lands within ceil(N/K)
-    cycles, and the K env is read at call time."""
+    cycles, and K is read at call time."""
     from src.replies import direct_reply as dr
-    monkeypatch.setenv("DIRECT_REPLY_QUERIES_PER_CYCLE", "8")
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=8)
     qs = [f"q{i}" for i in range(26)]
     slices = [dr._queries_for_cycle(qs) for _ in range(4)]
     assert all(len(s) == 8 for s in slices), "cycle must pay for K scrapes only"
     assert slices[0] != slices[1], "consecutive cycles must rotate"
     assert set().union(*(set(s) for s in slices)) == set(qs), \
         "rotation must cover every query within ceil(N/K) cycles"
-    # K >= N degrades to scan-everything; env read at call time
-    monkeypatch.setenv("DIRECT_REPLY_QUERIES_PER_CYCLE", "99")
+    # K >= N degrades to scan-everything; K read at call time
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=99)
     assert dr._queries_for_cycle(qs) == qs
     # the live cycle actually routes through the rotation
     import inspect

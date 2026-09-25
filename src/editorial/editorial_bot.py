@@ -3,7 +3,6 @@
 Trend slots and the Startup post pick their topic from the fastest-rising AI
 posts on X; their facts still come from a fresh article in FEEDS."""
 import json
-import os
 import re
 import threading
 import urllib.request
@@ -16,7 +15,7 @@ from typing import NamedTuple
 from urllib.parse import urlsplit
 
 from ..guards import action_guard, content_guard, respect_list
-from ..core import config
+from ..core import config, settings
 from ..guards.active_hours import bedtime, is_active, now_local, require_active, today_iso
 from ..core.llm_client import CallProfile, LLMStatus, run_llm
 from ..core.logger import log
@@ -333,7 +332,7 @@ def source_evidence(source):
 
 def draft_post(slot, sources, recent, feedback="", trending=None):
     from ..core.personality_store import render_voice, hard_rules_block
-    language = "French" if os.environ.get("CONTENT_LANG_PRIMARY", "en") == "fr" else "English"
+    language = "French" if settings.get("CONTENT_LANG_PRIMARY") == "fr" else "English"
     evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
                          "evidence": source_evidence(source)} for source in sources]
     prompt = f"""{render_voice('en')}

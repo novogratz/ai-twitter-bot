@@ -189,27 +189,26 @@ _pending(
 )
 
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
-_pending(
-    "EDITORIAL_OLLAMA_MODEL",
-    "EDITORIAL_LLM_TIMEOUT_SECONDS",
-    "DIRECT_REPLY_MAX_AGE_MINUTES",
-    "BESTIE_HANDLE",
-    "VIP_SCAN_HANDLES",
-    "DIRECT_REPLY_MAX_PER_CYCLE",
-    "DIRECT_REPLY_MAX_EN_PER_CYCLE",
-    "DIRECT_REPLY_FEED_SCAN_LIMIT",
-    "DIRECT_REPLY_PROFILE_SCAN_LIMIT",
-    "DIRECT_REPLY_HOT_QUERY_LIMIT",
-    "DIRECT_REPLY_LIVE_QUERY_LIMIT",
-    "DIRECT_REPLY_QUERIES_PER_CYCLE",
-    "ENABLE_DEBATES",
-    "DEBATE_MAX_PER_CYCLE",
-    "DEBATE_MAX_AGE_HOURS",
-    "BABYSIT_WINDOW_MINUTES",
-    "FEED_SWEEP_SCAN_LIMIT",
-    "FEED_SWEEP_MAX_REPLIES_PER_CYCLE",
-    "FEED_SWEEP_HARVEST_MIN_LIKES",
-)
+_declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts and reviews Originals.")
+_declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an editorial model call.")
+_declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
+_declare("BESTIE_HANDLE", str, "TheBTCTherapist", "VIP account whose posts get the bestie prompt.")
+_declare("VIP_SCAN_HANDLES", str, "Graphseo,TheBTCTherapist", "Comma-separated accounts the direct_reply VIP scan answers.")
+_declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
+_declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
+# No reader left: declared so an .env that still sets them starts.
+_declare("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999, "Unused.")
+_declare("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150, "Unused.")
+_declare("DIRECT_REPLY_PROFILE_SCAN_LIMIT", int, 25, "Unused.")
+_declare("DIRECT_REPLY_HOT_QUERY_LIMIT", int, 20, "Unused.")
+_declare("DIRECT_REPLY_LIVE_QUERY_LIMIT", int, 20, "Unused.")
+_declare("ENABLE_DEBATES", bool, True, "Let the debate job answer mentions; read at each cycle.")
+_declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may ship.")
+_declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
+_declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
+_declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.")
+_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed.")
+_declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
 _declare("PINNED_TRACKED_HANDLES", str, "TheBTCTherapist,Graphseo,Mindset4Money_X",

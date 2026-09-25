@@ -1,13 +1,12 @@
 """Direct reply: the VIP scan and the search lane. Its ReplyCall, niche filter
 and candidate order also serve the feed sweep, early bird and mega watch."""
-import os
 import re
 import random
 import traceback
 from datetime import timedelta
 from ..x import x_urls
+from ..core import config, settings
 from ..core.logger import log
-from ..core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
 from .reply_generator import LanguageRule, ReplyCall
@@ -186,8 +185,6 @@ HOT_TAB_QUERIES = [
     "Bitcoin OR \"BTC ETF\" OR crypto lang:en min_faves:300",
 ]
 
-DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "7200"))
-
 REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,
 answer, grounded observation or thoughtful disagreement. If it is a question,
 answer it directly. A joke is optional. No mandatory formula or question ending.
@@ -260,14 +257,12 @@ def _graphseo_call() -> ReplyCall:
     import shutil
     force = "claude" if shutil.which("claude") else None
     # dossier=False: whether the author's dossier joins it is the Operator's call.
-    return ReplyCall(GRAPHSEO_PROMPT, PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP", dossier=False,
+    return ReplyCall(GRAPHSEO_PROMPT, config.PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP", dossier=False,
                      text_limit=300, max_chars=220,
                      llm_options={"output_json": False, "timeout": 60, "force_provider": force})
 
 
 # The bestie and buddy VIP prompts; Graphseo keeps GRAPHSEO_PROMPT.
-BESTIE_HANDLE = os.environ.get("BESTIE_HANDLE", "TheBTCTherapist")
-
 BESTIE_REPLY_PROMPT = """@{author} (The Bitcoin Therapist) is your BEST FRIEND and
 little brother — you're the big sister who already made it out. In your
 running joke, he's all-in on Bitcoin; you're all-in on AI. You're
@@ -320,9 +315,10 @@ def _vip_call(handle: str) -> ReplyCall:
     every other VIP gets the bestie or buddy prompt."""
     if handle.lower() == "graphseo":
         return _graphseo_call()
-    template = BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower() else BUDDY_REPLY_PROMPT
+    bestie = settings.get("BESTIE_HANDLE")
+    template = BESTIE_REPLY_PROMPT if handle.lower() == bestie.lower() else BUDDY_REPLY_PROMPT
     # dossier=False: see _graphseo_call.
-    return ReplyCall(template, PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
+    return ReplyCall(template, config.PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
                      text_limit=300, strip_preamble=True, skip_window=20)
 
 
@@ -350,10 +346,10 @@ def _run_graphseo_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     """
     from ..x.scraper import scrape_x_search
 
-    VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(
-        "VIP_SCAN_HANDLES", "Graphseo,TheBTCTherapist").split(",") if h.strip()]
+    vip_scan_handles = [h.strip().lstrip("@") for h in settings.get("VIP_SCAN_HANDLES").split(",")
+                        if h.strip()]
     posted = 0
-    for handle in VIP_SCAN_HANDLES:
+    for handle in vip_scan_handles:
         if cycle.rate_limited or (remaining is not None and posted >= remaining):
             break
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
@@ -374,19 +370,9 @@ def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_F
     vip = (author or "").lower().lstrip("@") in _VIP_REPLY_ACCOUNTS_LC
     # Force the reliable reply provider (claude haiku): the local ollama
     # qwen 503s and silently drops replies (operator 2026-06-24).
-    return ReplyCall(REPLY_PROMPT, PRIORITY_REPLY_MODEL if vip else REPLY_MODEL,
+    return ReplyCall(REPLY_PROMPT, config.PRIORITY_REPLY_MODEL if vip else config.REPLY_MODEL,
                      "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language,
-                     llm_options={"force_provider": REPLY_LLM_PROVIDER, "cwd": "/tmp"})
-
-# Bound each scheduled pass so it finishes before the next interval. Reply
-# volume comes from frequent cycles plus the other reply jobs, not one cycle
-# holding Safari long enough for APScheduler to skip runs.
-DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "3"))
-MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "9999"))
-DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "150"))
-DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "25"))
-DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "20"))
-DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "20"))
+                     llm_options={"force_provider": config.REPLY_LLM_PROVIDER, "cwd": "/tmp"})
 
 
 def freshness_sort_key(tweet):
@@ -415,7 +401,7 @@ def _search_candidates(tweets: list, query: str) -> list:
     """Search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the niche
     (queries are broad), fresh and rising first. The query joins the log
     tag so per-query conversion is measurable (2026-06-08)."""
-    limit = timedelta(minutes=DIRECT_REPLY_MAX_AGE_MINUTES)
+    limit = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
     return [reply_pipeline.Candidate(t["url"], t.get("text") or "", f"SEARCH-HOT/{query[:60]}")
             for t in sorted(tweets, key=freshness_sort_key)
             if t.get("url") and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
@@ -433,7 +419,7 @@ def _queries_for_cycle(all_queries: list) -> list:
     DIRECT_REPLY_QUERIES_PER_CYCLE (default 8, read at call time) bounds
     how many Safari search scrapes one cycle pays for. K >= N degrades to
     the old scan-everything behavior."""
-    k = max(1, int(os.environ.get("DIRECT_REPLY_QUERIES_PER_CYCLE", "8")))
+    k = max(1, settings.get("DIRECT_REPLY_QUERIES_PER_CYCLE"))
     n = len(all_queries)
     if n == 0 or k >= n:
         return list(all_queries)
@@ -449,9 +435,13 @@ def run_direct_reply_cycle(max_replies=None):
     `max_replies` bounds the cycle and returns Safari to the scheduler. When
     omitted, the steady-state default is DIRECT_REPLY_MAX_PER_CYCLE; pass 0
     or a negative value only in a manual/debug call to make it unbounded.
+    The default bounds each scheduled pass so it finishes before the next
+    interval: Reply volume comes from frequent cycles plus the other reply
+    jobs, not one cycle holding Safari long enough for APScheduler to skip
+    runs.
     """
     if max_replies is None:
-        max_replies = DIRECT_REPLY_MAX_PER_CYCLE
+        max_replies = settings.get("DIRECT_REPLY_MAX_PER_CYCLE")
     elif max_replies <= 0:
         max_replies = None
     cycle = reply_pipeline.Cycle()  # a post tried by one lane is not retried by the other

@@ -11,14 +11,12 @@ Outside the window it does nothing (near-zero Safari cost). All actual writes
 still flow through the reply chokepoint (caps, spacing, one-reply-per-tweet,
 truncation gate, @Graphseo typo).
 """
-import os
 import traceback
 from datetime import datetime
 
+from ..core import settings
 from ..core.history import load_history
 from ..core.logger import log
-
-BABYSIT_WINDOW_MINUTES = float(os.environ.get("BABYSIT_WINDOW_MINUTES", "60"))
 
 
 def _latest_post_age_minutes() -> float:
@@ -32,7 +30,7 @@ def _latest_post_age_minutes() -> float:
 
 def run_babysit_cycle():
     age = _latest_post_age_minutes()
-    if age > BABYSIT_WINDOW_MINUTES:
+    if age > settings.get("BABYSIT_WINDOW_MINUTES"):
         log.debug(f"[BABYSIT] Latest post is {age:.0f} min old — outside the hot window, nothing to do.")
         return
     log.info(f"[BABYSIT] Latest post is {age:.0f} min old — extra replyback sweep (first-hour algo window).")
