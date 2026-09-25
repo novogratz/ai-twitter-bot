@@ -216,12 +216,22 @@ Ollama over HTTP and the Codex, Gemini, Claude and OpenCode CLIs are
 adapters in `llm_client.ADAPTERS`. Each returns its provider's raw output;
 `run_llm` alone runs the fallback ladder and reads the answer. The ladder
 starts with the primary (`force_provider`, else `AI_CLI`), then tries at
-most one fallback, `LLM_FALLBACK_CLI`. That variable defaults to codex even
-when empty, and `LLM_DISABLE_FALLBACK=1` turns the fallback off. A call
+most one fallback, `LLM_FALLBACK_CLI`. Unset or empty, there is no fallback,
+and `LLM_DISABLE_FALLBACK=1` turns a configured one off. A provider name no
+adapter carries, primary or fallback, fails that rank without running
+anything, and an unknown primary tries no fallback; `main.py` logs every
+such setting at start (`llm_client.unknown_providers`). A CLI that is not
+installed fails its rank by name, and no other CLI stands in. Every provider
+can be the primary; `llm_client.FALLBACKS` lists those that can be the
+fallback. `_fallback` ignores a fallback that is not one of them (Claude), a
+CLI not installed, Ollama behind Ollama, or the primary itself without
+`LLM_FALLBACK_MODEL`: the call then fails at the primary, and `main.py` logs
+it at start (`llm_client.ignored_fallbacks`). A call
 fails on an error, an empty answer, a limit or refusal message
 (`_should_fallback`), or an answer that reads empty. A codex usage limit is
 cached in `codex_lockout.json`: it sends the call to the fallback labelled
-`(codex locked)`, and later codex calls go to Ollama alone until it expires.
+`(codex locked)`, and later codex calls go to Ollama alone until it expires,
+`LLM_FALLBACK_CLI` set or not: Ollama is local, so no call leaves the machine.
 When every provider tried failed on a usage limit (`_USAGE_LIMIT_PATTERNS`,
 a codex lockout seen or cached counting as one), the call comes back
 `LLMStatus.EXHAUSTED`. Only the CLI or the transport reports a limit: the
@@ -569,6 +579,9 @@ These are how the code behaves today, not design intent:
   taking `_safari_lock`.
 - The debate, VIP and Graphseo voices (`identity=False`) carry the hard rules
   but neither `core_identity.md` nor the author's dossier.
+- The Graphseo voice forces the Claude CLI whenever it is installed
+  (`direct_reply._graphseo_voice`), whatever `REPLY_LLM_PROVIDER` says: the
+  one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which
   `judge_reply` then refuses.

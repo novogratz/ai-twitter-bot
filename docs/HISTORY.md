@@ -21,6 +21,21 @@ their order in the file is not strictly chronological.
 > reshare or quote a post older than 48 hours, and treat a post of
 > unknown age as stale.
 
+> **2026-09-25 — an implicit cloud fallback and unknown providers (issue #189):**
+> `LLM_FALLBACK_CLI` fell back to codex when unset or empty, Originals
+> included, while the config comment and `.env.example` said the default
+> stayed local. A provider name no adapter carried ran a CLI anyway, which
+> `_build_cmd` sent to Claude: a typo in `PROFILE_LLM_PROVIDER` would have
+> sent the Drafts to a cloud service. The Operator chose to align the code
+> on the doc: unset, there is no fallback; an unknown name fails the call
+> without running anything, and the start logs it. The review found two
+> more substitutions: a fallback naming the primary became codex, installed
+> or not, and an uninstalled claude or gemini primary became codex. Both now
+> fail at the primary, and the start logs every fallback the code ignores.
+> Guard: `tests/core/test_llm_client.py`, with the Original and Reply cases in
+> `tests/editorial/test_editorial_bot.py` and
+> `tests/replies/test_reply_generator.py`.
+
 > **2026-09-24 — display names read as handles (issue #162):** three
 > paths took a handle from the scraper's display name. The feed sweep's
 > author harvest stored one-word names (`Claude`, `Tesla`, `Ted`…) in

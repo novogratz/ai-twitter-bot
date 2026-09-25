@@ -84,8 +84,9 @@ NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude
 REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
 
-# Profile and reply provider overrides. Default both to Ollama; Codex is the
-# cloud fallback when explicitly enabled. Claude is not used by default.
+# Profile and reply provider overrides. Default both to Ollama, with no
+# fallback: only LLM_FALLBACK_CLI (codex, say) adds one. Claude is not used by
+# default.
 PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "ollama").strip() or None
 REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "ollama").strip() or None
 

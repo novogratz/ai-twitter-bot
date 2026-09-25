@@ -16,7 +16,8 @@ supersede the historical surfaces listed below:
 | `POST_JITTER_SECONDS` | 0; a random extra gap after each original, drawn once per post; a negative value reads as 0 |
 | `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job`, `replyback_job` and `babysit_job`; read at call time |
-| `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers |
+| `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers, `ollama` by default. An unknown name fails every call it routes without running anything; the start logs it and `--dry-run` lists it under `unknown_llm_providers` |
+| `LLM_FALLBACK_CLI` | Unset: no fallback, a failed call fails, Originals and Replies alike. `codex` (or `gemini`, `ollama`) opts into one; an unknown name fails the fallback without running anything. Ignored, and logged at start and listed by `--dry-run` under `ignored_llm_fallbacks`: `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself without `LLM_FALLBACK_MODEL`. Two calls leave the configured provider without it: the Replies to @Graphseo run on the Claude CLI whenever it is installed, and a codex primary under a cached usage lockout (`codex_lockout.json`) goes to local Ollama |
 | `FR_FORCED_REPLY_HANDLES` | `Graphseo`: parents always answered in French by the search and feed-sweep Replies; `judge_reply` refuses an English-looking reply to them; read at call time |
 | `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; environment only, read at each like cycle |
 | `DRY_RUN` | `1` logs every write instead of sending it; read at each call through `config.dry_run()` |
@@ -64,8 +65,8 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/core/c
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. |
-| `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
+| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. An unknown name fails the call; a CLI not installed fails it too, and no other CLI stands in. |
+| `LLM_FALLBACK_CLI` | (unset) | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. Unset or empty: no fallback. Naming the primary gives no fallback unless `LLM_FALLBACK_MODEL` is set. A codex primary under a cached usage lockout goes to local Ollama even when unset. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
 | `LLM_DISABLE_FALLBACK` | `0` | Set to `1` to disable automatic LLM fallback. |
@@ -148,7 +149,7 @@ Per-cycle quotas (not daily caps):
 ```env
 BOT_HANDLE=TheAIShrink
 AI_CLI=ollama
-LLM_FALLBACK_CLI=codex
+LLM_FALLBACK_CLI=
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini

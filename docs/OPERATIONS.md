@@ -31,10 +31,12 @@ least:
 - `BOT_HANDLE=TheAIShrink`: the example still says `CryptoAIDecode`.
 - `CONTENT_LANG_PRIMARY=en`: the example says `fr`, and the editorial
   pipeline writes originals in French when it sees `fr`.
-- `LLM_DISABLE_FALLBACK=1` if originals must never leave the machine. An
-  empty `LLM_FALLBACK_CLI` still falls back to codex; the
-  `LLM_ALLOW_REMOTE_FALLBACK` variable mentioned in the example does not
-  exist in the code.
+- `LLM_FALLBACK_CLI=codex` only to let a failed call fall back to the
+  cloud. Unset or empty, as in the example, there is no fallback and no
+  call leaves the machine, except the Replies to @Graphseo: they run on
+  the Claude CLI whenever it is installed (`direct_reply._graphseo_voice`).
+  The start logs a fallback the code ignores, and `--dry-run` lists it
+  under `ignored_llm_fallbacks`.
 
 `src/core/config.py` loads `.env` without overriding variables already set in the
 shell. Check the setup without a browser or a model with the dry-run command

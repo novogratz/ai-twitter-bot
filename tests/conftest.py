@@ -151,6 +151,18 @@ def _daylight_default(monkeypatch):
 
 
 @_pytest.fixture(autouse=True)
+def _cli_installed(monkeypatch):
+    """Tests run the same whichever model CLIs the host has installed: every
+    CLI looks installed. A test of a missing CLI patches `which` itself."""
+    import shutil as _shutil
+    real = _shutil.which
+    model_clis = {"claude", "codex", "gemini", "opencode", "ollama"}
+    monkeypatch.setattr(_shutil, "which",
+                        lambda name, *a, **k: f"/usr/local/bin/{name}" if name in model_clis
+                        else real(name, *a, **k))
+
+
+@_pytest.fixture(autouse=True)
 def _fresh_job_memory(monkeypatch):
     """The Reply pipeline keeps the posts each job set aside, the direct
     reply its query rotation cursor, and the content guard the posts of this
@@ -180,7 +192,8 @@ def _fresh_editorial_memory(monkeypatch):
 def providers(monkeypatch):
     """A fake adapter for every provider behind the real `run_llm`, each
     failing until a test gives it answers, every CLI installed, the
-    ladder's variables unset."""
+    ladder's variables unset but an explicit codex fallback. `monkeypatch`
+    lets a rank set its own."""
     from types import SimpleNamespace
     from src.core import llm_client as llm
     from tests.helpers import FakeAdapter
@@ -192,7 +205,8 @@ def providers(monkeypatch):
     for var in ("AI_CLI", "LLM_FALLBACK_CLI", "LLM_FALLBACK_MODEL", "LLM_DISABLE_FALLBACK",
                 "CODEX_FALLBACK_MODEL"):
         monkeypatch.delenv(var, raising=False)
-    return SimpleNamespace(calls=calls, **fakes)
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "codex")
+    return SimpleNamespace(calls=calls, monkeypatch=monkeypatch, **fakes)
 
 
 @_pytest.fixture
