@@ -5,7 +5,7 @@ If you can't -> SKIP. But try harder first: make the joke warmer, more
 specific, more absurd before giving up. Therapist energy (2026-06-05): they
 replied to their coach — reward them, never roast them.
 """
-from ..core.config import REPLY_MODEL
+from ..core import config
 from .reply_generator import LanguageRule, ReplyCall
 
 REPLYBACK_PROMPT = """Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
@@ -107,6 +107,7 @@ OUTPUT RULES:
 Output ONLY the reply text, or SKIP."""
 
 
-# The Voice file follows the Engager's reply, by a word test that
-# matches substrings ("est" in "best" reads as French).
-REPLY_CALL = ReplyCall(REPLYBACK_PROMPT, REPLY_MODEL, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)
+def reply_call() -> ReplyCall:
+    # The Voice file follows the Engager's reply, by a word test that
+    # matches substrings ("est" in "best" reads as French).
+    return ReplyCall(REPLYBACK_PROMPT, config.REPLY_MODEL, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)

@@ -11,24 +11,15 @@ Hard rules preserved:
     each post before generation, in the Reply pipeline
   - all writes go through the twitter_client chokepoints
 """
-import os
 import traceback
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core.config import BOT_HANDLE
+from ..core import config, settings
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline
-from .direct_reply import DIRECT_REPLY_MAX_AGE_MINUTES, freshness_sort_key, is_on_niche, reply_call
-
-_OWN_HANDLE = BOT_HANDLE.lower()
-
-FEED_SWEEP_SCAN_LIMIT = int(os.environ.get("FEED_SWEEP_SCAN_LIMIT", "80"))
-FEED_SWEEP_MAX_REPLIES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", "8"))
-
-# Authors with at least this many likes on a post get added to dynamic_accounts.
-HARVEST_MIN_LIKES = int(os.environ.get("FEED_SWEEP_HARVEST_MIN_LIKES", "100"))
+from .direct_reply import freshness_sort_key, is_on_niche, reply_call
 
 
 def _harvest_active_authors(tweets: list) -> None:
@@ -45,12 +36,13 @@ def _harvest_active_authors(tweets: list) -> None:
         from ..core.dynamic_strategy import add_dynamic_accounts, get_dynamic_accounts
         existing = get_dynamic_accounts()
         known = set(h.lower() for bucket in ("en", "fr") for h in existing.get(bucket, []))
-        known.add(_OWN_HANDLE)
+        known.add(config.BOT_HANDLE.lower())
 
+        min_likes = settings.get("FEED_SWEEP_HARVEST_MIN_LIKES")
         new_handles = []
         for t in tweets:
             likes = int(t.get("likes") or 0)
-            if likes < HARVEST_MIN_LIKES:
+            if likes < min_likes:
                 continue
             handle = x_urls.author(t.get("url") or "")
             if not handle or handle in known or is_blocked_account(handle):
@@ -79,7 +71,7 @@ def run_feed_sweep_cycle():
 
 def _sweep_one_feed(source, scraper, cycle):
     log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
-    tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=FEED_SWEEP_SCAN_LIMIT)
+    tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
         return
@@ -87,7 +79,7 @@ def _sweep_one_feed(source, scraper, cycle):
     # Harvest active authors from this feed pass before filtering.
     _harvest_active_authors(tweets)
 
-    max_age = timedelta(minutes=DIRECT_REPLY_MAX_AGE_MINUTES)
+    max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
     label = f"FEED-SWEEP-{source}"
     reply_candidates = []
     # No shuffle: fresh-and-rising first (2026-06-07 spec — front-load
@@ -108,7 +100,7 @@ def _sweep_one_feed(source, scraper, cycle):
 
     job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)
     replies_done = reply_pipeline.run(job, reply_candidates, cycle,
-                                      max_generations=FEED_SWEEP_MAX_REPLIES_PER_CYCLE)
+                                      max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")
 
 

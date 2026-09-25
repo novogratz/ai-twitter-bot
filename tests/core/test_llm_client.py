@@ -526,7 +526,7 @@ class OllamaServer:
         return io.BytesIO(json.dumps({"response": answer}).encode())
 
 
-def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
+def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch, settings_override):
     """Issue #174: the caller's profile sets the model, schema, temperature
     and timeout floor; the label only names the call, the suffixes the
     ladder adds to it included. Issue #192: no profile adds a voice, so
@@ -543,8 +543,7 @@ def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
                             lambda request, answer=answer: cloud.append(request.label) or answer)
     monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
     monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
-    monkeypatch.setenv("EDITORIAL_OLLAMA_MODEL", "editor-model")
-    monkeypatch.setenv("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")
+    settings_override(EDITORIAL_OLLAMA_MODEL="editor-model", EDITORIAL_LLM_TIMEOUT_SECONDS=300)
     monkeypatch.setenv("LLM_DISABLE_FALLBACK", "0")
     monkeypatch.delenv("LLM_FALLBACK_MODEL", raising=False)
     review = schemas.review_profile()

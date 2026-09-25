@@ -3,8 +3,7 @@ from them, and the call profiles that send those schemas to the model.
 
 Each limit below lives here only. The schemas, and editorial_bot's prompts and
 checks, read it at call time: changing one changes all three."""
-import os
-
+from ..core import settings
 from ..core.llm_client import CallProfile, Output
 
 TEXT_MAX_CHARS = 250
@@ -55,10 +54,10 @@ def review_schema() -> dict:
 
 def _profile(schema: dict, temperature: float) -> CallProfile:
     return CallProfile(
-        ollama_model=os.environ.get("EDITORIAL_OLLAMA_MODEL", "gemma4:31b"),
+        ollama_model=settings.get("EDITORIAL_OLLAMA_MODEL"),
         schema=schema,
         temperature=temperature,
-        min_timeout=int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")),
+        min_timeout=settings.get("EDITORIAL_LLM_TIMEOUT_SECONDS"),
         output=Output.JSON,
     )
 

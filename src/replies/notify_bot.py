@@ -1,6 +1,6 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
 import traceback
-from ..core.config import BOT_HANDLE
+from ..core import config
 from ..guards.reply_admission import is_blocked_account
 from ..core.logger import log
 from ..x import x_urls
@@ -13,11 +13,10 @@ from ..x.twitter_client import (
 from . import reply_pipeline, replyback_agent
 import random
 
-_OWN_HANDLE = BOT_HANDLE.lower()
 # Answering someone who answered us is a Debate turn. The babysitter's
 # extra sweeps run this job too, on the same set-aside posts.
 REPLYBACK_JOB = reply_pipeline.Job("replyback", "REPLYBACK",
-                                   reply_call=lambda _author: replyback_agent.REPLY_CALL, debate_turn=True)
+                                   reply_call=lambda _author: replyback_agent.reply_call(), debate_turn=True)
 
 
 def _influencer_handles() -> set:
@@ -131,6 +130,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
     engaged = 0  # engagers with at least one like that shipped
     liked = 0
     seen_handles = set()
+    own_handle = config.BOT_HANDLE.lower()
     candidates = list(replies)
     random.shuffle(candidates)  # don't always hit the same top-of-list person
 
@@ -145,7 +145,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
             continue
         seen_handles.add(handle)
         # Hardened blocklist: catches display-name variants from scraper.
-        if _is_blocklisted(user_str, handle) or handle == _OWN_HANDLE:
+        if _is_blocklisted(user_str, handle) or handle == own_handle:
             continue
         if handle in influencers:
             continue  # influencers already notice us via the in-thread reply

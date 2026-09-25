@@ -562,7 +562,7 @@ def test_a_job_in_turn_never_waits_for_the_spacing(spacing):
     assert url not in set_aside(), "the post stays replayable"
 
 
-def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing, monkeypatch):
+def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing, monkeypatch, settings_override):
     """The chokepoint stays the judge: another job's Reply lands mid-wait,
     the real reply_to_tweet refuses on spacing before Safari, writes no
     ledger row, and the post stays replayable."""
@@ -571,7 +571,7 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
     from src.x import twitter_client as tc
 
     s = spacing
-    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)  # every gap is exactly the minimum
+    settings_override(REPLY_JITTER_SECONDS=0)  # every gap is exactly the minimum
     ag.record(ag.REPLY, fresh("earlier"))
 
     def another_job_replies_after_the_first_slice():

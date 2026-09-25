@@ -116,14 +116,14 @@ def test_reply_jobs_never_borrow_each_others_privates():
 
 
 @pytest.fixture
-def direct(monkeypatch, llm, chokepoint):
+def direct(monkeypatch, llm, chokepoint, settings_override):
     """direct_reply with one VIP handle; `vip` and `search` are what the two
     lanes scrape."""
     from src.replies import direct_reply as dr
     from src.x import scraper
 
     lanes = {"vip": [], "search": [], "queries": []}
-    monkeypatch.setenv("VIP_SCAN_HANDLES", "Graphseo")
+    settings_override(VIP_SCAN_HANDLES="Graphseo")
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
 
     def search(query, **k):
@@ -207,7 +207,7 @@ def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     assert len(lanes["queries"]) == 1, "the cycle stops at the first query instead of scraping the rest"
 
 
-def test_direct_reply_cycle_is_bounded(direct, monkeypatch):
+def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
     """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
     outlive its 2-minute interval; the startup warm-up once ran 20+ minutes.
     The cycle stops at its budget and yields Safari."""
@@ -221,7 +221,7 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch):
         return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
     monkeypatch.setattr(dr, "scrape_x_search", fresh_posts)
-    monkeypatch.setattr(dr, "DIRECT_REPLY_MAX_PER_CYCLE", 3)
+    settings_override(DIRECT_REPLY_MAX_PER_CYCLE=3)
 
     dr.run_direct_reply_cycle()
     assert len(chokepoint.sent) == 3 and len(lanes["queries"]) == 1
@@ -313,39 +313,35 @@ def test_feed_sweep_never_harvests_a_blocked_account(monkeypatch):
 # --- reply search (one model call finds and drafts) --------------------------
 
 
-def test_reply_search_surface_disabled_by_default(monkeypatch):
+def test_reply_search_surface_disabled_by_default(monkeypatch, settings_override):
     """2026-07-19: the LLM-web-search reply surface (reply_bot -> reply_agent)
     is retired by default. Web search cannot index <=24h x.com tweets, so the
     path either hallucinated URLs (PR #59) or answered conversationally to its
     own stale FR-era persona prompt — 388 failed Claude CLI calls for 1 reply
     over 35h, plus a refresh_feed() Safari touch every ~3 min. Pin: with
     ENABLE_REPLY_SEARCH unset/0 the cycle returns before ANY side effect
-    (no Safari, no LLM); =1 re-arms the path. Env read at call time."""
+    (no Safari, no LLM); =1 re-arms the path. Read at call time."""
+    from src.core import settings
     from src.replies import reply_bot as rb
 
     calls = []
     monkeypatch.setattr(rb, "refresh_feed", lambda: calls.append("safari"))
     monkeypatch.setattr(rb, "generate_replies", lambda **kw: calls.append("llm") or None)
 
-    # Default (unset) -> disabled, zero side effects
-    monkeypatch.delenv("ENABLE_REPLY_SEARCH", raising=False)
-    rb.run_reply_cycle()
-    assert calls == [], "disabled surface must not touch Safari or the LLM"
-
-    # Explicit 0 -> same
-    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "0")
+    # Default -> disabled, zero side effects
+    assert settings.DECLARED["ENABLE_REPLY_SEARCH"].default is False
+    settings_override(ENABLE_REPLY_SEARCH=False)
     rb.run_reply_cycle()
     assert calls == [], "ENABLE_REPLY_SEARCH=0 must short-circuit the cycle"
 
-    # =1 -> the path runs again (env read at call time, no restart needed)
-    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
-    monkeypatch.setattr(rb, "MAX_REPLIES_PER_CYCLE", 5)
+    # =1 -> the path runs again (read at call time)
+    settings_override(ENABLE_REPLY_SEARCH=True, MAX_REPLIES_PER_CYCLE=5)
     rb.run_reply_cycle()
     assert calls == ["safari", "llm"], "ENABLE_REPLY_SEARCH=1 must re-arm the surface"
 
 
 @pytest.fixture
-def reply_search(monkeypatch, chokepoint):
+def reply_search(monkeypatch, chokepoint, settings_override):
     """reply_bot with a stub search-and-draft model returning `batch`."""
     from src.replies import reply_bot as rb
 
@@ -355,8 +351,7 @@ def reply_search(monkeypatch, chokepoint):
         searched.append(already_replied)
         return list(batch)
 
-    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
-    monkeypatch.setattr(rb, "MAX_REPLIES_PER_CYCLE", 20)
+    settings_override(ENABLE_REPLY_SEARCH=True, MAX_REPLIES_PER_CYCLE=20)
     monkeypatch.setattr(rb, "refresh_feed", lambda: None)
     monkeypatch.setattr(rb, "get_recent_tweets", lambda hours: [])
     monkeypatch.setattr(rb, "generate_replies", generate)
@@ -501,20 +496,19 @@ def test_mega_watch_sends_replies_of_10_to_270_characters(profile_job):
 
 
 @pytest.fixture
-def debate(monkeypatch, llm, chokepoint):
+def debate(monkeypatch, llm, chokepoint, settings_override):
     from src.replies import debate_bot as db
     from src.x import scraper
 
     mentions = []
-    monkeypatch.setenv("ENABLE_DEBATES", "1")
+    settings_override(ENABLE_DEBATES=True)
     monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: list(mentions))
     return db, mentions, llm, chokepoint
 
 
-def test_debate_answers_fresh_mentions_as_debate_turns(debate, monkeypatch):
+def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override):
     db, mentions, llm, chokepoint = debate
-    monkeypatch.setenv("DEBATE_MAX_PER_CYCLE", "2")
-    monkeypatch.setenv("DEBATE_MAX_AGE_HOURS", "24")
+    settings_override(DEBATE_MAX_PER_CYCLE=2, DEBATE_MAX_AGE_HOURS=24.0)
     old = fresh("old", minutes=25 * 60, n=1)
     first, second, third = fresh("someone", n=2), fresh("other", minutes=10, n=3), fresh("third", minutes=20, n=4)
     mentions += [{"url": third, "text": "mention three"}, {"url": old, "text": "mention old"},
@@ -528,13 +522,13 @@ def test_debate_answers_fresh_mentions_as_debate_turns(debate, monkeypatch):
     assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
 
 
-def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch):
+def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_override):
     from src.x import scraper
 
     db = debate[0]
     scraped = []
     monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: scraped.append(1) or [])
-    monkeypatch.setenv("ENABLE_DEBATES", "0")
+    settings_override(ENABLE_DEBATES=False)
     db.run_debate_cycle()
     assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
 

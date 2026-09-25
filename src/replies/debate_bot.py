@@ -18,13 +18,12 @@ reply_to_tweet chokepoint judges it again with the text — NO caller-side
 premark; log only on a confirmed ship; Safari work only inside the client
 primitives.
 """
-import os
 import traceback
 from collections import Counter
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core.config import REPLY_MODEL
+from ..core import config, settings
 from ..core.logger import log
 from . import reply_pipeline
 from .reply_generator import ReplyCall
@@ -56,15 +55,19 @@ RULES:
 
 Output ONLY the reply text, or exactly SKIP."""
 
-# dossier=False: whether the author's dossier joins it is the Operator's call.
-REPLY_CALL = ReplyCall(DEBATE_PROMPT, REPLY_MODEL, "DEBATE", dossier=False, text_limit=500)
-JOB = reply_pipeline.Job("debate", "DEBATE", reply_call=lambda _author: REPLY_CALL, debate_turn=True,
+
+def reply_call() -> ReplyCall:
+    # dossier=False: whether the author's dossier joins it is the Operator's call.
+    return ReplyCall(DEBATE_PROMPT, config.REPLY_MODEL, "DEBATE", dossier=False, text_limit=500)
+
+
+JOB = reply_pipeline.Job("debate", "DEBATE", reply_call=lambda _author: reply_call(), debate_turn=True,
                          pause=(3, 3))
 
 
 def _debates_enabled() -> bool:
     """Read at call time (side-effect-env rule)."""
-    return os.environ.get("ENABLE_DEBATES", "1") == "1"
+    return settings.get("ENABLE_DEBATES")
 
 
 def run_debate_cycle():
@@ -72,8 +75,8 @@ def run_debate_cycle():
         log.info("[DEBATE] Disabled (ENABLE_DEBATES=0). Skipping.")
         return
 
-    max_per_cycle = int(os.environ.get("DEBATE_MAX_PER_CYCLE", "3"))
-    max_age_hours = float(os.environ.get("DEBATE_MAX_AGE_HOURS", "24"))
+    max_per_cycle = settings.get("DEBATE_MAX_PER_CYCLE")
+    max_age_hours = settings.get("DEBATE_MAX_AGE_HOURS")
 
     from ..x.scraper import scrape_mentions
     mentions = scrape_mentions(max_tweets=20)
