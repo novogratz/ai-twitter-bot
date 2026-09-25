@@ -278,7 +278,7 @@ def like_job(monkeypatch, memory_ledger, settings_override):
     monkeypatch.setenv("DRY_RUN", "0")
     settings_override(**{name: settings.DECLARED[name].default
                          for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS")})
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     state = {"page": SearchPage([]), "closed": 0, "ledger": memory_ledger}

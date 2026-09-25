@@ -18,6 +18,16 @@ from .confirmed_write import WriteOutcome
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
 
 
+def _open_or_abort(url: str, tag: str) -> bool:
+    """Open the page a write acts on. On failure the front tab is not that
+    page, so nothing may be typed or clicked: return False, and the write
+    is FAILED."""
+    if safari.open_url(url):
+        return True
+    log.info(f"[{tag}] Page did not open; nothing sent: {url[:120]}")
+    return False
+
+
 def _paste_or_abort(text: str, tag: str) -> bool:
     """Paste into the open composer. On failure nothing was sent: return
     False."""
@@ -160,7 +170,8 @@ def post_tweet(text: str) -> WriteOutcome:
     an inline one.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
-    content, respect list or dedup skip, FAILED when a step before the submit failed,
+    content, respect list or dedup skip, FAILED when the page did not open or
+    a step before the submit failed,
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
@@ -213,7 +224,8 @@ def post_tweet(text: str) -> WriteOutcome:
     def steps():
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
-        safari.open_url(url)
+        if not _open_or_abort(url, "POST"):
+            return WriteOutcome.FAILED
         time.sleep(4)
 
         log.info("Auto-clicking Post...")
@@ -446,7 +458,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
     run, REFUSED when Reply admission or the replied store refuses
-    it, FAILED when a Safari step before the submit fails, UNCONFIRMED when
+    it, FAILED when the page does not open or a Safari step before the
+    submit fails (the claim is then released), UNCONFIRMED when
     the submit keystroke fails. Only SHIPPED is truthy.
     Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
@@ -516,7 +529,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             time.sleep(0.5)
 
             log.info(f"Opening tweet: {tweet_url}")
-            safari.open_url(tweet_url)
+            if not _open_or_abort(tweet_url, "REPLY"):
+                return WriteOutcome.FAILED
             # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
             # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
             time.sleep(6)
@@ -623,7 +637,8 @@ def follow_account(username: str) -> FollowOutcome:
     signal); the ledger row, the following count and the followed accounts
     are then updated here. ALREADY_FOLLOWED adds the handle to the followed
     accounts and writes no ledger row. A refusal names its cause, FAILED
-    means no Follow button was clicked, DRY_RUN that nothing was opened.
+    means the profile did not open or no Follow button was clicked, DRY_RUN
+    that nothing was opened.
     Raises StateUnreadable, with nothing opened or recorded, while
     the whitelist or the action ledger cannot be read before the profile
     opens.
@@ -650,7 +665,8 @@ def follow_account(username: str) -> FollowOutcome:
     def steps():
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
-        safari.open_url(profile_url)
+        if not _open_or_abort(profile_url, "FOLLOW"):
+            return FollowOutcome.FAILED
         time.sleep(5)
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
@@ -763,7 +779,8 @@ def like_search_posts(url: str, count: int, seconds: float,
     `seconds` have passed since the Safari lock was taken, and nothing is
     clicked unless the open tab is a search page. Outcomes are appended to
     `outcomes` as they come, so a caller keeps them when a stop raises
-    mid-walk; the tab is closed even then. DRY_RUN opens nothing."""
+    mid-walk; the tab is closed even then. A page that does not open adds
+    FAILED and clicks nothing. DRY_RUN opens nothing."""
     from ..core import config as _cfg
     outcomes = [] if outcomes is None else outcomes
     if _cfg.dry_run():
@@ -772,8 +789,11 @@ def like_search_posts(url: str, count: int, seconds: float,
     with safari._safari_lock:
         deadline = time.monotonic() + seconds
         log.info(f"[LIKE] Opening search: {url}")
-        safari.open_url(url)
+        opened = _open_or_abort(url, "LIKE")
         try:
+            if not opened:
+                outcomes.append(LikeOutcome.FAILED)
+                return outcomes
             time.sleep(7)
             # Scroll twice to populate ~20-30 articles.
             safari._scroll_page()
@@ -792,7 +812,8 @@ def like_search_posts(url: str, count: int, seconds: float,
 def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutcome]:
     """Visit a user's profile and like up to `like_count` of the posts it
     shows, their own only (reposts of others are skipped). Returns one
-    LikeOutcome per post handled; `like_count=0` and DRY_RUN open nothing.
+    LikeOutcome per post handled, [FAILED] when the profile does not open;
+    `like_count=0` and DRY_RUN open nothing.
 
     Gated by `_profile_visit_allowed` (2026-06-07 home/search-only mandate):
     likes to Engagers happen when we meet them on feeds/search, not by
@@ -811,8 +832,10 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
     with safari._safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
-        safari.open_url(profile_url)
+        opened = _open_or_abort(profile_url, "LIKE")
         try:
+            if not opened:
+                return [LikeOutcome.FAILED]
             time.sleep(5)
             outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
             log.info(f"[LIKE] @{username}: {like_summary(outcomes)}.")
@@ -830,7 +853,8 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
     profile'). We click via JS by matching either string. Returns SHIPPED and
     writes a ledger row only when the menu item was clicked and the confirm
     dialog's button was clicked; no row otherwise: FAILED before the Pin
-    click, UNCONFIRMED after it, a missing confirm dialog included. DRY_RUN
+    click (the page not opening included), UNCONFIRMED after it, a missing
+    confirm dialog included. DRY_RUN
     writes a dry-run ledger row and returns DRY_RUN.
 
     Note: X surfaces a confirmation modal on first pin per session; we
@@ -881,7 +905,8 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
 
     def steps():
         log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
-        safari.open_url(tweet_url)
+        if not _open_or_abort(tweet_url, "PIN"):
+            return WriteOutcome.FAILED
         time.sleep(7)
 
         step1 = _exec_js(js_code)
@@ -913,7 +938,7 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
 def like_own_tweet_replies() -> list[LikeOutcome]:
     """Visit own profile, open latest tweet, and like the replies under it,
     never our own posts, to build loyalty. Returns one LikeOutcome per post
-    handled; DRY_RUN opens nothing."""
+    handled, [FAILED] when the profile does not open; DRY_RUN opens nothing."""
     from ..core import config as _cfg
     if _cfg.dry_run():
         log.info("[NOTIFY][DRY_RUN] would like replies on our latest tweet.")
@@ -926,8 +951,10 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
         return []
     with safari._safari_lock:
         log.info("[NOTIFY] Opening own profile...")
-        safari.open_url(_cfg.BOT_PROFILE_URL)
+        opened = _open_or_abort(_cfg.BOT_PROFILE_URL, "NOTIFY")
         try:
+            if not opened:
+                return [LikeOutcome.FAILED]
             time.sleep(5)
             log.info("[NOTIFY] Opening latest tweet...")
             safari._navigate_to_first_tweet()

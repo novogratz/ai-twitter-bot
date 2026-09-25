@@ -763,7 +763,7 @@ def _scripted_pin_js(monkeypatch, steps):
     answers = iter(steps)
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))

@@ -64,9 +64,9 @@ def browser(monkeypatch):
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
+    state = {"page": FakePage(), "recorded": [], "closed": 0, "opens": True}
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: state["opens"])
     monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: None)
-    state = {"page": FakePage(), "recorded": [], "closed": 0}
     monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: state["recorded"].append((a, k)))
 
@@ -322,6 +322,25 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     with pytest.raises(StateUnreadable):
         tc.like_own_tweet_replies()
     assert browser["closed"] == 2
+
+
+@pytest.mark.parametrize("walk", [
+    lambda tc: tc.like_search_posts("https://x.com/search?q=AI", 3, 60),
+    lambda tc: tc.visit_profile_and_like("TheBTCTherapist", like_count=2),
+    lambda tc: tc.like_own_tweet_replies(),
+], ids=["search", "profile", "notify"])
+def test_a_walk_whose_page_does_not_open_clicks_nothing(browser, monkeypatch, settings_override, walk):
+    """#251: a page that does not open leaves the front tab to someone
+    else; the walk reads and clicks nothing there and records no row."""
+    from src.x import safari, twitter_client as tc
+
+    settings_override(NOTIFY_LIKE_REPLIES_COUNT=3)
+    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: pytest.fail("pressed a key"))
+    monkeypatch.setattr(safari, "_scroll_page", lambda: pytest.fail("scrolled"))
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
+    browser["opens"] = False
+    assert walk(tc) == [tc.LikeOutcome.FAILED]
+    assert browser["recorded"] == []
 
 
 def test_page_posts_fills_the_mode_and_target_and_parses_json(monkeypatch):

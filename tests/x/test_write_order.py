@@ -75,7 +75,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(safari, "_run_js",
                         lambda js, *a, **k: step(f"js:{_js_kind(js)}", t.js.pop(0) if t.js else ""))
     monkeypatch.setattr(safari, "close_front_tab", lambda: step("close"))
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: step("open", True))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: step("open", "open" not in t.fail))
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
@@ -418,6 +418,39 @@ def test_a_stop_during_the_page_steps_records_nothing_and_releases_the_lock(trac
         write()
     assert trace.events[-2:] == ["open", "unlock"]
     assert not [e for e in trace.events if e.startswith("record:")]
+
+
+@pytest.mark.parametrize("write, events", [
+    (lambda: tc.post_tweet(TEXT),
+     ["guard:can_post", "lock", "guard:can_post", "open", "close", "unlock"]),
+    (lambda: tc.reply_to_tweet(POST_URL, REPLY),
+     ["lock", "judge", "claim", "activate", "open", "release", "close", "unlock"]),
+    (lambda: tc.follow_account("someone"),
+     ["guard:judge_follow", "jitter", "lock", "open", "close", "unlock"]),
+    (lambda: tc.pin_own_tweet(POST_URL),
+     ["lock", "open", "close", "unlock"]),
+], ids=["post", "reply", "follow", "pin"])
+def test_a_page_that_does_not_open_fails_the_write_before_any_keystroke(trace, write, events):
+    """#251: the open's return was ignored, so a reply whose page never
+    opened pressed `r`, pasted and submitted into the front tab. A page that
+    does not open ends the write in FAILED: no keystroke, paste, click or
+    page read, no ledger row."""
+    trace.fail.add("open")
+    outcome = write()
+    assert outcome.name == "FAILED" and not outcome
+    assert trace.events == events
+    assert not [e for e in trace.events if e.startswith(("record:", "dry:"))]
+
+
+def test_a_reply_whose_page_does_not_open_stays_replayable(trace):
+    """The claim is released, so the next cycle may answer the post."""
+    trace.fail.add("open")
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    assert POST_URL not in trace.claimed
+    trace.fail.clear()
+    trace.events.clear()
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
 
 
 def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):

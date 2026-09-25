@@ -207,7 +207,7 @@ def _stub_like_browser(monkeypatch, tmp_path):
     from src.x import safari, twitter_client
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(twitter_client.time, "sleep", lambda *_: None)
@@ -813,7 +813,7 @@ def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
              "visits": []}
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: state["visits"].append(url))
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: state["visits"].append(url) or True)
     monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: (
         json.dumps({"path": state["page"], "handles": state["followers"]})
         if "UserCell" in js else state["profile"]))

@@ -291,8 +291,12 @@ that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 Every page JavaScript in `src/` goes through `_run_js`, with the caller's
 timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
-AppleScript escaping. Only `safari.py` and the Safari quit in
-`safari_hygiene` spawn `osascript` themselves.
+AppleScript escaping. `open_url`, `close_front_tab` and `_scroll_page`
+run under a bound (`OPEN_TIMEOUT_S` 20 s, `CLOSE_TIMEOUT_S` 10 s,
+`SCROLL_TIMEOUT_S` 15 s): past it the `osascript` child is killed and the
+run fails, so a wedged Safari cannot keep the Safari lock. `open_url`
+returns False then, as on any failed run. Only `safari.py` and the Safari
+quit in `safari_hygiene` spawn `osascript` themselves.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 `twitter_client.py` holds the write chokepoints. Writes use
@@ -321,7 +325,11 @@ chokepoint without it, or with two, raises before any guard runs.
    admission under it, and its dry-run exit follows that judgement;
    `post_tweet` checks `can_post` again under it.
 5. `reply_to_tweet` claims the tweet in the Replied store.
-6. The page steps.
+6. The page steps, opening the page first. A page that does not open
+   (`open_url` returns False) ends the write in `FAILED` before any
+   keystroke, paste, click or page read: the front tab is then not the
+   page the write acts on. A Reply releases its claim, so a later cycle
+   may answer the post.
 7. Ledger rows only when the page steps return a shipped outcome, then the
    chokepoint's bookkeeping: `record_followed` and `adjust_following`,
    `note_posted`, tweet history.
@@ -395,7 +403,8 @@ list the articles on the page and call it with each post's URL: the
 profile's own posts for the first, the replies under our latest post for
 the second, the posts of a niche search for `like_job` for the third, never
 our own posts. A `BLOCKED` post is skipped and the walk goes on; a `FAILED`
-or `UNCONFIRMED` one stops it. All three open nothing under `DRY_RUN` and
+or `UNCONFIRMED` one stops it. A page that does not open adds one
+`FAILED` and clicks nothing. All three open nothing under `DRY_RUN` and
 close their tab even when a like raises. `like_search_posts` starts no like
 once `LIKE_BOT_CYCLE_SECONDS` (30 s) have passed since it took the Safari
 lock, and fills the caller's outcome list as it goes: `like_job` adds the
@@ -664,6 +673,9 @@ These are how the code behaves today, not design intent:
   own daily caps in their state files.
 - `session_refresh_job` and the `health` recovery restart Safari without
   taking `_safari_lock`.
+- The page reads of `scraper.py`, the follow-back and the follower count
+  still ignore `open_url`'s result, and read the front tab when the page
+  did not open (parent issue #250). Only the writes check it.
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
