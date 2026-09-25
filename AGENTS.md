@@ -21,8 +21,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
-change. The same holds for the operator-owned guardrails: `core_identity.md`,
-`BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
+change. The same holds for the operator-owned guardrails: the Account's
+Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
+edits, `BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
 `respect_list.json`, and `personality_store.hard_rules_block()`.
 
 ## Active code
@@ -38,7 +39,7 @@ The top level of `src/` holds only packages.
 
 | Concern | Where |
 |---|---|
-| Account: handle, language, Slots and angles, feeds, Evergreen topics, trusted hosts, relevance filter, stricter limits; network handle lists, added Blocked accounts, niche patterns, X searches | `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked at start by `src/core/account.py` |
+| Account: handle, language, Slots and angles, feeds, Evergreen topics, trusted hosts, relevance filter, stricter limits; network handle lists, added Blocked accounts, niche patterns, X searches; Relations (per-handle Reply prompt, provider or dossier) and the default VIP scan prompt | `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked at start by `src/core/account.py`; the Voice files and the Relations' prompts next to it |
 | Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py` |
 | Draft and review limits, their JSON schemas and call profiles | `src/editorial/editorial_schemas.py` |
 | Model calls: provider adapters, the one fallback ladder (no fallback unless `LLM_FALLBACK_CLI` names one; an unknown provider fails the call and runs nothing), the CLI model a model setting gives the provider called, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |
@@ -63,7 +64,7 @@ The top level of `src/` holds only packages.
 | The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |
 | Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
 | Safari lock, AppleScript, page opening (`open_url`, never `webbrowser`), paste, tab and scroll primitives | `src/x/safari.py` |
-| Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `core_identity.md`, `core_identity_en.md` |
+| Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `accounts/<BOT_ACCOUNT>/voice_fr.md`, `voice_en.md` |
 
 ## Invariants
 
@@ -125,10 +126,10 @@ rule; cross-cutting invariants stay at the root of `tests/`.
 - JSON files at the repo root are live state, ignored by git: a new state
   file goes in `.gitignore` in the same change, and a test fails on one git
   does not ignore. The Operator's files stay tracked: `respect_list.json`,
-  `whitelist.json` and `core_identity*.md`. `action_ledger.json` already
-  counts toward today's ceiling and git holds no copy of it: keep it across
-  deploys. It holds one JSON object per line, not a JSON list: read it line
-  by line or through `action_guard`.
+  `whitelist.json` and the Account's Voice files under `accounts/`.
+  `action_ledger.json` already counts toward today's ceiling and git holds
+  no copy of it: keep it across deploys. It holds one JSON object per line,
+  not a JSON list: read it line by line or through `action_guard`.
 - A JSON state file goes through `state_store.StateFile`, declared once with
   its policy. An unreadable guarded file stops the job that needs it and is
   never overwritten: repair it by hand, never delete it

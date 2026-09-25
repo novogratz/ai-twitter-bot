@@ -173,7 +173,7 @@ def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
-    dr._run_graphseo_scan(reply_pipeline.Cycle())
+    dr._run_vip_scan(reply_pipeline.Cycle())
 
     assert chokepoint.sent == [recent]
     assert [r.source for r in logged()] == ["VIP/Graphseo"]

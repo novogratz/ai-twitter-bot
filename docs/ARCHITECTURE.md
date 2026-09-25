@@ -154,7 +154,7 @@ follow jobs read the same way the Account's `[network]` handle lists,
    Each page is fetched over HTTPS from a host of the Account's
    `trusted_hosts`, 12-second timeout, 1 MB read. A news title must match the
    Account's `relevance.topic`.
-5. **Draft.** The model sees the Voice (`core_identity_en.md`), the hard rules, the slot
+5. **Draft.** The model sees the Voice (the Account's `voice_en.md`), the hard rules, the slot
    brief, the last rejection reason for this slot, recent posts, numbered
    evidence sentences from each source and, for a trend slot, the trending
    posts as untrusted data that choose the topic. Recent posts include the
@@ -529,11 +529,12 @@ rule), and the parent post; `generate` returns a `Generation`: reply text, a dec
 said SKIP), a replayable failure, or a rate limit when every provider is
 exhausted. Reply text comes with the provider and model that wrote it. The
 generator always opens the prompt on the Voice,
-`personality_store.render_voice`: the Operator's `core_identity.md`
-(`core_identity_en.md` for an English reply) under a header naming
-`BOT_HANDLE`, the one reader of those files. The job's template follows,
+`personality_store.render_voice`: the Operator's `voice_fr.md`
+(`voice_en.md` for an English reply), in the Account's folder, under a
+header naming `BOT_HANDLE`, the one reader of those files. The job's template follows,
 with its instructions but no persona, then, for Reply calls with `dossier`, the
-author's dossier from `personality.json`, and always
+author's dossier from `personality.json` (or the fixed dossier of the
+author's Relation), and always
 `personality_store.hard_rules_block()`, which renders the hard rules and
 the respect list from `respect_list.json`. The editorial Draft opens on the
 same Voice. It decides the language in one place, `_language`: the
@@ -607,7 +608,8 @@ These are how the code behaves today, not design intent:
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
-  (`direct_reply._graphseo_call`), whatever `REPLY_LLM_PROVIDER` says: the
+  (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
+  `REPLY_LLM_PROVIDER` says: the
   one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
   It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
@@ -687,8 +689,10 @@ The files at the top of `tests/` pin cross-cutting invariants:
 `test_conftest_walls.py` (the walls below), `test_state_file_paths.py` (every
 state file resolves to the repo root), `test_state_untracked.py` (git
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
-`build_scheduler()` registers), `test_voice.py` (`core_identity.md` and the
-Voice block rendered from it), `test_mass_unfollow.py`
+`build_scheduler()` registers), `test_voice.py` (the Account's Voice files
+and the Voice block rendered from them), `test_engine_names_no_interlocutor.py`
+(no string of `src/` names Graphseo or TheBTCTherapist but the few listed
+places, each with its ticket), `test_mass_unfollow.py`
 (`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`
 and `tests/`, subfolders included, with `ast`. It fails when an

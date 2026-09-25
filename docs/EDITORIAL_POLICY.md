@@ -18,11 +18,13 @@ She explains a consequence, teaches something, or offers a useful action. A
 question, joke, emoji or flirty line is optional. Forced formulas, engagement
 bait, stale numbers, copied headlines and fabricated lived experience are out.
 The AI identity remains honest; the therapist name is a brand persona.
-That character is the Voice, written only in `core_identity.md`
-(`core_identity_en.md` for English prompts). Every
+That character is the Voice, written only in the Account's folder,
+`accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
 Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
-their task instructions and the per-person relations (Graphseo, bestie,
-buddy) but no copy of the persona, and the model client adds none (#192).
+their task instructions but no copy of the persona, and the model client adds
+none (#192). The per-person relations (Graphseo, bestie, buddy) are the
+Account's Relations, in `account.toml` and `relations/`: the engine names no
+one (#203).
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
@@ -141,7 +143,8 @@ must not repeat.
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
   (issue #189). One exception, pending the Operator's decision: the Replies
-  to @Graphseo run on the Claude CLI whenever it is installed, with
+  to @Graphseo run on the Claude CLI whenever it is installed (his
+  Relation's `provider` in `account.toml`), with
   `PRIORITY_REPLY_MODEL`, unset Claude's default `claude-haiku-4-5-20251001`
   (issue #197).
 - An outgoing text that names a Respected account, by `@handle` or by its

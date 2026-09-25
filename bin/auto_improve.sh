@@ -98,7 +98,7 @@ in auto-memory that a PR is awaiting review. A pushed PR for human review is
 a successful run — never end with uncommitted work or a half-applied change
 on a branch.
 
-Hard limits: never touch core_identity.md voice pillars, BLOCKLIST,
+Hard limits: never touch the Voice (accounts/*/voice_*.md) pillars, BLOCKLIST,
 respect_list defaults, hard_rules_block(), or the zero-repost rule.
 Keep the change small enough to review in one diff."
 

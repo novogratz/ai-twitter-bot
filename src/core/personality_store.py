@@ -36,21 +36,16 @@ Tout le reste est strategie mutable que le bot peut faire evoluer
 lui-meme via le reflection_agent et l'evolution_agent.
 """
 
+import copy
 import os
 from typing import Optional
 
-from . import config
-from .config import _PROJECT_ROOT
+from . import account, config
 from .state_store import GUARDED, StateFile
 
 # Guarded: a corrupt file used to read as empty, and the next save erased
 # every dossier.
 PERSONALITY = StateFile("personality.json", {"accounts": {}, "topics": {}}, GUARDED)
-# The Voice: the Operator's persona, rendered into EVERY generation prompt
-# by render_voice, its only reader. NEVER overwritten by any agent — only
-# the human edits it.
-CORE_IDENTITY_FILE = os.path.join(_PROJECT_ROOT, "core_identity.md")
-CORE_IDENTITY_EN_FILE = os.path.join(_PROJECT_ROOT, "core_identity_en.md")
 
 ALLOWED_CATEGORIES = {
     "builder", "predator", "retail", "media", "influencer", "institution", "unknown"
@@ -127,22 +122,10 @@ def get_account(handle: str) -> Optional[dict]:
     key = _normalize(handle)
     if not key:
         return None
-    if key == "mcnalliem":
-        return {
-            "first_seen": "2026-05-02",
-            "last_interaction": "2026-05-02",
-            "interaction_count": 0,
-            "category": "builder",
-            "stance": "fond",
-            "notes": [
-                "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-                "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
-            ],
-            "predictions": [],
-            "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
-            "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
-            "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
-        }
+    relation = account.current().relations.get(key)
+    if relation and relation.dossier:
+        # The Account's fixed dossier wins over the one the bot grows.
+        return copy.deepcopy({**DEFAULT_ACCOUNT, **relation.dossier})
     return load()["accounts"].get(key)
 
 
@@ -254,13 +237,20 @@ def render_account_block(handle: str) -> str:
     return "\n".join(lines)
 
 
+def voice_file(lang: str) -> str:
+    """The Account's Voice file for a reply language: voice_en.md for "en",
+    voice_fr.md otherwise. The Operator's persona: NEVER overwritten by any
+    agent — only the human edits it."""
+    return os.path.join(account.current().folder, "voice_en.md" if lang == "en" else "voice_fr.md")
+
+
 def render_voice(lang: str = "en") -> str:
-    """The Voice block: the Operator's persona from core_identity.md, or
-    core_identity_en.md for "en", under a header naming BOT_HANDLE. Every
+    """The Voice block: the Operator's persona from the Account's Voice
+    file, read on every call, under a header naming BOT_HANDLE. Every
     generation prompt carries it, and no prompt describes the persona
     itself. Empty string if the file is missing — the bot still runs, just
     without the curated voice anchor."""
-    path = CORE_IDENTITY_EN_FILE if lang == "en" else CORE_IDENTITY_FILE
+    path = voice_file(lang)
     try:
         with open(path, "r", encoding="utf-8") as f:
             raw = f.read().strip()

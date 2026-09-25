@@ -29,8 +29,9 @@ bare interpreter and the bot fails on `import apscheduler`.
 in [CONFIGURATION.md](CONFIGURATION.md). Set `LLM_FALLBACK_CLI=codex` only
 to let a failed call fall back to the cloud. Blank, as in the example, there
 is no fallback and no call leaves the machine, except the Replies to
-@Graphseo: they run on the Claude CLI whenever it is installed
-(`direct_reply._graphseo_call`). The start logs a fallback the code ignores,
+@Graphseo: they run on the Claude CLI whenever it is installed (his
+Relation's `provider` in `account.toml`, applied by
+`direct_reply._own_call`). The start logs a fallback the code ignores,
 and `--dry-run` lists it under `ignored_llm_fallbacks`.
 
 Keep `BOT_HANDLE` and `CONTENT_LANG_PRIMARY` out of `.env`: the Account
@@ -57,9 +58,19 @@ One process runs one Account: the Safari lock and `bot.lock` stay global.
 `BOT_ACCOUNT`, in `.env` or the shell, names its folder under `accounts/`;
 unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
 the language of the Originals (`en` or `fr`), the Slots and their angles, the
-feeds, Evergreen topics and trusted hosts, and the relevance filter; its
-comments describe each key. Settings resolve in this order, the later one
-winning: engine defaults, the Account, `.env`, the shell.
+feeds, Evergreen topics and trusted hosts, the relevance filter, and the
+Relations; its comments describe each key. Next to it sit the Voice, the
+Operator's `voice_fr.md` and `voice_en.md`, read on every prompt, and the
+Relations' prompts under `relations/`, read at start like `account.toml`. A
+Voice file missing or empty, a Relation's handle that is no X handle, an
+unknown key, an empty fixed dossier, a prompt file missing, empty or with a
+`{field}` the Reply generator does not fill, a Voice or prompt file that
+resolves outside the Account's folder (symbolic links followed), or a
+`network.vip_scan` handle without a prompt of its own while
+`relations.default` is unset stops the start; a `VIP_SCAN_HANDLES` handle
+from `.env` in that case is skipped with a `[VIP]` warning. Settings resolve
+in this order, the later one winning: engine defaults, the Account, `.env`,
+the shell.
 
 `main.py` reads the Account once at start, before any job. A `BOT_ACCOUNT`
 with no `account.toml`, an unknown key or a badly typed value stops the start
@@ -353,7 +364,8 @@ every state file, so a `git checkout`, `reset` or `pull` never touches them,
 and `tests/test_state_untracked.py` fails on a declared state file git does
 not ignore. A new state file goes in `.gitignore` in the same change. The
 Operator's files stay tracked: `respect_list.json`, `whitelist.json` (until
-issue #206 splits it) and `core_identity*.md`; git still refuses a pull
+issue #206 splits it), and the Account's Voice files under `accounts/`;
+git still refuses a pull
 that changes one of them while it holds a local edit.
 `action_ledger.json` keeps its name but holds one JSON object per line since
 issue #147. A ledger in the former format, one JSON list like the committed

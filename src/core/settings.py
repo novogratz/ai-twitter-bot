@@ -209,7 +209,7 @@ _declare("FR_FORCED_REPLY_HANDLES", str, "Graphseo", "Comma-separated handles wh
 _declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts and reviews Originals.")
 _declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an editorial model call.")
 _declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
-_declare("BESTIE_HANDLE", str, "TheBTCTherapist", "VIP account whose posts get the bestie prompt.")
+_declare_unused("BESTIE_HANDLE", str, "")
 _declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
 _declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
 _declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
