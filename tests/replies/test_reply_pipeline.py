@@ -256,10 +256,10 @@ def test_the_rate_limit_ends_the_cycle(llm, chokepoint, pipelined, calls):
 
 def cloud_job(**options):
     """A job whose ReplyCall runs on Claude through the real `run_llm`."""
-    from src.replies.reply_generator import ReplyCall
+    from src.replies.reply_generator import CallOptions, ReplyCall
 
     call = ReplyCall("Parent: {tweet_text}", "cloud-model", "TEST", dossier=False,
-                  llm_options={"force_provider": "claude"})
+                     options=CallOptions(force_provider="claude"))
     return job(reply_call=lambda author: call, **options)
 
 

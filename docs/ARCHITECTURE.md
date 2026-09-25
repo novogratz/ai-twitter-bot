@@ -532,7 +532,8 @@ reply.
 
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
 passes its Reply call, a `ReplyCall` (template, model, label, language
-rule), and the parent post; `generate` returns a `Generation`: reply text, a decline (the model
+rule, and its `run_llm` options as a frozen `CallOptions`, where a misspelt
+option fails when the Reply call is built), and the parent post; `generate` returns a `Generation`: reply text, a decline (the model
 said SKIP), a replayable failure, or a rate limit when every provider is
 exhausted. Reply text comes with the provider and model that wrote it. The
 generator always opens the prompt on the Voice,
