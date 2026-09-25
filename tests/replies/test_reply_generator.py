@@ -40,13 +40,13 @@ def voice_files(monkeypatch, tmp_path):
 def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
-    from src.replies import reply_pipeline
+    from src.replies import reply_pipeline, reply_source
     from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
     from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
     from src.x import scraper
 
     chokepoint.answer = WriteOutcome.REFUSED
-    for module in (dr, eb, mw, fs):
+    for module in (dr, eb, mw, reply_source):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))

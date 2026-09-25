@@ -1,5 +1,5 @@
-"""src/replies/direct_reply: reply lane, candidate order, query rotation and
-the VIP ReplyCalls."""
+"""src/replies/direct_reply: reply lane, query rotation and the VIP
+ReplyCalls."""
 
 
 def _url_with_age(minutes: int) -> str:
@@ -8,22 +8,6 @@ def _url_with_age(minutes: int) -> str:
     now_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
     tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH_MS) << 22
     return f"https://x.com/someone/status/{tweet_id}"
-
-
-def test_reply_candidates_sorted_fresh_and_rising_first():
-    """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
-    must beat a 60-hour-old tweet; unknown-age URLs go last; within the
-    same freshness bucket, higher likes-per-hour wins."""
-    from src.replies.direct_reply import freshness_sort_key
-    fresh_hot = {"url": _url_with_age(20), "likes": 400}
-    fresh_cold = {"url": _url_with_age(25), "likes": 2}
-    old = {"url": _url_with_age(60 * 60), "likes": 90000}
-    unknown = {"url": "https://x.com/someone", "likes": 50}
-    ordered = sorted([unknown, old, fresh_cold, fresh_hot], key=freshness_sort_key)
-    assert ordered[0] is fresh_hot
-    assert ordered[1] is fresh_cold
-    assert ordered[2] is old
-    assert ordered[3] is unknown
 
 
 def _searches():
@@ -108,7 +92,7 @@ def test_every_reply_and_like_query_finds_posts_on_the_niche():
     """#205: a query alternative `post` rejects sends the reply jobs posts
     they drop, and the like job, which has no niche check, likes them."""
     from src.core import account
-    from src.replies.direct_reply import is_on_niche
+    from src.replies.reply_source import is_on_niche
     replies, hot_tab = _searches()
     for query in replies + hot_tab + list(account.current().searches.likes):
         for and_first in (True, False):

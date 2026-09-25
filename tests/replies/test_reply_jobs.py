@@ -267,6 +267,20 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
     assert set_aside("feed_sweep") == {ok} and set_aside("direct_reply") == set()
 
 
+def test_feed_sweep_reads_its_age_limit_at_call_time(feed, settings_override):
+    """#242: the declaration is built on each pass, so a changed
+    DIRECT_REPLY_MAX_AGE_MINUTES applies without a restart of the module."""
+    fs, feeds, llm, chokepoint = feed
+    recent, older = fresh("someone", minutes=5, n=1), fresh("other", minutes=30, n=2)
+    feeds["FEED"] = [{"url": older, "text": "OpenAI ships a model"},
+                     {"url": recent, "text": "OpenAI ships a new model"}]
+    settings_override(DIRECT_REPLY_MAX_AGE_MINUTES=10)
+
+    fs.run_feed_sweep_cycle()
+
+    assert chokepoint.sent == [recent]
+
+
 def test_feed_sweep_stops_at_the_rate_limit(feed):
     fs, feeds, llm, chokepoint = feed
     feeds["FEED"] = [{"url": fresh("someone"), "text": "OpenAI ships a new model"}]

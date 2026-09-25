@@ -484,9 +484,17 @@ writes anything.
 Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
 `mega_watch`, `debate`, `replyback` and `babysit`, the disabled reply
 search) hands its candidates to the Reply pipeline,
-`src/replies/reply_pipeline.py`. A job keeps its source and its selection
-filters (niche, age threshold, thread-reply shape, handle pools), its
-budgets, its Reply call, its pace after a shipped Reply and its log tag. The
+`src/replies/reply_pipeline.py`. A job keeps its sub-sources (the feeds,
+searches or handle pools it scrapes), its budgets, its Reply call, its pace
+after a shipped Reply and its log tag. `feed_sweep` declares what it
+answers to the Reply source, `src/replies/reply_source.py`: the oldest post
+(`DIRECT_REPLY_MAX_AGE_MINUTES`, read on each pass), root posts only, the
+Account's niche, fresh and rising first. `reply_source.select` applies the
+declaration without side effects and never keeps a post without a URL or
+text, or of unknown or negative age; a declaration can also require the
+author a scanned profile's posts carry in their URL. The other jobs still
+select their candidates themselves (niche, age threshold, thread-reply
+shape) until they move to it. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and

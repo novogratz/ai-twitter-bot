@@ -18,8 +18,8 @@ from ..x import x_urls
 from ..core import config, settings
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
-from . import reply_pipeline
-from .direct_reply import freshness_sort_key, is_on_niche, reply_call
+from . import reply_pipeline, reply_source
+from .direct_reply import reply_call
 
 
 def _harvest_active_authors(tweets: list) -> None:
@@ -79,24 +79,13 @@ def _sweep_one_feed(source, scraper, cycle):
     # Harvest active authors from this feed pass before filtering.
     _harvest_active_authors(tweets)
 
-    max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
     label = f"FEED-SWEEP-{source}"
-    reply_candidates = []
     # No shuffle: fresh-and-rising first (2026-06-07 spec — front-load
     # <60-min climbers).
-    for t in sorted(tweets, key=freshness_sort_key):
-        url = t.get("url") or ""
-        text = (t.get("text") or "").strip()
-        if not url or not text:
-            continue
-        if x_urls.is_reply_like_tweet(t):
-            continue
-        if not is_on_niche(text):
-            continue
-        age = x_urls.age(url)
-        if age is None or age > max_age:
-            continue
-        reply_candidates.append(reply_pipeline.Candidate(url, t["text"], label))
+    declaration = reply_source.Declaration(
+        max_age=timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES")),
+        root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING)
+    reply_candidates = reply_source.select(tweets, declaration, label)
 
     job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)
     replies_done = reply_pipeline.run(job, reply_candidates, cycle,

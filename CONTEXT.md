@@ -132,6 +132,15 @@ on the primary alone is no exhaustion: the fallback answers, and the Reply
 is recorded under the fallback's provider and model.
 _Avoid_: rate-limit code, quota error, exit 75
 
+**Reply source**:
+The selection that turns the posts a Reply job scraped into its candidates,
+from what the job declares: the oldest post it answers, root posts only or
+not, the author a scanned profile's posts must carry, the Account's niche or
+not, and the order. A post without a URL or text, or of unknown or negative
+age, is never a candidate. The job keeps what it scrapes, its budget and its
+Reply call.
+_Avoid_: selection filters, candidate filter
+
 **Reply pipeline**:
 The one path from a job's candidates to shipped Replies: Reply admission
 before the Reply generator, the write, then the engagement log for a Reply
