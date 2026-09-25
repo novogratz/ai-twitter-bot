@@ -10,19 +10,18 @@ supersede the historical surfaces listed below:
 | `TARGET_POSTS_PER_DAY` | 6 |
 | `MAX_PROFILE_POSTS_PER_DAY` | 8, hard combined ceiling |
 | `MAX_ORIGINALS_PER_DAY` | 8 maximum; environment may lower it |
-| `MAX_QUOTES_PER_DAY`, `MAX_QUOTE_REPOSTS_PER_DAY`, `MAX_RETWEETS_PER_DAY` | 0, hard disabled |
-| `MAX_REPLIES_PER_DAY` | 0 means unlimited |
+| Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
+| Replies per day | Unlimited: no setting caps them |
 | `MIN_SECONDS_BETWEEN_POSTS` | At least 1200 (20 minutes); the environment may lengthen it |
 | `POST_JITTER_SECONDS` | 0; a random extra gap after each original, drawn once per post; a negative value reads as 0 |
 | `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job`, `replyback_job` and `babysit_job`; read at call time |
 | `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers |
 | `FR_FORCED_REPLY_HANDLES` | `Graphseo`: parents always answered in French by the search and feed-sweep Replies; `judge_reply` refuses an English-looking reply to them; read at call time |
-| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; environment only, read at each like cycle; `live_strategy.json` cannot raise them |
+| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; environment only, read at each like cycle |
 | `DRY_RUN` | `1` logs every write instead of sending it; read at each call through `config.dry_run()` |
 
-Legacy profile job caps do not add posting slots. `get_live_cap` cannot lift the
-hard ceiling, restore quotes/reposts, or impose a daily reply limit.
+Legacy profile job caps do not add posting slots.
 
 The quote, repost and boost branches left the live jobs (issue #107), and no
 code reads the variables that gated them any more: `FAVORITE_REPOSTS_PER_CYCLE`, `FAVORITE_REPOST_MIN_ENGAGEMENT`,
@@ -33,6 +32,15 @@ code reads the variables that gated them any more: `FAVORITE_REPOSTS_PER_CYCLE`,
 The bot never unfollows: the unfollow chokepoint left `src/` with its cap
 (issue #168), and no code reads `MAX_UNFOLLOWS_PER_DAY` any more.
 `bin/mass_unfollow.py`, run by hand, is bounded by its own `--max`.
+
+`config.py` stopped parsing the variables no Python code read (issue #170):
+`MAX_NEWS_PER_DAY`, `MAX_HOTAKES_PER_DAY`, `MAX_QUOTES_PER_DAY`,
+`MAX_QUOTE_REPOSTS_PER_DAY`, `MAX_RETWEETS_PER_DAY`, `MAX_REPLIES_PER_DAY`,
+`HOTAKE_MODEL`, `GROWTH_ENHANCEMENT`, `FOLLOW_BACK_RATIO`,
+`RETWEET_ENGAGEMENT_THRESHOLD`, `BOOST_ENGAGEMENT_POSTS`,
+`FOLLOWING_STEADY_STATE`, `REPLY_LANGUAGE_MATCH`, `ENABLE_AI_DISCOVERY`. The
+legacy tables below still list some of them. `ENABLE_AI_MAINTENANCE` and
+`ENABLE_CODEX_OPERATOR` are read by `operator_cycle.sh` only.
 
 ---
 
@@ -131,26 +139,7 @@ Per-cycle quotas (not daily caps):
 | Variable | Default | Purpose |
 |---|---|---|
 | `ENABLE_AI_MAINTENANCE` | `0` | Lets the 4-hour `operator_cycle.sh` spend a Codex CLI run. The in-process agents it once enabled were removed. |
-| `ENABLE_AI_DISCOVERY` | `0` | Parsed by `config.py`; the discover and scout agents it gated were removed, so nothing acts on it. |
-
----
-
-## Authoring
-
-`config.py` exposes runtime helpers that read `live_strategy.json`, written by the removed autonomous agents:
-
-```python
-from src.core.config import (
-    get_live_cap,                # cap from live_strategy.json (env fallback), clamped by the hard ceilings
-    get_live_cadence_factor,     # cadence multiplier (default 1.0)
-    get_live_topic_focus,        # current topic focus list
-)
-
-# Example: bot reads its dynamic cap, falls back to env constant.
-cap = get_live_cap("MAX_NEWS_PER_DAY", MAX_NEWS_PER_DAY)
-```
-
-These are best-effort: the file may not exist on first boot or after a fresh clone. The fallback default ensures the bot always has a sane number.
+| `ENABLE_AI_DISCOVERY` | `0` | No code reads it; the discover and scout agents it gated were removed. |
 
 ---
 

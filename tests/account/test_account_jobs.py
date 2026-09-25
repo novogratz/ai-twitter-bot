@@ -128,19 +128,6 @@ def _stub_like_browser(monkeypatch, tmp_path):
     return requested
 
 
-def test_live_strategy_cannot_raise_likes_per_cycle(monkeypatch, tmp_path):
-    from src.account import like_bot
-
-    strategy = tmp_path / "live_strategy.json"
-    strategy.write_text(json.dumps({"caps": {"LIKE_BOT_PER_CYCLE": 500}}))
-    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "10")
-    requested = _stub_like_browser(monkeypatch, tmp_path)
-
-    like_bot.run_like_cycle()
-
-    assert sum(requested) == 10
-
-
 def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path):
     from src.account import like_bot
 

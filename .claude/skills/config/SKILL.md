@@ -12,7 +12,7 @@ Show and edit config:
 3. If the operator wants changes, edit `.env` or `src/core/config.py`
 4. Remind that changes take effect at restart
 
-Hard ceilings cannot be lifted from `.env` or `live_strategy.json`, and are
+Hard ceilings cannot be lifted from `.env`, and are
 not edited without an explicit operator request that also updates
 `docs/EDITORIAL_POLICY.md` in the same change: the eight-post ceiling
 (`MAX_ORIGINALS_PER_DAY` can only go lower), the twenty-minute spacing

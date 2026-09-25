@@ -43,7 +43,7 @@ def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
     monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(p))
     monkeypatch.setenv("PROFILE_LLM_PROVIDER", "ollama")
     monkeypatch.setenv("AI_CLI", "codex")
-    el.log_post("test post", source="TEST")
+    el.log_reply("", "test post", "post", source="TEST")
     el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST")
     rows = list(csv.reader(open(p)))
     assert rows[0][-1] == "provider"

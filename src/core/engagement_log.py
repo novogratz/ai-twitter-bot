@@ -48,19 +48,6 @@ def _provider_for(action_type: str) -> str:
     return os.environ.get("AI_CLI", "ollama").strip()
 
 
-def log_post(text: str, source: str = "", pattern_id: str = ""):
-    """Log a posted tweet."""
-    _ensure_header()
-    with open(ENGAGEMENT_LOG_FILE, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([
-            datetime.now().isoformat(), "post", text[:280], "",
-            source, _normalize_pattern(pattern_id),
-            _classify_pillar(text, "post", source),
-            _provider_for("post"),
-        ])
-
-
 def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
               source: str = "", pattern_id: str = ""):
     """Log a reply or quote tweet.
@@ -91,16 +78,3 @@ def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
             personality_store.record_interaction(author, kind=action_type)
     except Exception:
         pass
-
-
-def log_hotake(text: str, source: str = "", pattern_id: str = ""):
-    """Log a hot take."""
-    _ensure_header()
-    with open(ENGAGEMENT_LOG_FILE, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([
-            datetime.now().isoformat(), "hotake", text[:280], "",
-            source, _normalize_pattern(pattern_id),
-            _classify_pillar(text, "hotake", source),
-            _provider_for("hotake"),
-        ])

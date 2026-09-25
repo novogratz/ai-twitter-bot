@@ -33,15 +33,11 @@ ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 
 # Operator policy (2026-09-23): at least three editorial posts targeted, up
 # to eight profile publications per Toronto day, and uncapped replies while awake. These
-# ceilings cannot be raised by stale .env files or autonomous strategy data.
+# ceilings cannot be raised by stale .env files.
 BOT_TIMEZONE = "America/Toronto"
 MIN_TARGET_POSTS_PER_DAY = 3
 TARGET_POSTS_PER_DAY = 6
 MAX_PROFILE_POSTS_PER_DAY = 8
-MAX_NEWS_PER_DAY = 8
-MAX_HOTAKES_PER_DAY = 8
-MAX_QUOTES_PER_DAY = 0
-MAX_RETWEETS_PER_DAY = 0
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
@@ -87,7 +83,6 @@ def _default_model(
 NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
 REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
-HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
 
 # Profile and reply provider overrides. Default both to Ollama; Codex is the
 # cloud fallback when explicitly enabled. Claude is not used by default.
@@ -96,23 +91,7 @@ REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "ollama").strip() or N
 
 # No budget limits — the bot calls the LLM freely.
 
-# Autonomous self-modification — OFF by default (operator 2026-06-21:
-# "disactivate the self improvement stuff, keep it static"). These drive the
-# meta_strategy / evolution / reflection / scout agents that rewrite caps,
-# prompts, personality, and the tracked-account list. Static = no drift.
-# Re-enable per-flag via .env only if explicitly wanted.
-ENABLE_AI_MAINTENANCE = os.environ.get("ENABLE_AI_MAINTENANCE", "0") == "1"
-ENABLE_AI_DISCOVERY = os.environ.get("ENABLE_AI_DISCOVERY", "0") == "1"
-ENABLE_CODEX_OPERATOR = False
-
-# Growth optimization settings
-GROWTH_ENHANCEMENT = os.environ.get("GROWTH_ENHANCEMENT", "0") == "1"
-FOLLOW_BACK_RATIO = float(os.environ.get("FOLLOW_BACK_RATIO", "0.3"))
-RETWEET_ENGAGEMENT_THRESHOLD = int(os.environ.get("RETWEET_ENGAGEMENT_THRESHOLD", "5"))
-BOOST_ENGAGEMENT_POSTS = int(os.environ.get("BOOST_ENGAGEMENT_POSTS", "1"))
-
 # Retry settings
-MAX_RETRIES = 3
 RETRY_DELAY_SECONDS = 5
 
 
@@ -141,19 +120,9 @@ MIN_SECONDS_BETWEEN_POSTS = max(1200, int(os.environ.get("MIN_SECONDS_BETWEEN_PO
 # A negative jitter would shorten the floor above.
 POST_JITTER_SECONDS = max(0, int(os.environ.get("POST_JITTER_SECONDS", "0")))
 
-# Automatic quotes, reposts and recycling are retired. Legacy callers still
-# encounter these hard limits, including urgent/mega-viral bypass attempts.
-MAX_QUOTE_REPOSTS_PER_DAY = 0
-MIN_SECONDS_BETWEEN_QUOTES = 3600
-QUOTE_JITTER_SECONDS = 0
-QUOTE_MEGA_VIRAL_LIKES = 1000
-QUOTE_MEGA_VIRAL_BONUS_SLOTS = 0
-
-# 0 explicitly means unlimited replies. Keep browser pacing and URL dedup.
-MAX_REPLIES_PER_DAY = 0
+# Replies have no daily cap. Keep browser pacing and URL dedup.
 MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "8"))
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "7"))
-REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
 # Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero
 # after the full purge). Following is a tool for exactly two things: curating
@@ -178,7 +147,6 @@ FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
 FOLLOWBACK_BYPASS_WHITELIST = os.environ.get("FOLLOWBACK_BYPASS_WHITELIST", "1") == "1"
 FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
-FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "150"))
 FOLLOW_TOTAL_CAP = int(os.environ.get("FOLLOW_TOTAL_CAP", "300"))
 # 2026-06-11 operator: "go back on following people and following back to
 # increase viewers/likes/followers". Growth mode unties the ceiling from the
@@ -210,50 +178,3 @@ REPOST_MAX_AGE_HOURS = min(48, int(os.environ.get("REPOST_MAX_AGE_HOURS", "48"))
 
 # Persistent, timestamped ledger of every write action (anti-churn + audit).
 ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")
-
-
-# Live strategy reader — read dynamic caps written by meta_strategy_agent.
-# Bots use get_live_cap(name) instead of the static env values so the
-# agent's strategic decisions actually flex behavior.
-def _live_strategy() -> dict:
-    from .live_strategy import LIVE_STRATEGY
-    return LIVE_STRATEGY.read()
-
-
-def get_live_cap(name: str, default: int) -> int:
-    """Return the live cap for `name` from live_strategy.json, or `default`
-    (from env / module-level constant) if the agent hasn't run yet or the
-    file is malformed. Best-effort, never raises."""
-    fixed = {
-        "MAX_QUOTES_PER_DAY": 0, "MAX_QUOTE_REPOSTS_PER_DAY": 0,
-        "MAX_RETWEETS_PER_DAY": 0, "MAX_REPLIES_PER_DAY": 0,
-        "MAX_ORIGINALS_PER_DAY": MAX_ORIGINALS_PER_DAY,
-        "MAX_NEWS_PER_DAY": 8, "MAX_HOTAKES_PER_DAY": 8,
-    }
-    if name in fixed:
-        return fixed[name]
-    try:
-        v = (_live_strategy().get("caps") or {}).get(name)
-        return int(v) if v is not None else default
-    except Exception:
-        return default
-
-
-def get_live_cadence_factor(default: float = 1.0) -> float:
-    """Live cadence multiplier (1.0 = neutral). Bots multiply their
-    sleep/interval by this. < 1 = faster, > 1 = slower."""
-    try:
-        v = _live_strategy().get("cadence_factor")
-        return float(v) if v is not None else default
-    except Exception:
-        return default
-
-
-def get_live_topic_focus() -> list:
-    """Top topics the meta-strategy agent says we should lean into.
-    Empty list if agent hasn't run yet."""
-    try:
-        v = _live_strategy().get("topic_focus") or []
-        return [str(t) for t in v][:5]
-    except Exception:
-        return []

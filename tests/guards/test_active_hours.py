@@ -76,7 +76,7 @@ def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
     hours.awake_job(lambda: called.append(True))()
     assert not called
     for action in (ag.POST, ag.QUOTE, ag.REPLY, ag.RETWEET):
-        assert not ag.can_post(action, urgent=True, high_value=True)[0]
+        assert not ag.can_post(action)[0]
 
 
 def test_awake_job_starts_nothing_after_stop(monkeypatch):

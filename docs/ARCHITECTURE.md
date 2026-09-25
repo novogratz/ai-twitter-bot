@@ -350,19 +350,18 @@ No write function exists for quotes, reposts, threads, GIF posts or
 self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 `retweet_post`, `retweet_own_latest`, `reboost_tweet`, `post_thread`,
 `reply_to_own_latest` and `reply_to_reply` were removed with their helpers
-(issue #111). The zero caps below stay as a second line. The writes no job
-called went too (issue #168): the unfollow chokepoint with its cap, the
-nested-reply alias, and `post_tweet`'s image path and non-editorial
-branch. The bot never unfollows; `bin/mass_unfollow.py` clicks on its own
-page and writes its ledger rows itself.
+(issue #111). `can_post` refusing quotes and retweets stays as a second
+line. The writes no job called went too (issue #168): the unfollow
+chokepoint with its cap, the nested-reply alias, and `post_tweet`'s image
+path and non-editorial branch. The bot never unfollows;
+`bin/mass_unfollow.py` clicks on its own page and writes its ledger rows
+itself.
 
 Five modules sit behind them:
 
-- `src/core/config.py` holds the ceilings that neither `.env` nor
-  `live_strategy.json` can lift: eight profile publications a day, quote and
-  repost caps at 0, originals capped at 8 and spaced by at least 1200 seconds,
-  replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
-  these fixed values whatever `live_strategy.json` says.
+- `src/core/config.py` holds the ceilings that `.env` cannot lift: eight
+  profile publications a day, originals capped at 8 and spaced by at least
+  1200 seconds, repost age clamped to 48 hours.
 - `src/guards/action_guard.py` decides `can_post`, answers the follow
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
