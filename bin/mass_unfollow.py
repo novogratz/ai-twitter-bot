@@ -117,10 +117,10 @@ def _legacy_keep_set() -> set:
     """The wide keep-set of the retired smart_unfollow job, plus the whitelist."""
     from src.guards import respect_list
     from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
-    from src.account.engage_bot import TARGET_ACCOUNTS
+    from src.core import account
     from src.replies.mega_watch_bot import MEGA_ACCOUNTS
     keep = {h.lower() for h in respect_list.load()}
-    for handles in (TARGET_ACCOUNTS, EARLY_BIRD_ACCOUNTS, MEGA_ACCOUNTS):
+    for handles in (account.current().network.engage_targets, EARLY_BIRD_ACCOUNTS, MEGA_ACCOUNTS):
         keep |= {h.lower() for h in handles}
     wl = follow_policy.load_whitelist()
     return keep | wl["tier1"] | wl["tier2"] | _whitelist_keep_set()

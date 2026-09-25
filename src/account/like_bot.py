@@ -21,23 +21,13 @@ import random
 import traceback
 import urllib.parse
 
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 from ..guards import active_hours
 from ..x import twitter_client
 from ..x.twitter_client import LikeOutcome
 
-LIKE_QUERIES = [
-    "AI datacenter OR power demand lang:en min_faves:50",
-    "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50",
-    "CoreWeave OR CRWV OR APLD lang:en min_faves:50",
-    "IREN OR HIVE OR TeraWulf OR WULF lang:en min_faves:50",
-    "TAO OR Bittensor OR decentralized compute lang:en min_faves:50",
-    "Nvidia OR GPU OR compute cluster lang:en min_faves:50",
-    "robotics OR humanoid robots OR frontier tech lang:en min_faves:50",
-    "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
-]
 # Guarded: the only record of the daily like cap.
 LIKE_BOT_STATE = StateFile("like_bot_state.json", {}, GUARDED)
 
@@ -81,7 +71,7 @@ def run_like_cycle():
         log.info(f"[LIKE] Daily cap reached ({daily_cap}) — skipping.")
         return
     cycle_cap = min(_likes_per_cycle(), remaining)
-    query = random.choice(LIKE_QUERIES)
+    query = random.choice(account.current().searches.likes)
     encoded = urllib.parse.quote(query)
     tab = "top" if random.random() < settings.get("LIKE_TOP_TAB_PROBABILITY") else "live"
     url = f"https://x.com/search?q={encoded}&f={tab}"

@@ -7,8 +7,9 @@ every setting through these layers, the later one winning:
     declared default -> Account -> .env
 
 The Account is accounts/<BOT_ACCOUNT>/account.toml (src/core/account.py): its
-handle and language, and the bounded settings its `[limits]` tightens. The
-process environment still wins over `.env`, as it always has. Bounds are
+handle and language, the handle lists of its `[network]` that settings serve,
+and the bounded settings its `[limits]` tightens. The process environment
+still wins over `.env`, as it always has. Bounds are
 applied once, after the merge, and to the Account's own values, so an Account
 can only tighten a bound: a value past its floor or ceiling is brought back to
 it and listed in `startup_warnings()`, which `main.py` logs. A `.env` key this
@@ -186,7 +187,7 @@ _declare("FOLLOW_REQUIRE_ENGLISH", bool, True, "Refuse to follow a profile that 
 _declare("FOLLOW_REQUIRE_NICHE", bool, True, "Refuse to follow a non-Engager whose bio is off-niche.")
 _declare("HUMAN_TYPO_HANDLES", str, "", "Comma-separated handles whose Replies get a human typo.")
 _declare("BLANK_GRACE_AFTER_RESTART_SECONDS", int, 120, "Seconds after a Safari restart when blank pages do not count.")
-_declare("PROFILE_VISIT_ALLOWLIST", str, "TheBTCTherapist,Graphseo", "Comma-separated profiles the scraper may visit, besides our own.")
+_declare("PROFILE_VISIT_ALLOWLIST", str, "", "Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set.")
 _declare("REPLY_LIKE_PARENT_PROB", float, 0.12, "Chance to like the post a Reply answers; 0 or less never.")
 _declare("NOTIFY_LIKE_REPLIES_COUNT", int, 3, "Replies under our latest post the notify job likes.")
 
@@ -209,7 +210,7 @@ _declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts 
 _declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an editorial model call.")
 _declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
 _declare("BESTIE_HANDLE", str, "TheBTCTherapist", "VIP account whose posts get the bestie prompt.")
-_declare("VIP_SCAN_HANDLES", str, "Graphseo,TheBTCTherapist", "Comma-separated accounts the direct_reply VIP scan answers.")
+_declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
 _declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
 _declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
 _declare_unused("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999)
@@ -226,8 +227,8 @@ _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
-_declare("PINNED_TRACKED_HANDLES", str, "TheBTCTherapist,Graphseo,Mindset4Money_X",
-         "Comma-separated handles the curator always tracks first (account_curator).")
+_declare("PINNED_TRACKED_HANDLES", str, "",
+         "Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set.")
 _declare("CURATOR_WINDOW_DAYS", int, 14, "Days of engagement log the curator scores.")
 _declare("CURATOR_TRACKED_MAX", int, 40, "Earned accounts the curator tracks, pinned ones aside.")
 _declare("CURATOR_MIN_ENGAGEMENTS", int, 3, "On-lane engagements an author needs to be tracked.")
@@ -347,6 +348,10 @@ def _account_layer(name: str) -> tuple[dict, list[str]]:
     from . import account
     loaded = account.load(name)
     layer = {"BOT_HANDLE": loaded.handle, "CONTENT_LANG_PRIMARY": loaded.language}
+    # The Account's network lists, as the comma-separated settings read them.
+    layer.update({"PROFILE_VISIT_ALLOWLIST": ",".join(loaded.network.profile_visits),
+                  "VIP_SCAN_HANDLES": ",".join(loaded.network.vip_scan),
+                  "PINNED_TRACKED_HANDLES": ",".join(loaded.network.pinned_tracked)})
     warnings = []
     for key, value in loaded.limits.items():
         setting = DECLARED.get(key)

@@ -8,10 +8,10 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override
     A non-allowlisted profile must return [] BEFORE any Safari work, and the
     allowlist must be read at call time (side-effect-gate rule)."""
     from src.x import safari, scraper, twitter_client as tc
-    from src.core import settings
+    from src.core import account
     from src.core.config import BOT_HANDLE
 
-    default = settings.DECLARED["PROFILE_VISIT_ALLOWLIST"].default
+    default = ",".join(account.current().network.profile_visits)
     assert default == "TheBTCTherapist,Graphseo"
     settings_override(PROFILE_VISIT_ALLOWLIST=default)  # whatever .env says
     monkeypatch.setattr(
@@ -21,7 +21,7 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override
     assert scraper.scrape_profile_tweets("karpathy") == []
     tc.visit_profile_and_like("unusual_whales")  # must not open Safari either
 
-    # Allowlist semantics (pure check, no Safari), on the declared default
+    # Allowlist semantics (pure check, no Safari), on the Account's list
     # pinned above: the two reply-everything friends (operator 2026-06-07).
     assert scraper._profile_visit_allowed(BOT_HANDLE)
     assert scraper._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")

@@ -259,3 +259,247 @@ def test_a_stricter_account_value_holds_under_the_defaults_and_env_wins_over_it(
     assert settings.get("MAX_ORIGINALS_PER_DAY") == 5
     assert settings.get("MIN_SECONDS_BETWEEN_POSTS") == 2400
     assert settings.startup_warnings() == []
+
+
+# --- Network and niche (#204) ------------------------------------------------------
+
+# The constants of src/replies/direct_reply.py, reply_agent.py (its
+# TARGET_ACCOUNTS as REPLY_TARGET_ACCOUNTS), src/account/engage_bot.py (its
+# TARGET_ACCOUNTS and VIP_ACCOUNTS as ENGAGE_*), like_bot.py,
+# follow_engagers_bot.py (its _SKIP_HANDLES set, sorted here) and
+# src/guards/follow_policy.py, and three settings defaults, printed from the
+# code before #204 moved them to accounts/theaishrink/account.toml. A pattern
+# is (source, flags).
+OLD_NETWORK = {
+    "PROFILE_VISIT_ALLOWLIST": "TheBTCTherapist,Graphseo",
+    "VIP_SCAN_HANDLES": "Graphseo,TheBTCTherapist",
+    "PINNED_TRACKED_HANDLES": "TheBTCTherapist,Graphseo,Mindset4Money_X",
+    "VIP_REPLY_ACCOUNTS": [
+        "TheBTCTherapist", "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
+        "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
+        "karpathy", "demishassabis", "sama", "VitalikButerin", "saylor", "brian_armstrong",
+        "cz_binance", "SpaceX",
+    ],
+    "BIG_AI_HYPE_ACCOUNTS": [
+        "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
+        "JensenHuang", "gdb", "miramurati", "AravSrinivas", "karpathy", "ylecun", "AndrewYNg",
+        "drfeifei", "lexfridman", "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
+        "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai", "MistralAI", "perplexity_ai",
+        "nvidia", "Microsoft", "Meta", "OpenAIDevs", "huggingface", "cursor_ai", "rowancheung",
+        "TheRundownAI", "minchoi", "kimmonismus", "slow_developer", "mreflow", "bentossell",
+        "venturetwins", "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq", "GaryMarcus",
+        "testingcatalog", "btibor91", "AISafetyMemes", "amasad", "OfficialLoganK", "DrJimFan",
+        "sytelus",
+    ],
+    "MID_SIZE_AI_ACCOUNTS": [
+        "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt", "Teknium1", "abacaj",
+        "corbtt", "Yuchenj_UW", "nutlope", "skirano", "steph_palazzolo", "saranormous", "packyM",
+        "nearcyan", "giffmana", "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
+        "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
+    ],
+    "HIGH_TRACTION_REPLY_ACCOUNTS": [
+        "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
+        "crypto_futur", "TheCrypt0Matrix", "TagadoBTC", "Crypto__Goku", "MiningTk", "MoneyRadar_FR",
+        "Capetlevrai", "Dark_Emi_", "Divs_King", "MathieuL1", "NCheron_bourse", "ABaradez",
+        "Phil_RX", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI",
+    ],
+    "BIG_FR_ACCOUNTS": [
+        "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
+        "frandroid", "journaldugeek", "FlavienChervet", "MistralAI", "arthurmensch",
+        "GuillaumeLample", "Heu7reka", "Yoann_Lopez_", "Finary", "ZonebourseFR", "BFMBourse",
+        "latribune", "Capital", "LesEchos", "boursorama", "GoodValYou", "Zonebourse", "Investir",
+        "SnowballEcho", "Hasheur", "cryptodiffusion", "Cointribune", "BFMcrypto", "PowerHasheur",
+        "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
+    ],
+    "ALWAYS_REPLY_ACCOUNTS": [
+        "TheBTCTherapist", "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
+        "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
+        "karpathy", "demishassabis", "sama", "VitalikButerin", "saylor", "brian_armstrong",
+        "cz_binance", "SpaceX", "elonmusk", "DarioAmodei", "satyanadella", "sundarpichai",
+        "JensenHuang", "gdb", "miramurati", "AravSrinivas", "AndrewYNg", "drfeifei", "lexfridman",
+        "ID_AA_Carmack", "EMostaque", "clementdelangue", "OpenAI", "AnthropicAI", "GoogleDeepMind",
+        "GoogleAI", "xai", "MistralAI", "perplexity_ai", "nvidia", "Microsoft", "Meta",
+        "OpenAIDevs", "huggingface", "cursor_ai", "rowancheung", "TheRundownAI", "minchoi",
+        "kimmonismus", "slow_developer", "mreflow", "bentossell", "venturetwins", "heybarsee",
+        "alexandr_wang", "emollick", "swyx", "_akhaliq", "GaryMarcus", "testingcatalog", "btibor91",
+        "AISafetyMemes", "amasad", "OfficialLoganK", "DrJimFan", "sytelus", "hwchase17",
+        "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt", "Teknium1", "abacaj", "corbtt",
+        "Yuchenj_UW", "nutlope", "skirano", "steph_palazzolo", "saranormous", "packyM", "nearcyan",
+        "giffmana", "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
+        "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an", "PowerHasheur",
+        "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou", "crypto_futur",
+        "TheCrypt0Matrix", "TagadoBTC", "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai",
+        "Dark_Emi_", "Divs_King", "MathieuL1", "NCheron_bourse", "ABaradez", "Phil_RX",
+        "GaelVaroquaux", "Korben", "micode", "Underscore_", "presse_citron", "numerama",
+        "siecledigital", "BFMTech", "frandroid", "journaldugeek", "FlavienChervet", "Heu7reka",
+        "Yoann_Lopez_", "Finary", "ZonebourseFR", "BFMBourse", "latribune", "Capital", "LesEchos",
+        "boursorama", "GoodValYou", "Zonebourse", "Investir", "SnowballEcho", "Hasheur",
+        "cryptodiffusion", "Cointribune", "BFMcrypto",
+    ],
+    "ENGAGE_VIP_ACCOUNTS": [
+        "Graphseo",
+    ],
+    "ENGAGE_TARGET_ACCOUNTS": [
+        "Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_",
+    ],
+    "REPLY_TARGET_ACCOUNTS": [
+        "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
+        "FlasheurInvest", "McnallieM", "sama", "OpenAI", "AnthropicAI", "GoogleDeepMind",
+        "elonmusk", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis", "MistralAI",
+        "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
+        "IREN_Ltd", "LambdaAPI", "applied_dc", "KobeissiLetter", "unusual_whales", "SpaceX",
+        "Tesla", "BostonDynamics", "Figure_robot", "ID_AA_Carmack", "drfeifei", "NCheron_bourse",
+        "ABaradez", "IVTrading", "Yoann_Lopez_", "SnowballEcho", "GoodValYou", "Finary", "LesEchos",
+        "BFMBusiness", "BFMBourse", "Capital_fr", "latribune", "CafeDelaBourse", "ZoneBourse",
+        "FlasheurInvest", "DereeperVivre", "Phil_RX", "Korben", "underscore_", "MichaelBenabou",
+        "presse_citron", "siecledigital", "usine_digitale", "numerama", "01net", "frandroid",
+        "LesNumeriques", "FrenchWeb", "MaddyNess", "arthurmensch", "GuillaumeLample",
+        "GaelVaroquaux", "vision_ia", "PowerHasheur", "Capetlevrai", "CoinAcademy_FR", "saylor",
+        "MicroStrategy", "VitalikButerin", "CoinDesk", "blockworks_", "Palantir",
+    ],
+    "SKIP_HANDLES": [
+        "bloomberg", "business", "cnbc", "cointelegraph", "ft", "reuters", "unusual_whales",
+        "watcherguru", "wsj", "zerohedge",
+    ],
+    "NICHE_PATTERN": (
+        r"\b(ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|"
+        r"deepseek|huggingface|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|"
+        r"humanoïde|altman|musk|ml|deep\s*learning|neural|saas|software|cloud|datacenter|codex|"
+        r"copilot|cursor|windsurf|replit|programmeur|coding|coder|développeur|ide|api|sdk|"
+        r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|blockchain|defi|stablecoin|token|"
+        r"altcoin|memecoin|nft|wallet|binance|coinbase|kraken|satoshi|web3|dao|staking|yield|"
+        r"dex|cex|space|espace|spatial|spacex|starship|starlink|rocket|fusée|fusee|satellite|"
+        r"nasa|esa|ariane|arianegroup|blue\s*origin|orbite|orbit|astéroïde|exploration|mars|"
+        r"lune|moon|cosmos|bourse|action|actions|stock|stocks|marché|trading|trader|invest|"
+        r"investir|portefeuille|etf|pea|cto|cac|cac40|nasdaq|fed|bce|taux|powell|lagarde|"
+        r"rendement|dividendes|ipo|valuation|per|fcf|roe|roic|livret|assurance|levée|fund|"
+        r"funding|vc|venture|startup|banque|fintech|néobanque|paiement|virement|swift|sepa|immo|"
+        r"immobilier|inflation|récession|earnings|acquisition|merger|m&a|finance|cotation|"
+        r"pétrole|xau|commodity|semi.?conducteur|bullish|bearish|oversold|resistance|support|"
+        r"volatility|krach|goldman|jpmorgan|morgan\s*stanley|dette|deficit|fiscal|impot|budget|"
+        r"deflation|monetaire|souverain|oat|spread|notation|moody|tesla|meta|microsoft|google|"
+        r"amazon|apple|netflix|alphabet|spotify|uber|airbnb|palantir|shopify|stripe|databricks|"
+        r"snowflake|datadog|cloudflare)\b", 34),
+    "TICKER_RE": (r"\$[A-Z]{1,5}\b", 32),
+    "NICHE_BIO_RE": (
+        r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|crypto|"
+        r"bitcoin|btc|eth|web3|defi|blockchain|token|invest|investor|investing|trader|trading|"
+        r"markets?|stocks?|equit|finance|financial|fintech|macro|quant|hedge|portfolio|capital|"
+        r"wealth|analyst|founder|builder|startup|venture|\bvc\b|tech|software|engineer|nvidia|"
+        r"bourse|économie|economy)\b", 34),
+    "SEARCH_QUERIES": [
+        "from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5",
+        "from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5",
+        "from:Mindset4Money_X min_faves:2",
+        '"why would" OR "why is" OR "what am I missing" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30',
+        '"would you buy" OR "would you rather" OR "do you own" (stock OR $NVDA OR AI OR Bitcoin OR ETF) lang:en min_faves:30',
+        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
+        "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
+        '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
+        '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
+        'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
+        'Nvidia OR NVDA OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
+        'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+        'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30',
+        'Palantir OR "AI stock" OR "AI bubble" OR "AI valuation" lang:en min_faves:50',
+        '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
+        '"panic sold" OR "bought the top" OR "portfolio is down" OR drawdown lang:en min_faves:30',
+        'Bitcoin OR BTC OR "crypto crash" OR "BTC ETF" lang:en min_faves:100',
+        'Nvidia OR Palantir OR "AI trade" OR "AI capex" OR "AI datacenter" earnings lang:en min_faves:100',
+        '"AI crypto" OR "AI token" OR "decentralized AI" OR "AI agents" crypto lang:en min_faves:50',
+    ],
+    "HOT_TAB_QUERIES": [
+        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
+        'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
+        '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
+        'Palantir OR "AI stock" OR "AI bubble" lang:en min_faves:300',
+        'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
+        '"market crash" OR "sell off" OR "sell-off" OR VIX lang:en min_faves:500',
+        'Bitcoin OR "BTC ETF" OR crypto lang:en min_faves:300',
+    ],
+    "LIKE_QUERIES": [
+        "AI datacenter OR power demand lang:en min_faves:50",
+        "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50",
+        "CoreWeave OR CRWV OR APLD lang:en min_faves:50",
+        "IREN OR HIVE OR TeraWulf OR WULF lang:en min_faves:50",
+        "TAO OR Bittensor OR decentralized compute lang:en min_faves:50",
+        "Nvidia OR GPU OR compute cluster lang:en min_faves:50",
+        "robotics OR humanoid robots OR frontier tech lang:en min_faves:50",
+        "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
+    ],
+}
+
+
+def test_theaishrink_loads_the_old_network_niche_and_searches():
+    loaded = account.load("theaishrink")
+    net, niche, searches = loaded.network, loaded.niche, loaded.searches
+    assert ",".join(net.profile_visits) == OLD_NETWORK["PROFILE_VISIT_ALLOWLIST"]
+    assert ",".join(net.vip_scan) == OLD_NETWORK["VIP_SCAN_HANDLES"]
+    assert ",".join(net.pinned_tracked) == OLD_NETWORK["PINNED_TRACKED_HANDLES"]
+    assert list(net.vip_reply) == OLD_NETWORK["VIP_REPLY_ACCOUNTS"]
+    assert list(net.big_ai_hype) == OLD_NETWORK["BIG_AI_HYPE_ACCOUNTS"]
+    assert list(net.mid_size_ai) == OLD_NETWORK["MID_SIZE_AI_ACCOUNTS"]
+    assert list(net.high_traction_reply) == OLD_NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
+    assert list(net.big_fr) == OLD_NETWORK["BIG_FR_ACCOUNTS"]
+    assert list(net.always_reply) == OLD_NETWORK["ALWAYS_REPLY_ACCOUNTS"]
+    assert list(net.engage_vip) == OLD_NETWORK["ENGAGE_VIP_ACCOUNTS"]
+    assert list(net.engage_targets) == OLD_NETWORK["ENGAGE_TARGET_ACCOUNTS"]
+    assert list(net.reply_targets) == OLD_NETWORK["REPLY_TARGET_ACCOUNTS"]
+    assert sorted(net.follow_engagers_skip) == OLD_NETWORK["SKIP_HANDLES"]
+    assert len(set(net.follow_engagers_skip)) == len(net.follow_engagers_skip)
+    assert (niche.post.pattern, niche.post.flags) == OLD_NETWORK["NICHE_PATTERN"]
+    assert (niche.ticker.pattern, niche.ticker.flags) == OLD_NETWORK["TICKER_RE"]
+    assert (niche.bio.pattern, niche.bio.flags) == OLD_NETWORK["NICHE_BIO_RE"]
+    assert list(searches.replies) == OLD_NETWORK["SEARCH_QUERIES"]
+    assert list(searches.hot_tab) == OLD_NETWORK["HOT_TAB_QUERIES"]
+    assert list(searches.likes) == OLD_NETWORK["LIKE_QUERIES"]
+    assert net.blocked_accounts == ()
+
+
+def test_the_account_network_fills_three_settings_and_env_wins(accounts, fresh):
+    accounts("theaishrink")
+    fresh("VIP_SCAN_HANDLES=FromEnv\n")
+    assert settings.get("PROFILE_VISIT_ALLOWLIST") == OLD_NETWORK["PROFILE_VISIT_ALLOWLIST"]
+    assert settings.get("PINNED_TRACKED_HANDLES") == OLD_NETWORK["PINNED_TRACKED_HANDLES"]
+    assert settings.get("VIP_SCAN_HANDLES") == "FromEnv"
+
+
+def test_the_jobs_read_the_loaded_account(accounts, fresh):
+    from src.account import engage_bot
+    from src.guards import follow_policy
+    from src.replies import direct_reply, notify_bot
+    other = (THEAISHRINK
+             .replace('engage_vip = ["Graphseo"]', 'engage_vip = ["OtherVip"]')
+             .replace('vip_reply = [', 'vip_reply = ["OtherVip", ')
+             .replace('engage_targets = [', 'engage_targets = ["OtherTarget", ')
+             .replace("post = '", "post = '\\bzebra\\b|")
+             .replace("bio = '", "bio = '\\bgiraffe\\b|"))
+    accounts("other", other)
+    fresh("BOT_ACCOUNT=other\n")
+    assert engage_bot._vip_accounts() == ("OtherVip",)
+    assert direct_reply.always_reply_accounts()[0] == "OtherVip"
+    assert direct_reply.reply_call("othervip").label == "DIRECT_REPLY_VIP"
+    assert direct_reply.reply_call("nobody").label == "DIRECT_REPLY"
+    assert "othertarget" in notify_bot._influencer_handles()
+    assert direct_reply.is_on_niche("a Zebra crossing")
+    assert follow_policy._quality_decision(5000, "giraffe keeper", "Someone", False) == (True, "")
+
+
+@pytest.mark.parametrize("old, new, named", [
+    ('vip_scan = ["Graphseo", "TheBTCTherapist"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
+    ('engage_vip = ["Graphseo"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
+    ("blocked_accounts = []", 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
+    ("blocked_accounts = []", "blocked_accounts = [3]", "network.blocked_accounts[0]"),
+    ("ticker = '", "ticker = '(", "niche.ticker"),
+    ("likes = [", "likes = [\n    ' ',", "searches.likes[0]"),
+    ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
+    ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
+    # No key removes a Blocked account of the engine's BLOCKLIST.
+    ("blocked_accounts = []", 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
+     "network.unblocked_accounts"),
+])
+def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new, named):
+    assert THEAISHRINK.count(old) == 1
+    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    with pytest.raises(settings.SettingsError, match=re.escape(named)):
+        fresh()

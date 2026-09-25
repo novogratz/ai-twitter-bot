@@ -152,8 +152,10 @@ _Avoid_: replied set, replied cache, dedup file
 The X account the bot runs, one per process, chosen at start by
 `BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
 handle and language, the Slots and their angles, the feeds, Evergreen
-topics and trusted hosts, and the relevance filter. An Account may tighten
-an engine ceiling or floor, never lift it.
+topics and trusted hosts, the relevance filter, and its network and niche:
+the accounts the jobs answer, scan, visit or skip, the niche patterns and
+the X searches. An Account may tighten an engine ceiling or floor, never
+lift it, and add Blocked accounts, never remove one.
 _Avoid_: profile (the account's page on X), bot, persona
 
 **Engager**:
@@ -195,7 +197,8 @@ kept by the follow chokepoint alone; the follow jobs read it to skip them.
 _Avoid_: followed list, registry, follow cache
 
 **Blocked account**:
-An account the Operator bars from any interaction.
+An account the Operator bars from any interaction: a token of the engine's
+`BLOCKLIST`, or one the Account adds to it.
 _Avoid_: banned, blacklisted
 
 **Respected account**:

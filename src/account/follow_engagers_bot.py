@@ -15,18 +15,13 @@ No new Safari scraping: the data source is the action ledger.
 import traceback
 
 from ..guards import active_hours, follow_policy
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 
 # Guarded: it alone holds this job's daily cap and the handles already tried.
 STATE = StateFile("follow_engagers_state.json",
                   {"date": "", "count_today": 0, "attempted": []}, GUARDED)
-
-# Big-media accounts get Debate turns too (we reply back under news posts)
-# — following @business back is pointless for follow-backs.
-_SKIP_HANDLES = {"business", "cnbc", "reuters", "wsj", "ft", "bloomberg",
-                 "watcherguru", "zerohedge", "unusual_whales", "cointelegraph"}
 
 
 def _load_state() -> dict:
@@ -60,6 +55,9 @@ def run_follow_engagers_cycle():
 
     attempted = set(st.get("attempted", []))
     own = config.BOT_HANDLE.lower()
+    # Big-media accounts get Debate turns too (we reply back under news
+    # posts): following them back is pointless for follow-backs.
+    skip = {h.lower() for h in account.current().network.follow_engagers_skip}
     followed = 0
 
     from ..x.twitter_client import FollowOutcome, follow_account
@@ -72,7 +70,7 @@ def run_follow_engagers_cycle():
     for h in follow_policy.engagers()[:200]:
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
-        if h == own or h in _SKIP_HANDLES or h in attempted:
+        if h == own or h in skip or h in attempted:
             continue
         result = follow_account(h)
         if result.is_budget_refusal:

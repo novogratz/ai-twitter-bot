@@ -9,8 +9,8 @@ allowed-tools: Bash Read
 Like @$username's latest posts. Only on an explicit operator request.
 
 1. Strip @ if present. The handle must be in `PROFILE_VISIT_ALLOWLIST`
-   (`.env`, default `TheBTCTherapist,Graphseo`); any other is refused
-   before Safari opens.
+   (`.env`, else the Account's `network.profile_visits`:
+   `TheBTCTherapist,Graphseo`); any other is refused before Safari opens.
 2. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`

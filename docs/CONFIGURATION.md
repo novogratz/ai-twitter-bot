@@ -4,7 +4,7 @@ Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
 `.env.example` is the starting point for @TheAIShrink.
 What describes the Account rather than the engine (handle, language, Slots,
-feeds, trusted hosts, relevance filter) lives in
+feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 `accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
 `[limits]` may tighten an engine bound, never lift it, and `.env` wins over it.
 
@@ -134,7 +134,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FOLLOW_REQUIRE_NICHE` | 0 or 1 | `1` |  | Refuse to follow a non-Engager whose bio is off-niche. |
 | `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
-| `PROFILE_VISIT_ALLOWLIST` | str | `TheBTCTherapist,Graphseo` |  | Comma-separated profiles the scraper may visit, besides our own. |
+| `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |
 | `REPLY_LIKE_PARENT_PROB` | float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
 | `NOTIFY_LIKE_REPLIES_COUNT` | int | `3` |  | Replies under our latest post the notify job likes. |
 | `OLLAMA_MODEL` | str | `qwen3.6:35b-a3b` |  | Ollama model of a call profile that names none; bin/run.sh pre-warms it. |
@@ -152,7 +152,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `BESTIE_HANDLE` | str | `TheBTCTherapist` |  | VIP account whose posts get the bestie prompt. |
-| `VIP_SCAN_HANDLES` | str | `Graphseo,TheBTCTherapist` |  | Comma-separated accounts the direct_reply VIP scan answers. |
+| `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
@@ -162,7 +162,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
-| `PINNED_TRACKED_HANDLES` | str | `TheBTCTherapist,Graphseo,Mindset4Money_X` |  | Comma-separated handles the curator always tracks first (account_curator). |
+| `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |
 | `CURATOR_TRACKED_MAX` | int | `40` |  | Earned accounts the curator tracks, pinned ones aside. |
 | `CURATOR_MIN_ENGAGEMENTS` | int | `3` |  | On-lane engagements an author needs to be tracked. |

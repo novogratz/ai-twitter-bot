@@ -113,8 +113,9 @@ must not repeat.
   still judges, and the wait ends on a stop request or at 23:30.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
-  URL contains a `BLOCKLIST` token (case, spaces, dashes and underscores
-  ignored on both sides), when the parent is the account's own post, or
+  URL contains a `BLOCKLIST` token or one of the Account's
+  `network.blocked_accounts`, which add to it and never remove from it
+  (case, spaces, dashes and underscores ignored on both sides), when the parent is the account's own post, or
   when the URL carries no author handle. The scheduled reply jobs ask
   the same admission before paying for a generation and keep no copy of
   these rules (issue #100). The legacy `reply_job`

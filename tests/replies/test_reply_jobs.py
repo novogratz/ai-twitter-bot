@@ -426,7 +426,7 @@ def profile_job(request, monkeypatch, llm, chokepoint):
     profiles = {}
     monkeypatch.setattr(eb, "_scan_pool", lambda: list(profiles))
     monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
-    monkeypatch.setattr(dr, "ALWAYS_REPLY_ACCOUNTS", [])
+    monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
     monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
