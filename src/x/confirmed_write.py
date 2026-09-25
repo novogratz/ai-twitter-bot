@@ -120,5 +120,5 @@ def _record(rows: list[tuple[str, str | None]], dry_run: bool = False) -> None:
 
 def _stopped(tag: str, outcome: O) -> O:
     log_line = log.info if outcome.name in _FAILURES else log.debug
-    log_line(f"[{tag}] Write {outcome.value}; nothing recorded.")
+    log_line(f"[{tag}] Write {outcome.value}; no ledger row.")
     return outcome

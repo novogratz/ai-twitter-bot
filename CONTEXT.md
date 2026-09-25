@@ -144,7 +144,9 @@ soon (the follow spacing), cap reached (the daily cap, the following
 ceiling or the ratio brake, reached or unreadable), quality rejected (the
 quality gate, on the profile or within 30 days), or refused (every other
 rule: handle, whitelist, anti-churn). Too soon and cap reached concern the
-account's follow budget, so a later cycle may follow the same account.
+account's follow budget, so a later cycle may follow the same account. A
+whitelist unreadable before the profile opens is no refusal: it stops the
+job, and no account is marked tried.
 _Avoid_: policy transient, follow error, skip
 
 **Followed accounts**:

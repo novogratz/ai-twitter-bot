@@ -573,10 +573,12 @@ class FollowOutcome(Enum):
     """What `follow_account` did. Truthy only for FOLLOWED, so a caller that
     tests the result counts only the follows that shipped. The refusals
     name their cause (CONTEXT.md: Follow refusal): TOO_SOON and CAP_REACHED
-    leave the handle for a later cycle, QUALITY_REJECTED and REFUSED are
-    about the handle. ALREADY_FOLLOWED: the profile showed it followed, and
-    it joined the followed accounts. DRY_RUN: a dry-run ledger row, nothing
-    clicked."""
+    concern the follow budget and leave the handle for a later cycle,
+    QUALITY_REJECTED and REFUSED are about the handle. An unreadable
+    whitelist is no outcome: `follow_account` raises StateUnreadable before
+    the profile opens, dry run included, and the job stops. ALREADY_FOLLOWED:
+    the profile showed it followed, and it joined the followed accounts.
+    DRY_RUN: a dry-run ledger row, nothing clicked."""
     FOLLOWED = "followed"
     ALREADY_FOLLOWED = "already_followed"
     TOO_SOON = "too_soon"
@@ -588,6 +590,12 @@ class FollowOutcome(Enum):
 
     def __bool__(self):
         return self is FollowOutcome.FOLLOWED
+
+    @property
+    def is_budget_refusal(self) -> bool:
+        """A refusal on the account's follow budget, not on the handle: the
+        cycle ends and the handle stays for a later one."""
+        return self in (FollowOutcome.TOO_SOON, FollowOutcome.CAP_REACHED)
 
 
 _REFUSED = {follow_policy.Refusal.TOO_SOON: FollowOutcome.TOO_SOON,
@@ -612,6 +620,8 @@ def follow_account(username: str, reciprocal: bool = False,
     are then updated here. ALREADY_FOLLOWED adds the handle to the followed
     accounts and writes no ledger row. A refusal names its cause, FAILED
     means no Follow button was clicked, DRY_RUN that nothing was opened.
+    Raises StateUnreadable, with nothing opened or recorded, while
+    whitelist.json cannot be read before the profile opens.
 
     ⛔ Callers never add a handle to the followed accounts themselves: this
     function does, for a follow that shipped or was found done.

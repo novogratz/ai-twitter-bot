@@ -88,14 +88,15 @@ def run_follow_engagers_cycle():
     # TRANSIENT policy refusals (the 3500 total-following ceiling blocked
     # every follow for days). A refusal on the follow budget (spacing, daily
     # cap, total ceiling) ends the cycle WITHOUT burning the candidate; any
-    # other outcome marks the handle attempted.
+    # other outcome marks the handle attempted. An unreadable whitelist
+    # raises out of the cycle, before any candidate is marked.
     for h in _engager_handles():
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
         if h == own or h in BLOCKLIST or h in _SKIP_HANDLES or h in attempted:
             continue
         result = follow_account(h, engager=True)
-        if result in (FollowOutcome.TOO_SOON, FollowOutcome.CAP_REACHED):
+        if result.is_budget_refusal:
             log.info(f"[FOLLOW-ENGAGERS] Follow budget: {result.value} — ending cycle, candidates preserved.")
             break
         if result is FollowOutcome.DRY_RUN:

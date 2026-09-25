@@ -244,6 +244,22 @@ def test_follow_refused_names_its_cause_and_never_opens_the_page(trace, refusal,
     assert trace.logs == [f"[FOLLOW] policy refuses @someone ({refusal.value}: refused)."]
 
 
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_follow_stops_on_an_unreadable_whitelist_before_the_profile_opens(trace, monkeypatch,
+                                                                        dry_run):
+    """#172: judge refused on an unreadable whitelist, and follow_engagers
+    marked each Engager tried. It raises now, before the lock, the page and
+    any ledger row, dry run included."""
+    def unreadable(*a, **k):
+        trace.events.append("guard:judge_follow")
+        raise StateUnreadable("whitelist.json is unreadable")
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setattr(fp, "judge", unreadable)
+    with pytest.raises(StateUnreadable):
+        tc.follow_account("someone")
+    assert trace.events == ["guard:judge_follow"]
+
+
 def test_follow_quality_refusal_closes_without_clicking(trace, monkeypatch):
     small = {"followers": "12", "bio": "dogs", "name": "x"}
     monkeypatch.setattr(scraper, "_scrape_profile_quality", lambda: trace.events.append("quality") or small)
@@ -413,8 +429,8 @@ def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):
     trace.js.append("NO_BTN")
     tc.follow_account("someone")
     assert [line for line in trace.logs if line.startswith("[FOLLOW] Write ")] == [
-        "[FOLLOW] Write failed; nothing recorded."]
-    assert debug == ["[FOLLOW] Write refused; nothing recorded."]
+        "[FOLLOW] Write failed; no ledger row."]
+    assert debug == ["[FOLLOW] Write refused; no ledger row."]
 
 
 def test_a_like_walk_skipping_liked_posts_logs_one_line_each(trace, monkeypatch):

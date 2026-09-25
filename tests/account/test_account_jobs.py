@@ -618,6 +618,36 @@ def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatc
     assert [r["action"] for r in memory_ledger.rows] == [ag.FOLLOW, ag.DEBATE_TURN]
 
 
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_candidate(
+        monkeypatch, memory_ledger, tmp_path, dry_run):
+    """#172: judge refused on an unreadable whitelist.json and the job
+    marked each Engager tried, about 200 in one cycle. The cycle now stops
+    at the first candidate, reported as a failure, with no candidate marked,
+    no page opened (conftest fails on open_url) and no ledger row."""
+    from src.core import health
+    from src.guards import action_guard as ag
+    from src.account import follow_engagers_bot as fe
+
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
+    whitelist = tmp_path / "whitelist.json"
+    whitelist.write_text('{"tiers": {"tier1": ["karp')
+    for fan in ("fan1", "fan2", "fan3"):
+        ag.record(ag.DEBATE_TURN, fan)
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda label: pytest.fail("cycle reported done"))
+
+    fe.safe_run_follow_engagers_cycle()
+
+    assert failures == ["follow_engagers"]
+    assert fe._load_state()["attempted"] == []
+    assert [r["action"] for r in memory_ledger.rows] == [ag.DEBATE_TURN] * 3
+    assert whitelist.read_text() == '{"tiers": {"tier1": ["karp'
+
+
 # --- followback ------------------------------------------------------------------
 
 
@@ -667,6 +697,19 @@ def test_followback_never_revisits_an_account_found_already_followed(followback,
     assert state["visits"] == [followers_page, "https://x.com/Alreadyfan", followers_page]
 
 
+def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeypatch):
+    """#172: an invalid handle took one of the cycle's picks before the
+    policy refused it; the job drops it with the policy's own check."""
+    fb, state = followback
+    monkeypatch.setattr(fb, "FOLLOW_BACK_CAP_PER_CYCLE", 1)
+    monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
+    state["followers"] = ["averyverylonghandle", "Realfan"]
+
+    fb.run_followback_cycle()
+
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+
+
 def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_path):
     fb, state = followback
     state["profile"] = "CLICKED"
@@ -676,3 +719,24 @@ def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_p
     assert json.loads((tmp_path / "followed_accounts.json").read_text()) == ["Alreadyfan"]
     assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "alreadyfan")]
     assert json.loads((tmp_path / "following_count.json").read_text())["count"] == 11
+
+
+def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, tmp_path,
+                                                      monkeypatch):
+    """An unreadable guarded file stops the job that needs it: followback
+    no longer logs a traceback per pick and reports the cycle a success."""
+    from src.core import health
+
+    fb, state = followback
+    state["followers"] = ["Realfan", "Otherfan"]
+    (tmp_path / "whitelist.json").write_text("{not json")
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
+
+    fb.safe_run_followback_cycle()
+
+    assert failures == ["followback"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert memory_ledger.rows == []
+    assert (tmp_path / "whitelist.json").read_text() == "{not json"

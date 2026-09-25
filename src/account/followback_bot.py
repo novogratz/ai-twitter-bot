@@ -25,18 +25,20 @@ import traceback
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from ..core.logger import log
+from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
-from ..x.twitter_client import FollowOutcome, follow_account
+from ..x.twitter_client import follow_account
 
 
 FOLLOW_BACK_CAP_PER_CYCLE = int(os.environ.get("FOLLOWBACK_CAP", "8"))
 
 
 def _looks_like_real_handle(handle: str) -> bool:
-    """Cheap bot-handle filter; follow_account validates the handle."""
-    if not handle:
+    """Cheap bot-handle filter, after the policy's handle check, so an
+    invalid handle never takes a pick of the cycle."""
+    if not follow_policy.valid_handle(handle):
         return False
     h = handle.lower()
     if h in BLOCKLIST:
@@ -129,11 +131,13 @@ def run_followback_cycle():
     for h in pick:
         try:
             result = follow_account(h, reciprocal=True)  # follow-back: bypass whitelist gate
-            if result in (FollowOutcome.TOO_SOON, FollowOutcome.CAP_REACHED):
+            if result.is_budget_refusal:
                 log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
                 break
             shipped += bool(result)
             time.sleep(random.randint(3, 6))
+        except StateUnreadable:
+            raise  # a guarded file stops the job, not one pick at a time
         except Exception:
             log.info(f"[FOLLOWBACK] Follow @{h} failed:")
             traceback.print_exc()

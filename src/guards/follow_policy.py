@@ -66,6 +66,13 @@ class Verdict:
 ADMITTED = Verdict(None)
 
 
+def valid_handle(handle: str | None) -> bool:
+    """X handles are [A-Za-z0-9_]{1,15}. Anything else (spaces, slashes,
+    accents, > 15 chars) is a scraper artifact like "aisha mansion" and
+    would just burn a profile visit."""
+    return bool(_HANDLE_RE.fullmatch(handle or ""))
+
+
 # --- whitelist --------------------------------------------------------------
 
 def load_whitelist() -> dict:
@@ -203,19 +210,15 @@ def judge(handle: str, *, reciprocal: bool = False) -> Verdict:
     TOO_SOON and CAP_REACHED are about the account's follow budget, not the
     handle: a later cycle may admit the same handle. A ceiling that cannot
     be read or checked counts as reached.
+
+    Raises StateUnreadable while whitelist.json cannot be read, whitelist-only
+    mode or not: a refusal would let a job mark the handle tried, and the
+    whitelist is the same for every handle, so the job stops instead.
     """
-    # X handles are [A-Za-z0-9_]{1,15}. Anything else (spaces, slashes,
-    # accents, > 15 chars) is a scraper artifact like "aisha mansion" and
-    # would just burn a profile visit.
-    if not _HANDLE_RE.fullmatch(handle or ""):
+    if not valid_handle(handle):
         return Verdict(Refusal.POLICY, f"invalid handle {handle!r}")
     h = handle.lower()
-    # judge_profile reads the whitelist too: an unreadable one admits no
-    # follow, whitelist-only mode or not.
-    try:
-        whitelisted = is_whitelisted(h)
-    except StateUnreadable as exc:
-        return Verdict(Refusal.POLICY, f"whitelist unreadable ({exc})")
+    whitelisted = is_whitelisted(h)
     exempt = reciprocal and config.FOLLOWBACK_BYPASS_WHITELIST
     if config.FOLLOW_WHITELIST_ONLY and not whitelisted and not exempt:
         return Verdict(Refusal.POLICY,
@@ -371,7 +374,10 @@ def judge_profile(handle: str, read_profile: Callable[[], dict], *,
                   engager: bool = False) -> Verdict:
     """The quality gate on the open profile. `read_profile` returns its
     followers, bio and name; it runs only once the whitelist is read. A
-    rejected handle is cached for 30 days, where `judge` finds it."""
+    rejected handle is cached for 30 days, where `judge` finds it.
+
+    A whitelist unreadable by now is a POLICY refusal, not a raise: the
+    profile is open, and the refusal lets `follow_account` close its tab."""
     try:
         whitelisted = is_whitelisted(handle)
     except StateUnreadable as exc:

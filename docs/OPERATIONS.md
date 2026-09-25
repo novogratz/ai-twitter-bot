@@ -200,7 +200,7 @@ Safari restart, and nothing writes over the file:
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
-| `whitelist.json` | Every follow: `follow_policy.judge` refuses, and `follow_account` returns `REFUSED` before opening the profile. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
+| `whitelist.json` | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job` ends its cycle as a failure with every Engager kept; `followback_job` and `engage_job` log the error for each pick and go on, `engage_job` without its like for that pick. A whitelist unreadable once the profile is open refuses the follow as `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
@@ -347,7 +347,7 @@ Files active code reads but no active job writes:
 | File | Read by | Holds | Policy |
 |---|---|---|---|
 | `respect_list.json` | `respect_list` | Operator-managed respect list | guarded |
-| `whitelist.json` | `action_guard`, `account_curator` | Tiered follow whitelist | guarded |
+| `whitelist.json` | `follow_policy`, `account_curator`, `bin/mass_unfollow.py` | Tiered follow whitelist | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
 | `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |

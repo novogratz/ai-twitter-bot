@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from src.core import config
+from src.core.state_errors import StateUnreadable
 from src.core.state_store import StateFile
 from src.guards import action_guard as ag
 from src.guards import follow_policy as fp
@@ -156,19 +157,35 @@ def test_a_follow_decision_reads_each_follow_file_once(follow_env, monkeypatch, 
 
 
 @pytest.mark.parametrize("whitelist_only", [True, False])
-def test_an_unreadable_whitelist_refuses_every_follow(follow_env, monkeypatch, tmp_path,
-                                                      whitelist_only):
-    """#171: an unreadable whitelist.json read as empty. Guarded now, it
-    refuses the follow (the quality gate reads it too), and the file waits
-    for the Operator."""
+def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, tmp_path,
+                                                    whitelist_only):
+    """#171: an unreadable whitelist.json read as empty. #172: a refusal let
+    follow_engagers mark each Engager tried, so judge raises instead, and
+    the file waits for the Operator."""
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
     _counts(monkeypatch, tmp_path, 100, 10)
     path = tmp_path / "whitelist.json"
     path.write_text('{"tiers": {"tier1": ["karp')
 
-    verdict = fp.judge("karpathy", reciprocal=True)
-    assert verdict.refusal is Refusal.POLICY and "whitelist unreadable" in verdict.reason
+    with pytest.raises(StateUnreadable, match="whitelist.json"):
+        fp.judge("karpathy", reciprocal=True)
     assert path.read_text() == '{"tiers": {"tier1": ["karp'
+
+
+def test_the_quality_gate_refuses_on_a_whitelist_unreadable_on_the_open_profile(
+        follow_env, tmp_path):
+    """On the open profile the gate refuses instead of raising, so
+    follow_account still closes its tab."""
+    (tmp_path / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
+    verdict = fp.judge_profile("karpathy", lambda: pytest.fail("profile read"))
+    assert verdict.refusal is Refusal.POLICY and "whitelist unreadable" in verdict.reason
+
+
+@pytest.mark.parametrize("handle, valid", [("karpathy", True), ("a_1", True), ("x" * 15, True),
+                                           ("x" * 16, False), ("@karpathy", False), ("", False),
+                                           (None, False)])
+def test_valid_handle_is_the_policy_handle_check(handle, valid):
+    assert fp.valid_handle(handle) is valid
 
 
 def test_adjust_following_keeps_the_baseline_and_never_overwrites_an_unreadable_count(

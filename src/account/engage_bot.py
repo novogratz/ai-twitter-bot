@@ -11,6 +11,7 @@ import random
 import time
 import traceback
 from ..core.logger import log
+from ..core.state_store import StateUnreadable
 from ..core.config import BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
 from ..guards import follow_policy
@@ -97,6 +98,8 @@ def run_engage_cycle():
             outcomes = visit_profile_and_like(username, like_count=like_count)
             liked += sum(o is LikeOutcome.LIKED for o in outcomes)
             time.sleep(random.randint(3, 5))
+        except StateUnreadable:
+            raise  # a guarded file stops the job, not one pick at a time
         except Exception:
             log.info(f"[ENGAGE] Failed to engage with @{username}:")
             traceback.print_exc()
