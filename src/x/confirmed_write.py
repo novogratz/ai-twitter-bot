@@ -30,9 +30,9 @@ class WriteOutcome(Enum):
         return self is WriteOutcome.SHIPPED
 
 
-# An outcome enum: `WriteOutcome`, or `LikeOutcome` for the like. Both are
-# truthy only for the shipped write and both carry DRY_RUN, FAILED and
-# UNCONFIRMED.
+# An outcome enum: `WriteOutcome`, `LikeOutcome` for the like or
+# `FollowOutcome` for the follow. Each is truthy only for the shipped write
+# and carries DRY_RUN and FAILED; the first two carry UNCONFIRMED too.
 O = TypeVar("O", bound=Enum)
 
 Rows = Callable[[], list[tuple[str, str | None]]]

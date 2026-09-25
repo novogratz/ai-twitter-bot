@@ -20,7 +20,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src.guards import action_guard, active_hours
+from src.guards import action_guard, active_hours, follow_policy
 from src.core import config
 from src.x import safari
 
@@ -100,7 +100,7 @@ def script(monkeypatch, tmp_path):
 
     ledger = []
     monkeypatch.setattr(action_guard, "record", lambda action, target="": ledger.append(target))
-    monkeypatch.setattr(action_guard, "adjust_following", lambda delta: None)
+    monkeypatch.setattr(follow_policy, "adjust_following", lambda delta: None)
     monkeypatch.setattr(sys, "argv", ["mass_unfollow.py"])
 
     clock = {"now": _toronto(12)}
@@ -350,7 +350,7 @@ def test_legacy_keep_set_protects_respect_list_targets_and_seed_tiers(script, mo
     from src.account import engage_bot
     from src.guards import respect_list
     monkeypatch.setattr(respect_list, "load", lambda: {"mistralai"})
-    monkeypatch.setattr(action_guard, "load_whitelist",
+    monkeypatch.setattr(follow_policy, "load_whitelist",
                         lambda: {"tier1": {"thebtctherapist"}, "tier2": {"morganhousel"}})
     keep = script._legacy_keep_set()
     assert {"mistralai", "thebtctherapist", "morganhousel"} <= keep

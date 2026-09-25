@@ -10,7 +10,8 @@ Strategy:
   - Get the list of @handles currently following us.
   - Follow back any handle we haven't followed yet, capped at FOLLOW_CAP
     per cycle (don't burn the daily follow budget all at once).
-  - Persist via engage_bot's followed_accounts.json so we don't double-follow.
+  - Skip the accounts in followed_accounts.json, which follow_account keeps
+    for a follow that shipped or an account found already followed.
 
 Safety: handle whitelist heuristic — skip obvious bots (handle made of
 random alphanumerics with no vowels, length=15) and BLOCKLIST entries.
@@ -24,17 +25,18 @@ import traceback
 
 from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from ..core.logger import log
+from ..guards import follow_policy
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
-from ..x.twitter_client import follow_account
+from ..x.twitter_client import FollowOutcome, follow_account
 
 
 FOLLOW_BACK_CAP_PER_CYCLE = int(os.environ.get("FOLLOWBACK_CAP", "8"))
 
 
 def _looks_like_real_handle(handle: str) -> bool:
-    """Cheap bot-handle filter."""
-    if not handle or len(handle) > 15:
+    """Cheap bot-handle filter; follow_account validates the handle."""
+    if not handle:
         return False
     h = handle.lower()
     if h in BLOCKLIST:
@@ -81,9 +83,7 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
 
 def run_followback_cycle():
     """Visit /TheAIShrink/followers and follow back fresh ones."""
-    from .engage_bot import _load_followed, _save_followed
-
-    followed = _load_followed()
+    followed = follow_policy.followed()
 
     with _safari_lock:
         url = f"https://x.com/{BOT_HANDLE}/followers"
@@ -125,18 +125,20 @@ def run_followback_cycle():
     pick = fresh[:FOLLOW_BACK_CAP_PER_CYCLE]
     log.info(f"[FOLLOWBACK] Following back {len(pick)} accounts: {pick}")
 
+    shipped = 0
     for h in pick:
         try:
-            ok = follow_account(h, reciprocal=True)  # follow-back: bypass whitelist gate
-            if ok:
-                followed.add(h)
-                _save_followed(followed)
+            result = follow_account(h, reciprocal=True)  # follow-back: bypass whitelist gate
+            if result in (FollowOutcome.TOO_SOON, FollowOutcome.CAP_REACHED):
+                log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
+                break
+            shipped += bool(result)
             time.sleep(random.randint(3, 6))
         except Exception:
             log.info(f"[FOLLOWBACK] Follow @{h} failed:")
             traceback.print_exc()
 
-    log.info(f"[FOLLOWBACK] Cycle done. Total followed (bot history): {len(followed)}")
+    log.info(f"[FOLLOWBACK] Cycle done: {shipped} followed back.")
 
 
 def safe_run_followback_cycle():

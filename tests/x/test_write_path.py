@@ -669,87 +669,14 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
 # --- follows -----------------------------------------------------------------
 
 
-def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
-    """2026-06-12 operator: "the accounts you follow are trash, very small
-    ... not related to AI or investment or crypto". The follow chokepoint
-    must refuse small or off-niche profiles (whitelist seeds exempt), and
-    must not follow blind when the followers count is unreadable."""
-    import inspect
-    from src.x.twitter_client import (_parse_follower_count,
-                                    _follow_quality_decision, follow_account)
-
-    assert _parse_follower_count("12.3K") == 12300
-    assert _parse_follower_count("1,423") == 1423
-    assert _parse_follower_count("2.1M") == 2_100_000
-    assert _parse_follower_count("") == -1
-
-    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "2000")
-    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
-
-    ok, why = _follow_quality_decision(150, "AI trader", "x", whitelisted=False)
-    assert not ok and "too small" in why
-    ok, why = _follow_quality_decision(50_000, "dog photos and recipes", "x",
-                                       whitelisted=False)
-    assert not ok and "off-niche" in why
-    ok, why = _follow_quality_decision(-1, "AI investor", "x", whitelisted=False)
-    assert not ok and "unreadable" in why
-    ok, _ = _follow_quality_decision(50_000, "Macro investor, AI & crypto",
-                                     "x", whitelisted=False)
-    assert ok
-    # Whitelisted seeds bypass (e.g. Graphseo's SEO bio is off-niche by
-    # design — operator-pinned accounts are never gated).
-    ok, _ = _follow_quality_decision(10, "SEO expert", "x", whitelisted=True)
-    assert ok
-
-    # Structural pin: the chokepoint actually consults the gate.
-    src = inspect.getsource(follow_account)
-    assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
-
-
-def test_an_unreadable_quality_reject_cache_reads_empty_and_is_replaced(tmp_path):
-    from src.x import twitter_client as tc
-
-    path = tmp_path / "follow_quality_rejects.json"
-    path.write_text('{"half')
-    assert not tc._quality_reject_recent("SmallAccount")
-    tc._record_quality_reject("SmallAccount")
-    assert tc._quality_reject_recent("smallaccount")
-    assert list(json.loads(path.read_text())) == ["smallaccount"]
-
-
-def test_follow_gate_english_only(monkeypatch):
-    """Operator 2026-07-19: 'follow US / english accounts not foreigner
-    langage follows' — the quality gate (rides EVERY follow path via the
-    follow_account chokepoint) must reject non-Latin-script and foreign-
-    language bios."""
-    from src.x.twitter_client import _follow_quality_decision
-    monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
-    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
-    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "2000")
-
-    ok, _ = _follow_quality_decision(
-        50000, "AI investor. Building agents, GPUs and datacenter plays.",
-        "Jane Doe", False)
-    assert ok, "big EN on-niche account must pass"
-    ok, why = _follow_quality_decision(
-        50000, "AIと暗号資産の最新情報を毎日配信します。株式投資も。", "田中太郎", False)
-    assert not ok and "non-English" in why, "Japanese bio must be rejected"
-    ok, why = _follow_quality_decision(
-        50000, "Analyse crypto et IA pour les investisseurs. Avec vous dans les marchés.",
-        "Jean Dupont", False)
-    assert not ok and "non-English" in why, "French bio must be rejected"
-    # Whitelisted seeds stay exempt (Graphseo's FR bio is by design)
-    ok, _ = _follow_quality_decision(500, "SEO et croissance pour les startups", "Julien", True)
-    assert ok, "whitelisted seed must bypass the language gate"
-
-
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, tmp_path,
                                                                   memory_ledger, dry_run):
     """#171: with no following count and an unreadable followed list, the
     follow chokepoint skipped the ceiling. It now refuses before the page
     opens (conftest fails the test on open_url), writes no ledger row, not
-    even a dry-run one, and leaves the file to the Operator."""
+    even a dry-run one, and leaves the file to the Operator. An unreadable
+    ceiling counts as reached."""
     from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", dry_run)
@@ -760,7 +687,7 @@ def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, 
     followed = tmp_path / "followed_accounts.json"
     followed.write_text('["half')
 
-    assert tc.follow_account("someaccount") is W.REFUSED
+    assert tc.follow_account("someaccount") is tc.FollowOutcome.CAP_REACHED
 
     assert memory_ledger.rows == []
     assert followed.read_text() == '["half'

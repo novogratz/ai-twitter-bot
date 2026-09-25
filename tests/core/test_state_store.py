@@ -111,6 +111,12 @@ def _engage(monkeypatch):
     engage_bot.run_engage_cycle()
 
 
+def _followback(monkeypatch):
+    from src.account import followback_bot
+    monkeypatch.setattr(followback_bot, "follow_account", lambda *a, **k: pytest.fail("followed"))
+    followback_bot.run_followback_cycle()
+
+
 def _like(monkeypatch):
     from src.account import like_bot
     from src.x import twitter_client
@@ -172,6 +178,7 @@ def _personality(monkeypatch):
 
 @pytest.mark.parametrize("name, job", [
     ("followed_accounts.json", _engage),
+    ("followed_accounts.json", _followback),
     ("like_bot_state.json", _like),
     ("pin_daily_state.json", _pin),
     ("pin_history.json", _pin),
@@ -229,14 +236,14 @@ def test_an_interaction_never_erases_unreadable_dossiers(tmp_path):
     assert path.read_text() == CORRUPT
 
 
-def test_two_jobs_saving_followed_accounts_keep_each_others_follows(monkeypatch, tmp_path):
+def test_two_follows_recorded_at_once_keep_each_other(monkeypatch, tmp_path):
     """engage_job and followback_job each read followed_accounts.json at the
     start of their cycle and saved their copy at the end: the last one to
     save erased the handles the other had followed. Both read here before
     either writes, unless the file's lock serialises them."""
-    from src.account import engage_bot
+    from src.guards import follow_policy
     both_read = threading.Barrier(2, timeout=0.3)
-    real_read = engage_bot.FOLLOWED.read
+    real_read = follow_policy.FOLLOWED.read
 
     def read_then_wait():
         value = real_read()
@@ -245,9 +252,9 @@ def test_two_jobs_saving_followed_accounts_keep_each_others_follows(monkeypatch,
         except threading.BrokenBarrierError:
             pass  # serialised: the other thread waits on the lock
         return value
-    monkeypatch.setattr(engage_bot.FOLLOWED, "read", read_then_wait)
+    monkeypatch.setattr(follow_policy.FOLLOWED, "read", read_then_wait)
 
-    threads = [threading.Thread(target=engage_bot._save_followed, args=({handle},))
+    threads = [threading.Thread(target=follow_policy.record_followed, args=(handle,))
                for handle in ("fromengage", "fromfollowback")]
     for t in threads:
         t.start()
@@ -255,14 +262,6 @@ def test_two_jobs_saving_followed_accounts_keep_each_others_follows(monkeypatch,
         t.join()
     assert set(json.loads((tmp_path / "followed_accounts.json").read_text())) == {
         "fromengage", "fromfollowback"}
-
-
-def test_a_save_merges_with_the_follows_on_disk(tmp_path):
-    from src.account import engage_bot
-    started_with = engage_bot._load_followed()
-    engage_bot._save_followed({"fromfollowback"})
-    engage_bot._save_followed(started_with | {"fromengage"})
-    assert engage_bot._load_followed() == {"fromengage", "fromfollowback"}
 
 
 def test_a_write_flushes_the_file_then_the_directory(monkeypatch, tmp_path):

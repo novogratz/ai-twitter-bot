@@ -7,13 +7,12 @@ import random
 import re
 import time
 import urllib.parse
-from datetime import datetime
 from enum import Enum
 from ..core.config import BOT_PROFILE_URL
 from ..core.logger import log
-from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
+from ..guards import follow_policy
 from . import confirmed_write, safari, scraper
 from .confirmed_write import WriteOutcome
 
@@ -570,164 +569,65 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         steps=steps)
 
 
-# --- Follow quality gate (operator 2026-06-12: "the accounts you follow are
-# trash, very small accounts... not related to AI or investment or crypto —
-# fix your algorithm"). The gate rides the profile visit follow_account
-# already makes: scrape followers + bio from the loaded page, refuse before
-# clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
-# bad candidate never burns a second profile visit. -------------------------
+class FollowOutcome(Enum):
+    """What `follow_account` did. Truthy only for FOLLOWED, so a caller that
+    tests the result counts only the follows that shipped. The refusals
+    name their cause (CONTEXT.md: Follow refusal): TOO_SOON and CAP_REACHED
+    leave the handle for a later cycle, QUALITY_REJECTED and REFUSED are
+    about the handle. ALREADY_FOLLOWED: the profile showed it followed, and
+    it joined the followed accounts. DRY_RUN: a dry-run ledger row, nothing
+    clicked."""
+    FOLLOWED = "followed"
+    ALREADY_FOLLOWED = "already_followed"
+    TOO_SOON = "too_soon"
+    CAP_REACHED = "cap_reached"
+    QUALITY_REJECTED = "quality_rejected"
+    REFUSED = "refused"
+    FAILED = "failed"
+    DRY_RUN = "dry_run"
 
-# Disposable: the quality gate reads the profile again before any click, so
-# a lost cache costs a profile visit, never a follow.
-FOLLOW_QUALITY_REJECTS = StateFile("follow_quality_rejects.json", {}, DISPOSABLE)
-
-_NICHE_BIO_RE = re.compile(
-    r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|"
-    r"crypto|bitcoin|btc|eth|web3|defi|blockchain|token|"
-    r"invest|investor|investing|trader|trading|markets?|stocks?|equit|finance|"
-    r"financial|fintech|macro|quant|hedge|portfolio|capital|wealth|analyst|"
-    r"founder|builder|startup|venture|\bvc\b|tech|software|engineer|nvidia|"
-    r"bourse|économie|economy)\b",
-    re.IGNORECASE,
-)
-
-
-def _parse_follower_count(text: str) -> int:
-    """'12.3K' → 12300, '1,423' → 1423, '2.1M' → 2100000, junk → -1."""
-    t = (text or "").strip().replace(",", "").replace(" ", "").replace(" ", "")
-    m = re.match(r"^([\d.]+)([KkMm])?$", t)
-    if not m:
-        return -1
-    try:
-        n = float(m.group(1))
-    except ValueError:
-        return -1
-    suffix = (m.group(2) or "").lower()
-    return int(n * (1_000_000 if suffix == "m" else 1_000 if suffix == "k" else 1))
+    def __bool__(self):
+        return self is FollowOutcome.FOLLOWED
 
 
-# Operator 2026-07-19: "follow US / english accounts not foreigner langage
-# follows". Non-Latin scripts (CJK, Cyrillic, Arabic, Hangul, Thai, Hebrew,
-# Devanagari) — accented Latin (José, Müller) intentionally NOT matched.
-_NON_LATIN_SCRIPT_RE = re.compile(
-    "["
-    "Ѐ-ӿ"   # Cyrillic
-    "֐-׿"   # Hebrew
-    "؀-ۿ"   # Arabic
-    "ऀ-ॿ"   # Devanagari
-    "฀-๿"   # Thai
-    "぀-ヿ"   # Hiragana + Katakana
-    "㄰-㆏"   # Hangul compat jamo
-    "一-鿿"   # CJK unified
-    "가-힯"   # Hangul syllables
-    "]"
-)
-# Common function words of major Latin-script languages that are rare in
-# English bios. ≥3 hits = the bio is written in that language, not just
-# quoting a name. Kept short on purpose — precision over recall.
-_NON_EN_WORDS_RE = re.compile(
-    r"\b(les|des|une|avec|pour|dans|vous|nous|los|las|para|desde|und|der|"
-    r"nicht|für|gli|sono|anche|não|você|uma|bir|için|"
-    r"değil|yang|dan|untuk)\b",
-    re.IGNORECASE,
-)
-
-
-def _looks_non_english_profile(name: str, bio: str) -> str:
-    """Return a reject reason if the profile reads non-English, else ''."""
-    blob = f"{name or ''} {bio or ''}"
-    if len(_NON_LATIN_SCRIPT_RE.findall(blob)) >= 3:
-        return "non-English profile (non-Latin script)"
-    if len(_NON_EN_WORDS_RE.findall(blob)) >= 3:
-        return "non-English profile (foreign-language bio)"
-    return ""
-
-
-def _follow_quality_decision(followers: int, bio: str, name: str,
-                             whitelisted: bool, engager: bool = False) -> tuple:
-    """Pure gate logic → (ok, reason). Env read at call time.
-
-    `engager=True` (2026-07-19 follow-your-engagers lane): the candidate
-    already replied to/engaged US, which is the highest follow-back-
-    probability signal there is AND proves the niche by behavior — so the
-    min-followers and bio-niche gates are skipped. The English gate,
-    blocklist, caps, spacing and churn cooldown still apply."""
-    if whitelisted:
-        return (True, "whitelisted seed (gate exempt)")
-    min_followers = int(os.environ.get("FOLLOW_MIN_FOLLOWERS", "2000"))
-    if not engager:
-        if followers < 0:
-            return (False, "followers count unreadable — won't follow blind")
-        if followers < min_followers:
-            return (False, f"too small ({followers} followers < {min_followers})")
-    if os.environ.get("FOLLOW_REQUIRE_ENGLISH", "1") == "1":
-        why = _looks_non_english_profile(name, bio)
-        if why:
-            return (False, why)
-    if not engager and os.environ.get("FOLLOW_REQUIRE_NICHE", "1") == "1":
-        blob = f"{name or ''} {bio or ''}"
-        if not _NICHE_BIO_RE.search(blob):
-            return (False, "off-niche bio (no AI/markets/crypto signal)")
-    return (True, "")
-
-
-def _quality_reject_recent(handle: str, days: int = 30) -> bool:
-    ts = FOLLOW_QUALITY_REJECTS.read().get((handle or "").lower(), "")
-    try:
-        return bool(ts) and (datetime.now() - datetime.fromisoformat(ts)).days < days
-    except (TypeError, ValueError):
-        return False
-
-
-def _record_quality_reject(handle: str) -> None:
-    FOLLOW_QUALITY_REJECTS.update(
-        lambda doc: {**doc, (handle or "").lower(): datetime.now().isoformat()})
+_REFUSED = {follow_policy.Refusal.TOO_SOON: FollowOutcome.TOO_SOON,
+            follow_policy.Refusal.CAP_REACHED: FollowOutcome.CAP_REACHED,
+            follow_policy.Refusal.QUALITY_REJECTED: FollowOutcome.QUALITY_REJECTED,
+            follow_policy.Refusal.POLICY: FollowOutcome.REFUSED}
 
 
 def follow_account(username: str, reciprocal: bool = False,
-                   engager: bool = False) -> WriteOutcome:
+                   engager: bool = False) -> FollowOutcome:
     """Visit a user's profile and click the Follow button.
 
     `reciprocal=True` marks a follow-back (someone who already engages with
-    us) so the whitelist-only gate is bypassed for it (see can_follow).
-    `engager=True` (2026-07-19): the candidate replied to our content —
-    the quality gate skips its size/niche checks (behavior proves both)
-    while keeping the English gate + every cap/spacing/churn rule.
+    us) so the whitelist-only gate is bypassed for it (see
+    follow_policy.judge). `engager=True` (2026-07-19): the candidate
+    replied to our content — the quality gate skips its size/niche checks
+    (behavior proves both) while keeping the English gate + every
+    cap/spacing/churn rule.
 
-    Returns SHIPPED only when the JS click actually fired (best-effort
-    signal), DRY_RUN on a dry run, REFUSED on a policy or quality
-    refusal or an account already followed, FAILED when no Follow button was
-    clicked. Callers MUST check the return value
-    before marking a handle as followed, otherwise transient AppleScript/Safari hiccups will pollute
-    followed_accounts.json with false-positives we never retry.
+    Returns FOLLOWED only when the JS click actually fired (best-effort
+    signal); the ledger row, the following count and the followed accounts
+    are then updated here. ALREADY_FOLLOWED adds the handle to the followed
+    accounts and writes no ledger row. A refusal names its cause, FAILED
+    means no Follow button was clicked, DRY_RUN that nothing was opened.
+
+    ⛔ Callers never add a handle to the followed accounts themselves: this
+    function does, for a follow that shipped or was found done.
     """
-    # Sanitize: strip whitespace + leading @, reject display-name garbage.
-    # X handles are [A-Za-z0-9_]{1,15}. Anything else (spaces, slashes, > 15 chars,
-    # accents, punctuation) is a scraper artifact like "aisha mansion" or
-    # "caborashedzaborashedles" and would just burn a profile-visit + 5s sleep.
-    username = (username or "").strip().lstrip("@")
     from ..guards import action_guard
     from ..core import config as _cfg
 
+    username = (username or "").strip().lstrip("@")
+
+    def refused(verdict) -> FollowOutcome:
+        log.info(f"[FOLLOW] policy refuses @{username} ({verdict.refusal.value}: {verdict.reason}).")
+        return _REFUSED[verdict.refusal]
+
     def admit():
-        if not username or len(username) > 15 or not all(
-            c.isascii() and (c.isalnum() or c == "_") for c in username
-        ):
-            log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
-            return WriteOutcome.REFUSED
-        # Follow policy: whitelist-only (no strangers / no reciprocity), ratio
-        # invariant (following < ceiling * followers), daily cap, 30-day
-        # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
-        ok, why = action_guard.can_follow(username, reciprocal=reciprocal or engager)
-        if not ok:
-            log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
-            return WriteOutcome.REFUSED
-        # Quality-reject cache: a candidate already judged small/off-niche
-        # within 30 days never burns another profile visit.
-        if _quality_reject_recent(username):
-            log.info(f"[FOLLOW] @{username} in quality-reject cache — skipping.")
-            return WriteOutcome.REFUSED
-        return None
+        verdict = follow_policy.judge(username, reciprocal=reciprocal or engager)
+        return None if verdict else refused(verdict)
 
     def pause():
         action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
@@ -740,23 +640,10 @@ def follow_account(username: str, reciprocal: bool = False,
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
-        from ..guards.action_guard import is_whitelisted
-        try:
-            whitelisted = is_whitelisted(username)
-        except StateUnreadable as exc:
-            log.info(f"[FOLLOW] whitelist unreadable, @{username} not followed ({exc}).")
-            return WriteOutcome.REFUSED
-        q = scraper._scrape_profile_quality()
-        ok, why = _follow_quality_decision(
-            _parse_follower_count(q.get("followers", "")),
-            q.get("bio", ""), q.get("name", ""),
-            whitelisted=whitelisted,
-            engager=engager,
-        )
-        if not ok:
-            log.info(f"[FOLLOW] quality gate refuses @{username} ({why}).")
-            _record_quality_reject(username)
-            return WriteOutcome.REFUSED
+        verdict = follow_policy.judge_profile(
+            username, scraper._scrape_profile_quality, engager=engager)
+        if not verdict:
+            return refused(verdict)
 
         # 2026-06-05 fix: the old inline-quoted JS errored on every attempt
         # ("Could not follow @X via JS" 100% of the time) — quote-escaping
@@ -794,18 +681,24 @@ def follow_account(username: str, reciprocal: bool = False,
         if status == "CLICKED":
             time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
-            return WriteOutcome.SHIPPED
+            return FollowOutcome.FOLLOWED
         if status == "ALREADY":
+            # Recorded here, or the jobs would visit this profile each cycle.
             log.info(f"[FOLLOW] Already following @{username}.")
-            return WriteOutcome.REFUSED
+            follow_policy.record_followed(username)
+            return FollowOutcome.ALREADY_FOLLOWED
         log.info(f"[FOLLOW] Could not follow @{username} (status={status or 'JS_FAIL'}), skipping.")
-        return WriteOutcome.FAILED
+        return FollowOutcome.FAILED
+
+    def after_record():
+        follow_policy.record_followed(username)
+        follow_policy.adjust_following(+1)
 
     return confirmed_write.run(
-        "FOLLOW", WriteOutcome, would=lambda: f"follow @{username}.",
+        "FOLLOW", FollowOutcome, would=lambda: f"follow @{username}.",
         rows=lambda: [(action_guard.FOLLOW, username)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT, pause), steps=steps,
-        after_record=lambda: action_guard.adjust_following(+1))
+        after_record=after_record)
 
 
 def _like_posts_on_page(count: int, wanted, page_ok=lambda page: True,

@@ -52,7 +52,7 @@ import threading
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
-from src.guards import action_guard, active_hours  # noqa: E402
+from src.guards import action_guard, active_hours, follow_policy  # noqa: E402
 from src.core import config  # noqa: E402
 from src.core.logger import log  # noqa: E402
 from src.core.state_errors import StateUnreadable  # noqa: E402
@@ -101,9 +101,9 @@ def _whitelist_keep_set() -> set:
     keep = set()
     # The store reads a missing file as empty: here that would unfollow
     # every seed.
-    if not os.path.exists(action_guard.WHITELIST.path):
+    if not os.path.exists(follow_policy.WHITELIST.path):
         raise StateUnreadable("whitelist.json is missing")
-    wl = action_guard.WHITELIST.read()
+    wl = follow_policy.WHITELIST.read()
     for handles in (wl.get("tiers") or {}).values():
         keep |= {str(h).lower() for h in handles}
     for seed in wl.get("seeds") or []:
@@ -122,7 +122,7 @@ def _legacy_keep_set() -> set:
     keep = {h.lower() for h in respect_list.load()}
     for handles in (TARGET_ACCOUNTS, EARLY_BIRD_ACCOUNTS, MEGA_ACCOUNTS):
         keep |= {h.lower() for h in handles}
-    wl = action_guard.load_whitelist()
+    wl = follow_policy.load_whitelist()
     return keep | wl["tier1"] | wl["tier2"] | _whitelist_keep_set()
 
 
@@ -344,7 +344,7 @@ def main() -> None:
                     _save_results(unfollowed)
                     try:
                         action_guard.record(action_guard.UNFOLLOW, target=h)
-                        action_guard.adjust_following(-1)
+                        follow_policy.adjust_following(-1)
                     except Exception as e:  # ledger best-effort, never stop the run
                         print("ledger err:", e, flush=True)
                     print("[%d] unfollowed @%s" % (len(unfollowed), h), flush=True)

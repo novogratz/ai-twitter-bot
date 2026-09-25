@@ -194,13 +194,13 @@ Safari restart, and nothing writes over the file:
 | File | Stops |
 |---|---|
 | `tweet_history.json` | `editorial_job` before any Draft, `post_tweet` (dedup and rationed openers), `babysit_job`, `reply_job` when enabled |
-| `followed_accounts.json` | `engage_job`, `followback_job`; every follow while `following_count.json` holds no count, as below |
-| `following_count.json` | Every follow: `can_follow` refuses the unreadable following ceiling and `follow_account` returns `REFUSED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
+| `followed_accounts.json` | `engage_job`, `followback_job`; every follow while `following_count.json` holds no count, as below. A follow that ships or finds the account already followed is not added to the file |
+| `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
-| `whitelist.json` | Every follow: `can_follow` refuses, and `follow_account` returns `REFUSED` before opening the profile. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
+| `whitelist.json` | Every follow: `follow_policy.judge` refuses, and `follow_account` returns `REFUSED` before opening the profile. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
@@ -325,12 +325,12 @@ Files written by active jobs:
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
-| `following_count.json` | `action_guard.adjust_following` | Following count used by the follow ceiling | guarded |
+| `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
-| `followed_accounts.json` | follow paths | Accounts followed by the bot | guarded |
-| `follow_quality_rejects.json` | `follow_account` | Handles refused by the quality gate, 30 days | disposable |
+| `followed_accounts.json` | `follow_policy.record_followed` (`follow_account`) | Accounts followed by the bot or found already followed | guarded |
+| `follow_quality_rejects.json` | `follow_policy` quality gate (`follow_account`) | Handles refused by the quality gate, 30 days | disposable |
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
 | `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |

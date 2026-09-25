@@ -15,7 +15,7 @@ def test_state_files_resolve_to_the_repo_root(unwalled):
     from src.core import (config, dynamic_strategy, evolution_store, health, history,
                           live_strategy, llm_client, personality_store, state_store)
     from src.editorial import editorial_bot, reach_report
-    from src.guards import action_guard, respect_list
+    from src.guards import action_guard, follow_policy, respect_list
     from src.x import safari_hygiene, twitter_client
 
     repo = Path(__file__).resolve().parent.parent
@@ -25,7 +25,7 @@ def test_state_files_resolve_to_the_repo_root(unwalled):
     modules = (account_curator, engage_bot, follow_engagers_bot, follower_tracker_bot,
                like_bot, pin_bot, dynamic_strategy, evolution_store, health, history,
                live_strategy, llm_client, personality_store, editorial_bot, reach_report,
-               action_guard, respect_list, safari_hygiene, twitter_client)
+               action_guard, follow_policy, respect_list, safari_hygiene, twitter_client)
     stored = [v for m in modules for v in vars(m).values() if isinstance(v, state_store.StateFile)]
     assert stored
     for state_file in stored:

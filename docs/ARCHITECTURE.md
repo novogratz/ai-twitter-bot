@@ -87,8 +87,8 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow a handful of accounts and likes their posts when profile visits are allowed. |
-| `followback_job` | 20 min | Follows back recent followers (`reciprocal=True`). |
-| `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). |
+| `followback_job` | 20 min | Follows back recent followers missing from the followed accounts (`reciprocal=True`); a too-soon or cap-reached refusal ends the cycle. |
+| `follow_engagers_job` | 50 min | Follows Engagers: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22). A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from niche searches. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
@@ -101,7 +101,7 @@ Two settings decide how much of the table does anything:
   scrapes and profile likes return nothing for other handles, so
   `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
   replyback profile likes only act on allowlisted accounts.
-- The follow policy in `action_guard.can_follow`. With the code defaults, the
+- The follow policy in `follow_policy.judge`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
   decides what actually passes. A following count that cannot be read
   (`following_count.json`, else `followed_accounts.json`) or an unreadable
@@ -241,8 +241,8 @@ before it run in a dry run too, the guards after it run live only. A
 chokepoint without it, or with two, raises before any guard runs.
 
 1. Admission before the Safari lock: `can_post` and the content checks,
-   `can_follow`, the handle check, the Blocked-account and liked-cache
-   checks of `like_tweet`.
+   `follow_policy.judge`, the Blocked-account and liked-cache checks of
+   `like_tweet`.
 2. The dry-run exit: under `DRY_RUN`, one `[TAG][DRY_RUN] would …` line and
    the dry-run ledger rows; nothing is opened.
 3. A pause or a last check before the lock: the follow jitter,
@@ -253,8 +253,8 @@ chokepoint without it, or with two, raises before any guard runs.
 5. `reply_to_tweet` claims the tweet in the Replied store.
 6. The page steps.
 7. Ledger rows only when the page steps return a shipped outcome, then the
-   chokepoint's bookkeeping: `adjust_following`, `note_posted`, tweet
-   history.
+   chokepoint's bookkeeping: `record_followed` and `adjust_following`,
+   `note_posted`, tweet history.
 8. One tab close, except for `like_tweet`, which acts on the open page. A
    stop raised by that close is swallowed once the write shipped, so the
    caller still learns it; after any other outcome it propagates.
@@ -270,11 +270,21 @@ line alone, its outcome line going to debug, so a refusal and a failure
 read apart in `bot.log` and a like walk logs one line per post it skips. A
 caller that persists on a truthy result persists nothing after a dry run,
 and one that must tell a dry run from a refusal compares with `is
-WriteOutcome.DRY_RUN` (`follow_engagers_bot`, `pin_job`). One limit: `SHIPPED`
+WriteOutcome.DRY_RUN` (`pin_job`) or `is FollowOutcome.DRY_RUN`
+(`follow_engagers_bot`). One limit: `SHIPPED`
 for a post or a Reply means `osascript` ran the submit keystroke, not that X
 confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
-`follow_account` ships on the Follow click; an account already followed is
-`REFUSED`.
+
+`follow_account` runs the same sequence but returns a `FollowOutcome`,
+truthy only for `FOLLOWED`, the Follow click. Its refusals name their
+cause (Follow refusal, CONTEXT.md): `TOO_SOON`, `CAP_REACHED`,
+`QUALITY_REJECTED` and `REFUSED`, from the follow policy before the
+profile opens or from the quality gate on it; `ALREADY_FOLLOWED` when the
+profile shows the account followed. `FAILED` and `DRY_RUN` keep their
+meaning. A follow that shipped writes its ledger row, joins the followed
+accounts and adds one to the following count; an account already
+followed joins the followed accounts, with no ledger row and no count
+change.
 
 `like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
 only for `LIKED`, which also carries `FAILED`, `UNCONFIRMED` and
@@ -323,15 +333,16 @@ nested-reply alias, and `post_tweet`'s image path and non-editorial
 branch. The bot never unfollows; `bin/mass_unfollow.py` clicks on its own
 page and writes its ledger rows itself.
 
-Four modules sit behind them:
+Five modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that neither `.env` nor
   `live_strategy.json` can lift: eight profile publications a day, quote and
   repost caps at 0, originals capped at 8 and spaced by at least 1200 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
-- `src/guards/action_guard.py` decides `can_post` and `can_follow`, and
-  records every write through `record`. It asks the action ledger and
+- `src/guards/action_guard.py` decides `can_post`, answers the follow
+  policy's ledger questions (today's follows, the follow spacing, anti-churn),
+  and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
   retweets are always refused; replies only need their spacing
   (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
@@ -366,6 +377,20 @@ Four modules sit behind them:
   with `F_FULLFSYNC` where the system has it.
 - `src/guards/content_guard.py` validates text before publication: near-term
   price targets, duplicates, truncation, violence, skip rationales.
+- `src/guards/follow_policy.py` is the follow policy and owns the follow
+  files: `followed_accounts.json`, `following_count.json`,
+  `follower_history.json`, `whitelist.json` and
+  `follow_quality_rejects.json`. `judge(handle)` checks, before the profile
+  opens, the handle (the one check of `[A-Za-z0-9_]{1,15}`), the
+  whitelist, anti-churn, the daily cap, the spacing, the following ceiling
+  and ratio brake, then the quality-reject cache. `judge_profile` runs the
+  quality gate on the open profile and caches a reject for 30 days. Each
+  returns a `Verdict` whose `Refusal` names the cause; `follow_account`
+  turns it into its `FollowOutcome`, and the jobs act on that outcome
+  without checking a rule again. `followed()` reads the followed accounts
+  for the jobs; `record_followed` and `adjust_following` are called by
+  `follow_account` alone, and log instead of raising on an unreadable file,
+  since the follow already happened.
 
 `reply_to_tweet` takes every rule from `src/guards/reply_admission.py` (Reply
 admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
@@ -463,7 +488,7 @@ never replaced; under the *disposable* policy it reads as the default and
 the next write replaces it. Each file has one lock, and
 `StateFile.update(fn)` reads, changes and writes under it. The files that
 several scheduler threads change go through it: `followed_accounts.json`
-(`engage_job` and `followback_job` merge their follows into the file),
+(`follow_account` merges each follow into the file, whichever job asked),
 `following_count.json`, `liked_tweets.json`, `follow_quality_rejects.json`,
 `tweet_history.json`, `safari_health.json` and `personality.json` (the
 dossier bump after every Reply). `tweet_history.json` has one reader,
@@ -509,8 +534,9 @@ These are how the code behaves today, not design intent:
   `early_bird`, `mega_watch`, `debate`, replyback or the VIP lane generates
   inside the gap is refused on spacing, and its generation is paid again in
   a later cycle.
-- The state store lock is per process: `bin/seed_fr_influencers.py` saving
-  `followed_accounts.json` while the bot runs can still lose a follow.
+- The state store lock is per process: `bin/seed_fr_influencers.py`
+  following while the bot runs can still lose a follow from
+  `followed_accounts.json`.
 - The ledger lock is per process, and `FileLedger` assumes the bot is the
   only writer while it runs. A row another process writes while the bot
   rewrites the file (conversion or daily retention pass) or drops an

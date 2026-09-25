@@ -36,7 +36,7 @@ from ..core.config import BLOCKLIST, BOT_HANDLE, ENGAGEMENT_LOG_FILE
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 # Guarded: a corrupt whitelist stops the cycle before any promotion.
-from ..guards.action_guard import WHITELIST
+from ..guards.follow_policy import WHITELIST
 
 # Disposable: recomputed every run from the engagement log.
 TRACKED = StateFile("tracked_accounts.json", {}, DISPOSABLE)

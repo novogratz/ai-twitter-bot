@@ -12,6 +12,7 @@ import pytest
 
 from src.guards.active_hours import OutsideActiveHours
 from src.x.confirmed_write import WriteOutcome
+from src.x.twitter_client import FollowOutcome
 
 OWN_POST = "https://x.com/TheAIShrink/status/2063500000000000103"
 
@@ -55,16 +56,13 @@ def _like_js(monkeypatch):
 
 
 def _follow(monkeypatch):
-    from src.guards import action_guard
-    from src.x import scraper, twitter_client as tc
+    from src.guards import action_guard, follow_policy
+    from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(action_guard, "can_follow", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(follow_policy, "judge", lambda *a, **k: follow_policy.ADMITTED)
+    monkeypatch.setattr(follow_policy, "judge_profile", lambda *a, **k: follow_policy.ADMITTED)
     monkeypatch.setattr(action_guard, "jitter_sleep", lambda *a, **k: None)
-    monkeypatch.setattr(action_guard, "is_whitelisted", lambda *a, **k: False)
-    monkeypatch.setattr(tc, "_quality_reject_recent", lambda *a: False)
-    monkeypatch.setattr(tc, "_follow_quality_decision", lambda *a, **k: (True, ""))
-    monkeypatch.setattr(scraper, "_scrape_profile_quality", lambda: {})
     return tc.follow_account("someaccount")
 
 
@@ -117,7 +115,7 @@ def _warm_up(monkeypatch):
 # when osascript failed
 CALLERS = {
     "like": (_like_js, (10, "[LIKE]", False), ""),
-    "follow": (_follow, (15, "[FOLLOW]", True), WriteOutcome.FAILED),
+    "follow": (_follow, (15, "[FOLLOW]", True), FollowOutcome.FAILED),
     "pin": (_pin, (15, "[PIN]", True), WriteOutcome.FAILED),
     "profile_quality": (_profile_quality, (15, "[SCRAPE]", False), {}),
     "tweets": (_tweets, (30, "[SCRAPE]", True), []),
@@ -233,17 +231,17 @@ def test_scrape_parses_the_page_answer(monkeypatch, browser):
 
 
 def test_follow_ships_only_on_a_clicked_answer(monkeypatch, browser):
-    from src.guards import action_guard
+    from src.guards import action_guard, follow_policy
 
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
-    monkeypatch.setattr(action_guard, "adjust_following", lambda *a: None)
+    monkeypatch.setattr(follow_policy, "adjust_following", lambda *a: None)
     browser("CLICKED")
-    assert _follow(monkeypatch) is WriteOutcome.SHIPPED
+    assert _follow(monkeypatch) is FollowOutcome.FOLLOWED
     assert recorded == [(action_guard.FOLLOW,)]
 
     browser("ALREADY")
-    assert _follow(monkeypatch) is WriteOutcome.REFUSED
+    assert _follow(monkeypatch) is FollowOutcome.ALREADY_FOLLOWED
     assert len(recorded) == 1
 
 
