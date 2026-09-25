@@ -278,14 +278,34 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
     return LLMResult(0, text, "")
 
 
+class LLMStatus(Enum):
+    """What a model call came to."""
+    ANSWERED = "answered"  # stdout holds the answer
+    FAILED = "failed"  # no usable answer; a later call may get one
+    EXHAUSTED = "exhausted"  # every provider tried hit its usage limit
+
+
 @dataclass
 class LLMResult:
+    """An adapter's raw output, or `run_llm`'s answer. `run_llm` names the
+    provider and model that answered, or failed last.
+
+    `status` means something on `run_llm`'s answer only. On an adapter's raw
+    output nobody has judged yet, the return code fills it with ANSWERED or
+    FAILED, which says nothing of a usage limit or of an answer `run_llm`
+    would refuse: read the return code and the output there instead."""
     returncode: int
     stdout: str = ""
     stderr: str = ""
+    status: Optional[LLMStatus] = None
+    provider: str = ""
+    model: str = ""
+
+    def __post_init__(self):
+        if self.status is None:
+            self.status = LLMStatus.ANSWERED if self.returncode == 0 else LLMStatus.FAILED
 
 
-LLM_RATE_LIMIT_CODE = 75
 DEFAULT_LLM_TIMEOUT_SECONDS = int(os.environ.get("LLM_TIMEOUT_SECONDS", "180"))
 
 
@@ -349,12 +369,12 @@ def _write_codex_lockout(end: datetime, reason: str = "usage_limit") -> None:
     })
 
 
-def _detect_codex_lockout(result: "LLMResult") -> Optional[datetime]:
-    """Return the lockout-end datetime if the codex response contains a usage-limit error."""
-    blob = ((result.stdout or "") + "\n" + (result.stderr or "")).lower()
-    if "hit your usage limit" not in blob:
+def _detect_codex_lockout(result: "LLMResult", prompt: str) -> Optional[datetime]:
+    """Return the lockout-end datetime if codex reported a usage-limit error."""
+    signal = _cli_signal(result, prompt)
+    if "hit your usage limit" not in signal.lower():
         return None
-    parsed = _parse_codex_lockout_end((result.stdout or "") + "\n" + (result.stderr or ""))
+    parsed = _parse_codex_lockout_end(signal)
     if parsed:
         return parsed
     # Couldn't parse the precise date — assume 24h lockout as a safety floor.
@@ -535,8 +555,59 @@ _REFUSAL_PATTERNS = (
 )
 
 
+# A usage limit: the provider will refuse every call until it resets, unlike
+# the context and refusal markers above, which concern one prompt.
+_USAGE_LIMIT_PATTERNS = (
+    "rate limit",
+    "rate_limit",
+    "quota exceeded",
+    "usage limit",
+    "hit your usage",
+    "upgrade to pro",
+    "too many requests",
+    "resource_exhausted",
+)
+
+
+def _envelope_error(stdout: str) -> str:
+    """The error a CLI's JSON output reports, even on a zero exit: Claude's
+    envelope flagged `is_error`, or an NDJSON error event."""
+    errors = []
+    for line in (stdout or "").strip().splitlines():
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(event, dict):
+            continue
+        if event.get("is_error"):
+            errors.append(str(event.get("result") or event.get("subtype") or ""))
+        elif event.get("type") in ("error", "turn.failed"):
+            errors.append(json.dumps(event.get("error") or event.get("message") or ""))
+    return "\n".join(errors)
+
+
+def _cli_signal(raw: LLMResult, prompt: str) -> str:
+    """What the CLI or the transport reported about a call, never the
+    model's answer: the whole output of a call that exited non-zero, or the
+    error a JSON envelope flags. A post about rate limits is a common
+    answer, and a common parent post: the lines of the prompt are dropped,
+    since `codex exec` echoes it on stderr."""
+    if raw.returncode != 0:
+        text = (raw.stdout or "") + "\n" + (raw.stderr or "")
+    else:
+        text = _envelope_error(raw.stdout)
+    echoed = {line.strip() for line in prompt.splitlines() if line.strip()}
+    return "\n".join(line for line in text.splitlines() if line.strip() not in echoed)
+
+
+def _usage_limit(raw: LLMResult, prompt: str) -> bool:
+    signal = _cli_signal(raw, prompt).lower()
+    return any(pat in signal for pat in _USAGE_LIMIT_PATTERNS)
+
+
 def _should_fallback(result: LLMResult) -> bool:
-    if result.returncode != 0 or result.returncode == LLM_RATE_LIMIT_CODE:
+    if result.returncode != 0:
         return True
     combined = ((result.stdout or "") + (result.stderr or "")).lower()
     if not combined.strip():
@@ -628,18 +699,31 @@ def _call(provider: str, request: _Request, after: Optional[str] = None) -> LLMR
     return _adapter(provider)(replace(request, timeout=timeout))
 
 
+def _model(provider: str, request: _Request) -> str:
+    """The model a provider runs for this request."""
+    if provider == "ollama":
+        return _ollama_model(request.profile)
+    if provider == "opencode":
+        return ""  # its local default: `_build_cmd` never passes --model
+    return request.model
+
+
 def _answer(provider: str, request: _Request, raw: LLMResult) -> LLMResult:
-    """One call's answer: the model's text read in the profile's mode, or a
-    failure, with a non-zero code and no text."""
+    """One call's answer, named after its provider and model: the model's
+    text read in the profile's mode, or a failure with a non-zero code and
+    no text, EXHAUSTED when the CLI or transport reported a usage limit."""
+    model = _model(provider, request)
     if _should_fallback(raw):
         reason = (raw.stderr or "").strip() or f"{request.label}: {provider} gave no usable answer"
-        return LLMResult(raw.returncode or 1, "", reason)
+        status = LLMStatus.EXHAUSTED if _usage_limit(raw, request.prompt) else LLMStatus.FAILED
+        return LLMResult(raw.returncode or 1, "", reason, status, provider, model)
     text = _read_answer(raw.stdout, request.profile.output)
     if not text.strip():
         raw_preview = re.sub(r"\s+", " ", (raw.stdout or "").strip())[:240]
         return LLMResult(1, "", f"{request.label}: {provider} output became empty after "
-                                f"safety unwrap; raw_preview={raw_preview!r}")
-    return LLMResult(0, text, raw.stderr)
+                                f"safety unwrap; raw_preview={raw_preview!r}",
+                         LLMStatus.FAILED, provider, model)
+    return LLMResult(0, text, raw.stderr, LLMStatus.ANSWERED, provider, model)
 
 
 def _describe(provider: str, request: _Request) -> str:
@@ -662,14 +746,17 @@ def run_llm(
 ) -> LLMResult:
     """The model's answer, read once in `profile.output` mode whichever
     provider gave it: post text, or a JSON value ready for json.loads. A
-    failure has a non-zero return code and no text.
+    failure has a non-zero return code and no text. The result names the
+    provider and model that answered, or failed last.
 
     The ladder: the primary provider (`force_provider`, else AI_CLI), then
     at most one fallback (LLM_FALLBACK_CLI). A call fails when
     `_should_fallback` says so or when its answer reads empty. A codex usage
     limit seen on this call is cached and sends the call to the fallback; a
-    cached one sends it to Ollama alone. `output_json` asks a CLI for its
-    JSON envelope; it does not set the output mode."""
+    cached one sends it to Ollama alone. When every provider tried hit its
+    usage limit, a cached codex lockout counting as one, the result is
+    EXHAUSTED. `output_json` asks a CLI for its JSON envelope; it does not
+    set the output mode."""
     from ..guards.active_hours import require_active
     require_active()
     primary = force_provider or _provider()
@@ -686,14 +773,15 @@ def run_llm(
 
     log.info(f"[LLM] {label}: {primary} primary → {_describe(primary, request)}.")
     raw = _call(primary, request)
-    locked_until = _detect_codex_lockout(raw) if primary == "codex" else None
+    locked_until = _detect_codex_lockout(raw, prompt) if primary == "codex" else None
     if locked_until is not None:
         _write_codex_lockout(locked_until)
         log.info(
             f"[LLM] Codex usage limit detected — locking out until "
             f"{locked_until.isoformat(timespec='minutes')}."
         )
-        first = LLMResult(raw.returncode or 1, "", f"{label}: codex usage limit.")
+        first = LLMResult(raw.returncode or 1, "", f"{label}: codex usage limit.",
+                          LLMStatus.EXHAUSTED, primary, _model(primary, request))
     else:
         first = _answer(primary, request, raw)
     if first.returncode == 0:
@@ -715,9 +803,14 @@ def run_llm(
     second = _answer(fallback, fallback_request, _call(fallback, fallback_request, after=primary))
     if second.returncode == 0:
         return second
+    exhausted = first.status is LLMStatus.EXHAUSTED and second.status is LLMStatus.EXHAUSTED
+    if exhausted:
+        log.info(f"[LLM] {label}: {primary} and {fallback} both hit their usage limit.")
     note = f"{label}: {primary}/{model} failed; tried {fallback}/{fallback_request.model}."
     return LLMResult(second.returncode, "",
-                     "\n".join(part for part in (first.stderr, note, second.stderr) if part))
+                     "\n".join(part for part in (first.stderr, note, second.stderr) if part),
+                     LLMStatus.EXHAUSTED if exhausted else LLMStatus.FAILED,
+                     second.provider, second.model)
 
 
 def _text_from_event(obj: dict) -> str:

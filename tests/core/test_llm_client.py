@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from src.core.llm_client import CallProfile, LLMResult, Output, contains_post_unsafe_leak
+from src.core.llm_client import CallProfile, LLMResult, LLMStatus, Output, contains_post_unsafe_leak
+from tests.helpers import USAGE_LIMIT
 
 
 def read(stdout, output):
@@ -42,39 +43,6 @@ TEXT = "Batching decides the margin, not the model."
 ITEMS = [{"tweet_url": "https://x.com/someone/status/1", "reply": "Batching decides the margin.",
           "type": "reply", "pattern": "OTHER"}]
 COMPACT = json.dumps(ITEMS, separators=(",", ":"))
-USAGE_LIMIT = "You've hit your usage limit. Upgrade to Pro or try again at May 16th, 2099 9:22 PM."
-
-
-class FakeAdapter:
-    """Stands in for one provider's adapter: records each request in
-    `calls`, shared by all the fakes, and answers its `answers` in turn,
-    the last one for good. An answer is raw provider output or an
-    LLMResult."""
-
-    def __init__(self, name, calls):
-        self.name, self.calls = name, calls
-        self.answers = [LLMResult(1, "", f"{name} was not expected")]
-
-    def __call__(self, request):
-        self.calls.append((self.name, request))
-        answer = self.answers.pop(0) if len(self.answers) > 1 else self.answers[0]
-        return answer if isinstance(answer, LLMResult) else LLMResult(0, answer, "")
-
-
-@pytest.fixture
-def providers(monkeypatch):
-    """A fake adapter for every provider, each failing until a test gives
-    it answers, every CLI installed, the ladder's variables unset."""
-    from types import SimpleNamespace
-    from src.core import llm_client as llm
-
-    calls = []
-    fakes = {name: FakeAdapter(name, calls) for name in ("ollama", "codex", "gemini", "claude", "opencode")}
-    monkeypatch.setattr(llm, "ADAPTERS", fakes)
-    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    for var in ("AI_CLI", "LLM_FALLBACK_CLI", "LLM_FALLBACK_MODEL", "LLM_DISABLE_FALLBACK"):
-        monkeypatch.delenv(var, raising=False)
-    return SimpleNamespace(calls=calls, **fakes)
 
 
 def ask(profile=CallProfile(), provider="claude", **options):
@@ -198,6 +166,141 @@ def test_the_fallback_can_be_turned_off(providers, monkeypatch):
     monkeypatch.setenv("LLM_DISABLE_FALLBACK", "1")
     assert ask().returncode != 0
     assert [name for name, _ in providers.calls] == ["claude"]
+
+
+# --- Usage limits and who answered ---------------------------------------------
+
+RATE_LIMIT = LLMResult(1, "", "429 Too Many Requests: rate limit reached for this hour")
+
+
+@pytest.mark.parametrize("rank, provider, model", [
+    (primary, "claude", "cloud-model"),
+    (fallback, "codex", "gpt-5.4-mini"),
+    (after_codex_lock, "ollama", "qwen3.6:35b-a3b"),
+    (while_codex_locked, "ollama", "qwen3.6:35b-a3b"),
+])
+def test_every_answer_names_the_provider_and_model_that_gave_it(providers, monkeypatch, rank, provider,
+                                                                  model):
+    from src.core import llm_client as llm
+    monkeypatch.setattr(llm, "OLLAMA_MODEL", "qwen3.6:35b-a3b")
+    first, _ = rank(providers, TEXT)
+    result = ask(provider=first)
+    assert (result.status, result.provider, result.model) == (LLMStatus.ANSWERED, provider, model)
+
+
+@pytest.mark.parametrize("fallback_limit", [
+    pytest.param(RATE_LIMIT, id="rate limit at both ranks"),
+    pytest.param(LLMResult(1, "", USAGE_LIMIT), id="codex usage limit as the fallback"),
+])
+def test_a_limit_at_every_rank_exhausts_the_call(providers, fallback_limit):
+    """Issue #176: the rate limit is a named result, EXHAUSTED, when every
+    provider tried hit its usage limit. It names the last one."""
+    providers.claude.answers = [RATE_LIMIT]
+    providers.codex.answers = [fallback_limit]
+    result = ask()
+    assert [name for name, _ in providers.calls] == ["claude", "codex"]
+    assert result.status is LLMStatus.EXHAUSTED and result.returncode != 0 and result.stdout == ""
+    assert (result.provider, result.model) == ("codex", "gpt-5.4-mini")
+
+
+def test_a_codex_usage_limit_then_an_ollama_limit_exhausts_the_call(providers):
+    providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
+    providers.ollama.answers = [RATE_LIMIT]
+    assert ask(provider="codex").status is LLMStatus.EXHAUSTED
+    providers.calls.clear()
+    assert ask(provider="codex").status is LLMStatus.EXHAUSTED, "a cached codex lockout counts as a limit"
+    assert [name for name, _ in providers.calls] == ["ollama"]
+
+
+def test_a_lone_provider_at_its_limit_exhausts_the_call(providers, monkeypatch):
+    monkeypatch.setenv("LLM_DISABLE_FALLBACK", "1")
+    providers.claude.answers = [RATE_LIMIT]
+    assert ask().status is LLMStatus.EXHAUSTED
+
+
+@pytest.mark.parametrize("answers", [
+    pytest.param((RATE_LIMIT, LLMResult(1, "", "boom")), id="limit then failure"),
+    pytest.param((LLMResult(124, "", "claude timed out"), RATE_LIMIT), id="failure then limit"),
+    pytest.param(("I don't need to search, as you have provided the text.", RATE_LIMIT), id="refusal then limit"),
+])
+def test_a_rank_that_fails_otherwise_leaves_the_call_failed(providers, answers):
+    """Another call may still get an answer: the job moves on."""
+    providers.claude.answers, providers.codex.answers = [answers[0]], [answers[1]]
+    assert ask().status is LLMStatus.FAILED
+
+
+def test_a_limit_at_the_primary_leaves_the_fallback_answer(providers):
+    providers.claude.answers = [RATE_LIMIT]
+    providers.codex.answers = [TEXT]
+    result = ask()
+    assert (result.status, result.stdout, result.provider) == (LLMStatus.ANSWERED, TEXT, "codex")
+
+
+def both_ranks(p, answer):
+    p.claude.answers = [claude_envelope(answer)]
+    p.codex.answers = [answer]
+    return "claude", ["claude", "codex"]
+
+
+# Answers about limits, as a model writes them on a zero exit. `_should_fallback`
+# refused the first two before #176 and still does: the call fails.
+TALK = {
+    "Rate limits, not model quality, decide who wins the agent race.": LLMStatus.FAILED,
+    "Hit your usage limit? Batching buys you another week.": LLMStatus.FAILED,
+    "Too many requests is a pricing problem, not an infra one.": LLMStatus.ANSWERED,
+}
+
+
+@pytest.mark.parametrize("answer, status", list(TALK.items()))
+@pytest.mark.parametrize("rank", [both_ranks, after_codex_lock, while_codex_locked])
+def test_an_answer_about_limits_is_no_usage_limit(providers, rank, answer, status):
+    """Review of #176: only the CLI or the transport reports a limit, never
+    the text of an answer, at any rank."""
+    provider, ladder = rank(providers, answer)
+    result = ask(provider=provider)
+    assert result.status is status
+    if status is LLMStatus.ANSWERED:
+        assert result.stdout == answer
+    else:
+        assert [name for name, _ in providers.calls] == ladder, "every rank answered"
+
+
+ECHO_PROMPT = "Reply to this post.\nParent: You've hit your usage limit. Rate limits, too many requests."
+
+
+def echoed(error):
+    """A failed CLI call whose stderr echoes the prompt, as `codex exec` does."""
+    return LLMResult(1, "", f"user\n{ECHO_PROMPT}\n\nERROR: {error}")
+
+
+@pytest.mark.parametrize("error, status", [
+    ("stream disconnected before completion", LLMStatus.FAILED),
+    (USAGE_LIMIT, LLMStatus.EXHAUSTED),
+])
+def test_the_prompt_echoed_on_stderr_is_no_usage_limit(providers, error, status):
+    from src.core.llm_client import run_llm
+    providers.claude.answers = [echoed(error)]
+    providers.codex.answers = [echoed(error)]
+    result = run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="claude")
+    assert result.status is status
+
+
+def test_the_prompt_echoed_on_stderr_locks_no_codex_out(providers):
+    from src.core.llm_client import run_llm
+    providers.codex.answers = [echoed("stream disconnected before completion"), TEXT]
+    assert run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="codex").status is LLMStatus.FAILED
+    assert run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="codex").stdout == TEXT
+    assert [name for name, _ in providers.calls] == ["codex", "ollama", "codex"]
+
+
+def test_an_error_envelope_on_a_zero_exit_is_a_usage_limit(providers):
+    """Claude's JSON envelope flags its limit with `is_error`, whatever its
+    exit code."""
+    providers.claude.answers = [LLMResult(0, json.dumps({
+        "type": "result", "subtype": "success", "is_error": True,
+        "result": "Claude AI usage limit reached|1790000000"}), "")]
+    providers.codex.answers = [RATE_LIMIT]
+    assert ask().status is LLMStatus.EXHAUSTED
 
 
 # --- Timeouts: one place computes them -----------------------------------------

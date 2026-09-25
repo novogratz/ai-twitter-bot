@@ -2,12 +2,30 @@
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
+from src.core.llm_client import LLMResult
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag, active_hours as hours
 from src.x import x_urls
 
 
 TORONTO = ZoneInfo("America/Toronto")
+USAGE_LIMIT = "You've hit your usage limit. Upgrade to Pro or try again at May 16th, 2099 9:22 PM."
+
+
+class FakeAdapter:
+    """Stands in for one provider's adapter in `llm_client.ADAPTERS`:
+    records each request in `calls`, shared by all the fakes, and answers
+    its `answers` in turn, the last one for good. An answer is raw provider
+    output or an LLMResult."""
+
+    def __init__(self, name, calls):
+        self.name, self.calls = name, calls
+        self.answers = [LLMResult(1, "", f"{name} was not expected")]
+
+    def __call__(self, request):
+        self.calls.append((self.name, request))
+        answer = self.answers.pop(0) if len(self.answers) > 1 else self.answers[0]
+        return answer if isinstance(answer, LLMResult) else LLMResult(0, answer, "")
 
 
 def clock(monkeypatch, value):

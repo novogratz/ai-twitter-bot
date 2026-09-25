@@ -40,11 +40,11 @@ The top level of `src/` holds only packages.
 |---|---|
 | Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py` |
 | Draft and review limits, their JSON schemas and call profiles | `src/editorial/editorial_schemas.py` |
-| Model calls: provider adapters, the one fallback ladder, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs) | `src/core/llm_client.py` |
+| Model calls: provider adapters, the one fallback ladder, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
-| Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes | `src/replies/reply_generator.py` |
-| Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship | `src/replies/reply_pipeline.py` |
+| Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
+| Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
 | Caps, pacing, anti-churn; the ledger facts the follow policy reads | `src/guards/action_guard.py` |

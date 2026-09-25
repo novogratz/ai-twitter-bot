@@ -222,6 +222,15 @@ fails on an error, an empty answer, a limit or refusal message
 (`_should_fallback`), or an answer that reads empty. A codex usage limit is
 cached in `codex_lockout.json`: it sends the call to the fallback labelled
 `(codex locked)`, and later codex calls go to Ollama alone until it expires.
+When every provider tried failed on a usage limit (`_USAGE_LIMIT_PATTERNS`,
+a codex lockout seen or cached counting as one), the call comes back
+`LLMStatus.EXHAUSTED`. Only the CLI or the transport reports a limit: the
+output of a call that exited non-zero, or the error a JSON envelope flags,
+with the lines of the prompt dropped since `codex exec` echoes it
+(`_cli_signal`). A model's answer that talks about rate limits is never
+one, and the codex lockout reads the same signal. A limit at one rank only, or any other failure,
+leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
+and model that answered, or failed last: the fallback's when it answered.
 `_timeout` computes every timeout: Ollama at least `LLM_TIMEOUT_SECONDS`
 (180) and the profile's floor, a CLI primary at most 360s, a CLI after
 Ollama at most 150s, a CLI after a CLI the requested timeout, all capped by
@@ -234,7 +243,9 @@ envelopes and strips tool-call markup. `Output.TEXT` empties anything
 value, whole or taken out of a code fence or surrounding prose. The Reply
 generator, the reply search and the editorial `_json_call` use the answer
 as it comes: text, or JSON for `json.loads`. A failure has a non-zero code
-and no text.
+and no text. The Reply generator reads `EXHAUSTED` as a rate limit; the
+editorial `_json_call` reads any status but `ANSWERED` as no Draft or no
+approval, so nothing is published and a missing Draft spends no Attempt.
 
 ## Write path and limits
 
@@ -434,12 +445,15 @@ filters (niche, age threshold, thread-reply shape, handle pools), its
 budgets, its voice, its pace after a shipped Reply and its log tag. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
-`engagement_log.log_reply` after a shipped Reply only. It keeps, per job and
+`engagement_log.log_reply` after a shipped Reply only, with the provider and
+model the Generation names (the reply search's, for its candidates); the
+log never guesses them from `AI_CLI`. It keeps, per job and
 lost at restart, the posts refused definitively, declined by the model
 (SKIP) or answered; `direct_reply`'s VIP and search lanes share theirs. A
 temporary refusal, a failed generation or a failed write leaves the post
-replayable. A model rate limit ends the job's generations for the cycle,
-with the post left replayable; in `direct_reply` it also stops the search
+replayable. A model rate limit, every provider exhausted, ends the job's
+generations for the cycle, with the post left replayable; in `direct_reply`
+it also stops the search
 lane, in `feed_sweep` the Following pass. `StateUnreadable` and
 `OutsideActiveHours` end the cycle from any step, a job's scrape included;
 any other error in a scrape, a generation or a write is logged and the
@@ -475,8 +489,10 @@ reply.
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
 passes its voice (template, model, label, language rule) and the parent
 post; `generate` returns a `Generation`: reply text, a decline (the model
-said SKIP), a replayable failure, or a rate limit. The generator always appends
-`personality_store.hard_rules_block()`, which renders the hard rules and the
+said SKIP), a replayable failure, or a rate limit when every provider is
+exhausted. Reply text comes with the provider and model that wrote it. The
+generator always appends `personality_store.hard_rules_block()`, which
+renders the hard rules and the
 respect list from `respect_list.json`; voices with `identity` also get
 `core_identity.md` (French or English) and the author's dossier from
 `personality.json`. It decides the language in one place, `_language`: the
@@ -607,7 +623,9 @@ packages live in `tests/helpers.py`, fixtures in `tests/conftest.py`.
 The reply tests share one fake model, `tests/replies/fakes.py`, which the
 `llm` fixture puts behind the Reply generator's `run_llm`. The fallback
 ladder is tested in `tests/core/test_llm_client.py`, where a fake adapter
-replaces each provider in `llm_client.ADAPTERS`.
+replaces each provider in `llm_client.ADAPTERS`. That `providers` fixture,
+in `tests/conftest.py`, also puts the real ladder behind the Reply pipeline
+and the editorial calls, for the usage-limit tests.
 
 The current policy is pinned across packages: Toronto and DST boundaries in
 `tests/guards/test_active_hours.py`, bedtime checks at the lock and before

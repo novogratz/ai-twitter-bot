@@ -9,7 +9,6 @@ from pathlib import Path
 import pytest
 
 from src.core import config
-from src.core.llm_client import LLM_RATE_LIMIT_CODE, LLMResult
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
 from src.guards.active_hours import OutsideActiveHours
@@ -17,9 +16,7 @@ from src.replies import reply_pipeline
 from src.x import x_urls
 from src.x.confirmed_write import WriteOutcome
 from tests.helpers import fresh
-from tests.replies.fakes import REPLY_TEXT, logged
-
-RATE_LIMITED = LLMResult(LLM_RATE_LIMIT_CODE, "", "hourly budget")
+from tests.replies.fakes import EXHAUSTED, REPLY_TEXT, logged
 
 
 def set_aside(name):
@@ -186,7 +183,7 @@ def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
     """A rate limit in the VIP lane ends the whole cycle, the search lane included."""
     dr, lanes, llm, chokepoint = direct
     lanes["vip"] = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
-    llm.default = RATE_LIMITED
+    llm.default = EXHAUSTED
 
     dr.run_direct_reply_cycle()
 
@@ -273,7 +270,7 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
 def test_feed_sweep_stops_at_the_rate_limit(feed):
     fs, feeds, llm, chokepoint = feed
     feeds["FEED"] = [{"url": fresh("someone"), "text": "OpenAI ships a new model"}]
-    llm.default = RATE_LIMITED
+    llm.default = EXHAUSTED
 
     fs.run_feed_sweep_cycle()
 
@@ -351,7 +348,8 @@ def reply_search(monkeypatch, chokepoint):
 
 
 def target(url, kind="reply"):
-    return {"tweet_url": url, "reply": REPLY_TEXT, "type": kind, "pattern": "RENAME"}
+    return {"tweet_url": url, "reply": REPLY_TEXT, "type": kind, "pattern": "RENAME",
+            "provider": "claude", "model": "sonnet"}
 
 
 def test_reply_search_sends_admitted_targets_once(reply_search, blocked_pgm_pm):
@@ -373,7 +371,7 @@ def test_reply_search_sends_admitted_targets_once(reply_search, blocked_pgm_pm):
 
     assert len(searched) == 1 and answered in searched[0], "the model is told which posts are answered"
     assert chokepoint.sent == [ok], "no quote, nothing admission refuses, each target once"
-    assert [(r.url, r.pattern) for r in logged()] == [(ok, "RENAME")]
+    assert [(r.url, r.pattern, r.provider, r.model) for r in logged()] == [(ok, "RENAME", "claude", "sonnet")]
 
 
 def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
@@ -466,7 +464,7 @@ def test_profile_jobs_bound_their_replies(profile_job):
 def test_profile_jobs_stop_at_the_rate_limit(profile_job):
     name, run, profiles, llm, chokepoint = profile_job
     profiles.update({"someone": [post("someone", "post one", n=1)], "other": [post("other", "post two", n=2)]})
-    llm.default = RATE_LIMITED
+    llm.default = EXHAUSTED
 
     run()
 

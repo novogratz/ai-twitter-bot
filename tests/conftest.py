@@ -177,6 +177,25 @@ def _fresh_editorial_memory(monkeypatch):
 
 
 @_pytest.fixture
+def providers(monkeypatch):
+    """A fake adapter for every provider behind the real `run_llm`, each
+    failing until a test gives it answers, every CLI installed, the
+    ladder's variables unset."""
+    from types import SimpleNamespace
+    from src.core import llm_client as llm
+    from tests.helpers import FakeAdapter
+
+    calls = []
+    fakes = {name: FakeAdapter(name, calls) for name in ("ollama", "codex", "gemini", "claude", "opencode")}
+    monkeypatch.setattr(llm, "ADAPTERS", fakes)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    for var in ("AI_CLI", "LLM_FALLBACK_CLI", "LLM_FALLBACK_MODEL", "LLM_DISABLE_FALLBACK",
+                "CODEX_FALLBACK_MODEL"):
+        monkeypatch.delenv(var, raising=False)
+    return SimpleNamespace(calls=calls, **fakes)
+
+
+@_pytest.fixture
 def memory_ledger(monkeypatch):
     """An in-memory action ledger in place of the file, for tests that read it."""
     from src.guards import action_guard, ledger

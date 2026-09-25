@@ -4,6 +4,7 @@ bedtime, the rate-limit stop, the spacing wait, the log after ship. The
 model is the fake LLM, the chokepoint a stub in twitter_client; Reply
 admission, the Replied store, the ledger and the engagement log are real
 (tests/conftest.py points their files at tmp_path)."""
+import json
 import math
 from datetime import datetime, timedelta
 from types import SimpleNamespace
@@ -12,7 +13,7 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from src.core import config
-from src.core.llm_client import LLM_RATE_LIMIT_CODE, LLMResult
+from src.core.llm_client import LLMResult
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
 from src.guards.active_hours import OutsideActiveHours
@@ -21,11 +22,10 @@ from src.x import x_urls
 from src.x.confirmed_write import WriteOutcome
 # The real chokepoint, before the chokepoint fixture replaces it.
 from src.x.twitter_client import reply_to_tweet as REAL_REPLY_TO_TWEET
-from tests.helpers import fresh, stop_requested
-from tests.replies.fakes import logged
+from tests.helpers import USAGE_LIMIT, fresh, stop_requested
+from tests.replies.fakes import EXHAUSTED as RATE_LIMITED, logged
 
 FAILED_CALL = LLMResult(1, "", "model down")
-RATE_LIMITED = LLMResult(LLM_RATE_LIMIT_CODE, "", "hourly budget")
 MODES = [pytest.param(False, id="in-turn"), pytest.param(True, id="pipelined")]
 
 
@@ -228,6 +228,65 @@ def test_the_rate_limit_ends_the_cycle(llm, chokepoint, pipelined, calls):
     assert chokepoint.sent == [] and set_aside() == set(), "a rate-limited post stays replayable"
 
 
+def cloud_job(**options):
+    """A job whose voice runs on Claude through the real `run_llm`."""
+    from src.replies.reply_generator import Voice
+
+    voice = Voice("Parent: {tweet_text}", "cloud-model", "TEST", identity=False,
+                  llm_options={"force_provider": "claude"})
+    return job(voice=lambda author: voice, **options)
+
+
+@pytest.mark.parametrize("pipelined, generations", [(False, {1}), (True, {1, 2})])
+def test_a_limit_at_every_rank_ends_the_cycle_after_the_first_candidate(providers, chokepoint, pipelined,
+                                                                        generations):
+    """Issue #176: Claude and its Codex fallback both refuse on their usage
+    limit. The cycle stops there: the next candidates do not pay the ladder
+    again. Pipelined, the generation submitted meanwhile may run too."""
+    providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]
+    providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
+    cycle = rp.Cycle()
+    candidates = [candidate(fresh("someone", n=i), f"post {i}") for i in range(4)]
+
+    assert run(cloud_job(pipelined=pipelined), candidates, cycle) == 0
+
+    ladder = [name for name, _ in providers.calls]
+    assert ladder[:2] == ["claude", "codex"] and len(ladder) // 2 in generations, ladder
+    assert cycle.rate_limited and chokepoint.sent == [] and logged() == []
+    assert set_aside() == set(), "a rate-limited post stays replayable"
+
+
+@pytest.mark.parametrize("pipelined", MODES)
+def test_answers_about_rate_limits_leave_the_cycle_running(providers, chokepoint, pipelined):
+    """Review of #176: Claude, then Codex, answer with a post about rate
+    limits on a zero exit. The call fails, it is no limit: the cycle goes on
+    to the next candidates, and the posts stay replayable."""
+    talk = "Rate limits, not model quality, decide who wins the agent race."
+    providers.claude.answers = [json.dumps({"type": "result", "subtype": "success", "result": talk})]
+    providers.codex.answers = [talk]
+    cycle = rp.Cycle()
+    candidates = [candidate(fresh("someone", n=i), f"rate limits post {i}") for i in range(3)]
+
+    assert run(cloud_job(pipelined=pipelined), candidates, cycle) == 0
+
+    assert [name for name, _ in providers.calls] == ["claude", "codex"] * 3
+    assert not cycle.rate_limited and chokepoint.sent == [] and set_aside() == set()
+
+
+def test_a_limit_at_the_primary_ships_the_fallback_reply_under_its_name(providers, chokepoint):
+    """Issue #176: the engagement log names the provider and model that
+    wrote the Reply, not the one configured for the surface."""
+    providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]
+    providers.codex.answers = ["Batching decides the margin, not the model."]
+    url = fresh("someone")
+    cycle = rp.Cycle()
+
+    assert run(cloud_job(), [candidate(url, "post one")], cycle) == 1
+
+    assert not cycle.rate_limited and chokepoint.sent == [url]
+    assert [(r.url, r.provider, r.model) for r in logged()] == [(url, "codex", "gpt-5.4-mini")]
+
+
 def test_budgets_bound_shipped_replies_or_generations(llm, chokepoint):
     candidates = [candidate(fresh("someone", n=i), f"post {i}") for i in range(4)]
 
@@ -352,6 +411,15 @@ def test_a_written_reply_skips_the_generation(llm, chokepoint):
 
     assert llm.calls == [] and chokepoint.calls[0].text == "Batching wins."
     assert [(r.source, r.pattern) for r in logged()] == [("", "RENAME")]
+
+
+def test_a_written_reply_is_logged_under_the_provider_that_wrote_it(llm, chokepoint):
+    written = rp.Candidate(fresh("someone"), "the parent", "", reply="Batching wins.",
+                           provider="claude", model="sonnet")
+
+    assert run(job(voice=None), [written]) == 1
+
+    assert [(r.provider, r.model) for r in logged()] == [("claude", "sonnet")]
 
 
 def test_a_reply_out_of_the_job_text_bounds_is_not_sent(llm, chokepoint):
