@@ -73,8 +73,8 @@ def test_stop_request_refuses_as_overnight(monkeypatch):
     assert judge_parent(url("someone")).refusal is Refusal.OVERNIGHT
 
 
-def test_debate_turn_cap_is_temporary_and_only_for_turns(monkeypatch):
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+def test_debate_turn_cap_is_temporary_and_only_for_turns(settings_override):
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
     action_guard.record(action_guard.DEBATE_TURN, target="challenger")
     capped = judge_parent(url("challenger"), debate_turn=True)
     assert capped.refusal is Refusal.DEBATE_TURN_CAP and not capped.refusal.definitive
@@ -100,8 +100,8 @@ def test_spacing_waits_for_the_reply_not_the_parent(monkeypatch):
     assert verdict.refusal is Refusal.SPACING and not verdict.refusal.definitive
 
 
-def test_admitted_text_is_the_validated_text(monkeypatch):
-    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
+    settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     validated = []

@@ -1,11 +1,10 @@
 """Reading X pages in Safari: feeds, search, profiles, mentions, our latest
 post and its replies, plus the blank-page recovery the scrapes feed."""
 import json
-import os
 import subprocess
 import threading
 import time
-from ..core.config import BOT_PROFILE_URL
+from ..core import config, settings
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
 from ..guards.active_hours import OutsideActiveHours
@@ -32,7 +31,7 @@ def _in_post_restart_grace() -> bool:
     re-trip the threshold ~15 min later — a self-perpetuating restart loop.
     Blanks within BLANK_GRACE_AFTER_RESTART_SECONDS of the last restart are
     EXPECTED and must not count. Env read at call time."""
-    grace = int(os.environ.get("BLANK_GRACE_AFTER_RESTART_SECONDS", "120"))
+    grace = settings.get("BLANK_GRACE_AFTER_RESTART_SECONDS")
     try:
         from . import safari_hygiene
         return (time.time() - safari_hygiene._last_run_ts()) < grace
@@ -322,7 +321,7 @@ def _profile_visit_allowed(username: str) -> bool:
         return False
     if base == BOT_HANDLE.lower():
         return True  # own profile (incl. BOT_HANDLE/with_replies callers)
-    allow = os.environ.get("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist,Graphseo")
+    allow = settings.get("PROFILE_VISIT_ALLOWLIST")
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
 
 
@@ -445,7 +444,7 @@ def scrape_own_tweet_and_replies():
     Returns {"own_tweet": str, "replies": [{"user": str, "text": str}]} or None."""
     with safari._safari_lock:
         log.info("[REPLYBACK] Opening own profile...")
-        safari.open_url(BOT_PROFILE_URL)
+        safari.open_url(config.BOT_PROFILE_URL)
         time.sleep(5)
 
         log.info("[REPLYBACK] Opening latest tweet...")

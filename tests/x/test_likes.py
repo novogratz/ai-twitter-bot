@@ -245,12 +245,12 @@ def test_blocked_account_post_is_never_liked(browser, monkeypatch, dry_run):
     assert browser["recorded"] == []
 
 
-def test_blocked_reply_is_skipped_and_the_walk_goes_on(browser, monkeypatch):
+def test_blocked_reply_is_skipped_and_the_walk_goes_on(browser, monkeypatch, settings_override):
     from src.core import config
     from src.x import twitter_client as tc
 
     monkeypatch.setattr(config, "BLOCKLIST", {"blockedone"})
-    monkeypatch.setenv("NOTIFY_LIKE_REPLIES_COUNT", "3")
+    settings_override(NOTIFY_LIKE_REPLIES_COUNT=3)
     page = browser["page"] = FakePage(page=OWN, posts=[
         {"url": BLOCKED, "liked": False},
         {"url": REPLY, "liked": False},
@@ -283,10 +283,10 @@ def test_profile_visit_opens_nothing_for_zero_likes_or_dry_run(monkeypatch, dry_
     assert tc.visit_profile_and_like("TheBTCTherapist", like_count=like_count) == []
 
 
-def test_notify_likes_replies_but_never_our_own_posts(browser, monkeypatch):
+def test_notify_likes_replies_but_never_our_own_posts(browser, settings_override):
     from src.x import twitter_client as tc
 
-    monkeypatch.setenv("NOTIFY_LIKE_REPLIES_COUNT", "3")
+    settings_override(NOTIFY_LIKE_REPLIES_COUNT=3)
     page = browser["page"] = FakePage(page=OWN, posts=[
         {"url": OWN, "liked": False},       # our post the replies answer
         {"url": REPLY, "liked": False},

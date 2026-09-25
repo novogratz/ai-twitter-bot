@@ -2,15 +2,15 @@
 import pytest
 
 
-def test_profile_visits_blocked_outside_allowlist(monkeypatch):
+def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override):
     """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
     scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
     A non-allowlisted profile must return [] BEFORE any Safari work, and the
-    allowlist env must be read at call time (side-effect-gate rule)."""
+    allowlist must be read at call time (side-effect-gate rule)."""
     from src.x import safari, scraper, twitter_client as tc
     from src.core.config import BOT_HANDLE
 
-    monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
+    settings_override(PROFILE_VISIT_ALLOWLIST="TheBTCTherapist,Graphseo")
     monkeypatch.setattr(
         safari, "open_url",
         lambda *a, **k: pytest.fail("Safari was opened for a blocked profile"))
@@ -28,8 +28,8 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     assert not scraper._profile_visit_allowed("zerohedge")
     assert not scraper._profile_visit_allowed("")
 
-    # Env read at CALL time — a live edit takes effect without restart.
-    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
+    # Read at CALL time: a later override reaches the next check.
+    settings_override(PROFILE_VISIT_ALLOWLIST="TheBTCTherapist")
     assert not scraper._profile_visit_allowed("graphseo")
     assert scraper._profile_visit_allowed("thebtctherapist")
 

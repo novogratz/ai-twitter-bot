@@ -17,7 +17,6 @@ job drops the post as after a model SKIP. Every environment switch and
 state file is read at call time; an unreadable Replied store or ledger
 raises `StateUnreadable`.
 """
-import os
 import re
 from dataclasses import dataclass
 from enum import Enum
@@ -29,7 +28,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import config, humanizer, reply_language
+from ..core import config, humanizer, reply_language, settings
 from ..x import x_urls
 from ..core.logger import log
 
@@ -112,7 +111,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     # The language is judged on the text as written, before the typo.
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
-    if author in _handles_env("HUMAN_TYPO_HANDLES", ""):
+    if author in _handles("HUMAN_TYPO_HANDLES"):
         text = humanizer.inject_human_typo(text)
         log.info(f"[REPLY] human-typo injected for @{author}.")
     # Validate last, so the text that ships is the text that was checked.
@@ -136,5 +135,5 @@ def is_blocked_account(author: str) -> bool:
     return any(token and token in handle for token in map(_normalise, config.BLOCKLIST))
 
 
-def _handles_env(name: str, default: str) -> set:
-    return {h.strip().lstrip("@").lower() for h in os.environ.get(name, default).split(",") if h.strip()}
+def _handles(name: str) -> set:
+    return {h.strip().lstrip("@").lower() for h in settings.get(name).split(",") if h.strip()}

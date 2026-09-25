@@ -20,14 +20,13 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
 so a job acts on the cause without checking the rule again. The ledger
 facts (today's follows, spacing, last touch) come from `action_guard`.
 """
-import os
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 
-from ..core import config
+from ..core import config, settings
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, GUARDED, StateFile
@@ -238,7 +237,7 @@ def _current_counts() -> tuple[int | None, int]:
     except (AttributeError, ValueError, TypeError):
         pass
 
-    override = os.environ.get("FOLLOWING_COUNT_OVERRIDE")
+    override = settings.get("FOLLOWING_COUNT_OVERRIDE")
     if override and override.isdigit():
         return followers, int(override)
     try:
@@ -284,7 +283,7 @@ def _following_ceiling(followers: int | None) -> int:
     # the ceiling is FOLLOW_TOTAL_CAP alone — the followers-tied bound
     # below would block every follow while the manual purge is mid-flight
     # (following > followers). Daily cap + spacing + anti-churn still apply.
-    if config.FOLLOW_GROWTH_MODE:
+    if config.follow_growth_mode():
         return config.FOLLOW_TOTAL_CAP
     if followers is None or followers < config.FOLLOW_LOW_PHASE_FOLLOWERS:
         return min(config.FOLLOW_TOTAL_CAP, config.FOLLOW_LOW_PHASE_CEILING)
@@ -323,8 +322,8 @@ def judge(handle: str) -> Verdict:
     rel = relation(h)
     if rel is Relation.STRANGER:
         return Verdict(Refusal.POLICY, _STRANGER)
-    exempt = config.FOLLOWBACK_BYPASS_WHITELIST
-    if config.FOLLOW_WHITELIST_ONLY and rel is not Relation.SEED and not exempt:
+    exempt = config.followback_bypass_whitelist()
+    if config.follow_whitelist_only() and rel is not Relation.SEED and not exempt:
         return Verdict(Refusal.POLICY,
                        f"not on whitelist (whitelist-only mode; {rel.value} not exempt)")
     if action_guard.within_churn_cooldown(h):
@@ -346,7 +345,7 @@ def judge(handle: str) -> Verdict:
     if following + 1 > ceiling:
         return Verdict(Refusal.CAP_REACHED, f"total following ceiling reached ({following} >= {ceiling})")
     # Legacy net-negative ratio brake (kept behind FOLLOW_ENFORCE_RATIO).
-    if config.FOLLOW_ENFORCE_RATIO:
+    if config.follow_enforce_ratio():
         if followers is None:
             return Verdict(Refusal.CAP_REACHED, "follower count unknown: ratio brake cannot be checked")
         unfollows_today = action_guard.count_today(action_guard.UNFOLLOW)
@@ -444,17 +443,17 @@ def _quality_decision(followers: int, bio: str, name: str,
     blocklist, caps, spacing and churn cooldown still apply."""
     if whitelisted:
         return (True, "whitelisted seed (gate exempt)")
-    min_followers = int(os.environ.get("FOLLOW_MIN_FOLLOWERS", "2000"))
+    min_followers = settings.get("FOLLOW_MIN_FOLLOWERS")
     if not engager:
         if followers < 0:
             return (False, "followers count unreadable — won't follow blind")
         if followers < min_followers:
             return (False, f"too small ({followers} followers < {min_followers})")
-    if os.environ.get("FOLLOW_REQUIRE_ENGLISH", "1") == "1":
+    if settings.get("FOLLOW_REQUIRE_ENGLISH"):
         why = _looks_non_english_profile(name, bio)
         if why:
             return (False, why)
-    if not engager and os.environ.get("FOLLOW_REQUIRE_NICHE", "1") == "1":
+    if not engager and settings.get("FOLLOW_REQUIRE_NICHE"):
         blob = f"{name or ''} {bio or ''}"
         if not _NICHE_BIO_RE.search(blob):
             return (False, "off-niche bio (no AI/markets/crypto signal)")

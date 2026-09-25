@@ -292,9 +292,7 @@ def test_env_file_reaches_the_llm_client_whatever_is_imported_first(tmp_path, fi
 _LITERAL_READ = re.compile(
     r'os\.(?:environ\.get|getenv)\(\s*"([A-Z0-9_]+)"|os\.environ\[\s*"([A-Z0-9_]+)"\s*\]')
 _DYNAMIC_READ = re.compile(r'os\.(?:environ\.get|getenv)\((?!\s*")')
-# Two helpers take the variable name as an argument.
-_HELPER_READ = re.compile(r'(?:_maybe_like_parent\([^)]*?|_handles_env\(\s*)"([A-Z0-9_]+)"')
-_DYNAMIC_SITES = {"src/x/twitter_client.py", "src/guards/reply_admission.py"}
+_DYNAMIC_SITES: set[str] = set()
 
 
 def _engine_files():
@@ -307,7 +305,6 @@ def test_every_key_the_code_reads_is_declared_or_pending():
     for path in _engine_files():
         text = path.read_text()
         read |= {a or b for a, b in _LITERAL_READ.findall(text)}
-        read |= set(_HELPER_READ.findall(text))
         if _DYNAMIC_READ.search(text):
             dynamic.add(str(path.relative_to(ROOT)))
     assert dynamic <= _DYNAMIC_SITES, "a new environment read by computed name: teach this test its keys"
