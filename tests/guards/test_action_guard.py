@@ -100,7 +100,6 @@ def follow_env(monkeypatch, tmp_path, memory_ledger):
 def _counts(monkeypatch, tmp_path, followers, following):
     """The account's counts as the follower tracker and the following
     counter leave them on disk."""
-    monkeypatch.setattr(config, "_PROJECT_ROOT", str(tmp_path))
     monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
     (tmp_path / "follower_history.json").write_text(json.dumps([{"count": followers}]))
     (tmp_path / "following_count.json").write_text(json.dumps({"count": following}))
@@ -150,6 +149,48 @@ def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatc
     _counts(monkeypatch, tmp_path, 320, 280)
     ok, why = ag.can_follow("morganhousel")
     assert ok, why  # 280+1 <= min(300, 320)
+
+
+@pytest.mark.parametrize("name", ["followed_accounts.json", "following_count.json"])
+def test_an_unreadable_following_count_refuses_every_follow(follow_env, monkeypatch, tmp_path, name):
+    """#171: with the following count unknown, can_follow skipped the
+    ceiling. The count comes from following_count.json, else from the
+    followed list: either one unreadable now refuses the follow, and the
+    file waits for the Operator."""
+    ag = follow_env
+    monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
+    (tmp_path / "follower_history.json").write_text(json.dumps([{"count": 100}]))
+    path = tmp_path / name
+    path.write_text('{"count": 1')
+
+    ok, why = ag.can_follow("karpathy")
+
+    assert not ok and "following ceiling unreadable" in why and name in why
+    assert path.read_text() == '{"count": 1'
+
+
+def test_an_unreadable_follower_history_leaves_the_lowest_ceiling(follow_env, monkeypatch, tmp_path):
+    """follower_history.json is disposable: unreadable, it reads as no
+    sample, and the ceiling falls to its low-phase value."""
+    ag = follow_env
+    _counts(monkeypatch, tmp_path, 10000, 150)
+    (tmp_path / "follower_history.json").write_text('[{"count": 1')
+    ok, why = ag.can_follow("karpathy")
+    assert not ok and "(150 >= 150)" in why
+
+
+def test_adjust_following_keeps_the_baseline_and_never_overwrites_an_unreadable_count(
+        monkeypatch, tmp_path):
+    monkeypatch.setenv("DRY_RUN", "0")
+    path = tmp_path / "following_count.json"
+    path.write_text(json.dumps({"count": 10, "baseline": 4200}))
+    ag.adjust_following(+1)
+    doc = json.loads(path.read_text())
+    assert (doc["count"], doc["baseline"]) == (11, 4200) and "updated" in doc
+
+    path.write_text('{"count": 1')
+    ag.adjust_following(+1)
+    assert path.read_text() == '{"count": 1'
 
 
 def test_follow_spacing_blocks_burst(follow_env, monkeypatch, tmp_path):

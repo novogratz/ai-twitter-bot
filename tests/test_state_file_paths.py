@@ -24,14 +24,14 @@ def test_state_files_resolve_to_the_repo_root(unwalled):
 
     modules = (account_curator, engage_bot, follow_engagers_bot, follower_tracker_bot,
                like_bot, pin_bot, dynamic_strategy, evolution_store, health, history,
-               live_strategy, llm_client, personality_store, editorial_bot, reach_report, respect_list,
-               safari_hygiene)
+               live_strategy, llm_client, personality_store, editorial_bot, reach_report,
+               action_guard, respect_list, safari_hygiene)
     stored = [v for m in modules for v in vars(m).values() if isinstance(v, state_store.StateFile)]
     assert stored
     for state_file in stored:
         assert os.path.basename(state_file.name) == state_file.name
         assert state_file.path == os.path.join(state_store.ROOT, state_file.name)
 
-    for state_file in (twitter_client._FOLLOW_REJECTS_FILE, action_guard._FOLLOWING_COUNT_FILE,
-                       editorial_bot.AUDIT_FILE, reach_report.REPORT_MARKDOWN):
+    for state_file in (twitter_client._FOLLOW_REJECTS_FILE, editorial_bot.AUDIT_FILE,
+                       reach_report.REPORT_MARKDOWN):
         assert Path(state_file).resolve().parent == repo, state_file

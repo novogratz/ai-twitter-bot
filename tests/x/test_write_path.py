@@ -731,6 +731,30 @@ def test_follow_gate_english_only(monkeypatch):
     assert ok, "whitelisted seed must bypass the language gate"
 
 
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, tmp_path,
+                                                                  memory_ledger, dry_run):
+    """#171: with no following count and an unreadable followed list, the
+    follow chokepoint skipped the ceiling. It now refuses before the page
+    opens (conftest fails the test on open_url), writes no ledger row, not
+    even a dry-run one, and leaves the file to the Operator."""
+    from src.x import twitter_client as tc
+
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
+    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
+    followed = tmp_path / "followed_accounts.json"
+    followed.write_text('["half')
+
+    assert tc.follow_account("someaccount") is W.REFUSED
+
+    assert memory_ledger.rows == []
+    assert followed.read_text() == '["half'
+    assert not (tmp_path / "following_count.json").exists()
+
+
 # --- pins: record only a shipped pin (#142) --------------------------------------
 
 

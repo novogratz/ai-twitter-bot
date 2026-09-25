@@ -103,7 +103,9 @@ Two settings decide how much of the table does anything:
   replyback profile likes only act on allowlisted accounts.
 - The follow policy in `action_guard.can_follow`. With the code defaults, the
   whitelist and the following ceiling refuse most follows; the live `.env`
-  decides what actually passes.
+  decides what actually passes. A following count that cannot be read
+  (`following_count.json`, else `followed_accounts.json`) refuses every
+  follow.
 
 ## Editorial pipeline
 
@@ -446,6 +448,7 @@ the next write replaces it. Each file has one lock, and
 `StateFile.update(fn)` reads, changes and writes under it. The files that
 several scheduler threads change go through it: `followed_accounts.json`
 (`engage_job` and `followback_job` merge their follows into the file),
+`following_count.json`,
 `tweet_history.json`, `safari_health.json` and `personality.json` (the
 dossier bump after every Reply). `tweet_history.json` has one reader,
 `history.load_history`, for the dedup, the rationed openers and the

@@ -13,12 +13,9 @@ import traceback
 from ..core.logger import log
 from ..core.config import BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
-from ..core.state_store import GUARDED, StateFile
+from ..guards.action_guard import FOLLOWED
 from ..x.scraper import _profile_visit_allowed
 from ..x.twitter_client import visit_profile_and_like, follow_account, LikeOutcome
-
-# Guarded: the job follows every pool handle missing from it.
-FOLLOWED = StateFile("followed_accounts.json", [], GUARDED)
 
 # Compatibility shim — notify_bot and reply_agent import TARGET_ACCOUNTS.
 # Real pool is built dynamically from the feed; this satisfies the import.
