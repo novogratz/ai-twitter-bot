@@ -58,7 +58,7 @@ def test_tests_cannot_spawn_osascript(monkeypatch):
             subprocess.run(argv, shell=isinstance(argv, str))
 
 
-WALLED = {"_run_applescript", "_run_js", "_paste_text"}
+WALLED = {"_run_applescript", "_run_js", "_paste_text", "open_url"}
 SAFARI = "src/x/safari.py"
 # The one direct osascript call that stays: safari_hygiene quits Safari
 # itself, because the Safari being quit may be wedged, and
@@ -86,7 +86,11 @@ def browser_path_problems(root, path):
     docstrings = _docstrings(tree)
     problems = []
     for node in ast.walk(tree):
-        if isinstance(node, ast.ImportFrom):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name == "webbrowser":
+                    problems.append(f"{rel}:{node.lineno}: opens pages past safari.open_url")
+        elif isinstance(node, ast.ImportFrom):
             for alias in node.names:
                 if (alias.name in WALLED or node.module == "webbrowser"
                         or (node.module == "subprocess" and alias.name == "Popen")):
@@ -104,14 +108,16 @@ def browser_path_problems(root, path):
 
 
 def test_every_browser_path_goes_through_the_conftest_walls():
-    """conftest walls `_run_applescript`, `_run_js` and `_paste_text` off in
-    src.x.safari, which defines them, and `webbrowser.open` and
-    `subprocess.Popen` on their modules. A module that binds one by name
+    """conftest walls `_run_applescript`, `_run_js`, `_paste_text` and
+    `open_url` off in src.x.safari, which defines them, and `webbrowser.open`
+    and `subprocess.Popen` on their modules. A module that binds one by name
     (`from .safari import _run_applescript`, `from subprocess import Popen`)
     keeps the real object past the wall, so twitter_client, scraper and the
     jobs reach them through their module (#118). Page JavaScript runs only
     through `safari._run_js`, and only safari.py and the files in
-    OWN_OSASCRIPT spawn `osascript` (#144)."""
+    OWN_OSASCRIPT spawn `osascript` (#144). Pages open only through
+    `safari.open_url`: `webbrowser` follows the default browser, and a page
+    opened in Firefox left `_run_js` reading Safari's front tab."""
     from src.x import safari
 
     for name in WALLED:
@@ -156,6 +162,20 @@ def test_do_javascript_is_matched_in_any_case(tmp_path):
     ))
     assert sorted(problems) == [f"src/job.py:{n}: runs do JavaScript past safari._run_js"
                                 for n in (1, 2, 3)]
+
+
+def test_webbrowser_is_matched_in_every_import_form(tmp_path):
+    problems = _problems(tmp_path, "src/job.py", (
+        "import webbrowser\n"
+        "import os, webbrowser as wb\n"
+        "from webbrowser import open\n"
+        "from .safari import open_url\n"
+        "import webbrowser_helpers\n"
+    ))
+    assert sorted(problems) == ["src/job.py:1: opens pages past safari.open_url",
+                                "src/job.py:2: opens pages past safari.open_url",
+                                "src/job.py:3: imports open",
+                                "src/job.py:4: imports open_url"]
 
 
 def test_docstrings_are_not_browser_paths(tmp_path):

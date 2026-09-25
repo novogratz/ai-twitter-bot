@@ -1,9 +1,10 @@
 """Safari and AppleScript primitives shared by the X reading and write
-modules: the Safari lock, AppleScript runs, paste, tab and keyboard moves.
+modules: the Safari lock, AppleScript runs, page opening, paste, tab and
+keyboard moves.
 
 Other modules call the walled primitives (`_run_applescript`, `_run_js`,
-`_paste_text`) through the module (`safari._run_applescript(...)`), never
-through a `from` import, so the test walls patched here reach them."""
+`_paste_text`, `open_url`) through the module (`safari.open_url(...)`),
+never through a `from` import, so the test walls patched here reach them."""
 import os
 import subprocess
 import tempfile
@@ -104,6 +105,22 @@ def _run_js(js: str, timeout_s: int = 15, *, log_prefix: str = "",
 def _escape_for_applescript(text: str) -> str:
     """Escape special characters for AppleScript string literals."""
     return text.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def open_url(url: str) -> bool:
+    """Open `url` in Safari and bring Safari to the front. Returns True when
+    the AppleScript ran.
+
+    Every page the bot reads or writes opens here, never through
+    `webbrowser.open`: that one follows the default browser, so on a Mac
+    where Firefox is the default the page opened in Firefox while `_run_js`
+    and the keystrokes went to Safari's front tab."""
+    return _run_applescript(f'''
+    tell application "Safari"
+        activate
+        open location "{_escape_for_applescript(url)}"
+    end tell
+    ''')
 
 
 def _paste_text(text: str) -> bool:

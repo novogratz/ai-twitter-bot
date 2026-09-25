@@ -5,7 +5,6 @@ import os
 import subprocess
 import threading
 import time
-import webbrowser
 from ..core.config import BOT_PROFILE_URL
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
@@ -124,7 +123,7 @@ def refresh_feed():
     """Open X home feed and refresh it so new tweets load."""
     with safari._safari_lock:
         log.info("Refreshing X feed...")
-        webbrowser.open("https://x.com/home")
+        safari.open_url("https://x.com/home")
         time.sleep(3)
         safari.close_front_tab()
 
@@ -338,7 +337,7 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
     with safari._safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
-        webbrowser.open(profile_url)
+        safari.open_url(profile_url)
         time.sleep(8)
         safari._scroll_page()
 
@@ -355,7 +354,7 @@ def scrape_mentions(max_tweets: int = 20):
     applies; best-effort [] on any failure."""
     with safari._safari_lock:
         log.info("[SCRAPE] Opening mentions notifications...")
-        webbrowser.open("https://x.com/notifications/mentions")
+        safari.open_url("https://x.com/notifications/mentions")
         time.sleep(8)
         for _ in range(2):
             safari._scroll_page()
@@ -368,7 +367,7 @@ def scrape_home_feed(max_tweets: int = 15):
     """Scrape tweets from the home feed (For You / algorithmic)."""
     with safari._safari_lock:
         log.info("[SCRAPE] Opening home feed...")
-        webbrowser.open("https://x.com/home")
+        safari.open_url("https://x.com/home")
         time.sleep(8)
 
         # Scroll deep — reply to everything means we need to surface many tweets.
@@ -390,7 +389,7 @@ def scrape_following_feed(max_tweets: int = 15):
     """
     with safari._safari_lock:
         log.info("[SCRAPE] Opening Following feed...")
-        webbrowser.open("https://x.com/home")
+        safari.open_url("https://x.com/home")
         time.sleep(8)
 
         # Click the "Following" tab.
@@ -431,7 +430,7 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
         f_param = "top" if tab == "top" else "live"
         search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
         log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
-        webbrowser.open(search_url)
+        safari.open_url(search_url)
         time.sleep(8)
         safari._scroll_page()
         safari._scroll_page()
@@ -446,7 +445,7 @@ def scrape_own_tweet_and_replies():
     Returns {"own_tweet": str, "replies": [{"user": str, "text": str}]} or None."""
     with safari._safari_lock:
         log.info("[REPLYBACK] Opening own profile...")
-        webbrowser.open(BOT_PROFILE_URL)
+        safari.open_url(BOT_PROFILE_URL)
         time.sleep(5)
 
         log.info("[REPLYBACK] Opening latest tweet...")

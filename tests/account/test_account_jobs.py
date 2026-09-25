@@ -116,7 +116,7 @@ def _stub_like_browser(monkeypatch, tmp_path):
     from src.x import safari, twitter_client
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(twitter_client.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(twitter_client.time, "sleep", lambda *_: None)
@@ -353,10 +353,10 @@ def test_like_job_counts_shipped_likes_when_a_stop_ends_the_walk(like_job):
 
 def test_like_job_dry_run_opens_nothing(like_job, monkeypatch):
     from src.account import like_bot
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "1")
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: pytest.fail("opened Safari"))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: pytest.fail("opened Safari"))
     monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
 
     like_bot.run_like_cycle()

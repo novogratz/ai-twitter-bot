@@ -56,7 +56,7 @@ The top level of `src/` holds only packages.
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
 | The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |
 | Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
-| Safari lock, AppleScript, paste, tab and scroll primitives | `src/x/safari.py` |
+| Safari lock, AppleScript, page opening (`open_url`, never `webbrowser`), paste, tab and scroll primitives | `src/x/safari.py` |
 | Voice, operator-managed | `core_identity.md` |
 
 ## Invariants

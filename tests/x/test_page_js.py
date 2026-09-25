@@ -6,7 +6,6 @@ import os
 import shutil
 import subprocess
 import time
-import webbrowser
 from types import SimpleNamespace
 
 import pytest
@@ -39,7 +38,7 @@ def browser(monkeypatch):
     installs a FakeJS as `safari._run_js`."""
     from src.x import safari
 
-    monkeypatch.setattr(webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
 

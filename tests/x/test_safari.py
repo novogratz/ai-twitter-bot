@@ -94,3 +94,18 @@ def test_run_applescript_counts_a_timeout_as_a_failed_attempt(monkeypatch, unwal
     monkeypatch.setattr(safari.subprocess, "run", run)
     assert unwalled["_run_applescript"]("return 1", timeout_s=20) is False
     assert seen == [20]
+
+
+def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
+    """`webbrowser.open` followed the default browser: with Firefox as the
+    default, pages opened in Firefox while `_run_js` read Safari's front tab.
+    open_url names Safari and escapes the URL for the AppleScript literal."""
+    from src.x import safari
+
+    scripts = []
+    monkeypatch.setattr(safari, "_run_applescript", lambda script: scripts.append(script) or True)
+    assert unwalled["open_url"]('https://x.com/search?q=%22AI%22&x="y"') is True
+    [script] = scripts
+    assert 'tell application "Safari"' in script
+    assert "activate" in script
+    assert 'open location "https://x.com/search?q=%22AI%22&x=\\"y\\""' in script

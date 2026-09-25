@@ -78,11 +78,9 @@ def _no_safari(monkeypatch):
     # The primitives live in src.x.safari; twitter_client and scraper call
     # them through the module, so this patch reaches every src.x path.
     from src.x import safari as _safari
-    for name in ("_run_applescript", "_run_js", "_paste_text"):
+    for name in ("_run_applescript", "_run_js", "_paste_text", "open_url"):
         _UNWALLED.setdefault(name, getattr(_safari, name))
-    monkeypatch.setattr(_safari, "_run_applescript", _blocked)
-    monkeypatch.setattr(_safari, "_run_js", _blocked)
-    monkeypatch.setattr(_safari, "_paste_text", _blocked)
+        monkeypatch.setattr(_safari, name, _blocked)
 
     # safari.py itself and the Safari quit and relaunch in safari_hygiene
     # call subprocess.run(["osascript", ...]) (or `open`, `pkill`) directly,
@@ -196,7 +194,7 @@ def like_job(monkeypatch, tmp_path, memory_ledger):
     monkeypatch.setenv("DRY_RUN", "0")
     for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS"):
         monkeypatch.delenv(name, raising=False)
-    monkeypatch.setattr(tc.webbrowser, "open", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
     monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_liked_cache_path", lambda: str(tmp_path / "liked_tweets.json"))
