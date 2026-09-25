@@ -4,6 +4,7 @@ bedtime, the rate-limit stop, the spacing wait, the log after ship. The
 model is the fake LLM, the chokepoint a stub in twitter_client; Reply
 admission, the Replied store, the ledger and the engagement log are real
 (tests/conftest.py points their files at tmp_path)."""
+import json
 import math
 from datetime import datetime, timedelta
 from types import SimpleNamespace
@@ -253,6 +254,23 @@ def test_a_limit_at_every_rank_ends_the_cycle_after_the_first_candidate(provider
     assert ladder[:2] == ["claude", "codex"] and len(ladder) // 2 in generations, ladder
     assert cycle.rate_limited and chokepoint.sent == [] and logged() == []
     assert set_aside() == set(), "a rate-limited post stays replayable"
+
+
+@pytest.mark.parametrize("pipelined", MODES)
+def test_answers_about_rate_limits_leave_the_cycle_running(providers, chokepoint, pipelined):
+    """Review of #176: Claude, then Codex, answer with a post about rate
+    limits on a zero exit. The call fails, it is no limit: the cycle goes on
+    to the next candidates, and the posts stay replayable."""
+    talk = "Rate limits, not model quality, decide who wins the agent race."
+    providers.claude.answers = [json.dumps({"type": "result", "subtype": "success", "result": talk})]
+    providers.codex.answers = [talk]
+    cycle = rp.Cycle()
+    candidates = [candidate(fresh("someone", n=i), f"rate limits post {i}") for i in range(3)]
+
+    assert run(cloud_job(pipelined=pipelined), candidates, cycle) == 0
+
+    assert [name for name, _ in providers.calls] == ["claude", "codex"] * 3
+    assert not cycle.rate_limited and chokepoint.sent == [] and set_aside() == set()
 
 
 def test_a_limit_at_the_primary_ships_the_fallback_reply_under_its_name(providers, chokepoint):

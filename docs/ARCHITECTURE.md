@@ -224,7 +224,11 @@ cached in `codex_lockout.json`: it sends the call to the fallback labelled
 `(codex locked)`, and later codex calls go to Ollama alone until it expires.
 When every provider tried failed on a usage limit (`_USAGE_LIMIT_PATTERNS`,
 a codex lockout seen or cached counting as one), the call comes back
-`LLMStatus.EXHAUSTED`. A limit at one rank only, or any other failure,
+`LLMStatus.EXHAUSTED`. Only the CLI or the transport reports a limit: the
+output of a call that exited non-zero, or the error a JSON envelope flags,
+with the lines of the prompt dropped since `codex exec` echoes it
+(`_cli_signal`). A model's answer that talks about rate limits is never
+one, and the codex lockout reads the same signal. A limit at one rank only, or any other failure,
 leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
 and model that answered, or failed last: the fallback's when it answered.
 `_timeout` computes every timeout: Ollama at least `LLM_TIMEOUT_SECONDS`

@@ -236,6 +236,73 @@ def test_a_limit_at_the_primary_leaves_the_fallback_answer(providers):
     assert (result.status, result.stdout, result.provider) == (LLMStatus.ANSWERED, TEXT, "codex")
 
 
+def both_ranks(p, answer):
+    p.claude.answers = [claude_envelope(answer)]
+    p.codex.answers = [answer]
+    return "claude", ["claude", "codex"]
+
+
+# Answers about limits, as a model writes them on a zero exit. `_should_fallback`
+# refused the first two before #176 and still does: the call fails.
+TALK = {
+    "Rate limits, not model quality, decide who wins the agent race.": LLMStatus.FAILED,
+    "Hit your usage limit? Batching buys you another week.": LLMStatus.FAILED,
+    "Too many requests is a pricing problem, not an infra one.": LLMStatus.ANSWERED,
+}
+
+
+@pytest.mark.parametrize("answer, status", list(TALK.items()))
+@pytest.mark.parametrize("rank", [both_ranks, after_codex_lock, while_codex_locked])
+def test_an_answer_about_limits_is_no_usage_limit(providers, rank, answer, status):
+    """Review of #176: only the CLI or the transport reports a limit, never
+    the text of an answer, at any rank."""
+    provider, ladder = rank(providers, answer)
+    result = ask(provider=provider)
+    assert result.status is status
+    if status is LLMStatus.ANSWERED:
+        assert result.stdout == answer
+    else:
+        assert [name for name, _ in providers.calls] == ladder, "every rank answered"
+
+
+ECHO_PROMPT = "Reply to this post.\nParent: You've hit your usage limit. Rate limits, too many requests."
+
+
+def echoed(error):
+    """A failed CLI call whose stderr echoes the prompt, as `codex exec` does."""
+    return LLMResult(1, "", f"user\n{ECHO_PROMPT}\n\nERROR: {error}")
+
+
+@pytest.mark.parametrize("error, status", [
+    ("stream disconnected before completion", LLMStatus.FAILED),
+    (USAGE_LIMIT, LLMStatus.EXHAUSTED),
+])
+def test_the_prompt_echoed_on_stderr_is_no_usage_limit(providers, error, status):
+    from src.core.llm_client import run_llm
+    providers.claude.answers = [echoed(error)]
+    providers.codex.answers = [echoed(error)]
+    result = run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="claude")
+    assert result.status is status
+
+
+def test_the_prompt_echoed_on_stderr_locks_no_codex_out(providers):
+    from src.core.llm_client import run_llm
+    providers.codex.answers = [echoed("stream disconnected before completion"), TEXT]
+    assert run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="codex").status is LLMStatus.FAILED
+    assert run_llm(ECHO_PROMPT, "cloud-model", label="TEST", force_provider="codex").stdout == TEXT
+    assert [name for name, _ in providers.calls] == ["codex", "ollama", "codex"]
+
+
+def test_an_error_envelope_on_a_zero_exit_is_a_usage_limit(providers):
+    """Claude's JSON envelope flags its limit with `is_error`, whatever its
+    exit code."""
+    providers.claude.answers = [LLMResult(0, json.dumps({
+        "type": "result", "subtype": "success", "is_error": True,
+        "result": "Claude AI usage limit reached|1790000000"}), "")]
+    providers.codex.answers = [RATE_LIMIT]
+    assert ask().status is LLMStatus.EXHAUSTED
+
+
 # --- Timeouts: one place computes them -----------------------------------------
 
 @pytest.mark.parametrize("provider, requested, profile_floor, expected", [

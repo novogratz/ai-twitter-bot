@@ -288,8 +288,12 @@ class LLMStatus(Enum):
 @dataclass
 class LLMResult:
     """An adapter's raw output, or `run_llm`'s answer. `run_llm` names the
-    provider and model that answered, or failed last; without a status, the
-    return code decides between ANSWERED and FAILED."""
+    provider and model that answered, or failed last.
+
+    `status` means something on `run_llm`'s answer only. On an adapter's raw
+    output nobody has judged yet, the return code fills it with ANSWERED or
+    FAILED, which says nothing of a usage limit or of an answer `run_llm`
+    would refuse: read the return code and the output there instead."""
     returncode: int
     stdout: str = ""
     stderr: str = ""
@@ -365,12 +369,12 @@ def _write_codex_lockout(end: datetime, reason: str = "usage_limit") -> None:
     })
 
 
-def _detect_codex_lockout(result: "LLMResult") -> Optional[datetime]:
-    """Return the lockout-end datetime if the codex response contains a usage-limit error."""
-    blob = ((result.stdout or "") + "\n" + (result.stderr or "")).lower()
-    if "hit your usage limit" not in blob:
+def _detect_codex_lockout(result: "LLMResult", prompt: str) -> Optional[datetime]:
+    """Return the lockout-end datetime if codex reported a usage-limit error."""
+    signal = _cli_signal(result, prompt)
+    if "hit your usage limit" not in signal.lower():
         return None
-    parsed = _parse_codex_lockout_end((result.stdout or "") + "\n" + (result.stderr or ""))
+    parsed = _parse_codex_lockout_end(signal)
     if parsed:
         return parsed
     # Couldn't parse the precise date — assume 24h lockout as a safety floor.
@@ -565,9 +569,41 @@ _USAGE_LIMIT_PATTERNS = (
 )
 
 
-def _usage_limit(result: LLMResult) -> bool:
-    blob = ((result.stdout or "") + "\n" + (result.stderr or "")).lower()
-    return any(pat in blob for pat in _USAGE_LIMIT_PATTERNS)
+def _envelope_error(stdout: str) -> str:
+    """The error a CLI's JSON output reports, even on a zero exit: Claude's
+    envelope flagged `is_error`, or an NDJSON error event."""
+    errors = []
+    for line in (stdout or "").strip().splitlines():
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(event, dict):
+            continue
+        if event.get("is_error"):
+            errors.append(str(event.get("result") or event.get("subtype") or ""))
+        elif event.get("type") in ("error", "turn.failed"):
+            errors.append(json.dumps(event.get("error") or event.get("message") or ""))
+    return "\n".join(errors)
+
+
+def _cli_signal(raw: LLMResult, prompt: str) -> str:
+    """What the CLI or the transport reported about a call, never the
+    model's answer: the whole output of a call that exited non-zero, or the
+    error a JSON envelope flags. A post about rate limits is a common
+    answer, and a common parent post: the lines of the prompt are dropped,
+    since `codex exec` echoes it on stderr."""
+    if raw.returncode != 0:
+        text = (raw.stdout or "") + "\n" + (raw.stderr or "")
+    else:
+        text = _envelope_error(raw.stdout)
+    echoed = {line.strip() for line in prompt.splitlines() if line.strip()}
+    return "\n".join(line for line in text.splitlines() if line.strip() not in echoed)
+
+
+def _usage_limit(raw: LLMResult, prompt: str) -> bool:
+    signal = _cli_signal(raw, prompt).lower()
+    return any(pat in signal for pat in _USAGE_LIMIT_PATTERNS)
 
 
 def _should_fallback(result: LLMResult) -> bool:
@@ -675,11 +711,11 @@ def _model(provider: str, request: _Request) -> str:
 def _answer(provider: str, request: _Request, raw: LLMResult) -> LLMResult:
     """One call's answer, named after its provider and model: the model's
     text read in the profile's mode, or a failure with a non-zero code and
-    no text, EXHAUSTED when the provider hit its usage limit."""
+    no text, EXHAUSTED when the CLI or transport reported a usage limit."""
     model = _model(provider, request)
     if _should_fallback(raw):
         reason = (raw.stderr or "").strip() or f"{request.label}: {provider} gave no usable answer"
-        status = LLMStatus.EXHAUSTED if _usage_limit(raw) else LLMStatus.FAILED
+        status = LLMStatus.EXHAUSTED if _usage_limit(raw, request.prompt) else LLMStatus.FAILED
         return LLMResult(raw.returncode or 1, "", reason, status, provider, model)
     text = _read_answer(raw.stdout, request.profile.output)
     if not text.strip():
@@ -737,7 +773,7 @@ def run_llm(
 
     log.info(f"[LLM] {label}: {primary} primary → {_describe(primary, request)}.")
     raw = _call(primary, request)
-    locked_until = _detect_codex_lockout(raw) if primary == "codex" else None
+    locked_until = _detect_codex_lockout(raw, prompt) if primary == "codex" else None
     if locked_until is not None:
         _write_codex_lockout(locked_until)
         log.info(

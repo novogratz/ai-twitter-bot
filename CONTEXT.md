@@ -97,7 +97,8 @@ _Avoid_: reply drafter, reply writer
 
 **Provider exhausted**:
 A model call on which every provider tried, the primary and its fallback,
-hit its usage limit. The Reply generator reads it as a rate limit, and the
+hit its usage limit, as the CLI or the transport reported it; a model's
+answer about rate limits never counts. The Reply generator reads it as a rate limit, and the
 Reply pipeline ends the job's cycle with the post left replayable. A limit
 on the primary alone is no exhaustion: the fallback answers, and the Reply
 is recorded under the fallback's provider and model.
