@@ -70,6 +70,21 @@ def test_no_hardcoded_bedtime_outside_the_constants():
     assert hits == []
 
 
+def test_every_day_comes_from_the_toronto_clock():
+    """Issue #191: the like, follow and pin counters took their day from the
+    Mac's clock, so a Mac in Europe opened a second quota in the Toronto
+    evening. Every day in src/ comes from active_hours.now_local()."""
+    import re
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    pattern = re.compile(r"\b(date|datetime)\.today\(|datetime\.now\(\)\.(date|strftime)\(|time\.strftime\(")
+    files = [*root.glob("src/**/*.py"), root / "main.py"]
+    hits = [f"{path.relative_to(root)}:{n}" for path in files
+            for n, line in enumerate(path.read_text().splitlines(), 1) if pattern.search(line)]
+    assert hits == []
+
+
 def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
     called = []

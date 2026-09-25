@@ -30,11 +30,12 @@ import os
 import re
 import traceback
 from collections import defaultdict
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 from ..core.config import BLOCKLIST, BOT_HANDLE, ENGAGEMENT_LOG_FILE
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
+from ..guards import active_hours
 # Guarded: a corrupt whitelist stops the cycle before any promotion.
 from ..guards.follow_policy import WHITELIST
 
@@ -137,10 +138,12 @@ def _promotable(cand: dict) -> bool:
 def _promote_to_whitelist(candidates: list, doc: dict) -> int:
     """Add top candidates to whitelist tiers["discovered"] (capped/logged)."""
     candidates = [c for c in candidates if _promotable(c)]
-    today = date.today().isoformat()
+    today = active_hours.now_local().date().isoformat()
     meta = doc.setdefault("promotion_meta", {})
-    if meta.get("date") != today:
-        meta["date"], meta["count"] = today, 0
+    # A later date was stamped today by the Mac's clock, ahead of Toronto's.
+    if (meta.get("date") or "") < today:
+        meta["count"] = 0
+    meta["date"] = today
     budget = DISCOVERED_PER_DAY - int(meta.get("count", 0))
     if budget <= 0:
         return 0

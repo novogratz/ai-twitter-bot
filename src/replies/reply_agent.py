@@ -592,8 +592,9 @@ def generate_replies(recent_topics=None, already_replied=None):
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood
 
-    from datetime import date, timedelta
-    today = date.today()
+    from datetime import timedelta
+    from ..guards.active_hours import now_local
+    today = now_local().date()
     # since:YYYY-MM-DD on X = STRICTLY AFTER that day. So passing yesterday
     # captures yesterday + today (≤24h-ish) at search time.
     since_date = (today - timedelta(days=1)).isoformat()

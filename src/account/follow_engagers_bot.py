@@ -14,9 +14,8 @@ No new Safari scraping: the data source is the action ledger.
 """
 import os
 import traceback
-from datetime import date
 
-from ..guards import follow_policy
+from ..guards import active_hours, follow_policy
 from ..core.config import BLOCKLIST, BOT_HANDLE
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
@@ -48,10 +47,15 @@ def run_follow_engagers_cycle():
     per_cycle = int(os.environ.get("FOLLOW_ENGAGERS_PER_CYCLE", "2"))
 
     st = _load_state()
-    today = date.today().isoformat()
-    if st.get("date") != today:
-        st["date"] = today
+    today = active_hours.now_local().date().isoformat()
+    stamped = st.get("date") or ""
+    if stamped < today:
         st["count_today"] = 0
+    st["date"] = today
+    if stamped > today:
+        # Stamped today by the Mac's clock, ahead of Toronto's: restamp it,
+        # or tomorrow would start with today's count.
+        _save_state(st)
     if st["count_today"] >= per_day:
         log.info(f"[FOLLOW-ENGAGERS] Daily cap reached ({per_day}). Skipping.")
         return

@@ -1,9 +1,34 @@
 """The account jobs: curator, engage, followback, likes, pin, follow_engagers."""
 import json
+import os
+import time
+from datetime import datetime
 
 import pytest
 
-from tests.helpers import FRESH, OWN_BEST, SearchPage, pin_rows, stop_requested, fresh
+from tests.helpers import (FRESH, OWN_BEST, TORONTO, SearchPage, clock, pin_rows, stop_requested,
+                           fresh)
+
+# 02:30 on 2026-10-15 in Paris.
+TORONTO_EVENING = datetime(2026, 10, 14, 20, 30, tzinfo=TORONTO)
+# The day each clock gives: Toronto's, and the one the Mac stamped before #191.
+STAMPED_DAYS = ["2026-10-14", "2026-10-15"]
+
+
+@pytest.fixture
+def mac_in_paris(monkeypatch):
+    """The Mac's clock in Paris just after midnight, when it is still the
+    evening before in Toronto (issue #191)."""
+    saved = os.environ.get("TZ")
+    os.environ["TZ"] = "Europe/Paris"
+    time.tzset()
+    clock(monkeypatch, TORONTO_EVENING)
+    yield
+    if saved is None:
+        os.environ.pop("TZ", None)
+    else:
+        os.environ["TZ"] = saved
+    time.tzset()
 
 
 # --- 2026-06-07 PM: self-curated tracking ----------------------------------
@@ -256,12 +281,13 @@ def test_like_job_likes_nothing_off_the_search_page(like_job):
 def test_like_job_volume_stays_under_its_caps(like_job, monkeypatch, per_cycle, already_today, expected):
     """Criterion: no volume increase; the per-cycle and daily caps still
     bound the likes that ship."""
-    from datetime import date
     from src.account import like_bot
+    from src.guards import active_hours
 
     monkeypatch.setenv("LIKE_BOT_PER_CYCLE", per_cycle)
     monkeypatch.setenv("LIKE_BOT_DAILY_CAP", "100")
-    like_bot._save_daily_state({"date": date.today().isoformat(), "count": already_today})
+    like_bot._save_daily_state({"date": active_hours.now_local().date().isoformat(),
+                                "count": already_today})
     posts = [{"url": f"https://x.com/infra_{i}/status/{2063500000000000400 + i}", "liked": False}
              for i in range(10)]
     page = like_job["page"] = SearchPage(posts)
@@ -278,10 +304,11 @@ def test_like_job_volume_stays_under_its_caps(like_job, monkeypatch, per_cycle, 
     (497, 3),     # LIKE_BOT_DAILY_CAP defaults to 500
 ])
 def test_like_job_default_caps(like_job, already_today, expected):
-    from datetime import date
     from src.account import like_bot
+    from src.guards import active_hours
 
-    like_bot._save_daily_state({"date": date.today().isoformat(), "count": already_today})
+    like_bot._save_daily_state({"date": active_hours.now_local().date().isoformat(),
+                                "count": already_today})
     posts = [{"url": f"https://x.com/infra_{i}/status/{2063500000000000400 + i}", "liked": False}
              for i in range(20)]
     page = like_job["page"] = SearchPage(posts)
@@ -289,6 +316,26 @@ def test_like_job_default_caps(like_job, already_today, expected):
     like_bot.run_like_cycle()
 
     assert len(page.clicks) == expected
+
+
+@pytest.mark.parametrize("stamped", STAMPED_DAYS)
+def test_like_quota_reached_stays_reached_for_the_toronto_day(like_job, mac_in_paris, monkeypatch,
+                                                             stamped):
+    """#191: a Mac in Europe opened a second quota of likes in the Toronto
+    evening. A quota reached today in Toronto stays reached, whichever clock
+    stamped it, until the next Toronto day."""
+    from src.account import like_bot
+
+    like_bot._save_daily_state({"date": stamped, "count": 500})
+    page = like_job["page"] = SearchPage(
+        [{"url": "https://x.com/infra_1/status/2063500000000000401", "liked": False}])
+
+    like_bot.run_like_cycle()
+
+    assert page.clicks == []
+    assert like_bot._load_daily_state() == {"date": "2026-10-14", "count": 500}
+    clock(monkeypatch, datetime(2026, 10, 15, 10, tzinfo=TORONTO))
+    assert like_bot._load_daily_state() == {"date": "2026-10-15", "count": 0}
 
 
 @pytest.mark.parametrize("cycle_seconds, expected", [
@@ -432,6 +479,24 @@ def test_pin_job_dry_run_records_a_dry_run_row_without_spending_the_attempt(pin_
     assert not pin_bot._already_ran_today()
 
 
+@pytest.mark.parametrize("stamped", STAMPED_DAYS)
+def test_pin_attempt_spent_stays_spent_for_the_toronto_day(pin_job, mac_in_paris, monkeypatch,
+                                                          stamped):
+    """#191: today's pin attempt, stamped by either clock, is spent until
+    the next Toronto day, and only until then."""
+    from src.account import pin_bot
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    pin_bot.PIN_STATE.write({"date": stamped})
+    monkeypatch.setattr(pin_bot, "scrape_profile_tweets",
+                        lambda *a, **k: pytest.fail("pinned twice the same Toronto day"))
+
+    pin_bot.run_pin_cycle()
+
+    clock(monkeypatch, datetime(2026, 10, 15, 10, tzinfo=TORONTO))
+    assert not pin_bot._already_ran_today()
+
+
 def test_pin_job_dry_run_without_a_candidate_leaves_the_live_attempt(pin_job, monkeypatch):
     from src.account import pin_bot
 
@@ -499,6 +564,33 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     fe.run_follow_engagers_cycle()
     assert followed == ["freshfan", "oldguy"], \
         "attempted handles never retried; next cycle takes the next engager"
+
+
+@pytest.mark.parametrize("stamped", STAMPED_DAYS)
+def test_follow_engagers_cap_reached_stays_reached_for_the_toronto_day(mac_in_paris, monkeypatch,
+                                                                      stamped):
+    """#191: the daily Engager follows, stamped by either clock, stay
+    counted until the next Toronto day."""
+    from src.account import follow_engagers_bot as fe
+    from src.guards import follow_policy
+    from src.x.twitter_client import FollowOutcome
+
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
+    monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1"])
+    monkeypatch.setattr("src.x.twitter_client.follow_account",
+                        lambda h: pytest.fail("followed past the Toronto day's cap"))
+    fe.STATE.write({"date": stamped, "count_today": 10, "attempted": []})
+
+    fe.run_follow_engagers_cycle()
+
+    assert fe._load_state()["count_today"] == 10
+    followed = []
+    monkeypatch.setattr("src.x.twitter_client.follow_account",
+                        lambda h: followed.append(h) or FollowOutcome.FOLLOWED)
+    clock(monkeypatch, datetime(2026, 10, 15, 10, tzinfo=TORONTO))
+    fe.run_follow_engagers_cycle()
+    assert followed == ["fan1"]
 
 
 def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_path):

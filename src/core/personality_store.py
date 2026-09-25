@@ -37,7 +37,6 @@ lui-meme via le reflection_agent et l'evolution_agent.
 """
 
 import os
-from datetime import datetime
 from typing import Optional
 
 from .config import _PROJECT_ROOT
@@ -159,7 +158,8 @@ def _apply_updates(data: dict, key: str, updates: dict) -> dict:
     data.setdefault("accounts", {})
     data.setdefault("topics", {})
     dossier = data["accounts"].get(key, dict(DEFAULT_ACCOUNT))
-    today = datetime.now().strftime("%Y-%m-%d")
+    from ..guards.active_hours import now_local
+    today = now_local().date().isoformat()
     if not dossier.get("first_seen"):
         dossier["first_seen"] = today
     dossier["last_interaction"] = today

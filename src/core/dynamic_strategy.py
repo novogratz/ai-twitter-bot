@@ -5,7 +5,6 @@
 prune, so a bad pass can only ADD noise, never silently delete a hand-picked
 target.
 """
-from datetime import datetime
 from .state_store import DISPOSABLE, StateFile
 
 # Disposable: harvested lists that only widen the pools of targets.
@@ -35,7 +34,8 @@ def add_dynamic_accounts(fr: list = None, en: list = None, known: set = None) ->
     data.setdefault("history", [])
     known = {h.lower() for h in (known or set())}
     added = 0
-    today = datetime.now().strftime("%Y-%m-%d")
+    from ..guards.active_hours import now_local
+    today = now_local().date().isoformat()
     for h in (fr or []):
         h = h.strip().lstrip("@")
         if not _is_valid_handle(h):

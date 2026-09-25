@@ -24,6 +24,7 @@ from ..core import config
 from ..core.config import BOT_HANDLE
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
+from ..guards import active_hours
 from ..x.scraper import scrape_profile_tweets, is_own_post
 from ..x import twitter_client
 from ..x.confirmed_write import WriteOutcome
@@ -60,12 +61,18 @@ def _day_key() -> str:
 
 
 def _already_ran_today() -> bool:
-    return _load_state().get(_day_key()) == date.today().isoformat()
+    today = active_hours.now_local().date().isoformat()
+    ran = _load_state().get(_day_key()) or ""
+    if ran > today:
+        # Stamped today by the Mac's clock, ahead of Toronto's: restamp it,
+        # or tomorrow would read it as already spent.
+        _mark_ran_today()
+    return ran >= today
 
 
 def _mark_ran_today():
     state = _load_state()
-    state[_day_key()] = date.today().isoformat()
+    state[_day_key()] = active_hours.now_local().date().isoformat()
     PIN_STATE.write(state)
 
 
@@ -137,7 +144,7 @@ def run_pin_cycle():
     pin_is_stale = True
     if pinned_at:
         try:
-            pin_is_stale = (date.today() - date.fromisoformat(pinned_at[:10])).days >= max_age_days
+            pin_is_stale = (active_hours.now_local().date() - date.fromisoformat(pinned_at[:10])).days >= max_age_days
         except ValueError:
             pin_is_stale = True
     if last_likes and not pin_is_stale and             best["likes"] < max(MIN_LIKES_TO_PIN, int(last_likes * 1.3)):
@@ -168,7 +175,7 @@ def run_pin_cycle():
     if ok:
         history.setdefault("pinned", []).append(best["url"])
         history["last_pin"] = {"url": best["url"], "likes": best["likes"],
-                               "pinned_at": date.today().isoformat()}
+                               "pinned_at": active_hours.now_local().date().isoformat()}
         _save_history(history)
         log.info(f"[PIN] Pinned: {best['url']}")
         time.sleep(2)
