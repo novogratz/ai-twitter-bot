@@ -78,10 +78,11 @@ cp .env.example .env
 uv run python main.py
 ```
 
-`.env.example` predates the current account: fix `.env` as described in
-[setup](docs/OPERATIONS.md#setup) before the first run. `.env` is read once at
-start: a key the engine does not know, or a badly typed value, stops the start
-with a message naming the key, and `--dry-run` names the same keys.
+`.env.example` describes @TheAIShrink with the policy values; every setting,
+its default and bounds are in [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
+`.env` is read once at start, so any change needs a restart: a key the engine
+does not know, or a badly typed value, stops the start with a message naming
+the key, and `--dry-run` names the same keys.
 
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
 `accounts/<name>/account.toml`, which holds the handle, the language of the

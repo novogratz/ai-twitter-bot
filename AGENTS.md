@@ -55,7 +55,8 @@ The top level of `src/` holds only packages.
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
 | JSON state files: one root, atomic writes, guarded or disposable | `src/core/state_store.py` |
-| Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides | `src/core/settings.py` |
+| Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides; the only reader of the environment with `config.dry_run()` | `src/core/settings.py` |
+| Settings reference of `docs/CONFIGURATION.md`, generated from the declarations | `bin/configuration_doc.py` |
 | Settings served under their old names and read on every access, side-effect switches as functions; fixed ceilings and `BLOCKLIST` that `.env` cannot touch | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
@@ -151,8 +152,9 @@ rule; cross-cutting invariants stay at the root of `tests/`.
   and docs, and update it when a term changes meaning.
 - [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md): current publishing
   rules, recovery, reach target.
-- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): the top table is current;
-  the rest documents legacy env vars.
+- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md): how settings are read,
+  the policy ceilings, and the settings reference generated from
+  `src/core/settings.py`.
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): process, jobs, editorial
   pipeline, write path, known gaps. Trust `main.py` where they disagree.
 - [`docs/OPERATIONS.md`](docs/OPERATIONS.md): start, stop, supervisors,
@@ -163,5 +165,6 @@ rule; cross-cutting invariants stay at the root of `tests/`.
 `CLAUDE.md` imports this file; edit `AGENTS.md` only. A behaviour change
 updates this file, `README.md` and the policy in the same commit; adding or
 removing a job also updates the jobs table in `docs/ARCHITECTURE.md`, a new
-env var goes in `docs/CONFIGURATION.md` and a new state file in the
+or changed setting regenerates `docs/CONFIGURATION.md`
+(`uv run python bin/configuration_doc.py --write`) and a new state file in the
 `docs/OPERATIONS.md` table. The incident narrative goes to `docs/HISTORY.md`.

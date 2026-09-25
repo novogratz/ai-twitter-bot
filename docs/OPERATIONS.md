@@ -25,24 +25,28 @@ The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
-`.env.example` predates the current account. Before the first run, check at
-least:
+`.env.example` describes @TheAIShrink with the policy values; every key is
+in [CONFIGURATION.md](CONFIGURATION.md). Set `LLM_FALLBACK_CLI=codex` only
+to let a failed call fall back to the cloud. Blank, as in the example, there
+is no fallback and no call leaves the machine, except the Replies to
+@Graphseo: they run on the Claude CLI whenever it is installed
+(`direct_reply._graphseo_call`). The start logs a fallback the code ignores,
+and `--dry-run` lists it under `ignored_llm_fallbacks`.
 
-- no `BOT_HANDLE` nor `CONTENT_LANG_PRIMARY` in `.env`: the Account carries
-  the handle and the language (see [Account](#account)), and a `.env` value
-  overrides it. With `fr`, the editorial pipeline writes originals in French.
-- `LLM_FALLBACK_CLI=codex` only to let a failed call fall back to the
-  cloud. Unset or empty, as in the example, there is no fallback and no
-  call leaves the machine, except the Replies to @Graphseo: they run on
-  the Claude CLI whenever it is installed (`direct_reply._graphseo_call`).
-  The start logs a fallback the code ignores, and `--dry-run` lists it
-  under `ignored_llm_fallbacks`.
+Keep `BOT_HANDLE` and `CONTENT_LANG_PRIMARY` out of `.env`: the Account
+carries the handle and the language (see [Account](#account)), and a `.env`
+value overrides it. With `fr`, the editorial pipeline writes Originals in
+French.
 
 `main.py` reads `.env` once at start, through `src/core/settings.py`, without
-overriding variables already set in the shell. A key `settings.py` does not
+overriding variables already set in the shell. **Every change to a setting,
+in `.env` or in the shell, needs a restart**: nothing re-reads them while the
+bot runs. A key `settings.py` does not
 know, or a value its type rejects (a switch takes `0` or `1`, a number a
 number), stops the start with a message naming the key; a value past its
 ceiling or floor is brought back to it and logged as a `[SETTINGS]` warning.
+A setting listed under "No effect" in CONFIGURATION.md still starts: delete
+its line from `.env`.
 Check the setup without a browser or a model with the dry-run command from
 [`AGENTS.md#verification`](../AGENTS.md#verification): it stops on the same
 keys and names them.
@@ -295,7 +299,9 @@ the `@handle` of the author a Reply answers excepted.
 
 ## What can be tuned
 
-Changes to `.env`, `account.toml` or code take effect at restart.
+Every change to `.env`, `account.toml`, a setting or the code takes effect at restart, and
+only then. The settings, their defaults and bounds are in
+[CONFIGURATION.md](CONFIGURATION.md).
 
 - Reply pacing and scope: `MIN_SECONDS_BETWEEN_REPLIES`,
   `REPLY_JITTER_SECONDS`, `DIRECT_REPLY_QUERIES_PER_CYCLE`,

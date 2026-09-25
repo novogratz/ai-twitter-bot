@@ -7,9 +7,9 @@ setting drives stay plain globals. A module that copies a setting with
 `from config import X` keeps the value it read at import: read `config.X`
 inside the function instead.
 
-Each side-effect switch also has a function, `dry_run()` and the ones below
-(`follow_whitelist_only()`, `reply_llm_provider()`...), which the constant
-of the same name calls.
+Each side-effect switch is a function read at call time, `dry_run()` and
+the ones below (`follow_whitelist_only()`, `reply_llm_provider()`...); the
+two provider switches also keep a constant of the same name, which calls it.
 """
 import os
 
@@ -17,8 +17,8 @@ from . import settings
 
 _PROJECT_ROOT = settings.PROJECT_ROOT
 
-# The modules not migrated yet read `.env` from the environment at import,
-# and state_store imports this module before them.
+# dry_run() reads DRY_RUN from the environment, which `.env` reaches only
+# once loaded: whoever imports this module can call it at once.
 settings.load()
 
 _READ_AT_ACCESS = {}
@@ -159,7 +159,6 @@ _served("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS")
 #     tier4 crypto/markets). Discovery candidates go to suggestions[] for
 #     human approval — the bot never auto-adds.
 #   - 30-day anti-churn stays ON; no follow→unfollow cycles.
-@_served_as("FOLLOW_WHITELIST_ONLY")
 def follow_whitelist_only() -> bool:
     return settings.get("FOLLOW_WHITELIST_ONLY")
 
@@ -169,11 +168,9 @@ def follow_whitelist_only() -> bool:
 # random strangers — but whitelist-only was silently blocking ALL of them
 # ("not on whitelist" refusals). All other gates (anti-churn, daily cap,
 # spacing, following ceiling) still apply. Set 0 to re-block.
-@_served_as("FOLLOWBACK_BYPASS_WHITELIST")
 def followback_bypass_whitelist() -> bool:
     return settings.get("FOLLOWBACK_BYPASS_WHITELIST")
 
-@_served_as("FOLLOW_ENFORCE_RATIO")
 def follow_enforce_ratio() -> bool:
     return settings.get("FOLLOW_ENFORCE_RATIO")
 
@@ -185,7 +182,6 @@ _served("FOLLOW_TOTAL_CAP")
 # follows while the manual purge is mid-flight: 2485 following vs 1423
 # followers). FOLLOW_TOTAL_CAP stays the hard ceiling; daily cap, jittered
 # spacing, and 30-day anti-churn are untouched.
-@_served_as("FOLLOW_GROWTH_MODE")
 def follow_growth_mode() -> bool:
     return settings.get("FOLLOW_GROWTH_MODE")
 
@@ -196,7 +192,6 @@ _served("MIN_SECONDS_BETWEEN_FOLLOWS", "FOLLOW_SPACING_JITTER_SECONDS", "MAX_FOL
 _served("CHURN_COOLDOWN_DAYS", "FOLLOW_ACTION_JITTER_SECONDS")
 
 # Content rules — ban short-term price targets; theses are multi-year.
-@_served_as("BAN_SHORT_TERM_PRICE_TARGETS")
 def ban_short_term_price_targets() -> bool:
     return settings.get("BAN_SHORT_TERM_PRICE_TARGETS")
 
