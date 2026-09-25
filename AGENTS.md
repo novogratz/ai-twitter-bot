@@ -22,8 +22,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
 change. The same holds for the operator-owned guardrails: `core_identity.md`,
-`BLOCKLIST` and the 48-hour `REPOST_MAX_AGE_HOURS` clamp in `src/core/config.py`,
-`respect_list.json`, and `personality_store.HARD_RULES_BLOCK`.
+`BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
+`respect_list.json`, and `personality_store.hard_rules_block()`.
 
 ## Active code
 

@@ -8,6 +8,19 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — two guardrails nothing read (issue #194):** `AGENTS.md`
+> listed `REPOST_MAX_AGE_HOURS` and `personality_store.HARD_RULES_BLOCK`
+> as operator guardrails, but no code read either. The 48-hour clamp
+> guarded `retweet_bot` and `quote_tweet_bot`, both gone since reposts and
+> quotes went to zero; the prompts render the hard rules through
+> `hard_rules_block()` on every call. The operator had both constants
+> removed, with the import-time render and its fallback to the default
+> respect-list handles. The guardrails are now the zero-repost rule and
+> `hard_rules_block()`. If reposts or quotes are ever re-enabled, the
+> 48-hour freshness rule of 2026-06-02 must come back with them: never
+> reshare or quote a post older than 48 hours, and treat a post of
+> unknown age as stale.
+
 > **2026-09-24 — display names read as handles (issue #162):** three
 > paths took a handle from the scraper's display name. The feed sweep's
 > author harvest stored one-word names (`Claude`, `Tesla`, `Ted`…) in

@@ -13,7 +13,7 @@ This repo runs continuously in production. Changes affect a live X account. Read
    or relaxing a check needs an operator request and an update to
    [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md).
 3. **Hard rules are non-negotiable.** Don't add a path that bypasses
-   `personality_store.HARD_RULES_BLOCK` or the respect list.
+   `personality_store.hard_rules_block()` or the respect list.
 
 ---
 

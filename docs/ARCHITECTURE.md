@@ -372,7 +372,7 @@ Five modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that `.env` cannot lift: eight
   profile publications a day, originals capped at 8 and spaced by at least
-  1200 seconds, repost age clamped to 48 hours.
+  1200 seconds.
 - `src/guards/action_guard.py` decides `can_post`, answers the follow
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
@@ -516,8 +516,7 @@ hard rules too. No
 chokepoint applies the respect list to outgoing text.
 While `respect_list.json` is unreadable, `hard_rules_block` raises
 `StateUnreadable`: the editorial cycle and the Reply cycles stop before the
-model call, and nothing ships. Only `HARD_RULES_BLOCK`, computed when
-`personality_store` is imported, falls back to the default handles, so
+model call, and nothing ships. Nothing renders the block at import, so
 `main.py` still starts.
 
 ## State store
