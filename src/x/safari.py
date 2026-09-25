@@ -38,6 +38,12 @@ class _AwakeSafariLock:
 
 _safari_lock = _AwakeSafariLock()
 
+# Bounds on the osascript runs made under the Safari lock: past them the
+# child is killed and the run fails, so a wedged Safari cannot hold the lock.
+OPEN_TIMEOUT_S = 20
+CLOSE_TIMEOUT_S = 10
+SCROLL_TIMEOUT_S = 15
+
 
 def _run_applescript(script: str, retries: int = 1,
                      timeout_s: float | None = None) -> bool:
@@ -109,7 +115,8 @@ def _escape_for_applescript(text: str) -> str:
 
 def open_url(url: str) -> bool:
     """Open `url` in Safari and bring Safari to the front. Returns True when
-    the AppleScript ran.
+    the AppleScript ran, False when it failed or outlasted OPEN_TIMEOUT_S:
+    then no page is ours, and nothing may be typed or clicked.
 
     Every page the bot reads or writes opens here, never through
     `webbrowser.open`: that one follows the default browser, so on a Mac
@@ -120,7 +127,7 @@ def open_url(url: str) -> bool:
         activate
         open location "{_escape_for_applescript(url)}"
     end tell
-    ''')
+    ''', timeout_s=OPEN_TIMEOUT_S)
 
 
 def _paste_text(text: str) -> bool:
@@ -166,7 +173,7 @@ def close_front_tab():
         end if
     end tell
     '''
-    if _run_applescript(script):
+    if _run_applescript(script, timeout_s=CLOSE_TIMEOUT_S):
         log.debug("Tab closed.")
 
 
@@ -179,5 +186,5 @@ def _scroll_page():
             delay 0.4
         end repeat
     end tell
-    ''')
+    ''', timeout_s=SCROLL_TIMEOUT_S)
     time.sleep(2)
