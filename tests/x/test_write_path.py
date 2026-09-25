@@ -181,7 +181,8 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     from src.guards import content_guard as cg
     from src.x import safari, twitter_client as tc
 
-    settings_override(MIN_SECONDS_BETWEEN_REPLIES=0, REPLY_JITTER_SECONDS=0)
+    # The Reply spacing has a floor of 8 s (#201); it is not what this test judges.
+    monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
@@ -214,7 +215,6 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_over
     from src.guards import content_guard as cg
     from src.x import safari, twitter_client as tc
 
-    settings_override(MIN_SECONDS_BETWEEN_REPLIES=0, REPLY_JITTER_SECONDS=0)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
@@ -638,11 +638,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     try:
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
-        cg.is_duplicate = lambda text, threshold=None: True   # force dup
+        cg.is_duplicate = lambda text: True   # force dup
         assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \
             "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
-        cg.is_duplicate = lambda text, threshold=None: False
+        cg.is_duplicate = lambda text: False
         assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost

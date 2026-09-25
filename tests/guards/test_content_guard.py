@@ -57,7 +57,7 @@ def test_dedup_text_window_read_at_call_time(monkeypatch, settings_override):
     from datetime import datetime, timedelta
     from src.core import history
 
-    posted = (datetime.now() - timedelta(hours=30)).isoformat()
+    posted = (datetime.now() - timedelta(hours=60)).isoformat()
     monkeypatch.setattr(history, "load_history", lambda: [{
         "timestamp": posted,
         "text": "Everyone watches GPU supply. The real bottleneck is the power bill",
@@ -65,9 +65,9 @@ def test_dedup_text_window_read_at_call_time(monkeypatch, settings_override):
     draft = ("Everyone is tracking GPU supply. The real bottleneck is the power bill. "
              "You are buying silicon; you are renting electricity.")
 
-    assert cg.is_duplicate(draft)
-    settings_override(DUP_TEXT_WINDOW_HOURS=24.0)
     assert not cg.is_duplicate(draft)
+    settings_override(DUP_TEXT_WINDOW_HOURS=72.0)
+    assert cg.is_duplicate(draft)
 
 
 # --- price-target gate ------------------------------------------------------
@@ -86,15 +86,15 @@ def test_price_gate_allows_normal_news():
     )
 
 
-def test_price_gate_switch_read_at_call_time(settings_override):
+def test_price_gate_cannot_be_switched_off(settings_override):
+    """#201: BAN_SHORT_TERM_PRICE_TARGETS has floor 1, so 0 changes nothing."""
     text = ("Analysts keep repeating one line this week: $NVDA to $200 by friday. "
             "Datacenter demand is real, but a four-day price call is a coin flip "
             "wearing a suit.")
 
+    settings_override(BAN_SHORT_TERM_PRICE_TARGETS=False)
     assert cg.validate(text) == (
         False, "near-term price target (price + near-term timeframe)")
-    settings_override(BAN_SHORT_TERM_PRICE_TARGETS=False)
-    assert cg.validate(text) == (True, "")
 
 
 # --- language detection ------------------------------------------------------

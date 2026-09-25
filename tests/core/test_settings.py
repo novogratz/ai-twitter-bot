@@ -59,6 +59,30 @@ def test_a_badly_typed_value_in_the_process_environment_stops_the_start_too(fres
         fresh("", {"MAX_FOLLOWS_PER_DAY": "lots"})
 
 
+FLOAT_SETTINGS = sorted(name for name, setting in settings.DECLARED.items() if setting.type is float)
+
+
+@pytest.mark.parametrize("name", FLOAT_SETTINGS)
+@pytest.mark.parametrize("raw", ["nan", "inf", "-inf", "NaN"])
+def test_a_non_finite_float_stops_the_start_like_a_bad_type(fresh, name, raw):
+    """nan passes every bound check: DUP_JACCARD_THRESHOLD=nan once turned
+    the duplicate check off without a warning."""
+    with pytest.raises(settings.SettingsError, match=f"{name}='{raw}' \\(expected finite float\\)"):
+        fresh(f"{name}={raw}\n")
+
+
+@pytest.mark.parametrize("raw", ["nan", "inf"])
+def test_a_non_finite_float_in_the_process_environment_stops_the_start_too(fresh, raw):
+    with pytest.raises(settings.SettingsError, match="DUP_CONTAINMENT_THRESHOLD"):
+        fresh("", {"DUP_CONTAINMENT_THRESHOLD": raw})
+
+
+@pytest.mark.parametrize("value", [float("nan"), float("inf")])
+def test_an_override_refuses_a_non_finite_float(settings_override, value):
+    with pytest.raises(TypeError, match="DUP_JACCARD_THRESHOLD takes finite float"):
+        settings_override(DUP_JACCARD_THRESHOLD=value)
+
+
 def test_keys_the_shell_scripts_read_are_accepted(fresh):
     keys = sorted(settings.SCRIPT_KEYS)
     environ = fresh("".join(f"{key}=1\n" for key in keys))
@@ -128,6 +152,116 @@ def test_a_stricter_value_is_kept_without_warning(fresh):
     assert settings.startup_warnings() == []
 
 
+# The Operator's bounds (2026-09-25, #201): name, a value past the bound, the
+# bound, a value stricter than the default.
+OPERATOR_BOUNDS = [
+    ("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "9", 4, 2),
+    ("MIN_SECONDS_BETWEEN_REPLIES", "0", 8, 30),
+    ("REPLY_JITTER_SECONDS", "-5", 0, 3),
+    ("LIKE_BOT_PER_CYCLE", "22", 10, 5),
+    ("LIKE_BOT_DAILY_CAP", "1800", 500, 200),
+    ("FOLLOW_TOTAL_CAP", "5000", 3500, 200),
+    ("MAX_FOLLOWS_PER_DAY", "40", 20, 10),
+    ("FOLLOWBACK_CAP", "30", 8, 4),
+    ("FOLLOW_ENGAGERS_PER_DAY", "25", 10, 5),
+    ("FOLLOW_ENGAGERS_PER_CYCLE", "5", 2, 1),
+    ("BAN_SHORT_TERM_PRICE_TARGETS", "0", True, True),
+    ("DUP_JACCARD_THRESHOLD", "0.9", 0.45, 0.3),
+    ("DUP_CONTAINMENT_THRESHOLD", "0.95", 0.6, 0.5),
+    ("DUP_SHARED_BIGRAMS", "10", 3, 2),
+    ("DUP_TOPIC_WINDOW_HOURS", "6", 24.0, 72.0),
+    ("DUP_TOPIC_SHARED_WORDS", "8", 3, 2),
+    ("DUP_TEXT_WINDOW_HOURS", "12", 48.0, 96.0),
+    ("REPLY_MIN_CHARS", "5", 25, 40),
+]
+
+
+@pytest.mark.parametrize("name, past, bound, stricter", OPERATOR_BOUNDS)
+def test_an_operator_bound_brings_env_back_to_it_with_a_warning(fresh, name, past, bound, stricter):
+    fresh(f"{name}={past}\n")
+    assert settings.get(name) == bound
+    assert [w for w in settings.startup_warnings() if w.startswith(f"{name}=")]
+
+
+@pytest.mark.parametrize("name, past, bound, stricter", OPERATOR_BOUNDS)
+def test_a_value_stricter_than_the_default_is_kept(fresh, name, past, bound, stricter):
+    fresh(f"{name}={settings.show(settings.DECLARED[name], stricter)}\n")
+    assert settings.get(name) == stricter
+    assert settings.startup_warnings() == []
+
+
+@pytest.mark.parametrize("name, past, bound, stricter", OPERATOR_BOUNDS)
+def test_an_override_cannot_pass_an_operator_bound(settings_override, name, past, bound, stricter):
+    settings_override(**{name: settings._parse(settings.DECLARED[name], past)})
+    assert settings.get(name) == bound
+
+
+# Volume and count settings with a floor, and the floor a negative is brought
+# back to: FOLLOWBACK_CAP=-1 once sliced 49 candidates out of 50.
+COUNT_FLOORS = [
+    ("MAX_ORIGINALS_PER_DAY", 0),
+    ("FOLLOW_TOTAL_CAP", 0),
+    ("MAX_FOLLOWS_PER_DAY", 0),
+    ("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", 0),
+    # At 0, any recent Original would make every new one a duplicate.
+    ("DUP_SHARED_BIGRAMS", 1),
+    ("DUP_TOPIC_SHARED_WORDS", 0),
+    ("LIKE_BOT_PER_CYCLE", 0),
+    ("LIKE_BOT_DAILY_CAP", 0),
+    ("FOLLOWBACK_CAP", 0),
+    ("FOLLOW_ENGAGERS_PER_DAY", 0),
+    ("FOLLOW_ENGAGERS_PER_CYCLE", 0),
+]
+
+
+@pytest.mark.parametrize("name, floor", COUNT_FLOORS)
+def test_a_negative_count_is_brought_back_to_its_floor_with_a_warning(fresh, name, floor):
+    fresh(f"{name}=-1\n")
+    assert settings.get(name) == floor
+    assert settings.startup_warnings() == [f"{name}=-1 is below its floor: using {floor}."]
+
+
+def test_every_int_setting_with_a_ceiling_has_a_floor():
+    assert [name for name, setting in settings.DECLARED.items()
+            if setting.type is int and setting.ceiling is not None and setting.floor is None] == []
+
+
+def test_the_price_target_ban_stays_on_and_says_so(fresh):
+    fresh("BAN_SHORT_TERM_PRICE_TARGETS=0\n")
+    assert settings.startup_warnings() == ["BAN_SHORT_TERM_PRICE_TARGETS=0 is below its floor: using 1."]
+
+
+def test_the_price_target_switch_serves_on_whatever_the_override(settings_override):
+    settings_override(BAN_SHORT_TERM_PRICE_TARGETS=False)
+    assert config.ban_short_term_price_targets() is True
+
+
+def test_a_stricter_follow_total_cap_above_its_default_is_kept(fresh):
+    """The default stays 300; the ceiling of 3500 is the Operator's."""
+    fresh("FOLLOW_TOTAL_CAP=3000\n")
+    assert settings.get("FOLLOW_TOTAL_CAP") == 3000
+    assert settings.DECLARED["FOLLOW_TOTAL_CAP"].default == 300
+    assert settings.startup_warnings() == []
+
+
+def test_the_dry_run_shows_every_bounded_value_and_the_warnings(monkeypatch, settings_override, capsys):
+    import json
+    import main
+    monkeypatch.setattr(settings, "_warnings", ["LIKE_BOT_DAILY_CAP=1800 is above its ceiling: using 500."])
+    monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
+    settings_override(LIKE_BOT_DAILY_CAP=200, MIN_SECONDS_BETWEEN_REPLIES=30)
+    main.main()
+    shown = json.loads(capsys.readouterr().out)
+    bounded = shown["bounded_settings"]
+    assert set(bounded) == {s.name for s in settings.DECLARED.values()
+                            if s.floor is not None or s.ceiling is not None}
+    assert {name for name, *_ in OPERATOR_BOUNDS} <= set(bounded)
+    assert bounded["LIKE_BOT_DAILY_CAP"] == {"value": 200, "floor": 0, "ceiling": 500}
+    assert bounded["MIN_SECONDS_BETWEEN_REPLIES"] == {"value": 30, "floor": 8}
+    assert bounded["BAN_SHORT_TERM_PRICE_TARGETS"] == {"value": True, "floor": True}
+    assert shown["settings_warnings"] == ["LIKE_BOT_DAILY_CAP=1800 is above its ceiling: using 500."]
+
+
 def test_main_logs_the_bound_warnings_at_startup(monkeypatch):
     import main
     logged = []
@@ -181,7 +315,6 @@ def test_dry_run_reads_the_environment_at_call_time_unless_overridden(monkeypatc
     ("followback_bypass_whitelist", "FOLLOWBACK_BYPASS_WHITELIST", False, False),
     ("follow_enforce_ratio", "FOLLOW_ENFORCE_RATIO", True, True),
     ("follow_growth_mode", "FOLLOW_GROWTH_MODE", True, True),
-    ("ban_short_term_price_targets", "BAN_SHORT_TERM_PRICE_TARGETS", False, False),
     ("profile_llm_provider", "PROFILE_LLM_PROVIDER", " codex ", "codex"),
     ("reply_llm_provider", "REPLY_LLM_PROVIDER", "  ", None),
 ])
@@ -473,11 +606,10 @@ def test_the_configuration_reference_lists_every_setting_with_its_default_and_bo
         if setting.name in settings.MODEL_DEFAULTS:
             assert "MODEL_DEFAULTS" in cells[2]
         elif setting.default not in (None, ""):
-            shown = int(setting.default) if setting.type is bool else setting.default
-            assert cells[2] == f"`{shown}`", setting.name
+            assert cells[2] == f"`{settings.show(setting, setting.default)}`", setting.name
         for bound in (setting.floor, setting.ceiling):
             if bound is not None:
-                assert f"`{bound}`" in cells[3], setting.name
+                assert f"`{settings.show(setting, bound)}`" in cells[3], setting.name
     for name, table in settings.MODEL_DEFAULTS.items():
         row = next(line for line in rendered.splitlines()
                    if line.startswith(f"| `{name}` |") and "MODEL_DEFAULTS" not in line)

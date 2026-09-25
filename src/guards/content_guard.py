@@ -14,7 +14,7 @@ Usage:
     ok, reason = content_guard.validate(text, kind="original")
 """
 import re
-from typing import Optional, Tuple
+from typing import Tuple
 
 from ..core import config, settings
 from ..core.state_errors import StateUnreadable
@@ -167,10 +167,10 @@ def _recent_profiles(limit: int = 40) -> list:
     return profiles
 
 
-def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
+def is_duplicate(text: str) -> bool:
     """True if `text` is a near-duplicate (or same-story rehash) of a
     recently posted original. See the v2 signal list above."""
-    th = threshold if threshold is not None else settings.get("DUP_JACCARD_THRESHOLD")
+    jaccard = settings.get("DUP_JACCARD_THRESHOLD")
     containment = settings.get("DUP_CONTAINMENT_THRESHOLD")
     shared_bigrams = settings.get("DUP_SHARED_BIGRAMS")
     text_window_h = settings.get("DUP_TEXT_WINDOW_HOURS")
@@ -194,7 +194,7 @@ def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
         union = len(ws | pw)
         age_h = prev.get("age_h", 9999.0)
         if age_h <= text_window_h:
-            if union and (inter / union) >= th:
+            if union and (inter / union) >= jaccard:
                 return True
             if (inter / max(1, min(len(ws), len(pw)))) >= containment:
                 return True

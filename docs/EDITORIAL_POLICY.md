@@ -168,6 +168,47 @@ must not repeat.
   dry-run reply never marks the tweet as answered, and a dry-run follow
   never enters `followed_accounts.json` or the follow-engagers state.
 
+## Bounds on volume and check settings
+
+The Operator set these bounds on 2026-09-25 (issue #201). They live in the
+declarations of `src/core/settings.py`; `.env` and an Account's `[limits]`
+may only tighten them. A value past a bound is brought back to it with a
+`[SETTINGS]` warning at start; `main.py --dry-run` lists every bounded
+setting under `bounded_settings`, with its effective value, and the
+warnings under `settings_warnings`.
+
+| Setting | Bound | Default |
+|---|---|---|
+| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 8 s | 8 |
+| `REPLY_JITTER_SECONDS`, Reply jitter | at least 0 | 7 |
+| `LIKE_BOT_PER_CYCLE`, likes per `like_job` cycle | 0 to 10 | 10 |
+| `LIKE_BOT_DAILY_CAP`, `like_job` likes per day | 0 to 500 | 500 |
+| `FOLLOW_TOTAL_CAP`, accounts followed in total | 0 to 3500 | 300 |
+| `MAX_FOLLOWS_PER_DAY`, follows per day | 0 to 20 | 20 |
+| `FOLLOWBACK_CAP`, Follow-backs per cycle | 0 to 8 | 8 |
+| `FOLLOW_ENGAGERS_PER_DAY`, Engagers followed per day | 0 to 10 | 10 |
+| `FOLLOW_ENGAGERS_PER_CYCLE`, Engagers followed per cycle | 0 to 2 | 2 |
+| `BAN_SHORT_TERM_PRICE_TARGETS`, short-term price target ban | always on: 0 reads as 1 | 1 |
+| `DUP_JACCARD_THRESHOLD`, duplicate Jaccard | at most 0.45 | 0.45 |
+| `DUP_CONTAINMENT_THRESHOLD`, duplicate containment | at most 0.6 | 0.6 |
+| `DUP_SHARED_BIGRAMS`, shared bigrams that make a duplicate | 1 to 3 | 3 |
+| `DUP_TOPIC_SHARED_WORDS`, shared words that make a same story | 0 to 3 | 3 |
+| `DUP_TOPIC_WINDOW_HOURS`, same-story window | at least 24 h | 24 |
+| `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
+| `REPLY_MIN_CHARS`, shortest Reply | at least 25 characters | 25 |
+
+The duplicate settings may only get stricter: a lower threshold or count, or
+a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,
+since at 0 any recent Original would make every new one a duplicate. The
+other counts stop at 0: a negative one is brought back to 0 with a warning,
+where `FOLLOWBACK_CAP=-1` used to take every candidate but one.
+A float setting takes a finite number only: `nan` or `inf` stops the start
+like a badly typed value. The older bounds hold as before:
+`MAX_ORIGINALS_PER_DAY` from 0 to 8, `MIN_SECONDS_BETWEEN_POSTS` at least
+1200, `POST_JITTER_SECONDS` at least 0. Lifting any bound needs an explicit
+Operator request and an update of this table in the same change.
+
 ## Inspection and recovery
 
 The dry-run command ([`AGENTS.md#verification`](../AGENTS.md#verification))
@@ -180,7 +221,7 @@ fails closed and is reported in the log.
 
 The active scheduler omits autonomous code/prompt rewriting and older profile
 publishing jobs. Hard caps in `src/core/config.py` also override stale strategy data.
-Reply pacing remains configurable. Restart after changing code or configuration.
+Reply pacing remains configurable within its floors. Restart after changing code or configuration.
 
 ## Reach target
 
