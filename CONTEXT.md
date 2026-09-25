@@ -92,7 +92,16 @@ _Avoid_: comment, response, draft (reserved for Originals)
 The one step that turns a post and a job's voice into reply text: it always
 adds the hard rules to the prompt, picks the reply language, and reads the
 model's answer as reply text, a decline (SKIP), a failure or a rate limit.
+Reply text comes with the provider and model that wrote it.
 _Avoid_: reply drafter, reply writer
+
+**Provider exhausted**:
+A model call on which every provider tried, the primary and its fallback,
+hit its usage limit. The Reply generator reads it as a rate limit, and the
+Reply pipeline ends the job's cycle with the post left replayable. A limit
+on the primary alone is no exhaustion: the fallback answers, and the Reply
+is recorded under the fallback's provider and model.
+_Avoid_: rate-limit code, quota error, exit 75
 
 **Reply pipeline**:
 The one path from a job's candidates to shipped Replies: Reply admission

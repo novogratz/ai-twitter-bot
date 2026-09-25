@@ -18,7 +18,7 @@ from urllib.parse import urlsplit
 from ..guards import action_guard, content_guard
 from ..core import config
 from ..guards.active_hours import bedtime, is_active, now_local, require_active
-from ..core.llm_client import CallProfile, run_llm
+from ..core.llm_client import CallProfile, LLMStatus, run_llm
 from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import GUARDED, StateFile
@@ -312,8 +312,9 @@ def collect_sources(state: dict, now=None, news_only=False) -> list:
 def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
     result = run_llm(prompt, config.NEWS_MODEL, label=label, profile=profile,
                      force_provider=config.PROFILE_LLM_PROVIDER)
-    if result.returncode:
-        log.info("[EDITORIAL] %s generation unavailable (code %s).", label, result.returncode)
+    if result.status is not LLMStatus.ANSWERED:
+        # Failed or exhausted alike: no Draft, or no approval.
+        log.info("[EDITORIAL] %s generation unavailable (%s).", label, result.status.value)
         return {}
     try:
         value = json.loads(result.stdout)

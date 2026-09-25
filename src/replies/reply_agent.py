@@ -630,12 +630,16 @@ def generate_replies(recent_topics=None, already_replied=None):
 
     # run_llm already took the array out of any prose or code fence.
     output = generation.text
+
+    def attributed(items):
+        return [{**d, "provider": generation.provider, "model": generation.model} for d in items]
+
     try:
         data = json.loads(output)
         if isinstance(data, list) and len(data) > 0:
             valid = [d for d in data if "tweet_url" in d and "reply" in d]
             if valid:
-                return valid
+                return attributed(valid)
     except json.JSONDecodeError:
         pass
 
@@ -654,7 +658,7 @@ def generate_replies(recent_topics=None, already_replied=None):
                 for url, reply, t, p in items
             ]
             log.info(f"[REPLY] Recovered {len(results)} replies via regex fallback (with pattern)")
-            return results
+            return attributed(results)
         items = re.findall(
             r'\{\s*"tweet_url"\s*:\s*"([^"]+)"\s*,\s*"reply"\s*:\s*"([^"]+)"\s*,\s*"type"\s*:\s*"([^"]+)"\s*\}',
             output,
@@ -662,7 +666,7 @@ def generate_replies(recent_topics=None, already_replied=None):
         if items:
             results = [{"tweet_url": url, "reply": reply, "type": t} for url, reply, t in items]
             log.info(f"[REPLY] Recovered {len(results)} replies via regex fallback")
-            return results
+            return attributed(results)
     except Exception:
         pass
 

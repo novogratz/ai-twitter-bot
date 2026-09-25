@@ -62,6 +62,8 @@ class Candidate:
     # Reply text the reply search wrote while finding the post: no generation.
     reply: str = ""
     pattern: str = ""
+    provider: str = ""  # the provider and model that wrote `reply`
+    model: str = ""
 
 
 @dataclass
@@ -166,7 +168,8 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
 def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
     if candidate.reply:
         # The reply search prompt is English (LanguageRule.ENGLISH).
-        return Generation(Outcome.WRITTEN, language="en", text=candidate.reply)
+        return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
+                          provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
     return reply_generator.generate(job.voice(author), author=author, text=candidate.text,
                                     context=candidate.context)
@@ -207,7 +210,8 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     _set_aside(job).add(url)
     try:
         engagement_log.log_reply(url, reply, "reply", source=candidate.source,
-                                 pattern_id=pattern_id or candidate.pattern)
+                                 pattern_id=pattern_id or candidate.pattern,
+                                 provider=generation.provider, model=generation.model)
     except Exception:
         log.info(f"[{job.label}] Engagement log failed for a shipped Reply {url}:")
         traceback.print_exc()

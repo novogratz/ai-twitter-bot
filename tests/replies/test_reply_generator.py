@@ -319,12 +319,23 @@ def test_no_usable_answer_is_a_replayable_failure(llm, answer):
     assert generate().outcome is Outcome.FAILED
 
 
-def test_the_rate_limit_code_is_its_own_outcome(llm):
-    from src.core.llm_client import LLM_RATE_LIMIT_CODE
+def test_an_exhausted_provider_is_a_rate_limit(llm):
+    """Issue #176: every provider at its usage limit, the job generates
+    nothing more this cycle."""
+    from src.replies.reply_generator import Outcome
+    from tests.replies.fakes import EXHAUSTED
+
+    llm.default = EXHAUSTED
+    assert generate().outcome is Outcome.RATE_LIMITED
+
+
+def test_a_written_reply_names_the_provider_and_model_that_wrote_it(llm):
     from src.replies.reply_generator import Outcome
 
-    llm.default = LLMResult(LLM_RATE_LIMIT_CODE, "", "hourly budget")
-    assert generate().outcome is Outcome.RATE_LIMITED
+    llm.default = LLMResult(0, "Batching decides the margin.", "", provider="codex", model="gpt-5.4-mini")
+    generation = generate()
+    assert (generation.outcome, generation.provider, generation.model) == \
+        (Outcome.WRITTEN, "codex", "gpt-5.4-mini")
 
 
 def test_a_stop_request_during_generation_ends_the_cycle(llm):
@@ -465,7 +476,8 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer):
     """Issue #175: the Reply generator read every answer as post text, and a
     compact array became a stream of no events, so the reply search found
     nothing. The array now reaches it whole, from Ollama or from Claude's
-    envelope, prose around it or not."""
+    envelope, prose around it or not. Since #176 each target also names the
+    provider and model that wrote its reply."""
     import urllib.request
 
     from src.core import llm_client as llm
@@ -477,4 +489,5 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer):
     monkeypatch.setattr(ra, "REPLY_LLM_PROVIDER", route)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
 
-    assert ra.generate_replies() == FOUND
+    model = llm.OLLAMA_MODEL if route == "ollama" else ra.REPLY_MODEL
+    assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]

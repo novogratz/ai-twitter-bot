@@ -14,7 +14,7 @@ from typing import Literal
 
 from ..core import personality_store
 from ..core.humanizer import smart_trim, strip_agent_preamble
-from ..core.llm_client import LLM_RATE_LIMIT_CODE, run_llm
+from ..core.llm_client import LLMStatus, run_llm
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
@@ -24,7 +24,7 @@ class Outcome(Enum):
     WRITTEN = "written"  # reply text the job may send
     DECLINED = "declined"  # the model said SKIP: definitive for this post
     FAILED = "failed"  # no usable answer: the post stays replayable
-    RATE_LIMITED = "rate limited"  # the job generates nothing more this cycle
+    RATE_LIMITED = "rate limited"  # provider exhausted: the job generates nothing more this cycle
 
 
 @dataclass(frozen=True)
@@ -32,6 +32,8 @@ class Generation:
     outcome: Outcome
     language: Literal["fr", "en"]  # as decided for the prompt
     text: str = ""  # the reply text, when WRITTEN
+    provider: str = ""  # the provider and model that wrote it, when WRITTEN
+    model: str = ""
 
 
 class LanguageRule(Enum):
@@ -89,8 +91,8 @@ def generate(voice: Voice, *, author: str = "", text: str = "", context: str = "
     except Exception as exc:
         log.info(f"[{voice.label}] Generation error: {exc!r}")
         return Generation(Outcome.FAILED, language=language)
-    if result.returncode == LLM_RATE_LIMIT_CODE:
-        log.info(f"[{voice.label}] LLM rate limit reached.")
+    if result.status is LLMStatus.EXHAUSTED:
+        log.info(f"[{voice.label}] LLM rate limit reached: every provider hit its usage limit.")
         return Generation(Outcome.RATE_LIMITED, language=language)
     if result.returncode != 0:
         log.info(f"[{voice.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
@@ -107,7 +109,8 @@ def generate(voice: Voice, *, author: str = "", text: str = "", context: str = "
         return Generation(Outcome.DECLINED, language=language)
     if voice.max_chars:
         reply = smart_trim(reply, voice.max_chars)
-    return Generation(Outcome.WRITTEN, language=language, text=reply)
+    return Generation(Outcome.WRITTEN, language=language, text=reply,
+                      provider=result.provider, model=result.model)
 
 
 def _language(voice: Voice, author: str, text: str) -> Literal["fr", "en"]:

@@ -126,7 +126,8 @@ must not repeat.
 - Every Reply prompt, in every job, carries the hard rules and the respect
   list (`personality_store.hard_rules_block()`): `src/replies/reply_generator.py`
   assembles them all (issue #155). A model SKIP sets the post aside for good;
-  a model rate limit ends the job's generations for the cycle.
+  a model rate limit, every provider at its usage limit, ends the job's
+  generations for the cycle.
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,

@@ -1,10 +1,12 @@
 """The one fake at the run_llm seam, for every Reply generator path."""
 from types import SimpleNamespace
 
-from src.core.llm_client import LLMResult
+from src.core.llm_client import LLMResult, LLMStatus
 from src.x.confirmed_write import WriteOutcome
 
 REPLY_TEXT = "Batching is where inference margins are won or lost, not in the model."
+# Every provider hit its usage limit.
+EXHAUSTED = LLMResult(1, "", "hourly budget", LLMStatus.EXHAUSTED, "codex", "gpt-5.4-mini")
 
 
 class FakeLlm:
@@ -64,7 +66,8 @@ class FakeChokepoint:
 
 
 def logged():
-    """The engagement log rows written so far: (target URL, source, text, pattern)."""
+    """The engagement log rows written so far: target URL, source, text,
+    pattern, provider and model."""
     import csv
     import os
 
@@ -74,4 +77,5 @@ def logged():
         return []
     with open(config.ENGAGEMENT_LOG_FILE, newline="") as f:
         rows = list(csv.reader(f))[1:]
-    return [SimpleNamespace(url=r[3], source=r[4], text=r[2], pattern=r[5]) for r in rows]
+    return [SimpleNamespace(url=r[3], source=r[4], text=r[2], pattern=r[5], provider=r[7], model=r[8])
+            for r in rows]

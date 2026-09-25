@@ -9,7 +9,10 @@ import pytest
 from src.guards import active_hours as hours
 from src.editorial import editorial_bot as editorial, editorial_schemas as schemas
 from src.x.confirmed_write import WriteOutcome
-from tests.helpers import TORONTO, clock
+from tests.helpers import TORONTO, USAGE_LIMIT, clock
+
+# The real model calls, before draft_fixture stubs them.
+REAL_JSON_CALL, REAL_DRAFT_POST = editorial._json_call, editorial.draft_post
 
 
 def test_slots_do_not_catch_up_or_repeat_after_restart():
@@ -109,6 +112,38 @@ def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixtu
     for _ in range(3):
         assert editorial.run_editorial_cycle()["approved"] is False
     assert editorial.run_editorial_cycle() is None
+    assert not editorial._read_state().get("published")
+
+
+@pytest.fixture
+def exhausted(monkeypatch, providers):
+    """Claude and its Codex fallback both at their usage limit, behind the
+    real `_json_call`; nothing may reach X."""
+    from src.core import config
+    from src.core.llm_client import LLMResult
+    from src.x import twitter_client as tc
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("published without a model answer"))
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "claude")
+    monkeypatch.setattr(editorial, "_json_call", REAL_JSON_CALL)
+    providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]
+    providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
+    return providers
+
+
+def test_an_exhausted_provider_drafts_nothing_and_spends_no_attempt(monkeypatch, draft_fixture, exhausted):
+    """Issue #176: every provider at its usage limit is no Draft."""
+    monkeypatch.setattr(editorial, "draft_post", REAL_DRAFT_POST)
+    assert editorial.run_editorial_cycle() is None
+    assert [name for name, _ in exhausted.calls] == ["claude", "codex"]
+    assert not editorial._read_state().get("attempts", {}).get("07:15")
+    assert not editorial._read_state().get("published")
+
+
+def test_an_exhausted_provider_approves_nothing(draft_fixture, exhausted):
+    """Issue #176: no review answer is no approval; the Attempt stays spent,
+    as for any review that fails."""
+    assert editorial.run_editorial_cycle()["approved"] is False
+    assert [name for name, _ in exhausted.calls] == ["claude", "codex"]
     assert not editorial._read_state().get("published")
 
 

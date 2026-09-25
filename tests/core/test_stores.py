@@ -32,25 +32,22 @@ def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     assert "AI math  signal" in out.read_text(encoding="utf-8")
 
 
-def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
-    """2026-07-19 (all-ollama switch): every engagement_log row must carry
-    the provider configured for its surface at write time, so provider
-    switches are judged on likes-per-post data instead of vibes. Profile
-    surfaces tag PROFILE_LLM_PROVIDER; replies tag the AI_CLI default."""
+def test_engagement_log_records_the_provider_and_model_it_is_given(monkeypatch, tmp_path):
+    """Issue #176: a row carries the provider and model that wrote the
+    text, as the caller passes them from the model's answer. The configured
+    provider is no guess at it: the Replies force their own, and a fallback
+    answers under another."""
     import csv
     from src.core import engagement_log as el
     p = tmp_path / "engagement_log.csv"
     monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(p))
-    monkeypatch.setenv("PROFILE_LLM_PROVIDER", "ollama")
-    monkeypatch.setenv("AI_CLI", "codex")
-    el.log_reply("", "test post", "post", source="TEST")
-    el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST")
+    monkeypatch.setenv("AI_CLI", "claude")
+    monkeypatch.setenv("PROFILE_LLM_PROVIDER", "gemini")
+    el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST",
+                 provider="codex", model="gpt-5.4-mini")
     rows = list(csv.reader(open(p)))
-    assert rows[0][-1] == "provider"
-    post_row = next(r for r in rows[1:] if r[1] == "post")
-    reply_row = next(r for r in rows[1:] if r[1] == "reply")
-    assert post_row[7] == "ollama", "profile surface must tag PROFILE_LLM_PROVIDER"
-    assert reply_row[7] == "codex", "reply surface must tag the AI_CLI default"
+    assert rows[0][-2:] == ["provider", "model"]
+    assert rows[1][7:] == ["codex", "gpt-5.4-mini"]
 
 
 def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):

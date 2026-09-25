@@ -83,7 +83,8 @@ def run_reply_cycle():
             continue
         candidates.append(reply_pipeline.Candidate(
             url, data.get("tweet_text") or data.get("text") or "", "", reply=data["reply"],
-            pattern=data.get("pattern", "")))
+            pattern=data.get("pattern", ""), provider=data.get("provider", ""),
+            model=data.get("model", "")))
 
     # The limit counts the targets Reply admission lets through.
     posted_count = reply_pipeline.run(JOB, candidates, reply_pipeline.Cycle(), max_generations=limit)
