@@ -103,9 +103,55 @@ def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
     from src.x import safari
 
     scripts = []
-    monkeypatch.setattr(safari, "_run_applescript", lambda script: scripts.append(script) or True)
+    monkeypatch.setattr(safari, "_run_applescript", lambda script, **k: scripts.append(script) or True)
     assert unwalled["open_url"]('https://x.com/search?q=%22AI%22&x="y"') is True
     [script] = scripts
     assert 'tell application "Safari"' in script
     assert "activate" in script
     assert 'open location "https://x.com/search?q=%22AI%22&x=\\"y\\""' in script
+
+
+@pytest.mark.parametrize("primitive, bound, args, failed", [
+    ("open_url", "OPEN_TIMEOUT_S", ("https://x.com/home",), False),
+    ("close_front_tab", "CLOSE_TIMEOUT_S", (), None),
+    ("_scroll_page", "SCROLL_TIMEOUT_S", (), None),
+    ("_paste_text", "KEYSTROKE_TIMEOUT_S", ("hello",), False),
+    ("_navigate_to_first_tweet", "KEYSTROKE_TIMEOUT_S", (), None),
+])
+def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, primitive, bound,
+                                                       args, failed):
+    """#251: open_url, the tab close, the scroll, the paste and the tab
+    walk had no timeout, so a wedged osascript held the Safari lock. Past
+    its bound the child is killed, the primitive returns and the lock is
+    free. A `sleep` child stands in for the wedged osascript."""
+    import subprocess
+    import threading
+    import time
+    from src.x import safari
+
+    real_run = subprocess.run
+    monkeypatch.setattr(safari, "require_active", lambda: None)
+    monkeypatch.setattr(safari, bound, 0.3)
+    monkeypatch.setattr(safari.subprocess, "run",
+                        lambda argv, **k: real_run(["sleep", "30"], **k))
+    monkeypatch.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
+    monkeypatch.setattr(safari, "open_url", unwalled["open_url"])
+    monkeypatch.setattr(safari, "_paste_text", unwalled["_paste_text"])
+    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
+
+    started = time.monotonic()
+    with safari._safari_lock:
+        result = getattr(safari, primitive)(*args)
+    assert time.monotonic() - started < 5
+    assert result is failed
+
+    free = []
+
+    def take_and_give_back():
+        if safari._safari_lock._lock.acquire(timeout=1):
+            free.append(True)
+            safari._safari_lock._lock.release()
+    other = threading.Thread(target=take_and_give_back)
+    other.start()
+    other.join()
+    assert free == [True]

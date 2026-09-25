@@ -184,7 +184,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     # The Reply spacing has a floor of 8 s (#201); it is not what this test judges.
     monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
-    monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
@@ -709,7 +709,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_overr
     settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
-    monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     barrier = Barrier(2)
@@ -763,7 +763,7 @@ def _scripted_pin_js(monkeypatch, steps):
     answers = iter(steps)
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))

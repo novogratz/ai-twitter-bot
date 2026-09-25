@@ -8,6 +8,21 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — a write whose page does not open fails (issue #251):**
+> every write chokepoint ignored the result of `safari.open_url`. A Reply
+> whose tweet never opened still pressed `r`, pasted and submitted into
+> whatever tab was in front; a follow, a pin or a like walk clicked there
+> too. `open_url`, the tab close, the scroll, the Reply's activate and
+> the keystrokes also ran without a timeout, so a wedged `osascript` kept
+> the Safari lock and every job behind it. `post_tweet`, `reply_to_tweet`,
+> `follow_account`, `pin_own_tweet` and the three like walks now stop in
+> `FAILED` when the page does not open, and a Reply when Safari does not
+> come to the front: no keystroke, click or ledger row, and a Reply
+> releases its claim in the Replied store. These runs have a bound (20 s
+> for the open, 15 s for the scroll, 10 s for the others) past which the
+> child is killed. The page reads still ignore the result, pending the
+> page session of issue #250, and two scraper runs remain unbounded.
+
 > **2026-09-25 — the reply, like and follow niche narrowed to AI (issue #205):**
 > the policy had limited the account to AI, but the niche of the Replies,
 > likes and follows still took crypto, markets, space and general tech: a

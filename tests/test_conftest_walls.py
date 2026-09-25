@@ -65,8 +65,8 @@ BY_MODULE = {"_safari_lock", "_scroll_page", "close_front_tab"}
 SAFARI = "src/x/safari.py"
 # The one direct osascript call that stays: safari_hygiene quits Safari
 # itself, because the Safari being quit may be wedged, and
-# `_run_applescript` has no timeout, so the pkill that follows might never
-# run.
+# its own timeout guarantees the pkill that follows runs, where
+# `_run_applescript` bounds a run only when its caller asks.
 OWN_OSASCRIPT = {"src/x/safari_hygiene.py"}
 
 

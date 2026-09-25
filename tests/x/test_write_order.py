@@ -75,7 +75,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(safari, "_run_js",
                         lambda js, *a, **k: step(f"js:{_js_kind(js)}", t.js.pop(0) if t.js else ""))
     monkeypatch.setattr(safari, "close_front_tab", lambda: step("close"))
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: step("open", True))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: step("open", "open" not in t.fail))
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
@@ -418,6 +418,85 @@ def test_a_stop_during_the_page_steps_records_nothing_and_releases_the_lock(trac
         write()
     assert trace.events[-2:] == ["open", "unlock"]
     assert not [e for e in trace.events if e.startswith("record:")]
+
+
+@pytest.mark.parametrize("write, events", [
+    (lambda: tc.post_tweet(TEXT),
+     ["guard:can_post", "lock", "guard:can_post", "open", "close", "unlock"]),
+    (lambda: tc.reply_to_tweet(POST_URL, REPLY),
+     ["lock", "judge", "claim", "activate", "open", "release", "close", "unlock"]),
+    (lambda: tc.follow_account("someone"),
+     ["guard:judge_follow", "jitter", "lock", "open", "close", "unlock"]),
+    (lambda: tc.pin_own_tweet(POST_URL),
+     ["lock", "open", "close", "unlock"]),
+], ids=["post", "reply", "follow", "pin"])
+def test_a_page_that_does_not_open_fails_the_write_before_any_keystroke(trace, write, events):
+    """#251: the open's return was ignored, so a reply whose page never
+    opened pressed `r`, pasted and submitted into the front tab. A page that
+    does not open ends the write in FAILED: no keystroke, paste, click or
+    page read, no ledger row."""
+    trace.fail.add("open")
+    outcome = write()
+    assert outcome.name == "FAILED" and not outcome
+    assert trace.events == events
+    assert not [e for e in trace.events if e.startswith(("record:", "dry:"))]
+
+
+def test_a_reply_whose_page_does_not_open_stays_replayable(trace):
+    """The claim is released, so the next cycle may answer the post."""
+    trace.fail.add("open")
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    assert POST_URL not in trace.claimed
+    trace.fail.clear()
+    trace.events.clear()
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+
+
+@pytest.mark.parametrize("failing, events", [
+    (1, ["lock", "judge", "claim", "activate", "release", "close", "unlock"]),
+    (2, ["lock", "judge", "claim", "activate", "open", "activate", "release", "close", "unlock"]),
+], ids=["before_open", "after_open"])
+def test_a_reply_whose_safari_does_not_come_to_the_front_sends_nothing(trace, monkeypatch,
+                                                                        failing, events):
+    """#251 review: the Reply's activate ran unbounded and its result was
+    ignored, so a wedged Safari held the lock before the open's bound, and
+    a failed one sent the keystrokes to another app. It now fails the
+    Reply: no keystroke, no ledger row, the post stays replayable."""
+    traced = safari._run_applescript
+    activations = []
+
+    def run(script, *a, **k):
+        ok = traced(script, *a, **k)
+        if _script_kind(script) == "activate":
+            activations.append(script)
+            return ok and len(activations) != failing
+        return ok
+    monkeypatch.setattr(safari, "_run_applescript", run)
+
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    assert trace.events == events
+    assert POST_URL not in trace.claimed
+    trace.events.clear()
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+
+
+def test_every_applescript_run_of_the_reply_and_the_post_is_bounded(trace, monkeypatch):
+    """#251 review: an unbounded osascript under the Safari lock holds it,
+    and every job behind it, while Safari is wedged."""
+    traced = safari._run_applescript
+    unbounded = []
+
+    def run(script, *a, **k):
+        if not k.get("timeout_s"):
+            unbounded.append(_script_kind(script))
+        return traced(script, *a, **k)
+    monkeypatch.setattr(safari, "_run_applescript", run)
+
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert tc.post_tweet(TEXT) is W.SHIPPED
+    assert unbounded == []
 
 
 def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):
