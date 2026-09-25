@@ -201,7 +201,6 @@ FOLLOW_ACTION_JITTER_SECONDS = int(os.environ.get("FOLLOW_ACTION_JITTER_SECONDS"
 
 # Content rules — ban short-term price targets; theses are multi-year.
 BAN_SHORT_TERM_PRICE_TARGETS = os.environ.get("BAN_SHORT_TERM_PRICE_TARGETS", "1") == "1"
-CONTENT_VALIDATION_RETRIES = int(os.environ.get("CONTENT_VALIDATION_RETRIES", "3"))
 
 # ⛔ HARD FRESHNESS RULE — operator mandate 2026-06-02, NEVER CHANGE THIS,
 # not even via autonomous maintenance. We NEVER reshare (retweet) or

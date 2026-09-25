@@ -87,7 +87,7 @@ def test_qrt_playbook_setup_colon_and_dotdot_texture():
     from src.core.humanizer import humanize, casualize
 
     setup = "Goldman Sachs watching retail buy the dip at 110x revenue:"
-    ok, why = content_guard.validate(setup, kind="quote")
+    ok, why = content_guard.validate(setup, kind="reply")
     assert not ok and "truncated" in why
 
     assert humanize("MFs will see this and still not take profit btw..") \

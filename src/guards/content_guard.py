@@ -1,34 +1,26 @@
 """Content validation layer (2026-06-02 pivot).
 
-Two hard gates on every generated draft before it can publish:
+Gates on every generated draft before it can publish, among them:
 
   1. NO short-term price targets. A draft that pairs a price / multiplier with
      a near-term timeframe ("$RKLB to $40 next week", "objectif 50€ d'ici
      vendredi", "x2 ce mois-ci") is rejected. Theses must be multi-year and
      reasoned (setup / catalyst / risk / asymmetry), never price-and-date.
 
-  2. LANGUAGE. Originals and quote-repost commentary must be FRENCH (the
-     account's primary language since the 2026-06-02 revert). Replies are
-     exempt — they match the parent post's language and are checked elsewhere.
+  2. LANGUAGE. Originals must be in CONTENT_LANG_PRIMARY. Replies are exempt
+     — they match the parent post's language and are checked elsewhere.
 
 Usage:
     ok, reason = content_guard.validate(text, kind="original")
-    # or wrap a generator with regenerate-then-skip:
-    text = content_guard.generate_validated(gen_fn, kind="original")
-
-`generate_validated` calls `gen_fn()` (which returns a draft str or None),
-validates, and on failure regenerates up to CONTENT_VALIDATION_RETRIES times.
-If it still fails it returns None and logs — a flagged draft is NEVER returned.
 """
 import os
 import re
-from typing import Callable, Optional, Tuple
+from typing import Optional, Tuple
 
-from ..core.config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES
-from ..core.logger import log
+from ..core.config import BAN_SHORT_TERM_PRICE_TARGETS
 from ..core.state_errors import StateUnreadable
 
-# X composer limit for replies and quotes; Reply admission trims to it.
+# X composer limit for replies; Reply admission trims to it.
 REPLY_MAX_CHARS = 278
 
 # --- near-duplicate detection (no posting the same story twice) -----------
@@ -321,11 +313,6 @@ def detect_language(text: str) -> Tuple[str, float]:
     return ("en", en / total)
 
 
-def is_french(text: str, min_confidence: float = 0.6) -> bool:
-    lang, conf = detect_language(text)
-    return lang == "fr" and conf >= min_confidence
-
-
 # --- public validation API ------------------------------------------------
 
 # Low-effort replies the account must never send (the spec: "never 'great
@@ -379,7 +366,7 @@ def looks_truncated(text: str) -> bool:
 
 # Stock phrases the account over-posted until they read as a bot signature
 # (live audit 2026-06-09: "we are so early" in 6+ posts in ONE day, each one
-# 0 likes). Substring match, lowercase. Posts + quotes only — replies are
+# 0 likes). Substring match, lowercase. Originals only — replies are
 # already the surface that converts and never developed the tic.
 _BURNED_CATCHPHRASES = (
     "we are so early",
@@ -463,11 +450,10 @@ def _rationed_shape_overused(text: str) -> bool:
 
 
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
-    """Validate a draft. kind ∈ {"original", "quote", "reply"}.
+    """Validate a draft. kind ∈ {"original", "reply"}.
 
-    Originals + quotes must be French; replies are language-matched to the
-    parent elsewhere so only the price-target gate applies. Returns
-    (ok, reason); reason is "" when ok.
+    Originals must be in CONTENT_LANG_PRIMARY; replies are language-matched
+    to the parent elsewhere. Returns (ok, reason); reason is "" when ok.
     """
     if not text or not text.strip():
         return (False, "empty")
@@ -489,7 +475,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if _violence_content(text):
         return (False, "violence/cruelty content (killing, terrorism, casualties) — never on-brand, SKIP")
 
-    if kind in ("original", "quote"):
+    if kind == "original":
         # Enforce the CONFIGURED primary language (not hardcoded). Bug 2026-06-04:
         # this was pinned to "fr", so after the English flip it REJECTED our
         # English posts and let French through. Now: primary=en → reject French,
@@ -503,7 +489,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if kind == "reply" and _is_lazy_reply(text):
         return (False, "low-effort reply (too short / generic — must be substantive)")
 
-    if kind in ("original", "quote"):
+    if kind == "original":
         # Burned-catchphrase backstop (2026-06-09). The prompts planted these
         # as quoted examples and the model parroted them ("we are so early"
         # shipped 6+ times in one day) — the #1 bot-tell killing likes on the
@@ -519,8 +505,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         if _rationed_shape_overused(text):
             return (False, "rationed shape overused (\"me [verb]ing…\" already posted in window) — vary the opener")
 
-    if kind in ("reply", "quote"):
-        # Hard X limit for these surfaces — an over-limit draft gets cut by
+    if kind == "reply":
+        # Hard X limit for replies — an over-limit draft gets cut by
         # the composer mid-sentence, which reads as a botched AI paste.
         if len(text) > REPLY_MAX_CHARS:
             return (False, f"too long for a {kind} ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
@@ -528,52 +514,3 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 
     return (True, "")
-
-
-class DeliberateSkip(Exception):
-    """The generator's model deliberately refused (e.g. returned 'SKIP').
-
-    Retrying with the same prompt won't flip a confident refusal — it just
-    burns 2 more LLM calls (~30s each on Claude Sonnet). Raise this from a
-    gen_fn to tell generate_validated to stop retrying immediately. Audit
-    2026-06-18 found ~29 quote SKIPs/day each burning 3 attempts ≈ 90s.
-    """
-    pass
-
-
-def generate_validated(
-    gen_fn: Callable[[], Optional[str]],
-    kind: str = "original",
-    attempts: Optional[int] = None,
-    label: str = "",
-) -> Optional[str]:
-    """Call gen_fn() and validate; regenerate on failure up to `attempts`.
-
-    Returns the first valid draft, or None if every attempt is flagged
-    (skip-and-log — a flagged draft is never returned). gen_fn must return a
-    draft string or None, or raise DeliberateSkip to short-circuit the retry
-    loop when the model gave a confident refusal.
-    """
-    n = attempts if attempts is not None else CONTENT_VALIDATION_RETRIES
-    tag = f"[{label or kind.upper()}] " if (label or kind) else ""
-    last_reason = "no draft produced"
-    for i in range(max(1, n)):
-        try:
-            draft = gen_fn()
-        except DeliberateSkip as e:
-            last_reason = f"deliberate skip ({e})" if str(e) else "deliberate skip"
-            log.info(f"{tag}content_guard: generator skipped deliberately — not retrying.")
-            break
-        except Exception as e:  # generator blew up — treat as a failed attempt
-            last_reason = f"generator error: {e}"
-            continue
-        if not draft:
-            last_reason = "empty draft"
-            continue
-        ok, reason = validate(draft, kind=kind)
-        if ok:
-            return draft
-        last_reason = reason
-        log.info(f"{tag}content_guard rejected draft (attempt {i + 1}/{n}): {reason} :: {draft[:120]!r}")
-    log.info(f"{tag}content_guard: all {n} attempts failed ({last_reason}) — SKIP.")
-    return None
