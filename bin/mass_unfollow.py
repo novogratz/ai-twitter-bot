@@ -6,15 +6,16 @@ Operator tool (/unfollow skill) — NOT a scheduled bot. Clicks each visible
 loads, repeats until the list is exhausted (or --max is hit).
 
 Safety:
-  - The protected keep-set is the CURRENT whitelist.json (all tiers +
-    seeds[] handles — the 2026-06-07 spec's curated follow list). Those
+  - The protected keep-set is the CURRENT whitelist: the Account's
+    whitelist.json (all tiers + seeds[] handles — the 2026-06-07 spec's
+    curated follow list) and the handles account_curator promoted. Those
     are never unfollowed: they're the accounts the follow policy may
     follow, and recording their unfollow would block the re-follow for
     30 days via the anti-churn ledger.
     `--keep legacy` restores the old wide keep-set (respect_list +
     engage/early-bird/mega target lists) for a gentler prune.
-    A missing or unreadable whitelist.json aborts the run before any
-    unfollow, and the file is left as is.
+    A missing or unreadable whitelist.json or whitelist_discovered.json
+    aborts the run before any unfollow, and the file is left as is.
   - Every confirmed unfollow is recorded into action_ledger.json (30-day
     anti-churn so follow bots don't re-follow) and decrements
     following_count.json.
@@ -96,16 +97,15 @@ def _save_results(unfollowed: list) -> None:
 
 
 def _whitelist_keep_set() -> set:
-    """All whitelist tier handles + seeds[] handles (the curated follow list).
-    Raises StateUnreadable when whitelist.json is missing or unreadable."""
+    """All whitelist tier handles, promoted handles included, + seeds[]
+    handles (the curated follow list). Raises StateUnreadable when
+    whitelist.json is missing or unreadable, or whitelist_discovered.json
+    unreadable."""
     keep = set()
-    # The store reads a missing file as empty: here that would unfollow
-    # every seed.
-    if not os.path.exists(follow_policy.WHITELIST.path):
-        raise StateUnreadable("whitelist.json is missing")
     wl = follow_policy.WHITELIST.read()
     for handles in (wl.get("tiers") or {}).values():
         keep |= {str(h).lower() for h in handles}
+    keep |= {str(h).lower() for h in follow_policy.DISCOVERED.read()}
     for seed in wl.get("seeds") or []:
         h = (seed.get("handle") or "").strip().lstrip("@").lower()
         if h:

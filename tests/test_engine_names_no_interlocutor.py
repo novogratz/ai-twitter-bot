@@ -18,10 +18,7 @@ DECLARE_DEFAULTS = {
     # A handle list .env can change; #208 moves it to the Account.
     ("core/settings.py", "FR_FORCED_REPLY_HANDLES"): "#208",
 }
-DICT_KEYS = {
-    # The respect list's seed, the Operator's data; #208 moves it out of src/.
-    ("guards/respect_list.py", "_DEFAULTS", "graphseo"): "#208",
-}
+DICT_KEYS = {}
 
 
 def _strings(tree):

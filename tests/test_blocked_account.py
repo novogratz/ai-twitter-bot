@@ -67,13 +67,13 @@ def _seed_script(monkeypatch, follow, tmp_path):
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 @pytest.mark.parametrize("caller", [_followback, _follow_engagers, _engage, _seed_script])
 def test_every_follow_caller_meets_the_blocked_account_refusal(monkeypatch, tmp_path, memory_ledger,
-                                                               settings_override, caller, dry_run):
+                                                               settings_override, caller, dry_run, operator_folder):
     monkeypatch.setenv("DRY_RUN", dry_run)
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     monkeypatch.setattr(time, "sleep", lambda *_: None)
     # A Seed account, so that engage and the seeding script ask to follow it.
-    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": [HANDLE]}}))
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": [HANDLE]}}))
     opened = []
     monkeypatch.setattr(safari, "open_url", opened.append)
     asked = []

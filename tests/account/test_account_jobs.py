@@ -34,7 +34,7 @@ def mac_in_paris(monkeypatch):
 # --- 2026-06-07 PM: self-curated tracking ----------------------------------
 
 
-def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
+def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     """Only ON-LANE engagements count as evidence (FR-era rows classify
     'other' and are ignored); pinned handles always lead the tracked list."""
     from datetime import datetime
@@ -50,7 +50,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
         rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
-    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {}}))
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
 
     ac.run_curator_cycle()
     handles = ac.tracked_handles(limit=10)
@@ -59,7 +59,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
 
-def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path):
+def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path, operator_folder):
     """#188: the curator compared the BLOCKLIST by exact equality, so a
     handle holding a blocked token could reach the whitelist."""
     from datetime import datetime
@@ -73,12 +73,13 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
-    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {}}))
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
 
     ac.run_curator_cycle()
 
     assert "la_pique_off" not in ac.tracked_handles(limit=10)
-    assert json.loads((tmp_path / "whitelist.json").read_text())["tiers"]["discovered"] == ["goodfinance"]
+    assert ac.DISCOVERED.read() == ["goodfinance"]
+    assert json.loads((operator_folder / "whitelist.json").read_text()) == {"tiers": {}}
 
 
 def test_curator_promotion_quality_bar():
@@ -96,19 +97,19 @@ def test_curator_promotion_quality_bar():
     ("2026-10-13", 3, ["deep_macro"]),  # yesterday: a fresh quota
 ])
 def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_override, stamped, count,
-                                                        promoted):
+                                                        promoted, operator_folder):
     """#191: the daily promotion quota, stamped by either clock, stays spent
     until the next Toronto day."""
     from src.account import account_curator as ac
 
     settings_override(CURATOR_DISCOVERED_PER_DAY=3)
-    ac.WHITELIST.write({"tiers": {}})
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
     doc = {"promotion_meta": {"date": stamped, "count": count}}
     cand = {"handle": "deep_macro", "engagements": 9, "score": 9.0, "weight": 1.0}
 
     ac._promote_to_whitelist([cand], doc)
 
-    assert ac.WHITELIST.read()["tiers"].get("discovered", []) == promoted
+    assert ac.DISCOVERED.read() == promoted
     assert doc["promotion_meta"] == {"date": "2026-10-14", "count": count if not promoted else 1}
 
 
@@ -151,7 +152,7 @@ def _dry_run_follow_path(monkeypatch):
     return recorded
 
 
-def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tmp_path):
+def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tmp_path, operator_folder):
     """#123: follow_account returned True on a dry run, so engage_bot stored
     handles it never followed and no later live cycle followed them."""
     from src.guards import action_guard
@@ -162,7 +163,7 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
     recorded = _dry_run_follow_path(monkeypatch)
     followed_file = tmp_path / "followed_accounts.json"
     followed_file.write_text(json.dumps(["already"]))
-    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["newcomer", "other"]}}))
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["newcomer", "other"]}}))
     monkeypatch.setattr(engage_bot, "_build_pool", lambda: ["already", "newcomer", "other"])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
     monkeypatch.setattr(engage_bot, "_profile_visit_allowed", lambda *_: False)
@@ -739,7 +740,7 @@ def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatc
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_candidate(
-        monkeypatch, memory_ledger, tmp_path, settings_override, dry_run):
+        monkeypatch, memory_ledger, tmp_path, settings_override, dry_run, operator_folder):
     """#172: judge refused on an unreadable whitelist.json and the job
     marked each Engager tried, about 200 in one cycle. The cycle now stops
     at the first candidate, reported as a failure, with no candidate marked,
@@ -751,7 +752,7 @@ def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_cand
     monkeypatch.setenv("DRY_RUN", dry_run)
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
-    whitelist = tmp_path / "whitelist.json"
+    whitelist = operator_folder / "whitelist.json"
     whitelist.write_text('{"tiers": {"tier1": ["karp')
     for fan in ("fan1", "fan2", "fan3"):
         ag.record(ag.DEBATE_TURN, fan)
@@ -888,15 +889,15 @@ def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_p
     assert json.loads((tmp_path / "following_count.json").read_text())["count"] == 11
 
 
-def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, tmp_path,
-                                                      monkeypatch):
+def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, monkeypatch,
+                                                      operator_folder):
     """An unreadable guarded file stops the job that needs it: followback
     no longer logs a traceback per pick and reports the cycle a success."""
     from src.core import health
 
     fb, state = followback
     state["followers"] = ["Realfan", "Otherfan"]
-    (tmp_path / "whitelist.json").write_text("{not json")
+    (operator_folder / "whitelist.json").write_text("{not json")
     failures = []
     monkeypatch.setattr(health, "record_failure", failures.append)
     monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
@@ -906,7 +907,7 @@ def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, 
     assert failures == ["followback"]
     assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
     assert memory_ledger.rows == []
-    assert (tmp_path / "whitelist.json").read_text() == "{not json"
+    assert (operator_folder / "whitelist.json").read_text() == "{not json"
 
 
 # --- #173: the policy finds the relation; a Stranger is never followed -------
@@ -1033,11 +1034,11 @@ def test_engage_leaves_its_followers_and_engagers_to_their_own_jobs(
 
 
 def test_engage_follows_a_seed_account_from_its_pool(engage, monkeypatch, memory_ledger,
-                                                     tmp_path):
+                                                     operator_folder):
     from src.x.twitter_client import FollowOutcome
 
     eb, state = engage
-    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["Graphseo"]}}))
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["Graphseo"]}}))
     monkeypatch.setattr(eb, "_build_pool", lambda: ["Graphseo", "feedaccount"])
     outcomes = _follow_outcomes(monkeypatch, eb)
 

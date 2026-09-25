@@ -1,0 +1,1 @@
+{"baseline": 4200, "as_of": "2026-06-02", "note": "Operator-stated baseline 2026-06-02. adjust_following() keeps this live on each follow/unfollow; a profile scrape can overwrite count for exact resync."}

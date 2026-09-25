@@ -112,12 +112,15 @@ uv run --with pytest --with-requirements requirements.txt python -m pytest tests
 `editorial_reach.md` shows measured reach and missing coverage. These are local
 runtime files and are not committed to Git. The JSON state files go through
 `src/core/state_store.py`, which writes them atomically; an unreadable
-guarded file, such as `respect_list.json` or `personality.json`, stops the
-job that needs it and is never overwritten
-([recovery](docs/OPERATIONS.md#recovery)). While the following count
-(`following_count.json`, else `followed_accounts.json`) or `whitelist.json`
-is unreadable, every follow is refused; an unreadable `whitelist.json` also
-stops `bin/mass_unfollow.py`.
+guarded file, such as `personality.json`, stops the job that needs it and
+is never overwritten ([recovery](docs/OPERATIONS.md#recovery)). The
+Operator's follow whitelist, respect list and following baseline live in the
+Account folder, versioned; the bot reads them and never writes them, and one
+missing or unreadable stops the job that needs it. While the following count
+(`following_count.json`, else `followed_accounts.json`) or the whitelist
+(`whitelist.json` in the Account folder, `whitelist_discovered.json` for the
+handles the curator promoted) is unreadable, every follow is refused; an
+unreadable whitelist also stops `bin/mass_unfollow.py`.
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
 handles source selection, drafting and review, from the Account that

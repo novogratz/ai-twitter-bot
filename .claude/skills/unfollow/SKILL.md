@@ -39,12 +39,14 @@ default).
    `[MASS_UNFOLLOW]`). A rate-limit toast or 5 failed confirms trigger a
    cooldown, never an abort: if the log shows repeated `COOLDOWN` lines, X
    is blocking the action; tell the operator.
-5. Keep-set (`--keep`): default `whitelist` = current `whitelist.json` tiers +
-   `seeds[]` (the curated follow list; never unfollow what the follow policy
+5. Keep-set (`--keep`): default `whitelist` = current
+   `accounts/theaishrink/whitelist.json` tiers + `seeds[]` + the promoted
+   handles of `whitelist_discovered.json` (the curated follow list; never unfollow what the follow policy
    may follow, or the 30-day anti-churn record would block the re-follow).
    `--keep legacy` adds respect_list + engage/early-bird/mega target lists
-   (gentle prune). A missing or unreadable `whitelist.json`, or an
-   unreadable `respect_list.json` under `--keep legacy`, prints
+   (gentle prune). A missing or unreadable `whitelist.json`, an unreadable
+   `whitelist_discovered.json`, or a missing or unreadable
+   `respect_list.json` under `--keep legacy`, prints
    `ABORT: keep-set unreadable` and exits before Safari: report it to the
    operator, never recreate or empty the file.
 6. Report the final `TOTAL unfollowed:` count, the `STOP:` line if any, and

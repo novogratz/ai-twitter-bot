@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from src.core import config
+from src.core.account import OperatorFile
 from src.core.state_errors import StateUnreadable
 from src.core.state_store import StateFile
 from src.guards import action_guard as ag
@@ -27,9 +28,9 @@ def _no_following_count_override(settings_override):
 
 
 @pytest.fixture()
-def follow_env(settings_override, tmp_path, memory_ledger):
+def follow_env(settings_override, memory_ledger, operator_folder):
     """Isolated ledger + whitelist + counts for the follow policy tests."""
-    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {
         "tier1": ["TheBTCTherapist"],
         "tier2": ["morganhousel"],
         "tier3": ["karpathy"],
@@ -71,12 +72,12 @@ def test_an_invalid_handle_is_a_policy_refusal(follow_env, monkeypatch, tmp_path
 @pytest.mark.parametrize("whitelist", ['{"tiers": {"tier1": ["la_pique_off"]}}',
                                        '{"tiers": {"tier1": ["la_pi'])
 def test_a_blocked_account_is_refused_before_its_relation(follow_env, monkeypatch, tmp_path,
-                                                          whitelist):
+                                                          whitelist, operator_folder):
     """#188: a handle holding a blocklist token is refused by name, a Seed
     account included, before the whitelist is even read."""
     _counts(monkeypatch, tmp_path, 100, 10)
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
-    (tmp_path / "whitelist.json").write_text(whitelist)
+    (operator_folder / "whitelist.json").write_text(whitelist)
 
     assert fp.judge("la_pique_off") == Verdict(Refusal.BLOCKED_ACCOUNT,
                                                "@la_pique_off matches the blocklist")
@@ -161,24 +162,27 @@ def test_a_follow_decision_reads_each_follow_file_once(follow_env, monkeypatch, 
     settings_override(FOLLOW_ENFORCE_RATIO=True)
     _counts(monkeypatch, tmp_path, 100, 10)
     reads = []
-    real_read = StateFile.read
-    monkeypatch.setattr(StateFile, "read", lambda self: reads.append(self.name) or real_read(self))
+    for kind in (StateFile, OperatorFile):
+        real_read = kind.read
+        monkeypatch.setattr(kind, "read", lambda self, real_read=real_read:
+                            reads.append(self.name) or real_read(self))
 
     assert fp.judge("karpathy") == ADMITTED
 
     assert sorted(reads) == ["follow_quality_rejects.json", "follower_history.json",
-                             "following_count.json", "whitelist.json"]
+                             "following_count.json", "whitelist.json",
+                             "whitelist_discovered.json"]
 
 
 @pytest.mark.parametrize("whitelist_only", [True, False])
 def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, settings_override,
-                                                    tmp_path, whitelist_only):
+                                                    tmp_path, whitelist_only, operator_folder):
     """#171: an unreadable whitelist.json read as empty. #172: a refusal let
     follow_engagers mark each Engager tried, so judge raises instead, and
     the file waits for the Operator."""
     settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only)
     _counts(monkeypatch, tmp_path, 100, 10)
-    path = tmp_path / "whitelist.json"
+    path = operator_folder / "whitelist.json"
     path.write_text('{"tiers": {"tier1": ["karp')
 
     with pytest.raises(StateUnreadable, match="whitelist.json"):
@@ -187,10 +191,10 @@ def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, set
 
 
 def test_the_quality_gate_refuses_on_a_whitelist_unreadable_on_the_open_profile(
-        follow_env, tmp_path):
+        follow_env, operator_folder):
     """On the open profile the gate refuses instead of raising, so
     follow_account still closes its tab."""
-    (tmp_path / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
+    (operator_folder / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
     verdict = fp.judge_profile("karpathy", lambda: pytest.fail("profile read"))
     assert verdict.refusal is Refusal.POLICY and "whitelist.json is unreadable" in verdict.reason
 
@@ -526,8 +530,8 @@ def test_the_gate_admits_a_seed_and_skips_size_for_an_engager_only(follow_env):
     assert verdict.refusal is Refusal.QUALITY_REJECTED and "too small" in verdict.reason
 
 
-def test_the_gate_reads_no_profile_while_the_whitelist_is_unreadable(tmp_path):
-    (tmp_path / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
+def test_the_gate_reads_no_profile_while_the_whitelist_is_unreadable(tmp_path, operator_folder):
+    (operator_folder / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
 
     verdict = fp.judge_profile("someone", lambda: pytest.fail("profile read"))
 

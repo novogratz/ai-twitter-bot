@@ -174,8 +174,9 @@ until about 2026-12-22, the frozen `replied_back.json`).
 _Avoid_: commenter, fan
 
 **Seed account**:
-An account the Operator lists as worth following; the only kind the account
-follows without a prior relationship, and never unfollows.
+An account the Operator lists as worth following, in the whitelist, or that
+the curator promoted to it; the only kind the account follows without a
+prior relationship, and never unfollows.
 _Avoid_: whitelisted account, tier, discovered account
 
 **Follow-back**:
@@ -257,3 +258,10 @@ A JSON state file the bot can lose without acting more: a cache, a report,
 a harvested list. Unreadable, it reads as its default and the next write
 replaces it.
 _Avoid_: cache file, temp file, optional file
+
+**Operator file**:
+A file the Operator keeps in the Account folder, versioned: the follow
+whitelist, the respect list, the following baseline. The bot reads it and
+never writes it; missing or unreadable, the job that needs it stops, and
+nothing recreates it. What the bot keeps beside it is a state file.
+_Avoid_: config file, Operator state, seed file

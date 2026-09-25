@@ -311,26 +311,29 @@ def test_an_empty_list_is_reloaded_through_run_js_before_done(script, monkeypatc
     assert "DONE: no unfollow buttons after 3 reloads" in capsys.readouterr().out
 
 
-def test_the_keep_set_reads_the_whitelist_tiers_and_seeds(script, monkeypatch, tmp_path):
-    (tmp_path / "whitelist.json").write_text(json.dumps({
-        "tiers": {"tier1": ["Karpathy"], "discovered": ["sama"]},
+def test_the_keep_set_reads_the_whitelist_tiers_seeds_and_promoted_handles(script, tmp_path,
+                                                                           operator_folder):
+    (operator_folder / "whitelist.json").write_text(json.dumps({
+        "tiers": {"tier1": ["Karpathy"]},
         "seeds": [{"handle": "@Saylor"}]}))
+    (tmp_path / "whitelist_discovered.json").write_text(json.dumps(["Sama"]))
     assert script.real_whitelist_keep_set() == {"karpathy", "sama", "saylor"}
 
 
 @pytest.mark.parametrize("keep", ["whitelist", "legacy"])
 @pytest.mark.parametrize("content", ['{"tiers": {"tier1": ["karp', None])
-def test_an_unreadable_or_missing_whitelist_aborts_before_any_unfollow(script, monkeypatch,
-                                                                       tmp_path, capsys,
-                                                                       keep, content):
+def test_an_unreadable_or_missing_whitelist_aborts_before_any_unfollow(script, monkeypatch, capsys,
+                                                                       keep, content, operator_folder):
     """#171: read as empty, the keep-set would unfollow every seed. A
     missing or unreadable whitelist.json stops the run before Safari, and
     the file waits for the Operator."""
     from src.guards import respect_list
     monkeypatch.setattr(respect_list, "load", lambda: set())
     monkeypatch.setattr(script, "_whitelist_keep_set", script.real_whitelist_keep_set)
-    path = tmp_path / "whitelist.json"
-    if content is not None:
+    path = operator_folder / "whitelist.json"
+    if content is None:
+        path.unlink()
+    else:
         path.write_text(content)
     monkeypatch.setattr(sys, "argv", ["mass_unfollow.py", "--keep", keep])
 

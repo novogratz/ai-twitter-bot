@@ -460,13 +460,12 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
-def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
+def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, respected):
     """The respect list is judged before the dry-run exit: a Reply naming
     another Respected account is refused, nothing pasted, no ledger row, no
     claim, live or dry run, and the caller hears the refusal. The @handle of
     the author it answers ships."""
     from src.core import humanizer
-    from src.guards import respect_list
     from src.guards.replied_store import load_replied
     from src.guards.reply_admission import Refusal
     from src.x import safari, twitter_client as tc
@@ -476,8 +475,7 @@ def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     pasted = []
     monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
-    respect_list.add("kindperson")
-    respect_list.add("otherperson")
+    respected("kindperson", "otherperson")
     url = "https://x.com/kindperson/status/2063500000000000168"
     refusals = []
 
@@ -670,12 +668,12 @@ def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
-def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
+def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, respected):
     """The respect list is judged before the dry-run exit: the Original is
     refused, nothing opened, no ledger row, live or dry run. A neutral text
     ships unchanged."""
     from urllib.parse import parse_qs, urlparse
-    from src.guards import content_guard, respect_list
+    from src.guards import content_guard
     from src.x import safari, twitter_client as tc
 
     recorded = _live_browser(monkeypatch)
@@ -685,7 +683,7 @@ def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
     opened = []
     monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
-    respect_list.add("kindperson")
+    respected("kindperson")
 
     for text in ("Inference is getting cheaper faster than training, says @kindperson.",
                  "Kindperson calling inference cheap is bullshit."):
