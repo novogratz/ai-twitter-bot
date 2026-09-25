@@ -29,33 +29,61 @@ def test_structured_editorial_json_preserves_text_and_evidence():
     assert json.loads(unwrap_text(json.dumps(draft), structured_output=True)) == draft
 
 
-def test_editorial_requests_use_dedicated_model_and_strict_schema(monkeypatch):
+class OllamaServer:
+    """Stands in for Ollama's /api/generate behind urllib: records each
+    request body with its HTTP timeout."""
+
+    def __init__(self):
+        self.requests = []
+
+    def __call__(self, request, timeout=None):
+        import io
+        self.requests.append((json.loads(request.data), timeout))
+        return io.BytesIO(b'{"response": "{}"}')
+
+
+def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
+    """Issue #174: the caller's profile sets the model, schema, temperature,
+    timeout floor and voice prefix; the label only names the call."""
     import urllib.request
     from src.core import llm_client as llm
-    requests = []
+    from src.editorial import editorial_schemas as schemas
 
-    class Response:
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *args):
-            pass
-
-        def read(self):
-            return b'{"response": "{}"}'
-
-    def request(req, **kwargs):
-        requests.append(json.loads(req.data))
-        return Response()
-
-    monkeypatch.setattr(urllib.request, "urlopen", request)
-    monkeypatch.setattr(llm, "EDITORIAL_OLLAMA_MODEL", "editor-model")
+    ollama = OllamaServer()
+    monkeypatch.setattr(urllib.request, "urlopen", ollama)
     monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
-    llm._run_ollama_http("Draft prompt", "EDITORIAL_DRAFT", 30)
-    llm._run_ollama_http("Review prompt", "EDITORIAL_REVIEW", 30)
-    llm._run_ollama_http("Reply prompt", "DIRECT_REPLY", 30)
-    assert requests[0]["model"] == requests[1]["model"] == "editor-model"
-    assert "evidence_ids" in requests[0]["format"]["required"]
-    assert requests[1]["format"]["properties"]["grounded"] == {"type": "boolean"}
-    assert requests[2]["model"] == "reply-model" and "format" not in requests[2]
-    assert llm._FUNNY_FORCER not in requests[0]["prompt"]
+    monkeypatch.setattr(schemas, "EDITORIAL_OLLAMA_MODEL", "editor-model")
+    monkeypatch.setenv("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")
+    review = schemas.review_profile()
+    for label in ("EDITORIAL_REVIEW", "EDITORIAL_REVIEW (fallback)", "EDITORIAL_REVIEW (codex locked)",
+                  "DIRECT_REPLY"):
+        llm._run_ollama_http("Review prompt", label, 30, profile=review)
+    llm._run_ollama_http("Draft prompt", "EDITORIAL_REVIEW", 30, profile=schemas.draft_profile())
+    llm._run_ollama_http("Reply prompt", "EDITORIAL_DRAFT", 30)
+
+    *reviews, (draft, draft_timeout), (reply, reply_timeout) = ollama.requests
+    assert all(r == reviews[0] for r in reviews)
+    request, timeout = reviews[0]
+    assert request["model"] == "editor-model" and timeout == 300
+    assert request["format"] == schemas.review_schema()
+    assert request["options"]["temperature"] == 0.2
+    assert request["prompt"] == "/no_think\n\nReview prompt"
+    assert draft["format"] == schemas.draft_schema() and draft["options"]["temperature"] == 0.65
+    assert reply["model"] == "reply-model" and "format" not in reply and reply_timeout == 30
+    assert reply["prompt"].startswith(llm._FUNNY_FORCER)
+
+
+def test_core_imports_nothing_from_the_editorial_package():
+    import ast
+    from pathlib import Path
+
+    core = Path(__file__).resolve().parents[2] / "src" / "core"
+    for path in core.glob("*.py"):
+        for node in ast.walk(ast.parse(path.read_text())):
+            if isinstance(node, ast.ImportFrom):
+                names = [node.module or ""]
+            elif isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            else:
+                continue
+            assert not any("editorial" in name.split(".") for name in names), path.name

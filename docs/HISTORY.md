@@ -8,6 +8,26 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-24 — the Editor's review lost its schema on a fallback (issue #174):**
+> `llm_client` picked the Ollama model, JSON schema, temperature and
+> timeout from the call's label: "starts with EDITORIAL", "equals
+> EDITORIAL_REVIEW". A probe showed that when a cloud provider failed
+> and the call fell back to Ollama, the label became
+> "EDITORIAL_REVIEW (fallback)": still editorial, no longer the review.
+> Ollama then got the Draft's schema and temperature, answered a Draft
+> without the review's booleans, and the Editor rejected the Original
+> without saying why. The caller now declares a `CallProfile`; the label
+> only names the call in logs, and `src/core` no longer imports the
+> editorial package. The Draft and review limits (250 characters, 40
+> Evidence passages, 3 IDs, the review fields) moved to one place in
+> `editorial_schemas`, read by the schemas, prompts and checks. Replies
+> keep their model, voice prefix and timeout. Guard:
+> `tests/editorial/test_editorial_bot.py` fails the primary provider and
+> checks the review schema and temperature reach Ollama, and pins each
+> limit across schema, prompt and check;
+> `tests/replies/test_reply_generator.py` pins every Reply voice's Ollama
+> request.
+
 > **2026-09-24 — pages opened in the default browser, not Safari:** every
 > page the bot read or wrote opened through `webbrowser.open`, which follows
 > the macOS default browser. On a Mac where Firefox is the default, X

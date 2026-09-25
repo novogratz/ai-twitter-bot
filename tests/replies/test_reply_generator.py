@@ -349,3 +349,70 @@ def test_the_language_decided_for_the_prompt_comes_back(llm):
     french = Voice("{tweet_text}{language_override}", "model", "TEST", language=LanguageRule.PARENT)
     assert reply_generator.generate(french, author="someone", text=FR).language == "fr"
     assert "FRENCH ONLY" in llm.prompts[-1]
+
+
+class OllamaServer:
+    """Stands in for Ollama's /api/generate behind urllib: records each
+    request body with its HTTP timeout, answers `answer`."""
+
+    def __init__(self, answer):
+        self.requests = []
+        self.answer = answer
+
+    def __call__(self, request, timeout=None):
+        import io
+        import json
+
+        self.requests.append((json.loads(request.data), timeout))
+        return io.BytesIO(json.dumps({"response": self.answer}).encode())
+
+
+REPLY_VOICES = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", "replyback")
+
+
+def reply_voice(name):
+    from src.replies import debate_bot, direct_reply as dr, replyback_agent
+
+    return {
+        "search": lambda: dr.reply_voice("someone"),
+        "search VIP": lambda: dr.reply_voice(sorted(dr.VIP_REPLY_ACCOUNTS)[0]),
+        "Graphseo": lambda: dr._vip_voice("Graphseo"),
+        "bestie": lambda: dr._vip_voice(dr.BESTIE_HANDLE),
+        "buddy": lambda: dr._vip_voice("vision_ia"),
+        "debate": lambda: debate_bot.VOICE,
+        "replyback": lambda: replyback_agent.VOICE,
+    }[name]()
+
+
+@pytest.mark.parametrize("route", ["ollama", "claude"])
+@pytest.mark.parametrize("name", REPLY_VOICES)
+def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, route):
+    """Issue #174 moved the Ollama settings from the label to a call profile
+    the caller declares. A Reply declares none and keeps what it had: the
+    reply model, the voice prefix, no schema, temperature 1.0 and its own
+    timeout floored at the default, whether Ollama answers first or after a
+    failed cloud call."""
+    import dataclasses
+    import urllib.request
+
+    from src.core import llm_client as llm
+    from src.replies import reply_generator
+
+    monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(1, "", "cloud down"))
+    ollama = OllamaServer("Batching decides the margin, not the model.")
+    monkeypatch.setattr(urllib.request, "urlopen", ollama)
+    voice = reply_voice(name)
+    voice = dataclasses.replace(voice, llm_options={**voice.llm_options, "force_provider": route})
+
+    generation = reply_generator.generate(voice, author="someone", text=EN)
+
+    assert generation.outcome is reply_generator.Outcome.WRITTEN
+    [(request, timeout)] = ollama.requests
+    assert request["model"] == "reply-model"
+    assert request["prompt"].startswith(llm._FUNNY_FORCER + "/no_think\n\n")
+    assert "format" not in request
+    assert request["options"]["temperature"] == 1.0
+    assert timeout == max(voice.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)

@@ -152,7 +152,6 @@ def contains_post_unsafe_leak(text: str) -> bool:
     return False
 
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
-EDITORIAL_OLLAMA_MODEL = os.environ.get("EDITORIAL_OLLAMA_MODEL", "gemma4:31b")
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
@@ -167,7 +166,28 @@ _FUNNY_FORCER = (
 )
 
 
-def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
+@dataclass(frozen=True)
+class CallProfile:
+    """What one kind of call asks of the local Ollama path, declared by its
+    caller. The label never selects any of it: it only names the call in
+    logs, fallback suffixes included. The default is the free-text call
+    the Replies make."""
+    ollama_model: Optional[str] = None  # None: OLLAMA_MODEL
+    schema: Optional[dict] = None  # sent as Ollama's `format`
+    temperature: float = 1.0
+    min_timeout: int = 0  # floor on the requested timeout, still capped by bedtime
+    voice_prefix: bool = True  # _FUNNY_FORCER opens the prompt
+
+
+TEXT_PROFILE = CallProfile()
+
+
+def _ollama_model(profile: CallProfile) -> str:
+    return profile.ollama_model or OLLAMA_MODEL
+
+
+def _run_ollama_http(prompt: str, label: str, timeout: int,
+                     profile: CallProfile = TEXT_PROFILE) -> "LLMResult":
     """Hit ollama's /api/generate directly — simple stateless single-shot.
 
     Previously used /api/chat with system+user split for KV cache reuse,
@@ -175,26 +195,23 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     via that path (80 tokens generated, all stripped — model doesn't
     speak the chat template correctly). /api/generate is reliable.
 
-    Front-loaded comedy forcer + temperature 1.0 for sharper outputs.
-    num_predict caps generation at ~600 chars so the model doesn't
+    `profile` sets the model, schema, temperature, timeout floor and voice
+    prefix; the default one front-loads the comedy forcer at temperature
+    1.0 for sharper outputs. num_predict caps generation at ~600 chars so the model doesn't
     ramble for minutes when codex/claude are unavailable.
     """
     import urllib.request
     import urllib.error
     from ..guards.active_hours import require_active, seconds_until_bedtime
     require_active()
-    editorial = label.startswith("EDITORIAL")
-    if editorial:
-        timeout = max(timeout, int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")))
+    timeout = max(timeout, profile.min_timeout)
     timeout = min(timeout, max(1, int(seconds_until_bedtime())))
-    from ..editorial.editorial_schemas import DRAFT_SCHEMA, REVIEW_SCHEMA
-    schema = REVIEW_SCHEMA if label == "EDITORIAL_REVIEW" else DRAFT_SCHEMA
-    full_prompt = ("" if editorial else _FUNNY_FORCER) + "/no_think\n\n" + prompt
+    full_prompt = (_FUNNY_FORCER if profile.voice_prefix else "") + "/no_think\n\n" + prompt
     payload = json.dumps({
-        "model": EDITORIAL_OLLAMA_MODEL if editorial else OLLAMA_MODEL,
+        "model": _ollama_model(profile),
         "prompt": full_prompt,
         "stream": False,
-        **({"format": schema} if editorial else {}),
+        **({"format": profile.schema} if profile.schema is not None else {}),
         "keep_alive": "24h",
         # Disable thinking-mode (qwen3.6 uncensored variants stream their
         # chain-of-thought into a separate `thinking` field while leaving
@@ -202,7 +219,7 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
         # generation mode and the answer lands in `response`).
         "think": False,
         "options": {
-            "temperature": (0.2 if label == "EDITORIAL_REVIEW" else 0.65) if editorial else 1.0,
+            "temperature": profile.temperature,
             "top_p": 0.95,
             "repeat_penalty": 1.15,
             # The long Décode prompts are regularly 16k-24k chars before
@@ -540,6 +557,7 @@ def run_llm(
     cwd: Optional[str] = None,
     force_provider: Optional[str] = None,
     structured_output: bool = False,
+    profile: CallProfile = TEXT_PROFILE,
 ) -> LLMResult:
     from ..guards.active_hours import require_active
     require_active()
@@ -556,11 +574,11 @@ def run_llm(
         # 0 posted in one hour because every call hit the 45s wall.
         effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
         log.info(
-            f"[LLM] {label}: ollama primary → ollama HTTP / "
-            f"{EDITORIAL_OLLAMA_MODEL if label.startswith('EDITORIAL') else OLLAMA_MODEL} "
+            f"[LLM] {label}: ollama primary → ollama HTTP / {_ollama_model(profile)} "
             f"(requested timeout {effective_timeout}s)."
         )
-        ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+        ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout,
+                                         profile=profile)
         if not _should_fallback(ollama_result):
             usable = unwrap_text(ollama_result.stdout, structured_output=structured_output)
             if usable.strip():
@@ -607,9 +625,10 @@ def run_llm(
             log.info(
                 f"[LLM] {label}: codex locked until "
                 f"{lockout.isoformat(timespec='minutes')} — "
-                f"using ollama HTTP / {OLLAMA_MODEL} (timeout {effective_timeout}s)."
+                f"using ollama HTTP / {_ollama_model(profile)} (timeout {effective_timeout}s)."
             )
-            return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+            return _run_ollama_http(prompt, label=label, timeout=effective_timeout,
+                                    profile=profile)
 
     # Claude lockout REMOVED (operator 2026-06-06: "WE ARE UNLIMITED TOKEN —
     # remove this completely"). Claude is tried on EVERY call; if a single
@@ -641,7 +660,8 @@ def run_llm(
             fb = _fallback_provider(provider)
             if fb in {"ollama", "opencode"}:
                 effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-                return _run_ollama_http(prompt, label=f"{label} (codex locked)", timeout=effective_timeout)
+                return _run_ollama_http(prompt, label=f"{label} (codex locked)",
+                                        timeout=effective_timeout, profile=profile)
             if fb:
                 fb_model = _fallback_model(model, fb)
                 fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, fb)
@@ -663,9 +683,10 @@ def run_llm(
         log.info(
             f"[LLM] {label}: primary {provider}/{model} failed "
             f"(exit {result.returncode}) — falling back to ollama HTTP / "
-            f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
+            f"{_ollama_model(profile)} (timeout {effective_timeout}s)."
         )
-        return _run_ollama_http(prompt, label=f"{label} (fallback)", timeout=effective_timeout)
+        return _run_ollama_http(prompt, label=f"{label} (fallback)", timeout=effective_timeout,
+                                profile=profile)
 
     fallback_model = _fallback_model(model, fallback_provider)
     fallback_cmd = _build_cmd(
