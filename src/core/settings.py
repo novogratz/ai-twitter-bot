@@ -29,11 +29,13 @@ every access. Never copy one at module level, `X = settings.get("X")` or
 Tests change settings only through the `settings_override` fixture
 (tests/conftest.py), which restores them.
 
-Layout, for the migration lots of #187 working in parallel: one section per
-lot, opened by a header comment and kept apart from the next by a blank line,
-so no two lots edit the same hunk. A lot declares what it migrates in its own
-section and drops those keys from its `_pending(...)` call there; #200 checks
-nothing is left pending.
+No module reads the environment but this one and `config.dry_run()`
+(tests/core/test_settings.py). docs/CONFIGURATION.md carries a reference
+generated from the declarations below: after changing one, run
+`uv run python bin/configuration_doc.py --write`.
+
+Layout: one section per lot of #187, opened by a header comment and kept
+apart from the next by a blank line.
 """
 import os
 import re
@@ -59,9 +61,9 @@ class Setting:
 
 
 DECLARED: dict[str, Setting] = {}
-# Keys a module not migrated yet still reads from the environment itself:
-# `.env` may carry them, unchecked, until their lot declares them.
-PENDING: set[str] = set()
+# Declared settings no code reads any more: accepted so a `.env` that still
+# sets them starts, documented as to remove from it.
+UNUSED: set[str] = set()
 # Keys the shell scripts outside the engine read after sourcing `.env`.
 SCRIPT_KEYS: set[str] = set()
 
@@ -103,8 +105,9 @@ def _declare(name, type_, default, description, *, floor=None, ceiling=None):
     DECLARED[name] = setting
 
 
-def _pending(*names):
-    PENDING.update(names)
+def _declare_unused(name, type_, default):
+    _declare(name, type_, default, "No effect: remove it from .env.")
+    UNUSED.add(name)
 
 
 def _script_keys(*names):
@@ -198,7 +201,7 @@ _declare("LLM_DISABLE_FALLBACK", bool, False, "1 turns the fallback off whatever
 _declare("LLM_FALLBACK_MODEL", str, "", "Model of every fallback call; blank, the fallback CLI's own below.")
 _declare("CODEX_FALLBACK_MODEL", str, "gpt-5.4-mini", "Codex model as the fallback; blank means this default.")
 _declare("GEMINI_FALLBACK_MODEL", str, "gemini-2.0-flash", "Gemini model as the fallback; blank means this default.")
-_declare("OPENCODE_FALLBACK_MODEL", str, "opencode/big-pickle", "No effect; kept so an old .env still starts.")
+_declare_unused("OPENCODE_FALLBACK_MODEL", str, "opencode/big-pickle")
 _declare("FR_FORCED_REPLY_HANDLES", str, "Graphseo", "Comma-separated handles whose posts always get French Replies.")
 
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
@@ -209,12 +212,11 @@ _declare("BESTIE_HANDLE", str, "TheBTCTherapist", "VIP account whose posts get t
 _declare("VIP_SCAN_HANDLES", str, "Graphseo,TheBTCTherapist", "Comma-separated accounts the direct_reply VIP scan answers.")
 _declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
 _declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
-# No reader left: declared so an .env that still sets them starts.
-_declare("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999, "Unused.")
-_declare("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150, "Unused.")
-_declare("DIRECT_REPLY_PROFILE_SCAN_LIMIT", int, 25, "Unused.")
-_declare("DIRECT_REPLY_HOT_QUERY_LIMIT", int, 20, "Unused.")
-_declare("DIRECT_REPLY_LIVE_QUERY_LIMIT", int, 20, "Unused.")
+_declare_unused("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999)
+_declare_unused("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150)
+_declare_unused("DIRECT_REPLY_PROFILE_SCAN_LIMIT", int, 25)
+_declare_unused("DIRECT_REPLY_HOT_QUERY_LIMIT", int, 20)
+_declare_unused("DIRECT_REPLY_LIVE_QUERY_LIMIT", int, 20)
 _declare("ENABLE_DEBATES", bool, True, "Let the debate job answer mentions; read at each cycle.")
 _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may ship.")
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
@@ -252,7 +254,7 @@ _CLI_PASSTHROUGH = re.compile(r"^(?:[A-Z0-9_]+_API_KEY|OLLAMA_HOST|(?:ANTHROPIC|
 
 
 def known_keys() -> set[str]:
-    return set(DECLARED) | PENDING | SCRIPT_KEYS
+    return set(DECLARED) | SCRIPT_KEYS
 
 
 def _is_known(key: str) -> bool:
@@ -263,7 +265,8 @@ def load(env_file: str | None = None, environ=None) -> None:
     """Read `.env` once, check it, resolve every setting. Later calls do nothing.
 
     Keys in `.env` also reach `environ` (os.environ by default) unless it
-    already holds them, for the modules that still read it themselves.
+    already holds them, for `config.dry_run()` and the model CLIs, which
+    read it.
     """
     global _values, _warnings
     if _values is not None:

@@ -8,6 +8,40 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — configuration reference generated from the code (issue #200):**
+> `docs/CONFIGURATION.md` had drifted: 59 keys the code read were missing,
+> 8 documented defaults differed from the code (`PIN_MIN_LIKES` 5 against
+> 2), and `.env.example` described another account (`CryptoAIDecode`,
+> French content) with like caps of 22 a cycle and 1,800 a day, above the
+> policy's 10 and 500. No module reads the environment any more but
+> `src/core/settings.py` and `config.dry_run()`; the reference is generated
+> from the declarations and a test fails while it is stale.
+> `scripts/suggest_improvements.py`, the 2026-06-24 suggester agent, read
+> `SUGGEST_INTERVAL_SECONDS` from the environment and nothing started it
+> any more: it was removed. The legacy tables left the page. What they
+> recorded:
+>
+> - Retired by issue #107 with the quote, repost and boost branches:
+>   `FAVORITE_REPOSTS_PER_CYCLE`, `FAVORITE_REPOST_MIN_ENGAGEMENT`,
+>   `FAVORITE_REPOST_MAX_AGE_MINUTES`, `FEED_SWEEP_QUOTE_MIN_LIKES`,
+>   `FEED_SWEEP_MAX_QUOTES_PER_CYCLE`, `FEED_SWEEP_BANGER_LIKES`,
+>   `BLITZ_MAX_QUOTES_PER_CYCLE`.
+> - Retired by issue #168 with the unfollow chokepoint:
+>   `MAX_UNFOLLOWS_PER_DAY`; `bin/mass_unfollow.py` is bounded by `--max`.
+> - Retired by issue #170, parsed but read by no Python code:
+>   `MAX_NEWS_PER_DAY`, `MAX_HOTAKES_PER_DAY`, `MAX_QUOTES_PER_DAY`,
+>   `MAX_QUOTE_REPOSTS_PER_DAY`, `MAX_RETWEETS_PER_DAY`,
+>   `MAX_REPLIES_PER_DAY`, `HOTAKE_MODEL`, `GROWTH_ENHANCEMENT`,
+>   `FOLLOW_BACK_RATIO`, `RETWEET_ENGAGEMENT_THRESHOLD`,
+>   `BOOST_ENGAGEMENT_POSTS`, `FOLLOWING_STEADY_STATE`,
+>   `REPLY_LANGUAGE_MATCH`, `ENABLE_AI_DISCOVERY`.
+> - The 2026-06-07 live values (viral focus, quality barbell): 100 quotes a
+>   day with 5-minute jittered spacing (`MIN_SECONDS_BETWEEN_QUOTES` 300,
+>   `QUOTE_JITTER_SECONDS` 180), replies uncapped, 4 originals a day on
+>   US-market slots, 2 retweets a day, follows capped at 300 in total, 150
+>   in the low phase, 20 a day 600 seconds apart, curator window 4 days,
+>   `PINNED_TRACKED_HANDLES` `TheBTCTherapist,Graphseo`.
+
 > **2026-09-25 — two guardrails nothing read (issue #194):** `AGENTS.md`
 > listed `REPOST_MAX_AGE_HOURS` and `personality_store.HARD_RULES_BLOCK`
 > as operator guardrails, but no code read either. The 48-hour clamp

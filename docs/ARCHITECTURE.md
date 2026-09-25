@@ -686,8 +686,8 @@ ignores every state file and tracks the Operator's), `test_scheduler.py` (the jo
 `build_scheduler()` registers), `test_voice.py` (`core_identity.md` and the
 Voice block rendered from it), `test_mass_unfollow.py`
 (`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
-`tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`,
-`scripts/` and `tests/`, subfolders included, with `ast`. It fails when an
+`tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`
+and `tests/`, subfolders included, with `ast`. It fails when an
 intra-project import, function-local or inside `try/except` included, names a
 missing module or an undefined name, imports a module under `src/` by its bare
 name instead of through its package, or crosses a package folder without

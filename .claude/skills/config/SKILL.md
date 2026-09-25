@@ -1,16 +1,18 @@
 ---
 name: config
 description: View and edit bot configuration - pacing, follows, models, settings
-allowed-tools: Read Edit
+allowed-tools: Read Edit Bash(uv run python bin/configuration_doc.py*)
 ---
 
 Show and edit config:
 
-1. Read `src/core/config.py` and `docs/CONFIGURATION.md` (its top table is
-   current; the rest documents legacy env vars) - display the settings
-2. Show which env vars can override them (`.env`)
-3. If the operator wants changes, edit `.env` or `src/core/config.py`
-4. Remind that changes take effect at restart
+1. Read `docs/CONFIGURATION.md` (its reference is generated from
+   `src/core/settings.py`) and `src/core/config.py` - display the settings
+2. Show which settings `.env` sets
+3. If the operator wants changes, edit `.env`; a new or changed declaration
+   goes in `src/core/settings.py`, then
+   `uv run python bin/configuration_doc.py --write`
+4. Remind that any change takes effect at restart only
 
 Hard ceilings cannot be lifted from `.env`, and are
 not edited without an explicit operator request that also updates

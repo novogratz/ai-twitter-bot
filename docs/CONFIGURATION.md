@@ -1,201 +1,221 @@
-# Active editorial settings (September 23, 2026)
+# Configuration
 
-The current policy is [documented here](EDITORIAL_POLICY.md). These settings
-supersede the historical surfaces listed below:
+Every engine setting is declared once in `src/core/settings.py`, with its
+type, default and bounds, and set in `.env`, which git does not track.
+`.env.example` is the starting point for @TheAIShrink.
+What describes the Account rather than the engine (handle, language, Slots,
+feeds, trusted hosts, relevance filter) lives in
+`accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
+`[limits]` may tighten an engine bound, never lift it, and `.env` wins over it.
 
-| Setting | Effective value |
+- `main.py` reads `.env` once at start. A variable already set in the
+  process environment wins over `.env`.
+- A key `settings.py` does not know, or a value its type rejects (a switch
+  takes `0` or `1`, a number a number), stops the start with a message
+  naming the key; `main.py --dry-run` stops on the same keys. Credentials
+  the model CLIs read (`*_API_KEY`, `OLLAMA_HOST`, `OPENAI_*`,
+  `ANTHROPIC_*`...) may sit in `.env` for those subprocesses.
+- A value past its floor or ceiling is brought back to the bound and logged
+  as a `[SETTINGS]` warning.
+- **Any change to a setting takes effect at the next restart.** Nothing
+  re-reads `.env` while the bot runs, `DRY_RUN` included.
+
+The reference at the bottom of this page is generated from the declarations:
+after adding or changing one, run
+`uv run python bin/configuration_doc.py --write`. `tests/core/test_settings.py`
+fails while it is stale, and on any key this page names that the engine does
+not know.
+
+## Policy ceilings
+
+The current rules are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). These
+hold whatever `.env` says:
+
+| Rule | Where |
 |---|---|
-| Working hours | 04:30–23:30 America/Toronto, DST aware (`active_hours.WAKE`, `BEDTIME`) |
-| `BOT_ACCOUNT` | `theaishrink`: the Account, `accounts/<name>/account.toml` (handle, language, Slots, feeds, Evergreen topics, trusted hosts, relevance filter). Missing, or with an unknown key or a badly typed value, it stops the start; its `[limits]` may tighten an engine bound, never lift it; `.env` wins over it ([Account](OPERATIONS.md#account)) |
-| `MIN_TARGET_POSTS_PER_DAY` | 3 |
-| `TARGET_POSTS_PER_DAY` | 6 |
-| `MAX_PROFILE_POSTS_PER_DAY` | 8, hard combined ceiling |
-| `MAX_ORIGINALS_PER_DAY` | 8 maximum; environment may lower it |
+| Working hours 04:30–23:30 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
+| `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py` |
+| `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py` |
+| `MAX_ORIGINALS_PER_DAY` | Ceiling 8: `.env` may lower it only |
+| `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
+| `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Replies per day | Unlimited: no setting caps them |
-| `MIN_SECONDS_BETWEEN_POSTS` | At least 1200 (20 minutes); the environment may lengthen it |
-| `POST_JITTER_SECONDS` | 0; a random extra gap after each original, drawn once per post; a negative value reads as 0 |
-| `MIN_SECONDS_BETWEEN_REPLIES`, `REPLY_JITTER_SECONDS` | Existing environment settings |
-| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | 4 debate turns per author per Toronto day, shared by `debate_job`, `replyback_job` and `babysit_job`; read at call time |
-| `PROFILE_LLM_PROVIDER`, `REPLY_LLM_PROVIDER` | Existing configured providers, `ollama` by default. An unknown name fails every call it routes without running anything; the start logs it and `--dry-run` lists it under `unknown_llm_providers` |
-| `LLM_FALLBACK_CLI` | Unset: no fallback, a failed call fails, Originals and Replies alike. `codex` (or `gemini`, `ollama`) opts into one; an unknown name fails the fallback without running anything. Ignored, and logged at start and listed by `--dry-run` under `ignored_llm_fallbacks`: `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself without `LLM_FALLBACK_MODEL`. Two calls leave the configured provider without it: the Replies to @Graphseo run on the Claude CLI whenever it is installed, and a codex primary under a cached usage lockout (`codex_lockout.json`) goes to local Ollama |
-| `FR_FORCED_REPLY_HANDLES` | `Graphseo`: parents always answered in French by the search and feed-sweep Replies; `judge_reply` refuses an English-looking reply to them; read at call time |
-| `LIKE_BOT_PER_CYCLE`, `LIKE_BOT_DAILY_CAP`, `LIKE_BOT_CYCLE_SECONDS` | 10 posts per cycle, 500 likes a day, 30 s per cycle; declared in `src/core/settings.py`, read at each like cycle |
-| `DRY_RUN` | `1` logs every write instead of sending it; read at each call through `config.dry_run()` |
+| Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` plus `REPLY_JITTER_SECONDS` space them |
+| `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
-Legacy profile job caps do not add posting slots.
+`DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, the like, follow and Reply spacing
+settings carry no bound yet (issue #201): raising one past its default needs
+an operator request and an update to the policy.
 
-The quote, repost and boost branches left the live jobs (issue #107), and no
-code reads the variables that gated them any more: `FAVORITE_REPOSTS_PER_CYCLE`, `FAVORITE_REPOST_MIN_ENGAGEMENT`,
-`FAVORITE_REPOST_MAX_AGE_MINUTES`, `FEED_SWEEP_QUOTE_MIN_LIKES`,
-`FEED_SWEEP_MAX_QUOTES_PER_CYCLE`, `FEED_SWEEP_BANGER_LIKES`,
-`BLITZ_MAX_QUOTES_PER_CYCLE`.
+## Models and providers
 
-The bot never unfollows: the unfollow chokepoint left `src/` with its cap
-(issue #168), and no code reads `MAX_UNFOLLOWS_PER_DAY` any more.
-`bin/mass_unfollow.py`, run by hand, is bounded by its own `--max`.
+- `AI_CLI` picks the primary provider, `ollama` by default;
+  `PROFILE_LLM_PROVIDER` and `REPLY_LLM_PROVIDER` route the profile surfaces
+  and the Replies, `ollama` both. An unknown provider name fails every call
+  it routes without running anything; the start logs it and `--dry-run`
+  lists it under `unknown_llm_providers`.
+- `LLM_FALLBACK_CLI` unset means no fallback: a failed call fails, Originals
+  and Replies alike. `codex` (or `gemini`, `ollama`) opts into one. Ignored,
+  logged at start and listed by `--dry-run` under `ignored_llm_fallbacks`:
+  `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself
+  without `LLM_FALLBACK_MODEL`. A fallback runs `LLM_FALLBACK_MODEL`, else
+  `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
+- Two calls leave the configured provider without a fallback: the Replies to
+  @Graphseo run on the Claude CLI whenever it is installed, with
+  `PRIORITY_REPLY_MODEL`; a codex primary under a cached usage lockout
+  (`codex_lockout.json`) goes to local Ollama.
+- `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
+  CLI (codex, claude, gemini). Unset or blank, the call takes the default of
+  the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
+  runs `EDITORIAL_OLLAMA_MODEL` for Originals and `OLLAMA_MODEL` for the
+  rest, the model `bin/run.sh` pre-warms. Nor does OpenCode, nor a fallback.
 
-`config.py` stopped parsing the variables no Python code read (issue #170):
-`MAX_NEWS_PER_DAY`, `MAX_HOTAKES_PER_DAY`, `MAX_QUOTES_PER_DAY`,
-`MAX_QUOTE_REPOSTS_PER_DAY`, `MAX_RETWEETS_PER_DAY`, `MAX_REPLIES_PER_DAY`,
-`HOTAKE_MODEL`, `GROWTH_ENHANCEMENT`, `FOLLOW_BACK_RATIO`,
-`RETWEET_ENGAGEMENT_THRESHOLD`, `BOOST_ENGAGEMENT_POSTS`,
-`FOLLOWING_STEADY_STATE`, `REPLY_LANGUAGE_MATCH`, `ENABLE_AI_DISCOVERY`. The
-legacy tables below still list some of them. `ENABLE_AI_MAINTENANCE` and
-`ENABLE_CODEX_OPERATOR` are read by `operator_cycle.sh` only.
+## Retired keys
 
----
+A key no code reads any more is not declared: a `.env` that still sets one
+stops the start and names it. Delete the line. The few declared settings
+that no longer have an effect are listed under
+[No effect](#no-effect-remove-from-env) below. The lists of
+keys retired by issues #107, #168 and #170, and the earlier configuration
+tables, are in [HISTORY.md](HISTORY.md).
 
-## Historical module configuration reference
+<!-- BEGIN settings reference: generated by bin/configuration_doc.py --write, do not edit -->
 
-# Configuration reference
+## Settings reference
 
-Every knob is an environment variable, settable in `.env`. `main.py` reads `.env` once at start through `src/core/settings.py`, which declares every key the engine reads; a key it does not know, or a badly typed value, stops the start, and `main.py --dry-run` names the key. Defaults are tuned for an English-content / global-audience build with conservative caps.
+Every setting `src/core/settings.py` declares, in declaration order. A value
+past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 
----
+| Setting | Type | Default | Bounds | Description |
+|---|---|---|---|---|
+| `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
+| `BOT_HANDLE` | str | `TheAIShrink` |  | X handle the bot runs, without @; the Account's handle unless set. |
+| `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
+| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
+| `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
+| `REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
+| `PRIORITY_REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
+| `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for profile surfaces; blank means none. |
+| `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for Replies; blank means none. |
+| `DRY_RUN` | 0 or 1 | `0` |  | 1 logs every write instead of doing it; config.dry_run() reads it at call time. |
+| `MAX_ORIGINALS_PER_DAY` | int | `8` | ceiling `8` | Originals per Toronto day. |
+| `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
+| `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
+| `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` |  | Minimum gap between two Replies. |
+| `REPLY_JITTER_SECONDS` | int | `7` |  | Random delay added to the Reply spacing. |
+| `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
+| `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
+| `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |
+| `FOLLOW_RATIO_CEILING` | float | `0.8` |  | Following-to-followers ratio when the ratio is enforced. |
+| `FOLLOW_TOTAL_CAP` | int | `300` |  | Accounts followed in total. |
+| `FOLLOW_GROWTH_MODE` | 0 or 1 | `0` |  | Untie the following ceiling from the followers count. |
+| `FOLLOW_LOW_PHASE_CEILING` | int | `150` |  | Following ceiling while followers are under FOLLOW_LOW_PHASE_FOLLOWERS. |
+| `FOLLOW_LOW_PHASE_FOLLOWERS` | int | `300` |  | Followers count that ends the low phase. |
+| `MIN_SECONDS_BETWEEN_FOLLOWS` | int | `600` |  | Minimum gap between two follows. |
+| `FOLLOW_SPACING_JITTER_SECONDS` | int | `300` |  | Random delay added to the follow spacing. |
+| `MAX_FOLLOWS_PER_DAY` | int | `20` |  | Follows per day. |
+| `CHURN_COOLDOWN_DAYS` | int | `30` |  | Days before an account followed or unfollowed may be touched again. |
+| `FOLLOW_ACTION_JITTER_SECONDS` | int | `45` |  | Random pause around a follow action. |
+| `BAN_SHORT_TERM_PRICE_TARGETS` | 0 or 1 | `1` |  | Refuse text carrying a short-term price target. |
+| `ENABLE_REPLY_SEARCH` | 0 or 1 | `0` |  | Schedule the search reply job (main.py, src/replies/reply_bot.py). |
+| `CONTENT_LANG_PRIMARY` | str | `en` |  | Primary content language, en or fr (content_guard, editorial_bot); the Account's language unless set. |
+| `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | int | `4` |  | Debate turns per Engager per Toronto day. |
+| `DUP_JACCARD_THRESHOLD` | float | `0.45` |  | Content-word Jaccard that makes an Original a duplicate. |
+| `DUP_CONTAINMENT_THRESHOLD` | float | `0.6` |  | Content-word containment that makes an Original a duplicate. |
+| `DUP_SHARED_BIGRAMS` | int | `3` |  | Shared content bigrams that make an Original a duplicate. |
+| `DUP_TOPIC_WINDOW_HOURS` | float | `24.0` |  | Hours a post counts for the same-story check. |
+| `DUP_TOPIC_SHARED_WORDS` | int | `3` |  | Content words shared with a same-entity post that make a same story. |
+| `DUP_TEXT_WINDOW_HOURS` | float | `48.0` |  | Hours a post counts for the text-similarity checks. |
+| `REPLY_MIN_CHARS` | int | `25` |  | Shortest Reply content_guard accepts. |
+| `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
+| `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
+| `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
+| `FOLLOW_REQUIRE_ENGLISH` | 0 or 1 | `1` |  | Refuse to follow a profile that does not read English. |
+| `FOLLOW_REQUIRE_NICHE` | 0 or 1 | `1` |  | Refuse to follow a non-Engager whose bio is off-niche. |
+| `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
+| `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
+| `PROFILE_VISIT_ALLOWLIST` | str | `TheBTCTherapist,Graphseo` |  | Comma-separated profiles the scraper may visit, besides our own. |
+| `REPLY_LIKE_PARENT_PROB` | float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
+| `NOTIFY_LIKE_REPLIES_COUNT` | int | `3` |  | Replies under our latest post the notify job likes. |
+| `OLLAMA_MODEL` | str | `qwen3.6:35b-a3b` |  | Ollama model of a call profile that names none; bin/run.sh pre-warms it. |
+| `OLLAMA_BASE_URL` | str | `http://localhost:11434` |  | Ollama HTTP endpoint; bin/run.sh pre-warms there. |
+| `OLLAMA_NUM_CTX` | int | `32768` |  | Ollama context window, in tokens. |
+| `OLLAMA_NUM_PREDICT` | int | `1800` |  | Tokens Ollama may generate per call. |
+| `LLM_TIMEOUT_SECONDS` | int | `180` |  | Default model-call timeout, and Ollama's floor. |
+| `LLM_FALLBACK_CLI` | str | blank |  | Fallback provider: codex, gemini or ollama; blank means none. |
+| `LLM_DISABLE_FALLBACK` | 0 or 1 | `0` |  | 1 turns the fallback off whatever LLM_FALLBACK_CLI says. |
+| `LLM_FALLBACK_MODEL` | str | blank |  | Model of every fallback call; blank, the fallback CLI's own below. |
+| `CODEX_FALLBACK_MODEL` | str | `gpt-5.4-mini` |  | Codex model as the fallback; blank means this default. |
+| `GEMINI_FALLBACK_MODEL` | str | `gemini-2.0-flash` |  | Gemini model as the fallback; blank means this default. |
+| `FR_FORCED_REPLY_HANDLES` | str | `Graphseo` |  | Comma-separated handles whose posts always get French Replies. |
+| `EDITORIAL_OLLAMA_MODEL` | str | `gemma4:31b` |  | Ollama model that drafts and reviews Originals. |
+| `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
+| `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
+| `BESTIE_HANDLE` | str | `TheBTCTherapist` |  | VIP account whose posts get the bestie prompt. |
+| `VIP_SCAN_HANDLES` | str | `Graphseo,TheBTCTherapist` |  | Comma-separated accounts the direct_reply VIP scan answers. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
+| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
+| `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
+| `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
+| `DEBATE_MAX_AGE_HOURS` | float | `24.0` |  | Oldest mention the debate job answers. |
+| `BABYSIT_WINDOW_MINUTES` | float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
+| `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
+| `PINNED_TRACKED_HANDLES` | str | `TheBTCTherapist,Graphseo,Mindset4Money_X` |  | Comma-separated handles the curator always tracks first (account_curator). |
+| `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |
+| `CURATOR_TRACKED_MAX` | int | `40` |  | Earned accounts the curator tracks, pinned ones aside. |
+| `CURATOR_MIN_ENGAGEMENTS` | int | `3` |  | On-lane engagements an author needs to be tracked. |
+| `CURATOR_DISCOVERED_PER_DAY` | int | `3` |  | Accounts the curator may add to the whitelist discovered tier per day. |
+| `CURATOR_DISCOVERED_MAX` | int | `50` |  | Accounts the whitelist discovered tier holds at most. |
+| `CURATOR_PROMOTE_MIN_ENGAGEMENTS` | int | `5` |  | On-lane engagements an author needs to be promoted to the whitelist. |
+| `PIN_MIN_LIKES` | int | `2` |  | Likes an own post needs before pin_job may pin it. |
+| `PIN_MAX_AGE_DAYS` | int | `7` |  | Days after which a pin no longer defends its slot with the 1.3x rule. |
+| `LIKE_TOP_TAB_PROBABILITY` | float | `0.55` |  | Probability like_job searches the Top tab instead of Live. |
+| `LIKE_BOT_PER_CYCLE` | int | `10` |  | Search posts like_job hands to like_tweet per cycle. |
+| `LIKE_BOT_DAILY_CAP` | int | `500` |  | Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED. |
+| `LIKE_BOT_CYCLE_SECONDS` | float | `30.0` |  | Seconds after taking the Safari lock past which like_job starts no like. |
+| `FOLLOWBACK_CAP` | int | `8` |  | Follow-back attempts per followback_job cycle. |
+| `ENABLE_FOLLOW_ENGAGERS` | 0 or 1 | `1` |  | Run follow_engagers_job. |
+| `FOLLOW_ENGAGERS_PER_DAY` | int | `10` |  | Engagers follow_engagers_job follows per Toronto day. |
+| `FOLLOW_ENGAGERS_PER_CYCLE` | int | `2` |  | Engagers follow_engagers_job follows per cycle. |
 
-## Identity
+### `MODEL_DEFAULTS`: the model of a CLI when its setting is unset
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `BOT_HANDLE` | `TheAIShrink` | Your X handle, without `@`. Used in profile URLs + log filtering. |
+| Setting | claude | codex | gemini |
+|---|---|---|---|
+| `NEWS_MODEL` | `claude-opus-4-8` | `gpt-5.4-mini` | `gemini-2.0-flash` |
+| `REPLY_MODEL` | `claude-haiku-4-5-20251001` | `gpt-5.4-mini` | `gemini-1.5-flash` |
+| `PRIORITY_REPLY_MODEL` | `claude-haiku-4-5-20251001` | `gpt-5.4-mini` | `gemini-2.0-flash` |
 
----
+### No effect: remove from `.env`
 
-## AI provider
+No code reads these any more. They stay declared so a `.env` that still
+sets them starts; delete them from it.
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. An unknown name fails the call; a CLI not installed fails it too, and no other CLI stands in. |
-| `LLM_FALLBACK_CLI` | (unset) | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. Unset or empty: no fallback. Naming the primary gives no fallback unless `LLM_FALLBACK_MODEL` is set. A codex primary under a cached usage lockout goes to local Ollama even when unset. |
-| `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
-| `CODEX_FALLBACK_MODEL` | `gpt-5.4-mini` | Codex model as the fallback when `LLM_FALLBACK_MODEL` is unset; blank means the default. |
-| `GEMINI_FALLBACK_MODEL` | `gemini-2.0-flash` | Gemini model as the fallback when `LLM_FALLBACK_MODEL` is unset; blank means the default. |
-| `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | No effect; kept so an old `.env` still starts. An Ollama fallback runs the call profile's model. |
-| `LLM_DISABLE_FALLBACK` | `0` | Set to `1` to disable automatic LLM fallback. |
-| `OLLAMA_MODEL` | `qwen3.6:35b-a3b` | Ollama model of every call whose profile names none, the Replies. `bin/run.sh` pre-warms it. |
-| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama HTTP endpoint, for the bot and the `bin/run.sh` pre-warm. |
-| `OLLAMA_NUM_CTX`, `OLLAMA_NUM_PREDICT` | `32768`, `1800` | Ollama context window and generation cap, in tokens. |
-| `LLM_TIMEOUT_SECONDS` | `180` | Default model-call timeout, and Ollama's floor. |
-| `NEWS_MODEL` | (unset) | CLI model for Originals, on the primary CLI. Unset or blank, each call takes the default of the CLI it runs (`settings.MODEL_DEFAULTS`): `gpt-5.4-mini` on codex, `claude-opus-4-8` on claude, `gemini-2.0-flash` on gemini. Ollama, OpenCode and a fallback never read it. |
-| `REPLY_MODEL` | (unset) | CLI model for Replies. Unset or blank: `gpt-5.4-mini` on codex, `claude-haiku-4-5-20251001` on claude, `gemini-1.5-flash` on gemini. |
-| `PRIORITY_REPLY_MODEL` | (unset) | CLI model for VIP and @Graphseo Replies. Unset or blank: `gpt-5.4-mini` on codex, `claude-haiku-4-5-20251001` on claude, `gemini-2.0-flash` on gemini. |
-| `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
-| `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
+| Setting | Type | Default | Bounds | Description |
+|---|---|---|---|---|
+| `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_FEED_SCAN_LIMIT` | int | `150` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_PROFILE_SCAN_LIMIT` | int | `25` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_HOT_QUERY_LIMIT` | int | `20` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_LIVE_QUERY_LIMIT` | int | `20` |  | No effect: remove it from .env. |
 
----
+### Keys the shell scripts read
 
-## Daily caps — original content
+Not read by the engine: these scripts read them after sourcing `.env`.
 
-Original content uses LLM cycles + appears on the profile feed; the cap balances freshness with profile-noise.
+| Key | Read by |
+|---|---|
+| `CODEX_BIN` | `operator_cycle.sh` |
+| `ENABLE_AI_MAINTENANCE` | `operator_cycle.sh` |
+| `ENABLE_CODEX_OPERATOR` | `operator_cycle.sh` |
+| `LLM_MAX_CALLS_PER_DAY` | `operator_cycle.sh`, `bot_watchdog.sh` |
+| `LLM_MAX_CALLS_PER_HOUR` | `operator_cycle.sh`, `bot_watchdog.sh` |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `operator_cycle.sh`, `bot_watchdog.sh` |
+| `OPERATOR_MODEL` | `operator_cycle.sh` |
+| `QUOTE_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
+| `ROAST_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `MAX_NEWS_PER_DAY` | `5` | Real sourced Décode insight posts. |
-| `MAX_HOTAKES_PER_DAY` | `3` | Quick takes on AI / crypto / macro stories. |
-
----
-
-## Daily caps — reshare + engagement
-
-Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much higher.
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `MAX_QUOTES_PER_DAY` | `300` | Bot-level cap for the quote bot (the chokepoint cap `MAX_QUOTE_REPOSTS_PER_DAY`=150 is the binding one). |
-| `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
-| `MAX_REPLIES_PER_CYCLE` | `3` | Broad reply-bot cap per cycle. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | `3` | Direct search/VIP reply cap per cycle; keeps the 2-minute job from overlapping itself. |
-| `DIRECT_REPLY_MAX_EN_PER_CYCLE` | `5` | English reply cap inside one direct-reply cycle. |
-
----
-
-## Cycle volumes
-
-Per-cycle quotas (not daily caps):
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `LIKE_BOT_PER_CYCLE` | `10` | Search posts `like_job` hands to `like_tweet` per cycle; at most that many likes. |
-| `LIKE_BOT_DAILY_CAP` | `500` | Daily circuit breaker on the likes `like_job` clicked: `LIKED` plus `UNCONFIRMED`, a click the page did not confirm. |
-| `LIKE_BOT_CYCLE_SECONDS` | `30` | Seconds after `like_job` takes the Safari lock past which it starts no like; bounds how long it holds the browser. |
-| `FOLLOWBACK_CAP` | `8` | Follow-back attempts per cycle. |
-| `EARLY_BIRD_MAX_REPLIES_PER_CYCLE` | `4` | Early-bird replies per cycle. |
-
----
-
-## Quality + safety gates
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `DIRECT_REPLY_MAX_AGE_MINUTES` | `1440` | Max age for direct replies. Keeps big-post search from commenting on old viral tweets. |
-| `LIKE_TOP_TAB_PROBABILITY` | `0.55` | Probability the like bot uses X Top search instead of Live to train For You toward the niche. |
-| `PIN_MIN_LIKES` | `5` | Min likes on a post before it's pinnable. |
-
----
-
-## Language
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
-
----
-
-## Self-modification toggles
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `ENABLE_AI_MAINTENANCE` | `0` | Lets the 4-hour `operator_cycle.sh` spend a Codex CLI run. The in-process agents it once enabled were removed. |
-| `ENABLE_AI_DISCOVERY` | `0` | No code reads it; the discover and scout agents it gated were removed. |
-
----
-
-## .env.example template
-
-```env
-BOT_HANDLE=TheAIShrink
-AI_CLI=ollama
-LLM_FALLBACK_CLI=
-NEWS_MODEL=gpt-5.4-mini
-HOTAKE_MODEL=gpt-5.4-mini
-REPLY_MODEL=gpt-5.4-mini
-PRIORITY_REPLY_MODEL=gpt-5.4-mini
-
-MAX_NEWS_PER_DAY=10
-MAX_HOTAKES_PER_DAY=0
-MAX_QUOTES_PER_DAY=80
-MAX_RETWEETS_PER_DAY=30
-MAX_REPLIES_PER_CYCLE=8
-DIRECT_REPLY_MAX_PER_CYCLE=32
-DIRECT_REPLY_MAX_EN_PER_CYCLE=5
-
-LIKE_BOT_PER_CYCLE=10
-LIKE_BOT_DAILY_CAP=500
-
-ENABLE_AI_MAINTENANCE=0
-ENABLE_AI_DISCOVERY=0
-ENABLE_CODEX_OPERATOR=0
-
-CONTENT_LANG_PRIMARY=en
-```
-
----
-
-## 2026-06-07 additions (viral focus / quality barbell — see HISTORY.md)
-
-The live values are in `.env` (which overrides everything above; treat the
-older tables on this page as historical defaults).
-
-| Variable | Live value | Purpose |
-|---|---|---|
-| `MAX_QUOTE_REPOSTS_PER_DAY` / `MAX_QUOTES_PER_DAY` | `100` | QRT quality lane — the focus surface. 50-like floor, screenshot-or-SKIP gate. |
-| `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
-| `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
-| `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |
-| `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
-| `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
-| `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |
-| `CURATOR_WINDOW_DAYS` / `CURATOR_DISCOVERED_PER_DAY` / `CURATOR_DISCOVERED_MAX` | `4` / `3` / `50` | Self-curated tracked list + whitelist `discovered`-tier promotion caps. |
-| `PINNED_TRACKED_HANDLES` | `TheBTCTherapist,Graphseo` | The only operator-pinned scan targets — everything else is earned. |
-| `BESTIE_HANDLE` | `TheBTCTherapist` | Account whose posts get the bestie prompt in the `direct_reply` VIP scan. |
+<!-- END settings reference -->
