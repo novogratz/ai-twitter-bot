@@ -61,12 +61,11 @@ def strip_tool_calls(text: str) -> str:
     return cleaned.strip()
 
 
-def contains_tool_call_leak(text: str) -> bool:
+def _contains_tool_call_leak(text: str) -> bool:
     """Returns True if the text looks like it still contains tool-call markup.
 
-    Use as a post-scrub guard — if this returns True after strip_tool_calls,
-    the safest action is to reject the post entirely rather than ship
-    half-stripped garbage.
+    One of the shapes contains_post_unsafe_leak refuses: markup that survives
+    strip_tool_calls rejects the whole post rather than ship it half-stripped.
     """
     if not text:
         return False
@@ -137,7 +136,7 @@ def contains_post_unsafe_leak(text: str) -> bool:
     """
     if not text:
         return False
-    if contains_tool_call_leak(text):
+    if _contains_tool_call_leak(text):
         return True
     stripped = text.strip()
     # A tweet that opens with `{` or `[{` is a JSON shape, not a tweet.
@@ -166,58 +165,6 @@ _FUNNY_FORCER = (
     "engagement bait, bro-speak or invented personal experience. "
     "Occasional subtle flirtation is fine when welcome; keep the AI insight central.\n\n"
 )
-
-
-# Section banners that signal "dynamic data starts here". We split the
-# bot's monolithic prompts at the first one and route everything before
-# into the system role (so ollama caches its KV state across calls) and
-# everything after into the user role (regenerated each cycle).
-_DYNAMIC_PROMPT_MARKERS = (
-    "APPRENDS DE TES PERFORMANCES",
-    "Performance snapshot",
-    "PERFORMANCE READ",
-    "EXTERNAL SIGNAL",
-    "FOLLOWER GROWTH SIGNAL",
-    "COMEDY PATTERN SCOREBOARD",
-    "DIRECTIVES AUTONOMES",
-    "INTERDIT — sujets",
-    "INTERDIT - sujets",
-    "Tu as déjà fait des hot takes sur",
-    "Tu as déjà fait des news sur",
-    "Tweets que tu as déjà écrits",
-    "STORIES FRESH",
-    "FRESH STORIES",
-)
-
-
-def _split_for_chat(prompt: str) -> tuple[str, str]:
-    """Split a monolithic prompt into (stable_system, dynamic_user).
-    Stable system message gets KV-cached by ollama between calls so we
-    only pay tokenization for the dynamic tail. Returns ('', prompt) if
-    no marker found — caller treats whole thing as user.
-    """
-    earliest = -1
-    for marker in _DYNAMIC_PROMPT_MARKERS:
-        idx = prompt.find(marker)
-        if idx > 0 and (earliest == -1 or idx < earliest):
-            earliest = idx
-    # Need at least 1KB of stable content for caching to be worth it.
-    if earliest < 1024:
-        return "", prompt
-    # Back up to the start of the line containing the marker.
-    nl = prompt.rfind("\n", 0, earliest)
-    if nl >= 0:
-        earliest = nl + 1
-    # Skip over banner separator lines just before (e.g. ====== or ------).
-    while earliest > 0:
-        prev_nl = prompt.rfind("\n", 0, earliest - 1)
-        line_start = prev_nl + 1 if prev_nl >= 0 else 0
-        line_content = prompt[line_start:earliest - 1].strip()
-        if line_content and len(line_content) >= 3 and all(c in "=-_*" for c in line_content):
-            earliest = line_start
-            continue
-        break
-    return prompt[:earliest].rstrip(), prompt[earliest:].lstrip()
 
 
 def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
@@ -408,7 +355,6 @@ def _build_cmd(
     model: str,
     output_json: bool,
     allowed_tools: Optional[Sequence[str]],
-    permission_mode: Optional[str],
     provider: Optional[str] = None,
 ) -> list[str]:
     provider = provider or _provider()
@@ -431,13 +377,8 @@ def _build_cmd(
         cmd = ["gemini", "-p", prompt, "--model", model, "--skip-trust"]
         if output_json:
             cmd.extend(["--output-format", "json"])
-        if permission_mode:
-            # gemini uses --approval-mode: default, auto_edit, yolo, plan
-            # map 'read-only' (claude) to 'plan' (gemini)
-            mode = "plan" if permission_mode == "read-only" else permission_mode
-            cmd.extend(["--approval-mode", mode])
-        elif allowed_tools:
-            # If tools are requested but no explicit mode, use yolo for headless automation
+        if allowed_tools:
+            # Tools requested: use yolo for headless automation
             cmd.extend(["--approval-mode", "yolo"])
         return cmd
 
@@ -447,7 +388,7 @@ def _build_cmd(
         # ollama). The `model` arg is preserved for logging upstream but
         # is intentionally ignored here.
         cmd = ["opencode", "run"]
-        if allowed_tools or permission_mode:
+        if allowed_tools:
             cmd.append("--dangerously-skip-permissions")
         if output_json:
             cmd.extend(["--format", "json"])
@@ -459,8 +400,6 @@ def _build_cmd(
         cmd.extend(["--output-format", "json"])
     if allowed_tools:
         cmd.extend(["--allowedTools", *allowed_tools])
-    if permission_mode:
-        cmd.extend(["--permission-mode", permission_mode])
     return cmd
 
 
@@ -498,13 +437,6 @@ def _fallback_model(primary_model: str, fallback_provider: str) -> str:
     if fallback_provider in {"ollama", "opencode"}:
         return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/big-pickle"
     return primary_model
-
-
-def _fallback_model2(fallback_provider: str) -> Optional[str]:
-    """Second-level fallback model — used when the first fallback also fails."""
-    if fallback_provider in {"ollama", "opencode"}:
-        return os.environ.get("OPENCODE_FALLBACK2_MODEL", "").strip() or "ollama/qwen3-coder"
-    return None
 
 
 def _run_cmd(
@@ -604,7 +536,6 @@ def run_llm(
     label: str,
     output_json: bool = True,
     allowed_tools: Optional[Sequence[str]] = None,
-    permission_mode: Optional[str] = None,
     timeout: Optional[int] = None,
     cwd: Optional[str] = None,
     force_provider: Optional[str] = None,
@@ -651,7 +582,7 @@ def run_llm(
             )
             # Cloud fallback gets the standard 150s cap (already enforced
             # for claude/codex/gemini in the cmd-runner branch below).
-            fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb_provider)
+            fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, fb_provider)
             fb_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
             fb_result = _run_cmd(fb_cmd, label=f"{label} ({fb_provider} fallback)", timeout=fb_timeout, cwd=cwd)
             if not _should_fallback(fb_result):
@@ -693,7 +624,7 @@ def run_llm(
         provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 360)
     else:
         provider_timeout = timeout
-    cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
+    cmd = _build_cmd(prompt, model, output_json, allowed_tools, provider)
     result = _run_cmd(cmd, label=label, timeout=provider_timeout, cwd=cwd)
 
     # If we actually ran codex this cycle and it returned a usage-limit
@@ -713,7 +644,7 @@ def run_llm(
                 return _run_ollama_http(prompt, label=f"{label} (codex locked)", timeout=effective_timeout)
             if fb:
                 fb_model = _fallback_model(model, fb)
-                fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
+                fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, fb)
                 return _run_cmd(fb_cmd, label=f"{label} (codex locked)", timeout=timeout, cwd=cwd)
 
     # (Claude lockout caching removed 2026-06-06 — a failed call just falls
@@ -742,7 +673,6 @@ def run_llm(
         fallback_model,
         output_json,
         allowed_tools,
-        permission_mode,
         fallback_provider,
     )
     fallback_result = _run_cmd(fallback_cmd, label=f"{label} fallback", timeout=timeout, cwd=cwd)
@@ -750,30 +680,10 @@ def run_llm(
         f"{label} primary {provider}/{model} failed "
         f"(exit {result.returncode}); tried {fallback_provider}/{fallback_model}."
     )
-    if not _should_fallback(fallback_result):
-        combined_stderr = "\n".join(
-            part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
-        )
-        return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
-
-    # Second fallback — opencode safety net (qwen)
-    model2 = _fallback_model2(fallback_provider)
-    if not model2:
-        combined_stderr = "\n".join(
-            part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
-        )
-        return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
-
-    fallback2_cmd = _build_cmd(prompt, model2, output_json, allowed_tools, permission_mode, fallback_provider)
-    fallback2_result = _run_cmd(fallback2_cmd, label=f"{label} fallback2", timeout=timeout, cwd=cwd)
-    fallback2_note = (
-        f"{fallback_note} {fallback_provider}/{fallback_model} also failed "
-        f"(exit {fallback_result.returncode}); tried {fallback_provider}/{model2}."
-    )
     combined_stderr = "\n".join(
-        part for part in [result.stderr.strip(), fallback2_note, fallback2_result.stderr.strip()] if part
+        part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
     )
-    return LLMResult(fallback2_result.returncode, fallback2_result.stdout, combined_stderr)
+    return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
 
 
 def _text_from_event(obj: dict) -> str:

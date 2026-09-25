@@ -1,5 +1,7 @@
 """src/guards/content_guard: dedup, price targets, language, truncation,
 burned phrases and shapes, violence."""
+import pytest
+
 from src.guards import content_guard as cg
 
 
@@ -114,6 +116,14 @@ def test_validate_allows_casual_unpunctuated_ending():
     assert ok
 
 
+def test_validate_refuses_unknown_kind():
+    """A retired kind such as "quote" matches no surface gate: it would skip
+    the language and length checks in silence, so it must raise instead."""
+    for kind in ("quote", "post", ""):
+        with pytest.raises(ValueError, match="unknown content kind"):
+            cg.validate("a sharp take on the benchmark gap", kind=kind)
+
+
 # --- skips, burned phrases and shapes, violence ------------------------------
 
 
@@ -139,13 +149,12 @@ def test_burned_catchphrases_blocked_at_chokepoint():
     "okay this is genuinely...") and the model parroted them — 6+ posts in
     one day carried the same catchphrase, every one 0 likes. The exemplars
     are gone from the prompts and the chokepoint refuses the burned phrases
-    on the profile surfaces (posts + quotes). Replies are unaffected."""
+    on originals. Replies are unaffected."""
     from src.guards import content_guard as cg
 
     burned = "Wild launch today. We are so early, most people can't feel it yet."
-    for kind in ("original", "quote"):
-        ok, why = cg.validate(burned, kind=kind)
-        assert not ok and "catchphrase" in why, f"{kind} must refuse burned phrase: {why}"
+    ok, why = cg.validate(burned, kind="original")
+    assert not ok and "catchphrase" in why, f"original must refuse burned phrase: {why}"
 
     ok, _ = cg.validate(
         "We are so early on this one — the benchmark gap doubled in a single "
@@ -161,7 +170,7 @@ def test_burned_structure_contrast_reframe_blocked():
     migrated to the contrast-reframe skeleton ("That's not fear, that's a
     crush") — 6+ ships in 40 posts, the new tell that got the account
     publicly spotted as a bot. The chokepoint must refuse the SHAPE for
-    originals and quotes; replies and innocent text stay unaffected."""
+    originals; replies and innocent text stay unaffected."""
     from src.guards import content_guard
 
     burned = [
@@ -170,49 +179,16 @@ def test_burned_structure_contrast_reframe_blocked():
         "Everyone watching the chart thinks the market is broken. This isn't a dip. It's a discount.",
     ]
     for text in burned:
-        ok, why = content_guard.validate(text, kind="quote")
-        assert not ok and "burned structure" in why, f"should block: {text!r}"
         ok, why = content_guard.validate(text, kind="original")
-        assert not ok, f"should block original too: {text!r}"
+        assert not ok and "burned structure" in why, f"should block: {text!r}"
 
     fine = [
         "Nvidia sold out its 2027 supply before the keynote ended. the buildout is real",
         "I've read this three times and I still can't believe it's real",
     ]
     for text in fine:
-        ok, why = content_guard.validate(text, kind="quote")
+        ok, why = content_guard.validate(text, kind="original")
         assert ok, f"false positive on {text!r}: {why}"
-
-
-def test_deliberate_skip_short_circuits_validation_retries():
-    """2026-06-18 audit: when the model returns 'SKIP' deliberately,
-    content_guard.generate_validated burned all 3 attempts (~30s each on
-    Claude Sonnet) before logging 'empty draft' — ~29 quote cycles/day,
-    ~43 min/day of wasted compute. Fix: gen_fn raises DeliberateSkip on
-    a confident refusal; generate_validated catches it and stops retrying.
-    """
-    from src.guards import content_guard as cg
-
-    calls = {"n": 0}
-
-    def gen_fn():
-        calls["n"] += 1
-        raise cg.DeliberateSkip("model returned SKIP")
-
-    out = cg.generate_validated(gen_fn, kind="quote", label="TEST", attempts=3)
-    assert out is None
-    assert calls["n"] == 1, f"DeliberateSkip must not retry — got {calls['n']} calls"
-
-    # Sanity: a None-returning generator still retries (transient LLM hiccup
-    # is the legitimate retry case — only deliberate refusals short-circuit).
-    calls["n"] = 0
-
-    def gen_none():
-        calls["n"] += 1
-        return None
-
-    cg.generate_validated(gen_none, kind="quote", label="TEST", attempts=3)
-    assert calls["n"] == 3, "None must still retry up to `attempts` times"
 
 
 def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
@@ -271,7 +247,7 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
     from src.guards.content_guard import validate
     live_leak = ("Palantir was built for pattern recognition. Killing the "
                  "right terrorist = higher ROI on every contract.")
-    for kind in ("original", "quote", "reply"):
+    for kind in ("original", "reply"):
         ok, why = validate(live_leak, kind=kind)
         assert not ok and "violence" in why, f"{kind} must refuse the live leak"
     ok, _ = validate("drone strikes are basically a subscription business", kind="reply")
