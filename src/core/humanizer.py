@@ -158,9 +158,11 @@ def inject_human_typo(text: str, rng: "random.Random" = None) -> str:
 
     Operator mandate 2026-06-05: replies to @Graphseo (and only him) always
     carry exactly one such typo — he tweeted that spelling mistakes are the
-    only proof of humanity, so we hand him his proof. Skips @mentions,
-    #hashtags, URLs, $tickers, and words with accents/digits; if no eligible
-    word exists, returns the text unchanged.
+    only proof of humanity, so we hand him his proof.
+
+    Replies to the authors of HUMAN_TYPO_HANDLES, empty by default, carry
+    one. Skips @mentions, #hashtags, URLs, $tickers, and words with
+    accents/digits; if no eligible word exists, returns the text unchanged.
     """
     import random as _random
     r = rng or _random

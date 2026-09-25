@@ -8,6 +8,7 @@ frozen below from commit 9748c36d.
 """
 import json
 import os
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -124,6 +125,8 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     assert [clock for clock, _ in shown["slots"]] == ["06:30", "09:00", "10:00", "12:30", "15:00",
                                                      "17:30", "19:45"]
     assert all("AI" not in angle.split() for _, angle in shown["slots"])
+    # Its [limits] lowers the day's ceiling to 4, and the targets under it.
+    assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
     assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100}
@@ -160,3 +163,71 @@ def test_the_example_operator_files_read(monkeypatch, settings_override):
     assert wl["all"] == set()
     for name in ("whitelist.json", "respect_list.json", "following_baseline.json"):
         json.loads((ROOT / "accounts" / "example" / name).read_text())
+
+
+def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
+    """The dry run's ceiling is the one the editorial job enforces."""
+    from src.core import config
+    from src.editorial import editorial_bot
+    from src.guards import action_guard
+
+    monkeypatch.setattr(account, "_loaded", {})
+    shutil.copytree(ROOT / "accounts" / "example", Path(account.ACCOUNTS_DIR) / "example")
+    settings_override(BOT_ACCOUNT="example", MAX_ORIGINALS_PER_DAY=4)
+    monkeypatch.setattr(action_guard, "profile_count_today", lambda: 0)
+    assert config.posts_ceiling() == 4 and config.post_targets() == (3, 4)
+    now = editorial_bot._local()
+    state = {"date": now.date().isoformat(), "published": [],
+             "slots": {clock: "published" for clock in ("06:30", "09:00", "10:00", "12:30")}}
+    assert editorial_bot._pending_refusal(state, now) == (
+        "daily ceiling reached with pending submissions (4/4)")
+
+
+def _words(text):
+    return set(re.findall(r"\w+", text))
+
+
+def test_the_example_prompts_name_its_domain(monkeypatch, settings_override):
+    """The prompts and the trending searches take the Account's domain: the
+    gardener's Originals, review, Trending posts and Replies never say AI."""
+    from types import SimpleNamespace
+    from src.core import llm_client
+    from src.editorial import editorial_bot, trending
+    from src.replies import direct_reply, reply_generator
+    from src.x import scraper
+
+    monkeypatch.setattr(account, "_loaded", {})
+    shutil.copytree(ROOT / "accounts" / "example", Path(account.ACCOUNTS_DIR) / "example")
+    settings_override(BOT_ACCOUNT="example")
+    prompts = []
+    monkeypatch.setattr(editorial_bot, "_json_call",
+                        lambda prompt, label, profile: prompts.append(prompt) or {"reason": "no"})
+    monkeypatch.setattr(reply_generator, "run_llm", lambda prompt, model, **kw: prompts.append(prompt) or
+                        SimpleNamespace(status=llm_client.LLMStatus.ANSWERED, returncode=0,
+                                        stdout="SKIP", stderr="", provider="p", model="m"))
+    body = "Mulch keeps the soil moist through a dry summer week in the vegetable patch. " * 6
+    source = dict(id="0", title="Mulch", url="https://www.rhs.org.uk/mulch", publisher="RHS",
+                  published_at="", kind="news", body=body)
+    posts = [dict(text="Sowing tomato seedlings", likes=90, views=900, age_minutes=30,
+                  likes_per_minute=3.0)] * 3
+    trend = next(slot for slot in editorial_bot.slots() if slot.trend)
+    editorial_bot.draft_post(trend, [source], [], "", posts)
+    draft = dict(source_id="0", text="Mulch keeps the soil moist through a dry week, so lay it "
+                 "after rain and water less often in the vegetable patch.",
+                 angle="a", takeaway="t", evidence_ids=["0"])
+    editorial_bot.review_draft(draft, [source], [], trending=posts)
+    reply_generator.generate(direct_reply.reply_call("someone"), author="someone",
+                             text="My raised bed tomatoes split after the rain")
+    assert len(prompts) == 3
+    draft_prompt, review_prompt, reply_prompt = prompts
+    assert "Write ONE original gardening post" in draft_prompt
+    assert "fastest-rising gardening posts" in draft_prompt
+    assert "strict independent gardening editor" in review_prompt
+    assert "stable gardening knowledge" in reply_prompt
+    assert all("AI" not in _words(prompt) for prompt in prompts)
+
+    queries = []
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **kw: queries.append(query) or [])
+    trending.collect_trending_posts(trend)
+    assert queries == list(account.current().searches.trending)
+    assert all("AI" not in _words(query) for query in queries)

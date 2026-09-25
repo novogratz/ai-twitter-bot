@@ -83,7 +83,8 @@ are its only filter.
 ## Trend slots and the Startup post
 
 The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from
-X. Two Top-tab searches for AI and "artificial intelligence" supply posts from
+X. Two Top-tab searches for AI and "artificial intelligence" (`[searches]
+trending` in `account.toml`) supply posts from
 the last 24 hours; the five with the most likes per minute are kept. Own posts,
 Blocked accounts, nested replies, posts without AI vocabulary and crypto or
 ticker posts are dropped. Handles, mentions and links, with or without a

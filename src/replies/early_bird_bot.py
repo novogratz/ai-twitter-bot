@@ -30,10 +30,12 @@ JOB = reply_pipeline.Job("early_bird", "EARLYBIRD",
 
 # 2026-06-07 PM (operator): "stop going to the static accounts… develop
 # yourself the list of accounts you want to follow and track" — the static
-# list is GONE. The scan pool now comes from account_curator.tracked_handles()
-# (the bot's own earned list: authors whose posts it kept engaging, weighted
-# by follower-conversion evidence), pinned with TheBTCTherapist + Graphseo,
-# the only two operator-mandated keepers.
+# list is GONE.
+
+# The scan pool comes from account_curator.tracked_handles(): the bot's own
+# earned list (authors whose posts it kept engaging, weighted by
+# follower-conversion evidence), with the Account's network.pinned_tracked
+# always first.
 EARLY_BIRD_ACCOUNTS: list = []  # intentionally empty — see _scan_pool()
 
 

@@ -6,6 +6,9 @@
 handle = "TheAIShrink"
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
+# The domain, as the editorial and Reply prompts name it: "Write ONE original
+# AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
+domain = "AI"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
@@ -128,7 +131,8 @@ off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|g
 # Relations: how the Replies treat particular accounts, keyed by handle (case
 # ignored); the engine names no one. A prompt is a file of this folder, read
 # at start: reply_generator fills {author} and {tweet_text} (also
-# {original_tweet}, {language_override}); write a literal brace as {{ or }}.
+# {original_tweet}, {language_override}, {domain}); write a literal brace as
+# {{ or }}.
 # The Voice opens the prompt and the hard rules close it, as for every Reply.
 [relations]
 # The VIP scan (network.vip_scan) answers a handle below with its own
@@ -302,4 +306,11 @@ likes = [
     'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',
     'Nvidia OR GPU OR AI compute cluster lang:en min_faves:50',
     'robotics OR humanoid robots lang:en min_faves:50',
+]
+# The Trend slots and the Startup post run each one on the Top tab, keep the
+# posts of the last 24 hours that pass the relevance filter, and take their
+# topic from the fastest-rising five.
+trending = [
+    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
+    'AI lang:en min_faves:200 -filter:replies',
 ]

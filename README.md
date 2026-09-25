@@ -84,16 +84,19 @@ mkdir -p state/theaishrink
 uv run python main.py
 ```
 
-`.env.example` describes @TheAIShrink with the policy values; every setting,
-its default and bounds are in [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
+`.env.example` describes @TheAIShrink with the policy values, its bounded
+settings commented out at their default, since `.env` would win over an
+Account's `[limits]`; every setting, its default and bounds are in
+[`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
 `.env` is read once at start, so any change needs a restart: a key the engine
 does not know, or a badly typed value, stops the start with a message naming
 the key, and `--dry-run` names the same keys.
 
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
 `accounts/<name>/account.toml`, which holds the handle, the language of the
-Originals, the Slots and their angles, the feeds, Evergreen topics, trusted
-hosts and the relevance filter, and the network and niche the reply, like and
+Originals, the domain its prompts name, the Slots and their angles, the
+feeds, Evergreen topics, trusted hosts, the relevance filter and the
+searches of the Trending posts, and the network and niche the reply, like and
 follow jobs use: handle lists, niche patterns, X searches, and the Blocked
 accounts it adds to the engine's `BLOCKLIST`, which it can never shrink. It
 also holds the Relations: the prompt, provider or dossier the Replies give a

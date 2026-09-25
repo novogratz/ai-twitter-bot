@@ -8,10 +8,11 @@ TheBTCTherapist alike, case ignored.
 The check reads the code, not the text: every token of a module (names,
 string literals, the JavaScript a string carries) counts, save comments and
 docstrings. A comment or a docstring may name one in a historical passage
-only, one that carries a date (2026-06-05) or an issue number (#187): the
-record of what happened then, not an instruction. A passage is a comment
-block, consecutive lines holding nothing but a comment, or an inline comment
-alone; in a docstring, a paragraph, the lines between two blank ones.
+only, one that carries a date (2026-06-05) or an issue number (#187), the
+`#` that opens a comment aside: the record of what happened then, not an
+instruction. A passage is a comment block, consecutive lines holding nothing
+but a comment, or an inline comment alone; in a docstring, a paragraph, the
+lines between two blank ones.
 """
 import ast
 import io
@@ -67,15 +68,17 @@ def _exempt(module, tree) -> tuple[set, set]:
 
 
 def _passages(tokens, docstrings):
-    """(line, text) of each comment block and docstring paragraph."""
+    """(line, text) of each comment block and docstring paragraph. A
+    comment's text drops the `#` that opens it, which "#1 Graphseo" would
+    pass for an issue number."""
     passages, block, last = [], None, None
     for tok in tokens:
         if tok.type == tokenize.COMMENT:
             alone = tok.line.strip().startswith("#")
             if alone and block is not None and last == tok.start[0] - 1:
-                block[1].append(tok.string)
+                block[1].append(tok.string[1:])
             else:
-                block = (tok.start[0], [tok.string])
+                block = (tok.start[0], [tok.string[1:]])
                 passages.append(block)
             last = tok.start[0] if alone else None
             if not alone:
@@ -127,6 +130,10 @@ def test_the_engine_names_no_real_account():
     # Historical: a date or an issue number in the same passage.
     ("# 2026-06-07 (operator): keep TheBTCTherapist\n# and Graphseo pinned.\nx = 1\n", []),
     ("# Graphseo asked for French (#123).\nx = 1\n", []),
+    # The `#` that opens a comment is no issue number.
+    ("#1 Graphseo gets French.\nx = 1\n", ["comment"]),
+    ("x = 1  #2 Graphseo only\n", ["comment"]),
+    ("#1 Graphseo gets French (#123).\nx = 1\n", []),
     ('def f():\n    """Now generic.\n\n    Bug 2026-06-05: the @Graphseo reply path.\n    """\n', []),
     # A blank line or code ends the passage: its date no longer covers it.
     ("# 2026-06-07: decided.\n\n# Graphseo stays pinned.\nx = 1\n", ["comment"]),

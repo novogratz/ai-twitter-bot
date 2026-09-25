@@ -13,7 +13,7 @@ from src.core import settings
 # .env whichever module reads it first. A bad .env stops the start here.
 settings.load()
 
-from src.core import config, state_store
+from src.core import account, config, state_store
 from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
 from src.editorial.editorial_bot import open_startup_window, safe_run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
@@ -104,7 +104,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="AI editorial posts and uncapped daytime replies")
+    parser = argparse.ArgumentParser(description="Sourced editorial posts and uncapped daytime replies")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--post-only", action="store_true")
     mode.add_argument("--reply-only", action="store_true")
@@ -126,11 +126,12 @@ def main():
     ignored = ignored_fallbacks()
     for note in ignored:
         log.error(f"[LLM] Fallback ignored: {note}. A call that fails there fails.")
+    min_target, target = config.post_targets()
     if args.dry_run:
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
-                          "min_target_posts": config.MIN_TARGET_POSTS_PER_DAY,
-                          "target_posts": config.TARGET_POSTS_PER_DAY,
-                          "max_profile_posts": config.MAX_PROFILE_POSTS_PER_DAY,
+                          "min_target_posts": min_target,
+                          "target_posts": target,
+                          "max_profile_posts": config.posts_ceiling(),
                           "replies": "unlimited",
                           "quotes": 0, "reposts": 0, "slots": slots(),
                           "trend_slots": sorted(trend_slots()),
@@ -159,7 +160,8 @@ def main():
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
     scheduler.start(paused=True)
     was_active = None
-    log.info(f"Bot started: at least three useful AI originals targeted (max eight); replies unlimited; active {window_label()}.")
+    log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
+             f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
     try:
         while not stop.is_set():
             active = is_active()

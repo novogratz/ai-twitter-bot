@@ -78,6 +78,11 @@ OLD = {
     "BOT_HANDLE": "TheAIShrink",
     "CONTENT_LANG_PRIMARY": "en",
 }
+# trending.TREND_QUERIES before #208 moved them to [searches] trending.
+OLD_TREND_QUERIES = [
+    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
+    'AI lang:en min_faves:200 -filter:replies',
+]
 
 
 def test_theaishrink_loads_the_old_constants():
@@ -95,6 +100,9 @@ def test_theaishrink_loads_the_old_constants():
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
+    # The prompts said "AI" in the code before #208.
+    assert loaded.domain == "AI"
+    assert list(loaded.searches.trending) == OLD_TREND_QUERIES
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -216,6 +224,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
     ('handle = "TheAIShrink"\n', "", "handle"),
+    ('domain = "AI"', "domain = 3", "domain"),
+    ('domain = "AI"', 'domain = " "', "domain is blank"),
+    ('domain = "AI"\n', "", "domain is missing"),
     ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
@@ -669,6 +680,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ("[niche]", "[niche]\nticker = '('", "niche.ticker"),
     ("[niche]", "[niche]\nticker = 3", "niche.ticker"),
     ("likes = [", "likes = [\n    ' ',", "searches.likes[0]"),
+    ("trending = [", "trending = [\n    ' ',", "searches.trending[0]"),
+    ("trending = [", "trending_queries = [", "searches.trending_queries"),
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
     ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.

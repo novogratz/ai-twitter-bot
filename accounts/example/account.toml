@@ -12,6 +12,9 @@
 handle = "ExampleGardener"
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
+# The domain, as the editorial and Reply prompts name it: "Write ONE original
+# gardening post", "a strict independent gardening editor".
+domain = "gardening"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
@@ -129,4 +132,10 @@ hot_tab = [
 likes = [
     '"vegetable garden" lang:en min_faves:50',
     'allotment harvest lang:en min_faves:50',
+]
+# The Trend slots and the Startup post run each one on the Top tab and keep
+# the posts of the last 24 hours that pass the relevance filter.
+trending = [
+    'gardening lang:en min_faves:50 -filter:replies',
+    '"vegetable garden" OR allotment lang:en min_faves:100 -filter:replies',
 ]

@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Literal
 
-from ..core import personality_store
+from ..core import account, personality_store
 from ..core.humanizer import smart_trim, strip_agent_preamble
 from ..core.llm_client import LLMStatus, run_llm
 from ..core.logger import log
@@ -49,9 +49,10 @@ class LanguageRule(Enum):
 @dataclass(frozen=True)
 class ReplyCall:
     """A job's prompt template and model call. The template may use
-    {author}, {tweet_text}, {original_tweet} and {language_override}. The
-    template holds the job's instructions, never the persona: the Voice
-    opens the prompt, the dossier and the hard rules close it."""
+    {author}, {tweet_text}, {original_tweet}, {language_override} and the
+    Account's {domain}. The template holds the job's instructions, never the
+    persona: the Voice opens the prompt, the dossier and the hard rules
+    close it."""
     template: str
     model: str
     label: str
@@ -138,5 +139,6 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "tweet_text": text[:call.text_limit],
         "original_tweet": context[:call.text_limit],
         "language_override": _LANGUAGE_OVERRIDE[language],
+        "domain": account.current().domain,
     })
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, *anchors]))

@@ -137,7 +137,8 @@ follow jobs read the same way the Account's `[network]` handle lists,
    before review. A pass with no source, a draft model error or an explicit
    skip spends none; the 45-minute window bounds those passes.
 3. **Trend.** For a trend slot, `collect_trending_posts`
-   (`src/editorial/trending.py`) runs the two `TREND_QUERIES` in the Top tab
+   (`src/editorial/trending.py`) runs the Account's `[searches] trending`
+   queries in the Top tab
    (`TREND_SEARCH_TWEETS` posts each, `text_limit=TREND_TEXT_LIMIT`),
    keeps posts under 24 hours old by status ID, drops own posts
    (`scraper.is_own_post`), Blocked accounts, nested replies, off-topic and

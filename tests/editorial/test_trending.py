@@ -8,7 +8,7 @@ from tests.helpers import TORONTO
 
 
 def test_trending_posts_are_fresh_ranked_anonymous_and_cached(monkeypatch):
-    from src.core import config
+    from src.core import account, config
     from src.x import scraper
     from tests.helpers import fresh
     monkeypatch.setattr(config, "BLOCKLIST", {"blockedguy"})
@@ -38,9 +38,9 @@ def test_trending_posts_are_fresh_ranked_anonymous_and_cached(monkeypatch):
     assert [p["text"] for p in posts] == [f"New AI model {i} from" for i in range(5)]
     assert all(k["tab"] == "top" and k["text_limit"] == trending.TREND_TEXT_LIMIT
                and k["max_tweets"] == trending.TREND_SEARCH_TWEETS for _, k in searches)
-    assert len(searches) == len(trending.TREND_QUERIES)
+    assert [query for query, _ in searches] == list(account.current().searches.trending)
     assert trending.collect_trending_posts(("10:00", "x"), now) == posts
-    assert len(searches) == len(trending.TREND_QUERIES)
+    assert len(searches) == len(account.current().searches.trending)
 
 
 @pytest.mark.parametrize("raw, kept", [

@@ -1,4 +1,4 @@
-"""Feed sweeper — useful replies to fresh AI posts in the For You / Following feed.
+"""Feed sweeper — useful replies to fresh on-niche posts in the For You / Following feed.
 
 Scroll For You and Following and reply to every on-niche post. The quote
 lane that once amplified viral posts is gone (2026-09-20 policy: quotes are

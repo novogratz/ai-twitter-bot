@@ -2,7 +2,7 @@
 from datetime import timedelta
 from pathlib import Path
 
-from ..core import config
+from ..core import account, config
 from ..guards.active_hours import now_local, require_active
 from .editorial_bot import _read_state, _stamp
 from ..core.logger import log
@@ -48,7 +48,7 @@ def safe_run_reach_report():
         report = summarize(published, tweets)
         REPORT.write(report)
         Path(REPORT_MARKDOWN).write_text(
-            f"# AI original-post reach\n\nUpdated: {report['as_of']}\n\n"
+            f"# {account.current().domain} original-post reach\n\nUpdated: {report['as_of']}\n\n"
             f"**{report['views']:,} observed views / {TARGET_VIEWS:,} target**\n\n"
             f"{report['metric']}. Coverage: {report['originals_observed']} of "
             f"{report['originals_published']} originals. Missing posts are unknown.\n\n"

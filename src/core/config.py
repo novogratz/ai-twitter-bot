@@ -141,6 +141,18 @@ def dry_run() -> bool:
 # of spacing (operator, 2026-09-23): the 09:30 and 10:00 slots sit thirty
 # minutes apart and the Startup post can land next to any slot.
 _served("MAX_ORIGINALS_PER_DAY", "MIN_SECONDS_BETWEEN_POSTS")
+
+def posts_ceiling() -> int:
+    """The day's ceiling of profile publications: the policy's eight, or
+    MAX_ORIGINALS_PER_DAY when an Account or .env sets it lower."""
+    return min(MAX_PROFILE_POSTS_PER_DAY, settings.get("MAX_ORIGINALS_PER_DAY"))
+
+def post_targets() -> tuple[int, int]:
+    """The minimum and the planned Originals of a day, neither above
+    `posts_ceiling()`."""
+    ceiling = posts_ceiling()
+    return min(MIN_TARGET_POSTS_PER_DAY, ceiling), min(TARGET_POSTS_PER_DAY, ceiling)
+
 # Floored at 0 in settings: a negative jitter would shorten the floor above.
 _served("POST_JITTER_SECONDS")
 
