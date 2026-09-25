@@ -399,7 +399,8 @@ def test_health_updates_are_serialised(monkeypatch):
         return data
     monkeypatch.setattr(health.HEALTH, "read", slow_read)
 
-    threads = [threading.Thread(target=health.record_failure, args=("job",)) for _ in range(40)]
+    threads = [threading.Thread(target=health.record_failure, args=("job", RuntimeError("job")))
+               for _ in range(40)]
     for t in threads:
         t.start()
     for t in threads:
@@ -421,11 +422,11 @@ def test_a_failure_during_a_safari_restart_does_not_restart_it_again(monkeypatch
         return True
     monkeypatch.setattr(health, "_restart_safari", blocked_restart)
 
-    first = threading.Thread(target=health.record_failure, args=("first",))
+    first = threading.Thread(target=health.record_failure, args=("first", RuntimeError("first")))
     first.start()
     try:
         assert restarting.wait(5)
-        assert health.record_failure("second") is False
+        assert health.record_failure("second", RuntimeError("second")) is False
     finally:
         release.set()
         first.join()

@@ -677,14 +677,24 @@ some files those bots used to write, as frozen data with no writer left:
 
 ## Adding a job
 
-1. Expose `safe_run_<name>_cycle()` in a module of the package that owns its
+1. Expose `run_<name>_cycle()` in a module of the package that owns its
    concern: `src/replies/<name>.py` for a reply job, `src/account/<name>.py`
    for a follow, like or pin job. The top level of `src/` holds only
-   packages. Catch every exception inside it and call `health.record_success`
-   or `record_failure`.
-2. Register it in `build_scheduler()` with `add(fn, minutes, "<name>_job")`.
-   Never call `scheduler.add_job` directly: `add()` supplies the waking-hours
-   wrapper.
+   packages. Let its errors raise: the job wrapper catches them.
+2. Register it in `build_scheduler()` with
+   `add(health.wrap_job(run_<name>_cycle, "<name>"), minutes, "<name>_job")`.
+   `wrap_job` logs an error at ERROR with its traceback in `bot.log`, resets
+   the Safari failure counter on success and hands the error to
+   `health.record_failure`; `StateUnreadable` and `OutsideActiveHours` never
+   count. Pass `safari_health=False` for a job whose failures say nothing
+   about Safari, such as a model call or a report: it never touches the
+   health file. Never call `scheduler.add_job` directly: `add()` supplies the
+   waking-hours wrapper.
+
+   In transition (issue #234): the jobs already registered still expose a
+   `safe_run_*` that catches its own errors, and their `record_failure` call
+   without an exception reads the one in flight. Issues #236 to #238 move them
+   under `wrap_job`; #239 makes the exception required.
 3. Take `_safari_lock` for any browser work and close the tab you opened.
 4. Write only through the `twitter_client` chokepoints; add a new rule inside
    the chokepoint, not in the job.

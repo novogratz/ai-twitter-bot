@@ -19,6 +19,7 @@ import os
 import sys
 import time
 from datetime import datetime
+from functools import wraps
 from .config import _PROJECT_ROOT
 from .logger import log
 from .state_errors import StateUnreadable
@@ -44,17 +45,47 @@ def record_success(label: str = ""):
     HEALTH.update(reset)
 
 
-def record_failure(label: str = "") -> bool:
+def wrap_job(run, label: str, *, safari_health: bool = True):
+    """The scheduler's wrapper around a job's `run_*`: it never raises.
+
+    An error is logged at ERROR with its traceback in bot.log. A job with
+    `safari_health` resets the failure counter on success and hands its
+    error to `record_failure`; without it, the job never touches the
+    health file. StateUnreadable and OutsideActiveHours are never failures.
+    """
+    @wraps(run)
+    def job():
+        try:
+            run()
+        except OutsideActiveHours:
+            log.info(f"[{label}] Stopped for bedtime.")
+            return
+        except StateUnreadable as exc:
+            log.error(f"[HEALTH] {label} halted: {exc}. Not a Safari failure, "
+                      f"no restart; repair the file (docs/OPERATIONS.md#recovery).")
+            return
+        except Exception as exc:
+            log.exception(f"[{label}] Cycle failed.")
+            if safari_health:
+                record_failure(label, exc)
+            return
+        if safari_health:
+            record_success(label)
+    return job
+
+
+def record_failure(label: str = "", exc: BaseException | None = None) -> bool:
     """Increment the failure counter. Returns True if recovery was triggered.
 
     Recovery = quit + relaunch Safari. Idempotent and rate-limited via
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
 
-    Call it from the `except` block that caught the cycle's error: a
-    StateUnreadable or an OutsideActiveHours in flight is logged and not
-    counted.
+    `exc` is the cycle's error: a StateUnreadable or an OutsideActiveHours is
+    logged and not counted. Without it, the error in flight is read, for the
+    `safe_run_*` still calling it from their `except` block (#234).
     """
-    exc = sys.exc_info()[1]
+    if exc is None:
+        exc = sys.exc_info()[1]
     if isinstance(exc, OutsideActiveHours):
         log.info(f"[HEALTH] {label or 'cycle'} stopped for bedtime. Not a Safari failure, "
                  f"no restart.")
