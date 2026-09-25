@@ -843,10 +843,10 @@ def _no_follow_written(memory_ledger, tmp_path):
 def followback(monkeypatch, live_follow):
     """Live followback_job over the scripted followers page."""
     from src.account import followback_bot as fb
+    from src.x import safari
 
     live_follow.update(followers=["Alreadyfan"], profile="ALREADY")
-    monkeypatch.setattr(fb, "_scroll_page", lambda: None)
-    monkeypatch.setattr(fb, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(fb.time, "sleep", lambda *_: None)
     return fb, live_follow
 

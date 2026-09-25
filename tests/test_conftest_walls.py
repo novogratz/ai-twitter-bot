@@ -59,6 +59,9 @@ def test_tests_cannot_spawn_osascript(monkeypatch):
 
 
 WALLED = {"_run_applescript", "_run_js", "_paste_text", "open_url"}
+# Not walled, but tests patch them on src.x.safari: a module that binds one
+# by name keeps the real object, and its tests had to patch it there too.
+BY_MODULE = {"_safari_lock", "_scroll_page", "close_front_tab"}
 SAFARI = "src/x/safari.py"
 # The one direct osascript call that stays: safari_hygiene quits Safari
 # itself, because the Safari being quit may be wedged, and
@@ -92,7 +95,7 @@ def browser_path_problems(root, path):
                     problems.append(f"{rel}:{node.lineno}: opens pages past safari.open_url")
         elif isinstance(node, ast.ImportFrom):
             for alias in node.names:
-                if (alias.name in WALLED or node.module == "webbrowser"
+                if (alias.name in WALLED or alias.name in BY_MODULE or node.module == "webbrowser"
                         or (node.module == "subprocess" and alias.name == "Popen")):
                     problems.append(f"{rel}:{node.lineno}: imports {alias.name}")
         elif isinstance(node, ast.FunctionDef) and node.name in WALLED and rel != SAFARI:
@@ -113,8 +116,10 @@ def test_every_browser_path_goes_through_the_conftest_walls():
     and `subprocess.Popen` on their modules. A module that binds one by name
     (`from .safari import _run_applescript`, `from subprocess import Popen`)
     keeps the real object past the wall, so twitter_client, scraper and the
-    jobs reach them through their module (#118). Page JavaScript runs only
-    through `safari._run_js`, and only safari.py and the files in
+    jobs reach them through their module (#118). They reach `_safari_lock`,
+    `_scroll_page` and `close_front_tab` through it too, so a test patches
+    them on src.x.safari alone (#252). Page JavaScript runs only through
+    `safari._run_js`, and only safari.py and the files in
     OWN_OSASCRIPT spawn `osascript` (#144). Pages open only through
     `safari.open_url`: `webbrowser` follows the default browser, and a page
     opened in Firefox left `_run_js` reading Safari's front tab."""
@@ -176,6 +181,18 @@ def test_webbrowser_is_matched_in_every_import_form(tmp_path):
                                 "src/job.py:2: opens pages past safari.open_url",
                                 "src/job.py:3: imports open",
                                 "src/job.py:4: imports open_url"]
+
+
+def test_safari_primitives_are_matched_when_imported_by_name(tmp_path):
+    problems = _problems(tmp_path, "src/job.py", (
+        "from ..x.safari import _safari_lock, close_front_tab\n"
+        "from .safari import _scroll_page\n"
+        "from . import safari\n"
+        "from .safari import restart_safari\n"
+    ))
+    assert sorted(problems) == ["src/job.py:1: imports _safari_lock",
+                                "src/job.py:1: imports close_front_tab",
+                                "src/job.py:2: imports _scroll_page"]
 
 
 def test_docstrings_are_not_browser_paths(tmp_path):
