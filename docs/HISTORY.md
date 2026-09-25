@@ -25,9 +25,10 @@ their order in the file is not strictly chronological.
 
 > **2026-09-25 — the search lane skips nested replies again (issue #241):**
 > on 2026-06-06, 3857e1ba ("zero limits") dropped `_is_reply_like_tweet`
-> from the `_reply_to_tweets` shared by every source; its message aimed at
-> For You and Following only. The feed sweep, early bird and mega watch
-> kept their own filter; the `direct_reply` search lane was left with none.
+> from the `_reply_to_tweets` shared by the feed, following and search
+> lanes; its message aimed at For You and Following only. The feed sweep,
+> early bird and mega watch kept their own filter; the `direct_reply`
+> search lane was left with none.
 > Nothing caught these posts downstream: `judge_parent` reads the URL only
 > and a Candidate does not carry `is_reply`. The model answered a reply
 > without its root post, and the Reply landed deep in a branch. The search
