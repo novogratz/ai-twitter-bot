@@ -71,9 +71,10 @@ def run_follow_engagers_cycle():
     # cap, total ceiling) ends the cycle WITHOUT burning the candidate; any
     # other outcome marks the handle attempted. An unreadable whitelist
     # raises out of the cycle, before any candidate is marked; a pick that
-    # failed otherwise marks nothing, and the cycle goes on.
+    # failed otherwise marks nothing and counts in the per-cycle bound, and
+    # its error is raised once the cycle is done.
     for h in run.fresh(follow_policy.engagers()[:200]):
-        if followed >= per_cycle or st["count_today"] >= per_day:
+        if followed + run.failed >= per_cycle or st["count_today"] >= per_day:
             break
         if h == own or h in skip or h in attempted:
             continue
@@ -98,6 +99,7 @@ def run_follow_engagers_cycle():
     _save_state(st)
     log.info(f"[FOLLOW-ENGAGERS] Cycle done: {followed} engagers followed "
              f"({st['count_today']}/{per_day} today).")
+    run.raise_failure()
 
 
 def safe_run_follow_engagers_cycle():

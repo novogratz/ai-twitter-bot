@@ -224,7 +224,8 @@ One cycle of a follow job, from its candidates to the follow chokepoint:
 it skips the Followed accounts and the accounts it already tried, asks
 nothing more once the follow budget's cap is reached, and hands each
 outcome back to the job, which keeps its own caps. Bedtime or an
-unreadable state file ends it; any other error costs one pick.
+unreadable state file ends it; any other error costs one pick, which the
+job counts in its per-cycle bound and reports as a failed cycle.
 _Avoid_: follow loop, follow batch
 
 **Blocked account**:

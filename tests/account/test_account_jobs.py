@@ -1024,8 +1024,10 @@ def test_follow_engagers_opens_no_profile_of_a_followed_account(live_follow, mon
 
 def test_follow_engagers_keeps_going_past_a_failed_pick(monkeypatch, settings_override):
     """#260: an unexpected error ended the cycle; it now costs the one pick,
-    and the Engager stays for a later cycle."""
+    counted in the per-cycle bound, and the Engager stays for a later cycle.
+    The cycle still reports the error to the health watchdog."""
     from src.account import follow_engagers_bot as fe
+    from src.core import health
     from src.guards import follow_policy
     from src.x.twitter_client import FollowOutcome
 
@@ -1034,16 +1036,42 @@ def test_follow_engagers_keeps_going_past_a_failed_pick(monkeypatch, settings_ov
         if handle == "fan1":
             raise RuntimeError("osascript died")
         return FollowOutcome.FOLLOWED
-    asked = []
+    asked, failures = [], []
     settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=2)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1", "fan2", "fan3"])
     monkeypatch.setattr("src.x.twitter_client.follow_account", follow)
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
 
-    fe.run_follow_engagers_cycle()
+    fe.safe_run_follow_engagers_cycle()
 
     state = fe._load_state()
-    assert asked == ["fan1", "fan2", "fan3"]
-    assert sorted(state["attempted"]) == ["fan2", "fan3"] and state["count_today"] == 2
+    assert asked == ["fan1", "fan2"]
+    assert state["attempted"] == ["fan2"] and state["count_today"] == 1
+    assert failures == ["follow_engagers"]
+
+
+def test_follow_engagers_failed_picks_count_in_the_per_cycle_bound(monkeypatch,
+                                                                   settings_override):
+    """#260 review: a pick that raises every time would otherwise open up
+    to 200 profiles in one cycle."""
+    from src.account import follow_engagers_bot as fe
+    from src.guards import follow_policy
+
+    def follow(handle):
+        asked.append(handle)
+        raise RuntimeError("judge_profile broke")
+    asked = []
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=2)
+    monkeypatch.setattr(follow_policy, "engagers", lambda: [f"fan{i}" for i in range(10)])
+    monkeypatch.setattr("src.x.twitter_client.follow_account", follow)
+
+    with pytest.raises(RuntimeError, match="judge_profile broke"):
+        fe.run_follow_engagers_cycle()
+
+    state = fe._load_state()
+    assert asked == ["fan0", "fan1"]
+    assert state["attempted"] == [] and state["count_today"] == 0
 
 
 @pytest.fixture

@@ -39,6 +39,17 @@ def test_fresh_drops_the_followed_accounts_whatever_the_case(tmp_path, chokepoin
     assert run.fresh(["alreadyfan", "ALREADYFAN", "Newfan", "newfan"]) == ["Newfan"]
 
 
+def test_fresh_drops_a_followed_account_recorded_with_its_at_sign(tmp_path, chokepoint):
+    """Same key as follow_policy.relation and the ledger."""
+    _followed(tmp_path, "@Alreadyfan")
+
+    run = FollowRun("TEST")
+
+    assert run.fresh(["alreadyfan", "@ALREADYFAN", "newfan"]) == ["newfan"]
+    assert run.follow("alreadyfan") is None
+    assert chokepoint["asked"] == []
+
+
 def test_a_followed_account_is_never_asked(tmp_path, chokepoint):
     _followed(tmp_path, "Alreadyfan")
 
@@ -95,6 +106,21 @@ def test_any_other_error_costs_one_pick(chokepoint):
     assert run.follow("fan2") is F.FOLLOWED
     assert run.follow("fan1") is None
     assert chokepoint["asked"] == ["fan1", "fan2"]
+    assert run.failed == 1
+
+
+def test_raise_failure_raises_the_last_pick_error(chokepoint):
+    run = FollowRun("TEST")
+    run.raise_failure()
+    first, last = RuntimeError("first"), RuntimeError("last")
+    chokepoint["answers"].update(fan1=first, fan2=last)
+    run.follow("fan1")
+    run.follow("fan2")
+
+    with pytest.raises(RuntimeError) as raised:
+        run.raise_failure()
+
+    assert raised.value is last and run.failed == 2
 
 
 def test_an_unreadable_followed_accounts_file_stops_the_run_before_any_follow(tmp_path, chokepoint):

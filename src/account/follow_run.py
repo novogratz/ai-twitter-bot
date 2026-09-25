@@ -10,7 +10,9 @@ Past CAP_REACHED the run asks no more: the daily cap, the following ceiling
 and the ratio brake do not come back within a cycle. TOO_SOON leaves it
 open, since the spacing may elapse during the cycle. Only
 `OutsideActiveHours` and `StateUnreadable` end the run, as in the Reply
-pipeline; any other error is logged and costs the one pick.
+pipeline; any other error is logged and costs the one pick. The job counts
+the failed picks in its per-cycle bound, and raises the last error once it
+saved its state, so that the health watchdog counts the cycle failed.
 """
 import traceback
 
@@ -21,24 +23,39 @@ from ..guards.active_hours import OutsideActiveHours
 from ..x import twitter_client
 
 
+def _key(handle: str) -> str:
+    return (handle or "").lower().lstrip("@")
+
+
 class FollowRun:
     """One job's follows for one cycle. Raises StateUnreadable, before any
     follow, while followed_accounts.json cannot be read."""
 
     def __init__(self, label: str):
         self._label = label  # the log prefix, "FOLLOW-ENGAGERS"…
-        self._followed = {h.lower() for h in follow_policy.followed()}
+        self._followed = {_key(h) for h in follow_policy.followed()}
         self._tried = set()
         self._cap_reached = False
+        self._failures = []
+
+    @property
+    def failed(self) -> int:
+        """The picks that raised during this run."""
+        return len(self._failures)
+
+    def raise_failure(self) -> None:
+        """Raise the last pick's error, if a pick failed."""
+        if self._failures:
+            raise self._failures[-1]
 
     def fresh(self, handles) -> list:
         """`handles` in order, without the Followed accounts, the handles
-        this run tried, and repeats, whatever the case."""
+        this run tried, and repeats, whatever the case and a leading @."""
         seen = set(self._followed | self._tried)
         kept = []
         for h in handles:
-            if h.lower() not in seen:
-                seen.add(h.lower())
+            if _key(h) not in seen:
+                seen.add(_key(h))
                 kept.append(h)
         return kept
 
@@ -50,14 +67,15 @@ class FollowRun:
             return None
         if self._cap_reached:
             return twitter_client.FollowOutcome.CAP_REACHED
-        self._tried.add(handle.lower())
+        self._tried.add(_key(handle))
         try:
             outcome = twitter_client.follow_account(handle)
         except (OutsideActiveHours, StateUnreadable):
             raise
-        except Exception:
+        except Exception as exc:
             log.info(f"[{self._label}] Follow @{handle} failed:")
             traceback.print_exc()
+            self._failures.append(exc)
             return None
         if outcome is twitter_client.FollowOutcome.CAP_REACHED:
             self._cap_reached = True
