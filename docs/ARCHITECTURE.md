@@ -664,7 +664,8 @@ reach accounting under `tests/editorial/`.
 
 The files at the top of `tests/` pin cross-cutting invariants:
 `test_conftest_walls.py` (the walls below), `test_state_file_paths.py` (every
-state file resolves to the repo root), `test_scheduler.py` (the jobs
+state file resolves to the repo root), `test_state_untracked.py` (git
+ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (`core_identity.md` and the
 reply prompts that carry it), `test_mass_unfollow.py`
 (`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
