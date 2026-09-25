@@ -88,7 +88,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
-| `BOT_HANDLE` | str | `TheAIShrink` |  | X handle the bot runs, without @. |
+| `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
+| `BOT_HANDLE` | str | `TheAIShrink` |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
 | `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
@@ -117,7 +118,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FOLLOW_ACTION_JITTER_SECONDS` | int | `45` |  | Random pause around a follow action. |
 | `BAN_SHORT_TERM_PRICE_TARGETS` | 0 or 1 | `1` |  | Refuse text carrying a short-term price target. |
 | `ENABLE_REPLY_SEARCH` | 0 or 1 | `0` |  | Schedule the search reply job (main.py, src/replies/reply_bot.py). |
-| `CONTENT_LANG_PRIMARY` | str | `en` |  | Primary content language, en or fr (content_guard, editorial_bot). |
+| `CONTENT_LANG_PRIMARY` | str | `en` |  | Primary content language, en or fr (content_guard, editorial_bot); the Account's language unless set. |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY` | int | `4` |  | Debate turns per Engager per Toronto day. |
 | `DUP_JACCARD_THRESHOLD` | float | `0.45` |  | Content-word Jaccard that makes an Original a duplicate. |
 | `DUP_CONTAINMENT_THRESHOLD` | float | `0.6` |  | Content-word containment that makes an Original a duplicate. |

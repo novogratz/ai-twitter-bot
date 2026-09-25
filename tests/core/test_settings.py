@@ -436,7 +436,8 @@ def test_env_example_describes_the_account_with_the_declared_defaults():
     it cannot offer more than the policy allows. No setting without effect
     either, nor a key only an older account used."""
     example = _env_example()
-    assert example["BOT_HANDLE"] == "TheAIShrink" and example["CONTENT_LANG_PRIMARY"] == "en"
+    assert example["BOT_ACCOUNT"] == "theaishrink"
+    assert not {"BOT_HANDLE", "CONTENT_LANG_PRIMARY"} & set(example), "the Account carries them"
     assert not set(example) & settings.UNUSED
     assert set(example) <= set(settings.DECLARED) | {"ENABLE_AI_MAINTENANCE", "ENABLE_CODEX_OPERATOR"}
     for key, raw in example.items():
