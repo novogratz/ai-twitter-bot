@@ -1,5 +1,6 @@
 """src/x/twitter_client write chokepoints: replies, posts, follows and pins
 (issues #100, #101, #142)."""
+import json
 from datetime import datetime
 
 import pytest
