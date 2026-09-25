@@ -6,6 +6,7 @@ supersede the historical surfaces listed below:
 | Setting | Effective value |
 |---|---|
 | Working hours | 04:30–23:30 America/Toronto, DST aware (`active_hours.WAKE`, `BEDTIME`) |
+| `BOT_ACCOUNT` | `theaishrink`: the Account, `accounts/<name>/account.toml` (handle, language, Slots, feeds, Evergreen topics, trusted hosts, relevance filter). Missing, or with an unknown key or a badly typed value, it stops the start; its `[limits]` may tighten an engine bound, never lift it; `.env` wins over it ([Account](OPERATIONS.md#account)) |
 | `MIN_TARGET_POSTS_PER_DAY` | 3 |
 | `TARGET_POSTS_PER_DAY` | 6 |
 | `MAX_PROFILE_POSTS_PER_DAY` | 8, hard combined ceiling |

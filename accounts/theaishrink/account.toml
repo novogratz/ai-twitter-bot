@@ -1,0 +1,131 @@
+# The Account @TheAIShrink: what the bot says and where it looks, never how
+# much it may do. BOT_ACCOUNT=theaishrink (the default) picks this folder.
+# src/core/account.py reads it once at start: an unknown key or a badly typed
+# value stops the start. Edit it by hand, then restart.
+
+handle = "TheAIShrink"
+# Language of the Originals: en or fr. Replies follow the parent's language.
+language = "en"
+
+[editorial]
+# The angle of every trend Slot and of the Startup post.
+trend_angle = "Trending: the AI topic X is talking about right now, told from a trusted source"
+# Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
+# only news under twelve hours old or an unusually useful source.
+slots = [
+    { clock = "05:00", angle = "Priority: the AI update worth understanding this morning" },
+    { clock = "07:15", angle = "A useful AI workflow with a concrete first step" },
+    { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
+    { clock = "10:00", trend = true },
+    { clock = "11:45", angle = "An AI concept explained through a clear example" },
+    { clock = "13:00", trend = true },
+    { clock = "14:00", angle = "A model or tool update and what changes for its users" },
+    { clock = "15:00", trend = true },
+    { clock = "16:15", angle = "Priority: an evidence-backed take on an AI tradeoff" },
+    { clock = "18:30", angle = "A practical AI idea worth saving or sharing" },
+    { clock = "20:45", angle = "Optional: an exceptional fresh AI update or unusually useful source", exceptional = true },
+]
+# News items: RSS or Atom feeds, read on a host of trusted_hosts only.
+feeds = [
+    { publisher = "OpenAI", url = "https://openai.com/news/rss.xml" },
+    { publisher = "Google AI", url = "https://blog.google/technology/ai/rss/" },
+    { publisher = "DeepMind", url = "https://deepmind.google/blog/rss.xml" },
+    { publisher = "Hugging Face", url = "https://huggingface.co/blog/feed.xml" },
+    { publisher = "NVIDIA", url = "https://blogs.nvidia.com/feed/" },
+    { publisher = "Microsoft Research", url = "https://www.microsoft.com/en-us/research/feed/" },
+    { publisher = "Mistral AI", url = "https://mistral.ai/rss.xml" },
+    { publisher = "Replicate", url = "https://replicate.com/blog/rss" },
+    { publisher = "The Decoder", url = "https://the-decoder.com/feed/" },
+    { publisher = "arXiv cs.AI", url = "https://rss.arxiv.org/rss/cs.AI" },
+]
+# The only hosts a source, a feed or a redirect may be fetched from, over https.
+trusted_hosts = [
+    "openai.com", "blog.google", "deepmind.google", "huggingface.co",
+    "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
+    "replicate.com", "the-decoder.com", "arxiv.org",
+]
+
+# Evergreen topics fill quiet news days, rotated daily; never presented as new.
+[[editorial.evergreen]]
+topic = "chat_templates"
+title = "Why a chat template changes model behavior"
+url = "https://huggingface.co/docs/transformers/chat_templating"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "evaluation"
+title = "How to evaluate an AI model on your own examples"
+url = "https://huggingface.co/docs/evaluate/index"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "quantization"
+title = "What quantization trades for smaller AI models"
+url = "https://huggingface.co/docs/transformers/quantization/overview"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "retrieval"
+title = "When retrieval can improve a language model's answers"
+url = "https://huggingface.co/learn/cookbook/en/advanced_rag"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "structured_output"
+title = "Why structured output still needs factual checks"
+url = "https://huggingface.co/docs/inference-providers/guides/structured-output"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "agents"
+title = "When an agent loop is useful and when it adds complexity"
+url = "https://huggingface.co/docs/smolagents/conceptual/tutorial"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "tool_use"
+title = "What changes when a model can call tools"
+url = "https://huggingface.co/docs/transformers/chat_extras"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "generation"
+title = "What temperature actually changes in generated text"
+url = "https://huggingface.co/docs/transformers/main_classes/text_generation"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "lora"
+title = "What a small adapter changes during model fine tuning"
+url = "https://huggingface.co/docs/peft/conceptual_guides/lora"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "tokenization"
+title = "Why tokenization matters for context budgets"
+url = "https://huggingface.co/docs/transformers/tokenizer_summary"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "model_cards"
+title = "What to check in a model card before using a model"
+url = "https://huggingface.co/docs/hub/model-cards"
+publisher = "Hugging Face docs"
+
+[[editorial.evergreen]]
+topic = "datasets"
+title = "Why the evaluation dataset matters as much as the score"
+url = "https://huggingface.co/docs/datasets/about_dataset_features"
+publisher = "Hugging Face docs"
+
+# Python regular expressions, matched case-insensitively. A news item's title
+# and a Trending post must match `topic`; a Trending post that matches
+# `off_topic` is dropped.
+[relevance]
+topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
+
+# An engine setting that has a ceiling or a floor in src/core/settings.py,
+# set stricter for this Account: a value past the engine's bound is brought
+# back to it, with a [SETTINGS] warning at start. .env still wins over it.
+[limits]

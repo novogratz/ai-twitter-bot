@@ -112,11 +112,13 @@ Two settings decide how much of the table does anything:
 ## Editorial pipeline
 
 `src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
-lock.
+lock. The Slots, feeds, Evergreen topics, trusted hosts and relevance filter
+are the Account's: `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked
+at start by `src/core/account.py` and read at each call.
 
-1. **Slot.** `SLOTS` lists 05:00, 07:15, 09:30, 10:00, 11:45, 13:00, 14:00,
-   15:00, 16:15, 18:30 and an optional 20:45; `TREND_SLOTS` marks 10:00, 13:00
-   and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
+1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
+   11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
+   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
    `editorial_state.json` has no entry for it and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
@@ -146,8 +148,9 @@ lock.
    cs.AI) supply AI news/articles under 48 hours old; the eight newest are
    tried before evergreen. Twelve Hugging Face documentation pages rotate daily
    as backup teaching topics. URLs used in the last seven days are skipped.
-   Each page is fetched over HTTPS from an allowed host, 12-second timeout,
-   1 MB read.
+   Each page is fetched over HTTPS from a host of the Account's
+   `trusted_hosts`, 12-second timeout, 1 MB read. A news title must match the
+   Account's `relevance.topic`.
 5. **Draft.** The model sees the Voice (`core_identity_en.md`), the hard rules, the slot
    brief, the last rejection reason for this slot, recent posts, numbered
    evidence sentences from each source and, for a trend slot, the trending

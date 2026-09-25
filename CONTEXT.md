@@ -18,9 +18,14 @@ quotes and reposts. Eight per Toronto calendar day, all kinds combined.
 _Avoid_: profile post, post
 
 **Slot**:
-A fixed daily time window, with a brief, in which at most one Original may be
+A fixed daily time window, with an Angle, in which at most one Original may be
 published.
 _Avoid_: window, schedule entry
+
+**Angle**:
+The brief a Slot gives its Original, set by the Account; every Trend slot
+shares the Account's trend angle.
+_Avoid_: purpose, brief
 
 **Exceptional slot**:
 The optional 20:45 Slot, reserved for news under twelve hours old or a useful
@@ -142,6 +147,14 @@ status ID: one Reply per post, ever. While it is unreadable, no Reply ships.
 _Avoid_: replied set, replied cache, dedup file
 
 ### Accounts
+
+**Account**:
+The X account the bot runs, one per process, chosen at start by
+`BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
+handle and language, the Slots and their angles, the feeds, Evergreen
+topics and trusted hosts, and the relevance filter. An Account may tighten
+an engine ceiling or floor, never lift it.
+_Avoid_: profile (the account's page on X), bot, persona
 
 **Engager**:
 Someone who replied to or mentioned the account. The follow policy knows

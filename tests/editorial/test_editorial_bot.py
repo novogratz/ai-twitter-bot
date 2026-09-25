@@ -1,11 +1,13 @@
 """src/editorial/editorial_bot: slots, sources, evidence, the separate
 review, bounded attempts and ambiguous submissions."""
+import dataclasses
 import json
 import os
 from datetime import datetime, timedelta
 
 import pytest
 
+from src.core import account
 from src.guards import active_hours as hours
 from src.editorial import editorial_bot as editorial, editorial_schemas as schemas
 from src.x.confirmed_write import WriteOutcome
@@ -13,6 +15,13 @@ from tests.helpers import TORONTO, USAGE_LIMIT, clock
 
 # The real model calls, before draft_fixture stubs them.
 REAL_JSON_CALL, REAL_DRAFT_POST = editorial._json_call, editorial.draft_post
+
+
+def use_editorial(monkeypatch, **fields):
+    """The Account's editorial with `fields` replaced, for this test."""
+    loaded = account.current()
+    swapped = dataclasses.replace(loaded, editorial=dataclasses.replace(loaded.editorial, **fields))
+    monkeypatch.setattr(account, "current", lambda: swapped)
 
 
 def test_slots_do_not_catch_up_or_repeat_after_restart():
@@ -37,10 +46,11 @@ def test_evening_slots_stay_inside_waking_hours():
     """2026-07-19: the post-slot grid covers the measured best evening
     hours, inside Waking hours. Moving bedtime to 23:30 on 2026-09-23
     added no slot: 20:45 stays the last one, the exceptional one."""
-    from src.editorial.editorial_bot import SLOTS
+    slots = editorial.slots()
     wake, bedtime = f"{hours.WAKE:%H:%M}", f"{hours.BEDTIME:%H:%M}"
-    assert all(wake <= clock < bedtime for clock, _ in SLOTS)
-    assert max(clock for clock, _ in SLOTS) == "20:45"
+    assert all(wake <= clock < bedtime for clock, _ in slots)
+    assert max(clock for clock, _ in slots) == "20:45"
+    assert slots[-1].exceptional
 
 
 @pytest.fixture
@@ -263,7 +273,7 @@ def test_source_pool_keeps_more_fresh_news_before_evergreen(monkeypatch):
             </item></channel></rss>"""
         return " ".join(["Fresh AI launch detail with a concrete model update."] * 40)
 
-    monkeypatch.setattr(editorial, "FEEDS", tuple((f"Feed {i}", f"https://feed/{i}") for i in range(10)))
+    use_editorial(monkeypatch, feeds=tuple((f"Feed {i}", f"https://feed/{i}") for i in range(10)))
     monkeypatch.setattr(editorial, "_fetch", fake_fetch)
 
     sources = editorial.collect_sources({"published": []}, now)
@@ -318,7 +328,7 @@ def editor(monkeypatch, editor_source):
 
 def draft_and_review(editor):
     """The Draft the real generator returns, and the review of it."""
-    draft = editorial.draft_post(editorial.SLOTS[0], [editor.source], [])
+    draft = editorial.draft_post(editorial.slots()[0], [editor.source], [])
     return draft, editorial.review_draft(draft, [editor.source], [])
 
 
@@ -468,8 +478,7 @@ def test_evidence_ids_resolve_to_exact_fetched_text(draft_fixture):
 def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     feed = "https://openai.com/news/rss.xml"
-    monkeypatch.setattr(editorial, "FEEDS", (("OpenAI", feed),))
-    monkeypatch.setattr(editorial, "KNOWLEDGE", ())
+    use_editorial(monkeypatch, feeds=(("OpenAI", feed),), evergreen=())
     items = "".join(
         f"<item><title>AI model {name}</title><link>https://openai.com/{name}</link>"
         f"<pubDate>{stamp}</pubDate></item>"
@@ -494,8 +503,9 @@ def test_a_spent_slot_does_not_hold_the_overlapping_next_one():
 
 
 def test_trend_slots_sit_in_the_grid():
-    assert editorial.TREND_SLOTS == {"10:00", "13:00", "15:00"}
-    assert editorial.TREND_SLOTS <= set(dict(editorial.SLOTS))
+    assert editorial.trend_slots() == {"10:00", "13:00", "15:00"}
+    assert editorial.trend_slots() <= set(dict(editorial.slots()))
+    assert [slot.clock for slot in editorial.slots() if slot.trend] == ["10:00", "13:00", "15:00"]
 
 
 def test_startup_window_opens_on_every_waking_start():
@@ -504,7 +514,7 @@ def test_startup_window_opens_on_every_waking_start():
     editorial.open_startup_window(at(11, 10))
     key = editorial.startup_key()
     assert key == "startup@11:10:00"
-    assert editorial.startup_slot(at(11, 20), {}) == (key, editorial.TREND_PURPOSE)
+    assert editorial.startup_slot(at(11, 20), {}) == (key, account.current().editorial.trend_angle)
     assert editorial.startup_slot(at(11, 55), {}) is None
     assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "slots": {key: "pending"}}) is None
     assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "attempts": {key: 3}}) is None
@@ -610,8 +620,7 @@ def test_a_restart_after_an_ambiguous_submission_skips_its_source(monkeypatch):
     process key; the next process's Startup post must not reuse the source."""
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     feed = "https://openai.com/news/rss.xml"
-    monkeypatch.setattr(editorial, "FEEDS", (("OpenAI", feed),))
-    monkeypatch.setattr(editorial, "KNOWLEDGE", ())
+    use_editorial(monkeypatch, feeds=(("OpenAI", feed),), evergreen=())
     xml = ("<rss><channel><item><title>AI model launch</title><link>https://openai.com/launch</link>"
            "<pubDate>2026-09-20T10:00:00-04:00</pubDate></item></channel></rss>")
     monkeypatch.setattr(editorial, "_fetch", lambda url: xml if url == feed else

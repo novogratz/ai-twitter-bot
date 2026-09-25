@@ -1,7 +1,9 @@
 """Three-to-eight source-backed AI originals, with a separate editor.
 
-Trend slots and the Startup post pick their topic from the fastest-rising AI
-posts on X; their facts still come from a fresh article in FEEDS."""
+The Slots, feeds, Evergreen topics and trusted hosts are the Account's
+(accounts/<BOT_ACCOUNT>/account.toml), read at each call. Trend slots and the
+Startup post pick their topic from the fastest-rising AI posts on X; their
+facts still come from a fresh article in the Account's feeds."""
 import json
 import re
 import threading
@@ -15,14 +17,14 @@ from typing import NamedTuple
 from urllib.parse import urlsplit
 
 from ..guards import action_guard, content_guard, respect_list
-from ..core import config, settings
+from ..core import account, config, settings
 from ..guards.active_hours import bedtime, is_active, now_local, require_active, today_iso
 from ..core.llm_client import CallProfile, LLMStatus, run_llm
 from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import GUARDED, StateFile
 from . import editorial_schemas as schemas
-from .trending import AI_TOPIC, TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
+from .trending import TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 # Guarded: it holds the Pending slots and the spent Attempts.
 STATE = StateFile("editorial_state.json", {}, GUARDED)
@@ -36,69 +38,29 @@ MAX_ATTEMPTS = 3
 # teaching topics are still valid, but factual review and dedup stay in force.
 # Trend slots (operator, 2026-09-23): the topic is the common thread of the
 # five fastest-rising AI posts on X from the last 24 hours; a fresh article
-# from FEEDS supplies every fact. No covering article, no post.
-TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
-TREND_SLOTS = frozenset({"10:00", "13:00", "15:00"})
-EXCEPTIONAL_SLOT = "20:45"
-
-
+# from the Account's feeds supplies every fact. No covering article, no post.
 class Slot(NamedTuple):
     clock: str
-    purpose: str
+    angle: str
 
     @property
     def trend(self) -> bool:
-        return is_startup(self.clock) or self.clock in TREND_SLOTS
+        return is_startup(self.clock) or self.clock in trend_slots()
 
     @property
     def exceptional(self) -> bool:
-        return self.clock == EXCEPTIONAL_SLOT
+        return self.clock in account.current().editorial.exceptional_clocks
 
 
-SLOTS = tuple(Slot(*slot) for slot in (
-    ("05:00", "Priority: the AI update worth understanding this morning"),
-    ("07:15", "A useful AI workflow with a concrete first step"),
-    ("09:30", "Priority: an AI article or model update with a sharp consequence"),
-    ("10:00", TREND_PURPOSE),
-    ("11:45", "An AI concept explained through a clear example"),
-    ("13:00", TREND_PURPOSE),
-    ("14:00", "A model or tool update and what changes for its users"),
-    ("15:00", TREND_PURPOSE),
-    ("16:15", "Priority: an evidence-backed take on an AI tradeoff"),
-    ("18:30", "A practical AI idea worth saving or sharing"),
-    (EXCEPTIONAL_SLOT, "Optional: an exceptional fresh AI update or unusually useful source"),
-))
-FEEDS = (
-    ("OpenAI", "https://openai.com/news/rss.xml"),
-    ("Google AI", "https://blog.google/technology/ai/rss/"),
-    ("DeepMind", "https://deepmind.google/blog/rss.xml"),
-    ("Hugging Face", "https://huggingface.co/blog/feed.xml"),
-    ("NVIDIA", "https://blogs.nvidia.com/feed/"),
-    ("Microsoft Research", "https://www.microsoft.com/en-us/research/feed/"),
-    ("Mistral AI", "https://mistral.ai/rss.xml"),
-    ("Replicate", "https://replicate.com/blog/rss"),
-    ("The Decoder", "https://the-decoder.com/feed/"),
-    ("arXiv cs.AI", "https://rss.arxiv.org/rss/cs.AI"),
-)
-# Source material for quiet news days. These are evergreen learning topics,
-# never represented as new releases or as experiments the bot performed.
-KNOWLEDGE = (
-    ("chat_templates", "Why a chat template changes model behavior", "https://huggingface.co/docs/transformers/chat_templating"),
-    ("evaluation", "How to evaluate an AI model on your own examples", "https://huggingface.co/docs/evaluate/index"),
-    ("quantization", "What quantization trades for smaller AI models", "https://huggingface.co/docs/transformers/quantization/overview"),
-    ("retrieval", "When retrieval can improve a language model's answers", "https://huggingface.co/learn/cookbook/en/advanced_rag"),
-    ("structured_output", "Why structured output still needs factual checks", "https://huggingface.co/docs/inference-providers/guides/structured-output"),
-    ("agents", "When an agent loop is useful and when it adds complexity", "https://huggingface.co/docs/smolagents/conceptual/tutorial"),
-    ("tool_use", "What changes when a model can call tools", "https://huggingface.co/docs/transformers/chat_extras"),
-    ("generation", "What temperature actually changes in generated text", "https://huggingface.co/docs/transformers/main_classes/text_generation"),
-    ("lora", "What a small adapter changes during model fine tuning", "https://huggingface.co/docs/peft/conceptual_guides/lora"),
-    ("tokenization", "Why tokenization matters for context budgets", "https://huggingface.co/docs/transformers/tokenizer_summary"),
-    ("model_cards", "What to check in a model card before using a model", "https://huggingface.co/docs/hub/model-cards"),
-    ("datasets", "Why the evaluation dataset matters as much as the score", "https://huggingface.co/docs/datasets/about_dataset_features"),
-)
-_HOSTS = {"openai.com", "blog.google", "deepmind.google", "huggingface.co",
-          "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
-          "replicate.com", "the-decoder.com", "arxiv.org"}
+def slots() -> tuple:
+    """The Account's Slot grid, earliest first."""
+    return tuple(Slot(*slot) for slot in account.current().editorial.slots)
+
+
+def trend_slots() -> frozenset:
+    return account.current().editorial.trend_clocks
+
+
 # Startup post (operator, 2026-09-23): every start in waking hours opens a
 # trend Slot for 45 minutes, restarts included. Its key carries the start
 # time, so each process gets its own Attempts and pending guard.
@@ -149,7 +111,7 @@ def open_slots(now=None, state=None) -> list:
     if not is_active(now):
         return []
     state = _read_state() if state is None else state
-    return [slot for slot in SLOTS if _open(slot.clock, now, state)]
+    return [slot for slot in slots() if _open(slot.clock, now, state)]
 
 
 def due_slot(now=None, state=None):
@@ -180,7 +142,7 @@ def startup_slot(now=None, state=None):
     if not key or not is_active(now):
         return None
     state = _read_state() if state is None else state
-    return Slot(key, TREND_PURPOSE) if _open(key, now, state) else None
+    return Slot(key, account.current().editorial.trend_angle) if _open(key, now, state) else None
 
 
 def next_slot(now=None, state=None):
@@ -191,7 +153,8 @@ def next_slot(now=None, state=None):
 
 def _trusted(url: str) -> bool:
     parts = urlsplit(url)
-    return parts.scheme == "https" and parts.hostname in _HOSTS and not parts.username
+    return (parts.scheme == "https" and parts.hostname in account.current().editorial.trusted_hosts
+            and not parts.username)
 
 
 class _Redirect(urllib.request.HTTPRedirectHandler):
@@ -260,7 +223,8 @@ def collect_sources(state: dict, now=None, news_only=False) -> list:
     # An ambiguous submission may be live: a restart must not reuse its source.
     used |= {pending["url"] for pending in state.get("pending_sources", {}).values()}
     candidates = []
-    for publisher, feed in FEEDS:
+    loaded = account.current()
+    for publisher, feed in loaded.editorial.feeds:
         try:
             root = ET.fromstring(_fetch(feed))
             for item in root.iter():
@@ -276,7 +240,8 @@ def collect_sources(state: dict, now=None, news_only=False) -> list:
                 stamp = _stamp(field("pubDate") or field("published") or field("updated"))
                 title = field("title")
                 if (not stamp or not now - timedelta(hours=48) <= stamp <= now
-                        or not _trusted(link) or link in used or not AI_TOPIC.search(title)):
+                        or not _trusted(link) or link in used
+                        or not loaded.relevance.topic.search(title)):
                     continue
                 candidates.append(dict(title=title, url=link, publisher=publisher,
                                        published_at=stamp.isoformat(), kind="news"))
@@ -285,12 +250,13 @@ def collect_sources(state: dict, now=None, news_only=False) -> list:
     candidates.sort(key=lambda c: c["published_at"], reverse=True)
     candidates = candidates[:8]  # fresh launches/articles first; evergreen fills quiet slots
     # Rotate evergreen topics daily, so quiet days still offer useful teaching.
-    offset = now.date().toordinal() % len(KNOWLEDGE) if KNOWLEDGE else 0
-    evergreen = () if news_only else KNOWLEDGE[offset:] + KNOWLEDGE[:offset]
-    for topic, title, url in evergreen:
-        if url not in used:
-            candidates.append(dict(title=title, url=url, publisher="Hugging Face docs",
-                                   published_at="", kind="knowledge", topic=topic))
+    topics = loaded.editorial.evergreen
+    offset = now.date().toordinal() % len(topics) if topics else 0
+    evergreen = () if news_only else topics[offset:] + topics[:offset]
+    for topic in evergreen:
+        if topic.url not in used:
+            candidates.append(dict(title=topic.title, url=topic.url, publisher=topic.publisher,
+                                   published_at="", kind="knowledge", topic=topic.topic))
     sources, seen = [], set()
     for candidate in candidates:
         if candidate["url"] in seen:

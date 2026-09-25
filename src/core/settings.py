@@ -4,13 +4,17 @@ A setting is declared below with its name, type, default, optional floor or
 ceiling, and a one-line description. `load()` reads `.env` once and resolves
 every setting through these layers, the later one winning:
 
-    declared default -> account (#202, empty until then) -> .env
+    declared default -> Account -> .env
 
-The process environment still wins over `.env`, as it always has. Bounds are
-applied once, after the merge: a value past its floor or ceiling is brought
-back to it and listed in `startup_warnings()`, which `main.py` logs. A `.env`
-key this module does not know, or a value its type rejects, stops the start
-with a `SettingsError` naming the key. Changing a setting needs a restart.
+The Account is accounts/<BOT_ACCOUNT>/account.toml (src/core/account.py): its
+handle and language, and the bounded settings its `[limits]` tightens. The
+process environment still wins over `.env`, as it always has. Bounds are
+applied once, after the merge, and to the Account's own values, so an Account
+can only tighten a bound: a value past its floor or ceiling is brought back to
+it and listed in `startup_warnings()`, which `main.py` logs. A `.env` key this
+module does not know, or a value its type rejects, stops the start with a
+`SettingsError` naming the key; so does a missing Account, or an unknown key
+or badly typed value in its account.toml. Changing a setting needs a restart.
 
 `main.py` calls `load()` before any other project import, so every module and
 every model call sees `.env` whatever it imports first; a script or a test
@@ -108,7 +112,8 @@ def _script_keys(*names):
 
 
 # ── #195 · src/core/config.py, and keys several lots share ──────────────────
-_declare("BOT_HANDLE", str, "TheAIShrink", "X handle the bot runs, without @.")
+_declare("BOT_ACCOUNT", str, "theaishrink", "Account the bot runs: the folder accounts/<name>/ holding its account.toml.")
+_declare("BOT_HANDLE", str, "TheAIShrink", "X handle the bot runs, without @; the Account's handle unless set.")
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
 _declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")
 _declare("NEWS_MODEL", str, None, "CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
@@ -147,7 +152,7 @@ _declare("CHURN_COOLDOWN_DAYS", int, 30, "Days before an account followed or unf
 _declare("FOLLOW_ACTION_JITTER_SECONDS", int, 45, "Random pause around a follow action.")
 _declare("BAN_SHORT_TERM_PRICE_TARGETS", bool, True, "Refuse text carrying a short-term price target.")
 _declare("ENABLE_REPLY_SEARCH", bool, False, "Schedule the search reply job (main.py, src/replies/reply_bot.py).")
-_declare("CONTENT_LANG_PRIMARY", str, "en", "Primary content language, en or fr (content_guard, editorial_bot).")
+_declare("CONTENT_LANG_PRIMARY", str, "en", "Primary content language, en or fr (content_guard, editorial_bot); the Account's language unless set.")
 
 # ── Shell scripts that source .env: operator_cycle.sh, bot_watchdog.sh ──────
 _script_keys(
@@ -269,8 +274,8 @@ def load(env_file: str | None = None, environ=None) -> None:
     if unknown:
         raise SettingsError(f"Unknown key in .env: {', '.join(unknown)}. Remove it, or declare it "
                             "in src/core/settings.py.")
-    account = _account_layer()
     raw = {**from_file, **environ}
+    account, warnings = _account_layer(raw.get("BOT_ACCOUNT", DECLARED["BOT_ACCOUNT"].default))
     values, problems = {}, []
     for name, setting in DECLARED.items():
         value = account.get(name, setting.default)
@@ -282,7 +287,6 @@ def load(env_file: str | None = None, environ=None) -> None:
         values[name] = value
     if problems:
         raise SettingsError(f"Bad value in .env or the environment: {'; '.join(problems)}.")
-    warnings = []
     for name, value in values.items():
         values[name], warning = _bound(DECLARED[name], value)
         if warning:
@@ -334,9 +338,26 @@ def overriding():
         _overrides.update(saved)
 
 
-def _account_layer() -> dict:
-    # #202: the values of the Account's account.toml, checked like `.env`.
-    return {}
+def _account_layer(name: str) -> tuple[dict, list[str]]:
+    """The settings the Account `name` sets, each within its bound, and a
+    warning for each value brought back to it."""
+    from . import account
+    loaded = account.load(name)
+    layer = {"BOT_HANDLE": loaded.handle, "CONTENT_LANG_PRIMARY": loaded.language}
+    warnings = []
+    for key, value in loaded.limits.items():
+        setting = DECLARED.get(key)
+        if setting is None or (setting.floor is None and setting.ceiling is None):
+            raise account.AccountError(f"{loaded.file}: limits.{key} is not an engine setting "
+                                       "with a floor or a ceiling.")
+        try:
+            value = _check(setting, value)
+        except TypeError as exc:
+            raise account.AccountError(f"{loaded.file}: limits.{exc}.") from None
+        layer[key], warning = _bound(setting, value)
+        if warning:
+            warnings.append(f"{loaded.file}: {warning}")
+    return layer, warnings
 
 
 def _declared(name: str) -> Setting:

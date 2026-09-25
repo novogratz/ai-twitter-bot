@@ -83,6 +83,15 @@ uv run python main.py
 start: a key the engine does not know, or a badly typed value, stops the start
 with a message naming the key, and `--dry-run` names the same keys.
 
+One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
+`accounts/<name>/account.toml`, which holds the handle, the language of the
+Originals, the Slots and their angles, the feeds, Evergreen topics, trusted
+hosts and the relevance filter. It is read once at start, like `.env`: a
+missing Account, an unknown key or a badly typed value stops the start with a
+message naming the file and the key. Its `[limits]` may tighten an engine
+ceiling or floor, never lift it; a value past the bound is brought back to it
+with a `[SETTINGS]` warning. `.env` still wins over the Account.
+
 ```bash
 uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs and exit; no browser or LLM
 uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
@@ -103,7 +112,8 @@ is unreadable, every follow is refused; an unreadable `whitelist.json` also
 stops `bin/mass_unfollow.py`.
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
-handles source selection, drafting and review. `src/guards/active_hours.py`
+handles source selection, drafting and review, from the Account that
+`src/core/account.py` loads. `src/guards/active_hours.py`
 owns the Toronto clock. `src/guards/action_guard.py` and
 `src/x/twitter_client.py` enforce limits at the browser boundary, from the
 writes recorded in the action ledger (`src/guards/ledger.py`).
