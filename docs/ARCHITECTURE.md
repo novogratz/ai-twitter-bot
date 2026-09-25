@@ -372,7 +372,7 @@ Five modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that `.env` cannot lift: eight
   profile publications a day, originals capped at 8 and spaced by at least
-  1200 seconds, repost age clamped to 48 hours.
+  1200 seconds.
 - `src/guards/action_guard.py` decides `can_post`, answers the follow
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and

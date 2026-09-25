@@ -306,6 +306,23 @@ def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
     assert path.read_text() == CORRUPT
 
 
+def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch, tmp_path):
+    """main.py imports it at start: a block rendered at import would stop
+    the process on an unreadable respect list."""
+    import importlib
+    from src.core import personality_store
+    from src.guards import respect_list
+    path = _corrupt(tmp_path, "respect_list.json")
+    monkeypatch.setattr(respect_list, "render_block", lambda: pytest.fail("rendered at import"))
+    saved = dict(vars(personality_store))
+    try:
+        importlib.reload(personality_store)
+    finally:
+        vars(personality_store).clear()
+        vars(personality_store).update(saved)
+    assert path.read_text() == CORRUPT
+
+
 def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, tmp_path, caplog):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
     cycle stops at the first candidate instead of trying the next ones."""

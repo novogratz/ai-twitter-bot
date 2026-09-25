@@ -204,8 +204,8 @@ Safari restart, and nothing writes over the file:
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
-until it is repaired; `main.py` still starts, because the hard-rules block
-computed at import names the default handles. A process killed mid-write
+until it is repaired; `main.py` still starts, because nothing renders the
+hard-rules block at import. A process killed mid-write
 can leave a `.<name>.<random>.tmp` file beside a state file: `.gitignore`
 covers it, and it can be deleted once the bot is stopped. With the bot stopped, repair the JSON by hand (usually a truncated
 tail), check its top-level type (a list for `tweet_history.json` and
