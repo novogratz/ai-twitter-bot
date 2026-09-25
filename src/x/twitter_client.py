@@ -161,7 +161,7 @@ def post_tweet(text: str) -> WriteOutcome:
     an inline one.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
-    content or dedup skip, FAILED when a step before the submit failed,
+    content, respect list or dedup skip, FAILED when a step before the submit failed,
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
@@ -178,7 +178,7 @@ def post_tweet(text: str) -> WriteOutcome:
     # Central write policy: originals daily cap + jittered spacing, then the
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
-    from ..guards import action_guard, content_guard
+    from ..guards import action_guard, content_guard, respect_list
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged its posts
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
     # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
@@ -192,6 +192,10 @@ def post_tweet(text: str) -> WriteOutcome:
         ok, why = content_guard.validate(text, kind="original")
         if not ok:
             log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
+            return WriteOutcome.REFUSED
+        _, why = respect_list.scrub_text_or_skip(text)
+        if why:
+            log.info(f"[POST] respect list skip ({why}): {text[:120]!r}")
             return WriteOutcome.REFUSED
         if content_guard.is_duplicate(text):
             log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")

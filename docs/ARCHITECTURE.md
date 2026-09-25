@@ -524,8 +524,10 @@ replyback a word test on the Engager's reply; the reply search English.
 with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
 is a decline; the bestie and buddy voices also decline "skip" anywhere in
 the first 20 characters (`skip_window`). The editorial prompt carries the
-hard rules too. No
-chokepoint applies the respect list to outgoing text.
+hard rules too. The write chokepoints apply the respect list to the
+outgoing text, before the dry-run exit: `post_tweet` refuses an Original
+and Reply admission a Reply (`RESPECTED_ACCOUNT`) that names a Respected
+account by `@handle`, or by its handle next to a derisive word.
 While `respect_list.json` is unreadable, `hard_rules_block` raises
 `StateUnreadable`: the editorial cycle and the Reply cycles stop before the
 model call, and nothing ships. Nothing renders the block at import, so

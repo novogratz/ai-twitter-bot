@@ -18,12 +18,12 @@ Public API:
   load() -> set of lowercased handles (no @)
   add(handle, reason="") -> persists, dedups
   remove(handle)
-  is_protected(handle_or_user_string) -> bool (handles common shapes)
   scrub_text_or_skip(text) -> (cleaned_text, reason_if_skipped)
        Final-line defense: if generated content names a protected
-       handle, returns (None, "names protected handle @x"). Caller
-       should SKIP the post.
-  render_block() -> str — for prompt injection.
+       handle, returns (None, "names protected handle @x"). The write
+       chokepoints refuse the post: `post_tweet` for an Original, Reply
+       admission for a Reply, dry run included.
+  render_block() -> str — for prompt injection, every handle named.
 
 The file is guarded: while respect_list.json is unreadable, every function
 that reads it raises StateUnreadable, render_block included, and nothing
@@ -136,22 +136,6 @@ def remove(handle: str) -> bool:
     return False
 
 
-def _normalize_handle(s: str) -> str:
-    if not s:
-        return ""
-    s = s.strip().lstrip("@").lower()
-    # Strip URL prefix shapes: "x.com/foo" -> "foo"
-    m = re.search(r"(?:x\.com|twitter\.com)/([^/?#]+)", s)
-    if m:
-        return m.group(1).lower()
-    return s
-
-
-def is_protected(handle_or_user_string: str) -> bool:
-    h = _normalize_handle(handle_or_user_string)
-    return h in load()
-
-
 def scrub_text_or_skip(text: str) -> Tuple[Optional[str], str]:
     """Final-line defense before any bot ships generated content.
 
@@ -202,8 +186,7 @@ def render_block() -> str:
     handles = sorted(load())
     if not handles:
         return ""
-    sample = ", ".join(f"@{h}" for h in handles[:30])
-    extra = f" (+{len(handles)-30} autres)" if len(handles) > 30 else ""
+    names = ", ".join(f"@{h}" for h in handles)
     return (
         "==================================================\n"
         "RESPECT LIST — comptes a NE JAMAIS critiquer NOMMEMENT\n"
@@ -215,5 +198,5 @@ def render_block() -> str:
         "- les ridiculiser, ironiser sur leur personne, ou mocker leur travail\n"
         "Si l'idee dans leur tweet est critiquable, tu critiques l'IDEE,\n"
         "jamais la personne. En cas de doute -> SKIP.\n\n"
-        f"Liste actuelle: {sample}{extra}.\n"
+        f"Liste actuelle: {names}.\n"
     )

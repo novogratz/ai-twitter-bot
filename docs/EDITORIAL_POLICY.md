@@ -129,13 +129,17 @@ must not repeat.
   list (`personality_store.hard_rules_block()`): `src/replies/reply_generator.py`
   assembles them all (issue #155). A model SKIP sets the post aside for good;
   a model rate limit, every provider at its usage limit, ends the job's
-  generations for the cycle.
+  generations for the cycle. The prompt names every Respected account.
 - Model calls stay on their configured provider, Ollama by default. Only an
   explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
   (issue #189). One exception, pending the Operator's decision: the Replies
   to @Graphseo run on the Claude CLI whenever it is installed.
+- An outgoing text that names a Respected account, by `@handle` or by its
+  handle next to a derisive word, is refused at the write chokepoint, dry
+  run included: `post_tweet` for an Original, Reply admission for a Reply,
+  which leaves the post replayable with a new generation (issue #190).
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,

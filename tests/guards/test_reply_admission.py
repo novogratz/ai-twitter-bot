@@ -131,6 +131,27 @@ def test_refused_text_leaves_the_post_replayable(monkeypatch):
     assert judge_reply(url("Graphseo"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
 
 
+@pytest.mark.parametrize("draft", [
+    "@kindperson batching is where inference margins are won or lost.",
+    "Kindperson calling batching a margin story is bullshit.",
+])
+def test_a_reply_naming_a_respected_account_is_refused(monkeypatch, draft):
+    from src.guards import respect_list
+    respect_list.add("kindperson")
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    verdict = judge_reply(url("kindperson"), draft)
+    assert verdict.refusal is Refusal.RESPECTED_ACCOUNT and not verdict.refusal.definitive
+    assert "kindperson" in verdict.reason
+
+
+def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch):
+    from src.guards import respect_list
+    respect_list.add("kindperson")
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    verdict = judge_reply(url("kindperson"), TEXT)
+    assert verdict and verdict.text == TEXT
+
+
 def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     assert judge_reply(url("someone"), TEXT, debate_turn=True)

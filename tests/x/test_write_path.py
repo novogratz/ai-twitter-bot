@@ -462,6 +462,32 @@ def test_live_reply_pastes_the_validated_text(monkeypatch):
     assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
 
 
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
+    """The respect list is judged before the dry-run exit: the Reply is
+    refused, nothing pasted, no ledger row, live or dry run."""
+    from src.core import humanizer
+    from src.guards import respect_list
+    from src.guards.replied_store import load_replied
+    from src.x import safari, twitter_client as tc
+
+    recorded = _live_browser(monkeypatch)
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    pasted = []
+    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
+    respect_list.add("kindperson")
+    url = "https://x.com/kindperson/status/2063500000000000168"
+
+    assert tc.reply_to_tweet(url, f"@kindperson {REPLY}") is W.REFUSED
+    assert recorded == [] and pasted == []
+    assert url not in load_replied()
+
+    shipped = tc.reply_to_tweet(url, REPLY)
+    assert shipped is (W.DRY_RUN if dry_run == "1" else W.SHIPPED)
+    assert pasted == ([] if dry_run == "1" else [REPLY])
+
+
 def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     """A Reply shipped by another thread while this one waited for the
     browser: the spacing check sees it and nothing is claimed."""
@@ -637,6 +663,38 @@ def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
             "https://huggingface.co/blog/inference-costs")
     assert tc.post_tweet(text) is W.SHIPPED
     assert parse_qs(urlparse(opened[0]).query)["text"] == [text]
+
+
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
+    """The respect list is judged before the dry-run exit: the Original is
+    refused, nothing opened, no ledger row, live or dry run. A neutral text
+    ships unchanged."""
+    from urllib.parse import parse_qs, urlparse
+    from src.guards import content_guard, respect_list
+    from src.x import safari, twitter_client as tc
+
+    recorded = _live_browser(monkeypatch)
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setattr(content_guard, "validate", lambda text, kind="original": (True, ""))
+    monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
+    monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
+    opened = []
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
+    respect_list.add("kindperson")
+
+    for text in ("Inference is getting cheaper faster than training, says @kindperson.",
+                 "Kindperson calling inference cheap is bullshit."):
+        assert tc.post_tweet(text) is W.REFUSED, text
+    assert recorded == [] and opened == []
+
+    neutral = "Inference is getting cheaper faster than training."
+    if dry_run == "1":
+        assert tc.post_tweet(neutral) is W.DRY_RUN
+        assert opened == []
+    else:
+        assert tc.post_tweet(neutral) is W.SHIPPED
+        assert parse_qs(urlparse(opened[0]).query)["text"] == [neutral]
 
 
 def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):

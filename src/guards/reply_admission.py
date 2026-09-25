@@ -25,6 +25,7 @@ from . import (
     active_hours,
     content_guard,
     replied_store,
+    respect_list,
 )
 from ..core import config, humanizer, reply_language
 from ..x import x_urls
@@ -40,6 +41,7 @@ class Refusal(Enum):
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
+    RESPECTED_ACCOUNT = "text names a Respected account"
 
     @property
     def definitive(self) -> bool:
@@ -114,6 +116,9 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
         return Verdict(Refusal.TEXT, why, author)
+    _, why = respect_list.scrub_text_or_skip(text)
+    if why:
+        return Verdict(Refusal.RESPECTED_ACCOUNT, why, author)
     return Verdict(None, author=author, text=text)
 
 
