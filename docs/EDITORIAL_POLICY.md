@@ -140,7 +140,9 @@ must not repeat.
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
   (issue #189). One exception, pending the Operator's decision: the Replies
-  to @Graphseo run on the Claude CLI whenever it is installed.
+  to @Graphseo run on the Claude CLI whenever it is installed, with
+  `PRIORITY_REPLY_MODEL`, unset Claude's default `claude-haiku-4-5-20251001`
+  (issue #197).
 - An outgoing text that names a Respected account, by `@handle` or by its
   handle in a sentence with a derisive word, is refused at the write
   chokepoint, dry run included: `post_tweet` for an Original, Reply

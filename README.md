@@ -63,10 +63,13 @@ See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details
 Requires macOS, Safari with JavaScript from Apple Events enabled (it need not be
 the default browser: the bot opens every page in Safari), Python 3.12+,
 [uv](https://docs.astral.sh/uv/), and the configured local Ollama models. Originals use `gemma4:31b` by default
-(`EDITORIAL_OLLAMA_MODEL`); replies use the existing reply model. With the
+(`EDITORIAL_OLLAMA_MODEL`); replies use `OLLAMA_MODEL` (default
+`qwen3.6:35b-a3b`), the model `bin/run.sh` pre-warms. With the
 default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
 fallback, codex for instance, with one exception: the Replies to @Graphseo run
-on the Claude CLI whenever it is installed. An unknown provider name fails the
+on the Claude CLI whenever it is installed. A CLI runs `NEWS_MODEL`,
+`REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
+(`llm_client.CLI_MODELS`). An unknown provider name fails the
 call and is logged at start, as is a fallback the code ignores.
 
 ```bash

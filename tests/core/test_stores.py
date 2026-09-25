@@ -32,7 +32,7 @@ def test_json_safety_strips_lone_surrogates_before_utf8_write(tmp_path):
     assert "AI math  signal" in out.read_text(encoding="utf-8")
 
 
-def test_engagement_log_records_the_provider_and_model_it_is_given(monkeypatch, tmp_path):
+def test_engagement_log_records_the_provider_and_model_it_is_given(monkeypatch, settings_override, tmp_path):
     """Issue #176: a row carries the provider and model that wrote the
     text, as the caller passes them from the model's answer. The configured
     provider is no guess at it: the Replies force their own, and a fallback
@@ -41,8 +41,7 @@ def test_engagement_log_records_the_provider_and_model_it_is_given(monkeypatch, 
     from src.core import engagement_log as el
     p = tmp_path / "engagement_log.csv"
     monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(p))
-    monkeypatch.setenv("AI_CLI", "claude")
-    monkeypatch.setenv("PROFILE_LLM_PROVIDER", "gemini")
+    settings_override(AI_CLI="claude", PROFILE_LLM_PROVIDER="gemini")
     el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST",
                  provider="codex", model="gpt-5.4-mini")
     rows = list(csv.reader(open(p)))

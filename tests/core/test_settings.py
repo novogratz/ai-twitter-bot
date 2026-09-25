@@ -193,10 +193,13 @@ def test_a_side_effect_switch_is_a_function_its_constant_calls(settings_override
 
 
 def test_a_setting_config_derives_follows_its_override(settings_override):
+    from src.core.config import REPLY_MODEL  # a copy made at import, as src/replies still does
     settings_override(BOT_HANDLE="Other", AI_CLI=" Codex ", REPLY_MODEL=None)
     assert config.BOT_PROFILE_URL == "https://x.com/Other"
     assert config.AI_CLI == "codex"
-    assert config.REPLY_MODEL == "gpt-5.4-mini"
+    assert REPLY_MODEL.for_provider("claude") == "claude-haiku-4-5-20251001"
+    settings_override(REPLY_MODEL="set-model")
+    assert REPLY_MODEL.for_provider("claude") == "set-model"
 
 
 def test_undoing_a_config_monkeypatch_leaves_a_global_behind():
@@ -270,7 +273,7 @@ def test_main_loads_settings_before_any_other_project_import():
     "src.core.llm_client", "src.core.logger", "src.core.state_store", "src.core.config"])
 def test_env_file_reaches_the_llm_client_whatever_is_imported_first(tmp_path, first):
     """The logger no longer imports the config: nothing may depend on it to
-    load .env before llm_client freezes its model at import."""
+    load .env before llm_client reads its model."""
     env_file = tmp_path / ".env"
     env_file.write_text("OLLAMA_MODEL=probe-model\nAI_CLI=codex\n")
     code = (
@@ -279,7 +282,8 @@ def test_env_file_reaches_the_llm_client_whatever_is_imported_first(tmp_path, fi
         "settings.ENV_FILE = sys.argv[1]\n"
         f"importlib.import_module({first!r})\n"
         "from src.core import llm_client\n"
-        "print(llm_client.OLLAMA_MODEL, os.environ.get('AI_CLI'), settings.get('AI_CLI'))\n"
+        "print(llm_client._ollama_model(llm_client.TEXT_PROFILE), os.environ.get('AI_CLI'), "
+        "settings.get('AI_CLI'))\n"
     )
     env = {k: v for k, v in os.environ.items() if k not in ("OLLAMA_MODEL", "AI_CLI")}
     out = subprocess.run([sys.executable, "-c", code, str(env_file)], env=env, check=True,
@@ -325,12 +329,16 @@ def test_every_script_key_is_read_by_a_script_that_sources_env():
     assert all(f"${{{key}" in scripts for key in settings.SCRIPT_KEYS)
 
 
-def test_the_config_no_longer_reads_the_environment():
-    """Only config.dry_run() still does, at call time."""
-    text = (ROOT / "src/core/config.py").read_text()
-    reads = {a or b for a, b in _LITERAL_READ.findall(text)}
-    assert reads <= {"DRY_RUN"}
-    assert not _DYNAMIC_READ.search(text)
+def test_src_core_no_longer_reads_the_environment():
+    """Only config.dry_run() still does, at call time (#197)."""
+    for path in (ROOT / "src/core").glob("*.py"):
+        if path.name == "settings.py":
+            continue
+        text = path.read_text()
+        reads = {a or b for a, b in _LITERAL_READ.findall(text)}
+        assert reads <= ({"DRY_RUN"} if path.name == "config.py" else set()), path.name
+        assert not _DYNAMIC_READ.search(text), path.name
+        assert "os.environ[" not in text and "getenv" not in text, path.name
 
 
 def test_model_cli_credentials_in_env_file_do_not_stop_the_start(tmp_path):

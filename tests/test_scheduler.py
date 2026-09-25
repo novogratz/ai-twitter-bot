@@ -44,7 +44,7 @@ def test_only_a_run_with_the_editorial_job_opens_a_startup_post(monkeypatch, fla
     assert calls == ([True] if opened else [])
 
 
-def test_the_start_reports_an_unknown_llm_provider(monkeypatch, capsys, caplog):
+def test_the_start_reports_an_unknown_llm_provider(monkeypatch, settings_override, capsys, caplog):
     """Issue #189: a provider name no adapter carries fails every call it
     routes; the start says so, in the log and in the dry run."""
     import json
@@ -52,27 +52,22 @@ def test_the_start_reports_an_unknown_llm_provider(monkeypatch, capsys, caplog):
     import main
 
     monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
-    monkeypatch.setenv("AI_CLI", "olama")
-    monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    settings_override(AI_CLI="olama", LLM_FALLBACK_CLI="")
     main.main()
     assert json.loads(capsys.readouterr().out)["unknown_llm_providers"] == ["AI_CLI='olama'"]
     assert "Unknown provider AI_CLI='olama'" in caplog.text
 
 
-def test_the_start_reports_an_explicit_fallback_it_ignores(monkeypatch, capsys, caplog):
+def test_the_start_reports_an_explicit_fallback_it_ignores(monkeypatch, settings_override, capsys, caplog):
     """Review of #189: LLM_FALLBACK_CLI=claude gave no fallback and said
     nothing."""
     import json
     import sys
     import main
-    from src.core import config
 
     monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
-    monkeypatch.setenv("AI_CLI", "ollama")
-    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", None)
-    monkeypatch.setattr(config, "REPLY_LLM_PROVIDER", None)
-    monkeypatch.setenv("LLM_FALLBACK_CLI", "claude")
-    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    settings_override(AI_CLI="ollama", PROFILE_LLM_PROVIDER="", REPLY_LLM_PROVIDER="",
+                      LLM_FALLBACK_CLI="claude", LLM_DISABLE_FALLBACK=False)
     main.main()
     note = "LLM_FALLBACK_CLI='claude' behind AI_CLI='ollama': claude is never a fallback"
     assert json.loads(capsys.readouterr().out)["ignored_llm_fallbacks"] == [note]

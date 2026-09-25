@@ -155,8 +155,8 @@ def test_reply_search_carries_the_english_voice_file(jobs):
     assert language(jobs("reply_search", "", "")) == ("en", None)
 
 
-def test_fr_forced_handles_are_read_at_call_time(jobs, monkeypatch):
-    monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", "someone")
+def test_fr_forced_handles_are_read_at_call_time(jobs, settings_override):
+    settings_override(FR_FORCED_REPLY_HANDLES="someone")
     assert language(jobs("search", "someone", EN)) == ("fr", "fr")
 
 
@@ -164,15 +164,15 @@ def test_fr_forced_handles_are_read_at_call_time(jobs, monkeypatch):
     (None, "Graphseo", True), (None, "@graphseo", True), (None, "someone", False),
     (" @SomeOne , other", "someone", True), ("", "graphseo", False), ("someone", "", False),
 ])
-def test_one_reader_decides_fr_forced_parents(monkeypatch, env, author, forced):
+def test_one_reader_decides_fr_forced_parents(settings_override, env, author, forced):
     """The generator and Reply admission share this reader: one default,
     one handle normalisation."""
+    from src.core import settings
     from src.core.reply_language import is_fr_forced
 
     if env is None:
-        monkeypatch.delenv("FR_FORCED_REPLY_HANDLES", raising=False)
-    else:
-        monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", env)
+        env = settings.DECLARED["FR_FORCED_REPLY_HANDLES"].default
+    settings_override(FR_FORCED_REPLY_HANDLES=env)
     assert is_fr_forced(author) is forced
 
 
@@ -453,7 +453,7 @@ def caller_prompts(monkeypatch):
 
 @pytest.mark.parametrize("route", ["ollama", "claude"])
 @pytest.mark.parametrize("name", REPLY_CALLS)
-def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, route):
+def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, settings_override, name, route):
     """Issue #174 moved the Ollama settings from the label to a call profile
     the caller declares. A Reply declares none and keeps what it had: the
     reply model, no schema, temperature 1.0 and its own timeout floored at
@@ -463,12 +463,10 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     import dataclasses
     import urllib.request
 
-    from src.core import llm_client as llm
+    from src.core import llm_client as llm, settings
     from src.replies import reply_generator
 
-    monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
-    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
-    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    settings_override(OLLAMA_MODEL="reply-model", LLM_FALLBACK_CLI="ollama", LLM_DISABLE_FALLBACK=False)
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(1, "", "cloud down"))
     ollama = OllamaServer("Batching decides the margin, not the model.")
     monkeypatch.setattr(urllib.request, "urlopen", ollama)
@@ -484,12 +482,12 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     assert request["prompt"] == "/no_think\n\n" + sent[-1]
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
-    assert timeout == max(call.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)
+    assert timeout == max(call.llm_options.get("timeout") or 0, settings.get("LLM_TIMEOUT_SECONDS"))
 
 
 @pytest.mark.parametrize("fallback", [None, "codex"])
 @pytest.mark.parametrize("name", REPLY_CALLS)
-def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, fallback):
+def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, settings_override, name, fallback):
     """Issue #189: codex was the fallback by default. Without
     LLM_FALLBACK_CLI, a failed Ollama call fails the Reply; with it, codex
     writes the Reply and is named."""
@@ -500,13 +498,8 @@ def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, 
     from src.core import llm_client as llm
     from src.replies import reply_generator
 
-    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
-    monkeypatch.delenv("LLM_FALLBACK_MODEL", raising=False)
-    monkeypatch.delenv("CODEX_FALLBACK_MODEL", raising=False)
-    if fallback is None:
-        monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
-    else:
-        monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+    settings_override(LLM_DISABLE_FALLBACK=False, LLM_FALLBACK_MODEL="", CODEX_FALLBACK_MODEL="gpt-5.4-mini",
+                      LLM_FALLBACK_CLI=fallback or "")
     monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
 
     def ollama_down(request, timeout=None):
@@ -536,12 +529,10 @@ def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch
     import json
     import urllib.request
 
-    from src.core import llm_client as llm
+    from src.core import llm_client as llm, settings
     from src.replies import reply_agent as ra
 
-    monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
-    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
-    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    settings_override(OLLAMA_MODEL="reply-model", LLM_FALLBACK_CLI="ollama", LLM_DISABLE_FALLBACK=False)
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(1, "", "cloud down"))
     settings_override(REPLY_LLM_PROVIDER=route)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
@@ -558,7 +549,7 @@ def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch
     assert request["prompt"] == "/no_think\n\n" + sent[-1]
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
-    assert timeout == llm.DEFAULT_LLM_TIMEOUT_SECONDS
+    assert timeout == settings.get("LLM_TIMEOUT_SECONDS")
 
 
 FOUND = [{"tweet_url": "https://x.com/someone/status/1", "reply": "Batching decides the margin.",
@@ -579,7 +570,7 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
     provider and model that wrote its reply."""
     import urllib.request
 
-    from src.core import config, llm_client as llm
+    from src.core import config, llm_client as llm, settings
     from src.replies import reply_agent as ra
 
     envelope = json.dumps({"type": "result", "subtype": "success", "result": answer})
@@ -588,5 +579,5 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
     settings_override(REPLY_LLM_PROVIDER=route)
     monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
 
-    model = llm.OLLAMA_MODEL if route == "ollama" else config.REPLY_MODEL
+    model = settings.get("OLLAMA_MODEL") if route == "ollama" else config.REPLY_MODEL.for_provider(route)
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]
