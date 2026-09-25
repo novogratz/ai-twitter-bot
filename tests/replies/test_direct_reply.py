@@ -198,6 +198,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     import shutil
     from src.core import account, config
     from src.replies import direct_reply as dr
+    from src.replies.reply_generator import CallOptions
 
     relations = account.current().relations
     monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
@@ -206,9 +207,9 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
                                                     config.PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
         False, 300, 220, False, 0)
-    assert own.llm_options == {"output_json": False, "timeout": 60, "force_provider": "claude"}
+    assert own.options == CallOptions(output_json=False, timeout=60, force_provider="claude")
     monkeypatch.setattr(shutil, "which", lambda name: None)
-    assert dr._vip_call("Graphseo").llm_options["force_provider"] is None
+    assert dr._vip_call("Graphseo").options.force_provider is None
 
     bestie, buddy = dr._vip_call("thebtctherapist"), dr._vip_call("vision_ia")
     assert (bestie.template, bestie.label) == (relations.get("TheBTCTherapist").prompt,
@@ -216,7 +217,8 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.model, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
-                call.max_chars, call.llm_options) == (config.PRIORITY_REPLY_MODEL, False, 300, True, 20, None, {})
+                call.max_chars, call.options) == (config.PRIORITY_REPLY_MODEL, False, 300, True, 20, None,
+                                                  CallOptions())
 
 
 def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings_override):

@@ -4,9 +4,12 @@ Every Reply prompt is assembled here, so none reaches the model without
 the Voice (`personality_store.render_voice`) before the template and
 `personality_store.hard_rules_block()` after it. The generator also picks the reply
 language (one decision point, `_language`) and reads the model's answer
-into reply text or a decline. The model stays behind `run_llm`, which hands
-back the answer already read in the output mode of the call profile the
-ReplyCall passes in `llm_options`; tests fake that name.
+into reply text or a decline. The model stays behind `run_llm` (tests fake
+that name), which hands back the answer already read in the output mode of
+the call profile the ReplyCall declares in its `options`. The options are a
+frozen `CallOptions`, one field per `run_llm` keyword with its default: a
+misspelt option raises where the ReplyCall is built, not as a FAILED
+generation at call time.
 """
 import re
 from dataclasses import dataclass, field
@@ -15,7 +18,7 @@ from typing import Literal
 
 from ..core import account, personality_store
 from ..core.humanizer import smart_trim, strip_agent_preamble
-from ..core.llm_client import LLMStatus, run_llm
+from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, ModelSetting, run_llm
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
@@ -47,6 +50,17 @@ class LanguageRule(Enum):
 
 
 @dataclass(frozen=True)
+class CallOptions:
+    """The `run_llm` options of a ReplyCall; the defaults are `run_llm`'s."""
+    output_json: bool = True
+    allowed_tools: tuple[str, ...] | None = None
+    timeout: int | None = None
+    cwd: str | None = None
+    force_provider: str | None = None
+    profile: CallProfile = TEXT_PROFILE
+
+
+@dataclass(frozen=True)
 class ReplyCall:
     """A job's prompt template and model call. The template may use
     {author}, {tweet_text}, {original_tweet}, {language_override} and the
@@ -54,7 +68,7 @@ class ReplyCall:
     persona: the Voice opens the prompt, the dossier and the hard rules
     close it."""
     template: str
-    model: str
+    model: str | ModelSetting
     label: str
     language: LanguageRule = LanguageRule.PARENT
     # The author's dossier. The Voice and the hard rules come regardless.
@@ -66,7 +80,11 @@ class ReplyCall:
     # prefix only, so "You can skip the hype..." ships.
     skip_window: int = 0
     max_chars: int | None = None
-    llm_options: dict = field(default_factory=dict)
+    options: CallOptions = field(default_factory=CallOptions)
+
+    def __post_init__(self):
+        if not isinstance(self.options, CallOptions):
+            raise TypeError(f"ReplyCall options must be CallOptions, not {type(self.options).__name__}")
 
 
 # SKIP as a PREFIX, not an exact match: the model often appends its
@@ -88,7 +106,10 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
     language = _language(call, author, text or "")
     prompt = _prompt(call, author, text or "", context or "", language, fields or {})
     try:
-        result = run_llm(prompt, call.model, label=call.label, **call.llm_options)
+        options = call.options
+        result = run_llm(prompt, call.model, label=call.label, output_json=options.output_json,
+                         allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
+                         force_provider=options.force_provider, profile=options.profile)
     except OutsideActiveHours:
         raise
     except Exception as exc:

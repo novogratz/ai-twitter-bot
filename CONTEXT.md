@@ -104,7 +104,8 @@ _Avoid_: core identity, persona prompt, spine
 
 **Reply call**:
 What a Reply job asks of the model: its prompt template, model, log label,
-language rule and call options (`reply_generator.ReplyCall`). It says what
+language rule and call options (`reply_generator.ReplyCall`, its options a
+`reply_generator.CallOptions`). It says what
 to write; the Voice, never the Reply call, says who writes it.
 _Avoid_: voice (reserved for the persona)
 

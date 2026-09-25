@@ -267,6 +267,59 @@ def generate(**options):
     return reply_generator.generate(reply_call(**options), author="someone", text="a post")
 
 
+def test_an_unknown_call_option_fails_where_the_reply_call_is_built():
+    """Issue #246: the options were a free dict unpacked into `run_llm`, so a
+    misspelt key only raised at call time, caught as a FAILED generation."""
+    from src.replies.reply_generator import CallOptions
+
+    with pytest.raises(TypeError):
+        reply_call(options=CallOptions(timout=60))
+    with pytest.raises(TypeError):
+        reply_call(options={"timeout": 60})
+    with pytest.raises(TypeError):
+        reply_call(llm_options={"timeout": 60})
+
+
+def test_the_call_options_are_frozen():
+    import dataclasses
+
+    from src.replies.reply_generator import CallOptions
+
+    with pytest.raises(dataclasses.FrozenInstanceError):
+        CallOptions().timeout = 60
+
+
+def test_the_generator_hands_every_call_option_to_run_llm(llm):
+    from src.core.llm_client import CallProfile, Output
+    from src.replies import reply_generator
+    from src.replies.reply_generator import CallOptions
+
+    profile = CallProfile(output=Output.JSON)
+    options = CallOptions(output_json=False, allowed_tools=("WebSearch",), timeout=60, cwd="/tmp",
+                          force_provider="claude", profile=profile)
+
+    reply_generator.generate(reply_call(options=options), author="someone", text="a post")
+
+    [call] = llm.calls
+    assert (call.model, call.label) == ("model", "TEST")
+    assert (call.output_json, call.allowed_tools, call.timeout, call.cwd, call.force_provider,
+            call.profile) == (False, ("WebSearch",), 60, "/tmp", "claude", profile)
+
+
+def test_default_call_options_are_run_llms_defaults(llm):
+    """A Reply call without options calls `run_llm` as it did with an empty dict."""
+    import inspect
+
+    from src.core import llm_client
+
+    generate()
+
+    [call] = llm.calls
+    defaults = {name: p.default for name, p in inspect.signature(llm_client.run_llm).parameters.items()
+                if p.kind is p.KEYWORD_ONLY and name != "label"}
+    assert {name: getattr(call, name) for name in defaults} == defaults
+
+
 @pytest.mark.parametrize("stdout", [
     "SKIP",
     "SKIP. The tweet is incomplete (cuts off mid-sentence)",  # 2026-06-07, shipped live
@@ -470,7 +523,7 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, setting
     ollama = OllamaServer("Batching decides the margin, not the model.")
     monkeypatch.setattr(urllib.request, "urlopen", ollama)
     call = job_reply_call(name)
-    call = dataclasses.replace(call, llm_options={**call.llm_options, "force_provider": route})
+    call = dataclasses.replace(call, options=dataclasses.replace(call.options, force_provider=route))
     sent = caller_prompts(monkeypatch)
 
     generation = reply_generator.generate(call, author="someone", text=EN)
@@ -481,7 +534,7 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, setting
     assert request["prompt"] == "/no_think\n\n" + sent[-1]
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
-    assert timeout == max(call.llm_options.get("timeout") or 0, settings.get("LLM_TIMEOUT_SECONDS"))
+    assert timeout == max(call.options.timeout or 0, settings.get("LLM_TIMEOUT_SECONDS"))
 
 
 @pytest.mark.parametrize("fallback", [None, "codex"])
@@ -509,7 +562,7 @@ def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, settin
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: cloud.append(cmd[0])
                         or LLMResult(0, "Batching decides the margin, not the model.", ""))
     call = job_reply_call(name)
-    call = dataclasses.replace(call, llm_options={**call.llm_options, "force_provider": "ollama"})
+    call = dataclasses.replace(call, options=dataclasses.replace(call.options, force_provider="ollama"))
 
     generation = reply_generator.generate(call, author="someone", text=EN)
 

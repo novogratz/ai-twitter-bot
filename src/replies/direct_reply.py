@@ -8,7 +8,7 @@ from ..core import account, config, settings
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
-from .reply_generator import LanguageRule, ReplyCall
+from .reply_generator import CallOptions, LanguageRule, ReplyCall
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
@@ -53,7 +53,7 @@ def _own_call(relation) -> ReplyCall:
     # dossier=False: whether the author's dossier joins it is the Operator's call.
     return ReplyCall(relation.prompt, config.PRIORITY_REPLY_MODEL, f"{relation.handle.upper()}_VIP",
                      dossier=False, text_limit=300, max_chars=220,
-                     llm_options={"output_json": False, "timeout": 60, "force_provider": force})
+                     options=CallOptions(output_json=False, timeout=60, force_provider=force))
 
 
 def _vip_call(handle: str) -> ReplyCall | None:
@@ -127,7 +127,7 @@ def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_F
     # qwen 503s and silently drops replies (operator 2026-06-24).
     return ReplyCall(REPLY_PROMPT, config.PRIORITY_REPLY_MODEL if vip else config.REPLY_MODEL,
                      "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language,
-                     llm_options={"force_provider": config.REPLY_LLM_PROVIDER, "cwd": "/tmp"})
+                     options=CallOptions(force_provider=config.REPLY_LLM_PROVIDER, cwd="/tmp"))
 
 
 def freshness_sort_key(tweet):
