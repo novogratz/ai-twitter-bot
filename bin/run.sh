@@ -26,13 +26,20 @@ if pgrep -f "python.*main.py" >/dev/null; then
 fi
 
 # Pre-warm the local LLM and pin it in memory for 24h. Cold-loading the
-# ~23GB model takes ~170s — longer than the bot's per-call timeout. Use
-# OLLAMA_MODEL from .env so a model swap auto-warms the right one.
-if command -v curl >/dev/null 2>&1 && uv run python -c \
-  'import sys; from src.guards.active_hours import is_active; sys.exit(0 if is_active() else 1)'; then
-  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive}"
+# ~23GB model takes ~170s — longer than the bot's per-call timeout. The model
+# and endpoint are the bot's own, OLLAMA_MODEL and OLLAMA_BASE_URL as
+# src/core/settings.py resolves them from .env, so a model swap auto-warms
+# the right one.
+if command -v curl >/dev/null 2>&1 && OLLAMA_TARGET="$(uv run python -c '
+import sys
+from src.core import settings
+from src.guards.active_hours import is_active
+if not is_active():
+    sys.exit(1)
+print(settings.get("OLLAMA_BASE_URL"), settings.get("OLLAMA_MODEL"))')"; then
+  read -r OLLAMA_URL OLLAMA_MODEL_NAME <<< "$OLLAMA_TARGET"
   echo "[run] Pre-warming $OLLAMA_MODEL_NAME (keep_alive=24h)..."
-  curl -fsS --max-time 300 http://localhost:11434/api/generate \
+  curl -fsS --max-time 300 "$OLLAMA_URL/api/generate" \
     -d "{\"model\":\"$OLLAMA_MODEL_NAME\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
     >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (model not pulled yet? ollama not running?). Bot will warm on first call."
 fi

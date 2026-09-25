@@ -17,8 +17,8 @@ from . import settings
 
 _PROJECT_ROOT = settings.PROJECT_ROOT
 
-# The modules not migrated yet (llm_client until #197) read `.env` from the
-# environment at import, and state_store imports this module before them.
+# The modules not migrated yet read `.env` from the environment at import,
+# and state_store imports this module before them.
 settings.load()
 
 _READ_AT_ACCESS = {}
@@ -84,33 +84,19 @@ BLOCKLIST = {
 def _ai_cli() -> str:
     return settings.get("AI_CLI").strip().lower()
 
-def _default_model(
-    codex_model: str,
-    claude_model: str,
-    gemini_model: str = "gemini-2.0-flash",
-    opencode_model: str = "opencode/big-pickle",
-) -> str:
-    ai_cli = _ai_cli()
-    if ai_cli == "codex":
-        return codex_model
-    if ai_cli == "gemini":
-        return gemini_model
-    if ai_cli in {"ollama", "opencode"}:
-        return opencode_model
-    return codex_model
+# The CLI model of each surface is resolved by the call, for the provider it
+# runs: an `llm_client.ModelSetting`, whose defaults sit in
+# `settings.MODEL_DEFAULTS`. 2026-06-08 (operator): the profile surfaces get
+# Opus on Claude, the reply firehose Haiku.
+def _served_model(name):
+    def read():
+        from .llm_client import ModelSetting
+        return ModelSetting(name)
+    _served_as(name)(read)
 
-def _model(name: str, *defaults: str) -> str:
-    value = settings.get(name)
-    return _default_model(*defaults) if value is None else value
-
-# Haiku for all reply surfaces (volume, speed) — Sonnet for content creation.
-# 2026-06-08 (operator): the PROFILE surfaces — new posts + quote-RTs —
-# get OPUS. They're low-volume + high-stakes (they show on the profile and
-# must earn the like), so the best model is worth it. The reply firehose
-# (1000+/day) stays on fast/cheap haiku — it's already converting well.
-_served_as("NEWS_MODEL")(lambda: _model("NEWS_MODEL", "gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
-_served_as("REPLY_MODEL")(lambda: _model("REPLY_MODEL", "gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
-_served_as("PRIORITY_REPLY_MODEL")(lambda: _model("PRIORITY_REPLY_MODEL", "gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
+_served_model("NEWS_MODEL")
+_served_model("REPLY_MODEL")
+_served_model("PRIORITY_REPLY_MODEL")
 
 # Profile and reply provider overrides. Default both to Ollama, with no
 # fallback: only LLM_FALLBACK_CLI (codex, say) adds one. Claude is not used by

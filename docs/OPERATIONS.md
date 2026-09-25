@@ -57,7 +57,8 @@ The script:
 
 1. kills every process matching `python.*main.py` on the machine, not only
    this repo's;
-2. pre-warms `OLLAMA_MODEL` from the shell environment, during waking hours
+2. pre-warms `OLLAMA_MODEL` at `OLLAMA_BASE_URL`, the values the bot calls,
+   as `src/core/settings.py` resolves them from `.env`, during waking hours
    only. It does not warm the editorial model;
 3. clears `__pycache__`;
 4. runs `uv run python main.py` in the foreground through `tee -a bot.log`.

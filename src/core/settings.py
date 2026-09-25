@@ -111,9 +111,19 @@ def _script_keys(*names):
 _declare("BOT_HANDLE", str, "TheAIShrink", "X handle the bot runs, without @.")
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
 _declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")
-_declare("NEWS_MODEL", str, None, "Model for Originals; unset, derived from AI_CLI.")
-_declare("REPLY_MODEL", str, None, "Model for Replies; unset, derived from AI_CLI.")
-_declare("PRIORITY_REPLY_MODEL", str, None, "Model for priority Replies; unset, derived from AI_CLI.")
+_declare("NEWS_MODEL", str, None, "CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
+_declare("REPLY_MODEL", str, None, "CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
+_declare("PRIORITY_REPLY_MODEL", str, None, "CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
+# The model the primary CLI runs for a model setting above left unset or
+# blank. Ollama never reads them, it runs the call profile's model; nor does
+# OpenCode, its own; nor a fallback, its *_FALLBACK_MODEL.
+MODEL_DEFAULTS = {
+    "NEWS_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-opus-4-8", "gemini": "gemini-2.0-flash"},
+    "REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
+                    "gemini": "gemini-1.5-flash"},
+    "PRIORITY_REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
+                             "gemini": "gemini-2.0-flash"},
+}
 _declare("PROFILE_LLM_PROVIDER", str, "ollama", "Provider for profile surfaces; blank means none.")
 _declare("REPLY_LLM_PROVIDER", str, "ollama", "Provider for Replies; blank means none.")
 _declare("DRY_RUN", bool, False, "1 logs every write instead of doing it; config.dry_run() reads it at call time.")
@@ -173,20 +183,18 @@ _declare("REPLY_LIKE_PARENT_PROB", float, 0.12, "Chance to like the post a Reply
 _declare("NOTIFY_LIKE_REPLIES_COUNT", int, 3, "Replies under our latest post the notify job likes.")
 
 # ── #197 · src/core ─────────────────────────────────────────────────────────
-_pending(
-    "OLLAMA_MODEL",
-    "OLLAMA_BASE_URL",
-    "OLLAMA_NUM_CTX",
-    "OLLAMA_NUM_PREDICT",
-    "LLM_TIMEOUT_SECONDS",
-    "LLM_FALLBACK_CLI",
-    "LLM_DISABLE_FALLBACK",
-    "LLM_FALLBACK_MODEL",
-    "CODEX_FALLBACK_MODEL",
-    "GEMINI_FALLBACK_MODEL",
-    "OPENCODE_FALLBACK_MODEL",
-    "FR_FORCED_REPLY_HANDLES",
-)
+_declare("OLLAMA_MODEL", str, "qwen3.6:35b-a3b", "Ollama model of a call profile that names none; bin/run.sh pre-warms it.")
+_declare("OLLAMA_BASE_URL", str, "http://localhost:11434", "Ollama HTTP endpoint; bin/run.sh pre-warms there.")
+_declare("OLLAMA_NUM_CTX", int, 32768, "Ollama context window, in tokens.")
+_declare("OLLAMA_NUM_PREDICT", int, 1800, "Tokens Ollama may generate per call.")
+_declare("LLM_TIMEOUT_SECONDS", int, 180, "Default model-call timeout, and Ollama's floor.")
+_declare("LLM_FALLBACK_CLI", str, "", "Fallback provider: codex, gemini or ollama; blank means none.")
+_declare("LLM_DISABLE_FALLBACK", bool, False, "1 turns the fallback off whatever LLM_FALLBACK_CLI says.")
+_declare("LLM_FALLBACK_MODEL", str, "", "Model of every fallback call; blank, the fallback CLI's own below.")
+_declare("CODEX_FALLBACK_MODEL", str, "gpt-5.4-mini", "Codex model as the fallback; blank means this default.")
+_declare("GEMINI_FALLBACK_MODEL", str, "gemini-2.0-flash", "Gemini model as the fallback; blank means this default.")
+_declare("OPENCODE_FALLBACK_MODEL", str, "opencode/big-pickle", "No effect; kept so an old .env still starts.")
+_declare("FR_FORCED_REPLY_HANDLES", str, "Graphseo", "Comma-separated handles whose posts always get French Replies.")
 
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
 _declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts and reviews Originals.")

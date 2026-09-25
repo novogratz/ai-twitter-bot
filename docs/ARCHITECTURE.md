@@ -209,6 +209,14 @@ Draft or review schema as `format`, temperature 0.65 or 0.2, and a
 timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
 bedtime. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, no schema, temperature 1.0.
+A CLI runs the model its caller names: `NEWS_MODEL` for Originals,
+`REPLY_MODEL` or `PRIORITY_REPLY_MODEL` for Replies. Each is an
+`llm_client.ModelSetting`, read when the call runs for the primary CLI:
+its value when set and not blank, else that CLI's default in
+`settings.MODEL_DEFAULTS`. Ollama and OpenCode never read them, nor does a
+known fallback: it runs `LLM_FALLBACK_MODEL`, else its own
+`CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`. `run_llm` resolves the
+model of each provider it calls once, for the call and its logs.
 Ollama receives the caller's prompt behind the `/no_think` directive and
 nothing else: the client adds no voice of its own. The reply search keeps those settings and only declares
 JSON output. The label only names the call in logs.
@@ -594,6 +602,7 @@ These are how the code behaves today, not design intent:
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (`direct_reply._graphseo_call`), whatever `REPLY_LLM_PROVIDER` says: the
   one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
+  It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which
   `judge_reply` then refuses.

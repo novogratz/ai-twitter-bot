@@ -345,9 +345,7 @@ def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch,
     import io
     import urllib.request
     from src.core import llm_client as llm
-    settings_override(PROFILE_LLM_PROVIDER="claude")
-    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
-    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    settings_override(PROFILE_LLM_PROVIDER="claude", LLM_FALLBACK_CLI="ollama", LLM_DISABLE_FALLBACK=False)
     cloud = []
     monkeypatch.setattr(llm, "_run_cmd",
                         lambda cmd, **k: cloud.append(k["label"]) or llm.LLMResult(1, "", "claude down"))
@@ -378,12 +376,7 @@ def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, setti
     import urllib.error
     import urllib.request
     from src.core import llm_client as llm
-    settings_override(PROFILE_LLM_PROVIDER="ollama")
-    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
-    if fallback is None:
-        monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
-    else:
-        monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+    settings_override(PROFILE_LLM_PROVIDER="ollama", LLM_DISABLE_FALLBACK=False, LLM_FALLBACK_CLI=fallback or "")
     monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
 
     def ollama_down(request, timeout=None):

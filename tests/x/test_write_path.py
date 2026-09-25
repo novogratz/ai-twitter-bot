@@ -267,8 +267,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_ov
     from src.x import twitter_client
 
     _dry_run_reply_path(monkeypatch)
-    settings_override(HUMAN_TYPO_HANDLES="typofriend")
-    monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", "typofriend")
+    settings_override(HUMAN_TYPO_HANDLES="typofriend", FR_FORCED_REPLY_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     judged, validated = [], []
     monkeypatch.setattr(reply_language, "looks_english", lambda text: judged.append(text) or False)

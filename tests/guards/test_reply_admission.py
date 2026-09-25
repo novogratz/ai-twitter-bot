@@ -122,8 +122,8 @@ def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
     assert verdict and len(verdict.text) <= 278 and verdict.text.endswith(".")
 
 
-def test_refused_text_leaves_the_post_replayable(monkeypatch):
-    monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", "graphseo")
+def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override):
+    settings_override(FR_FORCED_REPLY_HANDLES="graphseo")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     english = judge_reply(url("Graphseo"), "The market just told you what your conviction is worth this week.")
     assert english.refusal is Refusal.TEXT and not english.refusal.definitive

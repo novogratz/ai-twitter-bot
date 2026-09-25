@@ -210,11 +210,11 @@ def pytest_runtest_teardown(item, nextitem):
 
 
 @_pytest.fixture
-def providers(monkeypatch):
+def providers(monkeypatch, settings_override):
     """A fake adapter for every provider behind the real `run_llm`, each
     failing until a test gives it answers, every CLI installed, the
-    ladder's variables unset but an explicit codex fallback. `monkeypatch`
-    lets a rank set its own."""
+    ladder's settings at their defaults but an explicit codex fallback.
+    `settings` lets a rank set its own."""
     from types import SimpleNamespace
     from src.core import llm_client as llm
     from tests.helpers import FakeAdapter
@@ -223,11 +223,9 @@ def providers(monkeypatch):
     fakes = {name: FakeAdapter(name, calls) for name in ("ollama", "codex", "gemini", "claude", "opencode")}
     monkeypatch.setattr(llm, "ADAPTERS", fakes)
     monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    for var in ("AI_CLI", "LLM_FALLBACK_CLI", "LLM_FALLBACK_MODEL", "LLM_DISABLE_FALLBACK",
-                "CODEX_FALLBACK_MODEL"):
-        monkeypatch.delenv(var, raising=False)
-    monkeypatch.setenv("LLM_FALLBACK_CLI", "codex")
-    return SimpleNamespace(calls=calls, monkeypatch=monkeypatch, **fakes)
+    settings_override(AI_CLI="ollama", LLM_FALLBACK_CLI="codex", LLM_FALLBACK_MODEL="",
+                      LLM_DISABLE_FALLBACK=False, CODEX_FALLBACK_MODEL="gpt-5.4-mini")
+    return SimpleNamespace(calls=calls, monkeypatch=monkeypatch, settings=settings_override, **fakes)
 
 
 @_pytest.fixture
