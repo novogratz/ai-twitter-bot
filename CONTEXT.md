@@ -49,7 +49,7 @@ retried until the operator clears it, and until then it counts as a Profile
 publication for the day's ceiling and the post spacing.
 
 **Write outcome**:
-What one write to X (post, Reply, follow, unfollow, like, pin) came to:
+What one write to X (post, Reply, follow, like, pin) came to:
 shipped, refused, failed before anything was sent, unconfirmed (it may have
 reached X, the page never showed it), or dry run. Only a shipped write is
 recorded in the ledger or counted by a job. A like names its outcomes

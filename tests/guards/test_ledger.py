@@ -273,9 +273,9 @@ def test_two_ledgers_on_one_file_see_each_others_rows(path):
 
 def test_the_next_policy_check_sees_a_row_another_process_appended(monkeypatch, path):
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(path))
-    monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 5)
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     assert ag.can_post(ag.REPLY) == (True, "")
-    assert ag.can_unfollow("someone") == (True, "")
+    assert "anti-churn" not in ag.can_follow("someone")[1]
 
     other = FileLedger(str(path))
     _add(other, ag.REPLY, "https://x.com/a/status/1")
@@ -283,8 +283,8 @@ def test_the_next_policy_check_sees_a_row_another_process_appended(monkeypatch, 
 
     ok, why = ag.can_post(ag.REPLY)
     assert not ok and "too soon since last reply" in why
-    ok, why = ag.can_unfollow("someone")
-    assert not ok and "anti-churn" in why
+    ok, why = ag.can_follow("someone")
+    assert not ok and "anti-churn" in why, "an unfollow bin/mass_unfollow.py recorded blocks the re-follow"
 
 
 def test_index_follows_a_file_rewritten_or_replaced_by_another_process(ledger, path):

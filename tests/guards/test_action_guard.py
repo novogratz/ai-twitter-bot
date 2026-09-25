@@ -170,14 +170,6 @@ def test_follow_rejects_non_whitelisted(follow_env, monkeypatch, tmp_path):
     assert not ok and "whitelist" in why
 
 
-def test_unfollow_protects_all_whitelist_tiers(follow_env):
-    """No churn on seeds: tier3/tier4 are protected from unfollow too."""
-    ag = follow_env
-    for handle in ("TheBTCTherapist", "morganhousel", "karpathy", "saylor"):
-        ok, why = ag.can_unfollow(handle)
-        assert not ok and "protected" in why, (handle, why)
-
-
 def _noon(monkeypatch):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
@@ -200,26 +192,20 @@ def test_anti_churn_counts_any_follow_or_unfollow_within_the_cooldown(follow_env
     assert ag.can_follow("saylor") == (True, ""), "a like is no touch"
 
 
-def test_follow_and_unfollow_caps_count_todays_shipped_rows(follow_env, monkeypatch, memory_ledger,
-                                                            tmp_path):
+def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, memory_ledger, tmp_path):
     ag = follow_env
     now = _noon(monkeypatch)
     _counts(monkeypatch, tmp_path, 100, 10)
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 2)
-    monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 2)
-    for action in (ag.FOLLOW, ag.UNFOLLOW):
-        memory_ledger.append(action, "yesterday", False, now - timedelta(days=1))
-        memory_ledger.append(action, "dry", True, now)
-        memory_ledger.append(action, "today", False, now - timedelta(hours=1))
+    memory_ledger.append(ag.FOLLOW, "yesterday", False, now - timedelta(days=1))
+    memory_ledger.append(ag.FOLLOW, "dry", True, now)
+    memory_ledger.append(ag.FOLLOW, "today", False, now - timedelta(hours=1))
     assert ag.can_follow("stranger") == (True, "")
-    assert ag.can_unfollow("stranger") == (True, "")
 
     ag.record(ag.FOLLOW, "another")
-    ag.record(ag.UNFOLLOW, "another")
 
     assert ag.can_follow("stranger") == (False, "daily follow cap reached (2)")
-    assert ag.can_unfollow("stranger") == (False, "daily unfollow cap reached (2)")
 
 
 def test_debate_turn_cap_counts_todays_shipped_turns_per_author(monkeypatch, memory_ledger):

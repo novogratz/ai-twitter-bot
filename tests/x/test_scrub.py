@@ -1,5 +1,5 @@
-"""src/x/twitter_client: metadata, URL, hashtag and header scrubbing at the
-write chokepoint."""
+"""src/x/twitter_client: metadata, hashtag and header scrubbing at the write
+chokepoint."""
 
 
 def test_bare_pattern_tag_scrubbed_at_chokepoint():
@@ -20,12 +20,6 @@ def test_gif_tag_scrubbed_at_chokepoint():
     from src.x.twitter_client import _scrub_metadata_leaks
     out = _scrub_metadata_leaks("take here\n[GIF: kermit panic]")
     assert "[GIF" not in out and "take here" in out
-
-
-def test_post_urls_stripped():
-    from src.x.twitter_client import _strip_post_urls
-    out = _strip_post_urls("Big take here.\n\nhttps://cnbc.com/article/xyz")
-    assert "http" not in out and "Big take here." in out
 
 
 def test_hashtags_stripped_at_chokepoint():

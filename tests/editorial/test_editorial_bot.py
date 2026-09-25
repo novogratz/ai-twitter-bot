@@ -92,12 +92,12 @@ def test_eighth_post_needs_exceptional_value(draft_fixture):
 def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     calls = []
-    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append((text, k)) or True)
+    monkeypatch.setattr(tc, "post_tweet", lambda text: calls.append(text) or True)
     assert editorial.run_editorial_cycle(preview=True)["approved"]
     assert not calls and not os.path.exists(editorial.STATE.path) and not editorial.AUDIT_FILE.exists()
     assert editorial.run_editorial_cycle()["approved"]
-    assert len(calls) == 1 and calls[0][1] == {"editorial": True}
-    assert calls[0][0].endswith(draft_fixture[1]["url"])
+    assert len(calls) == 1
+    assert calls[0].endswith(draft_fixture[1]["url"])
     assert editorial.run_editorial_cycle() is None
     assert len(calls) == 1
 

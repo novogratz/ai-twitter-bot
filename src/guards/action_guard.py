@@ -2,7 +2,7 @@
 
 Single chokepoint for rate-limits, daily caps, anti-churn and the follow
 policy. Wired into the lowest-level write functions in twitter_client
-(post_tweet / reply_* / follow_account / unfollow_account) so every
+(post_tweet / reply_to_tweet / follow_account) so every
 caller — whichever of the ~30 bots — is governed by the same rules without
 rewriting each bot. Likes and pins are recorded in the ledger, not
 governed: no cap or spacing applies to them here.
@@ -307,22 +307,6 @@ def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
                 return (False, f"over ratio ceiling (following {following} vs "
                                f"{config.FOLLOW_RATIO_CEILING}*{followers}); day not net-negative "
                                f"(follows {follows_today} >= unfollows {_count_today(UNFOLLOW)})")
-    return (True, "")
-
-
-def can_unfollow(handle: str) -> Tuple[bool, str]:
-    """Daily cap, anti-churn cooldown; never unfollow ANY whitelisted seed
-    (all tiers — the 2026-06-07 spec bans follow/unfollow churn on the
-    curated list)."""
-    h = (handle or "").lower().lstrip("@")
-    if not h:
-        return (False, "empty handle")
-    if is_whitelisted(h):
-        return (False, "protected: whitelisted seed account (all tiers)")
-    if _within_churn_cooldown(h):
-        return (False, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")
-    if _count_today(UNFOLLOW) >= config.MAX_UNFOLLOWS_PER_DAY:
-        return (False, f"daily unfollow cap reached ({config.MAX_UNFOLLOWS_PER_DAY})")
     return (True, "")
 
 

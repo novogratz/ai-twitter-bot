@@ -120,7 +120,7 @@ RETRY_DELAY_SECONDS = 5
 # 2026-06-02 pivot tunables — French-language AI + Space + Stocks niche.
 # Everything here is config, not hardcoded logic (per the revision mandate).
 # Enforced centrally at the write chokepoints (twitter_client.post_tweet /
-# reply_* / follow_account / unfollow_account) via
+# reply_to_tweet / follow_account) via
 # src/guards/action_guard.py + src/guards/content_guard.py. NOTE: this bot is
 # Safari + AppleScript driven (no X API), so "API rate-limit / 429 backoff" maps to
 # Safari write-pacing here — same intent (no bursts), different mechanism.
@@ -192,8 +192,6 @@ FOLLOW_LOW_PHASE_FOLLOWERS = int(os.environ.get("FOLLOW_LOW_PHASE_FOLLOWERS", "3
 MIN_SECONDS_BETWEEN_FOLLOWS = int(os.environ.get("MIN_SECONDS_BETWEEN_FOLLOWS", "600"))
 FOLLOW_SPACING_JITTER_SECONDS = int(os.environ.get("FOLLOW_SPACING_JITTER_SECONDS", "300"))
 MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "20"))
-# 0 = unfollowing OFF in the bot (operator 2026-06-07: manual unfollows only).
-MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "0"))
 # Anti-churn / TOS safety: never re-touch (follow↔unfollow) the same account
 # within this window. Follow/unfollow cycling is a fast path to suspension.
 CHURN_COOLDOWN_DAYS = int(os.environ.get("CHURN_COOLDOWN_DAYS", "30"))

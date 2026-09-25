@@ -1,8 +1,6 @@
-"""src/x/twitter_client write chokepoints: replies, posts, follows,
-unfollows and pins (issues #100, #101, #141, #142)."""
-import json
+"""src/x/twitter_client write chokepoints: replies, posts, follows and pins
+(issues #100, #101, #142)."""
 from datetime import datetime
-from types import SimpleNamespace
 
 import pytest
 
@@ -195,7 +193,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_le
     text = "Inference cost falls when batching works, so the margin story depends on utilisation."
     url = lambda author, n: f"https://x.com/{author}/status/{n}"
     assert tc.reply_to_tweet(url("Challenger", 1), text, debate_turn=True)
-    assert tc.reply_to_tweet_in_thread(url("challenger", 2), text, debate_turn=True)
+    assert tc.reply_to_tweet(url("challenger", 2), text, debate_turn=True)
     assert not tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
     assert url("challenger", 3) not in rs.load_replied(), "refused turn must stay fresh"
     assert tc.reply_to_tweet(url("challenger", 4), text), "plain replies stay uncapped"
@@ -622,25 +620,21 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
         cg.is_duplicate = orig_isdup
 
 
-def test_image_post_that_fails_records_nothing(monkeypatch, tmp_path):
+def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
+    """An Original ships as reviewed: its source link stays, and nothing
+    casualizes the wording on the way out."""
+    from urllib.parse import parse_qs, urlparse
     from src.guards import content_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
-    image = tmp_path / "chart.png"
-    image.write_bytes(b"png")
+    _live_browser(monkeypatch)
     monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
-    noted = []
-    monkeypatch.setattr(content_guard, "note_posted", noted.append)
-    for step, outcome in (("paste", W.FAILED), ("submit", W.UNCONFIRMED)):
-        recorded = _live_browser(monkeypatch, failing_step=step)
-        assert tc.post_tweet("Inference is getting cheaper faster than training.",
-                             image_path=str(image)) is outcome, step
-        assert recorded == [] and noted == [], step
-
-    recorded = _live_browser(monkeypatch)
-    assert tc.post_tweet("Inference is getting cheaper faster than training.",
-                         image_path=str(image)) is W.SHIPPED
-    assert len(recorded) == 1
+    opened = []
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
+    text = ("Inference is getting cheaper faster than training.\n\n"
+            "https://huggingface.co/blog/inference-costs")
+    assert tc.post_tweet(text) is W.SHIPPED
+    assert parse_qs(urlparse(opened[0]).query)["text"] == [text]
 
 
 def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
@@ -666,7 +660,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
     monkeypatch.setattr(editorial.content_guard, "validate", simultaneous)
     text = "AI model evaluation needs examples from your real workflow. Test the failure cases your team actually sees before choosing a model."
     with ThreadPoolExecutor(2) as pool:
-        results = list(pool.map(lambda _: tc.post_tweet(text, editorial=True), range(2)))
+        results = list(pool.map(lambda _: tc.post_tweet(text), range(2)))
     assert sum(1 for result in results if result is W.SHIPPED) <= 1
     assert ag.profile_count_today() <= 8
 
@@ -735,94 +729,6 @@ def test_follow_gate_english_only(monkeypatch):
     # Whitelisted seeds stay exempt (Graphseo's FR bio is by design)
     ok, _ = _follow_quality_decision(500, "SEO et croissance pour les startups", "Julien", True)
     assert ok, "whitelisted seed must bypass the language gate"
-
-
-# --- unfollows: read both page answers, record only a confirmed unfollow (#141)
-
-
-@pytest.fixture()
-def unfollow_env(monkeypatch, tmp_path, memory_ledger):
-    """Unfollow allowed by policy, browser stubbed; `answers` feeds the page
-    JavaScript results in order."""
-    from src.core import config
-    from src.guards import action_guard as ag
-    from src.x import safari
-    from src.x import twitter_client as tc
-
-    monkeypatch.delenv("DRY_RUN", raising=False)
-    monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 5)
-    monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
-    wl = tmp_path / "whitelist.json"
-    wl.write_text(json.dumps({"tiers": {"tier1": ["karpathy"]}}))
-    monkeypatch.setattr(config, "WHITELIST_FILE", str(wl))
-    following = tmp_path / "following_count.json"
-    following.write_text(json.dumps({"count": 100}))
-    monkeypatch.setattr(ag, "_FOLLOWING_COUNT_FILE", str(following))
-
-    answers, scripts, prefixes, opened, closed = [], [], [], [], []
-
-    def run_js(js, *, log_prefix=""):
-        scripts.append(js)
-        prefixes.append(log_prefix)
-        return answers.pop(0) if answers else ""
-
-    monkeypatch.setattr(safari, "_run_js", run_js)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
-    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
-    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-
-    return SimpleNamespace(
-        tc=tc, ag=ag, answers=answers, scripts=scripts, prefixes=prefixes, opened=opened,
-        closed=closed,
-        following=lambda: json.loads(following.read_text())["count"],
-        ledger=lambda: memory_ledger.rows)
-
-
-@pytest.mark.parametrize("answer", ["NO_FOLLOWING_BTN", ""])
-def test_missing_following_button_records_nothing(unfollow_env, answer):
-    unfollow_env.answers.append(answer)
-
-    assert unfollow_env.tc.unfollow_account("someaccount") is W.FAILED
-
-    assert len(unfollow_env.scripts) == 1, "no confirm without a Following click"
-    assert unfollow_env.ledger() == []
-    assert unfollow_env.following() == 100
-    assert unfollow_env.closed
-
-
-@pytest.mark.parametrize("answer", ["NO_CONFIRM", ""])
-def test_missing_confirmation_records_nothing(unfollow_env, answer):
-    unfollow_env.answers.extend(["CLICKED", answer])
-
-    assert unfollow_env.tc.unfollow_account("someaccount") is W.UNCONFIRMED
-
-    assert unfollow_env.ledger() == []
-    assert unfollow_env.following() == 100
-    assert unfollow_env.closed
-
-
-def test_confirmed_unfollow_records_one_row(unfollow_env):
-    unfollow_env.answers.extend(["CLICKED", "CONFIRMED"])
-
-    assert unfollow_env.tc.unfollow_account("@SomeAccount") is W.SHIPPED
-
-    rows = unfollow_env.ledger()
-    assert [(r["action"], r["target"], r["dry_run"]) for r in rows] == [
-        (unfollow_env.ag.UNFOLLOW, "someaccount", False)]
-    assert unfollow_env.following() == 99
-    assert unfollow_env.closed
-    assert unfollow_env.prefixes == ["[UNFOLLOW]", "[UNFOLLOW]"]
-
-
-def test_dry_run_records_a_dry_row_without_the_browser(unfollow_env, monkeypatch):
-    monkeypatch.setenv("DRY_RUN", "1")
-
-    assert unfollow_env.tc.unfollow_account("someaccount") is W.DRY_RUN
-
-    assert unfollow_env.opened == [] and unfollow_env.scripts == []
-    rows = unfollow_env.ledger()
-    assert [(r["action"], r["dry_run"]) for r in rows] == [(unfollow_env.ag.UNFOLLOW, True)]
-    assert unfollow_env.following() == 100
 
 
 # --- pins: record only a shipped pin (#142) --------------------------------------

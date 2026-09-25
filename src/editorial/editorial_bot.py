@@ -559,7 +559,7 @@ def _run_slot(slot, state, preview):
     state.setdefault("pending_sources", {})[pending_key] = dict(
         url=source["url"], text=draft["text"], ts=now_local().isoformat())
     _save_state(state)
-    outcome = post_tweet(text, editorial=True)
+    outcome = post_tweet(text)
     if outcome:
         del state["pending_sources"][pending_key]
         state["slots"][slot.clock] = "published"

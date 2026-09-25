@@ -30,6 +30,10 @@ code reads the variables that gated them any more: `FAVORITE_REPOSTS_PER_CYCLE`,
 `FEED_SWEEP_MAX_QUOTES_PER_CYCLE`, `FEED_SWEEP_BANGER_LIKES`,
 `BLITZ_MAX_QUOTES_PER_CYCLE`.
 
+The bot never unfollows: the unfollow chokepoint left `src/` with its cap
+(issue #168), and no code reads `MAX_UNFOLLOWS_PER_DAY` any more.
+`bin/mass_unfollow.py`, run by hand, is bounded by its own `--max`.
+
 ---
 
 ## Historical module configuration reference
@@ -195,7 +199,6 @@ older tables on this page as historical defaults).
 | `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
 | `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
 | `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |
-| `MAX_UNFOLLOWS_PER_DAY` | `0` | Bot never unfollows — operator-manual (`bin/mass_unfollow.py`). |
 | `CURATOR_WINDOW_DAYS` / `CURATOR_DISCOVERED_PER_DAY` / `CURATOR_DISCOVERED_MAX` | `4` / `3` / `50` | Self-curated tracked list + whitelist `discovered`-tier promotion caps. |
 | `PINNED_TRACKED_HANDLES` | `TheBTCTherapist,Graphseo` | The only operator-pinned scan targets — everything else is earned. |
 | `BESTIE_HANDLE` | `TheBTCTherapist` | Account whose posts get the bestie prompt in the `direct_reply` VIP scan. |
