@@ -86,7 +86,7 @@ def _ai_cli() -> str:
 
 # The CLI model of each surface is resolved by the call, for the provider it
 # runs: an `llm_client.ModelSetting`, whose defaults sit in
-# `llm_client.CLI_MODELS`. 2026-06-08 (operator): the profile surfaces get
+# `settings.MODEL_DEFAULTS`. 2026-06-08 (operator): the profile surfaces get
 # Opus on Claude, the reply firehose Haiku.
 def _served_model(name):
     def read():

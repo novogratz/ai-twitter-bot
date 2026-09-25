@@ -70,15 +70,15 @@ Every knob is an environment variable, settable in `.env`. `main.py` reads `.env
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `CODEX_FALLBACK_MODEL` | `gpt-5.4-mini` | Codex model as the fallback when `LLM_FALLBACK_MODEL` is unset; blank means the default. |
 | `GEMINI_FALLBACK_MODEL` | `gemini-2.0-flash` | Gemini model as the fallback when `LLM_FALLBACK_MODEL` is unset; blank means the default. |
-| `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
+| `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | No effect; kept so an old `.env` still starts. An Ollama fallback runs the call profile's model. |
 | `LLM_DISABLE_FALLBACK` | `0` | Set to `1` to disable automatic LLM fallback. |
 | `OLLAMA_MODEL` | `qwen3.6:35b-a3b` | Ollama model of every call whose profile names none, the Replies. `bin/run.sh` pre-warms it. |
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama HTTP endpoint, for the bot and the `bin/run.sh` pre-warm. |
 | `OLLAMA_NUM_CTX`, `OLLAMA_NUM_PREDICT` | `32768`, `1800` | Ollama context window and generation cap, in tokens. |
 | `LLM_TIMEOUT_SECONDS` | `180` | Default model-call timeout, and Ollama's floor. |
-| `NEWS_MODEL` | (unset) | CLI model for Originals. Unset, each call takes the default of the CLI it runs: `gpt-5.4-mini` on codex, `claude-opus-4-8` on claude, `gemini-2.0-flash` on gemini. Ollama and OpenCode never read it. |
-| `REPLY_MODEL` | (unset) | CLI model for Replies. Unset: `gpt-5.4-mini` on codex, `claude-haiku-4-5-20251001` on claude, `gemini-1.5-flash` on gemini. |
-| `PRIORITY_REPLY_MODEL` | (unset) | CLI model for VIP and @Graphseo Replies. Unset: `gpt-5.4-mini` on codex, `claude-haiku-4-5-20251001` on claude, `gemini-2.0-flash` on gemini. |
+| `NEWS_MODEL` | (unset) | CLI model for Originals, on the primary CLI. Unset or blank, each call takes the default of the CLI it runs (`settings.MODEL_DEFAULTS`): `gpt-5.4-mini` on codex, `claude-opus-4-8` on claude, `gemini-2.0-flash` on gemini. Ollama, OpenCode and a fallback never read it. |
+| `REPLY_MODEL` | (unset) | CLI model for Replies. Unset or blank: `gpt-5.4-mini` on codex, `claude-haiku-4-5-20251001` on claude, `gemini-1.5-flash` on gemini. |
+| `PRIORITY_REPLY_MODEL` | (unset) | CLI model for VIP and @Graphseo Replies. Unset or blank: `gpt-5.4-mini` on codex, `claude-haiku-4-5-20251001` on claude, `gemini-2.0-flash` on gemini. |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
 

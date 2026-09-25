@@ -155,31 +155,27 @@ def contains_post_unsafe_leak(text: str) -> bool:
         return True
     return False
 
-# The model a CLI runs for a model setting left unset. Ollama never reads
-# these, it runs the call profile's model; nor does OpenCode, its own.
-CLI_MODELS = {
-    "NEWS_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-opus-4-8", "gemini": "gemini-2.0-flash"},
-    "REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
-                    "gemini": "gemini-1.5-flash"},
-    "PRIORITY_REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
-                             "gemini": "gemini-2.0-flash"},
-}
-
-
 @dataclass(frozen=True)
 class ModelSetting:
     """A model setting, passed to `run_llm` in place of a model name and
-    read when the call runs: its value when set, else the default of the CLI
-    the call runs, primary or not. Deriving it from AI_CLI sent
-    `opencode/big-pickle` to the Claude CLI that answers @Graphseo."""
+    read when the call runs, for the primary CLI: its value when set and not
+    blank, else that CLI's default in `settings.MODEL_DEFAULTS`. A known
+    fallback never reads it: it runs LLM_FALLBACK_MODEL or its own
+    *_FALLBACK_MODEL. Deriving it from AI_CLI sent `opencode/big-pickle` to
+    the Claude CLI that answers @Graphseo."""
     name: str
 
     def for_provider(self, provider: str) -> str:
-        return settings.get(self.name) or CLI_MODELS[self.name].get(provider, "")
+        return (settings.get(self.name) or "").strip() or settings.MODEL_DEFAULTS[self.name].get(provider, "")
 
 
-def _cli_model(model, provider: str) -> str:
-    return model.for_provider(provider) if isinstance(model, ModelSetting) else model
+@dataclass(frozen=True)
+class _ModelName:
+    """A model named outright: every CLI runs it."""
+    name: str
+
+    def for_provider(self, provider: str) -> str:
+        return self.name
 
 
 class Output(Enum):
@@ -209,7 +205,7 @@ def _ollama_model(profile: CallProfile) -> str:
 
 
 def _run_ollama_http(prompt: str, label: str, timeout: int,
-                     profile: CallProfile = TEXT_PROFILE) -> "LLMResult":
+                     profile: CallProfile, model: str) -> "LLMResult":
     """Hit ollama's /api/generate directly — simple stateless single-shot.
 
     Previously used /api/chat with system+user split for KV cache reuse,
@@ -217,10 +213,10 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
     via that path (80 tokens generated, all stripped — model doesn't
     speak the chat template correctly). /api/generate is reliable.
 
-    `profile` sets the model, schema and temperature; the default one runs
-    at temperature 1.0 for sharper outputs. The caller's prompt goes out as
-    written, after the /no_think directive: the Voice is the caller's to
-    render. num_predict caps generation at ~600 chars so the model doesn't
+    `model` is the one `run_llm` resolved from the profile; the profile sets
+    the schema and temperature, the default one 1.0 for sharper outputs.
+    The caller's prompt goes out as written, after the /no_think directive:
+    the Voice is the caller's to render. num_predict caps generation at ~600 chars so the model doesn't
     ramble for minutes when codex/claude are unavailable. `timeout` is final:
     `_timeout` computed it.
     """
@@ -230,7 +226,7 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
     require_active()
     full_prompt = "/no_think\n\n" + prompt
     payload = json.dumps({
-        "model": _ollama_model(profile),
+        "model": model,
         "prompt": full_prompt,
         "stream": False,
         **({"format": profile.schema} if profile.schema is not None else {}),
@@ -476,17 +472,17 @@ def _fallback(primary: str) -> tuple[Optional[str], str]:
     return fallback, ""
 
 
-def _fallback_model(primary_model: str, fallback_provider: str) -> str:
+def _fallback_model(model: "ModelSetting | _ModelName", fallback_provider: str) -> "ModelSetting | _ModelName":
+    """What a CLI fallback runs: LLM_FALLBACK_MODEL, else its own
+    *_FALLBACK_MODEL, never the caller's model. Ollama runs the profile's."""
     env_model = settings.get("LLM_FALLBACK_MODEL").strip()
     if env_model:
-        return env_model
+        return _ModelName(env_model)
     if fallback_provider == "codex":
-        return _model_or_default("CODEX_FALLBACK_MODEL")
+        return _ModelName(_model_or_default("CODEX_FALLBACK_MODEL"))
     if fallback_provider == "gemini":
-        return _model_or_default("GEMINI_FALLBACK_MODEL")
-    if fallback_provider in {"ollama", "opencode"}:
-        return _model_or_default("OPENCODE_FALLBACK_MODEL")
-    return primary_model
+        return _ModelName(_model_or_default("GEMINI_FALLBACK_MODEL"))
+    return model
 
 
 def _model_or_default(name: str) -> str:
@@ -639,7 +635,7 @@ class _Request:
     """One call as an adapter receives it. `timeout` is the caller's request
     until `_call` replaces it with the one `_timeout` computed."""
     prompt: str
-    model: "str | ModelSetting"  # a model name once `_call` hands it to the adapter
+    model: str  # the one the provider runs, `_model` resolved it
     label: str
     timeout: Optional[int]
     profile: CallProfile
@@ -649,7 +645,7 @@ class _Request:
 
 
 def _ollama_adapter(request: _Request) -> LLMResult:
-    return _run_ollama_http(request.prompt, request.label, request.timeout, request.profile)
+    return _run_ollama_http(request.prompt, request.label, request.timeout, request.profile, request.model)
 
 
 def _cli_adapter(provider: str) -> Callable[[_Request], LLMResult]:
@@ -756,23 +752,24 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
 
 def _call(provider: str, request: _Request, after: Optional[str] = None) -> LLMResult:
     timeout = _timeout(provider, request.timeout, request.profile, after)
-    return _adapter(provider)(replace(request, timeout=timeout, model=_cli_model(request.model, provider)))
+    return _adapter(provider)(replace(request, timeout=timeout))
 
 
-def _model(provider: str, request: _Request) -> str:
-    """The model a provider runs for this request."""
+def _model(provider: str, model: "ModelSetting | _ModelName", profile: CallProfile) -> str:
+    """The model `provider` runs for this call, resolved once for the call
+    and its logs."""
     if provider == "ollama":
-        return _ollama_model(request.profile)
+        return _ollama_model(profile)
     if provider == "opencode":
         return ""  # its local default: `_build_cmd` never passes --model
-    return _cli_model(request.model, provider)
+    return model.for_provider(provider)
 
 
 def _answer(provider: str, request: _Request, raw: LLMResult) -> LLMResult:
     """One call's answer, named after its provider and model: the model's
     text read in the profile's mode, or a failure with a non-zero code and
     no text, EXHAUSTED when the CLI or transport reported a usage limit."""
-    model = _model(provider, request)
+    model = request.model
     if _should_fallback(raw):
         reason = (raw.stderr or "").strip() or f"{request.label}: {provider} gave no usable answer"
         status = LLMStatus.EXHAUSTED if _usage_limit(raw, request.prompt) else LLMStatus.FAILED
@@ -788,8 +785,8 @@ def _answer(provider: str, request: _Request, raw: LLMResult) -> LLMResult:
 
 def _describe(provider: str, request: _Request) -> str:
     if provider == "ollama":
-        return f"ollama HTTP / {_ollama_model(request.profile)}"
-    return f"{provider}/{_cli_model(request.model, provider)}"
+        return f"ollama HTTP / {request.model}"
+    return f"{provider}/{request.model}" if request.model else f"{provider} (its own default model)"
 
 
 def run_llm(
@@ -818,21 +815,25 @@ def run_llm(
     cached one sends it to Ollama alone. When every provider tried hit its
     usage limit, a cached codex lockout counting as one, the result is
     EXHAUSTED. `output_json` asks a CLI for its JSON envelope; it does not
-    set the output mode. `model` names the CLI model, or is a `ModelSetting`
-    read for each CLI the ladder runs; Ollama runs the profile's model."""
+    set the output mode. `model` names the primary CLI's model, or is a
+    `ModelSetting` read for it; a known fallback runs its own (`_fallback_model`),
+    Ollama the profile's."""
     from ..guards.active_hours import require_active
     require_active()
     primary = (force_provider or _provider()).strip().lower()
-    request = _Request(prompt, model, label, timeout, profile, output_json, allowed_tools, cwd)
+    chosen = model if isinstance(model, ModelSetting) else _ModelName(model)
+    request = _Request(prompt, _model(primary, chosen, profile), label, timeout, profile,
+                       output_json, allowed_tools, cwd)
 
     if primary == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
+            local = replace(request, model=_model("ollama", chosen, profile))
             log.info(
                 f"[LLM] {label}: codex locked until "
-                f"{lockout.isoformat(timespec='minutes')} — using {_describe('ollama', request)}."
+                f"{lockout.isoformat(timespec='minutes')} — using {_describe('ollama', local)}."
             )
-            return _answer("ollama", request, _call("ollama", request))
+            return _answer("ollama", local, _call("ollama", local))
 
     log.info(f"[LLM] {label}: {primary} primary → {_describe(primary, request)}.")
     raw = _call(primary, request)
@@ -844,7 +845,7 @@ def run_llm(
             f"{locked_until.isoformat(timespec='minutes')}."
         )
         first = LLMResult(raw.returncode or 1, "", f"{label}: codex usage limit.",
-                          LLMStatus.EXHAUSTED, primary, _model(primary, request))
+                          LLMStatus.EXHAUSTED, primary, request.model)
     else:
         first = _answer(primary, request, raw)
     if first.returncode == 0 or primary not in ADAPTERS:
@@ -855,7 +856,7 @@ def run_llm(
         return first
     fallback_request = replace(
         request,
-        model=_fallback_model(model, fallback),
+        model=_model(fallback, _fallback_model(chosen, fallback), profile),
         label=f"{label} ({'codex locked' if locked_until else f'{fallback} fallback'})",
     )
     log.info(
@@ -868,8 +869,7 @@ def run_llm(
     exhausted = first.status is LLMStatus.EXHAUSTED and second.status is LLMStatus.EXHAUSTED
     if exhausted:
         log.info(f"[LLM] {label}: {primary} and {fallback} both hit their usage limit.")
-    note = (f"{label}: {primary}/{_cli_model(model, primary)} failed; "
-            f"tried {fallback}/{_cli_model(fallback_request.model, fallback)}.")
+    note = f"{label}: {_describe(primary, request)} failed; tried {_describe(fallback, fallback_request)}."
     return LLMResult(second.returncode, "",
                      "\n".join(part for part in (first.stderr, note, second.stderr) if part),
                      LLMStatus.EXHAUSTED if exhausted else LLMStatus.FAILED,

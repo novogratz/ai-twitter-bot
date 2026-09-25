@@ -211,9 +211,12 @@ bedtime. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, no schema, temperature 1.0.
 A CLI runs the model its caller names: `NEWS_MODEL` for Originals,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` for Replies. Each is an
-`llm_client.ModelSetting`, read when the call runs for the CLI it runs:
-its value when set, else that CLI's default in `llm_client.CLI_MODELS`.
-Ollama and OpenCode never read them.
+`llm_client.ModelSetting`, read when the call runs for the primary CLI:
+its value when set and not blank, else that CLI's default in
+`settings.MODEL_DEFAULTS`. Ollama and OpenCode never read them, nor does a
+known fallback: it runs `LLM_FALLBACK_MODEL`, else its own
+`CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`. `run_llm` resolves the
+model of each provider it calls once, for the call and its logs.
 Ollama receives the caller's prompt behind the `/no_think` directive and
 nothing else: the client adds no voice of its own. The reply search keeps those settings and only declares
 JSON output. The label only names the call in logs.

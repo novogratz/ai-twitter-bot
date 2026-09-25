@@ -360,6 +360,56 @@ def test_an_ollama_profile_keeps_its_model_whatever_the_model_setting(providers)
     assert ask_with(providers, "NEWS_MODEL", "ollama", draft_profile()).model == draft_profile().ollama_model
 
 
+@pytest.mark.parametrize("blank", ["", "  "])
+def test_a_blank_model_setting_takes_the_default_of_the_provider_called(providers, blank):
+    """`NEWS_MODEL=` used to send `--model ""`."""
+    providers.settings(NEWS_MODEL=blank)
+    assert ask_with(providers, "NEWS_MODEL", "claude").model == CLI_DEFAULTS["NEWS_MODEL"]["claude"]
+
+
+def test_a_model_setting_reaches_the_primary_cli_never_the_fallback(providers):
+    from src.core import config
+    from src.core.llm_client import run_llm
+    providers.settings(NEWS_MODEL="set-model", CODEX_FALLBACK_MODEL="codex-fallback")
+    providers.codex.answers = [TEXT]
+    result = run_llm("prompt", config.NEWS_MODEL, label="TEST", force_provider="claude")
+    assert [(name, request.model) for name, request in providers.calls] == [
+        ("claude", "set-model"), ("codex", "codex-fallback")]
+    assert (result.provider, result.model) == ("codex", "codex-fallback")
+
+
+@pytest.mark.parametrize("primary, fallback, ran, note", [
+    ("ollama", "codex", [("ollama", "local-model"), ("codex", "gpt-5.4-mini")],
+     "TEST: ollama HTTP / local-model failed; tried codex/gpt-5.4-mini."),
+    ("claude", "ollama", [("claude", "claude-opus-4-8"), ("ollama", "local-model")],
+     "TEST: claude/claude-opus-4-8 failed; tried ollama HTTP / local-model."),
+])
+def test_a_failed_ladder_names_the_model_each_provider_ran(providers, primary, fallback, ran, note):
+    """Review of #197: the note named an empty model for an Ollama primary,
+    and `opencode/big-pickle` for an Ollama fallback that ran qwen."""
+    from src.core import config
+    from src.core.llm_client import run_llm
+    providers.settings(LLM_FALLBACK_CLI=fallback, OLLAMA_MODEL="local-model", NEWS_MODEL=None)
+    result = run_llm("prompt", config.NEWS_MODEL, label="TEST", force_provider=primary)
+    assert result.status is LLMStatus.FAILED
+    assert [(name, request.model) for name, request in providers.calls] == ran
+    assert note in result.stderr.splitlines()
+
+
+@pytest.mark.parametrize("fallback", ["ollama", "opencode", "codex", "gemini"])
+def test_opencode_fallback_model_changes_no_call(providers, fallback):
+    """OPENCODE_FALLBACK_MODEL is declared so an old .env starts; no call
+    reads it."""
+    def ladder(label):
+        providers.settings(OPENCODE_FALLBACK_MODEL=label)
+        providers.calls.clear()
+        result = ask(provider="claude")
+        return [(name, request) for name, request in providers.calls], result
+
+    providers.settings(LLM_FALLBACK_CLI=fallback)
+    assert ladder("opencode/big-pickle") == ladder("another-label") == ladder("")
+
+
 # --- Usage limits and who answered ---------------------------------------------
 
 RATE_LIMIT = LLMResult(1, "", "429 Too Many Requests: rate limit reached for this hour")

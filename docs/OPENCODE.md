@@ -44,15 +44,17 @@ This runs the APScheduler-based bot from `main.py`. All LLM calls go through `sr
 ## Automatic fallback
 
 When the primary provider fails, times out, is missing, or returns empty output,
-`src/core/llm_client.py` automatically retries the same prompt through OpenCode:
+`src/core/llm_client.py` retries the same prompt once through the fallback
+`LLM_FALLBACK_CLI` names. `opencode` there is read as Ollama, which runs the
+call profile's model (`OLLAMA_MODEL` for the Replies):
 
 ```env
 LLM_FALLBACK_CLI=opencode
-OPENCODE_FALLBACK_MODEL=opencode/big-pickle
 ```
 
-Use `LLM_FALLBACK_MODEL` to force one fallback model for every fallback provider,
-or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
+`OPENCODE_FALLBACK_MODEL` has no effect; it is still accepted so an old `.env`
+starts. Use `LLM_FALLBACK_MODEL` to force one model on a codex or gemini
+fallback, or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
 news, replies, hot takes, quote commentary, and every other `run_llm()` caller.
 
 ## Skills
