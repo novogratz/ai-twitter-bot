@@ -128,6 +128,32 @@ def test_a_decline_is_set_aside_and_failures_are_replayed(llm, chokepoint, pipel
 
 
 @pytest.mark.parametrize("pipelined", MODES)
+def test_a_reply_naming_a_respected_account_is_set_aside(llm, chokepoint, monkeypatch, pipelined):
+    """Issue #190: the real chokepoint refuses a Reply naming another
+    Respected account. The post is set aside as after a model SKIP, never
+    generated again, and the Replied store stays unmarked."""
+    from src.x import twitter_client as tc
+
+    monkeypatch.setattr(tc, "reply_to_tweet", REAL_REPLY_TO_TWEET)
+    monkeypatch.setenv("DRY_RUN", "1")
+    named, addressed = fresh("graphseo", n=1), fresh("graphseo", n=2)
+    llm.answers.update({
+        "post named": "Le support tient tant que les volumes suivent, @micode l'a montré.",
+        "post addressed": "@graphseo le support tient tant que les volumes suivent.",
+    })
+    candidates = [candidate(named, "post named"), candidate(addressed, "post addressed")]
+
+    for _cycle in range(2):
+        run(job(pipelined=pipelined), candidates)
+
+    assert llm.parents("post named", "post addressed") == ["post named", "post addressed",
+                                                          "post addressed"], \
+        "the refused post is not generated again; a dry-run Reply is replayed"
+    assert set_aside() == {named}
+    assert replied_store.load_replied() == set(), "nothing shipped, nothing marked"
+
+
+@pytest.mark.parametrize("pipelined", MODES)
 def test_other_errors_leave_the_post_replayable(llm, chokepoint, monkeypatch, pipelined):
     """A write or a generation that raises is logged; the cycle moves on."""
     from src.replies import reply_generator

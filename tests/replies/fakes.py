@@ -53,7 +53,7 @@ class FakeChokepoint:
         self.calls = []
         self.answer = WriteOutcome.SHIPPED
 
-    def __call__(self, url, text, *, debate_turn=False):
+    def __call__(self, url, text, *, debate_turn=False, on_refused=None):
         self.calls.append(SimpleNamespace(url=url, text=text, debate_turn=debate_turn))
         answer = self.answer(url) if callable(self.answer) else self.answer
         if isinstance(answer, BaseException):

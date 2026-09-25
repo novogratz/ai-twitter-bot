@@ -161,7 +161,7 @@ def post_tweet(text: str) -> WriteOutcome:
     an inline one.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
-    content or dedup skip, FAILED when a step before the submit failed,
+    content, respect list or dedup skip, FAILED when a step before the submit failed,
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
@@ -178,7 +178,7 @@ def post_tweet(text: str) -> WriteOutcome:
     # Central write policy: originals daily cap + jittered spacing, then the
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
-    from ..guards import action_guard, content_guard
+    from ..guards import action_guard, content_guard, respect_list
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged its posts
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
     # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
@@ -192,6 +192,10 @@ def post_tweet(text: str) -> WriteOutcome:
         ok, why = content_guard.validate(text, kind="original")
         if not ok:
             log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
+            return WriteOutcome.REFUSED
+        _, why = respect_list.scrub_text_or_skip(text)
+        if why:
+            log.info(f"[POST] respect list skip ({why}): {text[:120]!r}")
             return WriteOutcome.REFUSED
         if content_guard.is_duplicate(text):
             log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
@@ -440,7 +444,8 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         steps=steps, close_tab=False)
 
 
-def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False) -> WriteOutcome:
+def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
+                   on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -455,7 +460,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
     slot between the check and the write. `debate_turn=True` marks an answer
-    to someone who answered the account (CONTEXT.md).
+    to someone who answered the account (CONTEXT.md). `on_refused`, when
+    given, receives the Refusal of a Reply admission refusal, dry run
+    included, so the caller can drop a post admission refused for good.
 
     ⛔ CALLERS MUST NOT write the replied store before calling this — the
     claim below REFUSES anything already in it. Bug 2026-06-07: five bots
@@ -486,6 +493,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         if not verdict:
             log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                      f"{tweet_url} {(reply_text or '')[:120]!r}")
+            if on_refused is not None:
+                on_refused(verdict.refusal)
             return WriteOutcome.REFUSED
         admitted_text, author = verdict.text, verdict.author
         return None

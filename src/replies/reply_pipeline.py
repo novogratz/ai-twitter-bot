@@ -75,7 +75,8 @@ class Cycle:
 
 
 # Posts each job is done with until restart, by job name: definitive Reply
-# admission refusals, posts the model declined, posts answered. Temporary
+# admission refusals, before the generation or at the write (a Reply that
+# names a Respected account), posts the model declined, posts answered. Temporary
 # refusals, failed generations and failed writes stay replayable.
 _skipped: dict[str, set] = {}
 
@@ -197,8 +198,10 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     if job.pipelined:
         _wait_out_reply_spacing(job.label)
     log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")
+    refusals = []
     try:
-        shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn)
+        shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
+                                                on_refused=refusals.append)
     except (OutsideActiveHours, StateUnreadable):
         raise
     except Exception:
@@ -206,7 +209,12 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
         traceback.print_exc()
         return 0
     if not shipped:
-        return 0  # the chokepoint's outcome is logged there; no phantom log row
+        # The chokepoint's outcome is logged there; no phantom log row.
+        if any(refusal.definitive for refusal in refusals):
+            log.info(f"[{job.label}] Reply admission refused @{author} for good "
+                     f"({refusals[0].value}): set aside.")
+            _set_aside(job).add(url)
+        return 0
     _set_aside(job).add(url)
     try:
         engagement_log.log_reply(url, reply, "reply", source=candidate.source,

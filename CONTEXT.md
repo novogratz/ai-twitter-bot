@@ -174,7 +174,8 @@ _Avoid_: banned, blacklisted
 
 **Respected account**:
 An account engaged normally but never criticised or named in the account's
-own commentary.
+own commentary. A Reply to its post may address it by its `@handle`, never
+mock it by name.
 _Avoid_: protected account, influencer
 
 ### Time and people

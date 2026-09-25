@@ -18,12 +18,15 @@ Public API:
   load() -> set of lowercased handles (no @)
   add(handle, reason="") -> persists, dedups
   remove(handle)
-  is_protected(handle_or_user_string) -> bool (handles common shapes)
-  scrub_text_or_skip(text) -> (cleaned_text, reason_if_skipped)
+  scrub_text_or_skip(text, addressee="") -> (cleaned_text, reason_if_skipped)
        Final-line defense: if generated content names a protected
-       handle, returns (None, "names protected handle @x"). Caller
-       should SKIP the post.
-  render_block() -> str — for prompt injection.
+       handle, returns (None, "names protected handle @x"). `addressee`
+       is the author a Reply answers: its `@handle` passes, never its
+       name next to a derisive word. An Original has no addressee. The
+       write chokepoints refuse the post, dry run included: `post_tweet`
+       for an Original, Reply admission for a Reply, which sets the
+       post aside for good.
+  render_block() -> str — for prompt injection, every handle named.
 
 The file is guarded: while respect_list.json is unreadable, every function
 that reads it raises StateUnreadable, render_block included, and nothing
@@ -136,29 +139,14 @@ def remove(handle: str) -> bool:
     return False
 
 
-def _normalize_handle(s: str) -> str:
-    if not s:
-        return ""
-    s = s.strip().lstrip("@").lower()
-    # Strip URL prefix shapes: "x.com/foo" -> "foo"
-    m = re.search(r"(?:x\.com|twitter\.com)/([^/?#]+)", s)
-    if m:
-        return m.group(1).lower()
-    return s
-
-
-def is_protected(handle_or_user_string: str) -> bool:
-    h = _normalize_handle(handle_or_user_string)
-    return h in load()
-
-
-def scrub_text_or_skip(text: str) -> Tuple[Optional[str], str]:
+def scrub_text_or_skip(text: str, addressee: str = "") -> Tuple[Optional[str], str]:
     """Final-line defense before any bot ships generated content.
 
     If the text NAMES a protected handle (either as `@foo` or as the
-    bare token `foo` adjacent to clear-attack signals), we return
+    bare token `foo` in a sentence with a clear-attack signal), we return
     (None, reason). Caller MUST treat None as a SKIP — this is more
-    important than the daily cap.
+    important than the daily cap. The `@addressee` of a Reply is not a
+    mention; the attack signal next to its name still is.
 
     Returns (text, "") on pass.
     """
@@ -167,28 +155,30 @@ def scrub_text_or_skip(text: str) -> Tuple[Optional[str], str]:
     protected = load()
     if not protected:
         return text, ""
+    addressee = (addressee or "").lower().lstrip("@")
 
     # 1. @handle mentions of protected accounts
     for m in re.finditer(r"@([A-Za-z0-9_]{1,15})", text):
         h = m.group(1).lower()
-        if h in protected:
+        if h in protected and h != addressee:
             return None, f"output names protected handle @{h}"
 
     # 2. Bare-token "ridicule" mentions (e.g. "Korben dit n'importe quoi"
     #    where "Korben" is a known display-name handle). To keep the
-    #    false-positive rate low, we only trigger if (a) the bare handle
-    #    appears AND (b) a clearly-derisive token also appears in the
-    #    same sentence/window.
+    #    false-positive rate low, we only trigger if the bare handle and a
+    #    clearly-derisive token appear in the same sentence.
     derisive_markers = (
         " ridicule", " bullshit", " mensonge", " arnaque", " zéro talent",
-        " comprend rien", " sait pas", " incompétent", " escroc",
+        " comprend rien", " incompétent", " escroc",
         " menteur", " menteuse", "nuls", " naïf", " naïve",
     )
-    lower = text.lower()
-    if any(d in lower for d in derisive_markers):
+    for sentence in re.split(r"(?<=[.!?…])\s+|\n+", text.lower()):
+        sentence = f" {sentence}"
+        if not any(d in sentence for d in derisive_markers):
+            continue
         for h in protected:
             # Bare handle must appear surrounded by word boundaries.
-            if re.search(rf"\b{re.escape(h)}\b", lower):
+            if re.search(rf"\b{re.escape(h)}\b", sentence):
                 return None, f"derisive language alongside protected handle '{h}'"
 
     return text, ""
@@ -202,8 +192,7 @@ def render_block() -> str:
     handles = sorted(load())
     if not handles:
         return ""
-    sample = ", ".join(f"@{h}" for h in handles[:30])
-    extra = f" (+{len(handles)-30} autres)" if len(handles) > 30 else ""
+    names = ", ".join(f"@{h}" for h in handles)
     return (
         "==================================================\n"
         "RESPECT LIST — comptes a NE JAMAIS critiquer NOMMEMENT\n"
@@ -215,5 +204,5 @@ def render_block() -> str:
         "- les ridiculiser, ironiser sur leur personne, ou mocker leur travail\n"
         "Si l'idee dans leur tweet est critiquable, tu critiques l'IDEE,\n"
         "jamais la personne. En cas de doute -> SKIP.\n\n"
-        f"Liste actuelle: {sample}{extra}.\n"
+        f"Liste actuelle: {names}.\n"
     )

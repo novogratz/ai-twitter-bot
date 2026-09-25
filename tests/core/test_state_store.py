@@ -298,7 +298,7 @@ def test_an_unreadable_respect_list_is_never_overwritten(tmp_path):
     path = _corrupt(tmp_path, "respect_list.json")
 
     for read in (lambda: respect_list.add("newhandle"), lambda: respect_list.remove("micode"),
-                 respect_list.load, lambda: respect_list.is_protected("micode"),
+                 respect_list.load, lambda: respect_list.scrub_text_or_skip("@micode"),
                  respect_list.render_block, personality_store._render_hard_rules,
                  personality_store.hard_rules_block):
         with pytest.raises(StateUnreadable):

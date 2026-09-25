@@ -12,8 +12,10 @@ Two judgements (CONTEXT.md: Reply admission):
 Neither writes anything: no claim, no ledger row. A refusal says whether it
 is definitive for the post (the job may drop the post for good) or
 temporary (the post stays replayable, with a new generation if the text
-was refused). Every environment switch and state file is read at call
-time; an unreadable Replied store or ledger raises `StateUnreadable`.
+was refused). A text that names a Respected account is definitive: the
+job drops the post as after a model SKIP. Every environment switch and
+state file is read at call time; an unreadable Replied store or ledger
+raises `StateUnreadable`.
 """
 import os
 import re
@@ -25,6 +27,7 @@ from . import (
     active_hours,
     content_guard,
     replied_store,
+    respect_list,
 )
 from ..core import config, humanizer, reply_language
 from ..x import x_urls
@@ -40,15 +43,17 @@ class Refusal(Enum):
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
+    RESPECTED_ACCOUNT = "text names a Respected account"
 
     @property
     def definitive(self) -> bool:
-        """True when no later cycle could get this post admitted."""
+        """True when the job drops this post for good: no later cycle could
+        get it admitted, or its Reply named a Respected account."""
         return self in _DEFINITIVE
 
 
 _DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
-                         Refusal.ALREADY_REPLIED})
+                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
 
 
 @dataclass(frozen=True)
@@ -114,6 +119,9 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
         return Verdict(Refusal.TEXT, why, author)
+    _, why = respect_list.scrub_text_or_skip(text, addressee=author)
+    if why:
+        return Verdict(Refusal.RESPECTED_ACCOUNT, why, author)
     return Verdict(None, author=author, text=text)
 
 

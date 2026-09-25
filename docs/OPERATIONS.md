@@ -203,7 +203,7 @@ Safari restart, and nothing writes over the file:
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
 | `whitelist.json` | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. A whitelist or ledger unreadable once the profile is open is a policy refusal: `follow_account` closes the tab and returns `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
-| `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
+| `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 
 An unreadable `respect_list.json` stops every Original and most Replies
 until it is repaired; `main.py` still starts, because nothing renders the
@@ -264,7 +264,9 @@ does not block a post. Missed slots are not caught up.
 (`python3 -c "from src.guards.respect_list import add; add('handle', 'reason')"`,
 picked up at the next prompt) or to `BLOCKLIST` in `src/core/config.py` (restart
 needed). Both are operator-managed. The respect list reaches every Reply
-prompt and the editorial prompt, through the hard rules.
+prompt and the editorial prompt, through the hard rules, and the write
+chokepoints refuse an Original or a Reply that names a Respected account,
+the `@handle` of the author a Reply answers excepted.
 
 ## What can be tuned
 
