@@ -143,6 +143,14 @@ _Avoid_: replied set, replied cache, dedup file
 
 ### Accounts
 
+**Account**:
+The X account the bot runs, one per process, chosen at start by
+`BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
+handle and language, the Slots and their angles, the feeds, Evergreen
+topics and trusted hosts, and the relevance filter. An Account may tighten
+an engine ceiling or floor, never lift it.
+_Avoid_: profile (the account's page on X), bot, persona
+
 **Engager**:
 Someone who replied to or mentioned the account. The follow policy knows
 narrower: only the authors the account answered with a Debate turn (and,

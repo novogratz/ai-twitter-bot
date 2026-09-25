@@ -25,12 +25,12 @@ The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
-`.env.example` predates the current account. Before the first run, set at
+`.env.example` predates the current account. Before the first run, check at
 least:
 
-- `BOT_HANDLE=TheAIShrink`: the example still says `CryptoAIDecode`.
-- `CONTENT_LANG_PRIMARY=en`: the example says `fr`, and the editorial
-  pipeline writes originals in French when it sees `fr`.
+- no `BOT_HANDLE` nor `CONTENT_LANG_PRIMARY` in `.env`: the Account carries
+  the handle and the language (see [Account](#account)), and a `.env` value
+  overrides it. With `fr`, the editorial pipeline writes originals in French.
 - `LLM_FALLBACK_CLI=codex` only to let a failed call fall back to the
   cloud. Unset or empty, as in the example, there is no fallback and no
   call leaves the machine, except the Replies to @Graphseo: they run on
@@ -46,6 +46,25 @@ ceiling or floor is brought back to it and logged as a `[SETTINGS]` warning.
 Check the setup without a browser or a model with the dry-run command from
 [`AGENTS.md#verification`](../AGENTS.md#verification): it stops on the same
 keys and names them.
+
+### Account
+
+One process runs one Account: the Safari lock and `bot.lock` stay global.
+`BOT_ACCOUNT`, in `.env` or the shell, names its folder under `accounts/`;
+unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
+the language of the Originals (`en` or `fr`), the Slots and their angles, the
+feeds, Evergreen topics and trusted hosts, and the relevance filter; its
+comments describe each key. Settings resolve in this order, the later one
+winning: engine defaults, the Account, `.env`, the shell.
+
+`main.py` reads the Account once at start, before any job. A `BOT_ACCOUNT`
+with no `account.toml`, an unknown key or a badly typed value stops the start
+with a message naming the file and the key; `--dry-run` stops on the same
+ones. The optional `[limits]` table takes only an engine setting that has a
+ceiling or a floor in `src/core/settings.py`, such as
+`MAX_ORIGINALS_PER_DAY`: a value past the bound is brought back to it and
+logged as a `[SETTINGS]` warning, so an Account can tighten a guardrail and
+never lift it. Edit `account.toml` by hand, then restart.
 
 ## Start
 
@@ -276,7 +295,7 @@ the `@handle` of the author a Reply answers excepted.
 
 ## What can be tuned
 
-Changes to `.env` or code take effect at restart.
+Changes to `.env`, `account.toml` or code take effect at restart.
 
 - Reply pacing and scope: `MIN_SECONDS_BETWEEN_REPLIES`,
   `REPLY_JITTER_SECONDS`, `DIRECT_REPLY_QUERIES_PER_CYCLE`,

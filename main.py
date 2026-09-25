@@ -15,7 +15,7 @@ settings.load()
 
 from src.core import config
 from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
-from src.editorial.editorial_bot import SLOTS, TREND_SLOTS, open_startup_window, safe_run_editorial_cycle
+from src.editorial.editorial_bot import open_startup_window, safe_run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
 
 _SINGLETON_LOCK_HANDLE = None
@@ -126,8 +126,8 @@ def main():
                           "target_posts": config.TARGET_POSTS_PER_DAY,
                           "max_profile_posts": config.MAX_PROFILE_POSTS_PER_DAY,
                           "replies": "unlimited",
-                          "quotes": 0, "reposts": 0, "slots": SLOTS,
-                          "trend_slots": sorted(TREND_SLOTS),
+                          "quotes": 0, "reposts": 0, "slots": slots(),
+                          "trend_slots": sorted(trend_slots()),
                           "startup_post": "every start in waking hours, restarts included",
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
