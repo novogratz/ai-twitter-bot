@@ -19,26 +19,26 @@ def test_tests_cannot_write_production_state(tmp_path):
     from src.core import engagement_log as el, history as hist, state_store
 
     repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    assert not os.path.abspath(state_store.ROOT).startswith(repo + os.sep) \
-        and os.path.abspath(state_store.ROOT) != repo, \
-        f"the state store root is the repo during tests: {state_store.ROOT}"
-    for mod, attr in ((el, "ENGAGEMENT_LOG_FILE"), (cfg, "ACTION_LEDGER_FILE"),
+    for where in (state_store.root(), state_store.LEGACY_DIR):
+        assert not os.path.abspath(where).startswith(repo + os.sep) \
+            and os.path.abspath(where) != repo, f"state in the repo during tests: {where}"
+    for mod, attr in ((cfg, "ENGAGEMENT_LOG_FILE"), (cfg, "ACTION_LEDGER_FILE"),
                       (cfg, "REPLIED_FILE")):
-        path = getattr(mod, attr)
+        path = os.fspath(getattr(mod, attr))
         assert not os.path.abspath(path).startswith(repo + os.sep), \
             f"{mod.__name__}.{attr} points INSIDE the repo during tests: {path}"
 
     # A write through the normal API must land in tmp, not the repo.
     el.log_reply("", "TEST-FIXTURE wall probe zz")
     hist.save_tweet("TEST-FIXTURE wall probe zz")
-    real_log = os.path.join(repo, "engagement_log.csv")
-    if os.path.exists(real_log):
-        assert "wall probe zz" not in open(real_log).read(), \
-            "test write leaked into the production engagement_log.csv"
-    real_hist = os.path.join(repo, "tweet_history.json")
-    if os.path.exists(real_hist):
-        assert "wall probe zz" not in open(real_hist).read(), \
-            "test write leaked into the production tweet_history.json"
+    state = os.path.join(repo, "state")
+    accounts = sorted(os.listdir(state)) if os.path.isdir(state) else []
+    for folder in [repo, *(os.path.join(state, name) for name in accounts)]:
+        for name in ("engagement_log.csv", "tweet_history.json"):
+            real = os.path.join(folder, name)
+            if os.path.exists(real):
+                assert "wall probe zz" not in open(real).read(), \
+                    f"test write leaked into the production {real}"
 
 
 def test_tests_cannot_spawn_osascript(monkeypatch):

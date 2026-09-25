@@ -77,8 +77,13 @@ current_tweet.txt
 outgoing_tweet.txt
 reply.txt
 
+# The live state of each Account, since issue #207.
+/state/
+
 # Live state at the repo root, untracked in issue #193: a pull never
 # overwrites it. Deploy that change with docs/OPERATIONS.md#deploying-issue-193.
+# Kept after issue #207 moved the state under state/: a checkout not
+# migrated yet, or a carry_state.sh restore, still holds it here.
 action_ledger.json
 autonomous_log.md
 codex_lockout.json

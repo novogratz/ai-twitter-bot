@@ -49,7 +49,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     for i in range(4):
         rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
     log_file.write_text("\n".join(rows) + "\n")
-    monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
+    monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
 
     ac.run_curator_cycle()
@@ -71,7 +71,8 @@ def test_a_negative_tracked_max_tracks_nobody(monkeypatch, tmp_path, settings_ov
             for author in ("goodfinance", "otherfinance") for i in range(6)]
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
-    monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
+    monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
+
     ac.run_curator_cycle()
 
     handles = ac.tracked_handles(limit=10)
@@ -92,7 +93,7 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
             for author in ("la_pique_off", "goodfinance") for i in range(6)]
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
-    monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
+    monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
 
     ac.run_curator_cycle()

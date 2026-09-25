@@ -38,7 +38,7 @@ You are the autonomous operator of the @CryptoAIDecode Twitter bot. The owner st
 
 5. **Tail bot.log** (last 200 lines) for the OTHER class of issues — those that don't kill the process: 'Tweet posted' (good), 'Card generation failed' (image bug), strategy/evolution agent runs, daily cap states.
 
-6. **Read engagement_log.csv** tail (last ~30 entries) — count post/reply/hotake/quote ratios since last cycle.
+6. **Read state/theaishrink/engagement_log.csv** tail (last ~30 entries) — count post/reply/hotake/quote ratios since last cycle.
 
 7. **Read learnings.json** — current avg_likes / avg_views and top/worst performers.
 

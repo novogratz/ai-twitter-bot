@@ -19,7 +19,8 @@ Then it creates whitelist_discovered.json when missing, even empty, adds the
 old discovered tier to it, keeping the handles already there, and drops
 baseline, as_of and note from following_count.json, keeping count and
 updated. It never writes an Operator file, refuses to start while bot.lock
-is held, and a second run changes nothing.
+is held or a state file waits at the project root for bin/migrate_state.py
+(issue #207), and a second run changes nothing.
 """
 import argparse
 import copy
@@ -31,6 +32,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
+from src.core import state_store  # noqa: E402
 from src.core.account import OperatorFile  # noqa: E402
 from src.core.state_errors import StateUnreadable  # noqa: E402
 from src.guards import follow_policy, respect_list  # noqa: E402
@@ -143,6 +145,12 @@ def main() -> None:
     if bot_holds_lock():
         print("bot.lock is held: stop the bot and its supervisor first", file=sys.stderr)
         sys.exit(1)
+    try:
+        state_store.require_migrated()
+    except state_store.Unmigrated as exc:
+        print(f"REFUSED, nothing written: {exc}", file=sys.stderr)
+        sys.exit(1)
+    state_store.ensure_root()
     try:
         report = migrate(args.folder)
     except Refused as exc:

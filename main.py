@@ -13,7 +13,7 @@ from src.core import settings
 # .env whichever module reads it first. A bad .env stops the start here.
 settings.load()
 
-from src.core import config
+from src.core import config, state_store
 from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
 from src.editorial.editorial_bot import open_startup_window, safe_run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
@@ -110,6 +110,12 @@ def main():
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
     args = parser.parse_args()
+    try:
+        state_store.require_migrated()
+    except state_store.Unmigrated as exc:
+        # Read as empty, a state file left behind would reset today's ceiling.
+        log.error(f"[STATE] Refusing to start: {exc}.")
+        raise SystemExit(f"Refusing to start: {exc}.")
     for warning in settings.startup_warnings():
         log.warning(f"[SETTINGS] {warning}")
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
@@ -137,6 +143,7 @@ def main():
         return
 
     _acquire_singleton_lock()
+    state_store.ensure_root()
     if not args.reply_only:
         # The editorial job publishes it, after every restart too.
         open_startup_window()

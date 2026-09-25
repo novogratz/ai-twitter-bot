@@ -12,7 +12,6 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
-from pathlib import Path
 from typing import NamedTuple
 from urllib.parse import urlsplit
 
@@ -22,13 +21,13 @@ from ..guards.active_hours import bedtime, is_active, now_local, require_active,
 from ..core.llm_client import CallProfile, LLMStatus, run_llm
 from ..core.logger import log
 from ..core.history import load_history
-from ..core.state_store import GUARDED, StateFile
+from ..core.state_store import GUARDED, StateFile, StatePath
 from . import editorial_schemas as schemas
 from .trending import TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 # Guarded: it holds the Pending slots and the spent Attempts.
 STATE = StateFile("editorial_state.json", {}, GUARDED)
-AUDIT_FILE = Path(config._PROJECT_ROOT) / "editorial_review.jsonl"
+AUDIT_FILE = StatePath("editorial_review.jsonl")
 _CYCLE_LOCK = threading.Lock()
 SLOT_WINDOW = timedelta(minutes=45)
 MAX_ATTEMPTS = 3
@@ -491,7 +490,7 @@ def _run_slot(slot, state, preview):
                  reason=reason, draft=draft, source_url=source["url"] if source else "")
     if preview:
         return audit
-    with AUDIT_FILE.open("a") as f:
+    with open(AUDIT_FILE, "a") as f:
         f.write(json.dumps(audit, ensure_ascii=False) + "\n")
     if not ok:
         state.setdefault("feedback", {})[slot.clock] = str(reason)[:500]

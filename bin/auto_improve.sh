@@ -62,7 +62,7 @@ do not survey everything.
    if loaded but dead, 'rm -f .bot_disabled && launchctl kickstart -k gui/\$(id -u)/com.kzer.ai-twitter-bot'.
    Verify it is STILL alive ~2 min later (started != running — a 17h silent
    blackout happened 2026-06-09). Uptime beats any code improvement.
-1. DIAGNOSE (fast — a few turns max): read engagement_log.csv per-action
+1. DIAGNOSE (fast — a few turns max): read state/theaishrink/engagement_log.csv per-action
    daily counts and the tail of bot.log. The
    account is AI-PRIMARY (AI labs/models/chips/stocks + AI-crypto + AI-vs-BTC
    feud; the therapist voice frames AI replies). Quote-RT of AI virals +

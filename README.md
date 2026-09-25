@@ -78,8 +78,9 @@ call and is logged at start, as is a fallback the code ignores.
 ```bash
 uv venv && uv pip install -r requirements.txt
 cp .env.example .env
-# A new install only; an existing checkout migrates (docs/OPERATIONS.md#deploying-issue-206).
-[ -e whitelist_discovered.json ] || echo '[]' > whitelist_discovered.json
+# A new install only; an existing checkout migrates (docs/OPERATIONS.md#deploying-issue-207).
+mkdir -p state/theaishrink
+[ -e state/theaishrink/whitelist_discovered.json ] || echo '[]' > state/theaishrink/whitelist_discovered.json
 uv run python main.py
 ```
 
@@ -111,11 +112,14 @@ uv run --with-requirements requirements.txt python main.py --post-only   # edito
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
 ```
 
-`bot.log` contains runtime activity. `editorial_review.jsonl` records decisions;
-`editorial_state.json` persists attempts, completed slots and source history;
-`editorial_reach.md` shows measured reach and missing coverage. These are local
-runtime files and are not committed to Git. The JSON state files go through
-`src/core/state_store.py`, which writes them atomically; an unreadable
+`bot.log`, at the root, contains runtime activity. The state of the Account
+lives in `state/<BOT_ACCOUNT>/`: there, `editorial_review.jsonl` records
+decisions; `editorial_state.json` persists attempts, completed slots and
+source history; `editorial_reach.md` shows measured reach and missing
+coverage. These are local runtime files and are not committed to Git; a
+checkout from before issue #207 moves its root copies there with
+`bin/migrate_state.py`, and `main.py` refuses to start until it has. The
+JSON state files go through `src/core/state_store.py`, which writes them atomically; an unreadable
 guarded file, such as `personality.json`, stops the job that needs it and
 is never overwritten ([recovery](docs/OPERATIONS.md#recovery)). The
 Operator's follow whitelist, respect list and following baseline live in the
