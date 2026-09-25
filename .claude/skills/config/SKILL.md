@@ -1,7 +1,7 @@
 ---
 name: config
 description: View and edit bot configuration - pacing, follows, models, settings
-allowed-tools: Read Edit
+allowed-tools: Read Edit Bash(uv run python bin/configuration_doc.py*)
 ---
 
 Show and edit config:

@@ -309,31 +309,75 @@ def test_env_file_reaches_the_llm_client_whatever_is_imported_first(tmp_path, fi
 # --- No module reads the environment but settings and config.dry_run() --------
 
 _ENV_NAMES = {"environ", "environb", "getenv", "getenvb", "putenv", "unsetenv"}
+_OS_MODULES = {"os", "posix", "nt"}
+_ENV_FILE_PATH = re.compile(r"(?:^|[/\\])\.env$")
 
 
-def _env_reads(tree, allowed_function=None):
-    """Line numbers of every environment access in `tree`, outside the body
-    of the function named `allowed_function`: `os.environ`, `os.getenv`,
-    whatever the module is bound to, `from os import environ`, and
-    `getattr(os, "environ")`."""
+def _dry_run(tree):
+    """The top-level `dry_run` function of `tree`, if any."""
+    return next((node for node in tree.body
+                 if isinstance(node, ast.FunctionDef) and node.name == "dry_run"), None)
+
+
+def _env_reads(tree, allow_dry_run=False):
+    """Line numbers of every environment access in `tree`, outside the
+    top-level `dry_run` function when `allow_dry_run`: `os.environ`,
+    `os.getenv`, whatever the module is bound to, `from os import environ`
+    or `*`, the name as a string (`getattr(os, "environ")`,
+    `vars(os)["environ"]`), the os module handed over as a value
+    (`getattr(os, name)`, `vars(os)`, `os.__dict__`), and a second read of
+    `.env` (`settings._read_env_file`, a `.env` path literal)."""
+    parents = {id(child): node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+    os_names = {(a.asname or a.name).split(".")[0] for node in ast.walk(tree) if isinstance(node, ast.Import)
+                for a in node.names if a.name.split(".")[0] in _OS_MODULES}
     skipped = set()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef) and node.name == allowed_function:
-            skipped |= {id(n) for n in ast.walk(node)}
-    return sorted(node.lineno for node in ast.walk(tree) if id(node) not in skipped and _reads_env(node))
+    if allow_dry_run and (function := _dry_run(tree)):
+        skipped = {id(n) for n in ast.walk(function)}
+    return sorted(node.lineno for node in ast.walk(tree)
+                  if id(node) not in skipped and _reads_env(node, parents.get(id(node)), os_names))
 
 
-def _reads_env(node) -> bool:
+def _reads_env(node, parent, os_names) -> bool:
     if isinstance(node, ast.Attribute):
-        return node.attr in _ENV_NAMES
+        return node.attr in _ENV_NAMES | {"_read_env_file"}
     if isinstance(node, ast.ImportFrom):
-        return any(a.name in _ENV_NAMES for a in node.names)
-    return (isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "getattr"
-            and any(isinstance(a, ast.Constant) and a.value in _ENV_NAMES for a in node.args))
+        return any(a.name in _ENV_NAMES | {"_read_env_file"}
+                   or (a.name == "*" and node.module in _OS_MODULES) for a in node.names)
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return node.value in _ENV_NAMES or bool(_ENV_FILE_PATH.search(node.value))
+    if isinstance(node, ast.Name):
+        if node.id == "_read_env_file":
+            return True
+        return (node.id in os_names and isinstance(node.ctx, ast.Load)
+                and not (isinstance(parent, ast.Attribute) and parent.attr != "__dict__"))
+    return False
+
+
+def _dry_run_keys(tree):
+    """The keys the top-level `dry_run` reads from the environment; None
+    stands for a read whose key is not a string literal."""
+    function = _dry_run(tree)
+    parents = {id(child): node for node in ast.walk(function) for child in ast.iter_child_nodes(node)}
+    keys = set()
+    for node in ast.walk(function):
+        if not (isinstance(node, ast.Attribute) and node.attr in _ENV_NAMES):
+            continue
+        parent = parents.get(id(node))
+        key = None
+        if node.attr == "environ" and isinstance(parent, ast.Subscript):
+            key = parent.slice
+        elif node.attr == "environ" and isinstance(parent, ast.Attribute) and parent.attr == "get":
+            call = parents.get(id(parent))
+            key = call.args[0] if isinstance(call, ast.Call) and call.args else None
+        elif node.attr == "getenv" and isinstance(parent, ast.Call) and parent.args:
+            key = parent.args[0]
+        keys.add(key.value if isinstance(key, ast.Constant) and isinstance(key.value, str) else None)
+    return keys
 
 
 def _code_files():
-    files = [ROOT / "main.py", *sorted((ROOT / "bin").glob("*.py")), *sorted((ROOT / "src").rglob("*.py"))]
+    files = [ROOT / "main.py", *sorted((ROOT / "bin").glob("*.py")),
+             *sorted((ROOT / "scripts").glob("*.py")), *sorted((ROOT / "src").rglob("*.py"))]
     return [f for f in files if f != ROOT / "src/core/settings.py"]
 
 
@@ -341,8 +385,7 @@ def test_no_module_reads_the_environment_but_settings_and_dry_run():
     reads = {}
     for path in _code_files():
         name = str(path.relative_to(ROOT))
-        allowed = "dry_run" if name == "src/core/config.py" else None
-        if lines := _env_reads(ast.parse(path.read_text()), allowed):
+        if lines := _env_reads(ast.parse(path.read_text()), allow_dry_run=name == "src/core/config.py"):
             reads[name] = lines
     assert not reads, f"read a setting through src/core/settings.py instead: {reads}"
 
@@ -354,15 +397,41 @@ def test_no_module_reads_the_environment_but_settings_and_dry_run():
     "from os import environ\n",
     "from os import getenv as read\n",
     "import os\nX = getattr(os, 'environ')",
+    "from os import *\nX = environ['X']",
+    "import os\nX = vars(os)['environ']['X']",
+    "import os\nX = os.__dict__['environ']['X']",
+    "import os\nname = 'env' + 'iron'\nX = getattr(os, name)",
+    "from src.core import settings\nX = settings._read_env_file('/tmp/x')",
+    "from src.core.settings import _read_env_file\n",
+    "with open('.env') as f:\n    X = f.read()",
+    "from pathlib import Path\nX = (Path(__file__).parent / '.env').read_text()",
     "import os\ndef dry_run():\n    pass\ndef other():\n    return os.environ",
+    "import os\nclass Switch:\n    def dry_run(self):\n        return os.environ.get('DRY_RUN')",
+    "import os\ndef outer():\n    def dry_run():\n        return os.environ.get('DRY_RUN')",
 ])
 def test_the_environment_check_catches_every_form(code):
-    assert _env_reads(ast.parse(code), "dry_run")
+    assert _env_reads(ast.parse(code), allow_dry_run=True)
+
+
+def test_the_environment_check_lets_text_about_env_through():
+    code = "import os\nX = os.path.join('a', 'b')\nDOC = 'set it in `.env`, then restart'\n"
+    assert not _env_reads(ast.parse(code))
 
 
 def test_config_reads_the_environment_in_dry_run_only():
     tree = ast.parse((ROOT / "src/core/config.py").read_text())
-    assert _env_reads(tree) and not _env_reads(tree, "dry_run")
+    assert _env_reads(tree) and not _env_reads(tree, allow_dry_run=True)
+    assert _dry_run_keys(tree) == {"DRY_RUN"}
+
+
+@pytest.mark.parametrize("code", [
+    "import os\ndef dry_run():\n    return os.environ.get('DRY_RUN') or os.environ.get('LIVE')",
+    "import os\ndef dry_run():\n    return os.getenv('DRY_RUN') == os.environ['LIVE']",
+    "import os\nKEY = 'DRY_RUN'\ndef dry_run():\n    return os.environ.get(KEY)",
+    "import os\ndef dry_run():\n    return dict(os.environ)",
+])
+def test_the_dry_run_check_catches_any_other_key(code):
+    assert _dry_run_keys(ast.parse(code)) != {"DRY_RUN"}
 
 
 def test_script_keys_are_not_declared():
@@ -376,7 +445,11 @@ def test_every_script_key_is_read_by_a_script_that_sources_env():
 
 # --- docs/CONFIGURATION.md and .env.example agree with the declarations ------
 
-_KEY_IN_BACKTICKS = re.compile(r"`([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+)`")
+_KEY_TOKEN = re.compile(r"\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b")
+_KEY_ASSIGNMENT = re.compile(r"^\s*(?:#\s*)?(?:export\s+)?([A-Z][A-Z0-9_]*)=", re.MULTILINE)
+# Named in the doc without being `.env` keys: the ceilings of
+# src/core/config.py, the table of per-provider models, the policy file.
+_NOT_KEYS = {name for name in dir(config) if name.isupper()} | {"MODEL_DEFAULTS", "EDITORIAL_POLICY"}
 
 
 def _configuration_doc():
@@ -411,15 +484,27 @@ def test_the_configuration_reference_lists_every_setting_with_its_default_and_bo
         assert all(f"`{model}`" in row for model in table.values()), name
 
 
+def _unknown_keys(text):
+    named = set(_KEY_TOKEN.findall(text)) | set(_KEY_ASSIGNMENT.findall(text))
+    return sorted(k for k in named - _NOT_KEYS if not settings._is_known(k))
+
+
 def test_the_configuration_doc_names_no_unknown_key():
     """A key the engine does not know stops the start: the doc must not offer
-    one. Constants of src/core/config.py and settings.MODEL_DEFAULTS are
-    named too, and are not `.env` keys."""
-    text = (ROOT / "docs/CONFIGURATION.md").read_text()
-    named = set(_KEY_IN_BACKTICKS.findall(text))
-    constants = {name for name in dir(config) if name.isupper()} | {"MODEL_DEFAULTS"}
-    unknown = sorted(k for k in named - constants if not settings._is_known(k))
+    one, in backticks, in plain text or in a `KEY=value` line."""
+    unknown = _unknown_keys((ROOT / "docs/CONFIGURATION.md").read_text())
     assert not unknown, unknown
+
+
+@pytest.mark.parametrize("text", [
+    "Set `MAX_NEWS_PER_DAY` to 5.",
+    "Set MAX_NEWS_PER_DAY to 5.",
+    "```env\nMAX_NEWS_PER_DAY=5\n```",
+    "```env\nVERBOSE=1\n```",
+    "```sh\nexport VERBOSE=1\n```",
+])
+def test_the_unknown_key_check_catches_every_form(text):
+    assert _unknown_keys(text)
 
 
 def _env_example():

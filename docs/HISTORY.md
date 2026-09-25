@@ -15,8 +15,11 @@ their order in the file is not strictly chronological.
 > French content) with like caps of 22 a cycle and 1,800 a day, above the
 > policy's 10 and 500. No module reads the environment any more but
 > `src/core/settings.py` and `config.dry_run()`; the reference is generated
-> from the declarations and a test fails while it is stale. The legacy
-> tables left the page. What they recorded:
+> from the declarations and a test fails while it is stale.
+> `scripts/suggest_improvements.py`, the 2026-06-24 suggester agent, read
+> `SUGGEST_INTERVAL_SECONDS` from the environment and nothing started it
+> any more: it was removed. The legacy tables left the page. What they
+> recorded:
 >
 > - Retired by issue #107 with the quote, repost and boost branches:
 >   `FAVORITE_REPOSTS_PER_CYCLE`, `FAVORITE_REPOST_MIN_ENGAGEMENT`,

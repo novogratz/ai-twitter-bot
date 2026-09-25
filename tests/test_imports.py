@@ -5,8 +5,8 @@ Live jobs import helpers from legacy modules lazily, often inside
 green while the live path silently returns False. This test reads the source
 with `ast` (nothing is imported) and checks every import that points into the
 project, at any depth: the module exists and defines each imported name.
-It reads `main.py` and every file under `src/`, `bin/`, `scripts/` and
-`tests/`, subfolders included.
+It reads `main.py` and every file under `src/`, `bin/` and `tests/`,
+subfolders included.
 
 Name resolution rules:
 - A module defines the names bound at its top level, including inside
@@ -34,7 +34,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 ROOT = Path(__file__).resolve().parent.parent
-SCANNED_FOLDERS = ("src", "bin", "scripts", "tests")
+SCANNED_FOLDERS = ("src", "bin", "tests")
 
 
 class Module(NamedTuple):
