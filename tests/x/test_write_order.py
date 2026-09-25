@@ -453,6 +453,52 @@ def test_a_reply_whose_page_does_not_open_stays_replayable(trace):
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
 
 
+@pytest.mark.parametrize("failing, events", [
+    (1, ["lock", "judge", "claim", "activate", "release", "close", "unlock"]),
+    (2, ["lock", "judge", "claim", "activate", "open", "activate", "release", "close", "unlock"]),
+], ids=["before_open", "after_open"])
+def test_a_reply_whose_safari_does_not_come_to_the_front_sends_nothing(trace, monkeypatch,
+                                                                        failing, events):
+    """#251 review: the Reply's activate ran unbounded and its result was
+    ignored, so a wedged Safari held the lock before the open's bound, and
+    a failed one sent the keystrokes to another app. It now fails the
+    Reply: no keystroke, no ledger row, the post stays replayable."""
+    traced = safari._run_applescript
+    activations = []
+
+    def run(script, *a, **k):
+        ok = traced(script, *a, **k)
+        if _script_kind(script) == "activate":
+            activations.append(script)
+            return ok and len(activations) != failing
+        return ok
+    monkeypatch.setattr(safari, "_run_applescript", run)
+
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    assert trace.events == events
+    assert POST_URL not in trace.claimed
+    trace.events.clear()
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+
+
+def test_every_applescript_run_of_the_reply_and_the_post_is_bounded(trace, monkeypatch):
+    """#251 review: an unbounded osascript under the Safari lock holds it,
+    and every job behind it, while Safari is wedged."""
+    traced = safari._run_applescript
+    unbounded = []
+
+    def run(script, *a, **k):
+        if not k.get("timeout_s"):
+            unbounded.append(_script_kind(script))
+        return traced(script, *a, **k)
+    monkeypatch.setattr(safari, "_run_applescript", run)
+
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert tc.post_tweet(TEXT) is W.SHIPPED
+    assert unbounded == []
+
+
 def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):
     """A refusal keeps the guard's line alone; a failure adds the outcome
     line, and the refusal's outcome line goes to debug."""

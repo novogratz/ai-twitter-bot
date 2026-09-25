@@ -12,14 +12,16 @@ their order in the file is not strictly chronological.
 > every write chokepoint ignored the result of `safari.open_url`. A Reply
 > whose tweet never opened still pressed `r`, pasted and submitted into
 > whatever tab was in front; a follow, a pin or a like walk clicked there
-> too. `open_url`, the tab close and the scroll also ran without a
-> timeout, so a wedged `osascript` kept the Safari lock, and every job
-> behind it, for good. `post_tweet`, `reply_to_tweet`, `follow_account`,
-> `pin_own_tweet` and the three like walks now stop in `FAILED` when the
-> page does not open: no keystroke, click or ledger row, and a Reply
-> releases its claim in the Replied store. The three primitives run under
-> a bound (20, 10 and 15 seconds) past which the child is killed. The page
-> reads still ignore the result, pending the page session of issue #250.
+> too. `open_url`, the tab close, the scroll, the Reply's activate and
+> the keystrokes also ran without a timeout, so a wedged `osascript` kept
+> the Safari lock and every job behind it. `post_tweet`, `reply_to_tweet`,
+> `follow_account`, `pin_own_tweet` and the three like walks now stop in
+> `FAILED` when the page does not open, and a Reply when Safari does not
+> come to the front: no keystroke, click or ledger row, and a Reply
+> releases its claim in the Replied store. These runs have a bound (20 s
+> for the open, 15 s for the scroll, 10 s for the others) past which the
+> child is killed. The page reads still ignore the result, pending the
+> page session of issue #250, and two scraper runs remain unbounded.
 
 > **2026-09-25 — the reply, like and follow niche narrowed to AI (issue #205):**
 > the policy had limited the account to AI, but the niche of the Replies,

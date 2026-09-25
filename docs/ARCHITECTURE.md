@@ -293,8 +293,11 @@ timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
 AppleScript escaping. `open_url`, `close_front_tab` and `_scroll_page`
 run under a bound (`OPEN_TIMEOUT_S` 20 s, `CLOSE_TIMEOUT_S` 10 s,
-`SCROLL_TIMEOUT_S` 15 s): past it the `osascript` child is killed and the
-run fails, so a wedged Safari cannot keep the Safari lock. `open_url`
+`SCROLL_TIMEOUT_S` 15 s), and so do the writes' Safari activate
+(`ACTIVATE_TIMEOUT_S` 10 s) and keystrokes: `_paste_text`,
+`_navigate_to_first_tweet`, the Reply's `r` and the submit
+(`KEYSTROKE_TIMEOUT_S` 10 s). Past it the `osascript` child is killed and
+the run fails, so a wedged Safari cannot keep the Safari lock. `open_url`
 returns False then, as on any failed run. Only `safari.py` and the Safari
 quit in `safari_hygiene` spawn `osascript` themselves.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
@@ -328,8 +331,9 @@ chokepoint without it, or with two, raises before any guard runs.
 6. The page steps, opening the page first. A page that does not open
    (`open_url` returns False) ends the write in `FAILED` before any
    keystroke, paste, click or page read: the front tab is then not the
-   page the write acts on. A Reply releases its claim, so a later cycle
-   may answer the post.
+   page the write acts on. A Reply whose Safari activate fails, before or
+   after the open, ends the same way. A Reply releases its claim, so a
+   later cycle may answer the post.
 7. Ledger rows only when the page steps return a shipped outcome, then the
    chokepoint's bookkeeping: `record_followed` and `adjust_following`,
    `note_posted`, tweet history.
@@ -676,6 +680,14 @@ These are how the code behaves today, not design intent:
 - The page reads of `scraper.py`, the follow-back and the follower count
   still ignore `open_url`'s result, and read the front tab when the page
   did not open (parent issue #250). Only the writes check it.
+- Two AppleScript runs of `scraper.py` still have no bound: the activate
+  before the second JavaScript try of a page read, and the scroll of
+  `scrape_own_tweet_and_replies`. A wedged Safari there keeps the Safari
+  lock.
+- A bound kills `osascript`, not the AppleEvent it already sent: Safari
+  may still open a timed-out page afterwards, and the write's tab close
+  then closes another tab and leaves that one open (issue #253). Nothing
+  is sent into it.
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed

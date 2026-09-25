@@ -43,6 +43,8 @@ _safari_lock = _AwakeSafariLock()
 OPEN_TIMEOUT_S = 20
 CLOSE_TIMEOUT_S = 10
 SCROLL_TIMEOUT_S = 15
+ACTIVATE_TIMEOUT_S = 10
+KEYSTROKE_TIMEOUT_S = 10
 
 
 def _run_applescript(script: str, retries: int = 1,
@@ -141,7 +143,7 @@ def _paste_text(text: str) -> bool:
         keystroke "v" using command down
     end tell
     '''
-    return _run_applescript(script)
+    return _run_applescript(script, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
 def _navigate_to_first_tweet():
@@ -157,7 +159,7 @@ def _navigate_to_first_tweet():
         keystroke return
     end tell
     '''
-    _run_applescript(script)
+    _run_applescript(script, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
 def close_front_tab():

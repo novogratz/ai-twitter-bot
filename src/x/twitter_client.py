@@ -28,6 +28,16 @@ def _open_or_abort(url: str, tag: str) -> bool:
     return False
 
 
+def _activate_or_abort(tweet_url: str) -> bool:
+    """Bring Safari to the front before the Reply's keystrokes. On failure
+    they would reach another app: return False, and the write is FAILED."""
+    if safari._run_applescript('tell application "Safari" to activate',
+                               timeout_s=safari.ACTIVATE_TIMEOUT_S):
+        return True
+    log.info(f"[REPLY] Safari did not come to the front; nothing sent: {tweet_url}")
+    return False
+
+
 def _paste_or_abort(text: str, tag: str) -> bool:
     """Paste into the open composer. On failure nothing was sent: return
     False."""
@@ -40,7 +50,7 @@ def _paste_or_abort(text: str, tag: str) -> bool:
 def _submit_or_abort(tag: str, target: str = "") -> bool:
     """Press Cmd+Return in the open composer. On failure the outcome is
     unknown: return False, and the write is UNCONFIRMED."""
-    if safari._run_applescript(_SUBMIT_KEYSTROKE):
+    if safari._run_applescript(_SUBMIT_KEYSTROKE, timeout_s=safari.KEYSTROKE_TIMEOUT_S):
         return True
     log.warning(f"[{tag}] Submit keystroke failed; outcome unknown"
                 f"{': ' + target if target else '.'}")
@@ -523,9 +533,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         sent = False
         try:
             # Make sure Safari is focused first
-            safari._run_applescript('''
-            tell application "Safari" to activate
-            ''')
+            if not _activate_or_abort(tweet_url):
+                return WriteOutcome.FAILED
             time.sleep(0.5)
 
             log.info(f"Opening tweet: {tweet_url}")
@@ -536,9 +545,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             time.sleep(6)
 
             # Make sure Safari is in front
-            safari._run_applescript('''
-            tell application "Safari" to activate
-            ''')
+            if not _activate_or_abort(tweet_url):
+                return WriteOutcome.FAILED
             time.sleep(0.5)
 
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
@@ -552,7 +560,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             tell application "System Events"
                 keystroke "r"
             end tell
-            '''):
+            ''', timeout_s=safari.KEYSTROKE_TIMEOUT_S):
                 log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
                 return WriteOutcome.FAILED
             time.sleep(3)  # Wait for reply box to open
