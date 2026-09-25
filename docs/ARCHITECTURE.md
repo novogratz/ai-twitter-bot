@@ -154,14 +154,24 @@ lock.
    posts as untrusted data that choose the topic. Recent posts include the
    text of every pending submission, which may be live; the review sees the
    same list. It returns JSON matching
-   `editorial_schemas.DRAFT_SCHEMA`, or an explicit skip.
+   `editorial_schemas.draft_schema()`, or an explicit skip.
 6. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
    1–3 evidence ids that resolve to sentences found in the source text, then
    `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
    twelve hours old or a useful AI teaching source. A second model call
-   (`REVIEW_SCHEMA`) must approve all six criteria, plus `exceptional` at 20:45
-   and `trending` for a trend slot, which also needs a news source and no `@`.
+   (`review_schema()`) must approve all six criteria, plus `exceptional` at
+   20:45 and `trending` for a trend slot, which also needs a news source and
+   no `@`.
+
+   Four of these limits live once, in `editorial_schemas`: the 250-character
+   ceiling (`TEXT_MAX_CHARS`), the 40 numbered evidence sentences per source
+   (`EVIDENCE_PASSAGES`), the 3 evidence ids (`EVIDENCE_IDS_MAX`) and the
+   review's boolean fields (`APPROVAL_FLAGS`, `EXCEPTIONAL_FLAG`,
+   `TREND_FLAG`). The schemas, the draft and review prompts and the
+   deterministic checks read them at call time. The 80-character floor and
+   the evidence sentence filter (35–700 characters, at least five words)
+   stay in `editorial_bot`, the only module that reads them.
 7. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
    next attempt. Nothing is written when `can_post` or the pending check
@@ -191,12 +201,17 @@ the `#` of an inline one. `post_tweet` then checks `can_post(POST)` again
 under the Safari lock.
 
 Models: drafts and reviews go through `run_llm` with
-`force_provider=PROFILE_LLM_PROVIDER`. On Ollama, `EDITORIAL*` labels use
-`EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with the JSON schema as
-`format`, and a timeout of `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
-bedtime. When Ollama fails, `llm_client` falls back to `LLM_FALLBACK_CLI`,
-which defaults to codex even when the variable is empty. `LLM_DISABLE_FALLBACK=1`
-turns the fallback off.
+`force_provider=PROFILE_LLM_PROVIDER` and a `CallProfile`,
+`editorial_schemas.draft_profile()` or `review_profile()`. The profile, not
+the label, sets what the call gets on Ollama, whether Ollama answers first
+or as a fallback: `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`), the
+Draft or review schema as `format`, temperature 0.65 or 0.2, no voice
+prefix, and a timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300)
+capped by bedtime. A call without a profile, every Reply, gets
+`llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, the voice prefix, no schema,
+temperature 1.0. The label only names the call in logs. When Ollama fails,
+`llm_client` falls back to `LLM_FALLBACK_CLI`, which defaults to codex even
+when the variable is empty. `LLM_DISABLE_FALLBACK=1` turns the fallback off.
 
 ## Write path and limits
 

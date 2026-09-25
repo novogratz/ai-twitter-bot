@@ -38,7 +38,9 @@ The top level of `src/` holds only packages.
 
 | Concern | Where |
 |---|---|
-| Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py`, `src/editorial/editorial_schemas.py` |
+| Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py` |
+| Draft and review limits, their JSON schemas and call profiles | `src/editorial/editorial_schemas.py` |
+| Model calls: providers, fallback, Ollama call profile (the label only names the call in logs) | `src/core/llm_client.py` |
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: hard rules, core identity, dossier, language, SKIP, failure and rate-limit outcomes | `src/replies/reply_generator.py` |

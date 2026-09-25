@@ -18,10 +18,11 @@ from urllib.parse import urlsplit
 from ..guards import action_guard, content_guard
 from ..core import config
 from ..guards.active_hours import bedtime, is_active, now_local, require_active
-from ..core.llm_client import run_llm, unwrap_text
+from ..core.llm_client import CallProfile, run_llm, unwrap_text
 from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import GUARDED, StateFile
+from . import editorial_schemas as schemas
 from .trending import AI_TOPIC, TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 # Guarded: it holds the Pending slots and the spent Attempts.
@@ -308,8 +309,8 @@ def collect_sources(state: dict, now=None, news_only=False) -> list:
     return sources
 
 
-def _json_call(prompt: str, label: str) -> dict:
-    result = run_llm(prompt, config.NEWS_MODEL, label=label,
+def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
+    result = run_llm(prompt, config.NEWS_MODEL, label=label, profile=profile,
                      force_provider=config.PROFILE_LLM_PROVIDER, structured_output=True)
     if result.returncode:
         log.info("[EDITORIAL] %s generation unavailable (code %s).", label, result.returncode)
@@ -326,7 +327,7 @@ def source_evidence(source):
     """Number exact source sentences so generation never has to recopy them."""
     sentences = [part.strip() for part in re.split(r"(?<=[.!?])\s+", source["body"])
                  if 35 <= len(part.strip()) <= 700 and len(part.split()) >= 5]
-    return {str(i): sentence for i, sentence in enumerate(sentences[:40])}
+    return {str(i): sentence for i, sentence in enumerate(sentences[:schemas.EVIDENCE_PASSAGES])}
 
 
 def draft_post(slot, sources, recent, feedback="", trending=None):
@@ -344,7 +345,7 @@ fresh source earns a sharper post.
 Make ONE useful point, in one or two complete conversational sentences.
 Choose a concrete action with its reason, OR a clear concept with an example,
 OR a sourced update with its consequence. Do not squeeze all formats together.
-Aim for 150–210 characters; finish the thought before 250 characters.
+Aim for 150–210 characters; finish the thought before {schemas.TEXT_MAX_CHARS} characters.
 No hashtags, markdown, URLs, or engagement bait.
 Sound like a real person who read the piece and pulled out the useful bit, not
 a headline bot or a classroom handout.
@@ -358,12 +359,12 @@ Label an inference as an opinion. Never call knowledge docs breaking news.
 Do not repeat recent stories or their punchlines. Skip if nothing earns a slot.
 Return ONLY JSON: {{"source_id":"0", "text":"...", "angle":"...",
 "takeaway":"...", "evidence_ids":["0"]}}.
-Select 1–3 evidence IDs from the chosen source. These are exact source
+Select 1–{schemas.EVIDENCE_IDS_MAX} evidence IDs from the chosen source. These are exact source
 sentences supplied by the application. Never make up IDs or quotations.
 Set "skip":true (with empty text/evidence_ids) if no strong post is possible.{trend_block(trending)}
 RECENT POSTS: {json.dumps(recent[-12:], ensure_ascii=False)}
 SOURCES: {json.dumps(evidence_sources, ensure_ascii=False)}"""
-    return _json_call(prompt, "EDITORIAL_DRAFT")
+    return _json_call(prompt, "EDITORIAL_DRAFT", schemas.draft_profile())
 
 
 def review_draft(draft, sources, recent, exceptional=False, trending=None):
@@ -372,7 +373,7 @@ def review_draft(draft, sources, recent, exceptional=False, trending=None):
         return False, "malformed draft", None
     text = draft.get("text")
     source = next((s for s in sources if s["id"] == draft.get("source_id")), None)
-    if (not isinstance(text, str) or not 80 <= len(text) <= 250 or not source
+    if (not isinstance(text, str) or not 80 <= len(text) <= schemas.TEXT_MAX_CHARS or not source
             or not _trusted(source["url"]) or not draft.get("angle") or not draft.get("takeaway")):
         return False, "missing substance, source, or invalid length", source
     if _BAIT.search(text) or re.search(r"https?://|#|\[|\]", text):
@@ -382,13 +383,13 @@ def review_draft(draft, sources, recent, exceptional=False, trending=None):
     if "evidence_ids" in draft:
         ids = draft["evidence_ids"]
         snippets = source_evidence(source)
-        if (not isinstance(ids, list) or not 1 <= len(ids) <= 3
+        if (not isinstance(ids, list) or not 1 <= len(ids) <= schemas.EVIDENCE_IDS_MAX
                 or any(not isinstance(i, str) or i not in snippets for i in ids)):
             return False, "invalid source evidence IDs", source
         draft["evidence"] = [snippets[i] for i in ids]
     evidence = draft.get("evidence")
     body = " ".join(source["body"].lower().split())
-    if (not isinstance(evidence, list) or not 1 <= len(evidence) <= 3
+    if (not isinstance(evidence, list) or not 1 <= len(evidence) <= schemas.EVIDENCE_IDS_MAX
             or any(not isinstance(q, str) or len(q.split()) < 5
                    or " ".join(q.lower().split()) not in body for q in evidence)):
         return False, "evidence not found in fetched source", source
@@ -413,20 +414,17 @@ A clear beginner explanation or a specific application of documentation counts
 as reader value. Novel means different from the recent posts, not a new
 scientific discovery. A useful teaching post need not invent a prediction,
 performance claim, or recommended numeric setting to earn approval.
-Return JSON only with boolean fields: approved, grounded, ai_relevant,
-adds_value, natural_voice, novel, exceptional, trending; and a short reason.
-exceptional means a consequential fresh update or unusually useful AI teaching source.
+Return JSON only with boolean fields: {', '.join(schemas.review_flags())};
+and a short reason.
+{schemas.EXCEPTIONAL_FLAG} means a consequential fresh update or unusually useful AI teaching source.
 {trend_rule(trending)}
 Do not rewrite or rubber-stamp. Quality beats filling a quota.
 DRAFT: {json.dumps(draft, ensure_ascii=False)}
 SOURCE: {json.dumps(source, ensure_ascii=False)}
-RECENT: {json.dumps(recent[-12:], ensure_ascii=False)}""", "EDITORIAL_REVIEW")
-    fields = ("approved", "grounded", "ai_relevant", "adds_value", "natural_voice", "novel")
-    ok = all(review.get(key) is True for key in fields)
-    if exceptional:
-        ok = ok and review.get("exceptional") is True
-    if trending:
-        ok = ok and review.get("trending") is True
+RECENT: {json.dumps(recent[-12:], ensure_ascii=False)}""", "EDITORIAL_REVIEW", schemas.review_profile())
+    flags = (*schemas.APPROVAL_FLAGS, *([schemas.EXCEPTIONAL_FLAG] if exceptional else []),
+             *([schemas.TREND_FLAG] if trending else []))
+    ok = all(review.get(key) is True for key in flags)
     return ok, review.get("reason", "editor did not return a complete approval"), source
 
 

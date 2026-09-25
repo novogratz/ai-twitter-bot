@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from src.guards import active_hours as hours
-from src.editorial import editorial_bot as editorial
+from src.editorial import editorial_bot as editorial, editorial_schemas as schemas
 from src.x.confirmed_write import WriteOutcome
 from tests.helpers import TORONTO, clock
 
@@ -225,19 +225,140 @@ def test_article_extraction_prioritizes_content_over_navigation():
     assert editorial._plain(html) == "Useful AI facts here."
 
 
-def test_profile_surfaces_force_capable_provider():
-    """Profile generators must pass force_provider=PROFILE_LLM_PROVIDER so
-    profile/reply routing can be changed independently from AI_CLI."""
-    import inspect
-    from src.editorial import editorial_bot
+EVIDENCE = ("Chat templates convert conversations into the format expected by the model.",
+            "A mismatched template quietly degrades the answers of an instruction tuned model.",
+            "The tokenizer applies the chat template before generation starts in the pipeline.")
 
-    assert "force_provider=config.PROFILE_LLM_PROVIDER" in inspect.getsource(editorial_bot._json_call), \
-        "the editorial generator must force the profile provider"
 
+@pytest.fixture
+def editor_source(monkeypatch):
+    """A source of three Evidence passages, a Draft citing two of them and
+    a full approval, for the real Draft and review calls."""
+    from types import SimpleNamespace
+    monkeypatch.setenv("CONTENT_LANG_PRIMARY", "en")
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
+    source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
+                  publisher="Hugging Face", body=" ".join(EVIDENCE), kind="knowledge", published_at="")
+    draft = dict(source_id="0", text="Your model expects a particular conversation format. Check its chat template before changing your prompts; the wrapper around your words matters too.",
+                 angle="format before prompting", takeaway="check the model chat template",
+                 evidence_ids=["0", "1"])
+    review = {flag: True for flag in schemas.review_flags()} | {"reason": "Grounded and useful"}
+    return SimpleNamespace(source=source, draft=draft, review=review)
+
+
+@pytest.fixture
+def editor(monkeypatch, editor_source):
+    """editor_source behind a fake model that records every call and answers
+    the Draft or the review by label."""
+    from types import SimpleNamespace
+    from src.core.llm_client import LLMResult
+    editor_source.calls = []
+
+    def model(prompt, model, **options):
+        editor_source.calls.append(SimpleNamespace(prompt=prompt, model=model, **options))
+        answer = editor_source.review if options["label"] == "EDITORIAL_REVIEW" else editor_source.draft
+        return LLMResult(0, json.dumps(answer), "")
+
+    monkeypatch.setattr(editorial, "run_llm", model)
+    return editor_source
+
+
+def draft_and_review(editor):
+    """The Draft the real generator returns, and the review of it."""
+    draft = editorial.draft_post(editorial.SLOTS[0], [editor.source], [])
+    return draft, editorial.review_draft(draft, [editor.source], [])
+
+
+def last_call(editor, label):
+    return [call for call in editor.calls if call.label == label][-1]
+
+
+def test_the_draft_and_the_review_run_on_the_profile_provider(monkeypatch, editor):
+    """PROFILE_LLM_PROVIDER routes the Originals apart from AI_CLI, each
+    call with its own profile."""
     from src.core import config
-    # Default is Ollama, env-overridable to Codex/Gemini when needed.
-    assert config.PROFILE_LLM_PROVIDER in ("ollama", "codex", "gemini", None) or \
-        isinstance(config.PROFILE_LLM_PROVIDER, str)
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "gemini")
+    assert draft_and_review(editor)[1][0]
+    assert [(c.label, c.model, c.force_provider, c.profile) for c in editor.calls] == [
+        ("EDITORIAL_DRAFT", config.NEWS_MODEL, "gemini", schemas.draft_profile()),
+        ("EDITORIAL_REVIEW", config.NEWS_MODEL, "gemini", schemas.review_profile()),
+    ]
+
+
+def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch, editor_source):
+    """Issue #174: the fallback renames the call "EDITORIAL_REVIEW
+    (fallback)". When the label chose the schema, Ollama got the Draft's,
+    answered a Draft, and the Editor rejected the Original without a word."""
+    import io
+    import urllib.request
+    from src.core import config, llm_client as llm
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "claude")
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    cloud = []
+    monkeypatch.setattr(llm, "_run_cmd",
+                        lambda cmd, **k: cloud.append(k["label"]) or llm.LLMResult(1, "", "claude down"))
+    requests = []
+
+    def ollama(request, timeout=None):
+        body = json.loads(request.data)
+        requests.append(body)
+        # Constrained decoding: the model answers in the shape of its schema.
+        shaped = editor_source.review if body["format"] == schemas.review_schema() else editor_source.draft
+        return io.BytesIO(json.dumps({"response": json.dumps(shaped)}).encode())
+
+    monkeypatch.setattr(urllib.request, "urlopen", ollama)
+    ok, reason, _ = editorial.review_draft(dict(editor_source.draft), [editor_source.source], [])
+    assert cloud == ["EDITORIAL_REVIEW"]
+    [request] = requests
+    assert request["format"] == schemas.review_schema()
+    assert request["options"]["temperature"] == schemas.review_profile().temperature == 0.2
+    assert ok, reason
+
+
+def test_the_text_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
+    assert draft_and_review(editor)[1][0]
+    monkeypatch.setattr(schemas, "TEXT_MAX_CHARS", 120)
+    _, (ok, reason, _) = draft_and_review(editor)
+    draft_call = last_call(editor, "EDITORIAL_DRAFT")
+    assert draft_call.profile.schema["properties"]["text"]["maxLength"] == 120
+    assert "finish the thought before 120 characters" in draft_call.prompt
+    assert not ok and "invalid length" in reason
+
+
+def test_the_evidence_id_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
+    assert draft_and_review(editor)[1][0]
+    monkeypatch.setattr(schemas, "EVIDENCE_IDS_MAX", 1)
+    _, (ok, reason, _) = draft_and_review(editor)
+    draft_call = last_call(editor, "EDITORIAL_DRAFT")
+    assert draft_call.profile.schema["properties"]["evidence_ids"]["maxItems"] == 1
+    assert "Select 1–1 evidence IDs" in draft_call.prompt
+    assert (ok, reason) == (False, "invalid source evidence IDs")
+
+
+def test_the_evidence_passage_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
+    editor.draft["evidence_ids"] = ["2"]
+    assert draft_and_review(editor)[1][0]
+    monkeypatch.setattr(schemas, "EVIDENCE_PASSAGES", 2)
+    _, (ok, reason, _) = draft_and_review(editor)
+    draft_call = last_call(editor, "EDITORIAL_DRAFT")
+    assert draft_call.profile.schema["properties"]["evidence_ids"]["items"]["enum"] == ["0", "1"]
+    assert EVIDENCE[1] in draft_call.prompt and EVIDENCE[2] not in draft_call.prompt
+    assert (ok, reason) == (False, "invalid source evidence IDs")
+
+
+def test_the_review_fields_move_the_schema_the_prompt_and_the_check(monkeypatch, editor):
+    assert draft_and_review(editor)[1][0]
+    monkeypatch.setattr(schemas, "APPROVAL_FLAGS", (*schemas.APPROVAL_FLAGS, "concise"))
+    _, (ok, _, _) = draft_and_review(editor)
+    review_call = last_call(editor, "EDITORIAL_REVIEW")
+    assert "concise" in review_call.profile.schema["required"]
+    assert review_call.profile.schema["properties"]["concise"] == {"type": "boolean"}
+    assert "novel, exceptional, trending, concise" not in review_call.prompt
+    assert "novel, concise, exceptional, trending" in review_call.prompt
+    assert not ok
+    editor.review["concise"] = True
+    assert draft_and_review(editor)[1][0]
 
 
 def test_explicit_skip_is_not_publishable_even_with_complete_fields(draft_fixture):
@@ -560,7 +681,7 @@ def test_a_pending_text_is_a_recent_post_for_the_next_draft_and_review(monkeypat
     from src.x import twitter_client as tc
     prompts = []
     monkeypatch.setattr(editorial, "_json_call",
-                        lambda prompt, label: prompts.append(prompt) or draft_fixture[2])
+                        lambda prompt, label, profile: prompts.append(prompt) or draft_fixture[2])
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.UNCONFIRMED)
     clock(monkeypatch, datetime(2026, 9, 20, 11, 10, tzinfo=TORONTO))
     editorial.open_startup_window()
@@ -598,7 +719,7 @@ def test_the_pending_count_is_checked_again_right_before_the_submit(monkeypatch,
     editorial._save_state({"date": "2026-09-20", "slots": {}, "published": [],
                            "pending_sources": _pending_today(7)})
     review = draft_fixture[2]
-    def shipped_during_review(prompt, label):
+    def shipped_during_review(prompt, label, profile):
         memory_ledger.append(editorial.action_guard.POST, "", False, hours.now_local())
         return review
     monkeypatch.setattr(editorial, "_json_call", shipped_during_review)
