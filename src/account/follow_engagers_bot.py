@@ -9,6 +9,8 @@ through the full follow chokepoint, which finds them Engagers in the same
 ledger (follow_policy.engagers): size/niche gates skipped — their behavior
 proves both — English gate + caps + spacing + churn kept. An Engager the
 followers page showed is a follower to the policy, and gets the full gate.
+The Follow run skips the Followed accounts, so an Engager already followed
+opens no profile.
 
 No new Safari scraping: the data source is the action ledger.
 """
@@ -18,6 +20,8 @@ from ..guards import active_hours, follow_policy
 from ..core import account, config, settings
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
+from ..x.twitter_client import FollowOutcome
+from .follow_run import FollowRun
 
 # Guarded: it alone holds this job's daily cap and the handles already tried.
 STATE = StateFile("follow_engagers_state.json",
@@ -53,6 +57,7 @@ def run_follow_engagers_cycle():
         log.info(f"[FOLLOW-ENGAGERS] Daily cap reached ({per_day}). Skipping.")
         return
 
+    run = FollowRun("FOLLOW-ENGAGERS")
     attempted = set(st.get("attempted", []))
     own = config.BOT_HANDLE.lower()
     # Big-media accounts get Debate turns too (we reply back under news
@@ -60,19 +65,21 @@ def run_follow_engagers_cycle():
     skip = {h.lower() for h in account.current().network.follow_engagers_skip}
     followed = 0
 
-    from ..x.twitter_client import FollowOutcome, follow_account
     # 2026-07-28 fix: 262 candidates were burned into `attempted` by
     # TRANSIENT policy refusals (the 3500 total-following ceiling blocked
     # every follow for days). A refusal on the follow budget (spacing, daily
     # cap, total ceiling) ends the cycle WITHOUT burning the candidate; any
     # other outcome marks the handle attempted. An unreadable whitelist
-    # raises out of the cycle, before any candidate is marked.
-    for h in follow_policy.engagers()[:200]:
+    # raises out of the cycle, before any candidate is marked; a pick that
+    # failed otherwise marks nothing, and the cycle goes on.
+    for h in run.fresh(follow_policy.engagers()[:200]):
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
         if h == own or h in skip or h in attempted:
             continue
-        result = follow_account(h)
+        result = run.follow(h)
+        if result is None:
+            continue
         if result.is_budget_refusal:
             log.info(f"[FOLLOW-ENGAGERS] Follow budget: {result.value} — ending cycle, candidates preserved.")
             break
