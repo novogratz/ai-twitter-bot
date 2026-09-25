@@ -4,9 +4,11 @@ The Account holds what the bot says and where it looks: its handle and
 language, its Slots and their angles, its feeds, Evergreen topics and trusted
 hosts, its relevance filter; its network (the accounts the jobs reply to,
 scan, visit or skip, and the Blocked accounts it adds to the engine's), its
-niche patterns and its X searches. `settings.load()` loads it at start,
-between the engine defaults and `.env`; a missing Account, an unknown key or
-a badly typed value stops the start with an `AccountError` naming the file.
+niche patterns, its X searches and its Relations. Its folder also holds the
+Voice (voice_en.md, voice_fr.md) and the Relations' prompts.
+`settings.load()` loads it at start, between the engine defaults and `.env`;
+a missing Account, an unknown key or a badly typed value stops the start
+with an `AccountError` naming the file.
 
 Read it when it is used, inside the function: `account.current().editorial.
 feeds`, never a module-level copy, so a test that swaps the Account reaches
@@ -15,6 +17,7 @@ global.
 """
 import os
 import re
+import string
 import tomllib
 from dataclasses import dataclass
 
@@ -71,6 +74,7 @@ class Account:
     network: "Network"
     niche: "Niche"
     searches: "Searches"
+    relations: "Relations"
 
 
 def current() -> Account:
@@ -101,7 +105,8 @@ def load(name: str) -> Account:
 def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "editorial": dict,
                                              "relevance": dict, "network": dict, "niche": dict,
-                                             "searches": dict}, optional={"limits": dict})
+                                             "searches": dict, "relations": dict},
+                 optional={"limits": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     editorial = _Table(shown, "editorial", top["editorial"],
@@ -114,7 +119,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=_network(top), niche=_niche(top),
-        searches=_searches(top))
+        searches=_searches(top),
+        relations=_relations(folder, _Table(shown, "relations", top["relations"],
+                                            required={"bestie": str, "buddy": str},
+                                            optional={"handles": dict})))
 
 
 def _editorial(table) -> Editorial:
@@ -274,4 +282,93 @@ class _Table:
 
 
 def _kind(kind) -> str:
-    return {str: "string", bool: "boolean", list: "list", dict: "table"}[kind]
+    return {str: "string", bool: "boolean", int: "integer", list: "list", dict: "table"}[kind]
+
+
+# --- Relations: how the Replies treat particular accounts (#203) ---------------
+
+# The fields reply_generator fills in a Reply prompt.
+_PROMPT_FIELDS = frozenset({"author", "tweet_text", "original_tweet", "language_override"})
+# The CLIs a Relation may name, as src/core/llm_client.ADAPTERS names them
+# (a test holds the two together): importing llm_client here would run before
+# settings.load() has finished.
+CLI_PROVIDERS = ("claude", "codex", "gemini", "opencode")
+# The dossier fields personality_store renders, and their types.
+_DOSSIER = {"first_seen": str, "last_interaction": str, "interaction_count": int, "category": str,
+            "stance": str, "notes": list, "feelings": str, "do": str, "dont": str}
+
+
+@dataclass(frozen=True)
+class Relation:
+    """One account the Replies treat apart, by its handle."""
+    handle: str  # as account.toml writes it
+    prompt: str | None  # its own VIP scan prompt, read at start
+    provider: str | None  # the CLI that writes its Replies whenever installed
+    dossier: dict | None  # a fixed dossier, in place of personality.json's
+
+
+@dataclass(frozen=True)
+class Relations:
+    """The VIP scan's prompts, read at start: the bestie prompt for
+    BESTIE_HANDLE, a Relation's own prompt, the buddy prompt otherwise."""
+    bestie: str
+    buddy: str
+    handles: dict  # lowercased handle -> Relation
+
+    def get(self, handle: str) -> Relation | None:
+        return self.handles.get((handle or "").lower().lstrip("@").strip())
+
+
+def _relations(folder, table) -> Relations:
+    handles = {}
+    for handle, raw in table.get("handles", {}).items():
+        where = f"relations.handles.{handle}"
+        if not _HANDLE.fullmatch(handle):
+            table.fail(f"handles.{handle}", "is not an X handle (letters, digits and _, 15 at most)")
+        if type(raw) is not dict:
+            table.fail(f"handles.{handle}", f"takes a table, not {raw!r}")
+        if handle.lower() in handles:
+            table.fail(f"handles.{handle}", f"repeats {handles[handle.lower()].handle}: handles ignore case")
+        entry = _Table(table.file, where, raw, required={},
+                       optional={"prompt": str, "provider": str, "dossier": dict})
+        if not entry.values:
+            entry.fail("prompt", "is missing: a Relation sets a prompt, a dossier or both")
+        if "provider" in entry and "prompt" not in entry:
+            entry.fail("provider", "needs a prompt: it only writes the Relation's own prompt")
+        if "provider" in entry and entry["provider"] not in CLI_PROVIDERS:
+            entry.fail("provider", f"takes one of {', '.join(CLI_PROVIDERS)}, not {entry['provider']!r}")
+        dossier = None
+        if "dossier" in entry:
+            dossier_table = _Table(table.file, f"{where}.dossier", entry["dossier"], required={},
+                                   optional=_DOSSIER)
+            if "notes" in dossier_table:
+                dossier_table.items("notes", str)
+            dossier = dict(dossier_table.values)
+        handles[handle.lower()] = Relation(
+            handle=handle, prompt=_prompt(folder, entry, "prompt") if "prompt" in entry else None,
+            provider=entry.get("provider", None), dossier=dossier)
+    return Relations(bestie=_prompt(folder, table, "bestie"), buddy=_prompt(folder, table, "buddy"),
+                     handles=handles)
+
+
+def _prompt(folder, table, key) -> str:
+    """The prompt file `table[key]` names, relative to the Account's folder."""
+    path = os.path.normpath(os.path.join(folder, table[key]))
+    if os.path.commonpath([folder, path]) != folder:
+        table.fail(key, f"names {table[key]!r}, outside the Account's folder")
+    try:
+        with open(path, encoding="utf-8") as f:
+            text = f.read().strip()
+    except OSError as exc:
+        table.fail(key, f"names {table[key]!r}, which cannot be read ({exc.strerror})")
+    if not text:
+        table.fail(key, f"names {table[key]!r}, which is empty")
+    try:
+        fields = {name for _, name, _, _ in string.Formatter().parse(text) if name is not None}
+    except ValueError as exc:
+        table.fail(key, f"names {table[key]!r}, whose braces do not parse ({exc}); write a brace as {{{{ or }}}}")
+    unknown = sorted(fields - _PROMPT_FIELDS)
+    if unknown:
+        table.fail(key, f"names {table[key]!r}, whose {{{unknown[0]}}} is no Reply prompt field "
+                        f"({', '.join(sorted(_PROMPT_FIELDS))})")
+    return text

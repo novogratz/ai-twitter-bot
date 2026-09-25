@@ -15,7 +15,9 @@ import src
 
 REPO = Path(__file__).resolve().parent.parent
 
-OPERATOR_FILES = ("respect_list.json", "whitelist.json", "core_identity.md", "core_identity_en.md")
+OPERATOR_FILES = ("respect_list.json", "whitelist.json", "accounts/theaishrink/voice_fr.md",
+                  "accounts/theaishrink/voice_en.md", "accounts/theaishrink/relations/bestie.md",
+                  "accounts/theaishrink/relations/buddy.md", "accounts/theaishrink/relations/graphseo.md")
 # Root files written outside src/, which the scan below cannot see.
 WRITTEN_BY_BIN = ("mass_unfollow_results.json",)
 

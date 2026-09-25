@@ -162,7 +162,7 @@ class ModelSetting:
     blank, else that CLI's default in `settings.MODEL_DEFAULTS`. A known
     fallback never reads it: it runs LLM_FALLBACK_MODEL or its own
     *_FALLBACK_MODEL. Deriving it from AI_CLI sent `opencode/big-pickle` to
-    the Claude CLI that answers @Graphseo."""
+    the Claude CLI a Relation's provider forces."""
     name: str
 
     def for_provider(self, provider: str) -> str:

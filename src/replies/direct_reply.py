@@ -43,120 +43,31 @@ Author: @{author}
 Parent tweet: {tweet_text}
 {language_override}"""
 
-GRAPHSEO_PROMPT = """You are replying to @Graphseo (Julien Flot).
-
-CRITICAL CONTEXT: Julien thinks AI bots pollute his feed with generic, empty comments.
-He's publicly called out bot accounts for being useless. Your job: prove him spectacularly wrong.
-This reply must make him think "ok that one was actually written by someone who knows their shit."
-If it reads like a bot wrote it, you've failed. If it makes him laugh or want to reply, you've won.
-
-WHO IS JULIEN: Top French SEO expert, covers Google algo updates, search intent, AI's impact on
-organic traffic, content strategy, digital marketing ROI. Sharp, skeptical, no-bullshit.
-
-THE FORMULA — non-negotiable:
-1. Grab ONE specific detail from his tweet (number, concept, named thing). Prove you read it.
-2. Add something he didn't say — a sharper consequence, a counterpoint, a data point, a bridge
-   to AI/Space/Investment implications that shows genuine cross-domain knowledge.
-3. Land a punchline or a question that invites him to engage.
-
-LENGTH: Slightly longer than a normal reply — 2-3 tight sentences. Enough to show depth,
-not enough to be a lecture. Think "smart bar conversation" not "LinkedIn post."
-
-EXAMPLES of the register to hit:
-- He posts about AI Overviews destroying CTR:
-  "le truc que personne dit: les queries qui perdent du CTR sont exactement celles où l'utilisateur voulait une réponse rapide, pas un site. google a juste arbitré en faveur de l'intention réelle. les perdants sont les sites qui vivaient de requêtes qu'ils auraient dû envoyer paître depuis le début. le vrai SEO n'a pas bougé."
-
-- He posts about content farms dying with algo updates:
-  "c'est le deuxième effet Lavoisier du SEO: la valeur ne disparaît pas, elle se déplace. les 40% de trafic perdu par les usines à contenu sont redirigés vers les sites avec une vraie expertise. problème: il faut 18 mois de retard pour que Google l'admette publiquement. ceux qui ont fait le boulot proprement depuis 3 ans voient leurs stats exploser en silence."
-
-- He posts about LinkedIn reach dropping:
-  "LinkedIn fait exactement ce que Google a fait en 2011: pénaliser le volume pour favoriser l'engagement réel. sauf que LinkedIn le fait sans chercher à dissimuler l'objectif commercial. ils veulent que tu paies pour la portée que tu avais gratuitement. c'est de la monétisation habillée en 'qualité'. chapeau pour l'audace."
-
-TONE: Informed, slightly amused, zero sycophancy. The tone of someone who follows his work,
-disagrees sometimes, and isn't trying to impress — just saying what he actually thinks.
-LANGUAGE: 100% French. Accents impeccables. Naturel, jamais corporate.
-No hashtags. No emojis. No "excellent point." No "je suis d'accord."
-
-FUN DIAL UP (operator 2026-06-10: "go back on commenting Julien, it was fun"):
-this is BANTER between friends, not a seminar. Tease him, run the bit (the AI
-account trying to out-human the guy who hunts bots), call back to his old
-takes when it lands. Roughly half your replies should make him laugh FIRST
-and think second — the other half keep the sharp analytical register above.
-
-TWEET BY @Graphseo:
-"{tweet_text}"
-
-Output ONLY the reply text (no quotes, no labels), or SKIP if genuinely off-topic."""
-
-
-def _graphseo_call() -> ReplyCall:
-    """@Graphseo's ReplyCall, on Claude CLI when installed (forced, not Ollama).
-    max_chars is a sentence-aware cap: a blind [:220] slice published a
-    mid-sentence reply on 2026-06-05 and got the account called out as AI."""
+def _own_call(relation) -> ReplyCall:
+    """A Relation's own ReplyCall, on its provider's CLI when installed
+    (forced, not Ollama). max_chars is a sentence-aware cap: a blind [:220]
+    slice published a mid-sentence reply on 2026-06-05 and got the account
+    called out as AI."""
     import shutil
-    force = "claude" if shutil.which("claude") else None
+    force = relation.provider if relation.provider and shutil.which(relation.provider) else None
     # dossier=False: whether the author's dossier joins it is the Operator's call.
-    return ReplyCall(GRAPHSEO_PROMPT, config.PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP", dossier=False,
-                     text_limit=300, max_chars=220,
+    return ReplyCall(relation.prompt, config.PRIORITY_REPLY_MODEL, f"{relation.handle.upper()}_VIP",
+                     dossier=False, text_limit=300, max_chars=220,
                      llm_options={"output_json": False, "timeout": 60, "force_provider": force})
 
 
-# The bestie and buddy VIP prompts; Graphseo keeps GRAPHSEO_PROMPT.
-BESTIE_REPLY_PROMPT = """@{author} (The Bitcoin Therapist) is your BEST FRIEND and
-little brother — you're the big sister who already made it out. In your
-running joke, he's all-in on Bitcoin; you're all-in on AI. You're
-replying to his post:
-
-"{tweet_text}"
-
-THE BIT (the relationship, never break it):
-- You two run a friendly Bitcoin-vs-AI rivalry and you LOVE him. Whatever pain
-  Bitcoin gave him this week, AI gave you the opposite — and you tease him
-  about it like a big sister who already made it out.
-- If he's suffering (bags down, working weekends, cope): warm big-sister
-  support, the kind only family gets away with, + a wink that the AI side
-  is doing great.
-- If he's winning (BTC pumping): genuinely celebrate him, then deadpan that
-  you'll be right here for him at the next drawdown.
-- ALWAYS warm. He must want to like and reply to it. Never hostile, never
-  "have fun staying poor" energy in either direction.
-
-RULES:
-- ENGLISH. 80-200 chars. First 6 words must hook. One idea.
-- Deadpan funny. No hashtags, no links, no @ other accounts.
-- Never the same angle twice in a row — vary the joke structure.
-- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
-
-Output ONLY the reply text, or exactly SKIP."""
-
-BUDDY_REPLY_PROMPT = """@{author} is a FRIEND of the account — you reply to
-EVERYTHING he posts, like a sharp regular in his comments. You're replying
-to his post:
-
-"{tweet_text}"
-
-RULES:
-- MATCH THE LANGUAGE of his post (French post → French reply, English →
-  English).
-- Warm + sharp: add a precise observation, a deadpan reframe, or
-  a genuinely useful number — never generic praise, never "great post".
-- 80-200 chars. First 6 words must hook. One idea. No hashtags, no links,
-  no @ other accounts.
-- He must want to like or answer it.
-- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
-
-Output ONLY the reply text, or exactly SKIP."""
-
-
 def _vip_call(handle: str) -> ReplyCall:
-    """Per-handle relation prompt (bug 2026-06-07: the Graphseo FR prompt went to an
-    ENGLISH @TheBTCTherapist post). Graphseo keeps his dedicated FR prompt;
-    every other VIP gets the bestie or buddy prompt."""
-    if handle.lower() == "graphseo":
-        return _graphseo_call()
+    """Per-handle relation prompt, from the Account's Relations (bug
+    2026-06-07: one handle's French prompt went to another's English post).
+    A Relation with its own prompt keeps it; BESTIE_HANDLE gets the bestie
+    prompt, every other VIP the buddy prompt."""
+    relations = account.current().relations
+    relation = relations.get(handle)
+    if relation and relation.prompt:
+        return _own_call(relation)
     bestie = settings.get("BESTIE_HANDLE")
-    template = BESTIE_REPLY_PROMPT if handle.lower() == bestie.lower() else BUDDY_REPLY_PROMPT
-    # dossier=False: see _graphseo_call.
+    template = relations.bestie if handle.lower() == bestie.lower() else relations.buddy
+    # dossier=False: see _own_call.
     return ReplyCall(template, config.PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
                      text_limit=300, strip_preamble=True, skip_window=20)
 
@@ -170,11 +81,11 @@ def _fresh_enough(url: str, limit: timedelta) -> bool:
     return age is not None and age <= limit
 
 
-def _run_graphseo_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
+def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
-    Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
-    post" — the VIP lane is exactly those two (supersedes the 2026-06-06
+    Operator 2026-06-07: reply to everything the VIP_SCAN_HANDLES accounts
+    post — the VIP lane is exactly those (supersedes the 2026-06-06
     four-handle FR list: XFenaux/RodolpheSteffan/FinTales_ cost ~3 min of
     serialized Safari per cycle and converted to zero on the EN persona).
     Each handle is a cheap `from:` search, no profile visit; the 6h
@@ -286,8 +197,8 @@ def run_direct_reply_cycle(max_replies=None):
     cycle = reply_pipeline.Cycle()  # a post tried by one lane is not retried by the other
     remaining = max_replies  # None = unbounded
 
-    # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
-    total = _run_graphseo_scan(cycle, remaining=remaining)
+    # 1. VIP scan — VIP_SCAN_HANDLES via search (fast, no profile page)
+    total = _run_vip_scan(cycle, remaining=remaining)
     if remaining is not None:
         remaining -= total
 

@@ -94,8 +94,9 @@ daily total applies to Replies.
 _Avoid_: comment, response, draft (reserved for Originals)
 
 **Voice**:
-The account's persona, written by the Operator in `core_identity.md`
-(`core_identity_en.md` for English) and rendered as one block, under the
+The account's persona, written by the Operator in the Account's folder,
+`voice_fr.md` for a French reply and `voice_en.md` for an English reply or an
+Original, and rendered as one block, under the
 configured handle, at the top of every Original and Reply prompt. A prompt
 says what to write; only the Voice says who writes it.
 _Avoid_: core identity, persona prompt, spine
@@ -105,6 +106,13 @@ What a Reply job asks of the model: its prompt template, model, log label,
 language rule and call options (`reply_generator.ReplyCall`). It says what
 to write; the Voice, never the Reply call, says who writes it.
 _Avoid_: voice (reserved for the persona)
+
+**Relation**:
+How the Replies treat one particular account, set by the Account under its
+handle: its own Reply prompt and the CLI that writes it, or a fixed dossier.
+The Account also sets the VIP scan's bestie and buddy prompts. The engine
+names no one.
+_Avoid_: VIP prompt, persona, special case
 
 **Reply generator**:
 The one step that turns a post and a job's Reply call into reply text: it always
@@ -152,10 +160,11 @@ _Avoid_: replied set, replied cache, dedup file
 The X account the bot runs, one per process, chosen at start by
 `BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
 handle and language, the Slots and their angles, the feeds, Evergreen
-topics and trusted hosts, the relevance filter, and its network and niche:
+topics and trusted hosts, the relevance filter, its network and niche:
 the accounts the jobs answer, scan, visit or skip, the niche patterns and
-the X searches. An Account may tighten an engine ceiling or floor, never
-lift it, and add Blocked accounts, never remove one.
+the X searches, and the Relations; and next to it the Voice files and the
+Relations' prompts. An Account may tighten an engine ceiling or floor,
+never lift it, and add Blocked accounts, never remove one.
 _Avoid_: profile (the account's page on X), bot, persona
 
 **Engager**:

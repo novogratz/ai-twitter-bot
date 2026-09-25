@@ -83,7 +83,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
-    never the Graphseo prompt (_graphseo_call); output passes through humanize."""
+    never the Graphseo prompt (its own Relation prompt); output passes through humanize."""
     import src.replies.direct_reply as dr
     from src.replies import reply_pipeline
 
@@ -101,7 +101,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
 
-    dr._run_graphseo_scan(reply_pipeline.Cycle())
+    dr._run_vip_scan(reply_pipeline.Cycle())
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
@@ -134,3 +134,31 @@ def test_direct_reply_scans_rotating_query_subset(settings_override):
     src = inspect.getsource(dr.run_direct_reply_cycle)
     assert "_queries_for_cycle" in src, \
         "run_direct_reply_cycle must scan the rotating slice, not all queries"
+
+
+def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch, settings_override):
+    """#203 moved the relation prompts into the Account's Relations: each VIP
+    ReplyCall keeps its label, limits and provider, and the engine names no
+    one. A Relation's provider is forced only when its CLI is installed."""
+    import shutil
+    from src.core import account, config
+    from src.replies import direct_reply as dr
+
+    relations = account.current().relations
+    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    own = dr._vip_call("graphseo")
+    assert (own.template, own.model, own.label) == (relations.get("Graphseo").prompt,
+                                                    config.PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP")
+    assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
+        False, 300, 220, False, 0)
+    assert own.llm_options == {"output_json": False, "timeout": 60, "force_provider": "claude"}
+    monkeypatch.setattr(shutil, "which", lambda name: None)
+    assert dr._vip_call("Graphseo").llm_options["force_provider"] is None
+
+    settings_override(BESTIE_HANDLE="SomeBestie")
+    bestie, buddy = dr._vip_call("somebestie"), dr._vip_call("vision_ia")
+    assert (bestie.template, bestie.label) == (relations.bestie, "VIP_REPLY/somebestie")
+    assert (buddy.template, buddy.label) == (relations.buddy, "VIP_REPLY/vision_ia")
+    for call in (bestie, buddy):
+        assert (call.model, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
+                call.max_chars, call.llm_options) == (config.PRIORITY_REPLY_MODEL, False, 300, True, 20, None, {})

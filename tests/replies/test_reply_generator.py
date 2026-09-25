@@ -10,14 +10,14 @@ from tests.helpers import fresh
 
 EN = "OpenAI just shipped a new reasoning model and the market is going wild"
 FR = "OpenAI vient de sortir un nouveau modèle et le marché est en feu"
-FR_VOICE_FILE = "Voice file core_identity.md"
-EN_VOICE_FILE = "Voice file core_identity_en.md"
+FR_VOICE_FILE = "Voice file voice_fr.md"
+EN_VOICE_FILE = "Voice file voice_en.md"
 
 
 def language(prompt):
     """(Voice file language, target language line) a prompt carries: the
-    French-reply Voice renders core_identity.md, the English one
-    core_identity_en.md (see the `jobs` fixture)."""
+    French-reply Voice renders voice_fr.md, the English one voice_en.md
+    (see the `jobs` fixture)."""
     identity = ("fr" if FR_VOICE_FILE in prompt else "en" if EN_VOICE_FILE in prompt else None)
     override = ("fr" if "TARGET LANGUAGE OVERRIDE: FRENCH ONLY" in prompt
                 else "en" if "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in prompt else None)
@@ -29,10 +29,11 @@ def voice_files(monkeypatch, tmp_path):
     """The Operator's Voice files, replaced by two marked stand-ins."""
     from src.core import personality_store
 
-    for attr, text in (("CORE_IDENTITY_FILE", FR_VOICE_FILE), ("CORE_IDENTITY_EN_FILE", EN_VOICE_FILE)):
-        path = tmp_path / f"{attr}.md"
-        path.write_text(text)
-        monkeypatch.setattr(personality_store, attr, str(path))
+    paths = {}
+    for lang, text in (("fr", FR_VOICE_FILE), ("en", EN_VOICE_FILE)):
+        paths[lang] = tmp_path / f"voice_{lang}.md"
+        paths[lang].write_text(text)
+    monkeypatch.setattr(personality_store, "voice_file", lambda lang: str(paths["en" if lang == "en" else "fr"]))
 
 
 @pytest.fixture
@@ -77,7 +78,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     def vip(handle, text):
         settings_override(VIP_SCAN_HANDLES=handle)
         monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
-        dr._run_graphseo_scan(reply_pipeline.Cycle())
+        dr._run_vip_scan(reply_pipeline.Cycle())
 
     def debate(author, text):
         monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: [{"url": fresh(author), "text": text}])

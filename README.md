@@ -3,8 +3,8 @@
 A Safari-driven AI account with the voice of a confident, warm, playfully flirty
 45-year-old mom who loves AI. The bot aims to give readers something useful in
 every post and respond naturally in conversations. That Voice lives only in
-`core_identity.md` (`core_identity_en.md` for English prompts): every post and
-reply prompt carries it as one block.
+the Account's folder, `accounts/theaishrink/voice_fr.md` (`voice_en.md` for
+English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
@@ -67,7 +67,8 @@ the default browser: the bot opens every page in Safari), Python 3.12+,
 `qwen3.6:35b-a3b`), the model `bin/run.sh` pre-warms. With the
 default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
 fallback, codex for instance, with one exception: the Replies to @Graphseo run
-on the Claude CLI whenever it is installed. A CLI runs `NEWS_MODEL`,
+on the Claude CLI whenever it is installed (his Relation's `provider` in
+`account.toml`). A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the
 call and is logged at start, as is a fallback the code ignores.
@@ -89,8 +90,11 @@ One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
 Originals, the Slots and their angles, the feeds, Evergreen topics, trusted
 hosts and the relevance filter, and the network and niche the reply, like and
 follow jobs use: handle lists, niche patterns, X searches, and the Blocked
-accounts it adds to the engine's `BLOCKLIST`, which it can never shrink. It is
-read once at start, like `.env`: a
+accounts it adds to the engine's `BLOCKLIST`, which it can never shrink. It
+also holds the Relations: the prompt, provider or dossier the Replies give a
+particular account, by handle, and the default prompt of the VIP scan, in
+`relations/`. The Voice files sit next to it. It is read once at start, like
+`.env`: a
 missing Account, an unknown key or a badly typed value stops the start with a
 message naming the file and the key. Its `[limits]` may tighten an engine
 ceiling or floor, never lift it; a value past the bound is brought back to it

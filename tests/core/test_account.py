@@ -2,6 +2,7 @@
 at start, and its layer in the settings (#202)."""
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -109,13 +110,14 @@ def test_the_editorial_reads_the_loaded_account():
 
 @pytest.fixture
 def accounts(monkeypatch, tmp_path):
-    """`write(name, text)` puts an account.toml under a temporary accounts/."""
+    """`write(name, text)` puts an account.toml under a temporary accounts/,
+    next to a copy of theaishrink's other files (Voice, Relation prompts)."""
     folder = tmp_path / "accounts"
     monkeypatch.setattr(account, "ACCOUNTS_DIR", str(folder))
     monkeypatch.setattr(account, "_loaded", {})
 
     def write(name, text=THEAISHRINK):
-        (folder / name).mkdir(parents=True, exist_ok=True)
+        shutil.copytree(ROOT / "accounts" / "theaishrink", folder / name, dirs_exist_ok=True)
         (folder / name / "account.toml").write_text(text)
     return write
 
@@ -503,3 +505,112 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
     accounts("theaishrink", THEAISHRINK.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
+
+
+# --- Relations: the per-handle Reply instructions (#203) -------------------------
+
+# sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
+# src/replies/direct_reply.py before #203 moved them to relations/. An
+# Operator edit of these files updates the hash here.
+OLD_RELATION_PROMPTS = {
+    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
+    "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
+    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
+}
+# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
+OLD_MCNALLIEM = {
+    "first_seen": "2026-05-02",
+    "last_interaction": "2026-05-02",
+    "interaction_count": 0,
+    "category": "builder",
+    "stance": "fond",
+    "notes": [
+        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
+        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+    ],
+    "predictions": [],
+    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
+    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
+    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
+}
+
+
+def _digest(text):
+    import hashlib
+    return len(text), hashlib.sha256(text.encode()).hexdigest()
+
+
+def test_theaishrink_relations_hold_the_old_prompts():
+    relations = account.load("theaishrink").relations
+    graphseo = relations.get("Graphseo")
+    assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(relations.bestie),
+            "buddy": _digest(relations.buddy)} == OLD_RELATION_PROMPTS
+    assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "claude", None)
+    assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
+    mcnallie = relations.get("mcnalliem")
+    assert (mcnallie.prompt, mcnallie.provider) == (None, None)
+    assert sorted(relations.handles) == ["graphseo", "mcnalliem"]
+
+
+def test_a_fixed_dossier_reads_as_the_old_one():
+    from src.core import personality_store
+    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
+    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
+
+
+def test_the_relation_providers_are_llm_client_clis():
+    from src.core import llm_client
+    assert set(account.CLI_PROVIDERS) == set(llm_client.ADAPTERS) - {"ollama"}
+
+
+@pytest.mark.parametrize("old, new, named", [
+    ('provider = "claude"', 'provider = "claude"\nlabel = "X"', "relations.handles.Graphseo.label"),
+    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.McnallieM.dossier.mood"),
+    ('buddy = "relations/buddy.md"', 'buddy = "relations/buddy.md"\nfriend = "x.md"', "relations.friend"),
+    ("[relations.handles.Graphseo]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
+    ("[relations.handles.Graphseo]", "[relations.handles.ThisHandleIsTooLong]",
+     "relations.handles.ThisHandleIsTooLong"),
+    ("[relations.handles.McnallieM.dossier]", "[relations.handles.graphseo.dossier]",
+     "relations.handles.graphseo repeats Graphseo"),
+])
+def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old, new, named):
+    assert THEAISHRINK.count(old) == 1
+    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    with pytest.raises(settings.SettingsError, match=re.escape(named)):
+        fresh()
+
+
+@pytest.mark.parametrize("old, new, named", [
+    ('provider = "claude"', 'provider = "claud"', "relations.handles.Graphseo.provider takes one of"),
+    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.provider needs a prompt"),
+    ('stance = "fond"', "stance = 3", "relations.handles.McnallieM.dossier.stance"),
+    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.McnallieM.dossier.notes[0]"),
+    ('prompt = "relations/graphseo.md"', 'prompt = "relations/nope.md"', "relations.handles.Graphseo.prompt"),
+    ('bestie = "relations/bestie.md"', 'bestie = "../voice_en.md"', "outside the Account's folder"),
+    ('bestie = "relations/bestie.md"\n', "", "relations.bestie is missing"),
+])
+def test_a_bad_relation_value_stops_the_start(accounts, fresh, old, new, named):
+    assert THEAISHRINK.count(old) == 1
+    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    with pytest.raises(settings.SettingsError, match=re.escape(named)):
+        fresh()
+
+
+def test_an_account_without_relations_stops_the_start(accounts, fresh):
+    start = THEAISHRINK.index("[relations]")
+    accounts("theaishrink", THEAISHRINK[:start] + THEAISHRINK[THEAISHRINK.index("[limits]"):])
+    with pytest.raises(settings.SettingsError, match=re.escape("relations is missing")):
+        fresh()
+
+
+@pytest.mark.parametrize("text, problem", [
+    ("Reply to {author} about {topic}.", "{topic} is no Reply prompt field"),
+    ("Reply to {author now.", "braces do not parse"),
+    ("  \n", "which is empty"),
+])
+def test_a_relation_prompt_with_bad_fields_stops_the_start(accounts, fresh, tmp_path, text, problem):
+    accounts("theaishrink")
+    (tmp_path / "accounts" / "theaishrink" / "relations" / "buddy.md").write_text(text)
+    with pytest.raises(settings.SettingsError, match=re.escape(problem)) as raised:
+        fresh()
+    assert "relations.buddy" in str(raised.value)
