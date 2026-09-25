@@ -68,6 +68,28 @@ def test_curator_promotion_quality_bar():
     assert not _promotable({"handle": "goodname", "engagements": 4}), "below promote floor"
 
 
+@pytest.mark.parametrize("stamped, count, promoted", [
+    ("2026-10-15", 3, []),              # the Mac's day, ahead of Toronto's: quota spent
+    ("2026-10-14", 3, []),              # Toronto's day: quota spent
+    ("2026-10-13", 3, ["deep_macro"]),  # yesterday: a fresh quota
+])
+def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, monkeypatch, stamped, count,
+                                                        promoted):
+    """#191: the daily promotion quota, stamped by either clock, stays spent
+    until the next Toronto day."""
+    from src.account import account_curator as ac
+
+    monkeypatch.setattr(ac, "DISCOVERED_PER_DAY", 3)
+    ac.WHITELIST.write({"tiers": {}})
+    doc = {"promotion_meta": {"date": stamped, "count": count}}
+    cand = {"handle": "deep_macro", "engagements": 9, "score": 9.0, "weight": 1.0}
+
+    ac._promote_to_whitelist([cand], doc)
+
+    assert ac.WHITELIST.read()["tiers"].get("discovered", []) == promoted
+    assert doc["promotion_meta"] == {"date": "2026-10-14", "count": count if not promoted else 1}
+
+
 # --- engage_bot ----------------------------------------------------------------
 
 
@@ -286,8 +308,7 @@ def test_like_job_volume_stays_under_its_caps(like_job, monkeypatch, per_cycle, 
 
     monkeypatch.setenv("LIKE_BOT_PER_CYCLE", per_cycle)
     monkeypatch.setenv("LIKE_BOT_DAILY_CAP", "100")
-    like_bot._save_daily_state({"date": active_hours.now_local().date().isoformat(),
-                                "count": already_today})
+    like_bot._save_daily_state({"date": active_hours.today_iso(), "count": already_today})
     posts = [{"url": f"https://x.com/infra_{i}/status/{2063500000000000400 + i}", "liked": False}
              for i in range(10)]
     page = like_job["page"] = SearchPage(posts)
@@ -307,8 +328,7 @@ def test_like_job_default_caps(like_job, already_today, expected):
     from src.account import like_bot
     from src.guards import active_hours
 
-    like_bot._save_daily_state({"date": active_hours.now_local().date().isoformat(),
-                                "count": already_today})
+    like_bot._save_daily_state({"date": active_hours.today_iso(), "count": already_today})
     posts = [{"url": f"https://x.com/infra_{i}/status/{2063500000000000400 + i}", "liked": False}
              for i in range(20)]
     page = like_job["page"] = SearchPage(posts)

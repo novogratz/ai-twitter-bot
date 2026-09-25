@@ -57,13 +57,12 @@ def _cycle_seconds() -> float:
 
 
 def _load_daily_state() -> dict:
-    today = active_hours.now_local().date().isoformat()
+    today = active_hours.today_iso()
     state = LIKE_BOT_STATE.read()
-    stamped = state.get("date") or ""
-    if stamped < today:
+    if active_hours.is_past_day(state.get("date")):
         return {"date": today, "count": 0}
     current = {"date": today, "count": int(state.get("count") or 0)}
-    if stamped > today:
+    if state.get("date") != today:
         # Stamped today by the Mac's clock, ahead of Toronto's: restamp it,
         # or tomorrow would start with today's count.
         _save_daily_state(current)

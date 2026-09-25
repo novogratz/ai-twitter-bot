@@ -61,18 +61,19 @@ def _day_key() -> str:
 
 
 def _already_ran_today() -> bool:
-    today = active_hours.now_local().date().isoformat()
-    ran = _load_state().get(_day_key()) or ""
-    if ran > today:
+    ran = _load_state().get(_day_key())
+    if active_hours.is_past_day(ran):
+        return False
+    if ran != active_hours.today_iso():
         # Stamped today by the Mac's clock, ahead of Toronto's: restamp it,
         # or tomorrow would read it as already spent.
         _mark_ran_today()
-    return ran >= today
+    return True
 
 
 def _mark_ran_today():
     state = _load_state()
-    state[_day_key()] = active_hours.now_local().date().isoformat()
+    state[_day_key()] = active_hours.today_iso()
     PIN_STATE.write(state)
 
 
@@ -175,7 +176,7 @@ def run_pin_cycle():
     if ok:
         history.setdefault("pinned", []).append(best["url"])
         history["last_pin"] = {"url": best["url"], "likes": best["likes"],
-                               "pinned_at": active_hours.now_local().date().isoformat()}
+                               "pinned_at": active_hours.today_iso()}
         _save_history(history)
         log.info(f"[PIN] Pinned: {best['url']}")
         time.sleep(2)

@@ -47,14 +47,13 @@ def run_follow_engagers_cycle():
     per_cycle = int(os.environ.get("FOLLOW_ENGAGERS_PER_CYCLE", "2"))
 
     st = _load_state()
-    today = active_hours.now_local().date().isoformat()
-    stamped = st.get("date") or ""
-    if stamped < today:
-        st["count_today"] = 0
-    st["date"] = today
-    if stamped > today:
+    today = active_hours.today_iso()
+    if active_hours.is_past_day(st.get("date")):
+        st["date"], st["count_today"] = today, 0
+    elif st["date"] != today:
         # Stamped today by the Mac's clock, ahead of Toronto's: restamp it,
         # or tomorrow would start with today's count.
+        st["date"] = today
         _save_state(st)
     if st["count_today"] >= per_day:
         log.info(f"[FOLLOW-ENGAGERS] Daily cap reached ({per_day}). Skipping.")

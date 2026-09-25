@@ -138,12 +138,10 @@ def _promotable(cand: dict) -> bool:
 def _promote_to_whitelist(candidates: list, doc: dict) -> int:
     """Add top candidates to whitelist tiers["discovered"] (capped/logged)."""
     candidates = [c for c in candidates if _promotable(c)]
-    today = active_hours.now_local().date().isoformat()
     meta = doc.setdefault("promotion_meta", {})
-    # A later date was stamped today by the Mac's clock, ahead of Toronto's.
-    if (meta.get("date") or "") < today:
+    if active_hours.is_past_day(meta.get("date")):
         meta["count"] = 0
-    meta["date"] = today
+    meta["date"] = active_hours.today_iso()
     budget = DISCOVERED_PER_DAY - int(meta.get("count", 0))
     if budget <= 0:
         return 0

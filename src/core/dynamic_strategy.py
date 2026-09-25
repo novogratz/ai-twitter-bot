@@ -34,8 +34,8 @@ def add_dynamic_accounts(fr: list = None, en: list = None, known: set = None) ->
     data.setdefault("history", [])
     known = {h.lower() for h in (known or set())}
     added = 0
-    from ..guards.active_hours import now_local
-    today = now_local().date().isoformat()
+    from ..guards.active_hours import today_iso
+    today = today_iso()
     for h in (fr or []):
         h = h.strip().lstrip("@")
         if not _is_valid_handle(h):
