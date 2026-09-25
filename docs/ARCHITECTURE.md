@@ -687,7 +687,10 @@ These are how the code behaves today, not design intent:
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
   may still open a timed-out page afterwards, and the write's tab close
   then closes another tab and leaves that one open (issue #253). Nothing
-  is sent into it.
+  is sent into it. The same holds for a keystroke: a System Events wedged
+  past its bound may still deliver a late `r` or paste to whatever is in
+  front then. A late submit is the only one that could publish, and its
+  write is already UNCONFIRMED with its claim kept.
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
