@@ -434,7 +434,7 @@ def _looks_non_english_profile(name: str, bio: str) -> str:
 
 def _quality_decision(followers: int, bio: str, name: str,
                       whitelisted: bool, engager: bool = False) -> tuple:
-    """Pure gate logic → (ok, reason). Env read at call time.
+    """Pure gate logic → (ok, reason). Settings read at call time.
 
     `engager=True` (2026-07-19 follow-your-engagers lane): the candidate
     already replied to/engaged US, which is the highest follow-back-

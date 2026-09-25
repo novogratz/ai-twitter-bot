@@ -30,7 +30,7 @@ def _in_post_restart_grace() -> bool:
     behind a hygiene restart hit a cold, still-warming Safari, go blank, and
     re-trip the threshold ~15 min later — a self-perpetuating restart loop.
     Blanks within BLANK_GRACE_AFTER_RESTART_SECONDS of the last restart are
-    EXPECTED and must not count. Env read at call time."""
+    EXPECTED and must not count. Setting read at call time."""
     grace = settings.get("BLANK_GRACE_AFTER_RESTART_SECONDS")
     try:
         from . import safari_hygiene
