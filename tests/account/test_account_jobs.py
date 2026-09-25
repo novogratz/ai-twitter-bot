@@ -59,6 +59,28 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
 
+def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path):
+    """#188: the curator compared the BLOCKLIST by exact equality, so a
+    handle holding a blocked token could reach the whitelist."""
+    from datetime import datetime
+    from src.account import account_curator as ac
+    from src.core import config
+    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
+    now = datetime.now().isoformat()
+    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
+            f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
+            for author in ("la_pique_off", "goodfinance") for i in range(6)]
+    log_file = tmp_path / "log.csv"
+    log_file.write_text("\n".join(rows) + "\n")
+    monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
+    (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {}}))
+
+    ac.run_curator_cycle()
+
+    assert "la_pique_off" not in ac.tracked_handles(limit=10)
+    assert json.loads((tmp_path / "whitelist.json").read_text())["tiers"]["discovered"] == ["goodfinance"]
+
+
 def test_curator_promotion_quality_bar():
     """Following is a higher bar than tracking: spam-pattern handles (long
     digit runs) and thin evidence never reach the whitelist."""
@@ -839,6 +861,23 @@ def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeyp
 
     fb.run_followback_cycle()
 
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+
+
+def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeypatch, memory_ledger):
+    """#188: without the job's filter, a Blocked follower stayed fresh every
+    cycle and took a pick and a pause before the chokepoint refused it."""
+    from src.core import config
+    fb, state = followback
+    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
+    monkeypatch.setattr(fb, "FOLLOW_BACK_CAP_PER_CYCLE", 1)
+    monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
+    asked = _follow_outcomes(monkeypatch, fb)
+    state.update(followers=["La_Pique_Off", "Realfan"], profile="CLICKED")
+
+    fb.run_followback_cycle()
+
+    assert [h for h, _ in asked] == ["Realfan"]
     assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
 
 

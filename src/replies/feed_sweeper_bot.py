@@ -16,8 +16,9 @@ import traceback
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core.config import BLOCKLIST, BOT_HANDLE
+from ..core.config import BOT_HANDLE
 from ..core.logger import log
+from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline
 from .direct_reply import DIRECT_REPLY_MAX_AGE_MINUTES, freshness_sort_key, is_on_niche, reply_voice
 
@@ -44,7 +45,6 @@ def _harvest_active_authors(tweets: list) -> None:
         from ..core.dynamic_strategy import add_dynamic_accounts, get_dynamic_accounts
         existing = get_dynamic_accounts()
         known = set(h.lower() for bucket in ("en", "fr") for h in existing.get(bucket, []))
-        known.update(BLOCKLIST)
         known.add(_OWN_HANDLE)
 
         new_handles = []
@@ -53,7 +53,7 @@ def _harvest_active_authors(tweets: list) -> None:
             if likes < HARVEST_MIN_LIKES:
                 continue
             handle = x_urls.author(t.get("url") or "")
-            if not handle or handle in known:
+            if not handle or handle in known or is_blocked_account(handle):
                 continue
             new_handles.append(handle)
             known.add(handle)

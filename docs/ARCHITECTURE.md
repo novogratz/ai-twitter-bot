@@ -311,7 +311,7 @@ confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
 
 `follow_account` runs the same sequence but returns a `FollowOutcome`,
 truthy only for `FOLLOWED`, the Follow click. Its refusals name their
-cause (Follow refusal, CONTEXT.md): `TOO_SOON`, `CAP_REACHED`,
+cause (Follow refusal, CONTEXT.md): `BLOCKED`, `TOO_SOON`, `CAP_REACHED`,
 `QUALITY_REJECTED` and `REFUSED`, from the follow policy before the
 profile opens or from the quality gate on it; `ALREADY_FOLLOWED` when the
 profile shows the account followed. `FAILED` and `DRY_RUN` keep their

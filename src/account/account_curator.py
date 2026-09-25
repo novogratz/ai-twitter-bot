@@ -32,12 +32,13 @@ import traceback
 from collections import defaultdict
 from datetime import datetime, timedelta
 
-from ..core.config import BLOCKLIST, BOT_HANDLE, ENGAGEMENT_LOG_FILE
+from ..core.config import BOT_HANDLE, ENGAGEMENT_LOG_FILE
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards import active_hours
 # Guarded: a corrupt whitelist stops the cycle before any promotion.
 from ..guards.follow_policy import WHITELIST
+from ..guards.reply_admission import is_blocked_account
 
 # Disposable: recomputed every run from the engagement log.
 TRACKED = StateFile("tracked_accounts.json", {}, DISPOSABLE)
@@ -79,7 +80,7 @@ def _author_engagements(window_days: int = WINDOW_DAYS) -> dict:
                 if not m:
                     continue
                 a = m.group(1).lower()
-                if a == own or a in BLOCKLIST:
+                if a == own or is_blocked_account(a):
                     continue
                 pillar = (row[6].strip() if len(row) > 6 and row[6] else
                           _classify_pillar(row[2] if len(row) > 2 else "", row[1]))
