@@ -63,7 +63,7 @@ do not survey everything.
    Verify it is STILL alive ~2 min later (started != running — a 17h silent
    blackout happened 2026-06-09). Uptime beats any code improvement.
 1. DIAGNOSE (fast — a few turns max): read engagement_log.csv per-action
-   daily counts, engine_health_alerts.json, and the tail of bot.log. The
+   daily counts and the tail of bot.log. The
    account is AI-PRIMARY (AI labs/models/chips/stocks + AI-crypto + AI-vs-BTC
    feud; the therapist voice frames AI replies). Quote-RT of AI virals +
    reply volume are the validated winners — protect and strengthen them.

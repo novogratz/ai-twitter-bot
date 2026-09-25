@@ -399,35 +399,48 @@ the case live. Deploy it once, from the live checkout:
 2. `git fetch origin`, then `git status --short`: only state files show
    up as modified or untracked. Set anything else aside first.
 3. Copy the state, with the script from the incoming commit, since the
-   checkout does not have it yet. The backup directory is new and outside
-   the checkout:
+   checkout does not have it yet. The backup directory is outside the
+   checkout and keeps this fixed name, so a second `save` finds it and
+   stops:
 
    ```bash
    git show origin/main:bin/carry_state.sh > /tmp/carry_state.sh
-   B=~/ai-twitter-bot-state-$(date +%Y-%m-%d-%H%M)
+   B=~/ai-twitter-bot-state-193
    bash /tmp/carry_state.sh save "$B" origin/main
    ```
 
    It lists the files the pull deletes and writes their SHA-256 to
-   `$B/SHA256SUMS`.
-4. Put back the committed copies, so git accepts the pull, then pull:
+   `$B/SHA256SUMS`. It refuses to start while `bot.lock` is held or a
+   `main.py` runs from this checkout. It also refuses a non-empty `$B`
+   (a backup is already there: go on from step 4 with it) and an
+   `action_ledger.json` equal to its committed copy: the live ledger always
+   holds rows the commit lacks, so an equal one means step 4 already ran
+   and the live copies are gone; recover them from the existing backup.
+   `save --force` skips that ledger check, for a checkout the bot never
+   ran in; never use it on the live checkout.
+4. Only once step 3 has printed `saved N files`, put back the committed
+   copies, so git accepts the pull, then pull:
 
    ```bash
    git checkout HEAD -- $(awk '{print $2}' "$B/SHA256SUMS")
    git pull --ff-only origin main
    ```
 
-5. Restore: `bin/carry_state.sh restore "$B"`. It copies back every saved
-   file git now ignores, refuses to overwrite one that differs, and checks
-   each against its checksum; it ends with `restored N files; N match the
-   backup`. The five orphans above are `left out` and stay deleted.
+5. Restore: `bin/carry_state.sh restore "$B"`. If git still tracks a
+   saved file, it stops with `pull not done` and copies nothing: finish
+   the pull, then run it again. Otherwise it copies back every saved file
+   git now ignores, refuses to overwrite one that differs, and checks each
+   against its checksum; it ends with `restored N files; N match the
+   backup`. The five orphans above, neither tracked nor ignored, are
+   `left out` and stay deleted.
 6. `git status --short` prints nothing for the state files. Restart the
    bot only on the Operator's request.
 
 If a step fails, the state is still in `$B`: copy it back by hand with the
 bot stopped, and check the copies from the checkout with
 `shasum -a 256 -c "$B/SHA256SUMS"` before restarting; only the orphans may
-report missing.
+report missing. `tests/test_carry_state.py` replays the procedure on a
+throwaway clone.
 
 ## Legacy tools
 

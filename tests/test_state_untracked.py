@@ -16,23 +16,28 @@ import src
 REPO = Path(__file__).resolve().parent.parent
 
 OPERATOR_FILES = ("respect_list.json", "whitelist.json", "core_identity.md", "core_identity_en.md")
+# Root files written outside src/, which the scan below cannot see.
+WRITTEN_BY_BIN = ("mass_unfollow_results.json",)
 
 
 def _declared_state_files() -> set:
     # Module attributes, not state_store._DECLARED: tests declare files too.
     modules = [importlib.import_module(m.name)
                for m in pkgutil.walk_packages(src.__path__, "src.")]
-    from src.core import config, evolution_store, health, logger, state_store
-    from src.editorial import editorial_bot, reach_report
+    from src.core import config, state_store
 
-    outside_the_store = (config.ACTION_LEDGER_FILE, config.REPLIED_FILE,
-                         config.ENGAGEMENT_LOG_FILE, editorial_bot.AUDIT_FILE,
-                         reach_report.REPORT_MARKDOWN, health.AUTONOMOUS_LOG_FILE,
-                         evolution_store.DIRECTIVES_FILE, logger.LOG_FILE,
-                         "mass_unfollow_results.json")
+    # The conftest wall moves the ledger, replied and engagement paths under
+    # the temp state_store.ROOT; the other paths keep the repo root.
+    roots = {os.path.normpath(config._PROJECT_ROOT), os.path.normpath(state_store.ROOT)}
     stored = {v.name for m in modules for v in vars(m).values()
               if isinstance(v, state_store.StateFile)}
-    return stored | {os.path.basename(p) for p in outside_the_store}
+    # Files kept outside the store: any module constant holding a path at
+    # the root (ACTION_LEDGER_FILE, AUDIT_FILE, LOG_FILE...).
+    outside_the_store = {os.path.basename(path) for m in modules for v in vars(m).values()
+                         if isinstance(v, (str, os.PathLike))
+                         for path in [os.path.normpath(os.fspath(v))]
+                         if os.path.isabs(path) and os.path.dirname(path) in roots}
+    return stored | outside_the_store | set(WRITTEN_BY_BIN)
 
 
 def _ignored(names) -> set:
@@ -46,7 +51,8 @@ def _ignored(names) -> set:
 def test_every_declared_state_file_is_ignored_by_git():
     state = _declared_state_files() - set(OPERATOR_FILES)
     assert {"action_ledger.json", "following_count.json", "personality.json",
-            "replied_tweets.json", "editorial_review.jsonl"} <= state
+            "replied_tweets.json", "editorial_review.jsonl", "bot.log",
+            "engagement_log.csv", "autonomous_log.md", "directives.md"} <= state
     exposed = sorted(state - _ignored(sorted(state)))
     assert not exposed, (
         "State files git tracks or does not ignore; add them to .gitignore and "

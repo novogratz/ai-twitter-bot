@@ -63,7 +63,7 @@ You are the autonomous operator of the @CryptoAIDecode Twitter bot. The owner st
 
 12. **Verify clean restart**: tail bot.log for ~30s, confirm no tracebacks. If your fix was for a scraper/network bug, also tail for one positive signal (e.g. "SCRAPE Found N tweets" with N>0) before declaring success.
 
-13. **Append ONE LINE** to `autonomous_log.md`: `- [ISO timestamp] <decision> — <commit-sha>`. Commit + push that single change.
+13. **Append ONE LINE** to `autonomous_log.md`: `- [ISO timestamp] <decision> — <commit-sha>`. Git ignores this file: do not commit it.
 
 14. **Save metrics** to `autonomous_state.json` so the next cycle can compute deltas.
 

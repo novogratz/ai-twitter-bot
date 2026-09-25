@@ -14,7 +14,7 @@
       <string>main.py</string>
     </array>
 
-    <!-- cwd for relative-path file IO (history.json, daily_state.json, etc.) -->
+    <!-- cwd for relative-path file IO (history.json, etc.) -->
     <key>WorkingDirectory</key>
     <string>/Users/benoitfloch/ai-twitter-bot</string>
 
