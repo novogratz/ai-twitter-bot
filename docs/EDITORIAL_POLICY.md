@@ -119,7 +119,9 @@ must not repeat.
   no longer match it against the scraper's display name, which is not an
   identity. The replyback profile likes read the Engager's handle from
   the reply's URL and still check both. `like_tweet`
-  refuses a post whose URL handle is a Blocked account with the same match.
+  refuses a post whose URL handle is a Blocked account with the same match,
+  and so does the follow policy for every `follow_account` caller, jobs and
+  seeding script alike (issue #188).
   `early_bird` and `mega_watch` keep a watched account's post when its URL
   handle is that account, whatever its display name: comparing the display
   name dropped every account whose name differs from its handle (#162).

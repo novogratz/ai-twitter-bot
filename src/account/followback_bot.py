@@ -19,7 +19,8 @@ Strategy:
     policy admits a Follow-back on that record, never on this job's word.
 
 Safety: handle whitelist heuristic — skip obvious bots (handle made of
-random alphanumerics with no vowels, length=15) and BLOCKLIST entries.
+random alphanumerics with no vowels, length=15). follow_account refuses a
+Blocked account.
 """
 import json
 import os
@@ -28,7 +29,7 @@ import re
 import time
 import traceback
 
-from ..core.config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
+from ..core.config import _PROJECT_ROOT, BOT_HANDLE
 from ..core.logger import log
 from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
@@ -44,9 +45,6 @@ def _looks_like_real_handle(handle: str) -> bool:
     """Cheap bot-handle filter, after the policy's handle check, so an
     invalid handle never takes a pick of the cycle."""
     if not follow_policy.valid_handle(handle):
-        return False
-    h = handle.lower()
-    if h in BLOCKLIST:
         return False
     # Pure-alphanumeric with no vowels = likely a bot (e.g., xkprz9821).
     if not re.search(r"[aeiouAEIOU]", handle):

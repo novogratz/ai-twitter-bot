@@ -574,13 +574,14 @@ class FollowOutcome(Enum):
     tests the result counts only the follows that shipped. The refusals
     name their cause (CONTEXT.md: Follow refusal): TOO_SOON and CAP_REACHED
     concern the follow budget and leave the handle for a later cycle,
-    QUALITY_REJECTED and REFUSED are about the handle. An unreadable
+    BLOCKED, QUALITY_REJECTED and REFUSED are about the handle. An unreadable
     whitelist is no outcome: `follow_account` raises StateUnreadable before
     the profile opens, dry run included, and the job stops. ALREADY_FOLLOWED:
     the profile showed it followed, and it joined the followed accounts.
     DRY_RUN: a dry-run ledger row, nothing clicked."""
     FOLLOWED = "followed"
     ALREADY_FOLLOWED = "already_followed"
+    BLOCKED = "blocked"
     TOO_SOON = "too_soon"
     CAP_REACHED = "cap_reached"
     QUALITY_REJECTED = "quality_rejected"
@@ -598,7 +599,8 @@ class FollowOutcome(Enum):
         return self in (FollowOutcome.TOO_SOON, FollowOutcome.CAP_REACHED)
 
 
-_REFUSED = {follow_policy.Refusal.TOO_SOON: FollowOutcome.TOO_SOON,
+_REFUSED = {follow_policy.Refusal.BLOCKED_ACCOUNT: FollowOutcome.BLOCKED,
+            follow_policy.Refusal.TOO_SOON: FollowOutcome.TOO_SOON,
             follow_policy.Refusal.CAP_REACHED: FollowOutcome.CAP_REACHED,
             follow_policy.Refusal.QUALITY_REJECTED: FollowOutcome.QUALITY_REJECTED,
             follow_policy.Refusal.POLICY: FollowOutcome.REFUSED}
@@ -609,7 +611,8 @@ def follow_account(username: str) -> FollowOutcome:
 
     The follow policy establishes the handle's relation with the account
     itself (follow_policy.relation): a caller declares none, and a
-    Stranger is refused before the profile opens, whoever asks.
+    Blocked account or a Stranger is refused before the profile opens,
+    whoever asks.
 
     Returns FOLLOWED only when the JS click actually fired (best-effort
     signal); the ledger row, the following count and the followed accounts

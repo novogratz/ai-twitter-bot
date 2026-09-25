@@ -14,9 +14,9 @@ import time
 import traceback
 from ..core.logger import log
 from ..core.state_store import StateUnreadable
-from ..core.config import BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
 from ..guards import follow_policy
+from ..guards.reply_admission import is_blocked_account
 from ..x.scraper import _profile_visit_allowed
 from ..x.twitter_client import visit_profile_and_like, follow_account, LikeOutcome
 
@@ -31,7 +31,7 @@ VIP_ACCOUNTS = ["Graphseo"]
 def _load_discovered_handles() -> list:
     """Read autonomously-discovered handles from discovered_accounts.json."""
     return [d.get("handle") for d in DISCOVERED_ACCOUNTS.read()
-            if d.get("handle") and d["handle"].lower() not in BLOCKLIST]
+            if d.get("handle") and not is_blocked_account(d["handle"])]
 
 
 def _load_dynamic_handles() -> list:
@@ -40,7 +40,7 @@ def _load_dynamic_handles() -> list:
     handles = []
     for bucket in ("en", "fr"):
         for h in data[bucket]:
-            if h and h.lower() not in BLOCKLIST:
+            if h and not is_blocked_account(h):
                 handles.append(h)
     return handles
 
@@ -51,7 +51,7 @@ def _build_pool() -> list:
     pool = []
     for h in VIP_ACCOUNTS + _load_dynamic_handles() + _load_discovered_handles():
         h_lower = h.lower() if h else ""
-        if h and h_lower not in seen and h_lower not in BLOCKLIST:
+        if h and h_lower not in seen and not is_blocked_account(h):
             pool.append(h)
             seen.add(h_lower)
     return pool

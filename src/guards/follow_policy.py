@@ -6,8 +6,9 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
   followers page, `record_followers`), Engager (the Debate turns), else
   Stranger.
   No caller declares a relation.
-- `judge(handle)` runs before the profile opens: the handle, the relation
-  (a Stranger is never followed), the whitelist, anti-churn, the daily cap,
+- `judge(handle)` runs before the profile opens: the handle, the Blocked
+  account (matched as Reply admission does), the relation (a Stranger is
+  never followed), the whitelist, anti-churn, the daily cap,
   the spacing, the following ceiling and ratio brake, then the
   quality-reject cache.
 - `judge_profile(handle, read_profile)` runs on the open profile, before
@@ -31,7 +32,7 @@ from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import DISPOSABLE, GUARDED, StateFile
 from ..x import x_urls
-from . import action_guard
+from . import action_guard, reply_admission
 
 # Guarded: the record of the accounts followed. engage_job follows every
 # pool handle missing from it, and the ceiling counts it when
@@ -79,6 +80,7 @@ class Relation(Enum):
 
 
 class Refusal(Enum):
+    BLOCKED_ACCOUNT = "Blocked account"
     TOO_SOON = "too soon after the last follow"
     CAP_REACHED = "follow budget reached"
     QUALITY_REJECTED = "quality gate"
@@ -297,7 +299,9 @@ def judge(handle: str) -> Verdict:
     20/day pacing with >=10-min randomized gaps, 30-day anti-churn — then
     the quality-reject cache.
 
-    A Stranger is refused whatever the mode or the caller. A follower or an
+    A Blocked account is refused first, whatever its relation, with the
+    matching of Reply admission and likes. A Stranger is refused whatever
+    the mode or the caller. A follower or an
     Engager passes the whitelist-only gate when FOLLOWBACK_BYPASS_WHITELIST
     is set — every other gate (churn, daily cap, spacing, ceiling) still
     applies.
@@ -313,6 +317,8 @@ def judge(handle: str) -> Verdict:
     """
     if not valid_handle(handle):
         return Verdict(Refusal.POLICY, f"invalid handle {handle!r}")
+    if reply_admission.is_blocked_account(handle):
+        return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{handle} matches the blocklist")
     h = handle.lower()
     rel = relation(h)
     if rel is Relation.STRANGER:

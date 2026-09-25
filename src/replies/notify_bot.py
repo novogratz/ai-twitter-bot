@@ -1,6 +1,7 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
 import traceback
-from ..core.config import BLOCKLIST, BOT_HANDLE
+from ..core.config import BOT_HANDLE
+from ..guards.reply_admission import is_blocked_account
 from ..core.logger import log
 from ..x import x_urls
 from ..x.scraper import scrape_own_tweet_and_replies
@@ -35,15 +36,10 @@ def _is_blocklisted(user_string: str, handle: str) -> bool:
     we replied to + followed back @pgm_pm — the exact bot-vs-bot loop the
     blocklist exists to prevent. Now we also scan the raw user string for
     any blocklisted token, so display-name variants are caught even if
-    only the @handle is in BLOCKLIST.
+    only the @handle is in BLOCKLIST. Both are matched as Reply admission
+    matches a handle.
     """
-    if handle and handle in BLOCKLIST:
-        return True
-    user_lower = (user_string or "").lower()
-    for blocked in BLOCKLIST:
-        if blocked and blocked in user_lower:
-            return True
-    return False
+    return is_blocked_account(handle) or is_blocked_account(user_string)
 
 
 def run_notify_cycle():

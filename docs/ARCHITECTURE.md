@@ -420,7 +420,9 @@ Five modules sit behind them:
   followers scrape writes, through `record_followers`), Engager (the
   ledger's Debate turns, then `replied_back.json`), else Stranger.
   `judge(handle)` checks, before the profile opens, the handle (the one
-  check of `[A-Za-z0-9_]{1,15}`), the relation (a Stranger is refused in
+  check of `[A-Za-z0-9_]{1,15}`), the Blocked account (the match of
+  `reply_admission.is_blocked_account`, the one Reply admission and
+  `like_tweet` use), the relation (a Stranger is refused in
   every mode), the whitelist (a follower or an Engager passes it while
   `FOLLOWBACK_BYPASS_WHITELIST` is on), anti-churn, the daily cap, the
   spacing, the following ceiling and ratio brake, then the quality-reject

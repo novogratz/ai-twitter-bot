@@ -232,6 +232,7 @@ def test_follow_ships_then_records_then_closes(trace):
 
 
 @pytest.mark.parametrize("refusal, outcome", [
+    (fp.Refusal.BLOCKED_ACCOUNT, F.BLOCKED),
     (fp.Refusal.TOO_SOON, F.TOO_SOON),
     (fp.Refusal.CAP_REACHED, F.CAP_REACHED),
     (fp.Refusal.QUALITY_REJECTED, F.QUALITY_REJECTED),

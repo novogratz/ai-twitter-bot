@@ -69,6 +69,20 @@ def test_an_invalid_handle_is_a_policy_refusal(follow_env, monkeypatch, tmp_path
     assert verdict.refusal is Refusal.POLICY and "invalid handle" in verdict.reason
 
 
+@pytest.mark.parametrize("whitelist", ['{"tiers": {"tier1": ["la_pique_off"]}}',
+                                       '{"tiers": {"tier1": ["la_pi'])
+def test_a_blocked_account_is_refused_before_its_relation(follow_env, monkeypatch, tmp_path,
+                                                          whitelist):
+    """#188: a handle holding a blocklist token is refused by name, a Seed
+    account included, before the whitelist is even read."""
+    _counts(monkeypatch, tmp_path, 100, 10)
+    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
+    (tmp_path / "whitelist.json").write_text(whitelist)
+
+    assert fp.judge("la_pique_off") == Verdict(Refusal.BLOCKED_ACCOUNT,
+                                               "@la_pique_off matches the blocklist")
+
+
 def test_follow_blocked_at_low_phase_ceiling(follow_env, monkeypatch, tmp_path):
     """While followers are low (<300), total following must stay under ~150."""
     _counts(monkeypatch, tmp_path, 100, 150)
