@@ -1,4 +1,4 @@
-"""The account jobs: curator, engage, likes, pin, follow_engagers."""
+"""The account jobs: curator, engage, followback, likes, pin, follow_engagers."""
 import json
 
 import pytest
@@ -73,12 +73,10 @@ def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
 
 
 def _dry_run_follow_path(monkeypatch):
-    from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.guards import action_guard, follow_policy
 
     monkeypatch.setenv("DRY_RUN", "1")
-    monkeypatch.setattr(action_guard, "can_follow", lambda *a, **k: (True, ""))
-    monkeypatch.setattr(tc, "_quality_reject_recent", lambda *_: False)
+    monkeypatch.setattr(follow_policy, "judge", lambda *a, **k: follow_policy.ADMITTED)
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
     return recorded
@@ -105,7 +103,7 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
     assert set(json.loads(followed_file.read_text())) == {"already"}
     assert sorted(k["target"] for a, k in recorded if a == (action_guard.FOLLOW,)) == ["newcomer", "other"]
     assert all(k["dry_run"] for _, k in recorded)
-    assert not tc.WriteOutcome.DRY_RUN
+    assert not tc.FollowOutcome.DRY_RUN
 
 
 # --- like_bot ------------------------------------------------------------------
@@ -487,7 +485,8 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     Engagers from the ledger's Debate turns (newest first), never retries an
     attempted handle, respects caps, and routes through follow_account
     with engager=True."""
-    from src.x.twitter_client import _follow_quality_decision
+    from src.guards.follow_policy import _quality_decision as _follow_quality_decision
+    from src.x.twitter_client import FollowOutcome
     monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "10000")
     monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
     monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
@@ -504,8 +503,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
         ag.record(ag.DEBATE_TURN, target=engager)
     followed = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h, engager=False: followed.append((h, engager)) or True)
-    monkeypatch.setattr(ag, "can_follow", lambda h, reciprocal=False: (True, ""))
+                        lambda h, engager=False: followed.append((h, engager)) or FollowOutcome.FOLLOWED)
     monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
@@ -546,15 +544,199 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
 
     from src.guards import action_guard as ag
     from src.account import follow_engagers_bot as fe
-    ag.record(ag.DEBATE_TURN, target="somefan")
+    from src.x.twitter_client import FollowOutcome
+    for fan in ("otherfan", "somefan"):
+        ag.record(ag.DEBATE_TURN, target=fan)
     called = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h, engager=False: called.append(h) or True)
-    monkeypatch.setattr("src.guards.action_guard.can_follow",
-                        lambda h, reciprocal=False: (False, "total following ceiling reached (3500 >= 3500)"))
+                        lambda h, engager=False: called.append(h) or FollowOutcome.CAP_REACHED)
     monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     fe.run_follow_engagers_cycle()
-    assert called == [], "transient refusal must not reach follow_account"
+    assert called == ["somefan"], "a transient refusal ends the cycle"
     st = fe._load_state()
     assert st.get("attempted", []) == [], \
         "transient policy refusal must NOT burn the candidate"
+
+
+def _follow_engagers_on(monkeypatch, outcomes):
+    """follow_engagers over fan1..fan3 with follow_account answering
+    `outcomes` in turn; returns the handles it was asked to follow."""
+    from src.account import follow_engagers_bot as fe
+
+    answers = iter(outcomes)
+    asked = []
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "3")
+    monkeypatch.setattr(fe, "_engager_handles", lambda: ["fan1", "fan2", "fan3"])
+    monkeypatch.setattr("src.x.twitter_client.follow_account",
+                        lambda h, engager=False: asked.append(h) or next(answers))
+    fe.run_follow_engagers_cycle()
+    return asked, fe._load_state()
+
+
+@pytest.mark.parametrize("budget", ["TOO_SOON", "CAP_REACHED"])
+def test_follow_engagers_ends_the_cycle_on_the_follow_budget(monkeypatch, budget):
+    """#172: the job read the cause from can_follow's message ("too soon",
+    "cap reached", "ceiling"); it now reads the outcome's cause."""
+    from src.x.twitter_client import FollowOutcome as F
+
+    asked, state = _follow_engagers_on(monkeypatch, [F.FOLLOWED, F[budget]])
+
+    assert asked == ["fan1", "fan2"]
+    assert state["attempted"] == ["fan1"] and state["count_today"] == 1
+
+
+def test_follow_engagers_burns_a_candidate_on_any_other_outcome(monkeypatch):
+    from src.x.twitter_client import FollowOutcome as F
+
+    asked, state = _follow_engagers_on(
+        monkeypatch, [F.QUALITY_REJECTED, F.ALREADY_FOLLOWED, F.REFUSED])
+
+    assert asked == ["fan1", "fan2", "fan3"]
+    assert sorted(state["attempted"]) == ["fan1", "fan2", "fan3"] and state["count_today"] == 0
+
+
+def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatch, memory_ledger,
+                                                                      tmp_path):
+    """Through the real chokepoint and policy: the spacing refuses before
+    any page opens (conftest fails the test on open_url), and the Engager
+    stays for a later cycle."""
+    from src.core import config
+    from src.guards import action_guard as ag
+    from src.account import follow_engagers_bot as fe
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
+    (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
+    ag.record(ag.FOLLOW, "earlier")
+    ag.record(ag.DEBATE_TURN, "somefan")
+
+    fe.run_follow_engagers_cycle()
+
+    assert fe._load_state()["attempted"] == []
+    assert [r["action"] for r in memory_ledger.rows] == [ag.FOLLOW, ag.DEBATE_TURN]
+
+
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_candidate(
+        monkeypatch, memory_ledger, tmp_path, dry_run):
+    """#172: judge refused on an unreadable whitelist.json and the job
+    marked each Engager tried, about 200 in one cycle. The cycle now stops
+    at the first candidate, reported as a failure, with no candidate marked,
+    no page opened (conftest fails on open_url) and no ledger row."""
+    from src.core import health
+    from src.guards import action_guard as ag
+    from src.account import follow_engagers_bot as fe
+
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
+    whitelist = tmp_path / "whitelist.json"
+    whitelist.write_text('{"tiers": {"tier1": ["karp')
+    for fan in ("fan1", "fan2", "fan3"):
+        ag.record(ag.DEBATE_TURN, fan)
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda label: pytest.fail("cycle reported done"))
+
+    fe.safe_run_follow_engagers_cycle()
+
+    assert failures == ["follow_engagers"]
+    assert fe._load_state()["attempted"] == []
+    assert [r["action"] for r in memory_ledger.rows] == [ag.DEBATE_TURN] * 3
+    assert whitelist.read_text() == '{"tiers": {"tier1": ["karp'
+
+
+# --- followback ------------------------------------------------------------------
+
+
+@pytest.fixture
+def followback(monkeypatch, memory_ledger, tmp_path):
+    """Live followback_job and follow_account over a scripted followers page
+    and profile; `state["profile"]` is what the Follow script finds."""
+    from src.core import config
+    from src.account import followback_bot as fb
+    from src.x import safari, scraper, twitter_client as tc
+
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
+    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
+    monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
+    (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
+    state = {"followers": ["Alreadyfan"], "profile": "ALREADY", "visits": []}
+    monkeypatch.setattr(fb, "_scrape_followers_list", lambda max_handles=30: list(state["followers"]))
+    monkeypatch.setattr(fb, "_scroll_page", lambda: None)
+    monkeypatch.setattr(fb, "close_front_tab", lambda: None)
+    monkeypatch.setattr(fb.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: state["visits"].append(url))
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: state["profile"])
+    monkeypatch.setattr(scraper, "_scrape_profile_quality",
+                        lambda: {"followers": "50K", "bio": "AI investor", "name": "Fan"})
+    return fb, state
+
+
+def test_followback_never_revisits_an_account_found_already_followed(followback, memory_ledger,
+                                                                     tmp_path):
+    """#172: an account already followed never entered the followed
+    accounts, so followback_job visited its profile every 20 minutes. The
+    chokepoint records it now, without a ledger row, and the next cycle
+    skips it."""
+    fb, state = followback
+    followers_page = "https://x.com/TheAIShrink/followers"
+
+    fb.run_followback_cycle()
+    assert state["visits"] == [followers_page, "https://x.com/Alreadyfan"]
+    assert json.loads((tmp_path / "followed_accounts.json").read_text()) == ["Alreadyfan"]
+    assert memory_ledger.rows == []
+
+    fb.run_followback_cycle()
+    assert state["visits"] == [followers_page, "https://x.com/Alreadyfan", followers_page]
+
+
+def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeypatch):
+    """#172: an invalid handle took one of the cycle's picks before the
+    policy refused it; the job drops it with the policy's own check."""
+    fb, state = followback
+    monkeypatch.setattr(fb, "FOLLOW_BACK_CAP_PER_CYCLE", 1)
+    monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
+    state["followers"] = ["averyverylonghandle", "Realfan"]
+
+    fb.run_followback_cycle()
+
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+
+
+def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_path):
+    fb, state = followback
+    state["profile"] = "CLICKED"
+
+    fb.run_followback_cycle()
+
+    assert json.loads((tmp_path / "followed_accounts.json").read_text()) == ["Alreadyfan"]
+    assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "alreadyfan")]
+    assert json.loads((tmp_path / "following_count.json").read_text())["count"] == 11
+
+
+def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, tmp_path,
+                                                      monkeypatch):
+    """An unreadable guarded file stops the job that needs it: followback
+    no longer logs a traceback per pick and reports the cycle a success."""
+    from src.core import health
+
+    fb, state = followback
+    state["followers"] = ["Realfan", "Otherfan"]
+    (tmp_path / "whitelist.json").write_text("{not json")
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
+
+    fb.safe_run_followback_cycle()
+
+    assert failures == ["followback"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert memory_ledger.rows == []
+    assert (tmp_path / "whitelist.json").read_text() == "{not json"

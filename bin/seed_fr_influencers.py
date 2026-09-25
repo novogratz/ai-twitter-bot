@@ -22,8 +22,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.core.config import _PROJECT_ROOT
 from src.core.logger import log
+from src.guards import follow_policy
 from src.x.twitter_client import follow_account
-from src.account.engage_bot import _load_followed, _save_followed
 
 # 50+ francophone handles, IA / Crypto / Bourse / Macro / Tech press.
 # Curated for likelihood of being active accounts.
@@ -88,7 +88,7 @@ def main():
             print(f"  + {h}")
 
     # Now follow them best-effort. Skip already-followed.
-    followed = _load_followed()
+    followed = follow_policy.followed()
     targets = [h for h in SEED_HANDLES if h not in followed]
 
     if not targets:
@@ -102,14 +102,12 @@ def main():
     for h in targets:
         print(f"  → @{h}", end=" ", flush=True)
         try:
-            ok = follow_account(h)
-            if ok:
-                followed.add(h)
-                _save_followed(followed)
+            result = follow_account(h)
+            if result:
                 succeeded += 1
                 print("✓")
             else:
-                print("(skipped — invalid handle or already following)")
+                print(f"(skipped — {result.value})")
         except Exception as e:
             print(f"(error: {e})")
         time.sleep(random.randint(3, 6))

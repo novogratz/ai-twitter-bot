@@ -14,7 +14,7 @@ from datetime import datetime
 
 from ..core.config import BOT_HANDLE
 from ..core.logger import log
-from ..guards.action_guard import FOLLOWER_HISTORY
+from ..guards.follow_policy import FOLLOWER_HISTORY
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab
 

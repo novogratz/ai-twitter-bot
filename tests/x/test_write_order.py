@@ -11,12 +11,14 @@ from src.core.logger import log
 from src.core.state_errors import StateUnreadable
 from src.guards import action_guard as ag
 from src.guards import content_guard as cg
+from src.guards import follow_policy as fp
 from src.guards import replied_store as rs
 from src.guards import reply_admission as ra
 from src.guards.active_hours import OutsideActiveHours
 from src.x import confirmed_write, safari, scraper
 from src.x import twitter_client as tc
 from src.x.confirmed_write import WriteOutcome as W
+from src.x.twitter_client import FollowOutcome as F
 
 POST_URL = "https://x.com/someone/status/2063500000000000500"
 QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Jane"}
@@ -45,10 +47,11 @@ def trace(monkeypatch):
     """Every browser primitive, guard and store write of the write path,
     traced in call order. `fail` names the AppleScript steps that fail,
     `js` and `likes` queue the page answers, `raise_at` names the step
-    that raises OutsideActiveHours."""
+    that raises OutsideActiveHours; `refuse` the guards that refuse, the
+    follow policy with `follow_refusal`."""
     events, logs = [], []
     t = SimpleNamespace(events=events, logs=logs, fail=set(), js=[], likes=[], raise_at=None,
-                        refuse=set(), claimed=set())
+                        refuse=set(), claimed=set(), follow_refusal=fp.Refusal.POLICY)
 
     def step(name, value=None):
         events.append(name)
@@ -80,19 +83,20 @@ def trace(monkeypatch):
     monkeypatch.setattr(tc, "_mark_liked", lambda url: step("mark_liked"))
     monkeypatch.setattr(tc, "_already_liked", lambda url: False)
     monkeypatch.setattr(tc, "_record_posted", lambda text: step("history"))
-    monkeypatch.setattr(tc, "_quality_reject_recent", lambda handle: False)
-    monkeypatch.setattr(tc, "_record_quality_reject", lambda handle: step("quality_reject"))
+    monkeypatch.setattr(fp, "_record_quality_reject", lambda handle: step("quality_reject"))
+    monkeypatch.setattr(fp, "record_followed", lambda handle: step("followed_accounts"))
     monkeypatch.setattr(scraper, "_scrape_profile_quality", lambda: step("quality", dict(QUALITY)))
 
     def record(action, target="", dry_run=False):
         events.append(f"{'dry' if dry_run else 'record'}:{action}")
     monkeypatch.setattr(ag, "record", record)
-    monkeypatch.setattr(ag, "adjust_following", lambda delta: step(f"adjust:{delta:+d}"))
+    monkeypatch.setattr(fp, "adjust_following", lambda delta: step(f"adjust:{delta:+d}"))
     monkeypatch.setattr(ag, "jitter_sleep", lambda *_: step("jitter"))
-    monkeypatch.setattr(ag, "is_whitelisted", lambda handle: False)
-    for name in ("can_post", "can_follow"):
-        monkeypatch.setattr(ag, name, lambda *a, _name=name, **k: (
-            step(f"guard:{_name}", (False, "refused") if _name in t.refuse else (True, ""))))
+    monkeypatch.setattr(fp, "is_whitelisted", lambda handle: False)
+    monkeypatch.setattr(ag, "can_post", lambda *a, **k: (
+        step("guard:can_post", (False, "refused") if "can_post" in t.refuse else (True, ""))))
+    monkeypatch.setattr(fp, "judge", lambda *a, **k: step("guard:judge_follow", (
+        fp.Verdict(t.follow_refusal, "refused") if "judge_follow" in t.refuse else fp.ADMITTED)))
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(cg, "is_duplicate", lambda *a, **k: False)
     monkeypatch.setattr(cg, "note_posted", lambda text: step("note_posted"))
@@ -221,22 +225,46 @@ def test_reply_dry_run(trace, monkeypatch):
 
 def test_follow_ships_then_records_then_closes(trace):
     trace.js.append("CLICKED")
-    assert tc.follow_account("someone") is W.SHIPPED
-    assert trace.events == ["guard:can_follow", "jitter", "lock", "open", "quality", "js:follow",
-                            "record:follow", "adjust:+1", "close", "unlock"]
+    assert tc.follow_account("someone") is F.FOLLOWED
+    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "quality", "js:follow",
+                            "record:follow", "followed_accounts", "adjust:+1", "close", "unlock"]
 
 
-def test_follow_refused_never_opens_the_page(trace):
-    trace.refuse.add("can_follow")
-    assert tc.follow_account("someone") is W.REFUSED
-    assert trace.events == ["guard:can_follow"]
+@pytest.mark.parametrize("refusal, outcome", [
+    (fp.Refusal.TOO_SOON, F.TOO_SOON),
+    (fp.Refusal.CAP_REACHED, F.CAP_REACHED),
+    (fp.Refusal.QUALITY_REJECTED, F.QUALITY_REJECTED),
+    (fp.Refusal.POLICY, F.REFUSED),
+])
+def test_follow_refused_names_its_cause_and_never_opens_the_page(trace, refusal, outcome):
+    trace.refuse.add("judge_follow")
+    trace.follow_refusal = refusal
+    assert tc.follow_account("someone") is outcome
+    assert trace.events == ["guard:judge_follow"]
+    assert trace.logs == [f"[FOLLOW] policy refuses @someone ({refusal.value}: refused)."]
+
+
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+def test_follow_stops_on_an_unreadable_whitelist_before_the_profile_opens(trace, monkeypatch,
+                                                                        dry_run):
+    """#172: judge refused on an unreadable whitelist, and follow_engagers
+    marked each Engager tried. It raises now, before the lock, the page and
+    any ledger row, dry run included."""
+    def unreadable(*a, **k):
+        trace.events.append("guard:judge_follow")
+        raise StateUnreadable("whitelist.json is unreadable")
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setattr(fp, "judge", unreadable)
+    with pytest.raises(StateUnreadable):
+        tc.follow_account("someone")
+    assert trace.events == ["guard:judge_follow"]
 
 
 def test_follow_quality_refusal_closes_without_clicking(trace, monkeypatch):
     small = {"followers": "12", "bio": "dogs", "name": "x"}
     monkeypatch.setattr(scraper, "_scrape_profile_quality", lambda: trace.events.append("quality") or small)
-    assert tc.follow_account("someone") is W.REFUSED
-    assert trace.events == ["guard:can_follow", "jitter", "lock", "open", "quality", "quality_reject",
+    assert tc.follow_account("someone") is F.QUALITY_REJECTED
+    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "quality", "quality_reject",
                             "close", "unlock"]
 
 
@@ -246,23 +274,33 @@ def test_follow_refused_when_the_whitelist_turns_unreadable_after_admission(trac
     or a quality reject."""
     def unreadable(handle):
         raise StateUnreadable("whitelist.json is unreadable")
-    monkeypatch.setattr(ag, "is_whitelisted", unreadable)
-    assert tc.follow_account("someone") is W.REFUSED
-    assert trace.events == ["guard:can_follow", "jitter", "lock", "open", "close", "unlock"]
+    monkeypatch.setattr(fp, "is_whitelisted", unreadable)
+    assert tc.follow_account("someone") is F.REFUSED
+    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "close", "unlock"]
 
 
-@pytest.mark.parametrize("answer, outcome", [("ALREADY", W.REFUSED), ("NO_BTN", W.FAILED), ("", W.FAILED)])
-def test_follow_without_a_click_records_nothing(trace, answer, outcome):
+@pytest.mark.parametrize("answer", ["NO_BTN", ""])
+def test_follow_without_a_click_records_nothing(trace, answer):
     trace.js.append(answer)
-    assert tc.follow_account("someone") is outcome
-    assert trace.events == ["guard:can_follow", "jitter", "lock", "open", "quality", "js:follow",
+    assert tc.follow_account("someone") is F.FAILED
+    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "quality", "js:follow",
                             "close", "unlock"]
+
+
+def test_follow_of_an_account_already_followed_keeps_it_without_a_ledger_row(trace):
+    """#172: an account already followed never entered the followed
+    accounts, so Follow-back visited its profile every cycle. It enters
+    them now, still without a ledger row or a count change."""
+    trace.js.append("ALREADY")
+    assert tc.follow_account("someone") is F.ALREADY_FOLLOWED
+    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "quality", "js:follow",
+                            "followed_accounts", "close", "unlock"]
 
 
 def test_follow_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.follow_account("someone") is W.DRY_RUN
-    assert trace.events == ["guard:can_follow", "dry:follow"]
+    assert tc.follow_account("someone") is F.DRY_RUN
+    assert trace.events == ["guard:judge_follow", "dry:follow"]
     assert _dry_run_line(trace, "FOLLOW")
 
 
@@ -334,6 +372,7 @@ def test_pin_dry_run(trace, monkeypatch):
 def test_only_a_shipped_write_is_truthy():
     assert [o for o in W if o] == [W.SHIPPED]
     assert [o for o in tc.LikeOutcome if o] == [tc.LikeOutcome.LIKED]
+    assert [o for o in F if o] == [F.FOLLOWED]
 
 
 @pytest.mark.parametrize("before_lock, under_lock", [
@@ -384,14 +423,14 @@ def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):
     line, and the refusal's outcome line goes to debug."""
     debug = []
     monkeypatch.setattr(log, "debug", lambda msg, *a, **k: debug.append(str(msg)))
-    trace.refuse.add("can_follow")
+    trace.refuse.add("judge_follow")
     tc.follow_account("someone")
     trace.refuse.clear()
     trace.js.append("NO_BTN")
     tc.follow_account("someone")
     assert [line for line in trace.logs if line.startswith("[FOLLOW] Write ")] == [
-        "[FOLLOW] Write failed; nothing recorded."]
-    assert debug == ["[FOLLOW] Write refused; nothing recorded."]
+        "[FOLLOW] Write failed; no ledger row."]
+    assert debug == ["[FOLLOW] Write refused; no ledger row."]
 
 
 def test_a_like_walk_skipping_liked_posts_logs_one_line_each(trace, monkeypatch):

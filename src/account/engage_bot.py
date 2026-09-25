@@ -11,9 +11,10 @@ import random
 import time
 import traceback
 from ..core.logger import log
+from ..core.state_store import StateUnreadable
 from ..core.config import BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
-from ..guards.action_guard import FOLLOWED
+from ..guards import follow_policy
 from ..x.scraper import _profile_visit_allowed
 from ..x.twitter_client import visit_profile_and_like, follow_account, LikeOutcome
 
@@ -54,20 +55,10 @@ def _build_pool() -> list:
     return pool
 
 
-def _load_followed() -> set:
-    return set(FOLLOWED.read())
-
-
-def _save_followed(followed: set):
-    # engage_job and followback_job each hold a copy read at cycle start:
-    # merge with the disk, never replace it, or one erases the other's follows.
-    FOLLOWED.update(lambda on_disk: sorted(set(on_disk) | set(followed)))
-
-
 def run_engage_cycle():
     """Visit a sample of feed-discovered profiles, like their latest tweets."""
     from ..core.evolution_store import filter_and_weight
-    followed = _load_followed()
+    followed = follow_policy.followed()
     pool = filter_and_weight(_build_pool())
 
     if not pool:
@@ -87,8 +78,7 @@ def run_engage_cycle():
         try:
             if username not in followed:
                 log.info(f"[ENGAGE] Following + liking @{username}...")
-                if follow_account(username):
-                    followed.add(username)
+                follow_account(username)
                 time.sleep(random.randint(2, 4))
 
             # 2026-06-17: skip the reciprocity-like pass when the handle is
@@ -108,11 +98,12 @@ def run_engage_cycle():
             outcomes = visit_profile_and_like(username, like_count=like_count)
             liked += sum(o is LikeOutcome.LIKED for o in outcomes)
             time.sleep(random.randint(3, 5))
+        except StateUnreadable:
+            raise  # a guarded file stops the job, not one pick at a time
         except Exception:
             log.info(f"[ENGAGE] Failed to engage with @{username}:")
             traceback.print_exc()
 
-    _save_followed(followed)
     log.info(f"[ENGAGE] Done. Visited {len(picks)} accounts, liked {liked} posts.")
 
 

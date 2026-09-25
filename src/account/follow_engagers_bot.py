@@ -83,31 +83,23 @@ def run_follow_engagers_cycle():
     own = BOT_HANDLE.lower()
     followed = 0
 
-    from ..x.confirmed_write import WriteOutcome
-    from ..x.twitter_client import follow_account
+    from ..x.twitter_client import FollowOutcome, follow_account
     # 2026-07-28 fix: 262 candidates were burned into `attempted` by
     # TRANSIENT policy refusals (the 3500 total-following ceiling blocked
-    # every follow for days). Pre-check the policy CHEAPLY: a transient
-    # refusal (spacing gap, daily cap, total ceiling) ends the cycle
-    # WITHOUT burning the candidate; only an actual attempt (which caches
-    # its own quality-reject) marks a handle attempted.
-    _TRANSIENT = ("too soon", "cap reached", "ceiling")
+    # every follow for days). A refusal on the follow budget (spacing, daily
+    # cap, total ceiling) ends the cycle WITHOUT burning the candidate; any
+    # other outcome marks the handle attempted. An unreadable whitelist
+    # raises out of the cycle, before any candidate is marked.
     for h in _engager_handles():
         if followed >= per_cycle or st["count_today"] >= per_day:
             break
         if h == own or h in BLOCKLIST or h in _SKIP_HANDLES or h in attempted:
             continue
-        ok, why = action_guard.can_follow(h, reciprocal=True)
-        if not ok:
-            if any(t in why for t in _TRANSIENT):
-                log.info(f"[FOLLOW-ENGAGERS] Policy transient ({why}) — ending cycle, candidates preserved.")
-                break
-            # permanent refusal (churn/whitelist policy) — burn this one only
-            attempted.add(h)
-            st["attempted"] = list(attempted)
-            continue
         result = follow_account(h, engager=True)
-        if result is WriteOutcome.DRY_RUN:
+        if result.is_budget_refusal:
+            log.info(f"[FOLLOW-ENGAGERS] Follow budget: {result.value} — ending cycle, candidates preserved.")
+            break
+        if result is FollowOutcome.DRY_RUN:
             # Followed no one: the Engager stays fresh and uncounted, but
             # the dry run still stops at the live per-cycle bound.
             followed += 1

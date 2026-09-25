@@ -11,7 +11,7 @@ import pytest
 
 from src.core import config
 from src.core.state_errors import StateUnreadable
-from src.guards import action_guard as ag, ledger as lg
+from src.guards import action_guard as ag, follow_policy as fp, ledger as lg
 from src.guards.ledger import FileLedger, MemoryLedger
 from tests.helpers import TORONTO
 
@@ -185,7 +185,7 @@ def test_corrupt_ledger_refuses_the_policy_and_the_write(monkeypatch, path):
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
 
     for check in (lambda: ag.can_post(ag.POST), lambda: ag.can_post(ag.REPLY),
-                  lambda: ag.can_follow("karpathy", reciprocal=True),
+                  lambda: fp.judge("karpathy", reciprocal=True),
                   lambda: ag.can_debate_turn("someone"), lambda: ag.record(ag.LIKE)):
         with pytest.raises(StateUnreadable, match="ledger unreadable"):
             check()
@@ -275,7 +275,7 @@ def test_the_next_policy_check_sees_a_row_another_process_appended(monkeypatch, 
     monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(path))
     monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
     assert ag.can_post(ag.REPLY) == (True, "")
-    assert "anti-churn" not in ag.can_follow("someone")[1]
+    assert "anti-churn" not in fp.judge("someone").reason
 
     other = FileLedger(str(path))
     _add(other, ag.REPLY, "https://x.com/a/status/1")
@@ -283,8 +283,8 @@ def test_the_next_policy_check_sees_a_row_another_process_appended(monkeypatch, 
 
     ok, why = ag.can_post(ag.REPLY)
     assert not ok and "too soon since last reply" in why
-    ok, why = ag.can_follow("someone")
-    assert not ok and "anti-churn" in why, "an unfollow bin/mass_unfollow.py recorded blocks the re-follow"
+    verdict = fp.judge("someone")
+    assert verdict.refusal is fp.Refusal.POLICY and "anti-churn" in verdict.reason, "an unfollow bin/mass_unfollow.py recorded blocks the re-follow"
 
 
 def test_index_follows_a_file_rewritten_or_replaced_by_another_process(ledger, path):

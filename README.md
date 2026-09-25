@@ -93,7 +93,10 @@ Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
 handles source selection, drafting and review. `src/guards/active_hours.py`
 owns the Toronto clock. `src/guards/action_guard.py` and
 `src/x/twitter_client.py` enforce limits at the browser boundary, from the
-writes recorded in the action ledger (`src/guards/ledger.py`). The reply
+writes recorded in the action ledger (`src/guards/ledger.py`).
+`src/guards/follow_policy.py` decides every follow and names why one is
+refused; `follow_account` alone adds an account followed, or found already
+followed, to `followed_accounts.json`. The reply
 jobs live in `src/replies/`, the follow, like, pin and follower-count jobs in
 `src/account/`, and shared foundations in `src/core/`. The legacy
 content modules are gone (issue #110): every module under `src/` is reached

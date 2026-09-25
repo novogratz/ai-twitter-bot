@@ -54,7 +54,9 @@ shipped, refused, failed before anything was sent, unconfirmed (it may have
 reached X, the page never showed it), or dry run. Only a shipped write is
 recorded in the ledger or counted by a job. A like names its outcomes
 finely: liked is its shipped write, already liked and blocked are its
-refusals; failed, unconfirmed and dry run keep their meaning.
+refusals; failed, unconfirmed and dry run keep their meaning. A follow
+too: followed is its shipped write, already followed and each Follow
+refusal are its refusals.
 _Avoid_: success, result, ok
 
 ### Drafting and review
@@ -135,6 +137,22 @@ _Avoid_: reciprocal follow, reciprocity
 An account that is neither a Seed account, a follower, nor an Engager; never
 followed.
 _Avoid_: discovered account, feed account
+
+**Follow refusal**:
+The named cause of a follow the follow policy stops before the click: too
+soon (the follow spacing), cap reached (the daily cap, the following
+ceiling or the ratio brake, reached or unreadable), quality rejected (the
+quality gate, on the profile or within 30 days), or refused (every other
+rule: handle, whitelist, anti-churn). Too soon and cap reached concern the
+account's follow budget, so a later cycle may follow the same account. A
+whitelist unreadable before the profile opens is no refusal: it stops the
+job, and no account is marked tried.
+_Avoid_: policy transient, follow error, skip
+
+**Followed accounts**:
+The record of the accounts the account followed, or found already followed,
+kept by the follow chokepoint alone; the follow jobs read it to skip them.
+_Avoid_: followed list, registry, follow cache
 
 **Blocked account**:
 An account the Operator bars from any interaction.

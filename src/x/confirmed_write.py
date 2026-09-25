@@ -30,9 +30,9 @@ class WriteOutcome(Enum):
         return self is WriteOutcome.SHIPPED
 
 
-# An outcome enum: `WriteOutcome`, or `LikeOutcome` for the like. Both are
-# truthy only for the shipped write and both carry DRY_RUN, FAILED and
-# UNCONFIRMED.
+# An outcome enum: `WriteOutcome`, `LikeOutcome` for the like or
+# `FollowOutcome` for the follow. Each is truthy only for the shipped write
+# and carries DRY_RUN and FAILED; the first two carry UNCONFIRMED too.
 O = TypeVar("O", bound=Enum)
 
 Rows = Callable[[], list[tuple[str, str | None]]]
@@ -120,5 +120,5 @@ def _record(rows: list[tuple[str, str | None]], dry_run: bool = False) -> None:
 
 def _stopped(tag: str, outcome: O) -> O:
     log_line = log.info if outcome.name in _FAILURES else log.debug
-    log_line(f"[{tag}] Write {outcome.value}; nothing recorded.")
+    log_line(f"[{tag}] Write {outcome.value}; no ledger row.")
     return outcome
