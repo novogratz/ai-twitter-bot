@@ -75,6 +75,21 @@ def test_the_order_is_the_scrape_order_or_fresh_and_rising_first():
     assert urls(ranked) == [hot["url"], cold["url"], old["url"]]
 
 
+def test_reply_candidates_sorted_fresh_and_rising_first():
+    """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
+    must beat a 60-hour-old tweet; unknown-age URLs go last; within the
+    same freshness bucket, higher likes-per-hour wins."""
+    fresh_hot = {"url": fresh("someone", minutes=20, n=1), "likes": 400}
+    fresh_cold = {"url": fresh("someone", minutes=25, n=2), "likes": 2}
+    old = {"url": fresh("someone", minutes=60 * 60, n=3), "likes": 90000}
+    unknown = {"url": "https://x.com/someone", "likes": 50}
+    ordered = sorted([unknown, old, fresh_cold, fresh_hot], key=reply_source.freshness_sort_key)
+    assert ordered[0] is fresh_hot
+    assert ordered[1] is fresh_cold
+    assert ordered[2] is old
+    assert ordered[3] is unknown
+
+
 def test_a_candidate_carries_the_post_text_and_the_tag():
     url = fresh("someone")
 

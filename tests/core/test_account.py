@@ -563,8 +563,8 @@ def test_the_removed_accounts_and_queries_are_gone():
     "This token is up 40% today",
 ])
 def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
-    from src.replies import direct_reply
-    assert not direct_reply.is_on_niche(text)
+    from src.replies import reply_source
+    assert not reply_source.is_on_niche(text)
 
 
 @pytest.mark.parametrize("text", [
@@ -594,8 +594,8 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Agentic workflows need evals",
 ])
 def test_an_ai_post_is_on_the_niche(text):
-    from src.replies import direct_reply
-    assert direct_reply.is_on_niche(text)
+    from src.replies import reply_source
+    assert reply_source.is_on_niche(text)
 
 
 @pytest.mark.parametrize("bio, on_niche", [
@@ -650,7 +650,7 @@ def test_env_wins_over_fr_forced_reply(accounts, fresh):
 def test_the_jobs_read_the_loaded_account(accounts, fresh):
     from src.account import engage_bot
     from src.guards import follow_policy
-    from src.replies import direct_reply, notify_bot
+    from src.replies import direct_reply, notify_bot, reply_source
     other = (THEAISHRINK
              .replace('engage_vip = ["Graphseo"]', 'engage_vip = ["OtherVip"]')
              .replace('vip_reply = [', 'vip_reply = ["OtherVip", ')
@@ -665,8 +665,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     assert direct_reply.reply_call("othervip").label == "DIRECT_REPLY_VIP"
     assert direct_reply.reply_call("nobody").label == "DIRECT_REPLY"
     assert "othertarget" in notify_bot._influencer_handles()
-    assert direct_reply.is_on_niche("a Zebra crossing")
-    assert direct_reply.is_on_niche("long $ZZZ") and not direct_reply.is_on_niche("long $zzz")
+    assert reply_source.is_on_niche("a Zebra crossing")
+    assert reply_source.is_on_niche("long $ZZZ") and not reply_source.is_on_niche("long $zzz")
     assert follow_policy._quality_decision(5000, "giraffe keeper", "Someone", False) == (True, "")
 
 
