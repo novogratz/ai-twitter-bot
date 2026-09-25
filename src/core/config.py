@@ -1,31 +1,52 @@
-"""Central configuration for the @TheAIShrink Twitter bot."""
+"""Central configuration for the @TheAIShrink Twitter bot.
+
+The engine settings of src/core/settings.py keep their names here, but are
+no module globals: the module `__getattr__` (PEP 562) reads each one on
+every access, so a `settings_override` reaches `config.X`. Constants no
+setting drives stay plain globals. A module that copies a setting with
+`from config import X` keeps the value it read at import: read `config.X`
+inside the function instead.
+
+Each side-effect switch also has a function, `dry_run()` and the ones below
+(`follow_whitelist_only()`, `reply_llm_provider()`...), which the constant
+of the same name calls.
+"""
 import os
 
-_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
+from . import settings
 
-def _load_dotenv(path: str = os.path.join(_PROJECT_ROOT, ".env")) -> None:
-    """Load simple KEY=VALUE pairs without adding a dependency."""
-    if not os.path.exists(path):
-        return
+_PROJECT_ROOT = settings.PROJECT_ROOT
+
+# The modules not migrated yet (llm_client until #197) read `.env` from the
+# environment at import, and state_store imports this module before them.
+settings.load()
+
+_READ_AT_ACCESS = {}
+
+
+def _served(*names):
+    for name in names:
+        _READ_AT_ACCESS[name] = lambda name=name: settings.get(name)
+
+
+def _served_as(name):
+    def register(read):
+        _READ_AT_ACCESS[name] = read
+        return read
+    return register
+
+
+def __getattr__(name):
     try:
-        with open(path) as f:
-            for raw in f:
-                line = raw.strip()
-                if not line or line.startswith("#") or "=" not in line:
-                    continue
-                key, value = line.split("=", 1)
-                key = key.strip()
-                value = value.strip().strip('"').strip("'")
-                if key and key not in os.environ:
-                    os.environ[key] = value
-    except OSError:
-        pass
+        read = _READ_AT_ACCESS[name]
+    except KeyError:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}") from None
+    return read()
 
-_load_dotenv()
 
 # Bot identity
-BOT_HANDLE = os.environ.get("BOT_HANDLE", "TheAIShrink")
-BOT_PROFILE_URL = f"https://x.com/{BOT_HANDLE}"
+_served("BOT_HANDLE")
+_served_as("BOT_PROFILE_URL")(lambda: f"https://x.com/{settings.get('BOT_HANDLE')}")
 
 # Data file paths outside the state store (src/core/state_store.py)
 REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
@@ -38,7 +59,7 @@ BOT_TIMEZONE = "America/Toronto"
 MIN_TARGET_POSTS_PER_DAY = 3
 TARGET_POSTS_PER_DAY = 6
 MAX_PROFILE_POSTS_PER_DAY = 8
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
+_served("MAX_REPLIES_PER_CYCLE")
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
@@ -59,7 +80,9 @@ BLOCKLIST = {
 
 # CLI/provider selection. Default is local Ollama; set AI_CLI=codex / gemini /
 # opencode at the env level to switch. Claude is no longer a default route.
-AI_CLI = os.environ.get("AI_CLI", "ollama").strip().lower()
+@_served_as("AI_CLI")
+def _ai_cli() -> str:
+    return settings.get("AI_CLI").strip().lower()
 
 def _default_model(
     codex_model: str,
@@ -67,28 +90,38 @@ def _default_model(
     gemini_model: str = "gemini-2.0-flash",
     opencode_model: str = "opencode/big-pickle",
 ) -> str:
-    if AI_CLI == "codex":
+    ai_cli = _ai_cli()
+    if ai_cli == "codex":
         return codex_model
-    if AI_CLI == "gemini":
+    if ai_cli == "gemini":
         return gemini_model
-    if AI_CLI in {"ollama", "opencode"}:
+    if ai_cli in {"ollama", "opencode"}:
         return opencode_model
     return codex_model
+
+def _model(name: str, *defaults: str) -> str:
+    value = settings.get(name)
+    return _default_model(*defaults) if value is None else value
 
 # Haiku for all reply surfaces (volume, speed) — Sonnet for content creation.
 # 2026-06-08 (operator): the PROFILE surfaces — new posts + quote-RTs —
 # get OPUS. They're low-volume + high-stakes (they show on the profile and
 # must earn the like), so the best model is worth it. The reply firehose
 # (1000+/day) stays on fast/cheap haiku — it's already converting well.
-NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
-REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
-PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
+_served_as("NEWS_MODEL")(lambda: _model("NEWS_MODEL", "gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
+_served_as("REPLY_MODEL")(lambda: _model("REPLY_MODEL", "gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
+_served_as("PRIORITY_REPLY_MODEL")(lambda: _model("PRIORITY_REPLY_MODEL", "gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
 
 # Profile and reply provider overrides. Default both to Ollama, with no
 # fallback: only LLM_FALLBACK_CLI (codex, say) adds one. Claude is not used by
-# default.
-PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "ollama").strip() or None
-REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "ollama").strip() or None
+# default. Blank means none.
+@_served_as("PROFILE_LLM_PROVIDER")
+def profile_llm_provider() -> str | None:
+    return settings.get("PROFILE_LLM_PROVIDER").strip() or None
+
+@_served_as("REPLY_LLM_PROVIDER")
+def reply_llm_provider() -> str | None:
+    return settings.get("REPLY_LLM_PROVIDER").strip() or None
 
 # No budget limits — the bot calls the LLM freely.
 
@@ -109,21 +142,23 @@ RETRY_DELAY_SECONDS = 5
 # Kill switch / dry-run. When 1, every write action (post, reply, follow,
 # unfollow, like, quote, retweet) is LOGGED but NOT executed — run this first
 # to verify the new behavior before any live writes, then set DRY_RUN=0.
-# A side-effect switch, so it is read on every call, never frozen at import.
+# A side-effect switch, so it is read on every call, never frozen at import:
+# the process environment, which `.env` reached at load, unless a test
+# overrides the setting.
 def dry_run() -> bool:
+    if settings.is_overridden("DRY_RUN"):
+        return settings.get("DRY_RUN")
     return os.environ.get("DRY_RUN", "0") == "1"
 
 # All original surfaces share the same ceiling and at least twenty minutes
 # of spacing (operator, 2026-09-23): the 09:30 and 10:00 slots sit thirty
 # minutes apart and the Startup post can land next to any slot.
-MAX_ORIGINALS_PER_DAY = min(8, int(os.environ.get("MAX_ORIGINALS_PER_DAY", "8")))
-MIN_SECONDS_BETWEEN_POSTS = max(1200, int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", "1200")))
-# A negative jitter would shorten the floor above.
-POST_JITTER_SECONDS = max(0, int(os.environ.get("POST_JITTER_SECONDS", "0")))
+_served("MAX_ORIGINALS_PER_DAY", "MIN_SECONDS_BETWEEN_POSTS")
+# Floored at 0 in settings: a negative jitter would shorten the floor above.
+_served("POST_JITTER_SECONDS")
 
 # Replies have no daily cap. Keep browser pacing and URL dedup.
-MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "8"))
-REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "7"))
+_served("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS")
 
 # Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero
 # after the full purge). Following is a tool for exactly two things: curating
@@ -138,36 +173,46 @@ REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "7"))
 #     tier4 crypto/markets). Discovery candidates go to suggestions[] for
 #     human approval — the bot never auto-adds.
 #   - 30-day anti-churn stays ON; no follow→unfollow cycles.
-FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
+@_served_as("FOLLOW_WHITELIST_ONLY")
+def follow_whitelist_only() -> bool:
+    return settings.get("FOLLOW_WHITELIST_ONLY")
+
 # Let RECIPROCAL follow-backs (people who already engage with us) through the
 # whitelist-only gate (self-improve loop #3, 2026-06-24). Followback is the
 # safest follower-growth loop — these are pre-qualified by engaging us, not
 # random strangers — but whitelist-only was silently blocking ALL of them
 # ("not on whitelist" refusals). All other gates (anti-churn, daily cap,
 # spacing, following ceiling) still apply. Set 0 to re-block.
-FOLLOWBACK_BYPASS_WHITELIST = os.environ.get("FOLLOWBACK_BYPASS_WHITELIST", "1") == "1"
-FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
-FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
-FOLLOW_TOTAL_CAP = int(os.environ.get("FOLLOW_TOTAL_CAP", "300"))
+@_served_as("FOLLOWBACK_BYPASS_WHITELIST")
+def followback_bypass_whitelist() -> bool:
+    return settings.get("FOLLOWBACK_BYPASS_WHITELIST")
+
+@_served_as("FOLLOW_ENFORCE_RATIO")
+def follow_enforce_ratio() -> bool:
+    return settings.get("FOLLOW_ENFORCE_RATIO")
+
+_served("FOLLOW_RATIO_CEILING")  # following < 0.8 * followers
+_served("FOLLOW_TOTAL_CAP")
 # 2026-06-11 operator: "go back on following people and following back to
 # increase viewers/likes/followers". Growth mode unties the ceiling from the
 # followers count (the 06-07 following<=followers invariant would block ALL
 # follows while the manual purge is mid-flight: 2485 following vs 1423
 # followers). FOLLOW_TOTAL_CAP stays the hard ceiling; daily cap, jittered
 # spacing, and 30-day anti-churn are untouched.
-FOLLOW_GROWTH_MODE = os.environ.get("FOLLOW_GROWTH_MODE", "0") == "1"
-FOLLOW_LOW_PHASE_CEILING = int(os.environ.get("FOLLOW_LOW_PHASE_CEILING", "150"))
-FOLLOW_LOW_PHASE_FOLLOWERS = int(os.environ.get("FOLLOW_LOW_PHASE_FOLLOWERS", "300"))
-MIN_SECONDS_BETWEEN_FOLLOWS = int(os.environ.get("MIN_SECONDS_BETWEEN_FOLLOWS", "600"))
-FOLLOW_SPACING_JITTER_SECONDS = int(os.environ.get("FOLLOW_SPACING_JITTER_SECONDS", "300"))
-MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "20"))
+@_served_as("FOLLOW_GROWTH_MODE")
+def follow_growth_mode() -> bool:
+    return settings.get("FOLLOW_GROWTH_MODE")
+
+_served("FOLLOW_LOW_PHASE_CEILING", "FOLLOW_LOW_PHASE_FOLLOWERS")
+_served("MIN_SECONDS_BETWEEN_FOLLOWS", "FOLLOW_SPACING_JITTER_SECONDS", "MAX_FOLLOWS_PER_DAY")
 # Anti-churn / TOS safety: never re-touch (follow↔unfollow) the same account
 # within this window. Follow/unfollow cycling is a fast path to suspension.
-CHURN_COOLDOWN_DAYS = int(os.environ.get("CHURN_COOLDOWN_DAYS", "30"))
-FOLLOW_ACTION_JITTER_SECONDS = int(os.environ.get("FOLLOW_ACTION_JITTER_SECONDS", "45"))
+_served("CHURN_COOLDOWN_DAYS", "FOLLOW_ACTION_JITTER_SECONDS")
 
 # Content rules — ban short-term price targets; theses are multi-year.
-BAN_SHORT_TERM_PRICE_TARGETS = os.environ.get("BAN_SHORT_TERM_PRICE_TARGETS", "1") == "1"
+@_served_as("BAN_SHORT_TERM_PRICE_TARGETS")
+def ban_short_term_price_targets() -> bool:
+    return settings.get("BAN_SHORT_TERM_PRICE_TARGETS")
 
 # Persistent, timestamped ledger of every write action (anti-churn + audit).
 ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")

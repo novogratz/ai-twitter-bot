@@ -54,7 +54,8 @@ The top level of `src/` holds only packages.
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
 | JSON state files: one root, atomic writes, guarded or disposable | `src/core/state_store.py` |
-| Hard ceilings that `.env` cannot lift | `src/core/config.py` |
+| Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides | `src/core/settings.py` |
+| Settings served under their old names and read on every access, side-effect switches as functions; fixed ceilings and `BLOCKLIST` that `.env` cannot touch | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
 | The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |

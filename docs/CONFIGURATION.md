@@ -49,7 +49,7 @@ legacy tables below still list some of them. `ENABLE_AI_MAINTENANCE` and
 
 # Configuration reference
 
-Every knob is an environment variable, settable in `.env` (loaded by `src/core/config.py:_load_dotenv`). Defaults are tuned for an English-content / global-audience build with conservative caps.
+Every knob is an environment variable, settable in `.env`. `main.py` reads `.env` once at start through `src/core/settings.py`, which declares every key the engine reads; a key it does not know, or a badly typed value, stops the start, and `main.py --dry-run` names the key. Defaults are tuned for an English-content / global-audience build with conservative caps.
 
 ---
 

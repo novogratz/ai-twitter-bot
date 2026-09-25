@@ -3,9 +3,9 @@ import logging
 import os
 import sys
 from logging.handlers import RotatingFileHandler
-from .config import _PROJECT_ROOT
+from .settings import PROJECT_ROOT
 
-LOG_FILE = os.path.join(_PROJECT_ROOT, "bot.log")
+LOG_FILE = os.path.join(PROJECT_ROOT, "bot.log")
 
 
 def setup_logging(level: str = "INFO") -> logging.Logger:
