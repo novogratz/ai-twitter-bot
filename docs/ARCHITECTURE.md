@@ -172,16 +172,15 @@ lock.
    `MIN_SECONDS_BETWEEN_POSTS` plus `POST_JITTER_SECONDS` old. A pending
    submission counts until the operator clears it. The slot is
    marked `pending` and saved with its source URL, text and time in
-   `pending_sources`, then `post_tweet(text, editorial=True)` sends
+   `pending_sources`, then `post_tweet(text)` sends
    the draft plus the source URL. `SHIPPED` marks it `published`. `REFUSED`,
    `FAILED` and `DRY_RUN` sent nothing and free the slot. `UNCONFIRMED` (the
    submit keystroke failed, so the post may be live), any other result and an
    exception leave it `pending`, which is never retried automatically. With
    `DRY_RUN` set, the text is logged and nothing is marked.
 
-`editorial=True` skips the URL stripping and the random casualization other
-posts get, so the reviewed text ships unchanged. `post_tweet` checks
-`can_post(POST)` again under the Safari lock.
+`post_tweet` ships the reviewed text unchanged, source link included, and
+checks `can_post(POST)` again under the Safari lock.
 
 Models: drafts and reviews go through `run_llm` with
 `force_provider=PROFILE_LLM_PROVIDER`. On Ollama, `EDITORIAL*` labels use
@@ -210,9 +209,8 @@ call a primitive through its module (`safari._run_applescript(...)`), never a
 
 Every write that should count goes through a function in
 `src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
-`reply_to_tweet_in_thread`, `follow_account`, `unfollow_account`,
-`like_tweet`, `pin_own_tweet`. Each runs one sequence, written once in
-`src/x/confirmed_write.py`. The chokepoint supplies its guards, its page
+`follow_account`, `like_tweet`, `pin_own_tweet`. Each runs one sequence,
+written once in `src/x/confirmed_write.py`. The chokepoint supplies its guards, its page
 steps and its ledger rows; `confirmed_write.run` owns the order. The guards
 come in two sequences, `before_lock` and `under_lock`, and
 `confirmed_write.DRY_RUN_EXIT` sits exactly once among them: the guards
@@ -220,8 +218,8 @@ before it run in a dry run too, the guards after it run live only. A
 chokepoint without it, or with two, raises before any guard runs.
 
 1. Admission before the Safari lock: `can_post` and the content checks,
-   `can_follow`, `can_unfollow`, the handle check, the Blocked-account and
-   liked-cache checks of `like_tweet`.
+   `can_follow`, the handle check, the Blocked-account and liked-cache
+   checks of `like_tweet`.
 2. The dry-run exit: under `DRY_RUN`, one `[TAG][DRY_RUN] would …` line and
    the dry-run ledger rows; nothing is opened.
 3. A pause or a last check before the lock: the follow jitter,
@@ -253,10 +251,7 @@ WriteOutcome.DRY_RUN` (`follow_engagers_bot`, `pin_job`). One limit: `SHIPPED`
 for a post or a Reply means `osascript` ran the submit keystroke, not that X
 confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
 `follow_account` ships on the Follow click; an account already followed is
-`REFUSED`. `unfollow_account`, which no active job calls, reads both page
-answers and returns `SHIPPED`, with its ledger row, only once the page
-reported the click on X's confirmation sheet. If `_run_js` times out (15 s) after that click, the
-unfollow may have shipped unrecorded.
+`REFUSED`.
 
 `like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
 only for `LIKED`, which also carries `FAILED`, `UNCONFIRMED` and
@@ -299,7 +294,11 @@ No write function exists for quotes, reposts, threads, GIF posts or
 self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 `retweet_post`, `retweet_own_latest`, `reboost_tweet`, `post_thread`,
 `reply_to_own_latest` and `reply_to_reply` were removed with their helpers
-(issue #111). The zero caps below stay as a second line.
+(issue #111). The zero caps below stay as a second line. The writes no job
+called went too (issue #168): the unfollow chokepoint with its cap, the
+nested-reply alias, and `post_tweet`'s image path and non-editorial
+branch. The bot never unfollows; `bin/mass_unfollow.py` clicks on its own
+page and writes its ledger rows itself.
 
 Four modules sit behind them:
 
@@ -308,9 +307,9 @@ Four modules sit behind them:
   repost caps at 0, originals capped at 8 and spaced by at least 1200 seconds,
   replies uncapped, repost age clamped to 48 hours. `get_live_cap` returns
   these fixed values whatever `live_strategy.json` says.
-- `src/guards/action_guard.py` decides `can_post`, `can_follow` and
-  `can_unfollow`, and records every write through `record`. It asks the
-  action ledger and never knows where the ledger stores. Quotes and
+- `src/guards/action_guard.py` decides `can_post` and `can_follow`, and
+  records every write through `record`. It asks the action ledger and
+  never knows where the ledger stores. Quotes and
   retweets are always refused; replies only need their spacing
   (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
@@ -319,8 +318,6 @@ Four modules sit behind them:
   capped at one gap so that a ledger row stamped in the future (clock set
   back, copied ledger) cannot park a waiting job; `can_post` still refuses
   until the spacing clears.
-  No active job calls `unfollow_account`, and `MAX_UNFOLLOWS_PER_DAY`
-  defaults to 0.
 - `src/guards/ledger.py` is that ledger (90 days, Toronto timestamps). Its
   interface answers four questions: shipped rows of an action on a Toronto
   day (per target for Debate turns), the last shipped write of an action,

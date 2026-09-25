@@ -26,17 +26,13 @@ def _script_kind(script):
         return "submit"
     if 'keystroke "r"' in script:
         return "reply_key"
-    if "as «class" in script:
-        return "image_copy"
-    if 'keystroke "v"' in script:
-        return "image_paste"
     if "activate" in script:
         return "activate"
     return "applescript"
 
 
 def _js_kind(js):
-    for marker, kind in (("NO_FOLLOWING_BTN", "following"), ("confirmationSheetConfirm", "confirm"),
+    for marker, kind in (("confirmationSheetConfirm", "confirm"),
                          ("NO_BTN", "follow"), ("caret", "more"), ("PIN_NOT_FOUND", "pin_item")):
         if marker in js:
             return kind
@@ -93,7 +89,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(ag, "adjust_following", lambda delta: step(f"adjust:{delta:+d}"))
     monkeypatch.setattr(ag, "jitter_sleep", lambda *_: step("jitter"))
     monkeypatch.setattr(ag, "is_whitelisted", lambda handle: False)
-    for name in ("can_post", "can_follow", "can_unfollow"):
+    for name in ("can_post", "can_follow"):
         monkeypatch.setattr(ag, name, lambda *a, _name=name, **k: (
             step(f"guard:{_name}", (False, "refused") if _name in t.refuse else (True, ""))))
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
@@ -135,50 +131,33 @@ TEXT = "Inference is getting cheaper faster than training, and the margin moves 
 
 
 def test_post_ships_then_records_then_closes(trace):
-    assert tc.post_tweet(TEXT, editorial=True) is W.SHIPPED
+    assert tc.post_tweet(TEXT) is W.SHIPPED
     assert trace.events == ["guard:can_post", "lock", "guard:can_post", "open", "submit",
                             "record:post", "note_posted", "history", "close", "unlock"]
 
 
 def test_post_refused_never_opens_the_page(trace):
     trace.refuse.add("can_post")
-    assert tc.post_tweet(TEXT, editorial=True) is W.REFUSED
+    assert tc.post_tweet(TEXT) is W.REFUSED
     assert trace.events == ["guard:can_post"]
 
 
 def test_post_refused_on_recheck_releases_the_lock(trace, monkeypatch):
     answers = [(True, ""), (False, "slot taken")]
     monkeypatch.setattr(ag, "can_post", lambda *a: trace.events.append("guard:can_post") or answers.pop(0))
-    assert tc.post_tweet(TEXT, editorial=True) is W.REFUSED
+    assert tc.post_tweet(TEXT) is W.REFUSED
     assert trace.events == ["guard:can_post", "lock", "guard:can_post", "unlock"]
 
 
 def test_post_failed_submit_records_nothing(trace):
     trace.fail.add("submit")
-    assert tc.post_tweet(TEXT, editorial=True) is W.UNCONFIRMED
+    assert tc.post_tweet(TEXT) is W.UNCONFIRMED
     assert trace.events == ["guard:can_post", "lock", "guard:can_post", "open", "submit", "close", "unlock"]
-
-
-def test_image_post_order(trace, tmp_path):
-    image = tmp_path / "chart.png"
-    image.write_bytes(b"png")
-    assert tc.post_tweet(TEXT, image_path=str(image), editorial=True) is W.SHIPPED
-    assert trace.events == ["guard:can_post", "lock", "guard:can_post", "open", "paste", "image_copy",
-                            "image_paste", "submit", "record:post", "note_posted", "history", "close",
-                            "unlock"]
-
-
-def test_image_post_failed_paste_records_nothing(trace, tmp_path):
-    image = tmp_path / "chart.png"
-    image.write_bytes(b"png")
-    trace.fail.add("paste")
-    assert tc.post_tweet(TEXT, image_path=str(image), editorial=True) is W.FAILED
-    assert trace.events == ["guard:can_post", "lock", "guard:can_post", "open", "paste", "close", "unlock"]
 
 
 def test_post_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.post_tweet(TEXT, editorial=True) is W.DRY_RUN
+    assert tc.post_tweet(TEXT) is W.DRY_RUN
     assert trace.events == ["guard:can_post", "dry:post"]
     assert _dry_run_line(trace, "POST")
 
@@ -273,42 +252,6 @@ def test_follow_dry_run(trace, monkeypatch):
     assert tc.follow_account("someone") is W.DRY_RUN
     assert trace.events == ["guard:can_follow", "dry:follow"]
     assert _dry_run_line(trace, "FOLLOW")
-
-
-# --- unfollow_account -----------------------------------------------------------
-
-
-def test_unfollow_ships_then_records(trace):
-    trace.js.extend(["CLICKED", "CONFIRMED"])
-    assert tc.unfollow_account("someone") is W.SHIPPED
-    assert trace.events == ["guard:can_unfollow", "jitter", "lock", "open", "js:following", "js:confirm",
-                            "record:unfollow", "adjust:-1", "close", "unlock"]
-
-
-def test_unfollow_refused_never_opens_the_page(trace):
-    trace.refuse.add("can_unfollow")
-    assert tc.unfollow_account("someone") is W.REFUSED
-    assert trace.events == ["guard:can_unfollow"]
-
-
-def test_unfollow_without_following_button(trace):
-    trace.js.append("NO_FOLLOWING_BTN")
-    assert tc.unfollow_account("someone") is W.FAILED
-    assert trace.events == ["guard:can_unfollow", "jitter", "lock", "open", "js:following", "close", "unlock"]
-
-
-def test_unfollow_unconfirmed_records_nothing(trace):
-    trace.js.extend(["CLICKED", "NO_CONFIRM"])
-    assert tc.unfollow_account("someone") is W.UNCONFIRMED
-    assert trace.events == ["guard:can_unfollow", "jitter", "lock", "open", "js:following", "js:confirm",
-                            "close", "unlock"]
-
-
-def test_unfollow_dry_run(trace, monkeypatch):
-    monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.unfollow_account("someone") is W.DRY_RUN
-    assert trace.events == ["guard:can_unfollow", "dry:unfollow"]
-    assert _dry_run_line(trace, "UNFOLLOW")
 
 
 # --- like_tweet -----------------------------------------------------------------
@@ -412,9 +355,8 @@ def test_stop_at_the_close_after_a_failure_still_raises(trace):
 
 
 @pytest.mark.parametrize("write", [
-    lambda: tc.post_tweet(TEXT, editorial=True),
+    lambda: tc.post_tweet(TEXT),
     lambda: tc.follow_account("someone"),
-    lambda: tc.unfollow_account("someone"),
     lambda: tc.pin_own_tweet(POST_URL),
 ])
 def test_a_stop_during_the_page_steps_records_nothing_and_releases_the_lock(trace, write):

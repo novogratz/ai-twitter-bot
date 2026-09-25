@@ -1,6 +1,6 @@
 """Write chokepoints for X via Safari + AppleScript (macOS only): each post,
-reply, like, follow, unfollow and pin has one function here that owns its
-rules, and runs them through `confirmed_write`."""
+reply, like, follow and pin has one function here that owns its rules, and
+runs them through `confirmed_write`."""
 import json
 import os
 import random
@@ -144,18 +144,6 @@ def _scrub_metadata_leaks(text: str) -> str:
     return text
 
 
-def _strip_post_urls(text: str) -> str:
-    """External links in standalone posts/quotes throttle reach and are
-    BANNED by the monetization mandate (2026-06-05). Strip them; the
-    link-in-first-reply pattern is the sanctioned alternative."""
-    stripped = re.sub(r"https?://\S+", "", text or "")
-    stripped = re.sub(r"[ \t]{2,}", " ", stripped)
-    stripped = re.sub(r"\n{3,}", "\n\n", stripped).strip()
-    if stripped != (text or "").strip():
-        log.info("[POST] external URL stripped (no-links mandate).")
-    return stripped
-
-
 class ToolCallLeakError(Exception):
     """Raised when a tweet still contains tool-call markup after scrubbing.
 
@@ -163,12 +151,9 @@ class ToolCallLeakError(Exception):
     """
 
 
-def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) -> WriteOutcome:
-    """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
-
-    Without image: uses the lightweight intent URL (text only).
-    With image: uses the full /compose/post composer + clipboard paste — the
-    intent URL doesn't support media uploads.
+def post_tweet(text: str) -> WriteOutcome:
+    """Publish an Original through the intent URL. Its reviewed wording and
+    checked source link ship unchanged.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content or dedup skip, FAILED when a step before the submit failed,
@@ -176,12 +161,6 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) ->
     Only SHIPPED is truthy.
     """
     text = _scrub_metadata_leaks(text)
-    if not editorial:
-        text = _strip_post_urls(text)
-        from ..core.humanizer import casualize
-        text = casualize(text)
-    # Editorial wording and its checked source link must survive unchanged.
-
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -224,8 +203,6 @@ def post_tweet(text: str, image_path: str = None, *, editorial: bool = False) ->
         return None
 
     def steps():
-        if image_path:
-            return _post_tweet_with_image(text, image_path)
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
         safari.open_url(url)
@@ -261,52 +238,6 @@ def _record_posted(text: str):
         save_tweet(text)
     except Exception as e:
         log.info(f"[POST] history record failed (non-fatal): {e}")
-
-
-def _post_tweet_with_image(text: str, image_path: str) -> WriteOutcome:
-    """Compose a tweet with an attached image: `post_tweet`'s page steps,
-    run by `confirmed_write` under the Safari lock, which closes the tab.
-    Returns SHIPPED only when the submit keystroke ran."""
-    import os as _os
-    if not _os.path.exists(image_path):
-        log.info(f"[POST] Image not found at {image_path} — falling back to text-only.")
-        # Fall back to text-only via the intent flow
-        url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
-        safari.open_url(url)
-        time.sleep(4)
-        if not _submit_or_abort("POST"):
-            return WriteOutcome.UNCONFIRMED
-        time.sleep(2)
-        return WriteOutcome.SHIPPED
-
-    log.info(f"[POST] Composing tweet with image {image_path}...")
-    safari.open_url("https://x.com/compose/post")
-    time.sleep(6)  # composer needs a moment to fully render
-
-    # Step 1: paste the text (focus is auto on the textarea on /compose/post)
-    if not _paste_or_abort(text, "POST"):
-        return WriteOutcome.FAILED
-    time.sleep(1)
-
-    # Step 2: copy the image to the clipboard, then Cmd+V to attach.
-    # GIFs use their own clipboard class so X uploads them ANIMATED
-    # (2026-06-05 operator: promo posts ride hype GIFs).
-    abs_path = _os.path.abspath(image_path)
-    clip_class = "GIFf" if abs_path.lower().endswith(".gif") else "PNGf"
-    copy_script = f'set the clipboard to (read POSIX file "{abs_path}" as «class {clip_class}»)'
-    if not safari._run_applescript(copy_script):
-        log.info("[POST] Could not copy image to clipboard — posting text-only.")
-    else:
-        time.sleep(0.5)
-        safari._run_applescript('tell application "System Events" to keystroke "v" using command down')
-        time.sleep(3)  # X needs a few seconds to upload + render the image preview
-
-    # Step 3: submit
-    if not _submit_or_abort("POST"):
-        return WriteOutcome.UNCONFIRMED
-    time.sleep(3)
-    log.info("[POST] Tweet with image posted!")
-    return WriteOutcome.SHIPPED
 
 
 def _maybe_like_parent(tweet_url: str, env_key: str, default_prob: float) -> None:
@@ -667,88 +598,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
         rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
         steps=steps)
-
-
-def unfollow_account(username: str) -> WriteOutcome:
-    """Visit a user's profile and click Following → confirm Unfollow.
-
-    Returns SHIPPED, and records the unfollow, only once the page reported
-    the confirm click; REFUSED, FAILED (no Following button) or UNCONFIRMED
-    (the confirm click not reported) otherwise, with nothing recorded. No
-    active job calls it.
-    """
-    username = (username or "").strip().lstrip("@")
-    # Prune policy: daily unfollow cap, 30-day anti-churn cooldown, never
-    # unfollow a protected tier1/tier2 whitelist account, dry-run.
-    from ..guards import action_guard
-    from ..core import config as _cfg
-
-    def admit():
-        if not username or len(username) > 15 or not all(
-            c.isascii() and (c.isalnum() or c == "_") for c in username
-        ):
-            log.info(f"[UNFOLLOW] Invalid handle '{username}' — skipping.")
-            return WriteOutcome.REFUSED
-        ok, why = action_guard.can_unfollow(username)
-        if not ok:
-            log.info(f"[UNFOLLOW] policy refuses @{username} ({why}).")
-            return WriteOutcome.REFUSED
-        return None
-
-    def pause():
-        action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
-
-    def steps():
-        profile_url = f"https://x.com/{username}"
-        log.info(f"[UNFOLLOW] Visiting profile: {profile_url}")
-        safari.open_url(profile_url)
-        time.sleep(5)
-
-        # Step 1: click the "Following" button. Try multiple selectors since
-        # X occasionally renames data-testid values.
-        click_following = """
-        (function() {
-            var btn = document.querySelector('[data-testid$="-unfollow"]');
-            if (!btn) btn = document.querySelector('[data-testid="userActions"] [role="button"]');
-            if (!btn) {
-                var spans = document.querySelectorAll('[role="button"] span');
-                for (var i = 0; i < spans.length; i++) {
-                    if (spans[i].textContent.trim() === 'Following') { btn = spans[i].closest('[role="button"]'); break; }
-                }
-            }
-            if (btn) { btn.click(); return 'CLICKED'; }
-            return 'NO_FOLLOWING_BTN';
-        })()
-        """
-        result = safari._run_js(click_following, log_prefix="[UNFOLLOW]")
-        if result != "CLICKED":
-            log.info(f"[UNFOLLOW] Not following @{username} (or button not found: "
-                     f"{result or 'no answer'}) — skipping.")
-            return WriteOutcome.FAILED
-        time.sleep(1.5)
-
-        # Step 2: click the confirm in the modal.
-        click_confirm = """
-        (function() {
-            var btn = document.querySelector('[data-testid="confirmationSheetConfirm"]');
-            if (btn) { btn.click(); return 'CONFIRMED'; }
-            return 'NO_CONFIRM';
-        })()
-        """
-        result = safari._run_js(click_confirm, log_prefix="[UNFOLLOW]")
-        time.sleep(1.5)
-        if result != "CONFIRMED":
-            log.info(f"[UNFOLLOW] Confirmation not clicked for @{username} "
-                     f"({result or 'no answer'}).")
-            return WriteOutcome.UNCONFIRMED
-        log.info(f"[UNFOLLOW] Unfollowed @{username}.")
-        return WriteOutcome.SHIPPED
-
-    return confirmed_write.run(
-        "UNFOLLOW", WriteOutcome, would=lambda: f"unfollow @{username}.",
-        rows=lambda: [(action_guard.UNFOLLOW, username)],
-        before_lock=(admit, confirmed_write.DRY_RUN_EXIT, pause), steps=steps,
-        after_record=lambda: action_guard.adjust_following(-1))
 
 
 # --- Follow quality gate (operator 2026-06-12: "the accounts you follow are
@@ -1223,12 +1072,3 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
         finally:
             safari.close_front_tab()
 
-
-def reply_to_tweet_in_thread(reply_url: str, reply_text: str, *, debate_turn: bool = False):
-    """Reply to a specific reply (nested), so our reply lands UNDER theirs in the thread.
-
-    Works because navigating to a reply's own status URL puts that reply in focus, so
-    pressing 'r' replies to *that* reply. Reuses reply_to_tweet's flow.
-    """
-    log.info(f"[REPLYBACK] Replying in-thread to: {reply_url}")
-    return reply_to_tweet(reply_url, reply_text, debate_turn=debate_turn)
