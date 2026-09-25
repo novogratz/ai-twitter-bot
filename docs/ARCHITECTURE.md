@@ -160,15 +160,18 @@ lock.
    1–3 evidence ids that resolve to sentences found in the source text, then
    `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
    twelve hours old or a useful AI teaching source. A second model call
-   (`review_schema()`) must approve all six criteria, plus `exceptional` at 20:45
-   and `trending` for a trend slot, which also needs a news source and no `@`.
+   (`review_schema()`) must approve all six criteria, plus `exceptional` at
+   20:45 and `trending` for a trend slot, which also needs a news source and
+   no `@`.
 
-The limits of the Draft and the review live once, in `editorial_schemas`:
-`TEXT_MAX_CHARS` (250), `EVIDENCE_PASSAGES` (40 numbered sentences per
-source), `EVIDENCE_IDS_MAX` (3) and the review's boolean fields
-(`APPROVAL_FLAGS`, `EXCEPTIONAL_FLAG`, `TREND_FLAG`). The schemas, the
-draft and review prompts and the deterministic checks read them at call
-time.
+   Four of these limits live once, in `editorial_schemas`: the 250-character
+   ceiling (`TEXT_MAX_CHARS`), the 40 numbered evidence sentences per source
+   (`EVIDENCE_PASSAGES`), the 3 evidence ids (`EVIDENCE_IDS_MAX`) and the
+   review's boolean fields (`APPROVAL_FLAGS`, `EXCEPTIONAL_FLAG`,
+   `TREND_FLAG`). The schemas, the draft and review prompts and the
+   deterministic checks read them at call time. The 80-character floor and
+   the evidence sentence filter (35–700 characters, at least five words)
+   stay in `editorial_bot`, the only module that reads them.
 7. **Audit.** An attempt that reaches review appends a line to
    `editorial_review.jsonl`; a rejection stores its reason as feedback for the
    next attempt. Nothing is written when `can_post` or the pending check
@@ -206,9 +209,9 @@ Draft or review schema as `format`, temperature 0.65 or 0.2, no voice
 prefix, and a timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300)
 capped by bedtime. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, the voice prefix, no schema,
-temperature 1.0. The label only names the call in logs. When Ollama fails, `llm_client` falls back to `LLM_FALLBACK_CLI`,
-which defaults to codex even when the variable is empty. `LLM_DISABLE_FALLBACK=1`
-turns the fallback off.
+temperature 1.0. The label only names the call in logs. When Ollama fails,
+`llm_client` falls back to `LLM_FALLBACK_CLI`, which defaults to codex even
+when the variable is empty. `LLM_DISABLE_FALLBACK=1` turns the fallback off.
 
 ## Write path and limits
 

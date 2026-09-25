@@ -1,13 +1,11 @@
 """The Draft and the Editor's review: their limits, the JSON schemas built
 from them, and the call profiles that send those schemas to the model.
 
-Each limit lives here once. The schemas, and editorial_bot's prompts and
+Each limit below lives here only. The schemas, and editorial_bot's prompts and
 checks, read it at call time: changing one changes all three."""
 import os
 
 from ..core.llm_client import CallProfile
-
-EDITORIAL_OLLAMA_MODEL = os.environ.get("EDITORIAL_OLLAMA_MODEL", "gemma4:31b")
 
 TEXT_MAX_CHARS = 250
 # Exact source sentences offered as Evidence, and how many a Draft may cite.
@@ -57,7 +55,7 @@ def review_schema() -> dict:
 
 def _profile(schema: dict, temperature: float) -> CallProfile:
     return CallProfile(
-        ollama_model=EDITORIAL_OLLAMA_MODEL,
+        ollama_model=os.environ.get("EDITORIAL_OLLAMA_MODEL", "gemma4:31b"),
         schema=schema,
         temperature=temperature,
         min_timeout=int(os.environ.get("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")),

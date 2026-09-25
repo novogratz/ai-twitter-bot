@@ -416,3 +416,34 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
     assert timeout == max(voice.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)
+
+
+@pytest.mark.parametrize("route", ["ollama", "claude"])
+def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch, route):
+    """The REPLY_SEARCH voice is built inside `reply_agent.generate_replies`,
+    with WebSearch as an allowed tool and structured output. It declares no
+    call profile either, so it reaches Ollama like every other Reply."""
+    import json
+    import urllib.request
+
+    from src.core import llm_client as llm
+    from src.replies import reply_agent as ra
+
+    monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "ollama")
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(1, "", "cloud down"))
+    monkeypatch.setattr(ra, "REPLY_LLM_PROVIDER", route)
+    monkeypatch.setattr(ra, "_load_discovered_handles", lambda limit=10: [])
+    found = [{"tweet_url": "https://x.com/someone/status/1", "reply": "Batching decides the margin.",
+              "type": "reply", "pattern": "OTHER"}]
+    ollama = OllamaServer(json.dumps(found))
+    monkeypatch.setattr(urllib.request, "urlopen", ollama)
+
+    ra.generate_replies()
+    [(request, timeout)] = ollama.requests
+    assert request["model"] == "reply-model"
+    assert request["prompt"].startswith(llm._FUNNY_FORCER + "/no_think\n\n")
+    assert "format" not in request
+    assert request["options"]["temperature"] == 1.0
+    assert timeout == llm.DEFAULT_LLM_TIMEOUT_SECONDS

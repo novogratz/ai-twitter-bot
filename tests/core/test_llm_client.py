@@ -52,7 +52,7 @@ def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch):
     ollama = OllamaServer()
     monkeypatch.setattr(urllib.request, "urlopen", ollama)
     monkeypatch.setattr(llm, "OLLAMA_MODEL", "reply-model")
-    monkeypatch.setattr(schemas, "EDITORIAL_OLLAMA_MODEL", "editor-model")
+    monkeypatch.setenv("EDITORIAL_OLLAMA_MODEL", "editor-model")
     monkeypatch.setenv("EDITORIAL_LLM_TIMEOUT_SECONDS", "300")
     review = schemas.review_profile()
     for label in ("EDITORIAL_REVIEW", "EDITORIAL_REVIEW (fallback)", "EDITORIAL_REVIEW (codex locked)",
