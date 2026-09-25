@@ -95,13 +95,13 @@ def test_curator_promotion_quality_bar():
     ("2026-10-14", 3, []),              # Toronto's day: quota spent
     ("2026-10-13", 3, ["deep_macro"]),  # yesterday: a fresh quota
 ])
-def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, monkeypatch, stamped, count,
+def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_override, stamped, count,
                                                         promoted):
     """#191: the daily promotion quota, stamped by either clock, stays spent
     until the next Toronto day."""
     from src.account import account_curator as ac
 
-    monkeypatch.setattr(ac, "DISCOVERED_PER_DAY", 3)
+    settings_override(CURATOR_DISCOVERED_PER_DAY=3)
     ac.WHITELIST.write({"tiers": {}})
     doc = {"promotion_meta": {"date": stamped, "count": count}}
     cand = {"handle": "deep_macro", "engagements": 9, "score": 9.0, "weight": 1.0}
@@ -198,12 +198,11 @@ def _stub_like_browser(monkeypatch, tmp_path):
     return requested
 
 
-def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path):
+def test_like_caps_are_read_at_call_time(monkeypatch, tmp_path, settings_override):
     from src.account import like_bot
 
     requested = _stub_like_browser(monkeypatch, tmp_path)
-    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "6")
-    monkeypatch.setenv("LIKE_BOT_DAILY_CAP", "4")
+    settings_override(LIKE_BOT_PER_CYCLE=6, LIKE_BOT_DAILY_CAP=4)
 
     like_bot.run_like_cycle()
 
@@ -223,7 +222,7 @@ def test_like_clicks_refused_after_stop(monkeypatch, tmp_path):
     assert requested == []
 
 
-def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
+def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path, settings_override):
     from src.account import like_bot
     from src.guards.active_hours import OutsideActiveHours
     import pytest
@@ -231,7 +230,7 @@ def test_like_count_survives_a_stop_between_batches(monkeypatch, tmp_path):
     from src.x import twitter_client
 
     _stub_like_browser(monkeypatch, tmp_path)
-    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", "10")
+    settings_override(LIKE_BOT_PER_CYCLE=10)
 
     def like_posts(n, wanted, page_ok, outcomes, deadline):
         outcomes.extend([twitter_client.LikeOutcome.LIKED] * 5)
@@ -318,18 +317,18 @@ def test_like_job_likes_nothing_off_the_search_page(like_job):
 
 
 @pytest.mark.parametrize("per_cycle, already_today, expected", [
-    ("3", 0, 3),        # LIKE_BOT_PER_CYCLE caps the cycle
-    ("40", 98, 2),      # the daily cap leaves 2
-    ("40", 100, 0),     # the daily cap is reached: nothing opens
+    (3, 0, 3),        # LIKE_BOT_PER_CYCLE caps the cycle
+    (40, 98, 2),      # the daily cap leaves 2
+    (40, 100, 0),     # the daily cap is reached: nothing opens
 ])
-def test_like_job_volume_stays_under_its_caps(like_job, monkeypatch, per_cycle, already_today, expected):
+def test_like_job_volume_stays_under_its_caps(like_job, settings_override, per_cycle, already_today,
+                                              expected):
     """Criterion: no volume increase; the per-cycle and daily caps still
     bound the likes that ship."""
     from src.account import like_bot
     from src.guards import active_hours
 
-    monkeypatch.setenv("LIKE_BOT_PER_CYCLE", per_cycle)
-    monkeypatch.setenv("LIKE_BOT_DAILY_CAP", "100")
+    settings_override(LIKE_BOT_PER_CYCLE=per_cycle, LIKE_BOT_DAILY_CAP=100)
     like_bot._save_daily_state({"date": active_hours.today_iso(), "count": already_today})
     posts = [{"url": f"https://x.com/infra_{i}/status/{2063500000000000400 + i}", "liked": False}
              for i in range(10)]
@@ -382,17 +381,18 @@ def test_like_quota_reached_stays_reached_for_the_toronto_day(like_job, mac_in_p
 
 @pytest.mark.parametrize("cycle_seconds, expected", [
     (None, 2),    # 30 s by default: clicks at 0 s and 20 s, none at 40 s
-    ("50", 3),    # read from the environment at each cycle
-    ("0", 0),     # time is up before the first like
+    (50.0, 3),    # read at each cycle
+    (0.0, 0),     # time is up before the first like
 ])
-def test_like_job_starts_no_like_after_its_cycle_deadline(like_job, monkeypatch, cycle_seconds, expected):
+def test_like_job_starts_no_like_after_its_cycle_deadline(like_job, monkeypatch, settings_override,
+                                                          cycle_seconds, expected):
     """The walk holds the Safari lock: past LIKE_BOT_CYCLE_SECONDS it
     clicks nothing more, so the reply jobs get the browser back."""
     from src.account import like_bot
     from src.x import twitter_client as tc
 
     if cycle_seconds is not None:
-        monkeypatch.setenv("LIKE_BOT_CYCLE_SECONDS", cycle_seconds)
+        settings_override(LIKE_BOT_CYCLE_SECONDS=cycle_seconds)
     clock = [1000.0]
     monkeypatch.setattr(tc.time, "monotonic", lambda: clock[0])
     posts = [{"url": f"https://x.com/infra_{i}/status/{2063500000000000400 + i}", "liked": False}
@@ -450,13 +450,14 @@ def test_pin_rotation_url_ground_truth_and_stale_override():
     PIN_MAX_AGE_DAYS must stop defending its slot via the 1.3x beat rule."""
     import inspect
     from src.account import pin_bot
+    from src.core import settings
     src = inspect.getsource(pin_bot.run_pin_cycle)
     assert "is_own_post" in src, "pin candidates must be filtered by URL ground truth"
     assert 'author != BOT_HANDLE' not in src and 'author and author !=' not in src, \
         "display-name-vs-handle compare must be gone"
     assert "PIN_MAX_AGE_DAYS" in src and "pin_is_stale" in src, \
         "a stale pin must rotate instead of defending with the 1.3x rule"
-    assert pin_bot.MIN_LIKES_TO_PIN <= 2 or "PIN_MIN_LIKES" in inspect.getsource(pin_bot), \
+    assert settings.DECLARED["PIN_MIN_LIKES"].default <= 2, \
         "likes floor must be reachable at this account size"
 
 
@@ -572,7 +573,7 @@ def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
         "the frozen file ages out with the ledger's 90 days; an /i/ URL names nobody"
 
 
-def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
+def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path, settings_override):
     """2026-07-19 likes+follows push: (1) the engager quality path skips
     size/niche (behavior proves both; small engagers follow back at the
     highest rate) but KEEPS the English gate; (2) follow_engagers_bot pulls
@@ -598,9 +599,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     followed = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h: followed.append(h) or FollowOutcome.FOLLOWED)
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
-    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "1")
-    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=1, FOLLOW_ENGAGERS_PER_DAY=10)
     fe.run_follow_engagers_cycle()
     assert followed == ["freshfan"], "newest engager first, media skipped"
     fe.run_follow_engagers_cycle()
@@ -610,15 +609,14 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
 
 @pytest.mark.parametrize("stamped", STAMPED_DAYS)
 def test_follow_engagers_cap_reached_stays_reached_for_the_toronto_day(mac_in_paris, monkeypatch,
-                                                                      stamped):
+                                                                      settings_override, stamped):
     """#191: the daily Engager follows, stamped by either clock, stay
     counted until the next Toronto day."""
     from src.account import follow_engagers_bot as fe
     from src.guards import follow_policy
     from src.x.twitter_client import FollowOutcome
 
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
-    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_DAY=10)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1"])
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h: pytest.fail("followed past the Toronto day's cap"))
@@ -635,7 +633,7 @@ def test_follow_engagers_cap_reached_stays_reached_for_the_toronto_day(mac_in_pa
     assert followed == ["fan1"]
 
 
-def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_path):
+def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_path, settings_override):
     """A dry-run follow neither counts toward the day nor burns the Engager,
     and still stops the cycle at its per-cycle bound."""
     from src.account import follow_engagers_bot as fe
@@ -644,7 +642,7 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     recorded = _dry_run_follow_path(monkeypatch)
     state_file = tmp_path / "follow_engagers_state.json"
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1", "fan2", "fan3"])
-    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "2")
+    settings_override(FOLLOW_ENGAGERS_PER_CYCLE=2)
 
     fe.run_follow_engagers_cycle()
 
@@ -653,7 +651,8 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]
 
 
-def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path):
+def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path,
+                                                                     settings_override):
     """2026-07-28 nine-day health read — shipped features were dead:
     (1) pin_bot was the DEAD-IMPORT family again (imported + in the
     hot-reload map, scheduler.add_job never called, zero [PIN] lines ever)
@@ -672,7 +671,7 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     called = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h: called.append(h) or FollowOutcome.CAP_REACHED)
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     fe.run_follow_engagers_cycle()
     assert called == ["somefan"], "a transient refusal ends the cycle"
     st = fe._load_state()
@@ -680,7 +679,7 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
         "transient policy refusal must NOT burn the candidate"
 
 
-def _follow_engagers_on(monkeypatch, outcomes):
+def _follow_engagers_on(monkeypatch, settings_override, outcomes):
     """follow_engagers over fan1..fan3 with follow_account answering
     `outcomes` in turn; returns the handles it was asked to follow."""
     from src.account import follow_engagers_bot as fe
@@ -688,8 +687,7 @@ def _follow_engagers_on(monkeypatch, outcomes):
 
     answers = iter(outcomes)
     asked = []
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
-    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "3")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=3)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1", "fan2", "fan3"])
     monkeypatch.setattr("src.x.twitter_client.follow_account",
                         lambda h: asked.append(h) or next(answers))
@@ -698,29 +696,29 @@ def _follow_engagers_on(monkeypatch, outcomes):
 
 
 @pytest.mark.parametrize("budget", ["TOO_SOON", "CAP_REACHED"])
-def test_follow_engagers_ends_the_cycle_on_the_follow_budget(monkeypatch, budget):
+def test_follow_engagers_ends_the_cycle_on_the_follow_budget(monkeypatch, settings_override, budget):
     """#172: the job read the cause from can_follow's message ("too soon",
     "cap reached", "ceiling"); it now reads the outcome's cause."""
     from src.x.twitter_client import FollowOutcome as F
 
-    asked, state = _follow_engagers_on(monkeypatch, [F.FOLLOWED, F[budget]])
+    asked, state = _follow_engagers_on(monkeypatch, settings_override, [F.FOLLOWED, F[budget]])
 
     assert asked == ["fan1", "fan2"]
     assert state["attempted"] == ["fan1"] and state["count_today"] == 1
 
 
-def test_follow_engagers_burns_a_candidate_on_any_other_outcome(monkeypatch):
+def test_follow_engagers_burns_a_candidate_on_any_other_outcome(monkeypatch, settings_override):
     from src.x.twitter_client import FollowOutcome as F
 
     asked, state = _follow_engagers_on(
-        monkeypatch, [F.QUALITY_REJECTED, F.ALREADY_FOLLOWED, F.REFUSED])
+        monkeypatch, settings_override, [F.QUALITY_REJECTED, F.ALREADY_FOLLOWED, F.REFUSED])
 
     assert asked == ["fan1", "fan2", "fan3"]
     assert sorted(state["attempted"]) == ["fan1", "fan2", "fan3"] and state["count_today"] == 0
 
 
 def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatch, memory_ledger,
-                                                                      tmp_path):
+                                                                      tmp_path, settings_override):
     """Through the real chokepoint and policy: the spacing refuses before
     any page opens (conftest fails the test on open_url), and the Engager
     stays for a later cycle."""
@@ -729,7 +727,7 @@ def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatc
     from src.account import follow_engagers_bot as fe
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
     ag.record(ag.FOLLOW, "earlier")
@@ -743,7 +741,7 @@ def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatc
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_candidate(
-        monkeypatch, memory_ledger, tmp_path, dry_run):
+        monkeypatch, memory_ledger, tmp_path, settings_override, dry_run):
     """#172: judge refused on an unreadable whitelist.json and the job
     marked each Engager tried, about 200 in one cycle. The cycle now stops
     at the first candidate, reported as a failure, with no candidate marked,
@@ -753,7 +751,7 @@ def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_cand
     from src.account import follow_engagers_bot as fe
 
     monkeypatch.setenv("DRY_RUN", dry_run)
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
     whitelist = tmp_path / "whitelist.json"
     whitelist.write_text('{"tiers": {"tier1": ["karp')
@@ -851,11 +849,11 @@ def test_followback_never_revisits_an_account_found_already_followed(followback,
     assert state["visits"] == [followers_page, "https://x.com/Alreadyfan", followers_page]
 
 
-def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeypatch):
+def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeypatch, settings_override):
     """#172: an invalid handle took one of the cycle's picks before the
     policy refused it; the job drops it with the policy's own check."""
     fb, state = followback
-    monkeypatch.setattr(fb, "FOLLOW_BACK_CAP_PER_CYCLE", 1)
+    settings_override(FOLLOWBACK_CAP=1)
     monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
     state["followers"] = ["averyverylonghandle", "Realfan"]
 
@@ -864,13 +862,14 @@ def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeyp
     assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
 
 
-def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeypatch, memory_ledger):
+def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeypatch, memory_ledger,
+                                                             settings_override):
     """#188: without the job's filter, a Blocked follower stayed fresh every
     cycle and took a pick and a pause before the chokepoint refused it."""
     from src.core import config
     fb, state = followback
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
-    monkeypatch.setattr(fb, "FOLLOW_BACK_CAP_PER_CYCLE", 1)
+    settings_override(FOLLOWBACK_CAP=1)
     monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
     asked = _follow_outcomes(monkeypatch, fb)
     state.update(followers=["La_Pique_Off", "Realfan"], profile="CLICKED")
@@ -961,14 +960,15 @@ def test_the_chokepoint_never_follows_a_stranger(live_follow, memory_ledger, tmp
 
 
 def test_follow_engagers_follows_an_engager_through_the_real_policy(live_follow, monkeypatch,
-                                                                    memory_ledger, tmp_path):
+                                                                    memory_ledger, tmp_path,
+                                                                    settings_override):
     """The policy finds the Engager in the ledger's Debate turns, lets it
     through the whitelist gate and skips the quality gate's size check."""
     from src.account import follow_engagers_bot as fe
     from src.guards import action_guard as ag
     from src.x import scraper
 
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(scraper, "_scrape_profile_quality",
                         lambda: {"followers": "12", "bio": "hi", "name": "Sam"})
     ag.record(ag.DEBATE_TURN, "SmallFan")

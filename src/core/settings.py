@@ -214,25 +214,24 @@ _pending(
 )
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
-_pending(
-    "PINNED_TRACKED_HANDLES",
-    "CURATOR_WINDOW_DAYS",
-    "CURATOR_TRACKED_MAX",
-    "CURATOR_MIN_ENGAGEMENTS",
-    "CURATOR_DISCOVERED_PER_DAY",
-    "CURATOR_DISCOVERED_MAX",
-    "CURATOR_PROMOTE_MIN_ENGAGEMENTS",
-    "PIN_MIN_LIKES",
-    "PIN_MAX_AGE_DAYS",
-    "LIKE_TOP_TAB_PROBABILITY",
-    "LIKE_BOT_PER_CYCLE",
-    "LIKE_BOT_DAILY_CAP",
-    "LIKE_BOT_CYCLE_SECONDS",
-    "FOLLOWBACK_CAP",
-    "ENABLE_FOLLOW_ENGAGERS",
-    "FOLLOW_ENGAGERS_PER_DAY",
-    "FOLLOW_ENGAGERS_PER_CYCLE",
-)
+_declare("PINNED_TRACKED_HANDLES", str, "TheBTCTherapist,Graphseo,Mindset4Money_X",
+         "Comma-separated handles the curator always tracks first (account_curator).")
+_declare("CURATOR_WINDOW_DAYS", int, 14, "Days of engagement log the curator scores.")
+_declare("CURATOR_TRACKED_MAX", int, 40, "Earned accounts the curator tracks, pinned ones aside.")
+_declare("CURATOR_MIN_ENGAGEMENTS", int, 3, "On-lane engagements an author needs to be tracked.")
+_declare("CURATOR_DISCOVERED_PER_DAY", int, 3, "Accounts the curator may add to the whitelist discovered tier per day.")
+_declare("CURATOR_DISCOVERED_MAX", int, 50, "Accounts the whitelist discovered tier holds at most.")
+_declare("CURATOR_PROMOTE_MIN_ENGAGEMENTS", int, 5, "On-lane engagements an author needs to be promoted to the whitelist.")
+_declare("PIN_MIN_LIKES", int, 2, "Likes an own post needs before pin_job may pin it.")
+_declare("PIN_MAX_AGE_DAYS", int, 7, "Days after which a pin no longer defends its slot with the 1.3x rule.")
+_declare("LIKE_TOP_TAB_PROBABILITY", float, 0.55, "Probability like_job searches the Top tab instead of Live.")
+_declare("LIKE_BOT_PER_CYCLE", int, 10, "Search posts like_job hands to like_tweet per cycle.")
+_declare("LIKE_BOT_DAILY_CAP", int, 500, "Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED.")
+_declare("LIKE_BOT_CYCLE_SECONDS", float, 30.0, "Seconds after taking the Safari lock past which like_job starts no like.")
+_declare("FOLLOWBACK_CAP", int, 8, "Follow-back attempts per followback_job cycle.")
+_declare("ENABLE_FOLLOW_ENGAGERS", bool, True, "Run follow_engagers_job.")
+_declare("FOLLOW_ENGAGERS_PER_DAY", int, 10, "Engagers follow_engagers_job follows per Toronto day.")
+_declare("FOLLOW_ENGAGERS_PER_CYCLE", int, 2, "Engagers follow_engagers_job follows per cycle.")
 
 # ── End of declarations ─────────────────────────────────────────────────────
 

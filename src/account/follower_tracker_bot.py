@@ -12,7 +12,7 @@ import time
 import traceback
 from datetime import datetime
 
-from ..core.config import BOT_HANDLE
+from ..core import config
 from ..core.logger import log
 from ..guards.follow_policy import FOLLOWER_HISTORY
 from ..x import safari
@@ -58,7 +58,7 @@ def _scrape_follower_count() -> int:
     '''
 
     with _safari_lock:
-        url = f"https://x.com/{BOT_HANDLE}"
+        url = f"https://x.com/{config.BOT_HANDLE}"
         log.info(f"[FOLLOWER] Opening {url}")
         safari.open_url(url)
         time.sleep(7)

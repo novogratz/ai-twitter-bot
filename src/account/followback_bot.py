@@ -24,13 +24,12 @@ they take no pick of the cycle. follow_account refuses a Blocked account
 all the same.
 """
 import json
-import os
 import random
 import re
 import time
 import traceback
 
-from ..core.config import _PROJECT_ROOT, BOT_HANDLE
+from ..core import config, settings
 from ..core.logger import log
 from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
@@ -38,9 +37,6 @@ from ..guards.reply_admission import is_blocked_account
 from ..x import safari
 from ..x.safari import _safari_lock, close_front_tab, _scroll_page
 from ..x.twitter_client import follow_account
-
-
-FOLLOW_BACK_CAP_PER_CYCLE = int(os.environ.get("FOLLOWBACK_CAP", "8"))
 
 
 def _looks_like_real_handle(handle: str) -> bool:
@@ -97,13 +93,13 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
     if not isinstance(page, dict):
         return []
     path = str(page.get("path") or "").rstrip("/").lower()
-    if path != f"/{BOT_HANDLE}/followers".lower():
+    if path != f"/{config.BOT_HANDLE}/followers".lower():
         log.info(f"[FOLLOWBACK] Not on our followers page ({path or 'no page'}); nothing read.")
         return []
     handles = []
     for h in page.get("handles") or []:
         h = str(h)
-        if h.lower() == BOT_HANDLE.lower():
+        if h.lower() == config.BOT_HANDLE.lower():
             continue
         if not _looks_like_real_handle(h):
             log.info(f"[FOLLOWBACK] Skipping suspicious handle @{h}")
@@ -120,7 +116,7 @@ def run_followback_cycle():
     followed = follow_policy.followed()
 
     with _safari_lock:
-        url = f"https://x.com/{BOT_HANDLE}/followers"
+        url = f"https://x.com/{config.BOT_HANDLE}/followers"
         log.info(f"[FOLLOWBACK] Opening {url}")
         safari.open_url(url)
         time.sleep(8)
@@ -147,7 +143,7 @@ def run_followback_cycle():
 
     # Cap per cycle so we don't burn the daily follow budget.
     random.shuffle(fresh)
-    pick = fresh[:FOLLOW_BACK_CAP_PER_CYCLE]
+    pick = fresh[:settings.get("FOLLOWBACK_CAP")]
     log.info(f"[FOLLOWBACK] Following back {len(pick)} accounts: {pick}")
 
     shipped = 0

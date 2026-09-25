@@ -17,12 +17,11 @@ Strategy:
 Rate-conscious: 10 likes per cycle by default, at most LIKE_BOT_DAILY_CAP
 (500) a day.
 """
-import os
 import random
 import traceback
 import urllib.parse
 
-from ..core import config
+from ..core import config, settings
 from ..core.logger import log
 from ..core.state_store import GUARDED, StateFile
 from ..guards import active_hours
@@ -39,21 +38,20 @@ LIKE_QUERIES = [
     "robotics OR humanoid robots OR frontier tech lang:en min_faves:50",
     "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
 ]
-TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
 # Guarded: the only record of the daily like cap.
 LIKE_BOT_STATE = StateFile("like_bot_state.json", {}, GUARDED)
 
 
 def _likes_per_cycle() -> int:
-    return int(os.environ.get("LIKE_BOT_PER_CYCLE", "10"))
+    return settings.get("LIKE_BOT_PER_CYCLE")
 
 
 def _daily_cap() -> int:
-    return int(os.environ.get("LIKE_BOT_DAILY_CAP", "500"))
+    return settings.get("LIKE_BOT_DAILY_CAP")
 
 
 def _cycle_seconds() -> float:
-    return float(os.environ.get("LIKE_BOT_CYCLE_SECONDS", "30"))
+    return settings.get("LIKE_BOT_CYCLE_SECONDS")
 
 
 def _load_daily_state() -> dict:
@@ -85,7 +83,7 @@ def run_like_cycle():
     cycle_cap = min(_likes_per_cycle(), remaining)
     query = random.choice(LIKE_QUERIES)
     encoded = urllib.parse.quote(query)
-    tab = "top" if random.random() < TOP_TAB_PROBABILITY else "live"
+    tab = "top" if random.random() < settings.get("LIKE_TOP_TAB_PROBABILITY") else "live"
     url = f"https://x.com/search?q={encoded}&f={tab}"
     if config.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like up to {cycle_cap} "

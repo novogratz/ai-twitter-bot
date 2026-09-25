@@ -134,7 +134,6 @@ def _pin(monkeypatch):
 
 def _follow_engagers(monkeypatch):
     from src.account import follow_engagers_bot
-    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     monkeypatch.setattr("src.x.twitter_client.follow_account", lambda *a, **k: pytest.fail("followed"))
     follow_engagers_bot.run_follow_engagers_cycle()
 
@@ -190,11 +189,13 @@ def _personality(monkeypatch):
     ("tweet_history.json", _validate),
     ("personality.json", _personality),
 ])
-def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypatch, tmp_path):
+def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypatch, tmp_path,
+                                                            settings_override):
     """Each of these files used to read as empty or default on a bad read,
     and the next save replaced it: a lost daily cap, a lost follow or pin
     record, a lost dedup corpus, lost dossiers or Operator tiers. The job now
     stops before acting, and the file waits for the Operator."""
+    settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     path = _corrupt(tmp_path, name)
     with pytest.raises(StateUnreadable):
         job(monkeypatch)

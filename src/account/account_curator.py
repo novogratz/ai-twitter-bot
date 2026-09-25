@@ -16,23 +16,23 @@ from its OWN evidence, recomputed every 4h into `tracked_accounts.json`:
       by conversion_attribution_bot when replying to that author actually
       produced followers (cap 3.0). Evidence of ROI, not just activity.
 
-PINNED (always tracked, never decay): TheBTCTherapist, Graphseo.
+PINNED_TRACKED_HANDLES (always tracked, never decay): TheBTCTherapist, Graphseo.
 
 The curator may also PROMOTE its strongest finds into whitelist.json under
 a dedicated "discovered" tier (operator-granted 2026-06-07: "develop
 yourself the list of accounts you want to follow") — hard-capped at
-DISCOVERED_PER_DAY adds/day and DISCOVERED_MAX total, never touching the
+CURATOR_DISCOVERED_PER_DAY adds/day and CURATOR_DISCOVERED_MAX total, never touching the
 operator tiers, every add logged. All follow chokepoint rules (20/day,
 10-min gaps, 300/150 ceiling, 30d churn) still govern actual follows.
 """
 import csv
-import os
 import re
 import traceback
 from collections import defaultdict
 from datetime import datetime, timedelta
 
-from ..core.config import BOT_HANDLE, ENGAGEMENT_LOG_FILE
+from ..core import config, settings
+from ..core.config import ENGAGEMENT_LOG_FILE
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards import active_hours
@@ -44,19 +44,14 @@ from ..guards.reply_admission import is_blocked_account
 TRACKED = StateFile("tracked_accounts.json", {}, DISPOSABLE)
 TARGETS_LOG = StateFile("engagement_targets_log.json", {}, DISPOSABLE)
 
-PINNED = tuple(h.strip() for h in os.environ.get(
-    "PINNED_TRACKED_HANDLES", "TheBTCTherapist,Graphseo,Mindset4Money_X").split(",") if h.strip())
-
-WINDOW_DAYS = int(os.environ.get("CURATOR_WINDOW_DAYS", "14"))
-TRACKED_MAX = int(os.environ.get("CURATOR_TRACKED_MAX", "40"))
-MIN_ENGAGEMENTS = int(os.environ.get("CURATOR_MIN_ENGAGEMENTS", "3"))
-DISCOVERED_PER_DAY = int(os.environ.get("CURATOR_DISCOVERED_PER_DAY", "3"))
-DISCOVERED_MAX = int(os.environ.get("CURATOR_DISCOVERED_MAX", "50"))
-
 _AUTHOR_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/")
 
 
-def _author_engagements(window_days: int = WINDOW_DAYS) -> dict:
+def pinned_handles() -> tuple:
+    return tuple(h.strip() for h in settings.get("PINNED_TRACKED_HANDLES").split(",") if h.strip())
+
+
+def _author_engagements(window_days: int | None = None) -> dict:
     """{author_lc: count} of our ON-LANE replies/quotes per parent author.
 
     Lane gate: only engagements whose outgoing text classified into a real
@@ -66,9 +61,11 @@ def _author_engagements(window_days: int = WINDOW_DAYS) -> dict:
     moment the voice changed, even though the rows are still in the window.
     """
     from ..core.pillar_tags import classify as _classify_pillar
+    if window_days is None:
+        window_days = settings.get("CURATOR_WINDOW_DAYS")
     cutoff = (datetime.now() - timedelta(days=window_days)).isoformat()
     counts: dict = defaultdict(int)
-    own = (BOT_HANDLE or "").lower()
+    own = (config.BOT_HANDLE or "").lower()
     try:
         with open(ENGAGEMENT_LOG_FILE, newline="") as f:
             for row in csv.reader(f):
@@ -106,11 +103,11 @@ def _load_tracked_doc() -> dict:
 
 
 def tracked_handles(limit: int = 30) -> list:
-    """PINNED first, then the bot's own earned list. This is THE source the
+    """Pinned handles first, then the bot's own earned list. This is THE source the
     early-reply bots scan — no static fallback by operator mandate."""
     doc = _load_tracked_doc()
     rows = doc.get("tracked") or []
-    out = list(PINNED)
+    out = list(pinned_handles())
     seen = {h.lower() for h in out}
     for r in rows:
         h = r.get("handle", "")
@@ -122,9 +119,6 @@ def tracked_handles(limit: int = 30) -> list:
     return out
 
 
-PROMOTE_MIN_ENGAGEMENTS = int(os.environ.get("CURATOR_PROMOTE_MIN_ENGAGEMENTS", "5"))
-
-
 def _promotable(cand: dict) -> bool:
     """TRACKING an account costs a scan; PROMOTING one means we FOLLOW it —
     the bar is higher. Reject spam-pattern handles (long digit runs are the
@@ -133,7 +127,7 @@ def _promotable(cand: dict) -> bool:
     h = cand.get("handle", "")
     if re.search(r"\d{4,}", h):
         return False
-    return int(cand.get("engagements", 0)) >= PROMOTE_MIN_ENGAGEMENTS
+    return int(cand.get("engagements", 0)) >= settings.get("CURATOR_PROMOTE_MIN_ENGAGEMENTS")
 
 
 def _promote_to_whitelist(candidates: list, doc: dict) -> int:
@@ -143,16 +137,17 @@ def _promote_to_whitelist(candidates: list, doc: dict) -> int:
     if active_hours.is_past_day(meta.get("date")):
         meta["count"] = 0
     meta["date"] = active_hours.today_iso()
-    budget = DISCOVERED_PER_DAY - int(meta.get("count", 0))
+    budget = settings.get("CURATOR_DISCOVERED_PER_DAY") - int(meta.get("count", 0))
     if budget <= 0:
         return 0
     wl = WHITELIST.read()
     tiers = wl.setdefault("tiers", {})
     discovered = tiers.setdefault("discovered", [])
     existing = {str(h).lower() for t in tiers.values() for h in (t or [])}
+    discovered_max = settings.get("CURATOR_DISCOVERED_MAX")
     added = 0
     for cand in candidates:
-        if added >= budget or len(discovered) >= DISCOVERED_MAX:
+        if added >= budget or len(discovered) >= discovered_max:
             break
         h = cand["handle"]
         if h.lower() in existing:
@@ -172,20 +167,22 @@ def _promote_to_whitelist(candidates: list, doc: dict) -> int:
 def run_curator_cycle() -> None:
     engagements = _author_engagements()
     weights = _conversion_weights()
-    pinned_lc = {h.lower() for h in PINNED}
+    pinned = pinned_handles()
+    pinned_lc = {h.lower() for h in pinned}
+    min_engagements = settings.get("CURATOR_MIN_ENGAGEMENTS")
     scored = []
     for a, n in engagements.items():
-        if n < MIN_ENGAGEMENTS or a in pinned_lc:
+        if n < min_engagements or a in pinned_lc:
             continue
         w = weights.get(a, 1.0)
         scored.append({"handle": a, "engagements": n, "weight": w,
                        "score": round(n * w, 2)})
     scored.sort(key=lambda r: r["score"], reverse=True)
-    tracked = scored[:TRACKED_MAX]
+    tracked = scored[:settings.get("CURATOR_TRACKED_MAX")]
 
     doc = _load_tracked_doc()
     doc["tracked"] = tracked
-    doc["pinned"] = list(PINNED)
+    doc["pinned"] = list(pinned)
     doc["updated"] = datetime.now().isoformat()
     promoted = _promote_to_whitelist(tracked[:10], doc)
     TRACKED.write(doc)
