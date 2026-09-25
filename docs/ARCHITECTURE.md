@@ -464,7 +464,7 @@ Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
 search) hands its candidates to the Reply pipeline,
 `src/replies/reply_pipeline.py`. A job keeps its source and its selection
 filters (niche, age threshold, thread-reply shape, handle pools), its
-budgets, its voice, its pace after a shipped Reply and its log tag. The
+budgets, its Reply call, its pace after a shipped Reply and its log tag. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and
@@ -509,15 +509,15 @@ the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
-passes its voice (template, model, label, language rule) and the parent
-post; `generate` returns a `Generation`: reply text, a decline (the model
+passes its Reply call, a `ReplyCall` (template, model, label, language
+rule), and the parent post; `generate` returns a `Generation`: reply text, a decline (the model
 said SKIP), a replayable failure, or a rate limit when every provider is
 exhausted. Reply text comes with the provider and model that wrote it. The
 generator always opens the prompt on the Voice,
 `personality_store.render_voice`: the Operator's `core_identity.md`
 (`core_identity_en.md` for an English reply) under a header naming
 `BOT_HANDLE`, the one reader of those files. The job's template follows,
-with its instructions but no persona, then, for voices with `dossier`, the
+with its instructions but no persona, then, for Reply calls with `dossier`, the
 author's dossier from `personality.json`, and always
 `personality_store.hard_rules_block()`, which renders the hard rules and
 the respect list from `respect_list.json`. The editorial Draft opens on the
@@ -527,7 +527,7 @@ parent's words; early-bird and mega-watch the parent's words only;
 replyback a word test on the Engager's reply; the reply search English.
 `FR_FORCED_REPLY_HANDLES` is read by `reply_language.is_fr_forced`, shared
 with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
-is a decline; the bestie and buddy voices also decline "skip" anywhere in
+is a decline; the bestie and buddy Reply calls also decline "skip" anywhere in
 the first 20 characters (`skip_window`). The editorial prompt carries the
 hard rules too. The write chokepoints apply the respect list to the
 outgoing text, before the dry-run exit: `post_tweet` refuses an Original
@@ -589,10 +589,10 @@ These are how the code behaves today, not design intent:
   own daily caps in their state files.
 - `session_refresh_job` and the `health` recovery restart Safari without
   taking `_safari_lock`.
-- The debate, VIP and Graphseo voices (`dossier=False`) carry the Voice and
+- The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
-- The Graphseo voice forces the Claude CLI whenever it is installed
-  (`direct_reply._graphseo_voice`), whatever `REPLY_LLM_PROVIDER` says: the
+- The Graphseo Reply call forces the Claude CLI whenever it is installed
+  (`direct_reply._graphseo_call`), whatever `REPLY_LLM_PROVIDER` says: the
   one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which

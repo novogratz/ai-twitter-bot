@@ -13,7 +13,7 @@ from ..core.config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
 from ..core.llm_client import CallProfile, Output
 from . import reply_generator
-from .reply_generator import LanguageRule, Outcome, Voice
+from .reply_generator import LanguageRule, Outcome, ReplyCall
 
 # Core influencers — AI + Space + Robotics + Investment, French priority
 TARGET_ACCOUNTS = [
@@ -587,17 +587,17 @@ def generate_replies(recent_topics=None, already_replied=None):
     # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
     # Reply agent is English-first: the Voice file in EN, but the prompt
     # still tells it to reply in each tweet's language.
-    voice = Voice(REPLY_PROMPT_TEMPLATE, REPLY_MODEL, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
-                  llm_options={
-                      "allowed_tools": ["WebSearch"],
-                      "cwd": "/tmp",
-                      # A Reply's profile, read as JSON: the answer is a JSON array.
-                      "profile": CallProfile(output=Output.JSON),
-                      # Must run on a tool-capable provider: ollama HTTP has no WebSearch
-                      # tool and 503s, so this path produced zero replies (op 2026-06-24).
-                      "force_provider": REPLY_LLM_PROVIDER,
-                  })
-    generation = reply_generator.generate(voice, fields={
+    call = ReplyCall(REPLY_PROMPT_TEMPLATE, REPLY_MODEL, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
+                     llm_options={
+                         "allowed_tools": ["WebSearch"],
+                         "cwd": "/tmp",
+                         # A Reply's profile, read as JSON: the answer is a JSON array.
+                         "profile": CallProfile(output=Output.JSON),
+                         # Must run on a tool-capable provider: ollama HTTP has no WebSearch
+                         # tool and 503s, so this path produced zero replies (op 2026-06-24).
+                         "force_provider": REPLY_LLM_PROVIDER,
+                     })
+    generation = reply_generator.generate(call, fields={
         "dedup_section": dedup_section,
         "skip_urls_section": skip_urls_section,
         "discovered_section": discovered_section,

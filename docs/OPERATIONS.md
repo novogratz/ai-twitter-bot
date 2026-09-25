@@ -34,7 +34,7 @@ least:
 - `LLM_FALLBACK_CLI=codex` only to let a failed call fall back to the
   cloud. Unset or empty, as in the example, there is no fallback and no
   call leaves the machine, except the Replies to @Graphseo: they run on
-  the Claude CLI whenever it is installed (`direct_reply._graphseo_voice`).
+  the Claude CLI whenever it is installed (`direct_reply._graphseo_call`).
   The start logs a fallback the code ignores, and `--dry-run` lists it
   under `ignored_llm_fallbacks`.
 
@@ -206,7 +206,7 @@ Safari restart, and nothing writes over the file:
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
-| `personality.json` | The Reply cycles whose voice reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
+| `personality.json` | The Reply cycles whose Reply call reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
 | `whitelist.json` | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. A whitelist or ledger unreadable once the profile is open is a policy refusal: `follow_account` closes the tab and returns `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing file |
 | `respect_list.json` | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `respect_list.add` and `remove`, `bin/mass_unfollow.py` |
 

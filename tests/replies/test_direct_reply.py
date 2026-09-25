@@ -1,5 +1,5 @@
 """src/replies/direct_reply: reply lane, candidate order, query rotation and
-the VIP voices."""
+the VIP ReplyCalls."""
 
 
 def _url_with_age(minutes: int) -> str:
@@ -76,7 +76,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
-    never the Graphseo voice (_graphseo_voice); output passes through humanize."""
+    never the Graphseo prompt (_graphseo_call); output passes through humanize."""
     import src.replies.direct_reply as dr
     from src.replies import reply_pipeline
 

@@ -27,7 +27,7 @@ from ..x import x_urls
 from ..core.config import REPLY_MODEL
 from ..core.logger import log
 from . import reply_pipeline
-from .reply_generator import Voice
+from .reply_generator import ReplyCall
 
 
 DEBATE_PROMPT = """Someone just responded to something you said. This is a DEBATE — your favorite sport. You are
@@ -57,8 +57,9 @@ RULES:
 Output ONLY the reply text, or exactly SKIP."""
 
 # dossier=False: whether the author's dossier joins it is the Operator's call.
-VOICE = Voice(DEBATE_PROMPT, REPLY_MODEL, "DEBATE", dossier=False, text_limit=500)
-JOB = reply_pipeline.Job("debate", "DEBATE", voice=lambda _author: VOICE, debate_turn=True, pause=(3, 3))
+REPLY_CALL = ReplyCall(DEBATE_PROMPT, REPLY_MODEL, "DEBATE", dossier=False, text_limit=500)
+JOB = reply_pipeline.Job("debate", "DEBATE", reply_call=lambda _author: REPLY_CALL, debate_turn=True,
+                         pause=(3, 3))
 
 
 def _debates_enabled() -> bool:

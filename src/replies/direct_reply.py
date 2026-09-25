@@ -1,4 +1,4 @@
-"""Direct reply: the VIP scan and the search lane. Its voice, niche filter
+"""Direct reply: the VIP scan and the search lane. Its ReplyCall, niche filter
 and candidate order also serve the feed sweep, early bird and mega watch."""
 import os
 import re
@@ -10,7 +10,7 @@ from ..core.logger import log
 from ..core.config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
-from .reply_generator import LanguageRule, Voice
+from .reply_generator import LanguageRule, ReplyCall
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
@@ -253,16 +253,16 @@ TWEET BY @Graphseo:
 Output ONLY the reply text (no quotes, no labels), or SKIP if genuinely off-topic."""
 
 
-def _graphseo_voice() -> Voice:
-    """@Graphseo's voice, on Claude CLI when installed (forced, not Ollama).
+def _graphseo_call() -> ReplyCall:
+    """@Graphseo's ReplyCall, on Claude CLI when installed (forced, not Ollama).
     max_chars is a sentence-aware cap: a blind [:220] slice published a
     mid-sentence reply on 2026-06-05 and got the account called out as AI."""
     import shutil
     force = "claude" if shutil.which("claude") else None
     # dossier=False: whether the author's dossier joins it is the Operator's call.
-    return Voice(GRAPHSEO_PROMPT, PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP", dossier=False,
-                 text_limit=300, max_chars=220,
-                 llm_options={"output_json": False, "timeout": 60, "force_provider": force})
+    return ReplyCall(GRAPHSEO_PROMPT, PRIORITY_REPLY_MODEL, "GRAPHSEO_VIP", dossier=False,
+                     text_limit=300, max_chars=220,
+                     llm_options={"output_json": False, "timeout": 60, "force_provider": force})
 
 
 # The bestie and buddy VIP prompts; Graphseo keeps GRAPHSEO_PROMPT.
@@ -270,20 +270,20 @@ BESTIE_HANDLE = os.environ.get("BESTIE_HANDLE", "TheBTCTherapist")
 
 BESTIE_REPLY_PROMPT = """@{author} (The Bitcoin Therapist) is your BEST FRIEND and
 little brother — you're the big sister who already made it out. In your
-running joke, he treats Bitcoin trauma; you treat AI-era portfolios. You're
+running joke, he's all-in on Bitcoin; you're all-in on AI. You're
 replying to his post:
 
 "{tweet_text}"
 
 THE BIT (the relationship, never break it):
-- You two run rival pretend therapy practices and you LOVE him. Whatever pain
+- You two run a friendly Bitcoin-vs-AI rivalry and you LOVE him. Whatever pain
   Bitcoin gave him this week, AI gave you the opposite — and you tease him
   about it like a big sister who already made it out.
-- If he's suffering (bags down, working weekends, cope): warm mock-clinical
-  support + a wink that the AI side is doing great. "I have a couch free
-  Tuesday. The GPU money is paying for it."
+- If he's suffering (bags down, working weekends, cope): warm big-sister
+  support, the kind only family gets away with, + a wink that the AI side
+  is doing great.
 - If he's winning (BTC pumping): genuinely celebrate him, then deadpan that
-  you'll see his patients again at the next drawdown.
+  you'll be right here for him at the next drawdown.
 - ALWAYS warm. He must want to like and reply to it. Never hostile, never
   "have fun staying poor" energy in either direction.
 
@@ -314,20 +314,20 @@ RULES:
 Output ONLY the reply text, or exactly SKIP."""
 
 
-def _vip_voice(handle: str) -> Voice:
+def _vip_call(handle: str) -> ReplyCall:
     """Per-handle relation prompt (bug 2026-06-07: the Graphseo FR prompt went to an
-    ENGLISH @TheBTCTherapist post). Graphseo keeps his dedicated FR voice;
+    ENGLISH @TheBTCTherapist post). Graphseo keeps his dedicated FR prompt;
     every other VIP gets the bestie or buddy prompt."""
     if handle.lower() == "graphseo":
-        return _graphseo_voice()
+        return _graphseo_call()
     template = BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower() else BUDDY_REPLY_PROMPT
-    # dossier=False: see _graphseo_voice.
-    return Voice(template, PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
-                 text_limit=300, strip_preamble=True, skip_window=20)
+    # dossier=False: see _graphseo_call.
+    return ReplyCall(template, PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
+                     text_limit=300, strip_preamble=True, skip_window=20)
 
 
 def _vip_job(handle: str) -> reply_pipeline.Job:
-    return reply_pipeline.Job(JOB_NAME, "VIP", voice=lambda _author: _vip_voice(handle))
+    return reply_pipeline.Job(JOB_NAME, "VIP", reply_call=lambda _author: _vip_call(handle))
 
 
 def _fresh_enough(url: str, limit: timedelta) -> bool:
@@ -368,15 +368,15 @@ def _run_graphseo_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     return posted
 
 
-def reply_voice(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_FORCED) -> Voice:
-    """The voice of the search, feed-sweep, early-bird and mega-watch
+def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_FORCED) -> ReplyCall:
+    """The ReplyCall of the search, feed-sweep, early-bird and mega-watch
     Replies; VIP authors get the priority model."""
     vip = (author or "").lower().lstrip("@") in _VIP_REPLY_ACCOUNTS_LC
     # Force the reliable reply provider (claude haiku): the local ollama
     # qwen 503s and silently drops replies (operator 2026-06-24).
-    return Voice(REPLY_PROMPT, PRIORITY_REPLY_MODEL if vip else REPLY_MODEL,
-                 "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language,
-                 llm_options={"force_provider": REPLY_LLM_PROVIDER, "cwd": "/tmp"})
+    return ReplyCall(REPLY_PROMPT, PRIORITY_REPLY_MODEL if vip else REPLY_MODEL,
+                     "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language,
+                     llm_options={"force_provider": REPLY_LLM_PROVIDER, "cwd": "/tmp"})
 
 # Bound each scheduled pass so it finishes before the next interval. Reply
 # volume comes from frequent cycles plus the other reply jobs, not one cycle
@@ -408,7 +408,7 @@ def freshness_sort_key(tweet):
     return (bucket, -velocity, minutes)
 
 
-SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", voice=reply_voice, pipelined=True)
+SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, pipelined=True)
 
 
 def _search_candidates(tweets: list, query: str) -> list:

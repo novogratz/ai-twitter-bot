@@ -208,7 +208,7 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
 
 @pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
                                                ("vip", "Graphseo", FR), ("debate", "someone", EN)])
-def test_voices_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
+def test_reply_calls_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
     """Adding the dossier to these prompts is the Operator's call: they end
     on the template, then the hard rules."""
     from src.core import personality_store
@@ -240,29 +240,6 @@ def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, monk
     assert [marker for marker in PERSONA if marker in rest] == []
 
 
-def test_the_respect_list_block_is_in_english(monkeypatch):
-    from src.guards import respect_list
-
-    monkeypatch.setattr(respect_list, "load", lambda: {"kindperson"})
-    block = respect_list.render_block()
-    assert "RESPECT LIST — accounts you must NEVER criticize BY NAME" in block
-    assert "criticize the IDEA,\nnever the person. When in doubt -> SKIP." in block
-    assert block.endswith("Current list: @kindperson.\n")
-
-
-def test_the_dossier_block_is_in_english(dossier):
-    from src.core import personality_store
-
-    personality_store.upsert_account("someone", stance="fond", feelings="warm", do="tease", dont="dunk",
-                                     predictions_to_add=[{"outcome": "right"}])
-    block = personality_store.render_account_block("someone")
-    assert block.startswith(dossier)
-    for line in ("- Category: builder", "- Stance: fond", "- Feeling: warm", "- Accumulated observations:",
-                 "- Prediction track record: 1 right / 0 wrong", "- What works with them: tease",
-                 "- What to avoid with them: dunk", "React FROM this memory."):
-        assert line in block
-
-
 @pytest.fixture
 def dossier():
     from src.core import personality_store
@@ -281,14 +258,14 @@ def test_reply_prompts_render_the_author_dossier(jobs, dossier, job):
 # --- Reading the model's answer --------------------------------------------------
 
 
-def voice(**options):
-    from src.replies.reply_generator import Voice
-    return Voice("Parent: {tweet_text}", "model", "TEST", dossier=False, **options)
+def reply_call(**options):
+    from src.replies.reply_generator import ReplyCall
+    return ReplyCall("Parent: {tweet_text}", "model", "TEST", dossier=False, **options)
 
 
 def generate(**options):
     from src.replies import reply_generator
-    return reply_generator.generate(voice(**options), author="someone", text="a post")
+    return reply_generator.generate(reply_call(**options), author="someone", text="a post")
 
 
 @pytest.mark.parametrize("stdout", [
@@ -328,7 +305,7 @@ SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
 PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
          ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
          ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
-# Only the bestie and buddy voices declined "skip" in the first 20
+# Only the bestie and buddy ReplyCalls declined "skip" in the first 20
 # characters before issue #155; every other path read SKIP as a prefix.
 VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}
 
@@ -418,9 +395,9 @@ def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
 
 def test_the_language_decided_for_the_prompt_comes_back(llm):
     from src.replies import reply_generator
-    from src.replies.reply_generator import LanguageRule, Voice
+    from src.replies.reply_generator import LanguageRule, ReplyCall
 
-    french = Voice("{tweet_text}{language_override}", "model", "TEST", language=LanguageRule.PARENT)
+    french = ReplyCall("{tweet_text}{language_override}", "model", "TEST", language=LanguageRule.PARENT)
     assert reply_generator.generate(french, author="someone", text=FR).language == "fr"
     assert "FRENCH ONLY" in llm.prompts[-1]
 
@@ -441,20 +418,20 @@ class OllamaServer:
         return io.BytesIO(json.dumps({"response": self.answer}).encode())
 
 
-REPLY_VOICES = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", "replyback")
+REPLY_CALLS = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", "replyback")
 
 
-def reply_voice(name):
+def job_reply_call(name):
     from src.replies import debate_bot, direct_reply as dr, replyback_agent
 
     return {
-        "search": lambda: dr.reply_voice("someone"),
-        "search VIP": lambda: dr.reply_voice(sorted(dr.VIP_REPLY_ACCOUNTS)[0]),
-        "Graphseo": lambda: dr._vip_voice("Graphseo"),
-        "bestie": lambda: dr._vip_voice(dr.BESTIE_HANDLE),
-        "buddy": lambda: dr._vip_voice("vision_ia"),
-        "debate": lambda: debate_bot.VOICE,
-        "replyback": lambda: replyback_agent.VOICE,
+        "search": lambda: dr.reply_call("someone"),
+        "search VIP": lambda: dr.reply_call(sorted(dr.VIP_REPLY_ACCOUNTS)[0]),
+        "Graphseo": lambda: dr._vip_call("Graphseo"),
+        "bestie": lambda: dr._vip_call(dr.BESTIE_HANDLE),
+        "buddy": lambda: dr._vip_call("vision_ia"),
+        "debate": lambda: debate_bot.REPLY_CALL,
+        "replyback": lambda: replyback_agent.REPLY_CALL,
     }[name]()
 
 
@@ -474,7 +451,7 @@ def caller_prompts(monkeypatch):
 
 
 @pytest.mark.parametrize("route", ["ollama", "claude"])
-@pytest.mark.parametrize("name", REPLY_VOICES)
+@pytest.mark.parametrize("name", REPLY_CALLS)
 def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, route):
     """Issue #174 moved the Ollama settings from the label to a call profile
     the caller declares. A Reply declares none and keeps what it had: the
@@ -494,11 +471,11 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: LLMResult(1, "", "cloud down"))
     ollama = OllamaServer("Batching decides the margin, not the model.")
     monkeypatch.setattr(urllib.request, "urlopen", ollama)
-    voice = reply_voice(name)
-    voice = dataclasses.replace(voice, llm_options={**voice.llm_options, "force_provider": route})
+    call = job_reply_call(name)
+    call = dataclasses.replace(call, llm_options={**call.llm_options, "force_provider": route})
     sent = caller_prompts(monkeypatch)
 
-    generation = reply_generator.generate(voice, author="someone", text=EN)
+    generation = reply_generator.generate(call, author="someone", text=EN)
 
     assert generation.outcome is reply_generator.Outcome.WRITTEN
     [(request, timeout)] = ollama.requests
@@ -506,11 +483,11 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     assert request["prompt"] == "/no_think\n\n" + sent[-1]
     assert "format" not in request
     assert request["options"]["temperature"] == 1.0
-    assert timeout == max(voice.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)
+    assert timeout == max(call.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)
 
 
 @pytest.mark.parametrize("fallback", [None, "codex"])
-@pytest.mark.parametrize("name", REPLY_VOICES)
+@pytest.mark.parametrize("name", REPLY_CALLS)
 def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, fallback):
     """Issue #189: codex was the fallback by default. Without
     LLM_FALLBACK_CLI, a failed Ollama call fails the Reply; with it, codex
@@ -538,10 +515,10 @@ def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, 
     cloud = []
     monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: cloud.append(cmd[0])
                         or LLMResult(0, "Batching decides the margin, not the model.", ""))
-    voice = reply_voice(name)
-    voice = dataclasses.replace(voice, llm_options={**voice.llm_options, "force_provider": "ollama"})
+    call = job_reply_call(name)
+    call = dataclasses.replace(call, llm_options={**call.llm_options, "force_provider": "ollama"})
 
-    generation = reply_generator.generate(voice, author="someone", text=EN)
+    generation = reply_generator.generate(call, author="someone", text=EN)
 
     if fallback is None:
         assert cloud == [] and generation.outcome is reply_generator.Outcome.FAILED
@@ -552,7 +529,7 @@ def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, 
 
 @pytest.mark.parametrize("route", ["ollama", "claude"])
 def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch, route):
-    """The REPLY_SEARCH voice is built inside `reply_agent.generate_replies`,
+    """The REPLY_SEARCH ReplyCall is built inside `reply_agent.generate_replies`,
     with WebSearch as an allowed tool and structured output. It declares no
     call profile either, so it reaches Ollama like every other Reply."""
     import json

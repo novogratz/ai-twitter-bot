@@ -20,7 +20,7 @@ from ..core.config import BOT_HANDLE
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline
-from .direct_reply import DIRECT_REPLY_MAX_AGE_MINUTES, freshness_sort_key, is_on_niche, reply_voice
+from .direct_reply import DIRECT_REPLY_MAX_AGE_MINUTES, freshness_sort_key, is_on_niche, reply_call
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -106,7 +106,7 @@ def _sweep_one_feed(source, scraper, cycle):
             continue
         reply_candidates.append(reply_pipeline.Candidate(url, t["text"], label))
 
-    job = reply_pipeline.Job("feed_sweep", label, voice=reply_voice, pipelined=True)
+    job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)
     replies_done = reply_pipeline.run(job, reply_candidates, cycle,
                                       max_generations=FEED_SWEEP_MAX_REPLIES_PER_CYCLE)
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")

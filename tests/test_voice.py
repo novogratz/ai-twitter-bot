@@ -51,6 +51,18 @@ def test_persona_is_woman_mom_in_the_one_voice():
     assert "big sister" in bestie_prompt and "big brother" not in bestie_prompt
 
 
+def test_relation_prompts_script_no_medical_metaphor():
+    """The Voice says "No scripted medical metaphors" and "never claim to
+    have patients": the bestie bit scripted a mock clinic (#192 review)."""
+    from src.replies import debate_bot, direct_reply, replyback_agent
+
+    prompts = (direct_reply.BESTIE_REPLY_PROMPT, direct_reply.BUDDY_REPLY_PROMPT, direct_reply.GRAPHSEO_PROMPT,
+               debate_bot.DEBATE_PROMPT, replyback_agent.REPLYBACK_PROMPT)
+    for prompt in prompts:
+        low = prompt.lower()
+        assert [w for w in ("clinical", "couch", "patient", "therapy", "session") if w in low] == []
+
+
 def test_the_voice_renders_the_operators_files_verbatim():
     """Issue #192: one reader, render_voice, and the Operator's text as is."""
     from pathlib import Path

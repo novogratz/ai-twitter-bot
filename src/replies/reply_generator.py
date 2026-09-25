@@ -1,4 +1,4 @@
-"""Reply generator: a parent post and a job's voice in, a typed Generation out.
+"""Reply generator: a parent post and a job's ReplyCall in, a typed Generation out.
 
 Every Reply prompt is assembled here, so none reaches the model without
 the Voice (`personality_store.render_voice`) before the template and
@@ -6,7 +6,7 @@ the Voice (`personality_store.render_voice`) before the template and
 language (one decision point, `_language`) and reads the model's answer
 into reply text or a decline. The model stays behind `run_llm`, which hands
 back the answer already read in the output mode of the call profile the
-voice passes in `llm_options`; tests fake that name.
+ReplyCall passes in `llm_options`; tests fake that name.
 """
 import re
 from dataclasses import dataclass, field
@@ -38,7 +38,7 @@ class Generation:
 
 
 class LanguageRule(Enum):
-    """How a voice picks the reply language, for the Voice file and the
+    """How a ReplyCall picks the reply language, for the Voice file and the
     template's `{language_override}` line."""
     PARENT = "parent"  # looks_french on the parent text
     PARENT_OR_FR_FORCED = "parent or FR-forced"  # FR_FORCED_REPLY_HANDLES first
@@ -47,7 +47,7 @@ class LanguageRule(Enum):
 
 
 @dataclass(frozen=True)
-class Voice:
+class ReplyCall:
     """A job's prompt template and model call. The template may use
     {author}, {tweet_text}, {original_tweet} and {language_override}. The
     template holds the job's instructions, never the persona: the Voice
@@ -79,44 +79,44 @@ _LANGUAGE_OVERRIDE = {
 }
 
 
-def generate(voice: Voice, *, author: str = "", text: str = "", context: str = "",
+def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str = "",
              fields: dict | None = None) -> Generation:
     """One model call for one parent post. `author` is the parent's handle,
     `context` the post it answers (replyback), `fields` any other template
     field. Raises OutsideActiveHours; any other error is a FAILED generation."""
-    language = _language(voice, author, text or "")
-    prompt = _prompt(voice, author, text or "", context or "", language, fields or {})
+    language = _language(call, author, text or "")
+    prompt = _prompt(call, author, text or "", context or "", language, fields or {})
     try:
-        result = run_llm(prompt, voice.model, label=voice.label, **voice.llm_options)
+        result = run_llm(prompt, call.model, label=call.label, **call.llm_options)
     except OutsideActiveHours:
         raise
     except Exception as exc:
-        log.info(f"[{voice.label}] Generation error: {exc!r}")
+        log.info(f"[{call.label}] Generation error: {exc!r}")
         return Generation(Outcome.FAILED, language=language)
     if result.status is LLMStatus.EXHAUSTED:
-        log.info(f"[{voice.label}] LLM rate limit reached: every provider hit its usage limit.")
+        log.info(f"[{call.label}] LLM rate limit reached: every provider hit its usage limit.")
         return Generation(Outcome.RATE_LIMITED, language=language)
     if result.returncode != 0:
-        log.info(f"[{voice.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
+        log.info(f"[{call.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
         return Generation(Outcome.FAILED, language=language)
     reply = result.stdout
-    if voice.strip_preamble:
+    if call.strip_preamble:
         reply = strip_agent_preamble(reply)
     reply = reply.strip()
     if reply.startswith('"') and reply.endswith('"'):
         reply = reply[1:-1].strip()
     if not reply:
         return Generation(Outcome.FAILED, language=language)
-    if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:voice.skip_window]:
+    if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
         return Generation(Outcome.DECLINED, language=language)
-    if voice.max_chars:
-        reply = smart_trim(reply, voice.max_chars)
+    if call.max_chars:
+        reply = smart_trim(reply, call.max_chars)
     return Generation(Outcome.WRITTEN, language=language, text=reply,
                       provider=result.provider, model=result.model)
 
 
-def _language(voice: Voice, author: str, text: str) -> Literal["fr", "en"]:
-    rule = voice.language
+def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
+    rule = call.language
     if rule is LanguageRule.ENGLISH:
         return "en"
     if rule is LanguageRule.ENGAGER_WORDS:
@@ -128,15 +128,15 @@ def _language(voice: Voice, author: str, text: str) -> Literal["fr", "en"]:
     return "fr" if looks_french(text) else "en"
 
 
-def _prompt(voice: Voice, author: str, text: str, context: str, language: str, fields: dict) -> str:
+def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict) -> str:
     anchors = [personality_store.hard_rules_block()]
-    if voice.dossier:
+    if call.dossier:
         anchors = [personality_store.render_account_block(author)] + anchors
-    prompt = voice.template.format(**{
+    prompt = call.template.format(**{
         **fields,
         "author": author,
-        "tweet_text": text[:voice.text_limit],
-        "original_tweet": context[:voice.text_limit],
+        "tweet_text": text[:call.text_limit],
+        "original_tweet": context[:call.text_limit],
         "language_override": _LANGUAGE_OVERRIDE[language],
     })
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, *anchors]))
