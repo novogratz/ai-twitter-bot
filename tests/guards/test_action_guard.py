@@ -64,9 +64,10 @@ def _noon(monkeypatch):
     return now
 
 
-def test_debate_turn_cap_counts_todays_shipped_turns_per_author(monkeypatch, memory_ledger):
+def test_debate_turn_cap_counts_todays_shipped_turns_per_author(monkeypatch, settings_override,
+                                                              memory_ledger):
     now = _noon(monkeypatch)
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "2")
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
     memory_ledger.append(ag.DEBATE_TURN, "challenger", False, now - timedelta(days=1))
     memory_ledger.append(ag.DEBATE_TURN, "challenger", True, now)
     memory_ledger.append(ag.DEBATE_TURN, "other", False, now)
@@ -165,9 +166,9 @@ def test_can_post_reply_admits_exactly_when_the_wait_reaches_zero(monkeypatch):
     assert ag.can_post(ag.REPLY) == (True, "")
 
 
-def test_original_gap_is_drawn_once_per_original(monkeypatch):
+def test_original_gap_is_drawn_once_per_original(monkeypatch, settings_override):
     now = _ledger_clock(monkeypatch)
-    monkeypatch.setattr(config, "POST_JITTER_SECONDS", 600)
+    settings_override(POST_JITTER_SECONDS=600)
     ag.record(ag.POST, "original")
     gap = ag.seconds_until_allowed(ag.POST)
     assert config.MIN_SECONDS_BETWEEN_POSTS <= gap <= config.MIN_SECONDS_BETWEEN_POSTS + 600

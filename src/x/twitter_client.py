@@ -2,13 +2,12 @@
 reply, like, follow and pin has one function here that owns its rules, and
 runs them through `confirmed_write`."""
 import json
-import os
 import random
 import re
 import time
 import urllib.parse
 from enum import Enum
-from ..core.config import BOT_PROFILE_URL
+from ..core import settings
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
@@ -249,19 +248,16 @@ def _record_posted(text: str):
         log.info(f"[POST] history record failed (non-fatal): {e}")
 
 
-def _maybe_like_parent(tweet_url: str, env_key: str, default_prob: float) -> None:
-    """Probabilistically like the tweet we just replied to / quoted.
+def _maybe_like_parent(tweet_url: str) -> None:
+    """Like the tweet we just replied to with REPLY_LIKE_PARENT_PROB.
 
     Operator 2026-06-15: "we got hit by spam/automation flags — cool down
     the number of likes you give." Liking the parent of EVERY reply (743/day)
     and EVERY quote was the automation signature. A human likes only some of
     what they reply to, so gate it behind a low probability (read at CALL
-    time — side-effect env). Replies still ship; we just stop the
+    time — side-effect setting). Replies still ship; we just stop the
     one-like-per-reply firehose. prob<=0 disables parent-likes entirely."""
-    try:
-        prob = float(os.environ.get(env_key, str(default_prob)))
-    except (TypeError, ValueError):
-        prob = default_prob
+    prob = settings.get("REPLY_LIKE_PARENT_PROB")
     if prob <= 0 or random.random() > prob:
         return
     try:
@@ -534,7 +530,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
-            _maybe_like_parent(tweet_url, "REPLY_LIKE_PARENT_PROB", 0.12)
+            _maybe_like_parent(tweet_url)
             time.sleep(1)
 
             log.info("Clicking reply...")
@@ -924,16 +920,13 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
         return []
     # Cooled down 8→3 (operator 2026-06-15: too many likes tripped the
     # automation flag). Liking our own engagers is the most defensible
-    # like, but fewer is calmer. Env-tunable.
-    try:
-        _n_like = max(0, int(os.environ.get("NOTIFY_LIKE_REPLIES_COUNT", "3")))
-    except (TypeError, ValueError):
-        _n_like = 3
+    # like, but fewer is calmer. NOTIFY_LIKE_REPLIES_COUNT.
+    _n_like = max(0, settings.get("NOTIFY_LIKE_REPLIES_COUNT"))
     if _n_like == 0:
         return []
     with safari._safari_lock:
         log.info("[NOTIFY] Opening own profile...")
-        safari.open_url(BOT_PROFILE_URL)
+        safari.open_url(_cfg.BOT_PROFILE_URL)
         try:
             time.sleep(5)
             log.info("[NOTIFY] Opening latest tweet...")

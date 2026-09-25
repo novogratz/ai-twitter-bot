@@ -78,11 +78,11 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     assert set_aside() == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
-def test_a_temporary_refusal_stays_replayable(llm, chokepoint, monkeypatch):
+def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override):
     from src.guards import action_guard
     from src.guards.reply_admission import Refusal
 
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
     action_guard.record(action_guard.DEBATE_TURN, target="capped")
     capped, admitted = fresh("capped", n=1), fresh("someone", n=2)
     cycle = rp.Cycle()

@@ -582,9 +582,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path, settings_ov
     which finds the Engager itself (#173)."""
     from src.guards.follow_policy import _quality_decision as _follow_quality_decision
     from src.x.twitter_client import FollowOutcome
-    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "10000")
-    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
-    monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
+    settings_override(FOLLOW_MIN_FOLLOWERS=10000, FOLLOW_REQUIRE_NICHE=True, FOLLOW_REQUIRE_ENGLISH=True)
     ok, _ = _follow_quality_decision(42, "just a person who likes computers", "Sam", False, engager=True)
     assert ok, "engager must bypass min-followers and niche gates"
     ok, why = _follow_quality_decision(42, "Analyse crypto et IA pour les investisseurs. Avec vous dans les marchés.", "Jean", False, engager=True)
@@ -773,7 +771,7 @@ def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_cand
 
 
 @pytest.fixture
-def live_follow(monkeypatch, memory_ledger, tmp_path):
+def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     """The real follow chokepoint and policy, in the live whitelist mode,
     over a scripted browser: the tab shows `state["page"]`, a followers
     page listing `state["followers"]`, every profile answers
@@ -783,8 +781,7 @@ def live_follow(monkeypatch, memory_ledger, tmp_path):
     from src.x import safari, scraper, twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", True)
+    settings_override(FOLLOW_WHITELIST_ONLY=True, FOLLOWBACK_BYPASS_WHITELIST=True)
     monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
     monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
     monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
@@ -996,14 +993,11 @@ def engage(monkeypatch, live_follow):
 @pytest.mark.parametrize("whitelist_only", [True, False])
 @pytest.mark.parametrize("bypass", [True, False])
 def test_engage_never_tries_to_follow_a_stranger_from_the_feed(
-        engage, monkeypatch, memory_ledger, tmp_path, whitelist_only, bypass):
+        engage, monkeypatch, settings_override, memory_ledger, tmp_path, whitelist_only, bypass):
     """#173: engage_job's pool comes from the feeds; an account there with
     no relation to ours never reaches the chokepoint, whatever the mode."""
-    from src.core import config
-
     eb, state = engage
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", bypass)
+    settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only, FOLLOWBACK_BYPASS_WHITELIST=bypass)
     monkeypatch.setattr(eb, "_build_pool", lambda: ["feedaccount"])
     outcomes = _follow_outcomes(monkeypatch, eb)
 
@@ -1017,16 +1011,14 @@ def test_engage_never_tries_to_follow_a_stranger_from_the_feed(
 @pytest.mark.parametrize("whitelist_only", [True, False])
 @pytest.mark.parametrize("bypass", [True, False])
 def test_engage_leaves_its_followers_and_engagers_to_their_own_jobs(
-        engage, monkeypatch, memory_ledger, tmp_path, whitelist_only, bypass):
+        engage, monkeypatch, settings_override, memory_ledger, tmp_path, whitelist_only, bypass):
     """#173 review: engage_job followed any follower or Engager of its pool
     past the whitelist, the engager quality gate and the caps of
     followback_job and follow_engagers_job. It follows Seed accounts only."""
-    from src.core import config
     from src.guards import action_guard as ag, follow_policy
 
     eb, state = engage
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", bypass)
+    settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only, FOLLOWBACK_BYPASS_WHITELIST=bypass)
     follow_policy.record_followers(["poolfan"])
     ag.record(ag.DEBATE_TURN, "pooldebater")
     monkeypatch.setattr(eb, "_build_pool", lambda: ["poolfan", "pooldebater"])

@@ -13,11 +13,10 @@ Gates on every generated draft before it can publish, among them:
 Usage:
     ok, reason = content_guard.validate(text, kind="original")
 """
-import os
 import re
 from typing import Optional, Tuple
 
-from ..core.config import BAN_SHORT_TERM_PRICE_TARGETS
+from ..core import config, settings
 from ..core.state_errors import StateUnreadable
 
 # X composer limit for replies; Reply admission trims to it.
@@ -42,17 +41,11 @@ REPLY_MAX_CHARS = 278
 #      covered 3× in one morning under different angles.
 
 _RECENT_NORM: list = []          # in-memory profiles of this run's posts
-_DUP_THRESHOLD = float(os.environ.get("DUP_JACCARD_THRESHOLD", "0.45"))
-_DUP_CONTAINMENT_THRESHOLD = float(os.environ.get("DUP_CONTAINMENT_THRESHOLD", "0.6"))
-_DUP_SHARED_BIGRAMS = int(os.environ.get("DUP_SHARED_BIGRAMS", "3"))
-_DUP_TOPIC_WINDOW_HOURS = float(os.environ.get("DUP_TOPIC_WINDOW_HOURS", "24"))
-_DUP_TOPIC_SHARED_WORDS = int(os.environ.get("DUP_TOPIC_SHARED_WORDS", "3"))
 # Text-similarity signals (jaccard/containment/bigrams) only apply to posts
-# from the last N hours — the account legitimately revisits its core topics
-# (datacenter power, BTC ETFs…) week after week; a 7-day-old post sharing 3
-# content bigrams is topic continuity, not duplication (false-positive fix
+# from the last DUP_TEXT_WINDOW_HOURS — the account legitimately revisits its
+# core topics (datacenter power, BTC ETFs…) week after week; a 7-day-old post
+# sharing 3 content bigrams is topic continuity, not duplication (false-positive fix
 # 2026-06-05 — two fresh Decodes were blocked against week-old posts).
-_DUP_TEXT_WINDOW_HOURS = float(os.environ.get("DUP_TEXT_WINDOW_HOURS", "48"))
 
 # Generic words that must never count as "shared content" between two posts
 # (EN + FR). Market/tech words (gpu, valuation, datacenter…) deliberately
@@ -177,7 +170,12 @@ def _recent_profiles(limit: int = 40) -> list:
 def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
     """True if `text` is a near-duplicate (or same-story rehash) of a
     recently posted original. See the v2 signal list above."""
-    th = threshold if threshold is not None else _DUP_THRESHOLD
+    th = threshold if threshold is not None else settings.get("DUP_JACCARD_THRESHOLD")
+    containment = settings.get("DUP_CONTAINMENT_THRESHOLD")
+    shared_bigrams = settings.get("DUP_SHARED_BIGRAMS")
+    text_window_h = settings.get("DUP_TEXT_WINDOW_HOURS")
+    topic_window_h = settings.get("DUP_TOPIC_WINDOW_HOURS")
+    topic_shared_words = settings.get("DUP_TOPIC_SHARED_WORDS")
     p = _dup_profile(text)
     ws = p["words"]
     # Exact normalized-text rehash is always a duplicate, even for short
@@ -195,17 +193,17 @@ def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
         inter = len(ws & pw)
         union = len(ws | pw)
         age_h = prev.get("age_h", 9999.0)
-        if age_h <= _DUP_TEXT_WINDOW_HOURS:
+        if age_h <= text_window_h:
             if union and (inter / union) >= th:
                 return True
-            if (inter / max(1, min(len(ws), len(pw)))) >= _DUP_CONTAINMENT_THRESHOLD:
+            if (inter / max(1, min(len(ws), len(pw)))) >= containment:
                 return True
-            if len(p["bigrams"] & prev["bigrams"]) >= _DUP_SHARED_BIGRAMS:
+            if len(p["bigrams"] & prev["bigrams"]) >= shared_bigrams:
                 return True
         if (
-            age_h <= _DUP_TOPIC_WINDOW_HOURS
+            age_h <= topic_window_h
             and (p["entities"] & prev["entities"])
-            and inter >= _DUP_TOPIC_SHARED_WORDS
+            and inter >= topic_shared_words
         ):
             return True
     return False
@@ -325,12 +323,11 @@ _LAZY_REPLIES = {
     "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
     "mdr", "enorme", "énorme", "ouais", "clairement", "evidemment", "évidemment",
 }
-_REPLY_MIN_CHARS = int(os.environ.get("REPLY_MIN_CHARS", "25"))
 
 
 def _is_lazy_reply(text: str) -> bool:
     stripped = (text or "").strip()
-    if len(stripped) < _REPLY_MIN_CHARS:
+    if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
     norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
     return norm in _LAZY_REPLIES
@@ -434,7 +431,7 @@ def _rationed_shape_overused(text: str) -> bool:
     matched = [p for p in _RATIONED_OPENER_SHAPES if p.match(text or "")]
     if not matched:
         return False
-    window_h = int(os.environ.get("RATIONED_SHAPE_WINDOW_HOURS", "6"))
+    window_h = settings.get("RATIONED_SHAPE_WINDOW_HOURS")
     try:
         from ..core.history import get_recent_tweets
         recent = get_recent_tweets(hours=window_h)
@@ -471,7 +468,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if re.match(r"^[\s\"'«]*skip", text, re.IGNORECASE):
         return (False, "SKIP-rationale leak (model refusal as content)")
 
-    if BAN_SHORT_TERM_PRICE_TARGETS and has_near_term_price_target(text):
+    if config.ban_short_term_price_targets() and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
 
     # ALL surfaces — replies included (the 2026-07-29 leak WAS a reply).
@@ -483,7 +480,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         # this was pinned to "fr", so after the English flip it REJECTED our
         # English posts and let French through. Now: primary=en → reject French,
         # primary=fr → reject English. Unknown/short → allow.
-        primary = os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
+        primary = settings.get("CONTENT_LANG_PRIMARY").strip().lower()
         if primary in ("en", "fr"):
             lang, conf = detect_language(text)
             if lang != "unknown" and lang != primary:

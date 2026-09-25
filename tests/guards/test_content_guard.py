@@ -53,6 +53,23 @@ def test_dedup_exact_repost_blocked():
     assert cg.is_duplicate(text)
 
 
+def test_dedup_text_window_read_at_call_time(monkeypatch, settings_override):
+    from datetime import datetime, timedelta
+    from src.core import history
+
+    posted = (datetime.now() - timedelta(hours=30)).isoformat()
+    monkeypatch.setattr(history, "load_history", lambda: [{
+        "timestamp": posted,
+        "text": "Everyone watches GPU supply. The real bottleneck is the power bill",
+    }])
+    draft = ("Everyone is tracking GPU supply. The real bottleneck is the power bill. "
+             "You are buying silicon; you are renting electricity.")
+
+    assert cg.is_duplicate(draft)
+    settings_override(DUP_TEXT_WINDOW_HOURS=24.0)
+    assert not cg.is_duplicate(draft)
+
+
 # --- price-target gate ------------------------------------------------------
 
 
@@ -67,6 +84,17 @@ def test_price_gate_allows_normal_news():
     assert not cg.has_near_term_price_target(
         "Multi-year thesis: $NVDA datacenter revenue compounds through 2030."
     )
+
+
+def test_price_gate_switch_read_at_call_time(settings_override):
+    text = ("Analysts keep repeating one line this week: $NVDA to $200 by friday. "
+            "Datacenter demand is real, but a four-day price call is a coin flip "
+            "wearing a suit.")
+
+    assert cg.validate(text) == (
+        False, "near-term price target (price + near-term timeframe)")
+    settings_override(BAN_SHORT_TERM_PRICE_TARGETS=False)
+    assert cg.validate(text) == (True, "")
 
 
 # --- language detection ------------------------------------------------------

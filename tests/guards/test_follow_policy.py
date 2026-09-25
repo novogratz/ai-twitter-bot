@@ -21,8 +21,13 @@ from tests.helpers import TORONTO, clock
 # --- 2026-06-07 agent spec: follow policy (Part 1 hard constraints) ---------
 
 
+@pytest.fixture(autouse=True)
+def _no_following_count_override(settings_override):
+    settings_override(FOLLOWING_COUNT_OVERRIDE=None)
+
+
 @pytest.fixture()
-def follow_env(monkeypatch, tmp_path, memory_ledger):
+def follow_env(settings_override, tmp_path, memory_ledger):
     """Isolated ledger + whitelist + counts for the follow policy tests."""
     (tmp_path / "whitelist.json").write_text(json.dumps({"tiers": {
         "tier1": ["TheBTCTherapist"],
@@ -31,24 +36,18 @@ def follow_env(monkeypatch, tmp_path, memory_ledger):
         "tier4": ["saylor", "balajis"],
     }}))
     # Spec pacing defaults, but zeroed spacing unless a test re-enables it.
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
-    monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 20)
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
-    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
-    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", False)
-    monkeypatch.setattr(config, "FOLLOW_TOTAL_CAP", 300)
-    monkeypatch.setattr(config, "FOLLOW_LOW_PHASE_CEILING", 150)
-    monkeypatch.setattr(config, "FOLLOW_LOW_PHASE_FOLLOWERS", 300)
+    settings_override(FOLLOW_WHITELIST_ONLY=True, MAX_FOLLOWS_PER_DAY=20, MIN_SECONDS_BETWEEN_FOLLOWS=0,
+                      FOLLOW_SPACING_JITTER_SECONDS=0, FOLLOW_ENFORCE_RATIO=False, FOLLOW_TOTAL_CAP=300,
+                      FOLLOW_LOW_PHASE_CEILING=150, FOLLOW_LOW_PHASE_FOLLOWERS=300)
     # These tests pin the LEGACY spec policy; growth mode (2026-06-11) has
     # its own dedicated test and must not leak in from the live .env.
-    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
+    settings_override(FOLLOW_GROWTH_MODE=False)
     return fp
 
 
 def _counts(monkeypatch, tmp_path, followers, following):
     """The account's counts as the follower tracker and the following
     counter leave them on disk."""
-    monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
     (tmp_path / "follower_history.json").write_text(json.dumps([{"count": followers}]))
     (tmp_path / "following_count.json").write_text(json.dumps({"count": following}))
 
@@ -120,7 +119,6 @@ def test_an_unreadable_following_count_refuses_every_follow(follow_env, monkeypa
     ceiling. The count comes from following_count.json, else from the
     followed list: either one unreadable now refuses the follow as a ceiling
     reached, and the file waits for the Operator."""
-    monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
     (tmp_path / "follower_history.json").write_text(json.dumps([{"count": 100}]))
     path = tmp_path / name
     path.write_text('{"count": 1')
@@ -143,11 +141,12 @@ def test_an_unreadable_follower_history_leaves_the_lowest_ceiling(follow_env, mo
 
 @pytest.mark.parametrize("history", ['[{"count": 1', "[]"])
 def test_the_ratio_brake_refuses_while_the_follower_count_is_unknown(follow_env, monkeypatch,
-                                                                    tmp_path, history):
+                                                                    settings_override, tmp_path,
+                                                                    history):
     """#171: the ratio brake skipped itself when follower_history.json
     held no sample, so losing the disposable file admitted follows the
     brake would refuse."""
-    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", True)
+    settings_override(FOLLOW_ENFORCE_RATIO=True)
     _counts(monkeypatch, tmp_path, 100, 10)
     assert fp.judge("karpathy") == ADMITTED
 
@@ -157,8 +156,9 @@ def test_the_ratio_brake_refuses_while_the_follower_count_is_unknown(follow_env,
         Refusal.CAP_REACHED, "follower count unknown: ratio brake cannot be checked")
 
 
-def test_a_follow_decision_reads_each_follow_file_once(follow_env, monkeypatch, tmp_path):
-    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", True)
+def test_a_follow_decision_reads_each_follow_file_once(follow_env, monkeypatch, settings_override,
+                                                        tmp_path):
+    settings_override(FOLLOW_ENFORCE_RATIO=True)
     _counts(monkeypatch, tmp_path, 100, 10)
     reads = []
     real_read = StateFile.read
@@ -171,12 +171,12 @@ def test_a_follow_decision_reads_each_follow_file_once(follow_env, monkeypatch, 
 
 
 @pytest.mark.parametrize("whitelist_only", [True, False])
-def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, tmp_path,
-                                                    whitelist_only):
+def test_an_unreadable_whitelist_stops_every_follow(follow_env, monkeypatch, settings_override,
+                                                    tmp_path, whitelist_only):
     """#171: an unreadable whitelist.json read as empty. #172: a refusal let
     follow_engagers mark each Engager tried, so judge raises instead, and
     the file waits for the Operator."""
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
+    settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only)
     _counts(monkeypatch, tmp_path, 100, 10)
     path = tmp_path / "whitelist.json"
     path.write_text('{"tiers": {"tier1": ["karp')
@@ -216,9 +216,9 @@ def test_adjust_following_keeps_the_baseline_and_never_overwrites_an_unreadable_
     assert path.read_text() == '{"count": 1'
 
 
-def test_follow_spacing_blocks_burst(follow_env, monkeypatch, tmp_path):
+def test_follow_spacing_blocks_burst(follow_env, monkeypatch, settings_override, tmp_path):
     """Never burst-follow: a follow within the 10-min gap is refused."""
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
+    settings_override(MIN_SECONDS_BETWEEN_FOLLOWS=600)
     _counts(monkeypatch, tmp_path, 100, 10)
     ag.record(ag.FOLLOW, target="TheBTCTherapist")
     verdict = fp.judge("morganhousel")
@@ -253,11 +253,11 @@ def test_anti_churn_counts_any_follow_or_unfollow_within_the_cooldown(follow_env
     assert fp.judge("saylor") == ADMITTED, "a like is no touch"
 
 
-def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, memory_ledger, tmp_path):
+def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, settings_override,
+                                              memory_ledger, tmp_path):
     now = _noon(monkeypatch)
     _counts(monkeypatch, tmp_path, 100, 10)
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
-    monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 2)
+    settings_override(FOLLOW_WHITELIST_ONLY=False, MAX_FOLLOWS_PER_DAY=2)
     fp.record_followers(["fan"])
     memory_ledger.append(ag.FOLLOW, "yesterday", False, now - timedelta(days=1))
     memory_ledger.append(ag.FOLLOW, "dry", True, now)
@@ -269,15 +269,16 @@ def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, memory_l
     assert fp.judge("fan") == Verdict(Refusal.CAP_REACHED, "daily follow cap reached (2)")
 
 
-def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatch, tmp_path):
+def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatch, settings_override,
+                                                         tmp_path):
     """2026-06-11 operator: "go back on following people and following back".
     Growth mode must untie the following ceiling from the followers count
     (following>followers mid-purge would block every follow), while
     FOLLOW_TOTAL_CAP stays the hard stop and legacy mode keeps the old
     followers-tied invariant."""
-    monkeypatch.setattr(config, "FOLLOW_TOTAL_CAP", 3000)
+    settings_override(FOLLOW_TOTAL_CAP=3000)
 
-    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", True)
+    settings_override(FOLLOW_GROWTH_MODE=True)
     _counts(monkeypatch, tmp_path, 1423, 2999)  # followers, following
     assert fp.judge("karpathy") == ADMITTED, \
         "growth mode: ceiling is FOLLOW_TOTAL_CAP, not the followers count"
@@ -285,7 +286,7 @@ def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatc
     verdict = fp.judge("karpathy")
     assert verdict.refusal is Refusal.CAP_REACHED and "(3000 >= 3000)" in verdict.reason
 
-    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
+    settings_override(FOLLOW_GROWTH_MODE=False)
     _counts(monkeypatch, tmp_path, 1423, 1422)
     assert fp.judge("karpathy") == ADMITTED
     _counts(monkeypatch, tmp_path, 1423, 1423)
@@ -295,13 +296,13 @@ def test_follow_growth_mode_unties_ceiling_from_followers(follow_env, monkeypatc
 
 
 def test_a_follower_or_an_engager_passes_the_whitelist_gate_while_the_bypass_is_on(
-        follow_env, monkeypatch, tmp_path):
+        follow_env, monkeypatch, settings_override, tmp_path):
     """Self-improve #3 (2026-06-24): followback was dead — whitelist-only
     blocked following people who engage with us. #173: the policy finds the
     relation itself; FOLLOWBACK_BYPASS_WHITELIST lets a follower or an
     Engager through the whitelist gate ONLY, never the other gates."""
     _counts(monkeypatch, tmp_path, 100, 10)
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", True)
+    settings_override(FOLLOWBACK_BYPASS_WHITELIST=True)
     fp.record_followers(["somefollower"])
     ag.record(ag.DEBATE_TURN, "someengager")
     assert fp.judge("somefollower") == ADMITTED
@@ -309,7 +310,7 @@ def test_a_follower_or_an_engager_passes_the_whitelist_gate_while_the_bypass_is_
     ag.record(ag.FOLLOW, "somefollower")
     assert "anti-churn" in fp.judge("somefollower").reason
 
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", False)
+    settings_override(FOLLOWBACK_BYPASS_WHITELIST=False)
     assert fp.judge("someengager") == Verdict(
         Refusal.POLICY, "not on whitelist (whitelist-only mode; Engager not exempt)")
     assert fp.judge("karpathy") == ADMITTED, "a Seed account needs no bypass"
@@ -317,12 +318,12 @@ def test_a_follower_or_an_engager_passes_the_whitelist_gate_while_the_bypass_is_
 
 @pytest.mark.parametrize("whitelist_only", [True, False])
 @pytest.mark.parametrize("bypass", [True, False])
-def test_a_stranger_is_never_followed(follow_env, monkeypatch, tmp_path, whitelist_only, bypass):
+def test_a_stranger_is_never_followed(follow_env, monkeypatch, settings_override, tmp_path,
+                                      whitelist_only, bypass):
     """#173: a Stranger is refused whatever the mode, before any profile
     opens and on the open profile, without the profile being read."""
     _counts(monkeypatch, tmp_path, 100, 10)
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", bypass)
+    settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only, FOLLOWBACK_BYPASS_WHITELIST=bypass)
     ag.record(ag.REPLY, "https://x.com/repliedto/status/2063500000000000201")
     stranger = Verdict(Refusal.POLICY, "Stranger: not on the whitelist, not a follower, not an Engager")
 
@@ -346,11 +347,10 @@ def test_a_stranger_is_never_followed(follow_env, monkeypatch, tmp_path, whiteli
     ("bothfan", False, False),         # follower and Engager: the full gate
 ])
 def test_each_relation_is_judged_no_wider_than_its_old_flag(
-        follow_env, monkeypatch, tmp_path, whitelist_only, bypass, handle,
+        follow_env, monkeypatch, settings_override, tmp_path, whitelist_only, bypass, handle,
         passes_whitelist_gate, small_profile_passes):
     _counts(monkeypatch, tmp_path, 100, 10)
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", whitelist_only)
-    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", bypass)
+    settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only, FOLLOWBACK_BYPASS_WHITELIST=bypass)
     fp.record_followers(["somefollower", "bothfan"])
     ag.record(ag.DEBATE_TURN, "someengager")
     ag.record(ag.DEBATE_TURN, "bothfan")
@@ -403,7 +403,7 @@ def test_an_unreadable_followers_record_reads_empty_and_is_replaced(tmp_path):
     assert fp.relation("fan") is fp.Relation.FOLLOWER
 
 
-def test_follow_gap_is_drawn_once_per_follow(monkeypatch, tmp_path):
+def test_follow_gap_is_drawn_once_per_follow(monkeypatch, settings_override, tmp_path):
     """A job retrying a follow the spacing refused must meet the same gap
     each cycle, or it would retry for a small draw."""
     from src.guards import active_hours
@@ -412,11 +412,8 @@ def test_follow_gap_is_drawn_once_per_follow(monkeypatch, tmp_path):
     monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "LEDGER", MemoryLedger())
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
-    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 300)
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
-    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
-    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", False)
+    settings_override(MIN_SECONDS_BETWEEN_FOLLOWS=600, FOLLOW_SPACING_JITTER_SECONDS=300,
+                      FOLLOW_WHITELIST_ONLY=False, FOLLOW_GROWTH_MODE=False, FOLLOW_ENFORCE_RATIO=False)
     _counts(monkeypatch, tmp_path, 100, 10)
     fp.record_followers(["fan4"])
     ag.record(ag.FOLLOW, "fan1")
@@ -439,7 +436,7 @@ def test_follow_gap_is_drawn_once_per_follow(monkeypatch, tmp_path):
 # --- the quality gate -----------------------------------------------------------
 
 
-def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
+def test_follow_quality_gate_blocks_small_and_offniche(settings_override):
     """2026-06-12 operator: "the accounts you follow are trash, very small
     ... not related to AI or investment or crypto". The follow chokepoint
     must refuse small or off-niche profiles (whitelist seeds exempt), and
@@ -449,8 +446,7 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert fp._parse_follower_count("2.1M") == 2_100_000
     assert fp._parse_follower_count("") == -1
 
-    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "2000")
-    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
+    settings_override(FOLLOW_MIN_FOLLOWERS=2000, FOLLOW_REQUIRE_NICHE=True)
 
     ok, why = fp._quality_decision(150, "AI trader", "x", whitelisted=False)
     assert not ok and "too small" in why
@@ -466,14 +462,12 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert ok
 
 
-def test_follow_gate_english_only(monkeypatch):
+def test_follow_gate_english_only(settings_override):
     """Operator 2026-07-19: 'follow US / english accounts not foreigner
     langage follows' — the quality gate (rides EVERY follow path via the
     follow_account chokepoint) must reject non-Latin-script and foreign-
     language bios."""
-    monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
-    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
-    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "2000")
+    settings_override(FOLLOW_REQUIRE_ENGLISH=True, FOLLOW_REQUIRE_NICHE=True, FOLLOW_MIN_FOLLOWERS=2000)
 
     ok, _ = fp._quality_decision(
         50000, "AI investor. Building agents, GPUs and datacenter plays.",
@@ -504,11 +498,11 @@ SMALL = {"followers": "12", "bio": "dogs", "name": "x"}
 
 
 def test_a_profile_rejected_by_the_gate_is_refused_before_the_next_visit(follow_env, monkeypatch,
-                                                                        tmp_path):
+                                                                        settings_override, tmp_path):
     """The gate's reject is a quality refusal on the profile, then a
     quality refusal before the profile opens, for 30 days."""
     _counts(monkeypatch, tmp_path, 100, 10)
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
+    settings_override(FOLLOW_WHITELIST_ONLY=False)
     fp.record_followers(["smallaccount"])
     assert fp.judge("smallaccount") == ADMITTED
 

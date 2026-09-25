@@ -18,13 +18,12 @@ Every executed (or dry-run) write is recorded in the action ledger
 for today's counts, the last write of an action and the last follow or
 unfollow of a handle, and never knows where it stores them.
 """
-import os
 import random
 import time
 from datetime import timedelta
 from typing import Optional, Tuple
 
-from ..core import config
+from ..core import config, settings
 from .active_hours import is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
@@ -65,7 +64,7 @@ def can_debate_turn(author: str) -> Tuple[bool, str]:
     """Per-author daily cap on Debate turns, shared by every answering bot."""
     if not (author or "").strip().lstrip("@"):
         return False, "debate turn without an author handle"
-    cap = int(os.environ.get("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "4"))
+    cap = settings.get("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY")
     if _ledger().count(DEBATE_TURN, now_local().date(), author) >= cap:
         return False, f"debate turn cap reached for @{author} ({cap}/day)"
     return True, ""

@@ -153,26 +153,24 @@ _script_keys(
 )
 
 # ── #196 · src/guards, src/x ────────────────────────────────────────────────
-_pending(
-    "DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY",
-    "DUP_JACCARD_THRESHOLD",
-    "DUP_CONTAINMENT_THRESHOLD",
-    "DUP_SHARED_BIGRAMS",
-    "DUP_TOPIC_WINDOW_HOURS",
-    "DUP_TOPIC_SHARED_WORDS",
-    "DUP_TEXT_WINDOW_HOURS",
-    "REPLY_MIN_CHARS",
-    "RATIONED_SHAPE_WINDOW_HOURS",
-    "FOLLOWING_COUNT_OVERRIDE",
-    "FOLLOW_MIN_FOLLOWERS",
-    "FOLLOW_REQUIRE_ENGLISH",
-    "FOLLOW_REQUIRE_NICHE",
-    "HUMAN_TYPO_HANDLES",
-    "BLANK_GRACE_AFTER_RESTART_SECONDS",
-    "PROFILE_VISIT_ALLOWLIST",
-    "REPLY_LIKE_PARENT_PROB",
-    "NOTIFY_LIKE_REPLIES_COUNT",
-)
+_declare("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", int, 4, "Debate turns per Engager per Toronto day.")
+_declare("DUP_JACCARD_THRESHOLD", float, 0.45, "Content-word Jaccard that makes an Original a duplicate.")
+_declare("DUP_CONTAINMENT_THRESHOLD", float, 0.6, "Content-word containment that makes an Original a duplicate.")
+_declare("DUP_SHARED_BIGRAMS", int, 3, "Shared content bigrams that make an Original a duplicate.")
+_declare("DUP_TOPIC_WINDOW_HOURS", float, 24.0, "Hours a post counts for the same-story check.")
+_declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-entity post that make a same story.")
+_declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.")
+_declare("REPLY_MIN_CHARS", int, 25, "Shortest Reply content_guard accepts.")
+_declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
+_declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
+_declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")
+_declare("FOLLOW_REQUIRE_ENGLISH", bool, True, "Refuse to follow a profile that does not read English.")
+_declare("FOLLOW_REQUIRE_NICHE", bool, True, "Refuse to follow a non-Engager whose bio is off-niche.")
+_declare("HUMAN_TYPO_HANDLES", str, "", "Comma-separated handles whose Replies get a human typo.")
+_declare("BLANK_GRACE_AFTER_RESTART_SECONDS", int, 120, "Seconds after a Safari restart when blank pages do not count.")
+_declare("PROFILE_VISIT_ALLOWLIST", str, "TheBTCTherapist,Graphseo", "Comma-separated profiles the scraper may visit, besides our own.")
+_declare("REPLY_LIKE_PARENT_PROB", float, 0.12, "Chance to like the post a Reply answers; 0 or less never.")
+_declare("NOTIFY_LIKE_REPLIES_COUNT", int, 3, "Replies under our latest post the notify job likes.")
 
 # ── #197 · src/core ─────────────────────────────────────────────────────────
 _pending(

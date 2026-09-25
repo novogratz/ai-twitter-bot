@@ -145,10 +145,10 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
         assert not ok, f"{leak!r} must never publish"
 
 
-def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
+def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_override):
     """2026-06-15 (operator: "hit by automation flag — cool down likes").
     Liking the parent of EVERY reply (743/day) was the automation
-    signature. _maybe_like_parent gates the like behind a low env
+    signature. _maybe_like_parent gates the like behind a low
     probability: prob<=0 disables it; the reply chokepoint must route
     through the gate, not an unconditional like_tweet on the parent."""
     import inspect
@@ -157,13 +157,13 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
     liked = []
     monkeypatch.setattr(tc, "like_tweet", lambda url=None: liked.append(url))
 
-    monkeypatch.setenv("REPLY_LIKE_PARENT_PROB", "0")
+    settings_override(REPLY_LIKE_PARENT_PROB=0.0)
     for _ in range(20):
-        tc._maybe_like_parent("https://x.com/a/status/1", "REPLY_LIKE_PARENT_PROB", 0.12)
+        tc._maybe_like_parent("https://x.com/a/status/1")
     assert liked == [], "prob=0 must disable parent-likes entirely"
 
-    monkeypatch.setenv("REPLY_LIKE_PARENT_PROB", "1")
-    tc._maybe_like_parent("https://x.com/a/status/2", "REPLY_LIKE_PARENT_PROB", 0.12)
+    settings_override(REPLY_LIKE_PARENT_PROB=1.0)
+    tc._maybe_like_parent("https://x.com/a/status/2")
     assert liked == ["https://x.com/a/status/2"]
 
     rsrc = inspect.getsource(tc.reply_to_tweet)
@@ -172,7 +172,7 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
         "reply must not unconditionally like the parent"
 
 
-def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_ledger):
+def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger):
     """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
     share one count. Ordinary replies to the same author stay uncapped, a
@@ -181,8 +181,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_le
     from src.guards import content_guard as cg
     from src.x import safari, twitter_client as tc
 
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_REPLIES", 0)
-    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)
+    settings_override(MIN_SECONDS_BETWEEN_REPLIES=0, REPLY_JITTER_SECONDS=0)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
@@ -190,7 +189,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_le
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "2")
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
 
     text = "Inference cost falls when batching works, so the margin story depends on utilisation."
     url = lambda author, n: f"https://x.com/{author}/status/{n}"
@@ -201,13 +200,13 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, memory_le
     assert tc.reply_to_tweet(url("challenger", 4), text), "plain replies stay uncapped"
     assert tc.reply_to_tweet(url("someone_else", 5), text, debate_turn=True)
     assert memory_ledger.count(ag.DEBATE_TURN, ag.now_local().date(), "challenger") == 2
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "3")
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=3)
     assert tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
     assert not tc.reply_to_tweet("https://x.com/i/web/status/6", text, debate_turn=True), \
         "a turn without a URL handle fails closed"
 
 
-def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, memory_ledger):
+def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_override, memory_ledger):
     """Another thread can ship the Engager's last turn while this one waits
     for the browser: admission, judged under the lock, refuses before Safari."""
     import contextlib
@@ -215,11 +214,10 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, memory_ledger
     from src.guards import content_guard as cg
     from src.x import safari, twitter_client as tc
 
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_REPLIES", 0)
-    monkeypatch.setattr(config, "REPLY_JITTER_SECONDS", 0)
+    settings_override(MIN_SECONDS_BETWEEN_REPLIES=0, REPLY_JITTER_SECONDS=0)
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
-    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
 
     @contextlib.contextmanager
     def contended_lock():
@@ -244,13 +242,13 @@ def _dry_run_reply_path(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
 
 
-def test_human_typo_text_is_the_validated_text(monkeypatch):
+def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import humanizer
     from src.x import twitter_client
 
     _dry_run_reply_path(monkeypatch)
-    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     validated = []
     real_validate = content_guard.validate
@@ -262,14 +260,14 @@ def test_human_typo_text_is_the_validated_text(monkeypatch):
     assert validated and validated[-1].endswith("(typo)")
 
 
-def test_language_check_judges_the_text_before_the_typo(monkeypatch):
+def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import reply_language
     from src.core import humanizer
     from src.x import twitter_client
 
     _dry_run_reply_path(monkeypatch)
-    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setenv("FR_FORCED_REPLY_HANDLES", "typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     judged, validated = [], []
@@ -284,14 +282,14 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch):
     assert validated[-1].endswith("(typo)")
 
 
-def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch):
+def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import humanizer
     from src.x import twitter_client
     from src.guards.replied_store import load_replied
 
     _dry_run_reply_path(monkeypatch)
-    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     monkeypatch.setattr(content_guard, "validate",
                         lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
@@ -440,7 +438,7 @@ def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
     assert url not in load_replied()
 
 
-def test_live_reply_pastes_the_validated_text(monkeypatch):
+def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
     """The text in the composer is the text admission validated, typo and
     dash cleanup included, never the raw draft."""
     from src.guards import content_guard
@@ -450,7 +448,7 @@ def test_live_reply_pastes_the_validated_text(monkeypatch):
     _live_browser(monkeypatch)
     pasted, validated = [], []
     monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
-    monkeypatch.setenv("HUMAN_TYPO_HANDLES", "typofriend")
+    settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     real_validate = content_guard.validate
     monkeypatch.setattr(content_guard, "validate",
@@ -704,15 +702,14 @@ def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run):
         assert parse_qs(urlparse(opened[0]).query)["text"] == [neutral]
 
 
-def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
+def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_override):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
     from src.x import safari, twitter_client as tc
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_POSTS", 0)
-    monkeypatch.setattr(config, "POST_JITTER_SECONDS", 0)
+    settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a: True)
@@ -736,7 +733,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch):
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
-def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, tmp_path,
+def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, settings_override, tmp_path,
                                                                   memory_ledger, dry_run):
     """#171: with no following count and an unreadable followed list, the
     follow chokepoint skipped the ceiling. It now refuses before the page
@@ -746,10 +743,8 @@ def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, 
     from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", dry_run)
-    monkeypatch.delenv("FOLLOWING_COUNT_OVERRIDE", raising=False)
-    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", False)
-    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
-    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
+    settings_override(FOLLOWING_COUNT_OVERRIDE=None, FOLLOW_WHITELIST_ONLY=False,
+                      MIN_SECONDS_BETWEEN_FOLLOWS=0, FOLLOW_SPACING_JITTER_SECONDS=0)
     follow_policy.record_followers(["someaccount"])
     followed = tmp_path / "followed_accounts.json"
     followed.write_text('["half')
