@@ -111,10 +111,20 @@ configured handle, at the top of every Original and Reply prompt. A prompt
 says what to write; only the Voice says who writes it.
 _Avoid_: core identity, persona prompt, spine
 
+**Call surface**:
+What a model call is for, as its caller names it: a Reply, a priority
+Reply, the reply search, a Relation's Reply, an Original. `llm_client`
+declares each once, in `SURFACES`, with its model setting, its provider
+setting and its CLI options; a caller names a surface and reads no model or
+provider setting. Only a Relation's CLI, forced by its caller, overrides the
+provider. Debate, replyback and the VIP scan run, for now, on surfaces bound
+to `AI_CLI` rather than `REPLY_LLM_PROVIDER`, pending the Operator's decision.
+_Avoid_: route, model setting, provider (each only a part of it)
+
 **Reply call**:
-What a Reply job asks of the model: its prompt template, model, log label,
-language rule and call options (`reply_generator.ReplyCall`, its options a
-`reply_generator.CallOptions`). It says what
+What a Reply job asks of the model: its prompt template, Call surface, log
+label, language rule, the Relation's CLI when forced, and call profile
+(`reply_generator.ReplyCall`). It says what
 to write; the Voice, never the Reply call, says who writes it.
 _Avoid_: voice (reserved for the persona)
 

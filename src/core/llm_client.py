@@ -200,6 +200,72 @@ class CallProfile:
 TEXT_PROFILE = CallProfile()
 
 
+class Surface(Enum):
+    """What a model call is for, named by its caller; `SURFACES` resolves it."""
+    REPLY = "Reply"
+    PRIORITY_REPLY = "priority Reply"
+    REPLY_SEARCH = "reply search"
+    RELATION_REPLY = "Relation Reply"
+    # Provisional (#248): debate, replyback and the VIP scan's template run
+    # on AI_CLI, not REPLY_LLM_PROVIDER, pending the Operator's decision.
+    REPLY_ON_AI_CLI = "Reply on AI_CLI"
+    PRIORITY_REPLY_ON_AI_CLI = "priority Reply on AI_CLI"
+    ORIGINAL = "Original"
+
+
+@dataclass(frozen=True)
+class CallOptions:
+    """A surface's CLI options; the defaults are `run_llm`'s."""
+    output_json: bool = True
+    allowed_tools: Optional[tuple[str, ...]] = None
+    timeout: Optional[int] = None
+    cwd: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class Route:
+    """A surface's model setting, provider setting and CLI options."""
+    model: str
+    provider: str
+    options: CallOptions = CallOptions()
+
+
+SURFACES: dict[Surface, Route] = {
+    # REPLY_LLM_PROVIDER: the local Ollama qwen 503'd and silently dropped
+    # replies (operator 2026-06-24). cwd=/tmp: see REPLY_SEARCH.
+    Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
+    Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
+    # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s
+    # (op 2026-06-24). cwd=/tmp: run from the project, the Claude CLI loaded
+    # its CLAUDE.md and git context, and parallel searches answered in prose
+    # instead of JSON (7 hallucinations on 2026-04-27).
+    Surface.REPLY_SEARCH: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER",
+                                CallOptions(allowed_tools=("WebSearch",), cwd="/tmp")),
+    # AI_CLI unless the caller forces the Relation's installed CLI.
+    Surface.RELATION_REPLY: Route("PRIORITY_REPLY_MODEL", "AI_CLI", CallOptions(output_json=False, timeout=60)),
+    Surface.REPLY_ON_AI_CLI: Route("REPLY_MODEL", "AI_CLI"),
+    Surface.PRIORITY_REPLY_ON_AI_CLI: Route("PRIORITY_REPLY_MODEL", "AI_CLI"),
+    Surface.ORIGINAL: Route("NEWS_MODEL", "PROFILE_LLM_PROVIDER"),
+}
+
+
+@dataclass(frozen=True)
+class SurfaceCall:
+    """A surface resolved for `run_llm`: its model, the provider to force
+    (None: AI_CLI, `run_llm`'s own primary) and its CLI options."""
+    model: ModelSetting
+    provider: Optional[str]
+    options: CallOptions
+
+
+def resolve(surface: Surface) -> SurfaceCall:
+    """The one place a surface's model and provider settings are read. A
+    blank provider setting leaves AI_CLI, opencode read as Ollama."""
+    route = SURFACES[surface]
+    provider = None if route.provider == "AI_CLI" else settings.get(route.provider).strip() or None
+    return SurfaceCall(ModelSetting(route.model), provider, route.options)
+
+
 def _ollama_model(profile: CallProfile) -> str:
     return profile.ollama_model or settings.get("OLLAMA_MODEL")
 

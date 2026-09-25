@@ -6,11 +6,12 @@ import random
 import traceback
 from datetime import timedelta
 from ..x import x_urls
-from ..core import account, config, settings
+from ..core import account, settings
+from ..core.llm_client import Surface
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
-from .reply_generator import CallOptions, LanguageRule, ReplyCall
+from .reply_generator import LanguageRule, ReplyCall
 from .reply_source import freshness_sort_key, is_on_niche
 
 # The VIP scan and the search lane set aside the same posts.
@@ -49,9 +50,8 @@ def _own_call(relation) -> ReplyCall:
     import shutil
     force = relation.provider if relation.provider and shutil.which(relation.provider) else None
     # dossier=False: whether the author's dossier joins it is the Operator's call.
-    return ReplyCall(relation.prompt, config.PRIORITY_REPLY_MODEL, f"{relation.handle.upper()}_VIP",
-                     dossier=False, text_limit=300, max_chars=220,
-                     options=CallOptions(output_json=False, timeout=60, force_provider=force))
+    return ReplyCall(relation.prompt, Surface.RELATION_REPLY, f"{relation.handle.upper()}_VIP",
+                     dossier=False, text_limit=300, max_chars=220, provider=force)
 
 
 def _vip_call(handle: str) -> ReplyCall | None:
@@ -68,7 +68,7 @@ def _vip_call(handle: str) -> ReplyCall | None:
     if template is None:
         return None
     # dossier=False: see _own_call.
-    return ReplyCall(template, config.PRIORITY_REPLY_MODEL, f"VIP_REPLY/{handle}", dossier=False,
+    return ReplyCall(template, Surface.PRIORITY_REPLY_ON_AI_CLI, f"VIP_REPLY/{handle}", dossier=False,
                      text_limit=300, strip_preamble=True, skip_window=20)
 
 
@@ -119,13 +119,10 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
 
 def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_FORCED) -> ReplyCall:
     """The ReplyCall of the search, feed-sweep, early-bird and mega-watch
-    Replies; VIP authors get the priority model."""
+    Replies; VIP authors get the priority Reply surface."""
     vip = (author or "").lower().lstrip("@") in {h.lower() for h in account.current().network.vip_reply}
-    # Force the reliable reply provider (claude haiku): the local ollama
-    # qwen 503s and silently drops replies (operator 2026-06-24).
-    return ReplyCall(REPLY_PROMPT, config.PRIORITY_REPLY_MODEL if vip else config.REPLY_MODEL,
-                     "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language,
-                     options=CallOptions(force_provider=config.REPLY_LLM_PROVIDER, cwd="/tmp"))
+    return ReplyCall(REPLY_PROMPT, Surface.PRIORITY_REPLY if vip else Surface.REPLY,
+                     "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language)
 
 
 SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, pipelined=True)

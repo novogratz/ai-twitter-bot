@@ -23,7 +23,8 @@ from collections import Counter
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core import config, settings
+from ..core import settings
+from ..core.llm_client import Surface
 from ..core.logger import log
 from . import reply_pipeline
 from .reply_generator import ReplyCall
@@ -58,7 +59,7 @@ Output ONLY the reply text, or exactly SKIP."""
 
 def reply_call() -> ReplyCall:
     # dossier=False: whether the author's dossier joins it is the Operator's call.
-    return ReplyCall(DEBATE_PROMPT, config.REPLY_MODEL, "DEBATE", dossier=False, text_limit=500)
+    return ReplyCall(DEBATE_PROMPT, Surface.REPLY_ON_AI_CLI, "DEBATE", dossier=False, text_limit=500)
 
 
 JOB = reply_pipeline.Job("debate", "DEBATE", reply_call=lambda _author: reply_call(), debate_turn=True,

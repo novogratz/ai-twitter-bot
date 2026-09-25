@@ -18,7 +18,7 @@ from urllib.parse import urlsplit
 from ..guards import action_guard, content_guard, respect_list
 from ..core import account, config, settings
 from ..guards.active_hours import bedtime, is_active, now_local, require_active
-from ..core.llm_client import CallProfile, LLMStatus, run_llm
+from ..core.llm_client import CallProfile, LLMStatus, Surface, resolve, run_llm
 from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import StatePath
@@ -267,8 +267,11 @@ def collect_sources(journal, now=None, news_only=False) -> list:
 
 
 def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
-    result = run_llm(prompt, config.NEWS_MODEL, label=label, profile=profile,
-                     force_provider=config.PROFILE_LLM_PROVIDER)
+    route = resolve(Surface.ORIGINAL)
+    options = route.options
+    result = run_llm(prompt, route.model, label=label, output_json=options.output_json,
+                     allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
+                     force_provider=route.provider, profile=profile)
     if result.status is not LLMStatus.ANSWERED:
         # Failed or exhausted alike: no Draft, or no approval.
         log.info("[EDITORIAL] %s generation unavailable (%s).", label, result.status.value)

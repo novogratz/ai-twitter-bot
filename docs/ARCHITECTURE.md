@@ -217,17 +217,37 @@ series headers, echoed prompt lines) and hashtags, a trailing run whole and
 the `#` of an inline one. `post_tweet` then checks `can_post(POST)` again
 under the Safari lock.
 
-Models: drafts and reviews go through `run_llm` with
-`force_provider=PROFILE_LLM_PROVIDER` and a `CallProfile`,
-`editorial_schemas.draft_profile()` or `review_profile()`. The profile, not
+Models: every caller names a Call surface, and `llm_client.SURFACES`
+declares, in that one place, the model setting, the provider setting and
+the CLI options each surface runs; `llm_client.resolve` reads the settings
+and the caller hands them to `run_llm`. No module under `src/replies/` or
+`src/editorial/` reads a model or provider setting.
+
+| Surface | Callers | Model setting | Provider | CLI options |
+|---|---|---|---|---|
+| `REPLY` | search, feed sweep, early bird, mega watch | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
+| `PRIORITY_REPLY` | the same, for a `vip_reply` author | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
+| `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool, `cwd=/tmp` |
+| `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | `AI_CLI`, or the Relation's CLI when installed | no JSON envelope, 60 s |
+| `REPLY_ON_AI_CLI` | debate, replyback | `REPLY_MODEL` | `AI_CLI` | defaults |
+| `PRIORITY_REPLY_ON_AI_CLI` | VIP scan, a Relation's or the default prompt | `PRIORITY_REPLY_MODEL` | `AI_CLI` | defaults |
+| `ORIGINAL` | Draft, review | `NEWS_MODEL` | `PROFILE_LLM_PROVIDER` | defaults |
+
+A blank provider setting leaves `AI_CLI`. The two `*_ON_AI_CLI` surfaces
+are provisional: whether debate, replyback and the VIP scan follow
+`REPLY_LLM_PROVIDER` is the Operator's decision (#248).
+`tests/test_call_surfaces.py` pins each job's model setting, provider and
+CLI options.
+
+Drafts and reviews go through `run_llm` on the `ORIGINAL` surface with a
+`CallProfile`, `editorial_schemas.draft_profile()` or `review_profile()`. The profile, not
 the label, sets what the call gets on Ollama, whether Ollama answers first
 or as a fallback: `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`), the
 Draft or review schema as `format`, temperature 0.65 or 0.2, and a
 timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
 bedtime. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, no schema, temperature 1.0.
-A CLI runs the model its caller names: `NEWS_MODEL` for Originals,
-`REPLY_MODEL` or `PRIORITY_REPLY_MODEL` for Replies. Each is an
+A CLI runs the model setting of the call's surface. Each is an
 `llm_client.ModelSetting`, read when the call runs for the primary CLI:
 its value when set and not blank, else that CLI's default in
 `settings.MODEL_DEFAULTS`. Ollama and OpenCode never read them, nor does a
@@ -579,9 +599,9 @@ the outcome is unknown: the claim stays, so the tweet never gets a second
 reply.
 
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
-passes its Reply call, a `ReplyCall` (template, model, label, language
-rule, and its `run_llm` options as a frozen `CallOptions`, where a misspelt
-option fails when the Reply call is built), and the parent post; `generate` returns a `Generation`: reply text, a decline (the model
+passes its Reply call, a `ReplyCall` (template, Call surface, label,
+language rule, the Relation's CLI when forced, and call profile; anything
+but a `Surface` fails when the Reply call is built), and the parent post; `generate` returns a `Generation`: reply text, a decline (the model
 said SKIP), a replayable failure, or a rate limit when every provider is
 exhausted. Reply text comes with the provider and model that wrote it. The
 generator always opens the prompt on the Voice,
@@ -695,7 +715,7 @@ These are how the code behaves today, not design intent:
   the hard rules but not the author's dossier.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
-  `REPLY_LLM_PROVIDER` says: the
+  `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the
   one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
   It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
