@@ -216,8 +216,11 @@ Ollama over HTTP and the Codex, Gemini, Claude and OpenCode CLIs are
 adapters in `llm_client.ADAPTERS`. Each returns its provider's raw output;
 `run_llm` alone runs the fallback ladder and reads the answer. The ladder
 starts with the primary (`force_provider`, else `AI_CLI`), then tries at
-most one fallback, `LLM_FALLBACK_CLI`. That variable defaults to codex even
-when empty, and `LLM_DISABLE_FALLBACK=1` turns the fallback off. A call
+most one fallback, `LLM_FALLBACK_CLI`. Unset or empty, there is no fallback,
+and `LLM_DISABLE_FALLBACK=1` turns a configured one off. A provider name no
+adapter carries, primary or fallback, fails that rank without running
+anything, and an unknown primary tries no fallback; `main.py` logs every
+such setting at start (`llm_client.unknown_providers`). A call
 fails on an error, an empty answer, a limit or refusal message
 (`_should_fallback`), or an answer that reads empty. A codex usage limit is
 cached in `codex_lockout.json`: it sends the call to the fallback labelled

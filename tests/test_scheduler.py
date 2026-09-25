@@ -42,3 +42,18 @@ def test_only_a_run_with_the_editorial_job_opens_a_startup_post(monkeypatch, fla
     with pytest.raises(Started):
         main.main()
     assert calls == ([True] if opened else [])
+
+
+def test_the_start_reports_an_unknown_llm_provider(monkeypatch, capsys, caplog):
+    """Issue #189: a provider name no adapter carries fails every call it
+    routes; the start says so, in the log and in the dry run."""
+    import json
+    import sys
+    import main
+
+    monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
+    monkeypatch.setenv("AI_CLI", "olama")
+    monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    main.main()
+    assert json.loads(capsys.readouterr().out)["unknown_llm_providers"] == ["AI_CLI='olama'"]
+    assert "Unknown provider AI_CLI='olama'" in caplog.text

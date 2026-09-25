@@ -382,13 +382,14 @@ def _detect_codex_lockout(result: "LLMResult", prompt: str) -> Optional[datetime
 
 
 def _provider() -> str:
-    requested = os.environ.get("AI_CLI", "ollama").strip().lower()
+    requested = os.environ.get("AI_CLI", "").strip().lower() or "ollama"
     if requested in {"ollama", "opencode"}:
         return "ollama"
-    if requested in {"claude", "codex", "gemini"}:
-        if shutil.which(requested):
-            return requested
-        log.info(f"[LLM] Requested AI_CLI={requested!r} is not installed; selecting an available CLI.")
+    if requested not in {"claude", "codex", "gemini"}:
+        return requested  # unknown: its adapter refuses the call
+    if shutil.which(requested):
+        return requested
+    log.info(f"[LLM] Requested AI_CLI={requested!r} is not installed; selecting an available CLI.")
     if shutil.which("codex"):
         return "codex"
     if shutil.which("gemini"):
@@ -450,15 +451,17 @@ def _build_cmd(
 
 
 def _fallback_provider(primary_provider: str) -> Optional[str]:
-    env_fallback = os.environ.get("LLM_FALLBACK_CLI", "codex").strip().lower()
-    default_fallback = "ollama" if primary_provider == "codex" else "codex"
-    fallback = env_fallback or default_fallback
+    """The fallback LLM_FALLBACK_CLI names, or None: unset, a failed call
+    fails. An unknown name comes back as is, and its adapter refuses the call."""
+    fallback = os.environ.get("LLM_FALLBACK_CLI", "").strip().lower()
     if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
         return None
     if not fallback:
         return None
     if fallback == "opencode":
         fallback = "ollama"
+    if fallback not in ADAPTERS:
+        return fallback
     if fallback not in {"ollama", "codex", "gemini"}:
         return None
     if fallback != "ollama" and not shutil.which(fallback):
@@ -466,9 +469,7 @@ def _fallback_provider(primary_provider: str) -> Optional[str]:
     # Avoid retrying the same provider as its own fallback unless the caller
     # explicitly configured a different fallback model.
     if fallback == primary_provider and not os.environ.get("LLM_FALLBACK_MODEL", "").strip():
-        fallback = default_fallback
-        if fallback == "opencode":
-            fallback = "ollama"
+        fallback = "ollama" if primary_provider == "codex" else "codex"
     return fallback
 
 
@@ -659,9 +660,29 @@ ADAPTERS: dict[str, Callable[[_Request], LLMResult]] = {
 }
 
 
+def _unknown_adapter(provider: str) -> Callable[[_Request], LLMResult]:
+    def run(request: _Request) -> LLMResult:
+        return LLMResult(1, "", f"{request.label}: unknown LLM provider {provider!r}; nothing was run.")
+    return run
+
+
 def _adapter(provider: str) -> Callable[[_Request], LLMResult]:
-    # An unknown name still runs a CLI: `_build_cmd` sends it to Claude.
-    return ADAPTERS.get(provider) or _cli_adapter(provider)
+    # Never a CLI for an unknown name: `_build_cmd` would send it to Claude.
+    return ADAPTERS.get(provider) or _unknown_adapter(provider)
+
+
+def unknown_providers() -> list[str]:
+    """The provider settings that name no adapter, as `NAME='value'`, for
+    the start to report: every call they route fails."""
+    from . import config
+    settings = {
+        "AI_CLI": os.environ.get("AI_CLI", ""),
+        "PROFILE_LLM_PROVIDER": config.PROFILE_LLM_PROVIDER or "",
+        "REPLY_LLM_PROVIDER": config.REPLY_LLM_PROVIDER or "",
+        "LLM_FALLBACK_CLI": os.environ.get("LLM_FALLBACK_CLI", ""),
+    }
+    return [f"{name}={value!r}" for name, value in settings.items()
+            if value.strip() and value.strip().lower() not in ADAPTERS]
 
 
 # A CLI's timeout ceiling as the primary (claude, codex and gemini only),
@@ -750,7 +771,8 @@ def run_llm(
     provider and model that answered, or failed last.
 
     The ladder: the primary provider (`force_provider`, else AI_CLI), then
-    at most one fallback (LLM_FALLBACK_CLI). A call fails when
+    the fallback LLM_FALLBACK_CLI names, if any. An unknown provider name
+    fails the call without running anything. A call fails when
     `_should_fallback` says so or when its answer reads empty. A codex usage
     limit seen on this call is cached and sends the call to the fallback; a
     cached one sends it to Ollama alone. When every provider tried hit its
@@ -759,7 +781,7 @@ def run_llm(
     set the output mode."""
     from ..guards.active_hours import require_active
     require_active()
-    primary = force_provider or _provider()
+    primary = (force_provider or _provider()).strip().lower()
     request = _Request(prompt, model, label, timeout, profile, output_json, allowed_tools, cwd)
 
     if primary == "codex":
@@ -784,7 +806,7 @@ def run_llm(
                           LLMStatus.EXHAUSTED, primary, _model(primary, request))
     else:
         first = _answer(primary, request, raw)
-    if first.returncode == 0:
+    if first.returncode == 0 or primary not in ADAPTERS:
         return first
 
     fallback = _fallback_provider(primary)

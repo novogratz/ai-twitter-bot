@@ -4,7 +4,9 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from src.core.llm_client import CallProfile, LLMResult, LLMStatus, Output, contains_post_unsafe_leak
+from src.core.llm_client import (TEXT_PROFILE, CallProfile, LLMResult, LLMStatus, Output,
+                                 contains_post_unsafe_leak)
+from src.editorial.editorial_schemas import draft_profile
 from tests.helpers import USAGE_LIMIT
 
 
@@ -166,6 +168,76 @@ def test_the_fallback_can_be_turned_off(providers, monkeypatch):
     monkeypatch.setenv("LLM_DISABLE_FALLBACK", "1")
     assert ask().returncode != 0
     assert [name for name, _ in providers.calls] == ["claude"]
+
+
+# --- Issue #189: no implicit fallback, no unknown provider ---------------------
+
+@pytest.mark.parametrize("fallback", [None, "", "  "])
+@pytest.mark.parametrize("provider", ["ollama", "claude", "codex", "gemini"])
+def test_without_a_configured_fallback_the_ladder_has_one_rank(providers, monkeypatch, provider, fallback):
+    if fallback is None:
+        monkeypatch.delenv("LLM_FALLBACK_CLI")
+    else:
+        monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+    result = ask(provider=provider)
+    assert [name for name, _ in providers.calls] == [provider]
+    assert result.status is LLMStatus.FAILED and result.provider == provider
+
+
+@pytest.fixture
+def no_process(monkeypatch):
+    """Fails the test on any process or HTTP request a model call starts."""
+    import urllib.request
+    from src.core import llm_client as llm
+
+    def started(*a, **k):
+        raise AssertionError("an unknown provider started something")
+
+    monkeypatch.setattr(llm.subprocess, "Popen", started)
+    monkeypatch.setattr(urllib.request, "urlopen", started)
+
+
+@pytest.mark.parametrize("setting", ["force_provider", "AI_CLI"])
+def test_an_unknown_primary_fails_by_name_and_runs_nothing(monkeypatch, no_process, setting):
+    """A typo in the Originals' provider sent the Drafts to the Claude CLI.
+    The real adapters stay in place, and the configured fallback is not
+    tried either."""
+    from src.core import llm_client as llm
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "codex")
+    monkeypatch.setenv("AI_CLI", "olama")
+    force = "olama" if setting == "force_provider" else None
+    result = llm.run_llm("prompt", "cloud-model", label="TEST", force_provider=force)
+    assert (result.status, result.provider, result.stdout) == (LLMStatus.FAILED, "olama", "")
+    assert "unknown LLM provider 'olama'" in result.stderr
+
+
+def test_an_unknown_fallback_fails_by_name_and_runs_nothing(providers, monkeypatch, no_process):
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "codx")
+    result = ask()
+    assert [name for name, _ in providers.calls] == ["claude"]
+    assert (result.status, result.provider) == (LLMStatus.FAILED, "codx")
+    assert "unknown LLM provider 'codx'" in result.stderr
+
+
+def test_the_start_reports_each_provider_setting_that_names_no_adapter(monkeypatch):
+    from src.core import config, llm_client as llm
+    monkeypatch.setenv("AI_CLI", "ollama")
+    monkeypatch.setenv("LLM_FALLBACK_CLI", "codx")
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "clade")
+    monkeypatch.setattr(config, "REPLY_LLM_PROVIDER", " Ollama ")
+    assert llm.unknown_providers() == ["PROFILE_LLM_PROVIDER='clade'", "LLM_FALLBACK_CLI='codx'"]
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", None)
+    monkeypatch.delenv("LLM_FALLBACK_CLI")
+    assert llm.unknown_providers() == []
+
+
+@pytest.mark.parametrize("profile", [TEXT_PROFILE, draft_profile()], ids=["Reply", "Original"])
+def test_an_explicit_fallback_answers_as_before_and_is_named(providers, monkeypatch, profile):
+    providers.codex.answers = [TEXT if profile is TEXT_PROFILE else json.dumps({"text": TEXT})]
+    result = ask(profile, provider="ollama")
+    assert [name for name, _ in providers.calls] == ["ollama", "codex"]
+    assert (result.status, result.provider, result.model) == (LLMStatus.ANSWERED, "codex", "gpt-5.4-mini")
 
 
 # --- Usage limits and who answered ---------------------------------------------

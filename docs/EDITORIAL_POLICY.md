@@ -130,6 +130,11 @@ must not repeat.
   assembles them all (issue #155). A model SKIP sets the post aside for good;
   a model rate limit, every provider at its usage limit, ends the job's
   generations for the cycle.
+- Model calls stay on their configured provider, Ollama by default. Only an
+  explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
+  fails, for Originals and Replies alike. A provider name the code does not
+  know fails every call it routes and runs nothing, and the start logs it
+  (issue #189).
 - Publishing checks the budget again after obtaining the browser lock.
   Preview and dry-run records do not consume the real daily budget.
 - `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,

@@ -431,6 +431,47 @@ def test_a_reply_reaches_ollama_as_before_the_call_profiles(monkeypatch, name, r
     assert timeout == max(voice.llm_options.get("timeout") or 0, llm.DEFAULT_LLM_TIMEOUT_SECONDS)
 
 
+@pytest.mark.parametrize("fallback", [None, "codex"])
+@pytest.mark.parametrize("name", REPLY_VOICES)
+def test_a_reply_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, name, fallback):
+    """Issue #189: codex was the fallback by default. Without
+    LLM_FALLBACK_CLI, a failed Ollama call fails the Reply; with it, codex
+    writes the Reply and is named."""
+    import dataclasses
+    import urllib.error
+    import urllib.request
+
+    from src.core import llm_client as llm
+    from src.replies import reply_generator
+
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    monkeypatch.delenv("LLM_FALLBACK_MODEL", raising=False)
+    monkeypatch.delenv("CODEX_FALLBACK_MODEL", raising=False)
+    if fallback is None:
+        monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    else:
+        monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+
+    def ollama_down(request, timeout=None):
+        raise urllib.error.URLError("connection refused")
+
+    monkeypatch.setattr(urllib.request, "urlopen", ollama_down)
+    cloud = []
+    monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: cloud.append(cmd[0])
+                        or LLMResult(0, "Batching decides the margin, not the model.", ""))
+    voice = reply_voice(name)
+    voice = dataclasses.replace(voice, llm_options={**voice.llm_options, "force_provider": "ollama"})
+
+    generation = reply_generator.generate(voice, author="someone", text=EN)
+
+    if fallback is None:
+        assert cloud == [] and generation.outcome is reply_generator.Outcome.FAILED
+    else:
+        assert cloud == ["codex"] and generation.outcome is reply_generator.Outcome.WRITTEN
+        assert (generation.provider, generation.model) == ("codex", "gpt-5.4-mini")
+
+
 @pytest.mark.parametrize("route", ["ollama", "claude"])
 def test_the_reply_search_reaches_ollama_as_before_the_call_profiles(monkeypatch, route):
     """The REPLY_SEARCH voice is built inside `reply_agent.generate_replies`,

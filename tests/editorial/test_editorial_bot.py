@@ -351,6 +351,35 @@ def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch,
     assert ok, reason
 
 
+@pytest.mark.parametrize("fallback, cloud_calls, approved", [(None, [], False),
+                                                          ("codex", ["EDITORIAL_REVIEW (codex fallback)"], True)])
+def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, editor_source, fallback,
+                                                              cloud_calls, approved):
+    """Issue #189: codex was the fallback by default. Without
+    LLM_FALLBACK_CLI, a failed Ollama call fails the review."""
+    import urllib.error
+    import urllib.request
+    from src.core import config, llm_client as llm
+    monkeypatch.setattr(config, "PROFILE_LLM_PROVIDER", "ollama")
+    monkeypatch.delenv("LLM_DISABLE_FALLBACK", raising=False)
+    if fallback is None:
+        monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    else:
+        monkeypatch.setenv("LLM_FALLBACK_CLI", fallback)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+
+    def ollama_down(request, timeout=None):
+        raise urllib.error.URLError("connection refused")
+
+    monkeypatch.setattr(urllib.request, "urlopen", ollama_down)
+    cloud = []
+    monkeypatch.setattr(llm, "_run_cmd", lambda cmd, **k: cloud.append(k["label"])
+                        or llm.LLMResult(0, json.dumps(editor_source.review), ""))
+    ok, _, _ = editorial.review_draft(dict(editor_source.draft), [editor_source.source], [])
+    assert cloud == cloud_calls
+    assert ok is approved
+
+
 def test_the_text_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
     assert draft_and_review(editor)[1][0]
     monkeypatch.setattr(schemas, "TEXT_MAX_CHARS", 120)
