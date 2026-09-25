@@ -167,6 +167,36 @@ def test_direct_reply_search_keeps_fresh_on_niche_posts(direct):
     assert set_aside("direct_reply") == {ok}
 
 
+def test_direct_reply_search_skips_nested_replies(direct):
+    """Issue #241: 3857e1ba (2026-06-06) dropped the nested-reply filter from
+    the search lane. A search result that answers another post reaches
+    neither the model nor the chokepoint, as in the feed sweep."""
+    dr, lanes, llm, chokepoint = direct
+    root, marked, mention = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
+    lanes["search"] = [{"url": marked, "text": "a nested reply", "is_reply": True},
+                       {"url": mention, "text": "  @someone a mention first"},
+                       {"url": root, "text": "a root post"}]
+
+    dr.run_direct_reply_cycle()
+
+    assert llm.parents("a nested reply", "a mention first", "a root post") == ["a root post"]
+    assert chokepoint.sent == [root]
+
+
+def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
+    """Issue #241 leaves the VIP scan as it was: it answers everything its
+    accounts post, their replies included."""
+    dr, lanes, llm, chokepoint = direct
+    marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
+    lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
+                    {"url": mention, "text": "@someone vip mention"}]
+    llm.default = "réponse précise sur le trafic organique"
+
+    dr._run_vip_scan(reply_pipeline.Cycle())
+
+    assert chokepoint.sent == [marked, mention]
+
+
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     dr, lanes, llm, chokepoint = direct
     recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)

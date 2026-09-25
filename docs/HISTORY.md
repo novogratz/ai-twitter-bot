@@ -23,6 +23,18 @@ their order in the file is not strictly chronological.
 > child is killed. The page reads still ignore the result, pending the
 > page session of issue #250, and two scraper runs remain unbounded.
 
+> **2026-09-25 — the search lane skips nested replies again (issue #241):**
+> on 2026-06-06, 3857e1ba ("zero limits") dropped `_is_reply_like_tweet`
+> from the `_reply_to_tweets` shared by the feed, following and search
+> lanes; its message aimed at For You and Following only. The feed sweep,
+> early bird and mega watch kept their own filter; the `direct_reply`
+> search lane was left with none.
+> Nothing caught these posts downstream: `judge_parent` reads the URL only
+> and a Candidate does not carry `is_reply`. The model answered a reply
+> without its root post, and the Reply landed deep in a branch. The search
+> lane now drops a post marked `is_reply` or whose text opens on a mention,
+> with `x_urls.is_reply_like_tweet`; the VIP scan is unchanged.
+
 > **2026-09-25 — the reply, like and follow niche narrowed to AI (issue #205):**
 > the policy had limited the account to AI, but the niche of the Replies,
 > likes and follows still took crypto, markets, space and general tech: a
