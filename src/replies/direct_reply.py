@@ -1,5 +1,7 @@
-"""Direct reply: the VIP scan and the search lane. Its ReplyCall, niche filter
-and candidate order also serve the feed sweep, early bird and mega watch."""
+"""Direct reply: the VIP scan and the search lane. Its ReplyCall also serves
+the feed sweep, early bird and mega watch. The niche filter and candidate
+order come from the Reply source; early bird and mega watch import them from
+here until they take their candidates from it too."""
 import random
 import traceback
 from datetime import timedelta
@@ -9,6 +11,7 @@ from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
 from .reply_generator import CallOptions, LanguageRule, ReplyCall
+from .reply_source import freshness_sort_key, is_on_niche
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
@@ -17,11 +20,6 @@ JOB_NAME = "direct_reply"
 def always_reply_accounts() -> tuple:
     """The accounts early_bird scans first, from the loaded Account."""
     return account.current().network.always_reply
-
-
-def is_on_niche(text: str) -> bool:
-    niche = account.current().niche
-    return bool(niche.post.search(text) or (niche.ticker and niche.ticker.search(text)))
 
 
 REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,
@@ -128,25 +126,6 @@ def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_F
     return ReplyCall(REPLY_PROMPT, config.PRIORITY_REPLY_MODEL if vip else config.REPLY_MODEL,
                      "DIRECT_REPLY_VIP" if vip else "DIRECT_REPLY", language=language,
                      options=CallOptions(force_provider=config.REPLY_LLM_PROVIDER, cwd="/tmp"))
-
-
-def freshness_sort_key(tweet):
-    """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
-    to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
-
-    Primary: age bucket (<=60 min, <=6h, older, unknown-age last).
-    Secondary within a bucket: likes-per-minute velocity, highest first.
-    First-hour replies are where the algo weight and the profile-visit
-    conversion live; a 60-hour-old tweet must never consume the slot a
-    20-minute riser deserved.
-    """
-    age = x_urls.age(tweet.get("url", ""))
-    if age is None:
-        return (3, 0.0, float("inf"))
-    minutes = age.total_seconds() / 60
-    bucket = 0 if minutes <= 60 else 1 if minutes <= 360 else 2
-    velocity = (tweet.get("likes") or 0) / max(minutes, 1.0)
-    return (bucket, -velocity, minutes)
 
 
 SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, pipelined=True)
