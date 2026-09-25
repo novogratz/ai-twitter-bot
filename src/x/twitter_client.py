@@ -152,8 +152,12 @@ class ToolCallLeakError(Exception):
 
 
 def post_tweet(text: str) -> WriteOutcome:
-    """Publish an Original through the intent URL. Its reviewed wording and
-    checked source link ship unchanged.
+    """Publish an Original through the intent URL. No URL is stripped and
+    nothing casualizes the text, so the source link and the reviewed wording
+    reach X. `_scrub_metadata_leaks` still runs first: it removes leaked
+    model output (tool-call markup, bracketed metadata tags, series headers,
+    echoed prompt lines) and hashtags, a trailing run whole and the `#` of
+    an inline one.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content or dedup skip, FAILED when a step before the submit failed,

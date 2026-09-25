@@ -179,8 +179,12 @@ lock.
    exception leave it `pending`, which is never retried automatically. With
    `DRY_RUN` set, the text is logged and nothing is marked.
 
-`post_tweet` ships the reviewed text unchanged, source link included, and
-checks `can_post(POST)` again under the Safari lock.
+`post_tweet` strips no URL and does not casualize, so the source link and
+the reviewed wording reach X. `_scrub_metadata_leaks` still runs first: it
+removes leaked model output (tool-call markup, bracketed metadata tags,
+series headers, echoed prompt lines) and hashtags, a trailing run whole and
+the `#` of an inline one. `post_tweet` then checks `can_post(POST)` again
+under the Safari lock.
 
 Models: drafts and reviews go through `run_llm` with
 `force_provider=PROFILE_LLM_PROVIDER`. On Ollama, `EDITORIAL*` labels use

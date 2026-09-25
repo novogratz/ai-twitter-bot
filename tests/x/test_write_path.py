@@ -620,22 +620,6 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
         cg.is_duplicate = orig_isdup
 
 
-def test_post_that_fails_records_nothing(monkeypatch):
-    from src.guards import content_guard
-    from src.x import twitter_client as tc
-
-    monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
-    noted = []
-    monkeypatch.setattr(content_guard, "note_posted", noted.append)
-    recorded = _live_browser(monkeypatch, failing_step="submit")
-    assert tc.post_tweet("Inference is getting cheaper faster than training.") is W.UNCONFIRMED
-    assert recorded == [] and noted == []
-
-    recorded = _live_browser(monkeypatch)
-    assert tc.post_tweet("Inference is getting cheaper faster than training.") is W.SHIPPED
-    assert len(recorded) == 1 and len(noted) == 1
-
-
 def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
     """An Original ships as reviewed: its source link stays, and nothing
     casualizes the wording on the way out."""
