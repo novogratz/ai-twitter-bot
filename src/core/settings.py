@@ -293,9 +293,6 @@ def load(env_file: str | None = None, environ=None) -> None:
             warnings.append(warning)
     for key, value in from_file.items():
         environ.setdefault(key, value)
-    # content_guard and editorial_bot still read the language from the
-    # environment until #196 and #198: the Account's reaches it, under .env.
-    environ.setdefault("CONTENT_LANG_PRIMARY", account["CONTENT_LANG_PRIMARY"])
     _values, _warnings = values, warnings
 
 

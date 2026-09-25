@@ -59,7 +59,8 @@ class Relevance:
 @dataclass(frozen=True)
 class Account:
     name: str
-    file: str
+    folder: str  # absolute: accounts/<name>/, where the Account's other files live
+    file: str  # account.toml relative to the project root, for messages
     handle: str
     language: str
     editorial: Editorial
@@ -77,7 +78,8 @@ def load(name: str) -> Account:
     if not _NAME.fullmatch(name):
         raise AccountError(f"BOT_ACCOUNT={name!r}: an Account name is a folder under "
                            f"{ACCOUNTS_DIR}/, lowercase letters, digits, - and _.")
-    path = os.path.join(settings.PROJECT_ROOT, ACCOUNTS_DIR, name, "account.toml")
+    folder = os.path.abspath(os.path.join(settings.PROJECT_ROOT, ACCOUNTS_DIR, name))
+    path = os.path.join(folder, "account.toml")
     if path not in _loaded:
         shown = os.path.join(ACCOUNTS_DIR, name, "account.toml")
         try:
@@ -87,11 +89,11 @@ def load(name: str) -> Account:
             raise AccountError(f"BOT_ACCOUNT={name}: no Account there, {shown} does not exist.") from None
         except tomllib.TOMLDecodeError as exc:
             raise AccountError(f"{shown} is not valid TOML: {exc}.") from None
-        _loaded[path] = _parse(name, shown, data)
+        _loaded[path] = _parse(name, folder, shown, data)
     return _loaded[path]
 
 
-def _parse(name: str, shown: str, data: dict) -> Account:
+def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "editorial": dict,
                                              "relevance": dict}, optional={"limits": dict})
     if top["language"] not in LANGUAGES:
@@ -102,7 +104,7 @@ def _parse(name: str, shown: str, data: dict) -> Account:
     relevance = _Table(shown, "relevance", top["relevance"],
                        required={"topic": str, "off_topic": str})
     return Account(
-        name=name, file=shown, handle=top["handle"], language=top["language"],
+        name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
         editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})))
@@ -118,8 +120,10 @@ def _editorial(table) -> Editorial:
             slot.fail("clock", f"takes HH:MM, not {clock!r}")
         if slots and clock <= slots[-1][0]:
             slot.fail("clock", f"{clock} must come after {slots[-1][0]}: Slots go earliest first")
-        if slot.get("trend", False) == ("angle" in slot):
-            slot.fail("angle", "is required unless trend = true, which takes trend_angle instead")
+        if slot.get("trend", False) and "angle" in slot:
+            slot.fail("angle", "must be absent when trend = true, which takes trend_angle instead")
+        if not slot.get("trend", False) and "angle" not in slot:
+            slot.fail("angle", "is required unless trend = true")
         if slot.get("trend", False):
             trend.add(clock)
         if slot.get("exceptional", False):

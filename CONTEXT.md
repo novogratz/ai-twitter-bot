@@ -18,9 +18,14 @@ quotes and reposts. Eight per Toronto calendar day, all kinds combined.
 _Avoid_: profile post, post
 
 **Slot**:
-A fixed daily time window, with a brief, in which at most one Original may be
+A fixed daily time window, with an Angle, in which at most one Original may be
 published.
 _Avoid_: window, schedule entry
+
+**Angle**:
+The brief a Slot gives its Original, set by the Account; every Trend slot
+shares the Account's trend angle.
+_Avoid_: purpose, brief
 
 **Exceptional slot**:
 The optional 20:45 Slot, reserved for news under twelve hours old or a useful

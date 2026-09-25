@@ -41,7 +41,7 @@ MAX_ATTEMPTS = 3
 # from the Account's feeds supplies every fact. No covering article, no post.
 class Slot(NamedTuple):
     clock: str
-    purpose: str
+    angle: str
 
     @property
     def trend(self) -> bool:

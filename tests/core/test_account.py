@@ -138,20 +138,30 @@ def fresh(monkeypatch, tmp_path):
 def test_bot_account_picks_the_folder(accounts, fresh):
     accounts("other", THEAISHRINK.replace('handle = "TheAIShrink"', 'handle = "OtherBot"')
              .replace('language = "en"', 'language = "fr"'))
-    environ = fresh("BOT_ACCOUNT=other\n")
+    fresh("BOT_ACCOUNT=other\n")
     assert account.current().name == "other"
     assert settings.get("BOT_HANDLE") == "OtherBot"
     assert config.BOT_PROFILE_URL == "https://x.com/OtherBot"
     assert settings.get("CONTENT_LANG_PRIMARY") == "fr"
-    # content_guard and editorial_bot still read the language from the environment.
-    assert environ["CONTENT_LANG_PRIMARY"] == "fr"
+
+
+def test_the_account_folder_is_absolute_and_follows_accounts_dir(accounts, fresh, tmp_path):
+    accounts("other")
+    fresh("BOT_ACCOUNT=other\n")
+    assert account.current().folder == str(tmp_path / "accounts" / "other")
+
+
+def test_the_real_account_folder_holds_its_account_toml():
+    folder = account.load("theaishrink").folder
+    assert os.path.isabs(folder)
+    assert Path(folder).resolve() == ROOT / "accounts" / "theaishrink"
 
 
 def test_env_wins_over_the_account(accounts, fresh):
     accounts("theaishrink")
-    environ = fresh("BOT_HANDLE=FromEnv\nCONTENT_LANG_PRIMARY=fr\n")
+    fresh("BOT_HANDLE=FromEnv\nCONTENT_LANG_PRIMARY=fr\n")
     assert settings.get("BOT_HANDLE") == "FromEnv"
-    assert environ["CONTENT_LANG_PRIMARY"] == "fr"
+    assert settings.get("CONTENT_LANG_PRIMARY") == "fr"
 
 
 @pytest.mark.parametrize("value", ["missing", "../theaishrink", "", "TheAIShrink"])
@@ -197,9 +207,6 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = "yes" }', "editorial.slots[3].trend"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
     ('{ clock = "10:00", trend = true }', '{ clock = "09:00", trend = true }', "editorial.slots[3].clock"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10:00" }', "editorial.slots[3].angle"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = true, angle = "x" }',
-     "editorial.slots[3].angle"),
     ('"openai.com", "blog.google"', '"openai.com", 7', "editorial.trusted_hosts[1]"),
     ('chat_templating"\npublisher = "Hugging Face docs"', 'chat_templating"\npublisher = true',
      "editorial.evergreen[0].publisher"),
@@ -213,6 +220,20 @@ def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
     accounts("theaishrink", THEAISHRINK.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
+
+
+@pytest.mark.parametrize("new, problem", [
+    ('{ clock = "10:00" }', "editorial.slots[3].angle is required unless trend = true."),
+    ('{ clock = "10:00", trend = true, angle = "x" }',
+     "editorial.slots[3].angle must be absent when trend = true, which takes trend_angle instead."),
+])
+def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, problem):
+    old = '{ clock = "10:00", trend = true }'
+    assert THEAISHRINK.count(old) == 1
+    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    with pytest.raises(settings.SettingsError) as raised:
+        fresh()
+    assert str(raised.value).endswith(problem)
 
 
 # --- Limits: an Account may only tighten an engine bound ------------------------
