@@ -1,6 +1,7 @@
 """Slot journal: the editorial state of the Toronto day, and its one owner.
 
-It answers what the editorial cycle and the reach report ask of that state:
+It answers what the editorial cycle, the reach report and the post
+chokepoint (`post_tweet`, read only) ask of that state:
 
 - the day: `roll_to` starts a new Toronto day; each day-scoped query names
   its day and reads nothing of another one;
@@ -8,8 +9,8 @@ It answers what the editorial cycle and the reach report ask of that state:
 - the Pending slot's life: `reserve` before the submission, then `confirm`
   once it shipped or `release` when nothing was sent;
 - the Slots closed for a day (pending or published), the source URLs
-  already used, the recent texts (published and pending), the day's
-  submissions and the latest one.
+  already used, the recent posts (published and pending) and their texts,
+  the day's submissions and the latest one.
 
 The file, `editorial_state.json`, keeps its format:
 
@@ -57,11 +58,11 @@ def stamp(raw):
     return dt.astimezone(timezone.utc) if dt.tzinfo else None
 
 
-class Submissions(NamedTuple):
-    """A day's submissions the journal knows: its Slots marked published,
-    and its pending submissions."""
-    published: int
-    pending: int
+class Post(NamedTuple):
+    """A published or pending Original: its text and submission time, None
+    when missing or malformed."""
+    text: str
+    at: Optional[datetime]
 
 
 class SlotJournal:
@@ -107,16 +108,14 @@ class SlotJournal:
         """The Editor's reason on `clock`'s last Attempt of `day`, or ""."""
         return self._of(day).get("feedback", {}).get(clock, "")
 
-    def submissions(self, day: date) -> Submissions:
-        """`day`'s Slots marked published, and its pending submissions: in
-        `pending_sources` or a Slot marked pending, the Operator's hand
-        edits included."""
-        slots = self._of(day).get("slots", {})
+    def submissions(self, day: date) -> frozenset:
+        """The keys (`YYYY-MM-DD/<slot>`) of `day`'s submissions: its Slots
+        marked published or pending and its `pending_sources` entries, the
+        Operator's hand edits included. A Slot counts once, whatever marks
+        it."""
         prefix = f"{day.isoformat()}/"
-        pending = {key for key in self._data.get("pending_sources", {}) if key.startswith(prefix)}
-        pending |= {prefix + clock for clock, mark in slots.items() if mark == "pending"}
-        return Submissions(published=sum(1 for mark in slots.values() if mark == "published"),
-                           pending=len(pending))
+        keys = {key for key in self._data.get("pending_sources", {}) if key.startswith(prefix)}
+        return frozenset(keys | {prefix + clock for clock in self._of(day).get("slots", {})})
 
     # --- changes of the held day ---------------------------------------------
 
@@ -129,14 +128,16 @@ class SlotJournal:
         self._data.setdefault("feedback", {})[clock] = str(reason)[:FEEDBACK_MAX_CHARS]
         self._save()
 
-    def reserve(self, clock: str, url: str, text: str, at: datetime) -> None:
+    def reserve(self, clock: str, url: str, text: str, at: datetime) -> str:
         """Mark `clock` pending before its submission: until confirmed or
         released, its source and text stay out of later Drafts, and it
-        counts toward the ceiling and the spacing."""
+        counts toward the ceiling and the spacing. Returns its key, which
+        the submission hands to `post_tweet`."""
+        key = self._pending_key(clock)
         self._data.setdefault("slots", {})[clock] = "pending"
-        self._data.setdefault("pending_sources", {})[self._pending_key(clock)] = dict(
-            url=url, text=text, ts=at.isoformat())
+        self._data.setdefault("pending_sources", {})[key] = dict(url=url, text=text, ts=at.isoformat())
         self._save()
+        return key
 
     def confirm(self, clock: str, url: str, text: str, angle: str, at: datetime) -> None:
         """The reserved submission of `clock` shipped at `at`."""
@@ -168,15 +169,25 @@ class SlotJournal:
                 if (stamp(r.get("ts", "")) or floor) > cutoff}
         return used | {p["url"] for p in self._data.get("pending_sources", {}).values()}
 
+    def _entries(self, besides: Optional[str]) -> list:
+        """The published entries, then the pending ones but `besides`."""
+        pending = self._data.get("pending_sources", {})
+        return [*self._data.get("published", []),
+                *(entry for key, entry in pending.items() if key != besides)]
+
+    def recent_posts(self, besides: Optional[str] = None) -> list:
+        """The published Posts, then the pending ones, the Operator's hand
+        edits included; the pending key `besides` left out."""
+        return [Post(e["text"], stamp(e.get("ts", ""))) for e in self._entries(besides)]
+
     def recent_texts(self) -> list:
         """The published texts, then the pending ones."""
-        return ([p["text"] for p in self._data.get("published", [])]
-                + [p["text"] for p in self._data.get("pending_sources", {}).values()])
+        return [post.text for post in self.recent_posts()]
 
-    def last_submission(self) -> Optional[datetime]:
-        """The latest pending or published submission time, any day."""
-        entries = (*self._data.get("pending_sources", {}).values(), *self._data.get("published", []))
-        return max((s for s in (stamp(e.get("ts", "")) for e in entries) if s), default=None)
+    def last_submission(self, besides: Optional[str] = None) -> Optional[datetime]:
+        """The latest pending or published submission time, any day; the
+        pending key `besides` left out."""
+        return max((post.at for post in self.recent_posts(besides) if post.at), default=None)
 
     def get(self, key, default=None):
         """One key of the file format, read only: the `collect_sources`

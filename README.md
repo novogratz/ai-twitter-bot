@@ -24,7 +24,8 @@ English prompts): every post and reply prompt carries it as one block.
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
-  ambiguous outcome counts toward both until the operator clears it.
+  ambiguous outcome counts toward both until the operator clears it, and its
+  story toward the duplicate check of every original.
 - **No automatic quote tweets, reposts, self-recycling, or burst threads.**
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate

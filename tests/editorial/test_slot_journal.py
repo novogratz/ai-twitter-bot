@@ -7,7 +7,7 @@ import pytest
 
 from src.core.state_errors import StateUnreadable
 from src.editorial import slot_journal
-from src.editorial.slot_journal import FileJournal, MemoryJournal, Submissions
+from src.editorial.slot_journal import FileJournal, MemoryJournal, Post
 from tests.helpers import TORONTO
 
 DAY = date(2026, 9, 20)
@@ -66,17 +66,20 @@ def test_attempts_and_feedback_belong_to_their_slot():
 
 def test_a_reserved_slot_is_closed_until_released():
     journal = journal_of()
-    journal.reserve("07:15", URL, "A post", AT)
+    assert journal.reserve("07:15", URL, "A post", AT) == "2026-09-20/07:15"
     assert journal.closed("07:15", DAY)
     assert journal.saved["pending_sources"] == {
         "2026-09-20/07:15": dict(url=URL, text="A post", ts=AT.isoformat())}
     assert URL in journal.used_urls(AT) and journal.recent_texts() == ["A post"]
-    assert journal.submissions(DAY) == Submissions(published=0, pending=1)
+    assert journal.recent_posts() == [Post("A post", AT)]
+    assert journal.submissions(DAY) == {"2026-09-20/07:15"}
     assert journal.last_submission() == AT
+    assert journal.recent_posts("2026-09-20/07:15") == []
+    assert journal.last_submission("2026-09-20/07:15") is None
     journal.release("07:15")
     assert not journal.closed("07:15", DAY)
     assert journal.saved["slots"] == {} and journal.saved["pending_sources"] == {}
-    assert journal.submissions(DAY) == Submissions(0, 0) and journal.last_submission() is None
+    assert journal.submissions(DAY) == set() and journal.last_submission() is None
 
 
 def test_a_confirmed_slot_is_published():
@@ -90,7 +93,7 @@ def test_a_confirmed_slot_is_published():
     assert journal.published() == [dict(ts=shipped.isoformat(), text="A post", source_url=URL,
                                         angle="format first", slot="07:15")]
     assert journal.recent_texts() == ["A post"] and URL in journal.used_urls(shipped)
-    assert journal.submissions(DAY) == Submissions(published=1, pending=0)
+    assert journal.submissions(DAY) == {"2026-09-20/07:15"}
     assert journal.last_submission() == shipped
 
 
@@ -102,20 +105,21 @@ def test_a_pending_slot_keeps_its_key_across_days():
     journal.reserve("07:15", "https://openai.com/new", "Today's post", AT + timedelta(days=1))
     assert set(journal.saved["pending_sources"]) == {"2026-09-20/07:15", "2026-09-21/07:15"}
     # Yesterday's pending counts toward yesterday.
-    assert journal.submissions(DAY + timedelta(days=1)) == Submissions(published=0, pending=1)
+    assert journal.submissions(DAY + timedelta(days=1)) == {"2026-09-21/07:15"}
     journal.release("07:15")
     assert set(journal.saved["pending_sources"]) == {"2026-09-20/07:15"}
 
 
 def test_submissions_count_the_operator_marks_of_the_day():
     """A Slot the Operator marked pending or published by hand counts, its
-    pending_sources entry removed or not."""
+    pending_sources entry removed or not, and once whatever marks it."""
     journal = journal_of(slots={"09:30": "published", "10:00": "pending", "11:45": "pending"},
                          pending_sources={"2026-09-20/11:45": dict(url=URL, text="t", ts=AT.isoformat()),
                                           "2026-09-20/startup@05:00:00": dict(
                                               url=URL, text="t", ts=AT.isoformat())})
-    assert journal.submissions(DAY) == Submissions(published=1, pending=3)
-    assert journal.submissions(DAY + timedelta(days=1)) == Submissions(published=0, pending=0)
+    assert journal.submissions(DAY) == {"2026-09-20/09:30", "2026-09-20/10:00", "2026-09-20/11:45",
+                                        "2026-09-20/startup@05:00:00"}
+    assert journal.submissions(DAY + timedelta(days=1)) == set()
 
 
 def test_used_urls_hold_a_week_of_publications_and_every_pending_one():
@@ -136,7 +140,7 @@ def test_an_empty_journal_answers_every_query():
     assert not journal.closed("07:15", DAY) and journal.attempts("07:15", DAY) == 0
     assert journal.feedback("07:15", DAY) == "" and journal.published() == []
     assert journal.used_urls(AT) == set() and journal.recent_texts() == []
-    assert journal.submissions(DAY) == Submissions(0, 0) and journal.last_submission() is None
+    assert journal.submissions(DAY) == set() and journal.last_submission() is None
 
 
 def test_stamps_read_iso_and_feed_dates_and_refuse_naive_ones():
@@ -176,7 +180,7 @@ def test_the_file_of_the_old_format_reads_and_rewrites_identically():
     journal.roll_to(DAY)
     assert journal.closed("05:00", DAY) and journal.attempts("05:00", DAY) == 1
     assert journal.feedback("09:30", DAY) == "evidence not found in fetched source"
-    assert journal.submissions(DAY) == Submissions(published=1, pending=1)
+    assert journal.submissions(DAY) == {"2026-09-20/05:00", "2026-09-20/startup@07:10:00"}
     journal.reserve("11:45", URL, "A post", AT)
     with open(path, encoding="utf-8") as f:
         assert json.load(f)["slots"] == {**OLD_FORMAT["slots"], "11:45": "pending"}
