@@ -30,9 +30,10 @@ MODES = [pytest.param(False, id="in-turn"), pytest.param(True, id="pipelined")]
 
 
 def job(**options):
+    from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", "model", "TEST", dossier=False)
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False)
     options.setdefault("reply_call", lambda author: call)
     return rp.Job(options.pop("name", "test_job"), "TEST", **options)
 
@@ -256,10 +257,10 @@ def test_the_rate_limit_ends_the_cycle(llm, chokepoint, pipelined, calls):
 
 def cloud_job(**options):
     """A job whose ReplyCall runs on Claude through the real `run_llm`."""
-    from src.replies.reply_generator import CallOptions, ReplyCall
+    from src.core.llm_client import Surface
+    from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", "cloud-model", "TEST", dossier=False,
-                     options=CallOptions(force_provider="claude"))
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False, provider="claude")
     return job(reply_call=lambda author: call, **options)
 
 

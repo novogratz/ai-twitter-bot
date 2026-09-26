@@ -9,11 +9,10 @@ import re
 from datetime import datetime
 from typing import Optional
 from ..core.logger import log
-from ..core import config
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS
-from ..core.llm_client import CallProfile, Output
+from ..core.llm_client import CallProfile, Output, Surface
 from . import reply_generator
-from .reply_generator import CallOptions, LanguageRule, Outcome, ReplyCall
+from .reply_generator import LanguageRule, Outcome, ReplyCall
 
 
 def _load_discovered_handles(limit: int = 10) -> list:
@@ -513,25 +512,12 @@ def generate_replies(recent_topics=None, already_replied=None):
     since_date = (today - timedelta(days=1)).isoformat()
 
     log.info("[REPLY] Running LLM CLI (searching X)...")
-    # cwd=/tmp: when Claude CLI is invoked from inside a project dir with
-    # CLAUDE.md and git context, parallel REPLY-search threads occasionally
-    # hallucinate prose responses ("1 reply postée:") instead of returning
-    # the requested JSON envelope — likely the project context cross-bleeds
-    # between concurrent CLI sessions. Running from /tmp gives each call a
-    # neutral CWD with no CLAUDE.md / git repo to leak in. Hit 7
-    # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
     # Reply agent is English-first: the Voice file in EN, but the prompt
-    # still tells it to reply in each tweet's language.
-    call = ReplyCall(REPLY_PROMPT_TEMPLATE, config.REPLY_MODEL, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
-                     options=CallOptions(
-                         allowed_tools=("WebSearch",),
-                         cwd="/tmp",
-                         # A Reply's profile, read as JSON: the answer is a JSON array.
-                         profile=CallProfile(output=Output.JSON),
-                         # Must run on a tool-capable provider: ollama HTTP has no WebSearch
-                         # tool and 503s, so this path produced zero replies (op 2026-06-24).
-                         force_provider=config.REPLY_LLM_PROVIDER,
-                     ))
+    # still tells it to reply in each tweet's language. Its surface carries
+    # the WebSearch tool and the neutral cwd.
+    call = ReplyCall(REPLY_PROMPT_TEMPLATE, Surface.REPLY_SEARCH, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
+                     # A Reply's profile, read as JSON: the answer is a JSON array.
+                     profile=CallProfile(output=Output.JSON))
     generation = reply_generator.generate(call, fields={
         "dedup_section": dedup_section,
         "skip_urls_section": skip_urls_section,
