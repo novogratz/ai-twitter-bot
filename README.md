@@ -149,9 +149,10 @@ whitelist, the ledger's Debate turns and the followers the followers page
 showed (`followers_seen.json`): a Stranger is never followed, whichever job
 asks, and neither is a Blocked account, matched as Reply admission matches
 it. `follow_account` alone adds an account followed, or found already
-followed, to `followed_accounts.json`. `follow_engagers_job` follows through
-a Follow run (`src/account/follow_run.py`), which skips those accounts
-before any profile opens. The reply
+followed, to `followed_accounts.json`. `follow_engagers_job` and
+`engage_job` follow through a Follow run (`src/account/follow_run.py`),
+which skips those accounts before any profile opens; `engage_job` asks the
+policy for Seed accounts only, and never finds a relation itself. The reply
 jobs live in `src/replies/`, the follow, like, pin and follower-count jobs in
 `src/account/`, and shared foundations in `src/core/`. The legacy
 content modules are gone (issue #110): every module under `src/` is reached

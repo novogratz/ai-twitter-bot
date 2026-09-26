@@ -97,7 +97,8 @@ def trace(monkeypatch):
     monkeypatch.setattr(ag, "can_post", lambda *a, **k: (
         step("guard:can_post", (False, "refused") if "can_post" in t.refuse else (True, ""))))
     monkeypatch.setattr(fp, "judge", lambda *a, **k: step("guard:judge_follow", (
-        fp.Verdict(t.follow_refusal, "refused") if "judge_follow" in t.refuse else fp.ADMITTED)))
+        fp.Verdict(t.follow_refusal, "refused") if "judge_follow" in t.refuse
+        else fp.Verdict(None, relation=fp.Relation.FOLLOWER))))
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(cg, "is_duplicate", lambda *a, **k: False)
     monkeypatch.setattr(cg, "note_posted", lambda text: step("note_posted"))
@@ -270,15 +271,21 @@ def test_follow_quality_refusal_closes_without_clicking(trace, monkeypatch):
                             "close", "unlock"]
 
 
-def test_follow_refused_when_the_whitelist_turns_unreadable_after_admission(trace, monkeypatch):
-    """The quality gate reads the whitelist on the open profile: unreadable
-    by then, the follow stops before the page is scored, without a click
-    or a quality reject."""
-    def unreadable(handle):
-        raise StateUnreadable("whitelist.json is unreadable")
-    monkeypatch.setattr(fp, "is_whitelisted", unreadable)
-    assert tc.follow_account("someone") is F.REFUSED
-    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "close", "unlock"]
+def test_follow_hands_the_relation_judge_found_to_the_quality_gate(trace, monkeypatch):
+    """#262: the relation is found once per follow, by judge, for the
+    relations the caller asked; the gate on the open profile reads none."""
+    asked, gated = [], []
+    monkeypatch.setattr(fp, "judge", lambda handle, relations: asked.append(relations) or (
+        fp.Verdict(None, relation=fp.Relation.SEED)))
+    monkeypatch.setattr(fp, "relation", lambda handle: pytest.fail("relation found again"))
+    monkeypatch.setattr(fp, "_quality_decision", lambda *a, **k: gated.append(k) or (True, ""))
+    trace.js.extend(["CLICKED", "CLICKED"])
+
+    assert tc.follow_account("someone", relations=fp.SEED_ONLY) is F.FOLLOWED
+    assert tc.follow_account("someone") is F.FOLLOWED
+
+    assert asked == [fp.SEED_ONLY, fp.FOLLOWABLE]
+    assert [k["whitelisted"] for k in gated] == [True, True]
 
 
 @pytest.mark.parametrize("answer", ["NO_BTN", ""])

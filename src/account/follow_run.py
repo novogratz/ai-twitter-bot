@@ -4,7 +4,9 @@ A job keeps its source, its order and its caps, and asks the run to follow
 its picks one at a time. The run skips the Followed accounts, whatever the
 case of the handle, and each handle it already tried; it asks
 `twitter_client.follow_account`, which keeps every rule of the follow
-policy, and hands the outcome back to the job.
+policy, and hands the outcome back to the job. A job that follows only
+some relations names them, as engage asks for `follow_policy.SEED_ONLY`:
+the policy refuses the others, and the job never finds the relation itself.
 
 Past CAP_REACHED the run asks no more: the daily cap, the following ceiling
 and the ratio brake do not come back within a cycle. TOO_SOON leaves it
@@ -31,8 +33,9 @@ class FollowRun:
     """One job's follows for one cycle. Raises StateUnreadable, before any
     follow, while followed_accounts.json cannot be read."""
 
-    def __init__(self, label: str):
+    def __init__(self, label: str, relations: frozenset = follow_policy.FOLLOWABLE):
         self._label = label  # the log prefix, "FOLLOW-ENGAGERS"…
+        self._relations = relations
         self._followed = {_key(h) for h in follow_policy.followed()}
         self._tried = set()
         self._cap_reached = False
@@ -69,7 +72,7 @@ class FollowRun:
             return twitter_client.FollowOutcome.CAP_REACHED
         self._tried.add(_key(handle))
         try:
-            outcome = twitter_client.follow_account(handle)
+            outcome = twitter_client.follow_account(handle, relations=self._relations)
         except (OutsideActiveHours, StateUnreadable):
             raise
         except Exception as exc:

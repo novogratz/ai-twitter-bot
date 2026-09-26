@@ -5,14 +5,18 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
   policy's own sources: Seed account (the whitelist), follower (the
   followers page, `record_followers`), Engager (the Debate turns), else
   Stranger.
-  No caller declares a relation.
-- `judge(handle)` runs before the profile opens: the handle, the Blocked
-  account (matched as Reply admission does), the relation (a Stranger is
-  never followed), the whitelist, anti-churn, the daily cap,
-  the spacing, the following ceiling and ratio brake, then the
-  quality-reject cache.
-- `judge_profile(handle, read_profile)` runs on the open profile, before
-  the click: the quality gate, which caches what it rejects for 30 days.
+  No caller declares a relation; a caller may narrow the relations it
+  follows, as engage and the `follow` skill ask for `SEED_ONLY`.
+- `judge(handle, relations)` runs before the profile opens: the handle, the
+  Blocked account (matched as Reply admission does), the relation (a
+  Stranger is never followed, a relation outside `relations` is refused),
+  the whitelist, anti-churn, the daily cap, the spacing, the following
+  ceiling and ratio brake, then the quality-reject cache. Its verdict
+  carries the relation it found.
+- `judge_profile(handle, relation, read_profile)` runs on the open profile,
+  before the click: the quality gate, by the relation `judge` found, which
+  caches what it rejects for 30 days. The relation is found once per
+  follow.
 - `followed()` and `record_followed(handle)` are the record of the accounts
   followed; `adjust_following(delta)` keeps the following count.
 - `discovered()` and `add_discovered(handles)` are the handles
@@ -25,7 +29,7 @@ facts (today's follows, spacing, last touch) come from `action_guard`.
 import os
 import re
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timedelta
 from enum import Enum
 
@@ -88,6 +92,11 @@ class Relation(Enum):
     STRANGER = "Stranger"
 
 
+# The relations a caller may ask to follow; a Stranger is in none.
+FOLLOWABLE = frozenset({Relation.SEED, Relation.FOLLOWER, Relation.ENGAGER})
+SEED_ONLY = frozenset({Relation.SEED})
+
+
 class Refusal(Enum):
     BLOCKED_ACCOUNT = "Blocked account"
     TOO_SOON = "too soon after the last follow"
@@ -100,6 +109,9 @@ class Refusal(Enum):
 class Verdict:
     refusal: Refusal | None
     reason: str = ""
+    # The relation `judge` found, handed to `judge_profile`; None when the
+    # handle was refused before it.
+    relation: Relation | None = field(default=None, compare=False)
 
     def __bool__(self) -> bool:
         return self.refusal is None
@@ -349,7 +361,7 @@ def _following_ceiling(followers: int | None) -> int:
 
 # --- before the profile opens -----------------------------------------------
 
-def judge(handle: str) -> Verdict:
+def judge(handle: str, relations: frozenset = FOLLOWABLE) -> Verdict:
     """2026-06-07 spec follow policy — whitelist-only seed/discovery list,
     hard total-following ceiling (300 cap / ~150 while followers are low),
     20/day pacing with >=10-min randomized gaps, 30-day anti-churn — then
@@ -357,10 +369,12 @@ def judge(handle: str) -> Verdict:
 
     A Blocked account is refused first, whatever its relation, with the
     matching of Reply admission and likes. A Stranger is refused whatever
-    the mode or the caller. A follower or an
+    the mode or the caller, then a relation outside `relations`, the ones
+    the caller follows. A follower or an
     Engager passes the whitelist-only gate when FOLLOWBACK_BYPASS_WHITELIST
     is set — every other gate (churn, daily cap, spacing, ceiling) still
-    applies.
+    applies. Past the Blocked account, the verdict carries the relation, for
+    `judge_profile`.
 
     TOO_SOON and CAP_REACHED are about the account's follow budget, not the
     handle: a later cycle may admit the same handle. A ceiling that cannot
@@ -377,8 +391,15 @@ def judge(handle: str) -> Verdict:
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{handle} matches the blocklist")
     h = handle.lower()
     rel = relation(h)
+    return replace(_judge_relation(h, rel, relations), relation=rel)
+
+
+def _judge_relation(h: str, rel: Relation, relations: frozenset) -> Verdict:
     if rel is Relation.STRANGER:
         return Verdict(Refusal.POLICY, _STRANGER)
+    if rel not in relations:
+        asked = ", ".join(sorted(r.value for r in relations))
+        return Verdict(Refusal.POLICY, f"{rel.value}, outside the relations asked ({asked})")
     exempt = config.followback_bypass_whitelist()
     if config.follow_whitelist_only() and rel is not Relation.SEED and not exempt:
         return Verdict(Refusal.POLICY,
@@ -521,26 +542,23 @@ def _record_quality_reject(handle: str) -> None:
         lambda doc: {**doc, (handle or "").lower(): datetime.now().isoformat()})
 
 
-def judge_profile(handle: str, read_profile: Callable[[], dict]) -> Verdict:
-    """The quality gate on the open profile, by the handle's relation: a
-    Seed account passes, an Engager skips the size and niche checks, a
-    Stranger is refused. `read_profile` returns its followers, bio and
-    name; it runs only once the relation is known. A rejected handle is
-    cached for 30 days, where `judge` finds it.
-
-    A relation unreadable by now is a POLICY refusal, not a raise: the
-    profile is open, and the refusal lets `follow_account` close its tab."""
-    try:
-        rel = relation(handle)
-    except StateUnreadable as exc:
-        return Verdict(Refusal.POLICY, f"relation unreadable ({exc})")
-    if rel is Relation.STRANGER:
+def judge_profile(handle: str, relation: Relation | None,
+                  read_profile: Callable[[], dict]) -> Verdict:
+    """The quality gate on the open profile, by the relation `judge` found
+    (its verdict's `relation`), never read again: a Seed account passes, an
+    Engager skips the size and niche checks, a Stranger or no relation is
+    refused without reading the profile. `read_profile` returns its
+    followers, bio and name. A rejected handle is cached for 30 days, where
+    `judge` finds it."""
+    if relation is None:
+        return Verdict(Refusal.POLICY, "no relation found before the profile opened")
+    if relation is Relation.STRANGER:
         return Verdict(Refusal.POLICY, _STRANGER)
     profile = read_profile()
     ok, why = _quality_decision(
         _parse_follower_count(profile.get("followers", "")),
         profile.get("bio", ""), profile.get("name", ""),
-        whitelisted=rel is Relation.SEED, engager=rel is Relation.ENGAGER)
+        whitelisted=relation is Relation.SEED, engager=relation is Relation.ENGAGER)
     if not ok:
         _record_quality_reject(handle)
         return Verdict(Refusal.QUALITY_REJECTED, why)
