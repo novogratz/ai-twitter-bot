@@ -285,6 +285,15 @@ A curated AI documentation page used for teaching on quiet news days, never
 presented as new.
 _Avoid_: knowledge doc, knowledge source, curated documentation
 
+### Browser
+
+**Page session**:
+One job's hold on Safari, from the Safari lock taken to the lock released:
+it opens its page when asked, reads nothing when that page does not open,
+and closes each tab it opened on every path. A session inside another one
+shares its page and opens nothing.
+_Avoid_: browser session (the x.com login), tab, visit
+
 ### State
 
 **Guarded state file**:

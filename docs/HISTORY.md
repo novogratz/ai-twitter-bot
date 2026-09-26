@@ -8,6 +8,15 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — the follower count reads through a page session (issue #253):**
+> `follower_tracker_job` ignored the result of `safari.open_url` and, when
+> the profile did not open, read the follower count of whatever profile was
+> in front. It is the first job on the page session of issue #250: the
+> session holds the Safari lock, raises `PageNotOpened` before any read,
+> and closes its tab on every path. A profile that does not open is now a
+> failed cycle. At bedtime the tab close is still refused and the tab
+> stays open until the next Safari restart, pending the Operator's answer.
+
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply
 > whose tweet never opened still pressed `r`, pasted and submitted into
