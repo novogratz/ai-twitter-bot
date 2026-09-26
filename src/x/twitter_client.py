@@ -633,6 +633,43 @@ _REFUSED = {follow_policy.Refusal.BLOCKED_ACCOUNT: FollowOutcome.BLOCKED,
             follow_policy.Refusal.POLICY: FollowOutcome.REFUSED}
 
 
+# Only the visited profile's own button is ever clicked (#259): a profile
+# already followed shows "-unfollow" in its header while the "Who to follow"
+# block beside it offers "-follow" buttons for other accounts. The script
+# reads the primary column only, checks that its header shows @__HANDLE__,
+# and takes the one follow or unfollow button whose aria-label names
+# @__HANDLE__ outside a user cell: the testid suffix gives the state, the
+# label the account. No such button, or more than one, clicks nothing.
+_FOLLOW_JS = r"""
+(function(handle) {
+    var h = (handle || '').toLowerCase();
+    if (!/^[a-z0-9_]+$/.test(h)) return 'NO_PROFILE';
+    var column = document.querySelector('[data-testid="primaryColumn"]');
+    if (!column) return 'NO_PROFILE';
+    var shown = new RegExp('@' + h + '(?![a-z0-9_])', 'i');
+    var names = column.querySelectorAll('[data-testid="UserName"]');
+    var onProfile = false;
+    for (var i = 0; i < names.length; i++) {
+        if (shown.test(names[i].textContent || '')) onProfile = true;
+    }
+    if (!onProfile) return 'NO_PROFILE';
+    var buttons = column.querySelectorAll('button[data-testid$="-follow"], button[data-testid$="-unfollow"]');
+    var own = [];
+    for (var j = 0; j < buttons.length; j++) {
+        var b = buttons[j];
+        if (b.closest('[data-testid="UserCell"]')) continue;
+        var words = (b.getAttribute('aria-label') || '').toLowerCase().split(/\s+/);
+        if (words.indexOf('@' + h) >= 0) own.push(b);
+    }
+    if (own.length > 1) return 'AMBIGUOUS';
+    if (!own.length) return 'NO_BTN';
+    if (/-unfollow$/.test(own[0].getAttribute('data-testid') || '')) return 'ALREADY';
+    own[0].click();
+    return 'CLICKED';
+})(__HANDLE__)
+"""
+
+
 def follow_account(username: str) -> FollowOutcome:
     """Visit a user's profile and click the Follow button.
 
@@ -683,38 +720,7 @@ def follow_account(username: str) -> FollowOutcome:
         if not verdict:
             return refused(verdict)
 
-        # 2026-06-05 fix: the old inline-quoted JS errored on every attempt
-        # ("Could not follow @X via JS" 100% of the time) — quote-escaping
-        # broke under osascript, and even when it ran, only the exact text
-        # 'Follow' inside placementTracking matched (X moved to
-        # data-testid="<id>-follow" buttons + localized labels). Now: temp-file
-        # JS (no quote hell), 3 selector strategies, and a REAL status return
-        # so we only record a follow when the click actually fired.
-        follow_js = """
-        (function() {
-            var btn = document.querySelector('button[data-testid$="-follow"]');
-            if (!btn) {
-                var all = document.querySelectorAll('button[aria-label], [role="button"][aria-label]');
-                for (var i = 0; i < all.length; i++) {
-                    var al = all[i].getAttribute('aria-label') || '';
-                    if (/^(Follow|Suivre) @/i.test(al)) { btn = all[i]; break; }
-                }
-            }
-            if (!btn) {
-                var btns = document.querySelectorAll('[data-testid="placementTracking"] [role="button"], main [role="button"]');
-                for (var j = 0; j < btns.length; j++) {
-                    var t = (btns[j].textContent || '').trim();
-                    if (t === 'Follow' || t === 'Suivre') { btn = btns[j]; break; }
-                }
-            }
-            if (!btn) {
-                if (document.querySelector('button[data-testid$="-unfollow"]')) return 'ALREADY';
-                return 'NO_BTN';
-            }
-            btn.click();
-            return 'CLICKED';
-        })()
-        """
+        follow_js = _FOLLOW_JS.replace("__HANDLE__", json.dumps(username))
         status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
         if status == "CLICKED":
             time.sleep(2)
