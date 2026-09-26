@@ -316,7 +316,7 @@ approval, so nothing is published and a missing Draft spends no Attempt.
 
 ## Write path and limits
 
-The browser layer is three modules in `src/x/`. `safari.py` holds the
+The browser layer is four modules in `src/x/`. `safari.py` holds the
 primitives: the Safari lock, `_run_applescript`, `_run_js` (page JavaScript
 that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 Every page JavaScript in `src/` goes through `_run_js`, with the caller's
@@ -331,6 +331,23 @@ run under a bound (`OPEN_TIMEOUT_S` 20 s, `CLOSE_TIMEOUT_S` 10 s,
 the run fails, so a wedged Safari cannot keep the Safari lock. `open_url`
 returns False then, as on any failed run. Only `safari.py` and the Safari
 quit in `safari_hygiene` spawn `osascript` themselves.
+`page_session.py` holds the page session, over those primitives:
+`session(tag)` takes the Safari lock for its whole life and yields a page
+that opens on demand (`page.open(url, settle_s)`), scrolls, runs a script
+(its failure line prefixed `[tag]`), reads a JSON answer and runs keys. A
+page that does not open raises `PageNotOpened` before any read. In a
+`finally`, the session closes the front tab once for each open it tried,
+a failed one included, since a timed-out open may have opened its page
+anyway. A session
+entered inside another one on the same thread shares its page: it opens
+nothing and closes nothing. At bedtime or on a stop the close goes through
+`_run_applescript`, which refuses it: the tab stays open until the next
+Safari restart, and `OutsideActiveHours` reaches the job (the Operator's
+open question of issue #250). `BROWSER` picks the adapter at the start of
+each session: `SafariBrowser`, which calls the primitives through the
+`safari` module, or `MemoryBrowser`, which scripts pages by URL for tests.
+The follower count reads its page through a session; the other page reads
+and the writes move to it with issues #254 to #256.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 `twitter_client.py` holds the write chokepoints. Writes use
@@ -708,16 +725,18 @@ These are how the code behaves today, not design intent:
   own daily caps in their state files.
 - `session_refresh_job` and the `health` recovery restart Safari without
   taking `_safari_lock`.
-- The page reads of `scraper.py`, the follow-back and the follower count
-  still ignore `open_url`'s result, and read the front tab when the page
-  did not open (parent issue #250). Only the writes check it.
+- The page reads of `scraper.py` and the follow-back still ignore
+  `open_url`'s result, and read the front tab when the page did not open
+  (parent issue #250). The writes and the page sessions check it.
 - Two AppleScript runs of `scraper.py` still have no bound: the activate
   before the second JavaScript try of a page read, and the scroll of
   `scrape_own_tweet_and_replies`. A wedged Safari there keeps the Safari
   lock.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
-  may still open a timed-out page afterwards, and the write's tab close
-  then closes another tab and leaves that one open (issue #253). Nothing
+  may still open a timed-out page afterwards, and the tab close of a write
+  or a page session then closes another tab and leaves that one open.
+  Safari's AppleScript gives a tab no lasting identifier, so the page
+  session closes the front tab, not the tab it opened. Nothing
   is sent into it. The same holds for a keystroke: a System Events wedged
   past its bound may still deliver a late `r` or paste to whatever is in
   front then. A late submit is the only one that could publish, and its
@@ -781,7 +800,10 @@ some files those bots used to write, as frozen data with no writer left:
    catches its own errors, and their `record_failure` call without an
    exception reads the one in flight. Issues #237 and #238 move them under
    `wrap_job`; #239 makes the exception required.
-3. Take `_safari_lock` for any browser work and close the tab you opened.
+3. Read or act on a page inside `page_session.session(tag)`: it takes the
+   Safari lock, opens the page when asked and closes the tab on every
+   path. Handle `PageNotOpened` if the job has a fallback; otherwise let
+   it fail the cycle. Test it on the `memory_page` fixture.
 4. Write only through the `twitter_client` chokepoints; add a new rule inside
    the chokepoint, not in the job.
 5. Key daily counters on the Toronto day (`active_hours.now_local()`).
@@ -855,7 +877,11 @@ or spawns `osascript` itself, docstrings aside; the Safari quit in
 `safari_hygiene` is the listed exception.
 `tests/x/test_page_js.py` pins each page script's timeout, log prefix and
 answer on failure, and checks that a test which forgets to mock `_run_js`
-fails on the wall. Every test also starts with fresh process memories: the
+fails on the wall. `tests/x/test_page_session.py` runs a contract over
+`MIGRATED`, every session moved to the page session: one tab close on the
+nominal path and when a read raises, and no read when the page does not
+open. The `memory_page` fixture puts a `MemoryBrowser` behind every page
+session, so those tests patch no primitive and no `sleep`. Every test also starts with fresh process memories: the
 posts the Reply pipeline set aside, the direct reply's query rotation cursor and the
 content guard's dedup memory of this run's posts.
 
