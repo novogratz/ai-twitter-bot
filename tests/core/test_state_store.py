@@ -109,7 +109,7 @@ def _corrupt(tmp_path, name):
 
 def _engage(monkeypatch):
     from src.account import engage_bot
-    monkeypatch.setattr(engage_bot, "follow_account", lambda *a, **k: pytest.fail("followed"))
+    monkeypatch.setattr("src.x.twitter_client.follow_account", lambda *a, **k: pytest.fail("followed"))
     engage_bot.run_engage_cycle()
 
 

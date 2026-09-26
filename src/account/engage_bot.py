@@ -7,7 +7,9 @@ Strategy (2026-06-06 operator mandate):
   - Blocked / pruned accounts are filtered out automatically.
   - Only a Seed account of the pool is followed (issue #173): followers
     belong to followback_job and Engagers to follow_engagers_job, each with
-    its own cap. The like pass is the same for every pool account.
+    its own cap. The Follow run asks the follow policy for Seed accounts
+    only, and the policy finds the relation (issue #262). The like pass is
+    the same for every pool account, past the follow budget too.
 """
 import random
 import time
@@ -17,9 +19,11 @@ from ..core.logger import log
 from ..core.state_store import StateUnreadable
 from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
 from ..guards import follow_policy
+from ..guards.active_hours import OutsideActiveHours
 from ..guards.reply_admission import is_blocked_account
 from ..x.scraper import _profile_visit_allowed
-from ..x.twitter_client import visit_profile_and_like, follow_account, LikeOutcome
+from ..x.twitter_client import visit_profile_and_like, LikeOutcome
+from .follow_run import FollowRun
 
 
 def _vip_accounts() -> tuple:
@@ -59,7 +63,7 @@ def _build_pool() -> list:
 def run_engage_cycle():
     """Visit a sample of feed-discovered profiles, like their latest tweets."""
     from ..core.evolution_store import filter_and_weight
-    followed = follow_policy.followed()
+    run = FollowRun("ENGAGE", relations=follow_policy.SEED_ONLY)
     pool = filter_and_weight(_build_pool())
 
     if not pool:
@@ -78,10 +82,7 @@ def run_engage_cycle():
     liked = 0
     for username in picks:
         try:
-            if (username not in followed
-                    and follow_policy.relation(username) is follow_policy.Relation.SEED):
-                log.info(f"[ENGAGE] Following + liking @{username}...")
-                follow_account(username)
+            if run.follow(username):
                 time.sleep(random.randint(2, 4))
 
             # 2026-06-17: skip the reciprocity-like pass when the handle is
@@ -101,8 +102,8 @@ def run_engage_cycle():
             outcomes = visit_profile_and_like(username, like_count=like_count)
             liked += sum(o is LikeOutcome.LIKED for o in outcomes)
             time.sleep(random.randint(3, 5))
-        except StateUnreadable:
-            raise  # a guarded file stops the job, not one pick at a time
+        except (StateUnreadable, OutsideActiveHours):
+            raise  # a guarded file or bedtime stops the job, not one pick at a time
         except Exception:
             log.info(f"[ENGAGE] Failed to engage with @{username}:")
             traceback.print_exc()

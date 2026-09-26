@@ -205,8 +205,9 @@ _Avoid_: reciprocal follow, reciprocity
 
 **Stranger**:
 An account that is neither a Seed account, a follower, nor an Engager; never
-followed, whoever asks. The follow policy finds the relation itself; no job
-declares it.
+followed, whoever asks. The follow policy finds the relation itself, once
+per follow; a job may only narrow the relations it follows (engage and the
+`follow` skill ask for Seed accounts), and no job declares it.
 _Avoid_: discovered account, feed account
 
 **Follow refusal**:
@@ -215,7 +216,8 @@ Blocked account (matched as Reply admission and likes match it), too soon
 (the follow spacing), cap reached (the daily cap, the following
 ceiling or the ratio brake, reached or unreadable), quality rejected (the
 quality gate, on the profile or within 30 days), or refused (every other
-rule: handle, Stranger, whitelist, anti-churn). Too soon and cap reached concern the
+rule: handle, Stranger, a relation outside the ones the caller follows,
+whitelist, anti-churn). Too soon and cap reached concern the
 account's follow budget, so a later cycle may follow the same account. A
 whitelist or action ledger unreadable before the profile opens is no
 refusal: it stops the job, and no account is marked tried.
@@ -230,7 +232,8 @@ _Avoid_: followed list, registry, follow cache
 
 **Follow run**:
 One cycle of a follow job, from its candidates to the follow chokepoint:
-it skips the Followed accounts and the accounts it already tried, asks
+it skips the Followed accounts and the accounts it already tried, asks for
+the relations the job follows, asks
 nothing more once the follow budget's cap is reached, and hands each
 outcome back to the job, which keeps its own caps. Bedtime or an
 unreadable state file ends it; any other error costs one pick, which the

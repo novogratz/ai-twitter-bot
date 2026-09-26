@@ -86,7 +86,7 @@ exceptions; all but the editorial and reach-report jobs also report to
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
-| `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
+| `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
@@ -370,7 +370,10 @@ change.
 
 `src/account/follow_run.py` runs one cycle's follows for a job. The
 `FollowRun` reads the followed accounts when it starts, and raises
-`StateUnreadable` while they cannot be read. `fresh(handles)` drops the
+`StateUnreadable` while they cannot be read. A job that follows only some
+relations names them to it, `follow_policy.SEED_ONLY` for `engage_job`,
+and the run hands them to `follow_account`: the job never finds a
+relation itself. `fresh(handles)` drops the
 followed accounts and the handles the run tried, whatever the case and a
 leading `@`;
 `follow(handle)` asks `follow_account` and returns its outcome, or `None`
@@ -384,7 +387,7 @@ and returns `None`, and the job goes on. `failed` counts those picks, which
 `raise_failure()` raises the last one's error: the job calls it once its
 state is saved, so the cycle reaches `health.record_failure`. The caps, the
 order and the persistent memory of tried handles stay in the job. `follow_engagers_job`
-uses it; `followback_job` and `engage_job` still run their own loop.
+and `engage_job` use it; `followback_job` still runs its own loop.
 
 `like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
 only for `LIKED`, which also carries `FAILED`, `UNCONFIRMED` and
@@ -490,17 +493,21 @@ Five modules sit behind them:
   the handle is to the account, from its own sources, never from the
   caller: Seed account (the whitelist, both files), follower (`followers_seen.json`, which only the
   followers scrape writes, through `record_followers`), Engager (the
-  ledger's Debate turns, then `replied_back.json`), else Stranger.
-  `judge(handle)` checks, before the profile opens, the handle (the one
+  ledger's Debate turns, then `replied_back.json`), else Stranger. It is
+  found once per follow, in `judge`.
+  `judge(handle, relations)` checks, before the profile opens, the handle (the one
   check of `[A-Za-z0-9_]{1,15}`), the Blocked account (the match of
   `reply_admission.is_blocked_account`, the one Reply admission and
   `like_tweet` use, over the engine's `BLOCKLIST` and the Account's
   `network.blocked_accounts`), the relation (a Stranger is refused in
-  every mode), the whitelist (a follower or an Engager passes it while
+  every mode, then a relation outside `relations`, the ones the caller
+  follows: `FOLLOWABLE` by default, `SEED_ONLY` for `engage_job` and the
+  `follow` skill), the whitelist (a follower or an Engager passes it while
   `FOLLOWBACK_BYPASS_WHITELIST` is on), anti-churn, the daily cap, the
   spacing, the following ceiling and ratio brake, then the quality-reject
-  cache. `judge_profile` runs the quality gate on the open profile, by
-  relation (a Seed account is exempt, an Engager skips the size and niche
+  cache; its verdict carries the relation. `judge_profile` runs the quality
+  gate on the open profile, by the relation `judge` found, read nowhere
+  again (a Seed account is exempt, an Engager skips the size and niche
   checks; the niche is the Account's `niche.bio`), and caches a reject for 30 days. Each
   returns a `Verdict` whose `Refusal` names the cause; `follow_account`
   turns it into its `FollowOutcome`, and the jobs act on that outcome
