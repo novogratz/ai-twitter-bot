@@ -8,6 +8,20 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — the Follow click touches only the visited profile (issue #259):**
+> the follow script took the first `button[data-testid$="-follow"]` of the
+> whole document, and answered "already followed" only when it found none.
+> On a profile already followed, whose own button is `-unfollow`, that
+> first `-follow` would be a "Who to follow" suggestion: the chokepoint
+> would have followed a Stranger, written a FOLLOW row under the visited
+> handle and added it to the followed accounts. Any account followed by
+> hand or before `followed_accounts.json` could reach it. Found reading the
+> code, not on a live page. The script now reads the primary column only,
+> checks that the header shows the visited `@handle`, and takes the one
+> follow or unfollow button whose `aria-label` names it outside a user
+> cell; the text and `placementTracking` fallbacks, which named no
+> account, are gone. No such button, or two, clicks nothing.
+
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply
 > whose tweet never opened still pressed `r`, pasted and submitted into

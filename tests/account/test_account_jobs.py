@@ -816,7 +816,7 @@ def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: state["visits"].append(url) or True)
     monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: (
         json.dumps({"path": state["page"], "handles": state["followers"]})
-        if "UserCell" in js else state["profile"]))
+        if "location.pathname" in js else state["profile"]))
     monkeypatch.setattr(scraper, "_scrape_profile_quality",
                         lambda: {"followers": "50K", "bio": "AI investor", "name": "Fan"})
     return state
