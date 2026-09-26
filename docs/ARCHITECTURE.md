@@ -74,10 +74,12 @@ reports to `health` (see [Adding a job](#adding-a-job)). The editorial stays
 out of the Safari failure counter because its failures are model timeouts,
 not Safari outages: the scraper already swallows most Safari errors, and the
 blank-page counter is the real Safari guard. Counted there, a slow model
-would restart a healthy Safari. The reach report is a measurement, and a
-missed one says nothing about Safari either. The wrapper logs their errors at
-ERROR with the traceback, and names a `StateUnreadable`, with the repair in
-[OPERATIONS.md](OPERATIONS.md#recovery), and the Overnight.
+would restart a healthy Safari. A missed reach measurement says nothing about
+Safari either. The wrapper logs their errors at ERROR with the traceback; it
+names a `StateUnreadable` (with the repair in
+[OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
+Overnight at INFO.
+
 The reply jobs live in `src/replies/`; `engage_job`,
 `followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and
 `follower_tracker_job` in `src/account/`; `editorial_job` and
