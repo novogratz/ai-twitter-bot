@@ -39,27 +39,23 @@ def summarize(published, scraped, now=None):
                 top_posts=sorted(observed, key=lambda p: p["views"], reverse=True)[:5])
 
 
-def safe_run_reach_report():
-    try:
-        require_active()
-        from ..x.scraper import scrape_profile_tweets
-        published = FileJournal().published()
-        tweets = scrape_profile_tweets(config.BOT_HANDLE, max_tweets=60) if published else []
-        report = summarize(published, tweets)
-        REPORT.write(report)
-        Path(REPORT_MARKDOWN).write_text(
-            f"# {account.current().domain} original-post reach\n\nUpdated: {report['as_of']}\n\n"
-            f"**{report['views']:,} observed views / {TARGET_VIEWS:,} target**\n\n"
-            f"{report['metric']}. Coverage: {report['originals_observed']} of "
-            f"{report['originals_published']} originals. Missing posts are unknown.\n\n"
-            "These are post-view counters, not unique people or home-timeline analytics. "
-            "The target is aspirational and does not raise the publishing cap.\n\n"
-            + "\n".join(f"- {p['views']:,} views, {p['likes']} likes — [{p['text']}]({p['url']})"
-                        for p in report["top_posts"])
-        )
-        log.info("[REACH] %s/%s observed original-post views; coverage %s/%s.",
-                 report["views"], TARGET_VIEWS, report["originals_observed"], report["originals_published"])
-        return report
-    except Exception as exc:
-        log.info("[REACH] Measurement unavailable: %s", exc)
-        return None
+def run_reach_report():
+    require_active()
+    from ..x.scraper import scrape_profile_tweets
+    published = FileJournal().published()
+    tweets = scrape_profile_tweets(config.BOT_HANDLE, max_tweets=60) if published else []
+    report = summarize(published, tweets)
+    REPORT.write(report)
+    Path(REPORT_MARKDOWN).write_text(
+        f"# {account.current().domain} original-post reach\n\nUpdated: {report['as_of']}\n\n"
+        f"**{report['views']:,} observed views / {TARGET_VIEWS:,} target**\n\n"
+        f"{report['metric']}. Coverage: {report['originals_observed']} of "
+        f"{report['originals_published']} originals. Missing posts are unknown.\n\n"
+        "These are post-view counters, not unique people or home-timeline analytics. "
+        "The target is aspirational and does not raise the publishing cap.\n\n"
+        + "\n".join(f"- {p['views']:,} views, {p['likes']} likes — [{p['text']}]({p['url']})"
+                    for p in report["top_posts"])
+    )
+    log.info("[REACH] %s/%s observed original-post views; coverage %s/%s.",
+             report["views"], TARGET_VIEWS, report["originals_observed"], report["originals_published"])
+    return report
