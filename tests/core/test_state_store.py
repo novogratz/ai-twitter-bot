@@ -366,7 +366,7 @@ def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, 
     from datetime import datetime
     from src.editorial import editorial_bot as editorial
     from src.x import twitter_client
-    from tests.helpers import TORONTO, clock
+    from tests.helpers import TORONTO, clock, scheduled_job
     path = _corrupt(operator_folder, "respect_list.json")
     clock(monkeypatch, datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO))
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
@@ -377,7 +377,7 @@ def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, 
     monkeypatch.setattr(editorial, "_json_call", lambda *a: pytest.fail("model called"))
     monkeypatch.setattr(twitter_client, "post_tweet", lambda *a, **k: pytest.fail("posted"))
 
-    assert editorial.safe_run_editorial_cycle() is None
+    scheduled_job("editorial_job")()
 
     assert not editorial._read_state().get("attempts")
     assert "respect_list.json is unreadable" in caplog.text

@@ -34,6 +34,12 @@ def clock(monkeypatch, value):
     monkeypatch.setattr(editorial, "now_local", lambda: value)
 
 
+def scheduled_job(job_id):
+    """The callable the scheduler runs for `job_id`, wrappers included."""
+    import main
+    return main.build_scheduler().get_job(job_id).func
+
+
 def stop_requested(monkeypatch):
     import threading
     from src.guards import active_hours

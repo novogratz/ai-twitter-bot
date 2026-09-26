@@ -520,11 +520,3 @@ def _run_slot(slot, journal, today, preview):
         log.warning("[EDITORIAL] %s stays pending: the submit may have reached X (%s). "
                     "Check the profile before clearing it.", slot.clock, outcome)
     return audit
-
-
-def safe_run_editorial_cycle():
-    try:
-        return run_editorial_cycle()
-    except Exception as exc:
-        log.warning("[EDITORIAL] Cycle stopped without forcing a post: %s", exc)
-        return None

@@ -1,4 +1,6 @@
 """Cross-cutting: the jobs `main.build_scheduler()` registers."""
+import inspect
+
 import pytest
 
 
@@ -16,9 +18,9 @@ def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
     import main
     def forbidden(*a, **k):
         raise AssertionError("Building the scheduler must not execute an editorial cycle")
-    monkeypatch.setattr(main, "safe_run_editorial_cycle", forbidden)
+    monkeypatch.setattr(main, "run_editorial_cycle", forbidden)
     scheduler = main.build_scheduler()
-    assert scheduler.get_job("editorial_job") is not None
+    assert inspect.unwrap(scheduler.get_job("editorial_job").func) is forbidden
     assert not any("quote" in j.id or "boost" in j.id or "thread" in j.id for j in scheduler.get_jobs())
 
 

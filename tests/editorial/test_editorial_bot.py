@@ -11,7 +11,7 @@ from src.core import account
 from src.guards import active_hours as hours
 from src.editorial import editorial_bot as editorial, editorial_schemas as schemas
 from src.x.confirmed_write import WriteOutcome
-from tests.helpers import TORONTO, USAGE_LIMIT, clock
+from tests.helpers import TORONTO, USAGE_LIMIT, clock, scheduled_job
 
 # The real model calls, before draft_fixture stubs them.
 REAL_JSON_CALL, REAL_DRAFT_POST = editorial._json_call, editorial.draft_post
@@ -173,13 +173,63 @@ def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture):
     def provider_down(*a):
         raise TimeoutError("cold load")
     monkeypatch.setattr(editorial, "draft_post", provider_down)
-    assert editorial.safe_run_editorial_cycle() is None
+    scheduled_job("editorial_job")()
     assert not editorial._read_state().get("attempts", {}).get("07:15")
     assert not editorial.AUDIT_FILE.exists()
     monkeypatch.setattr(editorial, "draft_post", lambda *a: draft_fixture[0])
     assert editorial.run_editorial_cycle()["approved"]
     assert len(calls) == 1
     assert editorial._read_state()["attempts"]["07:15"] == 1
+
+
+def test_an_editorial_failure_leaves_the_safari_health_file_alone(monkeypatch, draft_fixture, caplog):
+    """Issue #236: the editorial fails on model timeouts, not on Safari; its
+    failures never count toward a Safari restart."""
+    from src.core import health
+    monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
+    def provider_down(*a):
+        raise TimeoutError("cold load")
+    monkeypatch.setattr(editorial, "draft_post", provider_down)
+    job = scheduled_job("editorial_job")
+    for _ in range(health.RECOVERY_THRESHOLD + 1):
+        job()
+
+    assert not os.path.exists(health.HEALTH.path)
+    assert "TimeoutError: cold load" in caplog.text
+    assert "[HEALTH]" not in caplog.text
+
+
+def test_an_unreadable_state_halts_the_editorial_with_the_repair(monkeypatch, draft_fixture, caplog):
+    """Issue #236: a StateUnreadable is named at ERROR with the way to
+    repair it, not a warning that the cycle stopped."""
+    from src.core.state_errors import StateUnreadable
+    def unreadable():
+        raise StateUnreadable("post_history.json is unreadable")
+    monkeypatch.setattr(editorial, "load_history", unreadable)
+
+    scheduled_job("editorial_job")()
+
+    [record] = caplog.records
+    assert record.levelname == "ERROR"
+    assert record.getMessage() == ("[editorial] halted: post_history.json is unreadable. "
+                                   "Repair the file (docs/OPERATIONS.md#recovery).")
+
+
+def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture, caplog):
+    """A Draft that ends past 23:30 stops the cycle before publishing; the
+    log names the Overnight."""
+    from src.x import twitter_client as tc
+    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("published overnight"))
+    draft = draft_fixture[0]
+    def past_bedtime(*a):
+        clock(monkeypatch, datetime(2026, 9, 20, 23, 45, tzinfo=TORONTO))
+        return draft
+    monkeypatch.setattr(editorial, "draft_post", past_bedtime)
+
+    scheduled_job("editorial_job")()
+
+    assert "[editorial] stopped for the Overnight." in caplog.messages
+    assert not any(r.levelname == "ERROR" for r in caplog.records)
 
 
 def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture):
