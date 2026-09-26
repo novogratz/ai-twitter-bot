@@ -81,6 +81,7 @@ Account.
 | The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |
 | Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
 | Safari lock, AppleScript, page opening (`open_url`, never `webbrowser`), paste, tab and scroll primitives | `src/x/safari.py` |
+| Page session: the Safari lock held, the page opened on demand (`PageNotOpened`, no read), scroll, script, JSON read and keys, each tab it opened closed on every path, a nested session opening nothing; Safari and memory adapters | `src/x/page_session.py` |
 | Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `accounts/<BOT_ACCOUNT>/voice_fr.md`, `voice_en.md` |
 
 ## Invariants
@@ -132,7 +133,8 @@ Safari, `bot.log` and production state files. Patch a name where it is looked
 up: browser primitives in `src/x/safari.py`, and a scrape or write in its
 defining module (`src/x/scraper.py`, `src/x/twitter_client.py`) when the
 caller imports it inside a function, but on the caller when it imports it at
-module level. A guard change ships with a test pinning it. Tests mirror
+module level. Code on a page session needs no patch: the `memory_page`
+fixture scripts its pages by URL. A guard change ships with a test pinning it. Tests mirror
 `src/`: a test goes under `tests/<package>/`, with the module that owns the
 rule; cross-cutting invariants stay at the root of `tests/`.
 
