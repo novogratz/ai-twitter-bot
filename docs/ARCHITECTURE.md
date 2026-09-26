@@ -498,6 +498,15 @@ accounts and adds one to the following count; an account already
 followed joins the followed accounts, with no ledger row and no count
 change.
 
+The Follow click (`_FOLLOW_JS`) reads the primary column only, never the
+whole document, so the "Who to follow" and "You might like" suggestions
+are never clicked (issue #259). It needs the profile header
+(`data-testid="UserName"`) to show the visited `@handle`, then exactly one
+`-follow` or `-unfollow` button outside a user cell whose `aria-label`
+names that `@handle`: `-unfollow` is `ALREADY_FOLLOWED`, `-follow` is
+clicked. Another profile, no such button or two of them click nothing
+and return `FAILED`.
+
 `src/account/follow_run.py` runs one cycle's follows for a job. The
 `FollowRun` reads the followed accounts when it starts, and raises
 `StateUnreadable` while they cannot be read. A job that follows only some
@@ -839,6 +848,11 @@ These are how the code behaves today, not design intent:
 - The debate prompt carries the Engager's message but not the account's post
   it answers: the mentions tab does not show it, and reading it would open
   one more page per Debate turn. The prompt tells the model so.
+- The Follow click's reading of the profile header rests on the code's
+  knowledge of X's DOM, not on a live page (issue #259): the Operator has
+  yet to check a followed profile beside its "Who to follow" block. If X
+  labels the profile's button without the `@handle`, every follow returns
+  `FAILED`, and nothing is clicked.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
   `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the
