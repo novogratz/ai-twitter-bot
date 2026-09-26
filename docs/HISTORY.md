@@ -8,6 +8,19 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-25 — a Safari restart waits for the session in progress (issue #257):**
+> the two-hourly `session_refresh_job` and the `health` recovery quit
+> Safari without taking the Safari lock, so either could pull the tab from
+> under a Reply being typed or a page being read. Only the blank-page
+> recovery of `scraper.py` took the lock. `safari_hygiene.restart_safari`
+> now takes it itself, for all three: a restart waits for the session
+> holding Safari, reads the cooldown once it has the lock (two restarts
+> queued behind one session bounce Safari once), and gives up without a
+> restart when waking hours end while it waits. The lock is reentrant, so
+> a job that holds it and reports its third failure in a row restarts at
+> once. The osascript runs bounded by issue #251 cap the wait; the two
+> scraper runs still unbounded can hold it longer.
+
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply
 > whose tweet never opened still pressed `r`, pasted and submitted into
