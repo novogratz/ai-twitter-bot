@@ -14,9 +14,11 @@ minimum interval between same-type actions, and randomized jitter so writes
 never burst. Same intent, different mechanism.
 
 Every executed (or dry-run) write is recorded in the action ledger
-(`src/guards/ledger.py`) as {action, target, ts}. The policy asks the ledger
-for today's counts, the last write of an action and the last follow or
-unfollow of a handle, and never knows where it stores them.
+(`src/guards/ledger.py`) as {action, target, ts}; an Original's target is
+the Pending slot it was reserved under, if any, so `original_refusal`
+counts it once. The policy asks the ledger for today's counts, the last
+write of an action and the last follow or unfollow of a handle, and never
+knows where it stores them.
 """
 import os
 import random
@@ -135,6 +137,33 @@ def too_soon(action: str) -> str:
 
 
 # --- policy decisions -------------------------------------------------------
+
+def original_refusal(journal, now, besides: Optional[str] = None) -> str:
+    """Why the day's submissions forbid another Original at `now`, or "".
+
+    `journal` is the Slot journal (`src/editorial/slot_journal.py`). An
+    UNCONFIRMED submission writes no ledger row, so `can_post` never sees
+    it; the journal does. One count: the ledger's profile publications,
+    plus the journal's submissions of the day that no POST row names
+    (pending ones, and Slots the Operator marked published after a check).
+    A submission that shipped before a crash kept it from being confirmed
+    has its row, so it counts once. The spacing runs from the latest
+    pending or published submission. `besides`, the Pending slot of the
+    submission being judged, counts for neither."""
+    day = now.date()
+    unnamed = [key for key in journal.submissions(day)
+               if key != besides and not _ledger().count(POST, day, key)]
+    used = profile_count_today() + len(unnamed)
+    cap = config.posts_ceiling()
+    if used >= cap:
+        return f"daily ceiling reached with pending submissions ({used}/{cap})"
+    last = journal.last_submission(besides)
+    # The jitter's upper bound: every draw `_spacing_gap` can make is shorter.
+    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
+    if last and (now - last).total_seconds() < gap:
+        return f"too soon since the last submission (need ~{gap}s gap)"
+    return ""
+
 
 def can_post(action: str) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""

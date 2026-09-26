@@ -171,13 +171,18 @@ class ToolCallLeakError(Exception):
     """
 
 
-def post_tweet(text: str) -> WriteOutcome:
+def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     """Publish an Original through the intent URL. No URL is stripped and
     nothing casualizes the text, so the source link and the reviewed wording
     reach X. `_scrub_metadata_leaks` still runs first: it removes leaked
     model output (tool-call markup, bracketed metadata tags, series headers,
     echoed prompt lines) and hashtags, a trailing run whole and the `#` of
     an inline one.
+
+    The Slot journal's submissions count toward the ceiling and the spacing
+    (`action_guard.original_refusal`), and their texts toward the dedup.
+    `reserved`: the key of the Pending slot the caller reserved for this
+    very text, left out of those checks and named by the ledger row.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content, respect list or dedup skip, FAILED when the page did not open or
@@ -198,6 +203,8 @@ def post_tweet(text: str) -> WriteOutcome:
     # Central write policy: originals daily cap + jittered spacing, then the
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
+    # A leaf module (it imports core.state_store only): no import cycle.
+    from ..editorial.slot_journal import FileJournal
     from ..guards import action_guard, content_guard, respect_list
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged its posts
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
@@ -209,6 +216,11 @@ def post_tweet(text: str) -> WriteOutcome:
         if not ok:
             log.info(f"[POST] policy skip ({why}).")
             return WriteOutcome.REFUSED
+        journal = FileJournal()
+        why = action_guard.original_refusal(journal, action_guard.now_local(), reserved)
+        if why:
+            log.info(f"[POST] policy skip ({why}).")
+            return WriteOutcome.REFUSED
         ok, why = content_guard.validate(text, kind="original")
         if not ok:
             log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
@@ -217,7 +229,7 @@ def post_tweet(text: str) -> WriteOutcome:
         if why:
             log.info(f"[POST] respect list skip ({why}): {text[:120]!r}")
             return WriteOutcome.REFUSED
-        if content_guard.is_duplicate(text):
+        if content_guard.is_duplicate(text, journal.recent_posts(reserved)):
             log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
             return WriteOutcome.REFUSED
         return None
@@ -226,7 +238,9 @@ def post_tweet(text: str) -> WriteOutcome:
         # The initial check happens before waiting for Safari. Recheck under
         # its lock so concurrent posts cannot both consume the last slot.
         ok, why = action_guard.can_post(action_guard.POST)
-        if not ok:
+        if ok:
+            why = action_guard.original_refusal(FileJournal(), action_guard.now_local(), reserved)
+        if why:
             log.info("[POST] policy skip after browser wait (%s).", why)
             return WriteOutcome.REFUSED
         return None
@@ -250,7 +264,7 @@ def post_tweet(text: str) -> WriteOutcome:
 
     return confirmed_write.run(
         "POST", WriteOutcome, would=lambda: f"post: {text[:200]!r}",
-        rows=lambda: [(action_guard.POST, None)],
+        rows=lambda: [(action_guard.POST, reserved)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(recheck,),
         steps=steps, after_record=after_record)
 

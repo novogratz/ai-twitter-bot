@@ -329,8 +329,10 @@ SOURCES: {json.dumps(evidence_sources, ensure_ascii=False)}"""
     return _json_call(prompt, "EDITORIAL_DRAFT", schemas.draft_profile())
 
 
-def review_draft(draft, sources, recent, exceptional=False, trending=None):
-    """Deterministic evidence checks, then a separate factual/value editor."""
+def review_draft(draft, sources, recent, exceptional=False, trending=None, submitted=()):
+    """Deterministic evidence checks, then a separate factual/value editor.
+    `submitted`: the Slot journal's published and pending Posts, which the
+    dedup reads beside the tweet history."""
     if not isinstance(draft, dict) or draft.get("skip") is True:
         return False, "malformed draft", None
     domain = account.current().domain
@@ -357,7 +359,7 @@ def review_draft(draft, sources, recent, exceptional=False, trending=None):
                    or " ".join(q.lower().split()) not in body for q in evidence)):
         return False, "evidence not found in fetched source", source
     ok, reason = content_guard.validate(text, kind="original")
-    if not ok or content_guard.is_duplicate(text):
+    if not ok or content_guard.is_duplicate(text, submitted):
         return False, reason or "duplicate", source
     if exceptional:
         published = _stamp(source.get("published_at", ""))
@@ -395,24 +397,10 @@ _NO_DRAFT = object()
 
 
 def _pending_refusal(journal, now) -> str:
-    """Why the pending submissions forbid another one now, or "".
-
-    An ambiguous submission writes no ledger row, so `can_post` never sees
-    it. Each one counts toward today's ceiling and the post spacing until
-    the operator clears it; a Slot the operator marked published after a
-    check counts too, since its post has no ledger row either."""
-    journal = _journal(journal)
-    submitted = journal.submissions(now.date())
-    used = max(action_guard.profile_count_today(), submitted.published) + submitted.pending
-    cap = config.posts_ceiling()
-    if used >= cap:
-        return f"daily ceiling reached with pending submissions ({used}/{cap})"
-    last = journal.last_submission()
-    # The jitter's upper bound: every draw action_guard can make is shorter.
-    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
-    if last and (now - last).total_seconds() < gap:
-        return f"too soon since the last submission (need ~{gap}s gap)"
-    return ""
+    """Why the day's submissions forbid another one now, or "": the
+    chokepoint's rule (`action_guard.original_refusal`), asked before a
+    Draft spends an Attempt and again before the reservation."""
+    return action_guard.original_refusal(_journal(journal), now)
 
 
 def run_editorial_cycle(preview=False):
@@ -473,7 +461,7 @@ def _run_slot(slot, journal, today, preview):
         # Counted before review, so a crash mid-review still spends it.
         journal.spend_attempt(slot.clock)
     ok, reason, source = review_draft(draft, sources, recent, exceptional=slot.exceptional,
-                                      trending=trending)
+                                      trending=trending, submitted=journal.recent_posts())
     audit = dict(ts=now_local().isoformat(), slot=slot.clock, approved=ok,
                  reason=reason, draft=draft, source_url=source["url"] if source else "")
     if preview:
@@ -508,8 +496,8 @@ def _run_slot(slot, journal, today, preview):
     # never cause a duplicate after a restart. Only an outcome that sent
     # nothing releases it; until then its source and text stay out of later
     # Drafts, and it counts toward the ceiling and the spacing.
-    journal.reserve(slot.clock, source["url"], draft["text"], now_local())
-    outcome = post_tweet(text)
+    reserved = journal.reserve(slot.clock, source["url"], draft["text"], now_local())
+    outcome = post_tweet(text, reserved=reserved)
     if outcome:
         journal.confirm(slot.clock, source["url"], draft["text"], draft["angle"], now_local())
         log.info("[EDITORIAL] Published %s (%d/%d profile posts today).",

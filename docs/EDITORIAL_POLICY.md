@@ -115,7 +115,10 @@ up to one post every twenty minutes until the daily ceiling, at the expense of
 later slots. An ambiguous submission counts as a publication for that: the
 next Startup post waits twenty minutes after it, the day's pending submissions
 count toward the eight, and its text is a recent post the next draft and review
-must not repeat.
+must not repeat. The deterministic dedup refuses it too, before the editor
+is asked: the same story drawn from another article after an ambiguous
+submission never reaches X, nor does a repeat of a slot the operator
+marked published after a check.
 
 ## Runtime rules
 
@@ -140,7 +143,10 @@ must not repeat.
   does not erase history or grant extra slots. A `pending` submission, whose
   outcome was ambiguous, has no ledger row: it counts toward the day's eight
   and toward the twenty-minute spacing until the operator clears it, and so
-  does a slot the operator marked published after a check.
+  does a slot the operator marked published after a check. The publication
+  chokepoint, `post_tweet`, applies this count, the spacing and the dedup of
+  pending and operator-marked texts to every Original, whoever submits it.
+  A post that shipped just before a crash counts once, not twice.
 - Quote/repost caps are zero, including urgency and mega-viral exceptions.
   Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
   write functions are removed from `src/x/twitter_client.py` (issue #111), and

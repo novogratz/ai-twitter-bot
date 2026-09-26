@@ -13,8 +13,9 @@ from src.editorial import editorial_bot as editorial, editorial_schemas as schem
 from src.x.confirmed_write import WriteOutcome
 from tests.helpers import TORONTO, USAGE_LIMIT, clock, scheduled_job
 
-# The real model calls, before draft_fixture stubs them.
+# The real model calls and dedup, before draft_fixture stubs them.
 REAL_JSON_CALL, REAL_DRAFT_POST = editorial._json_call, editorial.draft_post
+REAL_IS_DUPLICATE = editorial.content_guard.is_duplicate
 
 
 def use_editorial(monkeypatch, **fields):
@@ -59,7 +60,7 @@ def draft_fixture(monkeypatch, tmp_path, settings_override):
     clock(monkeypatch, now)
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
     settings_override(CONTENT_LANG_PRIMARY="en")
-    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text, submitted=(): False)
     quote = "Chat templates convert conversations into the format expected by the model."
     source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
                   publisher="Hugging Face", body=quote, kind="knowledge", published_at="")
@@ -105,7 +106,7 @@ def test_eighth_post_needs_exceptional_value(draft_fixture):
 def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     calls = []
-    monkeypatch.setattr(tc, "post_tweet", lambda text: calls.append(text) or True)
+    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append(text) or True)
     assert editorial.run_editorial_cycle(preview=True)["approved"]
     assert not calls and not os.path.exists(editorial.STATE.path) and not editorial.AUDIT_FILE.exists()
     assert editorial.run_editorial_cycle()["approved"]
@@ -349,7 +350,7 @@ def editor_source(monkeypatch, settings_override):
     a full approval, for the real Draft and review calls."""
     from types import SimpleNamespace
     settings_override(CONTENT_LANG_PRIMARY="en")
-    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text, submitted=(): False)
     source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
                   publisher="Hugging Face", body=" ".join(EVIDENCE), kind="knowledge", published_at="")
     draft = dict(source_id="0", text="Your model expects a particular conversation format. Check its chat template before changing your prompts; the wrapper around your words matters too.",
@@ -805,7 +806,9 @@ def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkey
     pending["2026-09-19/20:45"] = entry(timedelta(hours=15))
     state = {"date": "2026-09-20", "slots": {"11:45": "published"},
              "pending_sources": pending, "published": []}
-    memory_ledger.append(editorial.action_guard.POST, "", False, now - timedelta(minutes=30))
+    # 11:45 shipped: its ledger row names its Pending slot, and it counts once.
+    memory_ledger.append(editorial.action_guard.POST, "2026-09-20/11:45", False,
+                         now - timedelta(minutes=30))
     assert editorial._pending_refusal(state, now) == ""  # 1 shipped + 6 pending
     # The operator marked 09:30 published after a check: no ledger row.
     state["slots"]["09:30"] = "published"
@@ -818,6 +821,77 @@ def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkey
     assert "too soon" in editorial._pending_refusal(state, now)
     pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=20))
     assert editorial._pending_refusal(state, now) == ""
+    # A post from another caller of post_tweet names no Slot: it counts too.
+    memory_ledger.append(editorial.action_guard.POST, "", False, now - timedelta(minutes=25))
+    assert "ceiling" in editorial._pending_refusal(state, now)
+
+
+@pytest.fixture
+def live_post(monkeypatch, memory_ledger):
+    """The real post_tweet, every Safari step succeeding, over an in-memory
+    ledger."""
+    from src.x import safari, twitter_client as tc
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    return memory_ledger
+
+
+def test_a_crash_between_the_ledger_row_and_the_confirmation_counts_once(monkeypatch, draft_fixture,
+                                                                         live_post):
+    """The post shipped and its ledger row was written, then the process
+    died before the Slot journal confirmed it: the Slot stays pending, and
+    its row names it, so it counts once, not twice."""
+    from src.editorial.slot_journal import SlotJournal
+    def crash(*a, **k):
+        raise RuntimeError("killed before the confirmation")
+    monkeypatch.setattr(SlotJournal, "confirm", crash)
+    with pytest.raises(RuntimeError):
+        editorial.run_editorial_cycle()
+    assert editorial._read_state()["slots"] == {"07:15": "pending"}
+    assert live_post.count(editorial.action_guard.POST, datetime(2026, 9, 20, tzinfo=TORONTO).date()) == 1
+    state = editorial._read_state()
+    state["pending_sources"].update(_pending_today(6))
+    editorial._save_state(state)
+    now = datetime(2026, 9, 20, 8, tzinfo=TORONTO)
+    assert editorial._pending_refusal(None, now) == ""  # 1 shipped + 6 pending
+    state["pending_sources"].update(_pending_today(7))
+    editorial._save_state(state)
+    assert "(8/8)" in editorial._pending_refusal(None, now)
+
+
+def test_a_story_left_pending_is_a_duplicate_from_another_url_after_a_restart(monkeypatch,
+                                                                             draft_fixture):
+    """The deterministic dedup, not replaced: after an UNCONFIRMED
+    submission and a restart, the same story drawn from another article is
+    refused before the Editor is asked, and nothing reaches X."""
+    from src.guards import content_guard
+    from src.x import twitter_client as tc
+    draft, source, review = draft_fixture
+    monkeypatch.setattr(content_guard, "is_duplicate", REAL_IS_DUPLICATE)
+    submitted, labels = [], []
+    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: submitted.append(text)
+                        or WriteOutcome.UNCONFIRMED)
+    monkeypatch.setattr(editorial, "_json_call", lambda prompt, label, profile: labels.append(label)
+                        or review)
+    assert editorial.run_editorial_cycle()["approved"]
+    assert editorial._read_state()["slots"] == {"07:15": "pending"} and len(submitted) == 1
+
+    # A new process at 09:35: nothing of the last one in memory.
+    monkeypatch.setattr(content_guard, "_RECENT_NORM", [])
+    clock(monkeypatch, datetime(2026, 9, 20, 9, 35, tzinfo=TORONTO))
+    other = dict(source, url="https://huggingface.co/docs/transformers/main/chat_templating")
+    monkeypatch.setattr(editorial, "collect_sources", lambda *a, **k: [other])
+    monkeypatch.setattr(editorial, "draft_post", lambda *a: dict(
+        draft, text="Every model expects its own conversation format. Check the chat template "
+                    "before changing your prompts: the wrapper around your words matters."))
+    labels.clear()
+    audit = editorial.run_editorial_cycle()
+    assert audit["slot"] == "09:30" and not audit["approved"]
+    assert audit["reason"] == "duplicate" and audit["source_url"] == other["url"]
+    assert labels == [] and len(submitted) == 1
 
 
 def test_a_pending_text_is_a_recent_post_for_the_next_draft_and_review(monkeypatch, draft_fixture,
