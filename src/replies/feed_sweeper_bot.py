@@ -91,14 +91,3 @@ def _sweep_one_feed(source, scraper, cycle):
     replies_done = reply_pipeline.run(job, reply_candidates, cycle,
                                       max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")
-
-
-def safe_run_feed_sweep_cycle():
-    from ..core import health
-    try:
-        run_feed_sweep_cycle()
-        health.record_success("feed_sweep")
-    except Exception:
-        log.info("[SWEEP] Error during feed sweep cycle:")
-        traceback.print_exc()
-        health.record_failure("feed_sweep")

@@ -65,25 +65,25 @@ def build_scheduler(*, post_only=False, reply_only=False):
             "editorial_job", executor="editorial", first_seconds=10)
 
     if not post_only:
-        from src.replies.direct_reply import safe_run_direct_reply_cycle
-        from src.replies.feed_sweeper_bot import safe_run_feed_sweep_cycle
-        from src.replies.early_bird_bot import safe_run_early_bird_cycle
-        from src.replies.notify_bot import safe_run_replyback_cycle, safe_run_notify_cycle
-        from src.replies.debate_bot import safe_run_debate_cycle
-        from src.replies.mega_watch_bot import safe_run_mega_watch_cycle
-        from src.replies.first_hour_babysitter import safe_run_babysit_cycle
+        from src.replies.direct_reply import run_direct_reply_cycle
+        from src.replies.feed_sweeper_bot import run_feed_sweep_cycle
+        from src.replies.early_bird_bot import run_early_bird_cycle
+        from src.replies.notify_bot import run_replyback_cycle, run_notify_cycle
+        from src.replies.debate_bot import run_debate_cycle
+        from src.replies.mega_watch_bot import run_mega_watch_cycle
+        from src.replies.first_hour_babysitter import run_babysit_cycle
 
-        add(safe_run_direct_reply_cycle, 2, "direct_reply_job", first_seconds=2)
-        add(safe_run_feed_sweep_cycle, 8, "feed_sweep_job")
-        add(safe_run_early_bird_cycle, 5, "early_bird_job")
-        add(safe_run_replyback_cycle, 3, "replyback_job")
-        add(safe_run_debate_cycle, 12, "debate_job")
-        add(safe_run_mega_watch_cycle, 2, "mega_watch_job")
-        add(safe_run_babysit_cycle, 5, "babysit_job")
-        add(safe_run_notify_cycle, 20, "notify_job")
+        add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
+        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
+        add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
+        add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
+        add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
+        add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
+        add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
+        add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job")
         if settings.get("ENABLE_REPLY_SEARCH"):
-            from src.replies.reply_bot import safe_run_reply_cycle
-            add(safe_run_reply_cycle, 3, "reply_job")
+            from src.replies.reply_bot import run_reply_cycle
+            add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
 
     if not post_only and not reply_only:
         from src.account.engage_bot import safe_run_engage_cycle

@@ -1,5 +1,4 @@
 """Reply bot: finds AI tweets and posts troll replies."""
-import traceback
 from datetime import timedelta
 from ..x import x_urls
 from ..core import config, settings
@@ -89,15 +88,3 @@ def run_reply_cycle():
     # The limit counts the targets Reply admission lets through.
     posted_count = reply_pipeline.run(JOB, candidates, reply_pipeline.Cycle(), max_generations=limit)
     log.info(f"[REPLY] Posted {posted_count} replies this cycle.")
-
-
-def safe_run_reply_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_reply_cycle()
-        health.record_success("reply")
-    except Exception:
-        log.info("[REPLY] Error during reply cycle:")
-        traceback.print_exc()
-        health.record_failure("reply")

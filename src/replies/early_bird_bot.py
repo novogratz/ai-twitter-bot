@@ -13,7 +13,6 @@ Strategy:
 - Source-tagged "EARLYBIRD/<handle>" so the strategy agent sees it.
 """
 import random
-import traceback
 from datetime import timedelta
 from ..x import x_urls
 from ..core.logger import log
@@ -119,15 +118,3 @@ def _fresh_candidates(username: str, tweets: list) -> list:
         log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
         candidates.append(reply_pipeline.Candidate(url, text, f"EARLYBIRD/{username}"))
     return candidates
-
-
-def safe_run_early_bird_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_early_bird_cycle()
-        health.record_success("early_bird")
-    except Exception:
-        log.info("[EARLYBIRD] Error during early-bird cycle:")
-        traceback.print_exc()
-        health.record_failure("early_bird")

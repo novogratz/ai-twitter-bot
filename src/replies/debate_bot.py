@@ -18,7 +18,6 @@ reply_to_tweet chokepoint judges it again with the text — NO caller-side
 premark; log only on a confirmed ship; Safari work only inside the client
 primitives.
 """
-import traceback
 from collections import Counter
 from datetime import timedelta
 
@@ -109,14 +108,3 @@ def run_debate_cycle():
     skips.update(cycle.refusals)
     log.info(f"[DEBATE] Cycle done: {posted} debate replies posted "
              f"(skips: {', '.join(f'{k}={v}' for k, v in skips.items())}).")
-
-
-def safe_run_debate_cycle():
-    from ..core import health
-    try:
-        run_debate_cycle()
-        health.record_success("debate")
-    except Exception:
-        log.info("[DEBATE] Error during debate cycle:")
-        traceback.print_exc()
-        health.record_failure("debate")

@@ -11,7 +11,6 @@ Outside the window it does nothing (near-zero Safari cost). All actual writes
 still flow through the reply chokepoint (caps, spacing, one-reply-per-tweet,
 truncation gate, human typo).
 """
-import traceback
 from datetime import datetime
 
 from ..core import settings
@@ -36,15 +35,3 @@ def run_babysit_cycle():
     log.info(f"[BABYSIT] Latest post is {age:.0f} min old — extra replyback sweep (first-hour algo window).")
     from .notify_bot import run_replyback_cycle
     run_replyback_cycle()
-
-
-def safe_run_babysit_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_babysit_cycle()
-        health.record_success("babysitter")
-    except Exception:
-        log.info("[BABYSIT] Error during babysit cycle:")
-        traceback.print_exc()
-        health.record_failure("babysitter")

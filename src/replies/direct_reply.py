@@ -3,7 +3,6 @@ the feed sweep, early bird and mega watch. The niche filter and candidate
 order come from the Reply source; early bird and mega watch import them from
 here until they take their candidates from it too."""
 import random
-import traceback
 from datetime import timedelta
 from ..x import x_urls
 from ..core import account, settings
@@ -217,14 +216,3 @@ def run_direct_reply_cycle(max_replies=None):
             remaining -= n
 
     log.info(f"[DIRECT] Posted {total} replies this cycle.")
-
-
-def safe_run_direct_reply_cycle(max_replies=None):
-    from ..core import health
-    try:
-        run_direct_reply_cycle(max_replies=max_replies)
-        health.record_success("direct_reply")
-    except Exception:
-        log.info("[DIRECT] Error during direct reply cycle:")
-        traceback.print_exc()
-        health.record_failure("direct_reply")

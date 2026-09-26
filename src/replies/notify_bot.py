@@ -168,28 +168,3 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
 
     if engaged:
         log.info(f"[RECIPROCATE] Engaged back with {engaged} engager(s): {liked} like(s).")
-
-
-def safe_run_notify_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_notify_cycle()
-        health.record_success("notify")
-    except Exception:
-        log.info("[NOTIFY] Error during notify cycle:")
-        traceback.print_exc()
-        health.record_failure("notify")
-
-
-def safe_run_replyback_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_replyback_cycle()
-        health.record_success("replyback")
-    except Exception:
-        log.info("[REPLYBACK] Error during replyback cycle:")
-        traceback.print_exc()
-        health.record_failure("replyback")
-

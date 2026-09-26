@@ -263,7 +263,7 @@ real account from a second process. Before any of them:
 
 | Where | What it tells you |
 |---|---|
-| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]` |
+| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a reply, editorial or reach-report job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report` |
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
