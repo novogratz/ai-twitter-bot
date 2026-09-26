@@ -1,7 +1,7 @@
 """src/x/twitter_client write chokepoints: replies, posts, follows and pins
 (issues #100, #101, #142)."""
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
@@ -638,11 +638,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     try:
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
-        cg.is_duplicate = lambda text: True   # force dup
+        cg.is_duplicate = lambda text, submitted=(): True   # force dup
         assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \
             "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
-        cg.is_duplicate = lambda text: False
+        cg.is_duplicate = lambda text, submitted=(): False
         assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost
@@ -724,6 +724,112 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_overr
         results = list(pool.map(lambda _: tc.post_tweet(text), range(2)))
     assert sum(1 for result in results if result is W.SHIPPED) <= 1
     assert ag.profile_count_today() <= 8
+
+
+# --- the Slot journal at the post chokepoint (issue #233) ------------------------
+
+NOON = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+POSTED = ("Your model expects a particular conversation format. Check its chat template "
+          "before changing your prompts; the wrapper around your words matters too.")
+SOURCE = "https://huggingface.co/docs/transformers/chat_templating"
+
+
+def _journal_file(slots=(), pending=(), published=()):
+    """editorial_state.json for NOON's day: `slots` marked as given,
+    `pending` (key, text, minutes ago) entries, `published` (slot, text,
+    minutes ago) entries."""
+    from src.editorial.slot_journal import STATE
+    ago = lambda minutes: (NOON - timedelta(minutes=minutes)).isoformat()
+    STATE.write({"date": "2026-09-20", "slots": dict(slots),
+                 "published": [dict(ts=ago(m), text=text, source_url=SOURCE, angle="a", slot=slot)
+                               for slot, text, m in published],
+                 "pending_sources": {key: dict(url=SOURCE, text=text, ts=ago(m))
+                                     for key, text, m in pending}})
+
+
+@pytest.fixture
+def journal_post(monkeypatch, memory_ledger):
+    """A live post at NOON past `can_post`, through the Slot journal's
+    checks and the real dedup, over an in-memory ledger: returns the ledger
+    rows recorded and the pages opened."""
+    from types import SimpleNamespace
+    from src.x import safari
+    clock(monkeypatch, NOON)
+    recorded = _live_browser(monkeypatch)
+    opened = []
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
+    return SimpleNamespace(recorded=recorded, opened=opened, ledger=memory_ledger)
+
+
+def test_post_refuses_seven_pending_submissions_and_one_published(journal_post):
+    """An UNCONFIRMED submission writes no ledger row: the chokepoint counts
+    it from the Slot journal, so any caller of post_tweet stops at eight."""
+    import src.x.twitter_client as tc
+    pending = [(f"2026-09-20/startup@0{h}:00:00", f"Pending post number {h}", 300 - h) for h in range(7)]
+    _journal_file(slots={"05:00": "published"}, pending=pending)
+    journal_post.ledger.append(ag.POST, "2026-09-20/05:00", False, NOON - timedelta(hours=7))
+    text = "Inference is getting cheaper faster than training.\n\nhttps://huggingface.co/blog/costs"
+    assert tc.post_tweet(text) is W.REFUSED
+    assert journal_post.opened == [] and journal_post.recorded == []
+    # One pending submission cleared: the seventh place is free.
+    _journal_file(slots={"05:00": "published"}, pending=pending[:6])
+    assert tc.post_tweet(text) is W.SHIPPED
+
+
+def test_post_waits_the_spacing_after_a_pending_submission(journal_post):
+    import src.x.twitter_client as tc
+    _journal_file(pending=[("2026-09-20/11:45", "A pending post about agents", 19)])
+    text = "Inference is getting cheaper faster than training.\n\nhttps://huggingface.co/blog/costs"
+    assert tc.post_tweet(text) is W.REFUSED
+    assert journal_post.opened == []
+
+
+def test_post_reads_the_slot_journal_again_under_the_safari_lock(monkeypatch, journal_post):
+    """A submission reserved while this post waited for Safari takes the
+    spacing: the check runs again under the lock."""
+    import src.x.twitter_client as tc
+    from src.x import safari
+    _journal_file()
+
+    class Lock:
+        def __enter__(self):
+            _journal_file(pending=[("2026-09-20/11:45", "A pending post about agents", 0)])
+
+        def __exit__(self, *exc):
+            return False
+    monkeypatch.setattr(safari, "_safari_lock", Lock())
+    text = "Inference is getting cheaper faster than training.\n\nhttps://huggingface.co/blog/costs"
+    assert tc.post_tweet(text) is W.REFUSED
+    assert journal_post.opened == [] and journal_post.recorded == []
+
+
+@pytest.mark.parametrize("marked", ["pending", "published"])
+def test_post_dedups_against_the_slot_journal(journal_post, marked):
+    """A pending text may be live, and a Slot the Operator marked published
+    by hand never reached tweet_history.json: both count for the dedup."""
+    import src.x.twitter_client as tc
+    if marked == "pending":
+        _journal_file(slots={"09:30": "pending"}, pending=[("2026-09-20/09:30", POSTED, 120)])
+    else:
+        _journal_file(slots={"09:30": "published"}, published=[("09:30", POSTED, 120)])
+    again = ("Every model expects its own conversation format. Check the chat template before "
+             "changing your prompts: the wrapper around your words matters."
+             "\n\nhttps://huggingface.co/docs/transformers/main/chat_templating")
+    assert tc.post_tweet(again) is W.REFUSED
+    assert journal_post.opened == [] and journal_post.recorded == []
+
+
+def test_post_leaves_out_its_own_reservation_and_names_it_in_the_ledger(journal_post):
+    """The editorial cycle reserves its Slot just before the submission: that
+    reservation counts for neither the spacing nor the dedup of its own
+    text, and the ledger row names it."""
+    import src.x.twitter_client as tc
+    key = "2026-09-20/11:45"
+    _journal_file(slots={"11:45": "pending"}, pending=[(key, POSTED, 0)])
+    text = POSTED + "\n\n" + SOURCE
+    assert tc.post_tweet(text) is W.REFUSED
+    assert tc.post_tweet(text, reserved=key) is W.SHIPPED
+    assert journal_post.recorded == [((ag.POST,), {"target": key})]
 
 
 # --- follows -----------------------------------------------------------------

@@ -134,11 +134,13 @@ follow jobs read the same way the Account's `[network]` handle lists,
 The day's editorial state belongs to the Slot journal,
 `src/editorial/slot_journal.py`: the day change, Attempts and feedback,
 the Pending slot reserved, confirmed or released, the closed Slots, the used
-source URLs, the recent texts, the day's submissions and the latest one.
-`FileJournal` keeps `editorial_state.json` (guarded, same format as
-before); `MemoryJournal` holds it in memory for tests. Each pass reads the
-file once, keeps the state in memory and saves it whole at each change; a
-new Toronto day is saved with the pass's first change.
+source URLs, the recent Posts (published and pending, with their time),
+the day's submissions and the latest one. `FileJournal` keeps
+`editorial_state.json` (guarded, same format as before); `MemoryJournal`
+holds it in memory for tests. Each pass reads the file once, keeps the
+state in memory and saves it whole at each change; a new Toronto day is
+saved with the pass's first change. `post_tweet` reads the file again at
+each submission, read only.
 
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
@@ -186,7 +188,10 @@ new Toronto day is saved with the pass's first change.
 6. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
    1–3 evidence ids that resolve to sentences found in the source text, then
-   `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
+   `content_guard.validate` and `is_duplicate`, which reads the Slot
+   journal's published and pending Posts beside `tweet_history.json`: the
+   same story drawn from another article after an `UNCONFIRMED` submission
+   is refused before the Editor is asked. The 20:45 slot needs news under
    twelve hours old or a useful AI teaching source. A second model call
    (`review_schema()`) must approve all six criteria, plus `exceptional` at
    20:45 and `trending` for a trend slot, which also needs a news source and
@@ -206,16 +211,20 @@ new Toronto day is saved with the pass's first change.
    refuses (spacing or ceiling), when the three attempts are spent, or when
    the pass yields no draft.
 8. **Publish.** Waking hours and the slot's window are checked again, then
-   the pending check: an `UNCONFIRMED` submission writes no ledger row, so
-   `can_post` cannot see it. Today's pending submissions (in `slots` or in
-   `pending_sources`), plus the published count (the ledger's, or today's
-   `published` slots when the operator marked more after a check), must stay
-   under the ceiling, and the newest pending or published timestamp must be
-   `MIN_SECONDS_BETWEEN_POSTS` plus `POST_JITTER_SECONDS` old. A pending
-   submission counts until the operator clears it. The Slot journal
-   reserves the slot: marked `pending` and saved with its source URL, text
-   and time in `pending_sources`. Then `post_tweet(text)` sends
-   the draft plus the source URL. `SHIPPED` confirms it `published`. `REFUSED`,
+   the pending check, `action_guard.original_refusal`, the rule
+   `post_tweet` enforces too: an `UNCONFIRMED` submission writes no ledger
+   row, so `can_post` cannot see it. One count: the ledger's profile
+   publications, plus today's submissions in the Slot journal (Slots marked
+   `pending` or `published`, `pending_sources` entries) that no `post` row
+   names. It must stay under the ceiling, and the newest pending or
+   published timestamp must be `MIN_SECONDS_BETWEEN_POSTS` plus
+   `POST_JITTER_SECONDS` old. A pending submission counts until the
+   operator clears it. The Slot journal reserves the slot: marked `pending`
+   and saved with its source URL, text and time in `pending_sources`, under
+   the key `YYYY-MM-DD/<slot>`. Then `post_tweet(text, reserved=<key>)`
+   sends the draft plus the source URL; its ledger row names the key, so a
+   post that shipped before a crash kept the journal from confirming it
+   counts once. `SHIPPED` confirms it `published`. `REFUSED`,
    `FAILED` and `DRY_RUN` sent nothing and release the slot. `UNCONFIRMED` (the
    submit keystroke failed, so the post may be live), any other result and an
    exception leave it `pending`, which is never retried automatically. With
@@ -225,8 +234,13 @@ new Toronto day is saved with the pass's first change.
 the reviewed wording reach X. `_scrub_metadata_leaks` still runs first: it
 removes leaked model output (tool-call markup, bracketed metadata tags,
 series headers, echoed prompt lines) and hashtags, a trailing run whole and
-the `#` of an inline one. `post_tweet` then checks `can_post(POST)` again
-under the Safari lock.
+the `#` of an inline one. Before the page opens, `post_tweet` refuses an
+Original that `can_post` or `original_refusal` forbids, or that
+`is_duplicate` finds among the history and the Slot journal's published and
+pending Posts; every caller inherits these checks. The Pending slot named by
+`reserved`, the caller's own reservation of that text, is left out of them.
+`post_tweet` checks `can_post(POST)` and `original_refusal` again under the
+Safari lock.
 
 Models: every caller names a Call surface, and `llm_client.SURFACES`
 declares, in that one place, the model setting, the provider setting and
@@ -485,7 +499,8 @@ Five modules sit behind them:
   until the spacing clears.
 - `src/guards/ledger.py` is that ledger (90 days, Toronto timestamps). Its
   interface answers four questions: shipped rows of an action on a Toronto
-  day (per target for Debate turns), the last shipped write of an action,
+  day (per target for Debate turns and for the Pending slot a `post` row
+  names), the last shipped write of an action,
   the last follow or unfollow of a handle (dry runs included), and the
   targets of an action newest first. An index kept up to date row by row
   answers them, with no scan of the rows. Two adapters sit behind it:
@@ -699,10 +714,6 @@ home-timeline attribution. It does not influence any cap.
 
 These are how the code behaves today, not design intent:
 
-- Pending editorial submissions count toward the ceiling and the spacing in
-  the editorial cycle only (`_pending_refusal`): `post_tweet` and the ledger
-  do not see them. The editorial cycle is the only `post_tweet` caller; a new
-  caller would not count them.
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.

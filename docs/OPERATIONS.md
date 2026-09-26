@@ -309,12 +309,18 @@ removes it.
 **A slot is `pending`.** The submission was interrupted or its outcome was
 unclear, and the bot will not retry it. Until you clear it, it counts toward
 today's eight publications and the twenty-minute spacing, and its text stays
-a recent post for later drafts. A failed submit keystroke logs
-`[EDITORIAL] <slot> stays pending` in `bot.log`. Check the profile first. If the post
+a recent post for later drafts and for the dedup of every Original.
+`post_tweet` reads these from the Slot journal before any submission,
+whoever calls it. A failed submit keystroke logs
+`[EDITORIAL] <slot> stays pending` in `bot.log`. A `post` row of
+`action_ledger.json` whose `target` is the slot's key (`YYYY-MM-DD/<slot>`)
+means the submit went through and the bot stopped before confirming the
+slot; the day's count takes that post once. Check the profile first. If the post
 is live, set the slot to `"published"` in `editorial_state.json` and append
 a matching entry (`ts`, `text`, `source_url`, `angle`, `slot`) to
-`published`, so the source rests for seven days and the reach report counts
-the post; the published slot keeps counting toward today's ceiling. If it is
+`published`, so the source rests for seven days, the reach report counts
+the post and the dedup refuses the same story; the published slot keeps
+counting toward today's ceiling. If it is
 not live, delete the slot entry. Either way, delete its entry (keyed
 `YYYY-MM-DD/<slot>`) from `pending_sources`: until then later drafts skip that
 source and text, across days too, and today's ceiling counts it. Do this with the bot
@@ -523,7 +529,7 @@ root:
 
 | File | Written by | Holds | Policy |
 |---|---|---|---|
-| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
+| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`; `post_tweet` reads it) | Slots, attempts, feedback, published originals, used sources | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
@@ -805,6 +811,16 @@ mv -n state/theaishrink/* . && rmdir state/theaishrink
 
 `rmdir` fails while a file is left, because the root holds one of the same
 name: compare them by hand.
+
+### Deploying issue #233
+
+Since issue #233 the `post` row of an editorial Original names its Pending
+slot, and the day's count adds the Slot journal's submissions that no row
+names. The rows written before the deploy name none: on the deploy day,
+each Original the bot published before the restart counts twice until
+midnight Toronto, so fewer Originals ship that day, never more. Restart
+before the day's first Original, overnight for instance, to avoid it;
+nothing needs to be migrated.
 
 ## Legacy tools
 

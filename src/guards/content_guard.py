@@ -148,10 +148,17 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
     }
 
 
-def _recent_profiles(limit: int = 40) -> list:
+def _recent_profiles(submitted=(), limit: int = 40) -> list:
     from datetime import datetime
     from ..core.history import load_history
+    from . import active_hours
     profiles = list(_RECENT_NORM[-limit:])
+    now_aware = active_hours.now_local()
+    for text, at in submitted:
+        age_h = (now_aware - at).total_seconds() / 3600.0 if at else 9999.0
+        p = _dup_profile(text, age_hours=age_h)
+        if p["words"]:
+            profiles.append(p)
     now = datetime.now()
     for entry in load_history()[-limit:]:
         if not isinstance(entry, dict):
@@ -167,9 +174,14 @@ def _recent_profiles(limit: int = 40) -> list:
     return profiles
 
 
-def is_duplicate(text: str) -> bool:
+def is_duplicate(text: str, submitted=()) -> bool:
     """True if `text` is a near-duplicate (or same-story rehash) of a
-    recently posted original. See the v2 signal list above."""
+    recently posted original. See the v2 signal list above.
+
+    `submitted`: (text, aware time or None) pairs the Slot journal knows,
+    published or pending. A pending submission may be live, and a Slot the
+    Operator marked published never reached tweet_history.json: both count
+    like a post of the history."""
     jaccard = settings.get("DUP_JACCARD_THRESHOLD")
     containment = settings.get("DUP_CONTAINMENT_THRESHOLD")
     shared_bigrams = settings.get("DUP_SHARED_BIGRAMS")
@@ -180,13 +192,14 @@ def is_duplicate(text: str) -> bool:
     ws = p["words"]
     # Exact normalized-text rehash is always a duplicate, even for short
     # stopword-heavy one-liners that the content-word signals can't profile.
+    recent = _recent_profiles(submitted)
     if p["norm"]:
-        for prev in _recent_profiles():
+        for prev in recent:
             if prev.get("norm") and prev["norm"] == p["norm"]:
                 return True
     if len(ws) < 4:
         return False
-    for prev in _recent_profiles():
+    for prev in recent:
         pw = prev["words"]
         if not pw:
             continue

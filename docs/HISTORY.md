@@ -35,6 +35,25 @@ their order in the file is not strictly chronological.
 > lane now drops a post marked `is_reply` or whose text opens on a mention,
 > with `x_urls.is_reply_like_tweet`; the VIP scan is unchanged.
 
+> **2026-09-25 — the post chokepoint sees the Pending slots (issue #233):**
+> the pending count of 2026-09-23 lived in the editorial cycle only, so a
+> new caller of `post_tweet` would have skipped it, and the deterministic
+> dedup read `tweet_history.json` and this run's posts, both filled on a
+> shipped post only. After an `UNCONFIRMED` submission and a restart, the
+> same story drawn from another article passed `is_duplicate`, and only the
+> Editor's prompt could still refuse it; a slot the Operator marked
+> published by hand never reached the dedup at all. The day's count took
+> `max(ledger, published slots) + pending`: a crash between the ledger row
+> and the slot's confirmation counted the post twice. `post_tweet` now
+> refuses an Original when the ledger's rows plus the Slot journal's
+> submissions that no row names reach the ceiling, when the spacing since
+> the latest submission has not run, or when the journal's published and
+> pending texts make it a duplicate; the review's dedup reads the same
+> texts. The `post` row names the Pending slot the cycle reserved, so that
+> post counts once. Guards: `tests/x/test_write_path.py`,
+> `tests/editorial/test_editorial_bot.py`,
+> `tests/guards/test_content_guard.py`.
+
 > **2026-09-25 — the reply, like and follow niche narrowed to AI (issue #205):**
 > the policy had limited the account to AI, but the niche of the Replies,
 > likes and follows still took crypto, markets, space and general tech: a
