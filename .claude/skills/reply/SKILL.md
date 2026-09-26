@@ -18,4 +18,7 @@ Only on an explicit operator request: it replies on the real account.
      generation; `reply_to_tweet` checks and marks `replied_tweets.json`.
      Never pre-mark that store by hand.
 3. Report from the `[DIRECT]` and `[REPLY]` lines of `bot.log`: how many
-   replies shipped and to which status URLs.
+   replies shipped and to which status URLs. A failed cycle logs
+   `[direct_reply] Cycle failed.` with its traceback, and an unreadable
+   state file `[HEALTH] direct_reply halted`, in `bot.log` only: report
+   those too.
