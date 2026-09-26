@@ -405,7 +405,8 @@ restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
 a restart and an empty mentions tab do not count. `health` also restarts
 Safari after 3 failed cycles in a row, all jobs counted together, and
 `session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
-after the last restart. A cycle stopped for bedtime is not a failed cycle,
+after the last restart. Every restart waits for the job holding Safari to
+finish its page. A cycle stopped for bedtime is not a failed cycle,
 and no restart runs outside waking hours. Each relaunch
 clears x.com service workers and caches. To do it by hand, stop the bot first:
 
