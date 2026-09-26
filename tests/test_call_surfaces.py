@@ -85,7 +85,7 @@ def _draft():
 
 def _review(monkeypatch):
     from src.editorial import editorial_bot as editorial
-    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text, submitted=(): False)
     draft = dict(source_id="0", text="Your model expects a particular conversation format. Check its chat "
                                      "template before changing your prompts; the wrapper around your words "
                                      "matters too.",
