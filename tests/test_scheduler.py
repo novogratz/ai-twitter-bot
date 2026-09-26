@@ -74,3 +74,41 @@ def test_the_start_reports_an_explicit_fallback_it_ignores(monkeypatch, settings
     note = "LLM_FALLBACK_CLI='claude' behind AI_CLI='ollama': claude is never a fallback"
     assert json.loads(capsys.readouterr().out)["ignored_llm_fallbacks"] == [note]
     assert f"Fallback ignored: {note}" in caplog.text
+
+
+REPLY_JOBS = [
+    ("direct_reply_job", "src.replies.direct_reply", "run_direct_reply_cycle", "direct_reply"),
+    ("feed_sweep_job", "src.replies.feed_sweeper_bot", "run_feed_sweep_cycle", "feed_sweep"),
+    ("early_bird_job", "src.replies.early_bird_bot", "run_early_bird_cycle", "early_bird"),
+    ("replyback_job", "src.replies.notify_bot", "run_replyback_cycle", "replyback"),
+    ("debate_job", "src.replies.debate_bot", "run_debate_cycle", "debate"),
+    ("mega_watch_job", "src.replies.mega_watch_bot", "run_mega_watch_cycle", "mega_watch"),
+    ("babysit_job", "src.replies.first_hour_babysitter", "run_babysit_cycle", "babysitter"),
+    ("notify_job", "src.replies.notify_bot", "run_notify_cycle", "notify"),
+    ("reply_job", "src.replies.reply_bot", "run_reply_cycle", "reply"),
+]
+
+
+@pytest.mark.parametrize("job_id, module, run, label", REPLY_JOBS, ids=[j[0] for j in REPLY_JOBS])
+def test_each_reply_job_counts_toward_safari_health_under_its_label(
+        monkeypatch, settings_override, caplog, job_id, module, run, label):
+    """Issue #237: the scheduler wraps each Reply job's `run_*`; its failure
+    is logged at ERROR with the traceback and counted under the health label
+    its `safe_run_*` used, `babysitter` included."""
+    import importlib
+    from src.core import health
+    from tests.helpers import scheduled_job
+
+    def fails():
+        raise RuntimeError("page never loaded")
+    monkeypatch.setattr(importlib.import_module(module), run, fails)
+    monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
+    settings_override(ENABLE_REPLY_SEARCH=True)
+
+    scheduled_job(job_id)()
+
+    assert health.HEALTH.read()["consecutive_failures"] == 1
+    assert f"[HEALTH] {label} FAILED — consecutive = 1." in caplog.messages
+    [error] = [r for r in caplog.records if r.levelname == "ERROR"]
+    assert error.getMessage() == f"[{label}] Cycle failed."
+    assert "RuntimeError: page never loaded" in caplog.text

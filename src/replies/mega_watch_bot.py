@@ -14,7 +14,6 @@ Cap: MAX_REPLIES_PER_CYCLE, to avoid burst-following the same account
 when it tweets a thread. Reply admission judges each post before generation.
 """
 import random
-import traceback
 from datetime import timedelta
 
 from ..x import x_urls
@@ -89,15 +88,3 @@ def _fresh_candidates(username: str, tweets: list) -> list:
         # itself under @sama) is refused by Reply admission on its URL handle.
         candidates.append(reply_pipeline.Candidate(url, text, f"MEGA/{username}"))
     return candidates
-
-
-def safe_run_mega_watch_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_mega_watch_cycle()
-        health.record_success("mega_watch")
-    except Exception:
-        log.info("[MEGA] Error during mega-watch cycle:")
-        traceback.print_exc()
-        health.record_failure("mega_watch")

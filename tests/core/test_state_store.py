@@ -338,7 +338,7 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
     cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health
     from src.replies import direct_reply as dr
-    from tests.helpers import fresh
+    from tests.helpers import fresh, scheduled_job
     path = _corrupt(operator_folder, "respect_list.json")
     scraped = []
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
@@ -351,7 +351,7 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
     monkeypatch.setattr(twitter_client, "reply_to_tweet", lambda *a, **k: pytest.fail("replied"))
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
 
-    dr.safe_run_direct_reply_cycle()
+    scheduled_job("direct_reply_job")()
 
     assert len(scraped) == 1, "the cycle stops, it does not move to the next query"
     assert "respect_list.json is unreadable" in caplog.text

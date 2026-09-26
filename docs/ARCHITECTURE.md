@@ -67,18 +67,21 @@ authorize a new action.
 ## Jobs
 
 `build_scheduler()` registers 17 jobs, plus `reply_job` when
-`ENABLE_REPLY_SEARCH=1`. `editorial_job` and `reach_report_job` register
-their `run_*` under `health.wrap_job(..., safari_health=False)`; the other
-jobs still expose a `safe_run_*` that catches its own exceptions and
-reports to `health` (see [Adding a job](#adding-a-job)). The editorial stays
-out of the Safari failure counter because its failures are model timeouts,
-not Safari outages: the scraper already swallows most Safari errors, and the
-blank-page counter is the real Safari guard. Counted there, a slow model
-would restart a healthy Safari. A missed reach measurement says nothing about
-Safari either. The wrapper logs their errors at ERROR with the traceback; it
-names a `StateUnreadable` (with the repair in
-[OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
-Overnight at INFO.
+`ENABLE_REPLY_SEARCH=1`. The reply jobs register their `run_*` under
+`health.wrap_job`, which counts them toward Safari health under their label
+(`babysitter` for `babysit_job`, the job name without `_job` for the
+others); `editorial_job` and `reach_report_job` register theirs under
+`health.wrap_job(..., safari_health=False)`. The account jobs and
+`session_refresh_job` still expose a `safe_run_*` that catches its own
+exceptions and reports to `health` (see [Adding a job](#adding-a-job)). The
+editorial stays out of the Safari failure counter because its failures are
+model timeouts, not Safari outages: the scraper already swallows most Safari
+errors, and the blank-page counter is the real Safari guard. Counted there, a
+slow model would restart a healthy Safari. A missed reach measurement says
+nothing about Safari either. The wrapper logs a job's error at ERROR with the
+traceback, as `[<label>] Cycle failed.`; it names a `StateUnreadable` (with
+the repair in [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop
+for the Overnight at INFO.
 
 The reply jobs live in `src/replies/`; `engage_job`,
 `followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and
@@ -776,11 +779,10 @@ some files those bots used to write, as frozen data with no writer left:
    health file. Never call `scheduler.add_job` directly: `add()` supplies the
    waking-hours wrapper.
 
-   In transition (issue #234): the jobs registered before, save the
-   editorial and the reach report (#236), still expose a `safe_run_*` that
-   catches its own errors, and their `record_failure` call without an
-   exception reads the one in flight. Issues #237 and #238 move them under
-   `wrap_job`; #239 makes the exception required.
+   In transition (issue #234): the account jobs and `session_refresh_job`
+   still expose a `safe_run_*` that catches its own errors, and their
+   `record_failure` call without an exception reads the one in flight.
+   Issue #238 moves them under `wrap_job`; #239 makes the exception required.
 3. Take `_safari_lock` for any browser work and close the tab you opened.
 4. Write only through the `twitter_client` chokepoints; add a new rule inside
    the chokepoint, not in the job.
