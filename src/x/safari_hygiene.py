@@ -20,6 +20,9 @@ Two trigger paths:
   2. Reactive — health.py calls into this when a cycle fails. Already
      wired through health.record_failure / _restart_safari.
 
+Every restart waits for the Safari lock, so it never quits Safari under a
+session in progress.
+
 This is intentionally a thin wrapper over the same restart logic that
 health.py uses, so callers can request a fresh Safari without going
 through the consecutive-failure counter.
@@ -31,7 +34,7 @@ from datetime import datetime
 
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
-from ..guards.active_hours import may_act
+from ..guards.active_hours import OutsideActiveHours, may_act
 from . import safari
 
 # Disposable: losing it only allows one earlier Safari restart.
@@ -194,10 +197,25 @@ def restart_safari(reason: str = "") -> bool:
     so reactive recovery isn't blocked by the 30-min preventive cooldown.
     Login session survives because cookies live on disk. Outside waking
     hours, or once a stop was requested, it does nothing.
+
+    It waits for the session holding the Safari lock, so a restart never
+    pulls the tab from under a Reply or a read, and reads the cooldown
+    once it has the lock. The lock is reentrant: a job that already holds
+    it restarts at once.
     """
     if not may_act():
         log.info(f"[HYGIENE] Skipping restart outside waking hours. reason={reason}")
         return False
+    try:
+        with safari._safari_lock:
+            return _restart_holding_lock(reason)
+    except OutsideActiveHours:
+        log.info(f"[HYGIENE] Skipping restart: waking hours ended while it waited for Safari. "
+                 f"reason={reason}")
+        return False
+
+
+def _restart_holding_lock(reason: str) -> bool:
     last = _last_run_ts()
     gap = time.time() - last
     effective_gap = 5 * 60 if reason == "black_screen_recovery" else MIN_GAP_SECONDS
