@@ -50,7 +50,7 @@ def _engage(monkeypatch, follow, tmp_path):
     monkeypatch.setattr(eb, "_build_pool", lambda: [HANDLE])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
     monkeypatch.setattr(eb, "_profile_visit_allowed", lambda *_: False)
-    monkeypatch.setattr(eb, "follow_account", follow)
+    monkeypatch.setattr(tc, "follow_account", follow)
     eb.run_engage_cycle()
 
 
@@ -72,15 +72,15 @@ def test_every_follow_caller_meets_the_blocked_account_refusal(monkeypatch, tmp_
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     monkeypatch.setattr(time, "sleep", lambda *_: None)
-    # A Seed account, so that engage and the seeding script ask to follow it.
+    # A Seed account, so that the seeding script asks to follow it.
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": [HANDLE]}}))
     opened = []
     monkeypatch.setattr(safari, "open_url", opened.append)
     asked = []
     real_follow = tc.follow_account
 
-    def follow(handle):
-        outcome = real_follow(handle)
+    def follow(handle, **kwargs):
+        outcome = real_follow(handle, **kwargs)
         asked.append((handle, outcome))
         return outcome
 
