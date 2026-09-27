@@ -8,7 +8,7 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
-> **2026-09-27 — no Reply prompt carries an author's dossier (Operator):**
+> **2026-09-27 — no prompt reads `personality.json` any more (Operator):**
 > since June, nothing fed `personality.json` but the interaction count
 > `engagement_log` bumps after every Reply, yet the search, feed-sweep,
 > early-bird, mega-watch, replyback, notify and babysit Replies still sent
@@ -19,9 +19,10 @@ their order in the file is not strictly chronological.
 > `personality_store` its `render_account_block` and `get_account`, and a
 > Relation its fixed dossier, now an unknown key that stops the start;
 > McnallieM, left with no prompt of his own, lost his Relation and gets the
-> VIP scan's default prompt if ever scanned. `personality.json` stays, with
-> the interaction count, and `reply_job`, when enabled, still reads it for
-> its global mood.
+> VIP scan's default prompt if ever scanned. The reply search's "global
+> mood" went too: when enabled, `reply_job` listed the stale "predator"
+> handles in its prompt. `personality.json` stays, with the interaction
+> count only; `personality_store` lost the writers of the other fields.
 
 > **2026-09-27 — English text in Simplified Technical English:** the
 > Operator asked that English posts and replies "talk in ASD-STE100

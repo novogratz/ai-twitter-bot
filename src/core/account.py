@@ -354,7 +354,7 @@ def _relations(folder, network, table) -> Relations:
             relation = handles.get(handle.lower())
             if not relation:
                 table.fail("default", f"is missing: network.vip_scan lists {handle}, which has no "
-                                      f"Relation with its own prompt, so the VIP scan needs a default prompt")
+                                      f"Relation, so the VIP scan needs a default prompt")
     return Relations(default=default, handles=handles)
 
 

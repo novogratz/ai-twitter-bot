@@ -242,13 +242,13 @@ def dossier():
 def test_no_reply_prompt_carries_an_author_dossier(jobs, dossier, job, author, text):
     """The Operator, 2026-09-27: nothing had fed the dossiers since June but
     the interaction count, and stale categories reached the prompts under
-    "React FROM this memory". Every prompt ends on the template, then the
-    hard rules."""
+    "React FROM this memory", or the reply search's "global mood". Every
+    prompt ends on the template, then the hard rules."""
     from src.core import personality_store
 
     prompt = jobs(job, author, text)
-    assert "Personal memory" not in prompt
-    assert "shills crypto" not in prompt
+    assert [w for w in ("Personal memory", "shills crypto", "state of mind", "Predatory", "@someone,")
+            if w in prompt] == []
     assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
 
 

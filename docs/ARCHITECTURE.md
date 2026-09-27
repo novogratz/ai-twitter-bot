@@ -712,8 +712,8 @@ generator always opens the prompt on the Voice,
 header naming `BOT_HANDLE`, the one reader of those files. The job's template follows,
 with its instructions but no persona, then
 `personality_store.hard_rules_block()`, which renders the hard rules and
-the respect list from the Account's `respect_list.json`. No Reply prompt
-carries the author's dossier from `personality.json` (Operator, 2026-09-27). The editorial Draft opens on the
+the respect list from the Account's `respect_list.json`. No prompt reads
+`personality.json` (Operator, 2026-09-27). The editorial Draft opens on the
 same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;

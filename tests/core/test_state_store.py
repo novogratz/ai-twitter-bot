@@ -172,11 +172,6 @@ def _validate(monkeypatch):
                            "table, because the eval setup decides the score.", kind="original")
 
 
-def _personality(monkeypatch):
-    from src.core import personality_store
-    personality_store.render_global_mood()
-
-
 @pytest.mark.parametrize("name, job", [
     ("followed_accounts.json", _engage),
     ("followed_accounts.json", _followback),
@@ -190,7 +185,6 @@ def _personality(monkeypatch):
     ("tweet_history.json", _post),
     ("tweet_history.json", _babysit),
     ("tweet_history.json", _validate),
-    ("personality.json", _personality),
 ])
 def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypatch, tmp_path,
                                                             settings_override):

@@ -772,8 +772,8 @@ def test_the_default_prompt_is_needed_only_for_a_scanned_handle_without_its_own(
     accounts("other", THEAISHRINK.replace('default = "relations/buddy.md"\n', "")
              .replace(scan, 'vip_scan = ["Graphseo", "TheBTCTherapist", "McnallieM"]'))
     with pytest.raises(settings.SettingsError, match=re.escape(
-            "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation "
-            "with its own prompt")):
+            "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation, "
+            "so the VIP scan needs a default prompt")):
         account.load("other")
 
 
