@@ -832,6 +832,29 @@ def test_post_leaves_out_its_own_reservation_and_names_it_in_the_ledger(journal_
     assert journal_post.recorded == [((ag.POST,), {"target": key})]
 
 
+@pytest.mark.parametrize("key, text", [
+    ("2026-09-20/13:00", POSTED + "\n\n" + SOURCE),                # no such Pending slot
+    ("2026-09-20/09:30", POSTED + "\n\n" + SOURCE),                # published, not pending
+    ("2026-09-19/20:45", POSTED + "\n\n" + SOURCE),                # yesterday's
+    ("2026-09-20/11:45", "Inference is getting cheaper.\n\n" + SOURCE),  # another text
+])
+def test_post_refuses_a_reservation_that_does_not_hold_its_text(journal_post, caplog, key, text):
+    """A wrong or stale key would free a place in the ceiling, the spacing
+    and the dedup: refused before the browser, with no ledger row, and the
+    Slot journal left as it was."""
+    import src.x.twitter_client as tc
+    from src.editorial.slot_journal import STATE
+    _journal_file(slots={"09:30": "published", "11:45": "pending"},
+                  pending=[("2026-09-20/11:45", POSTED, 0), ("2026-09-19/20:45", POSTED, 900)],
+                  published=[("09:30", POSTED, 150)])
+    before = STATE.read()
+    assert tc.post_tweet(text, reserved=key) is W.REFUSED
+    assert f"reservation skip (reservation {key!r}" in caplog.text
+    assert journal_post.opened == [] and journal_post.recorded == []
+    assert journal_post.ledger.count(ag.POST, NOON.date()) == 0
+    assert STATE.read() == before
+
+
 # --- follows -----------------------------------------------------------------
 
 

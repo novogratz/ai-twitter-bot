@@ -182,7 +182,10 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     The Slot journal's submissions count toward the ceiling and the spacing
     (`action_guard.original_refusal`), and their texts toward the dedup.
     `reserved`: the key of the Pending slot the caller reserved for this
-    very text, left out of those checks and named by the ledger row.
+    very text, left out of those checks and named by the ledger row. It
+    must be a Pending slot of the day whose Draft and source make `text`
+    as received (`action_guard.reservation_refusal`); any other key is
+    REFUSED before the browser, with no ledger row.
 
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content, respect list or dedup skip, FAILED when the page did not open or
@@ -190,6 +193,8 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
+    # The reservation holds the text as submitted, before the scrub.
+    submitted = text
     text = _scrub_metadata_leaks(text)
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
@@ -217,6 +222,12 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
             log.info(f"[POST] policy skip ({why}).")
             return WriteOutcome.REFUSED
         journal = FileJournal()
+        if reserved is not None:
+            why = action_guard.reservation_refusal(journal, action_guard.now_local(), reserved,
+                                                   submitted)
+            if why:
+                log.warning(f"[POST] reservation skip ({why}).")
+                return WriteOutcome.REFUSED
         why = action_guard.original_refusal(journal, action_guard.now_local(), reserved)
         if why:
             log.info(f"[POST] policy skip ({why}).")

@@ -10,7 +10,8 @@ chokepoint (`post_tweet`, read only) ask of that state:
   once it shipped or `release` when nothing was sent;
 - the Slots closed for a day (pending or published), the source URLs
   already used, the recent posts (published and pending) and their texts,
-  the day's submissions and the latest one.
+  the day's submissions and the latest one, and the text a Pending slot
+  was submitted with.
 
 The file, `editorial_state.json`, keeps its format:
 
@@ -56,6 +57,11 @@ def stamp(raw):
         except (ValueError, TypeError):
             return None
     return dt.astimezone(timezone.utc) if dt.tzinfo else None
+
+
+def submission_text(text: str, url: str) -> str:
+    """The text an Original is submitted with: its Draft, then its source."""
+    return text.strip() + "\n\n" + url
 
 
 class Post(NamedTuple):
@@ -179,6 +185,12 @@ class SlotJournal:
         """The published Posts, then the pending ones, the Operator's hand
         edits included; the pending key `besides` left out."""
         return [Post(e["text"], stamp(e.get("ts", ""))) for e in self._entries(besides)]
+
+    def pending_submission(self, key: str) -> Optional[str]:
+        """The text submitted under the Pending slot `key`, None when no
+        pending entry holds it."""
+        entry = self._data.get("pending_sources", {}).get(key)
+        return submission_text(entry["text"], entry["url"]) if entry else None
 
     def recent_texts(self) -> list:
         """The published texts, then the pending ones."""

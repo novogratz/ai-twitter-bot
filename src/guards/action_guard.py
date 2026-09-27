@@ -53,8 +53,12 @@ def count_today(action: str) -> int:
     return _ledger().count(action, now_local().date())
 
 
+def _profile_count(day) -> int:
+    return sum(_ledger().count(action, day) for action in (POST, QUOTE, RETWEET))
+
+
 def profile_count_today() -> int:
-    return sum(count_today(action) for action in (POST, QUOTE, RETWEET))
+    return _profile_count(now_local().date())
 
 
 def debate_turn_authors() -> list:
@@ -153,7 +157,7 @@ def original_refusal(journal, now, besides: Optional[str] = None) -> str:
     day = now.date()
     unnamed = [key for key in journal.submissions(day)
                if key != besides and not _ledger().count(POST, day, key)]
-    used = profile_count_today() + len(unnamed)
+    used = _profile_count(day) + len(unnamed)
     cap = config.posts_ceiling()
     if used >= cap:
         return f"daily ceiling reached with pending submissions ({used}/{cap})"
@@ -162,6 +166,24 @@ def original_refusal(journal, now, besides: Optional[str] = None) -> str:
     gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
     if last and (now - last).total_seconds() < gap:
         return f"too soon since the last submission (need ~{gap}s gap)"
+    return ""
+
+
+def reservation_refusal(journal, now, reserved: str, text: str) -> str:
+    """Why `reserved` does not stand for the submission of `text` at `now`,
+    or "".
+
+    The key `original_refusal` and the dedup leave out, and the ledger row
+    names, must be a Pending slot of `now`'s day in the Slot journal whose
+    Draft and source make `text`: a wrong or stale key would free a place
+    in the ceiling, the spacing and the dedup."""
+    if not reserved.startswith(f"{now.date().isoformat()}/"):
+        return f"reservation {reserved!r} is not of today"
+    held = journal.pending_submission(reserved)
+    if held is None:
+        return f"reservation {reserved!r} is not pending"
+    if held != text:
+        return f"reservation {reserved!r} holds another text"
     return ""
 
 

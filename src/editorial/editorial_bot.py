@@ -23,7 +23,8 @@ from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import StatePath
 from . import editorial_schemas as schemas
-from .slot_journal import STATE, FileJournal, MemoryJournal, SlotJournal, stamp as _stamp
+from .slot_journal import (STATE, FileJournal, MemoryJournal, SlotJournal, stamp as _stamp,
+                           submission_text)
 from .trending import TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 AUDIT_FILE = StatePath("editorial_review.jsonl")
@@ -483,7 +484,7 @@ def _run_slot(slot, journal, today, preview):
         return audit
     from ..x.confirmed_write import WriteOutcome
     from ..x.twitter_client import post_tweet
-    text = draft["text"].strip() + "\n\n" + source["url"]
+    text = submission_text(draft["text"], source["url"])
     if config.dry_run():
         # post_tweet is never reached in a dry run: judge the respect list here.
         _, why = respect_list.scrub_text_or_skip(text)

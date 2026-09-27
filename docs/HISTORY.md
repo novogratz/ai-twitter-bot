@@ -113,9 +113,10 @@ their order in the file is not strictly chronological.
 > the latest submission has not run, or when the journal's published and
 > pending texts make it a duplicate; the review's dedup reads the same
 > texts. The `post` row names the Pending slot the cycle reserved, so that
-> post counts once. Guards: `tests/x/test_write_path.py`,
+> post counts once; `post_tweet` refuses a key that is not a Pending slot of
+> the day holding that very text. Guards: `tests/x/test_write_path.py`,
 > `tests/editorial/test_editorial_bot.py`,
-> `tests/guards/test_content_guard.py`.
+> `tests/guards/test_action_guard.py`, `tests/guards/test_content_guard.py`.
 
 > **2026-09-25 — the reply, like and follow niche narrowed to AI (issue #205):**
 > the policy had limited the account to AI, but the niche of the Replies,

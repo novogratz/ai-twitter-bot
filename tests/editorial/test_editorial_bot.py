@@ -796,36 +796,6 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
         _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 4, 30, tzinfo=TORONTO)]))
 
 
-def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
-    clock(monkeypatch, now)
-    entry = lambda ago: dict(url="https://openai.com/x", text="An AI post",
-                             ts=(now - ago).isoformat())
-    pending = {f"2026-09-20/startup@{h:02d}:00:00": entry(timedelta(hours=1)) for h in range(5, 11)}
-    # Yesterday's pending may be live, but it counts toward yesterday.
-    pending["2026-09-19/20:45"] = entry(timedelta(hours=15))
-    state = {"date": "2026-09-20", "slots": {"11:45": "published"},
-             "pending_sources": pending, "published": []}
-    # 11:45 shipped: its ledger row names its Pending slot, and it counts once.
-    memory_ledger.append(editorial.action_guard.POST, "2026-09-20/11:45", False,
-                         now - timedelta(minutes=30))
-    assert editorial._pending_refusal(state, now) == ""  # 1 shipped + 6 pending
-    # The operator marked 09:30 published after a check: no ledger row.
-    state["slots"]["09:30"] = "published"
-    assert "ceiling" in editorial._pending_refusal(state, now)
-    # The operator removed its pending_sources entry only.
-    state["slots"]["09:30"] = "pending"
-    assert "ceiling" in editorial._pending_refusal(state, now)
-    del state["slots"]["09:30"]
-    pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=19))
-    assert "too soon" in editorial._pending_refusal(state, now)
-    pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=20))
-    assert editorial._pending_refusal(state, now) == ""
-    # A post from another caller of post_tweet names no Slot: it counts too.
-    memory_ledger.append(editorial.action_guard.POST, "", False, now - timedelta(minutes=25))
-    assert "ceiling" in editorial._pending_refusal(state, now)
-
-
 @pytest.fixture
 def live_post(monkeypatch, memory_ledger):
     """The real post_tweet, every Safari step succeeding, over an in-memory

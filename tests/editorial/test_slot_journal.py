@@ -72,6 +72,8 @@ def test_a_reserved_slot_is_closed_until_released():
         "2026-09-20/07:15": dict(url=URL, text="A post", ts=AT.isoformat())}
     assert URL in journal.used_urls(AT) and journal.recent_texts() == ["A post"]
     assert journal.recent_posts() == [Post("A post", AT)]
+    assert journal.pending_submission("2026-09-20/07:15") == "A post\n\n" + URL
+    assert journal.pending_submission("2026-09-20/09:30") is None
     assert journal.submissions(DAY) == {"2026-09-20/07:15"}
     assert journal.last_submission() == AT
     assert journal.recent_posts("2026-09-20/07:15") == []
@@ -80,6 +82,7 @@ def test_a_reserved_slot_is_closed_until_released():
     assert not journal.closed("07:15", DAY)
     assert journal.saved["slots"] == {} and journal.saved["pending_sources"] == {}
     assert journal.submissions(DAY) == set() and journal.last_submission() is None
+    assert journal.pending_submission("2026-09-20/07:15") is None
 
 
 def test_a_confirmed_slot_is_published():

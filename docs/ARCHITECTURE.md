@@ -245,6 +245,11 @@ Original that `can_post` or `original_refusal` forbids, or that
 `is_duplicate` finds among the history and the Slot journal's published and
 pending Posts; every caller inherits these checks. The Pending slot named by
 `reserved`, the caller's own reservation of that text, is left out of them.
+`action_guard.reservation_refusal` checks that key first: it must be a
+`pending_sources` entry of the day whose Draft and source URL make the text
+as received (`slot_journal.submission_text`, which the cycle also builds its
+text with). Any other key is refused before the browser opens, with no
+ledger row and the journal untouched, and the cycle then releases its Slot.
 `post_tweet` checks `can_post(POST)` and `original_refusal` again under the
 Safari lock.
 
