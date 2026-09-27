@@ -288,23 +288,21 @@ def memory_page(monkeypatch):
 
 
 @_pytest.fixture
-def like_job(monkeypatch, memory_ledger, settings_override):
+def like_job(monkeypatch, memory_ledger, memory_page, settings_override):
     """Live like_job on a scripted search page, its caps at their declared
-    defaults; the real walk and like_tweet run."""
+    defaults; the real walk and like_tweet run on the memory page, which
+    shows `state["page"]` at every search like_job may open and in the
+    front tab."""
     from src.core import settings
-    from src.x import safari, twitter_client as tc
-    from tests.helpers import SearchPage
+    from src.x import twitter_client as tc
+    from tests.helpers import SEARCH, SearchPage, like_searches, posts_script
 
     monkeypatch.setenv("DRY_RUN", "0")
     settings_override(**{name: settings.DECLARED[name].default
                          for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS")})
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    state = {"page": SearchPage([]), "closed": 0, "ledger": memory_ledger}
-    monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
-
-    def close_front_tab():
-        state["closed"] += 1
-    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
+    state = {"page": SearchPage([]), "ledger": memory_ledger, "browser": memory_page}
+    like_searches(memory_page, lambda js: posts_script(state["page"], js))
+    memory_page.pages[SEARCH] = lambda js: posts_script(state["page"], js)
+    memory_page.front = SEARCH
     return state

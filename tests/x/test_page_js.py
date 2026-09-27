@@ -100,7 +100,9 @@ def _own_replies(monkeypatch):
 
 def _followers_list(monkeypatch):
     from src.account import followback_bot
-    return followback_bot._scrape_followers_list(5)
+    from src.x import page_session
+    with page_session.session("FOLLOWBACK") as page:
+        return followback_bot._scrape_followers_list(page, 5)
 
 
 def _warm_up(monkeypatch):

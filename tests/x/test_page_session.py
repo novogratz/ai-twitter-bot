@@ -1,6 +1,7 @@
 """The page session (issue #253): it holds the Safari lock, closes each tab
 it opened on every path, reads nothing when its page does not open, and a
 nested session opens and closes nothing and reads only the page asked."""
+import json
 import threading
 from types import SimpleNamespace
 
@@ -12,6 +13,9 @@ from src.x.page_session import PageNotOpened
 from tests.helpers import stop_requested
 
 PROFILE = "https://x.com/TheAIShrink"
+SEARCH = "https://x.com/search?q=AI"
+THEIR_PROFILE = "https://x.com/TheBTCTherapist"
+FOLLOWERS = "https://x.com/TheAIShrink/followers"
 
 
 class Boom(Exception):
@@ -23,18 +27,71 @@ def _follower_count():
     return follower_tracker_bot._scrape_follower_count()
 
 
+def _search_likes():
+    from src.x import twitter_client
+    return twitter_client.like_search_posts(SEARCH, 3, 60)
+
+
+def _profile_likes():
+    from src.x import twitter_client
+    return twitter_client.visit_profile_and_like("TheBTCTherapist", like_count=2)
+
+
+def _reply_likes():
+    from src.x import twitter_client
+    return twitter_client.like_own_tweet_replies()
+
+
+def _followback():
+    from src.account import followback_bot
+    return followback_bot.run_followback_cycle()
+
+
 # Every session migrated to the page session: its run, and the one page it
-# opens. Issues #254 and #255 add theirs.
+# opens. Issue #254 adds the scraper's.
 MIGRATED = {
     "follower_count": (_follower_count, PROFILE),
+    "search_likes": (_search_likes, SEARCH),
+    "profile_likes": (_profile_likes, THEIR_PROFILE),
+    "reply_likes": (_reply_likes, PROFILE),
+    "followback": (_followback, FOLLOWERS),
+}
+
+
+def _failed():
+    from src.x.twitter_client import LikeOutcome
+    return [LikeOutcome.FAILED]
+
+
+# The runs that report a page that did not open in their result instead of
+# letting PageNotOpened through.
+REPORTS_NOT_OPENED = {
+    "search_likes": _failed,
+    "profile_likes": _failed,
+    "reply_likes": _failed,
+}
+
+
+def _no_posts(page):
+    return [json.dumps({"page": page, "posts": []})]
+
+
+# The walks list the posts of a page they accept; any other answer takes
+# their [FAILED] path.
+NOMINAL = {
+    "search_likes": _no_posts(SEARCH),
+    "profile_likes": _no_posts(THEIR_PROFILE),
+    "reply_likes": _no_posts("https://x.com/TheAIShrink/status/2063500000000000301"),
 }
 
 
 @pytest.mark.parametrize("name", MIGRATED)
 def test_a_session_closes_its_tab_once_on_the_nominal_path(memory_page, name):
     run, url = MIGRATED[name]
-    memory_page.pages[url] = ["1"]
-    run()
+    memory_page.pages[url] = NOMINAL.get(name, ["1"])
+    result = run()
+    if name in REPORTS_NOT_OPENED:
+        assert result == []
     assert memory_page.opened == [url]
     assert memory_page.closed == 1
 
@@ -52,8 +109,11 @@ def test_a_session_closes_its_tab_once_when_a_read_raises(memory_page, name):
 @pytest.mark.parametrize("name", MIGRATED)
 def test_a_session_reads_nothing_when_its_page_does_not_open(memory_page, name):
     run, url = MIGRATED[name]
-    with pytest.raises(PageNotOpened):
-        run()
+    if name in REPORTS_NOT_OPENED:
+        assert run() == REPORTS_NOT_OPENED[name]()
+    else:
+        with pytest.raises(PageNotOpened):
+            run()
     assert memory_page.opened == [url]
     assert (memory_page.scripts, memory_page.scrolls, memory_page.pressed) == ([], 0, [])
     assert memory_page.closed == 1, "a timed-out open may have opened its page"
@@ -124,6 +184,14 @@ def test_a_nested_session_refuses_a_page_the_outer_did_not_open(memory_page):
             with pytest.raises(PageNotOpened):
                 inner.run_js("1")
     assert memory_page.scripts == []
+
+
+def test_a_page_may_answer_as_a_function_of_the_script(memory_page):
+    memory_page.pages[PROFILE] = lambda js: js.upper()
+    with page_session.session("FUNCTION") as page:
+        page.open(PROFILE)
+        assert page.run_js("one") == "ONE"
+        assert page.run_js("two") == "TWO"
 
 
 def test_a_session_that_opens_nothing_closes_nothing(memory_page):

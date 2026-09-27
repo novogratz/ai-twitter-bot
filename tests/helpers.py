@@ -1,4 +1,7 @@
 """Helpers shared by test files of several packages."""
+import json
+import re
+import urllib.parse
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
@@ -99,6 +102,25 @@ class SearchPage:
         post["liked"] = self.click_sticks
         self.on_click()
         return {"url": post["url"], "result": "clicked"}
+
+
+_POSTS_CALL = re.compile(r'\("(\w+)", "(\d*)"\)\s*$')
+
+
+def posts_script(page, js):
+    """The answer to the `_POSTS_JS` call in `js` of `page`, a SearchPage or
+    any callable of (mode, target_id): a MemoryBrowser page is
+    `lambda js: posts_script(page, js)`."""
+    call = _POSTS_CALL.search(js)
+    return json.dumps(page(call.group(1), call.group(2))) if call else ""
+
+
+def like_searches(browser, page):
+    """Put `page` on `browser` at every search URL like_job may open."""
+    from src.core import account
+    for query in account.current().searches.likes:
+        for tab in ("top", "live"):
+            browser.pages[f"https://x.com/search?q={urllib.parse.quote(query)}&f={tab}"] = page
 
 
 def pin_rows(ledger):

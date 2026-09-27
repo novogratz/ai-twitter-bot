@@ -104,7 +104,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `debate_job` | 12 min | Answers mentions under `DEBATE_MAX_AGE_HOURS`, newest first, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too; a pick whose follow raised is still liked, and fails the cycle for the health watchdog once the likes are done. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
-| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
+| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page (a followers page that does not open fails the cycle), records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
@@ -391,9 +391,11 @@ tab stays open until the next Safari restart, and `OutsideActiveHours`
 reaches the job (the Operator's open question of issue #250); the error the
 job raised before it is logged first. `BROWSER` picks the adapter at the start of
 each session: `SafariBrowser`, which calls the primitives through the
-`safari` module, or `MemoryBrowser`, which scripts pages by URL for tests.
-The follower count reads its page through a session; the other page reads
-and the writes move to it with issues #254 to #256.
+`safari` module, or `MemoryBrowser`, which scripts pages by URL for tests,
+each page a list of answers given in turn or a function of the script.
+The follower count, the three like walks and the follow-back's read of
+the followers page go through a session; the other page reads and the
+writes move to it with issues #254 and #256.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 `twitter_client.py` holds the write chokepoints. Writes use
@@ -498,16 +500,22 @@ reads the article again and returns `LIKED` only once the button shows
 `unlike`; the ledger row and the cache entry then carry the URL read on the
 page. A click the page does not show returns `UNCONFIRMED`, falsy, with no
 ledger row or cache entry. `like_tweet` reads and clicks under the Safari
-lock, which is reentrant, so a caller that already holds it is unchanged. That read, about a second after the click, sees X's optimistic
+lock, which is reentrant, so a caller that already holds it is unchanged.
+Its page scripts run in a page session that opens and closes nothing: on
+its own it acts on the front tab, inside a walk's session on the walk's
+page. That read, about a second after the click, sees X's optimistic
 interface: it proves the page shows the like, not that X accepted it.
 `visit_profile_and_like`, `like_own_tweet_replies` and `like_search_posts`
 list the articles on the page and call it with each post's URL: the
 profile's own posts for the first, the replies under our latest post for
 the second, the posts of a niche search for `like_job` for the third, never
 our own posts. A `BLOCKED` post is skipped and the walk goes on; a `FAILED`
-or `UNCONFIRMED` one stops it. A page that does not open adds one
-`FAILED` and clicks nothing. All three open nothing under `DRY_RUN` and
-close their tab even when a like raises. `like_search_posts` starts no like
+or `UNCONFIRMED` one stops it. Each walk opens its page in a page
+session, which holds the Safari lock and closes the tab on every path,
+even when a like raises; its scrolls, pauses and `like_own_tweet_replies`'
+keys to our latest post go through the same page. A page that does not
+open adds one `FAILED` and nothing is read, pressed or clicked. All three
+check `DRY_RUN` before the session and open nothing under it. `like_search_posts` starts no like
 once `LIKE_BOT_CYCLE_SECONDS` (30 s) have passed since it took the Safari
 lock, and fills the caller's outcome list as it goes: `like_job` adds the
 `LIKED` and `UNCONFIRMED` outcomes to its daily count, so a stop mid-walk
@@ -785,9 +793,9 @@ These are how the code behaves today, not design intent:
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.
-- The page reads of `scraper.py` and the follow-back still ignore
-  `open_url`'s result, and read the front tab when the page did not open
-  (parent issue #250). The writes and the page sessions check it.
+- The page reads of `scraper.py` still ignore `open_url`'s result, and
+  read the front tab when the page did not open (parent issue #250). The
+  writes and the page sessions check it.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
   may still open a timed-out page afterwards, and the tab close of a write
   or a page session then closes another tab and leaves that one open.
