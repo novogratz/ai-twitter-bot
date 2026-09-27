@@ -26,9 +26,9 @@ know are kept within the day; a new day drops them.
 
 Two adapters: `FileJournal` reads the guarded file once when made and
 writes it whole at each change; `MemoryJournal` holds it in memory for
-tests. Both keep the state in memory between two saves: every change saves,
-the day change alone waits for the next one. The editorial cycle's lock and
-its one-thread executor exclude two writers.
+tests, set as `JOURNAL`. Both keep the state in memory between two saves:
+every change saves, the day change alone waits for the next one. The
+editorial cycle's lock and its one-thread executor exclude two writers.
 """
 import copy
 from datetime import date, datetime, timedelta, timezone
@@ -201,12 +201,6 @@ class SlotJournal:
         pending key `besides` left out."""
         return max((post.at for post in self.recent_posts(besides) if post.at), default=None)
 
-    def get(self, key, default=None):
-        """One key of the file format, read only: the `collect_sources`
-        stand-in of test_pending_source_is_released_only_when_nothing_was_sent
-        still reads the state as a dict (#232 moves it to the journal)."""
-        return self._data.get(key, default)
-
 
 class FileJournal(SlotJournal):
     """The journal kept in editorial_state.json, read when made:
@@ -230,3 +224,13 @@ class MemoryJournal(SlotJournal):
 
     def _save(self) -> None:
         self.saved = copy.deepcopy(self._data)
+
+
+# None: editorial_state.json, read afresh by each caller; tests set a
+# MemoryJournal.
+JOURNAL: Optional[SlotJournal] = None
+
+
+def current() -> SlotJournal:
+    """The Slot journal: JOURNAL when set, else the file's, read now."""
+    return JOURNAL if JOURNAL is not None else FileJournal()

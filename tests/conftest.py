@@ -268,6 +268,16 @@ def memory_ledger(monkeypatch):
 
 
 @_pytest.fixture
+def memory_journal(monkeypatch):
+    """An in-memory Slot journal in place of editorial_state.json, for the
+    editorial cycle; kept across its passes, as the file would be."""
+    from src.editorial import slot_journal
+    memory = slot_journal.MemoryJournal()
+    monkeypatch.setattr(slot_journal, "JOURNAL", memory)
+    return memory
+
+
+@_pytest.fixture
 def memory_page(monkeypatch):
     """A MemoryBrowser behind every page session: `memory_page.pages[url]`
     scripts the answers of a page, a URL without one does not open."""

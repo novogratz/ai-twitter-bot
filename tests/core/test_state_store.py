@@ -209,7 +209,7 @@ def test_an_unreadable_history_stops_the_editorial_cycle_before_a_draft(monkeypa
     """The review dedups the Draft against tweet_history.json: read after
     the Draft, an unreadable history spent the Attempt for nothing."""
     from datetime import datetime
-    from src.editorial import editorial_bot as editorial
+    from src.editorial import editorial_bot as editorial, slot_journal
     from tests.helpers import TORONTO, clock
     path = _corrupt(tmp_path, "tweet_history.json")
     clock(monkeypatch, datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO))
@@ -219,7 +219,7 @@ def test_an_unreadable_history_stops_the_editorial_cycle_before_a_draft(monkeypa
     with pytest.raises(StateUnreadable):
         editorial.run_editorial_cycle()
 
-    assert not editorial._read_state().get("attempts")
+    assert not slot_journal.STATE.read().get("attempts")
     assert path.read_text() == CORRUPT
 
 
@@ -365,7 +365,7 @@ def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, 
     """The Draft prompt carries the respect list: the cycle stops before the
     model call, and no Attempt is spent."""
     from datetime import datetime
-    from src.editorial import editorial_bot as editorial
+    from src.editorial import editorial_bot as editorial, slot_journal
     from src.x import twitter_client
     from tests.helpers import TORONTO, clock, scheduled_job
     path = _corrupt(operator_folder, "respect_list.json")
@@ -380,7 +380,7 @@ def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, 
 
     scheduled_job("editorial_job")()
 
-    assert not editorial._read_state().get("attempts")
+    assert not slot_journal.STATE.read().get("attempts")
     assert "respect_list.json is unreadable" in caplog.text
     assert path.read_text() == CORRUPT
 

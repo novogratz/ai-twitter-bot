@@ -174,6 +174,7 @@ def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
     """The dry run's ceiling is the one the editorial job enforces."""
     from src.core import config
     from src.editorial import editorial_bot
+    from src.editorial.slot_journal import MemoryJournal
     from src.guards import action_guard
 
     monkeypatch.setattr(account, "_loaded", {})
@@ -184,7 +185,7 @@ def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
     now = editorial_bot._local()
     state = {"date": now.date().isoformat(), "published": [],
              "slots": {clock: "published" for clock in ("06:30", "09:00", "10:00", "12:30")}}
-    assert editorial_bot._pending_refusal(state, now) == (
+    assert action_guard.original_refusal(MemoryJournal(state), now) == (
         "daily ceiling reached with pending submissions (4/4)")
 
 
