@@ -226,8 +226,9 @@ class MemoryJournal(SlotJournal):
         self.saved = copy.deepcopy(self._data)
 
 
-# None: editorial_state.json, read afresh by each caller; tests set a
-# MemoryJournal.
+# The editorial cycle's journal. None: editorial_state.json, read afresh
+# by each cycle; tests set a MemoryJournal. post_tweet and reach_report
+# still read the file themselves, through FileJournal().
 JOURNAL: Optional[SlotJournal] = None
 
 
