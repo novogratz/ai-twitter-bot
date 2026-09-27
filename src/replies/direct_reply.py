@@ -9,8 +9,6 @@ from ..core.logger import log
 from ..x.scraper import scrape_x_search
 from . import reply_pipeline, reply_source
 from .reply_generator import LanguageRule, ReplyCall
-# Unused here: a re-export #244 removes.
-from .reply_source import freshness_sort_key, is_on_niche
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"

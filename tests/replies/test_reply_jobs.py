@@ -491,13 +491,16 @@ def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
         post("someone", "post stale", minutes=max_minutes + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
+        # A repost shown on the profile: its URL names another account.
+        post("other", "post reposted", n=5),
         {"url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]
 
     run()
 
-    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread") == ["post fresh"]
+    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread",
+                       "post reposted") == ["post fresh"]
     assert chokepoint.sent == [ok["url"]]
     tag = {"early_bird": "EARLYBIRD", "mega_watch": "MEGA"}[name]
     assert [r.source for r in logged()] == [f"{tag}/someone"]
