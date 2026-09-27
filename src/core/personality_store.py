@@ -26,14 +26,8 @@ Schema (personality.json):
   }
 }
 
-HARD RULES — non-negotiable, baked into every generation prompt:
-1. Aucun contenu illegal.
-2. Aucun troll du gouvernement americain (institutions, presidents,
-   agences federales US). Commenter les faits OK, troller / mocker NON.
-   En cas de doute -> SKIP.
-
-Tout le reste est strategie mutable que le bot peut faire evoluer
-lui-meme via le reflection_agent et l'evolution_agent.
+HARD RULES — non-negotiable, baked into every generation prompt: the
+numbered rules of `_BASE_HARD_RULES`, then the respect list block.
 """
 
 import copy
@@ -90,9 +84,11 @@ _BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
 5. ENGLISH FORM (operator mandate 2026-09-27): when you write a post or a
    reply in English, write in ASD-STE100 Simplified Technical English:
    short sentences (25 words at most), one idea per sentence, active voice,
-   simple verb tenses, common words that keep one meaning each. The Voice
-   still sets the tone: warmth, wit and opinion stay. French text keeps its
-   own form.
+   simple verb tenses, common words that keep one meaning each, no
+   contractions, no -ing verb forms, no phrasal verbs. Where the Voice
+   speaks of form (contractions, rhythm, sentence length), this rule wins.
+   The Voice still sets the tone: warmth, wit and opinion stay. French text
+   keeps its own form.
 
 Everything else is negotiable — voice, tone, targets, mood."""
 

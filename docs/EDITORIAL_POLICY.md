@@ -18,12 +18,6 @@ She explains a consequence, teaches something, or offers a useful action. A
 question, joke, emoji or flirty line is optional. Forced formulas, engagement
 bait, stale numbers, copied headlines and fabricated lived experience are out.
 The AI identity remains honest; the therapist name is a brand persona.
-English Originals and Replies take the form of ASD-STE100 Simplified
-Technical English (Operator, 2026-09-27): short sentences of 25 words at
-most, one idea per sentence, active voice, simple verb tenses, common words
-that keep one meaning each. The Voice keeps the tone. It is hard rule 5 in
-`personality_store._BASE_HARD_RULES`, so every Original and Reply prompt
-carries it; French text keeps its own form.
 That character is the Voice, written only in the Account's folder,
 `accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
 Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
@@ -31,6 +25,15 @@ their task instructions but no copy of the persona, and the model client adds
 none (#192). The per-person relations (Graphseo, bestie, buddy) are the
 Account's Relations, in `account.toml` and `relations/`: the engine names no
 one (#203).
+
+English Originals and Replies take the form of ASD-STE100 Simplified
+Technical English (Operator, 2026-09-27): sentences of 25 words at most,
+one idea per sentence, active voice, simple verb tenses, common words that
+keep one meaning each, no contractions, -ing verb forms or phrasal verbs.
+Where the Voice speaks of form, such as contractions or rhythm, this rule
+wins; the Voice keeps the tone. It is one of the hard rules
+(`personality_store.hard_rules_block()`), so every Original and Reply
+prompt carries it; French text keeps its own form.
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains

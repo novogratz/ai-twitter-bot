@@ -25,6 +25,8 @@ def test_english_text_follows_simplified_technical_english():
     assert "ASD-STE100 Simplified Technical English" in block
     assert "in English" in block and "French text keeps its own form" in block
     assert "The Voice still sets the tone" in block
+    # STE forbids what voice_en.md asks for ("Use contractions"): form is STE's.
+    assert "no contractions" in block and "this rule wins" in block
 
 
 def test_the_dossier_block_is_in_english():

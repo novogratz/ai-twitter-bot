@@ -12,9 +12,11 @@ their order in the file is not strictly chronological.
 > Operator asked that English posts and replies "talk in ASD-STE100
 > Simplified Technical English". It became hard rule 5, so every Original
 > and Reply prompt carries it: short sentences, one idea each, active
-> voice, simple tenses, common words with one meaning. It sets the form
-> only: the Voice keeps the tone, its warmth, wit and opinions. French text
-> keeps its own form. The Editor's review does not check it.
+> voice, simple tenses, common words with one meaning, and no
+> contractions, -ing verb forms or phrasal verbs. It sets the form, and wins
+> where the Voice speaks of form ("Use contractions", "different rhythms"):
+> the Voice keeps the tone, its warmth, wit and opinions. French text keeps
+> its own form. The Editor's review does not check it.
 
 > **2026-09-27 — the replyback and debate prompts follow the Voice:**
 > a Reply prompt is a single block of text: Voice, the job's
