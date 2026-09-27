@@ -37,7 +37,7 @@ def voice_files(monkeypatch, tmp_path):
 
 
 @pytest.fixture
-def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
+def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override, always_reply):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
     from src.replies import reply_pipeline, reply_source
@@ -47,7 +47,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
 
     chokepoint.answer = WriteOutcome.REFUSED
     monkeypatch.setattr(reply_source, "is_on_niche", lambda text: True)
-    monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
+    always_reply()
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     settings_override(ENABLE_DEBATES=True)
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())

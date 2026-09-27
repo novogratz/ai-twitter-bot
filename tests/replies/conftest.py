@@ -1,4 +1,5 @@
 """Fixtures of the reply job tests."""
+import dataclasses
 import threading
 
 import pytest
@@ -33,6 +34,20 @@ def chokepoint(monkeypatch):
     monkeypatch.setattr(twitter_client, "reply_to_tweet", fake)
     monkeypatch.setattr(reply_pipeline, "_sleep", lambda seconds: None)
     return fake
+
+
+@pytest.fixture
+def always_reply(monkeypatch):
+    """`always_reply(*handles)`: the loaded Account's always-reply accounts
+    are `handles` alone, all in its vip_reply list."""
+    from src.core import account
+
+    def swap(*handles):
+        loaded = account.current()
+        network = dataclasses.replace(loaded.network, vip_reply=handles, big_ai_hype=(), mid_size_ai=(),
+                                      high_traction_reply=(), big_fr=())
+        monkeypatch.setattr(account, "current", lambda: dataclasses.replace(loaded, network=network))
+    return swap
 
 
 @pytest.fixture

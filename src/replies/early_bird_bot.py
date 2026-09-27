@@ -14,6 +14,7 @@ Strategy:
 """
 import random
 from datetime import timedelta
+from ..core import account
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline, reply_source
@@ -53,9 +54,8 @@ def run_early_bird_cycle():
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     from ..core.evolution_store import filter_and_weight
-    from .direct_reply import always_reply_accounts
     pool = filter_and_weight(_scan_pool())
-    always_pool = filter_and_weight(always_reply_accounts())
+    always_pool = filter_and_weight(account.current().network.always_reply)
 
     # Growth push: scan the always-reply accounts first, then fill with random
     # mega accounts. Early replies under big accounts are the highest upside

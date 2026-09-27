@@ -1,6 +1,7 @@
-"""Direct reply: the VIP scan and the search lane. Its ReplyCall also serves
-the feed sweep, early bird and mega watch. Both lanes take their candidates
-from the Reply source."""
+"""Direct reply: the VIP scan and the search lane. Both lanes take their
+candidates from the Reply source. The feed sweep, early bird and mega watch
+borrow its reply_call, and nothing else, until the call surface moves it
+(#245)."""
 import random
 from datetime import timedelta
 from ..core import account, settings
@@ -12,11 +13,6 @@ from .reply_generator import LanguageRule, ReplyCall
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
-
-
-def always_reply_accounts() -> tuple:
-    """The accounts early_bird scans first, from the loaded Account."""
-    return account.current().network.always_reply
 
 
 REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,
