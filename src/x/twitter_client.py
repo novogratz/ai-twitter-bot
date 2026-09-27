@@ -650,8 +650,10 @@ _REFUSED = {follow_policy.Refusal.BLOCKED_ACCOUNT: FollowOutcome.BLOCKED,
 # Only the visited profile's own button is ever clicked (#259): a profile
 # already followed shows "-unfollow" in its header while the "Who to follow"
 # block beside it offers "-follow" buttons for other accounts. The script
-# reads the primary column only, checks that its header shows @__HANDLE__,
-# and takes the one follow or unfollow button whose aria-label names
+# reads the primary column only, checks that one element of its header
+# reads exactly @__HANDLE__ (the header's whole text also holds the display
+# name and the "Follows you" badge of an account that follows us), and takes
+# the one follow or unfollow button whose aria-label names
 # @__HANDLE__ outside a user cell: the testid suffix gives the state, the
 # label the account. No such button, or more than one, clicks nothing.
 _FOLLOW_JS = r"""
@@ -660,11 +662,13 @@ _FOLLOW_JS = r"""
     if (!/^[a-z0-9_]+$/.test(h)) return 'NO_PROFILE';
     var column = document.querySelector('[data-testid="primaryColumn"]');
     if (!column) return 'NO_PROFILE';
-    var shown = new RegExp('@' + h + '(?![a-z0-9_])', 'i');
     var names = column.querySelectorAll('[data-testid="UserName"]');
     var onProfile = false;
     for (var i = 0; i < names.length; i++) {
-        if (shown.test(names[i].textContent || '')) onProfile = true;
+        var parts = [names[i]].concat(Array.prototype.slice.call(names[i].querySelectorAll('*')));
+        for (var k = 0; k < parts.length; k++) {
+            if ((parts[k].textContent || '').trim().toLowerCase() === '@' + h) onProfile = true;
+        }
     }
     if (!onProfile) return 'NO_PROFILE';
     var buttons = column.querySelectorAll('button[data-testid$="-follow"], button[data-testid$="-unfollow"]');

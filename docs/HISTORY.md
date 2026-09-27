@@ -227,9 +227,9 @@ their order in the file is not strictly chronological.
 > handle and added it to the followed accounts. Any account followed by
 > hand or before `followed_accounts.json` could reach it. Found reading the
 > code, not on a live page. The script now reads the primary column only,
-> checks that the header shows the visited `@handle`, and takes the one
-> follow or unfollow button whose `aria-label` names it outside a user
-> cell; the text and `placementTracking` fallbacks, which named no
+> checks that one element of the header reads the visited `@handle`, and
+> takes the one follow or unfollow button whose `aria-label` names it
+> outside a user cell; the text and `placementTracking` fallbacks, which named no
 > account, are gone. No such button, or two, clicks nothing.
 
 > **2026-09-25 — a write whose page does not open fails (issue #251):**

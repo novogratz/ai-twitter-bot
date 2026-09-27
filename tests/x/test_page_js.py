@@ -284,9 +284,10 @@ def test_own_replies_script_reads_a_thread(monkeypatch, browser):
 
 
 # The follow script, run by node against a profile page: the primary column
-# holds the profile header (UserName, then the profile's own button), and may
-# hold a "You might like" block of user cells; the sidebar holds a "Who to
-# follow" block. Each suggestion carries its own follow button. The document
+# holds the profile header (UserName, with the "Follows you" badge of an
+# account that follows us beside its @handle, then the profile's own button),
+# and may hold a "You might like" block of user cells; the sidebar holds a
+# "Who to follow" block. Each suggestion carries its own follow button. The document
 # answers only the primary column lookup: any wider search fails the test.
 _PROFILE_PAGE_JS = r"""
 var clicked = [];
@@ -302,6 +303,7 @@ Object.defineProperty(El.prototype, 'textContent', {get: function() {
 El.prototype.getAttribute = function(n) { return n in this.attrs ? this.attrs[n] : null; };
 El.prototype.matches = function(sel) {
     var id = this.attrs['data-testid'] || '';
+    if (sel === '*') return true;
     if (sel === '[data-testid="primaryColumn"]') return id === 'primaryColumn';
     if (sel === '[data-testid="UserName"]') return id === 'UserName';
     if (sel === '[data-testid="UserCell"]') return id === 'UserCell';
@@ -334,14 +336,19 @@ function suggestion(id, handle) {
 var sidebar = new El('div', {'data-testid': 'sidebarColumn'}, [
     new El('aside', {'aria-label': 'Who to follow'},
            [suggestion('111', 'suggested_one'), suggestion('222', 'suggested_two')])]);
-function page(shown, own, youMightLike) {
+// `youMightLike`: false, true, or the handle its one suggestion names;
+// `badge`: the text of the "Follows you" badge, if the account follows us.
+function page(shown, own, youMightLike, badge) {
+    var handleRow = new El('div', {}, [new El('div', {}, [new El('span', {}, [], '@' + shown)])].concat(
+        badge ? [new El('div', {'data-testid': 'userFollowIndicator'}, [new El('span', {}, [], badge)])] : []));
     var header = new El('div', {}, [
         new El('div', {'data-testid': 'UserName'}, [
-            new El('span', {}, [], 'Some Account'), new El('span', {}, [], '@' + shown)])
+            new El('div', {}, [new El('span', {}, [], 'Some Account')]), handleRow])
     ].concat(own));
+    var suggested = typeof youMightLike === 'string' ? youMightLike : 'suggested_three';
     var column = new El('div', {'data-testid': 'primaryColumn'}, [header].concat(
         youMightLike ? [new El('aside', {'aria-label': 'You might like'},
-                               [suggestion('333', 'suggested_three')])] : []));
+                               [suggestion('333', suggested)])] : []));
     var body = new El('body', {}, [column, sidebar]);
     return {querySelector: function(s) {
                 if (s !== '[data-testid="primaryColumn"]') throw new Error('document-wide ' + s);
@@ -354,12 +361,12 @@ function page(shown, own, youMightLike) {
 
 def _profile_follow(monkeypatch, document_js):
     """`follow_account("someaccount")` with its page script run by node
-    against `document_js`; returns the outcome, the testids clicked and the
-    handles written to the followed accounts."""
+    against `document_js`; returns the outcome, the testids clicked, the
+    ledger rows and the handles written to the followed accounts."""
     from src.guards import action_guard, follow_policy
     from src.x import safari
 
-    clicks, followed = [], []
+    clicks, rows, followed = [], [], []
 
     def run_js(js, *a, **k):
         answer = json.loads(_node_run(
@@ -371,10 +378,10 @@ def _profile_follow(monkeypatch, document_js):
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(time, "sleep", lambda *_: None)
-    monkeypatch.setattr(action_guard, "record", lambda *a, **k: None)
+    monkeypatch.setattr(action_guard, "record", lambda action, target="", **k: rows.append((action, target)))
     monkeypatch.setattr(follow_policy, "adjust_following", lambda *a: None)
     monkeypatch.setattr(follow_policy, "record_followed", followed.append)
-    return _follow(monkeypatch), clicks, followed
+    return _follow(monkeypatch), clicks, rows, followed
 
 
 OWN_FOLLOW = "button('42-follow', 'Follow @SomeAccount')"
@@ -386,28 +393,57 @@ def test_follow_on_a_followed_profile_with_suggestions_clicks_nothing(monkeypatc
     """#259: the script took the first "-follow" button of the document, so
     on a profile already followed it clicked a "Who to follow" suggestion
     and recorded the follow under the visited handle."""
-    outcome, clicks, followed = _profile_follow(
+    outcome, clicks, rows, followed = _profile_follow(
         monkeypatch, f"page('SomeAccount', [{OWN_UNFOLLOW}], {json.dumps(you_might_like)})")
 
     assert outcome is FollowOutcome.ALREADY_FOLLOWED
     assert clicks == []
+    assert rows == []
     assert followed == ["someaccount"]
 
 
 @pytest.mark.parametrize("label", ["Follow @SomeAccount", "Suivre @someaccount"])
 def test_follow_on_a_profile_with_suggestions_clicks_the_profile_button(monkeypatch, label):
-    outcome, clicks, followed = _profile_follow(
+    outcome, clicks, rows, followed = _profile_follow(
         monkeypatch, f"page('SomeAccount', [button('42-follow', {json.dumps(label)})], true)")
 
     assert outcome is FollowOutcome.FOLLOWED
     assert clicks == ["42-follow"]
+    assert rows == [("follow", "someaccount")]
     assert followed == ["someaccount"]
+
+
+@pytest.mark.parametrize("badge", ["Follows you", "Vous suit"])
+@pytest.mark.parametrize("own, expected, clicked", [
+    (OWN_FOLLOW, FollowOutcome.FOLLOWED, ["42-follow"]),
+    (OWN_UNFOLLOW, FollowOutcome.ALREADY_FOLLOWED, []),
+], ids=["follow", "already"])
+def test_follow_on_a_profile_that_follows_us(monkeypatch, badge, own, expected, clicked):
+    """The header of an account that follows us holds its "Follows you"
+    badge beside the @handle, and its whole text runs them together."""
+    outcome, clicks, rows, followed = _profile_follow(
+        monkeypatch, f"page('SomeAccount', [{own}], true, {json.dumps(badge)})")
+
+    assert outcome is expected
+    assert clicks == clicked
+    assert followed == ["someaccount"]
+
+
+def test_follow_skips_a_user_cell_naming_the_visited_handle(monkeypatch):
+    """A "You might like" suggestion for the visited account itself carries
+    a button named like the profile's: it is not the profile's button."""
+    outcome, clicks, rows, followed = _profile_follow(
+        monkeypatch, f"page('SomeAccount', [{OWN_FOLLOW}], 'SomeAccount')")
+
+    assert outcome is FollowOutcome.FOLLOWED
+    assert clicks == ["42-follow"]
 
 
 @pytest.mark.parametrize("document_js", [
     # The header shows another profile, or a handle the visited one prefixes.
     f"page('OtherAccount', [{OWN_FOLLOW}], true)",
     f"page('SomeAccount_fan', [{OWN_FOLLOW}], true)",
+    f"page('SomeAccount_fan', [{OWN_FOLLOW}], true, 'Follows you')",
     # No button names the visited handle: only suggestions are left.
     "page('SomeAccount', [], true)",
     "page('SomeAccount', [button('42-follow', 'Follow')], true)",
@@ -416,13 +452,14 @@ def test_follow_on_a_profile_with_suggestions_clicks_the_profile_button(monkeypa
     f"page('SomeAccount', [{OWN_FOLLOW}, {OWN_UNFOLLOW}], false)",
     # No primary column.
     "{querySelector: function() { return null; }}",
-], ids=["other-profile", "prefixed-handle", "no-own-button", "unnamed-button",
-        "other-handle-button", "two-own-buttons", "no-column"])
+], ids=["other-profile", "prefixed-handle", "prefixed-handle-follows-us", "no-own-button",
+        "unnamed-button", "other-handle-button", "two-own-buttons", "no-column"])
 def test_follow_on_doubt_clicks_nothing(monkeypatch, document_js):
-    outcome, clicks, followed = _profile_follow(monkeypatch, document_js)
+    outcome, clicks, rows, followed = _profile_follow(monkeypatch, document_js)
 
     assert outcome is FollowOutcome.FAILED
     assert clicks == []
+    assert rows == []
     assert followed == []
 
 
