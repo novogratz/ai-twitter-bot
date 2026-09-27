@@ -95,13 +95,13 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts (their posts under 48 hours old, replies included), then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries (root, on-niche posts under `DIRECT_REPLY_MAX_AGE_MINUTES`, fresh and rising first), and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
-| `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
-| `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
+| `early_bird_job` | 5 min | Replies to root, on-niche posts under 18 minutes old from four of the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and three of the tracked-account list, one Reply per account: seven per cycle at most. |
+| `mega_watch_job` | 2 min | Replies to root, on-niche posts under four minutes old from the top tracked handles, two per cycle at most. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
-| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
+| `debate_job` | 12 min | Answers mentions under `DEBATE_MAX_AGE_HOURS`, newest first, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too; a pick whose follow raised is still liked, and fails the cycle for the health watchdog once the likes are done. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
@@ -606,15 +606,24 @@ Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
 search) hands its candidates to the Reply pipeline,
 `src/replies/reply_pipeline.py`. A job keeps its sub-sources (the feeds,
 searches or handle pools it scrapes), its budgets, its Reply call, its pace
-after a shipped Reply and its log tag. `feed_sweep` declares what it
-answers to the Reply source, `src/replies/reply_source.py`: the oldest post
-(`DIRECT_REPLY_MAX_AGE_MINUTES`, read on each pass), root posts only, the
-Account's niche, fresh and rising first. `reply_source.select` applies the
+after a shipped Reply and its log tag, and declares what it answers to the
+Reply source, `src/replies/reply_source.py`: the oldest post, root posts
+only or not, the author a scanned profile's posts carry in their URL, the
+Account's niche or not, and the order. `reply_source.select` applies the
 declaration without side effects and never keeps a post without a URL or
-text, or of unknown or negative age; a declaration can also require the
-author a scanned profile's posts carry in their URL. The other jobs still
-select their candidates themselves (niche, age threshold, thread-reply
-shape) until they move to it. The
+text, or of unknown or negative age.
+
+| Job or lane | Oldest post | Root only | Author | Niche | Order |
+|---|---|---|---|---|---|
+| `direct_reply` VIP scan | 48 h | no | | no | scraped |
+| `direct_reply` search (SEARCH-HOT) | `DIRECT_REPLY_MAX_AGE_MINUTES` | yes | | yes | fresh and rising |
+| `feed_sweep` | `DIRECT_REPLY_MAX_AGE_MINUTES` | yes | | yes | fresh and rising |
+| `early_bird` | 18 min | yes | the scanned handle | yes | scraped |
+| `mega_watch` | 4 min | yes | the scanned handle | yes | scraped |
+| `debate` | `DEBATE_MAX_AGE_HOURS` | no (mentions are replies) | | no | newest |
+
+The settings are read on each pass. `replyback`, `babysit` and the reply
+search select their candidates themselves. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and

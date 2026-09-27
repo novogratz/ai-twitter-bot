@@ -46,8 +46,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     from src.x import scraper
 
     chokepoint.answer = WriteOutcome.REFUSED
-    for module in (dr, eb, mw, reply_source):
-        monkeypatch.setattr(module, "is_on_niche", lambda text: True)
+    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     settings_override(ENABLE_DEBATES=True)
@@ -77,7 +76,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
 
     def vip(handle, text):
         settings_override(VIP_SCAN_HANDLES=handle)
-        monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
+        monkeypatch.setattr(dr, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
         dr._run_vip_scan(reply_pipeline.Cycle())
 
     def debate(author, text):

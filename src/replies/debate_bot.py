@@ -18,6 +18,7 @@ reply_to_tweet chokepoint judges it again with the text — NO caller-side
 premark; log only on a confirmed ship; Safari work only inside the client
 primitives.
 """
+import dataclasses
 from collections import Counter
 from datetime import timedelta
 
@@ -25,7 +26,7 @@ from ..x import x_urls
 from ..core import settings
 from ..core.llm_client import Surface
 from ..core.logger import log
-from . import reply_pipeline
+from . import reply_pipeline, reply_source
 from .reply_generator import ReplyCall
 
 
@@ -86,22 +87,14 @@ def run_debate_cycle():
 
     skips = Counter()
 
-    # Freshest first — a debate is won in the first minutes.
-    mentions.sort(key=lambda t: x_urls.age(t.get("url") or "") or timedelta.max)
-
-    candidates = []
-    for t in mentions:
-        url = t.get("url") or ""
-        if not url:
-            continue
-        age = x_urls.age(url)
-        if age is None or age > timedelta(hours=max_age_hours):
-            skips["old"] += 1
-            continue
-        text = (t.get("text") or "").strip()
-        if not text:
-            continue
-        candidates.append(reply_pipeline.Candidate(url, text, f"DEBATE/{x_urls.author(url)}"))
+    # Freshest first: a debate is won in the first minutes. Mentions are
+    # replies by nature, so the source keeps nested replies.
+    declaration = reply_source.Declaration(max_age=timedelta(hours=max_age_hours),
+                                           order=reply_source.Order.NEWEST)
+    candidates = [dataclasses.replace(c, source=f"DEBATE/{x_urls.author(c.url)}")
+                  for c in reply_source.select(mentions, declaration, "DEBATE")]
+    if len(mentions) > len(candidates):
+        skips["unselected"] = len(mentions) - len(candidates)
 
     cycle = reply_pipeline.Cycle()
     posted = reply_pipeline.run(JOB, candidates, cycle, max_shipped=max_per_cycle)

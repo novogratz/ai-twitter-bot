@@ -21,6 +21,7 @@ from .reply_pipeline import Candidate
 class Order(Enum):
     SCRAPED = "scraped"
     FRESH_AND_RISING = "fresh_and_rising"
+    NEWEST = "newest"
 
 
 @dataclass(frozen=True)
@@ -60,11 +61,18 @@ def freshness_sort_key(tweet):
     return (bucket, -velocity, minutes)
 
 
+def _newest_first(tweet):
+    age = x_urls.age(tweet.get("url") or "")
+    return timedelta.max if age is None else age
+
+
 def select(tweets: list, declaration: Declaration, tag: str) -> list:
     """The Candidates among `tweets` that `declaration` answers, in its
     order, each logged under `tag`."""
     if declaration.order is Order.FRESH_AND_RISING:
         tweets = sorted(tweets, key=freshness_sort_key)
+    elif declaration.order is Order.NEWEST:
+        tweets = sorted(tweets, key=_newest_first)
     author = declaration.author.lower().lstrip("@")
     candidates = []
     for tweet in tweets:

@@ -118,22 +118,22 @@ def test_reply_jobs_never_borrow_each_others_privates():
 @pytest.fixture
 def direct(monkeypatch, llm, chokepoint, settings_override):
     """direct_reply with one VIP handle; `vip` and `search` are what the two
-    lanes scrape."""
-    from src.replies import direct_reply as dr
-    from src.x import scraper
+    lanes scrape, `queries` the search lane's queries."""
+    from src.replies import direct_reply as dr, reply_source
 
     lanes = {"vip": [], "search": [], "queries": []}
     settings_override(VIP_SCAN_HANDLES="Graphseo")
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
 
     def search(query, **k):
+        if query.startswith("from:"):
+            return list(lanes["vip"])
         lanes["queries"].append(query)
         if isinstance(lanes["search"], BaseException):
             raise lanes["search"]
         return list(lanes["search"])
 
     monkeypatch.setattr(dr, "scrape_x_search", search)
-    monkeypatch.setattr(dr, "is_on_niche", lambda text: "off-niche" not in text)
+    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
     return dr, lanes, llm, chokepoint
 
 
@@ -247,6 +247,8 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
     numbers = itertools.count()
 
     def fresh_posts(query, **k):
+        if query.startswith("from:"):
+            return []
         lanes["queries"].append(query)
         return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
@@ -463,7 +465,7 @@ def test_early_reply_targets_are_curator_driven():
 def profile_job(request, monkeypatch, llm, chokepoint):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
     from src.core import evolution_store
-    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
+    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw, reply_source
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
@@ -473,7 +475,7 @@ def profile_job(request, monkeypatch, llm, chokepoint):
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
-    monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
+    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
     return request.param, run, profiles, llm, chokepoint
 
 
@@ -489,13 +491,16 @@ def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
         post("someone", "post stale", minutes=max_minutes + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
+        # A repost shown on the profile: its URL names another account.
+        post("other", "post reposted", n=5),
         {"url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]
 
     run()
 
-    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread") == ["post fresh"]
+    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread",
+                       "post reposted") == ["post fresh"]
     assert chokepoint.sent == [ok["url"]]
     tag = {"early_bird": "EARLYBIRD", "mega_watch": "MEGA"}[name]
     assert [r.source for r in logged()] == [f"{tag}/someone"]
@@ -514,6 +519,27 @@ def test_profile_jobs_bound_their_replies(profile_job):
     assert len(chokepoint.sent) == per_account
     if name == "early_bird":
         assert len({x_urls.author(u) for u in chokepoint.sent}) == 3
+
+
+@pytest.mark.parametrize("profile_job", ["early_bird"], indirect=True)
+def test_early_bird_answers_seven_accounts_at_most(profile_job, monkeypatch):
+    """#243: the cap of 15 Replies per cycle never bound anything. Early
+    bird picks four always-reply accounts and three from its scan pool, one
+    Reply each: seven at most."""
+    from src.replies import direct_reply as dr, early_bird_bot as eb
+
+    name, run, profiles, llm, chokepoint = profile_job
+    always, tracked = [f"always{i}" for i in range(6)], [f"tracked{i}" for i in range(6)]
+    monkeypatch.setattr(dr, "always_reply_accounts", lambda: tuple(always))
+    monkeypatch.setattr(eb, "_scan_pool", lambda: list(tracked))
+    for handle in always + tracked:
+        profiles[handle] = [post(handle, f"post {handle} {i}", n=i) for i in range(3)]
+
+    run()
+
+    authors = [x_urls.author(u) for u in chokepoint.sent]
+    assert len(authors) == len(set(authors)) == 7
+    assert len([a for a in authors if a.startswith("always")]) == 4
 
 
 def test_profile_jobs_stop_at_the_rate_limit(profile_job):
@@ -564,6 +590,20 @@ def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override
     assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(first, True), (second, True)], \
         "freshest first, DEBATE_MAX_PER_CYCLE Replies"
     assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
+
+
+def test_debate_answers_the_newest_mention_first_whatever_its_likes(debate, settings_override):
+    """#243: the Reply source sorts the mentions, by age only; mentions are
+    replies by nature and stay candidates."""
+    db, mentions, llm, chokepoint = debate
+    settings_override(DEBATE_MAX_PER_CYCLE=1, DEBATE_MAX_AGE_HOURS=24.0)
+    newer = fresh("someone", minutes=5, n=1)
+    mentions += [{"url": fresh("liked", minutes=30, n=2), "text": "liked mention", "likes": 5_000},
+                 {"url": newer, "text": "@TheAIShrink newer mention", "is_reply": True}]
+
+    db.run_debate_cycle()
+
+    assert chokepoint.sent == [newer]
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_override):
