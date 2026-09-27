@@ -344,7 +344,8 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [
         {"url": fresh("someone", n=i), "text": "post"} for i in range(3)])
-    monkeypatch.setattr(dr, "is_on_niche", lambda text: True)
+    from src.replies import reply_source
+    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: True)
     from src.replies import reply_generator
     from src.x import twitter_client
     monkeypatch.setattr(reply_generator, "run_llm", lambda *a, **k: pytest.fail("model called"))

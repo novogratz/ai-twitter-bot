@@ -1,16 +1,15 @@
 """Direct reply: the VIP scan and the search lane. Its ReplyCall also serves
-the feed sweep, early bird and mega watch. The niche filter and candidate
-order come from the Reply source; early bird and mega watch import them from
-here until they take their candidates from it too."""
+the feed sweep, early bird and mega watch. Both lanes take their candidates
+from the Reply source."""
 import random
 from datetime import timedelta
-from ..x import x_urls
 from ..core import account, settings
 from ..core.llm_client import Surface
 from ..core.logger import log
-from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
-from . import reply_pipeline
+from ..x.scraper import scrape_x_search
+from . import reply_pipeline, reply_source
 from .reply_generator import LanguageRule, ReplyCall
+# Unused here: a re-export #244 removes.
 from .reply_source import freshness_sort_key, is_on_niche
 
 # The VIP scan and the search lane set aside the same posts.
@@ -75,11 +74,6 @@ def _vip_job(handle: str) -> reply_pipeline.Job:
     return reply_pipeline.Job(JOB_NAME, "VIP", reply_call=lambda _author: _vip_call(handle))
 
 
-def _fresh_enough(url: str, limit: timedelta) -> bool:
-    age = x_urls.age(url)
-    return age is not None and age <= limit
-
-
 def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
@@ -91,10 +85,8 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     btc_blitz converges full coverage, this lane keeps pickup fast.
 
     `remaining` bounds the Replies shipped; `cycle` is shared with the
-    search lane.
+    search lane. It answers its accounts' replies too (#241).
     """
-    from ..x.scraper import scrape_x_search
-
     vip_scan_handles = [h.strip().lstrip("@") for h in settings.get("VIP_SCAN_HANDLES").split(",")
                         if h.strip()]
     posted = 0
@@ -107,8 +99,8 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
-        candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
-                      if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))]
+        candidates = reply_source.select(tweets, reply_source.Declaration(max_age=timedelta(hours=48)),
+                                         f"VIP/{handle}")
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)
         log.info(f"[VIP] @{handle} done.")
@@ -133,11 +125,10 @@ def _search_candidates(tweets: list, query: str) -> list:
     skipped, as in the feed sweep: the model would see it without its root
     post (issue #241, lost in 3857e1ba). The query joins the log tag so
     per-query conversion is measurable (2026-06-08)."""
-    limit = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
-    return [reply_pipeline.Candidate(t["url"], t.get("text") or "", f"SEARCH-HOT/{query[:60]}")
-            for t in sorted(tweets, key=freshness_sort_key)
-            if t.get("url") and not x_urls.is_reply_like_tweet(t)
-            and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
+    declaration = reply_source.Declaration(
+        max_age=timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES")),
+        root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING)
+    return reply_source.select(tweets, declaration, f"SEARCH-HOT/{query[:60]}")
 
 
 # Rotation cursor for the per-cycle query slice. Process-lifetime state:

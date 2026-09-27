@@ -125,15 +125,13 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     import src.replies.direct_reply as dr
     from src.replies import reply_pipeline
 
-    # ⚠️ The VIP scan imports scrape_x_search FUNCTION-LOCALLY from scraper:
-    # patch THERE, not on direct_reply. (First version of this test patched
-    # dr.* — the real Safari fired and posted live replies to
-    # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
-    # mistake fail loudly instead.)
-    from src.x import scraper
+    # ⚠️ Both lanes look scrape_x_search up on direct_reply (#243): patch
+    # it there. (A version of this test patched the wrong module — the real
+    # Safari fired and posted live replies to @TheBTCTherapist mid-test.
+    # conftest's _no_safari wall now makes that mistake fail loudly instead.)
     settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
-    monkeypatch.setattr(scraper, "scrape_x_search",
+    monkeypatch.setattr(dr, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
@@ -212,14 +210,13 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     import dataclasses
     from src.core import account
     from src.replies import direct_reply as dr, reply_pipeline
-    from src.x import scraper
 
     loaded = account.current()
     bare = dataclasses.replace(loaded, relations=dataclasses.replace(loaded.relations, default=None))
     monkeypatch.setattr(account, "current", lambda: bare)
     settings_override(VIP_SCAN_HANDLES="vision_ia")
     scraped = []
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: scraped.append(a) or [])
+    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [])
 
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0

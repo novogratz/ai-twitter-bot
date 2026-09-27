@@ -75,6 +75,18 @@ def test_the_order_is_the_scrape_order_or_fresh_and_rising_first():
     assert urls(ranked) == [hot["url"], cold["url"], old["url"]]
 
 
+def test_the_newest_order_ignores_likes():
+    """Debate answers its freshest mentions first (#243): a liked mention
+    never jumps ahead of a newer one, as it would fresh and rising first."""
+    liked = {"url": fresh("a", minutes=40, n=1), "text": "liked", "likes": 5_000}
+    newer = {"url": fresh("b", minutes=5, n=2), "text": "newer"}
+    middle = {"url": fresh("c", minutes=20, n=3), "text": "middle", "likes": 1}
+
+    ranked = reply_source.select([liked, newer, middle], Declaration(max_age=HOUR, order=Order.NEWEST), "TAG")
+
+    assert urls(ranked) == [newer["url"], middle["url"], liked["url"]]
+
+
 def test_reply_candidates_sorted_fresh_and_rising_first():
     """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
     must beat a 60-hour-old tweet; unknown-age URLs go last; within the
