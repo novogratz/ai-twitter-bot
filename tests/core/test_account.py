@@ -697,13 +697,15 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 
 # --- Relations: the per-handle Reply instructions (#203) -------------------------
 
-# sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
-# src/replies/direct_reply.py before #203 moved them to relations/. An
-# Operator edit of these files updates the hash here.
-OLD_RELATION_PROMPTS = {
-    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
-    "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
-    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
+# sha256 of the Relations' prompts: GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and
+# BUDDY_REPLY_PROMPT of src/replies/direct_reply.py when #203 moved them to
+# relations/, as the Operator edited them since. An Operator edit of these
+# files updates the hash here: all three on 2026-09-27 (AI niche for
+# graphseo, no forced hook, no invented figures).
+RELATION_PROMPTS = {
+    "graphseo": (2118, "234dcd533ab81122c6416e809736c04d33e993c75184341779a7140805950782"),
+    "bestie": (1135, "8126ff3e231cddd41cf7d25d2817806280d2d4be433def656ff79c844e8663cb"),
+    "buddy": (670, "930b909815c16793b26454f43a2d00490b1e5e36664f4240f943f0702e17f3e8"),
 }
 
 def _digest(text):
@@ -715,7 +717,7 @@ def test_theaishrink_relations_hold_the_old_prompts():
     relations = account.load("theaishrink").relations
     graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
     assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
-            "buddy": _digest(relations.default)} == OLD_RELATION_PROMPTS
+            "buddy": _digest(relations.default)} == RELATION_PROMPTS
     assert (graphseo.handle, graphseo.provider) == ("Graphseo", "claude")
     assert (bestie.handle, bestie.provider) == ("TheBTCTherapist", None)
     assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
@@ -833,7 +835,7 @@ def test_a_link_inside_the_folder_is_followed(accounts, fresh, tmp_path):
     (folder / "relations" / "buddy.md").rename(folder / "buddy_real.md")
     (folder / "relations" / "buddy.md").symlink_to(folder / "buddy_real.md")
     fresh()
-    assert _digest(account.current().relations.default) == OLD_RELATION_PROMPTS["buddy"]
+    assert _digest(account.current().relations.default) == RELATION_PROMPTS["buddy"]
 
 
 @pytest.mark.parametrize("name", account.VOICE_FILES)

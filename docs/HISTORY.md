@@ -8,6 +8,27 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-27 — the Operator's prompt text loses its stale lines:** the
+> Voice, the hard rules and the respect list close or open every prompt,
+> so a stale line in them reaches every Reply. At the Operator's request:
+> the Voice files lose their "Publishing policy" block (hours, ceiling,
+> reach target), which helped no Reply and put the ceiling at seven in
+> `voice_en.md` against eight in the policy and `voice_fr.md`. Hard rule 4
+> and the respect list block no longer name the "therapist-snark voice",
+> quotes, hot takes, breakouts or spicy takes, all gone: they speak of the
+> account's own posts and of Replies, and the 32 Respected accounts stay.
+> The block now also asks not to name one in a Reply to someone else's
+> post, stricter than the text check at the write, which lets a neutral
+> sentence naming one pass. The Graphseo Relation no longer bridges to
+> "AI/Space/Investment" nor imposes "THE FORMULA — non-negotiable"; its
+> examples, full of unsourced percentages, are gone, and it forbids
+> invented figures; its banter mandate of 2026-06-10 stays. The default
+> VIP prompt (buddy) no longer asks for "a genuinely useful number", and
+> no Relation asks for a hook in the first six words. The bestie Relation
+> keeps its Bitcoin-versus-AI rivalry. The Voice keeps one line of the
+> policy block: "Skip a weak story; never fill a quota with filler". The
+> respect list labelled @graphseo "Bourse FR"; he is an SEO expert.
+
 > **2026-09-27 — no prompt reads `personality.json` any more (Operator):**
 > since June, nothing fed `personality.json` but the interaction count
 > `engagement_log` bumps after every Reply, yet the search, feed-sweep,

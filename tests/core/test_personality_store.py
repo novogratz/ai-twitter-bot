@@ -27,3 +27,13 @@ def test_english_text_follows_simplified_technical_english():
     assert "The Voice still sets the tone" in block
     # STE forbids what voice_en.md asks for ("Use contractions"): form is STE's.
     assert "no contractions" in block and "this rule wins" in block
+
+
+def test_hard_rule_4_names_no_removed_surface():
+    """Operator 2026-09-27: hard rule 4 still named the snark voice and
+    quotes, both gone; quotes stay at zero."""
+    from src.core import personality_store as ps
+    low = ps._BASE_HARD_RULES.lower()
+    assert [w for w in ("snark voice", "or quote", "quote-tweet") if w in low] == []
+    assert "overrides the voice's wit and criticism" in low
+
