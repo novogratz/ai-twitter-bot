@@ -122,6 +122,18 @@ def test_the_graphseo_relation_stays_on_ai_without_a_formula():
     assert "ai" in low.split() and "do not invent" in low
 
 
+def test_the_graphseo_relation_keeps_the_operators_banter():
+    """Operator 2026-06-10: "go back on commenting Julien, it was fun". The
+    2026-09-27 rewrite keeps his fun dial word for word, with no line around
+    it pulling the Reply back to a seminar."""
+    from src.core import account
+
+    prompt = account.current().relations.get("Graphseo").prompt
+    assert "this is BANTER between friends, not a seminar. Tease him, run the bit" in prompt
+    assert "make him laugh FIRST\nand think second" in prompt
+    assert "If it makes him laugh\nor want to reply, you've won." in prompt
+
+
 def test_no_relation_prompt_forces_a_hook():
     """Operator 2026-09-27: "First 6 words must hook" is the forced formula
     the Voice rules out, and "never the same angle twice in a row" asks the

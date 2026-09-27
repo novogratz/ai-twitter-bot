@@ -703,7 +703,7 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 # files updates the hash here: all three on 2026-09-27 (AI niche for
 # graphseo, no forced hook, no invented figures).
 RELATION_PROMPTS = {
-    "graphseo": (1930, "4c61c2a0ffc153d1db3bf21efd068ad3f8ca3cfb63bbe5347e3fdf9f74de3ca4"),
+    "graphseo": (2118, "234dcd533ab81122c6416e809736c04d33e993c75184341779a7140805950782"),
     "bestie": (1135, "8126ff3e231cddd41cf7d25d2817806280d2d4be433def656ff79c844e8663cb"),
     "buddy": (670, "930b909815c16793b26454f43a2d00490b1e5e36664f4240f943f0702e17f3e8"),
 }
