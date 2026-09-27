@@ -1,6 +1,7 @@
 """src/core/llm_client: the fallback ladder, output reading and request routing."""
 import json
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import pytest
 
@@ -677,3 +678,65 @@ def test_core_imports_nothing_from_the_editorial_package():
             else:
                 continue
             assert not any("editorial" in name.split(".") for name in names), path.name
+
+
+# --- The neutral directory the CLIs run from -----------------------------------
+
+def test_a_cli_runs_from_the_neutral_directory_even_after_it_was_purged(monkeypatch, settings_override, tmp_path):
+    """Issue #249: macOS purges old temp folders under a running bot; the
+    adapter creates the directory again before starting the CLI."""
+    from types import SimpleNamespace
+    from src.core import llm_client as llm
+
+    neutral = tmp_path / "gone"
+    started = []
+
+    def popen(cmd, **kwargs):
+        started.append((cmd[0], kwargs["cwd"], Path(kwargs["cwd"]).is_dir()))
+        return SimpleNamespace(pid=0, returncode=0, communicate=lambda timeout=None: (TEXT, ""))
+
+    monkeypatch.setattr(llm, "NEUTRAL_CWD", neutral)
+    monkeypatch.setattr(llm.subprocess, "Popen", popen)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    settings_override(LLM_FALLBACK_CLI="")
+    result = ask(provider="gemini", output_json=False)
+    assert started == [("gemini", str(neutral), True)]
+    assert (result.status, result.stdout) == (LLMStatus.ANSWERED, TEXT)
+
+
+def test_a_cli_without_its_neutral_directory_runs_nothing(monkeypatch, settings_override, tmp_path,
+                                                          no_process_started):
+    from src.core import llm_client as llm
+
+    blocked = tmp_path / "a-file"
+    blocked.write_text("")
+    monkeypatch.setattr(llm, "NEUTRAL_CWD", blocked / "neutral")
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    settings_override(LLM_FALLBACK_CLI="")
+    result = ask(provider="claude")
+    assert (result.status, result.provider, result.stdout) == (LLMStatus.FAILED, "claude", "")
+    assert "no neutral directory for claude" in result.stderr
+
+
+def test_ollama_stays_an_http_request_that_starts_no_process(monkeypatch, settings_override, no_process_started):
+    """Issue #249 moves the CLIs to a neutral directory; the Ollama path
+    keeps its one HTTP request and starts nothing."""
+    import urllib.request
+
+    ollama = OllamaServer()
+    monkeypatch.setattr(urllib.request, "urlopen", ollama)
+    settings_override(OLLAMA_MODEL="reply-model", LLM_FALLBACK_CLI="")
+    result = ask(provider="ollama")
+    assert (result.status, result.provider, result.stdout) == (LLMStatus.ANSWERED, "ollama", TEXT)
+    [(request, _)] = ollama.requests
+    assert (request["model"], request["prompt"]) == ("reply-model", "/no_think\n\nprompt")
+
+
+@pytest.fixture
+def no_process_started(monkeypatch):
+    from src.core import llm_client as llm
+
+    def started(*a, **k):
+        raise AssertionError("a model call started a process")
+
+    monkeypatch.setattr(llm.subprocess, "Popen", started)

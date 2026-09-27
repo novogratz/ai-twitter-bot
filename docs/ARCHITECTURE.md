@@ -242,9 +242,9 @@ and the caller hands them to `run_llm`. No module under `src/replies/` or
 
 | Surface | Callers | Model setting | Provider | CLI options |
 |---|---|---|---|---|
-| `REPLY` | search, feed sweep, early bird, mega watch | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
-| `PRIORITY_REPLY` | the same, for a `vip_reply` author | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
-| `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool, `cwd=/tmp` |
+| `REPLY` | search, feed sweep, early bird, mega watch | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
+| `PRIORITY_REPLY` | the same, for a `vip_reply` author | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
+| `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool |
 | `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | `AI_CLI`, or the Relation's CLI when installed | no JSON envelope, 60 s |
 | `REPLY_ON_AI_CLI` | debate, replyback | `REPLY_MODEL` | `AI_CLI` | defaults |
 | `PRIORITY_REPLY_ON_AI_CLI` | VIP scan, a Relation's or the default prompt | `PRIORITY_REPLY_MODEL` | `AI_CLI` | defaults |
@@ -255,6 +255,16 @@ are provisional: whether debate, replyback and the VIP scan follow
 `REPLY_LLM_PROVIDER` is the Operator's decision (#248).
 `tests/test_call_surfaces.py` pins each job's model setting, provider and
 CLI options.
+
+No caller picks the directory a model runs from. The CLI adapter starts
+every provider CLI, the fallback included, in `llm_client.NEUTRAL_CWD`, an
+empty `ai-twitter-bot-llm` folder in the per-user temp folder
+(`/var/folders/.../T` on macOS), created again before each call: no
+`CLAUDE.md`, `AGENTS.md`, `GEMINI.md` or git repository sits above it, so
+no CLI loads this repository's instructions or git context. Codex runs
+there with `--skip-git-repo-check`, without which it refuses a folder
+outside a git repository. The Ollama path is an HTTP request and starts no
+process.
 
 Drafts and reviews go through `run_llm` on the `ORIGINAL` surface with a
 `CallProfile`, `editorial_schemas.draft_profile()` or `review_profile()`. The profile, not

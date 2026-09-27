@@ -32,6 +32,22 @@ their order in the file is not strictly chronological.
 > failed cycle. At bedtime the tab close is still refused and the tab
 > stays open until the next Safari restart, pending the Operator's answer.
 
+> **2026-09-25 — every CLI runs from a neutral directory (issue #249):**
+> the Replies of search, feed sweep, early bird and mega watch, and the
+> reply search, ran their CLI from `/tmp`: from the project, the Claude CLI
+> had loaded its `CLAUDE.md` and git context, and parallel searches
+> answered in prose instead of JSON (7 hallucinations on 2026-04-27). The
+> Relation @Graphseo, debate, replyback, the VIP scan and the Originals
+> passed no `cwd` and ran from the repository, `CLAUDE.md` and `AGENTS.md`
+> included. The CLI adapter of `llm_client` now starts every provider CLI,
+> the fallback included, in `NEUTRAL_CWD`, a folder of the per-user temp
+> folder with no instruction file or git repository above it, rather than
+> a `/tmp` anyone can write to. Callers pass no `cwd` any more. Codex
+> gains `--skip-git-repo-check`, without which it refuses to run outside
+> a git repository or a folder its configuration trusts: until then a
+> Reply that reached codex from `/tmp` could fail on it. The @Graphseo Reply no longer sees this repository's
+> instructions. Ollama is unchanged.
+
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply
 > whose tweet never opened still pressed `r`, pasted and submitted into

@@ -270,7 +270,7 @@ def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
     route = resolve(Surface.ORIGINAL)
     options = route.options
     result = run_llm(prompt, route.model, label=label, output_json=options.output_json,
-                     allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
+                     allowed_tools=options.allowed_tools, timeout=options.timeout,
                      force_provider=route.provider, profile=profile)
     if result.status is not LLMStatus.ANSWERED:
         # Failed or exhausted alike: no Draft, or no approval.

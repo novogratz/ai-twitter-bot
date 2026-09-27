@@ -16,10 +16,9 @@ EVIDENCE = ("Chat templates convert conversations into the format expected by th
             "A mismatched template quietly degrades the answers of an instruction tuned model.",
             "The tokenizer applies the chat template before generation starts in the pipeline.")
 DEFAULT_TIMEOUT = 120
-# The CLI options a call hands its adapter: output_json, allowed_tools,
-# timeout and cwd.
-DEFAULTS = (True, None, DEFAULT_TIMEOUT, None)
-NEUTRAL_CWD = (True, None, DEFAULT_TIMEOUT, "/tmp")
+# The CLI options a call hands its adapter: output_json, allowed_tools and
+# timeout. The CLI adapter picks the cwd itself (#249).
+DEFAULTS = (True, None, DEFAULT_TIMEOUT)
 
 
 def _reply(job, author="someone"):
@@ -101,19 +100,19 @@ def _uninstalled(monkeypatch, cli):
 
 # job: (run it, model setting, provider called, CLI options)
 ROUTES = {
-    "search": (lambda mp: _search(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "search, VIP author": (lambda mp: _search(vip=True), "PRIORITY_REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
+    "search": (lambda mp: _search(), "REPLY_MODEL", "gemini", DEFAULTS),
+    "search, VIP author": (lambda mp: _search(vip=True), "PRIORITY_REPLY_MODEL", "gemini", DEFAULTS),
+    "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", DEFAULTS),
+    "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", DEFAULTS),
+    "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", DEFAULTS),
     "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", DEFAULTS),
     "Relation, CLI installed": (lambda mp: _vip_scan("Graphseo"), "PRIORITY_REPLY_MODEL", "claude",
-                                (False, None, 60, None)),
+                                (False, None, 60)),
     "Relation, CLI missing": (lambda mp: _uninstalled(mp, "claude") or _vip_scan("Graphseo"),
-                              "PRIORITY_REPLY_MODEL", "codex", (False, None, 60, None)),
+                              "PRIORITY_REPLY_MODEL", "codex", (False, None, 60)),
     "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", DEFAULTS),
     "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", DEFAULTS),
-    "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT, "/tmp")),
+    "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT)),
     "Draft": (lambda mp: _draft(), "NEWS_MODEL", "claude", DEFAULTS),
     "review": (_review, "NEWS_MODEL", "claude", DEFAULTS),
 }
@@ -131,7 +130,7 @@ def test_each_job_runs_its_model_setting_on_its_provider(providers, job):
 
     [(called, request)] = providers.calls
     assert (called, request.model) == (provider, model.lower())
-    assert (request.output_json, request.allowed_tools, request.timeout, request.cwd) == options
+    assert (request.output_json, request.allowed_tools, request.timeout) == options
 
 
 def test_the_jobs_read_no_model_or_provider_setting():
@@ -142,4 +141,65 @@ def test_the_jobs_read_no_model_or_provider_setting():
     found = [f"{path.relative_to(ROOT)}:{number}"
              for package in ("replies", "editorial") for path in sorted((ROOT / "src" / package).glob("*.py"))
              for number, line in enumerate(path.read_text().splitlines(), 1) if setting.search(line)]
+    assert found == []
+
+
+class _FailingCli:
+    """Stands in for subprocess.Popen: records each CLI's name and cwd,
+    then fails, so the ladder reaches its fallback."""
+
+    def __init__(self):
+        self.started = []
+
+    def __call__(self, cmd, **kwargs):
+        from types import SimpleNamespace
+        self.started.append((cmd[0], kwargs.get("cwd"), cmd))
+        return SimpleNamespace(pid=0, returncode=1, communicate=lambda timeout=None: ("", "down"))
+
+
+def _reached_instructions(folder: Path) -> list[str]:
+    """The instruction files a CLI started in `folder` loads, walking up."""
+    names = ("CLAUDE.md", "CLAUDE.local.md", "AGENTS.md", "GEMINI.md", ".git")
+    return [str(parent / name) for parent in (folder, *folder.parents) for name in names
+            if (parent / name).exists()]
+
+
+# job: (run it, primary CLI); each falls back on codex.
+NEUTRAL_RUNS = {
+    "Relation": (lambda: _vip_scan("Graphseo"), "claude"),
+    "debate": (_debate, "gemini"),
+    "Draft": (_draft, "claude"),
+}
+
+
+@pytest.mark.parametrize("job", NEUTRAL_RUNS)
+def test_every_cli_runs_from_a_neutral_directory_fallback_included(monkeypatch, settings_override, job):
+    """Issue #249: run from the project, the Claude CLI loaded its CLAUDE.md
+    and git context. The Relation @Graphseo, debate and the Originals had no
+    neutral cwd; now the CLI adapter picks it for every call."""
+    from src.core import llm_client as llm
+
+    run, primary = NEUTRAL_RUNS[job]
+    popen = _FailingCli()
+    monkeypatch.setattr(llm.subprocess, "Popen", popen)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    settings_override(AI_CLI="gemini", PROFILE_LLM_PROVIDER="claude", LLM_FALLBACK_CLI="codex",
+                      LLM_FALLBACK_MODEL="", LLM_DISABLE_FALLBACK=False, CONTENT_LANG_PRIMARY="en")
+
+    run()
+
+    assert [(name, cwd) for name, cwd, _ in popen.started] == [(primary, str(llm.NEUTRAL_CWD)),
+                                                              ("codex", str(llm.NEUTRAL_CWD))]
+    neutral = llm.NEUTRAL_CWD.resolve()
+    assert neutral.is_dir() and not neutral.is_relative_to(ROOT.resolve())
+    assert _reached_instructions(neutral) == []
+    # Outside a git repository, codex exec refuses to run without this flag.
+    assert "--skip-git-repo-check" in popen.started[1][2]
+
+
+def test_no_job_hands_a_cwd_to_the_model_call():
+    """The CLI adapter alone picks the directory a provider runs from."""
+    found = [f"{path.relative_to(ROOT)}:{number}"
+             for package in ("replies", "editorial") for path in sorted((ROOT / "src" / package).glob("*.py"))
+             for number, line in enumerate(path.read_text().splitlines(), 1) if re.search(r"\bcwd\b", line)]
     assert found == []
