@@ -14,6 +14,7 @@ from src.core import settings
 settings.load()
 
 from src.core import account, config, health, state_store
+from src.core.state_errors import StateUnreadable
 from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
 from src.editorial.editorial_bot import open_startup_window, run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
@@ -106,6 +107,18 @@ def build_scheduler(*, post_only=False, reply_only=False):
     return scheduler
 
 
+def _require_operator_data_migrated() -> None:
+    """Fail fast while issue #206's guarded follow state is missing.
+
+    Without this preflight, the bot starts and the first follow job raises
+    StateUnreadable inside the scheduler. That looks like a runtime crash,
+    but it is a deploy-time migration problem.
+    """
+    from src.guards import follow_policy
+
+    follow_policy.discovered()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Sourced editorial posts and uncapped daytime replies")
     mode = parser.add_mutually_exclusive_group()
@@ -120,6 +133,11 @@ def main():
         state_store.require_migrated()
     except state_store.Unmigrated as exc:
         # Read as empty, a state file left behind would reset today's ceiling.
+        log.error(f"[STATE] Refusing to start: {exc}.")
+        raise SystemExit(f"Refusing to start: {exc}.")
+    try:
+        _require_operator_data_migrated()
+    except StateUnreadable as exc:
         log.error(f"[STATE] Refusing to start: {exc}.")
         raise SystemExit(f"Refusing to start: {exc}.")
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)

@@ -254,6 +254,22 @@ def test_the_start_goes_on_once_migrated(script, checkout, start, capsys):
         start()
 
 
+@pytest.mark.parametrize("flags", [(), ("--dry-run",), ("--reply-only",)])
+def test_the_start_refuses_before_jobs_when_operator_data_is_not_migrated(
+        script, checkout, start, flags, capsys):
+    script.migrate()
+    target = checkout[1]
+    (target / "whitelist_discovered.json").unlink()
+
+    with pytest.raises(SystemExit) as exit_:
+        start(*flags)
+
+    message = str(exit_.value.code)
+    assert message.startswith("Refusing to start: whitelist_discovered.json is missing")
+    assert "bin/migrate_operator_data.py" in message
+    assert capsys.readouterr().out == ""
+
+
 def test_another_account_does_not_start_beside_the_unmigrated_root(checkout, other_account,
                                                                    start):
     project, target = checkout
