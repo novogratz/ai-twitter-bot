@@ -40,13 +40,19 @@ their order in the file is not strictly chronological.
 > Relation @Graphseo, debate, replyback, the VIP scan and the Originals
 > passed no `cwd` and ran from the repository, `CLAUDE.md` and `AGENTS.md`
 > included. The CLI adapter of `llm_client` now starts every provider CLI,
-> the fallback included, in `NEUTRAL_CWD`, a folder of the per-user temp
-> folder with no instruction file or git repository above it, rather than
-> a `/tmp` anyone can write to. Callers pass no `cwd` any more. Codex
-> gains `--skip-git-repo-check`, without which it refuses to run outside
-> a git repository or a folder its configuration trusts: until then a
-> Reply that reached codex from `/tmp` could fail on it. The @Graphseo Reply no longer sees this repository's
-> instructions. Ollama is unchanged.
+> the fallback included, in `NEUTRAL_CWD`, a folder of macOS's per-user
+> temp folder, even when `TMPDIR` points at `/tmp`, with no instruction
+> file or git repository above it. A folder there that is a symlink, not
+> the bot user's, or open to others fails the call and starts nothing.
+> Callers pass no `cwd` any more. Codex gains `--skip-git-repo-check`,
+> without which it refuses to run outside a git repository or a folder
+> its configuration trusts: until then a Reply that reached codex from
+> `/tmp` could fail on it. Opencode, which takes no `--model`, read its
+> model from the repository's `opencode.json`; from the neutral folder it
+> would read only the global config, another model on another server, so
+> it gets `OPENCODE_CONFIG` pointing at the repository's file. The
+> @Graphseo Reply no longer sees this repository's instructions. Ollama
+> is unchanged.
 
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply

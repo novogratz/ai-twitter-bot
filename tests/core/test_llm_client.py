@@ -1,5 +1,6 @@
 """src/core/llm_client: the fallback ladder, output reading and request routing."""
 import json
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -716,6 +717,90 @@ def test_a_cli_without_its_neutral_directory_runs_nothing(monkeypatch, settings_
     result = ask(provider="claude")
     assert (result.status, result.provider, result.stdout) == (LLMStatus.FAILED, "claude", "")
     assert "no neutral directory for claude" in result.stderr
+
+
+def _foreign_owner(monkeypatch, neutral):
+    from src.core import llm_client as llm
+    neutral.mkdir(mode=0o700)
+    owner = neutral.stat().st_uid
+    monkeypatch.setattr(llm.os, "getuid", lambda: owner + 1)
+
+
+def _open_mode(monkeypatch, neutral):
+    neutral.mkdir()
+    neutral.chmod(0o755)
+
+
+def _symlink(monkeypatch, neutral):
+    target = neutral.parent / "elsewhere"
+    target.mkdir(mode=0o700)
+    neutral.symlink_to(target)
+
+
+@pytest.mark.parametrize("prepare, reason", [
+    (_foreign_owner, "belongs to uid"),
+    (_open_mode, "has mode 755, not 700"),
+    (_symlink, "is not a directory"),
+])
+def test_a_neutral_directory_the_bot_user_does_not_own_alone_runs_nothing(
+        monkeypatch, settings_override, tmp_path, no_process_started, prepare, reason):
+    """Issue #249: without TMPDIR the temp folder is the shared /tmp, where
+    another user can have made the folder first."""
+    from src.core import llm_client as llm
+
+    neutral = tmp_path / "neutral"
+    prepare(monkeypatch, neutral)
+    monkeypatch.setattr(llm, "NEUTRAL_CWD", neutral)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    settings_override(LLM_FALLBACK_CLI="")
+    result = ask(provider="claude")
+    assert (result.status, result.provider, result.stdout) == (LLMStatus.FAILED, "claude", "")
+    assert "no neutral directory for claude" in result.stderr and reason in result.stderr
+
+
+@pytest.mark.skipif(sys.platform != "darwin", reason="macOS per-user temp folder")
+def test_the_neutral_directory_ignores_a_tmpdir_on_the_shared_tmp(monkeypatch):
+    import os
+    import tempfile
+    from src.core import llm_client as llm
+
+    monkeypatch.setenv("TMPDIR", "/tmp")
+    monkeypatch.setattr(tempfile, "tempdir", None)
+    assert Path(llm._user_temp_dir()).resolve().stat().st_uid == os.getuid()
+    assert not Path(llm._user_temp_dir()).resolve().is_relative_to(Path("/tmp").resolve())
+
+
+@pytest.mark.parametrize("provider", ["opencode", "claude", "codex", "gemini"])
+def test_opencode_alone_reads_the_repository_config_from_the_neutral_directory(
+        monkeypatch, settings_override, tmp_path, provider):
+    """Issue #249: away from the repository, opencode read only the user's
+    global config, another model on another server. OPENCODE_CONFIG keeps
+    the repository's opencode.json; the other CLIs inherit the environment."""
+    from types import SimpleNamespace
+    from src.core import llm_client as llm
+
+    started = []
+
+    def popen(cmd, **kwargs):
+        started.append((kwargs["cwd"], kwargs["env"]))
+        return SimpleNamespace(pid=0, returncode=0, communicate=lambda timeout=None: (TEXT, ""))
+
+    monkeypatch.setattr(llm, "NEUTRAL_CWD", tmp_path / "neutral")
+    monkeypatch.setattr(llm.subprocess, "Popen", popen)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    monkeypatch.setenv("PATH", "/usr/local/bin:/usr/bin")
+    settings_override(LLM_FALLBACK_CLI="")
+    ask(provider=provider, output_json=False)
+
+    [(cwd, env)] = started
+    assert cwd == str(tmp_path / "neutral")
+    if provider != "opencode":
+        assert env is None
+        return
+    repository = Path(__file__).resolve().parents[2]
+    assert env["OPENCODE_CONFIG"] == str(repository / "opencode.json")
+    assert json.loads((repository / "opencode.json").read_text())["model"].startswith("ollama/")
+    assert env["PATH"] == "/usr/local/bin:/usr/bin"
 
 
 def test_ollama_stays_an_http_request_that_starts_no_process(monkeypatch, settings_override, no_process_started):

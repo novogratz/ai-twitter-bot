@@ -158,8 +158,10 @@ class _FailingCli:
 
 
 def _reached_instructions(folder: Path) -> list[str]:
-    """The instruction files a CLI started in `folder` loads, walking up."""
-    names = ("CLAUDE.md", "CLAUDE.local.md", "AGENTS.md", "GEMINI.md", ".git")
+    """The instruction and config files a CLI started in `folder` loads,
+    walking up."""
+    names = ("CLAUDE.md", "CLAUDE.local.md", "AGENTS.md", "GEMINI.md", ".git",
+             ".claude", ".codex", ".gemini", ".opencode", "opencode.json", "opencode.jsonc")
     return [str(parent / name) for parent in (folder, *folder.parents) for name in names
             if (parent / name).exists()]
 

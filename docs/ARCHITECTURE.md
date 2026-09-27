@@ -258,13 +258,18 @@ CLI options.
 
 No caller picks the directory a model runs from. The CLI adapter starts
 every provider CLI, the fallback included, in `llm_client.NEUTRAL_CWD`, an
-empty `ai-twitter-bot-llm` folder in the per-user temp folder
-(`/var/folders/.../T` on macOS), created again before each call: no
-`CLAUDE.md`, `AGENTS.md`, `GEMINI.md` or git repository sits above it, so
-no CLI loads this repository's instructions or git context. Codex runs
-there with `--skip-git-repo-check`, without which it refuses a folder
-outside a git repository. The Ollama path is an HTTP request and starts no
-process.
+empty `ai-twitter-bot-llm-<uid>` folder in the per-user temp folder
+(`/var/folders/.../T` on macOS, even when `TMPDIR` says `/tmp`), created
+again before each call: no `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` or git
+repository sits above it, so no CLI loads this repository's instructions
+or git context. When that folder is a symlink, belongs to another user or
+has any group or other permission bit, the call fails and starts nothing.
+Codex runs there with `--skip-git-repo-check`, without which it refuses a
+folder outside a git repository. Opencode, which gets no `--model`, would
+read only the user's global config there: its process alone gets
+`OPENCODE_CONFIG` pointing at the repository's `opencode.json`, which
+opencode merges over the global one ([`docs/OPENCODE.md`](OPENCODE.md)).
+The Ollama path is an HTTP request and starts no process.
 
 Drafts and reviews go through `run_llm` on the `ORIGINAL` surface with a
 `CallProfile`, `editorial_schemas.draft_profile()` or `review_profile()`. The profile, not
