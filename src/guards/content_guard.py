@@ -19,9 +19,6 @@ from typing import Tuple
 from ..core import config, settings
 from ..core.state_errors import StateUnreadable
 
-# X composer limit for replies; Reply admission trims to it.
-REPLY_MAX_CHARS = 278
-
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
 # Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
@@ -519,10 +516,11 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             return (False, "rationed shape overused (\"me [verb]ing…\" already posted in window) — vary the opener")
 
     if kind == "reply":
-        # Hard X limit for replies — an over-limit draft gets cut by
-        # the composer mid-sentence, which reads as a botched AI paste.
-        if len(text) > REPLY_MAX_CHARS:
-            return (False, f"too long for a reply ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
+        # Operator 2026-09-27: the Replies were too long. The Reply
+        # admission trims to this on a sentence end before it gets here.
+        longest = settings.get("REPLY_MAX_CHARS")
+        if len(text) > longest:
+            return (False, f"too long for a reply ({len(text)} chars > {longest})")
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 

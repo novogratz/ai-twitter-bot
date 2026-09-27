@@ -200,6 +200,8 @@ _declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-ent
          floor=0, ceiling=3)
 _declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.", floor=48.0)
 _declare("REPLY_MIN_CHARS", int, 25, "Shortest Reply content_guard accepts.", floor=25)
+_declare("REPLY_MAX_CHARS", int, 160, "Longest Reply that ships: the Reply admission trims a longer one on a sentence end, "
+         "or refuses it.", floor=80, ceiling=160)
 _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")

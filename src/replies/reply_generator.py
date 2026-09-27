@@ -1,8 +1,9 @@
 """Reply generator: a parent post and a job's ReplyCall in, a typed Generation out.
 
 Every Reply prompt is assembled here, so none reaches the model without
-the Voice (`personality_store.render_voice`) before the template and
-`personality_store.hard_rules_block()` after it. The generator also picks the reply
+the Voice (`personality_store.render_voice`) before the template, and the
+one length rule (`LENGTH_RULE`) and `personality_store.hard_rules_block()`
+after it. The generator also picks the reply
 language (one decision point, `_language`) and reads the model's answer
 into reply text or a decline. The model stays behind `run_llm` (tests fake
 that name), which hands back the answer already read in the output mode of
@@ -15,7 +16,7 @@ from enum import Enum
 from typing import Literal
 
 from ..core import account, personality_store
-from ..core.humanizer import smart_trim, strip_agent_preamble
+from ..core.humanizer import strip_agent_preamble
 from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, resolve, run_llm
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
@@ -63,7 +64,6 @@ class ReplyCall:
     # after "I'd skip this one" shipped live (2026-06-07). 0: SKIP as a
     # prefix only, so "You can skip the hype..." ships.
     skip_window: int = 0
-    max_chars: int | None = None
     # A Relation's CLI, over the surface's provider: the caller's to force,
     # since llm_client knows no Account.
     provider: str | None = None
@@ -78,6 +78,12 @@ class ReplyCall:
 # rationale ("SKIP. The tweet is incomplete...") and an exact-match check
 # published the whole refusal as a live reply (2026-06-07).
 _SKIP_PREFIX = re.compile(r"^[\s\"'«]*skip", re.IGNORECASE)
+
+# Operator 2026-09-27: "the Replies are too long". The one length every
+# Reply prompt asks for; no template or Relation sets its own. The Reply
+# admission trims to REPLY_MAX_CHARS, a little above it.
+LENGTH_RULE = ("LENGTH: one or two short sentences. Aim for about 100 characters; "
+               "never more than 140.")
 
 _LANGUAGE_OVERRIDE = {
     "fr": "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords.",
@@ -119,8 +125,6 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         return Generation(Outcome.FAILED, language=language)
     if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
         return Generation(Outcome.DECLINED, language=language)
-    if call.max_chars:
-        reply = smart_trim(reply, call.max_chars)
     return Generation(Outcome.WRITTEN, language=language, text=reply,
                       provider=result.provider, model=result.model)
 
@@ -148,4 +152,4 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
     })
-    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, rules]))
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, LENGTH_RULE, rules]))

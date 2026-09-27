@@ -8,6 +8,19 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-27 — the Replies get short (Operator):** "the Replies are too
+> long". Six prompts each set their own length: 220 characters at most for
+> direct and replyback, 80 to 220 for debate, 80 to 200 for bestie and the
+> default VIP prompt, and "slightly longer, 2-3 tight sentences" for
+> Graphseo, whose Reply the generator alone cut at 220. The code capped
+> the rest at 278, X's limit. A maximum reads as a target: the Replies came
+> out near it. Every Reply prompt now carries one rule before the hard
+> rules, "one or two short sentences, about 100 characters, never more
+> than 140", and none sets another. The Reply admission trims to
+> `REPLY_MAX_CHARS`, 160 by default and at most, on a sentence end, and
+> refuses a draft it cannot cut there: a word-boundary cut reads as a
+> botched paste.
+
 > **2026-09-27 — McnallieM joins the respect list (Operator):** his author
 > dossier held the one rule of his that no other file kept, "avoid anything
 > that could feel like a dunk on him". #291 removed the dossiers with it, so

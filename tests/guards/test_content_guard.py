@@ -157,6 +157,14 @@ def test_validate_rejects_overlong_reply():
     assert not ok and "too long" in reason
 
 
+def test_validate_rejects_a_reply_past_reply_max_chars():
+    """Operator 2026-09-27: the write chokepoint refuses a Reply past 160."""
+    text = "Batching decides the margin, and the queue decides the latency. " * 3
+    assert 160 < len(text.strip()) < 278
+    ok, reason = cg.validate(text.strip(), kind="reply")
+    assert not ok and "160" in reason
+
+
 def test_validate_allows_casual_unpunctuated_ending():
     ok, _ = cg.validate("screenshot this. we'll talk about it in 6 months", kind="reply")
     assert ok

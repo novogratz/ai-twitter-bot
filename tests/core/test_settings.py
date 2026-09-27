@@ -205,6 +205,7 @@ OPERATOR_BOUNDS = [
     ("DUP_TOPIC_SHARED_WORDS", "8", 3, 2),
     ("DUP_TEXT_WINDOW_HOURS", "12", 48.0, 96.0),
     ("REPLY_MIN_CHARS", "5", 25, 40),
+    ("REPLY_MAX_CHARS", "278", 160, 120),
 ]
 
 

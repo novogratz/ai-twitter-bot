@@ -25,7 +25,9 @@ def test_smart_trim_salvages_overlong_reply():
     """Over-length replies are trimmed at a sentence boundary and must then
     pass the content_guard length + truncation checks (instead of being
     discarded along with the LLM call that produced them)."""
+    from src.core import settings
     from src.core.humanizer import smart_trim
+    longest = settings.get("REPLY_MAX_CHARS")
     long_reply = (
         "The market is not punishing you, it is teaching you. "
         "You bought the top because hope felt cheaper than patience. "
@@ -34,9 +36,9 @@ def test_smart_trim_salvages_overlong_reply():
         "Then we talk about your relationship with green candles and why "
         "you call panic-selling risk management."
     )
-    assert len(long_reply) > 278
-    trimmed = smart_trim(long_reply, 278)
-    assert 0 < len(trimmed) <= 278
+    assert len(long_reply) > longest
+    trimmed = smart_trim(long_reply, longest)
+    assert 0 < len(trimmed) <= longest
     ok, why = cg.validate(trimmed, kind="reply")
     assert ok, why
 

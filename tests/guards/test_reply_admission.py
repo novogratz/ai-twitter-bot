@@ -116,10 +116,28 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
 
 
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
+    """Operator 2026-09-27: a Reply ships at 160 characters at most."""
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     draft = "Batching decides the margin. " * 12
     verdict = judge_reply(url("someone"), draft)
-    assert verdict and len(verdict.text) <= 278 and verdict.text.endswith(".")
+    assert verdict and 80 <= len(verdict.text) <= 160 and verdict.text.endswith(".")
+
+
+def test_the_operator_may_shorten_the_longest_reply(monkeypatch, settings_override):
+    settings_override(REPLY_MAX_CHARS=100)
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    verdict = judge_reply(url("someone"), "Batching decides the margin. " * 12)
+    assert verdict and len(verdict.text) <= 100 and verdict.text.endswith(".")
+
+
+def test_an_over_length_draft_with_no_sentence_end_is_refused(monkeypatch):
+    """A cut on a word boundary reads as a botched paste: the draft is
+    refused, and the post stays replayable for a new generation."""
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    draft = "batching decides the margin and the queue decides the latency " * 4
+    verdict = judge_reply(url("someone"), draft.strip())
+    assert verdict.refusal is Refusal.TEXT and not verdict.refusal.definitive
+    assert "no sentence end" in verdict.reason
 
 
 def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override):
