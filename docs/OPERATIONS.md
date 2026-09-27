@@ -55,14 +55,14 @@ French.
 overriding variables already set in the shell. **Every change to a setting,
 in `.env` or in the shell, needs a restart**: nothing re-reads them while the
 bot runs. A key `settings.py` does not
-know, or a value its type rejects (a switch takes `0` or `1`, a number a
-number), stops the start with a message naming the key; a value past its
-ceiling or floor is brought back to it and logged as a `[SETTINGS]` warning.
-A setting listed under "No effect" in CONFIGURATION.md still starts: delete
-its line from `.env`.
+know is ignored and logged as a `[SETTINGS]` warning, with the setting it
+may misspell: delete its line from `.env`. A value its type rejects (a
+switch takes `0` or `1`, a number a number) stops the start with a message
+naming the key; a value past its ceiling or floor is brought back to it and
+logged as a `[SETTINGS]` warning.
 Check the setup without a browser or a model with the dry-run command from
 [`AGENTS.md#verification`](../AGENTS.md#verification): it stops on the same
-keys and names them.
+values and lists the same warnings under `settings_warnings`.
 
 ### Account
 

@@ -113,14 +113,15 @@ def main():
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
     args = parser.parse_args()
+    # Before any refusal below: a key .env set and the bot ignored reaches bot.log.
+    for warning in settings.startup_warnings():
+        log.warning(f"[SETTINGS] {warning}")
     try:
         state_store.require_migrated()
     except state_store.Unmigrated as exc:
         # Read as empty, a state file left behind would reset today's ceiling.
         log.error(f"[STATE] Refusing to start: {exc}.")
         raise SystemExit(f"Refusing to start: {exc}.")
-    for warning in settings.startup_warnings():
-        log.warning(f"[SETTINGS] {warning}")
     scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
     from src.core.llm_client import ignored_fallbacks, unknown_providers
     unknown = unknown_providers()

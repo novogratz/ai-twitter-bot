@@ -89,8 +89,9 @@ settings commented out at their default, since `.env` would win over an
 Account's `[limits]`; every setting, its default and bounds are in
 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
 `.env` is read once at start, so any change needs a restart: a key the engine
-does not know, or a badly typed value, stops the start with a message naming
-the key, and `--dry-run` names the same keys.
+does not know is ignored with a `[SETTINGS]` warning naming it, a badly typed
+value stops the start with a message naming the key, and `--dry-run` reports
+both.
 
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
 `accounts/<name>/account.toml`, which holds the handle, the language of the

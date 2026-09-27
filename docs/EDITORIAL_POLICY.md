@@ -220,6 +220,11 @@ may only tighten them. A value past a bound is brought back to it with a
 setting under `bounded_settings`, with its effective value, and the
 warnings under `settings_warnings`.
 
+A `.env` key the engine does not read is ignored with a `[SETTINGS]`
+warning, not refused (2026-09-27, PR #281): a misspelled bounded setting
+keeps its default, and a misspelled `DRY_RUN` runs live. After a `.env`
+change, read the warnings or run `main.py --dry-run` before starting.
+
 | Setting | Bound | Default |
 |---|---|---|
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |

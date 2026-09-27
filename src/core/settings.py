@@ -13,9 +13,11 @@ still wins over `.env`, as it always has. Bounds are
 applied once, after the merge, and to the Account's own values, so an Account
 can only tighten a bound: a value past its floor or ceiling is brought back to
 it and listed in `startup_warnings()`, which `main.py` logs. A `.env` key this
-module does not know, or a value its type rejects, stops the start with a
-`SettingsError` naming the key; so does a missing Account, or an unknown key
-or badly typed value in its account.toml. Changing a setting needs a restart.
+module does not know is ignored, never passed on to the environment, and
+listed there too, with the declared key it may misspell. A value its type
+rejects stops the start with a `SettingsError` naming the key; so does a
+missing Account, or an unknown key or badly typed value in its account.toml.
+Changing a setting needs a restart.
 
 `main.py` calls `load()` before any other project import, so every module and
 every model call sees `.env` whatever it imports first; a script or a test
@@ -38,6 +40,7 @@ generated from the declarations below: after changing one, run
 Layout: one section per lot of #187, opened by a header comment and kept
 apart from the next by a blank line.
 """
+import difflib
 import math
 import os
 import re
@@ -64,9 +67,6 @@ class Setting:
 
 
 DECLARED: dict[str, Setting] = {}
-# Declared settings no code reads any more: accepted so a `.env` that still
-# sets them starts, documented as to remove from it.
-UNUSED: set[str] = set()
 # Keys the shell scripts outside the engine read after sourcing `.env`.
 SCRIPT_KEYS: set[str] = set()
 
@@ -117,11 +117,6 @@ def _declare(name, type_, default, description, *, floor=None, ceiling=None):
     if _bound(setting, _check(setting, default))[1]:
         raise ValueError(f"setting {name}: default {default!r} is out of its bounds")
     DECLARED[name] = setting
-
-
-def _declare_unused(name, type_, default):
-    _declare(name, type_, default, "No effect: remove it from .env.")
-    UNUSED.add(name)
 
 
 def _script_keys(*names):
@@ -227,22 +222,15 @@ _declare("LLM_DISABLE_FALLBACK", bool, False, "1 turns the fallback off whatever
 _declare("LLM_FALLBACK_MODEL", str, "", "Model of every fallback call; blank, the fallback CLI's own below.")
 _declare("CODEX_FALLBACK_MODEL", str, "gpt-5.4-mini", "Codex model as the fallback; blank means this default.")
 _declare("GEMINI_FALLBACK_MODEL", str, "gemini-2.0-flash", "Gemini model as the fallback; blank means this default.")
-_declare_unused("OPENCODE_FALLBACK_MODEL", str, "opencode/big-pickle")
 _declare("FR_FORCED_REPLY_HANDLES", str, "", "Comma-separated handles whose posts always get French Replies; the Account's network.fr_forced_reply unless set.")
 
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
 _declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts and reviews Originals.")
 _declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an editorial model call.")
 _declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
-_declare_unused("BESTIE_HANDLE", str, "")
 _declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
 _declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
 _declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
-_declare_unused("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999)
-_declare_unused("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150)
-_declare_unused("DIRECT_REPLY_PROFILE_SCAN_LIMIT", int, 25)
-_declare_unused("DIRECT_REPLY_HOT_QUERY_LIMIT", int, 20)
-_declare_unused("DIRECT_REPLY_LIVE_QUERY_LIMIT", int, 20)
 _declare("ENABLE_DEBATES", bool, True, "Let the debate job answer mentions; read at each cycle.")
 _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may ship.")
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
@@ -280,6 +268,8 @@ _declare("FOLLOW_ENGAGERS_PER_CYCLE", int, 2, "Engagers follow_engagers_job foll
 # Credentials and endpoints the model CLIs read from their own environment:
 # `.env` may carry them for the subprocesses, the bot itself never reads them.
 _CLI_PASSTHROUGH = re.compile(r"^(?:[A-Z0-9_]+_API_KEY|OLLAMA_HOST|(?:ANTHROPIC|OPENAI|GEMINI|GOOGLE|CODEX|OPENCODE)_[A-Z0-9_]+)$")
+# Retired settings of the engine that the pattern above would pass on.
+_RETIRED_PASSTHROUGH = {"OPENCODE_FALLBACK_MODEL"}
 
 
 def known_keys() -> set[str]:
@@ -287,7 +277,17 @@ def known_keys() -> set[str]:
 
 
 def _is_known(key: str) -> bool:
+    if key in _RETIRED_PASSTHROUGH:
+        return False
     return key in known_keys() or bool(_CLI_PASSTHROUGH.match(key))
+
+
+def _unknown_key_warning(key: str) -> str:
+    # 0.9 catches a dropped letter or underscore (DRYRUN) and leaves out
+    # retired keys that only share a suffix (REPOST_MAX_AGE_HOURS).
+    near = difflib.get_close_matches(key, sorted(known_keys()), n=1, cutoff=0.9)
+    hint = f" Did you mean {near[0]}?" if near else ""
+    return f"{key} in .env is not a setting the engine reads: ignored, delete the line.{hint}"
 
 
 def load(env_file: str | None = None, environ=None) -> None:
@@ -303,11 +303,11 @@ def load(env_file: str | None = None, environ=None) -> None:
     environ = os.environ if environ is None else environ
     from_file = _read_env_file(ENV_FILE if env_file is None else env_file)
     unknown = sorted(k for k in from_file if not _is_known(k))
-    if unknown:
-        raise SettingsError(f"Unknown key in .env: {', '.join(unknown)}. Remove it, or declare it "
-                            "in src/core/settings.py.")
+    # An old `.env` still starts: a key no code reads is dropped and named.
+    from_file = {k: v for k, v in from_file.items() if k not in unknown}
     raw = {**from_file, **environ}
-    account, warnings = _account_layer(raw.get("BOT_ACCOUNT", DECLARED["BOT_ACCOUNT"].default))
+    account, bound_warnings = _account_layer(raw.get("BOT_ACCOUNT", DECLARED["BOT_ACCOUNT"].default))
+    warnings = [*map(_unknown_key_warning, unknown), *bound_warnings]
     values, problems = {}, []
     for name, setting in DECLARED.items():
         value = account.get(name, setting.default)
@@ -351,7 +351,8 @@ def is_overridden(name: str) -> bool:
 
 
 def startup_warnings() -> list[str]:
-    """The values `load()` brought back to a bound."""
+    """The `.env` keys `load()` ignored and the values it brought back to a
+    bound."""
     return list(_warnings)
 
 
@@ -423,7 +424,9 @@ def _declared(name: str) -> Setting:
 
 
 def _read_env_file(path: str) -> dict:
-    """KEY=VALUE lines, the first occurrence of a key winning."""
+    """KEY=VALUE lines, the first occurrence of a key winning. `export KEY=VALUE`
+    reads as KEY=VALUE, as the scripts that `source` .env read it: the bot
+    and bot_watchdog.sh then see the same DRY_RUN."""
     values = {}
     try:
         with open(path) as f:
@@ -432,7 +435,7 @@ def _read_env_file(path: str) -> dict:
                 if not line or line.startswith("#") or "=" not in line:
                     continue
                 key, value = line.split("=", 1)
-                key = key.strip()
+                key = re.sub(r"^export\s+", "", key.strip())
                 if key:
                     values.setdefault(key, value.strip().strip('"').strip("'"))
     except OSError:

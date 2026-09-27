@@ -398,20 +398,6 @@ def test_a_failed_ladder_names_the_model_each_provider_ran(providers, primary, f
     assert note in result.stderr.splitlines()
 
 
-@pytest.mark.parametrize("fallback", ["ollama", "opencode", "codex", "gemini"])
-def test_opencode_fallback_model_changes_no_call(providers, fallback):
-    """OPENCODE_FALLBACK_MODEL is declared so an old .env starts; no call
-    reads it."""
-    def ladder(label):
-        providers.settings(OPENCODE_FALLBACK_MODEL=label)
-        providers.calls.clear()
-        result = ask(provider="claude")
-        return [(name, request) for name, request in providers.calls], result
-
-    providers.settings(LLM_FALLBACK_CLI=fallback)
-    assert ladder("opencode/big-pickle") == ladder("another-label") == ladder("")
-
-
 # --- Usage limits and who answered ---------------------------------------------
 
 RATE_LIMIT = LLMResult(1, "", "429 Too Many Requests: rate limit reached for this hour")
