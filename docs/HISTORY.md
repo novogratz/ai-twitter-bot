@@ -122,6 +122,24 @@ their order in the file is not strictly chronological.
 > cycle, as the follower count's profile does. The dry-run check stays
 > before the session.
 
+> **2026-09-27 — the scrapes read through the page session (issue #254):**
+> the seven page reads of `scraper.py` ignored the result of
+> `safari.open_url`. When a page did not open, they read the tab in front
+> and handed its tweets to the Reply jobs, the Trending posts or the pin
+> as if they came from the page asked for. `scrape_own_tweet_and_replies`
+> also pressed Tab Tab Tab Return on that tab to reach our latest post.
+> Each scrape now opens its page in a page session and reads the tweets in
+> a session nested in it: a page that does not open reads nothing and
+> presses nothing, and the scrape gives the answer of a failed read, `[]`
+> or `None`, so its callers behave as before. A tweet scrape counts such a
+> page as a timed-out read, hence a blank page, once its session has
+> released the Safari lock: the review caught that a first version counted
+> nothing, which left a Safari whose `open location` timed out every time
+> without its reactive restart. The blank-page recovery still restarts
+> Safari from inside the session. The tab walk and the scroll of the
+> Replyback keep their bounds, and the session closes each tab on every
+> path.
+
 > **2026-09-25 — a Safari restart waits for the session in progress (issue #257):**
 > the two-hourly `session_refresh_job` and the `health` recovery quit
 > Safari without taking the Safari lock, so either could pull the tab from

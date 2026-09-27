@@ -65,7 +65,7 @@ class Browser(Protocol):
                raise_timeout: bool) -> str:
         """Run `js` in the front tab and return its answer, "" on failure."""
 
-    def keys(self, applescript: str) -> bool:
+    def keys(self, applescript: str, timeout_s: float) -> bool:
         """Run a System Events keyboard script; False when it failed."""
 
 
@@ -87,8 +87,8 @@ class SafariBrowser:
         return safari._run_js(js, timeout_s, log_prefix=log_prefix, activate=activate,
                               raise_timeout=raise_timeout)
 
-    def keys(self, applescript: str) -> bool:
-        return safari._run_applescript(applescript, timeout_s=safari.KEYSTROKE_TIMEOUT_S)
+    def keys(self, applescript: str, timeout_s: float) -> bool:
+        return safari._run_applescript(applescript, timeout_s=timeout_s)
 
 
 @dataclass
@@ -147,7 +147,7 @@ class MemoryBrowser:
             raise answer
         return answer
 
-    def keys(self, applescript: str) -> bool:
+    def keys(self, applescript: str, timeout_s: float) -> bool:
         self.pressed.append(applescript)
         return True
 
@@ -226,9 +226,9 @@ class Page:
             log.info(f"[{self._tag}] Unreadable page answer: {raw[:80]!r}")
             return None
 
-    def keys(self, applescript: str) -> bool:
+    def keys(self, applescript: str, timeout_s: float = safari.KEYSTROKE_TIMEOUT_S) -> bool:
         self._check_open()
-        return self._browser.keys(applescript)
+        return self._browser.keys(applescript, timeout_s)
 
 
 @contextlib.contextmanager
