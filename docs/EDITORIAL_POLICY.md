@@ -33,7 +33,9 @@ rivalry, the Operator's pick. Hard rule 4 overrides the Voice's wit and
 criticism for its subjects. The respect list block asks the model never to
 name a Respected account in a post of its own or in a Reply to someone
 else's post, nor to criticize one by name; the text check at the write is
-looser (`respect_list.scrub_text_or_skip`).
+looser (`respect_list.scrub_text_or_skip`). McnallieM is a Respected
+account since 2026-09-27: his author dossier, gone with #291, asked never
+to dunk on him.
 
 English Originals and Replies take the form of ASD-STE100 Simplified
 Technical English (Operator, 2026-09-27): sentences of 25 words at most,

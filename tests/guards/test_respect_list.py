@@ -60,3 +60,11 @@ def test_only_the_addressee_handle_passes():
     assert respect_list.scrub_text_or_skip(text, addressee="01net")[0] is None
     mocked = "@graphseo ton analyse est ridicule."
     assert respect_list.scrub_text_or_skip(mocked, addressee="graphseo")[0] is None
+
+
+def test_mcnalliem_is_a_respected_account():
+    """Operator 2026-09-27: his author dossier said "avoid anything that could
+    feel like a dunk on him"; #291 removed the dossiers, so the respect list
+    carries that protection now."""
+    assert "mcnalliem" in respect_list.load()
+    assert "@mcnalliem" in respect_list.render_block()

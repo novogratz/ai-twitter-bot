@@ -8,6 +8,12 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-27 — McnallieM joins the respect list (Operator):** his author
+> dossier held the one rule of his that no other file kept, "avoid anything
+> that could feel like a dunk on him". #291 removed the dossiers with it, so
+> the Operator put him on the respect list, which every Reply prompt carries
+> and the write chokepoints check. The list holds 33 Respected accounts.
+
 > **2026-09-27 — the Operator's prompt text loses its stale lines:** the
 > Voice, the hard rules and the respect list close or open every prompt,
 > so a stale line in them reaches every Reply. At the Operator's request:
