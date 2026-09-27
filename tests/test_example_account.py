@@ -93,6 +93,10 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 
     def run(environ):
         settings.load(env_file=str(env_file), environ=dict(environ))
+        # The start refuses without it (1c03629c): a new install writes [].
+        state = Path(state_store.root())
+        state.mkdir(parents=True, exist_ok=True)
+        (state / "whitelist_discovered.json").write_text("[]")
         monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
         main.main()
         assert calls == [], "the dry run called a model"
@@ -132,7 +136,8 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
                        "LIKE_BOT_DAILY_CAP": 100}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
-    assert os.listdir(project / "state") == ["theaishrink"]
+    assert sorted(os.listdir(project / "state")) == ["example", "theaishrink"]
+    assert os.listdir(project / "state" / "example") == ["whitelist_discovered.json"]
     assert os.listdir(theirs) == ["action_ledger.json"]
     assert (theirs / "action_ledger.json").read_text() == "not json"
 
