@@ -15,11 +15,13 @@ their order in the file is not strictly chronological.
 > recovery of `scraper.py` took the lock. `safari_hygiene.restart_safari`
 > now takes it itself, for all three: a restart waits for the session
 > holding Safari, reads the cooldown once it has the lock (two restarts
-> queued behind one session bounce Safari once), and gives up without a
-> restart when waking hours end while it waits. The lock is reentrant, so
-> a job that holds it and reports its third failure in a row restarts at
-> once. The osascript runs bounded by issue #251 cap the wait; the two
-> scraper runs still unbounded can hold it longer.
+> queued behind one session bounce Safari once, once the first one
+> succeeded), and gives up without a restart when waking hours end while
+> it waits. The lock is reentrant, so a job that holds it and reports its
+> third failure in a row restarts at once. The osascript runs bounded by
+> issue #251 cap the wait, and the two scraper runs #251 left unbounded,
+> the activate before a page read's second JavaScript try and the scroll
+> of `scrape_own_tweet_and_replies`, now carry the same bounds.
 
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply

@@ -168,6 +168,8 @@ def test_a_restart_that_waited_into_bedtime_does_nothing(monkeypatch, bounce):
     raising and touches nothing."""
     from src.x import safari, safari_hygiene as sh
 
+    infos = []
+    monkeypatch.setattr(sh.log, "info", lambda msg, *a, **k: infos.append(msg))
     with safari._safari_lock:
         restart, result = _in_thread(lambda: sh.restart_safari(reason="health_recovery"))
         restart.join(0.2)
@@ -175,6 +177,8 @@ def test_a_restart_that_waited_into_bedtime_does_nothing(monkeypatch, bounce):
     restart.join(5)
 
     assert result == [False] and bounce == []
+    assert any("waking hours ended while it waited" in msg for msg in infos), \
+        "the restart must have queued on the lock before bedtime"
 
 
 def test_a_wedged_osascript_holds_the_recovery_restart_only_up_to_its_bound(

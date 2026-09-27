@@ -715,10 +715,6 @@ These are how the code behaves today, not design intent:
 - The page reads of `scraper.py`, the follow-back and the follower count
   still ignore `open_url`'s result, and read the front tab when the page
   did not open (parent issue #250). Only the writes check it.
-- Two AppleScript runs of `scraper.py` still have no bound: the activate
-  before the second JavaScript try of a page read, and the scroll of
-  `scrape_own_tweet_and_replies`. A wedged Safari there keeps the Safari
-  lock.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
   may still open a timed-out page afterwards, and the write's tab close
   then closes another tab and leaves that one open (issue #253). Nothing
