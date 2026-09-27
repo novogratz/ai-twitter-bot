@@ -1,9 +1,9 @@
 """Personality store — the bot's autobiographical brain.
 
-The bot grows a brain by accumulating per-account and per-topic dossiers
-over time. Replies, quote-tweets and replybacks become PERSONAL because
-the bot remembers who said what, who's been right vs wrong, who's a
-builder vs a predator, what works with this specific person.
+personality.json keeps a per-account dossier, bumped after every logged
+Reply (`record_interaction`, the interaction count). No Reply prompt carries
+an author's dossier since 2026-09-27: nothing had fed them since June but
+the count. `render_global_mood` still reads them for the reply search.
 
 Schema (personality.json):
 {
@@ -30,9 +30,7 @@ HARD RULES — non-negotiable, baked into every generation prompt: the
 numbered rules of `_BASE_HARD_RULES`, then the respect list block.
 """
 
-import copy
 import os
-from typing import Optional
 
 from . import account, config
 from .state_store import GUARDED, StateFile
@@ -120,17 +118,6 @@ def save(data: dict) -> None:
     PERSONALITY.write(data)
 
 
-def get_account(handle: str) -> Optional[dict]:
-    key = _normalize(handle)
-    if not key:
-        return None
-    relation = account.current().relations.get(key)
-    if relation and relation.dossier:
-        # The Account's fixed dossier wins over the one the bot grows.
-        return copy.deepcopy({**DEFAULT_ACCOUNT, **relation.dossier})
-    return load()["accounts"].get(key)
-
-
 def upsert_account(handle: str, **updates) -> dict:
     key = _normalize(handle)
     if not key:
@@ -195,48 +182,6 @@ def record_interaction(handle: str, kind: str = "reply") -> None:
         upsert_account(handle, interaction_increment=1)
     except Exception:
         pass
-
-
-def render_account_block(handle: str) -> str:
-    """Prompt-ready block describing what we know about @handle.
-    Empty string if no dossier — agent treats them as a fresh face."""
-    d = get_account(handle)
-    if not d:
-        return ""
-    h = _normalize(handle)
-    lines = [f"# Personal memory: what you know about @{h}"]
-    cat = d.get("category")
-    if cat and cat != "unknown":
-        lines.append(f"- Category: {cat}")
-    st = d.get("stance")
-    if st and st != "neutral":
-        lines.append(f"- Stance: {st}")
-    if d.get("feelings"):
-        lines.append(f"- Feeling: {d['feelings']}")
-    ic = d.get("interaction_count", 0)
-    if ic:
-        lines.append(f"- Past interactions: {ic}")
-    notes = d.get("notes") or []
-    if notes:
-        lines.append("- Accumulated observations:")
-        for n in notes[-8:]:
-            lines.append(f"  - {n}")
-    preds = d.get("predictions") or []
-    right = sum(1 for p in preds if p.get("outcome") == "right")
-    wrong = sum(1 for p in preds if p.get("outcome") == "wrong")
-    if right or wrong:
-        lines.append(f"- Prediction track record: {right} right / {wrong} wrong")
-    if d.get("do"):
-        lines.append(f"- What works with them: {d['do']}")
-    if d.get("dont"):
-        lines.append(f"- What to avoid with them: {d['dont']}")
-    lines.append("")
-    lines.append(
-        "React FROM this memory. You are not neutral about them: you share a "
-        "history. Whether your feeling is warm or cold, the post always targets "
-        "the IDEA, the SYSTEM, the CLAIM. Never the person."
-    )
-    return "\n".join(lines)
 
 
 def voice_file(lang: str) -> str:

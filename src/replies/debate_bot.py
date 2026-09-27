@@ -66,8 +66,7 @@ Output ONLY the reply text, or exactly SKIP."""
 
 
 def reply_call() -> ReplyCall:
-    # dossier=False: whether the author's dossier joins it is the Operator's call.
-    return ReplyCall(DEBATE_PROMPT, Surface.REPLY_ON_AI_CLI, "DEBATE", dossier=False, text_limit=500)
+    return ReplyCall(DEBATE_PROMPT, Surface.REPLY_ON_AI_CLI, "DEBATE", text_limit=500)
 
 
 JOB = reply_pipeline.Job("debate", "DEBATE", reply_call=lambda _author: reply_call(), debate_turn=True,

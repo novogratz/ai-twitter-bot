@@ -705,23 +705,6 @@ OLD_RELATION_PROMPTS = {
     "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
     "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
 }
-# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
-OLD_MCNALLIEM = {
-    "first_seen": "2026-05-02",
-    "last_interaction": "2026-05-02",
-    "interaction_count": 0,
-    "category": "builder",
-    "stance": "fond",
-    "notes": [
-        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
-    ],
-    "predictions": [],
-    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
-    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
-    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
-}
-
 
 def _digest(text):
     import hashlib
@@ -733,20 +716,12 @@ def test_theaishrink_relations_hold_the_old_prompts():
     graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
     assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
             "buddy": _digest(relations.default)} == OLD_RELATION_PROMPTS
-    assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "claude", None)
-    assert (bestie.handle, bestie.provider, bestie.dossier) == ("TheBTCTherapist", None, None)
+    assert (graphseo.handle, graphseo.provider) == ("Graphseo", "claude")
+    assert (bestie.handle, bestie.provider) == ("TheBTCTherapist", None)
     assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
-    mcnallie = relations.get("mcnalliem")
-    assert (mcnallie.prompt, mcnallie.provider) == (None, None)
-    assert sorted(relations.handles) == ["graphseo", "mcnalliem", "thebtctherapist"]
+    assert sorted(relations.handles) == ["graphseo", "thebtctherapist"]
     assert relations.vip_prompt("thebtctherapist") == bestie.prompt
     assert relations.vip_prompt("McnallieM") == relations.vip_prompt("vision_ia") == relations.default
-
-
-def test_a_fixed_dossier_reads_as_the_old_one():
-    from src.core import personality_store
-    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
-    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
 
 
 def test_the_relation_providers_are_llm_client_clis():
@@ -756,13 +731,16 @@ def test_the_relation_providers_are_llm_client_clis():
 
 @pytest.mark.parametrize("old, new, named", [
     ('provider = "claude"', 'provider = "claude"\nlabel = "X"', "relations.handles.Graphseo.label"),
-    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.McnallieM.dossier.mood"),
+    # The fixed dossier a Relation could set until 2026-09-27.
+    ('prompt = "relations/bestie.md"\n', 'prompt = "relations/bestie.md"\n\n'
+     '[relations.handles.TheBTCTherapist.dossier]\nstance = "fond"\n',
+     "relations.handles.TheBTCTherapist.dossier is not a key the Account knows"),
     ('default = "relations/buddy.md"', 'default = "relations/buddy.md"\nbuddy = "x.md"', "relations.buddy"),
     ("[relations.handles.Graphseo]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
     ("[relations.handles.Graphseo]", "[relations.handles.ThisHandleIsTooLong]",
      "relations.handles.ThisHandleIsTooLong"),
-    ("[relations.handles.McnallieM.dossier]", "[relations.handles.graphseo.dossier]",
-     "relations.handles.graphseo repeats Graphseo"),
+    ("[relations.handles.TheBTCTherapist]", "[relations.handles.graphseo]",
+     "relations.handles.Graphseo repeats graphseo"),
 ])
 def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -773,9 +751,7 @@ def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old,
 
 @pytest.mark.parametrize("old, new, named", [
     ('provider = "claude"', 'provider = "claud"', "relations.handles.Graphseo.provider takes one of"),
-    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.provider needs a prompt"),
-    ('stance = "fond"', "stance = 3", "relations.handles.McnallieM.dossier.stance"),
-    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.McnallieM.dossier.notes[0]"),
+    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.prompt is missing"),
     ('prompt = "relations/graphseo.md"', 'prompt = "relations/nope.md"', "relations.handles.Graphseo.prompt"),
     ('prompt = "relations/bestie.md"', 'prompt = "../voice_en.md"', "outside the Account's folder"),
 ])
@@ -783,14 +759,6 @@ def test_a_bad_relation_value_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
     accounts("theaishrink", THEAISHRINK.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
-        fresh()
-
-
-def test_an_empty_fixed_dossier_stops_the_start(accounts, fresh):
-    start = THEAISHRINK.index("[relations.handles.McnallieM.dossier]")
-    end = THEAISHRINK.index("\n\n", THEAISHRINK.index("dont = ", start))
-    accounts("theaishrink", THEAISHRINK[:start] + "[relations.handles.McnallieM.dossier]" + THEAISHRINK[end:])
-    with pytest.raises(settings.SettingsError, match=re.escape("relations.handles.McnallieM.dossier is empty")):
         fresh()
 
 

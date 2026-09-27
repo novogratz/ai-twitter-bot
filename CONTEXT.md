@@ -132,9 +132,9 @@ _Avoid_: voice (reserved for the persona)
 
 **Relation**:
 How the Replies treat one particular account, set by the Account under its
-handle: its own Reply prompt and the CLI that writes it, or a fixed dossier.
-The Account also sets the VIP scan's default prompt, for a scanned handle
-without a prompt of its own. The engine names no one.
+handle: its own Reply prompt, and the CLI that writes it. The Account also
+sets the VIP scan's default prompt, for a scanned handle without a Relation.
+The engine names no one.
 _Avoid_: VIP prompt, persona, special case
 
 **Reply generator**:

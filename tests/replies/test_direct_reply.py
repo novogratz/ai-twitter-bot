@@ -187,8 +187,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     own = dr._vip_call("graphseo")
     assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
                                                       Surface.RELATION_REPLY, "GRAPHSEO_VIP")
-    assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
-        False, 300, 220, False, 0)
+    assert (own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (300, 220, False, 0)
     assert (own.provider, own.profile) == ("claude", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("Graphseo").provider is None
@@ -198,8 +197,8 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
                                                "VIP_REPLY/thebtctherapist")
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
-        assert (call.surface, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
-                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, False, 300,
+        assert (call.surface, call.text_limit, call.strip_preamble, call.skip_window,
+                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, 300,
                                                                  True, 20, None, None, TEXT_PROFILE)
 
 

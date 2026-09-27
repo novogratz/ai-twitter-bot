@@ -193,7 +193,9 @@ marked published after a check.
   name dropped every account whose name differs from its handle (#162).
 - Every Reply prompt, in every job, opens on the Voice and carries the hard
   rules and the respect list (`personality_store.hard_rules_block()`):
-  `src/replies/reply_generator.py` assembles them all (issues #155, #192). A model SKIP sets the post aside for good;
+  `src/replies/reply_generator.py` assembles them all (issues #155, #192).
+  None carries the author's dossier from `personality.json` (Operator,
+  2026-09-27). A model SKIP sets the post aside for good;
   a model rate limit, every provider at its usage limit, ends the job's
   generations for the cycle. The prompt names every Respected account.
 - Model calls stay on their configured provider, Ollama by default. Only an

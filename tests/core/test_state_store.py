@@ -174,7 +174,7 @@ def _validate(monkeypatch):
 
 def _personality(monkeypatch):
     from src.core import personality_store
-    personality_store.render_account_block("someone")
+    personality_store.render_global_mood()
 
 
 @pytest.mark.parametrize("name, job", [
@@ -232,8 +232,9 @@ def test_the_history_writer_leaves_an_unreadable_history_alone(tmp_path):
 
 
 def test_an_interaction_never_erases_unreadable_dossiers(tmp_path):
-    """engagement_log.log_reply bumps a dossier after every Reply, and
-    swallows the error: the Reply stays logged, the dossiers stay intact."""
+    """engagement_log.log_reply bumps an interaction count after every
+    Reply, and swallows the error: the Reply stays logged, the file stays
+    intact."""
     from src.core import engagement_log
     path = _corrupt(tmp_path, "personality.json")
     engagement_log.log_reply("https://x.com/someone/status/2063500000000000100", "a reply", "reply")

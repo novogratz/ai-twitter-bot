@@ -497,7 +497,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     if directives_block:
         discovered_section = (discovered_section or "") + directives_block
 
-    # Global mood: this path searches broadly, so no author dossier. The
+    # Global mood, aimed at no one author: this path searches broadly. The
     # generator adds the Voice and the hard rules.
     from ..core import personality_store
     mood = personality_store.render_global_mood()
