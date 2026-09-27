@@ -52,14 +52,11 @@ class ReplyCall:
     """A job's prompt template and model call. The template may use
     {author}, {tweet_text}, {original_tweet}, {language_override} and the
     Account's {domain}. The template holds the job's instructions, never the
-    persona: the Voice opens the prompt, the dossier and the hard rules
-    close it."""
+    persona: the Voice opens the prompt, the hard rules close it."""
     template: str
     surface: Surface
     label: str
     language: LanguageRule = LanguageRule.PARENT
-    # The author's dossier. The Voice and the hard rules come regardless.
-    dossier: bool = True
     text_limit: int = 200
     strip_preamble: bool = False
     # The VIP rule: "skip" anywhere in the first N characters declines too,
@@ -142,9 +139,7 @@ def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
 
 
 def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict) -> str:
-    anchors = [personality_store.hard_rules_block()]
-    if call.dossier:
-        anchors = [personality_store.render_account_block(author)] + anchors
+    rules = personality_store.hard_rules_block()
     prompt = call.template.format(**{
         **fields,
         "author": author,
@@ -153,4 +148,4 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
     })
-    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, *anchors]))
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, rules]))

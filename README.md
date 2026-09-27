@@ -103,7 +103,7 @@ feeds, Evergreen topics, trusted hosts, the relevance filter and the
 searches of the Trending posts, and the network and niche the reply, like and
 follow jobs use: handle lists, niche patterns, X searches, and the Blocked
 accounts it adds to the engine's `BLOCKLIST`, which it can never shrink. It
-also holds the Relations: the prompt, provider or dossier the Replies give a
+also holds the Relations: the prompt, and the provider, the Replies give a
 particular account, by handle, and the default prompt of the VIP scan, in
 `relations/`. The Voice files sit next to it. It is read once at start, like
 `.env`: a

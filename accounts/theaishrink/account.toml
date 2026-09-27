@@ -137,10 +137,11 @@ off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|g
 [relations]
 # The VIP scan (network.vip_scan) answers a handle below with its own
 # prompt, any other with this default one. Required only while a vip_scan
-# handle has no prompt of its own.
+# handle has no Relation.
 default = "relations/buddy.md"
 
-# A Relation's own VIP prompt, in place of the default one.
+# A Relation's own VIP prompt, in place of the default one. A Relation
+# always sets one.
 [relations.handles.TheBTCTherapist]
 prompt = "relations/bestie.md"
 
@@ -150,22 +151,6 @@ prompt = "relations/bestie.md"
 [relations.handles.Graphseo]
 prompt = "relations/graphseo.md"
 provider = "claude"
-
-# A fixed dossier: the Replies that carry the author's dossier read this one
-# in place of personality.json's. Keys: first_seen, last_interaction,
-# interaction_count, category, stance, notes, feelings, do, dont.
-[relations.handles.McnallieM.dossier]
-first_seen = "2026-05-02"
-last_interaction = "2026-05-02"
-category = "builder"
-stance = "fond"
-notes = [
-    "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-    "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
-]
-feelings = "Warm respect. Treat him as a useful operator sharing real results."
-do = "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity."
-dont = "Do not mock him, his work, his results, or his credibility. Never make him upset."
 
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
 # set stricter for this Account: a value past the engine's bound is brought

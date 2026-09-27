@@ -308,18 +308,14 @@ _PROMPT_FIELDS = frozenset({"author", "tweet_text", "original_tweet", "language_
 # (a test holds the two together): importing llm_client here would run before
 # settings.load() has finished.
 CLI_PROVIDERS = ("claude", "codex", "gemini", "opencode")
-# The dossier fields personality_store renders, and their types.
-_DOSSIER = {"first_seen": str, "last_interaction": str, "interaction_count": int, "category": str,
-            "stance": str, "notes": list, "feelings": str, "do": str, "dont": str}
 
 
 @dataclass(frozen=True)
 class Relation:
     """One account the Replies treat apart, by its handle."""
     handle: str  # as account.toml writes it
-    prompt: str | None  # its own VIP scan prompt, read at start
+    prompt: str  # its own VIP scan prompt, read at start
     provider: str | None  # the CLI that writes its Replies whenever installed
-    dossier: dict | None  # a fixed dossier, in place of personality.json's
 
 
 @dataclass(frozen=True)
@@ -334,7 +330,7 @@ class Relations:
 
     def vip_prompt(self, handle: str) -> str | None:
         relation = self.get(handle)
-        return relation.prompt if relation and relation.prompt else self.default
+        return relation.prompt if relation else self.default
 
 
 def _relations(folder, network, table) -> Relations:
@@ -347,33 +343,18 @@ def _relations(folder, network, table) -> Relations:
             table.fail(f"handles.{handle}", f"takes a table, not {raw!r}")
         if handle.lower() in handles:
             table.fail(f"handles.{handle}", f"repeats {handles[handle.lower()].handle}: handles ignore case")
-        entry = _Table(table.file, where, raw, required={},
-                       optional={"prompt": str, "provider": str, "dossier": dict})
-        if not entry.values:
-            entry.fail("prompt", "is missing: a Relation sets a prompt, a dossier or both")
-        if "provider" in entry and "prompt" not in entry:
-            entry.fail("provider", "needs a prompt: it only writes the Relation's own prompt")
+        entry = _Table(table.file, where, raw, required={"prompt": str}, optional={"provider": str})
         if "provider" in entry and entry["provider"] not in CLI_PROVIDERS:
             entry.fail("provider", f"takes one of {', '.join(CLI_PROVIDERS)}, not {entry['provider']!r}")
-        dossier = None
-        if "dossier" in entry:
-            dossier_table = _Table(table.file, f"{where}.dossier", entry["dossier"], required={},
-                                   optional=_DOSSIER)
-            if not dossier_table.values:
-                entry.fail("dossier", "is empty: a fixed dossier sets at least one field")
-            if "notes" in dossier_table:
-                dossier_table.items("notes", str)
-            dossier = dict(dossier_table.values)
-        handles[handle.lower()] = Relation(
-            handle=handle, prompt=_prompt(folder, entry, "prompt") if "prompt" in entry else None,
-            provider=entry.get("provider", None), dossier=dossier)
+        handles[handle.lower()] = Relation(handle=handle, prompt=_prompt(folder, entry, "prompt"),
+                                           provider=entry.get("provider", None))
     default = _prompt(folder, table, "default") if "default" in table else None
     if default is None:
         for handle in network.vip_scan:
             relation = handles.get(handle.lower())
-            if not (relation and relation.prompt):
+            if not relation:
                 table.fail("default", f"is missing: network.vip_scan lists {handle}, which has no "
-                                      f"Relation with its own prompt, so the VIP scan needs a default prompt")
+                                      f"Relation, so the VIP scan needs a default prompt")
     return Relations(default=default, handles=handles)
 
 

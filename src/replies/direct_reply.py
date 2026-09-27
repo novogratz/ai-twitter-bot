@@ -41,9 +41,8 @@ def _own_call(relation) -> ReplyCall:
     called out as AI."""
     import shutil
     force = relation.provider if relation.provider and shutil.which(relation.provider) else None
-    # dossier=False: whether the author's dossier joins it is the Operator's call.
     return ReplyCall(relation.prompt, Surface.RELATION_REPLY, f"{relation.handle.upper()}_VIP",
-                     dossier=False, text_limit=300, max_chars=220, provider=force)
+                     text_limit=300, max_chars=220, provider=force)
 
 
 def _vip_call(handle: str) -> ReplyCall | None:
@@ -59,8 +58,7 @@ def _vip_call(handle: str) -> ReplyCall | None:
     template = relations.vip_prompt(handle)
     if template is None:
         return None
-    # dossier=False: see _own_call.
-    return ReplyCall(template, Surface.PRIORITY_REPLY_ON_AI_CLI, f"VIP_REPLY/{handle}", dossier=False,
+    return ReplyCall(template, Surface.PRIORITY_REPLY_ON_AI_CLI, f"VIP_REPLY/{handle}",
                      text_limit=300, strip_preamble=True, skip_window=20)
 
 

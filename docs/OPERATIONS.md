@@ -77,10 +77,10 @@ and the Relations; its comments describe each key. Next to it sit the Voice, the
 Operator's `voice_fr.md` and `voice_en.md`, read on every prompt, and the
 Relations' prompts under `relations/`, read at start like `account.toml`. A
 Voice file missing or empty, a Relation's handle that is no X handle, an
-unknown key, an empty fixed dossier, a prompt file missing, empty or with a
+unknown key, a Relation without a prompt, a prompt file missing, empty or with a
 `{field}` the Reply generator does not fill, a Voice or prompt file that
 resolves outside the Account's folder (symbolic links followed), or a
-`network.vip_scan` handle without a prompt of its own while
+`network.vip_scan` handle without a Relation while
 `relations.default` is unset stops the start; a `VIP_SCAN_HANDLES` handle
 from `.env` in that case is skipped with a `[VIP]` warning. Settings resolve
 in this order, the later one winning: engine defaults, the Account, `.env`,
@@ -366,7 +366,7 @@ Safari restart, and nothing writes over the file:
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
-| `personality.json` | The Reply cycles whose Reply call reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
+| `personality.json` | No job: no prompt reads it since 2026-09-27. The interaction count after a Reply is skipped, and the Reply stays logged |
 | `whitelist.json` (Account folder), `whitelist_discovered.json`, missing too | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. Once the profile is open, the quality gate takes the relation `judge` found and reads neither file again. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing `whitelist.json` |
 | `respect_list.json` (Account folder, missing too) | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `bin/mass_unfollow.py --keep legacy` |
 
@@ -545,7 +545,7 @@ root:
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
 | `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |
-| `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers | guarded |
+| `personality.json` | `personality_store` (`engagement_log`) | The interaction count bumped after every Reply, per account; no prompt reads it since 2026-09-27 | guarded |
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |

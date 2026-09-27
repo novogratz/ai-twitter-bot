@@ -183,7 +183,7 @@ def test_early_bird_names_the_author_from_the_status_url(jobs):
     assert "@SomeOne" not in prompt
 
 
-# --- Hard rules and dossier ----------------------------------------------------
+# --- Hard rules ------------------------------------------------------------------
 
 EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird", "someone", EN),
               ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
@@ -203,18 +203,6 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
     rules = personality_store.hard_rules_block()
     assert "RESPECT LIST: never mock @kindperson" in rules
     assert jobs(job, author, text).endswith("\n\n" + rules)
-
-
-@pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
-                                               ("vip", "Graphseo", FR), ("debate", "someone", EN)])
-def test_reply_calls_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
-    """Adding the dossier to these prompts is the Operator's call: they end
-    on the template, then the hard rules."""
-    from src.core import personality_store
-
-    prompt = jobs(job, author, text)
-    assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
-    assert "Personal memory" not in prompt
 
 
 # The persona as the prompts used to hard-code it (issue #192).
@@ -241,17 +229,27 @@ def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, sett
 
 @pytest.fixture
 def dossier():
+    """An author dossier left in personality.json, as the bot's early
+    versions wrote them."""
     from src.core import personality_store
 
-    personality_store.PERSONALITY.write(
-        {"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}}, "topics": {}})
-    return "# Personal memory: what you know about @someone"
+    personality_store.PERSONALITY.write({"accounts": {
+        author.lower(): {"category": "predator", "stance": "hostile", "notes": ["shills crypto"]}
+        for author in ("someone", "TheBTCTherapist", "vision_ia", "Graphseo")}, "topics": {}})
 
 
-@pytest.mark.parametrize("job", ["replyback", "search", "early_bird", "mega_watch"])
-def test_reply_prompts_render_the_author_dossier(jobs, dossier, job):
-    """replyback never passed the author, so its dossier never rendered."""
-    assert dossier in jobs(job, "someone", EN)
+@pytest.mark.parametrize("job, author, text", EVERY_PATH)
+def test_no_reply_prompt_carries_an_author_dossier(jobs, dossier, job, author, text):
+    """The Operator, 2026-09-27: nothing had fed the dossiers since June but
+    the interaction count, and stale categories reached the prompts under
+    "React FROM this memory", or the reply search's "global mood". Every
+    prompt ends on the template, then the hard rules."""
+    from src.core import personality_store
+
+    prompt = jobs(job, author, text)
+    assert [w for w in ("Personal memory", "shills crypto", "state of mind", "Predatory", "@someone,")
+            if w in prompt] == []
+    assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
 
 
 # --- What the job's instructions say -------------------------------------------
@@ -310,7 +308,7 @@ def test_debate_tells_the_model_it_does_not_see_the_account_post(jobs):
 def reply_call(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
-    return ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False, **options)
+    return ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", **options)
 
 
 def generate(**options):
@@ -354,9 +352,8 @@ def test_the_generator_hands_the_surface_and_the_call_to_run_llm(llm, settings_o
     settings_override(REPLY_LLM_PROVIDER="gemini")
     profile = CallProfile(output=Output.JSON)
 
-    for call in (ReplyCall("Parent: {tweet_text}", Surface.REPLY_SEARCH, "TEST", dossier=False, profile=profile),
-                 ReplyCall("Parent: {tweet_text}", Surface.RELATION_REPLY, "TEST", dossier=False,
-                           provider="claude")):
+    for call in (ReplyCall("Parent: {tweet_text}", Surface.REPLY_SEARCH, "TEST", profile=profile),
+                 ReplyCall("Parent: {tweet_text}", Surface.RELATION_REPLY, "TEST", provider="claude")):
         reply_generator.generate(call, text="a post")
 
     search, relation = llm.calls

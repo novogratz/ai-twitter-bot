@@ -60,8 +60,8 @@ def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
             provider, model,
         ])
 
-    # Bump personality dossier so the bot grows a relationship with each
-    # account it engages. Best-effort — never block the engagement log write.
+    # Bump the author's interaction count in personality.json. Best-effort —
+    # never block the engagement log write.
     try:
         author = _extract_author(target_url)
         if author:

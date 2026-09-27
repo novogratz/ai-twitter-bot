@@ -65,8 +65,8 @@ topic = '\b(garden\w*|allotment|vegetables?|seeds?|seedlings?|sow\w*|compost\w*|
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|giveaway|airdrop|presale|cannabis)\b'
 
 # No Relation: no account is treated apart, so no [relations] table and an
-# empty network.vip_scan. A Relation added later needs a prompt of its own,
-# or a [relations] default for the VIP scan.
+# empty network.vip_scan. A handle added to vip_scan later needs a Relation,
+# which always sets its own prompt, or a [relations] default.
 
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
 # set stricter for this Account: a value past the engine's bound is brought

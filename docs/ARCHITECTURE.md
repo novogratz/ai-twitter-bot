@@ -710,11 +710,10 @@ generator always opens the prompt on the Voice,
 `personality_store.render_voice`: the Operator's `voice_fr.md`
 (`voice_en.md` for an English reply), in the Account's folder, under a
 header naming `BOT_HANDLE`, the one reader of those files. The job's template follows,
-with its instructions but no persona, then, for Reply calls with `dossier`, the
-author's dossier from `personality.json` (or the fixed dossier of the
-author's Relation), and always
+with its instructions but no persona, then
 `personality_store.hard_rules_block()`, which renders the hard rules and
-the respect list from the Account's `respect_list.json`. The editorial Draft opens on the
+the respect list from the Account's `respect_list.json`. No prompt reads
+`personality.json` (Operator, 2026-09-27). The editorial Draft opens on the
 same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;
@@ -766,7 +765,7 @@ several scheduler threads change go through it: `followed_accounts.json`
 `following_count.json`, `liked_tweets.json`, `follow_quality_rejects.json`,
 `followers_seen.json`,
 `tweet_history.json`, `safari_health.json` and `personality.json` (the
-dossier bump after every Reply). `tweet_history.json` has one reader,
+interaction count bumped after every Reply). `tweet_history.json` has one reader,
 `history.load_history`, for the dedup, the rationed openers and the
 babysitter; the editorial cycle reads it before any Draft, so an unreadable
 history spends no Attempt. The policy of each file is in the
@@ -805,8 +804,6 @@ These are how the code behaves today, not design intent:
   past its bound may still deliver a late `r` or paste to whatever is in
   front then. A late submit is the only one that could publish, and its
   write is already UNCONFIRMED with its claim kept.
-- The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
-  the hard rules but not the author's dossier.
 - The debate prompt carries the Engager's message but not the account's post
   it answers: the mentions tab does not show it, and reading it would open
   one more page per Debate turn. The prompt tells the model so.

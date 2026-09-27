@@ -1,4 +1,4 @@
-"""src/core/personality_store: the hard-rules and dossier blocks."""
+"""src/core/personality_store: the hard-rules block."""
 
 
 def test_positive_only_subjects_in_hard_rules():
@@ -27,18 +27,3 @@ def test_english_text_follows_simplified_technical_english():
     assert "The Voice still sets the tone" in block
     # STE forbids what voice_en.md asks for ("Use contractions"): form is STE's.
     assert "no contractions" in block and "this rule wins" in block
-
-
-def test_the_dossier_block_is_in_english():
-    from src.core import personality_store
-
-    personality_store.PERSONALITY.write(
-        {"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}}, "topics": {}})
-    personality_store.upsert_account("someone", stance="fond", feelings="warm", do="tease", dont="dunk",
-                                     predictions_to_add=[{"outcome": "right"}])
-    block = personality_store.render_account_block("someone")
-    assert block.startswith("# Personal memory: what you know about @someone")
-    for line in ("- Category: builder", "- Stance: fond", "- Feeling: warm", "- Accumulated observations:",
-                 "- Prediction track record: 1 right / 0 wrong", "- What works with them: tease",
-                 "- What to avoid with them: dunk", "React FROM this memory."):
-        assert line in block

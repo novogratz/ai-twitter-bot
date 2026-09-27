@@ -1,9 +1,10 @@
-"""Personality store — the bot's autobiographical brain.
+"""Personality store: the Voice, the hard rules, and the interaction count.
 
-The bot grows a brain by accumulating per-account and per-topic dossiers
-over time. Replies, quote-tweets and replybacks become PERSONAL because
-the bot remembers who said what, who's been right vs wrong, who's a
-builder vs a predator, what works with this specific person.
+personality.json keeps, per account, the interaction count bumped after
+every logged Reply (`record_interaction`). Since 2026-09-27 no prompt reads
+it: nothing had fed its dossiers since June but the count, and their stale
+categories and notes reached the Reply prompts and the reply search's
+"global mood". Older entries still carry those fields; nothing reads them.
 
 Schema (personality.json):
 {
@@ -11,55 +12,24 @@ Schema (personality.json):
     "<lowercased handle>": {
       "first_seen": "YYYY-MM-DD",
       "last_interaction": "YYYY-MM-DD",
-      "interaction_count": int,
-      "category": "builder|predator|retail|media|influencer|institution|unknown",
-      "stance":   "respect|skeptical|hostile|neutral|pity|curious|fond",
-      "notes": [str, ...],            # short factual observations, capped 20
-      "predictions": [{date, claim, outcome}],
-      "feelings": str,                 # one-liner emotional register
-      "do":  str,                      # what works with this account
-      "dont": str                      # what to avoid
+      "interaction_count": int
     }
   },
-  "topics": {
-    "<topic>": { "stance", "frame", "evidence": [...] }
-  }
+  "topics": {}
 }
 
 HARD RULES — non-negotiable, baked into every generation prompt: the
 numbered rules of `_BASE_HARD_RULES`, then the respect list block.
 """
 
-import copy
 import os
-from typing import Optional
 
 from . import account, config
 from .state_store import GUARDED, StateFile
 
 # Guarded: a corrupt file used to read as empty, and the next save erased
-# every dossier.
+# every count.
 PERSONALITY = StateFile("personality.json", {"accounts": {}, "topics": {}}, GUARDED)
-
-ALLOWED_CATEGORIES = {
-    "builder", "predator", "retail", "media", "influencer", "institution", "unknown"
-}
-ALLOWED_STANCES = {
-    "respect", "skeptical", "hostile", "neutral", "pity", "curious", "fond"
-}
-
-DEFAULT_ACCOUNT = {
-    "first_seen": None,
-    "last_interaction": None,
-    "interaction_count": 0,
-    "category": "unknown",
-    "stance": "neutral",
-    "notes": [],
-    "predictions": [],
-    "feelings": "",
-    "do": "",
-    "dont": "",
-}
 
 # These rules are ALWAYS injected into every generation prompt.
 # They are the only hard floor — everything else is mutable strategy.
@@ -109,134 +79,29 @@ def _normalize(handle: str) -> str:
     return (handle or "").lower().lstrip("@").strip()
 
 
-def load() -> dict:
-    data = PERSONALITY.read()
-    data.setdefault("accounts", {})
-    data.setdefault("topics", {})
-    return data
-
-
-def save(data: dict) -> None:
-    PERSONALITY.write(data)
-
-
-def get_account(handle: str) -> Optional[dict]:
-    key = _normalize(handle)
-    if not key:
-        return None
-    relation = account.current().relations.get(key)
-    if relation and relation.dossier:
-        # The Account's fixed dossier wins over the one the bot grows.
-        return copy.deepcopy({**DEFAULT_ACCOUNT, **relation.dossier})
-    return load()["accounts"].get(key)
-
-
-def upsert_account(handle: str, **updates) -> dict:
-    key = _normalize(handle)
-    if not key:
-        return {}
-    # Every Reply job bumps a dossier after shipping: change the file under
-    # its lock, or two jobs erase each other's bumps.
-    return PERSONALITY.update(lambda data: _apply_updates(data, key, updates))["accounts"][key]
-
-
-def _apply_updates(data: dict, key: str, updates: dict) -> dict:
-    data.setdefault("accounts", {})
-    data.setdefault("topics", {})
-    dossier = data["accounts"].get(key, dict(DEFAULT_ACCOUNT))
-    from ..guards.active_hours import today_iso
-    today = today_iso()
-    if not dossier.get("first_seen"):
-        dossier["first_seen"] = today
-    dossier["last_interaction"] = today
-
-    inc = updates.pop("interaction_increment", 0)
-    if inc:
-        dossier["interaction_count"] = dossier.get("interaction_count", 0) + inc
-
-    notes_add = updates.pop("notes_to_add", None)
-    if notes_add:
-        existing = list(dossier.get("notes", []))
-        seen = set(existing)
-        for n in notes_add:
-            n = (n or "").strip()
-            if n and n not in seen:
-                existing.append(n)
-                seen.add(n)
-        dossier["notes"] = existing[-20:]
-
-    preds_add = updates.pop("predictions_to_add", None)
-    if preds_add:
-        dossier.setdefault("predictions", []).extend(preds_add)
-        dossier["predictions"] = dossier["predictions"][-30:]
-
-    if "category" in updates:
-        cat = updates.pop("category")
-        if cat in ALLOWED_CATEGORIES:
-            dossier["category"] = cat
-    if "stance" in updates:
-        st = updates.pop("stance")
-        if st in ALLOWED_STANCES:
-            dossier["stance"] = st
-
-    for k, v in updates.items():
-        if v is not None:
-            dossier[k] = v
-
-    data["accounts"][key] = dossier
-    return data
-
-
 def record_interaction(handle: str, kind: str = "reply") -> None:
-    """Lightweight bump after a successful interaction. Append-only."""
-    if not _normalize(handle):
+    """Bump the interaction count after a logged interaction. An unreadable
+    file is left alone: the Reply stays logged, the count is skipped."""
+    key = _normalize(handle)
+    if not key:
         return
     try:
-        upsert_account(handle, interaction_increment=1)
+        # Every Reply job bumps a count after shipping: change the file under
+        # its lock, or two jobs erase each other's bumps.
+        PERSONALITY.update(lambda data: _bump(data, key))
     except Exception:
         pass
 
 
-def render_account_block(handle: str) -> str:
-    """Prompt-ready block describing what we know about @handle.
-    Empty string if no dossier — agent treats them as a fresh face."""
-    d = get_account(handle)
-    if not d:
-        return ""
-    h = _normalize(handle)
-    lines = [f"# Personal memory: what you know about @{h}"]
-    cat = d.get("category")
-    if cat and cat != "unknown":
-        lines.append(f"- Category: {cat}")
-    st = d.get("stance")
-    if st and st != "neutral":
-        lines.append(f"- Stance: {st}")
-    if d.get("feelings"):
-        lines.append(f"- Feeling: {d['feelings']}")
-    ic = d.get("interaction_count", 0)
-    if ic:
-        lines.append(f"- Past interactions: {ic}")
-    notes = d.get("notes") or []
-    if notes:
-        lines.append("- Accumulated observations:")
-        for n in notes[-8:]:
-            lines.append(f"  - {n}")
-    preds = d.get("predictions") or []
-    right = sum(1 for p in preds if p.get("outcome") == "right")
-    wrong = sum(1 for p in preds if p.get("outcome") == "wrong")
-    if right or wrong:
-        lines.append(f"- Prediction track record: {right} right / {wrong} wrong")
-    if d.get("do"):
-        lines.append(f"- What works with them: {d['do']}")
-    if d.get("dont"):
-        lines.append(f"- What to avoid with them: {d['dont']}")
-    lines.append("")
-    lines.append(
-        "React FROM this memory. You are not neutral about them: you share a "
-        "history. Whether your feeling is warm or cold, the post always targets "
-        "the IDEA, the SYSTEM, the CLAIM. Never the person."
-    )
-    return "\n".join(lines)
+def _bump(data: dict, key: str) -> dict:
+    from ..guards.active_hours import today_iso
+    today = today_iso()
+    entry = data.setdefault("accounts", {}).setdefault(key, {})
+    entry.setdefault("first_seen", today)
+    entry["last_interaction"] = today
+    entry["interaction_count"] = entry.get("interaction_count", 0) + 1
+    data.setdefault("topics", {})
+    return data
 
 
 def voice_file(lang: str) -> str:
@@ -268,39 +133,6 @@ def render_voice(lang: str = "en") -> str:
         "task below only says what to write this time.\n\n"
         + raw
     )
-
-
-def render_global_mood() -> str:
-    """High-level state of mind across all dossiers — for news/hot take prompts
-    that aren't aimed at a specific account. Empty if store is sparse."""
-    data = load()
-    accs = data.get("accounts", {})
-    if len(accs) < 3:
-        return ""
-    cats = {}
-    stances = {}
-    for d in accs.values():
-        cats[d.get("category", "unknown")] = cats.get(d.get("category", "unknown"), 0) + 1
-        stances[d.get("stance", "neutral")] = stances.get(d.get("stance", "neutral"), 0) + 1
-    top_builders = sorted(
-        ((h, d) for h, d in accs.items() if d.get("category") == "builder"),
-        key=lambda x: x[1].get("interaction_count", 0),
-        reverse=True,
-    )[:5]
-    top_predators = sorted(
-        ((h, d) for h, d in accs.items() if d.get("category") == "predator"),
-        key=lambda x: x[1].get("interaction_count", 0),
-        reverse=True,
-    )[:5]
-    lines = ["# Global state of mind (the bot's accumulated memory)"]
-    lines.append(f"- Accounts in memory: {len(accs)}")
-    if top_builders:
-        names = ", ".join(f"@{h}" for h, _ in top_builders)
-        lines.append(f"- Respected builders: {names}")
-    if top_predators:
-        names = ", ".join(f"@{h}" for h, _ in top_predators)
-        lines.append(f"- Predatory patterns watched (target: their systems): {names}")
-    return "\n".join(lines)
 
 
 def hard_rules_block() -> str:

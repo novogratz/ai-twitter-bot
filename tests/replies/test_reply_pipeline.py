@@ -33,7 +33,7 @@ def job(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False)
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST")
     options.setdefault("reply_call", lambda author: call)
     return rp.Job(options.pop("name", "test_job"), "TEST", **options)
 
@@ -260,7 +260,7 @@ def cloud_job(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False, provider="claude")
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", provider="claude")
     return job(reply_call=lambda author: call, **options)
 
 
@@ -415,8 +415,9 @@ def test_a_shipped_reply_is_logged_once_with_its_source(llm, chokepoint):
     sent = chokepoint.calls[0].text
     assert "—" not in sent and "[PATTERN" not in sent, "humanized, pattern tag stripped"
     assert [(r.url, r.source, r.text, r.pattern) for r in logged()] == [(shipped, "TEST/post one", sent, "RENAME")]
-    assert personality_store.get_account("someone")["interaction_count"] == 1, "the dossier bump"
-    assert personality_store.get_account("other") is None
+    dossiers = personality_store.PERSONALITY.read()["accounts"]
+    assert dossiers["someone"]["interaction_count"] == 1, "the interaction count"
+    assert "other" not in dossiers
 
 
 def test_callers_never_premark_the_replied_store(llm, chokepoint):
