@@ -244,7 +244,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         except subprocess.TimeoutExpired:
             # One retry: bring Safari to front explicitly, settle, try again.
             log.info(f"[SCRAPE] First JS attempt timed out for {label}; retrying after activate.")
-            safari._run_applescript('tell application "Safari" to activate')
+            safari._run_applescript('tell application "Safari" to activate',
+                                    timeout_s=safari.ACTIVATE_TIMEOUT_S)
             time.sleep(2)
             try:
                 raw = _try_once(30)
@@ -461,7 +462,7 @@ def scrape_own_tweet_and_replies():
                 delay 0.5
             end repeat
         end tell
-        ''')
+        ''', timeout_s=safari.SCROLL_TIMEOUT_S)
         time.sleep(2)
 
         js_code = r"""

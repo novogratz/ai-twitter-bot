@@ -18,6 +18,9 @@ There is no X API client.
 `editorial` (one thread, originals only) and `default` (twelve threads, every
 other job). Reply scans cannot starve the editorial job of a thread, but all
 browser work shares `_safari_lock`, so a post can still wait behind a reply.
+`safari_hygiene.restart_safari` takes it too: the session refresh, the
+`health` recovery and the blank-page recovery wait for the session in
+progress before quitting Safari.
 Every job is an `IntervalTrigger` registered through the local `add()` helper,
 which wraps it in `active_hours.awake_job`. There are no cron triggers and
 no warmup phase. The Startup post is not a job: `main()` opens its window and
@@ -709,15 +712,9 @@ These are how the code behaves today, not design intent:
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.
-- `session_refresh_job` and the `health` recovery restart Safari without
-  taking `_safari_lock`.
 - The page reads of `scraper.py`, the follow-back and the follower count
   still ignore `open_url`'s result, and read the front tab when the page
   did not open (parent issue #250). Only the writes check it.
-- Two AppleScript runs of `scraper.py` still have no bound: the activate
-  before the second JavaScript try of a page read, and the scroll of
-  `scrape_own_tweet_and_replies`. A wedged Safari there keeps the Safari
-  lock.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
   may still open a timed-out page afterwards, and the write's tab close
   then closes another tab and leaves that one open (issue #253). Nothing

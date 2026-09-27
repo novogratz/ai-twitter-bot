@@ -71,3 +71,30 @@ def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
     scraper._record_blank_page(label="@TheAIShrink")
     assert restarts == ["black_screen_recovery"], "diverse-label blanks = wedge = restart"
     scraper._reset_blank_page_count()
+
+
+def test_the_scraper_applescript_runs_have_a_bound(monkeypatch):
+    """#257: a restart waits for the Safari lock, so an osascript that never
+    returns under it would freeze the bot. The activate before a page read's
+    second JavaScript try and the Replyback scroll carry a bound."""
+    import subprocess
+    from src.x import safari, scraper
+
+    runs = []
+    monkeypatch.setattr(safari, "_run_applescript",
+                        lambda script, *a, **k: runs.append(k.get("timeout_s")) or True)
+    monkeypatch.setattr(scraper.time, "sleep", lambda *_: None)
+
+    def timed_out(*a, **k):
+        raise subprocess.TimeoutExpired("osascript", 30)
+    monkeypatch.setattr(safari, "_run_js", timed_out)
+    monkeypatch.setattr(scraper, "_record_timed_out_scrape", lambda label: None)
+    assert scraper._scrape_tweets_from_page("search 'ai'") == []
+
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "")
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda *a, **k: True)
+    assert scraper.scrape_own_tweet_and_replies() is None
+
+    assert runs == [safari.ACTIVATE_TIMEOUT_S, safari.SCROLL_TIMEOUT_S]
