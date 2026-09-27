@@ -1006,11 +1006,12 @@ def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeyp
     """#188: without the job's filter, a Blocked follower stayed fresh every
     cycle and took a pick and a pause before the chokepoint refused it."""
     from src.core import config
+    from src.x import twitter_client as tc
     fb, state = followback
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     settings_override(FOLLOWBACK_CAP=1)
     monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
-    asked = _follow_outcomes(monkeypatch, fb)
+    asked = _follow_outcomes(monkeypatch, tc)
     state.update(followers=["La_Pique_Off", "Realfan"], profile="CLICKED")
 
     fb.run_followback_cycle()
@@ -1073,6 +1074,91 @@ def test_followback_fails_when_its_followers_page_does_not_open(followback, memo
     _no_follow_written(memory_ledger, tmp_path)
 
 
+def _followback_over(monkeypatch, settings_override, followback, answers, cap=3):
+    """followback_job over the followers Fanone, Fantwo, Fanthree, Fanfour
+    in that order, `follow_account` answering from `answers` (an outcome, or
+    an exception to raise) per handle, FOLLOWED by default; returns the
+    handles it was asked to follow."""
+    from src.x.twitter_client import FollowOutcome
+
+    fb, state = followback
+    settings_override(FOLLOWBACK_CAP=cap)
+    monkeypatch.setattr(fb.random, "shuffle", lambda seq: None)
+    state["followers"] = ["Fanone", "Fantwo", "Fanthree", "Fanfour"]
+    asked = []
+
+    def follow(handle, **_):
+        asked.append(handle)
+        answer = answers.get(handle, FollowOutcome.FOLLOWED)
+        if isinstance(answer, BaseException):
+            raise answer
+        return answer
+    monkeypatch.setattr("src.x.twitter_client.follow_account", follow)
+    return asked
+
+
+@pytest.mark.parametrize("budget", ["TOO_SOON", "CAP_REACHED"])
+def test_followback_ends_the_cycle_on_the_follow_budget(followback, monkeypatch, settings_override,
+                                                        budget):
+    """#261: a refusal on the follow budget ends the cycle's attempts."""
+    from src.x.twitter_client import FollowOutcome
+    fb, _ = followback
+    asked = _followback_over(monkeypatch, settings_override, followback,
+                             {"Fantwo": FollowOutcome[budget]})
+
+    fb.run_followback_cycle()
+
+    assert asked == ["Fanone", "Fantwo"]
+
+
+def test_followback_stops_at_bedtime_and_reports_no_success(followback, monkeypatch,
+                                                            settings_override):
+    """#258: bedtime was swallowed pick by pick, with a traceback each,
+    and the cycle reported a success. It now ends the cycle, which is
+    neither a success nor a Safari failure."""
+    from src.core import health
+    from src.guards.active_hours import OutsideActiveHours
+    fb, _ = followback
+    asked = _followback_over(monkeypatch, settings_override, followback,
+                             {"Fanone": OutsideActiveHours("Bot asleep")})
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
+    monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
+
+    fb.safe_run_followback_cycle()
+
+    assert asked == ["Fanone"]
+    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
+
+
+def test_followback_never_tries_more_than_its_cap(followback, monkeypatch, settings_override):
+    """FOLLOWBACK_CAP bounds the attempts, not the follows shipped: a pick
+    refused, or one that raised, takes its place in the cycle. The error
+    fails the cycle once the picks are done."""
+    from src.x.twitter_client import FollowOutcome
+    fb, _ = followback
+    asked = _followback_over(monkeypatch, settings_override, followback,
+                             {"Fanone": RuntimeError("osascript died"),
+                              "Fantwo": FollowOutcome.QUALITY_REJECTED}, cap=3)
+
+    with pytest.raises(RuntimeError, match="osascript died"):
+        fb.run_followback_cycle()
+
+    assert asked == ["Fanone", "Fantwo", "Fanthree"]
+
+
+def test_followback_skips_a_followed_account_whatever_the_case(followback, monkeypatch,
+                                                               settings_override, tmp_path):
+    """#258: the follow-back matched the followed accounts case-sensitively,
+    so a follower recorded as `fanone` took a pick and a profile visit."""
+    fb, _ = followback
+    (tmp_path / "followed_accounts.json").write_text(json.dumps(["fanone"]))
+    asked = _followback_over(monkeypatch, settings_override, followback, {}, cap=2)
+
+    fb.run_followback_cycle()
+
+    assert asked == ["Fantwo", "Fanthree"]
+
+
 # --- #173: the policy finds the relation; a Stranger is never followed -------
 
 
@@ -1082,15 +1168,15 @@ def test_followback_never_follows_a_stranger_its_scrape_hands_over(followback, m
     suggested account scraped with them would have been followed. The
     policy reads its own record of the followers: a handle the scrape never
     recorded is a Stranger, refused before its profile opens."""
-    from src.x.twitter_client import FollowOutcome
+    from src.x import twitter_client as tc
 
     fb, state = followback
     monkeypatch.setattr(fb, "_scrape_followers_list", lambda page, max_handles=30: ["Suggested"])
-    outcomes = _follow_outcomes(monkeypatch, fb)
+    outcomes = _follow_outcomes(monkeypatch, tc)
 
     fb.run_followback_cycle()
 
-    assert outcomes == [("Suggested", FollowOutcome.REFUSED)]
+    assert outcomes == [("Suggested", tc.FollowOutcome.REFUSED)]
     assert state["visits"] == []
     _no_follow_written(memory_ledger, tmp_path)
 
@@ -1099,9 +1185,11 @@ def test_followback_follows_no_one_off_the_followers_page(followback, monkeypatc
                                                           tmp_path):
     """#173 review: a login wall or a redirect left another page in the tab,
     and its profile links were recorded as followers and followed back."""
+    from src.x import twitter_client as tc
+
     fb, state = followback
     state.update(page="/i/flow/login", followers=["Walluser"])
-    outcomes = _follow_outcomes(monkeypatch, fb)
+    outcomes = _follow_outcomes(monkeypatch, tc)
 
     fb.run_followback_cycle()
 

@@ -115,7 +115,7 @@ def _engage(monkeypatch):
 
 def _followback(monkeypatch):
     from src.account import followback_bot
-    monkeypatch.setattr(followback_bot, "follow_account", lambda *a, **k: pytest.fail("followed"))
+    monkeypatch.setattr("src.x.twitter_client.follow_account", lambda *a, **k: pytest.fail("followed"))
     followback_bot.run_followback_cycle()
 
 

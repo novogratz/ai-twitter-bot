@@ -31,7 +31,7 @@ def _followback(monkeypatch, follow, tmp_path):
     page = json.dumps({"path": f"/{config.BOT_HANDLE}/followers", "handles": [HANDLE]})
     monkeypatch.setattr(page_session, "BROWSER", page_session.MemoryBrowser(
         pages={f"https://x.com/{config.BOT_HANDLE}/followers": [page]}))
-    monkeypatch.setattr(fb, "follow_account", follow)
+    monkeypatch.setattr(tc, "follow_account", follow)
     fb.run_followback_cycle()
 
 
