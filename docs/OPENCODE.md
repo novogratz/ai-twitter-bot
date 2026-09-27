@@ -53,8 +53,8 @@ LLM_FALLBACK_CLI=opencode
 ```
 
 `OPENCODE_FALLBACK_MODEL` has no effect: an old `.env` that sets it starts,
-and the start logs it as ignored. Use `LLM_FALLBACK_MODEL` to force one model on a codex or gemini
-fallback, or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
+and the start logs it as ignored. Use `LLM_FALLBACK_MODEL` to force one
+model on a codex or gemini fallback, or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
 news, replies, hot takes, quote commentary, and every other `run_llm()` caller.
 
 ## Skills

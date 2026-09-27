@@ -268,6 +268,8 @@ _declare("FOLLOW_ENGAGERS_PER_CYCLE", int, 2, "Engagers follow_engagers_job foll
 # Credentials and endpoints the model CLIs read from their own environment:
 # `.env` may carry them for the subprocesses, the bot itself never reads them.
 _CLI_PASSTHROUGH = re.compile(r"^(?:[A-Z0-9_]+_API_KEY|OLLAMA_HOST|(?:ANTHROPIC|OPENAI|GEMINI|GOOGLE|CODEX|OPENCODE)_[A-Z0-9_]+)$")
+# Retired settings of the engine that the pattern above would pass on.
+_RETIRED_PASSTHROUGH = {"OPENCODE_FALLBACK_MODEL"}
 
 
 def known_keys() -> set[str]:
@@ -275,6 +277,8 @@ def known_keys() -> set[str]:
 
 
 def _is_known(key: str) -> bool:
+    if key in _RETIRED_PASSTHROUGH:
+        return False
     return key in known_keys() or bool(_CLI_PASSTHROUGH.match(key))
 
 
@@ -302,8 +306,8 @@ def load(env_file: str | None = None, environ=None) -> None:
     # An old `.env` still starts: a key no code reads is dropped and named.
     from_file = {k: v for k, v in from_file.items() if k not in unknown}
     raw = {**from_file, **environ}
-    account, warnings = _account_layer(raw.get("BOT_ACCOUNT", DECLARED["BOT_ACCOUNT"].default))
-    warnings[:0] = map(_unknown_key_warning, unknown)
+    account, bound_warnings = _account_layer(raw.get("BOT_ACCOUNT", DECLARED["BOT_ACCOUNT"].default))
+    warnings = [*map(_unknown_key_warning, unknown), *bound_warnings]
     values, problems = {}, []
     for name, setting in DECLARED.items():
         value = account.get(name, setting.default)
@@ -414,7 +418,9 @@ def _declared(name: str) -> Setting:
 
 
 def _read_env_file(path: str) -> dict:
-    """KEY=VALUE lines, the first occurrence of a key winning."""
+    """KEY=VALUE lines, the first occurrence of a key winning. `export KEY=VALUE`
+    reads as KEY=VALUE, as the scripts that `source` .env read it: the bot
+    and bot_watchdog.sh then see the same DRY_RUN."""
     values = {}
     try:
         with open(path) as f:
@@ -423,7 +429,7 @@ def _read_env_file(path: str) -> dict:
                 if not line or line.startswith("#") or "=" not in line:
                     continue
                 key, value = line.split("=", 1)
-                key = key.strip()
+                key = re.sub(r"^export\s+", "", key.strip())
                 if key:
                     values.setdefault(key, value.strip().strip('"').strip("'"))
     except OSError:

@@ -17,6 +17,8 @@ feeds, trusted hosts, relevance filter, network, niche and searches) lives in
   `main.py --dry-run` lists the same warnings under `settings_warnings`.
   Credentials the model CLIs read (`*_API_KEY`, `OLLAMA_HOST`, `OPENAI_*`,
   `ANTHROPIC_*`...) are not ignored: they reach those subprocesses.
+- An `export KEY=value` line reads as `KEY=value`, as the scripts that
+  `source` `.env` read it.
 - A value its type rejects (a switch takes `0` or `1`, a number a number)
   stops the start with a message naming the key; `main.py --dry-run` stops
   on the same values.

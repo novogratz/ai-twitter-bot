@@ -8,19 +8,22 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
-> **2026-09-27 — an old `.env` no longer stops the start:** since issue
-> #195, a `.env` key the engine did not know stopped the start. The
-> refactor of #187 retired about twenty keys (`REPOST_MAX_AGE_HOURS`, the
-> `RETWEET_*`, `NEWS_POST*` and `FOLLOW_BLAST_*` keys…), so a live `.env`
-> written before it kept the bot from starting after a pull. Such a key
-> is now ignored, never passed on to the
-> environment, and logged as a `[SETTINGS]` warning with the declared key it
-> may misspell. The seven settings kept declared only so an old `.env`
-> would start (`BESTIE_HANDLE`, `OPENCODE_FALLBACK_MODEL`, five
-> `DIRECT_REPLY_*`) were removed with it. The trade-off is known: a
-> misspelled key, `DRYRUN=1` for `DRY_RUN=1`, now starts with its default
-> and a warning instead of stopping. A badly typed value still stops the
-> start.
+> **2026-09-27 — an old `.env` no longer stops the start (PR #281):**
+> since issue #195, a `.env` key the engine did not know stopped the
+> start. The refactor of #187 retired about twenty keys
+> (`REPOST_MAX_AGE_HOURS`, the `RETWEET_*`, `NEWS_POST*` and
+> `FOLLOW_BLAST_*` keys…), so a live `.env` written before it kept the bot
+> from starting after a pull. Such a key is now ignored, never passed on
+> to the environment by the bot, and logged as a `[SETTINGS]` warning with
+> the declared key it may misspell, before any other refusal of the start.
+> The seven settings kept declared only so an old `.env` would start
+> (`BESTIE_HANDLE`, `OPENCODE_FALLBACK_MODEL`, five `DIRECT_REPLY_*`) were
+> removed with it. The review found that an `export DRY_RUN=1` line, which
+> `bot_watchdog.sh` sources as a dry run, would have read as an unknown
+> key under `bin/run.sh` and run live: `settings` now reads the `export`
+> form too. The trade-off is known: a misspelled key, `DRYRUN=1` for
+> `DRY_RUN=1`, now starts with its default and a warning instead of
+> stopping. A badly typed value still stops the start.
 
 > **2026-09-25 — a Safari restart waits for the session in progress (issue #257):**
 > the two-hourly `session_refresh_job` and the `health` recovery quit

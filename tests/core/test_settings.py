@@ -58,6 +58,15 @@ def test_a_retired_key_sharing_a_suffix_gets_no_suggestion(fresh):
     assert "Did you mean" not in settings.startup_warnings()[0]
 
 
+def test_an_export_line_reads_like_the_scripts_that_source_env_read_it(fresh):
+    """bot_watchdog.sh sources .env: `export DRY_RUN=1` is a dry run there,
+    so it must be one under bin/run.sh too."""
+    environ = fresh("export DRY_RUN=1\nexport  MAX_FOLLOWS_PER_DAY=3\n")
+    assert settings.get("DRY_RUN") is True and settings.get("MAX_FOLLOWS_PER_DAY") == 3
+    assert environ == {"DRY_RUN": "1", "MAX_FOLLOWS_PER_DAY": "3"}
+    assert settings.startup_warnings() == []
+
+
 def test_an_ignored_key_is_never_type_checked(fresh):
     """A key no code reads any more starts whatever its value."""
     fresh("DIRECT_REPLY_FEED_SCAN_LIMIT=lots\nBESTIE_HANDLE=someone\n")
@@ -293,6 +302,24 @@ def test_main_logs_the_bound_warnings_at_startup(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
     main.main()
     assert logged == ["[SETTINGS] MAX_ORIGINALS_PER_DAY=12 is above its ceiling: using 8."]
+
+
+def test_main_logs_the_ignored_keys_before_refusing_an_unmigrated_start(monkeypatch):
+    """The start that refuses still names in bot.log the .env keys it ignored."""
+    import main
+    from src.core import state_store
+    logged = []
+    warning = "DRYRUN in .env is not a setting the engine reads: ignored, delete the line. Did you mean DRY_RUN?"
+    monkeypatch.setattr(settings, "_warnings", [warning])
+    monkeypatch.setattr(main.log, "warning", logged.append)
+
+    def refuse():
+        raise state_store.Unmigrated("state files still at the project root")
+    monkeypatch.setattr(state_store, "require_migrated", refuse)
+    monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
+    with pytest.raises(SystemExit):
+        main.main()
+    assert logged == [f"[SETTINGS] {warning}"]
 
 
 # --- The override fixture ------------------------------------------------------
@@ -685,11 +712,13 @@ def test_env_example_describes_the_account_with_the_declared_defaults():
             assert settings._parse(setting, raw) == setting.default, key
 
 
-def test_model_cli_credentials_in_env_file_do_not_stop_the_start(tmp_path):
+def test_model_cli_credentials_in_env_file_reach_the_subprocesses(fresh):
     """A key the model CLIs read from their environment (an API key, the
     Ollama host) may sit in .env for the subprocesses; any other unknown key
-    is ignored."""
-    from src.core import settings
-    for key in ("OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_BASE_URL", "OLLAMA_HOST"):
-        assert settings._is_known(key), key
-    assert not settings._is_known("MAX_BREAKOUTS_PER_DAY")
+    is ignored, a retired setting with a CLI prefix too."""
+    keys = ("OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_BASE_URL", "OLLAMA_HOST")
+    environ = fresh("".join(f"{key}=x\n" for key in keys) + "MAX_BREAKOUTS_PER_DAY=4\n"
+                    "OPENCODE_FALLBACK_MODEL=opencode/big-pickle\n")
+    assert environ == dict.fromkeys(keys, "x")
+    assert [w.split()[0] for w in settings.startup_warnings()] == ["MAX_BREAKOUTS_PER_DAY",
+                                                                   "OPENCODE_FALLBACK_MODEL"]
