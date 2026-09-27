@@ -356,7 +356,7 @@ Safari restart, and nothing writes over the file:
 | File | Stops |
 |---|---|
 | `tweet_history.json` | `editorial_job` before any Draft, `post_tweet` (dedup and rationed openers), `babysit_job`, `reply_job` when enabled |
-| `followed_accounts.json` | `followback_job`, `engage_job` and `follow_engagers_job` (their Follow run, before any follow); every follow while `following_count.json` holds no count, as below. A follow that ships or finds the account already followed is not added to the file |
+| `followed_accounts.json` | `followback_job`, before it opens the followers page; `engage_job` and `follow_engagers_job`, whose Follow run stops before any follow; every follow while `following_count.json` holds no count, as below. A follow that ships or finds the account already followed is not added to the file |
 | `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |

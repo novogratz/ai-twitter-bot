@@ -22,8 +22,14 @@ from ..guards import follow_policy
 from ..guards.active_hours import OutsideActiveHours
 from ..guards.reply_admission import is_blocked_account
 from ..x.scraper import _profile_visit_allowed
-from ..x.twitter_client import visit_profile_and_like, LikeOutcome
+from ..x.twitter_client import visit_profile_and_like, FollowOutcome, LikeOutcome
 from .follow_run import FollowRun
+
+# The follow outcomes whose profile opened, or may have (a cached quality
+# reject, a page that failed to open): the like visit waits after them, as
+# it waited after every follow attempt before issue #262.
+_PROFILE_OPENED = frozenset({FollowOutcome.FOLLOWED, FollowOutcome.ALREADY_FOLLOWED,
+                             FollowOutcome.QUALITY_REJECTED, FollowOutcome.FAILED})
 
 
 def _vip_accounts() -> tuple:
@@ -82,7 +88,7 @@ def run_engage_cycle():
     liked = 0
     for username in picks:
         try:
-            if run.follow(username):
+            if run.follow(username) in _PROFILE_OPENED:
                 time.sleep(random.randint(2, 4))
 
             # 2026-06-17: skip the reciprocity-like pass when the handle is
@@ -109,6 +115,7 @@ def run_engage_cycle():
             traceback.print_exc()
 
     log.info(f"[ENGAGE] Done. Visited {len(picks)} accounts, liked {liked} posts.")
+    run.raise_failure()
 
 
 def safe_run_engage_cycle():

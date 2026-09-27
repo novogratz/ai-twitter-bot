@@ -103,7 +103,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
-| `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
+| `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too; a pick whose follow raised is still liked, and fails the cycle for the health watchdog once the likes are done. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
@@ -422,7 +422,8 @@ cycle, whereas a `TOO_SOON` may elapse. `OutsideActiveHours` and
 and returns `None`, and the job goes on. `failed` counts those picks, which
 `follow_engagers_job` counts in its per-cycle bound, and
 `raise_failure()` raises the last one's error: the job calls it once its
-state is saved, so the cycle reaches `health.record_failure`. The caps, the
+state is saved, `engage_job` once its likes are done, so the cycle reaches
+`health.record_failure`. The caps, the
 order and the persistent memory of tried handles stay in the job. `follow_engagers_job`
 and `engage_job` use it; `followback_job` still runs its own loop.
 

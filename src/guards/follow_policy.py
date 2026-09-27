@@ -13,7 +13,7 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
   the whitelist, anti-churn, the daily cap, the spacing, the following
   ceiling and ratio brake, then the quality-reject cache. Its verdict
   carries the relation it found.
-- `judge_profile(handle, relation, read_profile)` runs on the open profile,
+- `judge_profile(handle, rel, read_profile)` runs on the open profile,
   before the click: the quality gate, by the relation `judge` found, which
   caches what it rejects for 30 days. The relation is found once per
   follow.
@@ -542,7 +542,7 @@ def _record_quality_reject(handle: str) -> None:
         lambda doc: {**doc, (handle or "").lower(): datetime.now().isoformat()})
 
 
-def judge_profile(handle: str, relation: Relation | None,
+def judge_profile(handle: str, rel: Relation | None,
                   read_profile: Callable[[], dict]) -> Verdict:
     """The quality gate on the open profile, by the relation `judge` found
     (its verdict's `relation`), never read again: a Seed account passes, an
@@ -550,15 +550,15 @@ def judge_profile(handle: str, relation: Relation | None,
     refused without reading the profile. `read_profile` returns its
     followers, bio and name. A rejected handle is cached for 30 days, where
     `judge` finds it."""
-    if relation is None:
+    if rel is None:
         return Verdict(Refusal.POLICY, "no relation found before the profile opened")
-    if relation is Relation.STRANGER:
+    if rel is Relation.STRANGER:
         return Verdict(Refusal.POLICY, _STRANGER)
     profile = read_profile()
     ok, why = _quality_decision(
         _parse_follower_count(profile.get("followers", "")),
         profile.get("bio", ""), profile.get("name", ""),
-        whitelisted=relation is Relation.SEED, engager=relation is Relation.ENGAGER)
+        whitelisted=rel is Relation.SEED, engager=rel is Relation.ENGAGER)
     if not ok:
         _record_quality_reject(handle)
         return Verdict(Refusal.QUALITY_REJECTED, why)

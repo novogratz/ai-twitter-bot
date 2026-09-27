@@ -138,10 +138,13 @@ def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_
 # --- engage_bot ----------------------------------------------------------------
 
 
-def _engage_over(monkeypatch, answer, allowed=("seed1", "seed2", "seed3")):
+def _engage_over(monkeypatch, answer, allowed=("seed1", "seed2", "seed3"), sleeps=None,
+                 cycle=None):
     """engage_job over seed1..seed3 in that order, `follow_account` answering
-    `answer`, the profile visits of `allowed` permitted; returns the handles
-    it asked to follow and those whose posts it liked."""
+    `answer` (or calling it with the handle), the profile visits of
+    `allowed` permitted, each pause appended to `sleeps`; runs `cycle`,
+    `run_engage_cycle` by default, and returns the handles it asked to
+    follow and those whose posts it liked."""
     from src.account import engage_bot as eb
     from src.core import evolution_store
     from src.x import twitter_client as tc
@@ -150,13 +153,14 @@ def _engage_over(monkeypatch, answer, allowed=("seed1", "seed2", "seed3")):
     monkeypatch.setattr(eb, "_build_pool", lambda: ["seed1", "seed2", "seed3"])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
     monkeypatch.setattr(eb.random, "shuffle", lambda seq: None)
-    monkeypatch.setattr(eb.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(eb.time, "sleep", lambda s: sleeps is not None and sleeps.append(s))
     monkeypatch.setattr(eb, "_profile_visit_allowed", lambda h: h in allowed)
-    monkeypatch.setattr(tc, "follow_account", lambda h, **_: asked.append(h) or answer)
+    monkeypatch.setattr(tc, "follow_account", lambda h, **_: asked.append(h) or (
+        answer(h) if callable(answer) else answer))
     monkeypatch.setattr(eb, "visit_profile_and_like",
                         lambda h, like_count: liked.append(h) or [tc.LikeOutcome.LIKED])
 
-    eb.run_engage_cycle()
+    (cycle or eb.run_engage_cycle)()
     return asked, liked
 
 
@@ -193,6 +197,90 @@ def test_engage_asks_again_after_too_soon(monkeypatch):
 
     assert asked == ["seed1", "seed2", "seed3"]
     assert liked == ["seed1", "seed2", "seed3"]
+
+
+@pytest.mark.parametrize("outcome, waits", [
+    ("FOLLOWED", True), ("ALREADY_FOLLOWED", True), ("QUALITY_REJECTED", True),
+    ("FAILED", True), ("TOO_SOON", False), ("REFUSED", False), ("BLOCKED", False),
+    ("DRY_RUN", False)])
+def test_engage_waits_before_its_like_visit_after_a_profile_opened(monkeypatch, outcome, waits):
+    """#262 review: engage waited 2-4 s after every follow attempt before
+    reopening the profile to like; the Follow run kept the pause for
+    FOLLOWED only. A follow whose profile opened, or may have, keeps it; a
+    refusal before the profile opens needs none."""
+    from src.account import engage_bot as eb
+    from src.x.twitter_client import FollowOutcome
+
+    sleeps = []
+    monkeypatch.setattr(eb.random, "randint", lambda a, b: a)
+
+    _engage_over(monkeypatch, FollowOutcome[outcome], allowed=("seed1",), sleeps=sleeps)
+
+    follow_pause, like_pause = 2, 3
+    assert sleeps == ([follow_pause, like_pause, follow_pause, follow_pause] if waits
+                      else [like_pause])
+
+
+def test_engage_fails_the_cycle_once_its_likes_are_done_when_a_follow_raised(monkeypatch):
+    """#262 review: the Follow run logs a pick that raised and goes on; the
+    job raises the last error at the end of its cycle, after every like,
+    so that the health watchdog counts the cycle failed, as
+    follow_engagers does (#260)."""
+    from src.account import engage_bot as eb
+    from src.core import health
+    from src.x.twitter_client import FollowOutcome
+
+    def follow(handle):
+        if handle == "seed1":
+            raise RuntimeError("osascript died")
+        return FollowOutcome.FOLLOWED
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
+
+    asked, liked = _engage_over(monkeypatch, follow, cycle=eb.safe_run_engage_cycle)
+
+    assert asked == ["seed1", "seed2", "seed3"]
+    assert liked == ["seed1", "seed2", "seed3"]
+    assert failures == ["engage"]
+
+
+def test_engage_cycle_without_a_failed_follow_reports_success(monkeypatch):
+    from src.account import engage_bot as eb
+    from src.core import health
+    from src.x.twitter_client import FollowOutcome
+
+    successes = []
+    monkeypatch.setattr(health, "record_success", successes.append)
+    monkeypatch.setattr(health, "record_failure", lambda name: pytest.fail("cycle reported failed"))
+
+    _engage_over(monkeypatch, FollowOutcome.QUALITY_REJECTED, cycle=eb.safe_run_engage_cycle)
+
+    assert successes == ["engage"]
+
+
+def test_engage_stops_at_bedtime_in_its_like_step(monkeypatch):
+    """#262 review: bedtime raised by the like visit ends the cycle, not the
+    one pick: the picks after it are neither followed nor liked."""
+    from src.account import engage_bot as eb
+    from src.guards.active_hours import OutsideActiveHours
+    from src.x.twitter_client import FollowOutcome
+
+    liked = []
+
+    def like(handle, like_count):
+        liked.append(handle)
+        raise OutsideActiveHours("bedtime")
+
+    def cycle():
+        monkeypatch.setattr(eb, "visit_profile_and_like", like)
+        with pytest.raises(OutsideActiveHours):
+            eb.run_engage_cycle()
+
+    asked, _ = _engage_over(monkeypatch, FollowOutcome.FOLLOWED, cycle=cycle)
+
+    assert asked == ["seed1"]
+    assert liked == ["seed1"]
 
 
 def _dry_run_follow_path(monkeypatch):
