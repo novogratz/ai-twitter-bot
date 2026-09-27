@@ -24,7 +24,10 @@ Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
 their task instructions but no copy of the persona, and the model client adds
 none (#192). The per-person relations (Graphseo, bestie, buddy) are the
 Account's Relations, in `account.toml` and `relations/`: the engine names no
-one (#203).
+one (#203). The Voice says who writes, never the publishing rules: hours,
+ceilings and the reach target live in this file and in the engine, and
+reach no prompt (2026-09-27). The Relations' prompts keep to AI, impose no
+formula, and forbid invented figures.
 
 English Originals and Replies take the form of ASD-STE100 Simplified
 Technical English (Operator, 2026-09-27): sentences of 25 words at most,

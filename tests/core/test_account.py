@@ -699,11 +699,12 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 
 # sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
 # src/replies/direct_reply.py before #203 moved them to relations/. An
-# Operator edit of these files updates the hash here.
+# Operator edit of these files updates the hash here: graphseo and buddy
+# were rewritten on 2026-09-27 (AI niche, no formula, no invented figures).
 OLD_RELATION_PROMPTS = {
-    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
+    "graphseo": (1652, "749c11b4be836c2d9889a1b0284c59d00f9c299613ea8b9d32209cf3bc006546"),
     "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
-    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
+    "buddy": (670, "930b909815c16793b26454f43a2d00490b1e5e36664f4240f943f0702e17f3e8"),
 }
 
 def _digest(text):

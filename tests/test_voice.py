@@ -1,5 +1,6 @@
 """Cross-cutting: the Voice in the Account's voice_fr.md and voice_en.md,
 and the reply prompts that carry it."""
+import re
 from pathlib import Path
 
 ACCOUNT = Path(__file__).resolve().parent.parent / "accounts" / "theaishrink"
@@ -104,3 +105,16 @@ def test_spicy_dial_suggestive_never_explicit():
         low = personality_store.render_voice(lang).lower()
         assert "flirt" in low and "never explicit" in low, \
             "the Voice every prompt carries must hold the dial WITH its guardrail"
+
+
+def test_the_graphseo_relation_stays_on_ai_without_a_formula():
+    """Operator 2026-09-27: his prompt still bridged to "AI/Space/Investment",
+    the old niche, imposed "THE FORMULA — non-negotiable" ending on a
+    punchline or a question, and its examples carried unsourced figures."""
+    from src.core import account
+
+    low = account.current().relations.get("Graphseo").prompt.lower()
+    assert [w for w in ("space", "investment", "formula", "non-negotiable", "punchline", "their shit")
+            if w in low] == []
+    assert re.findall(r"\b(?!100%)\d+ ?%", low) == [], "an example figure the model would copy"
+    assert "ai" in low.split() and "do not invent" in low
