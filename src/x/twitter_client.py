@@ -633,13 +633,16 @@ _REFUSED = {follow_policy.Refusal.BLOCKED_ACCOUNT: FollowOutcome.BLOCKED,
             follow_policy.Refusal.POLICY: FollowOutcome.REFUSED}
 
 
-def follow_account(username: str) -> FollowOutcome:
+def follow_account(username: str,
+                   relations: frozenset = follow_policy.FOLLOWABLE) -> FollowOutcome:
     """Visit a user's profile and click the Follow button.
 
     The follow policy establishes the handle's relation with the account
-    itself (follow_policy.relation): a caller declares none, and a
-    Blocked account or a Stranger is refused before the profile opens,
-    whoever asks.
+    itself (follow_policy.relation), once per follow: a caller declares
+    none, and a Blocked account or a Stranger is refused before the profile
+    opens, whoever asks. `relations` narrows the relations the caller
+    follows, `follow_policy.SEED_ONLY` for engage and the `follow` skill:
+    any other relation is refused before the profile opens.
 
     Returns FOLLOWED only when the JS click actually fired (best-effort
     signal); the ledger row, the following count and the followed accounts
@@ -663,9 +666,12 @@ def follow_account(username: str) -> FollowOutcome:
         log.info(f"[FOLLOW] policy refuses @{username} ({verdict.refusal.value}: {verdict.reason}).")
         return _REFUSED[verdict.refusal]
 
+    admitted = None  # judge's verdict, whose relation the quality gate takes
+
     def admit():
-        verdict = follow_policy.judge(username)
-        return None if verdict else refused(verdict)
+        nonlocal admitted
+        admitted = follow_policy.judge(username, relations)
+        return None if admitted else refused(admitted)
 
     def pause():
         action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
@@ -679,7 +685,8 @@ def follow_account(username: str) -> FollowOutcome:
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
-        verdict = follow_policy.judge_profile(username, scraper._scrape_profile_quality)
+        verdict = follow_policy.judge_profile(username, admitted.relation,
+                                              scraper._scrape_profile_quality)
         if not verdict:
             return refused(verdict)
 

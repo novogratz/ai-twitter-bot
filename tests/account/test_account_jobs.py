@@ -138,30 +138,149 @@ def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_
 # --- engage_bot ----------------------------------------------------------------
 
 
-def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
-    """2026-06-17: engage_bot's reciprocity-like step calls
-    visit_profile_and_like, which is gated by PROFILE_VISIT_ALLOWLIST
-    (home/search-only mandate, 2026-06-07). Non-allowlisted handles return
-    instantly after logging '[LIKE] profile visit blocked' — but the engage
-    cycle still logged '[ENGAGE] Liking @X's latest tweets...' and slept
-    3-5s between each, producing ~50s of paired noise per cycle. Same shape
-    as PR #49's trusted-news skip: pre-filter by `_profile_visit_allowed`
-    before the like step. The follow_account call above is intentionally
-    NOT gated (mechanically required to click the Follow button)."""
-    import inspect
+def _engage_over(monkeypatch, answer, allowed=("seed1", "seed2", "seed3"), sleeps=None,
+                 cycle=None):
+    """engage_job over seed1..seed3 in that order, `follow_account` answering
+    `answer` (or calling it with the handle), the profile visits of
+    `allowed` permitted, each pause appended to `sleeps`; runs `cycle`,
+    `run_engage_cycle` by default, and returns the handles it asked to
+    follow and those whose posts it liked."""
     from src.account import engage_bot as eb
+    from src.core import evolution_store
+    from src.x import twitter_client as tc
 
-    src = inspect.getsource(eb.run_engage_cycle)
-    # Pin: the cycle imports the allowlist gate and uses it to skip likes
-    # for non-allowlisted handles before logging/sleeping.
-    assert "_profile_visit_allowed" in src, \
-        "engage cycle must pre-filter the like step by the profile allowlist"
-    # Pin: the gate runs BEFORE visit_profile_and_like (i.e. the skip path
-    # exists in the same function that calls the like primitive).
-    gate_idx = src.find("_profile_visit_allowed")
-    like_idx = src.find("visit_profile_and_like(username")
-    assert 0 < gate_idx < like_idx, \
-        "_profile_visit_allowed check must run before visit_profile_and_like"
+    asked, liked = [], []
+    monkeypatch.setattr(eb, "_build_pool", lambda: ["seed1", "seed2", "seed3"])
+    monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
+    monkeypatch.setattr(eb.random, "shuffle", lambda seq: None)
+    monkeypatch.setattr(eb.time, "sleep", lambda s: sleeps is not None and sleeps.append(s))
+    monkeypatch.setattr(eb, "_profile_visit_allowed", lambda h: h in allowed)
+    monkeypatch.setattr(tc, "follow_account", lambda h, **_: asked.append(h) or (
+        answer(h) if callable(answer) else answer))
+    monkeypatch.setattr(eb, "visit_profile_and_like",
+                        lambda h, like_count: liked.append(h) or [tc.LikeOutcome.LIKED])
+
+    (cycle or eb.run_engage_cycle)()
+    return asked, liked
+
+
+def test_engage_likes_only_the_profiles_it_may_visit(monkeypatch):
+    """2026-06-17: the like primitive returns at once for a handle outside
+    PROFILE_VISIT_ALLOWLIST (home/search-only mandate), so engage skips its
+    like step, log and pause. The follow is not gated: its profile visit is
+    mechanically required."""
+    from src.x.twitter_client import FollowOutcome
+
+    asked, liked = _engage_over(monkeypatch, FollowOutcome.FOLLOWED, allowed={"seed2"})
+
+    assert asked == ["seed1", "seed2", "seed3"]
+    assert liked == ["seed2"]
+
+
+def test_engage_likes_past_the_follow_budget_without_asking_the_chokepoint(monkeypatch):
+    """#262: past CAP_REACHED the daily cap, the ceiling and the ratio brake
+    do not come back within the cycle, so the Follow run asks no more; the
+    like step goes on for every pick."""
+    from src.x.twitter_client import FollowOutcome
+
+    asked, liked = _engage_over(monkeypatch, FollowOutcome.CAP_REACHED)
+
+    assert asked == ["seed1"]
+    assert liked == ["seed1", "seed2", "seed3"]
+
+
+def test_engage_asks_again_after_too_soon(monkeypatch):
+    """The follow spacing may elapse during the cycle: each pick asks."""
+    from src.x.twitter_client import FollowOutcome
+
+    asked, liked = _engage_over(monkeypatch, FollowOutcome.TOO_SOON)
+
+    assert asked == ["seed1", "seed2", "seed3"]
+    assert liked == ["seed1", "seed2", "seed3"]
+
+
+@pytest.mark.parametrize("outcome, waits", [
+    ("FOLLOWED", True), ("ALREADY_FOLLOWED", True), ("QUALITY_REJECTED", True),
+    ("FAILED", True), ("TOO_SOON", False), ("REFUSED", False), ("BLOCKED", False),
+    ("DRY_RUN", False)])
+def test_engage_waits_before_its_like_visit_after_a_profile_opened(monkeypatch, outcome, waits):
+    """#262 review: engage waited 2-4 s after every follow attempt before
+    reopening the profile to like; the Follow run kept the pause for
+    FOLLOWED only. A follow whose profile opened, or may have, keeps it; a
+    refusal before the profile opens needs none."""
+    from src.account import engage_bot as eb
+    from src.x.twitter_client import FollowOutcome
+
+    sleeps = []
+    monkeypatch.setattr(eb.random, "randint", lambda a, b: a)
+
+    _engage_over(monkeypatch, FollowOutcome[outcome], allowed=("seed1",), sleeps=sleeps)
+
+    follow_pause, like_pause = 2, 3
+    assert sleeps == ([follow_pause, like_pause, follow_pause, follow_pause] if waits
+                      else [like_pause])
+
+
+def test_engage_fails_the_cycle_once_its_likes_are_done_when_a_follow_raised(monkeypatch):
+    """#262 review: the Follow run logs a pick that raised and goes on; the
+    job raises the last error at the end of its cycle, after every like,
+    so that the health watchdog counts the cycle failed, as
+    follow_engagers does (#260)."""
+    from src.account import engage_bot as eb
+    from src.core import health
+    from src.x.twitter_client import FollowOutcome
+
+    def follow(handle):
+        if handle == "seed1":
+            raise RuntimeError("osascript died")
+        return FollowOutcome.FOLLOWED
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
+
+    asked, liked = _engage_over(monkeypatch, follow, cycle=eb.safe_run_engage_cycle)
+
+    assert asked == ["seed1", "seed2", "seed3"]
+    assert liked == ["seed1", "seed2", "seed3"]
+    assert failures == ["engage"]
+
+
+def test_engage_cycle_without_a_failed_follow_reports_success(monkeypatch):
+    from src.account import engage_bot as eb
+    from src.core import health
+    from src.x.twitter_client import FollowOutcome
+
+    successes = []
+    monkeypatch.setattr(health, "record_success", successes.append)
+    monkeypatch.setattr(health, "record_failure", lambda name: pytest.fail("cycle reported failed"))
+
+    _engage_over(monkeypatch, FollowOutcome.QUALITY_REJECTED, cycle=eb.safe_run_engage_cycle)
+
+    assert successes == ["engage"]
+
+
+def test_engage_stops_at_bedtime_in_its_like_step(monkeypatch):
+    """#262 review: bedtime raised by the like visit ends the cycle, not the
+    one pick: the picks after it are neither followed nor liked."""
+    from src.account import engage_bot as eb
+    from src.guards.active_hours import OutsideActiveHours
+    from src.x.twitter_client import FollowOutcome
+
+    liked = []
+
+    def like(handle, like_count):
+        liked.append(handle)
+        raise OutsideActiveHours("bedtime")
+
+    def cycle():
+        monkeypatch.setattr(eb, "visit_profile_and_like", like)
+        with pytest.raises(OutsideActiveHours):
+            eb.run_engage_cycle()
+
+    asked, _ = _engage_over(monkeypatch, FollowOutcome.FOLLOWED, cycle=cycle)
+
+    assert asked == ["seed1"]
+    assert liked == ["seed1"]
 
 
 def _dry_run_follow_path(monkeypatch):
@@ -619,7 +738,7 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path, settings_ov
         ag.record(ag.DEBATE_TURN, target=engager)
     followed = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h: followed.append(h) or FollowOutcome.FOLLOWED)
+                        lambda h, **_: followed.append(h) or FollowOutcome.FOLLOWED)
     settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=1, FOLLOW_ENGAGERS_PER_DAY=10)
     fe.run_follow_engagers_cycle()
     assert followed == ["freshfan"], "newest engager first, media skipped"
@@ -640,7 +759,7 @@ def test_follow_engagers_cap_reached_stays_reached_for_the_toronto_day(mac_in_pa
     settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_DAY=10)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1"])
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h: pytest.fail("followed past the Toronto day's cap"))
+                        lambda h, **_: pytest.fail("followed past the Toronto day's cap"))
     fe.STATE.write({"date": stamped, "count_today": 10, "attempted": []})
 
     fe.run_follow_engagers_cycle()
@@ -648,7 +767,7 @@ def test_follow_engagers_cap_reached_stays_reached_for_the_toronto_day(mac_in_pa
     assert fe._load_state()["count_today"] == 10
     followed = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h: followed.append(h) or FollowOutcome.FOLLOWED)
+                        lambda h, **_: followed.append(h) or FollowOutcome.FOLLOWED)
     clock(monkeypatch, datetime(2026, 10, 15, 10, tzinfo=TORONTO))
     fe.run_follow_engagers_cycle()
     assert followed == ["fan1"]
@@ -691,7 +810,7 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
         ag.record(ag.DEBATE_TURN, target=fan)
     called = []
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h: called.append(h) or FollowOutcome.CAP_REACHED)
+                        lambda h, **_: called.append(h) or FollowOutcome.CAP_REACHED)
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     fe.run_follow_engagers_cycle()
     assert called == ["somefan"], "a transient refusal ends the cycle"
@@ -711,7 +830,7 @@ def _follow_engagers_on(monkeypatch, settings_override, outcomes):
     settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=2)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1", "fan2", "fan3"])
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h: asked.append(h) or next(answers))
+                        lambda h, **_: asked.append(h) or next(answers))
     fe.run_follow_engagers_cycle()
     return asked, fe._load_state()
 
@@ -829,7 +948,8 @@ def _follow_outcomes(monkeypatch, module):
 
     seen = []
     real = tc.follow_account
-    monkeypatch.setattr(module, "follow_account", lambda h: seen.append((h, real(h))) or seen[-1][1])
+    monkeypatch.setattr(module, "follow_account",
+                        lambda h, **kw: seen.append((h, real(h, **kw))) or seen[-1][1])
     return seen
 
 
@@ -1012,7 +1132,7 @@ def test_follow_engagers_opens_no_profile_of_a_followed_account(live_follow, mon
 
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr("src.x.twitter_client.follow_account",
-                        lambda h: pytest.fail(f"asked to follow @{h}"))
+                        lambda h, **_: pytest.fail(f"asked to follow @{h}"))
     (tmp_path / "followed_accounts.json").write_text(json.dumps(["SmallFan"]))
     ag.record(ag.DEBATE_TURN, "SmallFan")
 
@@ -1031,7 +1151,7 @@ def test_follow_engagers_keeps_going_past_a_failed_pick(monkeypatch, settings_ov
     from src.guards import follow_policy
     from src.x.twitter_client import FollowOutcome
 
-    def follow(handle):
+    def follow(handle, **_):
         asked.append(handle)
         if handle == "fan1":
             raise RuntimeError("osascript died")
@@ -1058,7 +1178,7 @@ def test_follow_engagers_failed_picks_count_in_the_per_cycle_bound(monkeypatch,
     from src.account import follow_engagers_bot as fe
     from src.guards import follow_policy
 
-    def follow(handle):
+    def follow(handle, **_):
         asked.append(handle)
         raise RuntimeError("judge_profile broke")
     asked = []
@@ -1091,15 +1211,18 @@ def engage(monkeypatch, live_follow):
 def test_engage_never_tries_to_follow_a_stranger_from_the_feed(
         engage, monkeypatch, settings_override, memory_ledger, tmp_path, whitelist_only, bypass):
     """#173: engage_job's pool comes from the feeds; an account there with
-    no relation to ours never reaches the chokepoint, whatever the mode."""
+    no relation to ours is refused before its profile opens, whatever the
+    mode."""
+    from src.x import twitter_client as tc
+
     eb, state = engage
     settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only, FOLLOWBACK_BYPASS_WHITELIST=bypass)
     monkeypatch.setattr(eb, "_build_pool", lambda: ["feedaccount"])
-    outcomes = _follow_outcomes(monkeypatch, eb)
+    outcomes = _follow_outcomes(monkeypatch, tc)
 
     eb.run_engage_cycle()
 
-    assert outcomes == []
+    assert outcomes == [("feedaccount", tc.FollowOutcome.REFUSED)]
     assert state["visits"] == []
     _no_follow_written(memory_ledger, tmp_path)
 
@@ -1110,19 +1233,31 @@ def test_engage_leaves_its_followers_and_engagers_to_their_own_jobs(
         engage, monkeypatch, settings_override, memory_ledger, tmp_path, whitelist_only, bypass):
     """#173 review: engage_job followed any follower or Engager of its pool
     past the whitelist, the engager quality gate and the caps of
-    followback_job and follow_engagers_job. It follows Seed accounts only."""
+    followback_job and follow_engagers_job. It follows Seed accounts only:
+    #262, the policy refuses the others, by name, before their profile
+    opens."""
     from src.guards import action_guard as ag, follow_policy
+    from src.x import twitter_client as tc
 
     eb, state = engage
     settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only, FOLLOWBACK_BYPASS_WHITELIST=bypass)
     follow_policy.record_followers(["poolfan"])
     ag.record(ag.DEBATE_TURN, "pooldebater")
     monkeypatch.setattr(eb, "_build_pool", lambda: ["poolfan", "pooldebater"])
-    outcomes = _follow_outcomes(monkeypatch, eb)
+    outcomes = _follow_outcomes(monkeypatch, tc)
+    refusals = []
+    monkeypatch.setattr(tc.log, "info", lambda msg, *a, **k: refusals.append(msg)
+                        if msg.startswith("[FOLLOW] policy refuses") else None)
 
     eb.run_engage_cycle()
 
-    assert outcomes == []
+    assert sorted(outcomes) == [("pooldebater", tc.FollowOutcome.REFUSED),
+                                ("poolfan", tc.FollowOutcome.REFUSED)]
+    assert sorted(refusals) == [
+        "[FOLLOW] policy refuses @pooldebater (follow policy: Engager, outside the relations "
+        "asked (Seed account)).",
+        "[FOLLOW] policy refuses @poolfan (follow policy: follower, outside the relations "
+        "asked (Seed account))."]
     assert state["visits"] == []
     assert [r["action"] for r in memory_ledger.rows] == [ag.DEBATE_TURN]
     assert not (tmp_path / "followed_accounts.json").exists()
@@ -1130,18 +1265,40 @@ def test_engage_leaves_its_followers_and_engagers_to_their_own_jobs(
 
 def test_engage_follows_a_seed_account_from_its_pool(engage, monkeypatch, memory_ledger,
                                                      operator_folder):
+    from src.x import twitter_client as tc
     from src.x.twitter_client import FollowOutcome
 
     eb, state = engage
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["Graphseo"]}}))
     monkeypatch.setattr(eb, "_build_pool", lambda: ["Graphseo", "feedaccount"])
-    outcomes = _follow_outcomes(monkeypatch, eb)
+    monkeypatch.setattr(eb.random, "shuffle", lambda seq: None)
+    outcomes = _follow_outcomes(monkeypatch, tc)
 
     eb.run_engage_cycle()
 
-    assert outcomes == [("Graphseo", FollowOutcome.FOLLOWED)]
+    assert outcomes == [("Graphseo", FollowOutcome.FOLLOWED), ("feedaccount", FollowOutcome.REFUSED)]
     assert state["visits"] == ["https://x.com/Graphseo"]
     assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "graphseo")]
+
+
+def test_an_engage_follow_finds_the_relation_once(engage, monkeypatch, memory_ledger,
+                                                  operator_folder):
+    """#262: engage found the relation, then judge and the quality gate
+    each found it again: three whitelist reads for one follow."""
+    from src.core.account import OperatorFile
+
+    eb, state = engage
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["Graphseo"]}}))
+    monkeypatch.setattr(eb, "_build_pool", lambda: ["Graphseo"])
+    reads = []
+    real_read = OperatorFile.read
+    monkeypatch.setattr(OperatorFile, "read", lambda self: reads.append(self.name) or real_read(self))
+
+    eb.run_engage_cycle()
+
+    assert state["visits"] == ["https://x.com/Graphseo"]
+    assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "graphseo")]
+    assert reads.count("whitelist.json") == 1
 
 
 # The followers page script, run by node against a page whose sidebar holds

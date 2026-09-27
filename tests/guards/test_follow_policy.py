@@ -204,8 +204,6 @@ def test_a_missing_discovered_file_stops_every_follow(follow_env, monkeypatch, s
 
     with pytest.raises(StateUnreadable, match="whitelist_discovered.json is missing"):
         fp.judge("karpathy")
-    verdict = fp.judge_profile("karpathy", lambda: pytest.fail("profile read"))
-    assert verdict.refusal is Refusal.POLICY and "migrate_operator_data" in verdict.reason
     with pytest.raises(StateUnreadable, match="whitelist_discovered.json is missing"):
         fp.add_discovered(["deep_macro"])
     assert not path.exists()
@@ -222,15 +220,6 @@ def test_add_discovered_skips_known_handles_case_ignored_and_stops_at_its_limits
     assert fp.add_discovered(["third", "fourth"], max_total=4) == ["third"]
     assert fp.add_discovered(["sama"]) == []
     assert fp.DISCOVERED.read() == ["Sama", "new_one", "other", "third"]
-
-
-def test_the_quality_gate_refuses_on_a_whitelist_unreadable_on_the_open_profile(
-        follow_env, operator_folder):
-    """On the open profile the gate refuses instead of raising, so
-    follow_account still closes its tab."""
-    (operator_folder / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
-    verdict = fp.judge_profile("karpathy", lambda: pytest.fail("profile read"))
-    assert verdict.refusal is Refusal.POLICY and "whitelist.json is unreadable" in verdict.reason
 
 
 @pytest.mark.parametrize("handle, valid", [("karpathy", True), ("a_1", True), ("x" * 15, True),
@@ -367,7 +356,8 @@ def test_a_stranger_is_never_followed(follow_env, monkeypatch, settings_override
 
     assert fp.relation("repliedto") is fp.Relation.STRANGER, "a Reply we sent is no relation"
     assert fp.judge("repliedto") == stranger
-    assert fp.judge_profile("repliedto", lambda: pytest.fail("profile read")) == stranger
+    assert fp.judge_profile("repliedto", fp.Relation.STRANGER,
+                            lambda: pytest.fail("profile read")) == stranger
     assert not (tmp_path / "follow_quality_rejects.json").exists()
 
 
@@ -399,7 +389,7 @@ def test_each_relation_is_judged_no_wider_than_its_old_flag(
     assert bool(verdict) is admitted, verdict
     if not admitted:
         assert "not on whitelist" in verdict.reason
-    assert bool(fp.judge_profile(handle, lambda: small_fan)) is small_profile_passes
+    assert bool(fp.judge_profile(handle, verdict.relation, lambda: small_fan)) is small_profile_passes
 
 
 def test_the_relation_comes_from_the_policys_own_sources(follow_env, monkeypatch, tmp_path):
@@ -544,7 +534,7 @@ def test_a_profile_rejected_by_the_gate_is_refused_before_the_next_visit(follow_
     fp.record_followers(["smallaccount"])
     assert fp.judge("smallaccount") == ADMITTED
 
-    verdict = fp.judge_profile("SmallAccount", lambda: SMALL)
+    verdict = fp.judge_profile("SmallAccount", fp.Relation.FOLLOWER, lambda: SMALL)
 
     assert verdict.refusal is Refusal.QUALITY_REJECTED and "too small" in verdict.reason
     assert fp.judge("SmallAccount") == Verdict(
@@ -552,25 +542,59 @@ def test_a_profile_rejected_by_the_gate_is_refused_before_the_next_visit(follow_
 
 
 def test_the_gate_admits_a_seed_and_skips_size_for_an_engager_only(follow_env):
-    """#173: the gate reads the relation itself; a follower gets the full
-    gate, as a Follow-back always did."""
+    """#173: a follower gets the full gate, as a Follow-back always did.
+    #262: the gate takes the relation judge found."""
     small_fan = {"followers": "12", "bio": "hi", "name": "Sam"}
-    ag.record(ag.DEBATE_TURN, "smallfan")
-    fp.record_followers(["smallfollower"])
-    assert fp.judge_profile("karpathy", lambda: SMALL) == ADMITTED
-    assert fp.judge_profile("smallfan", lambda: small_fan) == ADMITTED
+    assert fp.judge_profile("karpathy", fp.Relation.SEED, lambda: SMALL) == ADMITTED
+    assert fp.judge_profile("smallfan", fp.Relation.ENGAGER, lambda: small_fan) == ADMITTED
     assert not fp._quality_reject_recent("smallfan")
-    verdict = fp.judge_profile("smallfollower", lambda: small_fan)
+    verdict = fp.judge_profile("smallfollower", fp.Relation.FOLLOWER, lambda: small_fan)
     assert verdict.refusal is Refusal.QUALITY_REJECTED and "too small" in verdict.reason
 
 
-def test_the_gate_reads_no_profile_while_the_whitelist_is_unreadable(tmp_path, operator_folder):
-    (operator_folder / "whitelist.json").write_text('{"tiers": {"tier1": ["karp')
+def test_the_gate_finds_no_relation_on_the_open_profile(follow_env, monkeypatch, tmp_path):
+    """#262: judge's relation serves the gate; nothing reads the whitelist
+    or the ledger again once the profile is open, and a verdict without a
+    relation reads no profile."""
+    monkeypatch.setattr(fp, "relation", lambda handle: pytest.fail("relation found again"))
 
-    verdict = fp.judge_profile("someone", lambda: pytest.fail("profile read"))
-
-    assert verdict.refusal is Refusal.POLICY and "whitelist.json is unreadable" in verdict.reason
+    assert fp.judge_profile("karpathy", fp.Relation.SEED, lambda: SMALL) == ADMITTED
+    verdict = fp.judge_profile("someone", None, lambda: pytest.fail("profile read"))
+    assert verdict.refusal is Refusal.POLICY
     assert not (tmp_path / "follow_quality_rejects.json").exists()
+
+
+@pytest.mark.parametrize("handle, relation", [("karpathy", fp.Relation.SEED),
+                                              ("somefollower", fp.Relation.FOLLOWER),
+                                              ("someengager", fp.Relation.ENGAGER)])
+def test_the_verdict_carries_the_relation_judge_found(follow_env, monkeypatch, settings_override,
+                                                      tmp_path, handle, relation):
+    _counts(monkeypatch, tmp_path, 100, 10)
+    settings_override(FOLLOW_WHITELIST_ONLY=False)
+    fp.record_followers(["somefollower"])
+    ag.record(ag.DEBATE_TURN, "someengager")
+
+    assert fp.judge(handle).relation is relation
+
+
+@pytest.mark.parametrize("handle, relation", [("somefollower", "follower"),
+                                              ("someengager", "Engager")])
+def test_a_relation_outside_the_ones_asked_is_refused_by_name(follow_env, monkeypatch,
+                                                              settings_override, tmp_path,
+                                                              handle, relation):
+    """#262: engage and the `follow` skill follow Seed accounts only; they
+    ask the policy for them instead of finding the relation themselves."""
+    _counts(monkeypatch, tmp_path, 100, 10)
+    settings_override(FOLLOW_WHITELIST_ONLY=False)
+    fp.record_followers(["somefollower"])
+    ag.record(ag.DEBATE_TURN, "someengager")
+
+    assert fp.judge(handle) == ADMITTED
+    assert fp.judge(handle, fp.SEED_ONLY) == Verdict(
+        Refusal.POLICY, f"{relation}, outside the relations asked (Seed account)")
+    assert fp.judge("karpathy", fp.SEED_ONLY) == ADMITTED
+    assert fp.judge("stranger", fp.SEED_ONLY) == Verdict(
+        Refusal.POLICY, "Stranger: not on the whitelist, not a follower, not an Engager")
 
 
 # --- the followed accounts ------------------------------------------------------
