@@ -794,6 +794,9 @@ These are how the code behaves today, not design intent:
   write is already UNCONFIRMED with its claim kept.
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
+- The debate prompt carries the Engager's message but not the account's post
+  it answers: the mentions tab does not show it, and reading it would open
+  one more page per Debate turn. The prompt tells the model so.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
   `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the

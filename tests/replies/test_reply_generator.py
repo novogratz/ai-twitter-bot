@@ -1,6 +1,7 @@
 """The Reply generator, tested through every job that calls it and through
 its interface, with the one fake LLM of tests/replies/fakes.py."""
 import json
+import re
 
 import pytest
 
@@ -251,6 +252,56 @@ def dossier():
 def test_reply_prompts_render_the_author_dossier(jobs, dossier, job):
     """replyback never passed the author, so its dossier never rendered."""
     assert dossier in jobs(job, "someone", EN)
+
+
+# --- What the job's instructions say -------------------------------------------
+
+AI_POST = "Long context windows keep growing and RAG still matters"
+
+
+def instructions(prompt):
+    """The prompt without its hard rules, which name the Fed on purpose."""
+    from src.core import personality_store
+
+    return prompt.replace(personality_store.hard_rules_block(), "")
+
+
+# The niche the replyback examples still joked about after #205 kept the
+# Replies to AI.
+OFF_NICHE = re.compile(r"\b(fed|bitcoin|btc|nfts?|crypto\w*|dip|markets?|marché|bercy|rates)\b", re.IGNORECASE)
+
+
+@pytest.mark.parametrize("job", ["search", "debate", "replyback"])
+def test_reply_instructions_stay_on_the_ai_niche(jobs, job):
+    assert OFF_NICHE.findall(instructions(jobs(job, "someone", AI_POST))) == []
+
+
+@pytest.mark.parametrize("job", ["search", "debate", "replyback"])
+def test_reply_instructions_forbid_inventing_figures(jobs, job):
+    """Debate asked for "one exact number" while the Reply prompt forbade
+    inventing current figures: the model sees one rule, never both."""
+    text = " ".join(instructions(jobs(job, "someone", AI_POST)).lower().split())
+    assert "do not invent current figures" in text
+    assert "exact number" not in text
+
+
+# The June replyback and debate orders the Voice contradicts: "A post does
+# not need a joke, question, emoji, or catchphrase", "no forced questions".
+FORCED = ("must make them laugh", "100% agree", "laugh floor", "needs a punchline", "be funnier",
+          "end with a tiny hook", "right?", "keep the rally going", "all four, every time")
+
+
+@pytest.mark.parametrize("job", ["search", "debate", "replyback"])
+def test_reply_instructions_force_no_joke_and_no_question(jobs, job):
+    text = " ".join(instructions(jobs(job, "someone", AI_POST)).lower().split())
+    assert [order for order in FORCED if order in text] == []
+
+
+def test_debate_tells_the_model_it_does_not_see_the_account_post(jobs):
+    """The mentions tab shows their message, not the post it answers: the
+    model must not guess what the account said."""
+    text = " ".join(instructions(jobs("debate", "someone", AI_POST)).split())
+    assert "You do not see the post they are answering." in text
 
 
 # --- Reading the model's answer --------------------------------------------------
