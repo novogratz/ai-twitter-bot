@@ -20,6 +20,8 @@ English prompts): every post and reply prompt carries it as one block.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
+- **English posts and replies in ASD-STE100 Simplified Technical English** for
+  their form, a hard rule; the Voice keeps the tone ([policy](docs/EDITORIAL_POLICY.md#value-and-voice)).
 - **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,

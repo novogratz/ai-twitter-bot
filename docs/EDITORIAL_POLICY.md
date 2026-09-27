@@ -26,6 +26,15 @@ none (#192). The per-person relations (Graphseo, bestie, buddy) are the
 Account's Relations, in `account.toml` and `relations/`: the engine names no
 one (#203).
 
+English Originals and Replies take the form of ASD-STE100 Simplified
+Technical English (Operator, 2026-09-27): sentences of 25 words at most,
+one idea per sentence, active voice, simple verb tenses, common words that
+keep one meaning each, no contractions, -ing verb forms or phrasal verbs.
+Where the Voice speaks of form, such as contractions or rhythm, this rule
+wins; the Voice keeps the tone. It is one of the hard rules
+(`personality_store.hard_rules_block()`), so every Original and Reply
+prompt carries it; French text keeps its own form.
+
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
 its own configuration. The draft generator sees fetched primary-source text. The generator selects numbered source
