@@ -55,23 +55,17 @@ def _row(setting) -> str:
 def render() -> str:
     """The reference, markers included."""
     header = ["| Setting | Type | Default | Bounds | Description |", "|---|---|---|---|---|"]
-    used = [s for s in settings.DECLARED.values() if s.name not in settings.UNUSED]
-    unused = [s for s in settings.DECLARED.values() if s.name in settings.UNUSED]
     providers = sorted({p for table in settings.MODEL_DEFAULTS.values() for p in table})
     lines = [BEGIN, "", "## Settings reference", "",
              "Every setting `src/core/settings.py` declares, in declaration order. A value",
              "past a bound is brought back to it and logged as a `[SETTINGS]` warning.", "",
-             *header, *map(_row, used), "",
+             *header, *map(_row, settings.DECLARED.values()), "",
              "### `MODEL_DEFAULTS`: the model of a CLI when its setting is unset", "",
              "| Setting | " + " | ".join(providers) + " |",
              "|---|" + "---|" * len(providers)]
     for name, table in settings.MODEL_DEFAULTS.items():
         lines.append(f"| `{name}` | " + " | ".join(f"`{table[p]}`" if p in table else "" for p in providers) + " |")
-    lines += ["", "### No effect: remove from `.env`", "",
-              "No code reads these any more. They stay declared so a `.env` that still",
-              "sets them starts; delete them from it.", "",
-              *header, *map(_row, unused), "",
-              "### Keys the shell scripts read", "",
+    lines += ["", "### Keys the shell scripts read", "",
               "Not read by the engine: these scripts read them after sourcing `.env`.", "",
               "| Key | Read by |", "|---|---|"]
     texts = {}

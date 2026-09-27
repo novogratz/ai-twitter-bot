@@ -11,11 +11,15 @@ feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 
 - `main.py` reads `.env` once at start. A variable already set in the
   process environment wins over `.env`.
-- A key `settings.py` does not know, or a value its type rejects (a switch
-  takes `0` or `1`, a number a number), stops the start with a message
-  naming the key; `main.py --dry-run` stops on the same keys. Credentials
-  the model CLIs read (`*_API_KEY`, `OLLAMA_HOST`, `OPENAI_*`,
-  `ANTHROPIC_*`...) may sit in `.env` for those subprocesses.
+- A key `settings.py` does not know is ignored, never passed on to the
+  environment, and logged as a `[SETTINGS]` warning that names it, with the
+  declared key it may misspell (`DRYRUN` gives `Did you mean DRY_RUN?`).
+  `main.py --dry-run` lists the same warnings under `settings_warnings`.
+  Credentials the model CLIs read (`*_API_KEY`, `OLLAMA_HOST`, `OPENAI_*`,
+  `ANTHROPIC_*`...) are not ignored: they reach those subprocesses.
+- A value its type rejects (a switch takes `0` or `1`, a number a number)
+  stops the start with a message naming the key; `main.py --dry-run` stops
+  on the same values.
 - A value past its floor or ceiling is brought back to the bound and logged
   as a `[SETTINGS]` warning.
 - **Any change to a setting takes effect at the next restart.** Nothing
@@ -78,9 +82,8 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
 ## Retired keys
 
 A key no code reads any more is not declared: a `.env` that still sets one
-stops the start and names it. Delete the line. The few declared settings
-that no longer have an effect are listed under
-[No effect](#no-effect-remove-from-env) below. The lists of
+starts, and the start logs a `[SETTINGS]` warning naming it. Delete the
+line. The lists of
 keys retired by issues #107, #168 and #170, and the earlier configuration
 tables, are in [HISTORY.md](HISTORY.md).
 
@@ -191,21 +194,6 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `NEWS_MODEL` | `claude-opus-4-8` | `gpt-5.4-mini` | `gemini-2.0-flash` |
 | `REPLY_MODEL` | `claude-haiku-4-5-20251001` | `gpt-5.4-mini` | `gemini-1.5-flash` |
 | `PRIORITY_REPLY_MODEL` | `claude-haiku-4-5-20251001` | `gpt-5.4-mini` | `gemini-2.0-flash` |
-
-### No effect: remove from `.env`
-
-No code reads these any more. They stay declared so a `.env` that still
-sets them starts; delete them from it.
-
-| Setting | Type | Default | Bounds | Description |
-|---|---|---|---|---|
-| `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
-| `BESTIE_HANDLE` | str | blank |  | No effect: remove it from .env. |
-| `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |
-| `DIRECT_REPLY_FEED_SCAN_LIMIT` | int | `150` |  | No effect: remove it from .env. |
-| `DIRECT_REPLY_PROFILE_SCAN_LIMIT` | int | `25` |  | No effect: remove it from .env. |
-| `DIRECT_REPLY_HOT_QUERY_LIMIT` | int | `20` |  | No effect: remove it from .env. |
-| `DIRECT_REPLY_LIVE_QUERY_LIMIT` | int | `20` |  | No effect: remove it from .env. |
 
 ### Keys the shell scripts read
 
