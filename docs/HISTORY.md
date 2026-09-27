@@ -25,6 +25,20 @@ their order in the file is not strictly chronological.
 > `DRY_RUN=1`, now starts with its default and a warning instead of
 > stopping. A badly typed value still stops the start.
 
+> **2026-09-27 — the like walks and the follow-back read their page through a session (issue #255):**
+> the three like walks each redid the Safari lock, the open, the pauses,
+> the scrolls and the tab close by hand, and `followback_job` ignored the
+> result of `safari.open_url`: when the followers page did not open, it
+> read whatever tab was in front, and only its check of the page path
+> kept it from recording another page's accounts. The walks and the
+> follow-back now open their page in a page session. `like_tweet`, called
+> from a walk, runs its scripts in a nested session that opens and closes
+> nothing, so it acts on the walk's page only; on its own it still acts on
+> the front tab. A walk whose page does not open still returns one
+> `FAILED`; a followers page that does not open now fails the follow-back
+> cycle, as the follower count's profile does. The dry-run check stays
+> before the session.
+
 > **2026-09-25 — a Safari restart waits for the session in progress (issue #257):**
 > the two-hourly `session_refresh_job` and the `health` recovery quit
 > Safari without taking the Safari lock, so either could pull the tab from

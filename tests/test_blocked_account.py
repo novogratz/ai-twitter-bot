@@ -26,11 +26,11 @@ def _followback(monkeypatch, follow, tmp_path):
     """The scrape drops a Blocked account; with that filter off, the
     chokepoint must refuse it all the same."""
     from src.account import followback_bot as fb
+    from src.x import page_session
     monkeypatch.setattr(fb, "is_blocked_account", lambda handle: False)
     page = json.dumps({"path": f"/{config.BOT_HANDLE}/followers", "handles": [HANDLE]})
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: page)
-    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(page_session, "BROWSER", page_session.MemoryBrowser(
+        pages={f"https://x.com/{config.BOT_HANDLE}/followers": [page]}))
     monkeypatch.setattr(fb, "follow_account", follow)
     fb.run_followback_cycle()
 

@@ -12,7 +12,7 @@ from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
 from ..guards import follow_policy
-from . import confirmed_write, safari, scraper
+from . import confirmed_write, page_session, safari, scraper
 from .confirmed_write import WriteOutcome
 
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
@@ -410,8 +410,10 @@ _POSTS_JS = r"""
 
 def _run_page_js(js: str) -> str:
     """Run `js` in Safari's front tab and return its result, "" when the
-    osascript call fails."""
-    return safari._run_js(js, 10, log_prefix="[LIKE]")
+    osascript call fails. Inside a walk's session it reads the walk's page
+    and opens nothing."""
+    with page_session.session("LIKE") as page:
+        return page.run_js(js, 10)
 
 
 def _page_posts(mode: str, target_id: str = "") -> dict:
@@ -826,26 +828,23 @@ def like_search_posts(url: str, count: int, seconds: float,
     if _cfg.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like up to {count} posts of {url}.")
         return outcomes
-    with safari._safari_lock:
+    with page_session.session("LIKE") as page:
         deadline = time.monotonic() + seconds
         log.info(f"[LIKE] Opening search: {url}")
-        opened = _open_or_abort(url, "LIKE")
         try:
-            if not opened:
-                outcomes.append(LikeOutcome.FAILED)
-                return outcomes
-            time.sleep(7)
-            # Scroll twice to populate ~20-30 articles.
-            safari._scroll_page()
-            time.sleep(1)
-            safari._scroll_page()
-            time.sleep(1)
-            _like_posts_on_page(
-                count, lambda post: True,
-                page_ok=lambda page: urllib.parse.urlparse(page).path == "/search",
-                outcomes=outcomes, deadline=deadline)
-        finally:
-            safari.close_front_tab()
+            page.open(url, settle_s=7)
+        except page_session.PageNotOpened:
+            outcomes.append(LikeOutcome.FAILED)
+            return outcomes
+        # Scroll twice to populate ~20-30 articles.
+        page.scroll()
+        page.wait(1)
+        page.scroll()
+        page.wait(1)
+        _like_posts_on_page(
+            count, lambda post: True,
+            page_ok=lambda listed: urllib.parse.urlparse(listed).path == "/search",
+            outcomes=outcomes, deadline=deadline)
     return outcomes
 
 
@@ -869,20 +868,17 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
         log.info(f"[LIKE][DRY_RUN] would like up to {like_count} posts of @{username}.")
         return []
     handle = username.strip().lstrip("@").lower()
-    with safari._safari_lock:
+    with page_session.session("LIKE") as page:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
-        opened = _open_or_abort(profile_url, "LIKE")
         try:
-            if not opened:
-                return [LikeOutcome.FAILED]
-            time.sleep(5)
-            outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
-            log.info(f"[LIKE] @{username}: {like_summary(outcomes)}.")
-            time.sleep(1)
-            return outcomes
-        finally:
-            safari.close_front_tab()
+            page.open(profile_url, settle_s=5)
+        except page_session.PageNotOpened:
+            return [LikeOutcome.FAILED]
+        outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
+        log.info(f"[LIKE] @{username}: {like_summary(outcomes)}.")
+        page.wait(1)
+        return outcomes
 
 
 def pin_own_tweet(tweet_url: str) -> WriteOutcome:
@@ -989,23 +985,20 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
     _n_like = max(0, settings.get("NOTIFY_LIKE_REPLIES_COUNT"))
     if _n_like == 0:
         return []
-    with safari._safari_lock:
+    with page_session.session("NOTIFY") as page:
         log.info("[NOTIFY] Opening own profile...")
-        opened = _open_or_abort(_cfg.BOT_PROFILE_URL, "NOTIFY")
         try:
-            if not opened:
-                return [LikeOutcome.FAILED]
-            time.sleep(5)
-            log.info("[NOTIFY] Opening latest tweet...")
-            safari._navigate_to_first_tweet()
-            time.sleep(4)
-            log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
-            # Off our own status page, "not ours" would match any post.
-            outcomes = _like_posts_on_page(_n_like, lambda url: True,
-                                           page_ok=lambda page: scraper.is_own_post({"url": page}))
-            log.info(f"[NOTIFY] Replies: {like_summary(outcomes)}.")
-            time.sleep(2)
-            return outcomes
-        finally:
-            safari.close_front_tab()
+            page.open(_cfg.BOT_PROFILE_URL, settle_s=5)
+        except page_session.PageNotOpened:
+            return [LikeOutcome.FAILED]
+        log.info("[NOTIFY] Opening latest tweet...")
+        page.keys(safari.FIRST_TWEET_KEYS)
+        page.wait(4)
+        log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
+        # Off our own status page, "not ours" would match any post.
+        outcomes = _like_posts_on_page(_n_like, lambda url: True,
+                                       page_ok=lambda listed: scraper.is_own_post({"url": listed}))
+        log.info(f"[NOTIFY] Replies: {like_summary(outcomes)}.")
+        page.wait(2)
+        return outcomes
 

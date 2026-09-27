@@ -6,8 +6,8 @@ from datetime import datetime
 
 import pytest
 
-from tests.helpers import (FRESH, OWN_BEST, TORONTO, SearchPage, clock, pin_rows, stop_requested,
-                           fresh)
+from tests.helpers import (FRESH, OWN_BEST, TORONTO, SearchPage, clock, like_searches, pin_rows,
+                           stop_requested, fresh)
 
 # 02:30 on 2026-10-15 in Paris.
 TORONTO_EVENING = datetime(2026, 10, 14, 20, 30, tzinfo=TORONTO)
@@ -322,14 +322,12 @@ def test_dry_run_engage_cycle_leaves_followed_accounts_unchanged(monkeypatch, tm
 
 
 def _stub_like_browser(monkeypatch, tmp_path):
-    from src.account import like_bot
-    from src.x import safari, twitter_client
+    from src.x import page_session, twitter_client
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(twitter_client.time, "sleep", lambda *_: None)
+    browser = page_session.MemoryBrowser()
+    like_searches(browser, [])
+    monkeypatch.setattr(page_session, "BROWSER", browser)
     requested = []
 
     def like_posts(n, wanted, page_ok, outcomes, deadline):
@@ -547,7 +545,7 @@ def test_like_job_starts_no_like_after_its_cycle_deadline(like_job, monkeypatch,
     assert len(page.clicks) == expected
     assert len(_like_rows(like_job)) == expected
     assert like_bot._load_daily_state()["count"] == expected
-    assert like_job["closed"] == 1
+    assert like_job["browser"].closed == 1
 
 
 def test_like_job_counts_shipped_likes_when_a_stop_ends_the_walk(like_job):
@@ -565,20 +563,18 @@ def test_like_job_counts_shipped_likes_when_a_stop_ends_the_walk(like_job):
 
     assert page.clicks == [FRESH]
     assert like_bot._load_daily_state()["count"] == 1
-    assert like_job["closed"] == 1
+    assert like_job["browser"].closed == 1
 
 
 def test_like_job_dry_run_opens_nothing(like_job, monkeypatch):
     from src.account import like_bot
-    from src.x import safari, twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "1")
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: pytest.fail("opened Safari"))
-    monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
 
     like_bot.run_like_cycle()
 
     assert _like_rows(like_job) == []
+    assert (like_job["browser"].opened, like_job["browser"].scripts) == ([], [])
 
 
 # --- pin_bot -------------------------------------------------------------------
@@ -915,10 +911,9 @@ def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_cand
 @pytest.fixture
 def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     """The real follow chokepoint and policy, in the live whitelist mode,
-    over a scripted browser: the tab shows `state["page"]`, a followers
-    page listing `state["followers"]`, every profile answers
-    `state["profile"]` to the Follow script and shows a big AI profile to
-    the quality gate; `state["visits"]` lists the pages opened."""
+    over a scripted browser: every profile answers `state["profile"]` to
+    the Follow script and shows a big AI profile to the quality gate;
+    `state["visits"]` lists the profiles opened."""
     from src.core import config
     from src.x import safari, scraper, twitter_client as tc
 
@@ -928,14 +923,11 @@ def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
     monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
-    state = {"page": "/TheAIShrink/followers", "followers": [], "profile": "CLICKED",
-             "visits": []}
+    state = {"profile": "CLICKED", "visits": []}
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: state["visits"].append(url) or True)
-    monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: (
-        json.dumps({"path": state["page"], "handles": state["followers"]})
-        if "UserCell" in js else state["profile"]))
+    monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: state["profile"])
     monkeypatch.setattr(scraper, "_scrape_profile_quality",
                         lambda: {"followers": "50K", "bio": "AI investor", "name": "Fan"})
     return state
@@ -959,14 +951,20 @@ def _no_follow_written(memory_ledger, tmp_path):
     assert not (tmp_path / "follow_quality_rejects.json").exists()
 
 
-@pytest.fixture
-def followback(monkeypatch, live_follow):
-    """Live followback_job over the scripted followers page."""
-    from src.account import followback_bot as fb
-    from src.x import safari
+FOLLOWERS_PAGE = "https://x.com/TheAIShrink/followers"
 
-    live_follow.update(followers=["Alreadyfan"], profile="ALREADY")
-    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
+
+@pytest.fixture
+def followback(monkeypatch, live_follow, memory_page):
+    """Live followback_job over the scripted followers page: the memory
+    page shows `state["page"]`, a followers page listing
+    `state["followers"]`, and `state["browser"]` records its opens."""
+    from src.account import followback_bot as fb
+
+    live_follow.update(page="/TheAIShrink/followers", followers=["Alreadyfan"], profile="ALREADY",
+                       browser=memory_page)
+    memory_page.pages[FOLLOWERS_PAGE] = lambda js: json.dumps(
+        {"path": live_follow["page"], "handles": live_follow["followers"]})
     monkeypatch.setattr(fb.time, "sleep", lambda *_: None)
     return fb, live_follow
 
@@ -978,15 +976,16 @@ def test_followback_never_revisits_an_account_found_already_followed(followback,
     chokepoint records it now, without a ledger row, and the next cycle
     skips it."""
     fb, state = followback
-    followers_page = "https://x.com/TheAIShrink/followers"
 
     fb.run_followback_cycle()
-    assert state["visits"] == [followers_page, "https://x.com/Alreadyfan"]
+    assert state["browser"].opened == [FOLLOWERS_PAGE]
+    assert state["visits"] == ["https://x.com/Alreadyfan"]
     assert json.loads((tmp_path / "followed_accounts.json").read_text()) == ["Alreadyfan"]
     assert memory_ledger.rows == []
 
     fb.run_followback_cycle()
-    assert state["visits"] == [followers_page, "https://x.com/Alreadyfan", followers_page]
+    assert state["browser"].opened == [FOLLOWERS_PAGE, FOLLOWERS_PAGE]
+    assert state["visits"] == ["https://x.com/Alreadyfan"]
 
 
 def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeypatch, settings_override):
@@ -999,7 +998,7 @@ def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeyp
 
     fb.run_followback_cycle()
 
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+    assert state["visits"] == ["https://x.com/Realfan"]
 
 
 def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeypatch, memory_ledger,
@@ -1017,7 +1016,7 @@ def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeyp
     fb.run_followback_cycle()
 
     assert [h for h, _ in asked] == ["Realfan"]
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+    assert state["visits"] == ["https://x.com/Realfan"]
 
 
 def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_path):
@@ -1047,7 +1046,8 @@ def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, 
     fb.safe_run_followback_cycle()
 
     assert failures == ["followback"]
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert state["browser"].opened == [FOLLOWERS_PAGE]
+    assert state["visits"] == []
     assert memory_ledger.rows == []
     assert (operator_folder / "whitelist.json").read_text() == "{not json"
 
@@ -1064,13 +1064,13 @@ def test_followback_never_follows_a_stranger_its_scrape_hands_over(followback, m
     from src.x.twitter_client import FollowOutcome
 
     fb, state = followback
-    monkeypatch.setattr(fb, "_scrape_followers_list", lambda max_handles=30: ["Suggested"])
+    monkeypatch.setattr(fb, "_scrape_followers_list", lambda page, max_handles=30: ["Suggested"])
     outcomes = _follow_outcomes(monkeypatch, fb)
 
     fb.run_followback_cycle()
 
     assert outcomes == [("Suggested", FollowOutcome.REFUSED)]
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert state["visits"] == []
     _no_follow_written(memory_ledger, tmp_path)
 
 
@@ -1085,7 +1085,8 @@ def test_followback_follows_no_one_off_the_followers_page(followback, monkeypatc
     fb.run_followback_cycle()
 
     assert outcomes == []
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert state["browser"].opened == [FOLLOWERS_PAGE]
+    assert state["visits"] == []
     assert not (tmp_path / "followers_seen.json").exists()
     _no_follow_written(memory_ledger, tmp_path)
 
@@ -1349,35 +1350,38 @@ var document = {{
 """
 
 
-def _run_followers_script(monkeypatch, page_js):
+def _scrape_followers(memory_page, page_js):
+    """The follow-back's scrape of the followers page `page_js` builds, run
+    by node on the memory page."""
     import shutil
     import subprocess
-    from src.x import safari
+    from src.account import followback_bot as fb
+    from src.x import page_session
 
     node = shutil.which("node")
     if not node:
         pytest.skip("node is not installed: the followers page script cannot be run")
 
-    def run_js(js, *a, **k):
+    def run_js(js):
         program = page_js + f"\nconsole.log(eval({json.dumps(js)}));"
         res = subprocess.run([node, "-e", program], capture_output=True, text=True, timeout=20)
         assert res.returncode == 0, res.stderr
         return res.stdout.strip()
-    monkeypatch.setattr(safari, "_run_js", run_js)
+    memory_page.pages[FOLLOWERS_PAGE] = run_js
+    with page_session.session("FOLLOWBACK") as page:
+        page.open(FOLLOWERS_PAGE)
+        return fb._scrape_followers_list(page, 50)
 
 
-def test_the_followers_scrape_reads_the_account_of_each_primary_column_cell(monkeypatch,
+def test_the_followers_scrape_reads_the_account_of_each_primary_column_cell(memory_page,
                                                                            tmp_path):
     """#173: the scrape took every profile link of the page, so the "Who to
     follow" block, and the @mentions of a follower's bio, would have passed
     for followers. It reads the first profile link of each user cell of the
     primary column, and records only the real-looking handles."""
-    from src.account import followback_bot as fb
     from src.guards import follow_policy
 
-    _run_followers_script(monkeypatch, _followers_page())
-
-    assert fb._scrape_followers_list(50) == ["fan_one", "fan_two"]
+    assert _scrape_followers(memory_page, _followers_page()) == ["fan_one", "fan_two"]
     assert set(json.loads((tmp_path / "followers_seen.json").read_text())) == {"fan_one", "fan_two"}
     for handle in ("suggested_one", "mentioned_one", "xkprz9821"):
         assert follow_policy.relation(handle) is follow_policy.Relation.STRANGER, handle
@@ -1389,20 +1393,13 @@ def test_the_followers_scrape_reads_the_account_of_each_primary_column_cell(monk
     _followers_page(path="/someoneelse/followers"),
     _followers_page(path="/TheAIShrink/following"),
 ])
-def test_the_followers_scrape_reads_nothing_off_our_followers_page(monkeypatch, tmp_path, page):
+def test_the_followers_scrape_reads_nothing_off_our_followers_page(memory_page, tmp_path, page):
     """A redirect, a login wall or a failed page load leaves another page in
     the tab: its accounts are no followers of ours."""
-    from src.account import followback_bot as fb
-
-    _run_followers_script(monkeypatch, page)
-
-    assert fb._scrape_followers_list(50) == []
+    assert _scrape_followers(memory_page, page) == []
     assert not (tmp_path / "followers_seen.json").exists()
 
 
-def test_the_followers_scrape_accepts_a_trailing_slash_and_any_case(monkeypatch, tmp_path):
-    from src.account import followback_bot as fb
-
-    _run_followers_script(monkeypatch, _followers_page(path="/theaishrink/followers/"))
-
-    assert fb._scrape_followers_list(50) == ["fan_one", "fan_two"]
+def test_the_followers_scrape_accepts_a_trailing_slash_and_any_case(memory_page):
+    assert _scrape_followers(memory_page, _followers_page(path="/theaishrink/followers/")) \
+        == ["fan_one", "fan_two"]

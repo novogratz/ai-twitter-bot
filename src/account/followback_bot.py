@@ -23,7 +23,6 @@ random alphanumerics with no vowels, length=15) and Blocked accounts, so
 they take no pick of the cycle. follow_account refuses a Blocked account
 all the same.
 """
-import json
 import random
 import re
 import time
@@ -34,7 +33,7 @@ from ..core.logger import log
 from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
 from ..guards.reply_admission import is_blocked_account
-from ..x import safari
+from ..x import page_session
 from ..x.twitter_client import follow_account
 
 
@@ -56,10 +55,10 @@ def _looks_like_real_handle(handle: str) -> bool:
     return True
 
 
-def _scrape_followers_list(max_handles: int = 30) -> list[str]:
-    """Scrape the @handles of the open followers page's user cells, keep the
-    real-looking ones and record them as followers. Nothing is read or
-    recorded unless the tab shows our own followers page."""
+def _scrape_followers_list(page: page_session.Page, max_handles: int = 30) -> list[str]:
+    """Scrape the @handles of the user cells of the followers page open in
+    `page`, keep the real-looking ones and record them as followers. Nothing
+    is read or recorded unless the tab shows our own followers page."""
     js_code = """
     (function() {
         var handles = [];
@@ -84,19 +83,15 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
     })()
     """.replace("MAX", str(max_handles * 2))
 
-    raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
-    try:
-        page = json.loads(raw or "null")
-    except ValueError:
+    answer = page.read_json(js_code, 30, activate=True)
+    if not isinstance(answer, dict):
         return []
-    if not isinstance(page, dict):
-        return []
-    path = str(page.get("path") or "").rstrip("/").lower()
+    path = str(answer.get("path") or "").rstrip("/").lower()
     if path != f"/{config.BOT_HANDLE}/followers".lower():
         log.info(f"[FOLLOWBACK] Not on our followers page ({path or 'no page'}); nothing read.")
         return []
     handles = []
-    for h in page.get("handles") or []:
+    for h in answer.get("handles") or []:
         h = str(h)
         if h.lower() == config.BOT_HANDLE.lower():
             continue
@@ -111,20 +106,19 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
 
 
 def run_followback_cycle():
-    """Visit the Account's followers page and follow back fresh ones."""
+    """Visit the Account's followers page and follow back fresh ones. A
+    followers page that does not open raises PageNotOpened: the cycle
+    fails and follows no one."""
     followed = follow_policy.followed()
 
-    with safari._safari_lock:
+    with page_session.session("FOLLOWBACK") as page:
         url = f"https://x.com/{config.BOT_HANDLE}/followers"
         log.info(f"[FOLLOWBACK] Opening {url}")
-        safari.open_url(url)
-        time.sleep(8)
+        page.open(url, settle_s=8)
         # Scroll twice to load 30-50 followers.
-        safari._scroll_page()
-        safari._scroll_page()
+        page.scroll(2)
 
-        candidates = _scrape_followers_list(max_handles=50)
-        safari.close_front_tab()
+        candidates = _scrape_followers_list(page, max_handles=50)
 
     if not candidates:
         log.info("[FOLLOWBACK] No candidates scraped.")

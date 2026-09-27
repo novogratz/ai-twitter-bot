@@ -146,9 +146,8 @@ def _paste_text(text: str) -> bool:
     return _run_applescript(script, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
-def _navigate_to_first_tweet():
-    """Use Tab+Enter to navigate to the first tweet on a profile/page."""
-    script = '''
+# Tab+Enter to the first tweet on a profile/page, for `Page.keys`.
+FIRST_TWEET_KEYS = '''
     tell application "System Events"
         keystroke tab
         delay 0.2
@@ -159,7 +158,11 @@ def _navigate_to_first_tweet():
         keystroke return
     end tell
     '''
-    _run_applescript(script, timeout_s=KEYSTROKE_TIMEOUT_S)
+
+
+def _navigate_to_first_tweet():
+    """Use Tab+Enter to navigate to the first tweet on a profile/page."""
+    _run_applescript(FIRST_TWEET_KEYS, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
 def close_front_tab():

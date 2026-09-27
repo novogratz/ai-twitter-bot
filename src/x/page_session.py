@@ -35,7 +35,7 @@ import contextlib
 import json
 import threading
 import time
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
@@ -106,8 +106,9 @@ class Script:
 class MemoryBrowser:
     """Pages scripted by URL: `pages[url]` lists the answers the page gives
     its scripts in turn, "" once exhausted; an answer that is an exception
-    is raised. A URL without a page does not open."""
-    pages: dict[str, list] = field(default_factory=dict)
+    is raised. A page may instead be a function of the script that returns
+    its answer. A URL without a page does not open."""
+    pages: dict[str, list | Callable[[str], str]] = field(default_factory=dict)
     opened: list[str] = field(default_factory=list)
     closed: int = 0
     waits: list[float] = field(default_factory=list)
@@ -137,8 +138,11 @@ class MemoryBrowser:
                raise_timeout: bool) -> str:
         self.scripts.append(Script(self.front, js, timeout_s, log_prefix, activate,
                                    raise_timeout))
-        answers = self.pages.get(self.front, [])
-        answer = answers.pop(0) if answers else ""
+        page = self.pages.get(self.front, [])
+        if callable(page):
+            answer = page(js)
+        else:
+            answer = page.pop(0) if page else ""
         if isinstance(answer, BaseException):
             raise answer
         return answer

@@ -7,7 +7,7 @@ import subprocess
 
 import pytest
 
-from tests.helpers import FRESH, SearchPage, stop_requested
+from tests.helpers import FRESH, SearchPage, posts_script, stop_requested
 
 
 POST = "https://x.com/thebtctherapist/status/2063500000000000101"
@@ -26,6 +26,15 @@ REPLY = "https://x.com/engager/status/2063500000000000105"
 
 
 BLOCKED = "https://x.com/BlockedOne/status/2063500000000000107"
+
+
+PROFILE = "https://x.com/TheBTCTherapist"
+
+
+SEARCH = "https://x.com/search?q=AI"
+
+
+FRONT = "https://x.com/front"
 
 
 class FakePage:
@@ -57,22 +66,21 @@ class FakePage:
 
 
 @pytest.fixture
-def browser(monkeypatch):
-    """Live write path on a scripted page; ledger rows and tab closes recorded."""
+def browser(monkeypatch, memory_page):
+    """Live write path on the memory page: it shows `state["page"]` in the
+    front tab and on the pages the walks open, which `state["memory"]`
+    records. Ledger rows are recorded."""
+    from src.core import config
     from src.guards import action_guard
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    state = {"page": FakePage(), "recorded": [], "closed": 0, "opens": True}
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: state["opens"])
-    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: None)
-    monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
+    state = {"page": FakePage(), "recorded": [], "memory": memory_page}
+    for url in (PROFILE, config.BOT_PROFILE_URL, SEARCH, FRONT):
+        memory_page.pages[url] = lambda js: posts_script(state["page"], js)
+    memory_page.front = FRONT
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: state["recorded"].append((a, k)))
-
-    def close_front_tab():
-        state["closed"] += 1
-    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
 
 
@@ -181,9 +189,9 @@ def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch
             held.pop()
 
     monkeypatch.setattr(safari, "_safari_lock", RecordingLock())
-    page = like_job["page"] = SearchPage([{"url": FRESH, "liked": False}])
+    page = SearchPage([{"url": FRESH, "liked": False}])
     seen = []
-    monkeypatch.setattr(tc, "_page_posts", lambda *a: seen.append(bool(held)) or page(*a))
+    like_job["page"] = lambda *a: seen.append(bool(held)) or page(*a)
 
     assert tc.like_tweet(FRESH) is tc.LikeOutcome.LIKED
     assert seen == [True, True]
@@ -270,7 +278,30 @@ def test_profile_visit_likes_their_own_posts_and_reports_each(browser):
     outcomes = tc.visit_profile_and_like("TheBTCTherapist", like_count=2)
     assert outcomes == [tc.LikeOutcome.ALREADY_LIKED, tc.LikeOutcome.LIKED]
     assert page.clicks == [NEXT]
-    assert browser["closed"] == 1
+    assert browser["memory"].closed == 1
+
+
+def test_a_like_inside_a_walk_opens_nothing_and_acts_on_the_walks_page(browser):
+    """#255: the walk's session opens the page; each like_tweet it calls
+    runs in a nested session, which opens and closes nothing."""
+    from src.x import twitter_client as tc
+
+    browser["page"] = FakePage(posts=[{"url": POST, "liked": False}])
+    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=1) == [tc.LikeOutcome.LIKED]
+    memory = browser["memory"]
+    assert memory.opened == [PROFILE]
+    assert [s.url for s in memory.scripts] == [PROFILE] * 3  # list, press, read
+    assert memory.closed == 1
+
+
+def test_a_like_on_its_own_opens_and_closes_nothing(browser):
+    from src.x import twitter_client as tc
+
+    browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": False}])
+    assert tc.like_tweet(POST) is tc.LikeOutcome.LIKED
+    memory = browser["memory"]
+    assert (memory.opened, memory.closed) == ([], 0)
+    assert [s.url for s in memory.scripts] == [FRONT, FRONT]
 
 
 @pytest.mark.parametrize("dry_run, like_count", [("0", 0), ("1", 2)])
@@ -294,7 +325,7 @@ def test_notify_likes_replies_but_never_our_own_posts(browser, settings_override
     ])
     assert tc.like_own_tweet_replies() == [tc.LikeOutcome.LIKED]
     assert page.clicks == [REPLY]
-    assert browser["closed"] == 1
+    assert browser["memory"].closed == 1
 
 
 def test_notify_clicks_nothing_off_our_own_status_page(browser):
@@ -321,25 +352,25 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     browser["page"] = FakePage(page=OWN, posts=[{"url": REPLY, "liked": False}])
     with pytest.raises(StateUnreadable):
         tc.like_own_tweet_replies()
-    assert browser["closed"] == 2
+    assert browser["memory"].closed == 2
 
 
 @pytest.mark.parametrize("walk", [
-    lambda tc: tc.like_search_posts("https://x.com/search?q=AI", 3, 60),
+    lambda tc: tc.like_search_posts(SEARCH, 3, 60),
     lambda tc: tc.visit_profile_and_like("TheBTCTherapist", like_count=2),
     lambda tc: tc.like_own_tweet_replies(),
 ], ids=["search", "profile", "notify"])
 def test_a_walk_whose_page_does_not_open_clicks_nothing(browser, monkeypatch, settings_override, walk):
     """#251: a page that does not open leaves the front tab to someone
     else; the walk reads and clicks nothing there and records no row."""
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     settings_override(NOTIFY_LIKE_REPLIES_COUNT=3)
-    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: pytest.fail("pressed a key"))
-    monkeypatch.setattr(safari, "_scroll_page", lambda: pytest.fail("scrolled"))
-    monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
-    browser["opens"] = False
+    memory = browser["memory"]
+    memory.pages.clear()
     assert walk(tc) == [tc.LikeOutcome.FAILED]
+    assert (memory.scripts, memory.scrolls, memory.pressed) == ([], 0, [])
+    assert memory.closed == 1
     assert browser["recorded"] == []
 
 
