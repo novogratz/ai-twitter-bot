@@ -22,6 +22,9 @@ English prompts): every post and reply prompt carries it as one block.
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **English posts and replies in ASD-STE100 Simplified Technical English** for
   their form, a hard rule; the Voice keeps the tone ([policy](docs/EDITORIAL_POLICY.md#value-and-voice)).
+- **Short replies**: one or two sentences, about 100 characters in every reply
+  prompt; Reply admission trims to `REPLY_MAX_CHARS` (160 at most) on a sentence
+  end ([policy](docs/EDITORIAL_POLICY.md#runtime-rules)).
 - **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,

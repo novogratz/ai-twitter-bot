@@ -33,6 +33,10 @@ from ..x import x_urls
 from ..core.logger import log
 
 
+# The end of a sentence, before any closing quote or bracket.
+_SENTENCE_END = re.compile(r"[.!?…][\"»')\]]*$")
+
+
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
@@ -101,11 +105,14 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
 
     # Every Reply loses its dashes here, including paths that skip humanize().
     text = humanizer.strip_dashes(draft)
-    if len(text) > content_guard.REPLY_MAX_CHARS:
-        # The generation is already paid for: trim on a sentence boundary
-        # rather than discard; validate below still rejects what can't be saved.
-        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
-        log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
+    longest = settings.get("REPLY_MAX_CHARS")
+    if len(text) > longest:
+        # The generation is already paid for: keep its first sentences. A cut
+        # on a word boundary reads as a botched paste: refuse it instead.
+        trimmed = humanizer.smart_trim(text, longest)
+        if not _SENTENCE_END.search(trimmed):
+            return Verdict(Refusal.TEXT, f"{len(text)} chars, no sentence end within {longest}", author)
+        log.info(f"[REPLY] over-length ({len(text)} chars): trimmed to {len(trimmed)}.")
         text = trimmed
     text = humanizer.casualize(text)
     # The language is judged on the text as written, before the typo.

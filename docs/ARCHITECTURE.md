@@ -625,8 +625,8 @@ admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
 handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
 answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
-(dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
-validates it last. `reply_to_tweet` calls `judge_reply` once under the
+(dashes, `smart_trim` to `REPLY_MAX_CHARS` on a sentence end or a refusal,
+`casualize`, FR-forced language check, typo) and validates it last. `reply_to_tweet` calls `judge_reply` once under the
 Safari lock, the lock that also records the reply, so the spacing and the
 Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement

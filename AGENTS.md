@@ -23,6 +23,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
   declarations; `.env` and `account.toml` may only tighten them.
 - English Originals and Replies take the form of ASD-STE100 Simplified
   Technical English, a hard rule (2026-09-27); the Voice keeps the tone.
+- A Reply is one or two short sentences (2026-09-27): every Reply prompt
+  asks for about 100 characters and 140 at most, and none sets its own
+  length; the Reply admission trims to `REPLY_MAX_CHARS`, 160 at most.
 - Replies, likes and follows keep to AI (2026-09-25): the Account's niche
   patterns and searches look for AI, and its lists drop crypto, markets and
   space accounts, save those the Operator picked by hand and a few still to
@@ -62,7 +65,7 @@ Account.
 | Model calls: the Call surfaces, each with its model setting, provider setting and CLI options (`SURFACES`; callers name a surface, only a Relation's CLI overrides its provider), provider adapters, the neutral directory every CLI runs from, the one fallback ladder (no fallback unless `LLM_FALLBACK_CLI` names one; an unknown provider fails the call and runs nothing), the CLI model a model setting gives the provider called, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search; direct, feed sweep, early bird, mega watch and debate select through the Reply source; a job reads the Account itself and takes nothing from `direct_reply` but its `reply_call` | `src/replies/` |
-| Reply prompts: Voice, hard rules, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
+| Reply prompts: Voice, the one length rule, hard rules, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising and newest orders | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
@@ -71,7 +74,7 @@ Account.
 | Caps, pacing, anti-churn; the ledger facts the follow policy reads; the Original count and spacing over the ledger and the Slot journal's submissions, and the check that a reserved key is the day's Pending slot of that text, which `post_tweet` enforces | `src/guards/action_guard.py` |
 | Follow policy: handle, Blocked account, the account's relation it finds itself once per follow (Seed account, follower, Engager; a Stranger never), the relations a caller follows (`SEED_ONLY` for engage and the `follow` skill), whitelist, caps, ceiling, quality gate, named Follow refusals, followed accounts and the other follow files | `src/guards/follow_policy.py` |
 | Write ledger: today's counts, last write, last follow or unfollow; file and in-memory adapters | `src/guards/ledger.py` |
-| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
+| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text trimmed to `REPLY_MAX_CHARS` on a sentence end, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |

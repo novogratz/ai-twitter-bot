@@ -701,11 +701,12 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 # BUDDY_REPLY_PROMPT of src/replies/direct_reply.py when #203 moved them to
 # relations/, as the Operator edited them since. An Operator edit of these
 # files updates the hash here: all three on 2026-09-27 (AI niche for
-# graphseo, no forced hook, no invented figures).
+# graphseo, no forced hook, no invented figures, then no length of their
+# own).
 RELATION_PROMPTS = {
-    "graphseo": (2118, "234dcd533ab81122c6416e809736c04d33e993c75184341779a7140805950782"),
-    "bestie": (1135, "8126ff3e231cddd41cf7d25d2817806280d2d4be433def656ff79c844e8663cb"),
-    "buddy": (670, "930b909815c16793b26454f43a2d00490b1e5e36664f4240f943f0702e17f3e8"),
+    "graphseo": (2003, "b5aef944267d7b22a5092109165b456af034ce395be2318bb34738fca09f7f6c"),
+    "bestie": (1121, "cb6498c7e6c8fdd86d3f38b53b3365e9f1d5ffc584d98708a41b01b197b5b5db"),
+    "buddy": (656, "742131d272308651a11a604d0013577c3bba83de77ecb31dede963c6cb6985bc"),
 }
 
 def _digest(text):

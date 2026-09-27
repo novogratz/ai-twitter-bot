@@ -64,6 +64,9 @@ PRE_187_BOUNDED = {
     "LIKE_BOT_PER_CYCLE": 10, "LIKE_BOT_DAILY_CAP": 500, "FOLLOWBACK_CAP": 8,
     "FOLLOW_ENGAGERS_PER_DAY": 10, "FOLLOW_ENGAGERS_PER_CYCLE": 2,
 }
+# Bounded settings declared since, with their value when no .env sets them:
+# the Operator shortened the Replies on 2026-09-27 (278 characters before).
+NEW_BOUNDED = {"REPLY_MAX_CHARS": 160}
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings"}
@@ -109,7 +112,8 @@ def test_theaishrink_keeps_the_jobs_and_ceilings_it_had_before_187(dry_run):
     shown = dry_run({})
     assert set(shown) == set(PRE_187) | NEW_KEYS
     assert {key: shown[key] for key in PRE_187} == PRE_187
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == PRE_187_BOUNDED
+    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
+        **PRE_187_BOUNDED, **NEW_BOUNDED}
     assert shown["settings_warnings"] == []
 
 
@@ -132,7 +136,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     # Its [limits] lowers the day's ceiling to 4, and the targets under it.
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
-    assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
+    assert bounded == {**PRE_187_BOUNDED, **NEW_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")

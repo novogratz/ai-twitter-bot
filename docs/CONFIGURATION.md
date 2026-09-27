@@ -137,6 +137,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
 | `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
+| `REPLY_MAX_CHARS` | int | `160` | floor `80`, ceiling `160` | Longest Reply that ships: the Reply admission trims a longer one on a sentence end, or refuses it. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |

@@ -174,7 +174,13 @@ marked published after a check.
   `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
   code and an operator request, not a config change.
 - Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
-  per-author debate turns protect conversation quality. Every answer to
+  per-author debate turns protect conversation quality.
+- A Reply is short (Operator, 2026-09-27: "the Replies are too long").
+  Every Reply prompt ends its instructions on one rule, "one or two short
+  sentences, about 100 characters, never more than 140"; no job template or
+  Relation sets another length. The Reply admission trims a longer draft to
+  `REPLY_MAX_CHARS` (160) on a sentence end, and refuses one it cannot cut
+  there; the post stays replayable. Every answer to
   someone who answered the account is a debate turn, whichever job sends it.
   The per-tweet dedup store fails closed: while it is unreadable, no reply
   ships. The gap after each reply is `MIN_SECONDS_BETWEEN_REPLIES` plus a
@@ -273,6 +279,7 @@ change, read the warnings or run `main.py --dry-run` before starting.
 | `DUP_TOPIC_WINDOW_HOURS`, same-story window | at least 24 h | 24 |
 | `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
 | `REPLY_MIN_CHARS`, shortest Reply | at least 25 characters | 25 |
+| `REPLY_MAX_CHARS`, longest Reply | 80 to 160 characters | 160 |
 
 The duplicate settings may only get stricter: a lower threshold or count, or
 a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,

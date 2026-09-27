@@ -252,6 +252,26 @@ def test_no_reply_prompt_carries_an_author_dossier(jobs, dossier, job, author, t
     assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
 
 
+# --- Length ---------------------------------------------------------------------
+
+# A length a template or a Relation still sets on its own (2026-09-27).
+OWN_LENGTH = re.compile(r"\bchar(?:s|acters)\b|\d+\s*-\s*\d+\s+(?:\w+\s+)?sentences", re.IGNORECASE)
+
+
+@pytest.mark.parametrize("job, author, text", EVERY_PATH)
+def test_every_reply_prompt_asks_for_the_one_short_length(jobs, job, author, text):
+    """Operator 2026-09-27: "the Replies are too long". Six prompts each set
+    a length, up to 220 characters or three sentences; one rule now closes
+    the job's instructions, before the hard rules, and none sets another."""
+    from src.core import personality_store
+    from src.replies.reply_generator import LENGTH_RULE
+
+    prompt = jobs(job, author, text)
+    assert "one or two short sentences" in LENGTH_RULE.lower() and "never more than 140" in LENGTH_RULE
+    assert prompt.endswith("\n\n" + LENGTH_RULE + "\n\n" + personality_store.hard_rules_block())
+    assert OWN_LENGTH.findall(instructions(prompt).replace(LENGTH_RULE, "")) == []
+
+
 # --- What the job's instructions say -------------------------------------------
 
 AI_POST = "Long context windows keep growing and RAG still matters"
@@ -495,13 +515,15 @@ def test_a_stop_request_during_generation_ends_the_cycle(llm):
         generate()
 
 
-def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
+def test_reply_text_is_unquoted_and_left_whole_for_the_admission(llm):
+    """The Reply admission trims every Reply to REPLY_MAX_CHARS: the
+    generator no longer trims one job's on its own (2026-09-27)."""
     from src.replies.reply_generator import Outcome
 
     llm.default = '"Short first sentence here. A second sentence runs on well past the cap."'
-    generation = generate(max_chars=40)
+    generation = generate()
     assert generation.outcome is Outcome.WRITTEN
-    assert generation.text == "Short first sentence here."
+    assert generation.text == "Short first sentence here. A second sentence runs on well past the cap."
 
 
 def test_the_language_decided_for_the_prompt_comes_back(llm):
