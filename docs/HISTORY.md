@@ -8,6 +8,23 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-27 — the replyback and debate prompts follow the Voice:**
+> a Reply prompt is a single block of text: Voice, the job's
+> instructions, the author's dossier for some jobs, the hard rules. The
+> post being answered is under 2% of it, so stale instructions reach every
+> Reply. The replyback instructions (5,325 characters, the longest) still
+> carried the June "be funnier" directive: "You MUST make them laugh",
+> "100% AGREE WITH THEM", a forced "right?" hook, and jokes about the Fed,
+> Bitcoin, NFTs, "the market" and Bercy, a niche #205 dropped from the
+> Replies. One example mocked the Fed, which hard rule 2 forbids. The
+> debate instructions asked for "one exact number" where the Reply prompt
+> says "Do not invent current figures", and made the model defend a post it
+> never sees: the mentions tab shows the Engager's message only. Both now
+> answer the point, make a joke or a closing question optional, forbid
+> invented figures, and debate says it does not see the account's post.
+> Replyback answers now take up to 220 characters, as debate's do, instead
+> of 110.
+
 > **2026-09-27 — an old `.env` no longer stops the start (PR #281):**
 > since issue #195, a `.env` key the engine did not know stopped the
 > start. The refactor of #187 retired about twenty keys

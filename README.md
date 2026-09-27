@@ -118,6 +118,7 @@ uv run --with-requirements requirements.txt python main.py --dry-run  # print po
 uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
 uv run --with-requirements requirements.txt python main.py --post-only   # editorial originals only
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
+uv run --with-requirements requirements.txt python bin/show_prompts.py [LABEL]  # the prompts as the jobs assemble them; no model, browser or state write
 ```
 
 `bot.log`, at the root, contains runtime activity. The state of the Account
