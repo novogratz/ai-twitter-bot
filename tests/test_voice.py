@@ -15,9 +15,10 @@ def test_voice_has_ai_fan_voice():
 
 
 def test_voice_prioritizes_reader_value():
-    text = VOICE_FR.read_text().lower()
-    assert "reader takeaway" in text and "source" in text
-    assert "never fill a quota with filler" in text
+    for path in (VOICE_FR, VOICE_EN):
+        text = path.read_text().lower()
+        assert "something useful" in text and "lead with the detail that matters" in text
+        assert "never invent a source or number" in text
 
 
 def test_voice_keeps_warmth_and_honest_criticism():
@@ -26,12 +27,15 @@ def test_voice_keeps_warmth_and_honest_criticism():
     assert "honest criticism" in text and "uncertainty" in text
 
 
-def test_voice_carries_editorial_strategy():
-    text = VOICE_FR.read_text().lower()
-    assert "at least three original ai posts" in text
-    assert "eight is the absolute ceiling" in text
-    assert "no automated quote tweets" in text
-    assert "replies remain uncapped" in text
+def test_voice_carries_no_publishing_policy():
+    """Operator 2026-09-27: the Voice opens every Reply prompt, where the
+    hours, the daily ceiling and the reach target help nothing, and the two
+    files disagreed on the ceiling (seven, eight). The engine enforces the
+    policy and docs/EDITORIAL_POLICY.md states it; the Voice says who writes."""
+    for path in (VOICE_FR, VOICE_EN):
+        text = path.read_text().lower()
+        assert [w for w in ("publishing policy", "ceiling", "per day", "toronto", "500,000", "quota")
+                if w in text] == [], path.name
 
 
 def test_persona_is_woman_mom_in_the_one_voice():
