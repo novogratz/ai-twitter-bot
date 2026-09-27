@@ -7,10 +7,12 @@ blocked by the very people we want to engage with.
 
 This module exposes a SOFT list (different from BLOCKLIST in config.py
 which is HARD — never engage at all). Respect list = engage normally
-(reply, like, follow), BUT:
-  - NEVER name them in an Original
-  - REPLIES must comment on the IDEA in their tweet, not on them
-  - No "@xxxx" tag in our standalone posts
+(reply, like, follow), BUT the prompt block asks never to:
+  - name them in an Original, or in a Reply to someone else's post
+  - criticize them by name, even in a Reply to their own post
+The text check is looser: it refuses their `@handle`, save the addressee's,
+and their name next to a mocking word, but lets a neutral sentence naming
+them pass.
 
 Public API:
   load() -> set of lowercased handles (no @)
@@ -103,8 +105,8 @@ def render_block() -> str:
         "==================================================\n"
         "You may engage (replies, likes) with these accounts' content,\n"
         "but you must NEVER:\n"
-        "- name them in an Original, or in a Reply to someone else's post\n"
-        "- criticize them by name, even in a Reply to their own post\n"
+        "- name them in a post of your own, or in a reply to someone else's post\n"
+        "- criticize them by name, even in a reply to their own post\n"
         "- ridicule them, be ironic about them as people, or mock their work\n"
         "If the idea in their post deserves criticism, criticize the IDEA,\n"
         "never the person. When in doubt -> SKIP.\n\n"

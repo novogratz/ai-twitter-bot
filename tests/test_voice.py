@@ -35,8 +35,10 @@ def test_voice_carries_no_publishing_policy():
     policy and docs/EDITORIAL_POLICY.md states it; the Voice says who writes."""
     for path in (VOICE_FR, VOICE_EN):
         text = path.read_text().lower()
-        assert [w for w in ("publishing policy", "ceiling", "per day", "toronto", "500,000", "quota")
+        assert [w for w in ("publishing policy", "ceiling", "per day", "toronto", "500,000")
                 if w in text] == [], path.name
+        # The one line of the policy block the Operator kept.
+        assert "skip a weak story; never fill a quota with filler." in text
 
 
 def test_persona_is_woman_mom_in_the_one_voice():
@@ -118,3 +120,15 @@ def test_the_graphseo_relation_stays_on_ai_without_a_formula():
             if w in low] == []
     assert re.findall(r"\b(?!100%)\d+ ?%", low) == [], "an example figure the model would copy"
     assert "ai" in low.split() and "do not invent" in low
+
+
+def test_no_relation_prompt_forces_a_hook():
+    """Operator 2026-09-27: "First 6 words must hook" is the forced formula
+    the Voice rules out, and "never the same angle twice in a row" asks the
+    model for Replies it never sees."""
+    from src.core import account
+
+    relations = account.current().relations
+    for prompt in (relations.default, *(r.prompt for r in relations.handles.values() if r.prompt)):
+        low = prompt.lower()
+        assert [w for w in ("must hook", "twice in a row") if w in low] == []

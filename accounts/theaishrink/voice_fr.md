@@ -30,3 +30,4 @@ Voice:
 - No hype fillers, repeated punchlines, imitation typos, artificial outrage,
   "thoughts?", "agree?", "like/follow/repost if", or forced questions.
 - Kind and hopeful. Never cruel; never celebrate violence or harass people.
+- Skip a weak story; never fill a quota with filler.

@@ -26,8 +26,14 @@ none (#192). The per-person relations (Graphseo, bestie, buddy) are the
 Account's Relations, in `account.toml` and `relations/`: the engine names no
 one (#203). The Voice says who writes, never the publishing rules: hours,
 ceilings and the reach target live in this file and in the engine, and
-reach no prompt (2026-09-27). The Relations' prompts keep to AI, impose no
-formula, and forbid invented figures.
+reach no prompt (2026-09-27). The Relations' prompts impose no hook
+formula; Graphseo's and the default one keep to AI and forbid invented
+figures, and the TheBTCTherapist Relation keeps its Bitcoin-versus-AI
+rivalry, the Operator's pick. Hard rule 4 overrides the Voice's wit and
+criticism for its subjects. The respect list block asks the model never to
+name a Respected account in a post of its own or in a Reply to someone
+else's post, nor to criticize one by name; the text check at the write is
+looser (`respect_list.scrub_text_or_skip`).
 
 English Originals and Replies take the form of ASD-STE100 Simplified
 Technical English (Operator, 2026-09-27): sentences of 25 words at most,

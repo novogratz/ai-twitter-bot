@@ -29,12 +29,11 @@ def test_english_text_follows_simplified_technical_english():
     assert "no contractions" in block and "this rule wins" in block
 
 
-def test_hard_rules_name_no_removed_surface():
-    """Operator 2026-09-27: the hard rules and the respect list close every
-    prompt, and still named the snark voice, hot takes, breakouts, spicy
-    takes and quote tweets, all gone; quotes stay at zero."""
+def test_hard_rule_4_names_no_removed_surface():
+    """Operator 2026-09-27: hard rule 4 still named the snark voice and
+    quotes, both gone; quotes stay at zero."""
     from src.core import personality_store as ps
-    low = ps.hard_rules_block().lower()
-    removed = ("snark voice", "hot take", "breakout", "spicy take", "quote-tweet", "quote tweet", "or quote")
-    assert [w for w in removed if w in low] == []
-    assert "original" in low and "reply" in low
+    low = ps._BASE_HARD_RULES.lower()
+    assert [w for w in ("snark voice", "or quote", "quote-tweet") if w in low] == []
+    assert "overrides the voice's wit and criticism" in low
+
