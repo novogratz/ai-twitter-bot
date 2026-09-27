@@ -70,6 +70,24 @@ def test_dedup_text_window_read_at_call_time(monkeypatch, settings_override):
     assert cg.is_duplicate(draft)
 
 
+def test_dedup_reads_the_slot_journal_posts_by_their_age(monkeypatch):
+    """Posts the Slot journal hands over (pending, or marked published by
+    the Operator) count like the history, aged from their own time."""
+    from datetime import datetime, timedelta
+    from src.guards import active_hours
+    from tests.helpers import TORONTO
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    monkeypatch.setattr(active_hours, "now_local", lambda: now)
+    earlier = "Everyone watches GPU supply. The real bottleneck is the power bill"
+    draft = ("Everyone is tracking GPU supply. The real bottleneck is the power bill. "
+             "You are buying silicon; you are renting electricity.")
+    assert not cg.is_duplicate(draft)
+    assert cg.is_duplicate(draft, [(earlier, now - timedelta(hours=2))])
+    assert not cg.is_duplicate(draft, [(earlier, now - timedelta(hours=60))])
+    assert not cg.is_duplicate(draft, [(earlier, None)])
+    assert cg.is_duplicate(earlier, [(earlier, None)])
+
+
 # --- price-target gate ------------------------------------------------------
 
 

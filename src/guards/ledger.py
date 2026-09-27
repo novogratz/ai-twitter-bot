@@ -1,9 +1,11 @@
 """Action ledger: every counted write, and what the write policy asks of it.
 
 A row is {action, target, ts, dry_run}: the action type, the handle or URL
-written to (lowercased, no @), the Toronto timestamp, and whether it was a
-dry run. A Ledger answers the policy's questions from an index kept up to
-date row by row, never by scanning its rows:
+written to (lowercased, no @) or, for an Original, the Pending slot it was
+reserved under (`YYYY-MM-DD/<slot>`, empty when none), the Toronto
+timestamp, and whether it was a dry run. A Ledger answers the policy's
+questions from an index kept up to date row by row, never by scanning its
+rows:
 
 - `count`: shipped rows of an action on a Toronto day, of one target if asked;
 - `last_write`: the latest shipped row of an action;

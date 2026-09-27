@@ -52,7 +52,8 @@ _Avoid_: startup burst, boot post
 **Pending slot**:
 A Slot whose Original was submitted without a definite outcome; it is never
 retried until the operator clears it, and until then it counts as a Profile
-publication for the day's ceiling and the post spacing.
+publication for the day's ceiling and the post spacing, and its text as a
+recent post for the dedup.
 
 **Slot journal**:
 The one owner of the Toronto day's editorial state, kept in
@@ -60,7 +61,8 @@ The one owner of the Toronto day's editorial state, kept in
 Editor's feedback, the Pending slot reserved, confirmed or released, the
 Slots closed for the day, the source URLs already used, the recent texts
 (published and pending), the day's submissions and the latest one. The
-editorial cycle and the reach report ask it; neither reads the file.
+editorial cycle, the reach report and the post chokepoint ask it; none reads
+the file.
 _Avoid_: editorial state, state dict
 
 **Write outcome**:

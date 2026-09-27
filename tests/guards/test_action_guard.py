@@ -5,6 +5,7 @@ adapter has its own tests in test_ledger.py."""
 from datetime import datetime, timedelta
 
 from src.core import config
+from src.editorial.slot_journal import MemoryJournal
 from src.guards import action_guard as ag
 from src.guards.ledger import MemoryLedger
 from tests.helpers import TORONTO, stop_requested, clock
@@ -179,3 +180,57 @@ def test_original_gap_is_drawn_once_per_original(monkeypatch, settings_override)
     now[0] += timedelta(seconds=2)
     assert ag.seconds_until_allowed(ag.POST) == 0
     assert ag.can_post(ag.POST) == (True, "")
+
+
+# --- the Slot journal's submissions (issue #233) ------------------------------
+
+
+def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    # The day is `now`'s, not the clock's.
+    clock(monkeypatch, now + timedelta(days=1))
+    entry = lambda ago: dict(url="https://openai.com/x", text="An AI post",
+                             ts=(now - ago).isoformat())
+    pending = {f"2026-09-20/startup@{h:02d}:00:00": entry(timedelta(hours=1)) for h in range(5, 11)}
+    # Yesterday's pending may be live, but it counts toward yesterday.
+    pending["2026-09-19/20:45"] = entry(timedelta(hours=15))
+    state = {"date": "2026-09-20", "slots": {"11:45": "published"},
+             "pending_sources": pending, "published": []}
+    refusal = lambda besides=None: ag.original_refusal(MemoryJournal(state), now, besides)
+    # 11:45 shipped: its ledger row names its Pending slot, and it counts once.
+    memory_ledger.append(ag.POST, "2026-09-20/11:45", False, now - timedelta(minutes=30))
+    assert refusal() == ""  # 1 shipped + 6 pending
+    # The operator marked 09:30 published after a check: no ledger row.
+    state["slots"]["09:30"] = "published"
+    assert "(8/8)" in refusal()
+    # The operator removed its pending_sources entry only.
+    state["slots"]["09:30"] = "pending"
+    assert "(8/8)" in refusal()
+    # The submission being judged counts for neither the ceiling nor the spacing.
+    assert refusal("2026-09-20/09:30") == ""
+    del state["slots"]["09:30"]
+    pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=19))
+    assert "too soon" in refusal()
+    assert refusal("2026-09-20/startup@10:00:00") == ""
+    pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=20))
+    assert refusal() == ""
+    # A post from another caller of post_tweet names no Slot: it counts too.
+    memory_ledger.append(ag.POST, "", False, now - timedelta(minutes=25))
+    assert "(8/8)" in refusal()
+
+
+def test_a_reservation_stands_only_for_its_own_text_of_the_day():
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    url = "https://openai.com/x"
+    journal = MemoryJournal({"date": "2026-09-20", "slots": {"11:45": "pending", "09:30": "published"},
+                             "pending_sources": {
+                                 "2026-09-20/11:45": dict(url=url, text="An AI post ", ts=now.isoformat()),
+                                 "2026-09-19/20:45": dict(url=url, text="An AI post", ts=now.isoformat())}})
+    posted = "An AI post\n\n" + url
+    assert ag.reservation_refusal(journal, now, "2026-09-20/11:45", posted) == ""
+    assert "another text" in ag.reservation_refusal(journal, now, "2026-09-20/11:45", "Another post")
+    assert "another text" in ag.reservation_refusal(journal, now, "2026-09-20/11:45", "An AI post")
+    assert "not pending" in ag.reservation_refusal(journal, now, "2026-09-20/09:30", posted)
+    assert "not pending" in ag.reservation_refusal(journal, now, "2026-09-20/13:00", posted)
+    assert "not of today" in ag.reservation_refusal(journal, now, "2026-09-19/20:45", posted)
+    assert "not of today" in ag.reservation_refusal(journal, now, "", posted)
