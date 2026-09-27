@@ -1,6 +1,7 @@
 """The page session (issue #253): it holds the Safari lock, closes each tab
 it opened on every path, reads nothing when its page does not open, and a
 nested session opens and closes nothing and reads only the page asked."""
+import json
 import threading
 from types import SimpleNamespace
 
@@ -71,11 +72,26 @@ REPORTS_NOT_OPENED = {
 }
 
 
+def _no_posts(page):
+    return [json.dumps({"page": page, "posts": []})]
+
+
+# The walks list the posts of a page they accept; any other answer takes
+# their [FAILED] path.
+NOMINAL = {
+    "search_likes": _no_posts(SEARCH),
+    "profile_likes": _no_posts(THEIR_PROFILE),
+    "reply_likes": _no_posts("https://x.com/TheAIShrink/status/2063500000000000301"),
+}
+
+
 @pytest.mark.parametrize("name", MIGRATED)
 def test_a_session_closes_its_tab_once_on_the_nominal_path(memory_page, name):
     run, url = MIGRATED[name]
-    memory_page.pages[url] = ["1"]
-    run()
+    memory_page.pages[url] = NOMINAL.get(name, ["1"])
+    result = run()
+    if name in REPORTS_NOT_OPENED:
+        assert result == []
     assert memory_page.opened == [url]
     assert memory_page.closed == 1
 

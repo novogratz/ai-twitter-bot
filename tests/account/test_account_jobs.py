@@ -1052,6 +1052,27 @@ def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, 
     assert (operator_folder / "whitelist.json").read_text() == "{not json"
 
 
+def test_followback_fails_when_its_followers_page_does_not_open(followback, memory_ledger,
+                                                                monkeypatch, tmp_path):
+    """#255: a followers page that does not open fails the cycle; nothing
+    read, no profile visited, no follow written."""
+    from src.core import health
+
+    fb, state = followback
+    del state["browser"].pages[FOLLOWERS_PAGE]
+    failures = []
+    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
+
+    fb.safe_run_followback_cycle()
+
+    assert failures == ["followback"]
+    assert state["browser"].opened == [FOLLOWERS_PAGE]
+    assert state["browser"].scripts == []
+    assert state["visits"] == []
+    _no_follow_written(memory_ledger, tmp_path)
+
+
 # --- #173: the policy finds the relation; a Stranger is never followed -------
 
 
