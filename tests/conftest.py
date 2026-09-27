@@ -268,6 +268,16 @@ def memory_ledger(monkeypatch):
 
 
 @_pytest.fixture
+def memory_page(monkeypatch):
+    """A MemoryBrowser behind every page session: `memory_page.pages[url]`
+    scripts the answers of a page, a URL without one does not open."""
+    from src.x import page_session
+    browser = page_session.MemoryBrowser()
+    monkeypatch.setattr(page_session, "BROWSER", browser)
+    return browser
+
+
+@_pytest.fixture
 def like_job(monkeypatch, memory_ledger, settings_override):
     """Live like_job on a scripted search page, its caps at their declared
     defaults; the real walk and like_tweet run."""

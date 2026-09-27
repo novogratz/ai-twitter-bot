@@ -1,6 +1,8 @@
 """Every page JavaScript runs through `safari._run_js` (issue #144): each
 caller keeps its timeout, its log prefix and its answer on failure, and
-lets `OutsideActiveHours` through without it counting as a Safari failure."""
+lets `OutsideActiveHours` through without it counting as a Safari failure.
+The follower count, on a page session, is pinned in
+`tests/account/test_follower_tracker.py`."""
 import json
 import os
 import shutil
@@ -101,11 +103,6 @@ def _followers_list(monkeypatch):
     return followback_bot._scrape_followers_list(5)
 
 
-def _follower_count(monkeypatch):
-    from src.account import follower_tracker_bot
-    return follower_tracker_bot._scrape_follower_count()
-
-
 def _warm_up(monkeypatch):
     from src.x import safari_hygiene
     return safari_hygiene._warm_up_xcom()
@@ -122,7 +119,6 @@ CALLERS = {
     "following_tab": (_following_tab, (8, "[SCRAPE]", False), []),
     "own_replies": (_own_replies, (30, "[REPLYBACK]", True), None),
     "followers_list": (_followers_list, (30, "[FOLLOWBACK]", True), []),
-    "follower_count": (_follower_count, (20, "[FOLLOWER]", True), 0),
     "warm_up": (_warm_up, (45, "[HYGIENE]", True), False),
 }
 
@@ -141,7 +137,7 @@ def test_each_caller_keeps_its_timeout_prefix_and_failure_answer(monkeypatch, br
 # Callers that used to wrap osascript in `except Exception`, swallowing the
 # bedtime check with every other error.
 SWALLOWED_BEFORE = ["follow", "pin", "profile_quality", "tweets", "following_tab",
-                    "own_replies", "followers_list", "follower_count", "warm_up"]
+                    "own_replies", "followers_list", "warm_up"]
 
 
 @pytest.mark.parametrize("name", ["like", *SWALLOWED_BEFORE])
@@ -152,28 +148,12 @@ def test_bedtime_reaches_the_job_through_every_caller(monkeypatch, browser, name
         run(monkeypatch)
 
 
-def test_bedtime_through_a_job_is_not_a_safari_failure(monkeypatch, browser, tmp_path):
-    """Nine callers used to swallow bedtime; now it reaches the jobs'
-    `except Exception`, which must not count it toward a Safari restart."""
-    from src.account import follower_tracker_bot
-    from src.core import health
-
-    restarts = []
-    monkeypatch.setattr(health, "_restart_safari", lambda: restarts.append(1) or True)
-    for _ in range(health.RECOVERY_THRESHOLD + 1):
-        browser(OutsideActiveHours("Bot asleep"))
-        follower_tracker_bot.safe_run_follower_tracker_cycle()
-    assert restarts == []
-    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
-
-
 # The answer each caller falls back on when the page answer does not parse.
 UNPARSABLE = {
     "profile_quality": ("{not json", {}),
     "tweets": ("[{not json", []),
     "own_replies": ("{not json", None),
     "followers_list": ("{not json", []),
-    "follower_count": ("1.2.3", 0),
 }
 
 

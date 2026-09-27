@@ -407,7 +407,9 @@ Safari after 3 failed cycles in a row, all jobs counted together, and
 `session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
 after the last restart. Every restart waits for the job holding Safari to
 finish its page. A cycle stopped for bedtime is not a failed cycle,
-and no restart runs outside waking hours. Each relaunch
+and no restart runs outside waking hours. A page read or write cut by
+bedtime or a stop leaves its tab open, since the tab close is refused
+too; the next restart clears it. Each relaunch
 clears x.com service workers and caches. To do it by hand, stop the bot first:
 
 ```bash
