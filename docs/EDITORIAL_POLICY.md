@@ -18,6 +18,12 @@ She explains a consequence, teaches something, or offers a useful action. A
 question, joke, emoji or flirty line is optional. Forced formulas, engagement
 bait, stale numbers, copied headlines and fabricated lived experience are out.
 The AI identity remains honest; the therapist name is a brand persona.
+English Originals and Replies take the form of ASD-STE100 Simplified
+Technical English (Operator, 2026-09-27): short sentences of 25 words at
+most, one idea per sentence, active voice, simple verb tenses, common words
+that keep one meaning each. The Voice keeps the tone. It is hard rule 5 in
+`personality_store._BASE_HARD_RULES`, so every Original and Reply prompt
+carries it; French text keeps its own form.
 That character is the Voice, written only in the Account's folder,
 `accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
 Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep

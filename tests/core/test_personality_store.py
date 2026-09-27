@@ -15,6 +15,18 @@ def test_positive_only_subjects_in_hard_rules():
     assert "override" in low or "overrides" in low
 
 
+def test_english_text_follows_simplified_technical_english():
+    """Operator 2026-09-27: English posts and replies take the form of
+    ASD-STE100 Simplified Technical English, while the Voice keeps the tone.
+    A hard rule, so every Original and Reply prompt carries it; French text
+    keeps its own form."""
+    from src.core import personality_store as ps
+    block = " ".join(ps.hard_rules_block().split())
+    assert "ASD-STE100 Simplified Technical English" in block
+    assert "in English" in block and "French text keeps its own form" in block
+    assert "The Voice still sets the tone" in block
+
+
 def test_the_dossier_block_is_in_english():
     from src.core import personality_store
 

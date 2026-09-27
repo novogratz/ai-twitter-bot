@@ -21,6 +21,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
+- English Originals and Replies take the form of ASD-STE100 Simplified
+  Technical English, a hard rule (2026-09-27); the Voice keeps the tone.
 - Replies, likes and follows keep to AI (2026-09-25): the Account's niche
   patterns and searches look for AI, and its lists drop crypto, markets and
   space accounts, save those the Operator picked by hand and a few still to
