@@ -341,15 +341,18 @@ quit in `safari_hygiene` spawn `osascript` themselves.
 `session(tag)` takes the Safari lock for its whole life and yields a page
 that opens on demand (`page.open(url, settle_s)`), scrolls, runs a script
 (its failure line prefixed `[tag]`), reads a JSON answer and runs keys. A
-page that does not open raises `PageNotOpened` before any read. In a
-`finally`, the session closes the front tab once for each open it tried,
-a failed one included, since a timed-out open may have opened its page
-anyway. A session
-entered inside another one on the same thread shares its page: it opens
-nothing and closes nothing. At bedtime or on a stop the close goes through
-`_run_applescript`, which refuses it: the tab stays open until the next
-Safari restart, and `OutsideActiveHours` reaches the job (the Operator's
-open question of issue #250). `BROWSER` picks the adapter at the start of
+page that does not open raises `PageNotOpened` before any read, and its
+scripts, keys and scrolls raise it too until an open succeeds, so a job
+that catches it reads nothing from the front tab. In a `finally`, the
+session closes the front tab once for each open it tried, a failed one
+included, since a timed-out open may have opened its page anyway. A
+session entered inside another one on the same thread shares its page: it
+opens nothing and closes nothing, and its `open(url)` raises
+`PageNotOpened` unless the outer session has that URL open. At bedtime or
+on a stop the close goes through `_run_applescript`, which refuses it: the
+tab stays open until the next Safari restart, and `OutsideActiveHours`
+reaches the job (the Operator's open question of issue #250); the error the
+job raised before it is logged first. `BROWSER` picks the adapter at the start of
 each session: `SafariBrowser`, which calls the primitives through the
 `safari` module, or `MemoryBrowser`, which scripts pages by URL for tests.
 The follower count reads its page through a session; the other page reads
@@ -809,8 +812,10 @@ some files those bots used to write, as frozen data with no writer left:
    Issue #238 moves them under `wrap_job`; #239 makes the exception required.
 3. Read or act on a page inside `page_session.session(tag)`: it takes the
    Safari lock, opens the page when asked and closes the tab on every
-   path. Handle `PageNotOpened` if the job has a fallback; otherwise let
-   it fail the cycle. Test it on the `memory_page` fixture.
+   path. Handle `PageNotOpened` if the job has a fallback that opens
+   another page or reads nothing; the page refuses every read until an
+   open succeeds. Otherwise let it fail the cycle. Test it on the
+   `memory_page` fixture.
 4. Write only through the `twitter_client` chokepoints; add a new rule inside
    the chokepoint, not in the job.
 5. Key daily counters on the Toronto day (`active_hours.now_local()`).
@@ -888,9 +893,10 @@ fails on the wall. `tests/x/test_page_session.py` runs a contract over
 `MIGRATED`, every session moved to the page session: one tab close on the
 nominal path and when a read raises, and no read when the page does not
 open. The `memory_page` fixture puts a `MemoryBrowser` behind every page
-session, so those tests patch no primitive and no `sleep`. Every test also starts with fresh process memories: the
-posts the Reply pipeline set aside, the direct reply's query rotation cursor and the
-content guard's dedup memory of this run's posts.
+session, so those tests patch no primitive and no `sleep`. Every test also
+starts with fresh process memories: the posts the Reply pipeline set aside,
+the direct reply's query rotation cursor and the content guard's dedup
+memory of this run's posts.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and

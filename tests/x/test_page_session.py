@@ -1,6 +1,6 @@
 """The page session (issue #253): it holds the Safari lock, closes each tab
 it opened on every path, reads nothing when its page does not open, and a
-nested session opens and closes nothing."""
+nested session opens and closes nothing and reads only the page asked."""
 import threading
 from types import SimpleNamespace
 
@@ -43,10 +43,8 @@ def test_a_session_closes_its_tab_once_on_the_nominal_path(memory_page, name):
 def test_a_session_closes_its_tab_once_when_a_read_raises(memory_page, name):
     run, url = MIGRATED[name]
     memory_page.pages[url] = [Boom("page script crashed")]
-    try:
+    with pytest.raises(Boom):
         run()
-    except Boom:
-        pass
     assert memory_page.scripts, "the scripted read raised"
     assert memory_page.closed == 1
 
@@ -61,17 +59,71 @@ def test_a_session_reads_nothing_when_its_page_does_not_open(memory_page, name):
     assert memory_page.closed == 1, "a timed-out open may have opened its page"
 
 
+def test_a_page_caught_not_opening_still_reads_nothing(memory_page):
+    memory_page.pages["https://x.com/front"] = ["front tab"]
+    memory_page.front = "https://x.com/front"
+    with page_session.session("CAUGHT") as page:
+        with pytest.raises(PageNotOpened):
+            page.open(PROFILE)
+        for act in (lambda: page.run_js("1"), lambda: page.read_json("1"),
+                    lambda: page.keys("keystroke tab"), page.scroll):
+            with pytest.raises(PageNotOpened):
+                act()
+    assert (memory_page.scripts, memory_page.scrolls, memory_page.pressed) == ([], 0, [])
+
+
+def test_a_page_reads_again_once_an_open_succeeds(memory_page):
+    memory_page.pages[PROFILE] = ["profile"]
+    with page_session.session("RETRY") as page:
+        with pytest.raises(PageNotOpened):
+            page.open("https://x.com/missing")
+        page.open(PROFILE)
+        assert page.run_js("1") == "profile"
+    assert memory_page.closed == 2
+
+
 def test_a_nested_session_opens_and_closes_nothing(memory_page):
-    memory_page.pages[PROFILE] = ["outer", "inner"]
+    memory_page.pages[PROFILE] = ["outer", "inner", "outer again"]
     with page_session.session("OUTER") as outer:
         outer.open(PROFILE)
         with page_session.session("INNER") as inner:
-            inner.open("https://x.com/elsewhere")
             assert inner.run_js("1") == "outer"
+            inner.open(PROFILE.upper() + "/")
+            assert inner.run_js("1") == "inner"
         assert memory_page.closed == 0
-        assert outer.run_js("1") == "inner"
+        assert outer.run_js("1") == "outer again"
     assert memory_page.opened == [PROFILE]
     assert memory_page.closed == 1
+
+
+def test_a_nested_session_refuses_another_page(memory_page):
+    memory_page.pages[PROFILE] = ["outer"]
+    with page_session.session("OUTER") as outer:
+        outer.open(PROFILE)
+        with page_session.session("INNER") as inner:
+            with pytest.raises(PageNotOpened):
+                inner.open("https://x.com/elsewhere")
+            with pytest.raises(PageNotOpened):
+                inner.run_js("1")
+        assert outer.run_js("1") == "outer"
+    assert memory_page.opened == [PROFILE]
+
+
+def test_a_nested_session_refuses_a_page_the_outer_did_not_open(memory_page):
+    memory_page.pages["https://x.com/front"] = ["front tab"]
+    memory_page.front = "https://x.com/front"
+    with (page_session.session("OUTER"), page_session.session("INNER") as inner,
+          pytest.raises(PageNotOpened)):
+        inner.open(PROFILE)
+    with page_session.session("OUTER") as outer:
+        with pytest.raises(PageNotOpened):
+            outer.open(PROFILE)
+        with page_session.session("INNER") as inner:
+            with pytest.raises(PageNotOpened):
+                inner.open(PROFILE)
+            with pytest.raises(PageNotOpened):
+                inner.run_js("1")
+    assert memory_page.scripts == []
 
 
 def test_a_session_that_opens_nothing_closes_nothing(memory_page):
@@ -170,6 +222,20 @@ def test_bedtime_at_the_close_leaves_the_tab_open(primitives):
     with pytest.raises(OutsideActiveHours), page_session.session("SAFARI") as page:
         page.open(PROFILE)
     assert primitives.calls == [("open", PROFILE)]
+
+
+def test_a_read_error_is_logged_before_the_close_can_replace_it(primitives):
+    warnings = []
+    primitives.monkeypatch.setattr(page_session.log, "warning",
+                                   lambda msg, *a, **k: warnings.append(msg))
+
+    def asleep():
+        raise OutsideActiveHours("Bot asleep")
+    primitives.monkeypatch.setattr(safari, "close_front_tab", asleep)
+    with pytest.raises(OutsideActiveHours), page_session.session("SAFARI") as page:
+        page.open(PROFILE)
+        raise Boom("page script crashed")
+    assert warnings == ["[SAFARI] Session failed, closing its tab: Boom: page script crashed"]
 
 
 def test_without_a_memory_page_a_session_hits_the_wall():

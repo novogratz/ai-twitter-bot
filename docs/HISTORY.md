@@ -27,8 +27,8 @@ their order in the file is not strictly chronological.
 > `follower_tracker_job` ignored the result of `safari.open_url` and, when
 > the profile did not open, read the follower count of whatever profile was
 > in front. It is the first job on the page session of issue #250: the
-> session holds the Safari lock, raises `PageNotOpened` before any read,
-> and closes its tab on every path. A profile that does not open is now a
+> session holds the Safari lock, raises `PageNotOpened` and refuses every
+> read until an open succeeds, and closes its tab on every path. A profile that does not open is now a
 > failed cycle. At bedtime the tab close is still refused and the tab
 > stays open until the next Safari restart, pending the Operator's answer.
 
