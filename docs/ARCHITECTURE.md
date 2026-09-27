@@ -903,7 +903,7 @@ and a comment or docstring only in a passage dated or numbered),
 `test_example_account.py` (the dry run of the fictitious `accounts/example/`,
 and theaishrink's jobs and ceilings as they were before #187),
 `test_mass_unfollow.py`
-(`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
+(`bin/mass_unfollow.py`), `test_show_prompts.py` (`bin/show_prompts.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`
 and `tests/`, subfolders included, with `ast`. It fails when an
 intra-project import, function-local or inside `try/except` included, names a

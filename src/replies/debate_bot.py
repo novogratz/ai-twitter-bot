@@ -1,4 +1,4 @@
-"""Debate bot — she argues back, warmly, and keeps the rally going.
+"""Debate bot — she answers the people who reply to or mention the account.
 
 Operator 2026-07-19: "make her do more debates with people and reply to
 other people replies and get her on a roll. She is the sharpest AI
@@ -38,8 +38,8 @@ conversation going.
 THEIR MESSAGE (from @{author}):
 "{tweet_text}"
 
-You do not see the post they are answering. Do not quote it, restate it or guess
-what you said: answer their message on its own terms.
+If they are answering one of your posts, you do not see it. Do not quote it,
+restate it or guess what you said: answer their message on its own terms.
 
 HOW TO ANSWER:
 1. Stay warm. Never rattled, hostile or condescending.

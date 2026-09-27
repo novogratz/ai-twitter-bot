@@ -301,7 +301,7 @@ def test_debate_tells_the_model_it_does_not_see_the_account_post(jobs):
     """The mentions tab shows their message, not the post it answers: the
     model must not guess what the account said."""
     text = " ".join(instructions(jobs("debate", "someone", AI_POST)).split())
-    assert "You do not see the post they are answering." in text
+    assert "If they are answering one of your posts, you do not see it." in text
 
 
 # --- Reading the model's answer --------------------------------------------------
