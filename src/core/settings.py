@@ -328,6 +328,12 @@ def load(env_file: str | None = None, environ=None) -> None:
     _values, _warnings = values, warnings
 
 
+def cli_environment(**extra: str) -> dict[str, str]:
+    """The environment a model CLI starts with: the process's, `.env`
+    passthrough keys included once `load()` ran, with `extra` set on top."""
+    return {**os.environ, **extra}
+
+
 def get(name: str):
     """The effective value of a declared setting."""
     setting = _declared(name)

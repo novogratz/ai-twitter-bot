@@ -99,7 +99,7 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         route = resolve(call.surface)
         options = route.options
         result = run_llm(prompt, route.model, label=call.label, output_json=options.output_json,
-                         allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
+                         allowed_tools=options.allowed_tools, timeout=options.timeout,
                          force_provider=call.provider or route.provider, profile=call.profile)
     except OutsideActiveHours:
         raise

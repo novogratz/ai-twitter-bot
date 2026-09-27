@@ -514,7 +514,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     log.info("[REPLY] Running LLM CLI (searching X)...")
     # Reply agent is English-first: the Voice file in EN, but the prompt
     # still tells it to reply in each tweet's language. Its surface carries
-    # the WebSearch tool and the neutral cwd.
+    # the WebSearch tool.
     call = ReplyCall(REPLY_PROMPT_TEMPLATE, Surface.REPLY_SEARCH, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
                      # A Reply's profile, read as JSON: the answer is a JSON array.
                      profile=CallProfile(output=Output.JSON))

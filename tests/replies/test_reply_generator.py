@@ -311,8 +311,8 @@ def test_the_generator_hands_the_surface_and_the_call_to_run_llm(llm, settings_o
 
     search, relation = llm.calls
     assert (search.model, search.label) == (ModelSetting("REPLY_MODEL"), "TEST")
-    assert (search.output_json, search.allowed_tools, search.timeout, search.cwd, search.force_provider,
-            search.profile) == (True, ("WebSearch",), None, "/tmp", "gemini", profile)
+    assert (search.output_json, search.allowed_tools, search.timeout, search.force_provider,
+            search.profile) == (True, ("WebSearch",), None, "gemini", profile)
     assert (relation.model, relation.output_json, relation.timeout, relation.force_provider) == (
         ModelSetting("PRIORITY_REPLY_MODEL"), False, 60, "claude")
 

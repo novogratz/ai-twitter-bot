@@ -10,10 +10,14 @@ import os
 import re
 import signal
 import shutil
+import stat
 import subprocess
+import sys
+import tempfile
 from dataclasses import dataclass, replace
 from datetime import datetime, timedelta
 from enum import Enum
+from pathlib import Path
 from typing import Callable, Optional, Sequence
 
 from . import settings
@@ -219,7 +223,6 @@ class CallOptions:
     output_json: bool = True
     allowed_tools: Optional[tuple[str, ...]] = None
     timeout: Optional[int] = None
-    cwd: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -232,15 +235,12 @@ class Route:
 
 SURFACES: dict[Surface, Route] = {
     # REPLY_LLM_PROVIDER: the local Ollama qwen 503'd and silently dropped
-    # replies (operator 2026-06-24). cwd=/tmp: see REPLY_SEARCH.
-    Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
-    Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
+    # replies (operator 2026-06-24).
+    Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER"),
+    Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER"),
     # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s
-    # (op 2026-06-24). cwd=/tmp: run from the project, the Claude CLI loaded
-    # its CLAUDE.md and git context, and parallel searches answered in prose
-    # instead of JSON (7 hallucinations on 2026-04-27).
-    Surface.REPLY_SEARCH: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER",
-                                CallOptions(allowed_tools=("WebSearch",), cwd="/tmp")),
+    # (op 2026-06-24).
+    Surface.REPLY_SEARCH: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(allowed_tools=("WebSearch",))),
     # AI_CLI unless the caller forces the Relation's installed CLI.
     Surface.RELATION_REPLY: Route("PRIORITY_REPLY_MODEL", "AI_CLI", CallOptions(output_json=False, timeout=60)),
     Surface.REPLY_ON_AI_CLI: Route("REPLY_MODEL", "AI_CLI"),
@@ -479,6 +479,8 @@ def _build_cmd(
             "exec",
             "--model", model,
             "--sandbox", "read-only",
+            # NEUTRAL_CWD is no git repository: codex refuses to run there without it.
+            "--skip-git-repo-check",
             "--ephemeral",
             prompt,
         ])
@@ -561,7 +563,8 @@ def _run_cmd(
     *,
     label: str,
     timeout: int,
-    cwd: Optional[str],
+    cwd: str,
+    env: Optional[dict[str, str]] = None,
 ) -> LLMResult:
     """Run a provider CLI. `timeout` is final: `_timeout` computed it."""
     from ..guards.active_hours import require_active
@@ -574,6 +577,7 @@ def _run_cmd(
             stderr=subprocess.PIPE,
             text=True,
             cwd=cwd,
+            env=env,
             start_new_session=True,  # isolate process group so children can be reaped
         )
         try:
@@ -707,7 +711,48 @@ class _Request:
     profile: CallProfile
     output_json: bool  # the CLI's own JSON envelope, not the Output mode
     allowed_tools: Optional[Sequence[str]]
-    cwd: Optional[str]
+
+
+def _user_temp_dir() -> str:
+    """macOS's per-user temp folder, even when TMPDIR points at /tmp."""
+    if sys.platform != "darwin":
+        return tempfile.gettempdir()
+    try:
+        # _CS_DARWIN_USER_TEMP_DIR in <unistd.h>; os.confstr_names lacks it.
+        return os.confstr(65537) or tempfile.gettempdir()
+    except (ValueError, OSError):
+        return tempfile.gettempdir()
+
+
+# Every CLI runs from here, fallback included; Ollama is an HTTP request.
+# Run from the project, the Claude CLI loaded its CLAUDE.md and git context,
+# and parallel searches answered in prose instead of JSON (7 hallucinations
+# on 2026-04-27). No CLAUDE.md, AGENTS.md, GEMINI.md or git repository sits
+# above the per-user temp folder; `_neutral_cwd_refusal` checks the folder
+# is the bot user's own, since /tmp, the fallback, is shared.
+NEUTRAL_CWD = Path(_user_temp_dir()) / f"ai-twitter-bot-llm-{os.getuid()}"
+
+# Away from the repository, opencode would read only the user's global
+# config: another model on another server. OPENCODE_CONFIG takes precedence
+# over it (opencode.ai/docs/config); the model stays the repository's.
+OPENCODE_CONFIG = Path(settings.PROJECT_ROOT).resolve() / "opencode.json"
+
+
+def _neutral_cwd_refusal() -> Optional[str]:
+    """Why no CLI may start in NEUTRAL_CWD, or None. Created again on every
+    call: macOS purges old temp folders under a running bot."""
+    try:
+        NEUTRAL_CWD.mkdir(mode=0o700, exist_ok=True)
+        status = os.lstat(NEUTRAL_CWD)
+    except OSError as exc:
+        return str(exc)
+    if not stat.S_ISDIR(status.st_mode):
+        return f"{NEUTRAL_CWD} is not a directory"
+    if status.st_uid != os.getuid():
+        return f"{NEUTRAL_CWD} belongs to uid {status.st_uid}"
+    if status.st_mode & 0o077:
+        return f"{NEUTRAL_CWD} has mode {stat.S_IMODE(status.st_mode):o}, not 700"
+    return None
 
 
 def _ollama_adapter(request: _Request) -> LLMResult:
@@ -720,7 +765,12 @@ def _cli_adapter(provider: str) -> Callable[[_Request], LLMResult]:
             return LLMResult(127, "", f"{request.label}: {provider} is not installed; nothing was run.")
         cmd = _build_cmd(request.prompt, request.model, request.output_json,
                          request.allowed_tools, provider)
-        return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=request.cwd)
+        refusal = _neutral_cwd_refusal()
+        if refusal:
+            return LLMResult(1, "", f"{request.label}: no neutral directory for {provider} ({refusal}); "
+                                    "nothing was run.")
+        env = settings.cli_environment(OPENCODE_CONFIG=str(OPENCODE_CONFIG)) if provider == "opencode" else None
+        return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=str(NEUTRAL_CWD), env=env)
     return run
 
 
@@ -863,7 +913,6 @@ def run_llm(
     output_json: bool = True,
     allowed_tools: Optional[Sequence[str]] = None,
     timeout: Optional[int] = None,
-    cwd: Optional[str] = None,
     force_provider: Optional[str] = None,
     profile: CallProfile = TEXT_PROFILE,
 ) -> LLMResult:
@@ -889,7 +938,7 @@ def run_llm(
     primary = (force_provider or _provider()).strip().lower()
     chosen = model if isinstance(model, ModelSetting) else _ModelName(model)
     request = _Request(prompt, _model(primary, chosen, profile), label, timeout, profile,
-                       output_json, allowed_tools, cwd)
+                       output_json, allowed_tools)
 
     if primary == "codex":
         lockout = _read_codex_lockout()
