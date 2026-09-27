@@ -79,7 +79,7 @@ Account.
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
 | The sequence every write runs: dry run, Safari lock, ledger rows only on a shipped Write outcome, tab close | `src/x/confirmed_write.py` |
-| Reading X pages: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
+| Reading X pages through page sessions, with each scrape's answer when its page does not open: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
 | Safari lock, AppleScript, page opening (`open_url`, never `webbrowser`), paste, tab and scroll primitives | `src/x/safari.py` |
 | Page session: the Safari lock held, the page opened on demand (`PageNotOpened`, no read until an open succeeds), scroll, script, JSON read and keys, each tab it opened closed on every path, a nested session opening nothing and reading only the outer session's page; Safari and memory adapters | `src/x/page_session.py` |
 | Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `accounts/<BOT_ACCOUNT>/voice_fr.md`, `voice_en.md` |

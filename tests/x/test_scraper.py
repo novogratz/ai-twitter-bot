@@ -1,5 +1,14 @@
-"""src/x/scraper: profile-visit allowlist and blank-page restarts."""
+"""src/x/scraper: profile-visit allowlist and blank-page restarts, and the
+page sessions its scrapes read through (#254)."""
+import json
+import threading
+import time
+
 import pytest
+
+PROFILE = "https://x.com/TheAIShrink"
+HOME = "https://x.com/home"
+SEARCH = "https://x.com/search?q=ai&src=typed_query&f=top"
 
 
 def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override):
@@ -76,7 +85,8 @@ def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
 def test_the_scraper_applescript_runs_have_a_bound(monkeypatch):
     """#257: a restart waits for the Safari lock, so an osascript that never
     returns under it would freeze the bot. The activate before a page read's
-    second JavaScript try and the Replyback scroll carry a bound."""
+    second JavaScript try, the Replyback tab walk and its scroll carry a
+    bound."""
     import subprocess
     from src.x import safari, scraper
 
@@ -93,8 +103,155 @@ def test_the_scraper_applescript_runs_have_a_bound(monkeypatch):
 
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "")
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda *a, **k: True)
     monkeypatch.setattr(safari, "close_front_tab", lambda *a, **k: True)
     assert scraper.scrape_own_tweet_and_replies() is None
 
-    assert runs == [safari.ACTIVATE_TIMEOUT_S, safari.SCROLL_TIMEOUT_S]
+    assert runs == [safari.ACTIVATE_TIMEOUT_S, safari.KEYSTROKE_TIMEOUT_S,
+                    safari.SCROLL_TIMEOUT_S]
+
+
+# The scrapes on the memory page.
+
+def _tweet(author, n):
+    return {"u": f"https://x.com/{author}/status/{n}", "t": "hello", "a": author}
+
+
+def test_only_the_visitable_profiles_open(memory_page, settings_override):
+    """The visit list gates the page itself: a profile off it opens no page,
+    ours and the listed ones do."""
+    from src.x import scraper
+
+    settings_override(PROFILE_VISIT_ALLOWLIST="TheBTCTherapist")
+    friend = "https://x.com/TheBTCTherapist"
+    memory_page.pages[friend] = [json.dumps([_tweet("TheBTCTherapist", 1)])]
+    memory_page.pages[PROFILE] = ["[]"]
+
+    assert scraper.scrape_profile_tweets("karpathy") == []
+    assert scraper.scrape_profile_tweets("Graphseo") == []
+    assert [t["url"] for t in scraper.scrape_profile_tweets("TheBTCTherapist")] \
+        == ["https://x.com/TheBTCTherapist/status/1"]
+    assert scraper.scrape_profile_tweets("TheAIShrink") == []
+    assert memory_page.opened == [friend, PROFILE]
+    assert memory_page.closed == 2
+
+
+def test_a_blank_page_storm_restarts_safari_inside_the_session(memory_page, monkeypatch):
+    """Three pages blank in a row: the third scrape restarts Safari from
+    inside its own session, which holds the reentrant Safari lock (#257),
+    without deadlocking, and each session still closes its tab once."""
+    from src.x import scraper
+    from src.x import safari_hygiene as sh
+
+    bounced = []
+    monkeypatch.setattr(sh, "_last_run_ts", lambda: time.time() - 3600)
+    monkeypatch.setattr(sh, "_quit_safari", lambda: bounced.append(memory_page.closed))
+    monkeypatch.setattr(sh, "_launch_safari", lambda: True)
+    monkeypatch.setattr(sh, "_mark_ran", lambda: None)
+    for url in (HOME, SEARCH, PROFILE):
+        memory_page.pages[url] = ["NO_ARTICLES"]
+    scraper._reset_blank_page_count()
+
+    results = []
+    worker = threading.Thread(daemon=True, target=lambda: results.extend([
+        scraper.scrape_home_feed(), scraper.scrape_x_search("ai"),
+        scraper.scrape_profile_tweets("TheAIShrink")]))
+    worker.start()
+    worker.join(5)
+
+    assert not worker.is_alive(), "the restart inside the scrape's session deadlocked"
+    assert results == [[], [], []]
+    assert bounced == [2], "the third session restarts Safari before its tab close"
+    assert memory_page.opened == [HOME, SEARCH, PROFILE]
+    assert memory_page.closed == 3
+    scraper._reset_blank_page_count()
+
+
+def _safari_lock_free():
+    from src.x import safari
+
+    seen = []
+
+    def probe():
+        got = safari._safari_lock._lock.acquire(blocking=False)
+        if got:
+            safari._safari_lock._lock.release()
+        seen.append(got)
+    worker = threading.Thread(target=probe)
+    worker.start()
+    worker.join()
+    return seen[0]
+
+
+def test_a_tweet_page_that_does_not_open_counts_as_a_blank_page(memory_page, monkeypatch):
+    """A wedged Safari times out on `open location` as on a read: the
+    tweet scrapes count a page that did not open as a timed-out read, once
+    their session has closed its tab and released the Safari lock. The feed
+    refresh and our latest post do not count it."""
+    from src.x import scraper
+
+    counted = []
+    monkeypatch.setattr(scraper, "_record_timed_out_scrape", lambda label: counted.append(
+        (label, memory_page.closed, _safari_lock_free())))
+    assert scraper.scrape_home_feed() == []
+    assert scraper.scrape_following_feed() == []
+    assert scraper.scrape_x_search("ai") == []
+    assert scraper.scrape_mentions() == []
+    assert scraper.scrape_profile_tweets("TheAIShrink") == []
+    assert scraper.refresh_feed() is None
+    assert scraper.scrape_own_tweet_and_replies() is None
+    assert counted == [("home feed", 1, True), ("following feed", 2, True),
+                       ("search 'ai' (top)", 3, True), ("mentions", 4, True),
+                       ("@TheAIShrink", 5, True)]
+    assert memory_page.scripts == []
+
+
+def test_pages_that_do_not_open_on_two_labels_restart_safari(memory_page, monkeypatch):
+    """Failed opens run the blank-page guards: mentions never counts, and
+    three in a row on two distinct pages restart Safari, after the last
+    session has closed its tab, without deadlocking."""
+    from src.x import scraper
+    from src.x import safari_hygiene as sh
+
+    bounced = []
+    monkeypatch.setattr(sh, "_last_run_ts", lambda: time.time() - 3600)
+    monkeypatch.setattr(sh, "_quit_safari", lambda: bounced.append(memory_page.closed))
+    monkeypatch.setattr(sh, "_launch_safari", lambda: True)
+    monkeypatch.setattr(sh, "_mark_ran", lambda: None)
+    scraper._reset_blank_page_count()
+
+    results = []
+    worker = threading.Thread(daemon=True, target=lambda: results.extend([
+        scraper.scrape_mentions(), scraper.scrape_x_search("ai"),
+        scraper.scrape_x_search("ai"), scraper.scrape_profile_tweets("TheAIShrink")]))
+    worker.start()
+    worker.join(5)
+
+    assert not worker.is_alive(), "the restart after a failed open deadlocked"
+    assert results == [[], [], [], []]
+    assert bounced == [4], "the restart runs once the fourth session closed its tab"
+    assert memory_page.scripts == []
+    scraper._reset_blank_page_count()
+
+
+def test_replyback_presses_nothing_when_our_profile_does_not_open(memory_page):
+    """The tab walk used to run whatever the open gave, pressing Tab Tab
+    Tab Return on the tab in front."""
+    from src.x import scraper
+
+    memory_page.pages["https://x.com/front"] = ['{"own_tweet": "theirs", "replies": []}']
+    memory_page.front = "https://x.com/front"
+    assert scraper.scrape_own_tweet_and_replies() is None
+    assert (memory_page.pressed, memory_page.scripts) == ([], [])
+
+
+def test_replyback_walks_to_our_latest_post_and_reads_its_replies(memory_page):
+    from src.x import safari, scraper
+
+    answer = {"own_tweet": "ours", "replies": [{"user": "a", "text": "hi", "url": ""}]}
+    memory_page.pages[PROFILE] = [json.dumps(answer)]
+    assert scraper.scrape_own_tweet_and_replies() == answer
+    walk, scroll = memory_page.pressed
+    assert walk == safari.FIRST_TWEET_KEYS
+    assert "key code 125" in scroll
+    assert memory_page.waits == [5, 5, 2]
+    assert memory_page.closed == 1

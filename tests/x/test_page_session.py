@@ -3,6 +3,8 @@ it opened on every path, reads nothing when its page does not open, and a
 nested session opens and closes nothing and reads only the page asked."""
 import json
 import threading
+from collections.abc import Callable
+from dataclasses import dataclass
 from types import SimpleNamespace
 
 import pytest
@@ -10,6 +12,7 @@ import pytest
 from src.guards.active_hours import OutsideActiveHours
 from src.x import page_session, safari
 from src.x.page_session import PageNotOpened
+from src.x.twitter_client import LikeOutcome
 from tests.helpers import stop_requested
 
 PROFILE = "https://x.com/TheAIShrink"
@@ -47,74 +50,106 @@ def _followback():
     return followback_bot.run_followback_cycle()
 
 
-# Every session migrated to the page session: its run, and the one page it
-# opens. Issue #254 adds the scraper's.
-MIGRATED = {
-    "follower_count": (_follower_count, PROFILE),
-    "search_likes": (_search_likes, SEARCH),
-    "profile_likes": (_profile_likes, THEIR_PROFILE),
-    "reply_likes": (_reply_likes, PROFILE),
-    "followback": (_followback, FOLLOWERS),
-}
-
-
-def _failed():
-    from src.x.twitter_client import LikeOutcome
-    return [LikeOutcome.FAILED]
-
-
-# The runs that report a page that did not open in their result instead of
-# letting PageNotOpened through.
-REPORTS_NOT_OPENED = {
-    "search_likes": _failed,
-    "profile_likes": _failed,
-    "reply_likes": _failed,
-}
+def _scrape(name, *args, **kwargs):
+    def run():
+        from src.x import scraper
+        return getattr(scraper, name)(*args, **kwargs)
+    return run
 
 
 def _no_posts(page):
     return [json.dumps({"page": page, "posts": []})]
 
 
-# The walks list the posts of a page they accept; any other answer takes
-# their [FAILED] path.
-NOMINAL = {
-    "search_likes": _no_posts(SEARCH),
-    "profile_likes": _no_posts(THEIR_PROFILE),
-    "reply_likes": _no_posts("https://x.com/TheAIShrink/status/2063500000000000301"),
+NO_READ = object()
+WALK_FAILED = [LikeOutcome.FAILED]
+
+
+@dataclass
+class Migrated:
+    """A session on the page session: its run, the one page it opens, that
+    page's answers on the nominal path, and what the run gives when the page
+    does not open and when a read raises `Boom`, an exception class meaning
+    that it raises it (`NO_READ`: the session runs no script)."""
+    run: Callable
+    url: str
+    answers: list
+    not_opened: object = PageNotOpened
+    crashed: object = Boom
+
+
+# Every session migrated to the page session. The like walks (#255) report a
+# page that did not open as [FAILED], and list the posts of a page they
+# accept: any other answer takes that path. A scrape gives its failure answer
+# when its page does not open, and the tweet scrapes count a crashed read as
+# a blank page (#254).
+MIGRATED = {
+    "follower_count": Migrated(_follower_count, PROFILE, ["1"]),
+    "search_likes": Migrated(_search_likes, SEARCH, _no_posts(SEARCH), WALK_FAILED),
+    "profile_likes": Migrated(_profile_likes, THEIR_PROFILE, _no_posts(THEIR_PROFILE),
+                              WALK_FAILED),
+    "reply_likes": Migrated(_reply_likes, PROFILE,
+                            _no_posts("https://x.com/TheAIShrink/status/2063500000000000301"),
+                            WALK_FAILED),
+    "followback": Migrated(_followback, FOLLOWERS, ["1"]),
+    "refresh_feed": Migrated(_scrape("refresh_feed"), "https://x.com/home", [], None, NO_READ),
+    "profile_tweets": Migrated(_scrape("scrape_profile_tweets", "TheAIShrink"), PROFILE,
+                               ["[]"], [], []),
+    "mentions": Migrated(_scrape("scrape_mentions"), "https://x.com/notifications/mentions",
+                         ["[]"], [], []),
+    "home_feed": Migrated(_scrape("scrape_home_feed"), "https://x.com/home", ["[]"], [], []),
+    "following_feed": Migrated(_scrape("scrape_following_feed"), "https://x.com/home",
+                               ["CLICKED", "[]"], []),
+    "x_search": Migrated(_scrape("scrape_x_search", "ai"),
+                         "https://x.com/search?q=ai&src=typed_query&f=top", ["[]"], [], []),
+    "own_replies": Migrated(_scrape("scrape_own_tweet_and_replies"), PROFILE, ["{}"], None),
 }
+
+
+@pytest.fixture(autouse=True)
+def _no_blank_run():
+    """A crashed tweet read counts a blank page: no count outlives its test."""
+    from src.x import scraper
+    scraper._reset_blank_page_count()
+    yield
+    scraper._reset_blank_page_count()
+
+
+def _gives(run, expected):
+    if isinstance(expected, type) and issubclass(expected, BaseException):
+        with pytest.raises(expected):
+            run()
+    else:
+        assert run() == expected
 
 
 @pytest.mark.parametrize("name", MIGRATED)
 def test_a_session_closes_its_tab_once_on_the_nominal_path(memory_page, name):
-    run, url = MIGRATED[name]
-    memory_page.pages[url] = NOMINAL.get(name, ["1"])
-    result = run()
-    if name in REPORTS_NOT_OPENED:
-        assert result == []
-    assert memory_page.opened == [url]
+    migrated = MIGRATED[name]
+    memory_page.pages[migrated.url] = list(migrated.answers)
+    result = migrated.run()
+    if migrated.not_opened == WALK_FAILED:
+        assert result == [], "the walk accepted its listed page"
+    assert memory_page.opened == [migrated.url]
     assert memory_page.closed == 1
 
 
-@pytest.mark.parametrize("name", MIGRATED)
+@pytest.mark.parametrize("name", [name for name, m in MIGRATED.items() if m.crashed is not NO_READ])
 def test_a_session_closes_its_tab_once_when_a_read_raises(memory_page, name):
-    run, url = MIGRATED[name]
-    memory_page.pages[url] = [Boom("page script crashed")]
-    with pytest.raises(Boom):
-        run()
+    migrated = MIGRATED[name]
+    memory_page.pages[migrated.url] = [Boom("page script crashed")]
+    _gives(migrated.run, migrated.crashed)
     assert memory_page.scripts, "the scripted read raised"
     assert memory_page.closed == 1
 
 
 @pytest.mark.parametrize("name", MIGRATED)
 def test_a_session_reads_nothing_when_its_page_does_not_open(memory_page, name):
-    run, url = MIGRATED[name]
-    if name in REPORTS_NOT_OPENED:
-        assert run() == REPORTS_NOT_OPENED[name]()
-    else:
-        with pytest.raises(PageNotOpened):
-            run()
-    assert memory_page.opened == [url]
+    migrated = MIGRATED[name]
+    memory_page.pages["https://x.com/front"] = ["front tab"]
+    memory_page.front = "https://x.com/front"
+    _gives(migrated.run, migrated.not_opened)
+    assert memory_page.opened == [migrated.url]
     assert (memory_page.scripts, memory_page.scrolls, memory_page.pressed) == ([], 0, [])
     assert memory_page.closed == 1, "a timed-out open may have opened its page"
 

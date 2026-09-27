@@ -408,7 +408,8 @@ gitignored, so git holds no copy to restore.
 **x.com renders a blank page.** After 3 consecutive empty scrapes across at
 least 2 different pages (2 in a row on the home feed), `scraper`
 restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
-a restart and an empty mentions tab do not count. `health` also restarts
+a restart and an empty mentions tab do not count; a tweet scrape whose page
+did not open or whose read timed out counts as empty. `health` also restarts
 Safari after 3 failed cycles in a row, all jobs counted together, and
 `session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
 after the last restart. Every restart waits for the job holding Safari to

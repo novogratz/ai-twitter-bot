@@ -377,7 +377,8 @@ quit in `safari_hygiene` spawn `osascript` themselves.
 `page_session.py` holds the page session, over those primitives:
 `session(tag)` takes the Safari lock for its whole life and yields a page
 that opens on demand (`page.open(url, settle_s)`), scrolls, runs a script
-(its failure line prefixed `[tag]`), reads a JSON answer and runs keys. A
+(its failure line prefixed `[tag]`), reads a JSON answer and runs keys
+(bounded by `KEYSTROKE_TIMEOUT_S` unless the caller gives its own bound). A
 page that does not open raises `PageNotOpened` before any read, and its
 scripts, keys and scrolls raise it too until an open succeeds, so a job
 that catches it reads nothing from the front tab. In a `finally`, the
@@ -393,11 +394,21 @@ job raised before it is logged first. `BROWSER` picks the adapter at the start o
 each session: `SafariBrowser`, which calls the primitives through the
 `safari` module, or `MemoryBrowser`, which scripts pages by URL for tests,
 each page a list of answers given in turn or a function of the script.
-The follower count, the three like walks and the follow-back's read of
-the followers page go through a session; the other page reads and the
-writes move to it with issues #254 and #256.
+The follower count, the scrapes, the three like walks and the
+follow-back's read of the followers page go through a session; the writes
+move to it with issue #256.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
+Each scrape opens its page in a session and reads the tweets in a session
+nested in it, so `_scrape_tweets_from_page` reads the page the scrape
+opened. When the page does not open, the scrape reads nothing, presses no
+key and gives its answer on any failed read: `[]` for a tweet list, `None`
+for our latest post. A tweet scrape whose page did not open counts it as a
+timed-out read, hence a blank page, once its session has closed its tab and
+released the lock; the feed refresh and our latest post do not. The
+blank-page recovery restarts Safari from inside the session, which holds
+the reentrant Safari lock; the session then closes the front tab of the
+relaunched Safari, its warm-up tab, as before the page session.
 `twitter_client.py` holds the write chokepoints. Writes use
 reading and primitives, reading uses primitives, never the other way. Both
 call a primitive through its module (`safari._run_applescript(...)`), never a
@@ -793,9 +804,6 @@ These are how the code behaves today, not design intent:
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.
-- The page reads of `scraper.py` still ignore `open_url`'s result, and
-  read the front tab when the page did not open (parent issue #250). The
-  writes and the page sessions check it.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
   may still open a timed-out page afterwards, and the tab close of a write
   or a page session then closes another tab and leaves that one open.
@@ -945,7 +953,7 @@ answer on failure, and checks that a test which forgets to mock `_run_js`
 fails on the wall. `tests/x/test_page_session.py` runs a contract over
 `MIGRATED`, every session moved to the page session: one tab close on the
 nominal path and when a read raises, and no read when the page does not
-open. The `memory_page` fixture puts a `MemoryBrowser` behind every page
+open, each with the answer or the exception the session's caller gets. The `memory_page` fixture puts a `MemoryBrowser` behind every page
 session, so those tests patch no primitive and no `sleep`. Every test also
 starts with fresh process memories: the posts the Reply pipeline set aside,
 the direct reply's query rotation cursor and the content guard's dedup
