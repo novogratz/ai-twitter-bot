@@ -30,24 +30,18 @@ def _private(name):
     return name.startswith("_") and not (name.startswith("__") and name.endswith("__"))
 
 
-def private_borrows(source, module):
-    """The names `module`, a module of src/replies, takes from another
-    reply module that start with an underscore: imported by name (relative
-    at any level, or absolute), or read as an attribute of an imported
-    sibling module."""
+def references(source, module):
+    """(line, dotted name) of what `module`, a module of src/replies, takes
+    from other modules: each module or name it imports (relative at any
+    level, or absolute), and each attribute read on an imported name."""
     package = module.split(".")[:-1]
-    bound, problems = {}, set()
-
-    def borrow(lineno, dotted):
-        parts = dotted.split(".")
-        if dotted.startswith(REPLIES + ".") and not dotted.startswith(module + ".") \
-                and any(_private(p) for p in parts[2:]):
-            problems.add(f"{lineno}: {dotted}")
+    bound, found = {}, []
 
     tree = ast.parse(source)
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for a in node.names:
+                found.append((node.lineno, a.name))
                 if a.asname:
                     bound[a.asname] = a.name
                 else:
@@ -63,7 +57,7 @@ def private_borrows(source, module):
                 target = node.module or ""
             for a in node.names:
                 dotted = f"{target}.{a.name}"
-                borrow(node.lineno, dotted)
+                found.append((node.lineno, dotted))
                 bound[a.asname or a.name] = dotted
     for node in ast.walk(tree):
         if isinstance(node, ast.Attribute):
@@ -72,8 +66,16 @@ def private_borrows(source, module):
                 chain.append(base.attr)
                 base = base.value
             if isinstance(base, ast.Name) and base.id in bound:
-                borrow(node.lineno, ".".join([bound[base.id], *reversed(chain)]))
-    return sorted(problems)
+                found.append((node.lineno, ".".join([bound[base.id], *reversed(chain)])))
+    return found
+
+
+def private_borrows(source, module):
+    """The names `module`, a module of src/replies, takes from another
+    reply module that start with an underscore."""
+    return sorted({f"{lineno}: {dotted}" for lineno, dotted in references(source, module)
+                   if dotted.startswith(REPLIES + ".") and not dotted.startswith(module + ".")
+                   and any(_private(p) for p in dotted.split(".")[2:])})
 
 
 @pytest.mark.parametrize("source", [
@@ -94,8 +96,8 @@ def test_the_private_borrow_guard_catches_every_import_form(source):
 
 
 @pytest.mark.parametrize("source", [
-    "from .direct_reply import is_on_niche",
-    "from . import direct_reply\ndirect_reply.is_on_niche(direct_reply.__name__)",
+    "from .direct_reply import reply_call",
+    "from . import direct_reply\ndirect_reply.reply_call(direct_reply.__name__)",
     "from ..core.config import _PROJECT_ROOT",
     "from . import example_bot\nexample_bot._own_helper",
 ])
@@ -110,6 +112,55 @@ def test_reply_jobs_never_borrow_each_others_privates():
     problems = [f"{path.name}:{p}" for path in sorted(root.glob("*.py"))
                 for p in private_borrows(path.read_text(), f"{REPLIES}.{path.stem}")]
     assert not problems, "private borrows across src/replies:\n  " + "\n  ".join(problems)
+
+
+DIRECT_REPLY = f"{REPLIES}.direct_reply"
+
+
+def direct_reply_takings(source, module):
+    """What `module` takes from direct_reply besides `reply_call`: the
+    module itself, or any other name imported or read from it."""
+    return sorted({f"{lineno}: {dotted}" for lineno, dotted in references(source, module)
+                   if dotted == DIRECT_REPLY or (dotted.startswith(DIRECT_REPLY + ".")
+                                                 and dotted.split(".")[3] != "reply_call")})
+
+
+@pytest.mark.parametrize("source", [
+    "from .direct_reply import is_on_niche",
+    "from . import direct_reply",
+    "from . import direct_reply as dr\ndr.is_on_niche",
+    "from ..replies.direct_reply import is_on_niche",
+    "from ..replies import direct_reply",
+    "from .. import replies\nreplies.direct_reply.is_on_niche",
+    "from src.replies.direct_reply import is_on_niche",
+    "from src.replies import direct_reply",
+    "import src.replies.direct_reply as dr\ndr.is_on_niche",
+    "import src.replies.direct_reply",
+    "import src.replies\nsrc.replies.direct_reply.is_on_niche",
+    "def run():\n    from .direct_reply import reply_call, is_on_niche",
+])
+def test_the_direct_reply_guard_catches_every_import_form(source):
+    assert direct_reply_takings(source, "src.replies.example_bot")
+
+
+@pytest.mark.parametrize("source", [
+    "from .direct_reply import reply_call",
+    "from src.replies.direct_reply import reply_call as call",
+    "from ..replies.direct_reply import reply_call",
+    "from . import reply_source\nreply_source.select",
+])
+def test_the_direct_reply_guard_lets_the_reply_call_through(source):
+    assert direct_reply_takings(source, "src.replies.example_bot") == []
+
+
+def test_the_other_reply_jobs_take_only_the_reply_call_from_direct_reply():
+    """Issue #244: direct_reply is a job, not a library. The other jobs
+    select through the Reply source and read the Account themselves; the
+    Reply call stays shared until the call surface moves it (#245)."""
+    root = Path(__file__).resolve().parents[2] / "src" / "replies"
+    taken = [f"{path.name}:{t}" for path in sorted(root.glob("*.py")) if path.stem != "direct_reply"
+             for t in direct_reply_takings(path.read_text(), f"{REPLIES}.{path.stem}")]
+    assert not taken, "taken from direct_reply:\n  " + "\n  ".join(taken)
 
 
 # --- direct_reply: the VIP scan, then the search lane -------------------------
@@ -462,17 +513,17 @@ def test_early_reply_targets_are_curator_driven():
 
 
 @pytest.fixture(params=["early_bird", "mega_watch"])
-def profile_job(request, monkeypatch, llm, chokepoint):
+def profile_job(request, monkeypatch, llm, chokepoint, always_reply):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
     from src.core import evolution_store
-    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw, reply_source
+    from src.replies import early_bird_bot as eb, mega_watch_bot as mw, reply_source
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
     profiles = {}
     monkeypatch.setattr(eb, "_scan_pool", lambda: list(profiles))
     monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
-    monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
+    always_reply()
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
     monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
@@ -522,15 +573,15 @@ def test_profile_jobs_bound_their_replies(profile_job):
 
 
 @pytest.mark.parametrize("profile_job", ["early_bird"], indirect=True)
-def test_early_bird_answers_seven_accounts_at_most(profile_job, monkeypatch):
+def test_early_bird_answers_seven_accounts_at_most(profile_job, monkeypatch, always_reply):
     """#243: the cap of 15 Replies per cycle never bound anything. Early
     bird picks four always-reply accounts and three from its scan pool, one
     Reply each: seven at most."""
-    from src.replies import direct_reply as dr, early_bird_bot as eb
+    from src.replies import early_bird_bot as eb
 
     name, run, profiles, llm, chokepoint = profile_job
     always, tracked = [f"always{i}" for i in range(6)], [f"tracked{i}" for i in range(6)]
-    monkeypatch.setattr(dr, "always_reply_accounts", lambda: tuple(always))
+    always_reply(*always)
     monkeypatch.setattr(eb, "_scan_pool", lambda: list(tracked))
     for handle in always + tracked:
         profiles[handle] = [post(handle, f"post {handle} {i}", n=i) for i in range(3)]

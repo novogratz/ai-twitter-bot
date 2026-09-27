@@ -36,6 +36,17 @@ def chokepoint(monkeypatch):
 
 
 @pytest.fixture
+def always_reply(monkeypatch):
+    """`always_reply(*handles)`: the loaded Account's always-reply accounts
+    are `handles` alone; its lists, vip_reply included, stay as loaded."""
+    from src.core import account
+
+    def swap(*handles):
+        monkeypatch.setattr(account.Network, "always_reply", property(lambda self: handles))
+    return swap
+
+
+@pytest.fixture
 def blocked_pgm_pm(monkeypatch):
     """@pgm_pm is the one Blocked account."""
     from src.core import config

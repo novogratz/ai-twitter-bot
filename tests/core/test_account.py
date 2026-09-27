@@ -661,7 +661,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     accounts("other", other)
     fresh("BOT_ACCOUNT=other\n")
     assert engage_bot._vip_accounts() == ("OtherVip",)
-    assert direct_reply.always_reply_accounts()[0] == "OtherVip"
+    assert account.current().network.always_reply[0] == "OtherVip"
     assert direct_reply.reply_call("othervip").label == "DIRECT_REPLY_VIP"
     assert direct_reply.reply_call("nobody").label == "DIRECT_REPLY"
     assert "othertarget" in notify_bot._influencer_handles()
