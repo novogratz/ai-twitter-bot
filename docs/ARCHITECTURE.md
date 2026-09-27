@@ -143,7 +143,10 @@ the Pending slot reserved, confirmed or released, the closed Slots, the used
 source URLs, the recent Posts (published and pending, with their time),
 the day's submissions and the latest one. `FileJournal` keeps
 `editorial_state.json` (guarded, same format as before); `MemoryJournal`
-holds it in memory for tests. Each pass reads the file once, keeps the
+holds it in memory for tests. `slot_journal.JOURNAL` picks the cycle's
+adapter: `None`, the default, stands for the file; the editorial cycle's
+tests set a `MemoryJournal` through the `memory_journal` fixture. Each
+pass reads the file once, keeps the
 state in memory and saves it whole at each change; a new Toronto day is
 saved with the pass's first change. `post_tweet` reads the file again at
 each submission, read only.

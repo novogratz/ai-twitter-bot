@@ -23,8 +23,7 @@ from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import StatePath
 from . import editorial_schemas as schemas
-from .slot_journal import (STATE, FileJournal, MemoryJournal, SlotJournal, stamp as _stamp,
-                           submission_text)
+from .slot_journal import SlotJournal, current, stamp as _stamp, submission_text
 from .trending import TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 AUDIT_FILE = StatePath("editorial_review.jsonl")
@@ -70,20 +69,9 @@ _BAIT = re.compile(r"\b(thoughts\??|agree\??|who.?s with me|game.?changer|"
                    r"like and share|follow for more|retweet if|repost if)\b", re.I)
 
 
-def _read_state() -> dict:
-    return STATE.read()
-
-
-def _save_state(data: dict) -> None:
-    STATE.write(data)
-
-
 def _journal(journal) -> SlotJournal:
-    """`journal`, or the file's when None. A dict in the file's format reads
-    as a journal of it, for the tests that still pass one (#232)."""
-    if journal is None:
-        return FileJournal()
-    return journal if isinstance(journal, SlotJournal) else MemoryJournal(journal)
+    """`journal`, or the current one when None."""
+    return current() if journal is None else journal
 
 
 def _local(now=None):
@@ -152,12 +140,6 @@ def startup_slot(now=None, journal=None):
     return Slot(key, account.current().editorial.trend_angle) if _open(key, now, journal) else None
 
 
-def next_slot(now=None, journal=None):
-    """The Startup post first, then the Slot grid."""
-    journal = _journal(journal)
-    return startup_slot(now, journal) or due_slot(now, journal)
-
-
 def _trusted(url: str) -> bool:
     parts = urlsplit(url)
     return (parts.scheme == "https" and parts.hostname in account.current().editorial.trusted_hosts
@@ -214,7 +196,7 @@ def _plain(html: str) -> str:
 def collect_sources(journal, now=None, news_only=False) -> list:
     now = now or now_local()
     # An ambiguous submission may be live: a restart must not reuse its source.
-    used = _journal(journal).used_urls(now)
+    used = journal.used_urls(now)
     candidates = []
     loaded = account.current()
     for publisher, feed in loaded.editorial.feeds:
@@ -401,7 +383,7 @@ def _pending_refusal(journal, now) -> str:
     """Why the day's submissions forbid another one now, or "": the
     chokepoint's rule (`action_guard.original_refusal`), asked before a
     Draft spends an Attempt and again before the reservation."""
-    return action_guard.original_refusal(_journal(journal), now)
+    return action_guard.original_refusal(journal, now)
 
 
 def run_editorial_cycle(preview=False):
@@ -409,7 +391,7 @@ def run_editorial_cycle(preview=False):
         return None
     try:
         require_active()
-        journal = FileJournal()
+        journal = current()
         # The review dedups against it: unreadable, refuse before a Draft
         # spends an Attempt.
         load_history()
