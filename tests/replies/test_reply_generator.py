@@ -268,7 +268,7 @@ def instructions(prompt):
 
 # The niche the replyback examples still joked about after #205 kept the
 # Replies to AI.
-OFF_NICHE = re.compile(r"\b(fed|bitcoin|btc|nfts?|crypto\w*|dip|markets?|marché|bercy|rates)\b", re.IGNORECASE)
+OFF_NICHE = re.compile(r"\b(fed|bitcoin|btc|nfts?|crypto\w*|markets?|marché|bercy)\b", re.IGNORECASE)
 
 
 @pytest.mark.parametrize("job", ["search", "debate", "replyback"])

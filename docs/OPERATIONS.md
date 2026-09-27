@@ -159,8 +159,7 @@ with no Relation, that never runs live.
    the values that hold under `bounded_settings`.
    Some prompt text still speaks of AI whatever the domain: the editorial
    draft's "model update, research method" and "a model generates text",
-   the review's "misleading benchmark comparisons", and the examples of the
-   replyback prompt (GPUs, the Fed, Bitcoin). The search Reply lane
+   and the review's "misleading benchmark comparisons". The search Reply lane
    (`ENABLE_REPLY_SEARCH`, off by default) runs an AI-only prompt with its
    own searches: leave it off for another domain.
 3. The Operator writes `voice_en.md` and `voice_fr.md`, and fills
