@@ -116,7 +116,11 @@ wrapper logs a job's error at ERROR
 with the traceback, as `[<label>] Cycle failed.`; it names a
 `StateUnreadable` (with the repair in
 [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
-Overnight at INFO.
+Overnight at INFO. A `safari_health.json` field that is not a count
+after a hand edit (a string, `null`, a boolean, a negative number, a
+fraction for a counter) goes back to its default with a `[HEALTH]`
+warning naming it, the other fields kept, so the wrapper never raises
+over it (issue #303).
 
 The reply jobs live in `src/replies/`; `engage_job`,
 `followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and

@@ -21,6 +21,7 @@ was. By design this is per-bot (across reply / engage / post / etc.) —
 three browser failures in a row from ANY mix of bots is the trigger, since
 they all share Safari.
 """
+import math
 import os
 import time
 from datetime import datetime
@@ -42,6 +43,29 @@ AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
 RECOVERY_THRESHOLD = 3      # consecutive cycle failures before we restart
 
 
+def _update(fn):
+    """HEALTH.update, with each field checked before `fn` sees it (#303).
+
+    The file is disposable, and valid JSON edited by hand may still hold a
+    field that is not a count: a string, null, a list, a boolean, a
+    negative number, a fraction for a counter. That field alone goes back
+    to its default with a warning naming it; the valid ones are kept."""
+    return HEALTH.update(lambda data: fn(_checked(data)))
+
+
+def _checked(data: dict) -> dict:
+    for field, default in HEALTH.default().items():
+        value = data.get(field, default)
+        kinds = (int, float) if field == "last_recovery_ts" else int
+        # bool is an int to Python; the comparison also refuses NaN and infinity.
+        if isinstance(value, bool) or not isinstance(value, kinds) or not 0 <= value < math.inf:
+            log.warning(f"[HEALTH] {HEALTH.name}: {field} is {value!r}, not a count: "
+                        f"reset to {default}.")
+            value = default
+        data[field] = value
+    return data
+
+
 def record_success(label: str = ""):
     """Reset the failure counter. Call from any cycle that completed normally."""
     _reset(f"{label or 'cycle'} OK")
@@ -55,11 +79,11 @@ def reset_after_restart(reason: str):
 
 def _reset(event: str):
     def reset(data):
-        if data.get("consecutive_failures", 0) > 0:
+        if data["consecutive_failures"] > 0:
             log.info(f"[HEALTH] {event} — resetting failure counter (was {data['consecutive_failures']}).")
         data["consecutive_failures"] = 0
         return data
-    HEALTH.update(reset)
+    _update(reset)
 
 
 def wrap_job(run, label: str, *, safari_health: bool = True):
@@ -127,10 +151,10 @@ def record_failure(label: str, exc: BaseException) -> bool:
         return False
 
     def count(data):
-        data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
+        data["consecutive_failures"] += 1
         log.info(f"[HEALTH] {label or 'cycle'} FAILED — consecutive = {data['consecutive_failures']}.")
         return data
-    failures = HEALTH.update(count)["consecutive_failures"]
+    failures = _update(count)["consecutive_failures"]
     if failures < RECOVERY_THRESHOLD:
         return False
 
@@ -142,9 +166,9 @@ def record_failure(label: str, exc: BaseException) -> bool:
 
     def tried(data):
         data["last_recovery_ts"] = time.time()
-        data["total_recoveries"] = data.get("total_recoveries", 0) + 1
+        data["total_recoveries"] += 1
         return data
-    total = HEALTH.update(tried)["total_recoveries"]
+    total = _update(tried)["total_recoveries"]
     _append_autonomous_flag(label, total, bool(outcome))
     return bool(outcome)
 

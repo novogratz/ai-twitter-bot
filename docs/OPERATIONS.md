@@ -567,7 +567,7 @@ root:
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |
-| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Browser failures in a row (reset by a success or a restart that succeeded), last tried recovery and the count of tried recoveries; last restart tried, failed or not, which starts the cooldown and the blank-page grace | disposable |
+| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Browser failures in a row (reset by a success or a restart that succeeded), last tried recovery and the count of tried recoveries, a field that is not a count reset to its default with a warning; last restart tried, failed or not, which starts the cooldown and the blank-page grace | disposable |
 | `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past or unreadable | disposable |
 | `autonomous_log.md` (root) | `health` | One line per Safari restart `health` tried, with its `success`; a refused restart writes none | append-only, outside the store |
 

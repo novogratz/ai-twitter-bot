@@ -1,6 +1,7 @@
 """src/core/health: the job wrapper and the failure it is handed (#235);
 only a browser failure counts toward a Safari restart (#298), and only a
 restart that was tried counts as a recovery (#302)."""
+import json
 import os
 import threading
 import time
@@ -230,6 +231,81 @@ def test_the_wrapper_never_raises_over_the_health_file(restarts, monkeypatch, fa
     fault(monkeypatch)
 
     health.wrap_job(run, "direct_reply")()
+
+
+VALID_HEALTH = {"consecutive_failures": 1, "last_recovery_ts": 1234.5, "total_recoveries": 4}
+NOT_A_NUMBER = ["3", None, [1], {"n": 1}, True, False, -1]
+INVALID_FIELDS = (
+    [("consecutive_failures", v) for v in NOT_A_NUMBER + [2.5]]
+    + [("total_recoveries", v) for v in NOT_A_NUMBER + [4.0]]
+    + [("last_recovery_ts", v) for v in NOT_A_NUMBER + [-0.5, float("nan"), float("inf")]])
+
+
+def _write_health(field, value):
+    """safari_health.json as an Operator's hand edit leaves it: valid JSON,
+    one field that is not a count."""
+    os.makedirs(os.path.dirname(health.HEALTH.path), exist_ok=True)
+    with open(health.HEALTH.path, "w") as f:
+        json.dump({**VALID_HEALTH, field: value}, f)
+
+
+def _assert_valid_health(data):
+    for field in ("consecutive_failures", "total_recoveries"):
+        assert type(data[field]) is int and data[field] >= 0, (field, data)
+    ts = data["last_recovery_ts"]
+    assert type(ts) in (int, float) and ts >= 0, data
+
+
+@pytest.mark.parametrize("field,value", INVALID_FIELDS)
+@pytest.mark.parametrize("run,failures", [(lambda: None, 0),
+                                          (_raises(PageNotOpened("https://x.com/home")), None)],
+                         ids=["success", "browser_failure"])
+def test_the_wrapper_never_raises_over_an_invalid_health_field(restarts, caplog, field, value,
+                                                              run, failures):
+    """#303: a field that is not a count is reset to its default with a
+    warning naming it; the valid fields are kept and the file rewritten."""
+    _write_health(field, value)
+
+    health.wrap_job(run, "direct_reply")()
+
+    data = health.HEALTH.read()
+    _assert_valid_health(data)
+    if failures is None:  # a browser failure counts one more, from 0 once reset
+        failures = 1 if field == "consecutive_failures" else VALID_HEALTH["consecutive_failures"] + 1
+    assert data["consecutive_failures"] == failures
+    if field != "consecutive_failures":
+        assert data[field] == 0
+    kept = {k: v for k, v in VALID_HEALTH.items() if k not in (field, "consecutive_failures")}
+    assert {k: data[k] for k in kept} == kept
+    assert any(r.levelname == "WARNING" and f"safari_health.json: {field} " in r.getMessage()
+               for r in caplog.records)
+    errors = [r.exc_info[0] for r in caplog.records if r.levelname == "ERROR"]
+    assert errors == ([] if failures == 0 else [PageNotOpened]), "only the job's own error"
+
+
+@pytest.mark.parametrize("field,value", INVALID_FIELDS)
+def test_a_reset_after_restart_never_raises_over_an_invalid_health_field(field, value):
+    """#303: restart_safari calls it after a real relaunch; raising there
+    would report a restart that succeeded as failed."""
+    _write_health(field, value)
+
+    health.reset_after_restart("health_recovery")
+
+    data = health.HEALTH.read()
+    _assert_valid_health(data)
+    assert data["consecutive_failures"] == 0
+
+
+def test_a_valid_health_file_is_rewritten_as_it_was(restarts, caplog):
+    """A float timestamp and integer counters are valid: nothing is reset,
+    nothing is logged about them."""
+    health.HEALTH.write(VALID_HEALTH)
+
+    health.wrap_job(_raises(PageNotOpened("https://x.com/home")), "direct_reply")()
+
+    assert health.HEALTH.read() == {**VALID_HEALTH, "consecutive_failures": 2}
+    assert restarts == []
+    assert not any(r.levelname == "WARNING" for r in caplog.records)
 
 
 @pytest.fixture
