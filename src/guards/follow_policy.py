@@ -19,8 +19,9 @@ files it reads and keeps (CONTEXT.md: Follow refusal).
   follow.
 - `followed()` and `record_followed(handle)` are the record of the accounts
   followed; `adjust_following(delta)` keeps the following count.
-- `discovered()` and `add_discovered(handles)` are the handles
-  account_curator promoted to the whitelist.
+- `discovered()` and `add_discovered(handles)` are the handles the
+  retired account_curator promoted to the whitelist; only
+  bin/migrate_operator_data.py adds to them (#299).
 
 `follow_account` asks both judgements and names the refusal in its outcome,
 so a job acts on the cause without checking the rule again. The ledger
@@ -57,7 +58,7 @@ FOLLOWER_HISTORY = StateFile("follower_history.json", [], DISPOSABLE)
 # The Operator's follow whitelist, in the Account folder: the bot reads it,
 # never writes it. Missing or unreadable, it stops every follow.
 WHITELIST = OperatorFile("whitelist.json", dict)
-# Guarded: the handles account_curator promoted to the whitelist. Read as
+# Guarded: the handles the retired account_curator promoted to the whitelist. Read as
 # empty, it would unprotect them from an unfollow and take their Seed
 # account status, so a missing file stops its readers too: see discovered().
 DISCOVERED = StateFile("whitelist_discovered.json", [], GUARDED)
@@ -132,7 +133,7 @@ def valid_handle(handle: str | None) -> bool:
 def load_whitelist() -> dict:
     """Return {"tier1": set, ..., "tier4": set, "discovered": set,
     "all": set} of lowercased handles: the Operator's tiers, then the
-    handles account_curator promoted. tier4 (2026-06-07 spec:
+    handles the retired account_curator promoted. tier4 (2026-06-07 spec:
     crypto/markets crossover seeds) is optional in the file. Raises
     StateUnreadable while whitelist.json or whitelist_discovered.json is
     missing or unreadable."""
@@ -146,9 +147,8 @@ def load_whitelist() -> dict:
     t2 = _norm(tiers.get("tier2") or tiers.get("tier2_peers"))
     t3 = _norm(tiers.get("tier3") or tiers.get("tier3_watch"))
     t4 = _norm(tiers.get("tier4"))
-    # "discovered" tier: curator-promoted handles (2026-06-07 operator grant
-    # — the bot develops its own follow list). Same follow rights as seeds;
-    # additions capped + logged in account_curator.
+    # "discovered" tier: curator-promoted handles (2026-06-07 operator grant,
+    # the curator retired in #299). Same follow rights as seeds.
     t5 = _norm(discovered())
     return {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
             "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
@@ -166,7 +166,7 @@ def _require_discovered() -> None:
 
 
 def discovered() -> list:
-    """The handles account_curator promoted, as written. Raises
+    """The handles the retired account_curator promoted, as written. Raises
     StateUnreadable while whitelist_discovered.json is missing or
     unreadable."""
     _require_discovered()

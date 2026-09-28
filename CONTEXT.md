@@ -200,6 +200,14 @@ Relations' prompts. An Account may tighten an engine ceiling or floor,
 never lift it, and add Blocked accounts, never remove one.
 _Avoid_: profile (the account's page on X), bot, persona
 
+**Pinned account**:
+An account the Account lists in `network.pinned_tracked`, or
+`PINNED_TRACKED_HANDLES` when `.env` sets it: the profiles early_bird
+(first 30) and mega_watch (first 12) pick from at random, the list's order
+deciding which are kept, a Blocked account left out. The Operator picks
+them; nothing adds to them.
+_Avoid_: tracked account, curated account
+
 **Engager**:
 Someone who replied to or mentioned the account. The follow policy knows
 narrower: only the authors the account answered with a Debate turn (and,
@@ -208,8 +216,8 @@ _Avoid_: commenter, fan
 
 **Seed account**:
 An account the Operator lists as worth following, in the whitelist, or that
-the curator promoted to it; the only kind the account follows without a
-prior relationship, and never unfollows.
+the curator promoted to it before its removal (issue #299); the only kind
+the account follows without a prior relationship, and never unfollows.
 _Avoid_: whitelisted account, tier, discovered account
 
 **Follow-back**:

@@ -8,6 +8,23 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — the curator is gone (issue #299, Operator):**
+> `account_curator.run_curator_cycle` was no longer scheduled, yet
+> `early_bird` and `mega_watch` still read their scan pool from
+> `tracked_accounts.json`, which nothing updated any more, and the curator
+> alone promoted accounts into `whitelist_discovered.json`, against the
+> hand-picked AI lists of 2026-09-25. The Operator had it removed rather
+> than scheduled again. `early_bird` and `mega_watch` now scan the
+> Account's pinned accounts (`network.pinned_tracked`, or
+> `PINNED_TRACKED_HANDLES` from `.env`), the first 30 and 12 in order; a
+> Blocked account among them is left out, which the curator's pins never
+> were. No Reply cap or pace changed. The six `CURATOR_*` settings are
+> gone: a `.env` that still sets one starts with a warning.
+> `whitelist_discovered.json` stays guarded and read by the follow policy
+> and `bin/mass_unfollow.py`; only `bin/migrate_operator_data.py` adds to
+> it. No code reads `tracked_accounts.json` or
+> `engagement_targets_log.json`; the live copies were left as they were.
+
 > **2026-09-28 — Replyback and notify stop when the walk to our latest post fails (issue #301):**
 > both jobs open our profile, then press Tab Tab Tab Return to open our
 > latest post, and ignored the result of the keys. When the walk failed,

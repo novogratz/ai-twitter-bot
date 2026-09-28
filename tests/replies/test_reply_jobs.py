@@ -454,21 +454,21 @@ def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
 # --- early_bird and mega_watch (profile scans) ------------------------------
 
 
-def test_early_reply_targets_are_curator_driven():
-    """2026-06-07 PM operator mandate: NO static target lists — the scan
-    pools come from account_curator.tracked_handles(), pinned with the only
-    two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
-    from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
-    from src.replies.mega_watch_bot import MEGA_ACCOUNTS
-    assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
-        "static early-reply lists must stay empty — pools come from the curator"
-    )
-    from src.account.account_curator import pinned_handles, tracked_handles
-    # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
-    # reply conversion on his question post (operator: "more things like this").
-    assert pinned_handles() == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
-    handles = tracked_handles(limit=5)
-    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
+def test_profile_scan_pools_are_the_accounts_pinned_accounts(monkeypatch, settings_override):
+    """#299: the curator is gone. early_bird and mega_watch scan the
+    Account's pinned accounts, in their order, 30 and 12 at most, a handle
+    listed twice kept at its first place and a Blocked account left out."""
+    from src.replies import early_bird_bot as eb, mega_watch_bot as mw
+    assert eb.EARLY_BIRD_ACCOUNTS == [] and mw.MEGA_ACCOUNTS == []
+    assert eb._scan_pool() == mw._watch_pool() == ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
+
+    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
+    pinned = [f"pinned{i}" for i in range(40)]
+    settings_override(PINNED_TRACKED_HANDLES=",".join(
+        ["pinned0", "la_pique_off", " @pinned1 ", "PINNED0", *pinned[1:]]))
+
+    assert eb._scan_pool() == pinned[:30]
+    assert mw._watch_pool() == pinned[:12]
 
 
 @pytest.fixture(params=["early_bird", "mega_watch"])

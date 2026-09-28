@@ -75,7 +75,7 @@ refuses a non-Engager whose bio shows no AI term; the reply and like
 searches look for AI posts only. Crypto, markets and space accounts left
 the reply and scan lists. The accounts the Operator picked by hand stay
 whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
-Mindset4Money_X in the curator's pins, and so do the few handles whose
+Mindset4Money_X among the Account's pinned accounts, and so do the few handles whose
 topic is still to be confirmed by the Operator. The VIP scan still answers
 Graphseo's and TheBTCTherapist's posts without the niche filter, and
 answers to Engagers still follow the conversation.

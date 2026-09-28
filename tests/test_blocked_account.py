@@ -82,10 +82,10 @@ def test_every_follow_caller_meets_the_blocked_account_refusal(monkeypatch, tmp_
 def test_reply_admission_likes_and_follows_share_one_blocklist_match(monkeypatch, memory_ledger):
     """#188: the follow policy and the job filters copied no match of their
     own: whatever `is_blocked_account` says, every one of them says."""
-    from src.account import account_curator, engage_bot, followback_bot
-    from src.replies import feed_sweeper_bot, notify_bot
+    from src.account import engage_bot, followback_bot
+    from src.replies import feed_sweeper_bot, notify_bot, reply_source
 
-    for module in (account_curator, engage_bot, feed_sweeper_bot, followback_bot, notify_bot):
+    for module in (engage_bot, feed_sweeper_bot, followback_bot, notify_bot, reply_source):
         assert module.is_blocked_account is reply_admission.is_blocked_account, module.__name__
     monkeypatch.setattr(config, "BLOCKLIST", set())
     monkeypatch.setattr(reply_admission, "is_blocked_account", lambda handle: handle.lower() == "anyone")

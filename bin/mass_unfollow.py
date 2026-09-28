@@ -8,7 +8,8 @@ loads, repeats until the list is exhausted (or --max is hit).
 Safety:
   - The protected keep-set is the CURRENT whitelist: the Account's
     whitelist.json (all tiers + seeds[] handles — the 2026-06-07 spec's
-    curated follow list) and the handles account_curator promoted. Those
+    curated follow list) and the handles the retired account_curator promoted
+    (whitelist_discovered.json). Those
     are never unfollowed: they're the accounts the follow policy may
     follow, and recording their unfollow would block the re-follow for
     30 days via the anti-churn ledger.

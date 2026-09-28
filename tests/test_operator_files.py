@@ -134,17 +134,6 @@ def test_no_scheduled_job_writes_the_operator_files(watched, walled, monkeypatch
             pass  # a walled job may raise; only its writes matter here
 
 
-def test_the_curator_promotes_into_the_state_never_the_whitelist(watched, tmp_path, monkeypatch):
-    from src.account import account_curator
-    from src.guards import follow_policy
-    monkeypatch.setattr(account_curator, "_author_engagements", lambda: {"deep_macro": 9})
-
-    account_curator.run_curator_cycle()
-
-    assert json.loads((tmp_path / "whitelist_discovered.json").read_text()) == ["deep_macro"]
-    assert follow_policy.relation("deep_macro") is follow_policy.Relation.SEED
-
-
 @pytest.mark.parametrize("dry_run", ["1", "0"])
 def test_a_follow_of_a_seed_account_writes_only_state(watched, walled, memory_ledger, tmp_path,
                                                       monkeypatch, dry_run):

@@ -31,16 +31,12 @@ JOB = reply_pipeline.Job("early_bird", "EARLYBIRD",
 # yourself the list of accounts you want to follow and track" — the static
 # list is GONE.
 
-# The scan pool comes from account_curator.tracked_handles(): the bot's own
-# earned list (authors whose posts it kept engaging, weighted by
-# follower-conversion evidence), with the Account's network.pinned_tracked
-# always first.
+# The scan pool is the Account's pinned accounts (#299, the curator gone).
 EARLY_BIRD_ACCOUNTS: list = []  # intentionally empty — see _scan_pool()
 
 
 def _scan_pool() -> list:
-    from ..account.account_curator import tracked_handles
-    return tracked_handles(limit=30)
+    return reply_source.pinned_accounts(limit=30)
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
 # Goal: land in top ~5 replies. Sweet spot is ~5-15 min depending on the
