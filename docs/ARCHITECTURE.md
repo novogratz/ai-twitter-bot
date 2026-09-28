@@ -117,8 +117,8 @@ with the traceback, as `[<label>] Cycle failed.`; it names a
 `StateUnreadable` (with the repair in
 [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
 Overnight at INFO. A `safari_health.json` field that is not a count
-after a hand edit (a string, `null`, a boolean, a negative number, a
-fraction for a counter) goes back to its default with a `[HEALTH]`
+after a hand edit (a string, `null`, a list, a boolean, a negative
+number, NaN or infinity, a fraction for a counter) goes back to its default with a `[HEALTH]`
 warning naming it, the other fields kept, so the wrapper never raises
 over it (issue #303).
 

@@ -42,6 +42,11 @@ AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
 
 RECOVERY_THRESHOLD = 3      # consecutive cycle failures before we restart
 
+# The types each HEALTH field accepts: the two counters are whole numbers,
+# the recovery time a timestamp.
+FIELD_KINDS = {"consecutive_failures": int, "total_recoveries": int,
+               "last_recovery_ts": (int, float)}
+
 
 def _update(fn):
     """HEALTH.update, with each field checked before `fn` sees it (#303).
@@ -56,11 +61,11 @@ def _update(fn):
 def _checked(data: dict) -> dict:
     for field, default in HEALTH.default().items():
         value = data.get(field, default)
-        kinds = (int, float) if field == "last_recovery_ts" else int
         # bool is an int to Python; the comparison also refuses NaN and infinity.
-        if isinstance(value, bool) or not isinstance(value, kinds) or not 0 <= value < math.inf:
-            log.warning(f"[HEALTH] {HEALTH.name}: {field} is {value!r}, not a count: "
-                        f"reset to {default}.")
+        if (isinstance(value, bool) or not isinstance(value, FIELD_KINDS[field])
+                or not 0 <= value < math.inf):
+            log.warning(f"[HEALTH] {HEALTH.name}: {field} is {value!r}, not a valid "
+                        f"value: reset to {default}.")
             value = default
         data[field] = value
     return data

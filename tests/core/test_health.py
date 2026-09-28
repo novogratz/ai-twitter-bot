@@ -436,3 +436,8 @@ def test_two_failures_crossing_the_threshold_together_restart_safari_once(monkey
     assert safari_restart["quits"] == 1
     assert len(_flags()) == 1
     assert health.HEALTH.read()["total_recoveries"] == 1
+
+
+def test_every_health_field_has_its_kinds():
+    """#303: a field added to HEALTH declares the types it accepts."""
+    assert set(health.FIELD_KINDS) == set(health.HEALTH.default())
