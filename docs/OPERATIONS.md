@@ -492,8 +492,8 @@ yet. Those root files belong to `theaishrink`, the only Account before
 issue #207 (`state_store.LEGACY_ACCOUNT`). `main.py` refuses to start,
 `--dry-run` included and whichever Account runs, while one of them has no
 copy in `state/theaishrink/` or differs from its copy there, and so do
-`bin/migrate_operator_data.py`, `bin/mass_unfollow.py` and
-`bin/seed_fr_influencers.py`: see [Deploying issue #207](#deploying-issue-207).
+`bin/migrate_operator_data.py` and `bin/mass_unfollow.py`: see
+[Deploying issue #207](#deploying-issue-207).
 
 `bot.log`, `bot.lock`, `autonomous_log.md`, `.bot_disabled` and
 `.watchdog_off` stay at the root: they belong to the process and its
@@ -853,7 +853,6 @@ nothing needs to be migrated.
   the handles it carries would unfollow them.
   `state/<account>/mass_unfollow_results.json` is rewritten after every
   unfollow.
-- `bin/seed_fr_influencers.py` is a one-off from the French era.
 
 ## Skills
 

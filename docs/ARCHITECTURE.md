@@ -860,9 +860,6 @@ These are how the code behaves today, not design intent:
   `early_bird`, `mega_watch`, `debate`, replyback or the VIP lane generates
   inside the gap is refused on spacing, and its generation is paid again in
   a later cycle.
-- The state store lock is per process: `bin/seed_fr_influencers.py`
-  following while the bot runs can still lose a follow from
-  `followed_accounts.json`.
 - The ledger lock is per process, and `FileLedger` assumes the bot is the
   only writer while it runs. A row another process writes while the bot
   rewrites the file (conversion or daily retention pass) or drops an
