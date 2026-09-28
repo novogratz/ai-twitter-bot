@@ -1,7 +1,11 @@
 """Cross-cutting: the jobs `main.build_scheduler()` registers."""
+import ast
 import inspect
+from pathlib import Path
 
 import pytest
+
+from tests.helpers import references
 
 
 def test_reply_only_still_registers_the_reply_engine():
@@ -179,3 +183,106 @@ def test_a_failed_session_refresh_is_logged_and_not_a_safari_failure(monkeypatch
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == "[hygiene] Cycle failed."
     assert "OSError: disk full" in caplog.text
+
+
+def test_a_job_that_reaches_bedtime_is_stopped_by_the_wrapper(monkeypatch, caplog):
+    """Issue #239: the wrapper names the Overnight; the waking-hours gate
+    around it only keeps a queued job from starting."""
+    from src.account import like_bot
+    from src.core import health
+    from src.guards.active_hours import OutsideActiveHours
+    from tests.helpers import scheduled_job
+
+    def bedtime():
+        raise OutsideActiveHours("Bot asleep")
+    monkeypatch.setattr(like_bot, "run_like_cycle", bedtime)
+
+    scheduled_job("like_job")()
+
+    assert caplog.messages == ["[HEALTH] like stopped for the Overnight. Not a Safari failure, no restart."]
+    assert not any(r.levelname == "ERROR" for r in caplog.records)
+    assert not Path(health.HEALTH.path).exists()
+
+
+def test_every_scheduled_job_runs_under_the_wrapper(settings_override):
+    """Issue #239: the waking-hours gate no longer catches a stop, so a job
+    registered without `health.wrap_job` would raise it to APScheduler."""
+    import main
+    from src.core import health
+
+    settings_override(ENABLE_REPLY_SEARCH=True)
+    wrapper = health.wrap_job(lambda: None, "probe").__code__
+    jobs = main.build_scheduler().get_jobs()
+
+    assert "reply_job" in {job.id for job in jobs}
+    assert [job.id for job in jobs if job.func.__wrapped__.__code__ is not wrapper] == []
+
+
+HEALTH_RECORDS = ("src.core.health.record_success", "src.core.health.record_failure")
+# The session refresh is the Safari restart itself: resetting the counter
+# after a restart is the effect of the restart, as in record_failure's own
+# recovery, not the outcome of a cycle the wrapper judges (#238). It has a
+# single caller, so it stays here rather than as a third wrapper mode.
+RESTART_RESETS_HEALTH = {("src.x.safari_hygiene", "src.core.health.record_success")}
+
+
+def wrapper_bypasses(source, module):
+    """(line, what) in `module` that does the job wrapper's work: a
+    `safe_run_*` it defines, or a `health.record_*` it reaches."""
+    found = {(n.lineno, f"def {n.name}") for n in ast.walk(ast.parse(source))
+             if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+             and n.name.startswith("safe_run")}
+    found |= {(lineno, dotted) for lineno, dotted in references(source, module)
+              if dotted in HEALTH_RECORDS}
+    return sorted(found)
+
+
+@pytest.mark.parametrize("source", [
+    "def safe_run_like_cycle():\n    pass",
+    "def run():\n    def safe_run():\n        pass",
+    "from ..core import health\nhealth.record_failure('like', exc)",
+    "from ..core import health as h\nh.record_success('like')",
+    "from ..core.health import record_success",
+    "from src.core import health\nhealth.record_success('like')",
+    "import src.core.health\nsrc.core.health.record_failure('like', exc)",
+    "def run_like_cycle():\n    from ..core import health\n    health.record_success('like')",
+])
+def test_the_wrapper_guard_catches_a_safe_run_or_a_health_record(source):
+    assert wrapper_bypasses(source, "src.account.like_bot")
+
+
+@pytest.mark.parametrize("source", [
+    "def run_like_cycle():\n    pass",
+    "from ..core import health\nhealth.wrap_job(run, 'like')",
+    "from ..core.health import HEALTH",
+])
+def test_the_wrapper_guard_lets_a_run_through(source):
+    assert wrapper_bypasses(source, "src.account.like_bot") == []
+
+
+def test_only_the_job_wrapper_captures_errors_and_records_health():
+    """Issue #239: a job module exposes its `run_*` and lets it raise;
+    `health.wrap_job`, in build_scheduler, catches, logs and counts. Every
+    module of src/ and bin/, and main.py, is checked: a new job is covered
+    wherever it lives."""
+    root = Path(__file__).resolve().parents[1]
+    paths = [*sorted((root / "src").rglob("*.py")), *sorted((root / "bin").glob("*.py")),
+             root / "main.py"]
+    found = []
+    for path in paths:
+        module = ".".join(path.relative_to(root).with_suffix("").parts)
+        if module == "src.core.health":
+            continue
+        found += [f"{path.relative_to(root)}:{lineno}: {what}"
+                  for lineno, what in wrapper_bypasses(path.read_text(), module)
+                  if (module, what) not in RESTART_RESETS_HEALTH]
+    assert not found, "the job wrapper's work done elsewhere:\n  " + "\n  ".join(found)
+
+
+def test_the_session_refresh_is_the_one_module_reaching_health_records():
+    """The exception above names code that exists: once the reset moves,
+    the entry goes."""
+    root = Path(__file__).resolve().parents[1]
+    source = (root / "src" / "x" / "safari_hygiene.py").read_text()
+    assert {("src.x.safari_hygiene", what)
+            for _, what in wrapper_bypasses(source, "src.x.safari_hygiene")} == RESTART_RESETS_HEALTH

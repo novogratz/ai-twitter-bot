@@ -46,8 +46,10 @@ handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
-next `require_active()`. `is_active()` reads the clock only: the scheduler's
-pause/resume loop must not treat a stop as a wake-up boundary.
+next `require_active()`, whose `OutsideActiveHours` the job wrapper
+(`health.wrap_job`) logs as a stop for the Overnight. `is_active()` reads
+the clock only: the scheduler's pause/resume loop must not treat a stop as a
+wake-up boundary.
 
 Pausing the scheduler is not enough, because a job queued at 23:29 would still
 run. The check is repeated at each point where work leaves the process:
@@ -83,9 +85,12 @@ slow model would restart a healthy Safari. A missed reach measurement says
 nothing about Safari either. The session refresh is the Safari restart
 itself: `run_session_refresh` resets the failure counter, under the label
 `hygiene`, after a restart only; a restart refused on its cooldown or
-outside waking hours, or one that failed, records nothing. The wrapper logs
-a job's error at ERROR with the traceback, as `[<label>] Cycle failed.`; it
-names a `StateUnreadable` (with the repair in
+outside waking hours, or one that failed, records nothing. It is the one
+module besides `health` that calls `health.record_*`: the reset follows the
+restart, as it does after `record_failure`'s own recovery, and is not a
+cycle outcome the wrapper judges. The wrapper logs a job's error at ERROR
+with the traceback, as `[<label>] Cycle failed.`; it names a
+`StateUnreadable` (with the repair in
 [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
 Overnight at INFO.
 
@@ -880,7 +885,12 @@ some files those bots used to write, as frozen data with no writer left:
 1. Expose `run_<name>_cycle()` in a module of the package that owns its
    concern: `src/replies/<name>.py` for a reply job, `src/account/<name>.py`
    for a follow, like or pin job. The top level of `src/` holds only
-   packages. Let its errors raise: the job wrapper catches them.
+   packages. Let its errors raise: the job wrapper catches them. The
+   module exposes the `run_*` only: no `safe_run_*` around it, no
+   `try`/`except` that logs the cycle's error, no call to `health.record_*`.
+   `tests/test_scheduler.py` fails on a `safe_run_*` or a `health.record_*`
+   anywhere in `src/`, `bin/` or `main.py` outside `health`, the session
+   refresh's reset excepted.
 2. Register it in `build_scheduler()` with
    `add(health.wrap_job(run_<name>_cycle, "<name>"), minutes, "<name>_job")`.
    `wrap_job` logs an error at ERROR with its traceback in `bot.log`, resets
@@ -890,10 +900,6 @@ some files those bots used to write, as frozen data with no writer left:
    about Safari, such as a model call or a report: it never touches the
    health file. Never call `scheduler.add_job` directly: `add()` supplies the
    waking-hours wrapper.
-
-   In transition (issue #234): `health.record_failure` called without an
-   exception still reads the one in flight; #239 makes the exception
-   required.
 3. Read or act on a page inside `page_session.session(tag)`: it takes the
    Safari lock, opens the page when asked and closes the tab on every
    path. Handle `PageNotOpened` if the job has a fallback that opens

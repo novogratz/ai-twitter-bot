@@ -1,4 +1,5 @@
 """Helpers shared by test files of several packages."""
+import ast
 import json
 import re
 import urllib.parse
@@ -188,3 +189,44 @@ class WritePage(page_session.MemoryBrowser):
                                                 raise_timeout))
         self.before(self.script_kind(js))
         return self.answers.pop(0) if self.answers else ""
+
+
+def references(source, module):
+    """(line, dotted name) of what `module`, a dotted module name such as
+    `src.replies.debate_bot`, takes from other modules: each module or name
+    it imports (relative at any level, or absolute), and each attribute read
+    on an imported name."""
+    package = module.split(".")[:-1]
+    bound, found = {}, []
+
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                found.append((node.lineno, a.name))
+                if a.asname:
+                    bound[a.asname] = a.name
+                else:
+                    head = a.name.split(".")[0]
+                    bound[head] = head
+        elif isinstance(node, ast.ImportFrom):
+            if node.level:
+                if node.level - 1 > len(package):
+                    continue
+                base = package[:len(package) - (node.level - 1)]
+                target = ".".join(base + (node.module.split(".") if node.module else []))
+            else:
+                target = node.module or ""
+            for a in node.names:
+                dotted = f"{target}.{a.name}"
+                found.append((node.lineno, dotted))
+                bound[a.asname or a.name] = dotted
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute):
+            chain, base = [], node
+            while isinstance(base, ast.Attribute):
+                chain.append(base.attr)
+                base = base.value
+            if isinstance(base, ast.Name) and base.id in bound:
+                found.append((node.lineno, ".".join([bound[base.id], *reversed(chain)])))
+    return found
