@@ -31,7 +31,6 @@ all the same.
 import random
 import re
 import time
-import traceback
 
 from ..core import config, settings
 from ..core.logger import log
@@ -154,15 +153,3 @@ def run_followback_cycle():
 
     log.info(f"[FOLLOWBACK] Cycle done: {shipped} followed back.")
     run.raise_failure()
-
-
-def safe_run_followback_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_followback_cycle()
-        health.record_success("followback")
-    except Exception:
-        log.info("[FOLLOWBACK] Error during follow-back cycle:")
-        traceback.print_exc()
-        health.record_failure("followback")

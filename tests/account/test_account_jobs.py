@@ -226,19 +226,19 @@ def test_engage_fails_the_cycle_once_its_likes_are_done_when_a_follow_raised(mon
     job raises the last error at the end of its cycle, after every like,
     so that the health watchdog counts the cycle failed, as
     follow_engagers does (#260)."""
-    from src.account import engage_bot as eb
     from src.core import health
     from src.x.twitter_client import FollowOutcome
+    from tests.helpers import scheduled_job
 
     def follow(handle):
         if handle == "seed1":
             raise RuntimeError("osascript died")
         return FollowOutcome.FOLLOWED
     failures = []
-    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_failure", lambda label, exc: failures.append(label))
     monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
 
-    asked, liked = _engage_over(monkeypatch, follow, cycle=eb.safe_run_engage_cycle)
+    asked, liked = _engage_over(monkeypatch, follow, cycle=scheduled_job("engage_job"))
 
     assert asked == ["seed1", "seed2", "seed3"]
     assert liked == ["seed1", "seed2", "seed3"]
@@ -246,15 +246,15 @@ def test_engage_fails_the_cycle_once_its_likes_are_done_when_a_follow_raised(mon
 
 
 def test_engage_cycle_without_a_failed_follow_reports_success(monkeypatch):
-    from src.account import engage_bot as eb
     from src.core import health
     from src.x.twitter_client import FollowOutcome
+    from tests.helpers import scheduled_job
 
     successes = []
     monkeypatch.setattr(health, "record_success", successes.append)
-    monkeypatch.setattr(health, "record_failure", lambda name: pytest.fail("cycle reported failed"))
+    monkeypatch.setattr(health, "record_failure", lambda *a: pytest.fail("cycle reported failed"))
 
-    _engage_over(monkeypatch, FollowOutcome.QUALITY_REJECTED, cycle=eb.safe_run_engage_cycle)
+    _engage_over(monkeypatch, FollowOutcome.QUALITY_REJECTED, cycle=scheduled_job("engage_job"))
 
     assert successes == ["engage"]
 
@@ -877,14 +877,16 @@ def test_follow_engagers_keeps_the_candidate_the_real_spacing_refuses(monkeypatc
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_candidate(
-        monkeypatch, memory_ledger, tmp_path, settings_override, dry_run, operator_folder):
+        monkeypatch, memory_ledger, tmp_path, settings_override, dry_run, operator_folder, caplog):
     """#172: judge refused on an unreadable whitelist.json and the job
     marked each Engager tried, about 200 in one cycle. The cycle now stops
-    at the first candidate, reported as a failure, with no candidate marked,
-    no page opened (conftest fails on open_url) and no ledger row."""
+    at the first candidate, logged as a halt and not as a Safari failure,
+    with no candidate marked, no page opened (conftest fails on open_url)
+    and no ledger row."""
     from src.core import health
     from src.guards import action_guard as ag
     from src.account import follow_engagers_bot as fe
+    from tests.helpers import scheduled_job
 
     monkeypatch.setenv("DRY_RUN", dry_run)
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
@@ -893,13 +895,13 @@ def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_cand
     whitelist.write_text('{"tiers": {"tier1": ["karp')
     for fan in ("fan1", "fan2", "fan3"):
         ag.record(ag.DEBATE_TURN, fan)
-    failures = []
-    monkeypatch.setattr(health, "record_failure", failures.append)
     monkeypatch.setattr(health, "record_success", lambda label: pytest.fail("cycle reported done"))
 
-    fe.safe_run_follow_engagers_cycle()
+    scheduled_job("follow_engagers_job")()
 
-    assert failures == ["follow_engagers"]
+    [halt] = [m for m in caplog.messages if m.startswith("[HEALTH] ")]
+    assert halt.startswith("[HEALTH] follow_engagers halted: ") and "whitelist.json" in halt
+    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
     assert fe._load_state()["attempted"] == []
     assert [r["action"] for r in memory_ledger.rows] == [ag.DEBATE_TURN] * 3
     assert whitelist.read_text() == '{"tiers": {"tier1": ["karp'
@@ -1032,21 +1034,23 @@ def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_p
 
 
 def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, monkeypatch,
-                                                      operator_folder):
+                                                      operator_folder, caplog):
     """An unreadable guarded file stops the job that needs it: followback
-    no longer logs a traceback per pick and reports the cycle a success."""
+    no longer logs a traceback per pick and reports the cycle a success.
+    The halt is logged, never counted as a Safari failure."""
     from src.core import health
+    from tests.helpers import scheduled_job
 
     fb, state = followback
     state["followers"] = ["Realfan", "Otherfan"]
     (operator_folder / "whitelist.json").write_text("{not json")
-    failures = []
-    monkeypatch.setattr(health, "record_failure", failures.append)
     monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
 
-    fb.safe_run_followback_cycle()
+    scheduled_job("followback_job")()
 
-    assert failures == ["followback"]
+    [halt] = [m for m in caplog.messages if m.startswith("[HEALTH] ")]
+    assert halt.startswith("[HEALTH] followback halted: ") and "whitelist.json" in halt
+    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
     assert state["browser"].opened == [FOLLOWERS_PAGE]
     assert state["visits"] == []
     assert memory_ledger.rows == []
@@ -1058,14 +1062,15 @@ def test_followback_fails_when_its_followers_page_does_not_open(followback, memo
     """#255: a followers page that does not open fails the cycle; nothing
     read, no profile visited, no follow written."""
     from src.core import health
+    from tests.helpers import scheduled_job
 
     fb, state = followback
     del state["browser"].pages[FOLLOWERS_PAGE]
     failures = []
-    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_failure", lambda label, exc: failures.append(label))
     monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
 
-    fb.safe_run_followback_cycle()
+    scheduled_job("followback_job")()
 
     assert failures == ["followback"]
     assert state["browser"].opened == [FOLLOWERS_PAGE]
@@ -1118,13 +1123,13 @@ def test_followback_stops_at_bedtime_and_reports_no_success(followback, monkeypa
     neither a success nor a Safari failure."""
     from src.core import health
     from src.guards.active_hours import OutsideActiveHours
-    fb, _ = followback
+    from tests.helpers import scheduled_job
     asked = _followback_over(monkeypatch, settings_override, followback,
                              {"Fanone": OutsideActiveHours("Bot asleep")})
     monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
 
-    fb.safe_run_followback_cycle()
+    scheduled_job("followback_job")()
 
     assert asked == ["Fanone"]
     assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
@@ -1260,6 +1265,7 @@ def test_follow_engagers_keeps_going_past_a_failed_pick(monkeypatch, settings_ov
     from src.core import health
     from src.guards import follow_policy
     from src.x.twitter_client import FollowOutcome
+    from tests.helpers import scheduled_job
 
     def follow(handle, **_):
         asked.append(handle)
@@ -1270,10 +1276,10 @@ def test_follow_engagers_keeps_going_past_a_failed_pick(monkeypatch, settings_ov
     settings_override(ENABLE_FOLLOW_ENGAGERS=True, FOLLOW_ENGAGERS_PER_CYCLE=2)
     monkeypatch.setattr(follow_policy, "engagers", lambda: ["fan1", "fan2", "fan3"])
     monkeypatch.setattr("src.x.twitter_client.follow_account", follow)
-    monkeypatch.setattr(health, "record_failure", failures.append)
+    monkeypatch.setattr(health, "record_failure", lambda label, exc: failures.append(label))
     monkeypatch.setattr(health, "record_success", lambda name: pytest.fail("cycle reported ok"))
 
-    fe.safe_run_follow_engagers_cycle()
+    scheduled_job("follow_engagers_job")()
 
     state = fe._load_state()
     assert asked == ["fan1", "fan2"]

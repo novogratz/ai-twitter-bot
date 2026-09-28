@@ -87,22 +87,25 @@ def build_scheduler(*, post_only=False, reply_only=False):
             add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
 
     if not post_only and not reply_only:
-        from src.account.engage_bot import safe_run_engage_cycle
-        from src.account.followback_bot import safe_run_followback_cycle
-        from src.account.follow_engagers_bot import safe_run_follow_engagers_cycle
-        from src.account.like_bot import safe_run_like_cycle
-        from src.account.pin_bot import safe_run_pin_cycle
-        from src.x.safari_hygiene import safe_run_session_refresh
-        from src.account.follower_tracker_bot import safe_run_follower_tracker_cycle
+        from src.account.engage_bot import run_engage_cycle
+        from src.account.followback_bot import run_followback_cycle
+        from src.account.follow_engagers_bot import run_follow_engagers_cycle
+        from src.account.like_bot import run_like_cycle
+        from src.account.pin_bot import run_pin_cycle
+        from src.x.safari_hygiene import run_session_refresh
+        from src.account.follower_tracker_bot import run_follower_tracker_cycle
         from src.editorial.reach_report import run_reach_report
 
-        add(safe_run_engage_cycle, 8, "engage_job")
-        add(safe_run_followback_cycle, 20, "followback_job")
-        add(safe_run_follow_engagers_cycle, 50, "follow_engagers_job")
-        add(safe_run_like_cycle, 4, "like_job")
-        add(safe_run_pin_cycle, 60, "pin_job")
-        add(safe_run_session_refresh, 120, "session_refresh_job")
-        add(safe_run_follower_tracker_cycle, 30, "follower_tracker_job")
+        add(health.wrap_job(run_engage_cycle, "engage"), 8, "engage_job")
+        add(health.wrap_job(run_followback_cycle, "followback"), 20, "followback_job")
+        add(health.wrap_job(run_follow_engagers_cycle, "follow_engagers"), 50, "follow_engagers_job")
+        add(health.wrap_job(run_like_cycle, "like"), 4, "like_job")
+        add(health.wrap_job(run_pin_cycle, "pin"), 60, "pin_job")
+        # The refresh is the Safari restart itself: it resets the failure
+        # counter after a restart only, and never counts toward it.
+        add(health.wrap_job(run_session_refresh, "hygiene", safari_health=False), 120,
+            "session_refresh_job")
+        add(health.wrap_job(run_follower_tracker_cycle, "follower_tracker"), 30, "follower_tracker_job")
         add(health.wrap_job(run_reach_report, "reach_report", safari_health=False), 60, "reach_report_job")
     return scheduler
 

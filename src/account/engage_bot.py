@@ -116,14 +116,3 @@ def run_engage_cycle():
 
     log.info(f"[ENGAGE] Done. Visited {len(picks)} accounts, liked {liked} posts.")
     run.raise_failure()
-
-
-def safe_run_engage_cycle():
-    from ..core import health
-    try:
-        run_engage_cycle()
-        health.record_success("engage")
-    except Exception:
-        log.info("[ENGAGE] Error during engage cycle:")
-        traceback.print_exc()
-        health.record_failure("engage")

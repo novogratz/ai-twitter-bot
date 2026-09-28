@@ -183,15 +183,3 @@ def run_pin_cycle():
             "[PIN] Pin attempt did not confirm. (X menu DOM may have shifted; "
             "manual pin still works.)"
         )
-
-
-def safe_run_pin_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_pin_cycle()
-        health.record_success("pin")
-    except Exception:
-        log.info("[PIN] Error during pin cycle:")
-        traceback.print_exc()
-        health.record_failure("pin")

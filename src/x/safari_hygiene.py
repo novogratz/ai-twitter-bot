@@ -15,7 +15,7 @@ So this module just quits + relaunches Safari, which:
   - PRESERVES localStorage / IndexedDB (file-based)
 
 Two trigger paths:
-  1. Preventive — main.py schedules safe_run_session_refresh() every ~2h
+  1. Preventive — main.py schedules run_session_refresh() every ~2h
      so we restart BEFORE Safari wedges.
   2. Reactive — health.py calls into this when a cycle fails. Already
      wired through health.record_failure / _restart_safari.
@@ -29,7 +29,6 @@ through the consecutive-failure counter.
 """
 import subprocess
 import time
-import traceback
 from datetime import datetime
 
 from ..core.logger import log
@@ -237,25 +236,15 @@ def run_session_refresh() -> dict:
 
     Called by the scheduler every ~2h. Cooldown ensures back-to-back ticks
     don't bounce Safari twice.
-    """
-    log.info("[HYGIENE] Running preventive session refresh.")
-    ok = restart_safari(reason="preventive_schedule")
-    return {"restarted": ok, "ts": datetime.now().isoformat()}
 
-
-def safe_run_session_refresh():
-    """Scheduler wrapper. Logs failures but never crashes the scheduler.
-
-    Does NOT call health.record_failure on a no-op (cooldown skip) — only on
-    actual restart attempts. This avoids the preventive scheduler tripping
-    the failure counter when it's working as designed.
+    Only a restart resets the health failure counter. A restart refused on
+    its cooldown or outside waking hours, or one that failed, records
+    nothing: the preventive tick working as designed is neither a Safari
+    success nor a failure. main.py keeps the job out of the counter.
     """
     from ..core import health
-    try:
-        result = run_session_refresh()
-        if result.get("restarted"):
-            health.record_success("hygiene")
-    except Exception:
-        log.info("[HYGIENE] Error during session refresh:")
-        traceback.print_exc()
-        health.record_failure("hygiene")
+    log.info("[HYGIENE] Running preventive session refresh.")
+    ok = restart_safari(reason="preventive_schedule")
+    if ok:
+        health.record_success("hygiene")
+    return {"restarted": ok, "ts": datetime.now().isoformat()}

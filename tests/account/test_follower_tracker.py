@@ -8,6 +8,7 @@ from src.account import follower_tracker_bot as tracker
 from src.guards.active_hours import OutsideActiveHours
 from src.guards.follow_policy import FOLLOWER_HISTORY
 from src.x.page_session import PageNotOpened
+from tests.helpers import scheduled_job
 
 PROFILE = "https://x.com/TheAIShrink"
 
@@ -47,18 +48,18 @@ def test_a_profile_that_does_not_open_is_a_failed_cycle(memory_page, monkeypatch
     from src.core import health
 
     failures = []
-    monkeypatch.setattr(health, "record_failure", lambda label="", exc=None: failures.append(label))
+    monkeypatch.setattr(health, "record_failure", lambda label, exc: failures.append(label))
     with pytest.raises(PageNotOpened):
         tracker._scrape_follower_count()
-    tracker.safe_run_follower_tracker_cycle()
+    scheduled_job("follower_tracker_job")()
     assert memory_page.scripts == []
     assert failures == ["follower_tracker"]
     assert FOLLOWER_HISTORY.read() == []
 
 
 def test_bedtime_reaches_the_job_and_is_not_a_safari_failure(memory_page, monkeypatch):
-    """Bedtime raised by the page script reaches the job's `except
-    Exception`, which must not count it toward a Safari restart."""
+    """Bedtime raised by the page script reaches the job's wrapper, which
+    must not count it toward a Safari restart."""
     from src.core import health
 
     restarts = []
@@ -66,9 +67,10 @@ def test_bedtime_reaches_the_job_and_is_not_a_safari_failure(memory_page, monkey
     memory_page.pages[PROFILE] = [OutsideActiveHours("Bot asleep")]
     with pytest.raises(OutsideActiveHours):
         tracker._scrape_follower_count()
+    job = scheduled_job("follower_tracker_job")
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         memory_page.pages[PROFILE] = [OutsideActiveHours("Bot asleep")]
-        tracker.safe_run_follower_tracker_cycle()
+        job()
     assert restarts == []
     assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
 
