@@ -32,7 +32,8 @@ their order in the file is not strictly chronological.
 > only a restart that succeeded did before: once `health` lost its own 10
 > minutes, a Safari that never came back would otherwise have been
 > bounced at every browser failure past the threshold, the 2026-07-19
-> storm again. The blank-page recovery gains the same guard, and its
+> storm again; this point was settled during the implementation, for
+> the Operator to confirm. The blank-page recovery gains the same guard, and its
 > 120-second grace now follows a failed restart too. Only a refused
 > restart starts nothing; the 30 and 5 minutes are unchanged. No cap,
 > pace or job cadence changed.

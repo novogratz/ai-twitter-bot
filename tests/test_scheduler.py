@@ -283,3 +283,18 @@ def test_only_the_job_wrapper_captures_errors_and_records_health():
         found += [f"{path.relative_to(root)}:{lineno}: {what}"
                   for lineno, what in wrapper_bypasses(path.read_text(), module)]
     assert not found, "the job wrapper's work done elsewhere:\n  " + "\n  ".join(found)
+
+
+def test_only_a_safari_restart_resets_the_health_counter():
+    """Issue #302: a restart that succeeded resets the counter in one
+    place, `safari_hygiene.restart_safari`; no job reaches that reset."""
+    root = Path(__file__).resolve().parents[1]
+    paths = [*sorted((root / "src").rglob("*.py")), *sorted((root / "bin").glob("*.py")),
+             root / "main.py"]
+    callers = set()
+    for path in paths:
+        module = ".".join(path.relative_to(root).with_suffix("").parts)
+        if any(dotted == "src.core.health.reset_after_restart"
+               for _, dotted in references(path.read_text(), module)):
+            callers.add(module)
+    assert callers == {"src.x.safari_hygiene"}
