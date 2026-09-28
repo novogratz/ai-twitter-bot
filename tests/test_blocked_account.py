@@ -1,8 +1,9 @@
 """A Blocked account is refused at the follow chokepoint, whoever calls it
 (issue #188), with the one match Reply admission and likes use.
 
-Each follow job runs for real on a handle holding a blocklist token; `follow_account` is wrapped, never replaced, so the test
-sees the chokepoint's own outcome.
+Each follow job runs for real on a handle holding a blocklist token;
+`follow_account` is wrapped, never replaced, so the test sees the
+chokepoint's own outcome.
 """
 import dataclasses
 import json
