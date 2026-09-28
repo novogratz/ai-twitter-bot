@@ -689,8 +689,9 @@ only or not, the author a scanned profile's posts carry in their URL, the
 Account's niche or not, and the order. `reply_source.select` applies the
 declaration without side effects and never keeps a post without a URL or
 text, or of unknown or negative age. A job reads its handle lists from the
-Account itself; `early_bird` and `mega_watch` scan its pinned accounts,
-`reply_source.pinned_accounts`, in order, a Blocked account left out; the
+Account itself; `early_bird` and `mega_watch` pick at random among its
+pinned accounts, `reply_source.pinned_accounts`, the first 30 and 12 in the
+list's order, a Blocked account left out; the
 feed sweep, `early_bird` and `mega_watch` take only
 their Reply call, `reply_call`, from `direct_reply`.
 

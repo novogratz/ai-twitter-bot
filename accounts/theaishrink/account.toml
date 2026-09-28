@@ -180,7 +180,8 @@ profile_visits = ["TheBTCTherapist", "Graphseo"]
 # Accounts the direct_reply VIP scan searches: VIP_SCAN_HANDLES unless .env
 # sets it.
 vip_scan = ["Graphseo", "TheBTCTherapist"]
-# Accounts early_bird (first 30) and mega_watch (first 12) scan, in order:
+# Accounts early_bird (first 30) and mega_watch (first 12) pick from at
+# random, the order deciding which are kept:
 # PINNED_TRACKED_HANDLES unless .env sets it.
 pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
 # Replies to these authors run the priority model.

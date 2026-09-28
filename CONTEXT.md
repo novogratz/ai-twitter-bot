@@ -202,9 +202,10 @@ _Avoid_: profile (the account's page on X), bot, persona
 
 **Pinned account**:
 An account the Account lists in `network.pinned_tracked`, or
-`PINNED_TRACKED_HANDLES` when `.env` sets it: the profiles early_bird and
-mega_watch scan, in that order, a Blocked account left out. The Operator
-picks them; nothing adds to them.
+`PINNED_TRACKED_HANDLES` when `.env` sets it: the profiles early_bird
+(first 30) and mega_watch (first 12) pick from at random, the list's order
+deciding which are kept, a Blocked account left out. The Operator picks
+them; nothing adds to them.
 _Avoid_: tracked account, curated account
 
 **Engager**:
