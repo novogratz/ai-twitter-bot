@@ -2,8 +2,10 @@
 
 Issue #247 pins the routing measured on main before the call surfaces:
 with AI_CLI, REPLY_LLM_PROVIDER and PROFILE_LLM_PROVIDER all apart, each job
-runs its model setting on the provider shown, with its CLI options. Debate,
-replyback and the VIP scan still run on AI_CLI (#248, the Operator's call).
+runs its model setting on the provider shown, with its CLI options. Since
+#248 (the Operator, 2026-09-28) no Reply runs on AI_CLI while
+REPLY_LLM_PROVIDER names a provider: debate, replyback, the VIP scan and a
+Relation whose CLI is missing follow it too.
 """
 import re
 from pathlib import Path
@@ -105,13 +107,13 @@ ROUTES = {
     "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", DEFAULTS),
     "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", DEFAULTS),
     "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", DEFAULTS),
+    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "gemini", DEFAULTS),
     "Relation, CLI installed": (lambda mp: _vip_scan("Graphseo"), "PRIORITY_REPLY_MODEL", "claude",
                                 (False, None, 60)),
     "Relation, CLI missing": (lambda mp: _uninstalled(mp, "claude") or _vip_scan("Graphseo"),
-                              "PRIORITY_REPLY_MODEL", "codex", (False, None, 60)),
-    "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", DEFAULTS),
-    "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", DEFAULTS),
+                              "PRIORITY_REPLY_MODEL", "gemini", (False, None, 60)),
+    "debate": (lambda mp: _debate(), "REPLY_MODEL", "gemini", DEFAULTS),
+    "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "gemini", DEFAULTS),
     "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT)),
     "Draft": (lambda mp: _draft(), "NEWS_MODEL", "claude", DEFAULTS),
     "review": (_review, "NEWS_MODEL", "claude", DEFAULTS),
@@ -131,6 +133,41 @@ def test_each_job_runs_its_model_setting_on_its_provider(providers, job):
     [(called, request)] = providers.calls
     assert (called, request.model) == (provider, model.lower())
     assert (request.output_json, request.allowed_tools, request.timeout) == options
+
+
+REPLIES = [job for job in ROUTES if job not in ("Draft", "review", "Relation, CLI installed")]
+
+
+@pytest.mark.parametrize("job", REPLIES)
+def test_a_blank_reply_provider_leaves_every_reply_on_ai_cli(providers, job):
+    """A blank REPLY_LLM_PROVIDER means none: every Reply, a Relation whose
+    CLI is missing included, runs on AI_CLI."""
+    run, model, _, options = ROUTES[job]
+    providers.settings(AI_CLI="codex", REPLY_LLM_PROVIDER="", PROFILE_LLM_PROVIDER="claude",
+                       LLM_FALLBACK_CLI="", LLM_TIMEOUT_SECONDS=DEFAULT_TIMEOUT, CONTENT_LANG_PRIMARY="en",
+                       **{name: name.lower() for name in MODELS})
+
+    run(providers.monkeypatch)
+
+    [(called, request)] = providers.calls
+    assert (called, request.model) == ("codex", model.lower())
+    assert (request.output_json, request.allowed_tools, request.timeout) == options
+
+
+@pytest.mark.parametrize("ai_cli, reply_provider", [("codex", "gemini"), ("codex", ""), ("codex", "opencode"),
+                                                    ("opencode", ""), ("ollama", ""), ("codex", " Claude ")])
+def test_a_surface_call_names_the_provider_run_llm_calls_first(providers, ai_cli, reply_provider):
+    """The Relation warning names `SurfaceCall.primary`: it must be the
+    adapter `run_llm` starts, opencode and its reading as Ollama included."""
+    from src.core.llm_client import Surface, resolve, run_llm
+
+    providers.settings(AI_CLI=ai_cli, REPLY_LLM_PROVIDER=reply_provider, LLM_FALLBACK_CLI="")
+    call = resolve(Surface.RELATION_REPLY)
+
+    run_llm("prompt", call.model, label="primary", force_provider=call.provider)
+
+    [(called, _)] = providers.calls
+    assert called == call.primary
 
 
 def test_the_jobs_read_no_model_or_provider_setting():
@@ -185,7 +222,8 @@ def test_every_cli_runs_from_a_neutral_directory_fallback_included(monkeypatch, 
     popen = _FailingCli()
     monkeypatch.setattr(llm.subprocess, "Popen", popen)
     monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    settings_override(AI_CLI="gemini", PROFILE_LLM_PROVIDER="claude", LLM_FALLBACK_CLI="codex",
+    settings_override(AI_CLI="gemini", REPLY_LLM_PROVIDER="gemini", PROFILE_LLM_PROVIDER="claude",
+                      LLM_FALLBACK_CLI="codex",
                       LLM_FALLBACK_MODEL="", LLM_DISABLE_FALLBACK=False, CONTENT_LANG_PRIMARY="en")
 
     run()

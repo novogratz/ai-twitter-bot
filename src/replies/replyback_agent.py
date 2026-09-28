@@ -37,4 +37,4 @@ leaves nothing to add."""
 def reply_call() -> ReplyCall:
     # The Voice file follows the Engager's reply, by a word test that
     # matches substrings ("est" in "best" reads as French).
-    return ReplyCall(REPLYBACK_PROMPT, Surface.REPLY_ON_AI_CLI, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)
+    return ReplyCall(REPLYBACK_PROMPT, Surface.REPLY, "REPLYBACK", language=LanguageRule.ENGAGER_WORDS)

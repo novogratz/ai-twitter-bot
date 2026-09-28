@@ -33,7 +33,7 @@ def job(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST")
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST")
     options.setdefault("reply_call", lambda author: call)
     return rp.Job(options.pop("name", "test_job"), "TEST", **options)
 
@@ -260,7 +260,7 @@ def cloud_job(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", provider="claude")
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST", provider="claude")
     return job(reply_call=lambda author: call, **options)
 
 

@@ -176,7 +176,8 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     """#203 moved the relation prompts into the Account's Relations: each VIP
     ReplyCall keeps its label, limits and provider, and the engine names no
     one. A Relation's provider is forced only when its CLI is installed; a
-    Relation with a prompt and no provider keeps the VIP scan's call."""
+    Relation with a prompt and no provider keeps the VIP scan's call, the
+    priority Reply's (#248)."""
     import shutil
     from src.core import account
     from src.core.llm_client import TEXT_PROFILE, Surface
@@ -198,8 +199,64 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.surface, call.text_limit, call.strip_preamble, call.skip_window,
-                call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, 300,
+                call.provider, call.profile) == (Surface.PRIORITY_REPLY, 300,
                                                  True, 20, None, TEXT_PROFILE)
+
+
+def test_a_relation_without_its_cli_warns_of_the_provider_it_falls_back_on(monkeypatch, settings_override):
+    """The Operator, 2026-09-28 (#248): a Relation whose CLI is missing
+    falls back on the Reply provider, and says so, naming both. When the
+    Reply provider is that missing CLI, the warning says the Reply fails."""
+    import shutil
+
+    from src.replies import direct_reply as dr
+
+    warnings = []
+    monkeypatch.setattr(dr.log, "warning", lambda msg, *a, **k: warnings.append(msg))
+    settings_override(AI_CLI="codex", REPLY_LLM_PROVIDER="gemini")
+    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    dr._vip_call("Graphseo")
+    assert warnings == []
+
+    monkeypatch.setattr(shutil, "which", lambda name: None)
+    assert dr._vip_call("Graphseo").provider is None
+    assert warnings == ["[VIP] Relation @Graphseo: claude is not installed, "
+                        "the Reply goes to the Reply provider (gemini)."]
+
+    settings_override(REPLY_LLM_PROVIDER="")
+    dr._vip_call("Graphseo")
+    assert warnings[-1] == ("[VIP] Relation @Graphseo: claude is not installed, "
+                            "the Reply goes to the Reply provider (codex).")
+
+    settings_override(REPLY_LLM_PROVIDER="Claude")
+    dr._vip_call("Graphseo")
+    assert warnings[-1] == ("[VIP] Relation @Graphseo: claude is not installed, it is the Reply provider "
+                            "too: the Reply fails, or goes to the fallback CLI if one is set.")
+
+
+def test_the_vip_scan_warns_of_a_missing_cli_once_per_generation(monkeypatch, llm, chokepoint,
+                                                                 settings_override):
+    """The scan's check for a prompt builds no call and warns of nothing;
+    each Reply generated for the Relation warns once."""
+    import shutil
+
+    from src.replies import direct_reply as dr, reply_pipeline
+
+    warnings = []
+    monkeypatch.setattr(dr.log, "warning", lambda msg, *a, **k: warnings.append(msg))
+    monkeypatch.setattr(shutil, "which", lambda name: None)
+    settings_override(VIP_SCAN_HANDLES="Graphseo")
+    tweets = []
+    monkeypatch.setattr(dr, "scrape_x_search", lambda q, max_tweets=20, tab="latest": list(tweets))
+
+    dr._run_vip_scan(reply_pipeline.Cycle())
+    assert warnings == [] and llm.calls == []
+
+    tweets.append({"url": _url_with_age(30).replace("/someone/", "/Graphseo/"),
+                   "text": "les agents IA changent le SEO", "author": "Graphseo"})
+    dr._run_vip_scan(reply_pipeline.Cycle())
+    assert len(llm.calls) == 1
+    assert len(warnings) == 1 and "claude is not installed" in warnings[0]
 
 
 def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings_override):

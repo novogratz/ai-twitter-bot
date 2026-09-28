@@ -129,7 +129,8 @@ def _script_keys(*names):
 _declare("BOT_ACCOUNT", str, "theaishrink", "Account the bot runs: the folder accounts/<name>/ holding its account.toml.")
 _declare("BOT_HANDLE", str, "", "X handle the bot runs, without @; the Account's handle unless set.")
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
-_declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")
+_declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude; "
+         "runs the Originals and the Replies when their provider setting is blank.")
 _declare("NEWS_MODEL", str, None, "CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
 _declare("REPLY_MODEL", str, None, "CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
 _declare("PRIORITY_REPLY_MODEL", str, None, "CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
@@ -143,8 +144,9 @@ MODEL_DEFAULTS = {
     "PRIORITY_REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
                              "gemini": "gemini-2.0-flash"},
 }
-_declare("PROFILE_LLM_PROVIDER", str, "ollama", "Provider for profile surfaces; blank means none.")
-_declare("REPLY_LLM_PROVIDER", str, "ollama", "Provider for Replies; blank means none.")
+_declare("PROFILE_LLM_PROVIDER", str, "ollama", "Provider for the Originals; blank means AI_CLI.")
+_declare("REPLY_LLM_PROVIDER", str, "ollama", "Provider for every Reply, a Relation whose CLI is missing "
+         "included; blank means AI_CLI.")
 _declare("DRY_RUN", bool, False, "1 logs every write instead of doing it; config.dry_run() reads it at call time.")
 _declare("MAX_ORIGINALS_PER_DAY", int, 8, "Originals per Toronto day.", floor=0, ceiling=8)
 _declare("MIN_SECONDS_BETWEEN_POSTS", int, 1200, "Minimum gap between two Profile publications.", floor=1200)
