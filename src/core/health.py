@@ -50,7 +50,7 @@ def wrap_job(run, label: str, *, safari_health: bool = True):
 
     An error is logged at ERROR with its traceback in bot.log. A job with
     `safari_health` resets the failure counter on success and hands its
-    error to `record_failure`; without it, the job never touches the
+    error to `record_failure`; without it, the wrapper never touches the
     health file. StateUnreadable and OutsideActiveHours are never failures.
     """
     @wraps(run)
