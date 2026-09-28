@@ -9,6 +9,7 @@ import pytest
 PROFILE = "https://x.com/TheAIShrink"
 HOME = "https://x.com/home"
 SEARCH = "https://x.com/search?q=ai&src=typed_query&f=top"
+OWN_STATUS = "https://x.com/TheAIShrink/status/2063500000000000301"
 
 
 def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override):
@@ -101,7 +102,8 @@ def test_the_scraper_applescript_runs_have_a_bound(monkeypatch):
     monkeypatch.setattr(scraper, "_record_timed_out_scrape", lambda label: None)
     assert scraper._scrape_tweets_from_page("search 'ai'") == []
 
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "")
+    monkeypatch.setattr(safari, "_run_js",
+                        lambda js, *a, **k: OWN_STATUS if js == scraper._LOCATION_JS else "")
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(safari, "close_front_tab", lambda *a, **k: True)
     assert scraper.scrape_own_tweet_and_replies() is None
@@ -248,10 +250,38 @@ def test_replyback_walks_to_our_latest_post_and_reads_its_replies(memory_page):
     from src.x import safari, scraper
 
     answer = {"own_tweet": "ours", "replies": [{"user": "a", "text": "hi", "url": ""}]}
-    memory_page.pages[PROFILE] = [json.dumps(answer)]
+    memory_page.pages[PROFILE] = [OWN_STATUS, json.dumps(answer)]
     assert scraper.scrape_own_tweet_and_replies() == answer
     walk, scroll = memory_page.pressed
     assert walk == safari.FIRST_TWEET_KEYS
     assert "key code 125" in scroll
     assert memory_page.waits == [5, 5, 2]
+    assert memory_page.closed == 1
+
+
+def test_replyback_reads_nothing_when_the_walk_to_our_latest_post_fails(monkeypatch):
+    """#301: a failed tab walk leaves our profile in front, whose first
+    post the read would take for ours and the others for its replies."""
+    from src.x import page_session, safari, scraper
+    from tests.helpers import WritePage
+
+    page = WritePage(answers=[OWN_STATUS, '{"own_tweet": "ours", "replies": []}'],
+                     fail={"keys"})
+    monkeypatch.setattr(page_session, "BROWSER", page)
+    assert scraper.scrape_own_tweet_and_replies() is None
+    assert (page.pressed, page.scripts) == ([safari.FIRST_TWEET_KEYS], [])
+    assert page.closed == 1
+
+
+@pytest.mark.parametrize("reached", [
+    PROFILE, "", "https://x.com/someone/status/2063500000000000301",
+    "https://x.com/TheAIShrink/with_replies",
+], ids=["our_profile", "no_location", "their_post", "our_replies_tab"])
+def test_replyback_reads_nothing_off_one_of_our_status_pages(memory_page, reached):
+    from src.x import scraper
+
+    memory_page.pages[PROFILE] = [reached, '{"own_tweet": "ours", "replies": []}']
+    assert scraper.scrape_own_tweet_and_replies() is None
+    assert len(memory_page.pressed) == 1, "no scroll past the walk"
+    assert [s.js for s in memory_page.scripts] == [scraper._LOCATION_JS]
     assert memory_page.closed == 1

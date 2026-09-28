@@ -19,6 +19,7 @@ PROFILE = "https://x.com/TheAIShrink"
 SEARCH = "https://x.com/search?q=AI"
 THEIR_PROFILE = "https://x.com/TheBTCTherapist"
 FOLLOWERS = "https://x.com/TheAIShrink/followers"
+OWN_POST = "https://x.com/TheAIShrink/status/2063500000000000301"
 
 
 class Boom(Exception):
@@ -88,8 +89,7 @@ MIGRATED = {
     "search_likes": Migrated(_search_likes, SEARCH, _no_posts(SEARCH), WALK_FAILED),
     "profile_likes": Migrated(_profile_likes, THEIR_PROFILE, _no_posts(THEIR_PROFILE),
                               WALK_FAILED),
-    "reply_likes": Migrated(_reply_likes, PROFILE,
-                            _no_posts("https://x.com/TheAIShrink/status/2063500000000000301"),
+    "reply_likes": Migrated(_reply_likes, PROFILE, [OWN_POST, *_no_posts(OWN_POST)],
                             WALK_FAILED),
     "followback": Migrated(_followback, FOLLOWERS, ["1"]),
     "refresh_feed": Migrated(_scrape("refresh_feed"), "https://x.com/home", [], None, NO_READ),
@@ -102,7 +102,8 @@ MIGRATED = {
                                ["CLICKED", "[]"], []),
     "x_search": Migrated(_scrape("scrape_x_search", "ai"),
                          "https://x.com/search?q=ai&src=typed_query&f=top", ["[]"], [], []),
-    "own_replies": Migrated(_scrape("scrape_own_tweet_and_replies"), PROFILE, ["{}"], None),
+    "own_replies": Migrated(_scrape("scrape_own_tweet_and_replies"), PROFILE, [OWN_POST, "{}"],
+                             None),
 }
 
 

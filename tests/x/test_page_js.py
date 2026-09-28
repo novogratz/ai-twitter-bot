@@ -95,6 +95,7 @@ def _following_tab(monkeypatch):
 
 def _own_replies(monkeypatch):
     from src.x import scraper
+    monkeypatch.setattr(scraper, "open_latest_own_post", lambda page, tag, settle_s: True)
     return scraper.scrape_own_tweet_and_replies()
 
 

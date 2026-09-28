@@ -420,7 +420,11 @@ Each scrape opens its page in a session and reads the tweets in a session
 nested in it, so `_scrape_tweets_from_page` reads the page the scrape
 opened. When the page does not open, the scrape reads nothing, presses no
 key and gives its answer on any failed read: `[]` for a tweet list, `None`
-for our latest post. A tweet scrape whose page did not open counts it as a
+for our latest post. Replyback and notify reach our latest post from our
+profile with the tab walk, through `open_latest_own_post`: when the keys
+fail or the front tab is not one of our status pages, its handle read from
+`location.href` with `x_urls`, the walk logs it and the job reads and
+clicks nothing, `None` for Replyback, one `FAILED` for notify. A tweet scrape whose page did not open counts it as a
 timed-out read, hence a blank page, once its session has closed its tab and
 released the lock; the feed refresh and our latest post do not. The
 blank-page recovery restarts Safari from inside a session nested in the
@@ -553,7 +557,8 @@ or `UNCONFIRMED` one stops it. Each walk opens its page in a page
 session, which holds the Safari lock and closes the tab on every path,
 even when a like raises; its scrolls, pauses and `like_own_tweet_replies`'
 keys to our latest post go through the same page. A page that does not
-open adds one `FAILED` and nothing is read, pressed or clicked. All three
+open adds one `FAILED` and nothing is read, pressed or clicked; so does a
+walk to our latest post that does not reach it, before any listing. All three
 check `DRY_RUN` before the session and open nothing under it. `like_search_posts` starts no like
 once `LIKE_BOT_CYCLE_SECONDS` (30 s) have passed since it took the Safari
 lock, and fills the caller's outcome list as it goes: `like_job` adds the

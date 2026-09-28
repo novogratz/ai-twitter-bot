@@ -12,7 +12,7 @@ from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
 from ..guards import follow_policy
-from . import confirmed_write, page_session, safari, scraper
+from . import confirmed_write, page_session, scraper
 from .confirmed_write import WriteOutcome
 
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
@@ -954,7 +954,8 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
 def like_own_tweet_replies() -> list[LikeOutcome]:
     """Visit own profile, open latest tweet, and like the replies under it,
     never our own posts, to build loyalty. Returns one LikeOutcome per post
-    handled, [FAILED] when the profile does not open; DRY_RUN opens nothing."""
+    handled, [FAILED] when the profile or the latest post does not open;
+    DRY_RUN opens nothing."""
     from ..core import config as _cfg
     if _cfg.dry_run():
         log.info("[NOTIFY][DRY_RUN] would like replies on our latest tweet.")
@@ -972,8 +973,8 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
         except page_session.PageNotOpened:
             return [LikeOutcome.FAILED]
         log.info("[NOTIFY] Opening latest tweet...")
-        page.keys(safari.FIRST_TWEET_KEYS)
-        page.wait(4)
+        if not scraper.open_latest_own_post(page, "NOTIFY", 4):
+            return [LikeOutcome.FAILED]
         log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
         # Off our own status page, "not ours" would match any post.
         outcomes = _like_posts_on_page(_n_like, lambda url: True,

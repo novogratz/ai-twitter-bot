@@ -111,7 +111,10 @@ _POSTS_CALL = re.compile(r'\("(\w+)", "(\d*)"\)\s*$')
 def posts_script(page, js):
     """The answer to the `_POSTS_JS` call in `js` of `page`, a SearchPage or
     any callable of (mode, target_id): a MemoryBrowser page is
-    `lambda js: posts_script(page, js)`."""
+    `lambda js: posts_script(page, js)`. A location read gets `page.page`."""
+    from src.x import scraper
+    if js == scraper._LOCATION_JS:
+        return page.page
     call = _POSTS_CALL.search(js)
     return json.dumps(page(call.group(1), call.group(2))) if call else ""
 
