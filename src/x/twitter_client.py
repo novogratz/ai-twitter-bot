@@ -18,39 +18,28 @@ from .confirmed_write import WriteOutcome
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
 
 
-def _open_or_abort(url: str, tag: str) -> bool:
-    """Open the page a write acts on. On failure the front tab is not that
-    page, so nothing may be typed or clicked: return False, and the write
-    is FAILED."""
-    if safari.open_url(url):
-        return True
-    log.info(f"[{tag}] Page did not open; nothing sent: {url[:120]}")
-    return False
-
-
-def _activate_or_abort(tweet_url: str) -> bool:
+def _activate_or_abort(page: page_session.Page, tweet_url: str) -> bool:
     """Bring Safari to the front before the Reply's keystrokes. On failure
     they would reach another app: return False, and the write is FAILED."""
-    if safari._run_applescript('tell application "Safari" to activate',
-                               timeout_s=safari.ACTIVATE_TIMEOUT_S):
+    if page.activate():
         return True
     log.info(f"[REPLY] Safari did not come to the front; nothing sent: {tweet_url}")
     return False
 
 
-def _paste_or_abort(text: str, tag: str) -> bool:
+def _paste_or_abort(page: page_session.Page, text: str, tag: str) -> bool:
     """Paste into the open composer. On failure nothing was sent: return
     False."""
-    if safari._paste_text(text):
+    if page.paste(text):
         return True
     log.info(f"[{tag}] Paste failed; nothing sent.")
     return False
 
 
-def _submit_or_abort(tag: str, target: str = "") -> bool:
+def _submit_or_abort(page: page_session.Page, tag: str, target: str = "") -> bool:
     """Press Cmd+Return in the open composer. On failure the outcome is
     unknown: return False, and the write is UNCONFIRMED."""
-    if safari._run_applescript(_SUBMIT_KEYSTROKE, timeout_s=safari.KEYSTROKE_TIMEOUT_S):
+    if page.keys(_SUBMIT_KEYSTROKE):
         return True
     log.warning(f"[{tag}] Submit keystroke failed; outcome unknown"
                 f"{': ' + target if target else '.'}")
@@ -256,15 +245,13 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
             return WriteOutcome.REFUSED
         return None
 
-    def steps():
+    def steps(page):
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
-        if not _open_or_abort(url, "POST"):
-            return WriteOutcome.FAILED
-        time.sleep(4)
+        page.open(url, settle_s=4)
 
         log.info("Auto-clicking Post...")
-        if not _submit_or_abort("POST"):
+        if not _submit_or_abort(page, "POST"):
             return WriteOutcome.UNCONFIRMED
         log.info("Tweet submitted!")
         return WriteOutcome.SHIPPED
@@ -462,7 +449,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
             return LikeOutcome.FAILED
         return None
 
-    def steps():
+    def steps(page):
         nonlocal liked_url
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
@@ -472,7 +459,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         if pressed.get("result") != "clicked":
             log.info(f"[LIKE] Post {target} or its like button not found on the page; nothing clicked.")
             return LikeOutcome.FAILED
-        time.sleep(1)
+        page.wait(1)
         if _page_posts("read", target).get("result") != "already_liked":
             log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked.")
             return LikeOutcome.UNCONFIRMED
@@ -481,12 +468,13 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         _mark_liked(url)
         return LikeOutcome.LIKED
 
-    # The post is on the open page: nothing to open, no tab to close.
+    # The post is on the open page: the like opens nothing, so its session
+    # closes nothing, and inside a walk's or a Reply's it reads their page.
     return confirmed_write.run(
         "LIKE", LikeOutcome, would=lambda: f"like {tweet_url[-50:]}.",
         rows=lambda: [(action_guard.LIKE, liked_url)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT, check_status_id),
-        steps=steps, close_tab=False)
+        steps=steps)
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
@@ -554,58 +542,57 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             return WriteOutcome.REFUSED
         return None
 
-    def steps():
+    def steps(page):
         # Every exit before the submit keystroke sent nothing: a failed step, a
-        # stop or bedtime releases the claim so a later cycle may answer.
+        # page that does not open, a stop or bedtime releases the claim so a
+        # later cycle may answer.
         sent = False
         try:
             # Make sure Safari is focused first
-            if not _activate_or_abort(tweet_url):
+            if not _activate_or_abort(page, tweet_url):
                 return WriteOutcome.FAILED
-            time.sleep(0.5)
+            page.wait(0.5)
 
             log.info(f"Opening tweet: {tweet_url}")
-            if not _open_or_abort(tweet_url, "REPLY"):
-                return WriteOutcome.FAILED
             # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
             # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
-            time.sleep(6)
+            page.open(tweet_url, settle_s=6)
 
             # Make sure Safari is in front
-            if not _activate_or_abort(tweet_url):
+            if not _activate_or_abort(page, tweet_url):
                 return WriteOutcome.FAILED
-            time.sleep(0.5)
+            page.wait(0.5)
 
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
             _maybe_like_parent(tweet_url)
-            time.sleep(1)
+            page.wait(1)
 
             log.info("Clicking reply...")
-            if not safari._run_applescript('''
+            if not page.keys('''
             tell application "System Events"
                 keystroke "r"
             end tell
-            ''', timeout_s=safari.KEYSTROKE_TIMEOUT_S):
+            '''):
                 log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
                 return WriteOutcome.FAILED
-            time.sleep(3)  # Wait for reply box to open
+            page.wait(3)  # Wait for reply box to open
 
             # Paste the reply (clipboard handles accents correctly)
             log.info("Pasting reply...")
-            if not _paste_or_abort(admitted_text, "REPLY"):
+            if not _paste_or_abort(page, admitted_text, "REPLY"):
                 return WriteOutcome.FAILED
-            time.sleep(2)  # Wait for paste to complete
+            page.wait(2)  # Wait for paste to complete
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True
-            if not _submit_or_abort("REPLY", target=tweet_url):
+            if not _submit_or_abort(page, "REPLY", target=tweet_url):
                 return WriteOutcome.UNCONFIRMED
-            time.sleep(2)  # Wait for submission
+            page.wait(2)  # Wait for submission
             log.info("Reply posted!")
             return WriteOutcome.SHIPPED
         finally:
@@ -703,12 +690,10 @@ def follow_account(username: str,
     def pause():
         action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
-    def steps():
+    def steps(page):
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
-        if not _open_or_abort(profile_url, "FOLLOW"):
-            return FollowOutcome.FAILED
-        time.sleep(5)
+        page.open(profile_url, settle_s=5)
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
@@ -749,9 +734,9 @@ def follow_account(username: str,
             return 'CLICKED';
         })()
         """
-        status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
+        status = page.run_js(follow_js, 15, activate=True)
         if status == "CLICKED":
-            time.sleep(2)
+            page.wait(2)
             log.info(f"[FOLLOW] Followed @{username}!")
             return FollowOutcome.FOLLOWED
         if status == "ALREADY":
@@ -936,33 +921,28 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
     })()
     """
 
-    def _exec_js(js: str, timeout_s: int = 15) -> str:
-        return safari._run_js(js, timeout_s, log_prefix="[PIN]", activate=True)
-
-    def steps():
+    def steps(page):
         log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
-        if not _open_or_abort(tweet_url, "PIN"):
-            return WriteOutcome.FAILED
-        time.sleep(7)
+        page.open(tweet_url, settle_s=7)
 
-        step1 = _exec_js(js_code)
+        step1 = page.run_js(js_code, 15, activate=True)
         log.info(f"[PIN] More-menu open: {step1}")
         if step1 != "MORE_CLICKED":
             return WriteOutcome.FAILED
-        time.sleep(1.2)
+        page.wait(1.2)
 
-        step2 = _exec_js(js_pin_item)
+        step2 = page.run_js(js_pin_item, 15, activate=True)
         log.info(f"[PIN] Pin item click: {step2}")
         if step2 != "PIN_CLICKED":
             return WriteOutcome.FAILED
-        time.sleep(1.5)
+        page.wait(1.5)
 
-        step3 = _exec_js(js_confirm)
+        step3 = page.run_js(js_confirm, 15, activate=True)
         log.info(f"[PIN] Confirm modal: {step3}")
         if step3 == "NO_CONFIRM":
             log.info(f"[PIN] No confirm dialog after the Pin click; not counted as a pin: {tweet_url}")
         # Whether the confirm modal appeared or not, we leave the page.
-        time.sleep(1)
+        page.wait(1)
         return WriteOutcome.SHIPPED if step3 == "CONFIRMED" else WriteOutcome.UNCONFIRMED
 
     return confirmed_write.run(

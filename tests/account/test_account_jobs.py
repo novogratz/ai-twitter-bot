@@ -1,6 +1,7 @@
 """The account jobs: curator, engage, followback, likes, pin, follow_engagers."""
 import json
 import os
+import re
 import time
 from datetime import datetime
 
@@ -910,14 +911,46 @@ def test_follow_engagers_stops_on_an_unreadable_whitelist_without_marking_a_cand
 # --- followback ------------------------------------------------------------------
 
 
+class _Profiles:
+    """`pages`, a MemoryBrowser, with every x.com profile opening apart
+    from it: a profile joins `state["visits"]`, not `pages.opened`, and
+    answers its scripts in turn, `state["quality"]` to the quality gate
+    then `state["profile"]` to the Follow script. Any other page is
+    `pages`'s own."""
+    PROFILE = re.compile(r"https://x\.com/\w+")
+
+    def __init__(self, pages, state):
+        self._pages, self._state, self._answers = pages, state, None
+
+    def __getattr__(self, name):
+        return getattr(self._pages, name)
+
+    def open(self, url):
+        if not self.PROFILE.fullmatch(url):
+            return self._pages.open(url)
+        self._state["visits"].append(url)
+        self._answers = [json.dumps(self._state["quality"]), self._state["profile"]]
+        return True
+
+    def close(self):
+        if self._answers is None:
+            self._pages.close()
+        self._answers = None
+
+    def run_js(self, js, *args):
+        if self._answers is None:
+            return self._pages.run_js(js, *args)
+        return self._answers.pop(0) if self._answers else ""
+
+
 @pytest.fixture
-def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
+def live_follow(monkeypatch, settings_override, memory_ledger, memory_page, tmp_path):
     """The real follow chokepoint and policy, in the live whitelist mode,
-    over a scripted browser: every profile answers `state["profile"]` to
-    the Follow script and shows a big AI profile to the quality gate;
-    `state["visits"]` lists the profiles opened."""
+    over the memory page: every profile opens, shows `state["quality"]`, a
+    big AI profile, to the quality gate and answers `state["profile"]` to
+    the Follow script; `state["visits"]` lists the profiles opened."""
     from src.core import config
-    from src.x import safari, scraper, twitter_client as tc
+    from src.x import page_session
 
     monkeypatch.setenv("DRY_RUN", "0")
     settings_override(FOLLOW_WHITELIST_ONLY=True, FOLLOWBACK_BYPASS_WHITELIST=True)
@@ -925,13 +958,9 @@ def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
     monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
-    state = {"profile": "CLICKED", "visits": []}
-    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: state["visits"].append(url) or True)
-    monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: state["profile"])
-    monkeypatch.setattr(scraper, "_scrape_profile_quality",
-                        lambda: {"followers": "50K", "bio": "AI investor", "name": "Fan"})
+    state = {"profile": "CLICKED", "visits": [],
+             "quality": {"followers": "50K", "bio": "AI investor", "name": "Fan"}}
+    monkeypatch.setattr(page_session, "BROWSER", _Profiles(memory_page, state))
     return state
 
 
@@ -1221,11 +1250,9 @@ def test_follow_engagers_follows_an_engager_through_the_real_policy(live_follow,
     through the whitelist gate and skips the quality gate's size check."""
     from src.account import follow_engagers_bot as fe
     from src.guards import action_guard as ag
-    from src.x import scraper
 
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
-    monkeypatch.setattr(scraper, "_scrape_profile_quality",
-                        lambda: {"followers": "12", "bio": "hi", "name": "Sam"})
+    live_follow["quality"] = {"followers": "12", "bio": "hi", "name": "Sam"}
     ag.record(ag.DEBATE_TURN, "SmallFan")
 
     fe.run_follow_engagers_cycle()

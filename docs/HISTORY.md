@@ -120,6 +120,26 @@ their order in the file is not strictly chronological.
 > still bounds the attempts per cycle, not the follows shipped, and a
 > too-soon or cap-reached refusal still ends them.
 
+> **2026-09-27 — the writes open their page through the session, and no private primitive leaves the browser layer (issue #256):**
+> `confirmed_write.run` took the Safari lock and closed the front tab
+> itself, and each write's steps opened their page and pressed their keys
+> through the private primitives of `safari.py`. It now holds a page
+> session named after the write and hands its page to the steps: the
+> checks under the lock still run before the open, the ledger rows before
+> the close, a page that does not open is still `FAILED`, and a stop at
+> the close still leaves a shipped write `SHIPPED`. Two paths change: a
+> step that raises now closes the tab it opened, where `run` closed
+> nothing, save at bedtime or on a stop, where `require_active()` still
+> refuses the close and the tab stays open (the Operator's open question
+> of #250); and a Reply whose first activate fails, before any open, no
+> longer closes the front tab, which was not its own. The quality gate of
+> a follow, the activate before a scrape's second try and the blank-page
+> recovery went through the session too, and the unused
+> `_navigate_to_first_tweet` left `safari.py`.
+> `tests/test_browser_layer.py` now fails on any `safari._xxx` reached
+> outside `safari.py` and `page_session.py`, save `safari_hygiene.py` and
+> `bin/mass_unfollow.py`, and the write tests run on a memory page.
+
 > **2026-09-27 — the like walks and the follow-back read their page through a session (issue #255):**
 > the three like walks each redid the Safari lock, the open, the pauses,
 > the scrolls and the tab close by hand, and `followback_job` ignored the

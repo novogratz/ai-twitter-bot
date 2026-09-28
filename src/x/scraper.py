@@ -56,15 +56,16 @@ _LEGIT_EMPTY_LABELS = {"mentions"}
 def _trigger_black_screen_recovery(reason_detail: str) -> None:
     """Serialize reactive dark-screen recovery.
 
-    Called from scrape code that often already holds _safari_lock. The RLock
-    lets that owner restart Safari immediately; other threads block until the
-    recovered x.com page has been warmed and verified.
+    Called from scrape code that often already holds a page session: the
+    session nested here shares its lock and closes nothing, so that owner
+    restarts Safari immediately; other threads block until the recovered
+    x.com page has been warmed and verified.
     """
     if not _blank_recovery_lock.acquire(blocking=False):
         log.info("[SCRAPE] Black-screen recovery already in progress; skipping duplicate trigger.")
         return
     try:
-        with safari._safari_lock:
+        with page_session.session("SCRAPE"):
             try:
                 from . import safari_hygiene
                 ok = safari_hygiene.restart_safari(reason="black_screen_recovery")
@@ -140,7 +141,8 @@ def refresh_feed():
 
 def _scrape_profile_quality() -> dict:
     """Read followers count + bio + name from the CURRENTLY LOADED profile
-    tab (no extra navigation). Best-effort: {} on any failure."""
+    tab (no extra navigation): the page of the enclosing page session, the
+    follow's. Best-effort: {} on any failure."""
     js = """
     (function() {
         var out = {followers: "", bio: "", name: ""};
@@ -157,7 +159,8 @@ def _scrape_profile_quality() -> dict:
     })()
     """
     try:
-        raw = safari._run_js(js, 15, log_prefix="[SCRAPE]")
+        with page_session.session("SCRAPE") as page:
+            raw = page.run_js(js, 15)
         if raw:
             return json.loads(raw)
     except json.JSONDecodeError:
@@ -256,8 +259,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             except subprocess.TimeoutExpired:
                 # One retry: bring Safari to front explicitly, settle, try again.
                 log.info(f"[SCRAPE] First JS attempt timed out for {label}; retrying after activate.")
-                safari._run_applescript('tell application "Safari" to activate',
-                                        timeout_s=safari.ACTIVATE_TIMEOUT_S)
+                page.activate()
                 page.wait(2)
                 try:
                     raw = _try_once(30)
