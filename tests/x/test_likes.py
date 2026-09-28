@@ -338,6 +338,7 @@ def test_notify_clicks_nothing_off_our_own_status_page(browser):
     assert tc.like_own_tweet_replies() == [tc.LikeOutcome.FAILED]
     assert page.clicks == [] and browser["recorded"] == []
     assert [s.js for s in browser["memory"].scripts] == [scraper._LOCATION_JS]
+    assert browser["memory"].closed == 1
 
 
 def test_notify_clicks_nothing_when_the_walk_to_our_latest_post_fails(browser, monkeypatch):

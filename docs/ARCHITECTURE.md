@@ -424,8 +424,9 @@ for our latest post. Replyback and notify reach our latest post from our
 profile with the tab walk, through `open_latest_own_post`: when the keys
 fail or the front tab is not one of our status pages, its handle read from
 `location.href` with `x_urls`, the walk logs it and the job reads and
-clicks nothing, `None` for Replyback, one `FAILED` for notify. A tweet scrape whose page did not open counts it as a
-timed-out read, hence a blank page, once its session has closed its tab and
+clicks nothing, `None` for Replyback, one `FAILED` for notify. A tweet
+scrape whose page did not open counts it as a timed-out read, hence a
+blank page, once its session has closed its tab and
 released the lock; the feed refresh and our latest post do not. The
 blank-page recovery restarts Safari from inside a session nested in the
 scrape's, which holds the reentrant Safari lock and closes nothing; the
