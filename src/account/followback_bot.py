@@ -8,10 +8,15 @@ to us — that misses 90% of new followers (lurkers + likers).
 Strategy:
   - Once per ~2h, visit /<BOT_HANDLE>/followers via Safari + JS scrape.
   - Get the list of @handles currently following us.
-  - Follow back any handle we haven't followed yet, capped at FOLLOW_CAP
-    per cycle (don't burn the daily follow budget all at once).
-  - Skip the accounts in followed_accounts.json, which follow_account keeps
-    for a follow that shipped or an account found already followed.
+  - Follow back any handle we haven't followed yet through a Follow run,
+    FOLLOWBACK_CAP attempts per cycle (don't burn the daily follow budget
+    all at once). A refused pick, or one that raised, takes its place.
+  - The run skips the accounts in followed_accounts.json, whatever the
+    case, which follow_account keeps for a follow that shipped or an
+    account found already followed.
+  - A too-soon or cap-reached refusal ends the cycle's attempts. Bedtime
+    ends the cycle; any other error costs its pick and fails the cycle
+    once the picks are done.
   - The scrape reads, on the followers page only, the profile link of each
     user cell of the primary column, so suggested accounts ("Who to
     follow") and the @mentions of a bio never pass for followers. It
@@ -30,11 +35,10 @@ import traceback
 
 from ..core import config, settings
 from ..core.logger import log
-from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
 from ..guards.reply_admission import is_blocked_account
 from ..x import page_session
-from ..x.twitter_client import follow_account
+from .follow_run import FollowRun
 
 
 def _looks_like_real_handle(handle: str) -> bool:
@@ -109,7 +113,7 @@ def run_followback_cycle():
     """Visit the Account's followers page and follow back fresh ones. A
     followers page that does not open raises PageNotOpened: the cycle
     fails and follows no one."""
-    followed = follow_policy.followed()
+    run = FollowRun("FOLLOWBACK")
 
     with page_session.session("FOLLOWBACK") as page:
         url = f"https://x.com/{config.BOT_HANDLE}/followers"
@@ -126,7 +130,7 @@ def run_followback_cycle():
 
     log.info(f"[FOLLOWBACK] Scraped {len(candidates)} follower handles. Filtering.")
 
-    fresh = [h for h in candidates if h not in followed]
+    fresh = run.fresh(candidates)
 
     if not fresh:
         log.info("[FOLLOWBACK] No fresh follow-back candidates after filtering.")
@@ -139,20 +143,17 @@ def run_followback_cycle():
 
     shipped = 0
     for h in pick:
-        try:
-            result = follow_account(h)
-            if result.is_budget_refusal:
-                log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
-                break
-            shipped += bool(result)
-            time.sleep(random.randint(3, 6))
-        except StateUnreadable:
-            raise  # a guarded file stops the job, not one pick at a time
-        except Exception:
-            log.info(f"[FOLLOWBACK] Follow @{h} failed:")
-            traceback.print_exc()
+        result = run.follow(h)
+        if result is None:
+            continue
+        if result.is_budget_refusal:
+            log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
+            break
+        shipped += bool(result)
+        time.sleep(random.randint(3, 6))
 
     log.info(f"[FOLLOWBACK] Cycle done: {shipped} followed back.")
+    run.raise_failure()
 
 
 def safe_run_followback_cycle():

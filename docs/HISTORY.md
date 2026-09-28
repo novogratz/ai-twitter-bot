@@ -108,6 +108,18 @@ their order in the file is not strictly chronological.
 > `DRY_RUN=1`, now starts with its default and a warning instead of
 > stopping. A badly typed value still stops the start.
 
+> **2026-09-27 — the follow-back follows through the Follow run (issue #261):**
+> `followback_job` was the last follow job with its own loop. It matched
+> the followed accounts case-sensitively, so a follower recorded under
+> another case took a pick and a profile visit, and it swallowed every
+> error pick by pick, bedtime included: up to eight tracebacks, then a
+> success reported to the health watchdog. It now follows through a
+> Follow run: the followed accounts are skipped whatever the case,
+> bedtime ends the cycle without a success, and a pick that raised costs
+> its pick and fails the cycle once the picks are done. `FOLLOWBACK_CAP`
+> still bounds the attempts per cycle, not the follows shipped, and a
+> too-soon or cap-reached refusal still ends them.
+
 > **2026-09-27 — the like walks and the follow-back read their page through a session (issue #255):**
 > the three like walks each redid the Safari lock, the open, the pauses,
 > the scrolls and the tab close by hand, and `followback_job` ignored the
