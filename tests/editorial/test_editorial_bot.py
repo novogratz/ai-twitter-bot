@@ -12,6 +12,7 @@ from src.guards import active_hours as hours
 from src.editorial import editorial_bot as editorial, editorial_schemas as schemas, slot_journal
 from src.editorial.slot_journal import MemoryJournal
 from src.x.confirmed_write import WriteOutcome
+from src.x.page_session import PageNotOpened
 from tests.helpers import TORONTO, USAGE_LIMIT, WritePage, clock, scheduled_job
 
 # The real model calls and dedup, before draft_fixture stubs them.
@@ -199,20 +200,26 @@ def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture, m
     assert saved(memory_journal)["attempts"]["07:15"] == 1
 
 
-def test_an_editorial_failure_leaves_the_safari_health_file_alone(monkeypatch, draft_fixture, caplog):
+@pytest.mark.parametrize("failure", [
+    TimeoutError("cold load"),
+    PageNotOpened("https://x.com/search?q=AI"),
+], ids=["model_timeout", "browser_failure"])
+def test_an_editorial_failure_leaves_the_safari_health_file_alone(monkeypatch, draft_fixture,
+                                                                  caplog, failure):
     """Issue #236: the editorial fails on model timeouts, not on Safari; its
-    failures never count toward a Safari restart."""
+    failures never count toward a Safari restart, a browser failure, which
+    a watched job would count (#298), included."""
     from src.core import health
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
     def provider_down(*a):
-        raise TimeoutError("cold load")
+        raise failure
     monkeypatch.setattr(editorial, "draft_post", provider_down)
     job = scheduled_job("editorial_job")
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         job()
 
     assert not os.path.exists(health.HEALTH.path)
-    assert "TimeoutError: cold load" in caplog.text
+    assert f"{type(failure).__name__}: {failure}" in caplog.text
     assert "[HEALTH]" not in caplog.text
 
 

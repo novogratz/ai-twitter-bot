@@ -22,10 +22,15 @@ their order in the file is not strictly chronological.
 > census of `src/x` found little that reaches a job: `PageNotOpened` from
 > `followback_job` and `follower_tracker_job` only. The scrapes and the
 > writes turn every other page failure into an empty result or a `FAILED`
-> outcome, and the one osascript timeout raised to a caller
-> (`raise_timeout`) is caught by the tweet scrape itself. The blank-page
-> counter remains the Safari guard of the Reply jobs. No cap or pace
-> changed.
+> or `UNCONFIRMED` outcome, and the one osascript timeout raised to a
+> caller (`raise_timeout`) is caught by the tweet scrape itself. The
+> review found one more: `_run_applescript` let an `OSError` at the
+> osascript launch through (osascript missing, a fork refused under
+> memory pressure), which would have reached the job uncounted. It is
+> now a failed run, as it already was in `_run_js` and the tab close, so
+> an open that cannot start osascript raises `PageNotOpened`. The
+> blank-page counter remains the Safari guard of the Reply jobs. No cap
+> or pace changed.
 
 > **2026-09-28 — a page session closes its tab after bedtime or a stop (issue #300):**
 > the tab close of a page session went through `_run_applescript`, whose

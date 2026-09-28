@@ -417,8 +417,9 @@ page that did not open (issue #298). A bug or a model timeout is logged,
 jobs let a browser failure through (`followback_job`,
 `follower_tracker_job`), so the blank-page counter above does most of the
 work. `session_refresh_job` restarts Safari preventively every 2 hours;
-`health` and it both wait 30 minutes after the last restart. Every restart waits for the job holding Safari to
-finish its page. A cycle stopped for bedtime is not a failed cycle,
+`health` and it both wait 30 minutes after the last restart. Every restart
+waits for the job holding Safari to finish its page. A cycle stopped for
+bedtime is not a failed cycle,
 and no restart runs outside waking hours. A page read or write cut by
 bedtime or a stop still closes its tab, the one AppleScript run allowed
 then (issue #300). Each relaunch

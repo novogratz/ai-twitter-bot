@@ -137,9 +137,11 @@ def test_the_traceback_is_in_the_log(restarts, caplog):
 
 
 @pytest.mark.parametrize("run", [lambda: None, _raises(RuntimeError("model timed out")),
+                                 _raises(PageNotOpened("https://x.com/home")),
                                  _raises(StateUnreadable("slots.json is unreadable")),
                                  _raises(OutsideActiveHours("Bot asleep"))],
-                         ids=["success", "failure", "state_unreadable", "overnight"])
+                         ids=["success", "failure", "browser_failure", "state_unreadable",
+                              "overnight"])
 def test_an_unwatched_job_never_touches_the_health_file(restarts, run):
     job = health.wrap_job(run, "editorial", safari_health=False)
     for _ in range(health.RECOVERY_THRESHOLD + 1):

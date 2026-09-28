@@ -86,15 +86,16 @@ error counts toward a Safari restart only when it is a browser failure, a
 ERROR with its traceback like any failed cycle, followed by `[HEALTH]
 <label> failed outside the browser (<type>). Not a Safari failure, no
 restart.`, and leaves the counter as it was; only a success resets it.
-The editorial
-stays out of the Safari failure counter because its failures are model
-timeouts, not Safari outages: the scraper already swallows most Safari
-errors, and the blank-page counter is the real Safari guard. Counted there, a
-slow model would restart a healthy Safari. A missed reach measurement says
-nothing about Safari either. The session refresh is the Safari restart
-itself: `run_session_refresh` resets the failure counter, under the label
-`hygiene`, after a restart only; a restart refused on its cooldown or
-outside waking hours, or one that failed, records nothing. It is the one
+The editorial stays out of the Safari failure counter: its failures are
+model timeouts, not Safari outages, and its cycles, which say little about
+Safari, must not reset the counter between the browser failures of other
+jobs. Before #298 every error of a watched job counted, so a slow model
+restarted a healthy Safari: that is why #236 took the editorial out. A
+missed reach measurement says nothing about Safari either. The session
+refresh is the Safari restart itself: `run_session_refresh` resets the
+failure counter, under the label `hygiene`, after a restart only; a
+restart refused on its cooldown or outside waking hours, or one that
+failed, records nothing. It is the one
 module besides `health` that calls `health.record_*`: the reset follows the
 restart, as it does after `record_failure`'s own recovery, and is not a
 cycle outcome the wrapper judges. The wrapper logs a job's error at ERROR
@@ -894,10 +895,12 @@ These are how the code behaves today, not design intent:
   stopped, never with `--force` beside it.
 - The Safari failure counter hears of few Safari outages: of the watched
   jobs, only `followback_job` and `follower_tracker_job` let a browser
-  failure through, a `PageNotOpened` on their one page. The scrapes turn
-  a page that does not open, an osascript failure or a timed-out read
-  into an empty result, and the writes into a `FAILED` outcome, so the
-  blank-page counter of `scraper` stays the Safari guard of the Reply jobs.
+  failure through, a `PageNotOpened` on their one page. `safari` turns an
+  osascript run that fails, times out or does not start into a failed
+  run; the scrapes turn a page that does not open or a failed read into an
+  empty result, and the writes into a `FAILED` or `UNCONFIRMED` outcome,
+  so the blank-page counter of `scraper` stays the Safari guard of the
+  Reply jobs.
 
 ## Legacy modules
 
@@ -930,10 +933,10 @@ some files those bots used to write, as frozen data with no writer left:
    or a model timeout. A browser failure the job lets through is an
    exception of `src/x` that inherits `page_session.BrowserFailure`:
    `tests/test_browser_layer.py` fails on one that does not, save the
-   ones it lists with their reason. Pass `safari_health=False` for a job whose failures say nothing
-   about Safari, such as a model call or a report: it never touches the
-   health file. Never call `scheduler.add_job` directly: `add()` supplies the
-   waking-hours wrapper.
+   ones it lists with their reason. Pass `safari_health=False` for a job
+   whose failures say nothing about Safari, such as a model call or a
+   report: it never touches the health file. Never call
+   `scheduler.add_job` directly: `add()` supplies the waking-hours wrapper.
 3. Read or act on a page inside `page_session.session(tag)`: it takes the
    Safari lock, opens the page when asked and closes the tab on every
    path. Handle `PageNotOpened` if the job has a fallback that opens
