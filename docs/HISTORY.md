@@ -8,6 +8,36 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — one delay between Safari restarts, and every restart that succeeded resets the health counter (issue #302, Operator):**
+> two delays contradicted each other: `health.COOLDOWN_SECONDS` (10
+> minutes) and the 30 minutes of `safari_hygiene.restart_safari`. Between
+> the two, `health.record_failure` claimed a recovery that
+> `restart_safari` then refused, counted it in `safari_health.json` and
+> wrote a `success=False` line to `autonomous_log.md` for a restart that
+> never happened. And only a restart asked by `health` or by the session
+> refresh reset the failure counter; one from the blank-page recovery left
+> it as it was. The Operator settled these open questions of #234:
+> `restart_safari` keeps its delays and guards and is the one delay;
+> `health.COOLDOWN_SECONDS` is gone. `restart_safari` now returns a
+> `RestartOutcome` (`RESTARTED`, `REFUSED`, `FAILED`, truthy only for
+> `RESTARTED`); `health` counts a recovery and writes its line only when
+> the restart was tried, and a refused one is logged at INFO. A restart
+> that succeeded resets the counter inside `restart_safari`, whoever
+> asked, so `run_session_refresh` no longer reaches `health` and the
+> scheduler contract test of #239 lost its exception. `health` no longer
+> claims a recovery before restarting: two failures crossing the
+> threshold together still restart Safari once, the second waiting for
+> the Safari lock and then finding the cooldown. Every restart tried now
+> starts the cooldown, a failed one or one that raised included, where
+> only a restart that succeeded did before: once `health` lost its own 10
+> minutes, a Safari that never came back would otherwise have been
+> bounced at every browser failure past the threshold, the 2026-07-19
+> storm again; this point was settled during the implementation, for
+> the Operator to confirm. The blank-page recovery gains the same guard, and its
+> 120-second grace now follows a failed restart too. Only a refused
+> restart starts nothing; the 30 and 5 minutes are unchanged. No cap,
+> pace or job cadence changed.
+
 > **2026-09-28 — only a browser failure counts toward a Safari restart (issue #298, Operator):**
 > `health.wrap_job` handed every error of a watched job to
 > `record_failure`, so a bug, a model timeout or a network error counted

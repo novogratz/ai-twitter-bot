@@ -406,31 +406,6 @@ def test_health_updates_are_serialised(monkeypatch):
     assert real_read()["consecutive_failures"] == 40
 
 
-def test_a_failure_during_a_safari_restart_does_not_restart_it_again(monkeypatch):
-    from src.core import health
-    monkeypatch.setattr(health, "RECOVERY_THRESHOLD", 1)
-    monkeypatch.setattr(health, "_append_autonomous_flag", lambda *a: None)
-    restarting, release = threading.Event(), threading.Event()
-    restarts = []
-
-    def blocked_restart():
-        restarts.append(1)
-        restarting.set()
-        release.wait(5)
-        return True
-    monkeypatch.setattr(health, "_restart_safari", blocked_restart)
-
-    first = threading.Thread(target=health.record_failure, args=("first", PageNotOpened("first")))
-    first.start()
-    try:
-        assert restarting.wait(5)
-        assert health.record_failure("second", PageNotOpened("second")) is False
-    finally:
-        release.set()
-        first.join()
-    assert restarts == [1]
-
-
 # --- codex_lockout.json ----------------------------------------------------------
 
 

@@ -92,13 +92,27 @@ Safari, must not reset the counter between the browser failures of other
 jobs. Before #298 every error of a watched job counted, so a slow model
 restarted a healthy Safari: that is why #236 took the editorial out. A
 missed reach measurement says nothing about Safari either. The session
-refresh is the Safari restart itself: `run_session_refresh` resets the
-failure counter, under the label `hygiene`, after a restart only; a
-restart refused on its cooldown or outside waking hours, or one that
-failed, records nothing. It is the one
-module besides `health` that calls `health.record_*`: the reset follows the
-restart, as it does after `record_failure`'s own recovery, and is not a
-cycle outcome the wrapper judges. The wrapper logs a job's error at ERROR
+refresh is the Safari restart itself and never reaches `health`.
+
+Every Safari restart, from `health`, the session refresh or the blank-page
+recovery, goes through `safari_hygiene.restart_safari`, which returns a
+`RestartOutcome`: `RESTARTED`, `REFUSED` (its cooldown, waking hours or a
+stop; Safari untouched) or `FAILED` (x.com never rendered after the
+relaunch), truthy only for `RESTARTED` (issue #302). Its cooldown is the
+one delay between two restarts: 30 minutes after the last restart tried,
+5 for the blank-page recovery. A restart that failed, or raised, starts it
+too, so a failure past the threshold does not bounce Safari again at
+once; a refused one starts none. It also starts the scraper's blank-page
+grace, `BLANK_GRACE_AFTER_RESTART_SECONDS`. A restart that succeeded resets
+the failure counter there, through `health.reset_after_restart`, whoever
+asked. From three browser failures in a row, each failure asks
+`restart_safari` for a restart: a refused one is logged at INFO and
+counted nowhere; a tried one counts in `safari_health.json`
+(`last_recovery_ts`, `total_recoveries`) and writes its line to
+`autonomous_log.md` with `success=True` or `success=False`. Two failures
+crossing the threshold together restart Safari once: the second waits for
+the Safari lock the first restart holds, then finds its cooldown. The
+wrapper logs a job's error at ERROR
 with the traceback, as `[<label>] Cycle failed.`; it names a
 `StateUnreadable` (with the repair in
 [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
@@ -922,8 +936,8 @@ some files those bots used to write, as frozen data with no writer left:
    module exposes the `run_*` only: no `safe_run_*` around it, no
    `try`/`except` that logs the cycle's error, no call to `health.record_*`.
    `tests/test_scheduler.py` fails on a `safe_run_*` or a `health.record_*`
-   anywhere in `src/`, `bin/` or `main.py` outside `health`, the session
-   refresh's reset excepted.
+   anywhere in `src/`, `bin/` or `main.py` outside `health`, with no
+   exception.
 2. Register it in `build_scheduler()` with
    `add(health.wrap_job(run_<name>_cycle, "<name>"), minutes, "<name>_job")`.
    `wrap_job` logs an error at ERROR with its traceback in `bot.log`, resets

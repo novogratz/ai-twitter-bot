@@ -235,6 +235,24 @@ def test_pages_that_do_not_open_on_two_labels_restart_safari(memory_page, monkey
     scraper._reset_blank_page_count()
 
 
+def test_a_blank_page_restart_that_succeeded_resets_the_health_counter(memory_page, monkeypatch):
+    """#302: the health failure counter is reset after every restart that
+    succeeded, the blank-page recovery's included."""
+    from src.core import health
+    from src.x import scraper
+    from src.x import safari_hygiene as sh
+
+    monkeypatch.setattr(sh, "_last_run_ts", lambda: time.time() - 3600)
+    monkeypatch.setattr(sh, "_quit_safari", lambda: None)
+    monkeypatch.setattr(sh, "_launch_safari", lambda: True)
+    monkeypatch.setattr(sh, "_mark_ran", lambda: None)
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 0})
+
+    scraper._trigger_black_screen_recovery("home_feed_blank_2")
+
+    assert health.HEALTH.read()["consecutive_failures"] == 0
+
+
 def test_replyback_presses_nothing_when_our_profile_does_not_open(memory_page):
     """The tab walk used to run whatever the open gave, pressing Tab Tab
     Tab Return on the tab in front."""

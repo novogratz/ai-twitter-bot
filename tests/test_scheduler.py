@@ -147,18 +147,23 @@ def test_each_account_job_resets_the_failure_counter_on_success(
     assert f"[HEALTH] {label} OK — resetting failure counter (was 2)." in caplog.messages
 
 
-@pytest.mark.parametrize("restarted, failures", [(True, 0), (False, 2)])
-def test_the_session_refresh_counts_as_a_success_only_after_a_restart(monkeypatch, restarted,
-                                                                      failures):
+@pytest.mark.parametrize("outcome, failures", [("restarted", 0), ("failed", 2), ("refused", 2)])
+def test_the_session_refresh_resets_the_counter_only_through_a_restart(monkeypatch, outcome,
+                                                                       failures):
     """Issue #238: a restart refused on its cooldown, or one that failed,
     is the preventive tick working as designed, neither a Safari success
-    nor a failure."""
+    nor a failure. The reset of a restart that succeeded happens in
+    restart_safari, as for every other path (#302)."""
+    import time
     from src.core import health
     from src.x import safari_hygiene
     from tests.helpers import scheduled_job
 
     health.HEALTH.write({"consecutive_failures": 2})
-    monkeypatch.setattr(safari_hygiene, "restart_safari", lambda reason="": restarted)
+    monkeypatch.setattr(safari_hygiene, "_quit_safari", lambda: None)
+    monkeypatch.setattr(safari_hygiene, "_launch_safari", lambda: outcome == "restarted")
+    if outcome == "refused":
+        monkeypatch.setattr(safari_hygiene, "_last_run_ts", lambda: time.time())
 
     scheduled_job("session_refresh_job")()
 
@@ -226,11 +231,6 @@ def test_every_scheduled_job_runs_under_the_wrapper(settings_override):
 
 
 HEALTH_RECORDS = ("src.core.health.record_success", "src.core.health.record_failure")
-# The session refresh is the Safari restart itself: resetting the counter
-# after a restart is the effect of the restart, as in record_failure's own
-# recovery, not the outcome of a cycle the wrapper judges (#238). It has a
-# single caller, so it stays here rather than as a third wrapper mode.
-RESTART_RESETS_HEALTH = {("src.x.safari_hygiene", "src.core.health.record_success")}
 
 
 def wrapper_bypasses(source, module):
@@ -281,15 +281,20 @@ def test_only_the_job_wrapper_captures_errors_and_records_health():
         if module == "src.core.health":
             continue
         found += [f"{path.relative_to(root)}:{lineno}: {what}"
-                  for lineno, what in wrapper_bypasses(path.read_text(), module)
-                  if (module, what) not in RESTART_RESETS_HEALTH]
+                  for lineno, what in wrapper_bypasses(path.read_text(), module)]
     assert not found, "the job wrapper's work done elsewhere:\n  " + "\n  ".join(found)
 
 
-def test_the_session_refresh_is_the_one_module_reaching_health_records():
-    """The exception above names code that exists: once the reset moves,
-    the entry goes."""
+def test_only_a_safari_restart_resets_the_health_counter():
+    """Issue #302: a restart that succeeded resets the counter in one
+    place, `safari_hygiene.restart_safari`; no job reaches that reset."""
     root = Path(__file__).resolve().parents[1]
-    source = (root / "src" / "x" / "safari_hygiene.py").read_text()
-    assert {("src.x.safari_hygiene", what)
-            for _, what in wrapper_bypasses(source, "src.x.safari_hygiene")} == RESTART_RESETS_HEALTH
+    paths = [*sorted((root / "src").rglob("*.py")), *sorted((root / "bin").glob("*.py")),
+             root / "main.py"]
+    callers = set()
+    for path in paths:
+        module = ".".join(path.relative_to(root).with_suffix("").parts)
+        if any(dotted == "src.core.health.reset_after_restart"
+               for _, dotted in references(path.read_text(), module)):
+            callers.add(module)
+    assert callers == {"src.x.safari_hygiene"}

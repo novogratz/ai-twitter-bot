@@ -71,8 +71,10 @@ def _trigger_black_screen_recovery(reason_detail: str) -> None:
                 ok = safari_hygiene.restart_safari(reason="black_screen_recovery")
                 if ok:
                     log.info(f"[SCRAPE] Black-screen recovery completed ({reason_detail}).")
+                elif ok is safari_hygiene.RestartOutcome.REFUSED:
+                    log.info(f"[SCRAPE] Black-screen recovery refused, Safari untouched ({reason_detail}).")
                 else:
-                    log.warning(f"[SCRAPE] Black-screen recovery skipped/failed ({reason_detail}).")
+                    log.warning(f"[SCRAPE] Black-screen recovery failed ({reason_detail}).")
             except Exception as e:
                 log.warning(f"[SCRAPE] Black-screen recovery crashed ({reason_detail}): {e}")
     finally:

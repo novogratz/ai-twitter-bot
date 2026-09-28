@@ -5,6 +5,7 @@ from datetime import datetime
 import pytest
 
 from src.x.page_session import PageNotOpened
+from src.x.safari_hygiene import RestartOutcome
 from tests.helpers import TORONTO, clock, stop_requested
 
 
@@ -70,10 +71,10 @@ def test_restart_safari_does_nothing_outside_waking_hours(monkeypatch, when):
     monkeypatch.setattr(sh, "_mark_ran", lambda: touched.append("mark"))
 
     if when == "day":
-        assert sh.restart_safari(reason="health_recovery") is True
+        assert sh.restart_safari(reason="health_recovery") is RestartOutcome.RESTARTED
         assert touched == ["quit", "launch", "mark"]
     else:
-        assert sh.restart_safari(reason="health_recovery") is False
+        assert sh.restart_safari(reason="health_recovery") is RestartOutcome.REFUSED
         assert touched == []
 
 
@@ -122,7 +123,7 @@ def test_a_restart_waits_for_the_session_in_progress(bounce):
     leave.set()
     restart.join(5)
     reader.join(5)
-    assert result == [True]
+    assert result == [RestartOutcome.RESTARTED]
     assert bounce == ["session ends", "quit", "launch"]
 
 
@@ -160,7 +161,7 @@ def test_a_queued_restart_reads_the_cooldown_once_it_has_the_lock(bounce):
     first.join(5)
     second.join(5)
 
-    assert sorted(first_result + second_result) == [False, True]
+    assert sorted(o.value for o in first_result + second_result) == ["refused", "restarted"]
     assert bounce == ["quit", "launch"]
 
 
@@ -177,7 +178,7 @@ def test_a_restart_that_waited_into_bedtime_does_nothing(monkeypatch, bounce):
         clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
     restart.join(5)
 
-    assert result == [False] and bounce == []
+    assert result == [RestartOutcome.REFUSED] and bounce == []
     assert any("waking hours ended while it waited" in msg for msg in infos), \
         "the restart must have queued on the lock before bedtime"
 
@@ -223,3 +224,73 @@ def test_a_wedged_osascript_holds_the_recovery_restart_only_up_to_its_bound(
     assert not recovery.is_alive() and time.monotonic() - started < 5
     assert result == [True]
     assert bounce == ["open_url returned False", "quit", "launch"]
+
+
+def test_a_restart_tells_refused_restarted_and_failed_apart(monkeypatch, bounce):
+    """#302: a refused restart leaves Safari alone, a failed one quit it and
+    never saw x.com render; only a restart that succeeded is truthy. Every
+    restart tried starts the cooldown, a failed one too."""
+    from src.x import safari_hygiene as sh
+
+    monkeypatch.setattr(sh, "_launch_safari", lambda: bounce.append("launch") or False)
+    failed = sh.restart_safari(reason="health_recovery")
+    assert failed is RestartOutcome.FAILED and not failed
+    assert bounce == ["quit", "launch"] and sh._last_run_ts() > 0
+
+    refused = sh.restart_safari(reason="health_recovery")
+    assert refused is RestartOutcome.REFUSED and not refused
+    assert bounce == ["quit", "launch"]
+
+    sh.HYGIENE_STATE.write({})
+    monkeypatch.setattr(sh, "_launch_safari", lambda: bounce.append("launch") or True)
+    restarted = sh.restart_safari(reason="health_recovery")
+    assert restarted is RestartOutcome.RESTARTED and restarted
+    assert sh._last_run_ts() > 0
+    assert sh.restart_safari(reason="health_recovery") is RestartOutcome.REFUSED
+    assert bounce == ["quit", "launch", "quit", "launch"]
+
+
+@pytest.mark.parametrize("step", ["_quit_safari", "_launch_safari"])
+def test_a_restart_that_raised_still_starts_the_cooldown(monkeypatch, bounce, step):
+    """#302: a quit or a relaunch that raises was still a restart tried."""
+    from src.x import safari_hygiene as sh
+
+    def boom():
+        raise OSError("osascript gone")
+    monkeypatch.setattr(sh, step, boom)
+
+    with pytest.raises(OSError):
+        sh.restart_safari(reason="black_screen_recovery")
+    assert sh._last_run_ts() > 0
+    assert sh.restart_safari(reason="black_screen_recovery") is RestartOutcome.REFUSED
+
+
+@pytest.mark.parametrize("reason", ["health_recovery", "preventive_schedule",
+                                    "black_screen_recovery"])
+def test_a_restart_that_succeeded_resets_the_health_counter_whoever_asked(monkeypatch, bounce,
+                                                                           reason):
+    """#302: the reset lives in restart_safari, the one place every path
+    goes through."""
+    from src.core import health
+    from src.x import safari_hygiene as sh
+
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 0})
+
+    assert sh.restart_safari(reason=reason) is RestartOutcome.RESTARTED
+    assert health.HEALTH.read()["consecutive_failures"] == 0
+
+
+@pytest.mark.parametrize("outcome", ["refused", "failed"])
+def test_a_restart_that_did_not_succeed_leaves_the_health_counter(monkeypatch, bounce, outcome):
+    import time
+    from src.core import health
+    from src.x import safari_hygiene as sh
+
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 0})
+    if outcome == "refused":
+        monkeypatch.setattr(sh, "_last_run_ts", lambda: time.time())
+    else:
+        monkeypatch.setattr(sh, "_launch_safari", lambda: False)
+
+    assert sh.restart_safari(reason="preventive_schedule").value == outcome
+    assert health.HEALTH.read()["consecutive_failures"] == 2
