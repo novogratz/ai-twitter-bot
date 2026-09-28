@@ -4,6 +4,7 @@ from datetime import datetime
 
 import pytest
 
+from src.x.page_session import PageNotOpened
 from tests.helpers import TORONTO, clock, stop_requested
 
 
@@ -136,7 +137,7 @@ def test_a_restart_from_a_job_holding_the_lock_does_not_deadlock(monkeypatch, bo
 
     def job():
         with safari._safari_lock:
-            fired = [health.record_failure("direct_reply", RuntimeError("page never loaded"))
+            fired = [health.record_failure("direct_reply", PageNotOpened("https://x.com/home"))
                      for _ in range(health.RECOVERY_THRESHOLD)]
         return fired[-1]
     worker, result = _in_thread(job)
@@ -215,7 +216,7 @@ def test_a_wedged_osascript_holds_the_recovery_restart_only_up_to_its_bound(
 
     started = time.monotonic()
     recovery, result = _in_thread(
-        lambda: health.record_failure("direct_reply", RuntimeError("page never loaded")))
+        lambda: health.record_failure("direct_reply", PageNotOpened("https://x.com/home")))
     recovery.join(5)
     reader.join(5)
 

@@ -110,13 +110,14 @@ def test_each_watched_job_counts_toward_safari_health_under_its_label(
     """Issues #237 and #238: the scheduler wraps each Reply and account
     job's `run_*`; its failure is logged at ERROR with the traceback and
     counted under the health label its `safe_run_*` used, `babysitter`
-    included."""
+    included. A browser failure is the one counted (#298)."""
     import importlib
     from src.core import health
+    from src.x.page_session import PageNotOpened
     from tests.helpers import scheduled_job
 
     def fails():
-        raise RuntimeError("page never loaded")
+        raise PageNotOpened("https://x.com/home")
     monkeypatch.setattr(importlib.import_module(module), run, fails)
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
     settings_override(ENABLE_REPLY_SEARCH=True)
@@ -127,7 +128,7 @@ def test_each_watched_job_counts_toward_safari_health_under_its_label(
     assert f"[HEALTH] {label} FAILED — consecutive = 1." in caplog.messages
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == f"[{label}] Cycle failed."
-    assert "RuntimeError: page never loaded" in caplog.text
+    assert "PageNotOpened: https://x.com/home" in caplog.text
 
 
 @pytest.mark.parametrize("job_id, module, run, label", ACCOUNT_JOBS, ids=[j[0] for j in ACCOUNT_JOBS])

@@ -273,3 +273,54 @@ def test_the_guard_catches_every_import_form(source):
 ])
 def test_the_guard_lets_public_names_and_other_modules_through(source):
     assert private_safari_accesses(source, "src.x.example") == []
+
+
+# Exceptions the browser layer defines that say nothing about Safari, with
+# the reason: they never count toward a Safari restart (#298).
+NOT_BROWSER_FAILURES = {
+    # Model output refused before any page opens.
+    "src.x.twitter_client.ToolCallLeakError",
+}
+
+
+def _exceptions_of_the_browser_layer():
+    import importlib
+    import pkgutil
+
+    import src.x
+
+    found = {}
+    for info in pkgutil.iter_modules(src.x.__path__):
+        module = importlib.import_module(f"src.x.{info.name}")
+        for obj in vars(module).values():
+            if isinstance(obj, type) and issubclass(obj, BaseException) \
+                    and obj.__module__ == module.__name__:
+                found[f"{module.__name__}.{obj.__qualname__}"] = obj
+    return found
+
+
+def test_every_exception_of_the_browser_layer_is_a_browser_failure():
+    """#298: `health` counts a `BrowserFailure` only. An exception added to
+    `src/x` inherits it, or is listed above with its reason."""
+    from src.x.page_session import BrowserFailure, PageNotOpened
+
+    defined = _exceptions_of_the_browser_layer()
+    assert NOT_BROWSER_FAILURES <= set(defined), "a listed exception no longer exists"
+    assert issubclass(PageNotOpened, BrowserFailure)
+    strays = sorted(name for name, cls in defined.items()
+                    if name not in NOT_BROWSER_FAILURES and not issubclass(cls, BrowserFailure))
+    assert not strays, f"Exceptions of src/x that are no BrowserFailure: {strays}"
+
+
+def test_a_raw_osascript_timeout_stays_in_the_scraper():
+    """#298: `raise_timeout=True` lets `subprocess.TimeoutExpired`, which is
+    no `BrowserFailure`, reach the caller. Its one caller, the tweet scrape,
+    catches it; a job reaching it would fail without counting."""
+    callers = set()
+    for path in _production_files():
+        for node in ast.walk(ast.parse(path.read_text())):
+            if isinstance(node, ast.Call) and any(
+                    k.arg == "raise_timeout" and isinstance(k.value, ast.Constant) and k.value.value
+                    for k in node.keywords):
+                callers.add(path.relative_to(ROOT).as_posix())
+    assert callers == {"src/x/scraper.py"}

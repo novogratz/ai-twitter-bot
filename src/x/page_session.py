@@ -47,7 +47,14 @@ from ..core.logger import log
 from . import safari
 
 
-class PageNotOpened(Exception):
+class BrowserFailure(Exception):
+    """A failure of the browser that the browser layer lets reach a job. The
+    one kind of error `health` counts toward a Safari restart (issue #298):
+    every exception `src/x` raises to its callers inherits it, save the ones
+    `tests/test_browser_layer.py` lists with their reason."""
+
+
+class PageNotOpened(BrowserFailure):
     """The page a session asked for did not open: the front tab is another
     page, and nothing may be read or pressed there."""
 

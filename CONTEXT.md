@@ -310,6 +310,12 @@ and closes each tab it opened on every path, overnight or after a stop too. A se
 shares its page and opens nothing; asked for another page, it reads nothing.
 _Avoid_: browser session (the x.com login), tab, visit
 
+**Browser failure**:
+An error the browser layer lets reach a job, such as a page that did not
+open. The one kind of error that counts toward a Safari restart; a bug or a
+model timeout never does.
+_Avoid_: Safari error, Safari failure (for any error of a cycle)
+
 ### State
 
 **Guarded state file**:

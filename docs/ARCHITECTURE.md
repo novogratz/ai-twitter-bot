@@ -79,7 +79,14 @@ authorize a new action.
 account jobs count toward Safari health under their label (`babysitter` for
 `babysit_job`, the job name without `_job` for the others);
 `editorial_job`, `reach_report_job` and `session_refresh_job` register
-theirs under `health.wrap_job(..., safari_health=False)`. The editorial
+theirs under `health.wrap_job(..., safari_health=False)`. A watched job's
+error counts toward a Safari restart only when it is a browser failure, a
+`page_session.BrowserFailure` raised by `src/x`, such as `PageNotOpened`
+(issue #298). Any other error, a bug or a model timeout, is logged at
+ERROR with its traceback like any failed cycle, followed by `[HEALTH]
+<label> failed outside the browser (<type>). Not a Safari failure, no
+restart.`, and leaves the counter as it was; only a success resets it.
+The editorial
 stays out of the Safari failure counter because its failures are model
 timeouts, not Safari outages: the scraper already swallows most Safari
 errors, and the blank-page counter is the real Safari guard. Counted there, a
@@ -113,9 +120,9 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers mentions under `DEBATE_MAX_AGE_HOURS`, newest first, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
-| `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too; a pick whose follow raised is still liked, and fails the cycle for the health watchdog once the likes are done. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
-| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page (a followers page that does not open fails the cycle), records the real-looking handles in `followers_seen.json`, and follows back, through a Follow run, the ones missing from the followed accounts, at most `FOLLOWBACK_CAP` attempts per cycle, refused and failed picks included. A too-soon or cap-reached refusal ends the attempts; bedtime ends the cycle, which reports no success; a pick that raised fails the cycle for the health watchdog once the picks are done. |
-| `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
+| `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too; a pick whose follow raised is still liked, and fails the cycle once the likes are done. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
+| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page (a followers page that does not open fails the cycle), records the real-looking handles in `followers_seen.json`, and follows back, through a Follow run, the ones missing from the followed accounts, at most `FOLLOWBACK_CAP` attempts per cycle, refused and failed picks included. A too-soon or cap-reached refusal ends the attempts; bedtime ends the cycle, which reports no success; a pick that raised fails the cycle once the picks are done. |
+| `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session; a restart resets the Safari failure counter, a skipped or failed one leaves it. |
@@ -885,6 +892,12 @@ These are how the code behaves today, not design intent:
   rewrites the file (conversion or daily retention pass) or drops an
   unreadable last line is lost: run `bin/mass_unfollow.py` with the bot
   stopped, never with `--force` beside it.
+- The Safari failure counter hears of few Safari outages: of the watched
+  jobs, only `followback_job` and `follower_tracker_job` let a browser
+  failure through, a `PageNotOpened` on their one page. The scrapes turn
+  a page that does not open, an osascript failure or a timed-out read
+  into an empty result, and the writes into a `FAILED` outcome, so the
+  blank-page counter of `scraper` stays the Safari guard of the Reply jobs.
 
 ## Legacy modules
 
@@ -912,8 +925,12 @@ some files those bots used to write, as frozen data with no writer left:
    `add(health.wrap_job(run_<name>_cycle, "<name>"), minutes, "<name>_job")`.
    `wrap_job` logs an error at ERROR with its traceback in `bot.log`, resets
    the Safari failure counter on success and hands the error to
-   `health.record_failure`; `StateUnreadable` and `OutsideActiveHours` never
-   count. Pass `safari_health=False` for a job whose failures say nothing
+   `health.record_failure`, which counts a `BrowserFailure` only;
+   `StateUnreadable` and `OutsideActiveHours` never count, nor does a bug
+   or a model timeout. A browser failure the job lets through is an
+   exception of `src/x` that inherits `page_session.BrowserFailure`:
+   `tests/test_browser_layer.py` fails on one that does not, save the
+   ones it lists with their reason. Pass `safari_health=False` for a job whose failures say nothing
    about Safari, such as a model call or a report: it never touches the
    health file. Never call `scheduler.add_job` directly: `add()` supplies the
    waking-hours wrapper.

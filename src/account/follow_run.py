@@ -14,7 +14,8 @@ open, since the spacing may elapse during the cycle. Only
 `OutsideActiveHours` and `StateUnreadable` end the run, as in the Reply
 pipeline; any other error is logged and costs the one pick. The job counts
 the failed picks in its per-cycle bound, and raises the last error once it
-saved its state, so that the health watchdog counts the cycle failed.
+saved its state, so that the cycle fails and the health watchdog judges its
+error: a browser failure counts toward a Safari restart, any other does not.
 """
 import traceback
 
