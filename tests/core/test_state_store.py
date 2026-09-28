@@ -140,10 +140,10 @@ def _follow_engagers(monkeypatch):
     follow_engagers_bot.run_follow_engagers_cycle()
 
 
-def _curator(monkeypatch):
-    from src.account import account_curator as ac
-    monkeypatch.setattr(ac, "_author_engagements", lambda: {"goodfinance": 9})
-    ac.run_curator_cycle()
+def _follow(monkeypatch):
+    from src.x import twitter_client
+    monkeypatch.setenv("DRY_RUN", "1")
+    twitter_client.follow_account("karpathy")
 
 
 def _editorial(monkeypatch):
@@ -180,7 +180,7 @@ def _validate(monkeypatch):
     ("pin_daily_state.json", _pin),
     ("pin_history.json", _pin),
     ("follow_engagers_state.json", _follow_engagers),
-    ("whitelist_discovered.json", _curator),
+    ("whitelist_discovered.json", _follow),
     ("editorial_state.json", _editorial),
     ("tweet_history.json", _post),
     ("tweet_history.json", _babysit),

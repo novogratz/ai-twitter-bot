@@ -1,4 +1,4 @@
-"""The account jobs: curator, engage, followback, likes, pin, follow_engagers."""
+"""The account jobs: engage, followback, likes, pin, follow_engagers."""
 import json
 import os
 import re
@@ -30,110 +30,6 @@ def mac_in_paris(monkeypatch):
     else:
         os.environ["TZ"] = saved
     time.tzset()
-
-
-# --- 2026-06-07 PM: self-curated tracking ----------------------------------
-
-
-def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
-    """Only ON-LANE engagements count as evidence (FR-era rows classify
-    'other' and are ignored); pinned handles always lead the tracked list."""
-    from datetime import datetime
-    from src.account import account_curator as ac
-    now = datetime.now().isoformat()
-    log_file = tmp_path / "log.csv"
-    rows = []
-    # 3 on-lane engagements with an EN markets author
-    for i in range(3):
-        rows.append(f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",https://x.com/goodfinance/status/12345{i},SEARCH,,market_trauma')
-    # 4 FR-era engagements (classify "other") with a legacy author
-    for i in range(4):
-        rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
-    log_file.write_text("\n".join(rows) + "\n")
-    monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
-    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
-
-    ac.run_curator_cycle()
-    handles = ac.tracked_handles(limit=10)
-    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo", "pins lead"
-    assert "goodfinance" in handles, "on-lane author must be tracked"
-    assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
-
-
-def test_a_negative_tracked_max_tracks_nobody(monkeypatch, tmp_path, settings_override):
-    """#201: CURATOR_TRACKED_MAX has no floor, so an Account cannot set it in
-    [limits]; a negative value read as scored[:-1] tracked all but one."""
-    from datetime import datetime
-    from src.account import account_curator as ac
-    settings_override(CURATOR_TRACKED_MAX=-1)
-    now = datetime.now().isoformat()
-    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
-            f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
-            for author in ("goodfinance", "otherfinance") for i in range(6)]
-    log_file = tmp_path / "log.csv"
-    log_file.write_text("\n".join(rows) + "\n")
-    monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
-
-    ac.run_curator_cycle()
-
-    handles = ac.tracked_handles(limit=10)
-    assert "goodfinance" not in handles and "otherfinance" not in handles
-
-
-def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path, operator_folder):
-    """#188: the curator compared the BLOCKLIST by exact equality, so a
-    handle holding a blocked token could reach the whitelist."""
-    from datetime import datetime
-    from src.account import account_curator as ac
-    from src.guards import follow_policy
-    from src.core import config
-    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
-    now = datetime.now().isoformat()
-    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
-            f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
-            for author in ("la_pique_off", "goodfinance") for i in range(6)]
-    log_file = tmp_path / "log.csv"
-    log_file.write_text("\n".join(rows) + "\n")
-    monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
-    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
-
-    ac.run_curator_cycle()
-
-    assert "la_pique_off" not in ac.tracked_handles(limit=10)
-    assert follow_policy.DISCOVERED.read() == ["goodfinance"]
-    assert json.loads((operator_folder / "whitelist.json").read_text()) == {"tiers": {}}
-
-
-def test_curator_promotion_quality_bar():
-    """Following is a higher bar than tracking: spam-pattern handles (long
-    digit runs) and thin evidence never reach the whitelist."""
-    from src.account.account_curator import _promotable
-    assert _promotable({"handle": "unusual_whales", "engagements": 9})
-    assert not _promotable({"handle": "bisdianora24202", "engagements": 9}), "digit-run spam"
-    assert not _promotable({"handle": "goodname", "engagements": 4}), "below promote floor"
-
-
-@pytest.mark.parametrize("stamped, count, promoted", [
-    ("2026-10-15", 3, []),              # the Mac's day, ahead of Toronto's: quota spent
-    ("2026-10-14", 3, []),              # Toronto's day: quota spent
-    ("2026-10-13", 3, ["deep_macro"]),  # yesterday: a fresh quota
-])
-def test_curator_promotion_quota_follows_the_toronto_day(mac_in_paris, settings_override, stamped, count,
-                                                        promoted, operator_folder):
-    """#191: the daily promotion quota, stamped by either clock, stays spent
-    until the next Toronto day."""
-    from src.account import account_curator as ac
-    from src.guards import follow_policy
-
-    settings_override(CURATOR_DISCOVERED_PER_DAY=3)
-    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
-    doc = {"promotion_meta": {"date": stamped, "count": count}}
-    cand = {"handle": "deep_macro", "engagements": 9, "score": 9.0, "weight": 1.0}
-
-    ac._promote_to_whitelist([cand], doc)
-
-    assert follow_policy.DISCOVERED.read() == promoted
-    assert doc["promotion_meta"] == {"date": "2026-10-14", "count": count if not promoted else 1}
 
 
 # --- engage_bot ----------------------------------------------------------------

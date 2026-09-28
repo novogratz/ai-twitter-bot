@@ -8,12 +8,15 @@ and has no side effect: no log, no store, no scrape. A post without a URL,
 without text, or of unknown or negative age (a status ID from the future:
 clock skew) is never a candidate. The job keeps its sub-sources, its budget
 and its Reply call.
+
+`pinned_accounts` gives the profiles early_bird and mega_watch scan.
 """
 from dataclasses import dataclass
 from datetime import timedelta
 from enum import Enum
 
-from ..core import account
+from ..core import account, settings
+from ..guards.reply_admission import is_blocked_account
 from ..x import x_urls
 from .reply_pipeline import Candidate
 
@@ -35,6 +38,21 @@ class Declaration:
     author: str = ""
     niche: bool = False
     order: Order = Order.SCRAPED
+
+
+def pinned_accounts(limit: int) -> list:
+    """The Account's pinned accounts, PINNED_TRACKED_HANDLES (its
+    network.pinned_tracked unless .env sets it), in their order: a handle
+    listed twice kept at its first place, case ignored, a Blocked account
+    left out, `limit` at most."""
+    pool, seen = [], set()
+    for raw in settings.get("PINNED_TRACKED_HANDLES").split(","):
+        handle = raw.strip().lstrip("@")
+        if not handle or handle.lower() in seen or is_blocked_account(handle):
+            continue
+        seen.add(handle.lower())
+        pool.append(handle)
+    return pool[:limit]
 
 
 def is_on_niche(text: str) -> bool:

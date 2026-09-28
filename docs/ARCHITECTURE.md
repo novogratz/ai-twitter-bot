@@ -105,8 +105,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts (their posts under 48 hours old, replies included), then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries (root, on-niche posts under `DIRECT_REPLY_MAX_AGE_MINUTES`, fresh and rising first), and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
-| `early_bird_job` | 5 min | Replies to root, on-niche posts under 18 minutes old from four of the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and three of the tracked-account list, one Reply per account: seven per cycle at most. |
-| `mega_watch_job` | 2 min | Replies to root, on-niche posts under four minutes old from the top tracked handles, two per cycle at most. |
+| `early_bird_job` | 5 min | Replies to root, on-niche posts under 18 minutes old from four of the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and three of its first 30 pinned accounts, one Reply per account: seven per cycle at most. |
+| `mega_watch_job` | 2 min | Replies to root, on-niche posts under four minutes old from five of the Account's first 12 pinned accounts, two per cycle at most. |
 | `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | 12 min | Answers mentions under `DEBATE_MAX_AGE_HOURS`, newest first, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
@@ -635,8 +635,9 @@ Five modules sit behind them:
   `follow_quality_rejects.json`, `followers_seen.json` and the frozen
   `replied_back.json`. It reads the Operator's `whitelist.json` in the
   Account folder and never writes it; the handles `account_curator`
-  promotes go to `whitelist_discovered.json`, through `add_discovered`, and
-  a missing one stops its readers as an unreadable one does: before the
+  promoted before its removal (issue #299) are in
+  `whitelist_discovered.json`, which only `bin/migrate_operator_data.py`
+  adds to, through `add_discovered`, and a missing one stops its readers as an unreadable one does: before the
   migration of issue #206 it would drop the handles still to carry.
   `relation(handle)` finds what
   the handle is to the account, from its own sources, never from the
@@ -688,7 +689,9 @@ only or not, the author a scanned profile's posts carry in their URL, the
 Account's niche or not, and the order. `reply_source.select` applies the
 declaration without side effects and never keeps a post without a URL or
 text, or of unknown or negative age. A job reads its handle lists from the
-Account itself; the feed sweep, `early_bird` and `mega_watch` take only
+Account itself; `early_bird` and `mega_watch` scan its pinned accounts,
+`reply_source.pinned_accounts`, in order, a Blocked account left out; the
+feed sweep, `early_bird` and `mega_watch` take only
 their Reply call, `reply_call`, from `direct_reply`.
 
 | Job or lane | Oldest post | Root only | Author | Niche | Order |

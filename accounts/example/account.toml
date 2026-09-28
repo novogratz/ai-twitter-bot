@@ -89,7 +89,7 @@ fr_forced_reply = []
 profile_visits = []
 # Accounts the direct_reply VIP scan searches: each needs a Relation prompt.
 vip_scan = []
-# Accounts the curator always tracks first.
+# Accounts early_bird (first 30) and mega_watch (first 12) scan, in order.
 pinned_tracked = []
 # Replies to these authors run the priority model.
 vip_reply = []

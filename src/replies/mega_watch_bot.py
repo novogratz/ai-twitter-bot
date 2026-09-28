@@ -28,16 +28,12 @@ JOB = reply_pipeline.Job("mega_watch", "MEGA", reply_call=lambda author: reply_c
 
 # 2026-06-07 PM (operator): static list GONE.
 
-# The ≤4-min watcher scans the TOP of the bot's own earned list
-# (account_curator), with the Account's network.pinned_tracked always first.
-# The tightest freshness window gets the highest-conviction handles the
-# curator has.
+# The ≤4-min watcher scans the first of the Account's pinned accounts (#299).
 MEGA_ACCOUNTS: list = []  # intentionally empty — see _watch_pool()
 
 
 def _watch_pool() -> list:
-    from ..account.account_curator import tracked_handles
-    return tracked_handles(limit=12)
+    return reply_source.pinned_accounts(limit=12)
 
 MAX_AGE_MIN = 4
 MAX_REPLIES_PER_CYCLE = 2

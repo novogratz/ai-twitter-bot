@@ -243,13 +243,7 @@ _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
 _declare("PINNED_TRACKED_HANDLES", str, "",
-         "Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set.")
-_declare("CURATOR_WINDOW_DAYS", int, 14, "Days of engagement log the curator scores.")
-_declare("CURATOR_TRACKED_MAX", int, 40, "Earned accounts the curator tracks, pinned ones aside.")
-_declare("CURATOR_MIN_ENGAGEMENTS", int, 3, "On-lane engagements an author needs to be tracked.")
-_declare("CURATOR_DISCOVERED_PER_DAY", int, 3, "Accounts the curator may add to the whitelist discovered tier per day.")
-_declare("CURATOR_DISCOVERED_MAX", int, 50, "Accounts the whitelist discovered tier holds at most.")
-_declare("CURATOR_PROMOTE_MIN_ENGAGEMENTS", int, 5, "On-lane engagements an author needs to be promoted to the whitelist.")
+         "Comma-separated accounts early_bird (first 30) and mega_watch (first 12) scan, in order, Blocked accounts left out; the Account's network.pinned_tracked unless set.")
 _declare("PIN_MIN_LIKES", int, 2, "Likes an own post needs before pin_job may pin it.")
 _declare("PIN_MAX_AGE_DAYS", int, 7, "Days after which a pin no longer defends its slot with the 1.3x rule.")
 _declare("LIKE_TOP_TAB_PROBABILITY", float, 0.55, "Probability like_job searches the Top tab instead of Live.")

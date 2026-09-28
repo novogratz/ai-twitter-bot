@@ -142,7 +142,7 @@ Account folder, versioned; the bot reads them and never writes them, and one
 missing or unreadable stops the job that needs it. While the following count
 (`following_count.json`, else `followed_accounts.json`) or the whitelist
 (`whitelist.json` in the Account folder, `whitelist_discovered.json` for the
-handles the curator promoted) is missing or unreadable, every follow is
+handles the curator promoted before its removal in issue #299) is missing or unreadable, every follow is
 refused; it also stops `bin/mass_unfollow.py`.
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`

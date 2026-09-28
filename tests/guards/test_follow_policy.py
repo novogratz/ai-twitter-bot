@@ -195,8 +195,8 @@ def test_a_missing_discovered_file_stops_every_follow(follow_env, monkeypatch, s
                                                       tmp_path, whitelist_only):
     """#206: until bin/migrate_operator_data.py carries the promoted handles
     out of the old whitelist.json, their file is missing; read as empty, they
-    would lose their Seed account status. The follow policy and the curator
-    stop as on an unreadable file, and nothing creates it."""
+    would lose their Seed account status. The follow policy and
+    add_discovered stop as on an unreadable file, and nothing creates it."""
     settings_override(FOLLOW_WHITELIST_ONLY=whitelist_only)
     _counts(monkeypatch, tmp_path, 100, 10)
     path = tmp_path / "whitelist_discovered.json"

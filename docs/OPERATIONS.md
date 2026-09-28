@@ -25,7 +25,7 @@ mkdir -p state/theaishrink
 
 The state of the Account lives in `state/<BOT_ACCOUNT>/` ([State files](#state-files)).
 `whitelist_discovered.json` there holds the handles `account_curator`
-promotes to the whitelist. Every follow stops while it is missing, so that a
+promoted to the whitelist before its removal (issue #299). Every follow stops while it is missing, so that a
 checkout not migrated yet never runs without them: a new install starts it
 empty, as above, and a checkout from before issue #206 or #207 runs
 [the migrations](#deploying-issue-207) instead.
@@ -126,7 +126,7 @@ each use and never writes:
 
 | File | Holds | Read by |
 |---|---|---|
-| `whitelist.json` | Follow whitelist: tiers, seeds, the spec's notes | `follow_policy`, `account_curator`, `bin/mass_unfollow.py` |
+| `whitelist.json` | Follow whitelist: tiers, seeds, the spec's notes | `follow_policy`, `bin/mass_unfollow.py` |
 | `respect_list.json` | Respected accounts, `{"handles": {handle: {reason, added}}}` | `respect_list`: the hard-rules prompt block, `post_tweet`, Reply admission, `bin/mass_unfollow.py --keep legacy` |
 | `following_baseline.json` | The following count the Operator stated on 2026-06-02, its date and note | no code; `following_count.json` holds the live count |
 
@@ -134,7 +134,7 @@ Edit them by hand and commit them; a change is read at the next use, with no
 restart. A missing or unreadable one stops the jobs that need it, like a
 guarded state file, and nothing recreates it with defaults
 ([Recovery](#recovery)). What the bot keeps beside them is state: the handles
-`account_curator` promotes go to `whitelist_discovered.json`, the live count to
+`account_curator` promoted are in `whitelist_discovered.json`, the live count in
 `following_count.json`.
 
 #### Creating an Account
@@ -367,7 +367,7 @@ Safari restart, and nothing writes over the file:
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | No job: no prompt reads it since 2026-09-27. The interaction count after a Reply is skipped, and the Reply stays logged |
-| `whitelist.json` (Account folder), `whitelist_discovered.json`, missing too | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. Once the profile is open, the quality gate takes the relation `judge` found and reads neither file again. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing `whitelist.json` |
+| `whitelist.json` (Account folder), `whitelist_discovered.json`, missing too | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. Once the profile is open, the quality gate takes the relation `judge` found and reads neither file again. Also `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing `whitelist.json` |
 | `respect_list.json` (Account folder, missing too) | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `bin/mass_unfollow.py --keep legacy` |
 
 A missing or unreadable `respect_list.json` stops every Original and most Replies
@@ -560,12 +560,10 @@ too:
 
 | File | Read by | Holds | Policy |
 |---|---|---|---|
-| `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written by `account_curator.run_curator_cycle`, not scheduled | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
+| `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written only by `bin/migrate_operator_data.py` since the curator's removal (issue #299) | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
 | `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
-| `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
-| `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
 | `replied_back.json` | `follow_policy` (`follow_account`, `follow_engagers_job`) | Frozen Engager list, see below | disposable |
 
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
@@ -573,6 +571,12 @@ to the replied store and the Engager list to the ledger's debate turns.
 The follow policy still reads it until its entries age out of the
 ledger's 90 days; delete it, and the fallback in `follow_policy`,
 around 2026-12-22.
+
+No code reads `tracked_accounts.json` or `engagement_targets_log.json`
+since issue #299 removed the curator: `early_bird` and `mega_watch` scan
+the Account's pinned accounts. A live copy stays in `state/<BOT_ACCOUNT>/`
+and can be deleted with the bot stopped; `bin/migrate_state.py` still
+moves one left at the root.
 
 `operator_prompt.md` stays tracked for `operator_cycle.sh`. Issue #193
 deleted the root files no code read any more: `daily_state.json`,
@@ -712,8 +716,7 @@ refuses while the state waits at the root.
 Given a directory without `whitelist.json`, the script refuses while
 `whitelist_discovered.json` does not exist yet. Until step 2 has created it,
 even empty, every follow stops as on an unreadable guarded file
-([Recovery](#recovery)), `account_curator` promotes nothing and
-`bin/mass_unfollow.py` aborts: read as empty, the file would take the
+([Recovery](#recovery)) and `bin/mass_unfollow.py` aborts: read as empty, the file would take the
 promoted handles' Seed account standing and their protection from an
 unfollow. The old files stay in `$B`: `shasum -a 256 -c "$B/SHA256SUMS"`
 from the checkout reports these two missing.
