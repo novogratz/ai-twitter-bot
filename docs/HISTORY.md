@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — every Reply follows REPLY_LLM_PROVIDER (Operator, #248):**
+> `REPLY_LLM_PROVIDER` was born on 2026-06-24 for the firehose and the reply
+> search; debate, replyback and the VIP scan came later without it and ran
+> on `AI_CLI`, as did @Graphseo's Relation when the Claude CLI was missing.
+> The call surfaces (#247) made the gap readable. The Operator decided that
+> debate, replyback and the VIP scan follow `REPLY_LLM_PROVIDER`, and that
+> the Relation falls back on it too, with a warning naming the Relation and
+> the provider. A blank `REPLY_LLM_PROVIDER` still sends every Reply to
+> `AI_CLI`. Both default to `ollama`: the provider changes only where the
+> live `.env` sets them apart, to check at the next deploy.
+
 > **2026-09-28 — the curator is gone (issue #299, Operator):**
 > `account_curator.run_curator_cycle` was no longer scheduled, yet
 > `early_bird` and `mega_watch` still read their scan pool from

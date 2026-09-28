@@ -119,8 +119,9 @@ Reply, the reply search, a Relation's Reply, an Original. `llm_client`
 declares each once, in `SURFACES`, with its model setting, its provider
 setting and its CLI options; a caller names a surface and reads no model or
 provider setting. Only a Relation's CLI, forced by its caller, overrides the
-provider. Debate, replyback and the VIP scan run, for now, on surfaces bound
-to `AI_CLI` rather than `REPLY_LLM_PROVIDER`, pending the Operator's decision.
+provider; a Relation whose CLI is missing runs on the Reply provider. Every
+Reply, debate, replyback and the VIP scan included, follows
+`REPLY_LLM_PROVIDER`, and `AI_CLI` when it is blank.
 _Avoid_: route, model setting, provider (each only a part of it)
 
 **Reply call**:

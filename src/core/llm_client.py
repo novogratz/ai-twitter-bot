@@ -210,10 +210,6 @@ class Surface(Enum):
     PRIORITY_REPLY = "priority Reply"
     REPLY_SEARCH = "reply search"
     RELATION_REPLY = "Relation Reply"
-    # Provisional (#248): debate, replyback and the VIP scan's template run
-    # on AI_CLI, not REPLY_LLM_PROVIDER, pending the Operator's decision.
-    REPLY_ON_AI_CLI = "Reply on AI_CLI"
-    PRIORITY_REPLY_ON_AI_CLI = "priority Reply on AI_CLI"
     ORIGINAL = "Original"
 
 
@@ -235,16 +231,16 @@ class Route:
 
 SURFACES: dict[Surface, Route] = {
     # REPLY_LLM_PROVIDER: the local Ollama qwen 503'd and silently dropped
-    # replies (operator 2026-06-24).
+    # replies (operator 2026-06-24). Every Reply follows it, debate,
+    # replyback and the VIP scan included (operator 2026-09-28, #248).
     Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER"),
     Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER"),
     # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s
     # (op 2026-06-24).
     Surface.REPLY_SEARCH: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(allowed_tools=("WebSearch",))),
-    # AI_CLI unless the caller forces the Relation's installed CLI.
-    Surface.RELATION_REPLY: Route("PRIORITY_REPLY_MODEL", "AI_CLI", CallOptions(output_json=False, timeout=60)),
-    Surface.REPLY_ON_AI_CLI: Route("REPLY_MODEL", "AI_CLI"),
-    Surface.PRIORITY_REPLY_ON_AI_CLI: Route("PRIORITY_REPLY_MODEL", "AI_CLI"),
+    # The Reply provider unless the caller forces the Relation's installed CLI.
+    Surface.RELATION_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER",
+                                  CallOptions(output_json=False, timeout=60)),
     Surface.ORIGINAL: Route("NEWS_MODEL", "PROFILE_LLM_PROVIDER"),
 }
 
@@ -256,6 +252,11 @@ class SurfaceCall:
     model: ModelSetting
     provider: Optional[str]
     options: CallOptions
+
+    @property
+    def primary(self) -> str:
+        """The provider `run_llm` tries first for this call."""
+        return (self.provider or _provider()).strip().lower()
 
 
 def resolve(surface: Surface) -> SurfaceCall:

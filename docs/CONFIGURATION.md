@@ -62,7 +62,9 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
 
 - `AI_CLI` picks the primary provider, `ollama` by default;
   `PROFILE_LLM_PROVIDER` and `REPLY_LLM_PROVIDER` route the profile surfaces
-  and the Replies, `ollama` both. An unknown provider name fails every call
+  and the Replies, `ollama` both; blank, they leave `AI_CLI`. Every Reply
+  follows `REPLY_LLM_PROVIDER`: debate, replyback and the VIP scan too
+  (Operator, 2026-09-28). An unknown provider name fails every call
   it routes without running anything; the start logs it and `--dry-run`
   lists it under `unknown_llm_providers`.
 - `LLM_FALLBACK_CLI` unset means no fallback: a failed call fails, Originals
@@ -73,8 +75,9 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
 - Two calls leave the configured provider without a fallback: the Replies to
   @Graphseo run on the Claude CLI whenever it is installed, with
-  `PRIORITY_REPLY_MODEL`; a codex primary under a cached usage lockout
-  (`codex_lockout.json`) goes to local Ollama.
+  `PRIORITY_REPLY_MODEL` (without it, on `REPLY_LLM_PROVIDER`, and a
+  warning names the Relation and that provider); a codex primary under a
+  cached usage lockout (`codex_lockout.json`) goes to local Ollama.
 - `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of
   the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
@@ -101,12 +104,12 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
-| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
+| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude; runs the Originals or the Replies whose provider setting is blank. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `PRIORITY_REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for profile surfaces; blank means none. |
-| `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for Replies; blank means none. |
+| `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for every Reply, a Relation whose CLI is missing included; blank means AI_CLI. |
 | `DRY_RUN` | 0 or 1 | `0` |  | 1 logs every write instead of doing it; config.dry_run() reads it at call time. |
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |

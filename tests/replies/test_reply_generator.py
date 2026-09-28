@@ -328,7 +328,7 @@ def test_debate_tells_the_model_it_does_not_see_the_account_post(jobs):
 def reply_call(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
-    return ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", **options)
+    return ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST", **options)
 
 
 def generate(**options):
@@ -384,13 +384,14 @@ def test_the_generator_hands_the_surface_and_the_call_to_run_llm(llm, settings_o
         ModelSetting("PRIORITY_REPLY_MODEL"), False, 60, "claude")
 
 
-def test_default_call_options_are_run_llms_defaults(llm):
-    """A Reply call on a surface with default options, on AI_CLI, calls
-    `run_llm` as it did with an empty dict."""
+def test_default_call_options_are_run_llms_defaults(llm, settings_override):
+    """A Reply call on a surface with default options, on AI_CLI (a blank
+    REPLY_LLM_PROVIDER), calls `run_llm` as it did with an empty dict."""
     import inspect
 
     from src.core import llm_client
 
+    settings_override(REPLY_LLM_PROVIDER="")
     generate()
 
     [call] = llm.calls
@@ -531,7 +532,7 @@ def test_the_language_decided_for_the_prompt_comes_back(llm):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import LanguageRule, ReplyCall
 
-    french = ReplyCall("{tweet_text}{language_override}", Surface.REPLY_ON_AI_CLI, "TEST",
+    french = ReplyCall("{tweet_text}{language_override}", Surface.REPLY, "TEST",
                        language=LanguageRule.PARENT)
     assert reply_generator.generate(french, author="someone", text=FR).language == "fr"
     assert "FRENCH ONLY" in llm.prompts[-1]

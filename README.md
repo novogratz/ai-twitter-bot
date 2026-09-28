@@ -76,7 +76,9 @@ the default browser: the bot opens every page in Safari), Python 3.12+,
 default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
 fallback, codex for instance, with one exception: the Replies to @Graphseo run
 on the Claude CLI whenever it is installed (his Relation's `provider` in
-`account.toml`). A CLI runs `NEWS_MODEL`,
+`account.toml`), else on `REPLY_LLM_PROVIDER` with a warning. Every Reply,
+debate, replyback and the VIP scan included, runs on `REPLY_LLM_PROVIDER`,
+and on `AI_CLI` when it is blank. A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the
 call and is logged at start, as is a fallback the code ignores.

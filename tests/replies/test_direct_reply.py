@@ -176,7 +176,8 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     """#203 moved the relation prompts into the Account's Relations: each VIP
     ReplyCall keeps its label, limits and provider, and the engine names no
     one. A Relation's provider is forced only when its CLI is installed; a
-    Relation with a prompt and no provider keeps the VIP scan's call."""
+    Relation with a prompt and no provider keeps the VIP scan's call, the
+    priority Reply's (#248)."""
     import shutil
     from src.core import account
     from src.core.llm_client import TEXT_PROFILE, Surface
@@ -198,8 +199,31 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.surface, call.text_limit, call.strip_preamble, call.skip_window,
-                call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, 300,
+                call.provider, call.profile) == (Surface.PRIORITY_REPLY, 300,
                                                  True, 20, None, TEXT_PROFILE)
+
+
+def test_a_relation_without_its_cli_warns_of_the_provider_it_falls_back_on(monkeypatch, settings_override):
+    """The Operator, 2026-09-28 (#248): a Relation whose CLI is missing
+    falls back on the Reply provider, and says so, naming both."""
+    import shutil
+
+    from src.replies import direct_reply as dr
+
+    warnings = []
+    monkeypatch.setattr(dr.log, "warning", lambda msg, *a, **k: warnings.append(msg))
+    settings_override(AI_CLI="codex", REPLY_LLM_PROVIDER="gemini")
+    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    dr._vip_call("Graphseo")
+    assert warnings == []
+
+    monkeypatch.setattr(shutil, "which", lambda name: None)
+    assert dr._vip_call("Graphseo").provider is None
+    assert warnings == ["[VIP] Relation @Graphseo: claude is not installed, the Reply runs on gemini."]
+
+    settings_override(REPLY_LLM_PROVIDER="")
+    dr._vip_call("Graphseo")
+    assert warnings[-1] == "[VIP] Relation @Graphseo: claude is not installed, the Reply runs on codex."
 
 
 def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings_override):

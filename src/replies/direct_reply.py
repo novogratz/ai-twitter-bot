@@ -5,7 +5,7 @@ borrow its reply_call, and nothing else, until the call surface moves it
 import random
 from datetime import timedelta
 from ..core import account, settings
-from ..core.llm_client import Surface
+from ..core.llm_client import Surface, resolve
 from ..core.logger import log
 from ..x.scraper import scrape_x_search
 from . import reply_pipeline, reply_source
@@ -36,9 +36,13 @@ Parent tweet: {tweet_text}
 
 def _own_call(relation) -> ReplyCall:
     """A Relation's own ReplyCall, on its provider's CLI when installed
-    (forced, not Ollama). The Reply admission trims it, as every Reply."""
+    (forced, not Ollama), else on the Reply provider, with a warning
+    (Operator, 2026-09-28). The Reply admission trims it, as every Reply."""
     import shutil
     force = relation.provider if relation.provider and shutil.which(relation.provider) else None
+    if force is None:
+        log.warning(f"[VIP] Relation @{relation.handle}: {relation.provider} is not installed, "
+                    f"the Reply runs on {resolve(Surface.RELATION_REPLY).primary}.")
     return ReplyCall(relation.prompt, Surface.RELATION_REPLY, f"{relation.handle.upper()}_VIP",
                      text_limit=300, provider=force)
 
@@ -56,7 +60,7 @@ def _vip_call(handle: str) -> ReplyCall | None:
     template = relations.vip_prompt(handle)
     if template is None:
         return None
-    return ReplyCall(template, Surface.PRIORITY_REPLY_ON_AI_CLI, f"VIP_REPLY/{handle}",
+    return ReplyCall(template, Surface.PRIORITY_REPLY, f"VIP_REPLY/{handle}",
                      text_limit=300, strip_preamble=True, skip_window=20)
 
 

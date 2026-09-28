@@ -272,17 +272,16 @@ and the caller hands them to `run_llm`. No module under `src/replies/` or
 
 | Surface | Callers | Model setting | Provider | CLI options |
 |---|---|---|---|---|
-| `REPLY` | search, feed sweep, early bird, mega watch | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
-| `PRIORITY_REPLY` | the same, for a `vip_reply` author | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
+| `REPLY` | search, feed sweep, early bird, mega watch, debate, replyback | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
+| `PRIORITY_REPLY` | the same, for a `vip_reply` author; VIP scan, a Relation's or the default prompt | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
 | `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool |
-| `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | `AI_CLI`, or the Relation's CLI when installed | no JSON envelope, 60 s |
-| `REPLY_ON_AI_CLI` | debate, replyback | `REPLY_MODEL` | `AI_CLI` | defaults |
-| `PRIORITY_REPLY_ON_AI_CLI` | VIP scan, a Relation's or the default prompt | `PRIORITY_REPLY_MODEL` | `AI_CLI` | defaults |
+| `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | the Relation's CLI when installed, else `REPLY_LLM_PROVIDER` with a warning | no JSON envelope, 60 s |
 | `ORIGINAL` | Draft, review | `NEWS_MODEL` | `PROFILE_LLM_PROVIDER` | defaults |
 
-A blank provider setting leaves `AI_CLI`. The two `*_ON_AI_CLI` surfaces
-are provisional: whether debate, replyback and the VIP scan follow
-`REPLY_LLM_PROVIDER` is the Operator's decision (#248).
+A blank provider setting leaves `AI_CLI`. Every Reply follows
+`REPLY_LLM_PROVIDER`, debate, replyback and the VIP scan included
+(Operator, 2026-09-28, #248); a Relation whose CLI is missing falls back on
+it and logs a warning naming the Relation and the provider it runs on.
 `tests/test_call_surfaces.py` pins each job's model setting, provider and
 CLI options.
 
@@ -856,8 +855,9 @@ These are how the code behaves today, not design intent:
   one more page per Debate turn. The prompt tells the model so.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
-  `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the
-  one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
+  `REPLY_LLM_PROVIDER` says, and falls back on `REPLY_LLM_PROVIDER`, with a
+  warning, when it is not (Operator, 2026-09-28): the one cloud call without
+  `LLM_FALLBACK_CLI`, pending the Operator's decision.
   It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which

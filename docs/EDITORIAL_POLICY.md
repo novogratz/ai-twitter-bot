@@ -215,7 +215,10 @@ marked published after a check.
   2026-09-27). A model SKIP sets the post aside for good;
   a model rate limit, every provider at its usage limit, ends the job's
   generations for the cycle. The prompt names every Respected account.
-- Model calls stay on their configured provider, Ollama by default. Only an
+- Model calls stay on their configured provider, Ollama by default. Every
+  Reply, debate, replyback and the VIP scan included, runs on
+  `REPLY_LLM_PROVIDER`, and on `AI_CLI` when it is blank (Operator,
+  2026-09-28, issue #248). Only an
   explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
@@ -223,7 +226,8 @@ marked published after a check.
   to @Graphseo run on the Claude CLI whenever it is installed (his
   Relation's `provider` in `account.toml`), with
   `PRIORITY_REPLY_MODEL`, unset Claude's default `claude-haiku-4-5-20251001`
-  (issue #197).
+  (issue #197). Without the Claude CLI they run on `REPLY_LLM_PROVIDER`, and
+  a warning names the Relation and that provider (Operator, 2026-09-28).
 - An outgoing text that names a Respected account, by `@handle` or by its
   handle in a sentence with a derisive word, is refused at the write
   chokepoint, dry run included: `post_tweet` for an Original, Reply
