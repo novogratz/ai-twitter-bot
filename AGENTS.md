@@ -83,7 +83,7 @@ Account.
 | Settings served under their old names and read on every access, side-effect switches as functions; fixed ceilings and `BLOCKLIST` that `.env` cannot touch | `src/core/config.py` |
 | Pre-publish validation (price targets, dedup, truncation, violence) | `src/guards/content_guard.py` |
 | Every browser write (`post_tweet`, `reply_to_tweet`, `follow_account`…) | `src/x/twitter_client.py` |
-| The sequence every write runs: dry run, a page session (Safari lock, guards under it before the open, the page handed to the steps, a page that does not open FAILED), ledger rows only on a shipped Write outcome, the tab closed on every path | `src/x/confirmed_write.py` |
+| The sequence every write runs: dry run, a page session (Safari lock, guards under it before the open, the page handed to the steps, a page that does not open FAILED), ledger rows only on a shipped Write outcome, the tab closed on every path save bedtime or a stop | `src/x/confirmed_write.py` |
 | Reading X pages through page sessions, with each scrape's answer when its page does not open: feeds, search, profiles, mentions, blank-page recovery | `src/x/scraper.py` |
 | Safari lock, AppleScript, page opening (`open_url`, never `webbrowser`), paste, tab and scroll primitives; its private names reached by `page_session` only, save `safari_hygiene` and `bin/mass_unfollow.py` | `src/x/safari.py` |
 | Page session, for every read and write: the Safari lock held, the page opened on demand (`PageNotOpened`, no read until an open succeeds), scroll, script, JSON read, keys, paste and Safari brought to the front, each tab it opened closed on every path, a nested session opening nothing and reading only the outer session's page; Safari and memory adapters | `src/x/page_session.py` |
@@ -109,11 +109,11 @@ Each one is a bug that shipped live. The full incident stories are in
   same `FAILED`, `UNCONFIRMED` and `DRY_RUN`.
 - **Pages go through the page session.** A job, a scrape or a write acts
   on a page through `page_session.session`, which closes the tabs it
-  opened on every path; a write gets its page from `confirmed_write.run`.
-  No module outside `src/x/safari.py` and `src/x/page_session.py` reaches
-  a private `safari._xxx` primitive, save the Safari restart in
-  `safari_hygiene.py` and `bin/mass_unfollow.py`: `tests/test_browser_layer.py`
-  fails on any other.
+  opened on every path save bedtime or a stop; a write gets its page from
+  `confirmed_write.run`. No module outside `src/x/safari.py` and
+  `src/x/page_session.py` reaches a private `safari._xxx` primitive, save
+  the Safari restart in `safari_hygiene.py` and `bin/mass_unfollow.py`:
+  `tests/test_browser_layer.py` fails on any other.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.
@@ -148,11 +148,14 @@ fixture scripts its pages by URL, and `tests.helpers.WritePage` opens every
 page of a write and fails or traces its steps. Patch a scrape or write in
 its defining module (`src/x/scraper.py`, `src/x/twitter_client.py`) when the
 caller imports it inside a function, but on the caller when it imports it at
-module level; the primitives themselves, in `src/x/safari.py`, only in the
-tests of `safari.py`, the Safari adapter and the listed exceptions. A guard change ships with a test pinning
-it. Tests mirror `src/`: a test goes under `tests/<package>/`, with the
-module that owns the rule; cross-cutting invariants stay at the root of
-`tests/`.
+module level. Patch a primitive of `src/x/safari.py` only to test
+`safari.py`, the Safari adapter or a listed exception, the real primitive
+restored from the `unwalled` fixture included, or to prove that a refusal
+never opens a page (`safari.open_url` in `tests/test_blocked_account.py`).
+The write tests also patch the lock, `safari._safari_lock`, to trace it or
+make it contended. A guard change ships with a test pinning it. Tests
+mirror `src/`: a test goes under `tests/<package>/`, with the module that
+owns the rule; cross-cutting invariants stay at the root of `tests/`.
 
 ## Live bot and state
 

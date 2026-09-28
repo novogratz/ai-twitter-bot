@@ -2,7 +2,9 @@
 layer (#256). Jobs, scrapes and writes act on a page through a page session;
 only `safari.py` and `page_session.py` reach `_safari_lock`, `_run_js`,
 `_run_applescript` and the other private names, save the listed
-exceptions."""
+exceptions. The guard follows imports of any form, `importlib` included,
+aliases by assignment, `getattr`, `vars()` and `__dict__`; a name read on
+safari or a module imported by a computed name fails it too."""
 import ast
 import re
 from pathlib import Path
@@ -15,18 +17,35 @@ LAYER = {"src/x/safari.py", "src/x/page_session.py"}
 # bin/mass_unfollow.py drives the front tab by hand, bot stopped, without
 # the lock (issue #250).
 EXCEPTIONS = {"src/x/safari_hygiene.py", "bin/mass_unfollow.py"}
-_PRIVATE_SAFARI = re.compile(r"(?:^|\.)safari\.(_(?!_)\w*)")
+# A private name of safari, or "?": a name read dynamically on safari
+# (`getattr` with a computed name, `vars(safari)`, `safari.__dict__`).
+_PRIVATE_SAFARI = re.compile(r"(?:^|\.)safari\.(?:_(?!_)\w*|\?)")
+# A module imported by a computed name: it may be safari.
+DYNAMIC_IMPORT = "?"
 
 
 def _module(rel):
     return rel.removesuffix(".py").replace("/", ".")
 
 
+def _absolute(name, package, level):
+    if level - 1 > len(package):
+        return None
+    base = package[:len(package) - (level - 1)] if level else []
+    return ".".join(base + (name.split(".") if name else []))
+
+
+def _constant(node):
+    return node.value if isinstance(node, ast.Constant) and isinstance(node.value, str) else None
+
+
 def references(source, module):
     """(line, dotted name) of what `module` takes from other modules: each
-    module or name it imports (relative at any level, or absolute), each
-    attribute read on an imported name, and each `getattr` of one with a
-    constant name."""
+    module or name it imports (relative at any level, absolute, or through
+    `importlib.import_module` and `__import__`), each name bound to one of
+    them by assignment, each attribute read on them, each `getattr` of one
+    and each key of its `vars()` or `__dict__`. A name read dynamically
+    ends in "?"; a module imported by a computed name is DYNAMIC_IMPORT."""
     package = module.split(".")[:-1]
     bound, found = {}, []
     tree = ast.parse(source)
@@ -40,16 +59,28 @@ def references(source, module):
                     head = a.name.split(".")[0]
                     bound[head] = head
         elif isinstance(node, ast.ImportFrom):
-            if node.level:
-                if node.level - 1 > len(package):
-                    continue
-                base = package[:len(package) - (node.level - 1)]
-                target = ".".join(base + (node.module.split(".") if node.module else []))
-            else:
-                target = node.module or ""
+            target = _absolute(node.module, package, node.level)
+            if target is None:
+                continue
             for a in node.names:
                 found.append((node.lineno, f"{target}.{a.name}"))
                 bound[a.asname or a.name] = f"{target}.{a.name}"
+
+    def imported(node):
+        """The module an import call returns, "" when its name is computed,
+        None when `node` is no import call."""
+        if not isinstance(node, ast.Call) or not node.args:
+            return None
+        if isinstance(node.func, ast.Name) and node.func.id == "__import__":
+            name = _constant(node.args[0])
+            return "" if name is None else name.split(".")[0]
+        if dotted(node.func) == "importlib.import_module":
+            name = _constant(node.args[0])
+            if name is None:
+                return ""
+            level = len(name) - len(name.lstrip("."))
+            return _absolute(name[level:], package, level) or ""
+        return None
 
     def dotted(node):
         chain = []
@@ -57,29 +88,70 @@ def references(source, module):
             chain.append(node.attr)
             node = node.value
         if isinstance(node, ast.Name) and node.id in bound:
-            return ".".join([bound[node.id], *reversed(chain)])
+            base = bound[node.id]
+        else:
+            base = imported(node)
+            if not base:
+                return None
+        return ".".join([base, *reversed(chain)])
+
+    def namespace(node):
+        """The module whose namespace `vars(m)` or `m.__dict__` is."""
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
+                and node.func.id == "vars" and len(node.args) == 1:
+            return dotted(node.args[0])
+        if isinstance(node, ast.Attribute) and node.attr == "__dict__":
+            return dotted(node.value)
         return None
 
+    # Aliases by assignment, to a fixed point: `a = safari; b = a`. The
+    # bound keeps a cycle such as `a = b.x; b = a.y` from growing forever.
+    for _ in range(10):
+        before = dict(bound)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                targets, value = node.targets, node.value
+            elif isinstance(node, (ast.AnnAssign, ast.NamedExpr)) and node.value is not None:
+                targets, value = [node.target], node.value
+            else:
+                continue
+            name = dotted(value)
+            if name:
+                for target in targets:
+                    if isinstance(target, ast.Name):
+                        bound[target.id] = name
+        if bound == before:
+            break
+
+    keyed = set()
     for node in ast.walk(tree):
-        if isinstance(node, ast.Attribute):
+        if isinstance(node, ast.Subscript) and (owner := namespace(node.value)):
+            key = _constant(node.slice)
+            found.append((node.lineno, f"{owner}.{key if key is not None else '?'}"))
+            keyed.add(id(node.value))
+    for node in ast.walk(tree):
+        name = None
+        if (owner := namespace(node)) and id(node) not in keyed:
+            name = f"{owner}.?"
+        elif isinstance(node, ast.Attribute):
             name = dotted(node)
+        elif isinstance(node, ast.Call) and imported(node) == "":
+            name = DYNAMIC_IMPORT
         elif (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
-              and node.func.id == "getattr" and len(node.args) >= 2
-              and isinstance(node.args[1], ast.Constant) and isinstance(node.args[1].value, str)):
+              and node.func.id == "getattr" and len(node.args) >= 2):
             owner = dotted(node.args[0])
-            name = owner and f"{owner}.{node.args[1].value}"
-        else:
-            continue
+            key = _constant(node.args[1])
+            name = owner and f"{owner}.{key if key is not None else '?'}"
         if name:
             found.append((node.lineno, name))
     return found
 
 
 def private_safari_accesses(source, module):
-    """Each place `module` reaches a private name of src.x.safari, as
-    "<line>: <dotted name>"."""
+    """Each place `module` reaches a private name of src.x.safari, or may
+    reach one through a dynamic read or import, as "<line>: <dotted name>"."""
     return sorted({f"{lineno}: {name}" for lineno, name in references(source, module)
-                   if _PRIVATE_SAFARI.search(name)})
+                   if name == DYNAMIC_IMPORT or _PRIVATE_SAFARI.search(name)})
 
 
 def _production_files():
@@ -110,6 +182,8 @@ def test_each_listed_exception_still_needs_its_place():
     "safari._run_js('1')",
     "with safari._safari_lock:\n    pass",
     "getattr(safari, '_run_applescript')('x')",
+    "_alias = safari\n_alias._paste_text('x')",
+    "vars(safari)['_run_js']('1')",
 ])
 def test_a_private_primitive_added_to_a_job_fails_the_guard(line):
     """The guard on a real module: twitter_client plus one private access."""
@@ -134,6 +208,20 @@ def test_a_private_primitive_added_to_a_job_fails_the_guard(line):
     "from . import safari_hygiene\nsafari_hygiene.safari._run_applescript",
     "from . import safari\ngetattr(safari, '_run_js')",
     "def run():\n    from . import safari\n    return safari._safari_lock",
+    "from . import safari\n_alias = safari\n_alias._run_js",
+    "from . import safari\na = safari\nb = a\nb._safari_lock",
+    "from .. import x\nsf = x.safari\nsf._run_js",
+    "from . import safari\nif (sf := safari):\n    sf._run_js",
+    "from . import safari\nvars(safari)['_run_js']",
+    "from . import safari\nsafari.__dict__['_run_js']",
+    "from . import safari\nvars(safari).get(name)",
+    "from . import safari\nsafari.__dict__[name]",
+    "import importlib\nimportlib.import_module('src.x.safari')._run_js",
+    "from importlib import import_module\nsf = import_module('..x.safari', __package__)\nsf._run_js",
+    "import importlib\nimportlib.import_module(name)",
+    "__import__('src.x.safari').x.safari._run_js",
+    "from . import safari\ngetattr(safari, '_run' + '_js')",
+    "from . import safari\ngetattr(safari, name)",
 ])
 def test_the_guard_catches_every_import_form(source):
     assert private_safari_accesses(source, "src.account.example_bot")
@@ -146,6 +234,12 @@ def test_the_guard_catches_every_import_form(source):
     "from . import page_session\npage_session._active",
     "from . import safari_hygiene\nsafari_hygiene._last_run_ts()",
     "_run_js = 1\n_run_js",
+    "from . import safari\nsf = safari\nsf.KEYSTROKE_TIMEOUT_S",
+    "from . import safari\nvars(safari)['KEYSTROKE_TIMEOUT_S']",
+    "from ..core import config\ngetattr(config, name)",
+    "import logging\ngetattr(logging, level.upper(), logging.INFO)",
+    "vars(self)['_x']",
+    "import importlib\nimportlib.import_module('src.x.scraper')._scrape_page",
 ])
 def test_the_guard_lets_public_names_and_other_modules_through(source):
     assert private_safari_accesses(source, "src.x.example") == []

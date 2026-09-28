@@ -19,7 +19,7 @@ from src.x import confirmed_write, page_session, safari, scraper
 from src.x import twitter_client as tc
 from src.x.confirmed_write import WriteOutcome as W
 from src.x.twitter_client import FollowOutcome as F
-from tests.helpers import WritePage
+from tests.helpers import WritePage, stop_requested
 
 POST_URL = "https://x.com/someone/status/2063500000000000500"
 QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Jane"}
@@ -39,16 +39,25 @@ def trace(monkeypatch):
     call order. `fail` names the page steps that fail, `js` and `likes`
     queue the page answers, `raise_at` names the step that raises
     OutsideActiveHours; `refuse` the guards that refuse, the follow policy
-    with `follow_refusal`. `page` is the memory page."""
+    with `follow_refusal`. `page` is the memory page: once a stop was
+    raised, it refuses every later page step, the tab close included, as
+    `require_active()` does in `safari._run_applescript`."""
     events, logs = [], []
     t = SimpleNamespace(events=events, logs=logs, fail=set(), js=[], likes=[], raise_at=None,
-                        refuse=set(), claimed=set(), follow_refusal=fp.Refusal.POLICY)
+                        stopped=False, refuse=set(), claimed=set(),
+                        follow_refusal=fp.Refusal.POLICY)
 
     def step(name, value=None):
         events.append(name)
         if t.raise_at == name:
+            t.stopped = True
             raise OutsideActiveHours("stop")
         return value
+
+    def page_step(kind):
+        step(kind)
+        if t.stopped:
+            raise OutsideActiveHours("stop")
 
     class Lock:
         def __enter__(self):
@@ -60,7 +69,7 @@ def trace(monkeypatch):
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(safari, "_safari_lock", Lock())
-    t.page = WritePage(answers=t.js, fail=t.fail, before=step,
+    t.page = WritePage(answers=t.js, fail=t.fail, before=page_step,
                        script_kind=lambda js: f"js:{_js_kind(js)}")
     monkeypatch.setattr(page_session, "BROWSER", t.page)
     monkeypatch.setattr(tc, "_page_posts",
@@ -194,14 +203,31 @@ def test_reply_failed_submit_keeps_the_claim(trace):
     assert POST_URL in trace.claimed
 
 
-def test_reply_stop_mid_steps_releases_claim_closes_the_tab_and_the_lock(trace):
-    """#256: the write's session closes the tab it opened even when a step
-    raises; before, a stop mid-steps left it open."""
-    trace.raise_at = "reply_key"
+def test_reply_stop_mid_steps_releases_claim_and_lock_and_leaves_the_tab_open(
+        trace, monkeypatch, unwalled):
+    """A stop mid-Reply leaves its tab open: the session's close goes
+    through the real `safari._run_applescript`, whose `require_active()`
+    refuses it. Whether to close it anyway is the Operator's open question
+    of #250."""
+    monkeypatch.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
+
+    def close():
+        trace.events.append("close")
+        safari.close_front_tab()
+        page_session.MemoryBrowser.close(trace.page)
+    monkeypatch.setattr(trace.page, "close", close)
+
+    def stop(kind):
+        trace.events.append(kind)
+        if kind == "reply_key":
+            stop_requested(monkeypatch)
+            raise OutsideActiveHours("stop")
+    trace.page.before = stop
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(POST_URL, REPLY)
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "release", "close",
                             "unlock"]
+    assert trace.page.closed == 0
 
 
 @pytest.mark.parametrize("write", [
@@ -212,8 +238,9 @@ def test_reply_stop_mid_steps_releases_claim_closes_the_tab_and_the_lock(trace):
 ], ids=["post", "reply", "follow", "pin"])
 def test_a_step_that_raises_closes_its_tab_and_records_nothing(trace, monkeypatch, write):
     """#256: `confirmed_write.run` closed the tab only when its steps
-    returned; the page session closes it on every path, and the error
-    reaches the caller."""
+    returned; the page session now closes it when a step raises, and the
+    error reaches the caller. A stop or bedtime still leave it open: see
+    the Reply stop test above."""
     def crash(*a, **k):
         trace.events.append("crash")
         raise RuntimeError("osascript died")
@@ -418,6 +445,17 @@ def test_stop_at_the_final_close_never_hides_a_shipped_write(trace):
     assert POST_URL in trace.claimed
 
 
+def test_stop_in_after_record_still_raises_after_a_shipped_write(trace):
+    """Only a stop at the session's close is swallowed after SHIPPED: one
+    raised by `after_record`, before the write's bookkeeping is done,
+    reaches the caller, as before #256."""
+    trace.raise_at = "history"
+    with pytest.raises(OutsideActiveHours):
+        tc.post_tweet(TEXT)
+    assert trace.events == ["guard:can_post", "lock", "guard:can_post", "open", "submit",
+                            "record:post", "note_posted", "history", "close", "unlock"]
+
+
 def test_stop_at_the_close_after_a_failure_still_raises(trace):
     trace.fail.add("paste")
     trace.raise_at = "close"
@@ -432,12 +470,13 @@ def test_stop_at_the_close_after_a_failure_still_raises(trace):
     lambda: tc.pin_own_tweet(POST_URL),
 ])
 def test_a_stop_during_the_page_steps_records_nothing_and_releases_the_lock(trace, write):
-    """The open that raised may have opened its page: the session closes
-    the front tab once."""
+    """The session tries to close the front tab, which the open that raised
+    may have opened, but the stop refuses that close too."""
     trace.raise_at = "open"
     with pytest.raises(OutsideActiveHours):
         write()
     assert trace.events[-3:] == ["open", "close", "unlock"]
+    assert trace.page.closed == 0
     assert not [e for e in trace.events if e.startswith("record:")]
 
 

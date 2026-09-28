@@ -128,12 +128,14 @@ their order in the file is not strictly chronological.
 > checks under the lock still run before the open, the ledger rows before
 > the close, a page that does not open is still `FAILED`, and a stop at
 > the close still leaves a shipped write `SHIPPED`. Two paths change: a
-> step that raises, a stop mid-Reply among them, now closes the tab it
-> opened, where `run` closed nothing; and a Reply whose first activate
-> fails, before any open, no longer closes the front tab, which was not
-> its own. The quality gate of a follow, the activate before a scrape's
-> second try and the blank-page recovery went through the session too, and
-> the unused `_navigate_to_first_tweet` left `safari.py`.
+> step that raises now closes the tab it opened, where `run` closed
+> nothing, save at bedtime or on a stop, where `require_active()` still
+> refuses the close and the tab stays open (the Operator's open question
+> of #250); and a Reply whose first activate fails, before any open, no
+> longer closes the front tab, which was not its own. The quality gate of
+> a follow, the activate before a scrape's second try and the blank-page
+> recovery went through the session too, and the unused
+> `_navigate_to_first_tweet` left `safari.py`.
 > `tests/test_browser_layer.py` now fails on any `safari._xxx` reached
 > outside `safari.py` and `page_session.py`, save `safari_hygiene.py` and
 > `bin/mass_unfollow.py`, and the write tests run on a memory page.

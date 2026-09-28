@@ -66,9 +66,12 @@ def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
        does not open (`PageNotOpened`) is FAILED.
     5. On a truthy outcome only: `rows()` in the ledger, then `after_record`.
     6. The session closes the tab `steps` opened, on every path, a raising
-       step included, and releases the lock. A stop raised at that close
-       never hides a shipped write. A write nested in another session, a
-       like on a walk's page, opens nothing and closes nothing.
+       step included, and releases the lock. At bedtime or on a stop,
+       `require_active()` refuses that close and the tab stays open. A stop
+       raised at the close, once the whole body ran, never hides a shipped
+       write; one raised by the steps or `after_record` propagates. A
+       write nested in another session, a like on a walk's page, opens
+       nothing and closes nothing.
 
     `DRY_RUN_EXIT` sits exactly once in `before_lock` or `under_lock`. When
     DRY_RUN is on there, the write logs "[TAG][DRY_RUN] would <would()>",

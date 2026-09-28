@@ -406,7 +406,9 @@ reaches a private `safari._xxx` primitive; `safari_hygiene` (the Safari
 quit and relaunch, under the lock but past any page) and
 `bin/mass_unfollow.py` (the front tab driven by hand, bot stopped, without
 the lock) are the two listed exceptions, and `tests/test_browser_layer.py`
-fails on any other, whatever the import form.
+fails on any other: it follows imports of any form, `importlib` included,
+aliases by assignment, `getattr`, `vars()` and `__dict__`, and fails on a
+name read on `safari` or a module imported by a computed name.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 Each scrape opens its page in a session and reads the tweets in a session
@@ -461,11 +463,13 @@ chokepoint without it, or with two, raises before any guard runs.
    `note_posted`, tweet history.
 8. The session closes the tab the steps opened and releases the lock, on
    every path: a step that raises closes it too, before the error reaches
-   the caller. A write that opened nothing closes nothing: `like_tweet`,
-   which acts on the open page and, nested in a walk's or a Reply's
-   session, on their page, and a Reply whose first activate failed. A stop
-   raised by that close is swallowed once the write shipped, so the caller
-   still learns it; after any other outcome it propagates.
+   the caller, save at bedtime or on a stop, where `require_active()`
+   refuses the close and the tab stays open (issue #250). A write that
+   opened nothing closes nothing: `like_tweet`, which acts on the open page
+   and, nested in a walk's or a Reply's session, on their page, and a Reply
+   whose first activate failed. A stop raised by that close is swallowed
+   once the write shipped, so the caller still learns it; after any other
+   outcome it propagates.
 
 The chokepoints return a `WriteOutcome`: `SHIPPED`, `REFUSED` (a guard, or
 the page state, left nothing to write), `FAILED` (a step failed before
@@ -962,7 +966,10 @@ logger writes to a temporary file, and the state store root, the engagement
 log, the replied store and the ledger point to `tmp_path`. A mock placed
 on a caller module misses function-local imports; patch a scrape in
 `scraper`, and a primitive in `safari` only to test `safari.py`, the Safari
-adapter or a listed exception. `tests/test_conftest_walls.py` fails when
+adapter or a listed exception, or to prove that a refusal never opens a
+page (`safari.open_url` in `tests/test_blocked_account.py`); the write
+tests also patch `safari._safari_lock` to trace the lock or make it
+contended. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
 past the wall, or binds `_safari_lock`, `_scroll_page` or `close_front_tab`
 by name, past the patches tests put on `safari`, and when a module other than `safari.py` runs `do JavaScript`
