@@ -56,7 +56,9 @@ run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
 - `safari._run_applescript` and `safari._run_js`, through which every page
-  JavaScript runs. A caller that falls back on an unparsable answer still
+  JavaScript runs; `safari._close_session_tab`, the page session's close of
+  the tab it opened, is the one AppleScript run that skips the check (issue
+  #300): closing a local tab sends nothing to X. A caller that falls back on an unparsable answer still
   lets `OutsideActiveHours` through, and `health.record_failure` does not
   count it toward a Safari restart;
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
@@ -375,7 +377,7 @@ that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 Every page JavaScript in `src/` goes through `_run_js`, with the caller's
 timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
-AppleScript escaping. `open_url`, `close_front_tab` and `_scroll_page`
+AppleScript escaping. `open_url`, `_close_session_tab` and `_scroll_page`
 run under a bound (`OPEN_TIMEOUT_S` 20 s, `CLOSE_TIMEOUT_S` 10 s,
 `SCROLL_TIMEOUT_S` 15 s), and so do the Safari activate
 (`ACTIVATE_TIMEOUT_S` 10 s) and the keystrokes: `_paste_text`, the tab walk
@@ -394,15 +396,18 @@ which acts on no page and may come before the open). A page that does not
 open raises `PageNotOpened` before any read, and its scripts, keys, pastes
 and scrolls raise it too until an open succeeds, so a job that catches it
 reads nothing from the front tab. In a `finally`, the
-session closes the front tab once for each open it tried, a failed one
-included, since a timed-out open may have opened its page anyway. A
+session closes the front tab once for each open that ran, a failed one
+included, since a timed-out open may have opened its page anyway; an open
+refused before its AppleScript ran, at bedtime or on a stop, opened nothing
+and closes nothing. A
 session entered inside another one on the same thread shares its page: it
 opens nothing and closes nothing, and its `open(url)` raises
-`PageNotOpened` unless the outer session has that URL open. At bedtime or
-on a stop the close goes through `_run_applescript`, which refuses it: the
-tab stays open until the next Safari restart, and `OutsideActiveHours`
-reaches the job (the Operator's open question of issue #250); the error the
-job raised before it is logged first. `BROWSER` picks the adapter at the start of
+`PageNotOpened` unless the outer session has that URL open. The close goes
+through `safari._close_session_tab`, which skips `require_active()` (issue
+#300): at bedtime or on a stop the session still closes its tab, then
+`OutsideActiveHours` or the job's own error reaches the job, logged first.
+`tests/test_browser_layer.py` fails when a module other than
+`page_session.py` reaches that close. `BROWSER` picks the adapter at the start of
 each session: `SafariBrowser`, which calls the primitives through the
 `safari` module, or `MemoryBrowser`, which scripts pages by URL for tests,
 each page a list of answers given in turn or a function of the script.
@@ -475,13 +480,14 @@ chokepoint without it, or with two, raises before any guard runs.
    `note_posted`, tweet history.
 8. The session closes the tab the steps opened and releases the lock, on
    every path: a step that raises closes it too, before the error reaches
-   the caller, save at bedtime or on a stop, where `require_active()`
-   refuses the close and the tab stays open (issue #250). A write that
+   the caller, and so do bedtime and a stop, since the close skips
+   `require_active()` (issue #300). A write that
    opened nothing closes nothing: `like_tweet`, which acts on the open page
-   and, nested in a walk's or a Reply's session, on their page, and a Reply
-   whose first activate failed. A stop raised by that close is swallowed
-   once the write shipped, so the caller still learns it; after any other
-   outcome it propagates.
+   and, nested in a walk's or a Reply's session, on their page, a Reply
+   whose first activate failed, and a write whose open was refused by
+   bedtime or a stop. The close raises no stop, so a write that shipped
+   stays `SHIPPED`; a stop raised by the steps or the bookkeeping
+   propagates once the tab is closed.
 
 The chokepoints return a `WriteOutcome`: `SHIPPED`, `REFUSED` (a guard, or
 the page state, left nothing to write), `FAILED` (a step failed before
@@ -976,7 +982,8 @@ above it: nothing outside `src/replies/` and `src/account/` imports them, and
 `src/account/` never imports `src/replies/`.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
-`_run_applescript`, `_run_js`, `_paste_text` and any subprocess that runs
+`_run_applescript`, `_run_js`, `_paste_text`, `open_url`,
+`_close_session_tab` and any subprocess that runs
 `osascript` or aims `open`, `pkill` or `killall` at Safari raise (an import
 error on `src.x.safari` fails every test rather than dropping the wall), the
 logger writes to a temporary file, and the state store root, the engagement
@@ -988,7 +995,7 @@ page (`safari.open_url` in `tests/test_blocked_account.py`); the write
 tests also patch `safari._safari_lock` to trace the lock or make it
 contended. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
-past the wall, or binds `_safari_lock`, `_scroll_page` or `close_front_tab`
+past the wall, or binds `_safari_lock` or `_scroll_page`
 by name, past the patches tests put on `safari`, and when a module other than `safari.py` runs `do JavaScript`
 or spawns `osascript` itself, docstrings aside; the Safari quit in
 `safari_hygiene` is the listed exception.

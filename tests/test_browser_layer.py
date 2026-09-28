@@ -169,6 +169,20 @@ def test_no_private_safari_primitive_leaves_the_browser_layer():
                           "page_session:\n  " + "\n  ".join(problems))
 
 
+def test_only_the_page_session_closes_a_tab_past_the_waking_hours_check():
+    """#300: `_close_session_tab` skips `require_active()`, for the page
+    session closing the tab it opened. No other module reaches it, the
+    listed exceptions included."""
+    reached = set()
+    for path in _production_files():
+        rel = path.relative_to(ROOT).as_posix()
+        if any(name.endswith("safari._close_session_tab") or name == DYNAMIC_IMPORT
+               or name.endswith("safari.?")
+               for _, name in references(path.read_text(), _module(rel))):
+            reached.add(rel)
+    assert reached == {"src/x/page_session.py"}
+
+
 def test_each_listed_exception_still_needs_its_place():
     """An exception that no longer reaches a private primitive leaves the
     list, so the list names only what the layer really lets through."""

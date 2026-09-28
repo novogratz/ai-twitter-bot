@@ -334,10 +334,9 @@ def _live_browser(monkeypatch, failing_step=None):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
 
     def before(kind):
-        if (failing_step, kind) in (("stop_before_submit", "reply_key"),
-                                    ("stop_after_submit", "close")):
+        if (failing_step, kind) == ("stop_before_submit", "reply_key"):
             raise OutsideActiveHours("stop")
-        if (failing_step, kind) == ("stop_at_submit", "paste"):
+        if (failing_step, kind) in (("stop_at_submit", "paste"), ("stop_after_submit", "close")):
             stop_requested(monkeypatch)
 
     monkeypatch.setattr(page_session, "BROWSER", WritePage(fail={failing_step}, before=before))
@@ -575,6 +574,7 @@ def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch
     assert tc.reply_to_tweet(after, REPLY) is W.SHIPPED, "a stop at the final close hides no Reply"
     assert after in load_replied()
     assert len(recorded) == 1
+    assert write_page().closed == 1
 
 
 # --- posts -------------------------------------------------------------------

@@ -8,6 +8,25 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — a page session closes its tab after bedtime or a stop (issue #300):**
+> the tab close of a page session went through `_run_applescript`, whose
+> `require_active()` refused it once bedtime struck or a stop was
+> requested: a read or a write caught mid-page left its tab open all
+> night, and the front tab at wake-up was a stale page until the next
+> Safari restart, up to two hours later. The Operator settled the open
+> question of #250: a session always closes the tab it opened, since
+> closing a local tab is no action on X. The close now goes through
+> `safari._close_session_tab`, the one AppleScript run without the
+> waking-hours check, bounded by `CLOSE_TIMEOUT_S`, under the Safari lock
+> and reached by `page_session` alone. Every write inherits it: a Reply
+> cut by bedtime closes its tab and still ships nothing. The close no
+> longer raises a stop, so `confirmed_write.run` dropped the branch that
+> kept such a stop from hiding a shipped write, and a job's own error is
+> no longer replaced by `OutsideActiveHours`. An open refused by bedtime
+> or a stop, before its AppleScript ran, opened no tab: the session
+> closes nothing then, where it tried to close the front tab before. A
+> timed-out open still closes the front tab, as #251 set.
+
 > **2026-09-28 — every Reply follows REPLY_LLM_PROVIDER (Operator, #248):**
 > `REPLY_LLM_PROVIDER` was born on 2026-06-24 for the firehose and the reply
 > search; debate, replyback and the VIP scan came later without it and ran

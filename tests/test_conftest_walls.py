@@ -58,10 +58,10 @@ def test_tests_cannot_spawn_osascript(monkeypatch):
             subprocess.run(argv, shell=isinstance(argv, str))
 
 
-WALLED = {"_run_applescript", "_run_js", "_paste_text", "open_url"}
+WALLED = {"_run_applescript", "_run_js", "_paste_text", "open_url", "_close_session_tab"}
 # Not walled, but tests patch them on src.x.safari: a module that binds one
 # by name keeps the real object, and its tests had to patch it there too.
-BY_MODULE = {"_safari_lock", "_scroll_page", "close_front_tab"}
+BY_MODULE = {"_safari_lock", "_scroll_page"}
 SAFARI = "src/x/safari.py"
 # The one direct osascript call that stays: safari_hygiene quits Safari
 # itself, because the Safari being quit may be wedged, and
@@ -111,13 +111,13 @@ def browser_path_problems(root, path):
 
 
 def test_every_browser_path_goes_through_the_conftest_walls():
-    """conftest walls `_run_applescript`, `_run_js`, `_paste_text` and
-    `open_url` off in src.x.safari, which defines them, and `webbrowser.open`
-    and `subprocess.Popen` on their modules. A module that binds one by name
+    """conftest walls `_run_applescript`, `_run_js`, `_paste_text`,
+    `open_url` and `_close_session_tab` off in src.x.safari, which defines
+    them, and `webbrowser.open` and `subprocess.Popen` on their modules. A module that binds one by name
     (`from .safari import _run_applescript`, `from subprocess import Popen`)
     keeps the real object past the wall, so twitter_client, scraper and the
-    jobs reach them through their module (#118). They reach `_safari_lock`,
-    `_scroll_page` and `close_front_tab` through it too, so a test patches
+    jobs reach them through their module (#118). They reach `_safari_lock`
+    and `_scroll_page` through it too, so a test patches
     them on src.x.safari alone (#252). Page JavaScript runs only through
     `safari._run_js`, and only safari.py and the files in
     OWN_OSASCRIPT spawn `osascript` (#144). Pages open only through
@@ -185,13 +185,13 @@ def test_webbrowser_is_matched_in_every_import_form(tmp_path):
 
 def test_safari_primitives_are_matched_when_imported_by_name(tmp_path):
     problems = _problems(tmp_path, "src/job.py", (
-        "from ..x.safari import _safari_lock, close_front_tab\n"
+        "from ..x.safari import _safari_lock, _close_session_tab\n"
         "from .safari import _scroll_page\n"
         "from . import safari\n"
         "from .safari import restart_safari\n"
     ))
-    assert sorted(problems) == ["src/job.py:1: imports _safari_lock",
-                                "src/job.py:1: imports close_front_tab",
+    assert sorted(problems) == ["src/job.py:1: imports _close_session_tab",
+                                "src/job.py:1: imports _safari_lock",
                                 "src/job.py:2: imports _scroll_page"]
 
 
