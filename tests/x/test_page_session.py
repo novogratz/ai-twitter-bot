@@ -161,10 +161,19 @@ def test_a_page_caught_not_opening_still_reads_nothing(memory_page):
         with pytest.raises(PageNotOpened):
             page.open(PROFILE)
         for act in (lambda: page.run_js("1"), lambda: page.read_json("1"),
-                    lambda: page.keys("keystroke tab"), page.scroll):
+                    lambda: page.keys("keystroke tab"), lambda: page.paste("text"), page.scroll):
             with pytest.raises(PageNotOpened):
                 act()
-    assert (memory_page.scripts, memory_page.scrolls, memory_page.pressed) == ([], 0, [])
+    assert (memory_page.scripts, memory_page.scrolls, memory_page.pressed, memory_page.pasted) \
+        == ([], 0, [], [])
+
+
+def test_a_page_brings_safari_to_the_front_before_its_open(memory_page):
+    """The Reply activates Safari before opening its post: an activate acts
+    on no page, so a session may run it first, and it opens nothing."""
+    with page_session.session("FRONT") as page:
+        assert page.activate()
+    assert (memory_page.activations, memory_page.opened, memory_page.closed) == (1, [], 0)
 
 
 def test_a_page_reads_again_once_an_open_succeeds(memory_page):
@@ -299,19 +308,27 @@ def primitives(monkeypatch):
     monkeypatch.setattr(safari, "_run_js", run_js)
     monkeypatch.setattr(safari, "_run_applescript",
                         lambda script, **kwargs: calls.append(("keys", kwargs)) or True)
+    monkeypatch.setattr(safari, "_paste_text", lambda text: calls.append(("paste", text)) or True)
     return SimpleNamespace(calls=calls, monkeypatch=monkeypatch)
 
 
 def test_the_safari_adapter_drives_the_safari_primitives(primitives):
+    """Every AppleScript run under the lock is bounded (#251): the keys and
+    the activate here, the open, the close, the scroll and the paste in
+    their primitives (test_safari.py)."""
     with page_session.session("SAFARI") as page:
+        assert page.activate()
         page.open(PROFILE, settle_s=7)
         page.scroll()
         assert page.run_js("1", 20, activate=True) == "42"
         assert page.keys('tell application "System Events" to keystroke tab')
+        assert page.paste("Bonjour à tous")
     assert primitives.calls == [
+        ("keys", {"timeout_s": safari.ACTIVATE_TIMEOUT_S}),
         ("open", PROFILE), ("sleep", 7), ("scroll",),
         ("js", 20, {"log_prefix": "[SAFARI]", "activate": True, "raise_timeout": False}),
         ("keys", {"timeout_s": safari.KEYSTROKE_TIMEOUT_S}),
+        ("paste", "Bonjour à tous"),
         ("close",)]
 
 

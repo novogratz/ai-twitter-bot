@@ -11,25 +11,25 @@ from src.guards import follow_policy
 from src.guards import replied_store as rs
 from src.core import config
 from src.core.state_errors import StateUnreadable
+from src.x import page_session
 from src.x.confirmed_write import WriteOutcome as W
-from tests.helpers import OWN_BEST, TORONTO, pin_rows, stop_requested, numbered_url, clock
+from tests.helpers import (OWN_BEST, TORONTO, WritePage, clock, numbered_url, pin_rows,
+                           stop_requested)
 
 
 # --- one reply per tweet, EVER (double-reply incident, 2026-06-05) -------------
 
 
 def _fake_safari(monkeypatch):
-    """Live (non-dry) reply path with every Safari step succeeding: the
-    Replied store is only claimed when a Reply really ships."""
+    """Live (non-dry) reply path on a memory page where every step
+    succeeds: the Replied store is only claimed when a Reply really
+    ships. Returns the page."""
     import src.x.twitter_client as tc
-    from src.x import safari
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    page = WritePage()
+    monkeypatch.setattr(page_session, "BROWSER", page)
+    return page
 
 
 def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
@@ -179,17 +179,12 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     refused turn leaves the tweet unmarked, and the cap is read at call time."""
     from src.guards import action_guard as ag
     from src.guards import content_guard as cg
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     # The Reply spacing has a floor of 8 s (#201); it is not what this test judges.
     monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
-    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(safari, "open_url", lambda *a: True)
-    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    _fake_safari(monkeypatch)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
 
     text = "Inference cost falls when batching works, so the margin story depends on utilisation."
@@ -216,7 +211,6 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_over
     from src.x import safari, twitter_client as tc
 
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
-    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
 
     @contextlib.contextmanager
@@ -224,7 +218,7 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_over
         ag.record(ag.DEBATE_TURN, target="challenger")  # the other thread won
         yield
     monkeypatch.setattr(safari, "_safari_lock", contended_lock())
-    # _run_applescript stays walled off by conftest: reaching Safari fails.
+    # No memory page: the conftest wall fails the test if Safari is reached.
     url = "https://x.com/challenger/status/7"
     assert not tc.reply_to_tweet(url, "Batching changes the cost curve.", debate_turn=True)
     assert memory_ledger.count(ag.DEBATE_TURN, ag.now_local().date(), "challenger") == 1
@@ -322,14 +316,15 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
 
 
 def _live_browser(monkeypatch, failing_step=None):
-    """Live (non-dry) write path with a scripted AppleScript outcome.
+    """Live (non-dry) write path on a memory page, `write_page()`, with a
+    scripted step outcome. Returns the ledger rows recorded.
 
     failing_step: "reply_key", "paste" or "submit" makes that step fail;
     "stop_before_submit", "stop_at_submit" and "stop_after_submit" request a
     stop at that point.
     """
     from src.guards import action_guard
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
     from src.guards.active_hours import OutsideActiveHours
 
     monkeypatch.setenv("DRY_RUN", "0")
@@ -338,31 +333,21 @@ def _live_browser(monkeypatch, failing_step=None):
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
 
-    def run_applescript(script, *a, **k):
-        if 'keystroke "r"' in script:
-            if failing_step == "stop_before_submit":
-                raise OutsideActiveHours("stop")
-            return failing_step != "reply_key"
-        if "keystroke return using command down" in script:
-            return failing_step != "submit"
-        return True
-
-    monkeypatch.setattr(safari, "_run_applescript", run_applescript)
-    def paste(text):
-        if failing_step == "stop_at_submit":
-            stop_requested(monkeypatch)
-        return failing_step != "paste"
-
-    monkeypatch.setattr(safari, "_paste_text", paste)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
-    def close_front_tab():
-        if failing_step == "stop_after_submit":
+    def before(kind):
+        if (failing_step, kind) in (("stop_before_submit", "reply_key"),
+                                    ("stop_after_submit", "close")):
             raise OutsideActiveHours("stop")
+        if (failing_step, kind) == ("stop_at_submit", "paste"):
+            stop_requested(monkeypatch)
 
-    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(page_session, "BROWSER", WritePage(fail={failing_step}, before=before))
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
     return recorded
+
+
+def write_page():
+    """The memory page the writes run on."""
+    return page_session.BROWSER
 
 
 REPLY = "Batching is where inference margins are won or lost."
@@ -442,11 +427,10 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
     dash cleanup included, never the raw draft."""
     from src.guards import content_guard
     from src.core import humanizer
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     _live_browser(monkeypatch)
-    pasted, validated = [], []
-    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
+    pasted, validated = write_page().pasted, []
     settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     real_validate = content_guard.validate
@@ -468,13 +452,12 @@ def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, r
     from src.core import humanizer
     from src.guards.replied_store import load_replied
     from src.guards.reply_admission import Refusal
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     recorded = _live_browser(monkeypatch)
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    pasted = []
-    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
+    pasted = write_page().pasted
     respected("kindperson", "otherperson")
     url = "https://x.com/kindperson/status/2063500000000000168"
     refusals = []
@@ -655,12 +638,11 @@ def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
     casualizes the wording on the way out."""
     from urllib.parse import parse_qs, urlparse
     from src.guards import content_guard
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
-    opened = []
-    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
+    opened = write_page().opened
     text = ("Inference is getting cheaper faster than training.\n\n"
             "https://huggingface.co/blog/inference-costs")
     assert tc.post_tweet(text) is W.SHIPPED
@@ -674,15 +656,14 @@ def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, re
     ships unchanged."""
     from urllib.parse import parse_qs, urlparse
     from src.guards import content_guard
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
 
     recorded = _live_browser(monkeypatch)
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(content_guard, "validate", lambda text, kind="original": (True, ""))
     monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
-    opened = []
-    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
+    opened = write_page().opened
     respected("kindperson")
 
     for text in ("Inference is getting cheaper faster than training, says @kindperson.",
@@ -702,16 +683,14 @@ def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, re
 def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_override):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
-    from src.x import safari, twitter_client as tc
+    from src.x import twitter_client as tc
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
     settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
-    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "open_url", lambda *a: True)
-    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(page_session, "BROWSER", WritePage())
     barrier = Barrier(2)
     original_validate = editorial.content_guard.validate
     def simultaneous(*a, **k):
@@ -753,12 +732,9 @@ def journal_post(monkeypatch, memory_ledger):
     checks and the real dedup, over an in-memory ledger: returns the ledger
     rows recorded and the pages opened."""
     from types import SimpleNamespace
-    from src.x import safari
     clock(monkeypatch, NOON)
     recorded = _live_browser(monkeypatch)
-    opened = []
-    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
-    return SimpleNamespace(recorded=recorded, opened=opened, ledger=memory_ledger)
+    return SimpleNamespace(recorded=recorded, opened=write_page().opened, ledger=memory_ledger)
 
 
 def test_post_refuses_seven_pending_submissions_and_one_published(journal_post):
@@ -886,16 +862,10 @@ def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, 
 
 
 def _scripted_pin_js(monkeypatch, steps):
-    """Live pin_own_tweet with each osascript call answering the next step."""
-    from src.x import safari, twitter_client as tc
-
-    answers = iter(steps)
-
+    """Live pin_own_tweet on a memory page whose scripts answer `steps` in
+    turn."""
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))
+    monkeypatch.setattr(page_session, "BROWSER", WritePage(answers=list(steps)))
 
 
 @pytest.mark.parametrize("steps, outcome", [

@@ -294,7 +294,8 @@ _Avoid_: knowledge doc, knowledge source, curated documentation
 ### Browser
 
 **Page session**:
-One job's hold on Safari, from the Safari lock taken to the lock released:
+One read's or one write's hold on Safari, from the Safari lock taken to
+the lock released:
 it opens its page when asked, reads nothing when that page does not open,
 and closes each tab it opened on every path. A session inside another one
 shares its page and opens nothing; asked for another page, it reads nothing.

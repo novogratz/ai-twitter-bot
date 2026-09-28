@@ -12,7 +12,7 @@ from src.guards import active_hours as hours
 from src.editorial import editorial_bot as editorial, editorial_schemas as schemas, slot_journal
 from src.editorial.slot_journal import MemoryJournal
 from src.x.confirmed_write import WriteOutcome
-from tests.helpers import TORONTO, USAGE_LIMIT, clock, scheduled_job
+from tests.helpers import TORONTO, USAGE_LIMIT, WritePage, clock, scheduled_job
 
 # The real model calls and dedup, before draft_fixture stubs them.
 REAL_JSON_CALL, REAL_DRAFT_POST = editorial._json_call, editorial.draft_post
@@ -823,14 +823,11 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
 
 @pytest.fixture
 def live_post(monkeypatch, memory_ledger):
-    """The real post_tweet, every Safari step succeeding, over an in-memory
-    ledger."""
-    from src.x import safari, twitter_client as tc
+    """The real post_tweet on a memory page where every step succeeds,
+    over an in-memory ledger."""
+    from src.x import page_session
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
-    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(page_session, "BROWSER", WritePage())
     return memory_ledger
 
 

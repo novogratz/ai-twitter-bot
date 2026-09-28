@@ -116,14 +116,15 @@ def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
     ("close_front_tab", "CLOSE_TIMEOUT_S", (), None),
     ("_scroll_page", "SCROLL_TIMEOUT_S", (), None),
     ("_paste_text", "KEYSTROKE_TIMEOUT_S", ("hello",), False),
-    ("_navigate_to_first_tweet", "KEYSTROKE_TIMEOUT_S", (), None),
 ])
 def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, primitive, bound,
                                                        args, failed):
-    """#251: open_url, the tab close, the scroll, the paste and the tab
-    walk had no timeout, so a wedged osascript held the Safari lock. Past
-    its bound the child is killed, the primitive returns and the lock is
-    free. A `sleep` child stands in for the wedged osascript."""
+    """#251: open_url, the tab close, the scroll and the paste had no
+    timeout, so a wedged osascript held the Safari lock. Past its bound the
+    child is killed, the primitive returns and the lock is free. A `sleep`
+    child stands in for the wedged osascript. The tab walk and the other
+    keys go through `Page.keys`, bounded by KEYSTROKE_TIMEOUT_S
+    (test_page_session.py)."""
     import subprocess
     import threading
     import time

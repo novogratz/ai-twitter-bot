@@ -1,11 +1,13 @@
-"""Page session: the one way a job reads or acts on an X page.
+"""Page session: the one way a job reads or acts on an X page, and the one
+module besides `safari` that calls its private primitives.
 
 `session(tag)` takes the Safari lock for its whole life. `page.open(url)`
 opens the page on demand: a page that does not open raises `PageNotOpened`
 before any read. A job that catches it and goes on still reads nothing:
-until an open succeeds, `run_js`, `read_json`, `keys` and `scroll` raise
-`PageNotOpened` too, since the front tab is another page. On every path out
-of the session, nominal or raising, each tab it opened is closed once.
+until an open succeeds, `run_js`, `read_json`, `keys`, `paste` and `scroll`
+raise `PageNotOpened` too, since the front tab is another page. On every
+path out of the session, nominal or raising, each tab it opened is closed
+once. Every write runs in one, through `confirmed_write.run`.
 
 A session opened inside another one on the same thread is nested: it shares
 the outer session's page, opens nothing and closes nothing. Without an
@@ -28,7 +30,8 @@ before that close is logged first, so the refusal does not hide it.
 
 Two adapters: `SafariBrowser` drives Safari through the `safari` module, so
 the test walls reach it; `MemoryBrowser` scripts pages by URL for tests and
-records opens, waits, scrolls, scripts, keys and closes, without waiting.
+records opens, waits, scrolls, scripts, keys, pastes, activations and
+closes, without waiting.
 `BROWSER`, read when a session starts, picks the adapter.
 """
 import contextlib
@@ -68,6 +71,12 @@ class Browser(Protocol):
     def keys(self, applescript: str, timeout_s: float) -> bool:
         """Run a System Events keyboard script; False when it failed."""
 
+    def paste(self, text: str) -> bool:
+        """Paste `text` through the clipboard; False when it failed."""
+
+    def activate(self) -> bool:
+        """Bring Safari to the front; False when it did not come."""
+
 
 class SafariBrowser:
     def open(self, url: str) -> bool:
@@ -89,6 +98,13 @@ class SafariBrowser:
 
     def keys(self, applescript: str, timeout_s: float) -> bool:
         return safari._run_applescript(applescript, timeout_s=timeout_s)
+
+    def paste(self, text: str) -> bool:
+        return safari._paste_text(text)
+
+    def activate(self) -> bool:
+        return safari._run_applescript('tell application "Safari" to activate',
+                                       timeout_s=safari.ACTIVATE_TIMEOUT_S)
 
 
 @dataclass
@@ -115,6 +131,8 @@ class MemoryBrowser:
     scrolls: int = 0
     scripts: list[Script] = field(default_factory=list)
     pressed: list[str] = field(default_factory=list)
+    pasted: list[str] = field(default_factory=list)
+    activations: int = 0
     front: str = ""
 
     def open(self, url: str) -> bool:
@@ -149,6 +167,14 @@ class MemoryBrowser:
 
     def keys(self, applescript: str, timeout_s: float) -> bool:
         self.pressed.append(applescript)
+        return True
+
+    def paste(self, text: str) -> bool:
+        self.pasted.append(text)
+        return True
+
+    def activate(self) -> bool:
+        self.activations += 1
         return True
 
 
@@ -229,6 +255,17 @@ class Page:
     def keys(self, applescript: str, timeout_s: float = safari.KEYSTROKE_TIMEOUT_S) -> bool:
         self._check_open()
         return self._browser.keys(applescript, timeout_s)
+
+    def paste(self, text: str) -> bool:
+        """Paste `text` where the page has the focus; False when it failed."""
+        self._check_open()
+        return self._browser.paste(text)
+
+    def activate(self) -> bool:
+        """Bring Safari to the front, so keys and scripts reach its front
+        tab and not another app. It acts on no page: a session may call it
+        before its open."""
+        return self._browser.activate()
 
 
 @contextlib.contextmanager

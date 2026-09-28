@@ -370,9 +370,9 @@ timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
 AppleScript escaping. `open_url`, `close_front_tab` and `_scroll_page`
 run under a bound (`OPEN_TIMEOUT_S` 20 s, `CLOSE_TIMEOUT_S` 10 s,
-`SCROLL_TIMEOUT_S` 15 s), and so do the writes' Safari activate
-(`ACTIVATE_TIMEOUT_S` 10 s) and keystrokes: `_paste_text`,
-`_navigate_to_first_tweet`, the Reply's `r` and the submit
+`SCROLL_TIMEOUT_S` 15 s), and so do the Safari activate
+(`ACTIVATE_TIMEOUT_S` 10 s) and the keystrokes: `_paste_text`, the tab walk
+to our latest post, the Reply's `r` and the submit
 (`KEYSTROKE_TIMEOUT_S` 10 s). Past it the `osascript` child is killed and
 the run fails, so a wedged Safari cannot keep the Safari lock. `open_url`
 returns False then, as on any failed run. Only `safari.py` and the Safari
@@ -380,11 +380,13 @@ quit in `safari_hygiene` spawn `osascript` themselves.
 `page_session.py` holds the page session, over those primitives:
 `session(tag)` takes the Safari lock for its whole life and yields a page
 that opens on demand (`page.open(url, settle_s)`), scrolls, runs a script
-(its failure line prefixed `[tag]`), reads a JSON answer and runs keys
-(bounded by `KEYSTROKE_TIMEOUT_S` unless the caller gives its own bound). A
-page that does not open raises `PageNotOpened` before any read, and its
-scripts, keys and scrolls raise it too until an open succeeds, so a job
-that catches it reads nothing from the front tab. In a `finally`, the
+(its failure line prefixed `[tag]`), reads a JSON answer, runs keys
+(bounded by `KEYSTROKE_TIMEOUT_S` unless the caller gives its own bound),
+pastes through the clipboard and brings Safari to the front (`activate`,
+which acts on no page and may come before the open). A page that does not
+open raises `PageNotOpened` before any read, and its scripts, keys, pastes
+and scrolls raise it too until an open succeeds, so a job that catches it
+reads nothing from the front tab. In a `finally`, the
 session closes the front tab once for each open it tried, a failed one
 included, since a timed-out open may have opened its page anyway. A
 session entered inside another one on the same thread shares its page: it
@@ -397,9 +399,14 @@ job raised before it is logged first. `BROWSER` picks the adapter at the start o
 each session: `SafariBrowser`, which calls the primitives through the
 `safari` module, or `MemoryBrowser`, which scripts pages by URL for tests,
 each page a list of answers given in turn or a function of the script.
-The follower count, the scrapes, the three like walks and the
-follow-back's read of the followers page go through a session; the writes
-move to it with issue #256.
+The follower count, the scrapes, the three like walks, the follow-back's
+read of the followers page and, since issue #256, every write go through a
+session. `page_session.py` is the only module besides `safari.py` that
+reaches a private `safari._xxx` primitive; `safari_hygiene` (the Safari
+quit and relaunch, under the lock but past any page) and
+`bin/mass_unfollow.py` (the front tab driven by hand, bot stopped, without
+the lock) are the two listed exceptions, and `tests/test_browser_layer.py`
+fails on any other, whatever the import form.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
 Each scrape opens its page in a session and reads the tweets in a session
@@ -409,13 +416,16 @@ key and gives its answer on any failed read: `[]` for a tweet list, `None`
 for our latest post. A tweet scrape whose page did not open counts it as a
 timed-out read, hence a blank page, once its session has closed its tab and
 released the lock; the feed refresh and our latest post do not. The
-blank-page recovery restarts Safari from inside the session, which holds
-the reentrant Safari lock; the session then closes the front tab of the
-relaunched Safari, its warm-up tab, as before the page session.
-`twitter_client.py` holds the write chokepoints. Writes use
-reading and primitives, reading uses primitives, never the other way. Both
-call a primitive through its module (`safari._run_applescript(...)`), never a
-`from` import, so the test walls reach every path.
+blank-page recovery restarts Safari from inside a session nested in the
+scrape's, which holds the reentrant Safari lock and closes nothing; the
+scrape's session then closes the front tab of the relaunched Safari, its
+warm-up tab, as before the page session. The quality gate of a follow reads
+the open profile the same way, in a session nested in the follow's.
+`twitter_client.py` holds the write chokepoints. Writes use the page
+session and reading, reading uses the page session, never the other way.
+The page session calls a primitive through its module
+(`safari._run_applescript(...)`), never a `from` import, so the test walls
+reach every path.
 
 Every write that should count goes through a function in
 `src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
@@ -434,22 +444,28 @@ chokepoint without it, or with two, raises before any guard runs.
    the dry-run ledger rows; nothing is opened.
 3. A pause or a last check before the lock: the follow jitter,
    `like_tweet`'s status-ID check.
-4. The Safari lock, released on every path. `reply_to_tweet` judges Reply
-   admission under it, and its dry-run exit follows that judgement;
-   `post_tweet` checks `can_post` again under it.
+4. A page session named after the write (`POST`, `REPLY`, `FOLLOW`,
+   `LIKE`, `PIN`), which holds the Safari lock for the rest of the write.
+   `reply_to_tweet` judges Reply admission under it, and its dry-run exit
+   follows that judgement; `post_tweet` checks `can_post` again under it.
+   These checks run before any page opens.
 5. `reply_to_tweet` claims the tweet in the Replied store.
-6. The page steps, opening the page first. A page that does not open
-   (`open_url` returns False) ends the write in `FAILED` before any
-   keystroke, paste, click or page read: the front tab is then not the
-   page the write acts on. A Reply whose Safari activate fails, before or
-   after the open, ends the same way. A Reply releases its claim, so a
-   later cycle may answer the post.
+6. The page steps, which receive the session's page and open it first
+   (`page.open`). A page that does not open raises `PageNotOpened`, which
+   ends the write in `FAILED` before any keystroke, paste, click or page
+   read: the front tab is then not the page the write acts on. A Reply
+   whose Safari activate fails, before or after the open, ends the same
+   way. A Reply releases its claim, so a later cycle may answer the post.
 7. Ledger rows only when the page steps return a shipped outcome, then the
    chokepoint's bookkeeping: `record_followed` and `adjust_following`,
    `note_posted`, tweet history.
-8. One tab close, except for `like_tweet`, which acts on the open page. A
-   stop raised by that close is swallowed once the write shipped, so the
-   caller still learns it; after any other outcome it propagates.
+8. The session closes the tab the steps opened and releases the lock, on
+   every path: a step that raises closes it too, before the error reaches
+   the caller. A write that opened nothing closes nothing: `like_tweet`,
+   which acts on the open page and, nested in a walk's or a Reply's
+   session, on their page, and a Reply whose first activate failed. A stop
+   raised by that close is swallowed once the write shipped, so the caller
+   still learns it; after any other outcome it propagates.
 
 The chokepoints return a `WriteOutcome`: `SHIPPED`, `REFUSED` (a guard, or
 the page state, left nothing to write), `FAILED` (a step failed before
@@ -807,8 +823,9 @@ These are how the code behaves today, not design intent:
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
-  may still open a timed-out page afterwards, and the tab close of a write
-  or a page session then closes another tab and leaves that one open.
+  may still open a timed-out page afterwards, and the tab close of the
+  page session, a write's included, then closes another tab and leaves
+  that one open.
   Safari's AppleScript gives a tab no lasting identifier, so the page
   session closes the front tab, not the tab it opened. Nothing
   is sent into it. The same holds for a keystroke: a System Events wedged
@@ -943,8 +960,9 @@ above it: nothing outside `src/replies/` and `src/account/` imports them, and
 error on `src.x.safari` fails every test rather than dropping the wall), the
 logger writes to a temporary file, and the state store root, the engagement
 log, the replied store and the ledger point to `tmp_path`. A mock placed
-on a caller module misses function-local imports; patch the primitive in
-`safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when
+on a caller module misses function-local imports; patch a scrape in
+`scraper`, and a primitive in `safari` only to test `safari.py`, the Safari
+adapter or a listed exception. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
 past the wall, or binds `_safari_lock`, `_scroll_page` or `close_front_tab`
 by name, past the patches tests put on `safari`, and when a module other than `safari.py` runs `do JavaScript`
@@ -956,7 +974,14 @@ fails on the wall. `tests/x/test_page_session.py` runs a contract over
 `MIGRATED`, every session moved to the page session: one tab close on the
 nominal path and when a read raises, and no read when the page does not
 open, each with the answer or the exception the session's caller gets. The `memory_page` fixture puts a `MemoryBrowser` behind every page
-session, so those tests patch no primitive and no `sleep`. Every test also
+session, so those tests patch no primitive and no `sleep`. The write tests
+(`tests/x/test_write_order.py`, `tests/x/test_write_path.py`) run on
+`tests.helpers.WritePage`, a `MemoryBrowser` that opens every page, fails
+the steps a test names and traces each step in order with the lock, the
+guards and the ledger rows. `tests/test_browser_layer.py` resolves every
+import form and attribute chain of `main.py`, `src/` and `bin/` and fails
+on a private `safari._xxx` reached outside `safari.py`, `page_session.py`
+and the two listed exceptions. Every test also
 starts with fresh process memories: the posts the Reply pipeline set aside,
 the direct reply's query rotation cursor and the content guard's dedup
 memory of this run's posts.

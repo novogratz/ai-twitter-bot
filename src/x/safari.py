@@ -1,10 +1,13 @@
-"""Safari and AppleScript primitives shared by the X reading and write
-modules: the Safari lock, AppleScript runs, page opening, paste, tab and
-keyboard moves.
+"""Safari and AppleScript primitives under the page session: the Safari
+lock, AppleScript runs, page opening, paste, tab and keyboard moves.
 
-Other modules call the walled primitives (`_run_applescript`, `_run_js`,
-`_paste_text`, `open_url`) through the module (`safari.open_url(...)`),
-never through a `from` import, so the test walls patched here reach them."""
+Only `page_session` reaches the private primitives (`_safari_lock`,
+`_run_applescript`, `_run_js`, `_paste_text`, `_scroll_page`); X reads and
+writes go through a page session. Two listed exceptions call them directly:
+`safari_hygiene`, which quits and relaunches Safari, and
+`bin/mass_unfollow.py`, run by hand with the bot stopped. Every caller goes
+through the module (`safari.open_url(...)`), never through a `from` import,
+so the test walls patched here reach them."""
 import os
 import subprocess
 import tempfile
@@ -158,11 +161,6 @@ FIRST_TWEET_KEYS = '''
         keystroke return
     end tell
     '''
-
-
-def _navigate_to_first_tweet():
-    """Use Tab+Enter to navigate to the first tweet on a profile/page."""
-    _run_applescript(FIRST_TWEET_KEYS, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
 def close_front_tab():

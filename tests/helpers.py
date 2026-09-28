@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 from src.core.llm_client import LLMResult
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag, active_hours as hours
-from src.x import x_urls
+from src.x import page_session, x_urls
 
 
 TORONTO = ZoneInfo("America/Toronto")
@@ -125,3 +125,66 @@ def like_searches(browser, page):
 
 def pin_rows(ledger):
     return [r for r in ledger.rows if r["action"] == ag.PIN]
+
+
+def key_kind(applescript):
+    """The write step a keyboard script is: "submit", "reply_key", or
+    "keys" for any other."""
+    from src.x import twitter_client
+    if applescript == twitter_client._SUBMIT_KEYSTROKE:
+        return "submit"
+    if 'keystroke "r"' in applescript:
+        return "reply_key"
+    return "keys"
+
+
+class WritePage(page_session.MemoryBrowser):
+    """A MemoryBrowser for the write path, whose page URLs carry the text:
+    every page opens, its scripts answer `answers` in turn, "" once
+    exhausted, and a step whose kind is in `fail` fails. The kinds are
+    "open", "close", "activate", "paste", those of `key_kind`, and
+    `script_kind(js)` for a script. `before` receives each step's kind
+    before it acts, to trace it or raise a stop. `fail` and `answers` stay
+    the caller's objects, so a test may change them between writes."""
+
+    def __init__(self, answers=None, fail=None, before=lambda kind: None,
+                 script_kind=lambda js: "js"):
+        super().__init__()
+        self.answers = [] if answers is None else answers
+        self.fail = set() if fail is None else fail
+        self.before, self.script_kind = before, script_kind
+        self.key_timeouts = []
+
+    def _ok(self, kind):
+        self.before(kind)
+        return kind not in self.fail
+
+    def open(self, url):
+        self.opened.append(url)
+        if not self._ok("open"):
+            return False
+        self.front = url
+        return True
+
+    def close(self):
+        self.before("close")
+        super().close()
+
+    def activate(self):
+        self.activations += 1
+        return self._ok("activate")
+
+    def paste(self, text):
+        self.pasted.append(text)
+        return self._ok("paste")
+
+    def keys(self, applescript, timeout_s):
+        self.pressed.append(applescript)
+        self.key_timeouts.append(timeout_s)
+        return self._ok(key_kind(applescript))
+
+    def run_js(self, js, timeout_s, log_prefix, activate, raise_timeout):
+        self.scripts.append(page_session.Script(self.front, js, timeout_s, log_prefix, activate,
+                                                raise_timeout))
+        self.before(self.script_kind(js))
+        return self.answers.pop(0) if self.answers else ""
