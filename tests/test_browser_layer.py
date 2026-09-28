@@ -273,3 +273,96 @@ def test_the_guard_catches_every_import_form(source):
 ])
 def test_the_guard_lets_public_names_and_other_modules_through(source):
     assert private_safari_accesses(source, "src.x.example") == []
+
+
+# Exceptions the browser layer defines that say nothing about Safari, with
+# the reason: they never count toward a Safari restart (#298).
+NOT_BROWSER_FAILURES = {
+    # Model output refused before any page opens.
+    "src.x.twitter_client.ToolCallLeakError",
+}
+
+
+def _exceptions_of_the_browser_layer():
+    """Each exception class of a `src/x` module, at module level or nested in
+    a class, by qualified name."""
+    import importlib
+    import pkgutil
+
+    import src.x
+
+    found = {}
+
+    def collect(owner, module, prefix):
+        for name, obj in vars(owner).items():
+            if isinstance(obj, type) and obj.__module__ == module.__name__ \
+                    and obj.__qualname__ == prefix + name:
+                if issubclass(obj, BaseException):
+                    found[f"{module.__name__}.{obj.__qualname__}"] = obj
+                collect(obj, module, f"{obj.__qualname__}.")
+
+    for info in pkgutil.iter_modules(src.x.__path__):
+        module = importlib.import_module(f"src.x.{info.name}")
+        collect(module, module, "")
+    return found
+
+
+def _classes_defined_in_functions():
+    """The classes with a base that a `src/x` function defines: no import
+    reaches them, so the census above cannot tell an exception among them."""
+    hidden = set()
+    for path in (ROOT / "src" / "x").glob("*.py"):
+        for fn in ast.walk(ast.parse(path.read_text())):
+            if isinstance(fn, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                hidden |= {f"{path.relative_to(ROOT).as_posix()}:{node.lineno} {node.name}"
+                           for node in ast.walk(fn)
+                           if isinstance(node, ast.ClassDef) and node.bases}
+    return sorted(hidden)
+
+
+def test_every_exception_of_the_browser_layer_is_a_browser_failure():
+    """#298: `health` counts a `BrowserFailure` only. An exception added to
+    `src/x` inherits it, or is listed above with its reason."""
+    from src.x.page_session import BrowserFailure, PageNotOpened
+
+    defined = _exceptions_of_the_browser_layer()
+    assert NOT_BROWSER_FAILURES <= set(defined), "a listed exception no longer exists"
+    assert issubclass(PageNotOpened, BrowserFailure)
+    strays = sorted(name for name, cls in defined.items()
+                    if name not in NOT_BROWSER_FAILURES and not issubclass(cls, BrowserFailure))
+    assert not strays, f"Exceptions of src/x that are no BrowserFailure: {strays}"
+    hidden = _classes_defined_in_functions()
+    assert not hidden, f"Define these src/x classes outside a function, for this test: {hidden}"
+
+
+def test_a_raw_osascript_timeout_stays_in_the_scraper():
+    """#298: `raise_timeout=True` lets `subprocess.TimeoutExpired`, which is
+    no `BrowserFailure`, reach the caller. Its one caller, the tweet scrape,
+    catches it; a job reaching it would fail without counting. A value the
+    test cannot read is refused, save a function forwarding its own
+    `raise_timeout` parameter."""
+    callers, unread = [], []
+
+    def visit(node, rel, where, params):
+        for child in ast.iter_child_nodes(node):
+            if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                args = child.args
+                visit(child, rel, getattr(child, "name", "<lambda>"),
+                      {a.arg for a in (*args.posonlyargs, *args.args, *args.kwonlyargs)})
+                continue
+            if isinstance(child, ast.Call):
+                for k in child.keywords:
+                    if k.arg != "raise_timeout":
+                        continue
+                    if isinstance(k.value, ast.Constant):
+                        if k.value.value:
+                            callers.append(f"{rel}::{where}")
+                    elif not (isinstance(k.value, ast.Name) and k.value.id == "raise_timeout"
+                              and "raise_timeout" in params):
+                        unread.append(f"{rel}:{child.lineno}")
+            visit(child, rel, where, params)
+
+    for path in _production_files():
+        visit(ast.parse(path.read_text()), path.relative_to(ROOT).as_posix(), "<module>", set())
+    assert not unread, f"raise_timeout= must be a constant: {unread}"
+    assert callers == ["src/x/scraper.py::_try_once"]

@@ -4,16 +4,19 @@ The whole stack runs through Safari + AppleScript. If Safari hangs (memory
 pressure, redirect loop, OS update, captive portal), every cycle silently
 errors and the bot looks alive but accomplishes nothing. This module:
 
-  1. Counts consecutive cycle failures across the whole bot (process-wide,
-     persisted so a restart doesn't lose context).
+  1. Counts consecutive browser failures across the whole bot (process-wide,
+     persisted so a restart doesn't lose context): a cycle counts only when
+     its error is a `BrowserFailure`, raised by the browser layer (`src/x`).
+     A bug or a model timeout is logged, never counted (issue #298).
   2. After RECOVERY_THRESHOLD failures in a row, force-quits Safari and
      reopens a fresh window — usually clears whatever wedged it.
   3. Writes a single-line flag into autonomous_log.md when recovery fires
      so the user sees it on return.
 
-The counter resets on any successful cycle. By design this is per-bot
-(across reply / engage / post / etc.) — three failed cycles in a row from
-ANY mix of bots is the trigger, since they all share Safari.
+The counter resets on any successful cycle; another failure leaves it as it
+was. By design this is per-bot (across reply / engage / post / etc.) —
+three browser failures in a row from ANY mix of bots is the trigger, since
+they all share Safari.
 """
 import os
 import time
@@ -24,6 +27,7 @@ from .logger import log
 from .state_errors import StateUnreadable
 from .state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import OutsideActiveHours
+from ..x.page_session import BrowserFailure
 
 HEALTH = StateFile("safari_health.json",
                    {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0},
@@ -49,8 +53,9 @@ def wrap_job(run, label: str, *, safari_health: bool = True):
 
     An error is logged at ERROR with its traceback in bot.log. A job with
     `safari_health` resets the failure counter on success and hands its
-    error to `record_failure`; without it, the wrapper never touches the
-    health file. StateUnreadable and OutsideActiveHours are never failures.
+    error to `record_failure`, which counts a BrowserFailure only; without
+    it, the wrapper never touches the health file. StateUnreadable and
+    OutsideActiveHours are never failures.
     """
     @wraps(run)
     def job():
@@ -92,10 +97,15 @@ def record_failure(label: str, exc: BaseException) -> bool:
     Recovery = quit + relaunch Safari. Idempotent and rate-limited via
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
 
-    `exc` is the cycle's error, handed by `wrap_job`: a StateUnreadable or an
-    OutsideActiveHours is logged and not counted.
+    `exc` is the cycle's error, handed by `wrap_job`: only a BrowserFailure
+    is counted. A StateUnreadable, an OutsideActiveHours or any other error
+    is logged and not counted, and leaves the counter as it was.
     """
     if _not_a_failure(label or "cycle", exc, safari_health=True):
+        return False
+    if not isinstance(exc, BrowserFailure):
+        log.info(f"[HEALTH] {label or 'cycle'} failed outside the browser "
+                 f"({type(exc).__name__}). Not a Safari failure, no restart.")
         return False
     claimed = []
 

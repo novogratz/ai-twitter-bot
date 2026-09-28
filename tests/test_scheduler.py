@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from src.x.page_session import PageNotOpened
 from tests.helpers import references
 
 
@@ -110,13 +111,13 @@ def test_each_watched_job_counts_toward_safari_health_under_its_label(
     """Issues #237 and #238: the scheduler wraps each Reply and account
     job's `run_*`; its failure is logged at ERROR with the traceback and
     counted under the health label its `safe_run_*` used, `babysitter`
-    included."""
+    included. A browser failure is the one counted (#298)."""
     import importlib
     from src.core import health
     from tests.helpers import scheduled_job
 
     def fails():
-        raise RuntimeError("page never loaded")
+        raise PageNotOpened("https://x.com/home")
     monkeypatch.setattr(importlib.import_module(module), run, fails)
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
     settings_override(ENABLE_REPLY_SEARCH=True)
@@ -127,7 +128,7 @@ def test_each_watched_job_counts_toward_safari_health_under_its_label(
     assert f"[HEALTH] {label} FAILED — consecutive = 1." in caplog.messages
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == f"[{label}] Cycle failed."
-    assert "RuntimeError: page never loaded" in caplog.text
+    assert "PageNotOpened: https://x.com/home" in caplog.text
 
 
 @pytest.mark.parametrize("job_id, module, run, label", ACCOUNT_JOBS, ids=[j[0] for j in ACCOUNT_JOBS])
@@ -164,15 +165,20 @@ def test_the_session_refresh_counts_as_a_success_only_after_a_restart(monkeypatc
     assert health.HEALTH.read()["consecutive_failures"] == failures
 
 
-def test_a_failed_session_refresh_is_logged_and_not_a_safari_failure(monkeypatch, caplog):
+@pytest.mark.parametrize("failure", [
+    OSError("disk full"),
+    PageNotOpened("https://x.com/home"),
+], ids=["disk", "browser_failure"])
+def test_a_failed_session_refresh_is_logged_and_not_a_safari_failure(monkeypatch, caplog, failure):
     """Issue #238: the refresh is the Safari restart itself; its own error
-    is logged with its traceback, outside the failure counter."""
+    is logged with its traceback, outside the failure counter, a browser
+    failure, which a watched job would count (#298), included."""
     from src.core import health
     from src.x import safari_hygiene
     from tests.helpers import scheduled_job
 
     def fails(reason=""):
-        raise OSError("disk full")
+        raise failure
     health.HEALTH.write({"consecutive_failures": 2})
     monkeypatch.setattr(safari_hygiene, "restart_safari", fails)
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
@@ -182,7 +188,8 @@ def test_a_failed_session_refresh_is_logged_and_not_a_safari_failure(monkeypatch
     assert health.HEALTH.read()["consecutive_failures"] == 2
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == "[hygiene] Cycle failed."
-    assert "OSError: disk full" in caplog.text
+    assert f"{type(failure).__name__}: {failure}" in caplog.text
+    assert "[HEALTH]" not in caplog.text
 
 
 def test_a_job_that_reaches_bedtime_is_stopped_by_the_wrapper(monkeypatch, caplog):

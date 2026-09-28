@@ -114,7 +114,10 @@ Each one is a bug that shipped live. The full incident stories are in
   `require_active()`; a write gets its page from `confirmed_write.run`. No module outside `src/x/safari.py` and
   `src/x/page_session.py` reaches a private `safari._xxx` primitive, save
   the Safari restart in `safari_hygiene.py` and `bin/mass_unfollow.py`:
-  `tests/test_browser_layer.py` fails on any other.
+  `tests/test_browser_layer.py` fails on any other. An exception `src/x`
+  defines inherits `page_session.BrowserFailure`, the one kind of error
+  `health` counts toward a Safari restart, or is listed in that test
+  with its reason.
 - **Callers never pre-mark a store the chokepoint checks.** `reply_to_tweet`
   both checks and marks `replied_tweets.json`; a caller-side pre-mark makes
   it refuse its own caller.

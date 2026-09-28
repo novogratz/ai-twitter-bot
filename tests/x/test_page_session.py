@@ -428,6 +428,35 @@ def test_a_wedged_close_at_bedtime_gives_the_safari_lock_back(primitives, unwall
     assert free == [True]
 
 
+@pytest.mark.parametrize("failure", [
+    FileNotFoundError(2, "No such file or directory", "osascript"),
+    BlockingIOError(35, "Resource temporarily unavailable"),
+], ids=["missing", "fork"])
+def test_an_osascript_that_does_not_start_is_a_page_not_opened(osascript, unwalled, failure):
+    """#298 review: `_run_applescript` let an `OSError` from the osascript
+    launch through, which reached the job as no `BrowserFailure` and went
+    uncounted. The open now fails like any osascript failure: the session
+    raises `PageNotOpened`, and `health` counts it."""
+    from src.core import health
+    m = osascript.monkeypatch
+    m.setattr(safari, "open_url", unwalled["open_url"])
+    m.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
+
+    def fail(argv, **k):
+        raise failure
+    m.setattr(safari.subprocess, "run", fail)
+
+    def read():
+        with page_session.session("SAFARI") as page:
+            page.open(PROFILE)
+            pytest.fail("read a page that did not open")
+
+    with pytest.raises(PageNotOpened):
+        read()
+    health.wrap_job(read, "direct_reply")()
+    assert health.HEALTH.read()["consecutive_failures"] == 1
+
+
 def test_without_a_memory_page_a_session_hits_the_wall():
     with (pytest.raises(AssertionError, match="TEST TRIED TO DRIVE SAFARI"),
           page_session.session("WALL") as page):

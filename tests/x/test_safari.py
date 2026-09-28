@@ -97,6 +97,32 @@ def test_run_applescript_counts_a_timeout_as_a_failed_attempt(monkeypatch, unwal
     assert seen == [20]
 
 
+@pytest.mark.parametrize("failure", [
+    FileNotFoundError(2, "No such file or directory", "osascript"),
+    BlockingIOError(35, "Resource temporarily unavailable"),
+], ids=["missing", "fork"])
+def test_an_osascript_that_does_not_start_is_a_failed_run(monkeypatch, unwalled, caplog, failure):
+    """#298 review: an `OSError` at the osascript launch is a failed run,
+    as `_run_js` and the tab close already treated it: keys and the paste
+    return False, logged, and never raise to the write."""
+    from src.x import safari
+    for name in ("_run_applescript", "_paste_text"):
+        monkeypatch.setattr(safari, name, unwalled[name])
+    monkeypatch.setattr(safari, "require_active", lambda: None)
+    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
+    tries = []
+
+    def fail(argv, **kwargs):
+        tries.append(argv)
+        raise failure
+    monkeypatch.setattr(safari.subprocess, "run", fail)
+
+    assert safari._run_applescript(safari.FIRST_TWEET_KEYS, retries=2) is False
+    assert len(tries) == 2
+    assert safari._paste_text("hello") is False
+    assert "AppleScript did not start" in caplog.text
+
+
 def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
     """`webbrowser.open` followed the default browser: with Firefox as the
     default, pages opened in Firefox while `_run_js` read Safari's front tab.

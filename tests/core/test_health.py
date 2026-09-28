@@ -1,4 +1,5 @@
-"""src/core/health: the job wrapper and the failure it is handed (#235)."""
+"""src/core/health: the job wrapper and the failure it is handed (#235);
+only a browser failure counts toward a Safari restart (#298)."""
 import os
 
 import pytest
@@ -6,6 +7,10 @@ import pytest
 from src.core import health, state_store
 from src.core.state_errors import StateUnreadable
 from src.guards.active_hours import OutsideActiveHours
+from src.x.page_session import BrowserFailure, PageNotOpened
+
+BROWSER_FAILURES = [PageNotOpened("https://x.com/home"), BrowserFailure("Safari wedged")]
+NOT_BROWSER_FAILURES = [RuntimeError("bug in the job"), TimeoutError("model timed out")]
 
 
 @pytest.fixture
@@ -34,18 +39,45 @@ def test_a_success_resets_the_failure_counter(restarts):
     assert _failures() == 0
 
 
-def test_a_failure_is_counted(restarts):
-    health.wrap_job(_raises(RuntimeError("page never loaded")), "direct_reply")()
+@pytest.mark.parametrize("error", BROWSER_FAILURES, ids=["page_not_opened", "browser_failure"])
+def test_a_browser_failure_is_counted(restarts, error):
+    health.wrap_job(_raises(error), "direct_reply")()
 
     assert _failures() == 1
 
 
-def test_failures_in_a_row_restart_safari(restarts):
-    job = health.wrap_job(_raises(RuntimeError("page never loaded")), "direct_reply")
+@pytest.mark.parametrize("error", BROWSER_FAILURES, ids=["page_not_opened", "browser_failure"])
+def test_browser_failures_in_a_row_restart_safari(restarts, error):
+    job = health.wrap_job(_raises(error), "direct_reply")
     for _ in range(health.RECOVERY_THRESHOLD):
         job()
 
     assert restarts == [1]
+
+
+@pytest.mark.parametrize("error", NOT_BROWSER_FAILURES, ids=["bug", "model_timeout"])
+def test_an_error_outside_the_browser_never_restarts_safari(restarts, caplog, error):
+    """#298: a bug or a model timeout says nothing about Safari. It is
+    logged at ERROR and leaves the failure counter alone."""
+    job = health.wrap_job(_raises(error), "direct_reply")
+    for _ in range(health.RECOVERY_THRESHOLD + 1):
+        job()
+
+    assert restarts == []
+    assert _failures() == 0
+    errors = [r for r in caplog.records if r.levelname == "ERROR"]
+    assert len(errors) == health.RECOVERY_THRESHOLD + 1
+    assert all(r.getMessage() == "[direct_reply] Cycle failed." and r.exc_info for r in errors)
+
+
+def test_an_error_outside_the_browser_does_not_reset_the_counter_either(restarts):
+    """Only a success resets the counter: a failed cycle is none."""
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 0})
+
+    health.wrap_job(_raises(RuntimeError("bug in the job")), "direct_reply")()
+
+    assert _failures() == 2
+    assert restarts == []
 
 
 @pytest.mark.parametrize("error", [StateUnreadable("replied_tweets.json is unreadable"),
@@ -105,9 +137,11 @@ def test_the_traceback_is_in_the_log(restarts, caplog):
 
 
 @pytest.mark.parametrize("run", [lambda: None, _raises(RuntimeError("model timed out")),
+                                 _raises(PageNotOpened("https://x.com/home")),
                                  _raises(StateUnreadable("slots.json is unreadable")),
                                  _raises(OutsideActiveHours("Bot asleep"))],
-                         ids=["success", "failure", "state_unreadable", "overnight"])
+                         ids=["success", "failure", "browser_failure", "state_unreadable",
+                              "overnight"])
 def test_an_unwatched_job_never_touches_the_health_file(restarts, run):
     job = health.wrap_job(run, "editorial", safari_health=False)
     for _ in range(health.RECOVERY_THRESHOLD + 1):
@@ -143,9 +177,20 @@ def test_record_failure_judges_the_exception_it_is_handed(restarts, error):
 
 
 def test_record_failure_counts_a_handed_exception_outside_an_except(restarts):
-    health.record_failure("direct_reply", RuntimeError("page never loaded"))
+    health.record_failure("direct_reply", PageNotOpened("https://x.com/home"))
 
     assert _failures() == 1
+
+
+@pytest.mark.parametrize("error", NOT_BROWSER_FAILURES, ids=["bug", "model_timeout"])
+def test_record_failure_counts_only_a_browser_failure(restarts, caplog, error):
+    for _ in range(health.RECOVERY_THRESHOLD + 1):
+        assert health.record_failure("direct_reply", error) is False
+
+    assert restarts == []
+    assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"
+    assert caplog.messages[0] == (f"[HEALTH] direct_reply failed outside the browser "
+                                  f"({type(error).__name__}). Not a Safari failure, no restart.")
 
 
 def test_record_failure_requires_the_exception(restarts):
@@ -170,8 +215,9 @@ def _unparsable(monkeypatch):
 
 
 @pytest.mark.parametrize("fault", [_unsaved, _unparsable], ids=["unsaved", "unparsable"])
-@pytest.mark.parametrize("run", [lambda: None, _raises(RuntimeError("page never loaded"))],
-                         ids=["success", "failure"])
+@pytest.mark.parametrize("run", [lambda: None, _raises(PageNotOpened("https://x.com/home")),
+                                 _raises(RuntimeError("bug in the job"))],
+                         ids=["success", "browser_failure", "other_failure"])
 def test_the_wrapper_never_raises_over_the_health_file(restarts, monkeypatch, fault, run):
     """The health file is disposable: an unreadable or unsaved counter is
     logged and never stops the job wrapper."""

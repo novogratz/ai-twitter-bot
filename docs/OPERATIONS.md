@@ -409,11 +409,17 @@ least 2 different pages (2 in a row on the home feed), `scraper`
 restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
 a restart and an empty mentions tab do not count; a tweet scrape whose page
 did not open or whose read timed out counts as empty. `health` also restarts
-Safari after 3 failed cycles in a row, all watched jobs counted together
-(`editorial_job`, `reach_report_job` and `session_refresh_job` stay out),
-and `session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
-after the last restart. Every restart waits for the job holding Safari to
-finish its page. A cycle stopped for bedtime is not a failed cycle,
+Safari after 3 browser failures in a row, all watched jobs counted together
+(`editorial_job`, `reach_report_job` and `session_refresh_job` stay out):
+a cycle counts only when its error comes from the browser layer, such as a
+page that did not open (issue #298). A bug or a model timeout is logged,
+`[HEALTH] <label> failed outside the browser`, and restarts nothing. Few
+jobs let a browser failure through (`followback_job`,
+`follower_tracker_job`), so the blank-page counter above does most of the
+work. `session_refresh_job` restarts Safari preventively every 2 hours;
+`health` and it both wait 30 minutes after the last restart. Every restart
+waits for the job holding Safari to finish its page. A cycle stopped for
+bedtime is not a failed cycle,
 and no restart runs outside waking hours. A page read or write cut by
 bedtime or a stop still closes its tab, the one AppleScript run allowed
 then (issue #300). Each relaunch

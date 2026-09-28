@@ -121,7 +121,7 @@ def test_engage_waits_before_its_like_visit_after_a_profile_opened(monkeypatch, 
 def test_engage_fails_the_cycle_once_its_likes_are_done_when_a_follow_raised(monkeypatch):
     """#262 review: the Follow run logs a pick that raised and goes on; the
     job raises the last error at the end of its cycle, after every like,
-    so that the health watchdog counts the cycle failed, as
+    so that the health watchdog is handed the cycle's error, as
     follow_engagers does (#260)."""
     from src.core import health
     from src.x.twitter_client import FollowOutcome

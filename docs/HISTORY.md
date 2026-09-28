@@ -8,6 +8,30 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — only a browser failure counts toward a Safari restart (issue #298, Operator):**
+> `health.wrap_job` handed every error of a watched job to
+> `record_failure`, so a bug, a model timeout or a network error counted
+> as a Safari failure, and three in a row restarted Safari, cutting the
+> page of every other job for nothing. The Operator settled the open
+> question of #234: `health` counts only a `BrowserFailure`, the new base
+> of the exceptions the browser layer (`src/x`) lets reach a job, which
+> `PageNotOpened` inherits. Any other error is still logged at ERROR with
+> its traceback, then as `[HEALTH] <label> failed outside the browser`,
+> and leaves the counter as it was; a success still resets it.
+> `StateUnreadable` and `OutsideActiveHours` keep their handling. The
+> census of `src/x` found little that reaches a job: `PageNotOpened` from
+> `followback_job` and `follower_tracker_job` only. The scrapes and the
+> writes turn every other page failure into an empty result or a `FAILED`
+> or `UNCONFIRMED` outcome, and the one osascript timeout raised to a
+> caller (`raise_timeout`) is caught by the tweet scrape itself. The
+> review found one more: `_run_applescript` let an `OSError` at the
+> osascript launch through (osascript missing, a fork refused under
+> memory pressure), which would have reached the job uncounted. It is
+> now a failed run, as it already was in `_run_js` and the tab close, so
+> an open that cannot start osascript raises `PageNotOpened`. The
+> blank-page counter remains the Safari guard of the Reply jobs. No cap
+> or pace changed.
+
 > **2026-09-28 — a page session closes its tab after bedtime or a stop (issue #300):**
 > the tab close of a page session went through `_run_applescript`, whose
 > `require_active()` refused it once bedtime struck or a stop was
