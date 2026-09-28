@@ -8,6 +8,19 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — an invalid field of `safari_health.json` no longer stops the job wrapper (issue #303):**
+> the file is disposable, so one that does not parse already read as the
+> default, but valid JSON whose `consecutive_failures`, `last_recovery_ts`
+> or `total_recoveries` was not a number, after a hand edit, raised
+> `TypeError` in `record_success`, `record_failure` or
+> `reset_after_restart`, up to APScheduler, and after a real relaunch
+> would have reported a restart that succeeded as failed. `health` now
+> checks each field before changing the file: a string, `null`, a list, a
+> boolean, a negative or non-finite number, or a fraction for a counter
+> goes back to its default with a `[HEALTH]` warning naming the field; the
+> valid fields are kept, and the next write saves the repaired file. No
+> cap, pace or job cadence changed.
+
 > **2026-09-28 — one delay between Safari restarts, and every restart that succeeded resets the health counter (issue #302, Operator):**
 > two delays contradicted each other: `health.COOLDOWN_SECONDS` (10
 > minutes) and the 30 minutes of `safari_hygiene.restart_safari`. Between
