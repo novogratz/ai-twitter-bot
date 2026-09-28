@@ -18,7 +18,6 @@ Rate-conscious: 10 likes per cycle by default, at most LIKE_BOT_DAILY_CAP
 (500) a day.
 """
 import random
-import traceback
 import urllib.parse
 
 from ..core import account, config, settings
@@ -98,15 +97,3 @@ def run_like_cycle():
         f"[{twitter_client.like_summary(outcomes)}] "
         f"({state['count']}/{daily_cap} today)."
     )
-
-
-def safe_run_like_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
-    from ..core import health
-    try:
-        run_like_cycle()
-        health.record_success("like")
-    except Exception:
-        log.info("[LIKE] Error during like cycle:")
-        traceback.print_exc()
-        health.record_failure("like")

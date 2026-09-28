@@ -262,7 +262,7 @@ real account from a second process. Before any of them:
 
 | Where | What it tells you |
 |---|---|
-| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a reply, editorial or reach-report job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report` |
+| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report`, `engage`, `followback`, `follow_engagers`, `like`, `pin`, `follower_tracker`, `hygiene` |
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
@@ -409,8 +409,9 @@ least 2 different pages (2 in a row on the home feed), `scraper`
 restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
 a restart and an empty mentions tab do not count; a tweet scrape whose page
 did not open or whose read timed out counts as empty. `health` also restarts
-Safari after 3 failed cycles in a row, all jobs counted together, and
-`session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
+Safari after 3 failed cycles in a row, all watched jobs counted together
+(`editorial_job`, `reach_report_job` and `session_refresh_job` stay out),
+and `session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
 after the last restart. Every restart waits for the job holding Safari to
 finish its page. A cycle stopped for bedtime is not a failed cycle,
 and no restart runs outside waking hours. A page read or write cut by

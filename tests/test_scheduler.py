@@ -87,14 +87,26 @@ REPLY_JOBS = [
     ("notify_job", "src.replies.notify_bot", "run_notify_cycle", "notify"),
     ("reply_job", "src.replies.reply_bot", "run_reply_cycle", "reply"),
 ]
+ACCOUNT_JOBS = [
+    ("engage_job", "src.account.engage_bot", "run_engage_cycle", "engage"),
+    ("followback_job", "src.account.followback_bot", "run_followback_cycle", "followback"),
+    ("follow_engagers_job", "src.account.follow_engagers_bot", "run_follow_engagers_cycle",
+     "follow_engagers"),
+    ("like_job", "src.account.like_bot", "run_like_cycle", "like"),
+    ("pin_job", "src.account.pin_bot", "run_pin_cycle", "pin"),
+    ("follower_tracker_job", "src.account.follower_tracker_bot", "run_follower_tracker_cycle",
+     "follower_tracker"),
+]
+WATCHED_JOBS = REPLY_JOBS + ACCOUNT_JOBS
 
 
-@pytest.mark.parametrize("job_id, module, run, label", REPLY_JOBS, ids=[j[0] for j in REPLY_JOBS])
-def test_each_reply_job_counts_toward_safari_health_under_its_label(
+@pytest.mark.parametrize("job_id, module, run, label", WATCHED_JOBS, ids=[j[0] for j in WATCHED_JOBS])
+def test_each_watched_job_counts_toward_safari_health_under_its_label(
         monkeypatch, settings_override, caplog, job_id, module, run, label):
-    """Issue #237: the scheduler wraps each Reply job's `run_*`; its failure
-    is logged at ERROR with the traceback and counted under the health label
-    its `safe_run_*` used, `babysitter` included."""
+    """Issues #237 and #238: the scheduler wraps each Reply and account
+    job's `run_*`; its failure is logged at ERROR with the traceback and
+    counted under the health label its `safe_run_*` used, `babysitter`
+    included."""
     import importlib
     from src.core import health
     from tests.helpers import scheduled_job
@@ -112,3 +124,58 @@ def test_each_reply_job_counts_toward_safari_health_under_its_label(
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == f"[{label}] Cycle failed."
     assert "RuntimeError: page never loaded" in caplog.text
+
+
+@pytest.mark.parametrize("job_id, module, run, label", ACCOUNT_JOBS, ids=[j[0] for j in ACCOUNT_JOBS])
+def test_each_account_job_resets_the_failure_counter_on_success(
+        monkeypatch, caplog, job_id, module, run, label):
+    import importlib
+    from src.core import health
+    from tests.helpers import scheduled_job
+
+    health.HEALTH.write({"consecutive_failures": 2})
+    monkeypatch.setattr(importlib.import_module(module), run, lambda: None)
+
+    scheduled_job(job_id)()
+
+    assert health.HEALTH.read()["consecutive_failures"] == 0
+    assert f"[HEALTH] {label} OK — resetting failure counter (was 2)." in caplog.messages
+
+
+@pytest.mark.parametrize("restarted, failures", [(True, 0), (False, 2)])
+def test_the_session_refresh_counts_as_a_success_only_after_a_restart(monkeypatch, restarted,
+                                                                      failures):
+    """Issue #238: a restart refused on its cooldown, or one that failed,
+    is the preventive tick working as designed, neither a Safari success
+    nor a failure."""
+    from src.core import health
+    from src.x import safari_hygiene
+    from tests.helpers import scheduled_job
+
+    health.HEALTH.write({"consecutive_failures": 2})
+    monkeypatch.setattr(safari_hygiene, "restart_safari", lambda reason="": restarted)
+
+    scheduled_job("session_refresh_job")()
+
+    assert health.HEALTH.read()["consecutive_failures"] == failures
+
+
+def test_a_failed_session_refresh_is_logged_and_not_a_safari_failure(monkeypatch, caplog):
+    """Issue #238: the refresh is the Safari restart itself; its own error
+    is logged with its traceback, outside the failure counter."""
+    from src.core import health
+    from src.x import safari_hygiene
+    from tests.helpers import scheduled_job
+
+    def fails(reason=""):
+        raise OSError("disk full")
+    health.HEALTH.write({"consecutive_failures": 2})
+    monkeypatch.setattr(safari_hygiene, "restart_safari", fails)
+    monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
+
+    scheduled_job("session_refresh_job")()
+
+    assert health.HEALTH.read()["consecutive_failures"] == 2
+    [error] = [r for r in caplog.records if r.levelname == "ERROR"]
+    assert error.getMessage() == "[hygiene] Cycle failed."
+    assert "OSError: disk full" in caplog.text

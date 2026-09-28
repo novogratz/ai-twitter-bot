@@ -14,7 +14,6 @@ opens no profile.
 
 No new Safari scraping: the data source is the action ledger.
 """
-import traceback
 
 from ..guards import active_hours, follow_policy
 from ..core import account, config, settings
@@ -100,14 +99,3 @@ def run_follow_engagers_cycle():
     log.info(f"[FOLLOW-ENGAGERS] Cycle done: {followed} engagers followed "
              f"({st['count_today']}/{per_day} today).")
     run.raise_failure()
-
-
-def safe_run_follow_engagers_cycle():
-    from ..core import health
-    try:
-        run_follow_engagers_cycle()
-        health.record_success("follow_engagers")
-    except Exception:
-        log.info("[FOLLOW-ENGAGERS] Error during cycle:")
-        traceback.print_exc()
-        health.record_failure("follow_engagers")

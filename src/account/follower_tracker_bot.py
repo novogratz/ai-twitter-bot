@@ -8,7 +8,6 @@ header via JS, and appends to follower_history.json.
 No LLM, just one Safari visit + JS extraction.
 """
 import re
-import traceback
 from datetime import datetime
 
 from ..core import config
@@ -91,14 +90,3 @@ def run_follower_tracker_cycle():
         log.info(f"[FOLLOWER] Count: {count} ({delta:+d} since last sample).")
     else:
         log.info(f"[FOLLOWER] First sample logged: {count}.")
-
-
-def safe_run_follower_tracker_cycle():
-    from ..core import health
-    try:
-        run_follower_tracker_cycle()
-        health.record_success("follower_tracker")
-    except Exception:
-        log.info("[FOLLOWER] Error during follower-tracker cycle:")
-        traceback.print_exc()
-        health.record_failure("follower_tracker")

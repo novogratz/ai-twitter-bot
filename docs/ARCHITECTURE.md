@@ -70,21 +70,24 @@ authorize a new action.
 ## Jobs
 
 `build_scheduler()` registers 17 jobs, plus `reply_job` when
-`ENABLE_REPLY_SEARCH=1`. The reply jobs register their `run_*` under
-`health.wrap_job`, which counts them toward Safari health under their label
-(`babysitter` for `babysit_job`, the job name without `_job` for the
-others); `editorial_job` and `reach_report_job` register theirs under
-`health.wrap_job(..., safari_health=False)`. The account jobs and
-`session_refresh_job` still expose a `safe_run_*` that catches its own
-exceptions and reports to `health` (see [Adding a job](#adding-a-job)). The
-editorial stays out of the Safari failure counter because its failures are
-model timeouts, not Safari outages: the scraper already swallows most Safari
+`ENABLE_REPLY_SEARCH=1`. Each job registers its `run_*` under
+`health.wrap_job` (see [Adding a job](#adding-a-job)). The reply and
+account jobs count toward Safari health under their label (`babysitter` for
+`babysit_job`, the job name without `_job` for the others);
+`editorial_job`, `reach_report_job` and `session_refresh_job` register
+theirs under `health.wrap_job(..., safari_health=False)`. The editorial
+stays out of the Safari failure counter because its failures are model
+timeouts, not Safari outages: the scraper already swallows most Safari
 errors, and the blank-page counter is the real Safari guard. Counted there, a
 slow model would restart a healthy Safari. A missed reach measurement says
-nothing about Safari either. The wrapper logs a job's error at ERROR with the
-traceback, as `[<label>] Cycle failed.`; it names a `StateUnreadable` (with
-the repair in [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop
-for the Overnight at INFO.
+nothing about Safari either. The session refresh is the Safari restart
+itself: `run_session_refresh` resets the failure counter, under the label
+`hygiene`, after a restart only; a restart refused on its cooldown or
+outside waking hours, or one that failed, records nothing. The wrapper logs
+a job's error at ERROR with the traceback, as `[<label>] Cycle failed.`; it
+names a `StateUnreadable` (with the repair in
+[OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
+Overnight at INFO.
 
 The reply jobs live in `src/replies/`; `engage_job`,
 `followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and
@@ -108,7 +111,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
-| `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
+| `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session; a restart resets the Safari failure counter, a skipped or failed one leaves it. |
 | `follower_tracker_job` | 30 min | Records the follower count in `follower_history.json`. |
 | `reach_report_job` | 60 min | Writes `editorial_reach.json` and `.md`. See [Reach report](#reach-report). |
 
@@ -867,10 +870,9 @@ some files those bots used to write, as frozen data with no writer left:
    health file. Never call `scheduler.add_job` directly: `add()` supplies the
    waking-hours wrapper.
 
-   In transition (issue #234): the account jobs and `session_refresh_job`
-   still expose a `safe_run_*` that catches its own errors, and their
-   `record_failure` call without an exception reads the one in flight.
-   Issue #238 moves them under `wrap_job`; #239 makes the exception required.
+   In transition (issue #234): `health.record_failure` called without an
+   exception still reads the one in flight; #239 makes the exception
+   required.
 3. Read or act on a page inside `page_session.session(tag)`: it takes the
    Safari lock, opens the page when asked and closes the tab on every
    path. Handle `PageNotOpened` if the job has a fallback that opens
