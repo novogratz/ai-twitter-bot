@@ -185,7 +185,6 @@ def test_a_failed_session_refresh_is_logged_and_not_a_safari_failure(monkeypatch
     assert "OSError: disk full" in caplog.text
 
 
-
 def test_a_job_that_reaches_bedtime_is_stopped_by_the_wrapper(monkeypatch, caplog):
     """Issue #239: the wrapper names the Overnight; the waking-hours gate
     around it only keeps a queued job from starting."""
@@ -203,6 +202,21 @@ def test_a_job_that_reaches_bedtime_is_stopped_by_the_wrapper(monkeypatch, caplo
     assert caplog.messages == ["[HEALTH] like stopped for the Overnight. Not a Safari failure, no restart."]
     assert not any(r.levelname == "ERROR" for r in caplog.records)
     assert not Path(health.HEALTH.path).exists()
+
+
+def test_every_scheduled_job_runs_under_the_wrapper(settings_override):
+    """Issue #239: the waking-hours gate no longer catches a stop, so a job
+    registered without `health.wrap_job` would raise it to APScheduler."""
+    import main
+    from src.core import health
+
+    settings_override(ENABLE_REPLY_SEARCH=True)
+    wrapper = health.wrap_job(lambda: None, "probe").__code__
+    jobs = main.build_scheduler().get_jobs()
+
+    assert "reply_job" in {job.id for job in jobs}
+    assert [job.id for job in jobs if job.func.__wrapped__.__code__ is not wrapper] == []
+
 
 HEALTH_RECORDS = ("src.core.health.record_success", "src.core.health.record_failure")
 # The session refresh is the Safari restart itself: resetting the counter
