@@ -1,13 +1,18 @@
 """src/core/health: the job wrapper and the failure it is handed (#235);
-only a browser failure counts toward a Safari restart (#298)."""
+only a browser failure counts toward a Safari restart (#298), and only a
+restart that was tried counts as a recovery (#302)."""
 import os
+import threading
+import time
 
 import pytest
 
 from src.core import health, state_store
 from src.core.state_errors import StateUnreadable
 from src.guards.active_hours import OutsideActiveHours
+from src.x import safari_hygiene as sh
 from src.x.page_session import BrowserFailure, PageNotOpened
+from src.x.safari_hygiene import RestartOutcome
 
 BROWSER_FAILURES = [PageNotOpened("https://x.com/home"), BrowserFailure("Safari wedged")]
 NOT_BROWSER_FAILURES = [RuntimeError("bug in the job"), TimeoutError("model timed out")]
@@ -16,7 +21,8 @@ NOT_BROWSER_FAILURES = [RuntimeError("bug in the job"), TimeoutError("model time
 @pytest.fixture
 def restarts(monkeypatch):
     calls = []
-    monkeypatch.setattr(health, "_restart_safari", lambda: calls.append(1) or True)
+    monkeypatch.setattr(health, "_restart_safari",
+                        lambda: calls.append(1) or RestartOutcome.RESTARTED)
     monkeypatch.setattr(health, "_append_autonomous_flag", lambda *a: None)
     return calls
 
@@ -224,3 +230,133 @@ def test_the_wrapper_never_raises_over_the_health_file(restarts, monkeypatch, fa
     fault(monkeypatch)
 
     health.wrap_job(run, "direct_reply")()
+
+
+@pytest.fixture
+def safari_restart(monkeypatch, tmp_path):
+    """The real restart_safari with its quit and relaunch recorded, and
+    autonomous_log.md in the test's folder. `launched` sets whether x.com
+    renders after the relaunch."""
+    steps = {"quits": 0, "launched": True}
+
+    def quit_safari():
+        steps["quits"] += 1
+    monkeypatch.setattr(sh, "_quit_safari", quit_safari)
+    monkeypatch.setattr(sh, "_launch_safari", lambda: steps["launched"])
+    monkeypatch.setattr(health, "AUTONOMOUS_LOG_FILE", str(tmp_path / "autonomous_log.md"))
+    return steps
+
+
+def _flags():
+    try:
+        with open(health.AUTONOMOUS_LOG_FILE) as f:
+            return [line for line in f.read().splitlines() if line]
+    except FileNotFoundError:
+        return []
+
+
+def _fail(label="direct_reply"):
+    return health.record_failure(label, PageNotOpened("https://x.com/home"))
+
+
+def test_a_restart_refused_on_its_cooldown_is_counted_nowhere(safari_restart, caplog):
+    """#302: the last restart is 15 min old, inside restart_safari's
+    cooldown. health no longer has one of its own: nothing is counted and
+    autonomous_log.md gets no line."""
+    sh.HYGIENE_STATE.write({"last_run_ts": time.time() - 15 * 60})
+    health.HEALTH.write({"consecutive_failures": 0, "last_recovery_ts": 1000,
+                         "total_recoveries": 4})
+
+    assert [_fail() for _ in range(health.RECOVERY_THRESHOLD)] == [False] * 3
+
+    assert safari_restart["quits"] == 0
+    assert _flags() == []
+    assert health.HEALTH.read() == {"consecutive_failures": 3, "last_recovery_ts": 1000,
+                                    "total_recoveries": 4}
+    assert "[HEALTH] Safari restart refused — no recovery counted." in caplog.messages
+    assert not hasattr(health, "COOLDOWN_SECONDS")
+
+
+def test_a_failed_restart_is_flagged_as_failed_and_keeps_the_counter(safari_restart):
+    safari_restart["launched"] = False
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 4})
+
+    assert _fail() is False
+
+    assert safari_restart["quits"] == 1
+    [flag] = _flags()
+    assert "Safari recovery #5 " in flag and "(trigger=direct_reply, success=False)" in flag
+    data = health.HEALTH.read()
+    assert data["consecutive_failures"] == 3 and data["total_recoveries"] == 5
+    assert data["last_recovery_ts"] > 0
+
+
+@pytest.mark.parametrize("how", ["not_rendered", "raised"])
+def test_a_failed_restart_starts_the_cooldown_for_the_next_failure(monkeypatch, safari_restart,
+                                                                    caplog, how):
+    """#302: a restart tried and failed starts restart_safari's cooldown, so
+    the next failure past the threshold does not bounce Safari again (the
+    2026-07-19 restart storm)."""
+    if how == "not_rendered":
+        safari_restart["launched"] = False
+    else:
+        def quit_raises():
+            safari_restart["quits"] += 1
+            raise OSError("osascript gone")
+        monkeypatch.setattr(sh, "_quit_safari", quit_raises)
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 4})
+
+    assert _fail() is False
+    assert _fail() is False
+
+    assert safari_restart["quits"] == 1
+    [flag] = _flags()
+    assert "success=False" in flag
+    data = health.HEALTH.read()
+    assert data["consecutive_failures"] == 4 and data["total_recoveries"] == 5
+    assert "[HEALTH] Safari restart refused — no recovery counted." in caplog.messages
+
+
+def test_a_restart_that_succeeded_is_flagged_and_resets_the_counter(safari_restart):
+    health.HEALTH.write({"consecutive_failures": 2, "last_recovery_ts": 0, "total_recoveries": 4})
+
+    assert _fail() is True
+
+    assert safari_restart["quits"] == 1
+    [flag] = _flags()
+    assert "Safari recovery #5 " in flag and "(trigger=direct_reply, success=True)" in flag
+    data = health.HEALTH.read()
+    assert data["consecutive_failures"] == 0 and data["total_recoveries"] == 5
+
+
+def test_two_failures_crossing_the_threshold_together_restart_safari_once(monkeypatch,
+                                                                          safari_restart):
+    """#302: health claims nothing before the restart. The second failure
+    waits for the Safari lock the first restart holds, then finds its
+    cooldown: one restart, one recovery counted."""
+    quitting, release = threading.Event(), threading.Event()
+
+    def blocked_quit():
+        safari_restart["quits"] += 1
+        quitting.set()
+        release.wait(5)
+    monkeypatch.setattr(sh, "_quit_safari", blocked_quit)
+    health.HEALTH.write({"consecutive_failures": health.RECOVERY_THRESHOLD - 1,
+                         "last_recovery_ts": 0, "total_recoveries": 0})
+
+    results = []
+    first = threading.Thread(target=lambda: results.append(_fail("first")), daemon=True)
+    first.start()
+    assert quitting.wait(5)
+    second = threading.Thread(target=lambda: results.append(_fail("second")), daemon=True)
+    second.start()
+    second.join(0.3)
+    assert second.is_alive(), "the second restart waits for the first one's Safari lock"
+    release.set()
+    first.join(5)
+    second.join(5)
+
+    assert sorted(results) == [False, True]
+    assert safari_restart["quits"] == 1
+    assert len(_flags()) == 1
+    assert health.HEALTH.read()["total_recoveries"] == 1

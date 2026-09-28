@@ -407,7 +407,7 @@ gitignored, so git holds no copy to restore.
 **x.com renders a blank page.** After 3 consecutive empty scrapes across at
 least 2 different pages (2 in a row on the home feed), `scraper`
 restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
-a restart and an empty mentions tab do not count; a tweet scrape whose page
+a restart tried, failed or not, and an empty mentions tab do not count; a tweet scrape whose page
 did not open or whose read timed out counts as empty. `health` also restarts
 Safari after 3 browser failures in a row, all watched jobs counted together
 (`editorial_job`, `reach_report_job` and `session_refresh_job` stay out):
@@ -416,8 +416,18 @@ page that did not open (issue #298). A bug or a model timeout is logged,
 `[HEALTH] <label> failed outside the browser`, and restarts nothing. Few
 jobs let a browser failure through (`followback_job`,
 `follower_tracker_job`), so the blank-page counter above does most of the
-work. `session_refresh_job` restarts Safari preventively every 2 hours;
-`health` and it both wait 30 minutes after the last restart. Every restart
+work. `session_refresh_job` restarts Safari preventively every 2 hours.
+Every restart goes through `safari_hygiene.restart_safari`, whose cooldown
+is the one delay: 30 minutes after the last restart tried, 5 for the
+blank-page recovery. A failed restart starts it too, so a Safari that
+does not come back is not bounced at every failure; a refused one starts
+none. A restart that
+succeeded resets the health failure counter, whichever of the three asked.
+From 3 failures in a row, `health` asks for a restart at each failure: a
+refused one logs `[HEALTH] Safari restart refused — no recovery counted.`
+and writes nothing; a tried one counts in `safari_health.json` and adds a
+line to `autonomous_log.md`, `success=False` when x.com never rendered
+after the relaunch (issue #302). Every restart
 waits for the job holding Safari to finish its page. A cycle stopped for
 bedtime is not a failed cycle,
 and no restart runs outside waking hours. A page read or write cut by
@@ -557,9 +567,9 @@ root:
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |
-| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart | disposable |
+| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Browser failures in a row (reset by a success or a restart that succeeded), last tried recovery and the count of tried recoveries; last restart tried, failed or not, which starts the cooldown and the blank-page grace | disposable |
 | `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past or unreadable | disposable |
-| `autonomous_log.md` (root) | `health` | One line per Safari recovery | append-only, outside the store |
+| `autonomous_log.md` (root) | `health` | One line per Safari restart `health` tried, with its `success`; a refused restart writes none | append-only, outside the store |
 
 Files active code reads but no active job writes, in `state/<BOT_ACCOUNT>/`
 too:
