@@ -3,7 +3,6 @@ hands the Reply pipeline, with which budget and log tag. The pipeline's own
 rules (admission first, set-aside posts, rate limit, errors that end a
 cycle) are tested once in test_reply_pipeline.py. The model is the fake LLM
 and the chokepoint a stub, both from tests/replies/conftest.py."""
-import ast
 from pathlib import Path
 
 import pytest
@@ -15,7 +14,7 @@ from src.guards.active_hours import OutsideActiveHours
 from src.replies import reply_pipeline
 from src.x import x_urls
 from src.x.confirmed_write import WriteOutcome
-from tests.helpers import fresh
+from tests.helpers import fresh, references
 from tests.replies.fakes import EXHAUSTED, REPLY_TEXT, logged
 
 
@@ -28,46 +27,6 @@ REPLIES = "src.replies"
 
 def _private(name):
     return name.startswith("_") and not (name.startswith("__") and name.endswith("__"))
-
-
-def references(source, module):
-    """(line, dotted name) of what `module`, a module of src/replies, takes
-    from other modules: each module or name it imports (relative at any
-    level, or absolute), and each attribute read on an imported name."""
-    package = module.split(".")[:-1]
-    bound, found = {}, []
-
-    tree = ast.parse(source)
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            for a in node.names:
-                found.append((node.lineno, a.name))
-                if a.asname:
-                    bound[a.asname] = a.name
-                else:
-                    head = a.name.split(".")[0]
-                    bound[head] = head
-        elif isinstance(node, ast.ImportFrom):
-            if node.level:
-                if node.level - 1 > len(package):
-                    continue
-                base = package[:len(package) - (node.level - 1)]
-                target = ".".join(base + (node.module.split(".") if node.module else []))
-            else:
-                target = node.module or ""
-            for a in node.names:
-                dotted = f"{target}.{a.name}"
-                found.append((node.lineno, dotted))
-                bound[a.asname or a.name] = dotted
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Attribute):
-            chain, base = [], node
-            while isinstance(base, ast.Attribute):
-                chain.append(base.attr)
-                base = base.value
-            if isinstance(base, ast.Name) and base.id in bound:
-                found.append((node.lineno, ".".join([bound[base.id], *reversed(chain)])))
-    return found
 
 
 def private_borrows(source, module):

@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from src.core import health
+from src.core import health, state_store
 from src.core.state_errors import StateUnreadable
 from src.guards.active_hours import OutsideActiveHours
 
@@ -146,3 +146,35 @@ def test_record_failure_counts_a_handed_exception_outside_an_except(restarts):
     health.record_failure("direct_reply", RuntimeError("page never loaded"))
 
     assert _failures() == 1
+
+
+def test_record_failure_requires_the_exception(restarts):
+    """Issue #239: no error in flight is read in its place."""
+    try:
+        raise RuntimeError("page never loaded")
+    except RuntimeError:
+        with pytest.raises(TypeError):
+            health.record_failure("direct_reply")
+
+
+def _unsaved(monkeypatch):
+    def disk_full(path, data):
+        raise OSError("disk full")
+    monkeypatch.setattr(state_store, "atomic_write_bytes", disk_full)
+
+
+def _unparsable(monkeypatch):
+    os.makedirs(os.path.dirname(health.HEALTH.path), exist_ok=True)
+    with open(health.HEALTH.path, "w") as f:
+        f.write("{")
+
+
+@pytest.mark.parametrize("fault", [_unsaved, _unparsable], ids=["unsaved", "unparsable"])
+@pytest.mark.parametrize("run", [lambda: None, _raises(RuntimeError("page never loaded"))],
+                         ids=["success", "failure"])
+def test_the_wrapper_never_raises_over_the_health_file(restarts, monkeypatch, fault, run):
+    """The health file is disposable: an unreadable or unsaved counter is
+    logged and never stops the job wrapper."""
+    fault(monkeypatch)
+
+    health.wrap_job(run, "direct_reply")()

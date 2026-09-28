@@ -16,7 +16,6 @@ The counter resets on any successful cycle. By design this is per-bot
 ANY mix of bots is the trigger, since they all share Safari.
 """
 import os
-import sys
 import time
 from datetime import datetime
 from functools import wraps
@@ -69,7 +68,7 @@ def wrap_job(run, label: str, *, safari_health: bool = True):
     return job
 
 
-def _not_a_failure(label: str, exc: BaseException | None, safari_health: bool) -> bool:
+def _not_a_failure(label: str, exc: BaseException, safari_health: bool) -> bool:
     """Log a StateUnreadable or an OutsideActiveHours, never a cycle failure,
     and say whether `exc` was one. Only a job with `safari_health` is told
     that Safari is not restarted."""
@@ -87,18 +86,15 @@ def _not_a_failure(label: str, exc: BaseException | None, safari_health: bool) -
     return True
 
 
-def record_failure(label: str = "", exc: BaseException | None = None) -> bool:
+def record_failure(label: str, exc: BaseException) -> bool:
     """Increment the failure counter. Returns True if recovery was triggered.
 
     Recovery = quit + relaunch Safari. Idempotent and rate-limited via
     COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
 
-    `exc` is the cycle's error: a StateUnreadable or an OutsideActiveHours is
-    logged and not counted. Without it, the error in flight is read, for the
-    `safe_run_*` still calling it from their `except` block (#234).
+    `exc` is the cycle's error, handed by `wrap_job`: a StateUnreadable or an
+    OutsideActiveHours is logged and not counted.
     """
-    if exc is None:
-        exc = sys.exc_info()[1]
     if _not_a_failure(label or "cycle", exc, safari_health=True):
         return False
     claimed = []
