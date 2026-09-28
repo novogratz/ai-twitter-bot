@@ -183,6 +183,22 @@ def test_only_the_page_session_closes_a_tab_past_the_waking_hours_check():
     assert reached == {"src/x/page_session.py"}
 
 
+def test_only_the_safari_browser_close_calls_the_unchecked_close():
+    """#300: inside the page session, the one caller of `_close_session_tab`
+    is `SafariBrowser.close`, which the session runs for the tab it opened."""
+    from src.x import page_session
+
+    tree = ast.parse(Path(page_session.__file__).read_text())
+    callers = set()
+    for cls in [n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)] + [tree]:
+        for fn in [n for n in ast.iter_child_nodes(cls) if isinstance(n, ast.FunctionDef)]:
+            if any(isinstance(n, ast.Attribute) and n.attr == "_close_session_tab"
+                   or isinstance(n, ast.Name) and n.id == "_close_session_tab"
+                   for n in ast.walk(fn)):
+                callers.add(f"{cls.name}.{fn.name}" if cls is not tree else fn.name)
+    assert callers == {"SafariBrowser.close"}
+
+
 def test_each_listed_exception_still_needs_its_place():
     """An exception that no longer reaches a private primitive leaves the
     list, so the list names only what the layer really lets through."""

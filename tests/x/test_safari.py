@@ -1,5 +1,6 @@
 """src/x/safari: bedtime checks at the browser lock and before AppleScript,
 save the page session's tab close, the page JavaScript runner."""
+import subprocess
 from datetime import datetime
 from types import SimpleNamespace
 
@@ -195,6 +196,25 @@ def test_asleep_only_the_session_tab_close_runs(monkeypatch, unwalled, why):
     assert timeout == safari.CLOSE_TIMEOUT_S
 
 
+@pytest.mark.parametrize("failure", [
+    subprocess.CalledProcessError(1, "osascript", stderr="no window"),
+    subprocess.TimeoutExpired("osascript", 5),
+    FileNotFoundError("osascript"),
+    PermissionError("osascript"),
+], ids=["exit_status", "timeout", "missing", "denied"])
+def test_a_failed_session_tab_close_never_raises(monkeypatch, unwalled, failure):
+    """#300: `confirmed_write.run` no longer guards the close, so a write
+    that shipped keeps its outcome only if a failed close never raises."""
+    from src.x import safari
+    monkeypatch.setattr(safari, "_close_session_tab", unwalled["_close_session_tab"])
+
+    def fail(*args, **kwargs):
+        raise failure
+    monkeypatch.setattr(safari.subprocess, "run", fail)
+
+    assert safari._close_session_tab() is None
+
+
 def test_only_the_session_tab_close_skips_the_waking_hours_check():
     """#300: in safari.py, the functions that start osascript themselves are
     `_run_applescript` and `_run_js`, which check waking hours first, and
@@ -218,3 +238,8 @@ def test_only_the_session_tab_close_skips_the_waking_hours_check():
     assert calls(spawning["_run_applescript"], "require_active")
     assert calls(spawning["_run_js"], "require_active")
     assert not calls(spawning["_close_session_tab"], "require_active")
+    spawners = {"Popen", "check_output", "check_call", "call", "system", "spawn", "execv"}
+    assert not [n.func.attr for n in ast.walk(tree) if isinstance(n, ast.Call)
+                and isinstance(n.func, ast.Attribute) and n.func.attr in spawners], (
+        "safari.py starts osascript through subprocess.run only")
+    assert not calls(tree, "_close_session_tab"), "safari.py never calls the unchecked close itself"

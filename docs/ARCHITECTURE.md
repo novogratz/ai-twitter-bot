@@ -56,11 +56,11 @@ run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
 - `safari._run_applescript` and `safari._run_js`, through which every page
-  JavaScript runs; `safari._close_session_tab`, the page session's close of
-  the tab it opened, is the one AppleScript run that skips the check (issue
-  #300): closing a local tab sends nothing to X. A caller that falls back on an unparsable answer still
+  JavaScript runs. A caller that falls back on an unparsable answer still
   lets `OutsideActiveHours` through, and `health.record_failure` does not
-  count it toward a Safari restart;
+  count it toward a Safari restart. `safari._close_session_tab`, the page
+  session's close of the tab it opened, is the one AppleScript run that
+  skips the check (issue #300): closing a local tab sends nothing to X;
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
