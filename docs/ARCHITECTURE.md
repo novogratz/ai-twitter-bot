@@ -281,7 +281,10 @@ and the caller hands them to `run_llm`. No module under `src/replies/` or
 A blank provider setting leaves `AI_CLI`. Every Reply follows
 `REPLY_LLM_PROVIDER`, debate, replyback and the VIP scan included
 (Operator, 2026-09-28, #248); a Relation whose CLI is missing falls back on
-it and logs a warning naming the Relation and the provider it runs on.
+it and, at each Reply it generates, logs a warning naming the Relation and
+the Reply provider the call goes to, before `run_llm`'s ladder (codex
+lockout, fallback); when that provider is the missing CLI, the warning says
+the Reply fails unless a fallback CLI is set.
 `tests/test_call_surfaces.py` pins each job's model setting, provider and
 CLI options.
 
@@ -856,8 +859,9 @@ These are how the code behaves today, not design intent:
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
   `REPLY_LLM_PROVIDER` says, and falls back on `REPLY_LLM_PROVIDER`, with a
-  warning, when it is not (Operator, 2026-09-28): the one cloud call without
-  `LLM_FALLBACK_CLI`, pending the Operator's decision.
+  warning, when it is not (Operator, 2026-09-28). Forcing Claude makes it
+  the one cloud call without `LLM_FALLBACK_CLI` (#189, pending the
+  Operator's decision).
   It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which

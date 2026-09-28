@@ -154,6 +154,22 @@ def test_a_blank_reply_provider_leaves_every_reply_on_ai_cli(providers, job):
     assert (request.output_json, request.allowed_tools, request.timeout) == options
 
 
+@pytest.mark.parametrize("ai_cli, reply_provider", [("codex", "gemini"), ("codex", ""), ("codex", "opencode"),
+                                                    ("opencode", ""), ("ollama", ""), ("codex", " Claude ")])
+def test_a_surface_call_names_the_provider_run_llm_calls_first(providers, ai_cli, reply_provider):
+    """The Relation warning names `SurfaceCall.primary`: it must be the
+    adapter `run_llm` starts, opencode and its reading as Ollama included."""
+    from src.core.llm_client import Surface, resolve, run_llm
+
+    providers.settings(AI_CLI=ai_cli, REPLY_LLM_PROVIDER=reply_provider, LLM_FALLBACK_CLI="")
+    call = resolve(Surface.RELATION_REPLY)
+
+    run_llm("prompt", call.model, label="primary", force_provider=call.provider)
+
+    [(called, _)] = providers.calls
+    assert called == call.primary
+
+
 def test_the_jobs_read_no_model_or_provider_setting():
     """The call surface names them, in llm_client: a Reply job or the
     editorial pipeline names a surface instead."""

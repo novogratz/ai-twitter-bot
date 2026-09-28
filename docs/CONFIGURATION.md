@@ -104,11 +104,11 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
-| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude; runs the Originals or the Replies whose provider setting is blank. |
+| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude; runs the Originals and the Replies when their provider setting is blank. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `PRIORITY_REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
-| `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for profile surfaces; blank means none. |
+| `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for the Originals; blank means AI_CLI. |
 | `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for every Reply, a Relation whose CLI is missing included; blank means AI_CLI. |
 | `DRY_RUN` | 0 or 1 | `0` |  | 1 logs every write instead of doing it; config.dry_run() reads it at call time. |
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |

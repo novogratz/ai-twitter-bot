@@ -256,7 +256,7 @@ class SurfaceCall:
     @property
     def primary(self) -> str:
         """The provider `run_llm` tries first for this call."""
-        return (self.provider or _provider()).strip().lower()
+        return _primary(self.provider)
 
 
 def resolve(surface: Surface) -> SurfaceCall:
@@ -460,6 +460,11 @@ def _provider() -> str:
     from . import config
     requested = config.AI_CLI or "ollama"
     return "ollama" if requested == "opencode" else requested
+
+
+def _primary(force_provider: Optional[str]) -> str:
+    """The provider `run_llm` tries first: the forced one, else AI_CLI's."""
+    return (force_provider or _provider()).strip().lower()
 
 
 def _build_cmd(
@@ -936,7 +941,7 @@ def run_llm(
     Ollama the profile's."""
     from ..guards.active_hours import require_active
     require_active()
-    primary = (force_provider or _provider()).strip().lower()
+    primary = _primary(force_provider)
     chosen = model if isinstance(model, ModelSetting) else _ModelName(model)
     request = _Request(prompt, _model(primary, chosen, profile), label, timeout, profile,
                        output_json, allowed_tools)
