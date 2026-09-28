@@ -329,13 +329,33 @@ def test_notify_likes_replies_but_never_our_own_posts(browser, settings_override
 
 
 def test_notify_clicks_nothing_off_our_own_status_page(browser):
-    from src.x import twitter_client as tc
+    """#301: a walk that stayed on our profile lists nothing there."""
+    from src.x import scraper, twitter_client as tc
 
     page = browser["page"] = FakePage(page="https://x.com/TheAIShrink", posts=[
         {"url": REPOST, "liked": False},
     ])
     assert tc.like_own_tweet_replies() == [tc.LikeOutcome.FAILED]
-    assert page.clicks == []
+    assert page.clicks == [] and browser["recorded"] == []
+    assert [s.js for s in browser["memory"].scripts] == [scraper._LOCATION_JS]
+    assert browser["memory"].closed == 1
+
+
+def test_notify_clicks_nothing_when_the_walk_to_our_latest_post_fails(browser, monkeypatch):
+    from src.x import safari, twitter_client as tc
+
+    memory = browser["memory"]
+    pressed = []
+
+    def keys_fail(applescript, timeout_s):
+        pressed.append(applescript)
+        return False
+    monkeypatch.setattr(memory, "keys", keys_fail)
+    page = browser["page"] = FakePage(page=OWN, posts=[{"url": REPLY, "liked": False}])
+    assert tc.like_own_tweet_replies() == [tc.LikeOutcome.FAILED]
+    assert page.clicks == [] and browser["recorded"] == []
+    assert (pressed, memory.scripts) == ([safari.FIRST_TWEET_KEYS], [])
+    assert memory.closed == 1
 
 
 def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):

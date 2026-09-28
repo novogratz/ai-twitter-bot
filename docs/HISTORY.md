@@ -8,6 +8,19 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-28 — Replyback and notify stop when the walk to our latest post fails (issue #301):**
+> both jobs open our profile, then press Tab Tab Tab Return to open our
+> latest post, and ignored the result of the keys. When the walk failed,
+> Replyback read our profile: our latest post as the post, our other
+> posts as its replies. Reply admission refused them, but the cycle ran
+> on wrong data. Notify went on too, and only the page check of its like
+> walk kept it from clicking. `scraper.open_latest_own_post` now checks
+> the keys, then reads `location.href` and requires one of our status
+> pages, the handle read from the URL. Otherwise it logs the failure,
+> Replyback returns `None` and notify returns `[FAILED]`, with no read
+> and no like. The scroll keys of Replyback after the walk stay
+> unchecked: a failed scroll loads fewer replies on the right page.
+
 > **2026-09-27 — the Replies get short (Operator):** "the Replies are too
 > long". Six prompts each set their own length: 220 characters at most for
 > direct and replyback, 80 to 220 for debate, 80 to 200 for bestie and the

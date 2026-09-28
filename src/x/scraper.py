@@ -16,7 +16,7 @@ from ..core import config, settings
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
 from ..guards.active_hours import OutsideActiveHours
-from . import page_session, safari
+from . import page_session, safari, x_urls
 from .page_session import PageNotOpened
 
 # Reactive black-screen recovery: track consecutive blank pages.
@@ -456,6 +456,26 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
         return []
 
 
+_LOCATION_JS = "location.href"
+
+
+def open_latest_own_post(page, tag: str, settle_s: float) -> bool:
+    """From our profile, open our latest post with the keyboard and wait
+    `settle_s`. False, logged, when the keys failed or the front tab is not
+    one of our status pages: a walk that stayed on our profile shows our
+    other posts where a reader expects the replies."""
+    if not page.keys(safari.FIRST_TWEET_KEYS):
+        log.info(f"[{tag}] Could not open our latest post; nothing read.")
+        return False
+    page.wait(settle_s)
+    reached = page.run_js(_LOCATION_JS)
+    if x_urls.author(reached) != config.BOT_HANDLE.lower():
+        log.info(f"[{tag}] Our latest post did not open, front tab is "
+                 f"{reached[:120] or 'unknown'}; nothing read.")
+        return False
+    return True
+
+
 def scrape_own_tweet_and_replies():
     """Visit own profile, open latest tweet, scrape the tweet text and reply texts.
     Returns {"own_tweet": str, "replies": [{"user": str, "text": str}]} or None."""
@@ -493,8 +513,8 @@ def scrape_own_tweet_and_replies():
             page.open(config.BOT_PROFILE_URL, settle_s=5)
 
             log.info("[REPLYBACK] Opening latest tweet...")
-            page.keys(safari.FIRST_TWEET_KEYS)
-            page.wait(5)
+            if not open_latest_own_post(page, "REPLYBACK", 5):
+                return None
 
             # Scroll down to load replies
             page.keys('''

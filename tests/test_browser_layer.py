@@ -186,8 +186,8 @@ def test_each_listed_exception_still_needs_its_place():
     "vars(safari)['_run_js']('1')",
 ])
 def test_a_private_primitive_added_to_a_job_fails_the_guard(line):
-    """The guard on a real module: twitter_client plus one private access."""
-    rel = "src/x/twitter_client.py"
+    """The guard on a real module: scraper plus one private access."""
+    rel = "src/x/scraper.py"
     source = (ROOT / rel).read_text()
     assert private_safari_accesses(source, _module(rel)) == []
     assert private_safari_accesses(f"{source}\n{line}\n", _module(rel))
