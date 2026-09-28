@@ -105,7 +105,7 @@ def test_the_scraper_applescript_runs_have_a_bound(monkeypatch):
     monkeypatch.setattr(safari, "_run_js",
                         lambda js, *a, **k: OWN_STATUS if js == scraper._LOCATION_JS else "")
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
-    monkeypatch.setattr(safari, "close_front_tab", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_close_session_tab", lambda: None)
     assert scraper.scrape_own_tweet_and_replies() is None
 
     assert runs == [safari.ACTIVATE_TIMEOUT_S, safari.KEYSTROKE_TIMEOUT_S,

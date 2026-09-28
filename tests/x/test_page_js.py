@@ -44,6 +44,7 @@ def browser(monkeypatch):
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_close_session_tab", lambda: None)
 
     def install(*answers):
         fake = FakeJS(*answers)

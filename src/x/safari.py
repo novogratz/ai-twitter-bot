@@ -2,8 +2,10 @@
 lock, AppleScript runs, page opening, paste, tab and keyboard moves.
 
 Only `page_session` reaches the private primitives (`_safari_lock`,
-`_run_applescript`, `_run_js`, `_paste_text`, `_scroll_page`); X reads and
-writes go through a page session. Two listed exceptions call them directly:
+`_run_applescript`, `_run_js`, `_paste_text`, `_scroll_page`,
+`_close_session_tab`); X reads and writes go through a page session.
+Each AppleScript run here checks waking hours first, save
+`_close_session_tab`. Two listed exceptions call them directly:
 `safari_hygiene`, which quits and relaunches Safari, and
 `bin/mass_unfollow.py`, run by hand with the bot stopped. Every caller goes
 through the module (`safari.open_url(...)`), never through a `from` import,
@@ -163,9 +165,7 @@ FIRST_TWEET_KEYS = '''
     '''
 
 
-def close_front_tab():
-    """Close the frontmost Safari tab to save memory."""
-    script = '''
+_CLOSE_FRONT_TAB = '''
     tell application "Safari"
         if (count of windows) > 0 then
             tell front window
@@ -176,8 +176,22 @@ def close_front_tab():
         end if
     end tell
     '''
-    if _run_applescript(script, timeout_s=CLOSE_TIMEOUT_S):
-        log.debug("Tab closed.")
+
+
+def _close_session_tab() -> None:
+    """Close the front tab, for a page session closing the tab it opened,
+    under the Safari lock. The one AppleScript run without
+    `require_active()` (issue #300): closing a local tab is no action on
+    X, and a session caught by bedtime or a stop still closes its tab
+    rather than leave a stale page in front until the next Safari restart.
+    Bounded by CLOSE_TIMEOUT_S; a failed close is logged, never raised."""
+    try:
+        subprocess.run(["osascript", "-e", _CLOSE_FRONT_TAB], check=True,
+                       capture_output=True, text=True, timeout=CLOSE_TIMEOUT_S)
+    except (OSError, subprocess.SubprocessError) as e:
+        log.info(f"Tab close failed: {e!r}")
+        return
+    log.debug("Tab closed.")
 
 
 def _scroll_page():

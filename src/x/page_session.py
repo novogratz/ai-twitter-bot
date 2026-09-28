@@ -6,8 +6,9 @@ opens the page on demand: a page that does not open raises `PageNotOpened`
 before any read. A job that catches it and goes on still reads nothing:
 until an open succeeds, `run_js`, `read_json`, `keys`, `paste` and `scroll`
 raise `PageNotOpened` too, since the front tab is another page. On every
-path out of the session, nominal or raising, each tab it opened is closed
-once. Every write runs in one, through `confirmed_write.run`.
+path out of the session, nominal or raising, bedtime and a stop included,
+each tab it opened is closed once. Every write runs in one, through
+`confirmed_write.run`.
 
 A session opened inside another one on the same thread is nested: it shares
 the outer session's page, opens nothing and closes nothing. Without an
@@ -18,15 +19,15 @@ the outer session opened nothing, when its open failed, or when it opened
 another URL. The nested page then reads nothing either.
 
 A failed open still closes the front tab once, as the writes do: a timed-out
-open may have opened its page all the same. Safari's AppleScript gives a
-tab no lasting identifier, so the close acts on the front tab, not on the
-tab the session opened.
+open may have opened its page all the same. An open that raised, refused
+before any AppleScript ran (bedtime, a stop), opened nothing and closes
+nothing. Safari's AppleScript gives a tab no lasting identifier, so the
+close acts on the front tab, not on the tab the session opened.
 
-At bedtime or on a stop, the close goes through `safari._run_applescript`,
-whose `require_active()` refuses it: the tab stays open until the next Safari
-restart and `OutsideActiveHours` reaches the job. Whether to close it anyway
-is the Operator's open question of issue #250. The error a job raised
-before that close is logged first, so the refusal does not hide it.
+The close goes through `safari._close_session_tab`, the one AppleScript run
+that skips `require_active()` (issue #300): at bedtime or on a stop the
+session still closes its tab, a local act that sends nothing to X, and
+`OutsideActiveHours` reaches the job once the tab is closed.
 
 Two adapters: `SafariBrowser` drives Safari through the `safari` module, so
 the test walls reach it; `MemoryBrowser` scripts pages by URL for tests and
@@ -56,7 +57,8 @@ class Browser(Protocol):
         """Open `url` in a new front tab; False when it did not open."""
 
     def close(self) -> None:
-        """Close the front tab."""
+        """Close the front tab, at bedtime or on a stop too; never raises
+        `OutsideActiveHours`."""
 
     def wait(self, seconds: float) -> None:
         """Let the page load for `seconds`."""
@@ -83,7 +85,7 @@ class SafariBrowser:
         return safari.open_url(url)
 
     def close(self) -> None:
-        safari.close_front_tab()
+        safari._close_session_tab()
 
     def wait(self, seconds: float) -> None:
         time.sleep(seconds)
@@ -207,9 +209,10 @@ class Page:
                 self._refuse(url, "Outer session does not have this page open")
             self._refused = None
             return
-        self._opens += 1
         self._url = None
-        if not self._browser.open(url):
+        opened = self._browser.open(url)
+        self._opens += 1
+        if not opened:
             self._refuse(url, "Page did not open")
         self._url, self._refused = url, None
         if settle_s:

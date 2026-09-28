@@ -1,10 +1,12 @@
 """The page session (issue #253): it holds the Safari lock, closes each tab
-it opened on every path, reads nothing when its page does not open, and a
-nested session opens and closes nothing and reads only the page asked."""
+it opened on every path, bedtime and a stop included (#300), reads nothing
+when its page does not open, and a nested session opens and closes nothing
+and reads only the page asked."""
 import json
 import threading
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import datetime
 from types import SimpleNamespace
 
 import pytest
@@ -13,7 +15,7 @@ from src.guards.active_hours import OutsideActiveHours
 from src.x import page_session, safari
 from src.x.page_session import PageNotOpened
 from src.x.twitter_client import LikeOutcome
-from tests.helpers import stop_requested
+from tests.helpers import TORONTO, clock, stop_requested
 
 PROFILE = "https://x.com/TheAIShrink"
 SEARCH = "https://x.com/search?q=AI"
@@ -299,7 +301,7 @@ def test_a_stop_at_the_lock_opens_nothing(memory_page, monkeypatch):
 def primitives(monkeypatch):
     calls = []
     monkeypatch.setattr(safari, "open_url", lambda url: calls.append(("open", url)) or True)
-    monkeypatch.setattr(safari, "close_front_tab", lambda: calls.append(("close",)))
+    monkeypatch.setattr(safari, "_close_session_tab", lambda: calls.append(("close",)))
     monkeypatch.setattr(safari, "_scroll_page", lambda: calls.append(("scroll",)))
     monkeypatch.setattr(page_session.time, "sleep", lambda s: calls.append(("sleep", s)))
 
@@ -333,30 +335,97 @@ def test_the_safari_adapter_drives_the_safari_primitives(primitives):
         ("close",)]
 
 
-def test_bedtime_at_the_close_leaves_the_tab_open(primitives):
-    """Today's behaviour, kept until the Operator decides (issue #250): the
-    close goes through `_run_applescript`, which refuses after bedtime, so
-    the tab stays open until the next Safari restart."""
-    def asleep():
-        raise OutsideActiveHours("Bot asleep")
-    primitives.monkeypatch.setattr(safari, "close_front_tab", asleep)
+def _asleep(monkeypatch, why):
+    if why == "bedtime":
+        clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
+    else:
+        stop_requested(monkeypatch)
+
+
+@pytest.fixture
+def osascript(primitives, unwalled):
+    """The real page script and tab close over a fake `subprocess.run`:
+    `osascript.scripts` lists each AppleScript that started."""
+    m = primitives.monkeypatch
+    scripts = []
+    m.setattr(safari.subprocess, "run", lambda argv, **k: scripts.append(argv[-1]))
+    m.setattr(safari, "_run_js", unwalled["_run_js"])
+    m.setattr(safari, "_close_session_tab", unwalled["_close_session_tab"])
+    primitives.scripts = scripts
+    return primitives
+
+
+@pytest.mark.parametrize("why", ["bedtime", "stop"])
+def test_bedtime_or_a_stop_mid_read_still_closes_the_tab(osascript, why):
+    """#300: the read is refused before osascript starts, the session closes
+    its tab all the same, then `OutsideActiveHours` reaches the job."""
     with pytest.raises(OutsideActiveHours), page_session.session("SAFARI") as page:
         page.open(PROFILE)
-    assert primitives.calls == [("open", PROFILE)]
+        _asleep(osascript.monkeypatch, why)
+        page.run_js("1")
+    assert osascript.calls == [("open", PROFILE)]
+    [close] = osascript.scripts
+    assert "close current tab" in close
 
 
-def test_a_read_error_is_logged_before_the_close_can_replace_it(primitives):
+@pytest.mark.parametrize("why", ["bedtime", "stop"])
+def test_an_open_refused_asleep_closes_nothing(osascript, unwalled, why):
+    """An open refused before its AppleScript ran opened no tab: the session
+    closes nothing, and the front tab, not its own, stays."""
+    m = osascript.monkeypatch
+    m.setattr(safari, "open_url", unwalled["open_url"])
+    m.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
+    with pytest.raises(OutsideActiveHours), page_session.session("SAFARI") as page:
+        _asleep(m, why)
+        page.open(PROFILE)
+    assert osascript.scripts == []
+
+
+def test_a_read_error_reaches_the_job_once_the_tab_is_closed(osascript):
+    """Before #300 the refused close replaced the job's error with
+    `OutsideActiveHours`; the close now raises nothing, so the error reaches
+    the job, logged first."""
     warnings = []
-    primitives.monkeypatch.setattr(page_session.log, "warning",
-                                   lambda msg, *a, **k: warnings.append(msg))
-
-    def asleep():
-        raise OutsideActiveHours("Bot asleep")
-    primitives.monkeypatch.setattr(safari, "close_front_tab", asleep)
-    with pytest.raises(OutsideActiveHours), page_session.session("SAFARI") as page:
+    osascript.monkeypatch.setattr(page_session.log, "warning",
+                                  lambda msg, *a, **k: warnings.append(msg))
+    with pytest.raises(Boom), page_session.session("SAFARI") as page:
         page.open(PROFILE)
+        _asleep(osascript.monkeypatch, "bedtime")
         raise Boom("page script crashed")
     assert warnings == ["[SAFARI] Session failed, closing its tab: Boom: page script crashed"]
+    [close] = osascript.scripts
+    assert "close current tab" in close
+
+
+def test_a_wedged_close_at_bedtime_gives_the_safari_lock_back(primitives, unwalled):
+    """#300: the close skips the waking-hours check but keeps its bound: an
+    osascript that never returns is killed past CLOSE_TIMEOUT_S, and the
+    session releases the lock. A `sleep` child stands in for it."""
+    import subprocess
+    import time
+
+    m = primitives.monkeypatch
+    real_run = subprocess.run
+    m.setattr(safari, "CLOSE_TIMEOUT_S", 0.3)
+    m.setattr(safari.subprocess, "run", lambda argv, **k: real_run(["sleep", "30"], **k))
+    m.setattr(safari, "_close_session_tab", unwalled["_close_session_tab"])
+    started = time.monotonic()
+    with pytest.raises(OutsideActiveHours), page_session.session("SAFARI") as page:
+        page.open(PROFILE)
+        _asleep(m, "bedtime")
+        raise OutsideActiveHours("Bot asleep")
+    assert time.monotonic() - started < 5
+
+    free = []
+
+    def take_and_give_back():
+        if safari._safari_lock._lock.acquire(timeout=1):
+            free.append(True)
+            safari._safari_lock._lock.release()
+    other = threading.Thread(target=take_and_give_back)
+    other.start()
+    other.join()
+    assert free == [True]
 
 
 def test_without_a_memory_page_a_session_hits_the_wall():

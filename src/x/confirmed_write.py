@@ -13,7 +13,6 @@ from typing import Callable, Sequence, TypeVar
 from ..core import config
 from ..core.logger import log
 from ..guards import action_guard
-from ..guards.active_hours import OutsideActiveHours
 from . import page_session
 
 
@@ -66,10 +65,9 @@ def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
        does not open (`PageNotOpened`) is FAILED.
     5. On a truthy outcome only: `rows()` in the ledger, then `after_record`.
     6. The session closes the tab `steps` opened, on every path, a raising
-       step included, and releases the lock. At bedtime or on a stop,
-       `require_active()` refuses that close and the tab stays open. A stop
-       raised at the close, once the whole body ran, never hides a shipped
-       write; one raised by the steps or `after_record` propagates. A
+       step, bedtime and a stop included, and releases the lock. The close
+       raises no stop, so it never hides a shipped write; a stop raised by
+       the steps or `after_record` propagates once the tab is closed. A
        write nested in another session, a like on a walk's page, opens
        nothing and closes nothing.
 
@@ -82,24 +80,18 @@ def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
     outcome = _admit(tag, outcomes, would, rows, before_lock)
     if outcome is not None:
         return outcome
-    outcome, finished = None, False
-    try:
-        with page_session.session(tag) as page:
-            outcome = _admit(tag, outcomes, would, rows, under_lock)
-            if outcome is not None:
-                return outcome
-            try:
-                outcome = steps(page)
-            except page_session.PageNotOpened:
-                outcome = outcomes["FAILED"]
-            if outcome:
-                _record(rows())
-                if after_record is not None:
-                    after_record()
-            finished = True
-    except OutsideActiveHours:
-        if not (finished and outcome):
-            raise
+    with page_session.session(tag) as page:
+        outcome = _admit(tag, outcomes, would, rows, under_lock)
+        if outcome is not None:
+            return outcome
+        try:
+            outcome = steps(page)
+        except page_session.PageNotOpened:
+            outcome = outcomes["FAILED"]
+        if outcome:
+            _record(rows())
+            if after_record is not None:
+                after_record()
     return outcome if outcome else _stopped(tag, outcome)
 
 

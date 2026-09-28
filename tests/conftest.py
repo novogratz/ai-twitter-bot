@@ -78,7 +78,7 @@ def _no_safari(monkeypatch):
     # The primitives live in src.x.safari; twitter_client and scraper call
     # them through the module, so this patch reaches every src.x path.
     from src.x import safari as _safari
-    for name in ("_run_applescript", "_run_js", "_paste_text", "open_url"):
+    for name in ("_run_applescript", "_run_js", "_paste_text", "open_url", "_close_session_tab"):
         _UNWALLED.setdefault(name, getattr(_safari, name))
         monkeypatch.setattr(_safari, name, _blocked)
 

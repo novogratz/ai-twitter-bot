@@ -144,7 +144,9 @@ marked published after a check.
 
 - Toronto time is explicit and used for budgets and waking hours, including DST.
 - The scheduler pauses overnight. Queued jobs, browser-lock acquisition,
-  AppleScript execution and model calls also check the window. Already-issued
+  AppleScript execution and model calls also check the window. One local
+  act skips it: a page session caught by bedtime or a stop closes the tab
+  it opened, which sends nothing to X (Operator, 2026-09-28). Already-issued
   remote work can finish; it cannot authorize a later out-of-hours submission.
   A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
   write is admitted after it.
