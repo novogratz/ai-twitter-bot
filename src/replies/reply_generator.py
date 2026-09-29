@@ -78,6 +78,10 @@ class ReplyCall:
 # rationale ("SKIP. The tweet is incomplete...") and an exact-match check
 # published the whole refusal as a live reply (2026-06-07).
 _SKIP_PREFIX = re.compile(r"^[\s\"'«]*skip", re.IGNORECASE)
+_BLAND_REPLY = re.compile(
+    r"^\s*(this is|that is|great|interesting|useful|important)\b.*\b(point|take|thought|insight|question)\b",
+    re.IGNORECASE,
+)
 
 # Operator 2026-09-27: "the Replies are too long". The one length every
 # Reply prompt asks for; no template or Relation sets its own. The Reply
@@ -124,6 +128,9 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
     if not reply:
         return Generation(Outcome.FAILED, language=language)
     if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
+        return Generation(Outcome.DECLINED, language=language)
+    if _BLAND_REPLY.match(reply):
+        log.info(f"[{call.label}] Bland reply declined before send.")
         return Generation(Outcome.DECLINED, language=language)
     return Generation(Outcome.WRITTEN, language=language, text=reply,
                       provider=result.provider, model=result.model)

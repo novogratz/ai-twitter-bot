@@ -131,7 +131,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts (their posts under 48 hours old, capped at `REPLY_MAX_AGE_MINUTES`, replies included), then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries (root, on-niche posts under `DIRECT_REPLY_MAX_AGE_MINUTES`, fresh and rising first), and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts (their posts under 48 hours old, capped at `REPLY_MAX_AGE_MINUTES`, replies included), then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries (root, on-niche posts under `DIRECT_REPLY_MAX_AGE_MINUTES`, fresh and conversation-hot first), and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
 | `early_bird_job` | 5 min | Replies to root, on-niche posts under 18 minutes old, capped at `REPLY_MAX_AGE_MINUTES`, from four of the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and three of its first 30 pinned accounts, one Reply per account: seven per cycle at most. |
 | `mega_watch_job` | 2 min | Replies to root, on-niche posts under four minutes old from five of the Account's first 12 pinned accounts, two per cycle at most. |
@@ -726,7 +726,9 @@ text, or of unknown or negative age. Quiet posts are capped at
 `REPLY_MAX_AGE_MINUTES` (15 minutes, 2026-09-29). Search, feed sweep and
 the VIP scan can set `rising_extension`: a post older than that but inside
 `REPLY_RISING_MAX_AGE_MINUTES` survives only when its likes and likes per
-minute clear the operator bounds. The selected candidate carries that
+minute clear the operator bounds. Within the same freshness bucket,
+`FRESH_AND_RISING` orders by conversation heat: likes plus double-weighted
+replies per minute, so active threads beat quiet like piles. The selected candidate carries that
 per-candidate limit, and Reply admission checks it before generation and
 again at the write. A job reads its handle lists from the
 Account itself; `early_bird` and `mega_watch` pick at random among its
@@ -812,7 +814,9 @@ replyback a word test on the Engager's reply; the reply search English.
 `.env` sets it, is read by `reply_language.is_fr_forced`, shared
 with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
 is a decline; the bestie and buddy Reply calls also decline "skip" anywhere in
-the first 20 characters (`skip_window`). The editorial prompt carries the
+the first 20 characters (`skip_window`). A narrow bland-praise check declines
+formulaic outputs such as useful-point or interesting-question praise before
+the write; specific replies stay writable. The editorial prompt carries the
 hard rules too. The write chokepoints apply the respect list to the
 outgoing text, before the dry-run exit: `post_tweet` refuses an Original
 and Reply admission a Reply (`RESPECTED_ACCOUNT`) that names a Respected

@@ -116,6 +116,19 @@ def test_the_order_is_the_scrape_order_or_fresh_and_rising_first():
     assert urls(ranked) == [hot["url"], steady["url"], cold["url"]]
 
 
+def test_fresh_and_rising_prefers_live_conversation_over_quiet_likes():
+    quiet_likes = {"url": fresh("a", minutes=10, n=1), "text": "quiet", "likes": 100, "replies": 0}
+    active_thread = {"url": fresh("b", minutes=10, n=2), "text": "argued", "likes": 40, "replies": 40}
+
+    ranked = reply_source.select(
+        [quiet_likes, active_thread],
+        Declaration(max_age=HOUR, order=Order.FRESH_AND_RISING),
+        "TAG",
+    )
+
+    assert urls(ranked) == [active_thread["url"], quiet_likes["url"]]
+
+
 def test_the_newest_order_ignores_likes():
     """Debate answers its freshest mentions first (#243): a liked mention
     never jumps ahead of a newer one, as it would fresh and rising first."""
@@ -131,8 +144,8 @@ def test_the_newest_order_ignores_likes():
 def test_reply_candidates_sorted_fresh_and_rising_first():
     """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
     must beat a 60-hour-old tweet; unknown-age URLs go last; within the
-    same freshness bucket, higher likes-per-hour wins."""
-    fresh_hot = {"url": fresh("someone", minutes=20, n=1), "likes": 400}
+    same freshness bucket, higher conversation heat wins."""
+    fresh_hot = {"url": fresh("someone", minutes=20, n=1), "likes": 100, "replies": 160}
     fresh_cold = {"url": fresh("someone", minutes=25, n=2), "likes": 2}
     old = {"url": fresh("someone", minutes=60 * 60, n=3), "likes": 90000}
     unknown = {"url": "https://x.com/someone", "likes": 50}

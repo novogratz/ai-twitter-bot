@@ -68,7 +68,9 @@ def freshness_sort_key(tweet):
     to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
 
     Primary: age bucket (<=60 min, <=6h, older, unknown-age last).
-    Secondary within a bucket: likes-per-minute velocity, highest first.
+    Secondary within a bucket: conversation heat, highest first. A reply is
+    more visible under an active argument than under a quiet like pile, so
+    replies count double in the score.
     First-hour replies are where the algo weight and the profile-visit
     conversion live; a 60-hour-old tweet must never consume the slot a
     20-minute riser deserved.
@@ -78,8 +80,17 @@ def freshness_sort_key(tweet):
         return (3, 0.0, float("inf"))
     minutes = age.total_seconds() / 60
     bucket = 0 if minutes <= 60 else 1 if minutes <= 360 else 2
-    velocity = (tweet.get("likes") or 0) / max(minutes, 1.0)
-    return (bucket, -velocity, minutes)
+    return (bucket, -conversation_heat(tweet, age), minutes)
+
+
+def conversation_heat(tweet, age: timedelta) -> float:
+    """Likes plus double-weighted replies per minute.
+
+    Likes show reach; replies show live conversation. Reply jobs should spend
+    their small freshness window where people are still opening the thread.
+    """
+    minutes = max(age.total_seconds() / 60, 1.0)
+    return ((tweet.get("likes") or 0) + 2 * (tweet.get("replies") or 0)) / minutes
 
 
 def rising_max_age() -> timedelta:

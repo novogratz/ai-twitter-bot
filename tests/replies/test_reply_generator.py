@@ -431,6 +431,25 @@ def test_skip_after_a_leaked_preamble_is_a_decline(llm):
     assert generate(strip_preamble=True).outcome is Outcome.DECLINED
 
 
+@pytest.mark.parametrize("stdout", [
+    "This is a useful point.",
+    "Interesting question, and it matters.",
+    "That is an important take.",
+])
+def test_bland_praise_is_a_definitive_decline(llm, stdout):
+    from src.replies.reply_generator import Outcome
+
+    llm.default = stdout
+    assert generate().outcome is Outcome.DECLINED
+
+
+def test_specific_replies_are_not_bland_declines(llm):
+    from src.replies.reply_generator import Outcome
+
+    llm.default = "The missing variable is distribution: a good model with no workflow still loses."
+    assert generate().outcome is Outcome.WRITTEN
+
+
 LEGIT = "You can skip the hype, the moat is data."
 HEDGE = "I'd skip this one honestly."
 SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]

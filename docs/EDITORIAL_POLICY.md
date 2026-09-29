@@ -184,7 +184,9 @@ marked published after a check.
   `REPLY_RISING_MAX_AGE_MINUTES` (45 minutes at most) when the post has at
   least `REPLY_RISING_MIN_LIKES` and at least
   `REPLY_RISING_MIN_LIKES_PER_MINUTE`; the per-candidate limit is checked
-  before generation and again at the write. Early bird, mega watch, debate
+  before generation and again at the write. Within the fresh search and feed
+  pools, active threads outrank quiet like piles: the source sorts by likes
+  plus double-weighted replies per minute. Early bird, mega watch, debate
   mentions and answers under our posts stay on their declared window capped
   by `REPLY_MAX_AGE_MINUTES`.
 - A Reply is short (Operator, 2026-09-27: "the Replies are too long").
@@ -192,7 +194,8 @@ marked published after a check.
   sentences, about 100 characters, never more than 140"; no job template or
   Relation sets another length. The Reply admission trims a longer draft to
   `REPLY_MAX_CHARS` (160) on a sentence end, and refuses one it cannot cut
-  there; the post stays replayable. Every answer to
+  there; the post stays replayable. Generic praise such as "this is a useful
+  point" is declined before the write, as a model SKIP is. Every answer to
   someone who answered the account is a debate turn, whichever job sends it.
   The per-tweet dedup store fails closed: while it is unreadable, no reply
   ships. The gap after each reply is `MIN_SECONDS_BETWEEN_REPLIES` plus a
