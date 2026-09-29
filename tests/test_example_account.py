@@ -66,7 +66,9 @@ PRE_187_BOUNDED = {
 }
 # Bounded settings declared since, with their value when no .env sets them:
 # the Operator shortened the Replies on 2026-09-27 (278 characters before).
-NEW_BOUNDED = {"REPLY_MAX_CHARS": 160, "REPLY_MAX_AGE_MINUTES": 15}
+NEW_BOUNDED = {"REPLY_MAX_CHARS": 160, "REPLY_MAX_AGE_MINUTES": 15,
+               "REPLY_RISING_MAX_AGE_MINUTES": 45, "REPLY_RISING_MIN_LIKES_PER_MINUTE": 1.0,
+               "REPLY_RISING_MIN_LIKES": 30}
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings"}

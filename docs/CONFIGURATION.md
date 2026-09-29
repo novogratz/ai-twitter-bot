@@ -142,6 +142,9 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
 | `REPLY_MAX_CHARS` | int | `160` | floor `80`, ceiling `160` | Longest Reply that ships: the Reply admission trims a longer one on a sentence end, or refuses it. |
 | `REPLY_MAX_AGE_MINUTES` | int | `15` | floor `1`, ceiling `15` | Oldest post any Reply answers, whatever the job: the Reply admission refuses an older post, or one of unknown age, for good. |
+| `REPLY_RISING_MAX_AGE_MINUTES` | int | `45` | floor `15`, ceiling `45` | Oldest rising post the Reply source may hand to Reply admission; quiet posts still use REPLY_MAX_AGE_MINUTES. |
+| `REPLY_RISING_MIN_LIKES_PER_MINUTE` | finite float | `1.0` | floor `1.0` | Minimum likes per minute for a post older than REPLY_MAX_AGE_MINUTES to count as rising. |
+| `REPLY_RISING_MIN_LIKES` | int | `30` | floor `30` | Minimum likes for a post older than REPLY_MAX_AGE_MINUTES to count as rising. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
@@ -173,7 +176,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers; REPLY_MAX_AGE_MINUTES caps it. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
-| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `120` |  | Posts the feed sweep scrapes per feed. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated accounts early_bird (first 30) and mega_watch (first 12) pick from at random, the order deciding which are kept, Blocked accounts left out; the Account's network.pinned_tracked unless set. |

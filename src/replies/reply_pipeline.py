@@ -20,6 +20,7 @@ import time
 import traceback
 from collections import Counter
 from dataclasses import dataclass, field
+from datetime import timedelta
 from typing import Callable
 
 from ..core import engagement_log
@@ -67,6 +68,7 @@ class Candidate:
     pattern: str = ""
     provider: str = ""  # the provider and model that wrote `reply`
     model: str = ""
+    oldest: timedelta | None = None  # per-candidate freshness limit, when wider than the default
 
 
 @dataclass
@@ -156,7 +158,7 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None
-    verdict = judge_parent(url, debate_turn=job.debate_turn)
+    verdict = judge_parent(url, debate_turn=job.debate_turn, oldest=candidate.oldest)
     if not verdict:
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:
@@ -204,7 +206,7 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     refusals = []
     try:
         shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
-                                                on_refused=refusals.append)
+                                                on_refused=refusals.append, oldest=candidate.oldest)
     except (OutsideActiveHours, StateUnreadable):
         raise
     except Exception:

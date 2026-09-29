@@ -46,6 +46,35 @@ def test_reply_max_age_caps_every_declaration(settings_override):
     assert urls(reply_source.select([over, within], week, "TAG")) == []
 
 
+def test_rising_extension_keeps_hot_posts_past_the_default_reply_age():
+    quiet = {"url": fresh("quiet", minutes=30, n=1), "text": "OpenAI launch note", "likes": 12}
+    hot = {"url": fresh("hot", minutes=30, n=2), "text": "OpenAI launch note", "likes": 90}
+    stale_hot = {"url": fresh("stale", minutes=50, n=3), "text": "OpenAI launch note", "likes": 500}
+
+    selected = reply_source.select(
+        [quiet, hot, stale_hot],
+        Declaration(max_age=HOUR, rising_extension=True),
+        "TAG",
+    )
+
+    assert urls(selected) == [hot["url"]]
+    assert selected[0].oldest == reply_source.rising_max_age()
+
+
+def test_rising_extension_uses_the_operator_thresholds(settings_override):
+    settings_override(REPLY_RISING_MIN_LIKES_PER_MINUTE=4.0, REPLY_RISING_MIN_LIKES=100)
+    hot_enough_before = {"url": fresh("almost", minutes=30, n=1), "text": "OpenAI launch note", "likes": 90}
+    hot_enough_after = {"url": fresh("hot", minutes=30, n=2), "text": "OpenAI launch note", "likes": 130}
+
+    selected = reply_source.select(
+        [hot_enough_before, hot_enough_after],
+        Declaration(max_age=HOUR, rising_extension=True),
+        "TAG",
+    )
+
+    assert urls(selected) == [hot_enough_after["url"]]
+
+
 def test_root_only_drops_nested_replies():
     root, nested, mention = fresh("a", n=1), fresh("b", n=2), fresh("c", n=3)
     tweets = [{"url": root, "text": "a root post"}, {"url": nested, "text": "a reply", "is_reply": True},

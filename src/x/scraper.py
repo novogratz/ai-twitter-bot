@@ -389,9 +389,9 @@ def scrape_home_feed(max_tweets: int = 15):
             log.info("[SCRAPE] Opening home feed...")
             page.open("https://x.com/home", settle_s=8)
 
-            # Scroll deep — reply to everything means we need to surface many tweets.
-            # Each scroll reveals ~8-12 posts; cap at 15 scrolls to stay bounded.
-            page.scroll(max(4, min(15, max_tweets // 7)))
+            # Scroll deep: the top of For You is often stale or already seen.
+            # Each scroll reveals ~8-12 posts; cap at 24 scrolls to stay bounded.
+            page.scroll(max(6, min(24, max_tweets // 6)))
 
             return _scrape_tweets_from_page("home feed", max_tweets)
     except PageNotOpened:
@@ -427,8 +427,9 @@ def scrape_following_feed(max_tweets: int = 15):
             page.run_js(click_js, 8)
 
             page.wait(4)
-            # Scroll proportionally to the requested depth (same as home feed).
-            page.scroll(max(2, min(8, max_tweets // 12)))
+            # Following is chronological, so go lower than the first viewport
+            # before the 15-minute filter starves the sweep.
+            page.scroll(max(6, min(18, max_tweets // 7)))
 
             return _scrape_tweets_from_page("following feed", max_tweets)
     except PageNotOpened:

@@ -40,6 +40,7 @@ class Declaration:
     author: str = ""
     niche: bool = False
     order: Order = Order.SCRAPED
+    rising_extension: bool = False
 
 
 def pinned_accounts(limit: int) -> list:
@@ -81,6 +82,24 @@ def freshness_sort_key(tweet):
     return (bucket, -velocity, minutes)
 
 
+def rising_max_age() -> timedelta:
+    return timedelta(minutes=settings.get("REPLY_RISING_MAX_AGE_MINUTES"))
+
+
+def _is_rising(tweet, age: timedelta) -> bool:
+    minutes = max(age.total_seconds() / 60, 1.0)
+    likes = tweet.get("likes") or 0
+    return (likes >= settings.get("REPLY_RISING_MIN_LIKES")
+            and likes / minutes >= settings.get("REPLY_RISING_MIN_LIKES_PER_MINUTE"))
+
+
+def _oldest_for(tweet, declaration: Declaration, age: timedelta) -> timedelta:
+    standard = min(declaration.max_age, max_age())
+    if not declaration.rising_extension or age <= standard or not _is_rising(tweet, age):
+        return standard
+    return min(declaration.max_age, rising_max_age())
+
+
 def _newest_first(tweet):
     age = x_urls.age(tweet.get("url") or "")
     return timedelta.max if age is None else age
@@ -94,7 +113,6 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
     elif declaration.order is Order.NEWEST:
         tweets = sorted(tweets, key=_newest_first)
     author = declaration.author.lower().lstrip("@")
-    oldest = min(declaration.max_age, max_age())
     candidates = []
     for tweet in tweets:
         url = tweet.get("url") or ""
@@ -108,7 +126,10 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         if declaration.niche and not is_on_niche(text.strip()):
             continue
         age = x_urls.age(url)
-        if age is None or age < timedelta(0) or age > oldest:
+        if age is None or age < timedelta(0):
             continue
-        candidates.append(Candidate(url, text, tag))
+        oldest = _oldest_for(tweet, declaration, age)
+        if age > oldest:
+            continue
+        candidates.append(Candidate(url, text, tag, oldest=oldest if oldest != max_age() else None))
     return candidates
