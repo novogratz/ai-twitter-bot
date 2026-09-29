@@ -19,9 +19,12 @@ REPLY_PROMPT = """Reply to the actual point in the tweet below. Be worth the slo
 Choose the strongest move for this parent:
 - name the missing variable or hidden tradeoff;
 - give the useful consequence for builders or users;
+- politely disagree with the claim if its weak assumption matters;
+- translate the hype into what actually changes;
 - make one dry, funny observation that still teaches something.
 If it is a question, answer it directly. Do not end with a generic question.
-Avoid exaggerated hype, flattery, safe summaries and catchphrases.
+Avoid exaggerated hype, flattery, safe summaries, generic praise and catchphrases.
+If your reply would only agree, admire or restate the parent, return SKIP.
 
 Use factual details from the supplied tweet or reliable, stable {domain} knowledge.
 Do not invent current figures, product capabilities, benchmark scores or tests.

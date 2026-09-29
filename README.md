@@ -27,6 +27,9 @@ English prompts): every post and reply prompt carries it as one block.
 - **Short replies**: one or two sentences, about 100 characters in every reply
   prompt; Reply admission trims to `REPLY_MAX_CHARS` (160 at most) on a sentence
   end ([policy](docs/EDITORIAL_POLICY.md#runtime-rules)).
+- **Reply targets favor active conversations**: search and feed candidates are
+  ranked by likes plus double-weighted replies per minute, and generic praise
+  is declined before sending.
 - **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
