@@ -206,6 +206,12 @@ _declare("REPLY_MAX_CHARS", int, 160, "Longest Reply that ships: the Reply admis
          "or refuses it.", floor=80, ceiling=160)
 _declare("REPLY_MAX_AGE_MINUTES", int, 15, "Oldest post any Reply answers, whatever the job: the Reply admission refuses "
          "an older post, or one of unknown age, for good.", floor=1, ceiling=15)
+_declare("REPLY_RISING_MAX_AGE_MINUTES", int, 45, "Oldest rising post the Reply source may hand to Reply admission; "
+         "quiet posts still use REPLY_MAX_AGE_MINUTES.", floor=15, ceiling=45)
+_declare("REPLY_RISING_MIN_LIKES_PER_MINUTE", float, 1.0, "Minimum likes per minute for a post older than "
+         "REPLY_MAX_AGE_MINUTES to count as rising.", floor=1.0)
+_declare("REPLY_RISING_MIN_LIKES", int, 30, "Minimum likes for a post older than REPLY_MAX_AGE_MINUTES to count as rising.",
+         floor=30)
 _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")
@@ -242,7 +248,7 @@ _declare("ENABLE_DEBATES", bool, True, "Let the debate job answer mentions; read
 _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may ship.")
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers; REPLY_MAX_AGE_MINUTES caps it.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
-_declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.")
+_declare("FEED_SWEEP_SCAN_LIMIT", int, 120, "Posts the feed sweep scrapes per feed.")
 _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed.")
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 

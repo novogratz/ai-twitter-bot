@@ -72,7 +72,7 @@ class Verdict:
         return self.refusal is None
 
 
-def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
+def judge_parent(url: str, *, debate_turn: bool = False, oldest: timedelta | None = None) -> Verdict:
     """May the account answer this post at all? Definitive rules first, so a
     Blocked account is dropped for good even when judged Overnight."""
     author = x_urls.author(url)
@@ -85,8 +85,9 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     # Operator request 2026-09-29: every job answers fresh posts only. The age
-    # is read from the status ID; a post of unknown age is never fresh.
-    age, oldest = x_urls.age(url), max_age()
+    # is read from the status ID; a post of unknown age is never fresh. The
+    # Reply source may pass a wider per-candidate limit for a rising post.
+    age, oldest = x_urls.age(url), oldest or max_age()
     if age is None or age > oldest:
         shown = "unknown" if age is None else f"{age.total_seconds() / 60:.0f} min"
         return Verdict(Refusal.TOO_OLD, f"post age {shown}, over {oldest.total_seconds() / 60:.0f} min", author)
@@ -105,11 +106,11 @@ def max_age() -> timedelta:
     return timedelta(minutes=settings.get("REPLY_MAX_AGE_MINUTES"))
 
 
-def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
+def judge_reply(url: str, draft: str, *, debate_turn: bool = False, oldest: timedelta | None = None) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
     exact text to send. Casualize and the typo are random: call it once per
     send and ship `verdict.text`, never the draft."""
-    verdict = judge_parent(url, debate_turn=debate_turn)
+    verdict = judge_parent(url, debate_turn=debate_turn, oldest=oldest)
     if not verdict:
         return verdict
     author = verdict.author

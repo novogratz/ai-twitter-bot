@@ -15,10 +15,13 @@ from .reply_generator import LanguageRule, ReplyCall
 JOB_NAME = "direct_reply"
 
 
-REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,
-answer, grounded observation or thoughtful disagreement. If it is a question,
-answer it directly. A joke is optional. No mandatory formula or question ending.
-Avoid exaggerated hype, flattery and catchphrases.
+REPLY_PROMPT = """Reply to the actual point in the tweet below. Be worth the slot.
+Choose the strongest move for this parent:
+- name the missing variable or hidden tradeoff;
+- give the useful consequence for builders or users;
+- make one dry, funny observation that still teaches something.
+If it is a question, answer it directly. Do not end with a generic question.
+Avoid exaggerated hype, flattery, safe summaries and catchphrases.
 
 Use factual details from the supplied tweet or reliable, stable {domain} knowledge.
 Do not invent current figures, product capabilities, benchmark scores or tests.
@@ -98,7 +101,8 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
-        candidates = reply_source.select(tweets, reply_source.Declaration(max_age=timedelta(hours=48)),
+        candidates = reply_source.select(tweets, reply_source.Declaration(max_age=timedelta(hours=48),
+                                                                          rising_extension=True),
                                          f"VIP/{handle}")
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)
@@ -126,7 +130,8 @@ def _search_candidates(tweets: list, query: str) -> list:
     per-query conversion is measurable (2026-06-08)."""
     declaration = reply_source.Declaration(
         max_age=timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES")),
-        root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING)
+        root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING,
+        rising_extension=True)
     return reply_source.select(tweets, declaration, f"SEARCH-HOT/{query[:60]}")
 
 

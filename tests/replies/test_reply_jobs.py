@@ -11,7 +11,7 @@ from src.core import config
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
 from src.guards.active_hours import OutsideActiveHours
-from src.replies import reply_pipeline
+from src.replies import reply_pipeline, reply_source
 from src.x import x_urls
 from src.x.confirmed_write import WriteOutcome
 from tests.helpers import fresh, references
@@ -208,7 +208,7 @@ def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
 
 
 def test_direct_reply_vip_lane_keeps_posts_under_reply_max_age(direct):
-    """The lane reads 48 hours; REPLY_MAX_AGE_MINUTES (15) caps it (2026-09-29)."""
+    """Quiet posts still stay under REPLY_MAX_AGE_MINUTES (15)."""
     dr, lanes, llm, chokepoint = direct
     recent, old = fresh("graphseo", minutes=14, n=1), fresh("graphseo", minutes=16, n=2)
     lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
@@ -218,6 +218,19 @@ def test_direct_reply_vip_lane_keeps_posts_under_reply_max_age(direct):
 
     assert chokepoint.sent == [recent]
     assert [r.source for r in logged()] == ["VIP/Graphseo"]
+
+
+def test_direct_reply_vip_lane_answers_rising_posts_past_reply_max_age(direct):
+    """A rising post can use the wider freshness budget at both admissions."""
+    dr, lanes, llm, chokepoint = direct
+    hot = fresh("graphseo", minutes=30, n=1)
+    lanes["vip"] = [{"url": hot, "text": "vip hot", "likes": 120}]
+    llm.default = "réponse précise sur le trafic organique"
+
+    dr._run_vip_scan(reply_pipeline.Cycle())
+
+    assert chokepoint.sent == [hot]
+    assert chokepoint.calls[0].oldest == reply_source.rising_max_age()
 
 
 def test_direct_reply_cycle_stops_at_the_rate_limit(direct):

@@ -18,10 +18,12 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Quotes, reposts, self-recycling and threads stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
-- A Reply answers a post under 15 minutes old (2026-09-29), whatever the
-  job, mentions and answers to our posts included: the Reply admission
-  refuses an older post for good, and `REPLY_MAX_AGE_MINUTES` caps every
-  job's oldest post in the Reply source.
+- A Reply answers a quiet post under 15 minutes old (2026-09-29), whatever
+  the job, mentions and answers to our posts included. The Reply source may
+  hand a rising post to admission up to `REPLY_RISING_MAX_AGE_MINUTES` (45
+  minutes at most) only when its like velocity clears the operator bounds;
+  the per-candidate limit is checked again at the write. `REPLY_MAX_AGE_MINUTES`
+  still caps quiet posts.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.

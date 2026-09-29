@@ -14,7 +14,9 @@ English prompts): every post and reply prompt carries it as one block.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts, links without an
-  author handle and posts over 15 minutes old (`REPLY_MAX_AGE_MINUTES`) are refused. Every reply prompt carries the Voice, the
+  author handle and quiet posts over 15 minutes old (`REPLY_MAX_AGE_MINUTES`) are refused.
+  Rising posts selected by the Reply source can use `REPLY_RISING_MAX_AGE_MINUTES`
+  (45 minutes at most) when their like velocity clears the operator bounds. Every reply prompt carries the Voice, the
   operator's hard rules and the respect list, and a reply or original that
   names a Respected account is refused at the write, dry run included; a
   reply may still address the Respected account it answers by its `@handle`.

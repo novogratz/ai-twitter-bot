@@ -84,7 +84,8 @@ def _sweep_one_feed(source, scraper, cycle):
     # <60-min climbers).
     declaration = reply_source.Declaration(
         max_age=timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES")),
-        root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING)
+        root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING,
+        rising_extension=True)
     reply_candidates = reply_source.select(tweets, declaration, label)
 
     job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)

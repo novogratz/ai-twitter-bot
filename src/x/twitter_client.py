@@ -478,7 +478,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
-                   on_refused=None) -> WriteOutcome:
+                   on_refused=None, oldest=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -523,7 +523,11 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def judge():
         nonlocal admitted_text, author
-        verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
+        if oldest is None:
+            verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
+        else:
+            verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn,
+                                                  oldest=oldest)
         if not verdict:
             log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                      f"{tweet_url} {(reply_text or '')[:120]!r}")
@@ -982,4 +986,3 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
         log.info(f"[NOTIFY] Replies: {like_summary(outcomes)}.")
         page.wait(2)
         return outcomes
-

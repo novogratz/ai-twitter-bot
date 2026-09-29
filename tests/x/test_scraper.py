@@ -184,6 +184,16 @@ def _safari_lock_free():
     return seen[0]
 
 
+def test_feed_scrapes_scroll_lower_for_the_default_reply_depth(memory_page):
+    from src.x import scraper
+
+    memory_page.pages[HOME] = ["[]", "CLICKED", "[]"]
+
+    assert scraper.scrape_home_feed(max_tweets=120) == []
+    assert scraper.scrape_following_feed(max_tweets=120) == []
+    assert memory_page.scrolls == 37  # 20 For You + 17 Following
+
+
 def test_a_tweet_page_that_does_not_open_counts_as_a_blank_page(memory_page, monkeypatch):
     """A wedged Safari times out on `open location` as on a read: the
     tweet scrapes count a page that did not open as a timed-out read, once
