@@ -722,7 +722,9 @@ Reply source, `src/replies/reply_source.py`: the oldest post, root posts
 only or not, the author a scanned profile's posts carry in their URL, the
 Account's niche or not, and the order. `reply_source.select` applies the
 declaration without side effects and never keeps a post without a URL or
-text, or of unknown or negative age. A job reads its handle lists from the
+text, or of unknown or negative age, and caps every declaration's oldest
+post at `REPLY_MAX_AGE_MINUTES` (15 minutes, 2026-09-29): the table below
+gives what each job declares, and none answers an older post. A job reads its handle lists from the
 Account itself; `early_bird` and `mega_watch` pick at random among its
 pinned accounts, `reply_source.pinned_accounts`, the first 30 and 12 in the
 list's order, a Blocked account left out; the
@@ -739,7 +741,8 @@ their Reply call, `reply_call`, from `direct_reply`.
 | `debate` | `DEBATE_MAX_AGE_HOURS` | no (mentions are replies) | | no | newest |
 
 The settings are read on each pass. `replyback`, `babysit` and the reply
-search select their candidates themselves. The
+search select their candidates themselves; the Reply admission refuses
+their posts over `REPLY_MAX_AGE_MINUTES` too. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and

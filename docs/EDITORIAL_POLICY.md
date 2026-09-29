@@ -177,6 +177,17 @@ marked published after a check.
   code and an operator request, not a config change.
 - Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
   per-author debate turns protect conversation quality.
+- A Reply answers a post under 15 minutes old (Operator, 2026-09-29: reply
+  only to messages under 15 minutes), whatever the job: searches, feeds,
+  the VIP scan, early bird, mega watch, debate mentions and the answers
+  under our posts alike. The age is read from the post's status ID. The
+  Reply admission refuses an older post for good, before the generation
+  and again at the write, so a post that aged past the limit while its
+  Reply was generated is not answered. `REPLY_MAX_AGE_MINUTES` caps the
+  oldest post of every job's declaration in the Reply source, which picks
+  only among posts the admission lets through; a job's own window, such as
+  `DIRECT_REPLY_MAX_AGE_MINUTES` or `DEBATE_MAX_AGE_HOURS`, can only make
+  it shorter.
 - A Reply is short (Operator, 2026-09-27: "the Replies are too long").
   Every Reply prompt ends its instructions on one rule, "one or two short
   sentences, about 100 characters, never more than 140"; no job template or
@@ -286,6 +297,7 @@ change, read the warnings or run `main.py --dry-run` before starting.
 | `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
 | `REPLY_MIN_CHARS`, shortest Reply | at least 25 characters | 25 |
 | `REPLY_MAX_CHARS`, longest Reply | 80 to 160 characters | 160 |
+| `REPLY_MAX_AGE_MINUTES`, oldest post a Reply answers | 1 to 15 minutes | 15 |
 
 The duplicate settings may only get stricter: a lower threshold or count, or
 a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,

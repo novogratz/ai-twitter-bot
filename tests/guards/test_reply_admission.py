@@ -16,7 +16,7 @@ from src.guards import (
 from src.core import config, humanizer
 from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
-from tests.helpers import url
+from tests.helpers import fresh, url
 
 
 TEXT = "Batching is where inference margins are won or lost."
@@ -55,6 +55,24 @@ def test_already_replied_on_status_id_whatever_the_url_author():
     replied_store.save_replied([url("someone")])
     verdict = judge_parent(url("misattributed"))
     assert verdict.refusal is Refusal.ALREADY_REPLIED and verdict.refusal.definitive
+
+
+def test_a_post_over_reply_max_age_is_refused_for_good(settings_override):
+    """Operator request 2026-09-29: every job answers posts under 15 minutes."""
+    assert judge_parent(fresh("someone", minutes=14, n=1))
+    old = judge_parent(fresh("someone", minutes=16, n=2))
+    assert old.refusal is Refusal.TOO_OLD and old.refusal.definitive
+    settings_override(REPLY_MAX_AGE_MINUTES=60)
+    assert judge_parent(fresh("someone", minutes=16, n=3)).refusal is Refusal.TOO_OLD, \
+        ".env may only tighten the 15-minute ceiling"
+    settings_override(REPLY_MAX_AGE_MINUTES=5)
+    assert judge_parent(fresh("someone", minutes=6, n=4)).refusal is Refusal.TOO_OLD
+
+
+def test_the_reply_chokepoint_refuses_a_post_over_reply_max_age():
+    """judge_reply replays the parent rules under the Safari lock: a post that
+    aged past the ceiling during its generation is not answered."""
+    assert judge_reply(fresh("someone", minutes=16), TEXT).refusal is Refusal.TOO_OLD
 
 
 def test_definitive_rules_win_over_overnight(monkeypatch):

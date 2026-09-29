@@ -141,6 +141,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
 | `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
 | `REPLY_MAX_CHARS` | int | `160` | floor `80`, ceiling `160` | Longest Reply that ships: the Reply admission trims a longer one on a sentence end, or refuses it. |
+| `REPLY_MAX_AGE_MINUTES` | int | `15` | floor `1`, ceiling `15` | Oldest post any Reply answers, whatever the job: the Reply admission refuses an older post, or one of unknown age, for good. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
@@ -164,13 +165,13 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FR_FORCED_REPLY_HANDLES` | str | blank |  | Comma-separated handles whose posts always get French Replies; the Account's network.fr_forced_reply unless set. |
 | `EDITORIAL_OLLAMA_MODEL` | str | `gemma4:31b` |  | Ollama model that drafts and reviews Originals. |
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
-| `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
+| `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer; REPLY_MAX_AGE_MINUTES caps it. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
-| `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
+| `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers; REPLY_MAX_AGE_MINUTES caps it. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |

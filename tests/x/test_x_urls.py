@@ -15,7 +15,7 @@ def test_author_comes_from_the_url_handle():
 def test_status_id_and_snowflake_age():
     posted = datetime(2026, 9, 23, 12, 0, tzinfo=timezone.utc)
     sid = (int(posted.timestamp() * 1000) - x_urls._TWITTER_EPOCH_MS) << 22
-    link = url("someone", sid)
+    link = f"https://x.com/someone/status/{sid}"
     assert x_urls.status_id(link) == str(sid)
     assert x_urls.age(link, now=posted + timedelta(minutes=5)) == timedelta(minutes=5)
     assert x_urls.age("https://x.com/someone") is None

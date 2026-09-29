@@ -7,6 +7,7 @@ from src.replies.reply_source import Declaration, Order
 from tests.helpers import fresh
 
 HOUR = timedelta(hours=1)
+TEN_MINUTES = timedelta(minutes=10)
 
 
 def urls(candidates):
@@ -24,13 +25,25 @@ def test_a_post_without_url_or_text_is_never_a_candidate():
 def test_a_post_of_unknown_or_negative_age_is_never_a_candidate():
     """Only early bird rejected a post from the future (clock skew); the
     Reply source rejects it for every job."""
-    ok = fresh("someone", minutes=59, n=1)
+    ok = fresh("someone", minutes=9, n=1)
     tweets = [{"url": "https://x.com/someone", "text": "no status id"},
               {"url": fresh("other", minutes=-5, n=2), "text": "from the future"},
-              {"url": fresh("third", minutes=61, n=3), "text": "too old"},
+              {"url": fresh("third", minutes=11, n=3), "text": "too old"},
               {"url": ok, "text": "in time"}]
 
-    assert urls(reply_source.select(tweets, Declaration(max_age=HOUR), "TAG")) == [ok]
+    assert urls(reply_source.select(tweets, Declaration(max_age=TEN_MINUTES), "TAG")) == [ok]
+
+
+def test_reply_max_age_caps_every_declaration(settings_override):
+    """Operator request 2026-09-29: a job declaring an older post picks only
+    among the posts the Reply admission lets it answer."""
+    within = {"url": fresh("a", minutes=14, n=1), "text": "within"}
+    over = {"url": fresh("b", minutes=16, n=2), "text": "over"}
+    week = Declaration(max_age=timedelta(days=7))
+
+    assert urls(reply_source.select([over, within], week, "TAG")) == [within["url"]]
+    settings_override(REPLY_MAX_AGE_MINUTES=10)
+    assert urls(reply_source.select([over, within], week, "TAG")) == []
 
 
 def test_root_only_drops_nested_replies():
@@ -64,23 +77,22 @@ def test_the_niche_keeps_posts_on_the_accounts_niche():
 
 
 def test_the_order_is_the_scrape_order_or_fresh_and_rising_first():
-    old = {"url": fresh("a", minutes=300, n=1), "text": "old", "likes": 90_000}
-    cold = {"url": fresh("b", minutes=25, n=2), "text": "cold", "likes": 2}
-    hot = {"url": fresh("c", minutes=20, n=3), "text": "hot", "likes": 400}
-    tweets = [old, cold, hot]
-    week = timedelta(days=7)
+    steady = {"url": fresh("a", minutes=14, n=1), "text": "steady", "likes": 100}
+    cold = {"url": fresh("b", minutes=12, n=2), "text": "cold", "likes": 2}
+    hot = {"url": fresh("c", minutes=10, n=3), "text": "hot", "likes": 400}
+    tweets = [steady, cold, hot]
 
-    assert urls(reply_source.select(tweets, Declaration(max_age=week), "TAG")) == [t["url"] for t in tweets]
-    ranked = reply_source.select(tweets, Declaration(max_age=week, order=Order.FRESH_AND_RISING), "TAG")
-    assert urls(ranked) == [hot["url"], cold["url"], old["url"]]
+    assert urls(reply_source.select(tweets, Declaration(max_age=HOUR), "TAG")) == [t["url"] for t in tweets]
+    ranked = reply_source.select(tweets, Declaration(max_age=HOUR, order=Order.FRESH_AND_RISING), "TAG")
+    assert urls(ranked) == [hot["url"], steady["url"], cold["url"]]
 
 
 def test_the_newest_order_ignores_likes():
     """Debate answers its freshest mentions first (#243): a liked mention
     never jumps ahead of a newer one, as it would fresh and rising first."""
-    liked = {"url": fresh("a", minutes=40, n=1), "text": "liked", "likes": 5_000}
+    liked = {"url": fresh("a", minutes=14, n=1), "text": "liked", "likes": 5_000}
     newer = {"url": fresh("b", minutes=5, n=2), "text": "newer"}
-    middle = {"url": fresh("c", minutes=20, n=3), "text": "middle", "likes": 1}
+    middle = {"url": fresh("c", minutes=10, n=3), "text": "middle", "likes": 1}
 
     ranked = reply_source.select([liked, newer, middle], Declaration(max_age=HOUR, order=Order.NEWEST), "TAG")
 

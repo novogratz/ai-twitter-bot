@@ -53,8 +53,14 @@ def stop_requested(monkeypatch):
     monkeypatch.setattr(active_hours, "_STOP", stop)
 
 
-def url(author, n=2063500000000000200):
-    return f"https://x.com/{author}/status/{n}"
+# A status ID posted as the session starts: the Reply admission refuses a
+# post older than REPLY_MAX_AGE_MINUTES, so the posts a test answers are fresh.
+FRESH_ID = (int(datetime.now(tz=timezone.utc).timestamp() * 1000) - x_urls._TWITTER_EPOCH_MS) << 22
+
+
+def url(author, n=200):
+    """A status URL posted as the session starts; `n` keeps URLs distinct."""
+    return f"https://x.com/{author}/status/{FRESH_ID + n}"
 
 
 def numbered_url(n, author="someone"):

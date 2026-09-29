@@ -13,8 +13,8 @@ English prompts): every post and reply prompt carries it as one block.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
-  and again at the write: blocked accounts, the account's own posts and links without an
-  author handle are refused. Every reply prompt carries the Voice, the
+  and again at the write: blocked accounts, the account's own posts, links without an
+  author handle and posts over 15 minutes old (`REPLY_MAX_AGE_MINUTES`) are refused. Every reply prompt carries the Voice, the
   operator's hard rules and the respect list, and a reply or original that
   names a Respected account is refused at the write, dry run included; a
   reply may still address the Respected account it answers by its `@handle`.
