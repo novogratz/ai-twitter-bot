@@ -86,9 +86,9 @@ never reaches the model, which would see it without the post it answers
 (issue #241). The VIP scan still answers everything its accounts post,
 their replies included.
 
-The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
+The `post` and `bio` patterns name AI itself (AI, IA, AGI, SI, LLMs, GenAI,
 artificial intelligence, machine and deep learning, computer vision,
-superintelligence, agentic, context windows, open weights, vibe coding),
+superintelligence, super intelligence, agentic, context windows, open weights, vibe coding),
 its labs and models (OpenAI, Anthropic, DeepMind, Mistral, Llama, Qwen,
 Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
 TPUs, data centers) and robotics. Some words no longer suffice alone:

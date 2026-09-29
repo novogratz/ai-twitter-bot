@@ -382,8 +382,9 @@ NETWORK = {
         "watcherguru", "wsj", "zerohedge",
     ],
     "NICHE_PATTERN": (
-        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
-        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|"
+        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|"
+        r"super\s+intelligence|genai|"
         r"llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|"
         r"xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|"
         r"(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|"
@@ -393,8 +394,9 @@ NETWORK = {
         r"humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b",
         34),
     "NICHE_BIO_RE": (
-        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
-        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|"
+        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|"
+        r"super\s+intelligence|genai|llms?|gpt\w*|"
         r"chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|"
         r"artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|"
         r"deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|"
@@ -404,6 +406,7 @@ NETWORK = {
         '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
         "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
+        '"super intelligence" OR superintelligence OR SI lang:en min_faves:30',
         '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
         '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
         'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
@@ -414,6 +417,7 @@ NETWORK = {
     ],
     "HOT_TAB_QUERIES": [
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
+        '"super intelligence" OR superintelligence OR SI lang:en min_faves:300',
         'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
         '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
         'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
@@ -555,6 +559,7 @@ def test_the_removed_accounts_and_queries_are_gone():
     "Ai-je raté le rallye ?",
     "Je vous ai dit que le marché allait monter",
     "J'en ai marre de la Fed",
+    "Si les taux baissent demain, le marché peut monter",
     # Too broad alone.
     "Real estate agent, 20 years in Miami",
     "Agent immobilier à Lyon",
@@ -583,6 +588,8 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Meta's Llama 4 is out",
     "Google's Veo 3 makes the best videos",
     "Meta superintelligence lab poached another researcher",
+    "Super intelligence is the next frontier after AGI",
+    "SI safety debates are getting louder",
     "1M token context window",
     "vibe coding is a trap",
     "Qwen3 beats everything on coding",
@@ -610,6 +617,8 @@ def test_an_ai_post_is_on_the_niche(text):
     ("Deep learning engineer", True),
     ("Computer vision engineer", True),
     ("LLMs engineer", True),
+    ("Super intelligence researcher", True),
+    ("SI policy analyst", True),
     ("GenAI founder", True),
     ("Robotics engineer @Figure", True),
     ("Building agents @ startup", True),

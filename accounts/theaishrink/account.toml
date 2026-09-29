@@ -254,12 +254,12 @@ follow_engagers_skip = [
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|super\s+intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|super\s+intelligence|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
 # X search queries.
 [searches]
@@ -271,6 +271,7 @@ replies = [
     '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
+    '"super intelligence" OR superintelligence OR SI lang:en min_faves:30',
     '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
     '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
     'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
@@ -281,6 +282,7 @@ replies = [
 ]
 hot_tab = [
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
+    '"super intelligence" OR superintelligence OR SI lang:en min_faves:300',
     'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
