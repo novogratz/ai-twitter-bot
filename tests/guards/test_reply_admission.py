@@ -69,9 +69,10 @@ def test_a_post_over_reply_max_age_is_refused_for_good(settings_override):
     assert judge_parent(fresh("someone", minutes=6, n=4)).refusal is Refusal.TOO_OLD
 
 
-def test_the_reply_chokepoint_refuses_a_post_over_reply_max_age():
-    """judge_reply replays the parent rules under the Safari lock: a post that
-    aged past the ceiling during its generation is not answered."""
+def test_judge_reply_refuses_a_post_that_aged_past_reply_max_age():
+    """judge_reply, which reply_to_tweet runs right before the send, replays
+    the parent rules: a post that aged past the limit during its generation is
+    not answered."""
     assert judge_reply(fresh("someone", minutes=16), TEXT).refusal is Refusal.TOO_OLD
 
 

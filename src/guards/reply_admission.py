@@ -19,6 +19,7 @@ raises `StateUnreadable`.
 """
 import re
 from dataclasses import dataclass
+from datetime import timedelta
 from enum import Enum
 
 from . import (
@@ -85,10 +86,10 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     # Operator request 2026-09-29: every job answers fresh posts only. The age
     # is read from the status ID; a post of unknown age is never fresh.
-    age, oldest = x_urls.age(url), settings.get("REPLY_MAX_AGE_MINUTES")
-    if age is None or age.total_seconds() > oldest * 60:
+    age, oldest = x_urls.age(url), max_age()
+    if age is None or age > oldest:
         shown = "unknown" if age is None else f"{age.total_seconds() / 60:.0f} min"
-        return Verdict(Refusal.TOO_OLD, f"post age {shown}, over {oldest} min", author)
+        return Verdict(Refusal.TOO_OLD, f"post age {shown}, over {oldest.total_seconds() / 60:.0f} min", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
     if debate_turn:
@@ -96,6 +97,12 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         if not ok:
             return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
     return Verdict(None, author=author)
+
+
+def max_age() -> timedelta:
+    """The oldest post any Reply answers, REPLY_MAX_AGE_MINUTES, read at call
+    time; the Reply source caps every job's declaration at it."""
+    return timedelta(minutes=settings.get("REPLY_MAX_AGE_MINUTES"))
 
 
 def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:

@@ -53,9 +53,16 @@ def stop_requested(monkeypatch):
     monkeypatch.setattr(active_hours, "_STOP", stop)
 
 
+def status_id(minutes_ago=0):
+    """The status ID of a post published `minutes_ago` minutes ago."""
+    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes_ago * 60_000
+    return (ms - x_urls._TWITTER_EPOCH_MS) << 22
+
+
 # A status ID posted as the session starts: the Reply admission refuses a
-# post older than REPLY_MAX_AGE_MINUTES, so the posts a test answers are fresh.
-FRESH_ID = (int(datetime.now(tz=timezone.utc).timestamp() * 1000) - x_urls._TWITTER_EPOCH_MS) << 22
+# post older than REPLY_MAX_AGE_MINUTES (15), so a test that answers `url()`
+# must run within 15 minutes of the import.
+FRESH_ID = status_id()
 
 
 def url(author, n=200):
@@ -69,8 +76,7 @@ def numbered_url(n, author="someone"):
 
 def fresh(handle, minutes=5, n=0):
     """A status URL posted `minutes` ago; `n` keeps URLs distinct."""
-    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes * 60_000
-    return f"https://x.com/{handle}/status/{((ms - x_urls._TWITTER_EPOCH_MS) << 22) + n}"
+    return f"https://x.com/{handle}/status/{status_id(minutes) + n}"
 
 
 SEARCH = "https://x.com/search?q=gpu&f=live"

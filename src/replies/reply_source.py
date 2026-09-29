@@ -18,7 +18,7 @@ from datetime import timedelta
 from enum import Enum
 
 from ..core import account, settings
-from ..guards.reply_admission import is_blocked_account
+from ..guards.reply_admission import is_blocked_account, max_age
 from ..x import x_urls
 from .reply_pipeline import Candidate
 
@@ -94,7 +94,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
     elif declaration.order is Order.NEWEST:
         tweets = sorted(tweets, key=_newest_first)
     author = declaration.author.lower().lstrip("@")
-    oldest = min(declaration.max_age, timedelta(minutes=settings.get("REPLY_MAX_AGE_MINUTES")))
+    oldest = min(declaration.max_age, max_age())
     candidates = []
     for tweet in tweets:
         url = tweet.get("url") or ""

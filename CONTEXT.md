@@ -179,7 +179,7 @@ _Avoid_: rally, round, comeback
 **Reply admission**:
 The Operator's rules a Reply must pass before it ships: first on the post
 it answers (author, Blocked account, own post, already Replied, older than
-15 minutes, Waking hours, Debate turn cap), then again with the spacing since the last Reply and the
+the oldest post a Reply answers, Waking hours, Debate turn cap), then again with the spacing since the last Reply and the
 final text, trimmed to the longest Reply on a sentence end. Only a Reply it
 admits is sent.
 _Avoid_: gate, prefilter, reply filter

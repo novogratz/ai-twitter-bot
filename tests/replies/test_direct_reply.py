@@ -3,11 +3,8 @@ ReplyCalls."""
 
 
 def _url_with_age(minutes: int) -> str:
-    from datetime import datetime, timezone
-    from src.x.x_urls import _TWITTER_EPOCH_MS
-    now_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
-    tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH_MS) << 22
-    return f"https://x.com/someone/status/{tweet_id}"
+    from tests.helpers import status_id
+    return f"https://x.com/someone/status/{status_id(minutes)}"
 
 
 def _searches():
