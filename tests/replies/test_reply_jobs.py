@@ -207,9 +207,10 @@ def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
     assert chokepoint.sent == [marked, mention]
 
 
-def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
+def test_direct_reply_vip_lane_keeps_posts_under_reply_max_age(direct):
+    """The lane reads 48 hours; REPLY_MAX_AGE_MINUTES (15) caps it (2026-09-29)."""
     dr, lanes, llm, chokepoint = direct
-    recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
+    recent, old = fresh("graphseo", minutes=14, n=1), fresh("graphseo", minutes=16, n=2)
     lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
@@ -495,7 +496,8 @@ def post(handle, text, minutes=1, n=0, **fields):
 
 def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
     name, run, profiles, llm, chokepoint = profile_job
-    max_minutes = {"early_bird": 18, "mega_watch": 4}[name]
+    # early_bird reads 18 minutes; REPLY_MAX_AGE_MINUTES (15) caps it.
+    max_minutes = {"early_bird": 15, "mega_watch": 4}[name]
     ok = post("someone", "post fresh", minutes=max_minutes - 1, n=1)
     profiles["someone"] = [
         post("someone", "post stale", minutes=max_minutes + 1, n=2),

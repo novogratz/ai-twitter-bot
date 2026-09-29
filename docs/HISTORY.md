@@ -8,6 +8,16 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-09-29 — Replies answer posts under 15 minutes only (Operator):**
+> "reply only to messages under 15 minutes". Each job had its own window:
+> 4 minutes for mega watch, 18 for early bird, 48 hours for the VIP scan,
+> 24 hours for debate mentions, five days (`DIRECT_REPLY_MAX_AGE_MINUTES`)
+> for the searches and the feed sweep, and none for the answers under our
+> posts. The Reply admission now refuses, for good, a post older than
+> `REPLY_MAX_AGE_MINUTES`, 15 by default and at most, read from its status
+> ID, for every job; the Reply source caps each job's window at it, so a
+> job picks only among posts it may answer.
+
 > **2026-09-28 — an invalid field of `safari_health.json` no longer stops the job wrapper (issue #303):**
 > the file is disposable, so one that does not parse already read as the
 > default, but valid JSON whose `consecutive_failures`, `last_recovery_ts`

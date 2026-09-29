@@ -3,11 +3,8 @@ ReplyCalls."""
 
 
 def _url_with_age(minutes: int) -> str:
-    from datetime import datetime, timezone
-    from src.x.x_urls import _TWITTER_EPOCH_MS
-    now_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
-    tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH_MS) << 22
-    return f"https://x.com/someone/status/{tweet_id}"
+    from tests.helpers import status_id
+    return f"https://x.com/someone/status/{status_id(minutes)}"
 
 
 def _searches():
@@ -130,7 +127,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     # Safari fired and posted live replies to @TheBTCTherapist mid-test.
     # conftest's _no_safari wall now makes that mistake fail loudly instead.)
     settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
-    url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
+    url = _url_with_age(5).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(dr, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
@@ -252,7 +249,7 @@ def test_the_vip_scan_warns_of_a_missing_cli_once_per_generation(monkeypatch, ll
     dr._run_vip_scan(reply_pipeline.Cycle())
     assert warnings == [] and llm.calls == []
 
-    tweets.append({"url": _url_with_age(30).replace("/someone/", "/Graphseo/"),
+    tweets.append({"url": _url_with_age(5).replace("/someone/", "/Graphseo/"),
                    "text": "les agents IA changent le SEO", "author": "Graphseo"})
     dr._run_vip_scan(reply_pipeline.Cycle())
     assert len(llm.calls) == 1

@@ -4,7 +4,9 @@ posts it scraped.
 A job declares what it answers: the oldest post, root posts only or not,
 the author a scanned profile's posts must carry in their URL, the Account's
 niche or not, and the order. `select` applies it the same way for every job
-and has no side effect: no log, no store, no scrape. A post without a URL,
+and has no side effect: no log, no store, no scrape. REPLY_MAX_AGE_MINUTES
+caps every declaration's oldest post, as the Reply admission refuses an
+older one: a job only picks among posts it may answer. A post without a URL,
 without text, or of unknown or negative age (a status ID from the future:
 clock skew) is never a candidate. The job keeps its sub-sources, its budget
 and its Reply call.
@@ -16,7 +18,7 @@ from datetime import timedelta
 from enum import Enum
 
 from ..core import account, settings
-from ..guards.reply_admission import is_blocked_account
+from ..guards.reply_admission import is_blocked_account, max_age
 from ..x import x_urls
 from .reply_pipeline import Candidate
 
@@ -92,6 +94,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
     elif declaration.order is Order.NEWEST:
         tweets = sorted(tweets, key=_newest_first)
     author = declaration.author.lower().lstrip("@")
+    oldest = min(declaration.max_age, max_age())
     candidates = []
     for tweet in tweets:
         url = tweet.get("url") or ""
@@ -105,7 +108,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         if declaration.niche and not is_on_niche(text.strip()):
             continue
         age = x_urls.age(url)
-        if age is None or age < timedelta(0) or age > declaration.max_age:
+        if age is None or age < timedelta(0) or age > oldest:
             continue
         candidates.append(Candidate(url, text, tag))
     return candidates

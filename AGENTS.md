@@ -18,6 +18,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Quotes, reposts, self-recycling and threads stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
+- A Reply answers a post under 15 minutes old (2026-09-29), whatever the
+  job, mentions and answers to our posts included: the Reply admission
+  refuses an older post for good, and `REPLY_MAX_AGE_MINUTES` caps every
+  job's oldest post in the Reply source.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
@@ -66,7 +70,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search; direct, feed sweep, early bird, mega watch and debate select through the Reply source; a job reads the Account itself and takes nothing from `direct_reply` but its `reply_call` | `src/replies/` |
 | Reply prompts: Voice, the one length rule, hard rules, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
-| Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising and newest orders; the Account's pinned accounts early_bird and mega_watch scan (`pinned_accounts`) | `src/replies/reply_source.py` |
+| Reply source: the candidates a job's declaration (oldest post, capped by `REPLY_MAX_AGE_MINUTES`, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising and newest orders; the Account's pinned accounts early_bird and mega_watch scan (`pinned_accounts`) | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count | `src/account/` |
 | Follow run: one cycle's follows, Followed accounts skipped whatever the case, each handle tried once, no call past CAP_REACHED, bedtime and `StateUnreadable` raised, any other error one pick, counted and raised once the job saved its state; the relations the job follows handed to the chokepoint; follow_engagers, engage and followback use it | `src/account/follow_run.py` |
@@ -74,7 +78,7 @@ Account.
 | Caps, pacing, anti-churn; the ledger facts the follow policy reads; the Original count and spacing over the ledger and the Slot journal's submissions, and the check that a reserved key is the day's Pending slot of that text, which `post_tweet` enforces | `src/guards/action_guard.py` |
 | Follow policy: handle, Blocked account, the account's relation it finds itself once per follow (Seed account, follower, Engager; a Stranger never), the relations a caller follows (`SEED_ONLY` for engage and the `follow` skill), whitelist, caps, ceiling, quality gate, named Follow refusals, followed accounts and the other follow files | `src/guards/follow_policy.py` |
 | Write ledger: today's counts, last write, last follow or unfollow; file and in-memory adapters | `src/guards/ledger.py` |
-| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text trimmed to `REPLY_MAX_CHARS` on a sentence end, Respected account named | `src/guards/reply_admission.py` |
+| Reply admission: Blocked account, own post, one Reply per post, post over `REPLY_MAX_AGE_MINUTES`, Debate turn cap, spacing, final text trimmed to `REPLY_MAX_CHARS` on a sentence end, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |

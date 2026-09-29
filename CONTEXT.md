@@ -158,7 +158,8 @@ _Avoid_: rate-limit code, quota error, exit 75
 The selection that turns the posts a Reply job scraped into its candidates,
 from what the job declares: the oldest post it answers, root posts only or
 not, the author a scanned profile's posts must carry, the Account's niche or
-not, and the order. A post without a URL or text, or of unknown or negative
+not, and the order. The oldest post never exceeds the one Reply admission
+accepts. A post without a URL or text, or of unknown or negative
 age, is never a candidate. The job keeps what it scrapes, its budget and its
 Reply call.
 _Avoid_: selection filters, candidate filter
@@ -177,8 +178,8 @@ _Avoid_: rally, round, comeback
 
 **Reply admission**:
 The Operator's rules a Reply must pass before it ships: first on the post
-it answers (author, Blocked account, own post, already Replied, Waking hours,
-Debate turn cap), then again with the spacing since the last Reply and the
+it answers (author, Blocked account, own post, already Replied, older than
+the oldest post a Reply answers, Waking hours, Debate turn cap), then again with the spacing since the last Reply and the
 final text, trimmed to the longest Reply on a sentence end. Only a Reply it
 admits is sent.
 _Avoid_: gate, prefilter, reply filter

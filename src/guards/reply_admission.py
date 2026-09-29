@@ -19,6 +19,7 @@ raises `StateUnreadable`.
 """
 import re
 from dataclasses import dataclass
+from datetime import timedelta
 from enum import Enum
 
 from . import (
@@ -42,6 +43,7 @@ class Refusal(Enum):
     BLOCKED_ACCOUNT = "Blocked account"
     OWN_POST = "own post"
     ALREADY_REPLIED = "already Replied"
+    TOO_OLD = "post older than REPLY_MAX_AGE_MINUTES"
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
@@ -56,7 +58,7 @@ class Refusal(Enum):
 
 
 _DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
-                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
+                         Refusal.ALREADY_REPLIED, Refusal.TOO_OLD, Refusal.RESPECTED_ACCOUNT})
 
 
 @dataclass(frozen=True)
@@ -82,6 +84,12 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
+    # Operator request 2026-09-29: every job answers fresh posts only. The age
+    # is read from the status ID; a post of unknown age is never fresh.
+    age, oldest = x_urls.age(url), max_age()
+    if age is None or age > oldest:
+        shown = "unknown" if age is None else f"{age.total_seconds() / 60:.0f} min"
+        return Verdict(Refusal.TOO_OLD, f"post age {shown}, over {oldest.total_seconds() / 60:.0f} min", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
     if debate_turn:
@@ -89,6 +97,12 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         if not ok:
             return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
     return Verdict(None, author=author)
+
+
+def max_age() -> timedelta:
+    """The oldest post any Reply answers, REPLY_MAX_AGE_MINUTES, read at call
+    time; the Reply source caps every job's declaration at it."""
+    return timedelta(minutes=settings.get("REPLY_MAX_AGE_MINUTES"))
 
 
 def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
