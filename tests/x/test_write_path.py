@@ -54,6 +54,17 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     assert len(recorded) == 1  # exactly ONE reply ever reached the write
 
 
+def test_reply_chokepoint_refuses_canned_openers_even_without_generation(monkeypatch, memory_ledger):
+    from src.x import twitter_client as tc
+
+    page = _fake_safari(monkeypatch)
+    assert tc.reply_to_tweet(helpers.url("someone"), "Fair, but latency decides the result.") is W.REFUSED
+    assert page.opened == []
+    assert not page.pasted
+    assert not rs.load_replied()
+    assert not memory_ledger.rows
+
+
 def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
     """reply_to_tweet must return the truthy SHIPPED when the reply ships and
     a falsy REFUSED on the dedup skip — callers gate log_reply on this."""

@@ -110,6 +110,39 @@ def test_unreadable_store_raises_instead_of_admitting():
 # --- spacing and text -------------------------------------------------------
 
 
+@pytest.mark.parametrize("text", [
+    "Fair, but latency decides the result.",
+    "fair point. But latency decides the result.",
+    "Fair enough but latency decides the result.",
+    "Valid point, but latency decides the result.",
+    "I see your point, but latency decides the result.",
+    "You’re right, but latency decides the result.",
+    "Fair — but latency decides the result.",
+    '"Here is the thing: latency decides the result."',
+    "Let's unpack this: latency decides the result.",
+    "Certes, mais la latence change le résultat.",
+    "Tu as raison, mais la latence change le résultat.",
+])
+def test_canned_openers_are_refused_without_rewriting_the_claim(text):
+    verdict = judge_reply(url("someone"), text)
+    assert verdict.refusal is Refusal.TEXT
+    assert "canned Reply opener" in verdict.reason
+    assert verdict.text == ""
+    assert not replied_store.load_replied()
+
+
+@pytest.mark.parametrize("text", [
+    "Latency decides the result, but token price still matters.",
+    "Fair use is a separate legal question.",
+    "A fair comparison needs the same task and budget.",
+    'The phrase "Fair, but" adds no technical value.',
+    "You are right about the latency limit.",
+    "This model can unpack this data format.",
+])
+def test_specific_statements_and_mid_sentence_words_still_pass(text):
+    assert judge_reply(url("someone"), text)
+
+
 def test_spacing_waits_for_the_reply_not_the_parent(monkeypatch):
     """A Reply that just shipped must not refuse every candidate before
     generation: only judge_reply applies the spacing."""

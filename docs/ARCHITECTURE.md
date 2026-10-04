@@ -813,6 +813,11 @@ the one `LENGTH_RULE`, and
 `personality_store.hard_rules_block()`, which renders the hard rules and
 the respect list from the Account's `respect_list.json`. The quality block
 asks for a concrete technical insight and dry sarcasm aimed at claims,
+with specific wit and direct openings. Generation declines canned agreement
+or lecture prefixes; Reply admission rechecks them before a claim or page open,
+so JSON search and direct write callers inherit the same check. Text is refused
+rather than edited into a potentially different claim. The prompt keeps AI
+identity honest and asks for supported mechanisms when discussing new techniques,
 with uncertainty explicit; it applies to Relations and JSON search too.
 Each parent and supplied context contributes up to 1,200 characters,
 including qualifications beyond the old 200–500 character cutoffs.

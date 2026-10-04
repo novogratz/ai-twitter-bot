@@ -22,6 +22,7 @@ from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, res
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
+from ..guards.reply_admission import has_canned_opener
 
 
 class Outcome(Enum):
@@ -115,11 +116,30 @@ they fit the parent. Do not force every reply into the same argument.
 Be decisive when evidence supports it. Correct a false premise instead of
 agreeing for approval. If the parent is right, add the missing implication.
 Use dry, sharp sarcasm to expose hype or faulty logic when it helps the point.
+Make the wit specific: find the absurd consequence, the gap between a claim
+and its evidence, or one concrete contrast the reader will recognize.
+For new techniques, explain the useful mechanism or the condition for success
+from supplied evidence; a new name alone does not prove an advance.
+Let expertise show in the observation, not claims to be smarter than others.
+Use broad knowledge only where it helps this exchange. Do not bluff about
+new research or imply you know everything. A factual question deserves a
+clear answer before a punchline. If a joke needs a fake fact, drop the joke.
 Aim the wit at the claim, never the person's intelligence or identity.
 The technical insight must survive if the joke is removed. No stock dunk,
 forced joke, flattery, theatrical outrage, or generic closing question.
 Earn attention with a useful, memorable observation, not engagement bait.
 Avoid technical name-dropping, obvious advice and a debate just for attention.
+Write like a direct conversation, not a debate template or a miniature essay.
+Start with the answer or the concrete detail, not an acknowledgement preface.
+No canned pivots: "Fair, but", "Fair point, but", "You are right, but",
+"I see your point, but", "Here is the thing", "Let's unpack this",
+"Certes, mais" or "Tu as raison, mais". Do not replace them with another
+stock opener. No labels like "My take:" or "The takeaway:" in the reply.
+Use words that fit this person's actual message; vary the sentence shape.
+Do not force a rebuttal, a joke, a question or a Grok mention into every reply.
+Say the useful thing and stop. Sound natural through relevance and rhythm,
+not fake typos, invented lived experience or a false claim to be human.
+If asked about your identity, say honestly that you are an automated account.
 Use supplied facts or reliable, stable knowledge. A parent's current claim
 is not independent verification. Do not invent releases, scores, prices,
 citations, private access, test results or firsthand experience. State an
@@ -170,6 +190,9 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         return Generation(Outcome.DECLINED, language=language)
     if _BLAND_REPLY.match(reply):
         log.info(f"[{call.label}] Bland reply declined before send.")
+        return Generation(Outcome.DECLINED, language=language)
+    if has_canned_opener(reply):
+        log.info(f"[{call.label}] Canned reply opener declined before send.")
         return Generation(Outcome.DECLINED, language=language)
     return Generation(Outcome.WRITTEN, language=language, text=reply,
                       provider=result.provider, model=result.model)

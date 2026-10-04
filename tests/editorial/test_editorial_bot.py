@@ -498,6 +498,9 @@ def test_the_draft_prompt_opens_on_the_one_voice(settings_override, editor):
     assert prompt.startswith(voice + "\n")
     assert "VOICE (NON-NEGOTIABLE): you are @SomeOtherBot\n" in voice
     assert "theaishrink" not in prompt[len(voice):].lower()
+    assert "Start with the concrete point" in prompt
+    assert "specific dry wit" in prompt
+    assert "never superiority claims or a joke with fake facts" in prompt
 
 
 def test_the_text_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
