@@ -217,6 +217,10 @@ def test_every_reply_path_requires_grounded_insight_and_sharp_wit(jobs, job, aut
     assert "Pass the value test" in prompt
     assert "falsifiable check" in prompt
     assert "Challenge a weak claim even from a favored company" in prompt
+    assert 'No canned pivots: "Fair, but"' in prompt
+    assert "Say the useful thing and stop" in prompt
+    assert "If a joke needs a fake fact, drop the joke" in prompt
+    assert "answer honestly that you are an AI bot" in prompt
     assert "superintelligence" in prompt
     assert "Use dry, sharp sarcasm" in prompt
     assert "never the person's intelligence or identity" in prompt
@@ -490,6 +494,19 @@ def test_specific_replies_are_not_bland_declines(llm):
 
     llm.default = "The missing variable is distribution: a good model with no workflow still loses."
     assert generate().outcome is Outcome.WRITTEN
+
+
+@pytest.mark.parametrize("stdout", [
+    "Fair, but latency decides the result.",
+    "I see your point, but latency decides the result.",
+    "Here's the thing: latency decides the result.",
+    "Certes, mais la latence change le résultat.",
+])
+def test_canned_opener_is_declined_before_send(llm, stdout):
+    from src.replies.reply_generator import Outcome
+
+    llm.default = stdout
+    assert generate().outcome is Outcome.DECLINED
 
 
 LEGIT = "You can skip the hype, the moat is data."

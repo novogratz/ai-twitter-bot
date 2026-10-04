@@ -289,6 +289,10 @@ Prefer a fresh launch, model update, {domain} article, research method, or concr
 project when the sources include one. Use evergreen documentation only when no
 fresh source earns a sharper post.
 Make ONE useful point, in one or two complete conversational sentences.
+Start with the concrete point, not a canned acknowledgement or lecture opener.
+Use specific dry wit or an absurd consequence when it helps explain the subject.
+For new techniques, explain a supported mechanism or condition for success.
+Show expertise through insight, never superiority claims or a joke with fake facts.
 Choose a concrete action with its reason, OR a clear concept with an example,
 OR a sourced update with its consequence. Do not squeeze all formats together.
 Aim for 150–210 characters; finish the thought before {schemas.TEXT_MAX_CHARS} characters.

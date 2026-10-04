@@ -26,6 +26,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
   the independent editorial review. Operator 2026-10-04: this Account is
   strongly pro-Grok, pro-xAI and supportive of Musk's AI work; praise needs
   specific evidence, current versions are not guessed, and AI stays the niche.
+- Natural Replies (2026-10-04) start on the actual point, with specific wit
+  rather than stock agreement/pivot or lecture openers. Generation and Reply
+  admission refuse narrow canned prefixes such as "Fair, but". Identity
+  remains honest; humor never invents a fact or firsthand experience.
 - A Reply answers a quiet post under 15 minutes old (2026-09-29), whatever
   the job, mentions and answers to our posts included. The Reply source may
   hand a rising post to admission up to `REPLY_RISING_MAX_AGE_MINUTES` (45

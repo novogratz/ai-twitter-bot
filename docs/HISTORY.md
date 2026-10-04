@@ -8,6 +8,15 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-10-04 — natural replies without canned pivots (Operator):** the shared
+> prompt now asks for direct answers, specific wit and supported explanations
+> of new techniques rather than formulaic acknowledgements or superiority
+> claims. Generation and Reply admission reject narrow English/French canned
+> prefixes, including "Fair, but"; ordinary words and phrases inside a
+> sentence stay valid. The write refuses before claiming or opening a page,
+> rather than deleting a clause that could change meaning. Identity stays
+> honest. The Operator also requested a release for the merged change.
+
 > **2026-10-04 — pro-Grok Account perspective (Operator):** added an optional
 > Account preference to Originals and every Reply surface, keeping the
 > independent review free of preference instructions. This Account favors

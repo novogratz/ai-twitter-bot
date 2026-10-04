@@ -37,6 +37,24 @@ from ..core.logger import log
 # The end of a sentence, before any closing quote or bracket.
 _SENTENCE_END = re.compile(r"[.!?…][\"»')\]]*$")
 
+# Operator 2026-10-04: refuse canned agreement/pivot and lecture openers.
+# Anchored to the opening only: discussion of these words remains valid.
+_CANNED_OPENER = re.compile(
+    r"^[\s\"'«“]*(?:"
+    r"(?:fair(?:\s+(?:point|enough))?|valid\s+point|good\s+point|"
+    r"i\s+see\s+your\s+point|you\s+are\s+right|you['’]re\s+right)"
+    r"\b\s*[,.:;!]?\s*but\b|"
+    r"(?:here(?:['’]s|\s+is)\s+the\s+thing|let['’]s\s+unpack\s+(?:this|that))\b|"
+    r"(?:certes|c['’]est\s+vrai|tu\s+as\s+raison|vous\s+avez\s+raison)"
+    r"\b\s*[,.:;!]?\s*mais\b)",
+    re.IGNORECASE,
+)
+
+
+def has_canned_opener(text: str) -> bool:
+    """A narrow opening refusal; never remove a clause and change its meaning."""
+    return bool(_CANNED_OPENER.match(text or ""))
+
 
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
@@ -120,6 +138,8 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False, oldest: time
 
     # Every Reply loses its dashes here, including paths that skip humanize().
     text = humanizer.strip_dashes(draft)
+    if has_canned_opener(text):
+        return Verdict(Refusal.TEXT, "canned Reply opener; answer the point directly", author)
     longest = settings.get("REPLY_MAX_CHARS")
     if len(text) > longest:
         # The generation is already paid for: keep its first sentences. A cut
