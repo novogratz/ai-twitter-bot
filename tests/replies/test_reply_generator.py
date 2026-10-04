@@ -220,7 +220,7 @@ def test_every_reply_path_requires_grounded_insight_and_sharp_wit(jobs, job, aut
     assert 'No canned pivots: "Fair, but"' in prompt
     assert "Say the useful thing and stop" in prompt
     assert "If a joke needs a fake fact, drop the joke" in prompt
-    assert "answer honestly that you are an AI bot" in prompt
+    assert "say honestly that you are an automated account" in prompt
     assert "superintelligence" in prompt
     assert "Use dry, sharp sarcasm" in prompt
     assert "never the person's intelligence or identity" in prompt
