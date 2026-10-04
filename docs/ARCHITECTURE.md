@@ -785,7 +785,12 @@ tweet already answered, and marks it just before writing, all under one lock.
 A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty. If the reply keystroke or the paste fails, or a
+instead of reading as empty. The reply box is opened by clicking the reply
+button of the article with that status ID. The `r` key is never pressed: it
+answers the post X has selected, and on a thread that was often the
+account's own reply (Operator, 2026-10-04). When the permalink on the page
+is the account's, nothing is clicked and the claim stays, so that status is
+not answered again. If the reply button or the paste fails, or a
 stop or 23:30 interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,

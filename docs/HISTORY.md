@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-10-04 — a Reply never answers the account, and never twice (Operator):**
+> "stop replying on your replies. Never respond to your own messages. Never
+> put more than 1 response per tweet." Admission already refused an own post
+> and a status already in the Replied store. The write still pressed `r`,
+> and that key answers whichever post X has selected. On a thread the
+> selection was often the account's own previous reply, so the new reply
+> landed there while the ledger recorded the post the job had opened. The
+> write now clicks the reply button of the article with that status ID. When
+> the permalink on the page is the account's, nothing is clicked and the
+> status stays claimed.
+
 > **2026-09-29 — Replies answer posts under 15 minutes only (Operator):**
 > "reply only to messages under 15 minutes". Each job had its own window:
 > 4 minutes for mega watch, 18 for early bird, 48 hours for the VIP scan,

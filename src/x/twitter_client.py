@@ -349,6 +349,66 @@ class LikeOutcome(Enum):
         return self is LikeOutcome.LIKED
 
 
+# The reply button of the post with status ID __TARGET_ID__, and no other.
+# The "r" shortcut answers whatever X has selected, which on a thread is
+# often the account's own previous reply (operator 2026-10-04: never answer
+# the account's own messages, and never a second time). This clicks only
+# that article's reply button, and clicks nothing when the permalink is the
+# account's.
+_REPLY_CLICK_JS = r"""
+(function(targetId, ownHandle) {
+    /* __REPLY_CLICK__ */
+    function statusId(href) {
+        var m = (href || '').match(/\/status\/(\d+)/);
+        return m ? m[1] : '';
+    }
+    function statusLink(art) {
+        var times = art.querySelectorAll('a[href*="/status/"] time');
+        for (var j = 0; j < times.length; j++) {
+            var a = times[j].closest('a');
+            if (a && a.closest('article') === art) return a.href;
+        }
+        return '';
+    }
+    function authorOf(href) {
+        var m = (href || '').match(/\/([A-Za-z0-9_]{1,15})\/status\//);
+        if (!m || m[1].toLowerCase() === 'i') return '';
+        return m[1].toLowerCase();
+    }
+    var all = document.querySelectorAll('article[data-testid="tweet"]');
+    var art = null;
+    for (var i = 0; targetId && i < all.length; i++) {
+        if (statusId(statusLink(all[i])) === targetId) { art = all[i]; break; }
+    }
+    if (!art) return JSON.stringify({url: '', result: 'missing'});
+    var url = statusLink(art);
+    if (ownHandle && authorOf(url) === ownHandle) {
+        return JSON.stringify({url: url, result: 'own'});
+    }
+    var button = art.querySelector('[data-testid="reply"]');
+    if (!button) return JSON.stringify({url: url, result: 'failed'});
+    button.click();
+    return JSON.stringify({url: url, result: 'clicked'});
+})("__TARGET_ID__", "__BOT_HANDLE__")
+"""
+
+
+def _click_reply(page, tweet_url: str) -> dict:
+    """Click the reply button of the post `tweet_url` names, on the open page.
+
+    Returns the page's JSON: `clicked` when that article's button was
+    clicked, `own` when its permalink is the account (nothing clicked),
+    `missing` or `failed` otherwise. {} when the page gave no answer."""
+    from ..core import config
+    from . import x_urls
+    target = x_urls.status_id(tweet_url)
+    handle = (config.BOT_HANDLE or "").lower()
+    js = (_REPLY_CLICK_JS.replace("__TARGET_ID__", target)
+          .replace("__BOT_HANDLE__", handle))
+    data = page.read_json(js, 10, activate=True)
+    return data if isinstance(data, dict) else {}
+
+
 # The article is identified before anything is clicked: the post with status
 # ID __TARGET_ID__, and no other. Only a data-testid="like" button is
 # clicked, never "unlike", so a like can neither toggle off nor land on
@@ -493,10 +553,15 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     account, own post, one Reply per post, Debate turn cap, spacing, and the
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
-    slot between the check and the write. `debate_turn=True` marks an answer
-    to someone who answered the account (CONTEXT.md). `on_refused`, when
-    given, receives the Refusal of a Reply admission refusal, dry run
-    included, so the caller can drop a post admission refused for good.
+    slot between the check and the write. The reply itself clicks the reply
+    button of the article with this status ID. The "r" key is never pressed:
+    it would answer the post X has selected, including one of the account's
+    own replies already on the thread. When the article's permalink is the
+    account, nothing is clicked and the status stays claimed. `debate_turn=True`
+    marks an answer to someone who answered the account (CONTEXT.md).
+    `on_refused`, when given, receives the Refusal of a Reply admission
+    refusal, dry run included, and of a post the page shows as the account's
+    own, so the caller can drop a post refused for good.
 
     ⛔ CALLERS MUST NOT write the replied store before calling this — the
     claim below REFUSES anything already in it. Bug 2026-06-07: five bots
@@ -574,12 +639,20 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             page.wait(1)
 
             log.info("Clicking reply...")
-            if not page.keys('''
-            tell application "System Events"
-                keystroke "r"
-            end tell
-            '''):
-                log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
+            opened = _click_reply(page, tweet_url)
+            result = opened.get("result")
+            if result == "own":
+                shown = opened.get("url") or tweet_url
+                log.info(f"[REPLY] the post on the page is the account's own; nothing sent: {shown}")
+                if on_refused is not None:
+                    on_refused(reply_admission.Refusal.OWN_POST)
+                # Keep the claim. This status is the account's, whatever
+                # handle the caller URL carried, and it is never answered.
+                sent = True
+                return WriteOutcome.REFUSED
+            if result != "clicked":
+                log.info(f"[REPLY] Reply button for this post was not on the page; "
+                         f"nothing sent, tweet left fresh: {tweet_url}")
                 return WriteOutcome.FAILED
             page.wait(3)  # Wait for reply box to open
 
