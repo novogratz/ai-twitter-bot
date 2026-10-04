@@ -208,7 +208,13 @@ marked published after a check.
   URL contains a `BLOCKLIST` token or one of the Account's
   `network.blocked_accounts`, which add to it and never remove from it
   (case, spaces, dashes and underscores ignored on both sides), when the parent is the account's own post, or
-  when the URL carries no author handle. The scheduled reply jobs ask
+  when the URL carries no author handle. One post gets one Reply
+  (Operator, 2026-10-04: never answer the account's own messages, and never
+  a second response on a post). The write clicks the reply button of the
+  article with that status ID and never presses `r`, which answers whatever
+  post X has selected, including one of the account's own replies in the
+  thread. When the permalink on the page is the account's, nothing is
+  clicked and that post is not answered again. The scheduled reply jobs ask
   the same admission before paying for a generation and keep no copy of
   these rules (issue #100). The legacy `reply_job`
   (`ENABLE_REPLY_SEARCH=1`) finds and drafts in one model call, so it asks

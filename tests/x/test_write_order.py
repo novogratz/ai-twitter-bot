@@ -3,6 +3,7 @@
 write, the tab closed and the Safari lock released on every path, one
 dry-run line per chokepoint. The writes run on a memory page that traces
 each step (#256), so these tests never reach Safari."""
+import json
 from datetime import datetime
 from types import SimpleNamespace
 
@@ -27,7 +28,8 @@ QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Ja
 
 
 def _js_kind(js):
-    for marker, kind in (("confirmationSheetConfirm", "confirm"),
+    for marker, kind in (("__REPLY_CLICK__", "reply_key"),
+                         ("confirmationSheetConfirm", "confirm"),
                          ("NO_BTN", "follow"), ("caret", "more"), ("PIN_NOT_FOUND", "pin_item")):
         if marker in js:
             return kind
@@ -72,7 +74,8 @@ def trace(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(safari, "_safari_lock", Lock())
     t.page = WritePage(answers=t.js, fail=t.fail, before=page_step,
-                       script_kind=lambda js: f"js:{_js_kind(js)}")
+                       script_kind=lambda js: _js_kind(js) if _js_kind(js) == "reply_key"
+                       else f"js:{_js_kind(js)}")
     monkeypatch.setattr(page_session, "BROWSER", t.page)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
@@ -512,7 +515,8 @@ def test_a_page_that_does_not_open_fails_the_write_before_any_keystroke(trace, w
     """#251: the open's return was ignored, so a reply whose page never
     opened pressed `r`, pasted and submitted into the front tab. A page that
     does not open ends the write in FAILED: no keystroke, paste, click or
-    page read, no ledger row."""
+    page read, no ledger row. The reply button is a click now; the open
+    still fails before it."""
     trace.fail.add("open")
     outcome = write()
     assert outcome.name == "FAILED" and not outcome
@@ -563,10 +567,49 @@ def test_every_keystroke_of_the_reply_and_the_post_is_bounded(trace):
     """#251 review: an unbounded osascript under the Safari lock holds it,
     and every job behind it, while Safari is wedged. The Safari adapter
     bounds the activate, the paste and the open itself
-    (test_page_session.py)."""
+    (test_page_session.py). The reply opens its box with the article's
+    reply button, so the only keystrokes left are the two submits."""
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
     assert tc.post_tweet(TEXT) is W.SHIPPED
-    assert trace.page.key_timeouts == [safari.KEYSTROKE_TIMEOUT_S] * 3
+    assert trace.page.key_timeouts == [safari.KEYSTROKE_TIMEOUT_S] * 2
+    assert not any('keystroke "r"' in script for script in trace.page.pressed)
+
+
+def test_reply_clicks_that_posts_button_and_never_the_r_key(trace):
+    """Operator 2026-10-04: a reply answers the post it was given. The r key
+    answers whatever X has selected, which on a thread is often the
+    account's own previous reply."""
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+    [script] = trace.page.scripts
+    assert "__REPLY_CLICK__" in script.js
+    assert "2063500000000000500" in script.js
+    assert '[data-testid="reply"]' in script.js
+    assert not any('keystroke "r"' in pressed for pressed in trace.page.pressed)
+
+
+def test_reply_whose_page_post_is_the_accounts_own_sends_nothing(trace):
+    """A scraped URL can name another handle for the account's own status.
+    The permalink on the page is the authority: nothing is clicked, the
+    status stays claimed, and the caller hears a definitive own-post refusal."""
+    refusals = []
+    trace.js.append(json.dumps({
+        "url": "https://x.com/TheAIShrink/status/2063500000000000500",
+        "result": "own",
+    }))
+    assert tc.reply_to_tweet(POST_URL, REPLY, on_refused=refusals.append) is W.REFUSED
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "close", "unlock"]
+    assert POST_URL in trace.claimed
+    assert refusals == [ra.Refusal.OWN_POST]
+    assert not [e for e in trace.events if e.startswith("record:")]
+    assert not trace.page.pasted
+
+
+def test_reply_whose_button_is_missing_leaves_the_post_fresh(trace):
+    trace.js.append(json.dumps({"url": "", "result": "missing"}))
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    assert POST_URL not in trace.claimed
+    assert not trace.page.pasted
 
 
 def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):

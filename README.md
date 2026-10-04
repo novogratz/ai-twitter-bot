@@ -13,8 +13,11 @@ English prompts): every post and reply prompt carries it as one block.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
-  and again at the write: blocked accounts, the account's own posts, links without an
+  and again at the write: blocked accounts, the account's own posts, a post
+  already answered, links without an
   author handle and quiet posts over 15 minutes old (`REPLY_MAX_AGE_MINUTES`) are refused.
+  The write clicks that post's reply button and never the `r` key, so a reply
+  cannot land on one of the account's own replies in the thread.
   Rising posts selected by the Reply source can use `REPLY_RISING_MAX_AGE_MINUTES`
   (45 minutes at most) when their like velocity clears the operator bounds. Every reply prompt carries the Voice, the
   operator's hard rules and the respect list, and a reply or original that

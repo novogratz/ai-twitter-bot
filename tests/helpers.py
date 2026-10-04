@@ -145,13 +145,23 @@ def pin_rows(ledger):
 
 def key_kind(applescript):
     """The write step a keyboard script is: "submit", "reply_key", or
-    "keys" for any other."""
+    "keys" for any other. The reply button is a page script, not a key;
+    `write_script_kind` names that script "reply_key"."""
     from src.x import twitter_client
     if applescript == twitter_client._SUBMIT_KEYSTROKE:
         return "submit"
     if 'keystroke "r"' in applescript:
         return "reply_key"
     return "keys"
+
+
+def write_script_kind(js):
+    """The write step a page script is. The reply click is "reply_key":
+    the same name the old "r" keystroke used, so a test that fails that
+    step still fails the click."""
+    if "__REPLY_CLICK__" in js:
+        return "reply_key"
+    return "js"
 
 
 class WritePage(page_session.MemoryBrowser):
@@ -164,7 +174,7 @@ class WritePage(page_session.MemoryBrowser):
     the caller's objects, so a test may change them between writes."""
 
     def __init__(self, answers=None, fail=None, before=lambda kind: None,
-                 script_kind=lambda js: "js"):
+                 script_kind=write_script_kind):
         super().__init__()
         self.answers = [] if answers is None else answers
         self.fail = set() if fail is None else fail
@@ -202,8 +212,16 @@ class WritePage(page_session.MemoryBrowser):
     def run_js(self, js, timeout_s, log_prefix, activate, raise_timeout):
         self.scripts.append(page_session.Script(self.front, js, timeout_s, log_prefix, activate,
                                                 raise_timeout))
-        self.before(self.script_kind(js))
-        return self.answers.pop(0) if self.answers else ""
+        kind = self.script_kind(js)
+        if not self._ok(kind):
+            return ""
+        if self.answers:
+            return self.answers.pop(0)
+        # A reply click the test did not script finds the open post and
+        # clicks its reply button. A test that needs another answer queues it.
+        if kind == "reply_key":
+            return json.dumps({"url": self.front or "", "result": "clicked"})
+        return ""
 
 
 def references(source, module):

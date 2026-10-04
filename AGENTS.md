@@ -137,7 +137,9 @@ Each one is a bug that shipped live. The full incident stories are in
 - **Keyboard shortcuts toggle.** A retweet keystroke on a retweeted post
   un-retweets it: know the state before pressing. A shortcut also acts on
   X's own selection, not on the post you read: likes click the `like`
-  button of an article found by status ID instead.
+  button of an article found by status ID instead, and replies click that
+  article's `reply` button. The `r` key is never pressed (2026-10-04): on a
+  thread it answered the account's own reply.
 - **Trim with `humanizer.smart_trim`.** A bare `[:N]` slice on outgoing
   text once published a reply cut mid-word.
 - **Fix the family.** When a bug ships, grep every surface for the same
