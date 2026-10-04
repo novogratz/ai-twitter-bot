@@ -807,9 +807,15 @@ generator always opens the prompt on the Voice,
 `personality_store.render_voice`: the Operator's `voice_fr.md`
 (`voice_en.md` for an English reply), in the Account's folder, under a
 header naming `BOT_HANDLE`, the one reader of those files. The job's template follows,
-with its instructions but no persona, then
+with its instructions but no persona, then the shared `QUALITY_RULE`,
+the one `LENGTH_RULE`, and
 `personality_store.hard_rules_block()`, which renders the hard rules and
-the respect list from the Account's `respect_list.json`. No prompt reads
+the respect list from the Account's `respect_list.json`. The quality block
+asks for a concrete technical insight and dry sarcasm aimed at claims,
+with uncertainty explicit; it applies to Relations and JSON search too.
+Each parent and supplied context contributes up to 1,200 characters,
+including qualifications beyond the old 200–500 character cutoffs.
+No prompt reads
 `personality.json` (Operator, 2026-09-27). The editorial Draft opens on the
 same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the

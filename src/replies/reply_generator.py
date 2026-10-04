@@ -2,7 +2,8 @@
 
 Every Reply prompt is assembled here, so none reaches the model without
 the Voice (`personality_store.render_voice`) before the template, and the
-one length rule (`LENGTH_RULE`) and `personality_store.hard_rules_block()`
+shared quality standard (`QUALITY_RULE`), one length rule (`LENGTH_RULE`)
+and `personality_store.hard_rules_block()`
 after it. The generator also picks the reply
 language (one decision point, `_language`) and reads the model's answer
 into reply text or a decline. The model stays behind `run_llm` (tests fake
@@ -58,7 +59,7 @@ class ReplyCall:
     surface: Surface
     label: str
     language: LanguageRule = LanguageRule.PARENT
-    text_limit: int = 200
+    text_limit: int = 1200
     strip_preamble: bool = False
     # The VIP rule: "skip" anywhere in the first N characters declines too,
     # after "I'd skip this one" shipped live (2026-06-07). 0: SKIP as a
@@ -88,6 +89,34 @@ _BLAND_REPLY = re.compile(
 # admission trims to REPLY_MAX_CHARS, a little above it.
 LENGTH_RULE = ("LENGTH: one or two short sentences. Aim for about 100 characters; "
                "never more than 140.")
+
+# Operator 2026-10-04: deeper expertise, sharper judgement and dry sarcasm.
+# Shared by every surface, including Relations and the JSON reply search.
+QUALITY_RULE = """REPLY QUALITY: apply this to each reply, including replies in JSON.
+Add one precise insight from {domain} knowledge that the parent does not give.
+Read the actual claim and its qualifications. Answer a question directly.
+Choose the strongest useful move: explain the mechanism, expose a hidden
+assumption, name the limiting resource, or give the test that would settle it.
+Prefer a concrete consequence to a summary or a list of technical terms.
+For technical claims, distinguish a demonstration from reliable operation,
+a benchmark from general ability, and a prediction from measured evidence.
+For claims of superintelligence, ask what ability was tested and what remains
+unproved; the label alone is not evidence. Use these distinctions only when
+they fit the parent. Do not force every reply into the same argument.
+Be decisive when evidence supports it. Correct a false premise instead of
+agreeing for approval. If the parent is right, add the missing implication.
+Use dry, sharp sarcasm to expose hype or faulty logic when it helps the point.
+Aim the wit at the claim, never the person's intelligence or identity.
+The technical insight must survive if the joke is removed. No stock dunk,
+forced joke, flattery, theatrical outrage, or generic closing question.
+Earn attention with a useful, memorable observation, not engagement bait.
+Use supplied facts or reliable, stable knowledge. A parent's current claim
+is not independent verification. Do not invent releases, scores, prices,
+citations, private access, test results or firsthand experience. State an
+inference as an inference. If a needed fact is unknown, name the missing
+evidence or return SKIP instead of bluffing. Do not claim to know everything
+or imitate a real person's identity. Follow the Voice, language, length,
+hard rules and respect list. Return only the requested output format."""
 
 _LANGUAGE_OVERRIDE = {
     "fr": "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords.",
@@ -159,4 +188,6 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
     })
-    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, LENGTH_RULE, rules]))
+    quality = QUALITY_RULE.format(domain=account.current().domain)
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
+                                    quality, LENGTH_RULE, rules]))

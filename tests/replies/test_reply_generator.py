@@ -192,6 +192,28 @@ EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird",
 
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
+def test_every_reply_path_requires_grounded_insight_and_sharp_wit(jobs, job, author, text):
+    """Relations and JSON search must not bypass the shared quality standard."""
+    prompt = jobs(job, author, text)
+    assert prompt.count("REPLY QUALITY:") == 1
+    assert "explain the mechanism" in prompt
+    assert "superintelligence" in prompt
+    assert "Use dry, sharp sarcasm" in prompt
+    assert "never the person's intelligence or identity" in prompt
+    assert "not independent verification" in prompt
+    assert "return SKIP instead of bluffing" in prompt
+    assert "requested output format" in prompt
+
+
+@pytest.mark.parametrize("job, author, _text", EVERY_PATH[:-1])
+def test_reply_jobs_keep_the_qualification_after_the_old_context_cutoff(jobs, job, author, _text):
+    parent = "AI benchmark results. " * 30 + "Only a simulation; no real deployment was tested."
+    assert 500 < len(parent) < 1200
+    prompt = jobs(job, author, parent)
+    assert "Only a simulation; no real deployment was tested." in prompt
+
+
+@pytest.mark.parametrize("job, author, text", EVERY_PATH)
 def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monkeypatch):
     """Issue #155: debate and the VIP and Graphseo paths used to build their
     prompts without the hard rules or the respect list. They close every

@@ -33,6 +33,11 @@ English prompts): every post and reply prompt carries it as one block.
 - **Reply targets favor active conversations**: search and feed candidates are
   ranked by likes plus double-weighted replies per minute, and generic praise
   is declined before sending.
+- **Sharper technical replies**: all reply paths ask for a precise mechanism,
+  missing assumption or useful test, with dry sarcasm aimed at hype and claims.
+  AI and superintelligence claims need evidence; unknown facts are never filled
+  in for effect. Prompts retain up to 1,200 characters of each parent and supplied
+  context, while replies keep the same short length.
 - **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,

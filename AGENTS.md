@@ -18,6 +18,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Quotes, reposts, self-recycling and threads stay at zero.
 - Replies are uncapped in waking hours, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
+- Reply prompts share a technical quality standard (2026-10-04): add a
+  precise mechanism, missing assumption or useful test; dry sarcasm targets
+  claims, with factual uncertainty explicit. Each parent and supplied context
+  can contribute up to 1,200 characters; the short output rule still applies.
 - A Reply answers a quiet post under 15 minutes old (2026-09-29), whatever
   the job, mentions and answers to our posts included. The Reply source may
   hand a rising post to admission up to `REPLY_RISING_MAX_AGE_MINUTES` (45
