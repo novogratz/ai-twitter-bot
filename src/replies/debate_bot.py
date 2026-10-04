@@ -66,7 +66,7 @@ Output ONLY the reply text, or exactly SKIP."""
 
 
 def reply_call() -> ReplyCall:
-    return ReplyCall(DEBATE_PROMPT, Surface.REPLY, "DEBATE", text_limit=500)
+    return ReplyCall(DEBATE_PROMPT, Surface.REPLY, "DEBATE")
 
 
 JOB = reply_pipeline.Job("debate", "DEBATE", reply_call=lambda _author: reply_call(), debate_turn=True,

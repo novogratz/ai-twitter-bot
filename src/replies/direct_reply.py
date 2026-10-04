@@ -55,7 +55,7 @@ def _own_call(relation) -> ReplyCall:
                    else f"the Reply goes to the Reply provider ({primary})")
         log.warning(f"[VIP] Relation @{relation.handle}: {relation.provider} is not installed, {outcome}.")
     return ReplyCall(relation.prompt, Surface.RELATION_REPLY, f"{relation.handle.upper()}_VIP",
-                     text_limit=300, provider=force)
+                     provider=force)
 
 
 def _vip_call(handle: str) -> ReplyCall | None:
@@ -72,7 +72,7 @@ def _vip_call(handle: str) -> ReplyCall | None:
     if template is None:
         return None
     return ReplyCall(template, Surface.PRIORITY_REPLY, f"VIP_REPLY/{handle}",
-                     text_limit=300, strip_preamble=True, skip_window=20)
+                     strip_preamble=True, skip_window=20)
 
 
 def _vip_job(handle: str) -> reply_pipeline.Job:

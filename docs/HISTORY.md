@@ -8,6 +8,15 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-10-04 — sharper technical Replies (Operator):** every Reply prompt
+> now asks for a precise mechanism, missing assumption or useful test, with
+> dry sarcasm aimed at hype and faulty claims. The shared instruction reaches
+> Relations and JSON search too, and requires uncertainty rather than invented
+> current facts. Parent and supplied context limits rise from 200–500 to 1,200
+> characters so qualifications survive; outgoing length and admission do not
+> change. Voice files remain Operator-owned. This changes drafting guidance,
+> not the model's knowledge or access to evidence.
+
 > **2026-10-04 — a Reply never answers the account, and never twice (Operator):**
 > "stop replying on your replies. Never respond to your own messages. Never
 > put more than 1 response per tweet." Admission already refused an own post
