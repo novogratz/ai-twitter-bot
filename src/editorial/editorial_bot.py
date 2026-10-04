@@ -283,6 +283,7 @@ def draft_post(slot, sources, recent, feedback="", trending=None):
     prompt = f"""{render_voice('en')}
 {hard_rules_block()}
 Write ONE original {domain} post in {language}. Today's slot: {slot[1]}.
+Account perspective (a preference, never factual evidence): {account.current().perspective or 'No preference.'}
 Draft three different angles privately, then choose the most useful one.
 Prefer a fresh launch, model update, {domain} article, research method, or concrete
 project when the sources include one. Use evergreen documentation only when no

@@ -475,6 +475,18 @@ def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, setti
     assert ok is approved
 
 
+def test_account_preference_guides_drafting_but_not_the_independent_review(editor, monkeypatch):
+    from dataclasses import replace
+    from src.core import account
+
+    loaded = account.current()
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, perspective="Prefer supplied ecosystem evidence."))
+    draft_and_review(editor)
+    draft_prompt = last_call(editor, "EDITORIAL_DRAFT").prompt
+    assert "Account perspective (a preference, never factual evidence): Prefer supplied ecosystem evidence." in draft_prompt
+    assert "Prefer supplied ecosystem evidence." not in last_call(editor, "EDITORIAL_REVIEW").prompt
+
+
 def test_the_draft_prompt_opens_on_the_one_voice(settings_override, editor):
     """Issue #192: an Original gets the persona from the Voice block alone,
     under the configured handle."""

@@ -93,16 +93,19 @@ def test_theaishrink_loads_the_old_constants():
     assert ed.trend_angle == OLD["TREND_PURPOSE"]
     assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
     assert list(ed.feeds) == OLD["FEEDS"]
-    assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
-    assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
-    assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
-    assert (loaded.relevance.topic.pattern, loaded.relevance.topic.flags) == OLD["AI_TOPIC"]
+    assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-1]] == OLD["KNOWLEDGE"]
+    assert ed.evergreen[-1].url == "https://docs.x.ai/developers/models"
+    assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"], "xAI docs"}
+    assert ed.trusted_hosts == set(OLD["HOSTS"]) | {"x.ai", "docs.x.ai"}
+    assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|")
+    assert loaded.relevance.topic.flags == OLD["AI_TOPIC"][1]
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
-    assert list(loaded.searches.trending) == OLD_TREND_QUERIES
+    assert list(loaded.searches.trending) == ['Grok OR xAI lang:en min_faves:50 -filter:replies',
+                                             *OLD_TREND_QUERIES]
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -111,6 +114,18 @@ def test_the_editorial_reads_the_loaded_account():
     assert sorted(editorial.trend_slots()) == OLD["TREND_SLOTS"]
     assert [slot.clock for slot in editorial.slots() if slot.exceptional] == [OLD["EXCEPTIONAL_SLOT"]]
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
+
+
+def test_pro_grok_account_prefers_supported_ai_claims_and_official_docs():
+    loaded = account.load("theaishrink")
+    assert "strongly pro-Grok, pro-xAI" in loaded.perspective
+    assert "Do not guess the latest version" in loaded.perspective
+    assert "Attribute vendor claims" in loaded.perspective
+    assert "Keep to AI" in loaded.perspective
+    assert loaded.relevance.topic.search("Grok update")
+    assert loaded.relevance.topic.search("xAI release")
+    assert editorial._trusted("https://docs.x.ai/developers/models")
+    assert not editorial._trusted("https://docs.x.ai.attacker.example/models")
 
 
 # --- Loading: BOT_ACCOUNT, and the settings layers ------------------------------
@@ -143,6 +158,22 @@ def fresh(monkeypatch, tmp_path):
         settings.load(env_file=str(env_file), environ=environ)
         return environ
     return load
+
+
+@pytest.mark.parametrize("value, expected", [(None, ""), ('""', ""), ('"  A preference.  "', "A preference.")])
+def test_optional_account_perspective_defaults_blank_and_trims(accounts, fresh, value, expected):
+    text = re.sub(r'perspective = """.*?"""', '' if value is None else f"perspective = {value}",
+                  THEAISHRINK, flags=re.S)
+    accounts("other", text)
+    fresh("BOT_ACCOUNT=other\n")
+    assert account.current().perspective == expected
+
+
+def test_account_perspective_rejects_non_text(accounts, fresh):
+    text = re.sub(r'perspective = """.*?"""', 'perspective = 3', THEAISHRINK, flags=re.S)
+    accounts("other", text)
+    with pytest.raises(settings.SettingsError, match="perspective"):
+        fresh("BOT_ACCOUNT=other\n")
 
 
 def test_bot_account_picks_the_folder(accounts, fresh):
@@ -506,12 +537,13 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert ",".join(net.profile_visits) == NETWORK["PROFILE_VISIT_ALLOWLIST"]
     assert ",".join(net.vip_scan) == NETWORK["VIP_SCAN_HANDLES"]
     assert ",".join(net.pinned_tracked) == NETWORK["PINNED_TRACKED_HANDLES"]
-    assert list(net.vip_reply) == NETWORK["VIP_REPLY_ACCOUNTS"]
+    assert list(net.vip_reply) == ["elonmusk", "xai", "grok", *NETWORK["VIP_REPLY_ACCOUNTS"]]
     assert list(net.big_ai_hype) == NETWORK["BIG_AI_HYPE_ACCOUNTS"]
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
-    assert list(net.always_reply) == NETWORK["ALWAYS_REPLY_ACCOUNTS"]
+    assert list(net.always_reply) == list(dict.fromkeys(
+        ["elonmusk", "xai", "grok", *NETWORK["ALWAYS_REPLY_ACCOUNTS"]]))
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
     assert list(net.engage_targets) == NETWORK["ENGAGE_TARGET_ACCOUNTS"]
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
@@ -520,8 +552,12 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert (niche.post.pattern, niche.post.flags) == NETWORK["NICHE_PATTERN"]
     assert niche.ticker is None
     assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
-    assert list(searches.replies) == NETWORK["SEARCH_QUERIES"]
-    assert list(searches.hot_tab) == NETWORK["HOT_TAB_QUERIES"]
+    def current_queries(old, threshold):
+        return [f'Grok OR xAI lang:en min_faves:{threshold}', *[
+            q.replace('"super intelligence" OR superintelligence OR SI',
+                      '("super intelligence" OR superintelligence OR SI) AI') for q in old]]
+    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30)
+    assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert net.blocked_accounts == ()
 

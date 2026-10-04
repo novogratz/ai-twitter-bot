@@ -8,6 +8,10 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
+- **Openly pro-Grok and pro-xAI**: the Account's `perspective` favors Musk's
+  AI work, supported Grok improvements and useful technical insights. Grok/xAI
+  searches and priority authors get more attention. Praise follows evidence;
+  model versions are never guessed, and the independent editor still checks facts.
 - **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.

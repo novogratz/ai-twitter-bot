@@ -8,6 +8,14 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-10-04 — pro-Grok Account perspective (Operator):** added an optional
+> Account preference to Originals and every Reply surface, keeping the
+> independent review free of preference instructions. This Account favors
+> Grok, xAI and Musk's AI work, with evidence for praise and no guessed latest
+> version. Added targeted searches, priority authors, Grok/xAI relevance terms
+> and official model documentation in the evergreen pool. SI search clauses
+> now explicitly require AI. The AI niche and write safeguards still apply.
+
 > **2026-10-04 — sharper technical Replies (Operator):** every Reply prompt
 > now asks for a precise mechanism, missing assumption or useful test, with
 > dry sarcasm aimed at hype and faulty claims. The shared instruction reaches

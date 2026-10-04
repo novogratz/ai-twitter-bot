@@ -73,7 +73,9 @@ unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
 the language of the Originals (`en` or `fr`), the `domain` the editorial and
 Reply prompts name ("Write ONE original AI post"), the Slots and their
 angles, the feeds, Evergreen topics and trusted hosts, the relevance filter,
-and the Relations; its comments describe each key. Next to it sit the Voice, the
+and the Relations; its comments describe each key. Optional `perspective`
+guides Originals and Replies, subordinate to evidence and hard rules, and
+never guides the independent editor. Next to it sit the Voice, the
 Operator's `voice_fr.md` and `voice_en.md`, read on every prompt, and the
 Relations' prompts under `relations/`, read at start like `account.toml`. A
 Voice file missing or empty, a Relation's handle that is no X handle, an

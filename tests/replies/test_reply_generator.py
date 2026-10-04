@@ -192,6 +192,23 @@ EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird",
 
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
+def test_account_preference_reaches_every_reply_but_not_other_accounts(jobs, job, author, text, monkeypatch):
+    from dataclasses import replace
+    from src.core import account
+
+    loaded = account.current()
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, perspective="Prefer the supplied ecosystem evidence."))
+    prompt = jobs(job, author, text)
+    assert "ACCOUNT PERSPECTIVE (subject to evidence and hard rules):" in prompt
+    assert "Prefer the supplied ecosystem evidence." in prompt
+    assert "not independent verification" in prompt
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, perspective=""))
+    prompt = jobs(job, author, text)
+    assert "ACCOUNT PERSPECTIVE" not in prompt
+    assert "Prefer the supplied ecosystem evidence." not in prompt
+
+
+@pytest.mark.parametrize("job, author, text", EVERY_PATH)
 def test_every_reply_path_requires_grounded_insight_and_sharp_wit(jobs, job, author, text):
     """Relations and JSON search must not bypass the shared quality standard."""
     prompt = jobs(job, author, text)

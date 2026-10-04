@@ -189,5 +189,7 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "domain": account.current().domain,
     })
     quality = QUALITY_RULE.format(domain=account.current().domain)
+    perspective = account.current().perspective
+    preference = f"ACCOUNT PERSPECTIVE (subject to evidence and hard rules):\n{perspective}" if perspective else ""
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
-                                    quality, LENGTH_RULE, rules]))
+                                    preference, quality, LENGTH_RULE, rules]))

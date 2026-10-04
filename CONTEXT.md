@@ -198,7 +198,9 @@ handle and language, the domain its prompts name, the Slots and their angles, th
 topics and trusted hosts, the relevance filter, its network and niche:
 the accounts the jobs answer, scan, visit or skip, the niche patterns and
 the X searches, and the Relations; and next to it the Voice files and the
-Relations' prompts. An Account may tighten an engine ceiling or floor,
+Relations' prompts. Optional `perspective` is an editorial preference for
+Originals and Replies, subordinate to evidence and hard rules, never passed
+to the independent review. An Account may tighten an engine ceiling or floor,
 never lift it, and add Blocked accounts, never remove one.
 _Avoid_: profile (the account's page on X), bot, persona
 

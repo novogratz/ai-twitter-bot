@@ -22,6 +22,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
   precise mechanism, missing assumption or useful test; dry sarcasm targets
   claims, with factual uncertainty explicit. Each parent and supplied context
   can contribute up to 1,200 characters; the short output rule still applies.
+- The Account's optional `perspective` guides Originals and Replies, never
+  the independent editorial review. Operator 2026-10-04: this Account is
+  strongly pro-Grok, pro-xAI and supportive of Musk's AI work; praise needs
+  specific evidence, current versions are not guessed, and AI stays the niche.
 - A Reply answers a quiet post under 15 minutes old (2026-09-29), whatever
   the job, mentions and answers to our posts included. The Reply source may
   hand a rising post to admission up to `REPLY_RISING_MAX_AGE_MINUTES` (45
