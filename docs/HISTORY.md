@@ -15,6 +15,9 @@ their order in the file is not strictly chronological.
 > version. Added targeted searches, priority authors, Grok/xAI relevance terms
 > and official model documentation in the evergreen pool. SI search clauses
 > now explicitly require AI. The AI niche and write safeguards still apply.
+> The Operator also reinforced sharper technical value: a testable challenge,
+> a decision-changing distinction or missing evidence, even for a favored
+> company, rather than a summary or technical name-dropping.
 
 > **2026-10-04 — sharper technical Replies (Operator):** every Reply prompt
 > now asks for a precise mechanism, missing assumption or useful test, with

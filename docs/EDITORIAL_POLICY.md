@@ -28,6 +28,11 @@ authors emphasize these conversations; original slots still need trusted
 article evidence. `x.ai` and `docs.x.ai` are trusted hosts; the official model
 docs enter the rotating evergreen pool as knowledge, never breaking news.
 No publishing cap, pacing, protected list or admission check changes.
+The same request reinforces technical value: Replies should leave readers
+with something new to test, decide or understand. Challenge sweeping claims
+with a failure case, missing comparison or falsifiable check, even for a
+favored company. Use one relevant distinction, such as capability versus
+reliability or task cost versus token price, rather than technical name-dropping.
 
 Operator, 2026-10-04: Replies should show deeper AI and superintelligence
 knowledge, sharper judgement and dry sarcasm. Every Reply surface, Relations

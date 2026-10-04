@@ -214,6 +214,9 @@ def test_every_reply_path_requires_grounded_insight_and_sharp_wit(jobs, job, aut
     prompt = jobs(job, author, text)
     assert prompt.count("REPLY QUALITY:") == 1
     assert "explain the mechanism" in prompt
+    assert "Pass the value test" in prompt
+    assert "falsifiable check" in prompt
+    assert "Challenge a weak claim even from a favored company" in prompt
     assert "superintelligence" in prompt
     assert "Use dry, sharp sarcasm" in prompt
     assert "never the person's intelligence or identity" in prompt
