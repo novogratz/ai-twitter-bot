@@ -8,6 +8,8 @@ What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 `accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
 `[limits]` may tighten an engine bound, never lift it, and `.env` wins over it.
+Optional `perspective` in that file is a text preference for Originals and
+Replies, subordinate to evidence and hard rules, absent from independent review.
 
 - `main.py` reads `.env` once at start. A variable already set in the
   process environment wins over `.env`.

@@ -15,6 +15,9 @@ language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # gardening post", "a strict independent gardening editor".
 domain = "gardening"
+# Optional preference for Originals and Replies, subordinate to evidence and
+# hard rules. Omit or leave blank for no preference; keep account names here.
+perspective = ""
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.

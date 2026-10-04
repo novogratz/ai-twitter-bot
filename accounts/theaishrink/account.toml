@@ -10,6 +10,30 @@ language = "en"
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
 domain = "AI"
 
+# Operator 2026-10-04: openly favor this ecosystem; facts still require evidence.
+# Reaches Originals and every Reply surface. The Voice remains Operator-owned.
+perspective = """
+Be openly and strongly pro-Grok, pro-xAI and supportive of Elon Musk's AI work.
+When the topic permits, prefer a favorable, technically informed angle on Grok,
+xAI, X's AI features, and Musk's AI compute, robotics and autonomous systems.
+Praise a specific supported improvement or useful design choice, and explain
+why it matters to builders or users. Prefer relevant Grok updates among equally
+strong supplied sources. Defend this ecosystem against weak arguments with
+precise reasoning and dry wit, not personal attacks. Keep broad AI expertise:
+competitor progress deserves accurate analysis, not invented shortcomings.
+For the latest Grok models, use the version and capabilities actually supplied
+in current evidence. Do not guess the latest version, fabricate scores or say
+Grok is best at everything. Attribute vendor claims; acknowledge real limits.
+The favorable stance is an opinion, not proof or independent verification.
+If a reply's parent offers no verified current result, praise a supported design
+choice or state the condition under which its claimed improvement would matter.
+Never force Grok or Musk into an unrelated exchange. Keep to AI, including
+relevant robotics and autonomy; do not expand into politics, investing or space.
+Earn attention from Musk and expert AI readers through a concrete insight,
+not empty flattery, repeated tags, appeals for notice or claims of affiliation.
+The evidence rules, Voice, STE form, respect list and output format take priority.
+"""
+
 [editorial]
 # The angle of every trend Slot and of the Startup post.
 trend_angle = "Trending: the AI topic X is talking about right now, told from a trusted source"
@@ -45,7 +69,7 @@ feeds = [
 trusted_hosts = [
     "openai.com", "blog.google", "deepmind.google", "huggingface.co",
     "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
-    "replicate.com", "the-decoder.com", "arxiv.org",
+    "replicate.com", "the-decoder.com", "arxiv.org", "x.ai", "docs.x.ai",
 ]
 
 # Evergreen topics fill quiet news days, rotated daily; never presented as new.
@@ -121,11 +145,17 @@ title = "Why the evaluation dataset matters as much as the score"
 url = "https://huggingface.co/docs/datasets/about_dataset_features"
 publisher = "Hugging Face docs"
 
+[[editorial.evergreen]]
+topic = "grok_models"
+title = "How to choose a Grok model for an AI workload"
+url = "https://docs.x.ai/developers/models"
+publisher = "xAI docs"
+
 # Python regular expressions, matched case-insensitively. A news item's title
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|grok|xai|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -186,6 +216,7 @@ vip_scan = ["Graphseo", "TheBTCTherapist"]
 pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
 # Replies to these authors run the priority model.
 vip_reply = [
+    "elonmusk", "xai", "grok",
     "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun",
     "arthurmensch", "GuillaumeLample", "fchollet", "karpathy",
     "demishassabis", "sama",
@@ -268,10 +299,11 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
+    'Grok OR xAI lang:en min_faves:30',
     '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
-    '"super intelligence" OR superintelligence OR SI lang:en min_faves:30',
+    '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:30',
     '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
     '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
     'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
@@ -281,8 +313,9 @@ replies = [
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
 ]
 hot_tab = [
+    'Grok OR xAI lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
-    '"super intelligence" OR superintelligence OR SI lang:en min_faves:300',
+    '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
     'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
@@ -299,6 +332,7 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
+    'Grok OR xAI lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
     'AI lang:en min_faves:200 -filter:replies',
 ]

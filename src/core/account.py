@@ -82,6 +82,7 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
+    perspective: str = ""  # account-owned editorial preference, subordinate to evidence
 
 
 def current() -> Account:
@@ -113,7 +114,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict})
+                 optional={"limits": dict, "relations": dict, "perspective": str})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -131,6 +132,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
         searches=_searches(top),
+        perspective=top.get("perspective", "").strip(),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
