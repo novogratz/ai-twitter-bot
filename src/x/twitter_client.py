@@ -373,11 +373,26 @@ _REPLY_CLICK_JS = r"""
                 !names[n].closest('[role="link"]')) { header = names[n]; break; }
         }
         if (!header) return '';
-        var times = header.querySelectorAll('a[href*="/status/"] time');
+        var links = header.querySelectorAll('a[href*="/"]');
+        var handle = '';
+        for (var h = 0; h < links.length; h++) {
+            var path = new URL(links[h].href, 'https://x.com').pathname;
+            var match = path.match(/^\/([A-Za-z0-9_]{1,15})(?:\/status\/\d+)?\/?$/);
+            if (match && match[1].toLowerCase() !== 'i') { handle = match[1].toLowerCase(); break; }
+        }
+        if (!handle) return '';
+        // Expanded posts can put their timestamp below the text, outside
+        // User-Name. It must still belong to this header's author.
+        var times = art.querySelectorAll('a[href*="/status/"] time');
         for (var j = 0; j < times.length; j++) {
             var a = times[j].closest('a');
-            if (a && a.closest('article') === art &&
-                a.closest('[data-testid="User-Name"]') === header) return a.href;
+            var owner = a && (a.href || '').match(/\/([A-Za-z0-9_]{1,15})\/status\//);
+            if (a && a.closest('article') === art && owner &&
+                owner[1].toLowerCase() === handle &&
+                !a.closest('[data-testid="quoteTweet"]') &&
+                !(a.parentElement && a.parentElement.closest('[role="link"]')) &&
+                (!a.closest('[data-testid="User-Name"]') ||
+                 a.closest('[data-testid="User-Name"]') === header)) return a.href;
         }
         return '';
     }
@@ -450,11 +465,26 @@ _POSTS_JS = r"""
                 !names[n].closest('[role="link"]')) { header = names[n]; break; }
         }
         if (!header) return '';
-        var times = header.querySelectorAll('a[href*="/status/"] time');
+        var links = header.querySelectorAll('a[href*="/"]');
+        var handle = '';
+        for (var h = 0; h < links.length; h++) {
+            var path = new URL(links[h].href, 'https://x.com').pathname;
+            var match = path.match(/^\/([A-Za-z0-9_]{1,15})(?:\/status\/\d+)?\/?$/);
+            if (match && match[1].toLowerCase() !== 'i') { handle = match[1].toLowerCase(); break; }
+        }
+        if (!handle) return '';
+        // Expanded posts can put their timestamp below the text, outside
+        // User-Name. It must still belong to this header's author.
+        var times = art.querySelectorAll('a[href*="/status/"] time');
         for (var j = 0; j < times.length; j++) {
             var a = times[j].closest('a');
-            if (a && a.closest('article') === art &&
-                a.closest('[data-testid="User-Name"]') === header) return a.href;
+            var owner = a && (a.href || '').match(/\/([A-Za-z0-9_]{1,15})\/status\//);
+            if (a && a.closest('article') === art && owner &&
+                owner[1].toLowerCase() === handle &&
+                !a.closest('[data-testid="quoteTweet"]') &&
+                !(a.parentElement && a.parentElement.closest('[role="link"]')) &&
+                (!a.closest('[data-testid="User-Name"]') ||
+                 a.closest('[data-testid="User-Name"]') === header)) return a.href;
         }
         return '';
     }

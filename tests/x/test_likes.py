@@ -461,6 +461,7 @@ function El(spec, parent) {
     var self = this;
     this.children = (spec.children || []).map(function(c) { return new El(c, self); });
 }
+Object.defineProperty(El.prototype, 'parentElement', {get: function() { return this.parent; }});
 Object.defineProperty(El.prototype, 'href', {get: function() { return this.attrs.href || ''; }});
 El.prototype.matchesCompound = function(c) {
     if (c.tag && c.tag !== this.tagName) return false;
@@ -610,3 +611,15 @@ def test_outer_post_action_never_clicks_quoted_own_reply_button(reply):
     result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
     assert clicks == ["parent-button"]
     assert result["url"] == "https://x.com/someone/status/123"
+
+
+@pytest.mark.parametrize("reply", [False, True])
+def test_expanded_post_timestamp_can_be_outside_its_author_header(reply):
+    outer = _article("https://x.com/someone/status/123", "reply" if reply else "like", "parent")
+    header = outer["children"][0]
+    timestamp = header["children"][0]
+    header["children"] = [{"tag": "a", "attrs": {"href": "https://x.com/someone"}}]
+    outer["children"].append(timestamp)
+    result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
+    assert result["url"] == "https://x.com/someone/status/123"
+    assert clicks == ["parent-button"]
