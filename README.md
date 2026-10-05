@@ -247,3 +247,12 @@ parent. Generic advice, empty contrarian claims, jargon without a point and
 jokes that do not fit the parent are rejected. Missing essential context means
 skip, not invention. The tone stays clear and conversational; wit is optional
 and no human identity or lived experience is fabricated.
+
+2026-10-05 — Operator requested broader Reply coverage. Six additional AI-only
+search queries discover quiet technical questions and builder posts without a
+minimum like count: retrieval, tuning, agent debugging, inference, prototypes
+and reliability. They join the existing rotating query pool; the per-cycle
+slice, schedule, root-post selection, age limits, quality review, own-post and
+duplicate refusal, pacing and waking hours are unchanged. Original, like and
+follow discovery are unchanged. This expands eligibility, not a promise of a
+specific reply count.

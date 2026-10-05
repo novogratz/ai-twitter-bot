@@ -23,7 +23,7 @@ def test_reply_and_like_queries_are_ai_only():
     queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ")
+                "cursor", "copilot", "humanoid", "robotics", " ia ", "llm")
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()

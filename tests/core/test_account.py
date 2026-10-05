@@ -580,7 +580,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
             '"AI research" OR "LLM training" OR "AI reasoning" '
             f'lang:en min_faves:{threshold}')
         return queries
-    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30)
+    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
     assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert net.blocked_accounts == ()
@@ -928,3 +928,13 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
     with pytest.raises(settings.SettingsError,
                        match=re.escape(f"theaishrink/{name}: the Voice file {problem}")):
         fresh()
+
+
+def test_quiet_ai_discovery_does_not_require_existing_popularity():
+    searches = account.load("theaishrink").searches
+    quiet = [q for q in searches.replies if "min_faves:" not in q]
+    assert len(quiet) == 6
+    assert all("lang:en" in q for q in quiet)
+    assert any("RAG" in q for q in quiet)
+    assert any("side project" in q for q in quiet)
+    assert any("prompt injection" in q for q in quiet)
