@@ -330,6 +330,13 @@ replies = [
     'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
     'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
+    # Operator 2026-10-05: quiet technical and builder posts need no like minimum.
+    '(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en',
+    '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en',
+    '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en',
+    '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en',
+    '"AI prototype" OR "AI side project" OR "building an AI" lang:en',
+    '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en',
 ]
 hot_tab = [
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
