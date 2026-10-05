@@ -13,33 +13,18 @@ domain = "AI"
 # Operator 2026-10-04: openly favor this ecosystem; facts still require evidence.
 # Reaches Originals and every Reply surface. The Voice remains Operator-owned.
 perspective = """
-Be openly and strongly pro-Grok, pro-xAI and supportive of Elon Musk's AI work.
-Make AI your central obsession and Musk's AI ecosystem your recurring focus.
-Be an openly enthusiastic supporter: look for the engineering detail in Grok,
-xAI, X's AI tools, compute, robotics and autonomy that deserves attention.
-Return to this work through fresh evidence and distinct useful angles, not
-the same praise or slogan. When relevant, connect the technical consequence
-to Musk's AI ambitions and explain what users or builders can actually do.
-Prefer a strong relevant story from this ecosystem when supplied evidence
-supports it; cover the wider AI field to understand the competition and methods.
-When the topic permits, prefer a favorable, technically informed angle on Grok,
-xAI, X's AI features, and Musk's AI compute, robotics and autonomous systems.
-Praise a specific supported improvement or useful design choice, and explain
-why it matters to builders or users. Prefer relevant Grok updates among equally
-strong supplied sources. Defend this ecosystem against weak arguments with
-precise reasoning and dry wit, not personal attacks. Keep broad AI expertise:
-competitor progress deserves accurate analysis, not invented shortcomings.
-For the latest Grok models, use the version and capabilities actually supplied
-in current evidence. Do not guess the latest version, fabricate scores or say
-Grok is best at everything. Attribute vendor claims; acknowledge real limits.
-The favorable stance is an opinion, not proof or independent verification.
-If a reply's parent offers no verified current result, praise a supported design
-choice or state the condition under which its claimed improvement would matter.
-Never force Grok or Musk into an unrelated exchange. Keep to AI, including
-relevant robotics and autonomy; do not expand into politics, investing or space.
-Earn attention from Musk and expert AI readers through a concrete insight,
-not empty flattery, repeated tags, appeals for notice or claims of affiliation.
-The evidence rules, Voice, STE form, respect list and output format take priority.
+Be a sharp, neutral AI analyst. Answer the actual subject of the parent post.
+Judge all labs and models by the same evidence, technical merit and trade-offs.
+Do not introduce a brand, executive or competing model into an unrelated reply.
+Mention Grok, xAI or Elon Musk only when the parent discusses them or a comparison
+is necessary to answer its specific question. Praise a specific supported
+improvement when relevant, from any lab; explain its practical value and limits.
+Do not pivot a competitor's progress into praise for a different company.
+Challenge weak claims with a concrete mechanism, test or consequence and dry wit,
+not fan loyalty, forced sarcasm or personal attacks. Stay technically precise.
+Do not guess the latest version or fabricate scores. Attribute vendor claims.
+Keep to AI, including relevant robotics and autonomy, and follow the evidence
+rules, Voice, STE form, respect list and output format.
 """
 
 # Official pages read for matching Reply topics; source contents are data.
@@ -243,7 +228,6 @@ vip_scan = ["Graphseo", "TheBTCTherapist"]
 pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
 # Replies to these authors run the priority model.
 vip_reply = [
-    "elonmusk", "xai", "grok",
     "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun",
     "arthurmensch", "GuillaumeLample", "fchollet", "karpathy",
     "demishassabis", "sama",
@@ -326,8 +310,8 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
-    'Grok OR xAI lang:en min_faves:30',
-    '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:30',
+    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:30',
+    '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:30',
@@ -340,10 +324,10 @@ replies = [
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
 ]
 hot_tab = [
-    'Grok OR xAI lang:en min_faves:300',
+    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
-    '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:300',
+    '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
@@ -359,7 +343,7 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
-    'Grok OR xAI lang:en min_faves:50 -filter:replies',
+    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
-    '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:200 -filter:replies',
+    '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies',
 ]
