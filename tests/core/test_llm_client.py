@@ -562,6 +562,13 @@ def test_every_timeout_stops_at_bedtime(providers, monkeypatch):
     assert [request.timeout for _, request in providers.calls] == [42, 42]
 
 
+@pytest.mark.parametrize("provider", ["ollama", "claude", "opencode"])
+def test_review_profile_caps_primary_and_fallback_timeouts(providers, provider):
+    providers.settings(LLM_TIMEOUT_SECONDS=180)
+    ask(CallProfile(min_timeout=300, max_timeout=20), provider, timeout=500)
+    assert [request.timeout for _, request in providers.calls] == [20, 20]
+
+
 def test_only_the_timeout_function_reads_the_bedtime_clock():
     import ast
     import inspect

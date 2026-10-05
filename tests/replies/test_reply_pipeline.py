@@ -300,7 +300,7 @@ def test_answers_about_rate_limits_leave_the_cycle_running(providers, chokepoint
     assert not cycle.rate_limited and chokepoint.sent == [] and set_aside() == set()
 
 
-def test_a_limit_at_the_primary_ships_the_fallback_reply_under_its_name(providers, chokepoint):
+def test_a_limit_at_the_primary_ships_the_fallback_reply_under_its_name(providers, chokepoint, quality_llm):
     """Issue #176: the engagement log names the provider and model that
     wrote the Reply, not the one configured for the surface."""
     providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]

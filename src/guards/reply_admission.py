@@ -56,6 +56,18 @@ def has_canned_opener(text: str) -> bool:
     return bool(_CANNED_OPENER.match(text or ""))
 
 
+def trim_reply(text: str) -> str | None:
+    """The single outgoing-length rule, also used before the quality review."""
+    longest = settings.get("REPLY_MAX_CHARS")
+    if len(text) <= longest:
+        return text
+    trimmed = humanizer.smart_trim(text, longest)
+    if not _SENTENCE_END.search(trimmed):
+        return None
+    log.info(f"[REPLY] over-length ({len(text)} chars): trimmed to {len(trimmed)}.")
+    return trimmed
+
+
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
@@ -67,6 +79,7 @@ class Refusal(Enum):
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     RESPECTED_ACCOUNT = "text names a Respected account"
+    UNREVIEWED = "Reply draft lacks a matching quality approval"
 
     @property
     def definitive(self) -> bool:
@@ -88,6 +101,23 @@ class Verdict:
 
     def __bool__(self) -> bool:
         return self.refusal is None
+
+
+@dataclass(frozen=True)
+class ReviewedReply:
+    """Issued after quality approval; binds the reviewed draft to its parent."""
+    status_id: str
+    text: str
+
+
+def judge_review(url: str, draft: str, approval: ReviewedReply | None) -> Verdict:
+    """The write must carry approval for this exact parent and draft.
+    Final admission may still refuse it or apply punctuation/typo cleanup."""
+    sid = x_urls.status_id(url)
+    if (not isinstance(approval, ReviewedReply) or not sid
+            or approval.status_id != sid or approval.text != draft):
+        return Verdict(Refusal.UNREVIEWED, "review the final draft for this parent before sending")
+    return Verdict(None)
 
 
 def judge_parent(url: str, *, debate_turn: bool = False, oldest: timedelta | None = None) -> Verdict:
@@ -140,15 +170,10 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False, oldest: time
     text = humanizer.strip_dashes(draft)
     if has_canned_opener(text):
         return Verdict(Refusal.TEXT, "canned Reply opener; answer the point directly", author)
-    longest = settings.get("REPLY_MAX_CHARS")
-    if len(text) > longest:
-        # The generation is already paid for: keep its first sentences. A cut
-        # on a word boundary reads as a botched paste: refuse it instead.
-        trimmed = humanizer.smart_trim(text, longest)
-        if not _SENTENCE_END.search(trimmed):
-            return Verdict(Refusal.TEXT, f"{len(text)} chars, no sentence end within {longest}", author)
-        log.info(f"[REPLY] over-length ({len(text)} chars): trimmed to {len(trimmed)}.")
-        text = trimmed
+    trimmed = trim_reply(text)
+    if trimmed is None:
+        return Verdict(Refusal.TEXT, f"{len(text)} chars, no sentence end within {settings.get('REPLY_MAX_CHARS')}", author)
+    text = trimmed
     text = humanizer.casualize(text)
     # The language is judged on the text as written, before the typo.
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):

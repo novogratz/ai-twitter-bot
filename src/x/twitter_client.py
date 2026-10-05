@@ -538,7 +538,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
-                   on_refused=None, oldest=None) -> WriteOutcome:
+                   on_refused=None, oldest=None, approval=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -608,6 +608,15 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         # is the atomic word on it. A dry run never gets here.
         if not replied_store.claim(tweet_url):
             log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
+            return WriteOutcome.REFUSED
+        return None
+
+    def quality_admit():
+        verdict = reply_admission.judge_review(tweet_url, reply_text, approval)
+        if not verdict:
+            log.info(f"[REPLY] not reviewed: {tweet_url}")
+            if on_refused is not None:
+                on_refused(verdict.refusal)
             return WriteOutcome.REFUSED
         return None
 
@@ -683,7 +692,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     # Admission needs the lock, so a dry run stops under it; it never claims.
     return confirmed_write.run(
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
-        rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
+        rows=rows, before_lock=(admit,), under_lock=(judge, quality_admit, confirmed_write.DRY_RUN_EXIT, claim),
         steps=steps)
 
 

@@ -7,7 +7,21 @@ from tests.replies.fakes import FakeChokepoint, FakeLlm
 
 
 @pytest.fixture
-def llm(monkeypatch):
+def quality_llm(monkeypatch):
+    import json
+    from src.core.llm_client import LLMResult
+    from src.replies import reply_quality
+    # These tests exercise generation/jobs. Evidence and the separate
+    # reviewer use independent seams; test_reply_quality tests their real code.
+    monkeypatch.setattr(reply_quality, "collect", lambda *a: ())
+    monkeypatch.setattr(reply_quality, "run_llm", lambda *a, **k: LLMResult(0, json.dumps({
+        "approved": True, "answers_parent": True, "adds_value": True, "natural": True,
+        "factually_supported": True, "needs_current_evidence": False,
+        "evidence_ids": [], "reason": "Useful stable point."}), ""))
+
+
+@pytest.fixture
+def llm(monkeypatch, quality_llm):
     from src.replies import reply_generator
 
     fake = FakeLlm()

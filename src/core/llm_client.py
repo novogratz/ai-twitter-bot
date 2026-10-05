@@ -198,6 +198,7 @@ class CallProfile:
     schema: Optional[dict] = None  # sent as Ollama's `format`
     temperature: float = 1.0
     min_timeout: int = 0  # floor on the requested timeout, still capped by bedtime
+    max_timeout: Optional[int] = None  # a bounded review can tighten the provider's default
     output: Output = Output.TEXT
 
 
@@ -210,6 +211,7 @@ class Surface(Enum):
     PRIORITY_REPLY = "priority Reply"
     REPLY_SEARCH = "reply search"
     RELATION_REPLY = "Relation Reply"
+    REPLY_REVIEW = "Reply review"
     ORIGINAL = "Original"
 
 
@@ -242,6 +244,8 @@ SURFACES: dict[Surface, Route] = {
     Surface.RELATION_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER",
                                   CallOptions(output_json=False, timeout=60)),
     Surface.ORIGINAL: Route("NEWS_MODEL", "PROFILE_LLM_PROVIDER"),
+    # Mandatory quality review: the Reply model/provider, with no browsing tools.
+    Surface.REPLY_REVIEW: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(timeout=20)),
 }
 
 
@@ -869,6 +873,8 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
         seconds = min(requested or default, _CLI_AFTER_OLLAMA_CAP)
     else:
         seconds = requested or default
+    if profile.max_timeout is not None:
+        seconds = min(seconds, profile.max_timeout)
     return min(seconds, max(1, int(seconds_until_bedtime())))
 
 

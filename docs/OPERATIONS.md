@@ -881,3 +881,7 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
+
+Reply review failures do not claim a parent or write a publication ledger row.
+Evidence cache state is disposable and memory-only. Deploy these changes with
+the normal operator-requested restart; merging does not restart the live bot.

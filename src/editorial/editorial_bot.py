@@ -143,7 +143,7 @@ def startup_slot(now=None, journal=None):
 def _trusted(url: str) -> bool:
     parts = urlsplit(url)
     return (parts.scheme == "https" and parts.hostname in account.current().editorial.trusted_hosts
-            and not parts.username)
+            and not parts.username and not parts.password and parts.netloc == parts.hostname)
 
 
 class _Redirect(urllib.request.HTTPRedirectHandler):
@@ -153,12 +153,12 @@ class _Redirect(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def _fetch(url: str) -> str:
+def _fetch(url: str, *, timeout_s: float = 12) -> str:
     require_active()
     if not _trusted(url):
         raise ValueError("Source must be an approved primary source")
     req = urllib.request.Request(url, headers={"User-Agent": "AIKnowledgeBot/1.0"})
-    with urllib.request.build_opener(_Redirect()).open(req, timeout=12) as response:
+    with urllib.request.build_opener(_Redirect()).open(req, timeout=timeout_s) as response:
         return response.read(1_000_000).decode("utf-8", errors="replace")
 
 
@@ -191,6 +191,11 @@ def _plain(html: str) -> str:
     parser = _Text()
     parser.feed(html)
     return " ".join(" ".join(parser.parts).split())
+
+
+def source_text(url: str, *, timeout_s: float = 4) -> str:
+    """Read article text through the same trusted-host/redirect checks as Originals."""
+    return _plain(_fetch(url, timeout_s=timeout_s))
 
 
 def collect_sources(journal, now=None, news_only=False) -> list:

@@ -340,3 +340,8 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
+
+**Reply approval**: an independent quality review result bound to the prepared
+Reply text and parent status ID. The write requires the matching approval.
+**Reply evidence**: bounded exact passages from trusted parent links or the
+Account’s configured reference pages, supplied as untrusted data to both calls.

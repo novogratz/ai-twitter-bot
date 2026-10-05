@@ -3249,3 +3249,8 @@ Mandatory invariants:
 > [`AGENTS.md`](../AGENTS.md); nothing loads this archive automatically.
 
 This file is read by Claude Code agentic sessions when working on the bot's source. It exists to give the AI context about the project so first-time edits don't break invariants.
+
+2026-10-04 — Grounded and independently reviewed Replies. All Reply lanes now
+share trusted reference collection and a separate quality review. The writer
+requires approval for the exact draft and parent. Failed review leaves the
+parent unclaimed. No caps, pacing, protected Voice files or live state changed.

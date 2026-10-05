@@ -32,7 +32,7 @@ def capture() -> dict:
     from src.core import account
     from src.core.llm_client import LLMResult
     from src.editorial import editorial_bot
-    from src.replies import debate_bot, direct_reply, replyback_agent, reply_generator
+    from src.replies import debate_bot, direct_reply, replyback_agent, reply_generator, reply_quality
 
     prompts = {}
 
@@ -41,9 +41,15 @@ def capture() -> dict:
         # Each caller's own decline, so none logs an error in bot.log.
         return LLMResult(0, '{"skip": true}' if options["output_json"] else "SKIP", "")
 
-    with mock.patch.object(reply_generator, "run_llm", model), mock.patch.object(editorial_bot, "run_llm", model):
-        reply_generator.generate(direct_reply.reply_call("someone"), author="someone", text=POST)
-        reply_generator.generate(debate_bot.reply_call(), author="someone", text=POST)
+    with mock.patch.object(reply_generator, "run_llm", model), mock.patch.object(editorial_bot, "run_llm", model), \
+            mock.patch.object(reply_quality, "run_llm", model), \
+            mock.patch.object(reply_quality, "require_active"):
+        passages = (reply_quality.Passage("0", SOURCE["url"], "", SOURCE["body"][:600]),)
+        reply_quality.review(POST, "", OWN_POST, passages)
+        reply_generator.generate(direct_reply.reply_call("someone"), author="someone", text=POST,
+                                 evidence=reply_quality.evidence_block(passages))
+        reply_generator.generate(debate_bot.reply_call(), author="someone", text=POST,
+                                 evidence=reply_quality.evidence_block(passages))
         reply_generator.generate(replyback_agent.reply_call(), author="someone", text=ENGAGER_REPLY,
                                  context=OWN_POST)
         for relation in account.current().relations.handles.values():

@@ -218,6 +218,23 @@ def _fresh_editorial_memory(monkeypatch):
     yield
 
 
+@_pytest.fixture(autouse=True)
+def _reply_quality_external_wall(monkeypatch):
+    """New research/review seams must never download or call a real model in tests."""
+    from src.replies import reply_quality
+    from src.guards import reply_admission
+
+    def blocked(*args, **kwargs):
+        raise AssertionError("TEST TRIED EXTERNAL REPLY RESEARCH/REVIEW; fake its defining-module seam")
+    monkeypatch.setattr(reply_quality, "source_text", blocked)
+    monkeypatch.setattr(reply_quality, "run_llm", blocked)
+    monkeypatch.setattr(reply_quality, "_cache", {})
+    # Existing write tests isolate the browser sequence and other guards.
+    # New approval binding tests restore this guard via `unwalled`.
+    _UNWALLED.setdefault("judge_review", reply_admission.judge_review)
+    monkeypatch.setattr(reply_admission, "judge_review", lambda *a: reply_admission.Verdict(None))
+
+
 @_pytest.fixture
 def settings_override():
     """`settings_override(NAME=value, ...)`: the one way a test changes a

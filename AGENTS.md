@@ -244,3 +244,26 @@ removing a job also updates the jobs table in `docs/ARCHITECTURE.md`, a new
 or changed setting regenerates `docs/CONFIGURATION.md`
 (`uv run python bin/configuration_doc.py --write`) and a new state file in the
 `docs/OPERATIONS.md` table. The incident narrative goes to `docs/HISTORY.md`.
+
+
+Reply quality (2026-10-04): all Reply lanes, including prewritten search drafts,
+use `src/replies/reply_quality.py` before the write. The pipeline reads at most
+two HTTPS links from trusted hosts: links in the parent and context first, then
+matching optional `[[reply_sources]]` Account entries (`pattern`, `url`). It uses
+the editorial source reader, rejects untrusted redirects, applies a four-second
+socket timeout per fetch, and caches successes and failures in memory for 60
+seconds. It supplies at most twelve exact passages. Shortened links are not
+expanded; absent evidence permits stable knowledge or clear conditional points,
+not unsupported current claims.
+
+A separate JSON review uses the ordinary Reply model and provider, without the
+Account's brand perspective or Voice. Each provider attempt is capped at twenty
+seconds. The reviewer checks relevance, added value, natural phrasing and factual
+support; current claims need supporting passage IDs. This is an additional model
+call per draft and may reduce reply volume. Model review reduces errors but does
+not prove a claim true. Malformed, failed or negative review sends nothing and
+leaves the parent retryable; exhausted providers stop the cycle. The approval
+binds the exact prepared draft to its parent status ID, and `reply_to_tweet`
+checks that approval under the page lock before claiming or opening the post.
+The existing own-post, duplicate, age, spacing, length and waking-hours rules
+still apply. No new persistent state or change to publishing ceilings.
