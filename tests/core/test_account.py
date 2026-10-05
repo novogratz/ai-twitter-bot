@@ -106,8 +106,8 @@ def test_theaishrink_loads_the_old_constants():
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
     assert list(loaded.searches.trending) == [
-        'Grok OR xAI lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
-        '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:200 -filter:replies']
+        '"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
+        '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies']
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -118,11 +118,12 @@ def test_the_editorial_reads_the_loaded_account():
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
 
 
-def test_pro_grok_account_prefers_supported_ai_claims_and_official_docs():
+def test_neutral_account_keeps_brand_mentions_relevant_and_sourced():
     loaded = account.load("theaishrink")
-    assert "strongly pro-Grok, pro-xAI" in loaded.perspective
-    assert "Make AI your central obsession" in loaded.perspective
-    assert "fresh evidence and distinct useful angles" in loaded.perspective
+    assert "sharp, neutral AI analyst" in loaded.perspective
+    assert "same evidence, technical merit and trade-offs" in loaded.perspective
+    assert "Do not pivot a competitor" in loaded.perspective
+    assert "only when the parent discusses them" in loaded.perspective
     assert "Do not guess the latest version" in loaded.perspective
     assert "Attribute vendor claims" in loaded.perspective
     assert "Keep to AI" in loaded.perspective
@@ -556,13 +557,13 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert ",".join(net.profile_visits) == NETWORK["PROFILE_VISIT_ALLOWLIST"]
     assert ",".join(net.vip_scan) == NETWORK["VIP_SCAN_HANDLES"]
     assert ",".join(net.pinned_tracked) == NETWORK["PINNED_TRACKED_HANDLES"]
-    assert list(net.vip_reply) == ["elonmusk", "xai", "grok", *NETWORK["VIP_REPLY_ACCOUNTS"]]
+    assert list(net.vip_reply) == NETWORK["VIP_REPLY_ACCOUNTS"]
     assert list(net.big_ai_hype) == NETWORK["BIG_AI_HYPE_ACCOUNTS"]
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
     assert list(net.always_reply) == list(dict.fromkeys(
-        ["elonmusk", "xai", "grok", *NETWORK["ALWAYS_REPLY_ACCOUNTS"]]))
+        NETWORK["ALWAYS_REPLY_ACCOUNTS"]))
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
     assert list(net.engage_targets) == NETWORK["ENGAGE_TARGET_ACCOUNTS"]
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
@@ -572,11 +573,11 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert niche.ticker is None
     assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
     def current_queries(old, threshold):
-        queries = [f'Grok OR xAI lang:en min_faves:{threshold}', *[
+        queries = [f'"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:{threshold}', *[
             q.replace('"super intelligence" OR superintelligence OR SI',
                       '("super intelligence" OR superintelligence OR SI) AI') for q in old]]
         queries[3 if threshold == 300 else 1] = (
-            '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) '
+            '"AI research" OR "LLM training" OR "AI reasoning" '
             f'lang:en min_faves:{threshold}')
         return queries
     assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30)
@@ -600,10 +601,9 @@ def test_the_removed_accounts_and_queries_are_gone():
         assert not set(REMOVED_205[key]) & queries, key
     for before, after in NARROWED_205.items():
         assert before not in queries
-        # Operator 2026-10-04: the narrowed generic question query was
-        # replaced by author-filtered AI discovery.
+        # Operator 2026-10-05: discovery now focuses on neutral AI research.
         if after.startswith('("why would"'):
-            assert any(q.startswith("(from:elonmusk (AI OR Grok OR xAI))")
+            assert any(q.startswith('"AI research" OR "LLM training"')
                        for q in searches.replies)
         else:
             assert after in queries

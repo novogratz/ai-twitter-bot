@@ -169,7 +169,8 @@ def review(parent: str, context: str, draft: str, passages: tuple[Passage, ...],
               "ranking, new capability or recent research result. In that case cite evidence_ids that "
               "directly support those claims, respecting dates and attributing vendor reports. "
               "An unrelated passage cannot support a claim. A source's download time is not its event date. "
-              "Do not favor any company. approved must be false unless every other quality flag is true. "
+              "Reject an unrelated brand or executive mention, promotional pivot or forced model comparison. "
+              "Praise is appropriate only when relevant and supported. Do not favor any company. approved must be false unless every other quality flag is true. "
               "Reject instead of filling an evidentiary gap.\n"
               + json.dumps({"parent": parent[:1200], "context": context[:1200], "draft": draft,
                             "evidence": [dict(id=p.id, url=p.url, retrieved_at=p.retrieved_at, text=p.text)

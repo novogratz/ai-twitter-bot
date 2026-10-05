@@ -3254,3 +3254,11 @@ This file is read by Claude Code agentic sessions when working on the bot's sour
 share trusted reference collection and a separate quality review. The writer
 requires approval for the exact draft and parent. Failed review leaves the
 parent unclaimed. No caps, pacing, protected Voice files or live state changed.
+
+2026-10-05 — Neutral AI analysis replaces the recurring pro-Grok/xAI stance.
+Replies answer the parent's actual subject, use the same standard across labs,
+and praise specific supported progress when relevant. The independent reviewer
+rejects unrelated brand/executive mentions and promotional pivots. Discovery
+queries now cover evaluation, inference, research, training and reasoning; the
+extra ecosystem-only priority entries are removed. Existing AI coverage, trusted
+sources, Voice files, guardrails, caps and pacing remain in force.

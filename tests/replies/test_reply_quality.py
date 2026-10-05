@@ -111,6 +111,9 @@ def test_stable_point_can_pass_without_external_evidence(monkeypatch):
     assert verdict.outcome is Outcome.WRITTEN
     prompt, _, options = calls[0]
     assert "Do not favor any company" in prompt
+    assert "Reject an unrelated brand or executive mention" in prompt
+    assert "promotional pivot or forced model comparison" in prompt
+    assert "Praise is appropriate only when relevant and supported" in prompt
     assert "Be openly and strongly pro-Grok" not in prompt
     assert options["label"] == "REPLY_REVIEW"
     assert options["profile"].max_timeout == 20

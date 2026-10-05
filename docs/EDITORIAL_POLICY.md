@@ -437,3 +437,11 @@ binds the exact prepared draft to its parent status ID, and `reply_to_tweet`
 checks that approval under the page lock before claiming or opening the post.
 The existing own-post, duplicate, age, spacing, length and waking-hours rules
 still apply. No new persistent state or change to publishing ceilings.
+
+2026-10-05 — Neutral AI analysis replaces the recurring pro-Grok/xAI stance.
+Replies answer the parent's actual subject, use the same standard across labs,
+and praise specific supported progress when relevant. The independent reviewer
+rejects unrelated brand/executive mentions and promotional pivots. Discovery
+queries now cover evaluation, inference, research, training and reasoning; the
+extra ecosystem-only priority entries are removed. Existing AI coverage, trusted
+sources, Voice files, guardrails, caps and pacing remain in force.
