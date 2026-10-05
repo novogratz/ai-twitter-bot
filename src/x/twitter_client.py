@@ -396,7 +396,13 @@ _REPLY_CLICK_JS = r"""
     if (ownHandle && authorOf(url) === ownHandle) {
         return JSON.stringify({url: url, result: 'own'});
     }
-    var button = art.querySelector('[data-testid="reply"]');
+    var buttons = art.querySelectorAll('[data-testid="reply"]');
+    var button = null;
+    for (var b = 0; b < buttons.length; b++) {
+        if (buttons[b].closest('article') === art &&
+            !buttons[b].closest('[data-testid="quoteTweet"]') &&
+            !buttons[b].closest('[role="link"]')) { button = buttons[b]; break; }
+    }
     if (!button) return JSON.stringify({url: url, result: 'failed'});
     button.click();
     return JSON.stringify({url: url, result: 'clicked'});
@@ -468,7 +474,13 @@ _POSTS_JS = r"""
     if (art.querySelector('[data-testid="unlike"]')) {
         return JSON.stringify({url: url, result: 'already_liked'});
     }
-    var button = art.querySelector('[data-testid="like"]');
+    var buttons = art.querySelectorAll('[data-testid="like"]');
+    var button = null;
+    for (var b = 0; b < buttons.length; b++) {
+        if (buttons[b].closest('article') === art &&
+            !buttons[b].closest('[data-testid="quoteTweet"]') &&
+            !buttons[b].closest('[role="link"]')) { button = buttons[b]; break; }
+    }
     if (!button) return JSON.stringify({url: url, result: 'failed'});
     if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
     button.click();

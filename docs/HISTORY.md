@@ -3269,3 +3269,9 @@ never the surrounding post's identity. A Reply also checks the clicked status
 and author against admission before pasting; an own author is refused, and an
 unknown or mismatched target fails without submission. Existing dedup and
 publication rules apply. Missing unquoted headers fail closed.
+
+2026-10-05 — Reply quality also requires one useful observation tied to the
+parent. Generic advice, empty contrarian claims, jargon without a point and
+jokes that do not fit the parent are rejected. Missing essential context means
+skip, not invention. The tone stays clear and conversational; wit is optional
+and no human identity or lived experience is fabricated.

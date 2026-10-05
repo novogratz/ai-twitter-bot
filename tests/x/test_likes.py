@@ -598,3 +598,15 @@ def test_reply_script_refuses_outer_own_post_and_selects_real_parent():
     result, clicks = _run_posts_js([own, parent], "press", "123", reply=True)
     assert result["url"] == "https://x.com/someone/status/123"
     assert clicks == ["parent-button"]
+
+
+@pytest.mark.parametrize("reply", [False, True])
+def test_outer_post_action_never_clicks_quoted_own_reply_button(reply):
+    outer = _article("https://x.com/someone/status/123", "reply" if reply else "like", "parent")
+    quote = _article("https://x.com/TheAIShrink/status/999", "reply" if reply else "like", "own-quote")
+    quote["tag"] = "div"
+    quote["attrs"] = {"role": "link"}
+    outer["children"].insert(0, quote)
+    result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
+    assert clicks == ["parent-button"]
+    assert result["url"] == "https://x.com/someone/status/123"
