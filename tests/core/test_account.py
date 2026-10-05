@@ -106,7 +106,7 @@ def test_theaishrink_loads_the_old_constants():
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
     assert list(loaded.searches.trending) == [
-        '"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
+        '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
         '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies']
 
 
@@ -573,7 +573,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert niche.ticker is None
     assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
     def current_queries(old, threshold):
-        queries = [f'"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:{threshold}', *[
+        queries = [f'"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:{threshold}', *[
             q.replace('"super intelligence" OR superintelligence OR SI',
                       '("super intelligence" OR superintelligence OR SI) AI') for q in old]]
         queries[3 if threshold == 300 else 1] = (

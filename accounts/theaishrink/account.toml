@@ -310,7 +310,7 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
-    '"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:30',
+    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:30',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
@@ -324,7 +324,7 @@ replies = [
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
 ]
 hot_tab = [
-    '"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:300',
+    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:300',
@@ -343,7 +343,7 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
-    '"LLM evaluation" OR "model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
+    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies',
 ]
