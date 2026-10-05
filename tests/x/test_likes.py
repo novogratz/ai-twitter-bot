@@ -497,7 +497,8 @@ El.prototype.click = function() {
 
 
 def _article(url, button, id_, quoted="", quoted_first=False):
-    children = [{"tag": "a", "attrs": {"href": url}, "children": [{"tag": "time"}]}]
+    children = [{"tag": "div", "attrs": {"data-testid": "User-Name"}, "children": [
+        {"tag": "a", "attrs": {"href": url}, "children": [{"tag": "time"}]}]}]
     if quoted:
         card = {"tag": "div", "children": [{"tag": "article", "children": [
             {"tag": "a", "attrs": {"href": quoted}, "children": [{"tag": "time"}]}]}]}
@@ -507,13 +508,15 @@ def _article(url, button, id_, quoted="", quoted_first=False):
     return {"tag": "article", "attrs": {"data-testid": "tweet", "id": id_}, "children": children}
 
 
-def _run_posts_js(articles, mode, target_id="", path="/home"):
+def _run_posts_js(articles, mode, target_id="", path="/home", reply=False):
     from src.x import twitter_client as tc
 
     node = shutil.which("node")
     if not node:
         pytest.skip("node is not installed: _POSTS_JS cannot be run")
     snippet = tc._POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
+    if reply:
+        snippet = tc._REPLY_CLICK_JS.replace("__TARGET_ID__", target_id).replace("__BOT_HANDLE__", "theaishrink")
     program = _FAKE_DOM_JS + f"""
 var root = new El({json.dumps({"tag": "html", "children": [{"tag": "body", "children": articles}]})});
 var document = {{
@@ -572,3 +575,26 @@ def test_js_lists_the_posts_in_page_order():
     articles = [_article(NEXT, "like", "a"), _article(POST, "unlike", "b", quoted=REPOST)]
     out, clicks = _run_posts_js(articles, "list")
     assert out == {"page": "https://x.com/home", "posts": [NEXT, POST]} and clicks == []
+
+
+@pytest.mark.parametrize("reply", [False, True])
+@pytest.mark.parametrize("wrapper", ["quoteTweet", "role-link"])
+def test_quoted_timestamp_in_same_article_never_selects_outer_own_reply(reply, wrapper):
+    outer = _article("https://x.com/TheAIShrink/status/999", "reply" if reply else "like", "own")
+    quote = _article("https://x.com/someone/status/123", "reply" if reply else "like", "quote")
+    quote["tag"] = "div"  # Quotes need not be nested article elements on X.
+    quote["attrs"] = ({"data-testid": "quoteTweet"} if wrapper == "quoteTweet" else {"role": "link"})
+    outer["children"].insert(0, quote)
+    result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
+    assert not clicks
+    assert result["result"] in {"missing", "failed"}
+
+
+def test_reply_script_refuses_outer_own_post_and_selects_real_parent():
+    own = _article("https://x.com/TheAIShrink/status/999", "reply", "own")
+    parent = _article("https://x.com/someone/status/123", "reply", "parent")
+    result, clicks = _run_posts_js([own, parent], "press", "999", reply=True)
+    assert result["result"] == "own" and not clicks
+    result, clicks = _run_posts_js([own, parent], "press", "123", reply=True)
+    assert result["url"] == "https://x.com/someone/status/123"
+    assert clicks == ["parent-button"]

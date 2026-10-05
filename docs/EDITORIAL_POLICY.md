@@ -445,3 +445,10 @@ rejects unrelated brand/executive mentions and promotional pivots. Discovery
 queries now cover evaluation, inference, research, training and reasoning; the
 extra ecosystem-only priority entries are removed. Existing AI coverage, trusted
 sources, Voice files, guardrails, caps and pacing remain in force.
+
+2026-10-05 — Reply and like page selectors use the outer post's unquoted
+User-Name header for its status link. A quote embedded in the same article is
+never the surrounding post's identity. A Reply also checks the clicked status
+and author against admission before pasting; an own author is refused, and an
+unknown or mismatched target fails without submission. Existing dedup and
+publication rules apply. Missing unquoted headers fail closed.

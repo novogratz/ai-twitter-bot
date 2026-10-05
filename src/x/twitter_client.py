@@ -363,10 +363,21 @@ _REPLY_CLICK_JS = r"""
         return m ? m[1] : '';
     }
     function statusLink(art) {
-        var times = art.querySelectorAll('a[href*="/status/"] time');
+        // Operator 2026-10-05: a quote can share the outer article.
+        // Only the outer post's unquoted User-Name header identifies it.
+        var names = art.querySelectorAll('[data-testid="User-Name"]');
+        var header = null;
+        for (var n = 0; n < names.length; n++) {
+            if (names[n].closest('article') === art &&
+                !names[n].closest('[data-testid="quoteTweet"]') &&
+                !names[n].closest('[role="link"]')) { header = names[n]; break; }
+        }
+        if (!header) return '';
+        var times = header.querySelectorAll('a[href*="/status/"] time');
         for (var j = 0; j < times.length; j++) {
             var a = times[j].closest('a');
-            if (a && a.closest('article') === art) return a.href;
+            if (a && a.closest('article') === art &&
+                a.closest('[data-testid="User-Name"]') === header) return a.href;
         }
         return '';
     }
@@ -423,10 +434,21 @@ _POSTS_JS = r"""
     }
     // A quoted post's timestamp link can come before the post's own.
     function statusLink(art) {
-        var times = art.querySelectorAll('a[href*="/status/"] time');
+        // Operator 2026-10-05: a quote can share the outer article.
+        // Only the outer post's unquoted User-Name header identifies it.
+        var names = art.querySelectorAll('[data-testid="User-Name"]');
+        var header = null;
+        for (var n = 0; n < names.length; n++) {
+            if (names[n].closest('article') === art &&
+                !names[n].closest('[data-testid="quoteTweet"]') &&
+                !names[n].closest('[role="link"]')) { header = names[n]; break; }
+        }
+        if (!header) return '';
+        var times = header.querySelectorAll('a[href*="/status/"] time');
         for (var j = 0; j < times.length; j++) {
             var a = times[j].closest('a');
-            if (a && a.closest('article') === art) return a.href;
+            if (a && a.closest('article') === art &&
+                a.closest('[data-testid="User-Name"]') === header) return a.href;
         }
         return '';
     }
@@ -573,7 +595,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     bot.log 'Reply posted!' said 140). The claim happens here, right before
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
+    from ..core import config
     from ..guards import action_guard, active_hours, replied_store, reply_admission
+    from . import x_urls
     # Set by an admitting verdict: the exact text to send, and its author.
     admitted_text = author = ""
 
@@ -659,7 +683,16 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 # handle the caller URL carried, and it is never answered.
                 sent = True
                 return WriteOutcome.REFUSED
-            if result != "clicked":
+            # Never trust a page result that points to another status or
+            # author, even when it reports a successful click.
+            shown = opened.get("url") or ""
+            if (result == "clicked" and x_urls.author(shown) == config.BOT_HANDLE.lower()):
+                if on_refused is not None:
+                    on_refused(reply_admission.Refusal.OWN_POST)
+                sent = True
+                return WriteOutcome.REFUSED
+            if (result != "clicked" or x_urls.status_id(shown) != x_urls.status_id(tweet_url)
+                    or x_urls.author(shown) != author):
                 log.info(f"[REPLY] Reply button for this post was not on the page; "
                          f"nothing sent, tweet left fresh: {tweet_url}")
                 return WriteOutcome.FAILED

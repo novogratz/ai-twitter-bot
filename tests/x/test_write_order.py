@@ -631,3 +631,16 @@ def test_a_like_walk_skipping_liked_posts_logs_one_line_each(trace, monkeypatch)
     monkeypatch.setattr(tc, "_already_liked", lambda url: True)
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.ALREADY_LIKED
     assert trace.logs == [f"[LIKE] already liked {POST_URL[-50:]}; skipping."]
+
+
+@pytest.mark.parametrize("url,expected", [
+    ("https://x.com/TheAIShrink/status/2063500000000000500", W.REFUSED),
+    ("https://x.com/someone/status/2063500000000000501", W.FAILED),
+    ("https://x.com/another/status/2063500000000000500", W.FAILED),
+    ("", W.FAILED),
+])
+def test_reply_checks_clicked_status_and_author_before_paste(trace, url, expected):
+    trace.js.append(json.dumps({"url": url, "result": "clicked"}))
+    assert tc.reply_to_tweet(POST_URL, REPLY) is expected
+    assert not trace.page.pasted
+    assert not [e for e in trace.events if e.startswith("record:")]
