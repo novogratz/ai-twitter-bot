@@ -32,6 +32,14 @@ mechanisms for new techniques; its separate evidence review still applies.
 
 Operator, 2026-10-04: the Account now takes a strong, openly favorable stance
 toward Grok, xAI and Elon Musk's AI work. Its optional `perspective` in
+`account.toml` makes AI its central obsession and Musk's AI ecosystem a
+recurring editorial focus. Return to it through fresh evidence and distinct
+useful angles rather than repeated praise. Relevant strong stories from this
+ecosystem are preferred when the supplied evidence supports them; wider AI
+coverage informs comparisons and methods. Author-filtered searches for
+Musk, xAI and Grok replace one generic query in each of Replies, hot-tab
+Replies and Trending; each requires AI, Grok or xAI terms. This changes
+discovery focus, not query counts or write volume. Its optional `perspective` in
 `account.toml` reaches Originals and all Reply surfaces, including Relations
 and JSON search, but not the independent editorial review. Prefer favorable
 technical angles and relevant Grok updates among equally strong sources.

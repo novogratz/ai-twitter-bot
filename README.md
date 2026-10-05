@@ -16,6 +16,8 @@ English prompts): every post and reply prompt carries it as one block.
   AI work, supported Grok improvements and useful technical insights. Grok/xAI
   searches and priority authors get more attention. Praise follows evidence;
   model versions are never guessed, and the independent editor still checks facts.
+  AI is the central obsession and Musk's AI ecosystem is a recurring focus;
+  author-filtered AI searches emphasize Musk, xAI and Grok with fresh angles.
   Replies challenge sweeping claims with a testable point and give readers
   something new to test, decide or understand, even on a favored company's claim.
 - **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.

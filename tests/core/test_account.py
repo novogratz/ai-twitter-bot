@@ -104,8 +104,9 @@ def test_theaishrink_loads_the_old_constants():
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
-    assert list(loaded.searches.trending) == ['Grok OR xAI lang:en min_faves:50 -filter:replies',
-                                             *OLD_TREND_QUERIES]
+    assert list(loaded.searches.trending) == [
+        'Grok OR xAI lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
+        '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:200 -filter:replies']
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -119,6 +120,8 @@ def test_the_editorial_reads_the_loaded_account():
 def test_pro_grok_account_prefers_supported_ai_claims_and_official_docs():
     loaded = account.load("theaishrink")
     assert "strongly pro-Grok, pro-xAI" in loaded.perspective
+    assert "Make AI your central obsession" in loaded.perspective
+    assert "fresh evidence and distinct useful angles" in loaded.perspective
     assert "Do not guess the latest version" in loaded.perspective
     assert "Attribute vendor claims" in loaded.perspective
     assert "Keep to AI" in loaded.perspective
@@ -553,9 +556,13 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert niche.ticker is None
     assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
     def current_queries(old, threshold):
-        return [f'Grok OR xAI lang:en min_faves:{threshold}', *[
+        queries = [f'Grok OR xAI lang:en min_faves:{threshold}', *[
             q.replace('"super intelligence" OR superintelligence OR SI',
                       '("super intelligence" OR superintelligence OR SI) AI') for q in old]]
+        queries[3 if threshold == 300 else 1] = (
+            '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) '
+            f'lang:en min_faves:{threshold}')
+        return queries
     assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30)
     assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
@@ -576,7 +583,14 @@ def test_the_removed_accounts_and_queries_are_gone():
     for key in ("replies", "hot_tab", "likes"):
         assert not set(REMOVED_205[key]) & queries, key
     for before, after in NARROWED_205.items():
-        assert before not in queries and after in queries
+        assert before not in queries
+        # Operator 2026-10-04: the narrowed generic question query was
+        # replaced by author-filtered AI discovery.
+        if after.startswith('("why would"'):
+            assert any(q.startswith("(from:elonmusk (AI OR Grok OR xAI))")
+                       for q in searches.replies)
+        else:
+            assert after in queries
 
 
 @pytest.mark.parametrize("text", [

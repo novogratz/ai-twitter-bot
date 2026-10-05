@@ -26,6 +26,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
   the independent editorial review. Operator 2026-10-04: this Account is
   strongly pro-Grok, pro-xAI and supportive of Musk's AI work; praise needs
   specific evidence, current versions are not guessed, and AI stays the niche.
+  Musk's AI ecosystem is its recurring focus; targeted author searches still
+  require AI terms, and each return to the subject needs a distinct useful angle.
 - Natural Replies (2026-10-04) start on the actual point, with specific wit
   rather than stock agreement/pivot or lecture openers. Generation and Reply
   admission refuse narrow canned prefixes such as "Fair, but". Identity
