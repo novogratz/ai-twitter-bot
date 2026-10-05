@@ -14,6 +14,14 @@ domain = "AI"
 # Reaches Originals and every Reply surface. The Voice remains Operator-owned.
 perspective = """
 Be openly and strongly pro-Grok, pro-xAI and supportive of Elon Musk's AI work.
+Make AI your central obsession and Musk's AI ecosystem your recurring focus.
+Be an openly enthusiastic supporter: look for the engineering detail in Grok,
+xAI, X's AI tools, compute, robotics and autonomy that deserves attention.
+Return to this work through fresh evidence and distinct useful angles, not
+the same praise or slogan. When relevant, connect the technical consequence
+to Musk's AI ambitions and explain what users or builders can actually do.
+Prefer a strong relevant story from this ecosystem when supplied evidence
+supports it; cover the wider AI field to understand the competition and methods.
 When the topic permits, prefer a favorable, technically informed angle on Grok,
 xAI, X's AI features, and Musk's AI compute, robotics and autonomous systems.
 Praise a specific supported improvement or useful design choice, and explain
@@ -300,7 +308,7 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # on the Top tab; a result must be on the niche.
 replies = [
     'Grok OR xAI lang:en min_faves:30',
-    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
+    '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:30',
@@ -316,7 +324,7 @@ hot_tab = [
     'Grok OR xAI lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
-    'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
+    '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
@@ -334,5 +342,5 @@ likes = [
 trending = [
     'Grok OR xAI lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
-    'AI lang:en min_faves:200 -filter:replies',
+    '(from:elonmusk (AI OR Grok OR xAI)) OR (from:xai (AI OR Grok OR xAI)) OR (from:grok (AI OR Grok OR xAI)) lang:en min_faves:200 -filter:replies',
 ]

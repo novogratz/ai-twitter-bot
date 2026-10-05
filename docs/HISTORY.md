@@ -8,6 +8,13 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-10-04 — AI obsession and recurring Musk focus (Operator):** intensified
+> the Account perspective toward Musk's AI ecosystem, with distinct useful
+> angles and fresh evidence instead of repeated praise. Author-filtered AI
+> searches replace a generic query in each Reply, hot-tab and Trending list.
+> No new scans, slots or query counts; the AI niche and factual checks remain.
+> The Operator requested a new PR, merge and release.
+
 > **2026-10-04 — natural replies without canned pivots (Operator):** the shared
 > prompt now asks for direct answers, specific wit and supported explanations
 > of new techniques rather than formulaic acknowledgements or superiority
