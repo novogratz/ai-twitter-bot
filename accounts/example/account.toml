@@ -143,3 +143,8 @@ trending = [
     'gardening lang:en min_faves:50 -filter:replies',
     '"vegetable garden" OR allotment lang:en min_faves:100 -filter:replies',
 ]
+
+# Optional reference entries belong at the top level before [editorial]:
+# [[reply_sources]]
+# pattern = "\\bexample-model\\b"
+# url = "https://a-host-in-editorial-trusted-hosts.example/releases"

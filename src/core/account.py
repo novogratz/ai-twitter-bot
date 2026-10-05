@@ -24,6 +24,7 @@ import re
 import string
 import tomllib
 from dataclasses import dataclass
+from urllib.parse import urlsplit
 
 from . import settings
 from .logger import log
@@ -68,6 +69,12 @@ class Relevance:
 
 
 @dataclass(frozen=True)
+class ReplySource:
+    pattern: re.Pattern
+    url: str
+
+
+@dataclass(frozen=True)
 class Account:
     name: str
     folder: str  # absolute: accounts/<name>/, where the Account's other files live
@@ -83,6 +90,7 @@ class Account:
     searches: "Searches"
     relations: "Relations"
     perspective: str = ""  # account-owned editorial preference, subordinate to evidence
+    reply_sources: tuple[ReplySource, ...] = ()
 
 
 def current() -> Account:
@@ -114,7 +122,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "perspective": str})
+                 optional={"limits": dict, "relations": dict, "perspective": str, "reply_sources": list})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -126,13 +134,29 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                        required={"topic": str, "off_topic": str})
     _check_voice(folder, os.path.dirname(shown))
     network = _network(top)
+    ed = _editorial(editorial)
+    reply_sources = []
+    for i, raw in enumerate(top.items("reply_sources", dict) if "reply_sources" in top else []):
+        source = _Table(shown, f"reply_sources[{i}]", raw,
+                        required={"pattern": str, "url": str})
+        try:
+            parts = urlsplit(source["url"])
+        except ValueError:
+            source.fail("url", "must be a valid trusted https URL")
+        if not source["pattern"].strip():
+            source.fail("pattern", "must not be blank")
+        if (parts.scheme != "https" or parts.hostname not in ed.trusted_hosts
+                or parts.username or parts.password or parts.netloc != parts.hostname):
+            source.fail("url", "must use https on a trusted host, without credentials or a port")
+        reply_sources.append(ReplySource(_pattern(source, "pattern"), source["url"]))
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
-        domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
+        domain=top["domain"], editorial=ed, relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
         searches=_searches(top),
         perspective=top.get("perspective", "").strip(),
+        reply_sources=tuple(reply_sources),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

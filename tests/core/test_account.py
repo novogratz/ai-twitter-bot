@@ -96,7 +96,8 @@ def test_theaishrink_loads_the_old_constants():
     assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-1]] == OLD["KNOWLEDGE"]
     assert ed.evergreen[-1].url == "https://docs.x.ai/developers/models"
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"], "xAI docs"}
-    assert ed.trusted_hosts == set(OLD["HOSTS"]) | {"x.ai", "docs.x.ai"}
+    assert ed.trusted_hosts == set(OLD["HOSTS"]) | {
+        "x.ai", "docs.x.ai", "help.openai.com", "platform.claude.com", "ai.google.dev"}
     assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|")
     assert loaded.relevance.topic.flags == OLD["AI_TOPIC"][1]
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
@@ -176,6 +177,21 @@ def test_account_perspective_rejects_non_text(accounts, fresh):
     text = re.sub(r'perspective = """.*?"""', 'perspective = 3', THEAISHRINK, flags=re.S)
     accounts("other", text)
     with pytest.raises(settings.SettingsError, match="perspective"):
+        fresh("BOT_ACCOUNT=other\n")
+
+
+@pytest.mark.parametrize("block, error", [
+    ('[[reply_sources]]\npattern = "grok"\nurl = "https://evil.example/news"', "reply_sources"),
+    ('[[reply_sources]]\npattern = "("\nurl = "https://docs.x.ai/news"', "pattern"),
+    ('[[reply_sources]]\npattern = 3\nurl = "https://docs.x.ai/news"', "pattern"),
+    ('[[reply_sources]]\npattern = "grok"\nurl = "https://user@docs.x.ai/news"', "url"),
+    ('[[reply_sources]]\npattern = "grok"\nurl = "https://docs.x.ai:443/news"', "url"),
+    ('[[reply_sources]]\npattern = "grok"\nurl = "https://docs.x.ai/news"\nunknown = true', "unknown"),
+])
+def test_reply_sources_reject_bad_configuration(accounts, fresh, block, error):
+    text = re.sub(r'\[\[reply_sources\]\].*?(?=\[editorial\])', block + "\n\n", THEAISHRINK, flags=re.S)
+    accounts("other", text)
+    with pytest.raises(settings.SettingsError, match=error):
         fresh("BOT_ACCOUNT=other\n")
 
 

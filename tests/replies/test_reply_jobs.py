@@ -411,7 +411,7 @@ def test_reply_search_surface_disabled_by_default(monkeypatch, settings_override
 
 
 @pytest.fixture
-def reply_search(monkeypatch, chokepoint, settings_override):
+def reply_search(monkeypatch, chokepoint, settings_override, quality_llm):
     """reply_bot with a stub search-and-draft model returning `batch`."""
     from src.replies import reply_bot as rb
 
@@ -430,7 +430,7 @@ def reply_search(monkeypatch, chokepoint, settings_override):
 
 def target(url, kind="reply"):
     return {"tweet_url": url, "reply": REPLY_TEXT, "type": kind, "pattern": "RENAME",
-            "provider": "claude", "model": "sonnet"}
+            "provider": "claude", "model": "sonnet", "tweet_text": "Batch size affects latency."}
 
 
 def test_reply_search_sends_admitted_targets_once(reply_search, blocked_pgm_pm):

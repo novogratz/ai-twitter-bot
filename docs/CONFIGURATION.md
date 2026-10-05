@@ -218,3 +218,8 @@ Not read by the engine: these scripts read them after sourcing `.env`.
 | `ROAST_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
 
 <!-- END settings reference -->
+
+Optional Account `[[reply_sources]]` entries pair a nonblank regex `pattern` with
+a trusted HTTPS `url`, without credentials or a port. They provide reference
+passages for Reply generation and review; no new environment settings. The review
+uses `REPLY_MODEL` and `REPLY_LLM_PROVIDER`, including for Relations.

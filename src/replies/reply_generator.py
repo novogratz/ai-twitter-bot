@@ -22,7 +22,7 @@ from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, res
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
-from ..guards.reply_admission import has_canned_opener
+from ..guards.reply_admission import ReviewedReply, has_canned_opener
 
 
 class Outcome(Enum):
@@ -39,6 +39,9 @@ class Generation:
     text: str = ""  # the reply text, when WRITTEN
     provider: str = ""  # the provider and model that wrote it, when WRITTEN
     model: str = ""
+    reviewed: bool = False
+    pattern: str = ""
+    approval: ReviewedReply | None = None
 
 
 class LanguageRule(Enum):
@@ -155,12 +158,12 @@ _LANGUAGE_OVERRIDE = {
 
 
 def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str = "",
-             fields: dict | None = None) -> Generation:
+             fields: dict | None = None, evidence: str = "") -> Generation:
     """One model call for one parent post. `author` is the parent's handle,
     `context` the post it answers (replyback), `fields` any other template
     field. Raises OutsideActiveHours; any other error is a FAILED generation."""
     language = _language(call, author, text or "")
-    prompt = _prompt(call, author, text or "", context or "", language, fields or {})
+    prompt = _prompt(call, author, text or "", context or "", language, fields or {}, evidence=evidence)
     try:
         route = resolve(call.surface)
         options = route.options
@@ -211,7 +214,8 @@ def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
     return "fr" if looks_french(text) else "en"
 
 
-def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict) -> str:
+def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict,
+            *, evidence: str = "") -> str:
     rules = personality_store.hard_rules_block()
     prompt = call.template.format(**{
         **fields,
@@ -225,4 +229,4 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
     perspective = account.current().perspective
     preference = f"ACCOUNT PERSPECTIVE (subject to evidence and hard rules):\n{perspective}" if perspective else ""
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
-                                    preference, quality, LENGTH_RULE, rules]))
+                                    preference, quality, evidence, LENGTH_RULE, rules]))
