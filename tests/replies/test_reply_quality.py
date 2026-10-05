@@ -253,3 +253,23 @@ def test_shared_source_reader_refuses_untrusted_redirects_and_extracts_body(monk
                         or "<nav>ignore</nav><article>Batching controls latency and cost.</article>")
     assert editorial.source_text(URL, timeout_s=4) == "Batching controls latency and cost."
     assert fetched == [(URL, {"timeout_s": 4})]
+
+
+def test_matching_review_approval_can_ship_once(monkeypatch, memory_ledger, unwalled):
+    from src.guards import reply_admission
+    from src.x import page_session, twitter_client
+    from src.x.confirmed_write import WriteOutcome
+    from tests.helpers import WritePage
+
+    monkeypatch.setattr(reply_admission, "judge_review", unwalled["judge_review"])
+    monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(twitter_client, "_maybe_like_parent", lambda *a, **kw: None)
+    page = WritePage()
+    monkeypatch.setattr(page_session, "BROWSER", page)
+    model(monkeypatch)
+    url = fresh("someone")
+    approval = q.review("Batching affects cost.", "", BODY, (), parent_url=url).approval
+    assert twitter_client.reply_to_tweet(url, BODY, approval=approval) is WriteOutcome.SHIPPED
+    assert len(memory_ledger.rows) == 1 and url in replied_store.load_replied()
+    assert twitter_client.reply_to_tweet(url, BODY, approval=approval) is WriteOutcome.REFUSED
+    assert len(memory_ledger.rows) == 1
