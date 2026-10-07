@@ -963,3 +963,20 @@ def test_the_pending_count_is_checked_again_right_before_the_submit(monkeypatch,
     monkeypatch.setattr(editorial, "_json_call", shipped_during_review)
     assert editorial.run_editorial_cycle()["approved"]
     assert "07:15" not in saved(journal)["slots"]
+
+
+def test_original_si_wording_is_prepared_before_review_and_reservation(draft_fixture, monkeypatch):
+    draft, source, review = draft_fixture
+    raw = "AI tools need a chat template that fits the model. Check the template before a test of artificial intelligence output."
+    draft["text"] = raw
+    seen = []
+    def json_call(prompt, *args):
+        seen.append(prompt)
+        return review
+    monkeypatch.setattr(editorial, "_json_call", json_call)
+    audit = editorial.run_editorial_cycle(preview=True)
+    expected = raw.replace("AI", "SI").replace("artificial intelligence", "super intelligence")
+    assert audit["approved"]
+    assert audit["draft"]["text"] == expected
+    assert expected in seen[0]
+    assert source["body"] in seen[0]

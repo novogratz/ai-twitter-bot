@@ -185,6 +185,10 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     # The reservation holds the text as submitted, before the scrub.
     submitted = text
     text = _scrub_metadata_leaks(text)
+    from ..core.humanizer import apply_publication_terms
+    if apply_publication_terms(text) != text:
+        log.info("[POST] Publication terms were not prepared before review; nothing sent.")
+        return WriteOutcome.REFUSED
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -679,6 +683,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def judge():
         nonlocal admitted_text, author
+        from ..core.humanizer import apply_publication_terms
+        if apply_publication_terms(reply_text) != reply_text:
+            log.info("[REPLY] Publication terms were not prepared before review; nothing sent.")
+            return WriteOutcome.REFUSED
         if oldest is None:
             verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
         else:

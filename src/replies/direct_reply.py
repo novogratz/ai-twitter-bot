@@ -105,7 +105,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
         candidates = reply_source.select(tweets, reply_source.Declaration(max_age=timedelta(hours=48),
-                                                                          rising_extension=True, niche=True, author=handle),
+                                                                          rising_extension=True),
                                          f"VIP/{handle}")
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)
@@ -204,7 +204,7 @@ def run_direct_reply_cycle(max_replies=None):
             log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
         tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
-                                       max_tweets=25, tab="top")
+                                       max_tweets=25, tab="top" if "min_faves:" in query else "live")
         # The budget bounds each query's generations; only the Replies
         # shipped come off it.
         n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query), cycle,

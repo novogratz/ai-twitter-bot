@@ -130,7 +130,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     url = _url_with_age(5).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(dr, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
-                        [{"url": url, "text": "working the weekend on AI inference", "author": "TheBTCTherapist"}])
+                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
 
@@ -276,12 +276,12 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     assert scraped == [] and llm.calls == []
 
 
-def test_vip_scan_skips_off_topic_posts_before_generation(monkeypatch, llm, chokepoint, settings_override):
-    import src.replies.direct_reply as dr
-    from src.replies import reply_pipeline
-    settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
-    url = _url_with_age(5).replace("/someone/", "/TheBTCTherapist/")
-    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [
-        {"url": url, "text": "Bitcoin prices went up. Great weekend."}])
-    assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
-    assert llm.calls == [] and chokepoint.calls == []
+def test_quiet_searches_use_recent_results_while_popular_searches_keep_top(monkeypatch):
+    from src.replies import direct_reply as dr
+    monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
+    monkeypatch.setattr(dr, "_queries_for_cycle", lambda _: ["AI inference lang:en", "AI testing min_faves:30"])
+    monkeypatch.setattr(dr.random, "shuffle", lambda _: None)
+    calls = []
+    monkeypatch.setattr(dr, "scrape_x_search", lambda query, **kw: calls.append((query, kw["tab"])) or [])
+    dr.run_direct_reply_cycle(max_replies=3)
+    assert calls == [("AI inference lang:en", "live"), ("AI testing min_faves:30", "top")]
