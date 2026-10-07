@@ -185,8 +185,7 @@ def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
     if generation.outcome is not Outcome.WRITTEN:
         return generation
     text, pattern = extract_pattern(generation.text)
-    from ..core.humanizer import apply_publication_terms
-    text = trim_reply(apply_publication_terms(humanize(text)))
+    text = trim_reply(humanize(text))
     if text is None:
         return replace(generation, outcome=Outcome.FAILED)
     if job.text_bounds and not job.text_bounds[0] <= len(text) <= job.text_bounds[1]:

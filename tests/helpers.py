@@ -219,8 +219,6 @@ class WritePage(page_session.MemoryBrowser):
             return self.answers.pop(0)
         # A reply click the test did not script finds the open post and
         # clicks its reply button. A test that needs another answer queues it.
-        if "__REPLY_COMPOSER__" in js:
-            return json.dumps({"url": self.front or "", "result": "verified"})
         if kind == "reply_key":
             return json.dumps({"url": self.front or "", "result": "clicked"})
         return ""

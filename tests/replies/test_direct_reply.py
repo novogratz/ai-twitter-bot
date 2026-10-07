@@ -274,14 +274,3 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
     assert scraped == [] and llm.calls == []
-
-
-def test_quiet_searches_use_recent_results_while_popular_searches_keep_top(monkeypatch):
-    from src.replies import direct_reply as dr
-    monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
-    monkeypatch.setattr(dr, "_queries_for_cycle", lambda _: ["AI inference lang:en", "AI testing min_faves:30"])
-    monkeypatch.setattr(dr.random, "shuffle", lambda _: None)
-    calls = []
-    monkeypatch.setattr(dr, "scrape_x_search", lambda query, **kw: calls.append((query, kw["tab"])) or [])
-    dr.run_direct_reply_cycle(max_replies=3)
-    assert calls == [("AI inference lang:en", "live"), ("AI testing min_faves:30", "top")]

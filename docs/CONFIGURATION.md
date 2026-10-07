@@ -11,12 +11,6 @@ feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 Optional `perspective` in that file is a text preference for Originals and
 Replies, subordinate to evidence and hard rules, absent from independent review.
 
-Optional Account `publication_terms` maps literal English words/phrases to
-publication labels. The terms apply before review, length checks and reservation;
-URLs and handles are preserved. Acronyms match exact case, phrases ignore case.
-The write chokepoints refuse unprepared terms. This is Account configuration,
-not an environment setting.
-
 - `main.py` reads `.env` once at start. A variable already set in the
   process environment wins over `.env`.
 - A key `settings.py` does not know is ignored, never passed on to the
