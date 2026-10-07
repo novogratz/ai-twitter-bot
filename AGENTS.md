@@ -297,3 +297,10 @@ slice, schedule, root-post selection, age limits, quality review, own-post and
 duplicate refusal, pacing and waking hours are unchanged. Original, like and
 follow discovery are unchanged. This expands eligibility, not a promise of a
 specific reply count.
+
+
+2026-10-06 — Replies verify the actual open composer parent before paste and
+again before submission. Its status ID and author must match admission;
+missing, ambiguous, changed or own targets send nothing. Replied status IDs
+are retained without eviction: one reply per tweet, regardless of author or
+URL alias, for the lifetime of the account. Existing caps and pacing apply.

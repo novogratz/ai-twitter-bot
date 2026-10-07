@@ -3284,3 +3284,11 @@ slice, schedule, root-post selection, age limits, quality review, own-post and
 duplicate refusal, pacing and waking hours are unchanged. Original, like and
 follow discovery are unchanged. This expands eligibility, not a promise of a
 specific reply count.
+
+
+2026-10-06 — Operator reported self-replies and repeated answers. The write
+path checked the article it clicked but did not check the composer X opened.
+It now checks the composer before paste and submission and fails closed on an
+unknown or different parent. The replied store also no longer evicts its
+oldest entries at 50,000, which could allow a previously answered ID again.
+Regression tests cover changed and own composer parents and permanent dedup.

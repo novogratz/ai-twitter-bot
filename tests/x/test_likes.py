@@ -516,7 +516,9 @@ def _run_posts_js(articles, mode, target_id="", path="/home", reply=False):
     if not node:
         pytest.skip("node is not installed: _POSTS_JS cannot be run")
     snippet = tc._POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
-    if reply:
+    if reply == "composer":
+        snippet = tc._REPLY_COMPOSER_JS.replace("__TARGET_ID__", target_id).replace("__BOT_HANDLE__", "theaishrink")
+    elif reply:
         snippet = tc._REPLY_CLICK_JS.replace("__TARGET_ID__", target_id).replace("__BOT_HANDLE__", "theaishrink")
     program = _FAKE_DOM_JS + f"""
 var root = new El({json.dumps({"tag": "html", "children": [{"tag": "body", "children": articles}]})});
@@ -623,3 +625,28 @@ def test_expanded_post_timestamp_can_be_outside_its_author_header(reply):
     result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
     assert result["url"] == "https://x.com/someone/status/123"
     assert clicks == ["parent-button"]
+
+
+@pytest.mark.parametrize("parent, expected", [
+    ("https://x.com/someone/status/123", "verified"),
+    ("https://x.com/TheAIShrink/status/123", "own"),
+    ("https://x.com/someone/status/999", "missing"),
+])
+def test_composer_script_reads_only_actual_dialog_parent(parent, expected):
+    background = _article("https://x.com/someone/status/123", "reply", "background")
+    dialog = {"tag": "div", "attrs": {"role": "dialog"},
+              "children": [_article(parent, "reply", "composer")]}
+    out, clicks = _run_posts_js([background, dialog], "press", "123", reply="composer")
+    assert out["result"] == expected
+    assert clicks == []
+
+
+@pytest.mark.parametrize("dialogs", [[], [[], []], [[]], [[
+    _article("https://x.com/someone/status/123", "reply", "a"),
+    _article("https://x.com/other/status/456", "reply", "b"),
+]]])
+def test_composer_missing_or_ambiguous_parent_fails_closed(dialogs):
+    elements = [{"tag": "div", "attrs": {"role": "dialog"}, "children": posts}
+                for posts in dialogs]
+    out, clicks = _run_posts_js(elements, "press", "123", reply="composer")
+    assert out["result"] == "missing" and not clicks
