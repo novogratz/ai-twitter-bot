@@ -93,21 +93,20 @@ def test_theaishrink_loads_the_old_constants():
     assert ed.trend_angle == OLD["TREND_PURPOSE"]
     assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
     assert list(ed.feeds) == OLD["FEEDS"]
-    assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-2]] == OLD["KNOWLEDGE"]
-    assert ed.evergreen[-2].url == "https://docs.x.ai/developers/models"
-    assert ed.evergreen[-1].url == "https://docs.x.ai/developers/model-capabilities/imagine"
+    assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-1]] == OLD["KNOWLEDGE"]
+    assert ed.evergreen[-1].url == "https://docs.x.ai/developers/models"
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"], "xAI docs"}
     assert ed.trusted_hosts == set(OLD["HOSTS"]) | {
         "x.ai", "docs.x.ai", "help.openai.com", "platform.claude.com", "ai.google.dev"}
-    assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|").replace("artificial intelligence|", "artificial intelligence|superintelligence|super\\s+intelligence|")
+    assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|")
     assert loaded.relevance.topic.flags == OLD["AI_TOPIC"][1]
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
-    assert list(loaded.searches.trending[1:]) == [
-        '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0].replace('"artificial intelligence"', '"artificial intelligence" OR "Grok Imagine"'),
+    assert list(loaded.searches.trending) == [
+        '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
         '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies']
 
 
@@ -119,15 +118,14 @@ def test_the_editorial_reads_the_loaded_account():
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
 
 
-def test_positive_account_keeps_brand_mentions_relevant_and_sourced():
+def test_fan_account_keeps_brand_mentions_relevant_and_sourced():
     loaded = account.load("theaishrink")
-    assert "positive bias toward Grok, xAI" in loaded.perspective
-    assert "Account's favorite AI product" in loaded.perspective
-    assert "not proof that it is objectively best" in loaded.perspective
-    assert "Account likes Grok Imagine" in loaded.perspective
-    assert "Never claim firsthand use or invented results" in loaded.perspective
-    assert "Keep this occasional" in loaded.perspective
-    assert "same evidence and technical merit" in loaded.perspective
+    assert "obvious, enthusiastic fan of Elon Musk's AI work" in loaded.perspective
+    assert "Grok Imagine/image tools and SpaceX AI products" in loaded.perspective
+    assert "Do not mention them in every response" in loaded.perspective
+    assert "not generic" in loaded.perspective
+    assert "never invent current products" in loaded.perspective
+    assert "same evidence, technical merit and trade-offs" in loaded.perspective
     assert "Do not pivot a competitor" in loaded.perspective
     assert "only when the parent discusses them" in loaded.perspective
     assert "Do not guess the latest version" in loaded.perspective
@@ -585,14 +583,9 @@ def test_theaishrink_loads_its_network_niche_and_searches():
         queries[3 if threshold == 300 else 1] = (
             '"AI research" OR "LLM training" OR "AI reasoning" '
             f'lang:en min_faves:{threshold}')
-        queries = [q.replace('ChatGPT OR Claude OR Gemini OR Grok OR Llama',
-                             'ChatGPT OR Claude OR Gemini OR Grok OR "Grok Imagine" OR Llama')
-                   .replace('ChatGPT OR Claude OR Gemini OR "humanoid robot"',
-                            'ChatGPT OR Claude OR Gemini OR "Grok Imagine" OR "humanoid robot"')
-                   for q in queries]
         return queries
-    assert list(searches.replies[1:]) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
-    assert list(searches.hot_tab[1:]) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
+    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['"AI memory" OR "LLM context" OR "AI tool use" lang:en', '"AI model testing" OR "LLM debugging" OR "AI agent tools" lang:en', '"LLM reasoning" OR "AI model deployment" OR "AI model errors" lang:en', '"AI training data" OR "LLM evaluation results" OR "AI model reliability" lang:en', '(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
+    assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert net.blocked_accounts == ()
 
@@ -944,40 +937,21 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
 def test_quiet_ai_discovery_does_not_require_existing_popularity():
     searches = account.load("theaishrink").searches
     quiet = [q for q in searches.replies if "min_faves:" not in q]
-    assert len(quiet) == 6
+    assert len(quiet) == 10
     assert all("lang:en" in q for q in quiet)
     assert any("RAG" in q for q in quiet)
     assert any("side project" in q for q in quiet)
     assert any("prompt injection" in q for q in quiet)
 
 
-def test_imagine_discovery_and_official_grounding_stay_bounded():
-    loaded = account.load("theaishrink")
-    assert (len(loaded.searches.replies), len(loaded.searches.hot_tab),
-            len(loaded.searches.trending)) == (19, 7, 4)
-    for queries in (loaded.searches.replies, loaded.searches.hot_tab, loaded.searches.trending):
-        assert sum('"Grok Imagine"' in q for q in queries) == 2
-    sources = [s.url for s in loaded.reply_sources if s.pattern.search("Grok Imagine workflow")]
-    assert sources[0] == "https://docs.x.ai/developers/model-capabilities/imagine"
-    assert editorial._trusted(sources[0])
-    assert loaded.editorial.evergreen[-1].topic == "grok_imagine"
+def test_account_publication_terms_are_optional_and_operator_owned():
+    assert account.load("theaishrink").publication_terms == (
+        ("AI", "SI"), ("artificial intelligence", "super intelligence"))
 
 
-def test_musk_ecosystem_keywords_reach_reply_and_original_research():
-    loaded = account.load("theaishrink")
-    for name, threshold in (("replies", 30), ("hot_tab", 300), ("trending", 50)):
-        query = getattr(loaded.searches, name)[0]
-        for term in ('("Elon Musk" AI)', '(Elon AI)', '(Optimus AI)',
-                     '(from:elonmusk AI)', 'xAI', 'Grok', '"Grok Imagine"',
-                     '"super intelligence"', 'superintelligence', '(SI AI)'):
-            assert term in query
-        assert f"lang:en min_faves:{threshold}" in query
-        assert ("-filter:replies" in query) == (name == "trending")
-
-
-def test_superintelligence_topics_are_researched_without_ambiguous_si():
-    loaded = account.load("theaishrink")
-    assert loaded.relevance.topic.search("Super intelligence research")
-    assert loaded.relevance.topic.search("Superintelligence safety")
-    assert loaded.relevance.topic.search("SI AI research")
-    assert not loaded.relevance.topic.search("SI units for a bicycle")
+@pytest.mark.parametrize("terms", ['{"AI" = 3}', '{"AI" = ""}', '{"AI.*" = "SI"}'])
+def test_publication_terms_reject_nonliteral_or_bad_values(accounts, fresh, terms):
+    text = re.sub(r"publication_terms = .*", "publication_terms = " + terms, THEAISHRINK)
+    accounts("theaishrink", text)
+    with pytest.raises(settings.SettingsError, match="publication_terms"):
+        fresh()

@@ -349,3 +349,42 @@ def humanize(text: str) -> str:
         result = result[0].upper() + result[1:]
 
     return result
+
+
+def apply_publication_terms(text: str) -> str:
+    """Apply Account word substitutions once, preserving URLs and handles.
+
+    Acronyms match case exactly; multiword phrases ignore case. The replacement
+    runs before evidence review and reservation, never after approval.
+    """
+    from . import account
+    terms = account.current().publication_terms
+    if not text or not terms:
+        return text
+    protected = re.compile(r"https?://\S+|[@#][A-Za-z0-9_]+")
+    def render(part):
+        alternatives = []
+        for term, replacement in sorted(terms, key=lambda item: -len(item[0])):
+            pattern = re.escape(term).replace(r"\ ", r"\s+")
+            if " " in term:
+                pattern = "(?i:" + pattern + ")"
+            alternatives.append((pattern, replacement))
+        pattern = re.compile(r"(?<!\w)(?:" + "|".join(
+            "(?P<t" + str(i) + ">" + item[0] + ")" for i, item in enumerate(alternatives)) + r")(?!\w)")
+        return pattern.sub(lambda match: alternatives[int(match.lastgroup[1:])][1], part)
+    parts, start = [], 0
+    for match in protected.finditer(text):
+        parts.extend((render(text[start:match.start()]), match.group()))
+        start = match.end()
+    parts.append(render(text[start:]))
+    return "".join(parts)
+
+
+def publication_terms_rule() -> str:
+    """Neutral terminology context for the independent reviewers."""
+    from . import account
+    terms = account.current().publication_terms
+    if not terms:
+        return ""
+    return ("Publication display terms: " + "; ".join(f"{old} becomes {new}" for old, new in terms)
+            + ". These labels do not establish new capabilities; reject unsupported capability claims.")

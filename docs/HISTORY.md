@@ -3294,42 +3294,39 @@ oldest entries at 50,000, which could allow a previously answered ID again.
 Regression tests cover changed and own composer parents and permanent dedup.
 
 
-2026-10-06 — Operator requested a positive Grok/xAI preference, including
-liking Grok Imagine, only when relevant and without repeated fan praise. The
-Account perspective supersedes the previous neutral preference; factual
-standards and independent reviewers remain unchanged. Imagine enters one
-existing query per Reply, hot-tab and Trend pool, the evergreen research pool
-and matching official Reply sources. No change to query counts, write volume,
-schedules, Voice files, guards or pacing. The release includes the prior
-composer-target verification and permanent per-tweet reply dedup fix.
+2026-10-07 — Operator reverted PRs #325, #326 and #327. Account perspective,
+research queries, topic filters, Reply review and search reads return to their
+pre-#325 behavior. The additional Grok/Imagine preference and research terms,
+explicit Reply topic verdict, VIP filtering change and search cache are removed.
+PR #324 remains: verify the actual composer parent before paste and submission,
+refuse own/mismatched targets, and retain permanent one-reply-per-tweet dedup.
+Existing independent review, AI policy, caps, pacing and Voice remain in force.
 
 
-2026-10-06 — Operator added Elon Musk, Elon, Optimus, xAI, Grok and Grok
-Imagine to research discovery. One dedicated keyword query joins each Reply,
-hot-tab and Trending pool (19, 7 and 4 queries respectively). Musk, Elon,
-Optimus and from:elonmusk branches require AI; branded AI terms remain explicit.
-The queries keep the respective 30/300/50 like thresholds and English language;
-Trending still excludes replies. Reply searches retain their per-cycle rotating
-slice; Trend/Startup research reads one additional query. Relevance, fresh age,
-independent review, publishing caps, pacing and self-reply/per-tweet dedup checks
-remain in force. Likes and follows are unchanged. Applies at the next start.
+2026-10-07 — Operator requested publication wording: standalone uppercase AI
+becomes SI and the phrase artificial intelligence becomes super intelligence.
+Account-owned optional `publication_terms` declares literal word/phrase
+substitutions. URLs, handles and embedded names such as OpenAI/xAI stay intact;
+acronyms match exact case and phrases ignore case. Originals and all Reply
+lanes apply terms before independent review, length checks and reservation.
+Reviewers receive neutral display-term context; source evidence is unchanged,
+and terminology is not evidence of new capabilities. Write chokepoints refuse
+unprepared wording instead of altering an approved draft after review.
+
+The Operator also requested more Reply opportunities: four additional AI-only
+technical question queries without a minimum like count join the rotating pool.
+All quiet queries now use Recent/Live results, while queries with a like minimum
+retain Top results. The per-cycle query slice, jobs, age limits, independent
+review, caps and pacing are unchanged. This expands fresh candidate discovery;
+it does not guarantee a reply count. Self-reply and lifetime per-tweet dedup
+protections from #324 remain; the later #325–#327 changes stay reverted.
 
 
-2026-10-06 — Operator requires all speech to stay on AI and AI posts, including
-superintelligence/SI. VIP candidates now use the Account niche filter and
-expected author. Every Reply review requires an explicit `on_topic: true` for
-both the actual parent subject and the draft; names, brands or SI letters alone
-are insufficient, and unrelated chatter must not be turned into an AI thought.
-Missing or negative topic verdicts send nothing, including prewritten search
-and Replyback drafts. Shared generation instructions ask for SKIP on unrelated
-posts. Originals' existing `ai_relevant` review explicitly checks source and
-published text. Super intelligence and superintelligence join the topic filter;
-the dedicated research queries also include these phrases and SI with AI.
-
-To reduce repeated search reloads across jobs, successful X search reads share
-a bounded in-memory 30-second cache, scoped to Account, query, Top/Live mode and
-read limits. Queued readers recheck it under the page-session lock. Results are
-copied, failed/blank reads are not cached, and hits still check waking hours and
-stop. Admission rechecks actual post age at the write. Separate legitimate
-Top/Live searches remain distinct; no automatic tab-toggle retry is added.
-No new persistent state, model call, schedule, cap, pacing or Voice change.
+2026-10-07 — Operator subsequently restored an explicit enthusiastic fan
+preference for Elon Musk's AI work, Grok, xAI, Grok Imagine/image tools and
+SpaceX AI products, only when relevant to the actual parent or a necessary
+comparison. No brand pivot in unrelated responses; SpaceX remains AI-only,
+not generic launch/space coverage. Praise stays supported, preference is an
+opinion and no products, versions, scores or firsthand use are invented.
+Independent review stays neutral. This restores perspective only, not the
+reverted keyword priorities, topic-review schema or search cache of #325–#327.

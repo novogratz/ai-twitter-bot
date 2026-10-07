@@ -345,3 +345,10 @@ _Avoid_: config file, Operator state, seed file
 Reply text and parent status ID. The write requires the matching approval.
 **Reply evidence**: bounded exact passages from trusted parent links or the
 Account’s configured reference pages, supplied as untrusted data to both calls.
+
+
+2026-10-07 — Publication terms are Account-owned display substitutions applied
+before independent review. This Account renders AI as SI and artificial
+intelligence as super intelligence. These labels do not establish a model's
+capability; source evidence and the technical meaning of superintelligence
+remain subject to factual review.

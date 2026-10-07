@@ -9,15 +9,21 @@ language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
 domain = "AI"
+# Operator 2026-10-07: publication wording, applied before independent review.
+publication_terms = { "AI" = "SI", "artificial intelligence" = "super intelligence" }
 
-# Operator 2026-10-06: relevant positive preference, never forced promotion.
+# Operator 2026-10-04: openly favor this ecosystem; facts still require evidence.
 # Reaches Originals and every Reply surface. The Voice remains Operator-owned.
 perspective = """
-Be a sharp AI analyst with a positive bias toward Grok, xAI and Musk's AI work.
-Answer only AI-related posts, including superintelligence (SI). If the actual
-subject is unrelated to AI, return SKIP, even for a favored author. A name or
-ambiguous SI acronym alone is not evidence of an AI topic. Never inject a random
-AI thought into an unrelated discussion. Answer the actual point of the parent.
+Be a sharp AI analyst and an obvious, enthusiastic fan of Elon Musk's AI work,
+Grok, xAI, Grok Imagine/image tools and SpaceX AI products. Show that preference
+when the parent actually discusses them or a comparison is necessary to answer
+its specific question. Do not mention them in every response or insert them
+into unrelated discussions. Keep SpaceX coverage to AI products, not generic
+space or launch news. Favor a supported positive angle and explain its value.
+Fan enthusiasm is an opinion, not evidence of universal superiority. Be honest
+about limits; never invent current products, versions, scores or firsthand use.
+Answer the actual subject of the parent post.
 Read what the person actually said before choosing a point. Make one precise,
 useful observation: a mechanism, trade-off, practical implication or concrete test.
 If the point needs missing context, skip rather than invent it. Cut generic
@@ -26,15 +32,7 @@ Sound like a thoughtful conversation: direct, clear and attentive to the person.
 A clever line should make the insight easier to see. Humor and sarcasm are
 optional; use them only when they fit the topic and do not distort the facts.
 Do not invent lived experience or claim to be human. Relevance earns attention.
-Treat Grok as the Account's favorite AI product: enthusiasm is a preference,
-not proof that it is objectively best at every task. Be warm and confident when
-the topic is Grok or a relevant Musk AI project. Lead with specific supported
-strengths and explain why they matter; acknowledge material limits honestly.
-The Account likes Grok Imagine. Express that preference when image or video
-creation is the actual topic and Imagine is relevant, with a concrete useful
-angle rather than a slogan. Never claim firsthand use or invented results.
-Keep this occasional: no repeated fan praise, gratuitous tags or hero worship.
-Judge factual claims about all labs by the same evidence and technical merit.
+Judge all labs and models by the same evidence, technical merit and trade-offs.
 Do not introduce a brand, executive or competing model into an unrelated reply.
 Mention Grok, xAI or Elon Musk only when the parent discusses them or a comparison
 is necessary to answer its specific question. Praise a specific supported
@@ -49,11 +47,6 @@ rules, Voice, STE form, respect list and output format.
 
 # Official pages read for matching Reply topics; source contents are data.
 # Operator 2026-10-04: bounded source grounding before drafts and review.
-# Operator 2026-10-06: Imagine gets its specific official source first.
-[[reply_sources]]
-pattern = '\bgrok\s+imagine\b'
-url = "https://docs.x.ai/developers/model-capabilities/imagine"
-
 [[reply_sources]]
 pattern = '\b(grok|xai)\b'
 url = "https://docs.x.ai/developers/release-notes"
@@ -188,17 +181,11 @@ title = "How to choose a Grok model for an AI workload"
 url = "https://docs.x.ai/developers/models"
 publisher = "xAI docs"
 
-[[editorial.evergreen]]
-topic = "grok_imagine"
-title = "How to test Grok Imagine in an image or video workflow"
-url = "https://docs.x.ai/developers/model-capabilities/imagine"
-publisher = "xAI docs"
-
 # Python regular expressions, matched case-insensitively. A news item's title
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b(ai|artificial intelligence|superintelligence|super\s+intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|grok|xai|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|grok|xai|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -341,12 +328,10 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
-    # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
-    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" OR "super intelligence" OR superintelligence OR (SI AI) lang:en min_faves:30',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:30',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
-    'ChatGPT OR Claude OR Gemini OR Grok OR "Grok Imagine" OR Llama lang:en min_faves:50',
+    'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:30',
     '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
     '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
@@ -356,6 +341,11 @@ replies = [
     'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
     # Operator 2026-10-05: quiet technical and builder posts need no like minimum.
+    # Operator 2026-10-07: more fresh technical questions without a like minimum.
+    '"AI memory" OR "LLM context" OR "AI tool use" lang:en',
+    '"AI model testing" OR "LLM debugging" OR "AI agent tools" lang:en',
+    '"LLM reasoning" OR "AI model deployment" OR "AI model errors" lang:en',
+    '"AI training data" OR "LLM evaluation results" OR "AI model reliability" lang:en',
     '(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en',
     '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en',
     '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en',
@@ -364,14 +354,12 @@ replies = [
     '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en',
 ]
 hot_tab = [
-    # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
-    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" OR "super intelligence" OR superintelligence OR (SI AI) lang:en min_faves:300',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
-    'ChatGPT OR Claude OR Gemini OR "Grok Imagine" OR "humanoid robot" lang:en min_faves:500',
+    'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
 # like_job picks one per cycle, on the Top or the Latest tab, and likes
 # what it finds without the niche check: the query is the only filter.
@@ -385,9 +373,7 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
-    # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
-    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" OR "super intelligence" OR superintelligence OR (SI AI) lang:en min_faves:50 -filter:replies',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
-    '"artificial intelligence" OR "Grok Imagine" lang:en min_faves:50 -filter:replies',
+    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies',
 ]
