@@ -123,7 +123,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
 
     No follow here: engager follows belong to follow_engagers_job, which
     reads the ledger's Debate turns, where the follow policy finds them
-    Engagers (CONTEXT.md: Engager).
+    Engagers (GLOSSARY.md: Engager).
     """
     visited = 0  # visits attempted, the cap
     engaged = 0  # engagers with at least one like that shipped

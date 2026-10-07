@@ -622,7 +622,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     it would answer the post X has selected, including one of the account's
     own replies already on the thread. When the article's permalink is the
     account, nothing is clicked and the status stays claimed. `debate_turn=True`
-    marks an answer to someone who answered the account (CONTEXT.md).
+    marks an answer to someone who answered the account (GLOSSARY.md).
     `on_refused`, when given, receives the Refusal of a Reply admission
     refusal, dry run included, and of a post the page shows as the account's
     own, so the caller can drop a post refused for good.
@@ -774,7 +774,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 class FollowOutcome(Enum):
     """What `follow_account` did. Truthy only for FOLLOWED, so a caller that
     tests the result counts only the follows that shipped. The refusals
-    name their cause (CONTEXT.md: Follow refusal): TOO_SOON and CAP_REACHED
+    name their cause (GLOSSARY.md: Follow refusal): TOO_SOON and CAP_REACHED
     concern the follow budget and leave the handle for a later cycle,
     BLOCKED, QUALITY_REJECTED and REFUSED are about the handle. An unreadable
     whitelist is no outcome: `follow_account` raises StateUnreadable before

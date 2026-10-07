@@ -175,7 +175,7 @@ def test_an_exhausted_provider_approves_nothing(draft_fixture, exhausted, memory
 
 
 def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture, memory_journal):
-    """An Attempt is a Draft submitted to the Editor (CONTEXT.md). A feed
+    """An Attempt is a Draft submitted to the Editor (GLOSSARY.md). A feed
     outage, a generator error or an explicit skip must not burn the Slot."""
     from src.x import twitter_client as tc
     calls = []

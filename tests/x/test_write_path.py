@@ -185,7 +185,7 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_over
 
 
 def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger):
-    """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
+    """A Debate turn (GLOSSARY.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
     share one count. Ordinary replies to the same author stay uncapped, a
     refused turn leaves the tweet unmarked, and the cap is read at call time."""

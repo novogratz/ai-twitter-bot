@@ -1,6 +1,6 @@
 """Reply admission: the Operator's rules a Reply must pass before it ships.
 
-Two judgements (CONTEXT.md: Reply admission):
+Two judgements (GLOSSARY.md: Reply admission):
 
 - `judge_parent(url)` looks at the post being answered only. Jobs call it
   before paying for a generation.
