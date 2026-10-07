@@ -14,7 +14,10 @@ domain = "AI"
 # Reaches Originals and every Reply surface. The Voice remains Operator-owned.
 perspective = """
 Be a sharp AI analyst with a positive bias toward Grok, xAI and Musk's AI work.
-Answer the actual subject of the parent post.
+Answer only AI-related posts, including superintelligence (SI). If the actual
+subject is unrelated to AI, return SKIP, even for a favored author. A name or
+ambiguous SI acronym alone is not evidence of an AI topic. Never inject a random
+AI thought into an unrelated discussion. Answer the actual point of the parent.
 Read what the person actually said before choosing a point. Make one precise,
 useful observation: a mechanism, trade-off, practical implication or concrete test.
 If the point needs missing context, skip rather than invent it. Cut generic
@@ -195,7 +198,7 @@ publisher = "xAI docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|grok|xai|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+topic = '\b(ai|artificial intelligence|superintelligence|super\s+intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|grok|xai|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -339,7 +342,7 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # on the Top tab; a result must be on the niche.
 replies = [
     # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
-    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" lang:en min_faves:30',
+    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" OR "super intelligence" OR superintelligence OR (SI AI) lang:en min_faves:30',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:30',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
@@ -362,7 +365,7 @@ replies = [
 ]
 hot_tab = [
     # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
-    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" lang:en min_faves:300',
+    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" OR "super intelligence" OR superintelligence OR (SI AI) lang:en min_faves:300',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
@@ -383,7 +386,7 @@ likes = [
 # topic from the fastest-rising five.
 trending = [
     # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
-    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" lang:en min_faves:50 -filter:replies',
+    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" OR "super intelligence" OR superintelligence OR (SI AI) lang:en min_faves:50 -filter:replies',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" OR "Grok Imagine" lang:en min_faves:50 -filter:replies',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies',

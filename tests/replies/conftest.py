@@ -15,7 +15,7 @@ def quality_llm(monkeypatch):
     # reviewer use independent seams; test_reply_quality tests their real code.
     monkeypatch.setattr(reply_quality, "collect", lambda *a: ())
     monkeypatch.setattr(reply_quality, "run_llm", lambda *a, **k: LLMResult(0, json.dumps({
-        "approved": True, "answers_parent": True, "adds_value": True, "natural": True,
+        "approved": True, "on_topic": True, "answers_parent": True, "adds_value": True, "natural": True,
         "factually_supported": True, "needs_current_evidence": False,
         "evidence_ids": [], "reason": "Useful stable point."}), ""))
 

@@ -15,7 +15,7 @@ from tests.helpers import fresh
 URL = "https://docs.x.ai/developers/release-notes"
 BODY = "Batching reduces the cost per request but can increase latency for a single request."
 PASSAGES = (q.Passage("0", URL, "2026-10-04T12:00:00+00:00", BODY),)
-APPROVAL = dict(approved=True, answers_parent=True, adds_value=True, natural=True,
+APPROVAL = dict(approved=True, on_topic=True, answers_parent=True, adds_value=True, natural=True,
                 factually_supported=True, needs_current_evidence=False, evidence_ids=[], reason="Useful.")
 
 
@@ -124,7 +124,7 @@ def test_stable_point_can_pass_without_external_evidence(monkeypatch):
 
 
 @pytest.mark.parametrize("change", [
-    {"approved": False}, {"answers_parent": False}, {"adds_value": False},
+    {"approved": False}, {"on_topic": False}, {"answers_parent": False}, {"adds_value": False},
     {"natural": False}, {"factually_supported": False}, {"approved": 1},
     {"needs_current_evidence": "false"}, {"evidence_ids": "0"}, {"reason": None},
 ])
@@ -278,3 +278,22 @@ def test_matching_review_approval_can_ship_once(monkeypatch, memory_ledger, unwa
     assert len(memory_ledger.rows) == 1 and url in replied_store.load_replied()
     assert twitter_client.reply_to_tweet(url, BODY, approval=approval) is WriteOutcome.REFUSED
     assert len(memory_ledger.rows) == 1
+
+
+@pytest.mark.parametrize("parent", [
+    "Elon went to a concert", "Optimus investment token up 40%", "SI units for my bike",
+    "Claude is my uncle", "Grok fans love this football team",
+])
+def test_off_topic_review_cannot_approve_even_with_all_other_flags_true(monkeypatch, parent):
+    calls = model(monkeypatch, on_topic=False)
+    verdict = q.review(parent, "", "AI might change that.", (), parent_url=fresh("someone", 1))
+    assert verdict.outcome is Outcome.FAILED and verdict.approval is None
+    assert "actual parent subject and the draft both concern AI" in calls[0][0]
+    assert "Do not invent an AI connection" in calls[0][0]
+
+
+def test_old_reviewer_payload_without_topic_verdict_fails_closed(monkeypatch):
+    payload = dict(APPROVAL)
+    payload.pop("on_topic")
+    model(monkeypatch, json.dumps(payload))
+    assert q.review("AI inference", "", BODY, ()).outcome is Outcome.FAILED

@@ -9,13 +9,14 @@ session has closed its tab and released the Safari lock: a wedged Safari
 whose `open location` times out every time still triggers the restart. The
 feed refresh and our latest post do not count it."""
 import json
+import copy
 import subprocess
 import threading
 import time
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
-from ..guards.active_hours import OutsideActiveHours
+from ..guards.active_hours import OutsideActiveHours, require_active
 from . import page_session, safari, x_urls
 from .page_session import PageNotOpened
 
@@ -437,23 +438,62 @@ def scrape_following_feed(max_tweets: int = 15):
         return []
 
 
+# Operator 2026-10-06: repeated read jobs should not reopen the same search.
+_SEARCH_CACHE_SECONDS = 30
+_SEARCH_CACHE_MAX_ENTRIES = 64
+_search_cache = {}
+_search_cache_lock = threading.Lock()
+
+
+def _cached_search(key):
+    with _search_cache_lock:
+        cached = _search_cache.get(key)
+        if cached and time.monotonic() - cached[0] < _SEARCH_CACHE_SECONDS:
+            return copy.deepcopy(cached[1])
+    return None
+
+
+def _remember_search(key, tweets):
+    if not tweets:
+        return  # Failed/blank reads remain eligible for existing recovery.
+    with _search_cache_lock:
+        if key not in _search_cache and len(_search_cache) >= _SEARCH_CACHE_MAX_ENTRIES:
+            del _search_cache[next(iter(_search_cache))]
+        _search_cache[key] = (time.monotonic(), copy.deepcopy(tweets))
+
+
 def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200):
     """Search X and scrape results, each text cut to `text_limit` characters.
 
-    tab: "live" = chronological (default, current behavior), "top" = X's hot/algorithmic
+    Successful searches are reused for 30 seconds across jobs, by account,
+    query, tab and read limits. Cache hits still check waking hours and stop.
+    tab: "live" (also "latest") = chronological, "top" = X's hot/algorithmic
     ranking. Use "top" to surface tweets that ALREADY have engagement (avoids the
     dead-tweet filter dropping everything).
     """
     import urllib.parse
+    require_active()
     f_param = "top" if tab == "top" else "live"
+    key = (account.current().folder, query, f_param, max_tweets, text_limit)
+    cached = _cached_search(key)
+    if cached is not None:
+        log.debug("[SCRAPE] Reusing recent %s search: %s", f_param, query)
+        return cached
     search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
     label = f"search '{query}' ({f_param})"
     try:
         with page_session.session("SCRAPE") as page:
+            # The session lock serializes search readers. Recheck after waiting
+            # for it; the reader ahead may have completed this exact query.
+            cached = _cached_search(key)
+            if cached is not None:
+                return cached
             log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
             page.open(search_url, settle_s=8)
             page.scroll(2)
-            return _scrape_tweets_from_page(label, max_tweets, text_limit)
+            tweets = _scrape_tweets_from_page(label, max_tweets, text_limit)
+            _remember_search(key, tweets)
+            return tweets
     except PageNotOpened:
         _record_timed_out_scrape(label)
         return []
