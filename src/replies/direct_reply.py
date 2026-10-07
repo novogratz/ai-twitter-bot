@@ -105,7 +105,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
         candidates = reply_source.select(tweets, reply_source.Declaration(max_age=timedelta(hours=48),
-                                                                          rising_extension=True),
+                                                                          rising_extension=True, niche=True, author=handle),
                                          f"VIP/{handle}")
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)

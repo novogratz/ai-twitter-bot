@@ -280,3 +280,23 @@ Trending still excludes replies. Reply searches retain their per-cycle rotating
 slice; Trend/Startup research reads one additional query. Relevance, fresh age,
 independent review, publishing caps, pacing and self-reply/per-tweet dedup checks
 remain in force. Likes and follows are unchanged. Applies at the next start.
+
+
+2026-10-06 — Operator requires all speech to stay on AI and AI posts, including
+superintelligence/SI. VIP candidates now use the Account niche filter and
+expected author. Every Reply review requires an explicit `on_topic: true` for
+both the actual parent subject and the draft; names, brands or SI letters alone
+are insufficient, and unrelated chatter must not be turned into an AI thought.
+Missing or negative topic verdicts send nothing, including prewritten search
+and Replyback drafts. Shared generation instructions ask for SKIP on unrelated
+posts. Originals' existing `ai_relevant` review explicitly checks source and
+published text. Super intelligence and superintelligence join the topic filter;
+the dedicated research queries also include these phrases and SI with AI.
+
+To reduce repeated search reloads across jobs, successful X search reads share
+a bounded in-memory 30-second cache, scoped to Account, query, Top/Live mode and
+read limits. Queued readers recheck it under the page-session lock. Results are
+copied, failed/blank reads are not cached, and hits still check waking hours and
+stop. Admission rechecks actual post age at the write. Separate legitimate
+Top/Live searches remain distinct; no automatic tab-toggle retry is added.
+No new persistent state, model call, schedule, cap, pacing or Voice change.

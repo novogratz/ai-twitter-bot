@@ -99,7 +99,7 @@ def test_theaishrink_loads_the_old_constants():
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"], "xAI docs"}
     assert ed.trusted_hosts == set(OLD["HOSTS"]) | {
         "x.ai", "docs.x.ai", "help.openai.com", "platform.claude.com", "ai.google.dev"}
-    assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|")
+    assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|").replace("artificial intelligence|", "artificial intelligence|superintelligence|super\\s+intelligence|")
     assert loaded.relevance.topic.flags == OLD["AI_TOPIC"][1]
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
@@ -968,7 +968,16 @@ def test_musk_ecosystem_keywords_reach_reply_and_original_research():
     for name, threshold in (("replies", 30), ("hot_tab", 300), ("trending", 50)):
         query = getattr(loaded.searches, name)[0]
         for term in ('("Elon Musk" AI)', '(Elon AI)', '(Optimus AI)',
-                     '(from:elonmusk AI)', 'xAI', 'Grok', '"Grok Imagine"'):
+                     '(from:elonmusk AI)', 'xAI', 'Grok', '"Grok Imagine"',
+                     '"super intelligence"', 'superintelligence', '(SI AI)'):
             assert term in query
         assert f"lang:en min_faves:{threshold}" in query
         assert ("-filter:replies" in query) == (name == "trending")
+
+
+def test_superintelligence_topics_are_researched_without_ambiguous_si():
+    loaded = account.load("theaishrink")
+    assert loaded.relevance.topic.search("Super intelligence research")
+    assert loaded.relevance.topic.search("Superintelligence safety")
+    assert loaded.relevance.topic.search("SI AI research")
+    assert not loaded.relevance.topic.search("SI units for a bicycle")

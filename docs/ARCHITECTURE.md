@@ -1110,3 +1110,10 @@ binds the exact prepared draft to its parent status ID, and `reply_to_tweet`
 checks that approval under the page lock before claiming or opening the post.
 The existing own-post, duplicate, age, spacing, length and waking-hours rules
 still apply. No new persistent state or change to publishing ceilings.
+
+
+2026-10-06: Reply review requires an explicit positive topic verdict for the
+parent and draft on all lanes; VIP selection also filters by niche and expected
+author. Successful X search reads share a bounded 30-second in-memory cache per
+Account/query/mode/read limits, with a second check under the page-session lock.
+Cache hits retain waking-hours/stop checks; Reply admission retains age checks.

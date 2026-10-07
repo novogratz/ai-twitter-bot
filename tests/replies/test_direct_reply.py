@@ -130,7 +130,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     url = _url_with_age(5).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(dr, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
-                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
+                        [{"url": url, "text": "working the weekend on AI inference", "author": "TheBTCTherapist"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
 
@@ -274,3 +274,14 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
     assert scraped == [] and llm.calls == []
+
+
+def test_vip_scan_skips_off_topic_posts_before_generation(monkeypatch, llm, chokepoint, settings_override):
+    import src.replies.direct_reply as dr
+    from src.replies import reply_pipeline
+    settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
+    url = _url_with_age(5).replace("/someone/", "/TheBTCTherapist/")
+    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [
+        {"url": url, "text": "Bitcoin prices went up. Great weekend."}])
+    assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
+    assert llm.calls == [] and chokepoint.calls == []

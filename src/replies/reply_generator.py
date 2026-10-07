@@ -97,6 +97,10 @@ LENGTH_RULE = ("LENGTH: one or two short sentences. Aim for about 100 characters
 # Operator 2026-10-04: deeper expertise, sharper judgement and dry sarcasm.
 # Shared by every surface, including Relations and the JSON reply search.
 QUALITY_RULE = """REPLY QUALITY: apply this to each reply, including replies in JSON.
+Reply only when the parent's actual subject is {domain}; otherwise return SKIP.
+An author's identity, brand name or ambiguous SI abbreviation is not enough.
+Supplied conversation context must establish relevance; never invent a topic
+connection or turn unrelated chatter into a {domain} thought. Keep the reply on topic.
 Add one precise insight from {domain} knowledge that the parent does not give.
 Read the actual claim and its qualifications. Answer a question directly.
 Choose the strongest useful move: explain the mechanism, expose a hidden
