@@ -21,7 +21,6 @@ from ..core import config
 from ..x import x_urls
 from ..core.state_errors import StateUnreadable
 
-_REPLIED_CAP = 50000
 _write_lock = threading.Lock()
 
 
@@ -75,7 +74,6 @@ def _read_entries() -> list:
 
 
 def _write_entries(entries: list) -> None:
-    entries = entries[-_REPLIED_CAP:]
     path = config.REPLIED_FILE
     fd, tmp = tempfile.mkstemp(dir=os.path.dirname(os.path.abspath(path)),
                                prefix=".replied_tweets.", suffix=".tmp")
@@ -117,7 +115,7 @@ def load_replied() -> CanonReplied:
 
 
 def save_replied(urls) -> None:
-    """Merge `urls` into the on-disk store, newest last, capped at 50k.
+    """Merge `urls` into the on-disk store, newest last, without evicting past replies.
 
     Bug 2026-05-16: slicing a Python set (`list(urls)[-2000:]`) randomly
     dropped half the store and let bots reply twice days later. The merge
