@@ -23,11 +23,12 @@ real account. Setup and run commands live in [`README.md`](README.md).
   claims, with factual uncertainty explicit. Each parent and supplied context
   can contribute up to 1,200 characters; the short output rule still applies.
 - The Account's optional `perspective` guides Originals and Replies, never
-  the independent editorial review. Operator 2026-10-04: this Account is
-  strongly pro-Grok, pro-xAI and supportive of Musk's AI work; praise needs
-  specific evidence, current versions are not guessed, and AI stays the niche.
-  Musk's AI ecosystem is its recurring focus; targeted author searches still
-  require AI terms, and each return to the subject needs a distinct useful angle.
+  the independent editorial or Reply review. Operator 2026-10-06: favor Grok,
+  xAI and Musk's relevant AI work, with occasional enthusiasm. Grok is the
+  Account's favorite AI product, an opinion rather than an unsupported ranking;
+  it likes Grok Imagine and discusses it when relevant to the actual topic.
+  Praise needs evidence, material limits remain explicit, versions are not
+  guessed, and no firsthand use is invented. No unrelated promotion or fan spam.
 - Natural Replies (2026-10-04) start on the actual point, with specific wit
   rather than stock agreement/pivot or lecture openers. Generation and Reply
   admission refuse narrow canned prefixes such as "Fair, but". Identity
@@ -304,3 +305,12 @@ again before submission. Its status ID and author must match admission;
 missing, ambiguous, changed or own targets send nothing. Replied status IDs
 are retained without eviction: one reply per tweet, regardless of author or
 URL alias, for the lifetime of the account. Existing caps and pacing apply.
+
+
+2026-10-06 — Positive Grok/xAI preference supersedes the 2026-10-05 neutral
+stance. Grok is the Account's favorite AI product and it likes Grok Imagine;
+express this occasionally and only when relevant, with supported strengths,
+honest limits and no invented firsthand use. Imagine joins one existing query
+in each Reply, hot-tab and Trend pool, evergreen research and official Reply
+sources. Independent review, query counts, publishing caps, pacing, Voice and
+self-reply/per-tweet dedup protections remain unchanged. Applies at restart.
