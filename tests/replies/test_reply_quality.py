@@ -289,7 +289,7 @@ def test_off_topic_review_cannot_approve_even_with_all_other_flags_true(monkeypa
     verdict = q.review(parent, "", "AI might change that.", (), parent_url=fresh("someone", 1))
     assert verdict.outcome is Outcome.FAILED and verdict.approval is None
     assert "actual parent subject and the draft both concern AI" in calls[0][0]
-    assert "Do not invent an AI connection" in calls[0][0]
+    assert "Do not invent a topic connection" in calls[0][0]
 
 
 def test_old_reviewer_payload_without_topic_verdict_fails_closed(monkeypatch):
