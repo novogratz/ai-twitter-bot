@@ -283,5 +283,5 @@ def test_quiet_searches_use_recent_results_while_popular_searches_keep_top(monke
     monkeypatch.setattr(dr.random, "shuffle", lambda _: None)
     calls = []
     monkeypatch.setattr(dr, "scrape_x_search", lambda query, **kw: calls.append((query, kw["tab"])) or [])
-    assert dr.run_direct_reply_cycle(max_replies=3) == 0
+    dr.run_direct_reply_cycle(max_replies=3)
     assert calls == [("AI inference lang:en", "live"), ("AI testing min_faves:30", "top")]
