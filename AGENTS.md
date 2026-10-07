@@ -298,47 +298,11 @@ duplicate refusal, pacing and waking hours are unchanged. Original, like and
 follow discovery are unchanged. This expands eligibility, not a promise of a
 specific reply count.
 
-
-2026-10-06 — Replies verify the actual open composer parent before paste and
-again before submission. Its status ID and author must match admission;
-missing, ambiguous, changed or own targets send nothing. Replied status IDs
-are retained without eviction: one reply per tweet, regardless of author or
-URL alias, for the lifetime of the account. Existing caps and pacing apply.
-
-
-2026-10-07 — Operator reverted PRs #325, #326 and #327. Account perspective,
-research queries, topic filters, Reply review and search reads return to their
-pre-#325 behavior. The additional Grok/Imagine preference and research terms,
-explicit Reply topic verdict, VIP filtering change and search cache are removed.
-PR #324 remains: verify the actual composer parent before paste and submission,
-refuse own/mismatched targets, and retain permanent one-reply-per-tweet dedup.
-Existing independent review, AI policy, caps, pacing and Voice remain in force.
-
-
-2026-10-07 — Operator requested publication wording: standalone uppercase AI
-becomes SI and the phrase artificial intelligence becomes super intelligence.
-Account-owned optional `publication_terms` declares literal word/phrase
-substitutions. URLs, handles and embedded names such as OpenAI/xAI stay intact;
-acronyms match exact case and phrases ignore case. Originals and all Reply
-lanes apply terms before independent review, length checks and reservation.
-Reviewers receive neutral display-term context; source evidence is unchanged,
-and terminology is not evidence of new capabilities. Write chokepoints refuse
-unprepared wording instead of altering an approved draft after review.
-
-The Operator also requested more Reply opportunities: four additional AI-only
-technical question queries without a minimum like count join the rotating pool.
-All quiet queries now use Recent/Live results, while queries with a like minimum
-retain Top results. The per-cycle query slice, jobs, age limits, independent
-review, caps and pacing are unchanged. This expands fresh candidate discovery;
-it does not guarantee a reply count. Self-reply and lifetime per-tweet dedup
-protections from #324 remain; the later #325–#327 changes stay reverted.
-
-
-2026-10-07 — Operator subsequently restored an explicit enthusiastic fan
-preference for Elon Musk's AI work, Grok, xAI, Grok Imagine/image tools and
-SpaceX AI products, only when relevant to the actual parent or a necessary
-comparison. No brand pivot in unrelated responses; SpaceX remains AI-only,
-not generic launch/space coverage. Praise stays supported, preference is an
-opinion and no products, versions, scores or firsthand use are invented.
-Independent review stays neutral. This restores perspective only, not the
-reverted keyword priorities, topic-review schema or search cache of #325–#327.
+2026-10-07 — Operator requested restoration of the version on main on the
+morning of October 6: commit 93c55653. Runtime code, Account configuration and
+tests return to that snapshot. This removes the later composer-permalink check
+that blocked replies, SI wording substitutions, promotional perspective, added
+discovery queries and subsequent topic/cache changes. The snapshot retains its
+own-author refusal, status-ID reply deduplication, independent quality review,
+AI niche, pacing and publishing limits. Production state and .env are preserved.
+Deployment takes effect on the next explicitly requested start or restart.

@@ -185,10 +185,6 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     # The reservation holds the text as submitted, before the scrub.
     submitted = text
     text = _scrub_metadata_leaks(text)
-    from ..core.humanizer import apply_publication_terms
-    if apply_publication_terms(text) != text:
-        log.info("[POST] Publication terms were not prepared before review; nothing sent.")
-        return WriteOutcome.REFUSED
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -429,31 +425,6 @@ _REPLY_CLICK_JS = r"""
 """
 
 
-# Operator 2026-10-06: inspect the composer itself, not X's selection.
-_REPLY_COMPOSER_JS = (_REPLY_CLICK_JS
-    .replace('/* __REPLY_CLICK__ */', '/* __REPLY_COMPOSER__ */')
-    .replace("var all = document.querySelectorAll('article[data-testid=\"tweet\"]');",
-             "var dialogs = document.querySelectorAll('[role=\"dialog\"]');"
-             "if (dialogs.length !== 1) return JSON.stringify({url: '', result: 'missing'});"
-             "var all = dialogs[0].querySelectorAll('article[data-testid=\"tweet\"]');"
-             "if (all.length !== 1) return JSON.stringify({url: '', result: 'missing'});")
-    .replace(_REPLY_CLICK_JS[_REPLY_CLICK_JS.index('    var buttons ='):],
-             "return JSON.stringify({url: url, result: 'verified'});"
-             '\n})("__TARGET_ID__", "__BOT_HANDLE__")'))
-
-
-def _verify_reply_composer(page, tweet_url: str, author: str) -> bool:
-    from ..core import config
-    from . import x_urls
-    js = (_REPLY_COMPOSER_JS.replace("__TARGET_ID__", x_urls.status_id(tweet_url))
-          .replace("__BOT_HANDLE__", config.BOT_HANDLE.lower()))
-    data = page.read_json(js, 10, activate=True)
-    return bool(isinstance(data, dict) and data.get("result") == "verified"
-                and x_urls.status_id(data.get("url", "")) == x_urls.status_id(tweet_url)
-                and x_urls.author(data.get("url", "")) == author
-                and author != config.BOT_HANDLE.lower())
-
-
 def _click_reply(page, tweet_url: str) -> dict:
     """Click the reply button of the post `tweet_url` names, on the open page.
 
@@ -683,10 +654,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def judge():
         nonlocal admitted_text, author
-        from ..core.humanizer import apply_publication_terms
-        if apply_publication_terms(reply_text) != reply_text:
-            log.info("[REPLY] Publication terms were not prepared before review; nothing sent.")
-            return WriteOutcome.REFUSED
         if oldest is None:
             verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
         else:
@@ -773,19 +740,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.FAILED
             page.wait(3)  # Wait for reply box to open
 
-            if not _verify_reply_composer(page, tweet_url, author):
-                log.warning("[REPLY] Composer parent not verified; nothing sent.")
-                return WriteOutcome.FAILED
-
             # Paste the reply (clipboard handles accents correctly)
             log.info("Pasting reply...")
             if not _paste_or_abort(page, admitted_text, "REPLY"):
                 return WriteOutcome.FAILED
             page.wait(2)  # Wait for paste to complete
 
-            if not _verify_reply_composer(page, tweet_url, author):
-                log.warning("[REPLY] Composer parent changed; nothing sent.")
-                return WriteOutcome.FAILED
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
             # From here X may hold the reply: a failed submit keeps the claim

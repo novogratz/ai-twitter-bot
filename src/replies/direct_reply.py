@@ -204,7 +204,7 @@ def run_direct_reply_cycle(max_replies=None):
             log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
         tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
-                                       max_tweets=25, tab="top" if "min_faves:" in query else "live")
+                                       max_tweets=25, tab="top")
         # The budget bounds each query's generations; only the Replies
         # shipped come off it.
         n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query), cycle,

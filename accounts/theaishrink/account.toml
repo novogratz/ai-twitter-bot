@@ -9,21 +9,11 @@ language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
 domain = "AI"
-# Operator 2026-10-07: publication wording, applied before independent review.
-publication_terms = { "AI" = "SI", "artificial intelligence" = "super intelligence" }
 
 # Operator 2026-10-04: openly favor this ecosystem; facts still require evidence.
 # Reaches Originals and every Reply surface. The Voice remains Operator-owned.
 perspective = """
-Be a sharp AI analyst and an obvious, enthusiastic fan of Elon Musk's AI work,
-Grok, xAI, Grok Imagine/image tools and SpaceX AI products. Show that preference
-when the parent actually discusses them or a comparison is necessary to answer
-its specific question. Do not mention them in every response or insert them
-into unrelated discussions. Keep SpaceX coverage to AI products, not generic
-space or launch news. Favor a supported positive angle and explain its value.
-Fan enthusiasm is an opinion, not evidence of universal superiority. Be honest
-about limits; never invent current products, versions, scores or firsthand use.
-Answer the actual subject of the parent post.
+Be a sharp, neutral AI analyst. Answer the actual subject of the parent post.
 Read what the person actually said before choosing a point. Make one precise,
 useful observation: a mechanism, trade-off, practical implication or concrete test.
 If the point needs missing context, skip rather than invent it. Cut generic
@@ -341,11 +331,6 @@ replies = [
     'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
     # Operator 2026-10-05: quiet technical and builder posts need no like minimum.
-    # Operator 2026-10-07: more fresh technical questions without a like minimum.
-    '"AI memory" OR "LLM context" OR "AI tool use" lang:en',
-    '"AI model testing" OR "LLM debugging" OR "AI agent tools" lang:en',
-    '"LLM reasoning" OR "AI model deployment" OR "AI model errors" lang:en',
-    '"AI training data" OR "LLM evaluation results" OR "AI model reliability" lang:en',
     '(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en',
     '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en',
     '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en',

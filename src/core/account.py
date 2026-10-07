@@ -91,7 +91,6 @@ class Account:
     relations: "Relations"
     perspective: str = ""  # account-owned editorial preference, subordinate to evidence
     reply_sources: tuple[ReplySource, ...] = ()
-    publication_terms: tuple[tuple[str, str], ...] = ()
 
 
 def current() -> Account:
@@ -123,7 +122,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "perspective": str, "reply_sources": list, "publication_terms": dict})
+                 optional={"limits": dict, "relations": dict, "perspective": str, "reply_sources": list})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -150,12 +149,6 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                 or parts.username or parts.password or parts.netloc != parts.hostname):
             source.fail("url", "must use https on a trusted host, without credentials or a port")
         reply_sources.append(ReplySource(_pattern(source, "pattern"), source["url"]))
-    publication_terms = top.get("publication_terms", {})
-    for term, replacement in publication_terms.items():
-        if (not isinstance(replacement, str) or not replacement.strip()
-                or not re.fullmatch(r"[A-Za-z][A-Za-z ]{0,63}", term)
-                or not re.fullmatch(r"[A-Za-z][A-Za-z ]{0,63}", replacement)):
-            top.fail("publication_terms", "takes nonempty English word/phrase substitutions, 64 chars at most")
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
         domain=top["domain"], editorial=ed, relevance=Relevance(
@@ -164,7 +157,6 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         searches=_searches(top),
         perspective=top.get("perspective", "").strip(),
         reply_sources=tuple(reply_sources),
-        publication_terms=tuple(publication_terms.items()),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

@@ -118,13 +118,9 @@ def test_the_editorial_reads_the_loaded_account():
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
 
 
-def test_fan_account_keeps_brand_mentions_relevant_and_sourced():
+def test_neutral_account_keeps_brand_mentions_relevant_and_sourced():
     loaded = account.load("theaishrink")
-    assert "obvious, enthusiastic fan of Elon Musk's AI work" in loaded.perspective
-    assert "Grok Imagine/image tools and SpaceX AI products" in loaded.perspective
-    assert "Do not mention them in every response" in loaded.perspective
-    assert "not generic" in loaded.perspective
-    assert "never invent current products" in loaded.perspective
+    assert "sharp, neutral AI analyst" in loaded.perspective
     assert "same evidence, technical merit and trade-offs" in loaded.perspective
     assert "Do not pivot a competitor" in loaded.perspective
     assert "only when the parent discusses them" in loaded.perspective
@@ -584,7 +580,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
             '"AI research" OR "LLM training" OR "AI reasoning" '
             f'lang:en min_faves:{threshold}')
         return queries
-    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['"AI memory" OR "LLM context" OR "AI tool use" lang:en', '"AI model testing" OR "LLM debugging" OR "AI agent tools" lang:en', '"LLM reasoning" OR "AI model deployment" OR "AI model errors" lang:en', '"AI training data" OR "LLM evaluation results" OR "AI model reliability" lang:en', '(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
+    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
     assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert net.blocked_accounts == ()
@@ -937,21 +933,8 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
 def test_quiet_ai_discovery_does_not_require_existing_popularity():
     searches = account.load("theaishrink").searches
     quiet = [q for q in searches.replies if "min_faves:" not in q]
-    assert len(quiet) == 10
+    assert len(quiet) == 6
     assert all("lang:en" in q for q in quiet)
     assert any("RAG" in q for q in quiet)
     assert any("side project" in q for q in quiet)
     assert any("prompt injection" in q for q in quiet)
-
-
-def test_account_publication_terms_are_optional_and_operator_owned():
-    assert account.load("theaishrink").publication_terms == (
-        ("AI", "SI"), ("artificial intelligence", "super intelligence"))
-
-
-@pytest.mark.parametrize("terms", ['{"AI" = 3}', '{"AI" = ""}', '{"AI.*" = "SI"}'])
-def test_publication_terms_reject_nonliteral_or_bad_values(accounts, fresh, terms):
-    text = re.sub(r"publication_terms = .*", "publication_terms = " + terms, THEAISHRINK)
-    accounts("theaishrink", text)
-    with pytest.raises(settings.SettingsError, match="publication_terms"):
-        fresh()

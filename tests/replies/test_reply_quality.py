@@ -278,19 +278,3 @@ def test_matching_review_approval_can_ship_once(monkeypatch, memory_ledger, unwa
     assert len(memory_ledger.rows) == 1 and url in replied_store.load_replied()
     assert twitter_client.reply_to_tweet(url, BODY, approval=approval) is WriteOutcome.REFUSED
     assert len(memory_ledger.rows) == 1
-
-
-@pytest.mark.parametrize("prewritten", [True, False])
-def test_si_wording_is_prepared_before_review_and_bound_to_approval(monkeypatch, chokepoint, prewritten):
-    from src.replies import reply_generator
-    monkeypatch.setattr(q, "collect", lambda *a: ())
-    raw = "AI tools use artificial intelligence."
-    expected = "SI tools use super intelligence."
-    monkeypatch.setattr(reply_generator, "run_llm", lambda *a, **k: LLMResult(0, raw, ""))
-    reviews = model(monkeypatch)
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST")
-    candidate = rp.Candidate(fresh("someone"), "AI tools need tests.", "TEST", reply=raw if prewritten else "")
-    job = rp.Job("test", "TEST", None if prewritten else lambda _: call)
-    assert rp.run(job, [candidate], rp.Cycle()) == 1
-    assert '"draft": "' + expected + '"' in reviews[0][0]
-    assert chokepoint.calls[0].text == expected

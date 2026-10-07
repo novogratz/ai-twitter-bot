@@ -634,11 +634,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
         cg.is_duplicate = lambda text, submitted=(): True   # force dup
-        assert tc.post_tweet("SI capex is the new rent again") is W.REFUSED, \
+        assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \
             "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
         cg.is_duplicate = lambda text, submitted=(): False
-        assert tc.post_tweet("a genuinely fresh original take about SI") is W.DRY_RUN
+        assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost
         cg.validate = orig_validate
@@ -899,11 +899,3 @@ def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, memory_ledger, st
     assert tc.pin_own_tweet(OWN_BEST) is outcome
     assert [r["target"] for r in pin_rows(memory_ledger)] == ([OWN_BEST.lower()] if outcome else [])
     assert action_guard.profile_count_today() == 0
-
-
-@pytest.mark.parametrize("text", ["AI tools need tests.", "Artificial intelligence tools need tests."])
-def test_publication_terms_unprepared_writes_are_refused_before_browser(monkeypatch, text):
-    from src.x import twitter_client as tc, safari
-    monkeypatch.setattr(safari, "open_url", lambda *a: pytest.fail("unprepared write opened Safari"))
-    assert tc.post_tweet(text) is W.REFUSED
-    assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000500", text) is W.REFUSED

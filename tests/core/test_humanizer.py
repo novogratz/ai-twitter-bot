@@ -139,12 +139,3 @@ def test_casualize_human_texture_is_safe():
     # Never produce a truncated-looking ending: short final word keeps it safe.
     out = casualize("Honestly the whole thread is worth it.", rng=_Fire())
     assert not looks_truncated(out)
-
-
-def test_publication_terms_replace_words_before_review_and_preserve_urls_and_names():
-    from src.core.humanizer import apply_publication_terms
-    text = "AI tools use Artificial Intelligence. OpenAI xAI @AI #AI https://example.com/AI?q=artificial-intelligence"
-    expected = "SI tools use super intelligence. OpenAI xAI @AI #AI https://example.com/AI?q=artificial-intelligence"
-    assert apply_publication_terms(text) == expected
-    assert apply_publication_terms(expected) == expected
-    assert apply_publication_terms("J'ai dit oui. DAILY AI-based tools.") == "J'ai dit oui. DAILY SI-based tools."

@@ -28,7 +28,7 @@ QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Ja
 
 
 def _js_kind(js):
-    for marker, kind in (("__REPLY_COMPOSER__", "composer"), ("__REPLY_CLICK__", "reply_key"),
+    for marker, kind in (("__REPLY_CLICK__", "reply_key"),
                          ("confirmationSheetConfirm", "confirm"),
                          ("NO_BTN", "follow"), ("caret", "more"), ("PIN_NOT_FOUND", "pin_item")):
         if marker in js:
@@ -74,7 +74,7 @@ def trace(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(safari, "_safari_lock", Lock())
     t.page = WritePage(answers=t.js, fail=t.fail, before=page_step,
-                       script_kind=lambda js: _js_kind(js) if _js_kind(js) in {"reply_key", "composer"}
+                       script_kind=lambda js: _js_kind(js) if _js_kind(js) == "reply_key"
                        else f"js:{_js_kind(js)}")
     monkeypatch.setattr(page_session, "BROWSER", t.page)
     monkeypatch.setattr(tc, "_page_posts",
@@ -172,7 +172,7 @@ def test_post_dry_run(trace, monkeypatch):
 # --- reply_to_tweet -------------------------------------------------------------
 
 REPLY = "Batching is where inference margins are won or lost."
-REPLY_STEPS = ["activate", "open", "activate", "maybe_like", "reply_key", "composer", "paste", "composer", "submit"]
+REPLY_STEPS = ["activate", "open", "activate", "maybe_like", "reply_key", "paste", "submit"]
 
 
 def test_reply_ships_then_records_then_closes(trace):
@@ -581,7 +581,7 @@ def test_reply_clicks_that_posts_button_and_never_the_r_key(trace):
     account's own previous reply."""
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
-    script = trace.page.scripts[0]
+    [script] = trace.page.scripts
     assert "__REPLY_CLICK__" in script.js
     assert "2063500000000000500" in script.js
     assert '[data-testid="reply"]' in script.js
@@ -644,22 +644,3 @@ def test_reply_checks_clicked_status_and_author_before_paste(trace, url, expecte
     assert tc.reply_to_tweet(POST_URL, REPLY) is expected
     assert not trace.page.pasted
     assert not [e for e in trace.events if e.startswith("record:")]
-
-
-@pytest.mark.parametrize("when", ["before_paste", "before_submit"])
-@pytest.mark.parametrize("target", [
-    "https://x.com/TheAIShrink/status/2063500000000000600",
-    "https://x.com/other/status/2063500000000000500",
-    "https://x.com/someone/status/2063500000000000600",
-    "",
-])
-def test_composer_target_must_match_parent_at_paste_and_submit(trace, when, target):
-    trace.js.append(json.dumps({"url": POST_URL, "result": "clicked"}))
-    if when == "before_submit":
-        trace.js.append(json.dumps({"url": POST_URL, "result": "verified"}))
-    trace.js.append(json.dumps({"url": target, "result": "verified"}))
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
-    assert "submit" not in trace.events
-    assert "record:reply" not in trace.events
-    assert POST_URL not in trace.claimed
-    assert bool(trace.page.pasted) == (when == "before_submit")
