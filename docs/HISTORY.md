@@ -3292,3 +3292,13 @@ It now checks the composer before paste and submission and fails closed on an
 unknown or different parent. The replied store also no longer evicts its
 oldest entries at 50,000, which could allow a previously answered ID again.
 Regression tests cover changed and own composer parents and permanent dedup.
+
+
+2026-10-06 — Operator requested a positive Grok/xAI preference, including
+liking Grok Imagine, only when relevant and without repeated fan praise. The
+Account perspective supersedes the previous neutral preference; factual
+standards and independent reviewers remain unchanged. Imagine enters one
+existing query per Reply, hot-tab and Trend pool, the evergreen research pool
+and matching official Reply sources. No change to query counts, write volume,
+schedules, Voice files, guards or pacing. The release includes the prior
+composer-target verification and permanent per-tweet reply dedup fix.

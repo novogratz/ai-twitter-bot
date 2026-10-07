@@ -93,8 +93,9 @@ def test_theaishrink_loads_the_old_constants():
     assert ed.trend_angle == OLD["TREND_PURPOSE"]
     assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
     assert list(ed.feeds) == OLD["FEEDS"]
-    assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-1]] == OLD["KNOWLEDGE"]
-    assert ed.evergreen[-1].url == "https://docs.x.ai/developers/models"
+    assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-2]] == OLD["KNOWLEDGE"]
+    assert ed.evergreen[-2].url == "https://docs.x.ai/developers/models"
+    assert ed.evergreen[-1].url == "https://docs.x.ai/developers/model-capabilities/imagine"
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"], "xAI docs"}
     assert ed.trusted_hosts == set(OLD["HOSTS"]) | {
         "x.ai", "docs.x.ai", "help.openai.com", "platform.claude.com", "ai.google.dev"}
@@ -106,7 +107,7 @@ def test_theaishrink_loads_the_old_constants():
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
     assert list(loaded.searches.trending) == [
-        '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
+        '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0].replace('"artificial intelligence"', '"artificial intelligence" OR "Grok Imagine"'),
         '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies']
 
 
@@ -118,10 +119,15 @@ def test_the_editorial_reads_the_loaded_account():
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
 
 
-def test_neutral_account_keeps_brand_mentions_relevant_and_sourced():
+def test_positive_account_keeps_brand_mentions_relevant_and_sourced():
     loaded = account.load("theaishrink")
-    assert "sharp, neutral AI analyst" in loaded.perspective
-    assert "same evidence, technical merit and trade-offs" in loaded.perspective
+    assert "positive bias toward Grok, xAI" in loaded.perspective
+    assert "Account's favorite AI product" in loaded.perspective
+    assert "not proof that it is objectively best" in loaded.perspective
+    assert "Account likes Grok Imagine" in loaded.perspective
+    assert "Never claim firsthand use or invented results" in loaded.perspective
+    assert "Keep this occasional" in loaded.perspective
+    assert "same evidence and technical merit" in loaded.perspective
     assert "Do not pivot a competitor" in loaded.perspective
     assert "only when the parent discusses them" in loaded.perspective
     assert "Do not guess the latest version" in loaded.perspective
@@ -579,6 +585,11 @@ def test_theaishrink_loads_its_network_niche_and_searches():
         queries[3 if threshold == 300 else 1] = (
             '"AI research" OR "LLM training" OR "AI reasoning" '
             f'lang:en min_faves:{threshold}')
+        queries = [q.replace('ChatGPT OR Claude OR Gemini OR Grok OR Llama',
+                             'ChatGPT OR Claude OR Gemini OR Grok OR "Grok Imagine" OR Llama')
+                   .replace('ChatGPT OR Claude OR Gemini OR "humanoid robot"',
+                            'ChatGPT OR Claude OR Gemini OR "Grok Imagine" OR "humanoid robot"')
+                   for q in queries]
         return queries
     assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
     assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
@@ -938,3 +949,15 @@ def test_quiet_ai_discovery_does_not_require_existing_popularity():
     assert any("RAG" in q for q in quiet)
     assert any("side project" in q for q in quiet)
     assert any("prompt injection" in q for q in quiet)
+
+
+def test_imagine_discovery_and_official_grounding_stay_bounded():
+    loaded = account.load("theaishrink")
+    assert (len(loaded.searches.replies), len(loaded.searches.hot_tab),
+            len(loaded.searches.trending)) == (18, 6, 3)
+    for queries in (loaded.searches.replies, loaded.searches.hot_tab, loaded.searches.trending):
+        assert sum('"Grok Imagine"' in q for q in queries) == 1
+    sources = [s.url for s in loaded.reply_sources if s.pattern.search("Grok Imagine workflow")]
+    assert sources[0] == "https://docs.x.ai/developers/model-capabilities/imagine"
+    assert editorial._trusted(sources[0])
+    assert loaded.editorial.evergreen[-1].topic == "grok_imagine"
