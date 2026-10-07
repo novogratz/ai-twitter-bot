@@ -379,3 +379,14 @@ def test_parallel_search_readers_share_one_navigation(memory_page):
         assert not worker.is_alive()
     assert len(results) == 2 and all(results)
     assert memory_page.opened == [SEARCH]
+
+
+def test_repeated_top_live_switch_requests_open_each_mode_once(memory_page):
+    from src.x import scraper
+    live = SEARCH.replace("f=top", "f=live")
+    memory_page.pages[SEARCH] = lambda js: json.dumps([_tweet("someone", 123)])
+    memory_page.pages[live] = lambda js: json.dumps([_tweet("someone", 456)])
+    for attempt in range(100):
+        mode = "top" if attempt % 2 == 0 else "live"
+        assert scraper.scrape_x_search("ai", tab=mode)
+    assert memory_page.opened == [SEARCH, live]
