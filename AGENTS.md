@@ -224,7 +224,7 @@ owns the rule; cross-cutting invariants stay at the root of `tests/`.
 
 ## Documentation
 
-- [`CONTEXT.md`](CONTEXT.md): domain glossary. Use its terms in code, logs
+- [`GLOSSARY.md`](GLOSSARY.md): domain glossary. Use its terms in code, logs
   and docs, and update it when a term changes meaning.
 - [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md): current publishing
   rules, recovery, reach target.

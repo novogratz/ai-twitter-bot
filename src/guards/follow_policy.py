@@ -1,5 +1,5 @@
 """The follow policy: may the account follow this handle, and the follow
-files it reads and keeps (CONTEXT.md: Follow refusal).
+files it reads and keeps (GLOSSARY.md: Follow refusal).
 
 - `relation(handle)` says what the handle is to the account, from the
   policy's own sources: Seed account (the whitelist), follower (the
@@ -85,7 +85,7 @@ _STRANGER = "Stranger: not on the whitelist, not a follower, not an Engager"
 
 
 class Relation(Enum):
-    """What a handle is to the account (CONTEXT.md: Seed account,
+    """What a handle is to the account (GLOSSARY.md: Seed account,
     Follow-back, Engager, Stranger)."""
     SEED = "Seed account"
     ENGAGER = "Engager"

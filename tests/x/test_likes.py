@@ -236,7 +236,7 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_blocked_account_post_is_never_liked(browser, monkeypatch, dry_run):
-    """CONTEXT.md: a Blocked account is barred from any interaction. The
+    """GLOSSARY.md: a Blocked account is barred from any interaction. The
     handle comes from the URL and is matched as Reply admission matches it
     (case, underscores ignored); nothing is read, clicked or recorded, not
     even a dry-run row."""

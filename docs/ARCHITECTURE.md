@@ -533,7 +533,7 @@ confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
 
 `follow_account` runs the same sequence but returns a `FollowOutcome`,
 truthy only for `FOLLOWED`, the Follow click. Its refusals name their
-cause (Follow refusal, CONTEXT.md): `BLOCKED`, `TOO_SOON`, `CAP_REACHED`,
+cause (Follow refusal, GLOSSARY.md): `BLOCKED`, `TOO_SOON`, `CAP_REACHED`,
 `QUALITY_REJECTED` and `REFUSED`, from the follow policy before the
 profile opens or from the quality gate on it; `ALREADY_FOLLOWED` when the
 profile shows the account followed. `FAILED` and `DRY_RUN` keep their
@@ -701,7 +701,7 @@ Five modules sit behind them:
   since the follow already happened.
 
 `reply_to_tweet` takes every rule from `src/guards/reply_admission.py` (Reply
-admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
+admission, GLOSSARY.md). `judge_parent(url)` judges the post alone: author
 handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
 answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
