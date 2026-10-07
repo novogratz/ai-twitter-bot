@@ -3302,3 +3302,14 @@ existing query per Reply, hot-tab and Trend pool, the evergreen research pool
 and matching official Reply sources. No change to query counts, write volume,
 schedules, Voice files, guards or pacing. The release includes the prior
 composer-target verification and permanent per-tweet reply dedup fix.
+
+
+2026-10-06 — Operator added Elon Musk, Elon, Optimus, xAI, Grok and Grok
+Imagine to research discovery. One dedicated keyword query joins each Reply,
+hot-tab and Trending pool (19, 7 and 4 queries respectively). Musk, Elon,
+Optimus and from:elonmusk branches require AI; branded AI terms remain explicit.
+The queries keep the respective 30/300/50 like thresholds and English language;
+Trending still excludes replies. Reply searches retain their per-cycle rotating
+slice; Trend/Startup research reads one additional query. Relevance, fresh age,
+independent review, publishing caps, pacing and self-reply/per-tweet dedup checks
+remain in force. Likes and follows are unchanged. Applies at the next start.

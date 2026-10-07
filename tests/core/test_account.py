@@ -106,7 +106,7 @@ def test_theaishrink_loads_the_old_constants():
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
-    assert list(loaded.searches.trending) == [
+    assert list(loaded.searches.trending[1:]) == [
         '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0].replace('"artificial intelligence"', '"artificial intelligence" OR "Grok Imagine"'),
         '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies']
 
@@ -591,8 +591,8 @@ def test_theaishrink_loads_its_network_niche_and_searches():
                             'ChatGPT OR Claude OR Gemini OR "Grok Imagine" OR "humanoid robot"')
                    for q in queries]
         return queries
-    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
-    assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
+    assert list(searches.replies[1:]) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
+    assert list(searches.hot_tab[1:]) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert net.blocked_accounts == ()
 
@@ -954,10 +954,21 @@ def test_quiet_ai_discovery_does_not_require_existing_popularity():
 def test_imagine_discovery_and_official_grounding_stay_bounded():
     loaded = account.load("theaishrink")
     assert (len(loaded.searches.replies), len(loaded.searches.hot_tab),
-            len(loaded.searches.trending)) == (18, 6, 3)
+            len(loaded.searches.trending)) == (19, 7, 4)
     for queries in (loaded.searches.replies, loaded.searches.hot_tab, loaded.searches.trending):
-        assert sum('"Grok Imagine"' in q for q in queries) == 1
+        assert sum('"Grok Imagine"' in q for q in queries) == 2
     sources = [s.url for s in loaded.reply_sources if s.pattern.search("Grok Imagine workflow")]
     assert sources[0] == "https://docs.x.ai/developers/model-capabilities/imagine"
     assert editorial._trusted(sources[0])
     assert loaded.editorial.evergreen[-1].topic == "grok_imagine"
+
+
+def test_musk_ecosystem_keywords_reach_reply_and_original_research():
+    loaded = account.load("theaishrink")
+    for name, threshold in (("replies", 30), ("hot_tab", 300), ("trending", 50)):
+        query = getattr(loaded.searches, name)[0]
+        for term in ('("Elon Musk" AI)', '(Elon AI)', '(Optimus AI)',
+                     '(from:elonmusk AI)', 'xAI', 'Grok', '"Grok Imagine"'):
+            assert term in query
+        assert f"lang:en min_faves:{threshold}" in query
+        assert ("-filter:replies" in query) == (name == "trending")

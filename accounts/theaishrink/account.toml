@@ -338,6 +338,8 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
+    # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
+    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" lang:en min_faves:30',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:30',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
@@ -359,6 +361,8 @@ replies = [
     '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en',
 ]
 hot_tab = [
+    # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
+    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" lang:en min_faves:300',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
@@ -378,6 +382,8 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
+    # Operator 2026-10-06: relevant Musk AI ecosystem keyword research.
+    '("Elon Musk" AI) OR (Elon AI) OR (Optimus AI) OR (from:elonmusk AI) OR xAI OR Grok OR "Grok Imagine" lang:en min_faves:50 -filter:replies',
     '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" OR "Grok Imagine" lang:en min_faves:50 -filter:replies',
     '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies',

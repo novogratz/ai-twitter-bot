@@ -269,3 +269,14 @@ honest limits and no invented firsthand use. Imagine joins one existing query
 in each Reply, hot-tab and Trend pool, evergreen research and official Reply
 sources. Independent review, query counts, publishing caps, pacing, Voice and
 self-reply/per-tweet dedup protections remain unchanged. Applies at restart.
+
+
+2026-10-06 — Operator added Elon Musk, Elon, Optimus, xAI, Grok and Grok
+Imagine to research discovery. One dedicated keyword query joins each Reply,
+hot-tab and Trending pool (19, 7 and 4 queries respectively). Musk, Elon,
+Optimus and from:elonmusk branches require AI; branded AI terms remain explicit.
+The queries keep the respective 30/300/50 like thresholds and English language;
+Trending still excludes replies. Reply searches retain their per-cycle rotating
+slice; Trend/Startup research reads one additional query. Relevance, fresh age,
+independent review, publishing caps, pacing and self-reply/per-tweet dedup checks
+remain in force. Likes and follows are unchanged. Applies at the next start.
