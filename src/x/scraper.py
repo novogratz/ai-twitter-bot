@@ -221,7 +221,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             var views = 0;
             var an = a.querySelector('a[href*="/analytics"]');
             if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), ft: text, a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -271,6 +271,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         tweets = [{
             "url": t["u"],
             "text": t["t"],
+            "full_text": t.get("ft") or t["t"],
             "author": t["a"],
             "likes": int(t.get("l") or 0),
             "replies": int(t.get("r") or 0),

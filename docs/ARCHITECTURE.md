@@ -92,10 +92,11 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
-| `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
-| `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
+| `reply_selection_job` | 10 min | Compares up to thirty saved, admitted posts; records scores, reasons and angles; drafts at most one candidate scoring at least 85/100. All daily budgets and write guards still apply. |
+| `direct_reply_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
+| `feed_sweep_job` | 8 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
+| `early_bird_job` | 5 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
+| `mega_watch_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
@@ -237,6 +238,7 @@ and the caller hands them to `run_llm`. No module under `src/replies/` or
 |---|---|---|---|---|
 | `REPLY` | search, feed sweep, early bird, mega watch | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
 | `PRIORITY_REPLY` | the same, for a `vip_reply` author | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
+| `REPLY_SELECTION` | shared pool comparison | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | JSON review schema, `cwd=/tmp` |
 | `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool, `cwd=/tmp` |
 | `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | `AI_CLI`, or the Relation's CLI when installed | no JSON envelope, 60 s |
 | `REPLY_ON_AI_CLI` | debate, replyback | `REPLY_MODEL` | `AI_CLI` | defaults |
@@ -883,3 +885,28 @@ restart; this change does not restart the running process.
 Reply generation refreshes trusted article context at most once per hour per Account using the editorial source collector (news from the last 48 hours). It reads the last ten shipped replies from the engagement log to avoid repeated openings and jokes. Missing current sources require stable knowledge or SKIP. This context adds no browsing of X and no publishing surface.
 
 Ambiguous Reply submissions are reserved in guarded `reply_submissions.json` before submit and count toward the ten-per-day budget across restarts. Only confirmed writes enter the ledger; confirmed reservations are released after recording. Check X before clearing an ambiguous reservation.
+
+2026-10-08 — Operator requested saving discovered posts and choosing Replies
+from a shared pool. Reply scans now collect only: every discovered post is
+saved before filters, keyed by status ID, with the full text exposed by the
+browser, source and engagement counts. `reply_archive.jsonl` permanently keeps
+discoveries and selection decisions. Guarded `reply_candidates.json` holds the
+last day’s discoveries and their eligibility, score, reason, proposed angle
+and outcome. Own posts, comments and off-niche posts are saved without making
+them eligible. A shared `reply_selection_job` runs every ten minutes, after a
+one-minute collection delay, and compares up to thirty admitted posts per
+review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+highest fresh score across the reviewed pool wins. Only scores of at least
+85/100 may reach drafting, one post per selector cycle, and the model may
+reject every post. Scans never consume reply budget or draft replies. The
+selector rechecks admission before drafting and every write retains the
+standalone-page check and the ten-per-day ceiling including ambiguous
+submissions. Nothing is automatically retried from `processing` after a crash;
+check X and the Replied store before repairing its pool status. An unreadable
+pool or an unsavable archive stops collection/selection without overwriting
+state. Existing active windows, caps and evidence rules remain. No live X
+writes or restart are performed by this implementation.
+
+The Reply selector uses the `REPLY_SELECTION` Call surface, `PRIORITY_REPLY_MODEL` and `REPLY_LLM_PROVIDER`, with a structured JSON review profile. The ordinary Reply surface still drafts the selected response (VIP relations retain their configured prompt/provider). The working pool is guarded; the append-only archive records discoveries and decisions before mutable state is saved.
+
+Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.

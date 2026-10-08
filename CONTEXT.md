@@ -28,13 +28,13 @@ shares the Account's trend angle.
 _Avoid_: purpose, brief
 
 **Exceptional slot**:
-The optional 20:45 Slot, reserved for news under twelve hours old or a useful
+The optional 22:15 Slot, reserved for news under twelve hours old or a useful
 teaching source that the Editor judges exceptional.
 _Avoid_: eighth post, breaking slot
 
 **Trend slot**:
 A Slot whose topic is the common thread of the Trending posts, told from a
-fresh trusted article: 10:00, 13:00, 15:00 and the Startup post.
+fresh trusted article: 09:45, 14:20, 17:00 and the Startup post.
 _Avoid_: viral slot, hot take
 
 **Trending posts**:
@@ -306,3 +306,17 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
+
+**Reply pool**:
+The shared, guarded working set of the last day’s discovered posts and their
+eligibility, score, reason, proposed angle and outcome, keyed by status ID.
+Reply scans collect into it; the Reply selector chooses from it.
+
+**Reply archive**:
+The permanent append-only record of discoveries and selection decisions.
+It retains posts removed from the working Reply pool.
+
+**Reply selector**:
+The one scheduled job that compares saved candidates before drafting. It
+reviews batches, may reject them all, and chooses at most one candidate
+scoring at least 85/100 per cycle, within Reply admission and the daily cap.

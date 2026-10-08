@@ -179,6 +179,9 @@ def _daylight_default(monkeypatch):
     from src.guards import active_hours
     real_now = active_hours.now_local
     monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=14, minute=0))
+    from src.replies import reply_pool, reply_selector
+    monkeypatch.setattr(reply_pool, "now_local", lambda: active_hours.now_local())
+    monkeypatch.setattr(reply_selector, "now_local", lambda: active_hours.now_local())
     yield
 
 
@@ -302,5 +305,5 @@ def _capture_bot_logs(caplog):
 @_pytest.fixture(autouse=True)
 def _no_reply_news_network(monkeypatch):
     from src.replies import reply_generator
-    _UNWALLED.setdefault("reply_context", reply_generator._current_context)
-    monkeypatch.setattr(reply_generator, "_current_context", lambda: "")
+    _UNWALLED.setdefault("reply_context", reply_generator.current_context)
+    monkeypatch.setattr(reply_generator, "current_context", lambda: "")

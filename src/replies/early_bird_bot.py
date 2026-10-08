@@ -53,7 +53,7 @@ EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 15
 
 
 def run_early_bird_cycle():
-    """One scan: pick a few mega accounts, reply to ANY fresh tweet found."""
+    """One scan: save discoveries and queue eligible fresh posts for selection."""
     posted = 0
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
@@ -85,7 +85,7 @@ def run_early_bird_cycle():
     if posted:
         log.info(f"[EARLYBIRD] Posted {posted} fresh reply this cycle.")
     else:
-        log.info("[EARLYBIRD] No fresh tweets in window this cycle.")
+        log.info("[EARLYBIRD] Scan completed; eligible posts saved for Reply selection.")
 
 
 def _fresh_candidates(username: str, tweets: list) -> list:

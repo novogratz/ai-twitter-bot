@@ -335,7 +335,7 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
 
 def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operator_folder, caplog):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
-    cycle stops at the first candidate instead of trying the next ones."""
+    collector can save discoveries; the selector halts before a model call."""
     from src.core import health
     from src.replies import direct_reply as dr
     from tests.helpers import fresh, scheduled_job
@@ -353,9 +353,12 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
 
     scheduled_job("direct_reply_job")()
 
-    assert len(scraped) == 1, "the cycle stops, it does not move to the next query"
+    from src.replies import reply_pool
+    assert scraped and reply_pool.read(), "collection is saved without drafting"
+    monkeypatch.setattr(reply_pool, "COLLECT_SECONDS", 0)
+    scheduled_job("reply_selection_job")()
     assert "respect_list.json is unreadable" in caplog.text
-    assert "direct_reply halted" in caplog.text
+    assert "[reply_selection] halted" in caplog.text
     assert path.read_text() == CORRUPT
 
 

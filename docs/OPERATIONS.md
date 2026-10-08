@@ -528,6 +528,8 @@ root:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
+| `reply_candidates.json` | `reply_pool` | Last-day discovered posts, eligibility, selection score/reason/angle, outcome; keyed by status ID | guarded |
+| `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
 | `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward ten/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
@@ -850,3 +852,26 @@ keeps its reservation across restarts and is never retried. Check X before
 manually removing an entry; keep it for the day if the reply may be live.
 Past-day entries do not consume today's budget. A malformed file stops reply
 admission and must be repaired, never deleted or overwritten with defaults.
+
+2026-10-08 — Operator requested saving discovered posts and choosing Replies
+from a shared pool. Reply scans now collect only: every discovered post is
+saved before filters, keyed by status ID, with the full text exposed by the
+browser, source and engagement counts. `reply_archive.jsonl` permanently keeps
+discoveries and selection decisions. Guarded `reply_candidates.json` holds the
+last day’s discoveries and their eligibility, score, reason, proposed angle
+and outcome. Own posts, comments and off-niche posts are saved without making
+them eligible. A shared `reply_selection_job` runs every ten minutes, after a
+one-minute collection delay, and compares up to thirty admitted posts per
+review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+highest fresh score across the reviewed pool wins. Only scores of at least
+85/100 may reach drafting, one post per selector cycle, and the model may
+reject every post. Scans never consume reply budget or draft replies. The
+selector rechecks admission before drafting and every write retains the
+standalone-page check and the ten-per-day ceiling including ambiguous
+submissions. Nothing is automatically retried from `processing` after a crash;
+check X and the Replied store before repairing its pool status. An unreadable
+pool or an unsavable archive stops collection/selection without overwriting
+state. Existing active windows, caps and evidence rules remain. No live X
+writes or restart are performed by this implementation.
+
+Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
