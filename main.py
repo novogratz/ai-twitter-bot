@@ -14,7 +14,7 @@ from src.core import settings
 settings.load()
 
 from src.core import account, config, health, state_store
-from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
+from src.guards.active_hours import awake_job, is_active, next_wake, window_label
 from src.editorial.editorial_bot import open_startup_window, run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
 
@@ -76,11 +76,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
-        add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
-        add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
-        add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
-        add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job")
         if settings.get("ENABLE_REPLY_SEARCH"):
             from src.replies.reply_bot import run_reply_cycle
             add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
@@ -107,7 +103,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Sourced editorial posts and uncapped daytime replies")
+    parser = argparse.ArgumentParser(description="Sourced editorial posts and selective capped replies")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--post-only", action="store_true")
     mode.add_argument("--reply-only", action="store_true")
@@ -131,11 +127,11 @@ def main():
         log.error(f"[LLM] Fallback ignored: {note}. A call that fails there fails.")
     min_target, target = config.post_targets()
     if args.dry_run:
-        print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
+        print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": window_label(),
                           "min_target_posts": min_target,
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
-                          "replies": "unlimited",
+                          "replies": settings.get("MAX_REPLIES_PER_DAY"),
                           "quotes": 0, "reposts": 0, "slots": slots(),
                           "trend_slots": sorted(trend_slots()),
                           "startup_post": "every start in waking hours, restarts included",
@@ -164,7 +160,7 @@ def main():
     scheduler.start(paused=True)
     was_active = None
     log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
-             f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
+             f"(max {config.posts_ceiling()}); replies max {settings.get('MAX_REPLIES_PER_DAY')}/day; active {window_label()}.")
     try:
         while not stop.is_set():
             active = is_active()

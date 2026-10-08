@@ -79,21 +79,11 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     assert set_aside() == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
-def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override):
-    from src.guards import action_guard
-    from src.guards.reply_admission import Refusal
-
-    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
-    action_guard.record(action_guard.DEBATE_TURN, target="capped")
-    capped, admitted = fresh("capped", n=1), fresh("someone", n=2)
-    cycle = rp.Cycle()
-
-    run(job(debate_turn=True), [candidate(capped, "post capped"), candidate(admitted, "post admitted")], cycle)
-
-    assert llm.parents("post capped", "post admitted") == ["post admitted"]
-    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
-    assert set_aside() == {admitted}, "the Debate turn cap is temporary"
-    assert cycle.refusals == {Refusal.DEBATE_TURN_CAP.value: 1}, "counted for the job's summary"
+def test_conversation_candidates_never_generate(llm, chokepoint):
+    post = fresh("someone")
+    assert run(job(debate_turn=True), [candidate(post, "comment")]) == 0
+    assert run(job(), [rp.Candidate(post, "comment", "tag", context="our post")]) == 0
+    assert not llm.calls and not chokepoint.calls
 
 
 def test_each_job_sets_aside_its_own_posts(llm, chokepoint):
@@ -501,7 +491,7 @@ def spacing(llm, chokepoint, monkeypatch, memory_ledger):
 
     s = SimpleNamespace(chokepoint=chokepoint, slept=[], waited_at_send=[], gap_after_send=[],
                         on_sleep=lambda: None, ledger=memory_ledger,
-                        now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
+                        now=datetime(2026, 9, 21, 14, tzinfo=ZoneInfo("America/Toronto")))
     monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
     monkeypatch.setattr(ag, "now_local", lambda: s.now)
 
@@ -609,7 +599,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
         if cut == "stop":
             stop.set()
         else:
-            s.now = s.now.replace(hour=23, minute=45, second=0)
+            s.now = s.now.replace(hour=19, minute=0, second=0)
 
     ag.record(ag.REPLY, fresh("earlier"))
     s.on_sleep = cut_short

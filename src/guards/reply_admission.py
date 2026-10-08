@@ -40,6 +40,7 @@ class Refusal(Enum):
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
+    DAILY_CAP = "daily Reply cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     RESPECTED_ACCOUNT = "text names a Respected account"
@@ -80,6 +81,8 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
+    if action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count() >= settings.get("MAX_REPLIES_PER_DAY"):
+        return Verdict(Refusal.DAILY_CAP, f"{settings.get('MAX_REPLIES_PER_DAY')} Replies per Toronto day at most, ambiguous submits included", author)
     if debate_turn:
         ok, why = action_guard.can_debate_turn(author)
         if not ok:

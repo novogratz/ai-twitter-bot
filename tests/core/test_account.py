@@ -20,20 +20,20 @@ THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 # accounts/theaishrink/account.toml.
 TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
 OLD = {
-    "SLOTS": [("05:05", "Priority: the AI update worth understanding this morning"),
+    "SLOTS": [("05:00", "Priority: the AI update worth understanding this morning"),
               ("07:15", "A useful AI workflow with a concrete first step"),
               ("09:30", "Priority: an AI article or model update with a sharp consequence"),
-              ("10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("11:45", "An AI concept explained through a clear example"),
-              ("13:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("14:00", "A model or tool update and what changes for its users"),
-              ("15:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("16:15", "Priority: an evidence-backed take on an AI tradeoff"),
+              ("09:45", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("14:00", "An AI concept explained through a clear example"),
+              ("14:20", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("14:40", "A model or tool update and what changes for its users"),
+              ("17:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("17:45", "Priority: an evidence-backed take on an AI tradeoff"),
               ("18:30", "A practical AI idea worth saving or sharing"),
-              ("20:45", "Optional: an exceptional fresh AI update or unusually useful source")],
-    "TREND_SLOTS": ["10:00", "13:00", "15:00"],
+              ("22:15", "Optional: an exceptional fresh AI update or unusually useful source")],
+    "TREND_SLOTS": ["09:45", "14:20", "17:00"],
     "TREND_PURPOSE": TREND_PURPOSE,
-    "EXCEPTIONAL_SLOT": "20:45",
+    "EXCEPTIONAL_SLOT": "22:15",
     "FEEDS": [("OpenAI", "https://openai.com/news/rss.xml"),
               ("Google AI", "https://blog.google/technology/ai/rss/"),
               ("DeepMind", "https://deepmind.google/blog/rss.xml"),
@@ -197,7 +197,7 @@ def test_main_stops_on_an_unknown_bot_account():
 @pytest.mark.parametrize("old, new, named", [
     ('handle = "TheAIShrink"', 'handle = "TheAIShrink"\nnickname = "shrink"', "nickname"),
     ('trend_angle =', 'trend_hours = 3\ntrend_angle =', "editorial.trend_hours"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = true, weight = 2 }',
+    ('{ clock = "09:45", trend = true }', '{ clock = "09:45", trend = true, weight = 2 }',
      "editorial.slots[3].weight"),
     ('publisher = "OpenAI", url', 'publisher = "OpenAI", lang = "en", url', "editorial.feeds[0].lang"),
     ('[relevance]', '[relevance]\nniche = "ai"', "relevance.niche"),
@@ -215,9 +215,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
 @pytest.mark.parametrize("old, new, named", [
     ('handle = "TheAIShrink"', "handle = 3", "handle"),
     ('language = "en"', 'language = "de"', "language"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = "yes" }', "editorial.slots[3].trend"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "09:00", trend = true }', "editorial.slots[3].clock"),
+    ('{ clock = "09:45", trend = true }', '{ clock = "09:45", trend = "yes" }', "editorial.slots[3].trend"),
+    ('{ clock = "09:45", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
+    ('{ clock = "09:45", trend = true }', '{ clock = "09:00", trend = true }', "editorial.slots[3].clock"),
     ('"openai.com", "blog.google"', '"openai.com", 7', "editorial.trusted_hosts[1]"),
     ('chat_templating"\npublisher = "Hugging Face docs"', 'chat_templating"\npublisher = true',
      "editorial.evergreen[0].publisher"),
@@ -237,12 +237,12 @@ def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
 
 
 @pytest.mark.parametrize("new, problem", [
-    ('{ clock = "10:00" }', "editorial.slots[3].angle is required unless trend = true."),
-    ('{ clock = "10:00", trend = true, angle = "x" }',
+    ('{ clock = "09:45" }', "editorial.slots[3].angle is required unless trend = true."),
+    ('{ clock = "09:45", trend = true, angle = "x" }',
      "editorial.slots[3].angle must be absent when trend = true, which takes trend_angle instead."),
 ])
 def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, problem):
-    old = '{ clock = "10:00", trend = true }'
+    old = '{ clock = "09:45", trend = true }'
     assert THEAISHRINK.count(old) == 1
     accounts("theaishrink", THEAISHRINK.replace(old, new))
     with pytest.raises(settings.SettingsError) as raised:

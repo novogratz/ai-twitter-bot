@@ -68,6 +68,7 @@ def trace(monkeypatch):
             events.append("unlock")
 
     monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     monkeypatch.setattr(safari, "_safari_lock", Lock())
     monkeypatch.setattr(safari, "_run_applescript",
                         lambda script, *a, **k: step(_script_kind(script), _script_kind(script) not in t.fail))

@@ -24,6 +24,7 @@ def _fake_safari(monkeypatch):
     import src.x.twitter_client as tc
     from src.x import safari
     monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
@@ -190,6 +191,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
 
     text = "Inference cost falls when batching works, so the margin story depends on utilisation."
@@ -333,6 +335,7 @@ def _live_browser(monkeypatch, failing_step=None):
     from src.guards.active_hours import OutsideActiveHours
 
     monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     monkeypatch.setattr(action_guard, "can_debate_turn", lambda *a, **k: (True, ""))
     recorded = []
@@ -528,7 +531,7 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 45, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 19, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 
@@ -703,7 +706,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_overr
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
     from src.x import safari, twitter_client as tc
-    clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 14, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
     settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)

@@ -10,9 +10,10 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-- **Active daily: 05:05–23:45 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 05:00–10:00, 14:00–15:00, 17:00–19:00, 22:00–24:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
-- **Unlimited replies during waking hours**, with spacing and duplicate protection.
+- **At most ten replies per Toronto day**, only to other accounts’ standalone posts.
+  Never answer our own posts or comments on them. Spacing and duplicate protection remain.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
@@ -36,23 +37,23 @@ English prompts): every post and reply prompt carries it as one block.
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action after 23:45. An already-issued request may still finish remotely.
+a new action outside those four windows. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 
 | Toronto time | Reader value |
 |---|---|
-| 05:05 | Priority AI update worth understanding |
+| 05:00 | Priority AI update worth understanding |
 | 07:15 | A practical AI workflow |
 | 09:30 | Priority AI article or model update with a sharp consequence |
-| 10:00 | Trend: the AI topic X is talking about, told from a trusted article |
-| 11:45 | A clear explanation of an AI concept |
-| 13:00 | Trend |
-| 14:00 | A model or tool update and its consequences |
-| 15:00 | Trend |
-| 16:15 | Priority informed take on an AI tradeoff |
+| 09:45 | Trend: the AI topic X is talking about, told from a trusted article |
+| 14:00 | A clear explanation of an AI concept |
+| 14:20 | Trend |
+| 14:40 | A model or tool update and its consequences |
+| 17:00 | Trend |
+| 17:45 | Priority informed take on an AI tradeoff |
 | 18:30 | An idea worth saving or sharing |
-| 20:45 | Optional post for an exceptional update or unusually useful source |
+| 22:15 | Optional post for an exceptional update or unusually useful source |
 
 Each slot has a short retry window and missed slots are not caught up. Every
 start in waking hours opens one extra trend post, the Startup post. Eleven
@@ -178,3 +179,24 @@ checks and settings, including its Reply behavior without the later independent
 Reply quality review. Production state, .env and untracked files are preserved.
 The running bot is not restarted; deployment takes effect on the next explicitly
 requested start or restart.
+
+2026-10-08 — Operator requested selective engagement after account growth.
+All external bot activity is limited to Toronto windows 05:00–10:00,
+14:00–15:00, 17:00–19:00 and 22:00–24:00 (end exclusive). Replies have a
+hard ceiling of ten shipped replies per Toronto calendar day across all jobs;
+configuration may only tighten it. Existing shipped ledger rows count.
+Reply only to other accounts' standalone posts: never own posts, comments on
+own posts, or nested conversation turns. The write chokepoint verifies the
+opened target and refuses unreadable or non-standalone pages. Replyback,
+Debate, babysitter and notification jobs are no longer scheduled. Their
+shared pipeline also refuses conversation-context candidates.
+Editorial slots move inside active windows; existing publication caps,
+spacing, sourcing and review remain. Replies must earn their place with a
+specific insight or apt wit, vary length naturally, use no emojis and skip
+unsupported current news claims. The Account Voice is enthusiastically
+pro-Elon Musk, Grok, xAI and SpaceX; Grok/Imagine recommendations must be
+relevant and grounded, without invented personal use or celebrity engagement
+claims. Code/config deployment takes effect at the next explicitly requested
+restart; this change does not restart the running process.
+
+Ambiguous Reply submissions are reserved in guarded `reply_submissions.json` before submit and count toward the ten-per-day budget across restarts. Only confirmed writes enter the ledger; confirmed reservations are released after recording. Check X before clearing an ambiguous reservation.

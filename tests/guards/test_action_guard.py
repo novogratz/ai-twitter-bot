@@ -14,7 +14,7 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 
 def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkeypatch):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     clock(monkeypatch, now)
     rows = [{"action": ag.POST, "ts": "2026-09-20T03:59:00+00:00"},
             {"action": ag.POST, "ts": "2026-09-20T04:00:00+00:00", "dry_run": True}]
@@ -25,22 +25,24 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ledger.count(ag.POST, now.date()) == 5
     assert ag.profile_count_today() == 7
     assert ag.can_post(ag.POST)[0]
-    assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
+    assert ledger.last_write(ag.POST) == now - timedelta(hours=8)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST)[0]
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+def test_replies_capped_across_jobs_and_dry_runs_excluded(monkeypatch, memory_ledger):
+    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(500):
-        memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
-                             now - timedelta(hours=6, seconds=n))
+    for n in range(9):
+        memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=6))
+    memory_ledger.append(ag.REPLY, "dry", True, now - timedelta(hours=6))
     assert ag.can_post(ag.REPLY)[0]
-    ag.record(ag.REPLY, "https://x.com/a/status/500")
+    memory_ledger.append(ag.REPLY, "tenth", False, now - timedelta(hours=6))
     assert not ag.can_post(ag.REPLY)[0]
+    clock(monkeypatch, now + timedelta(days=1))
+    assert ag.can_post(ag.REPLY)[0]
 
 
 def test_quotes_and_reposts_are_refused(memory_ledger):
@@ -59,7 +61,7 @@ def test_can_post_refuses_after_stop(monkeypatch):
 
 
 def _noon(monkeypatch):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     clock(monkeypatch, now)
     return now
 
@@ -92,7 +94,7 @@ def _ledger_clock(monkeypatch):
     over an empty in-memory ledger."""
     from src.guards import active_hours
 
-    now = [datetime(2026, 9, 21, 12, tzinfo=TORONTO)]
+    now = [datetime(2026, 9, 21, 7, tzinfo=TORONTO)]
     monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "LEDGER", MemoryLedger())

@@ -50,7 +50,7 @@ def _own_call(relation) -> ReplyCall:
     force = relation.provider if relation.provider and shutil.which(relation.provider) else None
     # dossier=False: whether the author's dossier joins it is the Operator's call.
     return ReplyCall(relation.prompt, Surface.RELATION_REPLY, f"{relation.handle.upper()}_VIP",
-                     dossier=False, text_limit=300, max_chars=220, provider=force)
+                     dossier=False, text_limit=800, max_chars=270, provider=force)
 
 
 def _vip_call(handle: str) -> ReplyCall | None:
@@ -68,7 +68,7 @@ def _vip_call(handle: str) -> ReplyCall | None:
         return None
     # dossier=False: see _own_call.
     return ReplyCall(template, Surface.PRIORITY_REPLY_ON_AI_CLI, f"VIP_REPLY/{handle}", dossier=False,
-                     text_limit=300, strip_preamble=True, skip_window=20)
+                     text_limit=800, strip_preamble=True, skip_window=20)
 
 
 def _vip_job(handle: str) -> reply_pipeline.Job:
@@ -83,8 +83,8 @@ def _fresh_enough(url: str, limit: timedelta) -> bool:
 def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     """Scan VIP friend accounts via search and reply to recent posts.
 
-    Operator 2026-06-07: reply to everything the VIP_SCAN_HANDLES accounts
-    post — the VIP lane is exactly those (supersedes the 2026-06-06
+    Operator 2026-10-08: consider standalone posts only, with the same
+    selective generation and daily ceiling as every lane. The VIP lane is exactly those (supersedes the 2026-06-06
     four-handle FR list: XFenaux/RodolpheSteffan/FinTales_ cost ~3 min of
     serialized Safari per cycle and converted to zero on the EN persona).
     Each handle is a cheap `from:` search, no profile visit; the 6h
@@ -108,7 +108,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
         candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
-                      if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))]
+                      if t.get("url") and t.get("text") and not x_urls.is_reply_like_tweet(t, handle) and _fresh_enough(t["url"], timedelta(hours=48))]
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)
         log.info(f"[VIP] @{handle} done.")

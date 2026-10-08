@@ -9,14 +9,14 @@ real account. Setup and run commands live in [`README.md`](README.md).
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active 05:05–23:45 America/Toronto only; nothing external happens overnight.
+- Active only 05:00–10:00, 14:00–15:00, 17:00–19:00 and 22:00–24:00 America/Toronto.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
-- Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
+- Three trend slots (09:45, 14:20, 17:00) and a Startup post on every start
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
 - Quotes, reposts, self-recycling and threads stay at zero.
-- Replies are uncapped in waking hours, paced and deduplicated per tweet;
+- Replies are capped at ten per Toronto day, standalone posts only, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
@@ -220,3 +220,24 @@ Voice only and does not add automated video generation or uploading.
 The shared waking guard now permits external work from 05:05 through 23:44.
 The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
 Caps and pacing are unchanged; this takes effect on the next explicit restart.
+
+2026-10-08 — Operator requested selective engagement after account growth.
+All external bot activity is limited to Toronto windows 05:00–10:00,
+14:00–15:00, 17:00–19:00 and 22:00–24:00 (end exclusive). Replies have a
+hard ceiling of ten shipped replies per Toronto calendar day across all jobs;
+configuration may only tighten it. Existing shipped ledger rows count.
+Reply only to other accounts' standalone posts: never own posts, comments on
+own posts, or nested conversation turns. The write chokepoint verifies the
+opened target and refuses unreadable or non-standalone pages. Replyback,
+Debate, babysitter and notification jobs are no longer scheduled. Their
+shared pipeline also refuses conversation-context candidates.
+Editorial slots move inside active windows; existing publication caps,
+spacing, sourcing and review remain. Replies must earn their place with a
+specific insight or apt wit, vary length naturally, use no emojis and skip
+unsupported current news claims. The Account Voice is enthusiastically
+pro-Elon Musk, Grok, xAI and SpaceX; Grok/Imagine recommendations must be
+relevant and grounded, without invented personal use or celebrity engagement
+claims. Code/config deployment takes effect at the next explicitly requested
+restart; this change does not restart the running process.
+
+Ambiguous Reply submissions are reserved in guarded `reply_submissions.json` before submit and count toward the ten-per-day budget across restarts. Only confirmed writes enter the ledger; confirmed reservations are released after recording. Check X before clearing an ambiguous reservation.

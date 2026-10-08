@@ -31,7 +31,7 @@ def test_voice_carries_editorial_strategy():
     assert "at least three original ai posts" in text
     assert "eight is the absolute ceiling" in text
     assert "no automated quote tweets" in text
-    assert "replies remain uncapped" in text
+    assert "replies are capped at ten" in text
 
 
 def test_persona_is_woman_mom_in_the_one_voice():

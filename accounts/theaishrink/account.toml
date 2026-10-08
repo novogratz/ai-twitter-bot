@@ -16,17 +16,17 @@ trend_angle = "Trending: the AI topic X is talking about right now, told from a 
 # Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
 # only news under twelve hours old or an unusually useful source.
 slots = [
-    { clock = "05:05", angle = "Priority: the AI update worth understanding this morning" },
+    { clock = "05:00", angle = "Priority: the AI update worth understanding this morning" },
     { clock = "07:15", angle = "A useful AI workflow with a concrete first step" },
     { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
-    { clock = "10:00", trend = true },
-    { clock = "11:45", angle = "An AI concept explained through a clear example" },
-    { clock = "13:00", trend = true },
-    { clock = "14:00", angle = "A model or tool update and what changes for its users" },
-    { clock = "15:00", trend = true },
-    { clock = "16:15", angle = "Priority: an evidence-backed take on an AI tradeoff" },
+    { clock = "09:45", trend = true },
+    { clock = "14:00", angle = "An AI concept explained through a clear example" },
+    { clock = "14:20", trend = true },
+    { clock = "14:40", angle = "A model or tool update and what changes for its users" },
+    { clock = "17:00", trend = true },
+    { clock = "17:45", angle = "Priority: an evidence-backed take on an AI tradeoff" },
     { clock = "18:30", angle = "A practical AI idea worth saving or sharing" },
-    { clock = "20:45", angle = "Optional: an exceptional fresh AI update or unusually useful source", exceptional = true },
+    { clock = "22:15", angle = "Optional: an exceptional fresh AI update or unusually useful source", exceptional = true },
 ]
 # News items: RSS or Atom feeds, read on a host of trusted_hosts only.
 feeds = [

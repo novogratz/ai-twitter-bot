@@ -54,7 +54,7 @@ REPLIED_FILE = state_store.StatePath("replied_tweets.json")
 ENGAGEMENT_LOG_FILE = state_store.StatePath("engagement_log.csv")
 
 # Operator policy (2026-09-23): at least three editorial posts targeted, up
-# to eight profile publications per Toronto day, and uncapped replies while awake. These
+# to eight profile publications per Toronto day, and ten replies per Toronto day (2026-10-08). These
 # ceilings cannot be raised by stale .env files.
 BOT_TIMEZONE = "America/Toronto"
 MIN_TARGET_POSTS_PER_DAY = 3
@@ -156,7 +156,7 @@ def post_targets() -> tuple[int, int]:
 # Floored at 0 in settings: a negative jitter would shorten the floor above.
 _served("POST_JITTER_SECONDS")
 
-# Replies have no daily cap. Keep browser pacing and URL dedup.
+# Replies share a ten-per-day ceiling plus browser pacing and URL dedup.
 _served("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS")
 
 # Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero

@@ -45,6 +45,13 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
     from src.x import scraper
 
+    original_admit = reply_pipeline._admit
+    def admit(job, candidate, cycle):
+        if job.debate_turn or candidate.context:
+            from src.x.x_urls import author
+            return author(candidate.url)
+        return original_admit(job, candidate, cycle)
+    monkeypatch.setattr(reply_pipeline, "_admit", admit)
     chokepoint.answer = WriteOutcome.REFUSED
     for module in (dr, eb, mw, reply_source):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
