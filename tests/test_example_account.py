@@ -23,31 +23,31 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "05:05–23:45",
+    "active": "05:00–10:00, 14:00–15:00, 17:00–19:00, 22:00–24:00 America/Toronto",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
-    "replies": "unlimited",
+    "replies": 10,
     "quotes": 0,
     "reposts": 0,
     "slots": [
-        ["05:05", "Priority: the AI update worth understanding this morning"],
+        ["05:00", "Priority: the AI update worth understanding this morning"],
         ["07:15", "A useful AI workflow with a concrete first step"],
         ["09:30", "Priority: an AI article or model update with a sharp consequence"],
-        ["10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
-        ["11:45", "An AI concept explained through a clear example"],
-        ["13:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
-        ["14:00", "A model or tool update and what changes for its users"],
-        ["15:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
-        ["16:15", "Priority: an evidence-backed take on an AI tradeoff"],
+        ["09:45", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["14:00", "An AI concept explained through a clear example"],
+        ["14:20", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["14:40", "A model or tool update and what changes for its users"],
+        ["17:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["17:45", "Priority: an evidence-backed take on an AI tradeoff"],
         ["18:30", "A practical AI idea worth saving or sharing"],
-        ["20:45", "Optional: an exceptional fresh AI update or unusually useful source"],
+        ["22:15", "Optional: an exceptional fresh AI update or unusually useful source"],
     ],
-    "trend_slots": ["10:00", "13:00", "15:00"],
+    "trend_slots": ["09:45", "14:20", "17:00"],
     "startup_post": "every start in waking hours, restarts included",
     "jobs": [
-        "editorial_job", "direct_reply_job", "feed_sweep_job", "early_bird_job", "replyback_job",
-        "debate_job", "mega_watch_job", "babysit_job", "notify_job", "engage_job", "followback_job",
+        "editorial_job", "direct_reply_job", "feed_sweep_job", "early_bird_job",
+         "mega_watch_job",   "engage_job", "followback_job",
         "follow_engagers_job", "like_job", "pin_job", "session_refresh_job", "follower_tracker_job",
         "reach_report_job",
     ],
@@ -55,6 +55,7 @@ PRE_187 = {
 # The values the code at 9748c36d used with no .env, for each setting that
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
+    "MAX_REPLIES_PER_DAY": 10,
     "MAX_ORIGINALS_PER_DAY": 8, "MIN_SECONDS_BETWEEN_POSTS": 1200, "POST_JITTER_SECONDS": 0,
     "MIN_SECONDS_BETWEEN_REPLIES": 8, "REPLY_JITTER_SECONDS": 7, "FOLLOW_TOTAL_CAP": 300,
     "MAX_FOLLOWS_PER_DAY": 20, "BAN_SHORT_TERM_PRICE_TARGETS": True,
@@ -178,7 +179,7 @@ def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
     assert config.posts_ceiling() == 4 and config.post_targets() == (3, 4)
     now = editorial_bot._local()
     state = {"date": now.date().isoformat(), "published": [],
-             "slots": {clock: "published" for clock in ("06:30", "09:00", "10:00", "12:30")}}
+             "slots": {clock: "published" for clock in ("06:30", "09:00", "09:45", "12:30")}}
     assert editorial_bot._pending_refusal(state, now) == (
         "daily ceiling reached with pending submissions (4/4)")
 

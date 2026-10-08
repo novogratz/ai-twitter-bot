@@ -270,7 +270,7 @@ def test_follow_rejects_non_whitelisted(follow_env, monkeypatch, tmp_path):
 
 
 def _noon(monkeypatch):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     clock(monkeypatch, now)
     return now
 
@@ -446,7 +446,7 @@ def test_follow_gap_is_drawn_once_per_follow(monkeypatch, settings_override, tmp
     each cycle, or it would retry for a small draw."""
     from src.guards import active_hours
 
-    now = [datetime(2026, 9, 21, 12, tzinfo=TORONTO)]
+    now = [datetime(2026, 9, 21, 14, tzinfo=TORONTO)]
     monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "LEDGER", MemoryLedger())

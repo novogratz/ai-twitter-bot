@@ -10,7 +10,7 @@ from tests.helpers import (FRESH, OWN_BEST, TORONTO, SearchPage, clock, pin_rows
                            fresh)
 
 # 02:30 on 2026-10-15 in Paris.
-TORONTO_EVENING = datetime(2026, 10, 14, 20, 30, tzinfo=TORONTO)
+TORONTO_EVENING = datetime(2026, 10, 14, 18, 30, tzinfo=TORONTO)
 # The day each clock gives: Toronto's, and the one the Mac stamped before #191.
 STAMPED_DAYS = ["2026-10-14", "2026-10-15"]
 

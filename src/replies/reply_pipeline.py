@@ -153,6 +153,9 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     store, so a post another job answered since the scrape is dropped here,
     not after a paid generation. Returns the author it read, or None."""
     require_active()
+    # Operator 2026-10-08: standalone posts only, never conversation turns.
+    if job.debate_turn or candidate.context or candidate.text.lstrip().startswith("@"):
+        return None
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None

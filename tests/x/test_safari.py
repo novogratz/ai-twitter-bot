@@ -17,7 +17,7 @@ def test_browser_wait_rechecks_bedtime(monkeypatch):
 
     class SlowLock:
         def acquire(self):
-            clock(monkeypatch, datetime(2026, 9, 20, 23, 45, tzinfo=TORONTO))
+            clock(monkeypatch, datetime(2026, 9, 20, 19, 0, tzinfo=TORONTO))
 
         def release(self):
             released.append(True)
@@ -36,7 +36,7 @@ def test_submit_checks_bedtime_before_applescript(monkeypatch):
     from unittest.mock import patch
     with patch("subprocess.run") as run:
         safari = importlib.reload(safari)
-        clock(monkeypatch, datetime(2026, 9, 20, 23, 45, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, 19, 0, tzinfo=TORONTO))
         with pytest.raises(hours.OutsideActiveHours):
             safari._run_applescript("submission")
         run.assert_not_called()

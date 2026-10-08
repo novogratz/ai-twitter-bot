@@ -8,8 +8,10 @@ from ..core import config
 from ..core.logger import log
 
 
-WAKE = time(5, 5)
-BEDTIME = time(23, 45)
+WAKE = time(5)
+BEDTIME = time(0)
+ACTIVE_WINDOWS = ((time(5), time(10)), (time(14), time(15)),
+                  (time(17), time(19)), (time(22), time(0)))
 
 _STOP = threading.Event()
 
@@ -23,7 +25,9 @@ class OutsideActiveHours(RuntimeError):
 
 
 def window_label() -> str:
-    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    windows = ", ".join(f"{start:%H:%M}–{end:%H:%M}" if end != time(0)
+                        else f"{start:%H:%M}–24:00" for start, end in ACTIVE_WINDOWS)
+    return windows + " " + config.BOT_TIMEZONE
 
 
 def now_local() -> datetime:
@@ -49,7 +53,9 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    return WAKE <= local.time().replace(tzinfo=None) < BEDTIME
+    clock = local.time().replace(tzinfo=None)
+    return any(start <= clock and (end == time(0) or clock < end)
+               for start, end in ACTIVE_WINDOWS)
 
 
 def stop_requested() -> bool:
@@ -67,8 +73,11 @@ def may_act(now: datetime | None = None) -> bool:
 
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
-    return wake if local < wake else wake + timedelta(days=1)
+    for start, _ in ACTIVE_WINDOWS:
+        wake = local.replace(hour=start.hour, minute=start.minute, second=0, microsecond=0)
+        if local < wake:
+            return wake
+    return (local + timedelta(days=1)).replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
 
 
 def require_active() -> None:
@@ -91,8 +100,12 @@ def awake_job(fn):
 
 
 def bedtime(now: datetime) -> datetime:
-    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
-    return now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    """End of the current Toronto active window; now itself while asleep."""
+    for start, end in ACTIVE_WINDOWS:
+        if start <= now.time().replace(tzinfo=None) and (end == time(0) or now.time().replace(tzinfo=None) < end):
+            day = now + timedelta(days=1) if end == time(0) else now
+            return day.replace(hour=end.hour, minute=end.minute, second=0, microsecond=0)
+    return now
 
 
 def seconds_until_bedtime() -> float:

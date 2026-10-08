@@ -38,7 +38,7 @@ def test_root_only_drops_nested_replies():
     tweets = [{"url": root, "text": "a root post"}, {"url": nested, "text": "a reply", "is_reply": True},
               {"url": mention, "text": "@someone a reply"}]
 
-    assert urls(reply_source.select(tweets, Declaration(max_age=HOUR), "TAG")) == [root, nested, mention]
+    assert urls(reply_source.select(tweets, Declaration(max_age=HOUR), "TAG")) == [root]
     assert urls(reply_source.select(tweets, Declaration(max_age=HOUR, root_only=True), "TAG")) == [root]
 
 

@@ -30,7 +30,7 @@ At start, `main()`:
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
    `--reply-only`;
 4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at the 05:05 and 23:45 boundaries.
+   pauses or resumes it at all four active windows’ boundaries.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
@@ -38,7 +38,7 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 05:05 ≤ Toronto time < 23:45, DST
+`src/guards/active_hours.py` owns the clock: 05:00–10:00, 14:00–15:00, 17:00–19:00 and 22:00–24:00 Toronto time, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
@@ -57,11 +57,11 @@ run. The check is repeated at each point where work leaves the process:
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
-  also caps every model call's timeout at the time left before 23:45;
+  also caps every model call's timeout at the time left in the current active window;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
   `editorial_bot` before fetching a source and again before publishing.
 
-A request already sent to X or to a model can finish after 23:45; it cannot
+A request already sent to X or to a model can finish after the active window ends; it cannot
 authorize a new action.
 
 ## Jobs
@@ -96,10 +96,6 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
-| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
-| `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
-| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
-| `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
@@ -143,9 +139,9 @@ before); `MemoryJournal` holds it in memory for tests. Each pass reads the
 file once, keeps the state in memory and saves it whole at each change; a
 new Toronto day is saved with the pass's first change.
 
-1. **Slot.** The `slots` of `account.toml` list 05:05, 07:15, 09:30, 10:00,
-   11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
-   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
+1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 09:45,
+   14:00, 14:20, 14:40, 17:00, 17:45, 18:30 and an optional 22:15, the
+   exceptional one; those with `trend = true` are 09:45, 14:20 and 17:00. A slot is due for 45 minutes, never past the current active window, only if
    the Slot journal has not closed it today and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
@@ -864,3 +860,26 @@ content guard's dedup memory of this run's posts.
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and
 every push to `main`.
+
+2026-10-08 — Operator requested selective engagement after account growth.
+All external bot activity is limited to Toronto windows 05:00–10:00,
+14:00–15:00, 17:00–19:00 and 22:00–24:00 (end exclusive). Replies have a
+hard ceiling of ten shipped replies per Toronto calendar day across all jobs;
+configuration may only tighten it. Existing shipped ledger rows count.
+Reply only to other accounts' standalone posts: never own posts, comments on
+own posts, or nested conversation turns. The write chokepoint verifies the
+opened target and refuses unreadable or non-standalone pages. Replyback,
+Debate, babysitter and notification jobs are no longer scheduled. Their
+shared pipeline also refuses conversation-context candidates.
+Editorial slots move inside active windows; existing publication caps,
+spacing, sourcing and review remain. Replies must earn their place with a
+specific insight or apt wit, vary length naturally, use no emojis and skip
+unsupported current news claims. The Account Voice is enthusiastically
+pro-Elon Musk, Grok, xAI and SpaceX; Grok/Imagine recommendations must be
+relevant and grounded, without invented personal use or celebrity engagement
+claims. Code/config deployment takes effect at the next explicitly requested
+restart; this change does not restart the running process.
+
+Reply generation refreshes trusted article context at most once per hour per Account using the editorial source collector (news from the last 48 hours). It reads the last ten shipped replies from the engagement log to avoid repeated openings and jokes. Missing current sources require stable knowledge or SKIP. This context adds no browsing of X and no publishing surface.
+
+Ambiguous Reply submissions are reserved in guarded `reply_submissions.json` before submit and count toward the ten-per-day budget across restarts. Only confirmed writes enter the ledger; confirmed reservations are released after recording. Check X before clearing an ambiguous reservation.

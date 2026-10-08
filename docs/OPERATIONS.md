@@ -528,6 +528,7 @@ root:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
+| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward ten/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -841,3 +842,11 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
+
+2026-10-08 — Reply submission recovery: `reply_submissions.json` reserves one
+of the ten daily Replies before the submit step. Confirmed ledger rows count
+only once even if a crash prevents reservation cleanup. An ambiguous submit
+keeps its reservation across restarts and is never retried. Check X before
+manually removing an entry; keep it for the day if the reply may be live.
+Past-day entries do not consume today's budget. A malformed file stops reply
+admission and must be repaired, never deleted or overwritten with defaults.

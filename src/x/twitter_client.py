@@ -462,6 +462,27 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         steps=steps, close_tab=False)
 
 
+def _standalone_reply_target(url: str) -> bool:
+    """Verify the opened target, not a feed's incomplete reply metadata."""
+    from .x_urls import status_id
+    sid = status_id(url)
+    js = """(() => {
+      const id = TARGET;
+      const articles = [...document.querySelectorAll('article')];
+      const index = articles.findIndex(a => [...a.querySelectorAll('a[href]')]
+        .some(l => l.querySelector('time') && l.pathname.endsWith('/status/' + id)));
+      if (index !== 0) return 'refused';
+      const article = articles[index];
+      if (!article.querySelector('[data-testid="tweetText"]')) return 'refused';
+      if (/Replying to|En réponse à/i.test(article.innerText)) return 'refused';
+      return 'standalone';
+    })()""".replace("TARGET", json.dumps(sid))
+    try:
+        return safari._run_js(js, 10, log_prefix="[REPLY]") == "standalone"
+    except Exception:
+        return False
+
+
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
                    on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
@@ -549,6 +570,11 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.FAILED
             time.sleep(0.5)
 
+            # Operator 2026-10-08: fail closed unless this is a standalone post.
+            if not _standalone_reply_target(tweet_url):
+                log.info("[REPLY] Conversation or unreadable target: refusing %s", tweet_url)
+                return WriteOutcome.REFUSED
+
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
@@ -573,6 +599,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
+            action_guard.reserve_reply(tweet_url)
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True
@@ -593,7 +620,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     return confirmed_write.run(
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
         rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
-        steps=steps)
+        steps=steps, after_record=lambda: action_guard.confirm_reply(tweet_url))
 
 
 class FollowOutcome(Enum):

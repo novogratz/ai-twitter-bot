@@ -10,7 +10,7 @@ from tests.helpers import TORONTO, clock, scheduled_job
 
 def test_reach_reports_missing_coverage_without_inventing_homepage_views():
     from src.editorial.reach_report import summarize
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     posts = [dict(ts=now.isoformat(), text="A useful AI workflow", slot="08:00"),
              dict(ts=now.isoformat(), text="Another AI idea", slot="11:30")]
     tweet = dict(url=f"https://x.com/{config.BOT_HANDLE}/status/1", text=posts[0]["text"], views=250, likes=5)
@@ -26,7 +26,7 @@ def test_a_failed_measurement_leaves_the_safari_health_file_alone(monkeypatch, c
     from src.core import health
     from src.editorial import reach_report
     from src.x import scraper
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     clock(monkeypatch, now)
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
 

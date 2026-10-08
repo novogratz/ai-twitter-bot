@@ -26,7 +26,8 @@ class Order(Enum):
 @dataclass(frozen=True)
 class Declaration:
     """What a job answers. Only `max_age` is required; every other filter
-    is off until the job turns it on. Build it at call time so the settings
+    is off until the job turns it on, except standalone-post filtering which
+    always applies (Operator 2026-10-08). Build it at call time so the settings
     it reads stay live."""
     max_age: timedelta
     root_only: bool = False
@@ -72,7 +73,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         text = tweet.get("text") or ""
         if not url or not text.strip():
             continue
-        if declaration.root_only and x_urls.is_reply_like_tweet(tweet):
+        if x_urls.is_reply_like_tweet(tweet):
             continue
         if author and x_urls.author(url) not in ("", author):
             continue

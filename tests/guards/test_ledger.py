@@ -355,7 +355,7 @@ def test_policy_reads_the_configured_file_at_call_time(monkeypatch, tmp_path):
 # --- what both adapters answer ----------------------------------------------------
 
 
-_TODAY_NOON = datetime(2026, 9, 21, 12, tzinfo=TORONTO)
+_TODAY_NOON = datetime(2026, 9, 21, 14, tzinfo=TORONTO)
 _ROWS = [
     # Stamps written by older code: naive (Toronto host clock) and UTC.
     {"action": ag.POST, "ts": "2026-09-21T03:59:00+00:00"},  # 23:59 the day before

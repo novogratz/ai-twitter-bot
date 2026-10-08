@@ -1,9 +1,10 @@
 # Editorial policy — September 23, 2026
 
-The operator requested at least three valuable AI posts a day, up to eight
-profile posts, uncapped replies, a more natural voice, and a working day from
-05:05 to 23:45 (22:00 until 2026-09-23; the later bedtime added no slot and
-changed no cap or pacing). The schedule aims for six originals, with more opportunities
+The operator's current mandate (2026-10-08) permits at most ten replies per
+Toronto day, to other accounts' standalone posts only. Never answer own
+posts or comments on them. All external activity runs only during 05:00–10:00,
+14:00–15:00, 17:00–19:00 and 22:00–24:00 Toronto time, end exclusive.
+The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
 start; they compete for the same eight publications (see below).
@@ -90,7 +91,7 @@ are its only filter.
 
 ## Trend slots and the Startup post
 
-The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from
+The 09:45, 14:20 and 17:00 slots, and the Startup post, take their topic from
 X. Two Top-tab searches for AI and "artificial intelligence" (`[searches]
 trending` in `account.toml`) supply posts from
 the last 24 hours; the five with the most likes per minute are kept. Own posts,
@@ -112,7 +113,7 @@ and pending guard per start, goes before a slot whose window is open, and
 obeys the waking hours, the eight-publication ceiling and the post spacing. A
 pass that gives it no draft falls through to the open slots in the same pass,
 so a restart never hides a slot. A start overnight opens nothing, even just
-before 05:05. A restart loop in daytime therefore publishes
+before 05:00. A restart loop in daytime therefore publishes
 up to one post every twenty minutes until the daily ceiling, at the expense of
 later slots. An ambiguous submission counts as a publication for that: the
 next Startup post waits twenty minutes after it, the day's pending submissions
@@ -127,12 +128,13 @@ must not repeat.
   remote work can finish; it cannot authorize a later out-of-hours submission.
   A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
   write is admitted after it.
-- Slots: 05:05, 07:15, 09:30, 10:00 (trend), 11:45, 13:00 (trend), 14:00,
-  15:00 (trend), 16:15, 18:30, optional 20:45, plus the Startup post.
+- Slots: 05:00, 07:15, 09:30, 09:45 (trend), 14:00, 14:20 (trend), 14:40,
+  17:00 (trend), 17:45, 18:30, optional 22:15, plus the Startup post.
   Eleven slots and the Startup post compete for eight publications: on a full
   day the evening slots are the ones left out.
 - A slot permits at most three attempts over 45 minutes, and no window runs
-  past 23:45: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
+  past the active window: the 22:15 slot ends at 23:00; a Startup post window
+  ends at the next pause.
   An attempt is a draft submitted to the editor; a pass without a draft
   spends none. A slot out of attempts, or one whose pass yields no draft, no
   longer holds an overlapping one; a pass still submits once at most.
@@ -149,15 +151,16 @@ must not repeat.
   no scheduled job carries such a branch (issue #107):
   `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
   code and an operator request, not a config change.
-- Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
-  per-author debate turns protect conversation quality. Every answer to
-  someone who answered the account is a debate turn, whichever job sends it.
+- Replies have a hard ten-per-day cap. Browser pacing, per-tweet dedup and bounded
+  standalone-post verification protect conversation quality. Conversation
+  turns and comments on our posts are no longer scheduled or admitted by the
+  Reply pipeline.
   The per-tweet dedup store fails closed: while it is unreadable, no reply
   ships. The gap after each reply is `MIN_SECONDS_BETWEEN_REPLIES` plus a
   jitter drawn once per reply, the same for every caller: retrying cannot
   shorten it. The direct-reply and feed-sweep pipeline waits out that gap
   before sending instead of discarding a paid generation; the chokepoint
-  still judges, and the wait ends on a stop request or at 23:45.
+  still judges, and the wait ends on a stop request or at the active window’s end.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token or one of the Account's
@@ -297,3 +300,24 @@ requested start or restart.
 The shared waking guard now permits external work from 05:05 through 23:44.
 The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
 Caps and pacing are unchanged; this takes effect on the next explicit restart.
+
+2026-10-08 — Operator requested selective engagement after account growth.
+All external bot activity is limited to Toronto windows 05:00–10:00,
+14:00–15:00, 17:00–19:00 and 22:00–24:00 (end exclusive). Replies have a
+hard ceiling of ten shipped replies per Toronto calendar day across all jobs;
+configuration may only tighten it. Existing shipped ledger rows count.
+Reply only to other accounts' standalone posts: never own posts, comments on
+own posts, or nested conversation turns. The write chokepoint verifies the
+opened target and refuses unreadable or non-standalone pages. Replyback,
+Debate, babysitter and notification jobs are no longer scheduled. Their
+shared pipeline also refuses conversation-context candidates.
+Editorial slots move inside active windows; existing publication caps,
+spacing, sourcing and review remain. Replies must earn their place with a
+specific insight or apt wit, vary length naturally, use no emojis and skip
+unsupported current news claims. The Account Voice is enthusiastically
+pro-Elon Musk, Grok, xAI and SpaceX; Grok/Imagine recommendations must be
+relevant and grounded, without invented personal use or celebrity engagement
+claims. Code/config deployment takes effect at the next explicitly requested
+restart; this change does not restart the running process.
+
+Ambiguous Reply submissions are reserved in guarded `reply_submissions.json` before submit and count toward the ten-per-day budget across restarts. Only confirmed writes enter the ledger; confirmed reservations are released after recording. Check X before clearing an ambiguous reservation.

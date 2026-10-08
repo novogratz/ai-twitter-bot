@@ -2858,3 +2858,22 @@ Voice only and does not add automated video generation or uploading.
 The shared waking guard now permits external work from 05:05 through 23:44.
 The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
 Caps and pacing are unchanged; this takes effect on the next explicit restart.
+
+2026-10-08 — Operator requested selective engagement after account growth.
+All external bot activity is limited to Toronto windows 05:00–10:00,
+14:00–15:00, 17:00–19:00 and 22:00–24:00 (end exclusive). Replies have a
+hard ceiling of ten shipped replies per Toronto calendar day across all jobs;
+configuration may only tighten it. Existing shipped ledger rows count.
+Reply only to other accounts' standalone posts: never own posts, comments on
+own posts, or nested conversation turns. The write chokepoint verifies the
+opened target and refuses unreadable or non-standalone pages. Replyback,
+Debate, babysitter and notification jobs are no longer scheduled. Their
+shared pipeline also refuses conversation-context candidates.
+Editorial slots move inside active windows; existing publication caps,
+spacing, sourcing and review remain. Replies must earn their place with a
+specific insight or apt wit, vary length naturally, use no emojis and skip
+unsupported current news claims. The Account Voice is enthusiastically
+pro-Elon Musk, Grok, xAI and SpaceX; Grok/Imagine recommendations must be
+relevant and grounded, without invented personal use or celebrity engagement
+claims. Code/config deployment takes effect at the next explicitly requested
+restart; this change does not restart the running process.

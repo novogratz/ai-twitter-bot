@@ -20,6 +20,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def pytest_configure(config):
+    from src.core import settings
+    settings.load(env_file="/dev/null", environ={})
     from src.core.logger import setup_logging
 
     logger = setup_logging()
@@ -176,7 +178,7 @@ def _daylight_default(monkeypatch):
     """
     from src.guards import active_hours
     real_now = active_hours.now_local
-    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
+    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=14, minute=0))
     yield
 
 
@@ -288,3 +290,17 @@ def like_job(monkeypatch, memory_ledger, settings_override):
         state["closed"] += 1
     monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
+
+@_pytest.fixture(autouse=True)
+def _capture_bot_logs(caplog):
+    # The production logger deliberately does not propagate to root.
+    from src.core.logger import log
+    log.addHandler(caplog.handler)
+    yield
+    log.removeHandler(caplog.handler)
+
+@_pytest.fixture(autouse=True)
+def _no_reply_news_network(monkeypatch):
+    from src.replies import reply_generator
+    _UNWALLED.setdefault("reply_context", reply_generator._current_context)
+    monkeypatch.setattr(reply_generator, "_current_context", lambda: "")
