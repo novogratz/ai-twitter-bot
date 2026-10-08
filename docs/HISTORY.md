@@ -2845,3 +2845,11 @@ checks and settings, including its Reply behavior without the later independent
 Reply quality review. Production state, .env and untracked files are preserved.
 The running bot is not restarted; deployment takes effect on the next explicitly
 requested start or restart.
+
+2026-10-07 — Operator updated the Account Voice: a sexy, funny, sarcastic
+40-year-old woman and mom with deep expertise in AI models and news. AI-generated
+videos are a new interest, and the Account has started publishing them. Specific
+video descriptions and production claims need supplied context. Flirtation stays
+non-explicit and occasional; sarcasm targets claims. Identity honesty, evidence
+requirements, publishing limits and scheduling are unchanged. This changes the
+Voice only and does not add automated video generation or uploading.

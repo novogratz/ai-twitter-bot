@@ -1,7 +1,9 @@
 # @TheAIShrink — AI knowledge, useful updates, and conversation
 
 A Safari-driven AI account with the voice of a confident, warm, playfully flirty
-45-year-old mom who loves AI. The bot aims to give readers something useful in
+40-year-old mom: sexy, funny, sarcastic, and deeply knowledgeable about AI
+models and news. She also loves AI-generated videos, which the account has
+started publishing. The bot aims to give readers something useful in
 every post and respond naturally in conversations. That Voice lives only in
 the Account's folder, `accounts/theaishrink/voice_fr.md` (`voice_en.md` for
 English prompts): every post and reply prompt carries it as one block.
