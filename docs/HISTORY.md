@@ -2877,3 +2877,24 @@ pro-Elon Musk, Grok, xAI and SpaceX; Grok/Imagine recommendations must be
 relevant and grounded, without invented personal use or celebrity engagement
 claims. Code/config deployment takes effect at the next explicitly requested
 restart; this change does not restart the running process.
+
+2026-10-08 — Operator requested saving discovered posts and choosing Replies
+from a shared pool. Reply scans now collect only: every discovered post is
+saved before filters, keyed by status ID, with the full text exposed by the
+browser, source and engagement counts. `reply_archive.jsonl` permanently keeps
+discoveries and selection decisions. Guarded `reply_candidates.json` holds the
+last day’s discoveries and their eligibility, score, reason, proposed angle
+and outcome. Own posts, comments and off-niche posts are saved without making
+them eligible. A shared `reply_selection_job` runs every ten minutes, after a
+one-minute collection delay, and compares up to thirty admitted posts per
+review. Unreviewed posts get a turn before previously reviewed posts; the
+highest fresh score across the reviewed pool wins. Only scores of at least
+85/100 may reach drafting, one post per selector cycle, and the model may
+reject every post. Scans never consume reply budget or draft replies. The
+selector rechecks admission before drafting and every write retains the
+standalone-page check and the ten-per-day ceiling including ambiguous
+submissions. Nothing is automatically retried from `processing` after a crash;
+check X and the Replied store before repairing its pool status. An unreadable
+pool or an unsavable archive stops collection/selection without overwriting
+state. Existing active windows, caps and evidence rules remain. No live X
+writes or restart are performed by this implementation.

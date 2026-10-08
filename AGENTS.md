@@ -241,3 +241,26 @@ claims. Code/config deployment takes effect at the next explicitly requested
 restart; this change does not restart the running process.
 
 Ambiguous Reply submissions are reserved in guarded `reply_submissions.json` before submit and count toward the ten-per-day budget across restarts. Only confirmed writes enter the ledger; confirmed reservations are released after recording. Check X before clearing an ambiguous reservation.
+
+2026-10-08 — Operator requested saving discovered posts and choosing Replies
+from a shared pool. Reply scans now collect only: every discovered post is
+saved before filters, keyed by status ID, with the full text exposed by the
+browser, source and engagement counts. `reply_archive.jsonl` permanently keeps
+discoveries and selection decisions. Guarded `reply_candidates.json` holds the
+last day’s discoveries and their eligibility, score, reason, proposed angle
+and outcome. Own posts, comments and off-niche posts are saved without making
+them eligible. A shared `reply_selection_job` runs every ten minutes, after a
+one-minute collection delay, and compares up to thirty admitted posts per
+review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+highest fresh score across the reviewed pool wins. Only scores of at least
+85/100 may reach drafting, one post per selector cycle, and the model may
+reject every post. Scans never consume reply budget or draft replies. The
+selector rechecks admission before drafting and every write retains the
+standalone-page check and the ten-per-day ceiling including ambiguous
+submissions. Nothing is automatically retried from `processing` after a crash;
+check X and the Replied store before repairing its pool status. An unreadable
+pool or an unsavable archive stops collection/selection without overwriting
+state. Existing active windows, caps and evidence rules remain. No live X
+writes or restart are performed by this implementation.
+
+Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.

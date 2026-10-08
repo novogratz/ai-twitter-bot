@@ -1,6 +1,7 @@
 """Feed sweeper — useful replies to fresh on-niche posts in the For You / Following feed.
 
-Scroll For You and Following and reply to every on-niche post. The quote
+Scroll For You and Following, archive discovered posts and queue eligible
+standalone posts for comparison by the shared Reply selector. The quote
 lane that once amplified viral posts is gone (2026-09-20 policy: quotes are
 zero). Authors of high-engagement feed posts are added to
 dynamic_accounts.json so the engage_bot visits them.
@@ -70,7 +71,7 @@ def run_feed_sweep_cycle():
 
 
 def _sweep_one_feed(source, scraper, cycle):
-    log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
+    log.info(f"[SWEEP] Sweeping {source} (save posts for selective replies)...")
     tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
@@ -90,4 +91,4 @@ def _sweep_one_feed(source, scraper, cycle):
     job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)
     replies_done = reply_pipeline.run(job, reply_candidates, cycle,
                                       max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
-    log.info(f"[SWEEP] {source} done: {replies_done} replies.")
+    log.info(f"[SWEEP] {source} done: {len(reply_candidates)} candidates saved for selection.")

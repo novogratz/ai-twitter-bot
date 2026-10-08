@@ -45,7 +45,7 @@ MAX_REPLIES_PER_CYCLE = 2
 
 
 def run_mega_watch_cycle():
-    """Pick 5 mega accounts at random, reply to any fresh tweet."""
+    """Pick five watched accounts and queue eligible fresh posts for selection."""
     posted = 0
 
     pool = _watch_pool()
@@ -60,7 +60,7 @@ def run_mega_watch_cycle():
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
                                      max_shipped=MAX_REPLIES_PER_CYCLE - posted)
 
-    log.info(f"[MEGA] Cycle done: {posted} replies posted.")
+    log.info("[MEGA] Scan completed; eligible posts saved for Reply selection.")
 
 
 def _fresh_candidates(username: str, tweets: list) -> list:

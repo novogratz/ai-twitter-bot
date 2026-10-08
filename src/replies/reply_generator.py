@@ -149,7 +149,7 @@ _context_lock = threading.Lock()
 _context_cache = {}  # Account-keyed, one refresh per hour; never stale on failure.
 
 
-def _current_context() -> str:
+def current_context() -> str:
     from ..guards.active_hours import now_local, require_active
     from ..editorial import editorial_bot
     from ..editorial.slot_journal import MemoryJournal
@@ -173,7 +173,7 @@ def _current_context() -> str:
         return context
 
 
-def _recent_style() -> str:
+def recent_style() -> str:
     """Examples to avoid repeating, never a source of factual claims."""
     try:
         with open(config.ENGAGEMENT_LOG_FILE, newline="") as stream:
@@ -215,5 +215,7 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
     return "\n\n".join(filter(None, [
         personality_store.render_voice(language), prompt,
         _SELECTIVE_REPLY.format(domain=account.current().domain),
-        _current_context(), _recent_style(), *anchors,
+        current_context(), recent_style(),
+        "SELECTED ANGLE (context data, verify before using): " + fields["selected_angle"]
+        if fields.get("selected_angle") else "", *anchors,
     ]))

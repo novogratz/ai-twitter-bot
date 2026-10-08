@@ -204,6 +204,7 @@ class Surface(Enum):
     """What a model call is for, named by its caller; `SURFACES` resolves it."""
     REPLY = "Reply"
     PRIORITY_REPLY = "priority Reply"
+    REPLY_SELECTION = "Reply selection"
     REPLY_SEARCH = "reply search"
     RELATION_REPLY = "Relation Reply"
     # Provisional (#248): debate, replyback and the VIP scan's template run
@@ -233,6 +234,7 @@ class Route:
 SURFACES: dict[Surface, Route] = {
     # REPLY_LLM_PROVIDER: the local Ollama qwen 503'd and silently dropped
     # replies (operator 2026-06-24). cwd=/tmp: see REPLY_SEARCH.
+    Surface.REPLY_SELECTION: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s

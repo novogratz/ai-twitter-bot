@@ -41,3 +41,14 @@ def blocked_pgm_pm(monkeypatch):
     from src.core import config
 
     monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})
+
+@pytest.fixture(autouse=True)
+def legacy_dispatch_tests(monkeypatch, request):
+    """Existing source/generator tests exercise dispatch independently of pooling.
+
+    Pool and selector integration tests retain the production collection path.
+    """
+    if request.node.path.name in {"test_reply_pool.py", "test_reply_selector.py"}:
+        return
+    from src.replies import reply_pipeline
+    monkeypatch.setattr(reply_pipeline, "run", reply_pipeline.dispatch)

@@ -383,5 +383,5 @@ def test_scrape_text_limit_reaches_the_page_script(monkeypatch, browser):
     monkeypatch.setattr(scraper, "_record_blank_page", lambda **k: None)
     scraper._scrape_tweets_from_page("search 'ai'", 10)
     scraper._scrape_tweets_from_page("search 'ai'", 10, text_limit=600)
-    assert "text.substring(0, 200), a: author" in fake.calls[0].js
-    assert "text.substring(0, 600), a: author" in fake.calls[1].js
+    assert "text.substring(0, 200), ft: text, a: author" in fake.calls[0].js
+    assert "text.substring(0, 600), ft: text, a: author" in fake.calls[1].js

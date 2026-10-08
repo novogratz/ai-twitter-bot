@@ -71,6 +71,11 @@ def _vip_call(handle: str) -> ReplyCall | None:
                      text_limit=800, strip_preamble=True, skip_window=20)
 
 
+def vip_reply_call(handle: str) -> ReplyCall | None:
+    """The selector's current Account-owned VIP prompt and provider."""
+    return _vip_call(handle)
+
+
 def _vip_job(handle: str) -> reply_pipeline.Job:
     return reply_pipeline.Job(JOB_NAME, "VIP", reply_call=lambda _author: _vip_call(handle))
 
@@ -112,7 +117,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)
         log.info(f"[VIP] @{handle} done.")
-    log.info(f"[VIP] Total VIP replies posted: {posted}.")
+    log.info("[VIP] Scan completed; eligible posts saved for Reply selection.")
     return posted
 
 
@@ -215,4 +220,4 @@ def run_direct_reply_cycle(max_replies=None):
         if remaining is not None:
             remaining -= n
 
-    log.info(f"[DIRECT] Posted {total} replies this cycle.")
+    log.info("[DIRECT] Scan completed; eligible posts saved for Reply selection.")

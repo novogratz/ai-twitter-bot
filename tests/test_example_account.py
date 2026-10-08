@@ -46,7 +46,7 @@ PRE_187 = {
     "trend_slots": ["09:45", "14:20", "17:00"],
     "startup_post": "every start in waking hours, restarts included",
     "jobs": [
-        "editorial_job", "direct_reply_job", "feed_sweep_job", "early_bird_job",
+        "editorial_job", "reply_selection_job", "direct_reply_job", "feed_sweep_job", "early_bird_job",
          "mega_watch_job",   "engage_job", "followback_job",
         "follow_engagers_job", "like_job", "pin_job", "session_refresh_job", "follower_tracker_job",
         "reach_report_job",

@@ -48,7 +48,7 @@ def test_recent_shipped_replies_are_style_examples_not_facts(monkeypatch, tmp_pa
         for n in range(12):
             writer.writerow(["t", "reply", f"Reply number {n}"])
     monkeypatch.setattr(config, "ENGAGEMENT_LOG_FILE", path)
-    style = rg._recent_style()
+    style = rg.recent_style()
     assert "Reply number 0\n" not in style
     assert "Reply number 2" in style and "Reply number 11" in style
     assert "Original text" not in style
