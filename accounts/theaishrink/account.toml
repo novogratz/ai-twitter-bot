@@ -16,7 +16,7 @@ trend_angle = "Trending: the AI topic X is talking about right now, told from a 
 # Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
 # only news under twelve hours old or an unusually useful source.
 slots = [
-    { clock = "05:00", angle = "Priority: the AI update worth understanding this morning" },
+    { clock = "05:05", angle = "Priority: the AI update worth understanding this morning" },
     { clock = "07:15", angle = "A useful AI workflow with a concrete first step" },
     { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
     { clock = "10:00", trend = true },

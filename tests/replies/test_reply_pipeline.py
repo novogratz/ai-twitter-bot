@@ -609,7 +609,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
         if cut == "stop":
             stop.set()
         else:
-            s.now = s.now.replace(hour=23, minute=30, second=0)
+            s.now = s.now.replace(hour=23, minute=45, second=0)
 
     ag.record(ag.REPLY, fresh("earlier"))
     s.on_sleep = cut_short

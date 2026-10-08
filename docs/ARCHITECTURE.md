@@ -30,7 +30,7 @@ At start, `main()`:
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
    `--reply-only`;
 4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at the 04:30 and 23:30 boundaries.
+   pauses or resumes it at the 05:05 and 23:45 boundaries.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
@@ -38,7 +38,7 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 23:30, DST
+`src/guards/active_hours.py` owns the clock: 05:05 ≤ Toronto time < 23:45, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
@@ -46,7 +46,7 @@ no-op in the same cases (`may_act()`), and a job already running halts at its
 next `require_active()`. `is_active()` reads the clock only: the scheduler's
 pause/resume loop must not treat a stop as a wake-up boundary.
 
-Pausing the scheduler is not enough, because a job queued at 23:29 would still
+Pausing the scheduler is not enough, because a job queued at 23:44 would still
 run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
@@ -57,11 +57,11 @@ run. The check is repeated at each point where work leaves the process:
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
-  also caps every model call's timeout at the time left before 23:30;
+  also caps every model call's timeout at the time left before 23:45;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
   `editorial_bot` before fetching a source and again before publishing.
 
-A request already sent to X or to a model can finish after 23:30; it cannot
+A request already sent to X or to a model can finish after 23:45; it cannot
 authorize a new action.
 
 ## Jobs
@@ -143,7 +143,7 @@ before); `MemoryJournal` holds it in memory for tests. Each pass reads the
 file once, keeps the state in memory and saves it whole at each change; a
 new Toronto day is saved with the pass's first change.
 
-1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
+1. **Slot.** The `slots` of `account.toml` list 05:05, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
    exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
    the Slot journal has not closed it today and its attempts are not spent.
@@ -590,7 +590,7 @@ generates reply N+1 while reply N is posted, so its text is ready as soon
 as reply N's ledger row is written. Before calling `reply_to_tweet`,
 outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
 one-second slices and raises `OutsideActiveHours` on a stop request or at
-23:30. The chokepoint still judges: when another job's reply lands during
+23:45. The chokepoint still judges: when another job's reply lands during
 the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
 post stays replayable in a later cycle, at the cost of a new generation.
 On a rate limit, bedtime or an unreadable state file the pipelined job
@@ -606,7 +606,7 @@ A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
 instead of reading as empty. If the reply keystroke or the paste fails, or a
-stop or 23:30 interrupts the sequence before the submit keystroke, nothing
+stop or 23:45 interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second

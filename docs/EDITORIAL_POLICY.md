@@ -2,7 +2,7 @@
 
 The operator requested at least three valuable AI posts a day, up to eight
 profile posts, uncapped replies, a more natural voice, and a working day from
-04:30 to 23:30 (22:00 until 2026-09-23; the later bedtime added no slot and
+05:05 to 23:45 (22:00 until 2026-09-23; the later bedtime added no slot and
 changed no cap or pacing). The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
@@ -112,7 +112,7 @@ and pending guard per start, goes before a slot whose window is open, and
 obeys the waking hours, the eight-publication ceiling and the post spacing. A
 pass that gives it no draft falls through to the open slots in the same pass,
 so a restart never hides a slot. A start overnight opens nothing, even just
-before 04:30. A restart loop in daytime therefore publishes
+before 05:05. A restart loop in daytime therefore publishes
 up to one post every twenty minutes until the daily ceiling, at the expense of
 later slots. An ambiguous submission counts as a publication for that: the
 next Startup post waits twenty minutes after it, the day's pending submissions
@@ -127,12 +127,12 @@ must not repeat.
   remote work can finish; it cannot authorize a later out-of-hours submission.
   A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
   write is admitted after it.
-- Slots: 05:00, 07:15, 09:30, 10:00 (trend), 11:45, 13:00 (trend), 14:00,
+- Slots: 05:05, 07:15, 09:30, 10:00 (trend), 11:45, 13:00 (trend), 14:00,
   15:00 (trend), 16:15, 18:30, optional 20:45, plus the Startup post.
   Eleven slots and the Startup post compete for eight publications: on a full
   day the evening slots are the ones left out.
 - A slot permits at most three attempts over 45 minutes, and no window runs
-  past 23:30: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
+  past 23:45: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
   An attempt is a draft submitted to the editor; a pass without a draft
   spends none. A slot out of attempts, or one whose pass yields no draft, no
   longer holds an overlapping one; a pass still submits once at most.
@@ -157,7 +157,7 @@ must not repeat.
   jitter drawn once per reply, the same for every caller: retrying cannot
   shorten it. The direct-reply and feed-sweep pipeline waits out that gap
   before sending instead of discarding a paid generation; the chokepoint
-  still judges, and the wait ends on a stop request or at 23:30.
+  still judges, and the wait ends on a stop request or at 23:45.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
   for every job: a reply is refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token or one of the Account's
@@ -292,3 +292,8 @@ checks and settings, including its Reply behavior without the later independent
 Reply quality review. Production state, .env and untracked files are preserved.
 The running bot is not restarted; deployment takes effect on the next explicitly
 requested start or restart.
+
+2026-10-07 — Operator changed Toronto sleeping hours to 23:45–05:05.
+The shared waking guard now permits external work from 05:05 through 23:44.
+The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
+Caps and pacing are unchanged; this takes effect on the next explicit restart.

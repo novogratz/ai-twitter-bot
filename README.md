@@ -10,7 +10,7 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-- **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 05:05–23:45 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
@@ -36,13 +36,13 @@ English prompts): every post and reply prompt carries it as one block.
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action after 23:30. An already-issued request may still finish remotely.
+a new action after 23:45. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 
 | Toronto time | Reader value |
 |---|---|
-| 05:00 | Priority AI update worth understanding |
+| 05:05 | Priority AI update worth understanding |
 | 07:15 | A practical AI workflow |
 | 09:30 | Priority AI article or model update with a sharp consequence |
 | 10:00 | Trend: the AI topic X is talking about, told from a trusted article |

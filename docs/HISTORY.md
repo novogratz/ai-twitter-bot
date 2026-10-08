@@ -2853,3 +2853,8 @@ video descriptions and production claims need supplied context. Flirtation stays
 non-explicit and occasional; sarcasm targets claims. Identity honesty, evidence
 requirements, publishing limits and scheduling are unchanged. This changes the
 Voice only and does not add automated video generation or uploading.
+
+2026-10-07 — Operator changed Toronto sleeping hours to 23:45–05:05.
+The shared waking guard now permits external work from 05:05 through 23:44.
+The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
+Caps and pacing are unchanged; this takes effect on the next explicit restart.

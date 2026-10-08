@@ -20,7 +20,7 @@ THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 # accounts/theaishrink/account.toml.
 TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
 OLD = {
-    "SLOTS": [("05:00", "Priority: the AI update worth understanding this morning"),
+    "SLOTS": [("05:05", "Priority: the AI update worth understanding this morning"),
               ("07:15", "A useful AI workflow with a concrete first step"),
               ("09:30", "Priority: an AI article or model update with a sharp consequence"),
               ("10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
