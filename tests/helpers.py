@@ -1,15 +1,11 @@
 """Helpers shared by test files of several packages."""
-import ast
-import json
-import re
-import urllib.parse
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 from src.core.llm_client import LLMResult
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag, active_hours as hours
-from src.x import page_session, x_urls
+from src.x import x_urls
 
 
 TORONTO = ZoneInfo("America/Toronto")
@@ -53,21 +49,8 @@ def stop_requested(monkeypatch):
     monkeypatch.setattr(active_hours, "_STOP", stop)
 
 
-def status_id(minutes_ago=0):
-    """The status ID of a post published `minutes_ago` minutes ago."""
-    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes_ago * 60_000
-    return (ms - x_urls._TWITTER_EPOCH_MS) << 22
-
-
-# A status ID posted as the session starts: the Reply admission refuses a
-# post older than REPLY_MAX_AGE_MINUTES (15), so a test that answers `url()`
-# must run within 15 minutes of the import.
-FRESH_ID = status_id()
-
-
-def url(author, n=200):
-    """A status URL posted as the session starts; `n` keeps URLs distinct."""
-    return f"https://x.com/{author}/status/{FRESH_ID + n}"
+def url(author, n=2063500000000000200):
+    return f"https://x.com/{author}/status/{n}"
 
 
 def numbered_url(n, author="someone"):
@@ -76,7 +59,8 @@ def numbered_url(n, author="someone"):
 
 def fresh(handle, minutes=5, n=0):
     """A status URL posted `minutes` ago; `n` keeps URLs distinct."""
-    return f"https://x.com/{handle}/status/{status_id(minutes) + n}"
+    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes * 60_000
+    return f"https://x.com/{handle}/status/{((ms - x_urls._TWITTER_EPOCH_MS) << 22) + n}"
 
 
 SEARCH = "https://x.com/search?q=gpu&f=live"
@@ -117,149 +101,5 @@ class SearchPage:
         return {"url": post["url"], "result": "clicked"}
 
 
-_POSTS_CALL = re.compile(r'\("(\w+)", "(\d*)"\)\s*$')
-
-
-def posts_script(page, js):
-    """The answer to the `_POSTS_JS` call in `js` of `page`, a SearchPage or
-    any callable of (mode, target_id): a MemoryBrowser page is
-    `lambda js: posts_script(page, js)`. A location read gets `page.page`."""
-    from src.x import scraper
-    if js == scraper._LOCATION_JS:
-        return page.page
-    call = _POSTS_CALL.search(js)
-    return json.dumps(page(call.group(1), call.group(2))) if call else ""
-
-
-def like_searches(browser, page):
-    """Put `page` on `browser` at every search URL like_job may open."""
-    from src.core import account
-    for query in account.current().searches.likes:
-        for tab in ("top", "live"):
-            browser.pages[f"https://x.com/search?q={urllib.parse.quote(query)}&f={tab}"] = page
-
-
 def pin_rows(ledger):
     return [r for r in ledger.rows if r["action"] == ag.PIN]
-
-
-def key_kind(applescript):
-    """The write step a keyboard script is: "submit", "reply_key", or
-    "keys" for any other. The reply button is a page script, not a key;
-    `write_script_kind` names that script "reply_key"."""
-    from src.x import twitter_client
-    if applescript == twitter_client._SUBMIT_KEYSTROKE:
-        return "submit"
-    if 'keystroke "r"' in applescript:
-        return "reply_key"
-    return "keys"
-
-
-def write_script_kind(js):
-    """The write step a page script is. The reply click is "reply_key":
-    the same name the old "r" keystroke used, so a test that fails that
-    step still fails the click."""
-    if "__REPLY_CLICK__" in js:
-        return "reply_key"
-    return "js"
-
-
-class WritePage(page_session.MemoryBrowser):
-    """A MemoryBrowser for the write path, whose page URLs carry the text:
-    every page opens, its scripts answer `answers` in turn, "" once
-    exhausted, and a step whose kind is in `fail` fails. The kinds are
-    "open", "close", "activate", "paste", those of `key_kind`, and
-    `script_kind(js)` for a script. `before` receives each step's kind
-    before it acts, to trace it or raise a stop. `fail` and `answers` stay
-    the caller's objects, so a test may change them between writes."""
-
-    def __init__(self, answers=None, fail=None, before=lambda kind: None,
-                 script_kind=write_script_kind):
-        super().__init__()
-        self.answers = [] if answers is None else answers
-        self.fail = set() if fail is None else fail
-        self.before, self.script_kind = before, script_kind
-        self.key_timeouts = []
-
-    def _ok(self, kind):
-        self.before(kind)
-        return kind not in self.fail
-
-    def open(self, url):
-        self.opened.append(url)
-        if not self._ok("open"):
-            return False
-        self.front = url
-        return True
-
-    def close(self):
-        self.before("close")
-        super().close()
-
-    def activate(self):
-        self.activations += 1
-        return self._ok("activate")
-
-    def paste(self, text):
-        self.pasted.append(text)
-        return self._ok("paste")
-
-    def keys(self, applescript, timeout_s):
-        self.pressed.append(applescript)
-        self.key_timeouts.append(timeout_s)
-        return self._ok(key_kind(applescript))
-
-    def run_js(self, js, timeout_s, log_prefix, activate, raise_timeout):
-        self.scripts.append(page_session.Script(self.front, js, timeout_s, log_prefix, activate,
-                                                raise_timeout))
-        kind = self.script_kind(js)
-        if not self._ok(kind):
-            return ""
-        if self.answers:
-            return self.answers.pop(0)
-        # A reply click the test did not script finds the open post and
-        # clicks its reply button. A test that needs another answer queues it.
-        if kind == "reply_key":
-            return json.dumps({"url": self.front or "", "result": "clicked"})
-        return ""
-
-
-def references(source, module):
-    """(line, dotted name) of what `module`, a dotted module name such as
-    `src.replies.debate_bot`, takes from other modules: each module or name
-    it imports (relative at any level, or absolute), and each attribute read
-    on an imported name."""
-    package = module.split(".")[:-1]
-    bound, found = {}, []
-
-    tree = ast.parse(source)
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            for a in node.names:
-                found.append((node.lineno, a.name))
-                if a.asname:
-                    bound[a.asname] = a.name
-                else:
-                    head = a.name.split(".")[0]
-                    bound[head] = head
-        elif isinstance(node, ast.ImportFrom):
-            if node.level:
-                if node.level - 1 > len(package):
-                    continue
-                base = package[:len(package) - (node.level - 1)]
-                target = ".".join(base + (node.module.split(".") if node.module else []))
-            else:
-                target = node.module or ""
-            for a in node.names:
-                dotted = f"{target}.{a.name}"
-                found.append((node.lineno, dotted))
-                bound[a.asname or a.name] = dotted
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Attribute):
-            chain, base = [], node
-            while isinstance(base, ast.Attribute):
-                chain.append(base.attr)
-                base = base.value
-            if isinstance(base, ast.Name) and base.id in bound:
-                found.append((node.lineno, ".".join([bound[base.id], *reversed(chain)])))
-    return found

@@ -33,7 +33,7 @@ def job(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST")
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False)
     options.setdefault("reply_call", lambda author: call)
     return rp.Job(options.pop("name", "test_job"), "TEST", **options)
 
@@ -260,7 +260,7 @@ def cloud_job(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
 
-    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST", provider="claude")
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False, provider="claude")
     return job(reply_call=lambda author: call, **options)
 
 
@@ -300,7 +300,7 @@ def test_answers_about_rate_limits_leave_the_cycle_running(providers, chokepoint
     assert not cycle.rate_limited and chokepoint.sent == [] and set_aside() == set()
 
 
-def test_a_limit_at_the_primary_ships_the_fallback_reply_under_its_name(providers, chokepoint, quality_llm):
+def test_a_limit_at_the_primary_ships_the_fallback_reply_under_its_name(providers, chokepoint):
     """Issue #176: the engagement log names the provider and model that
     wrote the Reply, not the one configured for the surface."""
     providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]
@@ -415,9 +415,8 @@ def test_a_shipped_reply_is_logged_once_with_its_source(llm, chokepoint):
     sent = chokepoint.calls[0].text
     assert "—" not in sent and "[PATTERN" not in sent, "humanized, pattern tag stripped"
     assert [(r.url, r.source, r.text, r.pattern) for r in logged()] == [(shipped, "TEST/post one", sent, "RENAME")]
-    dossiers = personality_store.PERSONALITY.read()["accounts"]
-    assert dossiers["someone"]["interaction_count"] == 1, "the interaction count"
-    assert "other" not in dossiers
+    assert personality_store.get_account("someone")["interaction_count"] == 1, "the dossier bump"
+    assert personality_store.get_account("other") is None
 
 
 def test_callers_never_premark_the_replied_store(llm, chokepoint):

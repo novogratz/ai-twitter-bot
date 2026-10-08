@@ -18,9 +18,6 @@ There is no X API client.
 `editorial` (one thread, originals only) and `default` (twelve threads, every
 other job). Reply scans cannot starve the editorial job of a thread, but all
 browser work shares `_safari_lock`, so a post can still wait behind a reply.
-`safari_hygiene.restart_safari` takes it too: the session refresh, the
-`health` recovery and the blank-page recovery wait for the session in
-progress before quitting Safari.
 Every job is an `IntervalTrigger` registered through the local `add()` helper,
 which wraps it in `active_hours.awake_job`. There are no cron triggers and
 no warmup phase. The Startup post is not a job: `main()` opens its window and
@@ -46,10 +43,8 @@ handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
-next `require_active()`, whose `OutsideActiveHours` the job wrapper
-(`health.wrap_job`) logs as a stop for the Overnight. `is_active()` reads
-the clock only: the scheduler's pause/resume loop must not treat a stop as a
-wake-up boundary.
+next `require_active()`. `is_active()` reads the clock only: the scheduler's
+pause/resume loop must not treat a stop as a wake-up boundary.
 
 Pausing the scheduler is not enough, because a job queued at 23:29 would still
 run. The check is repeated at each point where work leaves the process:
@@ -58,9 +53,7 @@ run. The check is repeated at each point where work leaves the process:
 - `safari._run_applescript` and `safari._run_js`, through which every page
   JavaScript runs. A caller that falls back on an unparsable answer still
   lets `OutsideActiveHours` through, and `health.record_failure` does not
-  count it toward a Safari restart. `safari._close_session_tab`, the page
-  session's close of the tab it opened, is the one AppleScript run that
-  skips the check (issue #300): closing a local tab sends nothing to X;
+  count it toward a Safari restart;
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
@@ -74,53 +67,21 @@ authorize a new action.
 ## Jobs
 
 `build_scheduler()` registers 17 jobs, plus `reply_job` when
-`ENABLE_REPLY_SEARCH=1`. Each job registers its `run_*` under
-`health.wrap_job` (see [Adding a job](#adding-a-job)). The reply and
-account jobs count toward Safari health under their label (`babysitter` for
-`babysit_job`, the job name without `_job` for the others);
-`editorial_job`, `reach_report_job` and `session_refresh_job` register
-theirs under `health.wrap_job(..., safari_health=False)`. A watched job's
-error counts toward a Safari restart only when it is a browser failure, a
-`page_session.BrowserFailure` raised by `src/x`, such as `PageNotOpened`
-(issue #298). Any other error, a bug or a model timeout, is logged at
-ERROR with its traceback like any failed cycle, followed by `[HEALTH]
-<label> failed outside the browser (<type>). Not a Safari failure, no
-restart.`, and leaves the counter as it was; only a success resets it.
-The editorial stays out of the Safari failure counter: its failures are
-model timeouts, not Safari outages, and its cycles, which say little about
-Safari, must not reset the counter between the browser failures of other
-jobs. Before #298 every error of a watched job counted, so a slow model
-restarted a healthy Safari: that is why #236 took the editorial out. A
-missed reach measurement says nothing about Safari either. The session
-refresh is the Safari restart itself and never reaches `health`.
-
-Every Safari restart, from `health`, the session refresh or the blank-page
-recovery, goes through `safari_hygiene.restart_safari`, which returns a
-`RestartOutcome`: `RESTARTED`, `REFUSED` (its cooldown, waking hours or a
-stop; Safari untouched) or `FAILED` (x.com never rendered after the
-relaunch), truthy only for `RESTARTED` (issue #302). Its cooldown is the
-one delay between two restarts: 30 minutes after the last restart tried,
-5 for the blank-page recovery. A restart that failed, or raised, starts it
-too, so a failure past the threshold does not bounce Safari again at
-once; a refused one starts none. It also starts the scraper's blank-page
-grace, `BLANK_GRACE_AFTER_RESTART_SECONDS`. A restart that succeeded resets
-the failure counter there, through `health.reset_after_restart`, whoever
-asked. From three browser failures in a row, each failure asks
-`restart_safari` for a restart: a refused one is logged at INFO and
-counted nowhere; a tried one counts in `safari_health.json`
-(`last_recovery_ts`, `total_recoveries`) and writes its line to
-`autonomous_log.md` with `success=True` or `success=False`. Two failures
-crossing the threshold together restart Safari once: the second waits for
-the Safari lock the first restart holds, then finds its cooldown. The
-wrapper logs a job's error at ERROR
-with the traceback, as `[<label>] Cycle failed.`; it names a
-`StateUnreadable` (with the repair in
-[OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop for the
-Overnight at INFO. A `safari_health.json` field that is not a count
-after a hand edit (a string, `null`, a list, a boolean, a negative
-number, NaN or infinity, a fraction for a counter) goes back to its default with a `[HEALTH]`
-warning naming it, the other fields kept, so the wrapper never raises
-over it (issue #303).
+`ENABLE_REPLY_SEARCH=1`. The reply jobs register their `run_*` under
+`health.wrap_job`, which counts them toward Safari health under their label
+(`babysitter` for `babysit_job`, the job name without `_job` for the
+others); `editorial_job` and `reach_report_job` register theirs under
+`health.wrap_job(..., safari_health=False)`. The account jobs and
+`session_refresh_job` still expose a `safe_run_*` that catches its own
+exceptions and reports to `health` (see [Adding a job](#adding-a-job)). The
+editorial stays out of the Safari failure counter because its failures are
+model timeouts, not Safari outages: the scraper already swallows most Safari
+errors, and the blank-page counter is the real Safari guard. Counted there, a
+slow model would restart a healthy Safari. A missed reach measurement says
+nothing about Safari either. The wrapper logs a job's error at ERROR with the
+traceback, as `[<label>] Cycle failed.`; it names a `StateUnreadable` (with
+the repair in [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop
+for the Overnight at INFO.
 
 The reply jobs live in `src/replies/`; `engage_job`,
 `followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and
@@ -131,20 +92,20 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts (their posts under 48 hours old, capped at `REPLY_MAX_AGE_MINUTES`, replies included), then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries (root, on-niche posts under `DIRECT_REPLY_MAX_AGE_MINUTES`, fresh and conversation-hot first), and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
-| `early_bird_job` | 5 min | Replies to root, on-niche posts under 18 minutes old, capped at `REPLY_MAX_AGE_MINUTES`, from four of the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and three of its first 30 pinned accounts, one Reply per account: seven per cycle at most. |
-| `mega_watch_job` | 2 min | Replies to root, on-niche posts under four minutes old from five of the Account's first 12 pinned accounts, two per cycle at most. |
-| `replyback_job` | 3 min | Replies under our latest post to people who answered it under `REPLY_MAX_AGE_MINUTES` ago (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
+| `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
+| `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
+| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
-| `debate_job` | 12 min | Answers mentions under `DEBATE_MAX_AGE_HOURS`, capped at `REPLY_MAX_AGE_MINUTES`, newest first, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
+| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
-| `engage_job` | 8 min | Tries to follow a handful of pool accounts through a Follow run that asks the follow policy for Seed accounts only, and likes the posts of each when profile visits are allowed, past a cap-reached refusal too; a pick whose follow raised is still liked, and fails the cycle once the likes are done. The pool comes from the feeds; the policy refuses its followers and Engagers, left to `followback_job` and `follow_engagers_job`. |
-| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page (a followers page that does not open fails the cycle), records the real-looking handles in `followers_seen.json`, and follows back, through a Follow run, the ones missing from the followed accounts, at most `FOLLOWBACK_CAP` attempts per cycle, refused and failed picks included. A too-soon or cap-reached refusal ends the attempts; bedtime ends the cycle, which reports no success; a pick that raised fails the cycle once the picks are done. |
-| `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle; any other outcome marks it tried. |
+| `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
+| `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
+| `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
-| `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session; a restart resets the Safari failure counter, a skipped or failed one leaves it. |
+| `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
 | `follower_tracker_job` | 30 min | Records the follower count in `follower_history.json`. |
 | `reach_report_job` | 60 min | Writes `editorial_reach.json` and `.md`. See [Reach report](#reach-report). |
 
@@ -176,16 +137,11 @@ follow jobs read the same way the Account's `[network]` handle lists,
 The day's editorial state belongs to the Slot journal,
 `src/editorial/slot_journal.py`: the day change, Attempts and feedback,
 the Pending slot reserved, confirmed or released, the closed Slots, the used
-source URLs, the recent Posts (published and pending, with their time),
-the day's submissions and the latest one. `FileJournal` keeps
-`editorial_state.json` (guarded, same format as before); `MemoryJournal`
-holds it in memory for tests. `slot_journal.JOURNAL` picks the cycle's
-adapter: `None`, the default, stands for the file; the editorial cycle's
-tests set a `MemoryJournal` through the `memory_journal` fixture. Each
-pass reads the file once, keeps the
-state in memory and saves it whole at each change; a new Toronto day is
-saved with the pass's first change. `post_tweet` reads the file again at
-each submission, read only.
+source URLs, the recent texts, the day's submissions and the latest one.
+`FileJournal` keeps `editorial_state.json` (guarded, same format as
+before); `MemoryJournal` holds it in memory for tests. Each pass reads the
+file once, keeps the state in memory and saves it whole at each change; a
+new Toronto day is saved with the pass's first change.
 
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
@@ -233,10 +189,7 @@ each submission, read only.
 6. **Review.** Deterministic checks first: 80–250 characters, trusted source,
    angle and takeaway present, no bait phrasing, URL, hashtag or brackets,
    1–3 evidence ids that resolve to sentences found in the source text, then
-   `content_guard.validate` and `is_duplicate`, which reads the Slot
-   journal's published and pending Posts beside `tweet_history.json`: the
-   same story drawn from another article after an `UNCONFIRMED` submission
-   is refused before the Editor is asked. The 20:45 slot needs news under
+   `content_guard.validate` and `is_duplicate`. The 20:45 slot needs news under
    twelve hours old or a useful AI teaching source. A second model call
    (`review_schema()`) must approve all six criteria, plus `exceptional` at
    20:45 and `trending` for a trend slot, which also needs a news source and
@@ -256,20 +209,16 @@ each submission, read only.
    refuses (spacing or ceiling), when the three attempts are spent, or when
    the pass yields no draft.
 8. **Publish.** Waking hours and the slot's window are checked again, then
-   the pending check, `action_guard.original_refusal`, the rule
-   `post_tweet` enforces too: an `UNCONFIRMED` submission writes no ledger
-   row, so `can_post` cannot see it. One count: the ledger's profile
-   publications, plus today's submissions in the Slot journal (Slots marked
-   `pending` or `published`, `pending_sources` entries) that no `post` row
-   names. It must stay under the ceiling, and the newest pending or
-   published timestamp must be `MIN_SECONDS_BETWEEN_POSTS` plus
-   `POST_JITTER_SECONDS` old. A pending submission counts until the
-   operator clears it. The Slot journal reserves the slot: marked `pending`
-   and saved with its source URL, text and time in `pending_sources`, under
-   the key `YYYY-MM-DD/<slot>`. Then `post_tweet(text, reserved=<key>)`
-   sends the draft plus the source URL; its ledger row names the key, so a
-   post that shipped before a crash kept the journal from confirming it
-   counts once. `SHIPPED` confirms it `published`. `REFUSED`,
+   the pending check: an `UNCONFIRMED` submission writes no ledger row, so
+   `can_post` cannot see it. Today's pending submissions (in `slots` or in
+   `pending_sources`), plus the published count (the ledger's, or today's
+   `published` slots when the operator marked more after a check), must stay
+   under the ceiling, and the newest pending or published timestamp must be
+   `MIN_SECONDS_BETWEEN_POSTS` plus `POST_JITTER_SECONDS` old. A pending
+   submission counts until the operator clears it. The Slot journal
+   reserves the slot: marked `pending` and saved with its source URL, text
+   and time in `pending_sources`. Then `post_tweet(text)` sends
+   the draft plus the source URL. `SHIPPED` confirms it `published`. `REFUSED`,
    `FAILED` and `DRY_RUN` sent nothing and release the slot. `UNCONFIRMED` (the
    submit keystroke failed, so the post may be live), any other result and an
    exception leave it `pending`, which is never retried automatically. With
@@ -279,18 +228,8 @@ each submission, read only.
 the reviewed wording reach X. `_scrub_metadata_leaks` still runs first: it
 removes leaked model output (tool-call markup, bracketed metadata tags,
 series headers, echoed prompt lines) and hashtags, a trailing run whole and
-the `#` of an inline one. Before the page opens, `post_tweet` refuses an
-Original that `can_post` or `original_refusal` forbids, or that
-`is_duplicate` finds among the history and the Slot journal's published and
-pending Posts; every caller inherits these checks. The Pending slot named by
-`reserved`, the caller's own reservation of that text, is left out of them.
-`action_guard.reservation_refusal` checks that key first: it must be a
-`pending_sources` entry of the day whose Draft and source URL make the text
-as received (`slot_journal.submission_text`, which the cycle also builds its
-text with). Any other key is refused before the browser opens, with no
-ledger row and the journal untouched, and the cycle then releases its Slot.
-`post_tweet` checks `can_post(POST)` and `original_refusal` again under the
-Safari lock.
+the `#` of an inline one. `post_tweet` then checks `can_post(POST)` again
+under the Safari lock.
 
 Models: every caller names a Call surface, and `llm_client.SURFACES`
 declares, in that one place, the model setting, the provider setting and
@@ -300,36 +239,19 @@ and the caller hands them to `run_llm`. No module under `src/replies/` or
 
 | Surface | Callers | Model setting | Provider | CLI options |
 |---|---|---|---|---|
-| `REPLY` | search, feed sweep, early bird, mega watch, debate, replyback | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
-| `PRIORITY_REPLY` | the same, for a `vip_reply` author; VIP scan, a Relation's or the default prompt | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | defaults |
-| `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool |
-| `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | the Relation's CLI when installed, else `REPLY_LLM_PROVIDER` with a warning | no JSON envelope, 60 s |
+| `REPLY` | search, feed sweep, early bird, mega watch | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
+| `PRIORITY_REPLY` | the same, for a `vip_reply` author | `PRIORITY_REPLY_MODEL` | `REPLY_LLM_PROVIDER` | `cwd=/tmp` |
+| `REPLY_SEARCH` | reply search (disabled) | `REPLY_MODEL` | `REPLY_LLM_PROVIDER` | WebSearch tool, `cwd=/tmp` |
+| `RELATION_REPLY` | a Relation with a provider | `PRIORITY_REPLY_MODEL` | `AI_CLI`, or the Relation's CLI when installed | no JSON envelope, 60 s |
+| `REPLY_ON_AI_CLI` | debate, replyback | `REPLY_MODEL` | `AI_CLI` | defaults |
+| `PRIORITY_REPLY_ON_AI_CLI` | VIP scan, a Relation's or the default prompt | `PRIORITY_REPLY_MODEL` | `AI_CLI` | defaults |
 | `ORIGINAL` | Draft, review | `NEWS_MODEL` | `PROFILE_LLM_PROVIDER` | defaults |
 
-A blank provider setting leaves `AI_CLI`. Every Reply follows
-`REPLY_LLM_PROVIDER`, debate, replyback and the VIP scan included
-(Operator, 2026-09-28, #248); a Relation whose CLI is missing falls back on
-it and, at each Reply it generates, logs a warning naming the Relation and
-the Reply provider the call goes to, before `run_llm`'s ladder (codex
-lockout, fallback); when that provider is the missing CLI, the warning says
-the Reply fails unless a fallback CLI is set.
+A blank provider setting leaves `AI_CLI`. The two `*_ON_AI_CLI` surfaces
+are provisional: whether debate, replyback and the VIP scan follow
+`REPLY_LLM_PROVIDER` is the Operator's decision (#248).
 `tests/test_call_surfaces.py` pins each job's model setting, provider and
 CLI options.
-
-No caller picks the directory a model runs from. The CLI adapter starts
-every provider CLI, the fallback included, in `llm_client.NEUTRAL_CWD`, an
-empty `ai-twitter-bot-llm-<uid>` folder in the per-user temp folder
-(`/var/folders/.../T` on macOS, even when `TMPDIR` says `/tmp`), created
-again before each call: no `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` or git
-repository sits above it, so no CLI loads this repository's instructions
-or git context. When that folder is a symlink, belongs to another user or
-has any group or other permission bit, the call fails and starts nothing.
-Codex runs there with `--skip-git-repo-check`, without which it refuses a
-folder outside a git repository. Opencode, which gets no `--model`, would
-read only the user's global config there: its process alone gets
-`OPENCODE_CONFIG` pointing at the repository's `opencode.json`, which
-opencode merges over the global one ([`docs/OPENCODE.md`](OPENCODE.md)).
-The Ollama path is an HTTP request and starts no process.
 
 Drafts and reviews go through `run_llm` on the `ORIGINAL` surface with a
 `CallProfile`, `editorial_schemas.draft_profile()` or `review_profile()`. The profile, not
@@ -397,80 +319,27 @@ approval, so nothing is published and a missing Draft spends no Attempt.
 
 ## Write path and limits
 
-The browser layer is four modules in `src/x/`. `safari.py` holds the
+The browser layer is three modules in `src/x/`. `safari.py` holds the
 primitives: the Safari lock, `_run_applescript`, `_run_js` (page JavaScript
 that returns its result), `_paste_text`, tab, scroll and keyboard moves.
 Every page JavaScript in `src/` goes through `_run_js`, with the caller's
 timeout, log prefix and, when asked, Safari brought to the front first; it
 reads the script from a temp file as UTF-8, so the script carries no
-AppleScript escaping. `open_url`, `_close_session_tab` and `_scroll_page`
+AppleScript escaping. `open_url`, `close_front_tab` and `_scroll_page`
 run under a bound (`OPEN_TIMEOUT_S` 20 s, `CLOSE_TIMEOUT_S` 10 s,
-`SCROLL_TIMEOUT_S` 15 s), and so do the Safari activate
-(`ACTIVATE_TIMEOUT_S` 10 s) and the keystrokes: `_paste_text`, the tab walk
-to our latest post, the Reply's `r` and the submit
+`SCROLL_TIMEOUT_S` 15 s), and so do the writes' Safari activate
+(`ACTIVATE_TIMEOUT_S` 10 s) and keystrokes: `_paste_text`,
+`_navigate_to_first_tweet`, the Reply's `r` and the submit
 (`KEYSTROKE_TIMEOUT_S` 10 s). Past it the `osascript` child is killed and
 the run fails, so a wedged Safari cannot keep the Safari lock. `open_url`
 returns False then, as on any failed run. Only `safari.py` and the Safari
 quit in `safari_hygiene` spawn `osascript` themselves.
-`page_session.py` holds the page session, over those primitives:
-`session(tag)` takes the Safari lock for its whole life and yields a page
-that opens on demand (`page.open(url, settle_s)`), scrolls, runs a script
-(its failure line prefixed `[tag]`), reads a JSON answer, runs keys
-(bounded by `KEYSTROKE_TIMEOUT_S` unless the caller gives its own bound),
-pastes through the clipboard and brings Safari to the front (`activate`,
-which acts on no page and may come before the open). A page that does not
-open raises `PageNotOpened` before any read, and its scripts, keys, pastes
-and scrolls raise it too until an open succeeds, so a job that catches it
-reads nothing from the front tab. In a `finally`, the
-session closes the front tab once for each open that ran, a failed one
-included, since a timed-out open may have opened its page anyway; an open
-refused before its AppleScript ran, at bedtime or on a stop, opened nothing
-and closes nothing. A
-session entered inside another one on the same thread shares its page: it
-opens nothing and closes nothing, and its `open(url)` raises
-`PageNotOpened` unless the outer session has that URL open. The close goes
-through `safari._close_session_tab`, which skips `require_active()` (issue
-#300): at bedtime or on a stop the session still closes its tab, then
-`OutsideActiveHours` or the job's own error reaches the job, logged first.
-`tests/test_browser_layer.py` fails when a module other than
-`page_session.py` reaches that close. `BROWSER` picks the adapter at the start of
-each session: `SafariBrowser`, which calls the primitives through the
-`safari` module, or `MemoryBrowser`, which scripts pages by URL for tests,
-each page a list of answers given in turn or a function of the script.
-The follower count, the scrapes, the three like walks, the follow-back's
-read of the followers page and, since issue #256, every write go through a
-session. `page_session.py` is the only module besides `safari.py` that
-reaches a private `safari._xxx` primitive; `safari_hygiene` (the Safari
-quit and relaunch, under the lock but past any page) and
-`bin/mass_unfollow.py` (the front tab driven by hand, bot stopped, without
-the lock) are the two listed exceptions, and `tests/test_browser_layer.py`
-fails on any other: it follows imports of any form, `importlib` included,
-aliases by assignment, `getattr`, `vars()` and `__dict__`, and fails on a
-name read on `safari` or a module imported by a computed name.
 `scraper.py` reads pages: feeds, search, profiles, mentions, our latest
 post and its replies, and the blank-page recovery those reads trigger.
-Each scrape opens its page in a session and reads the tweets in a session
-nested in it, so `_scrape_tweets_from_page` reads the page the scrape
-opened. When the page does not open, the scrape reads nothing, presses no
-key and gives its answer on any failed read: `[]` for a tweet list, `None`
-for our latest post. Replyback and notify reach our latest post from our
-profile with the tab walk, through `open_latest_own_post`: when the keys
-fail or the front tab is not one of our status pages, its handle read from
-`location.href` with `x_urls`, the walk logs it and the job reads and
-clicks nothing, `None` for Replyback, one `FAILED` for notify. A tweet
-scrape whose page did not open counts it as a timed-out read, hence a
-blank page, once its session has closed its tab and
-released the lock; the feed refresh and our latest post do not. The
-blank-page recovery restarts Safari from inside a session nested in the
-scrape's, which holds the reentrant Safari lock and closes nothing; the
-scrape's session then closes the front tab of the relaunched Safari, its
-warm-up tab, as before the page session. The quality gate of a follow reads
-the open profile the same way, in a session nested in the follow's.
-`twitter_client.py` holds the write chokepoints. Writes use the page
-session and reading, reading uses the page session, never the other way.
-The page session calls a primitive through its module
-(`safari._run_applescript(...)`), never a `from` import, so the test walls
-reach every path.
+`twitter_client.py` holds the write chokepoints. Writes use
+reading and primitives, reading uses primitives, never the other way. Both
+call a primitive through its module (`safari._run_applescript(...)`), never a
+`from` import, so the test walls reach every path.
 
 Every write that should count goes through a function in
 `src/x/twitter_client.py`: `post_tweet`, `reply_to_tweet`,
@@ -489,31 +358,22 @@ chokepoint without it, or with two, raises before any guard runs.
    the dry-run ledger rows; nothing is opened.
 3. A pause or a last check before the lock: the follow jitter,
    `like_tweet`'s status-ID check.
-4. A page session named after the write (`POST`, `REPLY`, `FOLLOW`,
-   `LIKE`, `PIN`), which holds the Safari lock for the rest of the write.
-   `reply_to_tweet` judges Reply admission under it, and its dry-run exit
-   follows that judgement; `post_tweet` checks `can_post` again under it.
-   These checks run before any page opens.
+4. The Safari lock, released on every path. `reply_to_tweet` judges Reply
+   admission under it, and its dry-run exit follows that judgement;
+   `post_tweet` checks `can_post` again under it.
 5. `reply_to_tweet` claims the tweet in the Replied store.
-6. The page steps, which receive the session's page and open it first
-   (`page.open`). A page that does not open raises `PageNotOpened`, which
-   ends the write in `FAILED` before any keystroke, paste, click or page
-   read: the front tab is then not the page the write acts on. A Reply
-   whose Safari activate fails, before or after the open, ends the same
-   way. A Reply releases its claim, so a later cycle may answer the post.
+6. The page steps, opening the page first. A page that does not open
+   (`open_url` returns False) ends the write in `FAILED` before any
+   keystroke, paste, click or page read: the front tab is then not the
+   page the write acts on. A Reply whose Safari activate fails, before or
+   after the open, ends the same way. A Reply releases its claim, so a
+   later cycle may answer the post.
 7. Ledger rows only when the page steps return a shipped outcome, then the
    chokepoint's bookkeeping: `record_followed` and `adjust_following`,
    `note_posted`, tweet history.
-8. The session closes the tab the steps opened and releases the lock, on
-   every path: a step that raises closes it too, before the error reaches
-   the caller, and so do bedtime and a stop, since the close skips
-   `require_active()` (issue #300). A write that
-   opened nothing closes nothing: `like_tweet`, which acts on the open page
-   and, nested in a walk's or a Reply's session, on their page, a Reply
-   whose first activate failed, and a write whose open was refused by
-   bedtime or a stop. The close raises no stop, so a write that shipped
-   stays `SHIPPED`; a stop raised by the steps or the bookkeeping
-   propagates once the tab is closed.
+8. One tab close, except for `like_tweet`, which acts on the open page. A
+   stop raised by that close is swallowed once the write shipped, so the
+   caller still learns it; after any other outcome it propagates.
 
 The chokepoints return a `WriteOutcome`: `SHIPPED`, `REFUSED` (a guard, or
 the page state, left nothing to write), `FAILED` (a step failed before
@@ -533,7 +393,7 @@ confirmed it; a failed submit keystroke returns `UNCONFIRMED`.
 
 `follow_account` runs the same sequence but returns a `FollowOutcome`,
 truthy only for `FOLLOWED`, the Follow click. Its refusals name their
-cause (Follow refusal, GLOSSARY.md): `BLOCKED`, `TOO_SOON`, `CAP_REACHED`,
+cause (Follow refusal, CONTEXT.md): `BLOCKED`, `TOO_SOON`, `CAP_REACHED`,
 `QUALITY_REJECTED` and `REFUSED`, from the follow policy before the
 profile opens or from the quality gate on it; `ALREADY_FOLLOWED` when the
 profile shows the account followed. `FAILED` and `DRY_RUN` keep their
@@ -544,10 +404,7 @@ change.
 
 `src/account/follow_run.py` runs one cycle's follows for a job. The
 `FollowRun` reads the followed accounts when it starts, and raises
-`StateUnreadable` while they cannot be read. A job that follows only some
-relations names them to it, `follow_policy.SEED_ONLY` for `engage_job`,
-and the run hands them to `follow_account`: the job never finds a
-relation itself. `fresh(handles)` drops the
+`StateUnreadable` while they cannot be read. `fresh(handles)` drops the
 followed accounts and the handles the run tried, whatever the case and a
 leading `@`;
 `follow(handle)` asks `follow_account` and returns its outcome, or `None`
@@ -559,10 +416,9 @@ cycle, whereas a `TOO_SOON` may elapse. `OutsideActiveHours` and
 and returns `None`, and the job goes on. `failed` counts those picks, which
 `follow_engagers_job` counts in its per-cycle bound, and
 `raise_failure()` raises the last one's error: the job calls it once its
-state is saved, `engage_job` once its likes are done, so the cycle reaches
-`health.record_failure`. The caps, the
-order and the persistent memory of tried handles stay in the job.
-`follow_engagers_job`, `engage_job` and `followback_job` use it.
+state is saved, so the cycle reaches `health.record_failure`. The caps, the
+order and the persistent memory of tried handles stay in the job. `follow_engagers_job`
+uses it; `followback_job` and `engage_job` still run their own loop.
 
 `like_tweet` runs the same sequence but returns a `LikeOutcome`, truthy
 only for `LIKED`, which also carries `FAILED`, `UNCONFIRMED` and
@@ -578,23 +434,16 @@ reads the article again and returns `LIKED` only once the button shows
 `unlike`; the ledger row and the cache entry then carry the URL read on the
 page. A click the page does not show returns `UNCONFIRMED`, falsy, with no
 ledger row or cache entry. `like_tweet` reads and clicks under the Safari
-lock, which is reentrant, so a caller that already holds it is unchanged.
-Its page scripts run in a page session that opens and closes nothing: on
-its own it acts on the front tab, inside a walk's session on the walk's
-page. That read, about a second after the click, sees X's optimistic
+lock, which is reentrant, so a caller that already holds it is unchanged. That read, about a second after the click, sees X's optimistic
 interface: it proves the page shows the like, not that X accepted it.
 `visit_profile_and_like`, `like_own_tweet_replies` and `like_search_posts`
 list the articles on the page and call it with each post's URL: the
 profile's own posts for the first, the replies under our latest post for
 the second, the posts of a niche search for `like_job` for the third, never
 our own posts. A `BLOCKED` post is skipped and the walk goes on; a `FAILED`
-or `UNCONFIRMED` one stops it. Each walk opens its page in a page
-session, which holds the Safari lock and closes the tab on every path,
-even when a like raises; its scrolls, pauses and `like_own_tweet_replies`'
-keys to our latest post go through the same page. A page that does not
-open adds one `FAILED` and nothing is read, pressed or clicked; so does a
-walk to our latest post that does not reach it, before any listing. All three
-check `DRY_RUN` before the session and open nothing under it. `like_search_posts` starts no like
+or `UNCONFIRMED` one stops it. A page that does not open adds one
+`FAILED` and clicks nothing. All three open nothing under `DRY_RUN` and
+close their tab even when a like raises. `like_search_posts` starts no like
 once `LIKE_BOT_CYCLE_SECONDS` (30 s) have passed since it took the Safari
 lock, and fills the caller's outcome list as it goes: `like_job` adds the
 `LIKED` and `UNCONFIRMED` outcomes to its daily count, so a stop mid-walk
@@ -639,8 +488,7 @@ Five modules sit behind them:
   until the spacing clears.
 - `src/guards/ledger.py` is that ledger (90 days, Toronto timestamps). Its
   interface answers four questions: shipped rows of an action on a Toronto
-  day (per target for Debate turns and for the Pending slot a `post` row
-  names), the last shipped write of an action,
+  day (per target for Debate turns), the last shipped write of an action,
   the last follow or unfollow of a handle (dry runs included), and the
   targets of an action newest first. An index kept up to date row by row
   answers them, with no scan of the rows. Two adapters sit behind it:
@@ -669,29 +517,24 @@ Five modules sit behind them:
   `follow_quality_rejects.json`, `followers_seen.json` and the frozen
   `replied_back.json`. It reads the Operator's `whitelist.json` in the
   Account folder and never writes it; the handles `account_curator`
-  promoted before its removal (issue #299) are in
-  `whitelist_discovered.json`, which only `bin/migrate_operator_data.py`
-  adds to, through `add_discovered`, and a missing one stops its readers as an unreadable one does: before the
+  promotes go to `whitelist_discovered.json`, through `add_discovered`, and
+  a missing one stops its readers as an unreadable one does: before the
   migration of issue #206 it would drop the handles still to carry.
   `relation(handle)` finds what
   the handle is to the account, from its own sources, never from the
   caller: Seed account (the whitelist, both files), follower (`followers_seen.json`, which only the
   followers scrape writes, through `record_followers`), Engager (the
-  ledger's Debate turns, then `replied_back.json`), else Stranger. It is
-  found once per follow, in `judge`.
-  `judge(handle, relations)` checks, before the profile opens, the handle (the one
+  ledger's Debate turns, then `replied_back.json`), else Stranger.
+  `judge(handle)` checks, before the profile opens, the handle (the one
   check of `[A-Za-z0-9_]{1,15}`), the Blocked account (the match of
   `reply_admission.is_blocked_account`, the one Reply admission and
   `like_tweet` use, over the engine's `BLOCKLIST` and the Account's
   `network.blocked_accounts`), the relation (a Stranger is refused in
-  every mode, then a relation outside `relations`, the ones the caller
-  follows: `FOLLOWABLE` by default, `SEED_ONLY` for `engage_job` and the
-  `follow` skill), the whitelist (a follower or an Engager passes it while
+  every mode), the whitelist (a follower or an Engager passes it while
   `FOLLOWBACK_BYPASS_WHITELIST` is on), anti-churn, the daily cap, the
   spacing, the following ceiling and ratio brake, then the quality-reject
-  cache; its verdict carries the relation. `judge_profile` runs the quality
-  gate on the open profile, by the relation `judge` found, read nowhere
-  again (a Seed account is exempt, an Engager skips the size and niche
+  cache. `judge_profile` runs the quality gate on the open profile, by
+  relation (a Seed account is exempt, an Engager skips the size and niche
   checks; the niche is the Account's `niche.bio`), and caches a reject for 30 days. Each
   returns a `Verdict` whose `Refusal` names the cause; `follow_account`
   turns it into its `FollowOutcome`, and the jobs act on that outcome
@@ -701,12 +544,12 @@ Five modules sit behind them:
   since the follow already happened.
 
 `reply_to_tweet` takes every rule from `src/guards/reply_admission.py` (Reply
-admission, GLOSSARY.md). `judge_parent(url)` judges the post alone: author
+admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
 handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
 answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
-(dashes, `smart_trim` to `REPLY_MAX_CHARS` on a sentence end or a refusal,
-`casualize`, FR-forced language check, typo) and validates it last. `reply_to_tweet` calls `judge_reply` once under the
+(dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
+validates it last. `reply_to_tweet` calls `judge_reply` once under the
 Safari lock, the lock that also records the reply, so the spacing and the
 Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
@@ -717,38 +560,15 @@ Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
 search) hands its candidates to the Reply pipeline,
 `src/replies/reply_pipeline.py`. A job keeps its sub-sources (the feeds,
 searches or handle pools it scrapes), its budgets, its Reply call, its pace
-after a shipped Reply and its log tag, and declares what it answers to the
-Reply source, `src/replies/reply_source.py`: the oldest post, root posts
-only or not, the author a scanned profile's posts carry in their URL, the
-Account's niche or not, and the order. `reply_source.select` applies the
+after a shipped Reply and its log tag. `feed_sweep` declares what it
+answers to the Reply source, `src/replies/reply_source.py`: the oldest post
+(`DIRECT_REPLY_MAX_AGE_MINUTES`, read on each pass), root posts only, the
+Account's niche, fresh and rising first. `reply_source.select` applies the
 declaration without side effects and never keeps a post without a URL or
-text, or of unknown or negative age. Quiet posts are capped at
-`REPLY_MAX_AGE_MINUTES` (15 minutes, 2026-09-29). Search, feed sweep and
-the VIP scan can set `rising_extension`: a post older than that but inside
-`REPLY_RISING_MAX_AGE_MINUTES` survives only when its likes and likes per
-minute clear the operator bounds. Within the same freshness bucket,
-`FRESH_AND_RISING` orders by conversation heat: likes plus double-weighted
-replies per minute, so active threads beat quiet like piles. The selected candidate carries that
-per-candidate limit, and Reply admission checks it before generation and
-again at the write. A job reads its handle lists from the
-Account itself; `early_bird` and `mega_watch` pick at random among its
-pinned accounts, `reply_source.pinned_accounts`, the first 30 and 12 in the
-list's order, a Blocked account left out; the
-feed sweep, `early_bird` and `mega_watch` take only
-their Reply call, `reply_call`, from `direct_reply`.
-
-| Job or lane | Oldest post | Root only | Author | Niche | Order |
-|---|---|---|---|---|---|
-| `direct_reply` VIP scan | 48 h, quiet 15 min, rising 45 min max | no | | no | scraped |
-| `direct_reply` search (SEARCH-HOT) | `DIRECT_REPLY_MAX_AGE_MINUTES`, quiet 15 min, rising 45 min max | yes | | yes | fresh and rising |
-| `feed_sweep` | `DIRECT_REPLY_MAX_AGE_MINUTES`, quiet 15 min, rising 45 min max | yes | | yes | fresh and rising |
-| `early_bird` | 18 min, so 15 min | yes | the scanned handle | yes | scraped |
-| `mega_watch` | 4 min | yes | the scanned handle | yes | scraped |
-| `debate` | `DEBATE_MAX_AGE_HOURS`, so 15 min | no (mentions are replies) | | no | newest |
-
-The settings are read on each pass. `replyback`, `babysit` and the reply
-search select their candidates themselves; the Reply admission refuses
-their posts over `REPLY_MAX_AGE_MINUTES` too. The
+text, or of unknown or negative age; a declaration can also require the
+author a scanned profile's posts carry in their URL. The other jobs still
+select their candidates themselves (niche, age threshold, thread-reply
+shape) until they move to it. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and
@@ -785,12 +605,7 @@ tweet already answered, and marks it just before writing, all under one lock.
 A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty. The reply box is opened by clicking the reply
-button of the article with that status ID. The `r` key is never pressed: it
-answers the post X has selected, and on a thread that was often the
-account's own reply (Operator, 2026-10-04). When the permalink on the page
-is the account's, nothing is clicked and the claim stays, so that status is
-not answered again. If the reply button or the paste fails, or a
+instead of reading as empty. If the reply keystroke or the paste fails, or a
 stop or 23:30 interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
@@ -807,23 +622,11 @@ generator always opens the prompt on the Voice,
 `personality_store.render_voice`: the Operator's `voice_fr.md`
 (`voice_en.md` for an English reply), in the Account's folder, under a
 header naming `BOT_HANDLE`, the one reader of those files. The job's template follows,
-with its instructions but no persona, then the Account's optional
-`perspective` (a preference subordinate to evidence), the shared `QUALITY_RULE`,
-the one `LENGTH_RULE`, and
+with its instructions but no persona, then, for Reply calls with `dossier`, the
+author's dossier from `personality.json` (or the fixed dossier of the
+author's Relation), and always
 `personality_store.hard_rules_block()`, which renders the hard rules and
-the respect list from the Account's `respect_list.json`. The quality block
-asks for a concrete technical insight and dry sarcasm aimed at claims,
-with specific wit and direct openings. Generation declines canned agreement
-or lecture prefixes; Reply admission rechecks them before a claim or page open,
-so JSON search and direct write callers inherit the same check. Text is refused
-rather than edited into a potentially different claim. The prompt keeps AI
-identity honest and asks for supported mechanisms when discussing new techniques,
-with uncertainty explicit; it applies to Relations and JSON search too.
-Each parent and supplied context contributes up to 1,200 characters,
-including qualifications beyond the old 200–500 character cutoffs.
-The Account's `perspective` also reaches Original drafting, but is never a
-preference instruction in the independent editorial review. No prompt reads
-`personality.json` (Operator, 2026-09-27). The editorial Draft opens on the
+the respect list from the Account's `respect_list.json`. The editorial Draft opens on the
 same Voice. It decides the language in one place, `_language`: the
 search and feed-sweep Replies follow `FR_FORCED_REPLY_HANDLES`, then the
 parent's words; early-bird and mega-watch the parent's words only;
@@ -832,9 +635,7 @@ replyback a word test on the Engager's reply; the reply search English.
 `.env` sets it, is read by `reply_language.is_fr_forced`, shared
 with `judge_reply`. An answer opening with SKIP, after quotes are stripped,
 is a decline; the bestie and buddy Reply calls also decline "skip" anywhere in
-the first 20 characters (`skip_window`). A narrow bland-praise check declines
-formulaic outputs such as useful-point or interesting-question praise before
-the write; specific replies stay writable. The editorial prompt carries the
+the first 20 characters (`skip_window`). The editorial prompt carries the
 hard rules too. The write chokepoints apply the respect list to the
 outgoing text, before the dry-run exit: `post_tweet` refuses an Original
 and Reply admission a Reply (`RESPECTED_ACCOUNT`) that names a Respected
@@ -877,7 +678,7 @@ several scheduler threads change go through it: `followed_accounts.json`
 `following_count.json`, `liked_tweets.json`, `follow_quality_rejects.json`,
 `followers_seen.json`,
 `tweet_history.json`, `safari_health.json` and `personality.json` (the
-interaction count bumped after every Reply). `tweet_history.json` has one reader,
+dossier bump after every Reply). `tweet_history.json` has one reader,
 `history.load_history`, for the dedup, the rationed openers and the
 babysitter; the editorial cycle reads it before any Draft, so an unreadable
 history spends no Attempt. The policy of each file is in the
@@ -901,28 +702,35 @@ home-timeline attribution. It does not influence any cap.
 
 These are how the code behaves today, not design intent:
 
+- Pending editorial submissions count toward the ceiling and the spacing in
+  the editorial cycle only (`_pending_refusal`): `post_tweet` and the ledger
+  do not see them. The editorial cycle is the only `post_tweet` caller; a new
+  caller would not count them.
 - `like_tweet` and `pin_own_tweet` have no `can_post`: likes and pins are
   recorded, not capped by the ledger. `like_job` and `pin_job` keep their
   own daily caps in their state files.
+- `session_refresh_job` and the `health` recovery restart Safari without
+  taking `_safari_lock`.
+- The page reads of `scraper.py`, the follow-back and the follower count
+  still ignore `open_url`'s result, and read the front tab when the page
+  did not open (parent issue #250). Only the writes check it.
+- Two AppleScript runs of `scraper.py` still have no bound: the activate
+  before the second JavaScript try of a page read, and the scroll of
+  `scrape_own_tweet_and_replies`. A wedged Safari there keeps the Safari
+  lock.
 - A bound kills `osascript`, not the AppleEvent it already sent: Safari
-  may still open a timed-out page afterwards, and the tab close of the
-  page session, a write's included, then closes another tab and leaves
-  that one open.
-  Safari's AppleScript gives a tab no lasting identifier, so the page
-  session closes the front tab, not the tab it opened. Nothing
+  may still open a timed-out page afterwards, and the write's tab close
+  then closes another tab and leaves that one open (issue #253). Nothing
   is sent into it. The same holds for a keystroke: a System Events wedged
   past its bound may still deliver a late `r` or paste to whatever is in
   front then. A late submit is the only one that could publish, and its
   write is already UNCONFIRMED with its claim kept.
-- The debate prompt carries the Engager's message but not the account's post
-  it answers: the mentions tab does not show it, and reading it would open
-  one more page per Debate turn. The prompt tells the model so.
+- The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
+  the hard rules but not the author's dossier.
 - The Graphseo Reply call forces the Claude CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
-  `REPLY_LLM_PROVIDER` says, and falls back on `REPLY_LLM_PROVIDER`, with a
-  warning, when it is not (Operator, 2026-09-28). Forcing Claude makes it
-  the one cloud call without `LLM_FALLBACK_CLI` (#189, pending the
-  Operator's decision).
+  `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the
+  one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
   It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
 - `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which
@@ -935,19 +743,14 @@ These are how the code behaves today, not design intent:
   `early_bird`, `mega_watch`, `debate`, replyback or the VIP lane generates
   inside the gap is refused on spacing, and its generation is paid again in
   a later cycle.
+- The state store lock is per process: `bin/seed_fr_influencers.py`
+  following while the bot runs can still lose a follow from
+  `followed_accounts.json`.
 - The ledger lock is per process, and `FileLedger` assumes the bot is the
   only writer while it runs. A row another process writes while the bot
   rewrites the file (conversion or daily retention pass) or drops an
   unreadable last line is lost: run `bin/mass_unfollow.py` with the bot
   stopped, never with `--force` beside it.
-- The Safari failure counter hears of few Safari outages: of the watched
-  jobs, only `followback_job` and `follower_tracker_job` let a browser
-  failure through, a `PageNotOpened` on their one page. `safari` turns an
-  osascript run that fails, times out or does not start into a failed
-  run; the scrapes turn a page that does not open or a failed read into an
-  empty result, and the writes into a `FAILED` or `UNCONFIRMED` outcome,
-  so the blank-page counter of `scraper` stays the Safari guard of the
-  Reply jobs.
 
 ## Legacy modules
 
@@ -965,31 +768,22 @@ some files those bots used to write, as frozen data with no writer left:
 1. Expose `run_<name>_cycle()` in a module of the package that owns its
    concern: `src/replies/<name>.py` for a reply job, `src/account/<name>.py`
    for a follow, like or pin job. The top level of `src/` holds only
-   packages. Let its errors raise: the job wrapper catches them. The
-   module exposes the `run_*` only: no `safe_run_*` around it, no
-   `try`/`except` that logs the cycle's error, no call to `health.record_*`.
-   `tests/test_scheduler.py` fails on a `safe_run_*` or a `health.record_*`
-   anywhere in `src/`, `bin/` or `main.py` outside `health`, with no
-   exception.
+   packages. Let its errors raise: the job wrapper catches them.
 2. Register it in `build_scheduler()` with
    `add(health.wrap_job(run_<name>_cycle, "<name>"), minutes, "<name>_job")`.
    `wrap_job` logs an error at ERROR with its traceback in `bot.log`, resets
    the Safari failure counter on success and hands the error to
-   `health.record_failure`, which counts a `BrowserFailure` only;
-   `StateUnreadable` and `OutsideActiveHours` never count, nor does a bug
-   or a model timeout. A browser failure the job lets through is an
-   exception of `src/x` that inherits `page_session.BrowserFailure`:
-   `tests/test_browser_layer.py` fails on one that does not, save the
-   ones it lists with their reason. Pass `safari_health=False` for a job
-   whose failures say nothing about Safari, such as a model call or a
-   report: it never touches the health file. Never call
-   `scheduler.add_job` directly: `add()` supplies the waking-hours wrapper.
-3. Read or act on a page inside `page_session.session(tag)`: it takes the
-   Safari lock, opens the page when asked and closes the tab on every
-   path. Handle `PageNotOpened` if the job has a fallback that opens
-   another page or reads nothing; the page refuses every read until an
-   open succeeds. Otherwise let it fail the cycle. Test it on the
-   `memory_page` fixture.
+   `health.record_failure`; `StateUnreadable` and `OutsideActiveHours` never
+   count. Pass `safari_health=False` for a job whose failures say nothing
+   about Safari, such as a model call or a report: it never touches the
+   health file. Never call `scheduler.add_job` directly: `add()` supplies the
+   waking-hours wrapper.
+
+   In transition (issue #234): the account jobs and `session_refresh_job`
+   still expose a `safe_run_*` that catches its own errors, and their
+   `record_failure` call without an exception reads the one in flight.
+   Issue #238 moves them under `wrap_job`; #239 makes the exception required.
+3. Take `_safari_lock` for any browser work and close the tab you opened.
 4. Write only through the `twitter_client` chokepoints; add a new rule inside
    the chokepoint, not in the job.
 5. Key daily counters on the Toronto day (`active_hours.now_local()`).
@@ -1034,7 +828,7 @@ and a comment or docstring only in a passage dated or numbered),
 `test_example_account.py` (the dry run of the fictitious `accounts/example/`,
 and theaishrink's jobs and ceilings as they were before #187),
 `test_mass_unfollow.py`
-(`bin/mass_unfollow.py`), `test_show_prompts.py` (`bin/show_prompts.py`), `test_imports.py` and `test_disabled_surfaces.py`.
+(`bin/mass_unfollow.py`), `test_imports.py` and `test_disabled_surfaces.py`.
 `tests/test_imports.py` reads `main.py` and every file under `src/`, `bin/`
 and `tests/`, subfolders included, with `ast`. It fails when an
 intra-project import, function-local or inside `try/except` included, names a
@@ -1049,64 +843,24 @@ above it: nothing outside `src/replies/` and `src/account/` imports them, and
 `src/account/` never imports `src/replies/`.
 
 `tests/conftest.py` walls tests off from production: `webbrowser.open`,
-`_run_applescript`, `_run_js`, `_paste_text`, `open_url`,
-`_close_session_tab` and any subprocess that runs
+`_run_applescript`, `_run_js`, `_paste_text` and any subprocess that runs
 `osascript` or aims `open`, `pkill` or `killall` at Safari raise (an import
 error on `src.x.safari` fails every test rather than dropping the wall), the
 logger writes to a temporary file, and the state store root, the engagement
 log, the replied store and the ledger point to `tmp_path`. A mock placed
-on a caller module misses function-local imports; patch a scrape in
-`scraper`, and a primitive in `safari` only to test `safari.py`, the Safari
-adapter or a listed exception, or to prove that a refusal never opens a
-page (`safari.open_url` in `tests/test_blocked_account.py`); the write
-tests also patch `safari._safari_lock` to trace the lock or make it
-contended. `tests/test_conftest_walls.py` fails when
+on a caller module misses function-local imports; patch the primitive in
+`safari` and a scrape in `scraper`. `tests/test_conftest_walls.py` fails when
 a module binds a walled primitive, `webbrowser` or `subprocess.Popen` by name,
-past the wall, or binds `_safari_lock` or `_scroll_page`
+past the wall, or binds `_safari_lock`, `_scroll_page` or `close_front_tab`
 by name, past the patches tests put on `safari`, and when a module other than `safari.py` runs `do JavaScript`
 or spawns `osascript` itself, docstrings aside; the Safari quit in
 `safari_hygiene` is the listed exception.
 `tests/x/test_page_js.py` pins each page script's timeout, log prefix and
 answer on failure, and checks that a test which forgets to mock `_run_js`
-fails on the wall. `tests/x/test_page_session.py` runs a contract over
-`MIGRATED`, every session moved to the page session: one tab close on the
-nominal path and when a read raises, and no read when the page does not
-open, each with the answer or the exception the session's caller gets. The `memory_page` fixture puts a `MemoryBrowser` behind every page
-session, so those tests patch no primitive and no `sleep`. The write tests
-(`tests/x/test_write_order.py`, `tests/x/test_write_path.py`) run on
-`tests.helpers.WritePage`, a `MemoryBrowser` that opens every page, fails
-the steps a test names and traces each step in order with the lock, the
-guards and the ledger rows. `tests/test_browser_layer.py` resolves every
-import form and attribute chain of `main.py`, `src/` and `bin/` and fails
-on a private `safari._xxx` reached outside `safari.py`, `page_session.py`
-and the two listed exceptions. Every test also
-starts with fresh process memories: the posts the Reply pipeline set aside,
-the direct reply's query rotation cursor and the content guard's dedup
-memory of this run's posts.
+fails on the wall. Every test also starts with fresh process memories: the
+posts the Reply pipeline set aside, the direct reply's query rotation cursor and the
+content guard's dedup memory of this run's posts.
 
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and
 every push to `main`.
-
-
-Reply quality (2026-10-04): all Reply lanes, including prewritten search drafts,
-use `src/replies/reply_quality.py` before the write. The pipeline reads at most
-two HTTPS links from trusted hosts: links in the parent and context first, then
-matching optional `[[reply_sources]]` Account entries (`pattern`, `url`). It uses
-the editorial source reader, rejects untrusted redirects, applies a four-second
-socket timeout per fetch, and caches successes and failures in memory for 60
-seconds. It supplies at most twelve exact passages. Shortened links are not
-expanded; absent evidence permits stable knowledge or clear conditional points,
-not unsupported current claims.
-
-A separate JSON review uses the ordinary Reply model and provider, without the
-Account's brand perspective or Voice. Each provider attempt is capped at twenty
-seconds. The reviewer checks relevance, added value, natural phrasing and factual
-support; current claims need supporting passage IDs. This is an additional model
-call per draft and may reduce reply volume. Model review reduces errors but does
-not prove a claim true. Malformed, failed or negative review sends nothing and
-leaves the parent retryable; exhausted providers stop the cycle. The approval
-binds the exact prepared draft to its parent status ID, and `reply_to_tweet`
-checks that approval under the page lock before claiming or opening the post.
-The existing own-post, duplicate, age, spacing, length and waking-hours rules
-still apply. No new persistent state or change to publishing ceilings.

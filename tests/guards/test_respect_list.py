@@ -21,18 +21,6 @@ def test_the_prompt_block_is_in_english(monkeypatch):
     assert block.endswith("Current list: @kindperson.\n")
 
 
-def test_the_prompt_block_names_no_removed_surface(monkeypatch):
-    """Operator 2026-09-27: the block named hot takes, breakouts, spicy takes
-    and quote tweets, all gone. It speaks of the account's own posts and of
-    Replies, a rule stricter than the text check: a neutral sentence that
-    names a Respected account passes the check."""
-    monkeypatch.setattr(respect_list, "load", lambda: {"kindperson"})
-    low = respect_list.render_block().lower()
-    removed = ("hot take", "breakout", "spicy take", "quote-tweet", "quote tweet", "news post")
-    assert [w for w in removed if w in low] == []
-    assert "- name them in a post of your own, or in a reply to someone else's post\n" in low
-
-
 def test_a_neutral_text_passes_unchanged():
     text = "Inference is getting cheaper faster than training."
     assert respect_list.scrub_text_or_skip(text) == (text, "")
@@ -60,11 +48,3 @@ def test_only_the_addressee_handle_passes():
     assert respect_list.scrub_text_or_skip(text, addressee="01net")[0] is None
     mocked = "@graphseo ton analyse est ridicule."
     assert respect_list.scrub_text_or_skip(mocked, addressee="graphseo")[0] is None
-
-
-def test_mcnalliem_is_a_respected_account():
-    """Operator 2026-09-27: his author dossier said "avoid anything that could
-    feel like a dunk on him"; #291 removed the dossiers, so the respect list
-    carries that protection now."""
-    assert "mcnalliem" in respect_list.load()
-    assert "@mcnalliem" in respect_list.render_block()

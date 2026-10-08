@@ -1,7 +1,7 @@
 """src/x/twitter_client write chokepoints: replies, posts, follows and pins
 (issues #100, #101, #142)."""
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import pytest
 
@@ -11,26 +11,25 @@ from src.guards import follow_policy
 from src.guards import replied_store as rs
 from src.core import config
 from src.core.state_errors import StateUnreadable
-from src.x import page_session
 from src.x.confirmed_write import WriteOutcome as W
-from tests import helpers
-from tests.helpers import (OWN_BEST, TORONTO, WritePage, clock, pin_rows,
-                           stop_requested)
+from tests.helpers import OWN_BEST, TORONTO, pin_rows, stop_requested, numbered_url, clock
 
 
 # --- one reply per tweet, EVER (double-reply incident, 2026-06-05) -------------
 
 
 def _fake_safari(monkeypatch):
-    """Live (non-dry) reply path on a memory page where every step
-    succeeds: the Replied store is only claimed when a Reply really
-    ships. Returns the page."""
+    """Live (non-dry) reply path with every Safari step succeeding: the
+    Replied store is only claimed when a Reply really ships."""
     import src.x.twitter_client as tc
+    from src.x import safari
     monkeypatch.setenv("DRY_RUN", "0")
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
-    page = WritePage()
-    monkeypatch.setattr(page_session, "BROWSER", page)
-    return page
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
 
 
 def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
@@ -45,24 +44,13 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
 
-    url = helpers.url("Graphseo", 56789)
+    url = "https://x.com/Graphseo/status/1234567890123456789"
     reply = "le signal des fautes tient exactement un cycle de finetuning, profites-en tant que ça marche"
     tc.reply_to_tweet(url, reply)
     tc.reply_to_tweet(url, reply + " v2")          # same tweet, second bot
     tc.reply_to_tweet(url + "?s=20", reply + " v3")  # same tweet, different URL form
 
     assert len(recorded) == 1  # exactly ONE reply ever reached the write
-
-
-def test_reply_chokepoint_refuses_canned_openers_even_without_generation(monkeypatch, memory_ledger):
-    from src.x import twitter_client as tc
-
-    page = _fake_safari(monkeypatch)
-    assert tc.reply_to_tweet(helpers.url("someone"), "Fair, but latency decides the result.") is W.REFUSED
-    assert page.opened == []
-    assert not page.pasted
-    assert not rs.load_replied()
-    assert not memory_ledger.rows
 
 
 def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
@@ -76,7 +64,7 @@ def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     _fake_safari(monkeypatch)
 
-    url = helpers.url("foo", 42)
+    url = "https://x.com/foo/status/2063500000000000042"
     text = "Naming the fear is step one. The number says 40 billion in capex."
     assert tc.reply_to_tweet(url, text) is W.SHIPPED
     # Store was marked by the chokepoint itself — second attempt refuses.
@@ -93,7 +81,7 @@ def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
     with open(config.REPLIED_FILE, "w") as f:
         f.write("[")
     with pytest.raises(StateUnreadable):
-        tc.reply_to_tweet(helpers.url("someone", 1), "Batching is the whole margin story: utilisation decides the price.")
+        tc.reply_to_tweet(numbered_url(1), "Batching is the whole margin story: utilisation decides the price.")
     assert recorded == [], "nothing ships on an unreadable store"
 
 
@@ -123,7 +111,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
         return real_validate(text, kind=kind)
     monkeypatch.setattr(cg2, "validate", spy_validate)
 
-    url = helpers.url("foo", 88)
+    url = "https://x.com/foo/status/2063500000000000088"
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is W.DRY_RUN
     assert "—" not in seen["text"]
     assert "conviction is the hard part" in seen["text"]
@@ -143,7 +131,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setenv("DRY_RUN", "1")
 
-    url = helpers.url("Graphseo", 99)
+    url = "https://x.com/Graphseo/status/2063500000000000099"
     english = "The market just told you what your conviction is worth this week."
     assert tc.reply_to_tweet(url, english) is W.REFUSED
     # Post must stay UNMARKED — a later FR draft can still ship.
@@ -171,12 +159,12 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_over
 
     settings_override(REPLY_LIKE_PARENT_PROB=0.0)
     for _ in range(20):
-        tc._maybe_like_parent(helpers.url("a", 1))
+        tc._maybe_like_parent("https://x.com/a/status/1")
     assert liked == [], "prob=0 must disable parent-likes entirely"
 
     settings_override(REPLY_LIKE_PARENT_PROB=1.0)
-    tc._maybe_like_parent(helpers.url("a", 2))
-    assert liked == [helpers.url("a", 2)]
+    tc._maybe_like_parent("https://x.com/a/status/2")
+    assert liked == ["https://x.com/a/status/2"]
 
     rsrc = inspect.getsource(tc.reply_to_tweet)
     assert "_maybe_like_parent" in rsrc
@@ -185,22 +173,27 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_over
 
 
 def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger):
-    """A Debate turn (GLOSSARY.md) is capped per author per Toronto day at
+    """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
     share one count. Ordinary replies to the same author stay uncapped, a
     refused turn leaves the tweet unmarked, and the cap is read at call time."""
     from src.guards import action_guard as ag
     from src.guards import content_guard as cg
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     # The Reply spacing has a floor of 8 s (#201); it is not what this test judges.
     monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
-    _fake_safari(monkeypatch)
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
 
     text = "Inference cost falls when batching works, so the margin story depends on utilisation."
-    url = helpers.url
+    url = lambda author, n: f"https://x.com/{author}/status/{n}"
     assert tc.reply_to_tweet(url("Challenger", 1), text, debate_turn=True)
     assert tc.reply_to_tweet(url("challenger", 2), text, debate_turn=True)
     assert not tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
@@ -223,6 +216,7 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_over
     from src.x import safari, twitter_client as tc
 
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
 
     @contextlib.contextmanager
@@ -230,8 +224,8 @@ def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_over
         ag.record(ag.DEBATE_TURN, target="challenger")  # the other thread won
         yield
     monkeypatch.setattr(safari, "_safari_lock", contended_lock())
-    # No memory page: the conftest wall fails the test if Safari is reached.
-    url = helpers.url("challenger", 7)
+    # _run_applescript stays walled off by conftest: reaching Safari fails.
+    url = "https://x.com/challenger/status/7"
     assert not tc.reply_to_tweet(url, "Batching changes the cost curve.", debate_turn=True)
     assert memory_ledger.count(ag.DEBATE_TURN, ag.now_local().date(), "challenger") == 1
     assert url not in rs.load_replied(), "the race loser was never claimed"
@@ -261,7 +255,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
     monkeypatch.setattr(content_guard, "validate",
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
-    url = helpers.url("typofriend", 101)
+    url = "https://x.com/typofriend/status/2063500000000000101"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
     assert validated and validated[-1].endswith("(typo)")
 
@@ -281,7 +275,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_ov
     monkeypatch.setattr(content_guard, "validate",
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
 
-    url = helpers.url("typofriend", 103)
+    url = "https://x.com/typofriend/status/2063500000000000103"
     assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
     assert validated[-1].endswith("(typo)")
@@ -299,7 +293,7 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override
     monkeypatch.setattr(content_guard, "validate",
                         lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
 
-    url = helpers.url("typofriend", 102)
+    url = "https://x.com/typofriend/status/2063500000000000102"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.REFUSED
     assert url not in load_replied()
 
@@ -328,15 +322,14 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
 
 
 def _live_browser(monkeypatch, failing_step=None):
-    """Live (non-dry) write path on a memory page, `write_page()`, with a
-    scripted step outcome. Returns the ledger rows recorded.
+    """Live (non-dry) write path with a scripted AppleScript outcome.
 
     failing_step: "reply_key", "paste" or "submit" makes that step fail;
     "stop_before_submit", "stop_at_submit" and "stop_after_submit" request a
     stop at that point.
     """
     from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
     from src.guards.active_hours import OutsideActiveHours
 
     monkeypatch.setenv("DRY_RUN", "0")
@@ -345,20 +338,31 @@ def _live_browser(monkeypatch, failing_step=None):
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
 
-    def before(kind):
-        if (failing_step, kind) == ("stop_before_submit", "reply_key"):
-            raise OutsideActiveHours("stop")
-        if (failing_step, kind) in (("stop_at_submit", "paste"), ("stop_after_submit", "close")):
+    def run_applescript(script, *a, **k):
+        if 'keystroke "r"' in script:
+            if failing_step == "stop_before_submit":
+                raise OutsideActiveHours("stop")
+            return failing_step != "reply_key"
+        if "keystroke return using command down" in script:
+            return failing_step != "submit"
+        return True
+
+    monkeypatch.setattr(safari, "_run_applescript", run_applescript)
+    def paste(text):
+        if failing_step == "stop_at_submit":
             stop_requested(monkeypatch)
+        return failing_step != "paste"
 
-    monkeypatch.setattr(page_session, "BROWSER", WritePage(fail={failing_step}, before=before))
+    monkeypatch.setattr(safari, "_paste_text", paste)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    def close_front_tab():
+        if failing_step == "stop_after_submit":
+            raise OutsideActiveHours("stop")
+
+    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     return recorded
-
-
-def write_page():
-    """The memory page the writes run on."""
-    return page_session.BROWSER
 
 
 REPLY = "Batching is where inference margins are won or lost."
@@ -369,7 +373,7 @@ def test_reply_ships_and_records_when_every_step_runs(monkeypatch):
     from src.guards.replied_store import load_replied
 
     recorded = _live_browser(monkeypatch)
-    url = helpers.url("someone", 110)
+    url = "https://x.com/someone/status/2063500000000000110"
 
     assert tc.reply_to_tweet(url, REPLY) is W.SHIPPED
     assert len(recorded) == 1
@@ -380,12 +384,12 @@ def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monk
     from src.x import twitter_client as tc
     from src.guards.replied_store import load_replied, save_replied
 
-    other = helpers.url("else", 119)
+    other = "https://x.com/else/status/2063500000000000119"
     save_replied({other})
     for n, step in enumerate(("reply_key", "paste")):
         for debate_turn in (False, True):
             recorded = _live_browser(monkeypatch, failing_step=step)
-            url = helpers.url("someone", 100 + 10 * n + int(debate_turn))
+            url = f"https://x.com/someone/status/20635000000000001{n}{int(debate_turn)}"
 
             assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is W.FAILED, step
             assert recorded == [], step
@@ -399,7 +403,7 @@ def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
 
     for n, debate_turn in enumerate((False, True)):
         recorded = _live_browser(monkeypatch, failing_step="submit")
-        url = helpers.url("someone", 130 + n)
+        url = f"https://x.com/someone/status/206350000000000013{n}"
 
         assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is W.UNCONFIRMED
         assert recorded == []
@@ -426,7 +430,7 @@ def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
             lock_held.clear()
 
     monkeypatch.setattr(safari, "_safari_lock", ContendedLock())
-    url = helpers.url("someone", 160)
+    url = "https://x.com/someone/status/2063500000000000160"
 
     assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is W.REFUSED
     assert recorded == []
@@ -438,16 +442,17 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
     dash cleanup included, never the raw draft."""
     from src.guards import content_guard
     from src.core import humanizer
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     _live_browser(monkeypatch)
-    pasted, validated = write_page().pasted, []
+    pasted, validated = [], []
+    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
     settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     real_validate = content_guard.validate
     monkeypatch.setattr(content_guard, "validate",
                         lambda text, kind="post": validated.append(text) or real_validate(text, kind=kind))
-    url = helpers.url("typofriend", 165)
+    url = "https://x.com/typofriend/status/2063500000000000165"
 
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is W.SHIPPED
     assert pasted == [validated[-1]]
@@ -463,14 +468,15 @@ def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, r
     from src.core import humanizer
     from src.guards.replied_store import load_replied
     from src.guards.reply_admission import Refusal
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     recorded = _live_browser(monkeypatch)
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    pasted = write_page().pasted
+    pasted = []
+    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
     respected("kindperson", "otherperson")
-    url = helpers.url("kindperson", 168)
+    url = "https://x.com/kindperson/status/2063500000000000168"
     refusals = []
 
     assert tc.reply_to_tweet(url, f"@otherperson {REPLY}", on_refused=refusals.append) is W.REFUSED
@@ -504,7 +510,7 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
             lock_held.clear()
 
     monkeypatch.setattr(safari, "_safari_lock", ContendedLock())
-    url = helpers.url("someone", 166)
+    url = "https://x.com/someone/status/2063500000000000166"
 
     assert tc.reply_to_tweet(url, REPLY) is W.REFUSED
     assert recorded == []
@@ -523,7 +529,7 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
                         lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
-    assert tc.reply_to_tweet(helpers.url("someone", 167), REPLY) is W.REFUSED
+    assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 
 def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
@@ -536,7 +542,7 @@ def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     _dry_run_reply_path(monkeypatch)
     from src.guards import action_guard
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
-    url = helpers.url("someone", 170)
+    url = "https://x.com/someone/status/2063500000000000170"
 
     assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is W.DRY_RUN
     assert url not in load_replied()
@@ -554,7 +560,7 @@ def test_refused_reply_never_reaches_safari(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
-    for url in (helpers.url("La_Pique_Off", 180),
+    for url in ("https://x.com/La_Pique_Off/status/2063500000000000180",
                 f"https://x.com/{config.BOT_HANDLE}/status/2063500000000000181",
                 "https://x.com/i/web/status/2063500000000000182"):
         assert tc.reply_to_tweet(url, REPLY) is W.REFUSED, url
@@ -567,13 +573,13 @@ def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch
     from src.guards.replied_store import load_replied
 
     _live_browser(monkeypatch, failing_step="stop_before_submit")
-    before = helpers.url("someone", 140)
+    before = "https://x.com/someone/status/2063500000000000140"
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(before, REPLY)
     assert before not in load_replied()
 
     _live_browser(monkeypatch, failing_step="stop_at_submit")
-    at = helpers.url("someone", 142)
+    at = "https://x.com/someone/status/2063500000000000142"
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(at, REPLY)
     assert at not in load_replied()
@@ -582,11 +588,10 @@ def test_stop_before_submit_leaves_tweet_fresh_after_submit_keeps_it(monkeypatch
     from src.guards import active_hours
     monkeypatch.setattr(active_hours, "_STOP", threading.Event())
     recorded = _live_browser(monkeypatch, failing_step="stop_after_submit")
-    after = helpers.url("someone", 141)
+    after = "https://x.com/someone/status/2063500000000000141"
     assert tc.reply_to_tweet(after, REPLY) is W.SHIPPED, "a stop at the final close hides no Reply"
     assert after in load_replied()
     assert len(recorded) == 1
-    assert write_page().closed == 1
 
 
 # --- posts -------------------------------------------------------------------
@@ -633,11 +638,11 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     try:
         ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
-        cg.is_duplicate = lambda text, submitted=(): True   # force dup
+        cg.is_duplicate = lambda text: True   # force dup
         assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \
             "a near-duplicate post must return a falsy refusal, not None"
         # Not a dup, DRY_RUN → recorded, not shipped
-        cg.is_duplicate = lambda text, submitted=(): False
+        cg.is_duplicate = lambda text: False
         assert tc.post_tweet("a genuinely fresh original take about AI") is W.DRY_RUN
     finally:
         ag.can_post = orig_canpost
@@ -650,11 +655,12 @@ def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
     casualizes the wording on the way out."""
     from urllib.parse import parse_qs, urlparse
     from src.guards import content_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
-    opened = write_page().opened
+    opened = []
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
     text = ("Inference is getting cheaper faster than training.\n\n"
             "https://huggingface.co/blog/inference-costs")
     assert tc.post_tweet(text) is W.SHIPPED
@@ -668,14 +674,15 @@ def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, re
     ships unchanged."""
     from urllib.parse import parse_qs, urlparse
     from src.guards import content_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     recorded = _live_browser(monkeypatch)
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(content_guard, "validate", lambda text, kind="original": (True, ""))
     monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
-    opened = write_page().opened
+    opened = []
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
     respected("kindperson")
 
     for text in ("Inference is getting cheaper faster than training, says @kindperson.",
@@ -695,14 +702,16 @@ def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, re
 def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_override):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
     clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
     settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)
     monkeypatch.setattr(tc.content_guard if hasattr(tc, "content_guard") else editorial.content_guard, "is_duplicate", lambda *a: False)
     monkeypatch.setattr(tc, "_record_posted", lambda *a: None)
-    monkeypatch.setattr(page_session, "BROWSER", WritePage())
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
     barrier = Barrier(2)
     original_validate = editorial.content_guard.validate
     def simultaneous(*a, **k):
@@ -715,132 +724,6 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_overr
         results = list(pool.map(lambda _: tc.post_tweet(text), range(2)))
     assert sum(1 for result in results if result is W.SHIPPED) <= 1
     assert ag.profile_count_today() <= 8
-
-
-# --- the Slot journal at the post chokepoint (issue #233) ------------------------
-
-NOON = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
-POSTED = ("Your model expects a particular conversation format. Check its chat template "
-          "before changing your prompts; the wrapper around your words matters too.")
-SOURCE = "https://huggingface.co/docs/transformers/chat_templating"
-
-
-def _journal_file(slots=(), pending=(), published=()):
-    """editorial_state.json for NOON's day: `slots` marked as given,
-    `pending` (key, text, minutes ago) entries, `published` (slot, text,
-    minutes ago) entries."""
-    from src.editorial.slot_journal import STATE
-    ago = lambda minutes: (NOON - timedelta(minutes=minutes)).isoformat()
-    STATE.write({"date": "2026-09-20", "slots": dict(slots),
-                 "published": [dict(ts=ago(m), text=text, source_url=SOURCE, angle="a", slot=slot)
-                               for slot, text, m in published],
-                 "pending_sources": {key: dict(url=SOURCE, text=text, ts=ago(m))
-                                     for key, text, m in pending}})
-
-
-@pytest.fixture
-def journal_post(monkeypatch, memory_ledger):
-    """A live post at NOON past `can_post`, through the Slot journal's
-    checks and the real dedup, over an in-memory ledger: returns the ledger
-    rows recorded and the pages opened."""
-    from types import SimpleNamespace
-    clock(monkeypatch, NOON)
-    recorded = _live_browser(monkeypatch)
-    return SimpleNamespace(recorded=recorded, opened=write_page().opened, ledger=memory_ledger)
-
-
-def test_post_refuses_seven_pending_submissions_and_one_published(journal_post):
-    """An UNCONFIRMED submission writes no ledger row: the chokepoint counts
-    it from the Slot journal, so any caller of post_tweet stops at eight."""
-    import src.x.twitter_client as tc
-    pending = [(f"2026-09-20/startup@0{h}:00:00", f"Pending post number {h}", 300 - h) for h in range(7)]
-    _journal_file(slots={"05:00": "published"}, pending=pending)
-    journal_post.ledger.append(ag.POST, "2026-09-20/05:00", False, NOON - timedelta(hours=7))
-    text = "Inference is getting cheaper faster than training.\n\nhttps://huggingface.co/blog/costs"
-    assert tc.post_tweet(text) is W.REFUSED
-    assert journal_post.opened == [] and journal_post.recorded == []
-    # One pending submission cleared: the seventh place is free.
-    _journal_file(slots={"05:00": "published"}, pending=pending[:6])
-    assert tc.post_tweet(text) is W.SHIPPED
-
-
-def test_post_waits_the_spacing_after_a_pending_submission(journal_post):
-    import src.x.twitter_client as tc
-    _journal_file(pending=[("2026-09-20/11:45", "A pending post about agents", 19)])
-    text = "Inference is getting cheaper faster than training.\n\nhttps://huggingface.co/blog/costs"
-    assert tc.post_tweet(text) is W.REFUSED
-    assert journal_post.opened == []
-
-
-def test_post_reads_the_slot_journal_again_under_the_safari_lock(monkeypatch, journal_post):
-    """A submission reserved while this post waited for Safari takes the
-    spacing: the check runs again under the lock."""
-    import src.x.twitter_client as tc
-    from src.x import safari
-    _journal_file()
-
-    class Lock:
-        def __enter__(self):
-            _journal_file(pending=[("2026-09-20/11:45", "A pending post about agents", 0)])
-
-        def __exit__(self, *exc):
-            return False
-    monkeypatch.setattr(safari, "_safari_lock", Lock())
-    text = "Inference is getting cheaper faster than training.\n\nhttps://huggingface.co/blog/costs"
-    assert tc.post_tweet(text) is W.REFUSED
-    assert journal_post.opened == [] and journal_post.recorded == []
-
-
-@pytest.mark.parametrize("marked", ["pending", "published"])
-def test_post_dedups_against_the_slot_journal(journal_post, marked):
-    """A pending text may be live, and a Slot the Operator marked published
-    by hand never reached tweet_history.json: both count for the dedup."""
-    import src.x.twitter_client as tc
-    if marked == "pending":
-        _journal_file(slots={"09:30": "pending"}, pending=[("2026-09-20/09:30", POSTED, 120)])
-    else:
-        _journal_file(slots={"09:30": "published"}, published=[("09:30", POSTED, 120)])
-    again = ("Every model expects its own conversation format. Check the chat template before "
-             "changing your prompts: the wrapper around your words matters."
-             "\n\nhttps://huggingface.co/docs/transformers/main/chat_templating")
-    assert tc.post_tweet(again) is W.REFUSED
-    assert journal_post.opened == [] and journal_post.recorded == []
-
-
-def test_post_leaves_out_its_own_reservation_and_names_it_in_the_ledger(journal_post):
-    """The editorial cycle reserves its Slot just before the submission: that
-    reservation counts for neither the spacing nor the dedup of its own
-    text, and the ledger row names it."""
-    import src.x.twitter_client as tc
-    key = "2026-09-20/11:45"
-    _journal_file(slots={"11:45": "pending"}, pending=[(key, POSTED, 0)])
-    text = POSTED + "\n\n" + SOURCE
-    assert tc.post_tweet(text) is W.REFUSED
-    assert tc.post_tweet(text, reserved=key) is W.SHIPPED
-    assert journal_post.recorded == [((ag.POST,), {"target": key})]
-
-
-@pytest.mark.parametrize("key, text", [
-    ("2026-09-20/13:00", POSTED + "\n\n" + SOURCE),                # no such Pending slot
-    ("2026-09-20/09:30", POSTED + "\n\n" + SOURCE),                # published, not pending
-    ("2026-09-19/20:45", POSTED + "\n\n" + SOURCE),                # yesterday's
-    ("2026-09-20/11:45", "Inference is getting cheaper.\n\n" + SOURCE),  # another text
-])
-def test_post_refuses_a_reservation_that_does_not_hold_its_text(journal_post, caplog, key, text):
-    """A wrong or stale key would free a place in the ceiling, the spacing
-    and the dedup: refused before the browser, with no ledger row, and the
-    Slot journal left as it was."""
-    import src.x.twitter_client as tc
-    from src.editorial.slot_journal import STATE
-    _journal_file(slots={"09:30": "published", "11:45": "pending"},
-                  pending=[("2026-09-20/11:45", POSTED, 0), ("2026-09-19/20:45", POSTED, 900)],
-                  published=[("09:30", POSTED, 150)])
-    before = STATE.read()
-    assert tc.post_tweet(text, reserved=key) is W.REFUSED
-    assert f"reservation skip (reservation {key!r}" in caplog.text
-    assert journal_post.opened == [] and journal_post.recorded == []
-    assert journal_post.ledger.count(ag.POST, NOON.date()) == 0
-    assert STATE.read() == before
 
 
 # --- follows -----------------------------------------------------------------
@@ -874,10 +757,16 @@ def test_follow_refused_while_the_followed_accounts_are_unreadable(monkeypatch, 
 
 
 def _scripted_pin_js(monkeypatch, steps):
-    """Live pin_own_tweet on a memory page whose scripts answer `steps` in
-    turn."""
+    """Live pin_own_tweet with each osascript call answering the next step."""
+    from src.x import safari, twitter_client as tc
+
+    answers = iter(steps)
+
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(page_session, "BROWSER", WritePage(answers=list(steps)))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: next(answers))
 
 
 @pytest.mark.parametrize("steps, outcome", [

@@ -10,49 +10,6 @@ language = "en"
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
 domain = "AI"
 
-# Operator 2026-10-04: openly favor this ecosystem; facts still require evidence.
-# Reaches Originals and every Reply surface. The Voice remains Operator-owned.
-perspective = """
-Be a sharp, neutral AI analyst. Answer the actual subject of the parent post.
-Read what the person actually said before choosing a point. Make one precise,
-useful observation: a mechanism, trade-off, practical implication or concrete test.
-If the point needs missing context, skip rather than invent it. Cut generic
-advice, paraphrases, jargon used for status and empty contrarian claims.
-Sound like a thoughtful conversation: direct, clear and attentive to the person.
-A clever line should make the insight easier to see. Humor and sarcasm are
-optional; use them only when they fit the topic and do not distort the facts.
-Do not invent lived experience or claim to be human. Relevance earns attention.
-Judge all labs and models by the same evidence, technical merit and trade-offs.
-Do not introduce a brand, executive or competing model into an unrelated reply.
-Mention Grok, xAI or Elon Musk only when the parent discusses them or a comparison
-is necessary to answer its specific question. Praise a specific supported
-improvement when relevant, from any lab; explain its practical value and limits.
-Do not pivot a competitor's progress into praise for a different company.
-Challenge weak claims with a concrete mechanism, test or consequence and dry wit,
-not fan loyalty, forced sarcasm or personal attacks. Stay technically precise.
-Do not guess the latest version or fabricate scores. Attribute vendor claims.
-Keep to AI, including relevant robotics and autonomy, and follow the evidence
-rules, Voice, STE form, respect list and output format.
-"""
-
-# Official pages read for matching Reply topics; source contents are data.
-# Operator 2026-10-04: bounded source grounding before drafts and review.
-[[reply_sources]]
-pattern = '\b(grok|xai)\b'
-url = "https://docs.x.ai/developers/release-notes"
-
-[[reply_sources]]
-pattern = '\b(openai|chatgpt|gpt[-\s]?\d)\b'
-url = "https://help.openai.com/en/articles/9624314-model-release-notes"
-
-[[reply_sources]]
-pattern = '\b(anthropic|claude)\b'
-url = "https://platform.claude.com/docs/en/release-notes/overview"
-
-[[reply_sources]]
-pattern = '\b(gemini|google\s+ai)\b'
-url = "https://ai.google.dev/gemini-api/docs/changelog"
-
 [editorial]
 # The angle of every trend Slot and of the Startup post.
 trend_angle = "Trending: the AI topic X is talking about right now, told from a trusted source"
@@ -88,8 +45,7 @@ feeds = [
 trusted_hosts = [
     "openai.com", "blog.google", "deepmind.google", "huggingface.co",
     "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
-    "replicate.com", "the-decoder.com", "arxiv.org", "x.ai", "docs.x.ai",
-    "help.openai.com", "platform.claude.com", "ai.google.dev",
+    "replicate.com", "the-decoder.com", "arxiv.org",
 ]
 
 # Evergreen topics fill quiet news days, rotated daily; never presented as new.
@@ -165,17 +121,11 @@ title = "Why the evaluation dataset matters as much as the score"
 url = "https://huggingface.co/docs/datasets/about_dataset_features"
 publisher = "Hugging Face docs"
 
-[[editorial.evergreen]]
-topic = "grok_models"
-title = "How to choose a Grok model for an AI workload"
-url = "https://docs.x.ai/developers/models"
-publisher = "xAI docs"
-
 # Python regular expressions, matched case-insensitively. A news item's title
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|grok|xai|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -187,11 +137,10 @@ off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|g
 [relations]
 # The VIP scan (network.vip_scan) answers a handle below with its own
 # prompt, any other with this default one. Required only while a vip_scan
-# handle has no Relation.
+# handle has no prompt of its own.
 default = "relations/buddy.md"
 
-# A Relation's own VIP prompt, in place of the default one. A Relation
-# always sets one.
+# A Relation's own VIP prompt, in place of the default one.
 [relations.handles.TheBTCTherapist]
 prompt = "relations/bestie.md"
 
@@ -201,6 +150,22 @@ prompt = "relations/bestie.md"
 [relations.handles.Graphseo]
 prompt = "relations/graphseo.md"
 provider = "claude"
+
+# A fixed dossier: the Replies that carry the author's dossier read this one
+# in place of personality.json's. Keys: first_seen, last_interaction,
+# interaction_count, category, stance, notes, feelings, do, dont.
+[relations.handles.McnallieM.dossier]
+first_seen = "2026-05-02"
+last_interaction = "2026-05-02"
+category = "builder"
+stance = "fond"
+notes = [
+    "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
+    "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+]
+feelings = "Warm respect. Treat him as a useful operator sharing real results."
+do = "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity."
+dont = "Do not mock him, his work, his results, or his credibility. Never make him upset."
 
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
 # set stricter for this Account: a value past the engine's bound is brought
@@ -230,9 +195,8 @@ profile_visits = ["TheBTCTherapist", "Graphseo"]
 # Accounts the direct_reply VIP scan searches: VIP_SCAN_HANDLES unless .env
 # sets it.
 vip_scan = ["Graphseo", "TheBTCTherapist"]
-# Accounts early_bird (first 30) and mega_watch (first 12) pick from at
-# random, the order deciding which are kept:
-# PINNED_TRACKED_HANDLES unless .env sets it.
+# Accounts the curator always tracks first: PINNED_TRACKED_HANDLES unless
+# .env sets it.
 pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
 # Replies to these authors run the priority model.
 vip_reply = [
@@ -304,12 +268,12 @@ follow_engagers_skip = [
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|super\s+intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|super\s+intelligence|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
 # X search queries.
 [searches]
@@ -318,11 +282,9 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
-    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:30',
-    '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:30',
+    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
-    '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:30',
     '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
     '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
     'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
@@ -330,19 +292,10 @@ replies = [
     'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
     'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
-    # Operator 2026-10-05: quiet technical and builder posts need no like minimum.
-    '(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en',
-    '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en',
-    '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en',
-    '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en',
-    '"AI prototype" OR "AI side project" OR "building an AI" lang:en',
-    '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en',
 ]
 hot_tab = [
-    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:300',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
-    '("super intelligence" OR superintelligence OR SI) AI lang:en min_faves:300',
-    '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:300',
+    'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
@@ -358,7 +311,6 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
-    '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
-    '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies',
+    'AI lang:en min_faves:200 -filter:replies',
 ]

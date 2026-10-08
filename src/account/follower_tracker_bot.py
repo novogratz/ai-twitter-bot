@@ -8,12 +8,14 @@ header via JS, and appends to follower_history.json.
 No LLM, just one Safari visit + JS extraction.
 """
 import re
+import time
+import traceback
 from datetime import datetime
 
 from ..core import config
 from ..core.logger import log
 from ..guards.follow_policy import FOLLOWER_HISTORY
-from ..x import page_session
+from ..x import safari
 
 
 def _parse_count(s: str) -> int:
@@ -35,8 +37,7 @@ def _parse_count(s: str) -> int:
 
 
 def _scrape_follower_count() -> int:
-    """Open the Account's profile, JS-extract the number next to 'Followers' / 'Abonnés'.
-    Raises PageNotOpened when the profile does not open."""
+    """Open the Account's profile, JS-extract the number next to 'Followers' / 'Abonnés'."""
     js_code = '''
     (function() {
         // Followers link looks like /<handle>/verified_followers or /followers.
@@ -55,16 +56,19 @@ def _scrape_follower_count() -> int:
     })()
     '''
 
-    with page_session.session("FOLLOWER") as page:
+    with safari._safari_lock:
         url = f"https://x.com/{config.BOT_HANDLE}"
         log.info(f"[FOLLOWER] Opening {url}")
-        page.open(url, settle_s=7)
-        raw = page.run_js(js_code, 20, activate=True)
-    try:
-        return _parse_count(raw)
-    except ValueError:
-        log.info(f"[FOLLOWER] Unreadable follower count: {raw[:40]!r}")
-        return 0
+        safari.open_url(url)
+        time.sleep(7)
+
+        raw = safari._run_js(js_code, 20, log_prefix="[FOLLOWER]", activate=True)
+        safari.close_front_tab()
+        try:
+            return _parse_count(raw)
+        except ValueError:
+            log.info(f"[FOLLOWER] Unreadable follower count: {raw[:40]!r}")
+            return 0
 
 
 def _load_history() -> list:
@@ -90,3 +94,14 @@ def run_follower_tracker_cycle():
         log.info(f"[FOLLOWER] Count: {count} ({delta:+d} since last sample).")
     else:
         log.info(f"[FOLLOWER] First sample logged: {count}.")
+
+
+def safe_run_follower_tracker_cycle():
+    from ..core import health
+    try:
+        run_follower_tracker_cycle()
+        health.record_success("follower_tracker")
+    except Exception:
+        log.info("[FOLLOWER] Error during follower-tracker cycle:")
+        traceback.print_exc()
+        health.record_failure("follower_tracker")

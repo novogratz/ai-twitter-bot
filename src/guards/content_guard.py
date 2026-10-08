@@ -19,6 +19,9 @@ from typing import Tuple
 from ..core import config, settings
 from ..core.state_errors import StateUnreadable
 
+# X composer limit for replies; Reply admission trims to it.
+REPLY_MAX_CHARS = 278
+
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
 # Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
@@ -145,17 +148,10 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
     }
 
 
-def _recent_profiles(submitted=(), limit: int = 40) -> list:
+def _recent_profiles(limit: int = 40) -> list:
     from datetime import datetime
     from ..core.history import load_history
-    from . import active_hours
     profiles = list(_RECENT_NORM[-limit:])
-    now_aware = active_hours.now_local()
-    for text, at in submitted:
-        age_h = (now_aware - at).total_seconds() / 3600.0 if at else 9999.0
-        p = _dup_profile(text, age_hours=age_h)
-        if p["words"]:
-            profiles.append(p)
     now = datetime.now()
     for entry in load_history()[-limit:]:
         if not isinstance(entry, dict):
@@ -171,14 +167,9 @@ def _recent_profiles(submitted=(), limit: int = 40) -> list:
     return profiles
 
 
-def is_duplicate(text: str, submitted=()) -> bool:
+def is_duplicate(text: str) -> bool:
     """True if `text` is a near-duplicate (or same-story rehash) of a
-    recently posted original. See the v2 signal list above.
-
-    `submitted`: (text, aware time or None) pairs the Slot journal knows,
-    published or pending. A pending submission may be live, and a Slot the
-    Operator marked published never reached tweet_history.json: both count
-    like a post of the history."""
+    recently posted original. See the v2 signal list above."""
     jaccard = settings.get("DUP_JACCARD_THRESHOLD")
     containment = settings.get("DUP_CONTAINMENT_THRESHOLD")
     shared_bigrams = settings.get("DUP_SHARED_BIGRAMS")
@@ -189,14 +180,13 @@ def is_duplicate(text: str, submitted=()) -> bool:
     ws = p["words"]
     # Exact normalized-text rehash is always a duplicate, even for short
     # stopword-heavy one-liners that the content-word signals can't profile.
-    recent = _recent_profiles(submitted)
     if p["norm"]:
-        for prev in recent:
+        for prev in _recent_profiles():
             if prev.get("norm") and prev["norm"] == p["norm"]:
                 return True
     if len(ws) < 4:
         return False
-    for prev in recent:
+    for prev in _recent_profiles():
         pw = prev["words"]
         if not pw:
             continue
@@ -516,11 +506,10 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             return (False, "rationed shape overused (\"me [verb]ing…\" already posted in window) — vary the opener")
 
     if kind == "reply":
-        # Operator 2026-09-27: the Replies were too long. The Reply
-        # admission trims to this on a sentence end before it gets here.
-        longest = settings.get("REPLY_MAX_CHARS")
-        if len(text) > longest:
-            return (False, f"too long for a reply ({len(text)} chars > {longest})")
+        # Hard X limit for replies — an over-limit draft gets cut by
+        # the composer mid-sentence, which reads as a botched AI paste.
+        if len(text) > REPLY_MAX_CHARS:
+            return (False, f"too long for a reply ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 

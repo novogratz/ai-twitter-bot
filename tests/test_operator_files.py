@@ -134,15 +134,28 @@ def test_no_scheduled_job_writes_the_operator_files(watched, walled, monkeypatch
             pass  # a walled job may raise; only its writes matter here
 
 
+def test_the_curator_promotes_into_the_state_never_the_whitelist(watched, tmp_path, monkeypatch):
+    from src.account import account_curator
+    from src.guards import follow_policy
+    monkeypatch.setattr(account_curator, "_author_engagements", lambda: {"deep_macro": 9})
+
+    account_curator.run_curator_cycle()
+
+    assert json.loads((tmp_path / "whitelist_discovered.json").read_text()) == ["deep_macro"]
+    assert follow_policy.relation("deep_macro") is follow_policy.Relation.SEED
+
+
 @pytest.mark.parametrize("dry_run", ["1", "0"])
 def test_a_follow_of_a_seed_account_writes_only_state(watched, walled, memory_ledger, tmp_path,
                                                       monkeypatch, dry_run):
-    from src.x import page_session, twitter_client
-    from tests.helpers import WritePage
+    from src.x import safari, scraper, twitter_client
     monkeypatch.setenv("DRY_RUN", dry_run)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
-    quality = json.dumps({"followers": "12K", "bio": "AI", "name": "Seed"})
-    monkeypatch.setattr(page_session, "BROWSER", WritePage(answers=[quality, "CLICKED"]))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "CLICKED")
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(scraper, "_scrape_profile_quality",
+                        lambda: {"followers": "12K", "bio": "AI", "name": "Seed"})
     seed = account.OperatorFile("whitelist.json", dict).read()["tiers"]["tier3"][0]
 
     outcome = twitter_client.follow_account(seed)

@@ -1,15 +1,10 @@
-"""Safari and AppleScript primitives under the page session: the Safari
-lock, AppleScript runs, page opening, paste, tab and keyboard moves.
+"""Safari and AppleScript primitives shared by the X reading and write
+modules: the Safari lock, AppleScript runs, page opening, paste, tab and
+keyboard moves.
 
-Only `page_session` reaches the private primitives (`_safari_lock`,
-`_run_applescript`, `_run_js`, `_paste_text`, `_scroll_page`,
-`_close_session_tab`); X reads and writes go through a page session.
-Each AppleScript run here checks waking hours first, save
-`_close_session_tab`. Two listed exceptions call them directly:
-`safari_hygiene`, which quits and relaunches Safari, and
-`bin/mass_unfollow.py`, run by hand with the bot stopped. Every caller goes
-through the module (`safari.open_url(...)`), never through a `from` import,
-so the test walls patched here reach them."""
+Other modules call the walled primitives (`_run_applescript`, `_run_js`,
+`_paste_text`, `open_url`) through the module (`safari.open_url(...)`),
+never through a `from` import, so the test walls patched here reach them."""
 import os
 import subprocess
 import tempfile
@@ -55,8 +50,7 @@ KEYSTROKE_TIMEOUT_S = 10
 def _run_applescript(script: str, retries: int = 1,
                      timeout_s: float | None = None) -> bool:
     """Run an AppleScript command with optional retries. Returns True on success.
-    With `timeout_s`, a run that outlasts it counts as a failed attempt, and so
-    does an osascript that did not start (`OSError`, logged)."""
+    With `timeout_s`, a run that outlasts it counts as a failed attempt."""
     for attempt in range(retries):
         require_active()
         try:
@@ -64,9 +58,7 @@ def _run_applescript(script: str, retries: int = 1,
             subprocess.run(["osascript", "-e", script], check=True,
                            capture_output=True, text=True, timeout=timeout_s)
             return True
-        except (OSError, subprocess.SubprocessError) as e:
-            if isinstance(e, OSError):
-                log.info(f"AppleScript did not start: {e!r}")
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
             if attempt < retries - 1:
                 log.warning(f"AppleScript failed (attempt {attempt + 1}/{retries}), retrying...")
                 time.sleep(RETRY_DELAY_SECONDS)
@@ -154,8 +146,9 @@ def _paste_text(text: str) -> bool:
     return _run_applescript(script, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
-# Tab+Enter to the first tweet on a profile/page, for `Page.keys`.
-FIRST_TWEET_KEYS = '''
+def _navigate_to_first_tweet():
+    """Use Tab+Enter to navigate to the first tweet on a profile/page."""
+    script = '''
     tell application "System Events"
         keystroke tab
         delay 0.2
@@ -166,9 +159,12 @@ FIRST_TWEET_KEYS = '''
         keystroke return
     end tell
     '''
+    _run_applescript(script, timeout_s=KEYSTROKE_TIMEOUT_S)
 
 
-_CLOSE_FRONT_TAB = '''
+def close_front_tab():
+    """Close the frontmost Safari tab to save memory."""
+    script = '''
     tell application "Safari"
         if (count of windows) > 0 then
             tell front window
@@ -179,22 +175,8 @@ _CLOSE_FRONT_TAB = '''
         end if
     end tell
     '''
-
-
-def _close_session_tab() -> None:
-    """Close the front tab, for a page session closing the tab it opened,
-    under the Safari lock. The one AppleScript run without
-    `require_active()` (issue #300): closing a local tab is no action on
-    X, and a session caught by bedtime or a stop still closes its tab
-    rather than leave a stale page in front until the next Safari restart.
-    Bounded by CLOSE_TIMEOUT_S; a failed close is logged, never raised."""
-    try:
-        subprocess.run(["osascript", "-e", _CLOSE_FRONT_TAB], check=True,
-                       capture_output=True, text=True, timeout=CLOSE_TIMEOUT_S)
-    except (OSError, subprocess.SubprocessError) as e:
-        log.info(f"Tab close failed: {e!r}")
-        return
-    log.debug("Tab closed.")
+    if _run_applescript(script, timeout_s=CLOSE_TIMEOUT_S):
+        log.debug("Tab closed.")
 
 
 def _scroll_page():

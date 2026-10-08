@@ -24,7 +24,6 @@ import re
 import string
 import tomllib
 from dataclasses import dataclass
-from urllib.parse import urlsplit
 
 from . import settings
 from .logger import log
@@ -69,12 +68,6 @@ class Relevance:
 
 
 @dataclass(frozen=True)
-class ReplySource:
-    pattern: re.Pattern
-    url: str
-
-
-@dataclass(frozen=True)
 class Account:
     name: str
     folder: str  # absolute: accounts/<name>/, where the Account's other files live
@@ -89,8 +82,6 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
-    perspective: str = ""  # account-owned editorial preference, subordinate to evidence
-    reply_sources: tuple[ReplySource, ...] = ()
 
 
 def current() -> Account:
@@ -122,7 +113,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "perspective": str, "reply_sources": list})
+                 optional={"limits": dict, "relations": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -134,29 +125,12 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                        required={"topic": str, "off_topic": str})
     _check_voice(folder, os.path.dirname(shown))
     network = _network(top)
-    ed = _editorial(editorial)
-    reply_sources = []
-    for i, raw in enumerate(top.items("reply_sources", dict) if "reply_sources" in top else []):
-        source = _Table(shown, f"reply_sources[{i}]", raw,
-                        required={"pattern": str, "url": str})
-        try:
-            parts = urlsplit(source["url"])
-        except ValueError:
-            source.fail("url", "must be a valid trusted https URL")
-        if not source["pattern"].strip():
-            source.fail("pattern", "must not be blank")
-        if (parts.scheme != "https" or parts.hostname not in ed.trusted_hosts
-                or parts.username or parts.password or parts.netloc != parts.hostname):
-            source.fail("url", "must use https on a trusted host, without credentials or a port")
-        reply_sources.append(ReplySource(_pattern(source, "pattern"), source["url"]))
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
-        domain=top["domain"], editorial=ed, relevance=Relevance(
+        domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
         searches=_searches(top),
-        perspective=top.get("perspective", "").strip(),
-        reply_sources=tuple(reply_sources),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -334,14 +308,18 @@ _PROMPT_FIELDS = frozenset({"author", "tweet_text", "original_tweet", "language_
 # (a test holds the two together): importing llm_client here would run before
 # settings.load() has finished.
 CLI_PROVIDERS = ("claude", "codex", "gemini", "opencode")
+# The dossier fields personality_store renders, and their types.
+_DOSSIER = {"first_seen": str, "last_interaction": str, "interaction_count": int, "category": str,
+            "stance": str, "notes": list, "feelings": str, "do": str, "dont": str}
 
 
 @dataclass(frozen=True)
 class Relation:
     """One account the Replies treat apart, by its handle."""
     handle: str  # as account.toml writes it
-    prompt: str  # its own VIP scan prompt, read at start
+    prompt: str | None  # its own VIP scan prompt, read at start
     provider: str | None  # the CLI that writes its Replies whenever installed
+    dossier: dict | None  # a fixed dossier, in place of personality.json's
 
 
 @dataclass(frozen=True)
@@ -356,7 +334,7 @@ class Relations:
 
     def vip_prompt(self, handle: str) -> str | None:
         relation = self.get(handle)
-        return relation.prompt if relation else self.default
+        return relation.prompt if relation and relation.prompt else self.default
 
 
 def _relations(folder, network, table) -> Relations:
@@ -369,18 +347,33 @@ def _relations(folder, network, table) -> Relations:
             table.fail(f"handles.{handle}", f"takes a table, not {raw!r}")
         if handle.lower() in handles:
             table.fail(f"handles.{handle}", f"repeats {handles[handle.lower()].handle}: handles ignore case")
-        entry = _Table(table.file, where, raw, required={"prompt": str}, optional={"provider": str})
+        entry = _Table(table.file, where, raw, required={},
+                       optional={"prompt": str, "provider": str, "dossier": dict})
+        if not entry.values:
+            entry.fail("prompt", "is missing: a Relation sets a prompt, a dossier or both")
+        if "provider" in entry and "prompt" not in entry:
+            entry.fail("provider", "needs a prompt: it only writes the Relation's own prompt")
         if "provider" in entry and entry["provider"] not in CLI_PROVIDERS:
             entry.fail("provider", f"takes one of {', '.join(CLI_PROVIDERS)}, not {entry['provider']!r}")
-        handles[handle.lower()] = Relation(handle=handle, prompt=_prompt(folder, entry, "prompt"),
-                                           provider=entry.get("provider", None))
+        dossier = None
+        if "dossier" in entry:
+            dossier_table = _Table(table.file, f"{where}.dossier", entry["dossier"], required={},
+                                   optional=_DOSSIER)
+            if not dossier_table.values:
+                entry.fail("dossier", "is empty: a fixed dossier sets at least one field")
+            if "notes" in dossier_table:
+                dossier_table.items("notes", str)
+            dossier = dict(dossier_table.values)
+        handles[handle.lower()] = Relation(
+            handle=handle, prompt=_prompt(folder, entry, "prompt") if "prompt" in entry else None,
+            provider=entry.get("provider", None), dossier=dossier)
     default = _prompt(folder, table, "default") if "default" in table else None
     if default is None:
         for handle in network.vip_scan:
             relation = handles.get(handle.lower())
-            if not relation:
+            if not (relation and relation.prompt):
                 table.fail("default", f"is missing: network.vip_scan lists {handle}, which has no "
-                                      f"Relation, so the VIP scan needs a default prompt")
+                                      f"Relation with its own prompt, so the VIP scan needs a default prompt")
     return Relations(default=default, handles=handles)
 
 

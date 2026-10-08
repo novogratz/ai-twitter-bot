@@ -9,15 +9,12 @@ import pytest
 
 from src.core import account
 from src.guards import active_hours as hours
-from src.editorial import editorial_bot as editorial, editorial_schemas as schemas, slot_journal
-from src.editorial.slot_journal import MemoryJournal
+from src.editorial import editorial_bot as editorial, editorial_schemas as schemas
 from src.x.confirmed_write import WriteOutcome
-from src.x.page_session import PageNotOpened
-from tests.helpers import TORONTO, USAGE_LIMIT, WritePage, clock, scheduled_job
+from tests.helpers import TORONTO, USAGE_LIMIT, clock, scheduled_job
 
-# The real model calls and dedup, before draft_fixture stubs them.
+# The real model calls, before draft_fixture stubs them.
 REAL_JSON_CALL, REAL_DRAFT_POST = editorial._json_call, editorial.draft_post
-REAL_IS_DUPLICATE = editorial.content_guard.is_duplicate
 
 
 def use_editorial(monkeypatch, **fields):
@@ -27,35 +24,22 @@ def use_editorial(monkeypatch, **fields):
     monkeypatch.setattr(account, "current", lambda: swapped)
 
 
-def saved(journal) -> dict:
-    """The Slot journal's state at its last save, as the file would hold it."""
-    return journal.saved or {}
-
-
-def seed_journal(monkeypatch, data) -> MemoryJournal:
-    """The cycle's Slot journal, holding `data` as the file would."""
-    journal = MemoryJournal(data)
-    monkeypatch.setattr(slot_journal, "JOURNAL", journal)
-    return journal
-
-
 def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    empty = MemoryJournal()
-    assert editorial.due_slot(at(5, 0), empty)[0] == "05:00"
-    assert editorial.due_slot(at(5, 45), empty) is None
-    assert editorial.due_slot(at(10, 15), empty)[0] == "10:00"
-    assert editorial.due_slot(at(10, 45), empty) is None
+    assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
+    assert editorial.due_slot(at(5, 45), {}) is None
+    assert editorial.due_slot(at(10, 15), {})[0] == "10:00"
+    assert editorial.due_slot(at(10, 45), {}) is None
     state = {"date": "2026-09-20", "slots": {"05:00": "published"}}
-    assert editorial.due_slot(at(5, 30), MemoryJournal(state)) is None
+    assert editorial.due_slot(at(5, 30), state) is None
     state["slots"]["05:00"] = "pending"
-    assert editorial.due_slot(at(5, 30), MemoryJournal(state)) is None
-    assert editorial.due_slot(at(20, 45), empty)[0] == "20:45"
-    assert editorial.due_slot(at(21, 29), empty)[0] == "20:45"
-    assert editorial.due_slot(at(21, 30), empty) is None
-    assert editorial.due_slot(at(22, 0), empty) is None
-    assert editorial.due_slot(at(23, 0), empty) is None
-    assert editorial.due_slot(at(23, 30), empty) is None
+    assert editorial.due_slot(at(5, 30), state) is None
+    assert editorial.due_slot(at(20, 45), {})[0] == "20:45"
+    assert editorial.due_slot(at(21, 29), {})[0] == "20:45"
+    assert editorial.due_slot(at(21, 30), {}) is None
+    assert editorial.due_slot(at(22, 0), {}) is None
+    assert editorial.due_slot(at(23, 0), {}) is None
+    assert editorial.due_slot(at(23, 30), {}) is None
 
 
 def test_evening_slots_stay_inside_waking_hours():
@@ -70,12 +54,12 @@ def test_evening_slots_stay_inside_waking_hours():
 
 
 @pytest.fixture
-def draft_fixture(monkeypatch, tmp_path, settings_override, memory_journal):
+def draft_fixture(monkeypatch, tmp_path, settings_override):
     now = datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO)
     clock(monkeypatch, now)
     monkeypatch.setattr(editorial, "AUDIT_FILE", tmp_path / "audit.jsonl")
     settings_override(CONTENT_LANG_PRIMARY="en")
-    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text, submitted=(): False)
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
     quote = "Chat templates convert conversations into the format expected by the model."
     source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
                   publisher="Hugging Face", body=quote, kind="knowledge", published_at="")
@@ -118,13 +102,12 @@ def test_eighth_post_needs_exceptional_value(draft_fixture):
     assert not editorial.review_draft(draft, [source], [], exceptional=True)[0]
 
 
-def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_fixture,
-                                                            memory_journal):
+def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     calls = []
-    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: calls.append(text) or True)
+    monkeypatch.setattr(tc, "post_tweet", lambda text: calls.append(text) or True)
     assert editorial.run_editorial_cycle(preview=True)["approved"]
-    assert not calls and memory_journal.saved is None and not editorial.AUDIT_FILE.exists()
+    assert not calls and not os.path.exists(editorial.STATE.path) and not editorial.AUDIT_FILE.exists()
     assert editorial.run_editorial_cycle()["approved"]
     assert len(calls) == 1
     assert calls[0].endswith(draft_fixture[1]["url"])
@@ -132,14 +115,14 @@ def test_preview_has_no_writes_and_success_consumes_one_slot(monkeypatch, draft_
     assert len(calls) == 1
 
 
-def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixture, memory_journal):
+def test_weak_draft_never_posts_and_retries_are_bounded(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     draft_fixture[2]["adds_value"] = False
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("weak draft published"))
     for _ in range(3):
         assert editorial.run_editorial_cycle()["approved"] is False
     assert editorial.run_editorial_cycle() is None
-    assert not saved(memory_journal).get("published")
+    assert not editorial._read_state().get("published")
 
 
 @pytest.fixture
@@ -156,26 +139,25 @@ def exhausted(monkeypatch, providers, settings_override):
     return providers
 
 
-def test_an_exhausted_provider_drafts_nothing_and_spends_no_attempt(monkeypatch, draft_fixture, exhausted,
-                                                                    memory_journal):
+def test_an_exhausted_provider_drafts_nothing_and_spends_no_attempt(monkeypatch, draft_fixture, exhausted):
     """Issue #176: every provider at its usage limit is no Draft."""
     monkeypatch.setattr(editorial, "draft_post", REAL_DRAFT_POST)
     assert editorial.run_editorial_cycle() is None
     assert [name for name, _ in exhausted.calls] == ["claude", "codex"]
-    assert not saved(memory_journal).get("attempts", {}).get("07:15")
-    assert not saved(memory_journal).get("published")
+    assert not editorial._read_state().get("attempts", {}).get("07:15")
+    assert not editorial._read_state().get("published")
 
 
-def test_an_exhausted_provider_approves_nothing(draft_fixture, exhausted, memory_journal):
+def test_an_exhausted_provider_approves_nothing(draft_fixture, exhausted):
     """Issue #176: no review answer is no approval; the Attempt stays spent,
     as for any review that fails."""
     assert editorial.run_editorial_cycle()["approved"] is False
     assert [name for name, _ in exhausted.calls] == ["claude", "codex"]
-    assert not saved(memory_journal).get("published")
+    assert not editorial._read_state().get("published")
 
 
-def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture, memory_journal):
-    """An Attempt is a Draft submitted to the Editor (GLOSSARY.md). A feed
+def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture):
+    """An Attempt is a Draft submitted to the Editor (CONTEXT.md). A feed
     outage, a generator error or an explicit skip must not burn the Slot."""
     from src.x import twitter_client as tc
     calls = []
@@ -192,34 +174,28 @@ def test_passes_without_a_draft_consume_no_attempt(monkeypatch, draft_fixture, m
         raise TimeoutError("cold load")
     monkeypatch.setattr(editorial, "draft_post", provider_down)
     scheduled_job("editorial_job")()
-    assert not saved(memory_journal).get("attempts", {}).get("07:15")
+    assert not editorial._read_state().get("attempts", {}).get("07:15")
     assert not editorial.AUDIT_FILE.exists()
     monkeypatch.setattr(editorial, "draft_post", lambda *a: draft_fixture[0])
     assert editorial.run_editorial_cycle()["approved"]
     assert len(calls) == 1
-    assert saved(memory_journal)["attempts"]["07:15"] == 1
+    assert editorial._read_state()["attempts"]["07:15"] == 1
 
 
-@pytest.mark.parametrize("failure", [
-    TimeoutError("cold load"),
-    PageNotOpened("https://x.com/search?q=AI"),
-], ids=["model_timeout", "browser_failure"])
-def test_an_editorial_failure_leaves_the_safari_health_file_alone(monkeypatch, draft_fixture,
-                                                                  caplog, failure):
+def test_an_editorial_failure_leaves_the_safari_health_file_alone(monkeypatch, draft_fixture, caplog):
     """Issue #236: the editorial fails on model timeouts, not on Safari; its
-    failures never count toward a Safari restart, a browser failure, which
-    a watched job would count (#298), included."""
+    failures never count toward a Safari restart."""
     from src.core import health
     monkeypatch.setattr(health, "_restart_safari", lambda: pytest.fail("Safari restarted"))
     def provider_down(*a):
-        raise failure
+        raise TimeoutError("cold load")
     monkeypatch.setattr(editorial, "draft_post", provider_down)
     job = scheduled_job("editorial_job")
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         job()
 
     assert not os.path.exists(health.HEALTH.path)
-    assert f"{type(failure).__name__}: {failure}" in caplog.text
+    assert "TimeoutError: cold load" in caplog.text
     assert "[HEALTH]" not in caplog.text
 
 
@@ -256,7 +232,7 @@ def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture
     assert not any(r.levelname == "ERROR" for r in caplog.records)
 
 
-def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture, memory_journal):
+def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("expired draft published"))
     draft = draft_fixture[0]
@@ -265,16 +241,16 @@ def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, dra
         return draft
     monkeypatch.setattr(editorial, "draft_post", slow)
     editorial.run_editorial_cycle()
-    assert not saved(memory_journal).get("slots")
+    assert not editorial._read_state().get("slots")
 
 
 @pytest.mark.parametrize("outcome", [WriteOutcome.REFUSED, WriteOutcome.FAILED, WriteOutcome.DRY_RUN])
-def test_a_write_that_sent_nothing_frees_the_slot(monkeypatch, draft_fixture, memory_journal, outcome):
+def test_a_write_that_sent_nothing_frees_the_slot(monkeypatch, draft_fixture, outcome):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: outcome)
     editorial.run_editorial_cycle()
-    assert not saved(memory_journal)["slots"]
-    assert not saved(memory_journal)["published"]
+    assert not editorial._read_state()["slots"]
+    assert not editorial._read_state()["published"]
 
 
 def test_a_dry_run_judges_the_respect_list(monkeypatch, draft_fixture, caplog):
@@ -296,27 +272,27 @@ def test_a_dry_run_judges_the_respect_list(monkeypatch, draft_fixture, caplog):
     assert "refused" not in caplog.text and neutral in caplog.text
 
 
-def test_an_unconfirmed_submit_keeps_the_slot_pending(monkeypatch, draft_fixture, memory_journal):
+def test_an_unconfirmed_submit_keeps_the_slot_pending(monkeypatch, draft_fixture):
     """The submit keystroke may have reached X: the slot is never retried
     automatically, the operator checks the profile first."""
     from src.x import twitter_client as tc
     calls = []
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: calls.append(a) or WriteOutcome.UNCONFIRMED)
     editorial.run_editorial_cycle()
-    assert saved(memory_journal)["slots"]["07:15"] == "pending"
-    assert not saved(memory_journal)["published"]
+    assert editorial._read_state()["slots"]["07:15"] == "pending"
+    assert not editorial._read_state()["published"]
     assert editorial.run_editorial_cycle() is None
     assert len(calls) == 1
 
 
-def test_an_interrupted_submission_keeps_the_slot_pending(monkeypatch, draft_fixture, memory_journal):
+def test_an_interrupted_submission_keeps_the_slot_pending(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     def ambiguous(*a, **k):
         raise RuntimeError("connection interrupted after submission")
     monkeypatch.setattr(tc, "post_tweet", ambiguous)
     with pytest.raises(RuntimeError):
         editorial.run_editorial_cycle()
-    assert saved(memory_journal)["slots"]["07:15"] == "pending"
+    assert editorial._read_state()["slots"]["07:15"] == "pending"
     assert editorial.run_editorial_cycle() is None
 
 
@@ -350,7 +326,7 @@ def test_source_pool_keeps_more_fresh_news_before_evergreen(monkeypatch):
     use_editorial(monkeypatch, feeds=tuple((f"Feed {i}", f"https://feed/{i}") for i in range(10)))
     monkeypatch.setattr(editorial, "_fetch", fake_fetch)
 
-    sources = editorial.collect_sources(MemoryJournal({"published": []}), now)
+    sources = editorial.collect_sources({"published": []}, now)
     news = [source for source in sources if source["kind"] == "news"]
     assert len(news) == 5
     assert all(source["url"].startswith("https://mistral.ai/news/launch-") for source in news)
@@ -373,7 +349,7 @@ def editor_source(monkeypatch, settings_override):
     a full approval, for the real Draft and review calls."""
     from types import SimpleNamespace
     settings_override(CONTENT_LANG_PRIMARY="en")
-    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text, submitted=(): False)
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
     source = dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
                   publisher="Hugging Face", body=" ".join(EVIDENCE), kind="knowledge", published_at="")
     draft = dict(source_id="0", text="Your model expects a particular conversation format. Check its chat template before changing your prompts; the wrapper around your words matters too.",
@@ -475,18 +451,6 @@ def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, setti
     assert ok is approved
 
 
-def test_account_preference_guides_drafting_but_not_the_independent_review(editor, monkeypatch):
-    from dataclasses import replace
-    from src.core import account
-
-    loaded = account.current()
-    monkeypatch.setattr(account, "current", lambda: replace(loaded, perspective="Prefer supplied ecosystem evidence."))
-    draft_and_review(editor)
-    draft_prompt = last_call(editor, "EDITORIAL_DRAFT").prompt
-    assert "Account perspective (a preference, never factual evidence): Prefer supplied ecosystem evidence." in draft_prompt
-    assert "Prefer supplied ecosystem evidence." not in last_call(editor, "EDITORIAL_REVIEW").prompt
-
-
 def test_the_draft_prompt_opens_on_the_one_voice(settings_override, editor):
     """Issue #192: an Original gets the persona from the Voice block alone,
     under the configured handle."""
@@ -498,9 +462,6 @@ def test_the_draft_prompt_opens_on_the_one_voice(settings_override, editor):
     assert prompt.startswith(voice + "\n")
     assert "VOICE (NON-NEGOTIABLE): you are @SomeOtherBot\n" in voice
     assert "theaishrink" not in prompt[len(voice):].lower()
-    assert "Start with the concrete point" in prompt
-    assert "specific dry wit" in prompt
-    assert "never superiority claims or a joke with fake facts" in prompt
 
 
 def test_the_text_limit_moves_the_schema_the_prompt_and_the_check(monkeypatch, editor):
@@ -578,18 +539,17 @@ def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
     xml = f"<rss><channel>{items}</channel></rss>"
     monkeypatch.setattr(editorial, "_fetch", lambda url: xml if url == feed else
                         "<article>" + "A useful AI model update with sourced details. " * 10 + "</article>")
-    sources = editorial.collect_sources(MemoryJournal(), now)
+    sources = editorial.collect_sources({}, now)
     assert [s["url"] for s in sources] == ["https://openai.com/fresh"]
 
 
 def test_a_spent_slot_does_not_hold_the_overlapping_next_one():
     """09:30 and 10:00 overlap: a published or spent 09:30 frees 10:00."""
     at = datetime(2026, 9, 20, 10, 5, tzinfo=TORONTO)
-    due = lambda state: editorial.due_slot(at, MemoryJournal(state))[0]
-    assert due({}) == "09:30"
-    assert due({"date": "2026-09-20", "slots": {"09:30": "published"}}) == "10:00"
-    assert due({"date": "2026-09-20", "attempts": {"09:30": 3}}) == "10:00"
-    assert due({"date": "2026-09-19", "attempts": {"09:30": 3}}) == "09:30"
+    assert editorial.due_slot(at, {})[0] == "09:30"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "slots": {"09:30": "published"}})[0] == "10:00"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "attempts": {"09:30": 3}})[0] == "10:00"
+    assert editorial.due_slot(at, {"date": "2026-09-19", "attempts": {"09:30": 3}})[0] == "09:30"
 
 
 def test_trend_slots_sit_in_the_grid():
@@ -600,37 +560,31 @@ def test_trend_slots_sit_in_the_grid():
 
 def test_startup_window_opens_on_every_waking_start():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    empty = MemoryJournal()
-    assert editorial.startup_slot(at(11, 10), empty) is None
+    assert editorial.startup_slot(at(11, 10), {}) is None
     editorial.open_startup_window(at(11, 10))
     key = editorial.startup_key()
     assert key == "startup@11:10:00"
-    assert editorial.startup_slot(at(11, 20), empty) == (key, account.current().editorial.trend_angle)
-    assert editorial.startup_slot(at(11, 55), empty) is None
-    pending = MemoryJournal({"date": "2026-09-20", "slots": {key: "pending"}})
-    assert editorial.startup_slot(at(11, 20), pending) is None
-    spent = MemoryJournal({"date": "2026-09-20", "attempts": {key: 3}})
-    assert editorial.startup_slot(at(11, 20), spent) is None
+    assert editorial.startup_slot(at(11, 20), {}) == (key, account.current().editorial.trend_angle)
+    assert editorial.startup_slot(at(11, 55), {}) is None
+    assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "slots": {key: "pending"}}) is None
+    assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "attempts": {key: 3}}) is None
     # A restart the same day opens a fresh window, even after a published one.
     editorial.open_startup_window(at(11, 30))
-    done = MemoryJournal({"date": "2026-09-20", "slots": {key: "published"}})
+    done = {"date": "2026-09-20", "slots": {key: "published"}}
     assert editorial.startup_slot(at(11, 31), done)[0] == "startup@11:30:00"
     # Nothing overnight: the watchdog relaunches at night, and a 04:20 start
     # must not publish at 04:30.
     editorial.open_startup_window(at(4, 20))
     assert editorial.startup_key() is None
-    assert editorial.startup_slot(at(4, 35), empty) is None
-    assert editorial.due_slot(at(4, 35), empty) is None
+    assert editorial.startup_slot(at(4, 35), {}) is None
+    assert editorial.next_slot(at(4, 35), {}) is None
 
 
-def test_startup_post_goes_before_an_open_slot(monkeypatch, trend_fixture):
-    from src.x import twitter_client as tc
-    monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: True)
+def test_startup_post_goes_before_an_open_slot():
     at = datetime(2026, 9, 20, 10, 20, tzinfo=TORONTO)
-    clock(monkeypatch, at)
-    assert editorial.due_slot(at, MemoryJournal())[0] == "10:00"
+    assert editorial.next_slot(at, {})[0] == "10:00"
     editorial.open_startup_window(at)
-    assert editorial.run_editorial_cycle()["slot"] == "startup@10:20:00"
+    assert editorial.next_slot(at, {})[0] == "startup@10:20:00"
 
 
 TRENDING = [dict(text=f"AI model story {i}", likes=100, views=1000, age_minutes=60,
@@ -655,7 +609,7 @@ def trend_fixture(monkeypatch, draft_fixture):
     return calls
 
 
-def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture, memory_journal):
+def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture):
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
@@ -665,8 +619,8 @@ def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture, me
     assert len(posted) == 1
     assert trend_fixture["sources"] == [True]
     assert trend_fixture["drafts"][0][4] == TRENDING
-    assert saved(memory_journal)["slots"]["startup@11:10:00"] == "published"
-    assert saved(memory_journal)["pending_sources"] == {}
+    assert editorial._read_state()["slots"]["startup@11:10:00"] == "published"
+    assert editorial._read_state()["pending_sources"] == {}
     # Same process: the window is spent.
     assert editorial.run_editorial_cycle() is None
     assert len(posted) == 1
@@ -677,25 +631,24 @@ def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture, me
     assert len(posted) == 2
 
 
-def test_trend_slot_without_enough_trending_posts_spends_no_attempt(monkeypatch, trend_fixture,
-                                                                    memory_journal):
+def test_trend_slot_without_enough_trending_posts_spends_no_attempt(monkeypatch, trend_fixture):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("posted without a trend"))
     clock(monkeypatch, datetime(2026, 9, 20, 13, 5, tzinfo=TORONTO))
     monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: TRENDING[:2])
     assert editorial.run_editorial_cycle() is None
-    assert not saved(memory_journal).get("attempts", {}).get("13:00")
+    assert not editorial._read_state().get("attempts", {}).get("13:00")
     assert not trend_fixture["drafts"]
 
 
-def test_trend_slot_drafts_from_news_only(monkeypatch, trend_fixture, memory_journal):
+def test_trend_slot_drafts_from_news_only(monkeypatch, trend_fixture):
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
     clock(monkeypatch, datetime(2026, 9, 20, 13, 5, tzinfo=TORONTO))
     assert editorial.run_editorial_cycle()["approved"]
     assert trend_fixture["sources"] == [True]
-    assert saved(memory_journal)["slots"]["13:00"] == "published"
+    assert editorial._read_state()["slots"]["13:00"] == "published"
 
 
 def test_trend_review_needs_news_no_mention_and_editor_trend_approval(draft_fixture):
@@ -722,40 +675,39 @@ def test_a_restart_after_an_ambiguous_submission_skips_its_source(monkeypatch):
            "<pubDate>2026-09-20T10:00:00-04:00</pubDate></item></channel></rss>")
     monkeypatch.setattr(editorial, "_fetch", lambda url: xml if url == feed else
                         "<article>" + "A useful AI model update with sourced details. " * 10 + "</article>")
-    assert editorial.collect_sources(MemoryJournal(), now)
+    assert editorial.collect_sources({}, now)
     state = {"date": "2026-09-20", "slots": {"startup@11:10:00": "pending"},
              "pending_sources": {"2026-09-20/startup@11:10:00": dict(
                  url="https://openai.com/launch", text="An AI launch post",
                  ts="2026-09-20T11:10:10-04:00")}}
-    assert editorial.collect_sources(MemoryJournal(state), now) == []
+    assert editorial.collect_sources(state, now) == []
 
 
-def test_pending_source_is_released_only_when_nothing_was_sent(monkeypatch, draft_fixture, memory_journal):
+def test_pending_source_is_released_only_when_nothing_was_sent(monkeypatch, draft_fixture):
     from src.x import twitter_client as tc
     url = draft_fixture[1]["url"]
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.FAILED)
     editorial.run_editorial_cycle()
-    assert saved(memory_journal)["pending_sources"] == {}
+    assert editorial._read_state()["pending_sources"] == {}
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.UNCONFIRMED)
     editorial.run_editorial_cycle()
     pending = {"2026-09-20/07:15": dict(url=url, text=draft_fixture[0]["text"],
                                         ts="2026-09-20T07:30:00-04:00")}
-    assert saved(memory_journal)["pending_sources"] == pending
+    assert editorial._read_state()["pending_sources"] == pending
     # Kept across the day reset, and not overwritten by tomorrow's 07:15:
     # the post may be live.
     clock(monkeypatch, datetime(2026, 9, 21, 7, 30, tzinfo=TORONTO))
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.FAILED)
     seen = []
     source = draft_fixture[1]
-    monkeypatch.setattr(editorial, "collect_sources", lambda journal, *a, **k: seen.append(
-        journal.pending_submission("2026-09-20/07:15")) or [source])
+    monkeypatch.setattr(editorial, "collect_sources",
+                        lambda state, *a, **k: seen.append(dict(state.get("pending_sources", {}))) or [source])
     editorial.run_editorial_cycle()
-    assert seen == [slot_journal.submission_text(draft_fixture[0]["text"], url)]
-    assert saved(memory_journal)["pending_sources"] == pending
+    assert seen == [pending]
+    assert editorial._read_state()["pending_sources"] == pending
 
 
-def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, trend_fixture,
-                                                                  memory_journal):
+def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, trend_fixture):
     """A restart at 05:00 with no usable trend must not hide the 05:00 Slot."""
     from src.x import twitter_client as tc
     posted = []
@@ -764,7 +716,7 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
     editorial.open_startup_window()
     monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: [])
     assert editorial.run_editorial_cycle()["slot"] == "05:00"
-    assert saved(memory_journal)["slots"] == {"05:00": "published"}
+    assert editorial._read_state()["slots"] == {"05:00": "published"}
     assert trend_fixture["sources"] == [False]
     assert len(posted) == 1
 
@@ -773,12 +725,12 @@ def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     editorial.open_startup_window(at(23, 10))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(23, 29), MemoryJournal())[0] == key
+    assert editorial.startup_slot(at(23, 29), {})[0] == key
     assert not editorial._in_window(key, at(23, 30))
-    assert editorial.startup_slot(at(23, 30), MemoryJournal()) is None
+    assert editorial.startup_slot(at(23, 30), {}) is None
 
 
-def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture, memory_journal):
+def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):
     """At 10:05, 09:30 yields no Draft: 10:00 gets its pass at once, and a
     pass with two Drafts available still submits once."""
     from src.x import twitter_client as tc
@@ -789,8 +741,8 @@ def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend
     monkeypatch.setattr(editorial, "draft_post",
                         lambda slot, *a: {} if slot.clock == "09:30" else draft(slot, *a))
     assert editorial.run_editorial_cycle()["slot"] == "10:00"
-    assert saved(memory_journal)["slots"] == {"10:00": "published"}
-    assert not saved(memory_journal)["attempts"].get("09:30")
+    assert editorial._read_state()["slots"] == {"10:00": "published"}
+    assert not editorial._read_state()["attempts"].get("09:30")
     monkeypatch.setattr(editorial, "draft_post", draft)
     clock(monkeypatch, datetime(2026, 9, 21, 10, 5, tzinfo=TORONTO))
     assert editorial.run_editorial_cycle()["slot"] == "09:30"
@@ -843,76 +795,33 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
         _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 4, 30, tzinfo=TORONTO)]))
 
 
-@pytest.fixture
-def live_post(monkeypatch, memory_ledger):
-    """The real post_tweet on a memory page where every step succeeds,
-    over an in-memory ledger."""
-    from src.x import page_session
-    monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(page_session, "BROWSER", WritePage())
-    return memory_ledger
-
-
-def test_a_crash_between_the_ledger_row_and_the_confirmation_counts_once(monkeypatch, draft_fixture,
-                                                                         live_post, memory_journal):
-    """The post shipped and its ledger row was written, then the process
-    died before the Slot journal confirmed it: the Slot stays pending, and
-    its row names it, so it counts once, not twice."""
-    from src.editorial.slot_journal import SlotJournal
-    # post_tweet reads the file's journal itself: it must see the cycle's
-    # reservation.
-    monkeypatch.setattr(slot_journal, "FileJournal", lambda: memory_journal)
-    def crash(*a, **k):
-        raise RuntimeError("killed before the confirmation")
-    monkeypatch.setattr(SlotJournal, "confirm", crash)
-    with pytest.raises(RuntimeError):
-        editorial.run_editorial_cycle()
-    assert saved(memory_journal)["slots"] == {"07:15": "pending"}
-    assert live_post.count(editorial.action_guard.POST, datetime(2026, 9, 20, tzinfo=TORONTO).date()) == 1
-    state = saved(memory_journal)
-    state["pending_sources"].update(_pending_today(6))
-    now = datetime(2026, 9, 20, 8, tzinfo=TORONTO)
-    refusal = lambda: editorial.action_guard.original_refusal(MemoryJournal(state), now)
-    assert refusal() == ""  # 1 shipped + 6 pending
-    state["pending_sources"].update(_pending_today(7))
-    assert "(8/8)" in refusal()
-
-
-def test_a_story_left_pending_is_a_duplicate_from_another_url_after_a_restart(monkeypatch,
-                                                                             draft_fixture,
-                                                                             memory_journal):
-    """The deterministic dedup, not replaced: after an UNCONFIRMED
-    submission and a restart, the same story drawn from another article is
-    refused before the Editor is asked, and nothing reaches X."""
-    from src.guards import content_guard
-    from src.x import twitter_client as tc
-    draft, source, review = draft_fixture
-    monkeypatch.setattr(content_guard, "is_duplicate", REAL_IS_DUPLICATE)
-    submitted, labels = [], []
-    monkeypatch.setattr(tc, "post_tweet", lambda text, **k: submitted.append(text)
-                        or WriteOutcome.UNCONFIRMED)
-    monkeypatch.setattr(editorial, "_json_call", lambda prompt, label, profile: labels.append(label)
-                        or review)
-    assert editorial.run_editorial_cycle()["approved"]
-    assert saved(memory_journal)["slots"] == {"07:15": "pending"} and len(submitted) == 1
-
-    # A new process at 09:35: nothing of the last one in memory.
-    monkeypatch.setattr(content_guard, "_RECENT_NORM", [])
-    clock(monkeypatch, datetime(2026, 9, 20, 9, 35, tzinfo=TORONTO))
-    other = dict(source, url="https://huggingface.co/docs/transformers/main/chat_templating")
-    monkeypatch.setattr(editorial, "collect_sources", lambda *a, **k: [other])
-    monkeypatch.setattr(editorial, "draft_post", lambda *a: dict(
-        draft, text="Every model expects its own conversation format. Check the chat template "
-                    "before changing your prompts: the wrapper around your words matters."))
-    labels.clear()
-    audit = editorial.run_editorial_cycle()
-    assert audit["slot"] == "09:30" and not audit["approved"]
-    assert audit["reason"] == "duplicate" and audit["source_url"] == other["url"]
-    assert labels == [] and len(submitted) == 1
+def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    clock(monkeypatch, now)
+    entry = lambda ago: dict(url="https://openai.com/x", text="An AI post",
+                             ts=(now - ago).isoformat())
+    pending = {f"2026-09-20/startup@{h:02d}:00:00": entry(timedelta(hours=1)) for h in range(5, 11)}
+    # Yesterday's pending may be live, but it counts toward yesterday.
+    pending["2026-09-19/20:45"] = entry(timedelta(hours=15))
+    state = {"date": "2026-09-20", "slots": {"11:45": "published"},
+             "pending_sources": pending, "published": []}
+    memory_ledger.append(editorial.action_guard.POST, "", False, now - timedelta(minutes=30))
+    assert editorial._pending_refusal(state, now) == ""  # 1 shipped + 6 pending
+    # The operator marked 09:30 published after a check: no ledger row.
+    state["slots"]["09:30"] = "published"
+    assert "ceiling" in editorial._pending_refusal(state, now)
+    # The operator removed its pending_sources entry only.
+    state["slots"]["09:30"] = "pending"
+    assert "ceiling" in editorial._pending_refusal(state, now)
+    del state["slots"]["09:30"]
+    pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=19))
+    assert "too soon" in editorial._pending_refusal(state, now)
+    pending["2026-09-20/startup@10:00:00"] = entry(timedelta(minutes=20))
+    assert editorial._pending_refusal(state, now) == ""
 
 
 def test_a_pending_text_is_a_recent_post_for_the_next_draft_and_review(monkeypatch, draft_fixture,
-                                                                       trend_fixture, memory_journal):
+                                                                       trend_fixture):
     """A restart after an ambiguous Startup post must not tell the same
     story from another article: its text reaches the generator and the
     Editor as a recent post."""
@@ -924,7 +833,7 @@ def test_a_pending_text_is_a_recent_post_for_the_next_draft_and_review(monkeypat
     clock(monkeypatch, datetime(2026, 9, 20, 11, 10, tzinfo=TORONTO))
     editorial.open_startup_window()
     editorial.run_editorial_cycle()
-    text = saved(memory_journal)["pending_sources"]["2026-09-20/startup@11:10:00"]["text"]
+    text = editorial._read_state()["pending_sources"]["2026-09-20/startup@11:10:00"]["text"]
     clock(monkeypatch, datetime(2026, 9, 20, 11, 40, tzinfo=TORONTO))
     editorial.open_startup_window()
     editorial.run_editorial_cycle()
@@ -943,10 +852,10 @@ def test_a_full_day_of_pending_submissions_spends_no_attempt(monkeypatch, draft_
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("posted past the ceiling"))
     monkeypatch.setattr(editorial, "draft_post", lambda *a: pytest.fail("drafted past the ceiling"))
-    journal = seed_journal(monkeypatch, {"date": "2026-09-20", "slots": {}, "published": [],
-                                         "pending_sources": _pending_today(8)})
+    editorial._save_state({"date": "2026-09-20", "slots": {}, "published": [],
+                           "pending_sources": _pending_today(8)})
     assert editorial.run_editorial_cycle() is None
-    assert not saved(journal).get("attempts")
+    assert not editorial._read_state().get("attempts")
 
 
 def test_the_pending_count_is_checked_again_right_before_the_submit(monkeypatch, draft_fixture,
@@ -954,12 +863,12 @@ def test_the_pending_count_is_checked_again_right_before_the_submit(monkeypatch,
     """A post shipped while the Editor reviewed fills the last place."""
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("posted past the ceiling"))
-    journal = seed_journal(monkeypatch, {"date": "2026-09-20", "slots": {}, "published": [],
-                                         "pending_sources": _pending_today(7)})
+    editorial._save_state({"date": "2026-09-20", "slots": {}, "published": [],
+                           "pending_sources": _pending_today(7)})
     review = draft_fixture[2]
     def shipped_during_review(prompt, label, profile):
         memory_ledger.append(editorial.action_guard.POST, "", False, hours.now_local())
         return review
     monkeypatch.setattr(editorial, "_json_call", shipped_during_review)
     assert editorial.run_editorial_cycle()["approved"]
-    assert "07:15" not in saved(journal)["slots"]
+    assert "07:15" not in editorial._read_state()["slots"]

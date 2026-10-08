@@ -78,7 +78,7 @@ def _no_safari(monkeypatch):
     # The primitives live in src.x.safari; twitter_client and scraper call
     # them through the module, so this patch reaches every src.x path.
     from src.x import safari as _safari
-    for name in ("_run_applescript", "_run_js", "_paste_text", "open_url", "_close_session_tab"):
+    for name in ("_run_applescript", "_run_js", "_paste_text", "open_url"):
         _UNWALLED.setdefault(name, getattr(_safari, name))
         monkeypatch.setattr(_safari, name, _blocked)
 
@@ -218,23 +218,6 @@ def _fresh_editorial_memory(monkeypatch):
     yield
 
 
-@_pytest.fixture(autouse=True)
-def _reply_quality_external_wall(monkeypatch):
-    """New research/review seams must never download or call a real model in tests."""
-    from src.replies import reply_quality
-    from src.guards import reply_admission
-
-    def blocked(*args, **kwargs):
-        raise AssertionError("TEST TRIED EXTERNAL REPLY RESEARCH/REVIEW; fake its defining-module seam")
-    monkeypatch.setattr(reply_quality, "source_text", blocked)
-    monkeypatch.setattr(reply_quality, "run_llm", blocked)
-    monkeypatch.setattr(reply_quality, "_cache", {})
-    # Existing write tests isolate the browser sequence and other guards.
-    # New approval binding tests restore this guard via `unwalled`.
-    _UNWALLED.setdefault("judge_review", reply_admission.judge_review)
-    monkeypatch.setattr(reply_admission, "judge_review", lambda *a: reply_admission.Verdict(None))
-
-
 @_pytest.fixture
 def settings_override():
     """`settings_override(NAME=value, ...)`: the one way a test changes a
@@ -285,41 +268,23 @@ def memory_ledger(monkeypatch):
 
 
 @_pytest.fixture
-def memory_journal(monkeypatch):
-    """An in-memory Slot journal in place of editorial_state.json, for the
-    editorial cycle; kept across its passes, as the file would be."""
-    from src.editorial import slot_journal
-    memory = slot_journal.MemoryJournal()
-    monkeypatch.setattr(slot_journal, "JOURNAL", memory)
-    return memory
-
-
-@_pytest.fixture
-def memory_page(monkeypatch):
-    """A MemoryBrowser behind every page session: `memory_page.pages[url]`
-    scripts the answers of a page, a URL without one does not open."""
-    from src.x import page_session
-    browser = page_session.MemoryBrowser()
-    monkeypatch.setattr(page_session, "BROWSER", browser)
-    return browser
-
-
-@_pytest.fixture
-def like_job(monkeypatch, memory_ledger, memory_page, settings_override):
+def like_job(monkeypatch, memory_ledger, settings_override):
     """Live like_job on a scripted search page, its caps at their declared
-    defaults; the real walk and like_tweet run on the memory page, which
-    shows `state["page"]` at every search like_job may open and in the
-    front tab."""
+    defaults; the real walk and like_tweet run."""
     from src.core import settings
-    from src.x import twitter_client as tc
-    from tests.helpers import SEARCH, SearchPage, like_searches, posts_script
+    from src.x import safari, twitter_client as tc
+    from tests.helpers import SearchPage
 
     monkeypatch.setenv("DRY_RUN", "0")
     settings_override(**{name: settings.DECLARED[name].default
                          for name in ("LIKE_BOT_PER_CYCLE", "LIKE_BOT_DAILY_CAP", "LIKE_BOT_CYCLE_SECONDS")})
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    state = {"page": SearchPage([]), "ledger": memory_ledger, "browser": memory_page}
-    like_searches(memory_page, lambda js: posts_script(state["page"], js))
-    memory_page.pages[SEARCH] = lambda js: posts_script(state["page"], js)
-    memory_page.front = SEARCH
+    state = {"page": SearchPage([]), "closed": 0, "ledger": memory_ledger}
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
+
+    def close_front_tab():
+        state["closed"] += 1
+    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state

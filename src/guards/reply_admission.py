@@ -1,6 +1,6 @@
 """Reply admission: the Operator's rules a Reply must pass before it ships.
 
-Two judgements (GLOSSARY.md: Reply admission):
+Two judgements (CONTEXT.md: Reply admission):
 
 - `judge_parent(url)` looks at the post being answered only. Jobs call it
   before paying for a generation.
@@ -19,7 +19,6 @@ raises `StateUnreadable`.
 """
 import re
 from dataclasses import dataclass
-from datetime import timedelta
 from enum import Enum
 
 from . import (
@@ -34,52 +33,16 @@ from ..x import x_urls
 from ..core.logger import log
 
 
-# The end of a sentence, before any closing quote or bracket.
-_SENTENCE_END = re.compile(r"[.!?…][\"»')\]]*$")
-
-# Operator 2026-10-04: refuse canned agreement/pivot and lecture openers.
-# Anchored to the opening only: discussion of these words remains valid.
-_CANNED_OPENER = re.compile(
-    r"^[\s\"'«“]*(?:"
-    r"(?:fair(?:\s+(?:point|enough))?|valid\s+point|good\s+point|"
-    r"i\s+see\s+your\s+point|you\s+are\s+right|you['’]re\s+right)"
-    r"\b\s*[,.:;!]?\s*but\b|"
-    r"(?:here(?:['’]s|\s+is)\s+the\s+thing|let['’]s\s+unpack\s+(?:this|that))\b|"
-    r"(?:certes|c['’]est\s+vrai|tu\s+as\s+raison|vous\s+avez\s+raison)"
-    r"\b\s*[,.:;!]?\s*mais\b)",
-    re.IGNORECASE,
-)
-
-
-def has_canned_opener(text: str) -> bool:
-    """A narrow opening refusal; never remove a clause and change its meaning."""
-    return bool(_CANNED_OPENER.match(text or ""))
-
-
-def trim_reply(text: str) -> str | None:
-    """The single outgoing-length rule, also used before the quality review."""
-    longest = settings.get("REPLY_MAX_CHARS")
-    if len(text) <= longest:
-        return text
-    trimmed = humanizer.smart_trim(text, longest)
-    if not _SENTENCE_END.search(trimmed):
-        return None
-    log.info(f"[REPLY] over-length ({len(text)} chars): trimmed to {len(trimmed)}.")
-    return trimmed
-
-
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
     OWN_POST = "own post"
     ALREADY_REPLIED = "already Replied"
-    TOO_OLD = "post older than REPLY_MAX_AGE_MINUTES"
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     RESPECTED_ACCOUNT = "text names a Respected account"
-    UNREVIEWED = "Reply draft lacks a matching quality approval"
 
     @property
     def definitive(self) -> bool:
@@ -89,7 +52,7 @@ class Refusal(Enum):
 
 
 _DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
-                         Refusal.ALREADY_REPLIED, Refusal.TOO_OLD, Refusal.RESPECTED_ACCOUNT})
+                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
 
 
 @dataclass(frozen=True)
@@ -103,24 +66,7 @@ class Verdict:
         return self.refusal is None
 
 
-@dataclass(frozen=True)
-class ReviewedReply:
-    """Issued after quality approval; binds the reviewed draft to its parent."""
-    status_id: str
-    text: str
-
-
-def judge_review(url: str, draft: str, approval: ReviewedReply | None) -> Verdict:
-    """The write must carry approval for this exact parent and draft.
-    Final admission may still refuse it or apply punctuation/typo cleanup."""
-    sid = x_urls.status_id(url)
-    if (not isinstance(approval, ReviewedReply) or not sid
-            or approval.status_id != sid or approval.text != draft):
-        return Verdict(Refusal.UNREVIEWED, "review the final draft for this parent before sending")
-    return Verdict(None)
-
-
-def judge_parent(url: str, *, debate_turn: bool = False, oldest: timedelta | None = None) -> Verdict:
+def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     """May the account answer this post at all? Definitive rules first, so a
     Blocked account is dropped for good even when judged Overnight."""
     author = x_urls.author(url)
@@ -132,13 +78,6 @@ def judge_parent(url: str, *, debate_turn: bool = False, oldest: timedelta | Non
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
-    # Operator request 2026-09-29: every job answers fresh posts only. The age
-    # is read from the status ID; a post of unknown age is never fresh. The
-    # Reply source may pass a wider per-candidate limit for a rising post.
-    age, oldest = x_urls.age(url), oldest or max_age()
-    if age is None or age > oldest:
-        shown = "unknown" if age is None else f"{age.total_seconds() / 60:.0f} min"
-        return Verdict(Refusal.TOO_OLD, f"post age {shown}, over {oldest.total_seconds() / 60:.0f} min", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
     if debate_turn:
@@ -148,17 +87,11 @@ def judge_parent(url: str, *, debate_turn: bool = False, oldest: timedelta | Non
     return Verdict(None, author=author)
 
 
-def max_age() -> timedelta:
-    """The oldest post any Reply answers, REPLY_MAX_AGE_MINUTES, read at call
-    time; the Reply source caps every job's declaration at it."""
-    return timedelta(minutes=settings.get("REPLY_MAX_AGE_MINUTES"))
-
-
-def judge_reply(url: str, draft: str, *, debate_turn: bool = False, oldest: timedelta | None = None) -> Verdict:
+def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
     exact text to send. Casualize and the typo are random: call it once per
     send and ship `verdict.text`, never the draft."""
-    verdict = judge_parent(url, debate_turn=debate_turn, oldest=oldest)
+    verdict = judge_parent(url, debate_turn=debate_turn)
     if not verdict:
         return verdict
     author = verdict.author
@@ -168,12 +101,12 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False, oldest: time
 
     # Every Reply loses its dashes here, including paths that skip humanize().
     text = humanizer.strip_dashes(draft)
-    if has_canned_opener(text):
-        return Verdict(Refusal.TEXT, "canned Reply opener; answer the point directly", author)
-    trimmed = trim_reply(text)
-    if trimmed is None:
-        return Verdict(Refusal.TEXT, f"{len(text)} chars, no sentence end within {settings.get('REPLY_MAX_CHARS')}", author)
-    text = trimmed
+    if len(text) > content_guard.REPLY_MAX_CHARS:
+        # The generation is already paid for: trim on a sentence boundary
+        # rather than discard; validate below still rejects what can't be saved.
+        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
+        log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
+        text = trimmed
     text = humanizer.casualize(text)
     # The language is judged on the text as written, before the typo.
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):

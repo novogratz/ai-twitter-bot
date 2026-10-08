@@ -12,7 +12,7 @@ folder, `state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
    handles the feed sweeper harvested in `dynamic_accounts.json` (`en`/`fr`
    buckets) and `discovered_accounts.json`. Show counts per source.
 2. Follow whitelist: `accounts/theaishrink/whitelist.json` (`tiers`,
-   `seeds`), plus the handles the retired curator promoted in
+   `seeds`), plus the handles the curator promoted in
    `whitelist_discovered.json`. `follow_account`
    never follows a Stranger. With `FOLLOW_WHITELIST_ONLY` on, it follows
    outside the whitelist only a follower or an Engager, and only while

@@ -8,15 +8,10 @@ to us — that misses 90% of new followers (lurkers + likers).
 Strategy:
   - Once per ~2h, visit /<BOT_HANDLE>/followers via Safari + JS scrape.
   - Get the list of @handles currently following us.
-  - Follow back any handle we haven't followed yet through a Follow run,
-    FOLLOWBACK_CAP attempts per cycle (don't burn the daily follow budget
-    all at once). A refused pick, or one that raised, takes its place.
-  - The run skips the accounts in followed_accounts.json, whatever the
-    case, which follow_account keeps for a follow that shipped or an
-    account found already followed.
-  - A too-soon or cap-reached refusal ends the cycle's attempts. Bedtime
-    ends the cycle; any other error costs its pick and fails the cycle
-    once the picks are done.
+  - Follow back any handle we haven't followed yet, capped at FOLLOW_CAP
+    per cycle (don't burn the daily follow budget all at once).
+  - Skip the accounts in followed_accounts.json, which follow_account keeps
+    for a follow that shipped or an account found already followed.
   - The scrape reads, on the followers page only, the profile link of each
     user cell of the primary column, so suggested accounts ("Who to
     follow") and the @mentions of a bio never pass for followers. It
@@ -28,16 +23,19 @@ random alphanumerics with no vowels, length=15) and Blocked accounts, so
 they take no pick of the cycle. follow_account refuses a Blocked account
 all the same.
 """
+import json
 import random
 import re
 import time
+import traceback
 
 from ..core import config, settings
 from ..core.logger import log
+from ..core.state_store import StateUnreadable
 from ..guards import follow_policy
 from ..guards.reply_admission import is_blocked_account
-from ..x import page_session
-from .follow_run import FollowRun
+from ..x import safari
+from ..x.twitter_client import follow_account
 
 
 def _looks_like_real_handle(handle: str) -> bool:
@@ -58,10 +56,10 @@ def _looks_like_real_handle(handle: str) -> bool:
     return True
 
 
-def _scrape_followers_list(page: page_session.Page, max_handles: int = 30) -> list[str]:
-    """Scrape the @handles of the user cells of the followers page open in
-    `page`, keep the real-looking ones and record them as followers. Nothing
-    is read or recorded unless the tab shows our own followers page."""
+def _scrape_followers_list(max_handles: int = 30) -> list[str]:
+    """Scrape the @handles of the open followers page's user cells, keep the
+    real-looking ones and record them as followers. Nothing is read or
+    recorded unless the tab shows our own followers page."""
     js_code = """
     (function() {
         var handles = [];
@@ -86,15 +84,19 @@ def _scrape_followers_list(page: page_session.Page, max_handles: int = 30) -> li
     })()
     """.replace("MAX", str(max_handles * 2))
 
-    answer = page.read_json(js_code, 30, activate=True)
-    if not isinstance(answer, dict):
+    raw = safari._run_js(js_code, 30, log_prefix="[FOLLOWBACK]", activate=True)
+    try:
+        page = json.loads(raw or "null")
+    except ValueError:
         return []
-    path = str(answer.get("path") or "").rstrip("/").lower()
+    if not isinstance(page, dict):
+        return []
+    path = str(page.get("path") or "").rstrip("/").lower()
     if path != f"/{config.BOT_HANDLE}/followers".lower():
         log.info(f"[FOLLOWBACK] Not on our followers page ({path or 'no page'}); nothing read.")
         return []
     handles = []
-    for h in answer.get("handles") or []:
+    for h in page.get("handles") or []:
         h = str(h)
         if h.lower() == config.BOT_HANDLE.lower():
             continue
@@ -109,19 +111,20 @@ def _scrape_followers_list(page: page_session.Page, max_handles: int = 30) -> li
 
 
 def run_followback_cycle():
-    """Visit the Account's followers page and follow back fresh ones. A
-    followers page that does not open raises PageNotOpened: the cycle
-    fails and follows no one."""
-    run = FollowRun("FOLLOWBACK")
+    """Visit the Account's followers page and follow back fresh ones."""
+    followed = follow_policy.followed()
 
-    with page_session.session("FOLLOWBACK") as page:
+    with safari._safari_lock:
         url = f"https://x.com/{config.BOT_HANDLE}/followers"
         log.info(f"[FOLLOWBACK] Opening {url}")
-        page.open(url, settle_s=8)
+        safari.open_url(url)
+        time.sleep(8)
         # Scroll twice to load 30-50 followers.
-        page.scroll(2)
+        safari._scroll_page()
+        safari._scroll_page()
 
-        candidates = _scrape_followers_list(page, max_handles=50)
+        candidates = _scrape_followers_list(max_handles=50)
+        safari.close_front_tab()
 
     if not candidates:
         log.info("[FOLLOWBACK] No candidates scraped.")
@@ -129,7 +132,7 @@ def run_followback_cycle():
 
     log.info(f"[FOLLOWBACK] Scraped {len(candidates)} follower handles. Filtering.")
 
-    fresh = run.fresh(candidates)
+    fresh = [h for h in candidates if h not in followed]
 
     if not fresh:
         log.info("[FOLLOWBACK] No fresh follow-back candidates after filtering.")
@@ -142,14 +145,29 @@ def run_followback_cycle():
 
     shipped = 0
     for h in pick:
-        result = run.follow(h)
-        if result is None:
-            continue
-        if result.is_budget_refusal:
-            log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
-            break
-        shipped += bool(result)
-        time.sleep(random.randint(3, 6))
+        try:
+            result = follow_account(h)
+            if result.is_budget_refusal:
+                log.info(f"[FOLLOWBACK] Follow budget: {result.value}; ending cycle.")
+                break
+            shipped += bool(result)
+            time.sleep(random.randint(3, 6))
+        except StateUnreadable:
+            raise  # a guarded file stops the job, not one pick at a time
+        except Exception:
+            log.info(f"[FOLLOWBACK] Follow @{h} failed:")
+            traceback.print_exc()
 
     log.info(f"[FOLLOWBACK] Cycle done: {shipped} followed back.")
-    run.raise_failure()
+
+
+def safe_run_followback_cycle():
+    """Wrapper that catches errors so the scheduler keeps running."""
+    from ..core import health
+    try:
+        run_followback_cycle()
+        health.record_success("followback")
+    except Exception:
+        log.info("[FOLLOWBACK] Error during follow-back cycle:")
+        traceback.print_exc()
+        health.record_failure("followback")

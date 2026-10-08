@@ -1,13 +1,12 @@
 """src/x/safari: bedtime checks at the browser lock and before AppleScript,
-save the page session's tab close, the page JavaScript runner."""
-import subprocess
+the page JavaScript runner."""
 from datetime import datetime
 from types import SimpleNamespace
 
 import pytest
 
 from src.guards import active_hours as hours
-from tests.helpers import TORONTO, clock, stop_requested
+from tests.helpers import TORONTO, clock
 
 
 def test_browser_wait_rechecks_bedtime(monkeypatch):
@@ -97,32 +96,6 @@ def test_run_applescript_counts_a_timeout_as_a_failed_attempt(monkeypatch, unwal
     assert seen == [20]
 
 
-@pytest.mark.parametrize("failure", [
-    FileNotFoundError(2, "No such file or directory", "osascript"),
-    BlockingIOError(35, "Resource temporarily unavailable"),
-], ids=["missing", "fork"])
-def test_an_osascript_that_does_not_start_is_a_failed_run(monkeypatch, unwalled, caplog, failure):
-    """#298 review: an `OSError` at the osascript launch is a failed run,
-    as `_run_js` and the tab close already treated it: keys and the paste
-    return False, logged, and never raise to the write."""
-    from src.x import safari
-    for name in ("_run_applescript", "_paste_text"):
-        monkeypatch.setattr(safari, name, unwalled[name])
-    monkeypatch.setattr(safari, "require_active", lambda: None)
-    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
-    tries = []
-
-    def fail(argv, **kwargs):
-        tries.append(argv)
-        raise failure
-    monkeypatch.setattr(safari.subprocess, "run", fail)
-
-    assert safari._run_applescript(safari.FIRST_TWEET_KEYS, retries=2) is False
-    assert len(tries) == 2
-    assert safari._paste_text("hello") is False
-    assert "AppleScript did not start" in caplog.text
-
-
 def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
     """`webbrowser.open` followed the default browser: with Firefox as the
     default, pages opened in Firefox while `_run_js` read Safari's front tab.
@@ -140,18 +113,17 @@ def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
 
 @pytest.mark.parametrize("primitive, bound, args, failed", [
     ("open_url", "OPEN_TIMEOUT_S", ("https://x.com/home",), False),
-    ("_close_session_tab", "CLOSE_TIMEOUT_S", (), None),
+    ("close_front_tab", "CLOSE_TIMEOUT_S", (), None),
     ("_scroll_page", "SCROLL_TIMEOUT_S", (), None),
     ("_paste_text", "KEYSTROKE_TIMEOUT_S", ("hello",), False),
+    ("_navigate_to_first_tweet", "KEYSTROKE_TIMEOUT_S", (), None),
 ])
 def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, primitive, bound,
                                                        args, failed):
-    """#251: open_url, the tab close, the scroll and the paste had no
-    timeout, so a wedged osascript held the Safari lock. Past its bound the
-    child is killed, the primitive returns and the lock is free. A `sleep`
-    child stands in for the wedged osascript. The tab walk and the other
-    keys go through `Page.keys`, bounded by KEYSTROKE_TIMEOUT_S
-    (test_page_session.py)."""
+    """#251: open_url, the tab close, the scroll, the paste and the tab
+    walk had no timeout, so a wedged osascript held the Safari lock. Past
+    its bound the child is killed, the primitive returns and the lock is
+    free. A `sleep` child stands in for the wedged osascript."""
     import subprocess
     import threading
     import time
@@ -165,7 +137,6 @@ def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, pr
     monkeypatch.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
     monkeypatch.setattr(safari, "open_url", unwalled["open_url"])
     monkeypatch.setattr(safari, "_paste_text", unwalled["_paste_text"])
-    monkeypatch.setattr(safari, "_close_session_tab", unwalled["_close_session_tab"])
     monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
 
     started = time.monotonic()
@@ -184,88 +155,3 @@ def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, pr
     other.start()
     other.join()
     assert free == [True]
-
-
-def _asleep(monkeypatch, why):
-    if why == "bedtime":
-        clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
-    else:
-        stop_requested(monkeypatch)
-
-
-@pytest.mark.parametrize("why", ["bedtime", "stop"])
-def test_asleep_only_the_session_tab_close_runs(monkeypatch, unwalled, why):
-    """#300: after bedtime or a stop every AppleScript run is refused before
-    osascript starts, save the close of the tab a page session opened,
-    which is local and sends nothing to X."""
-    from src.x import safari
-    for name in ("_run_applescript", "_run_js", "_paste_text", "open_url", "_close_session_tab"):
-        monkeypatch.setattr(safari, name, unwalled[name])
-    runs = []
-    monkeypatch.setattr(safari.subprocess, "run",
-                        lambda argv, **k: runs.append((argv[-1], k.get("timeout"))))
-    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
-    _asleep(monkeypatch, why)
-
-    for primitive in (lambda: safari.open_url("https://x.com/home"),
-                      lambda: safari._run_js("return 1"),
-                      lambda: safari._run_applescript(safari.FIRST_TWEET_KEYS),
-                      lambda: safari._paste_text("hello"),
-                      safari._scroll_page):
-        with pytest.raises(hours.OutsideActiveHours):
-            primitive()
-    assert runs == []
-
-    safari._close_session_tab()
-    [(script, timeout)] = runs
-    assert "close current tab" in script
-    assert timeout == safari.CLOSE_TIMEOUT_S
-
-
-@pytest.mark.parametrize("failure", [
-    subprocess.CalledProcessError(1, "osascript", stderr="no window"),
-    subprocess.TimeoutExpired("osascript", 5),
-    FileNotFoundError("osascript"),
-    PermissionError("osascript"),
-], ids=["exit_status", "timeout", "missing", "denied"])
-def test_a_failed_session_tab_close_never_raises(monkeypatch, unwalled, failure):
-    """#300: `confirmed_write.run` no longer guards the close, so a write
-    that shipped keeps its outcome only if a failed close never raises."""
-    from src.x import safari
-    monkeypatch.setattr(safari, "_close_session_tab", unwalled["_close_session_tab"])
-
-    def fail(*args, **kwargs):
-        raise failure
-    monkeypatch.setattr(safari.subprocess, "run", fail)
-
-    assert safari._close_session_tab() is None
-
-
-def test_only_the_session_tab_close_skips_the_waking_hours_check():
-    """#300: in safari.py, the functions that start osascript themselves are
-    `_run_applescript` and `_run_js`, which check waking hours first, and
-    `_close_session_tab`, which alone does not. Every other primitive runs
-    through the first two."""
-    import ast
-    from pathlib import Path
-    from src.x import safari
-
-    tree = ast.parse(Path(safari.__file__).read_text())
-
-    def calls(fn, name):
-        return [n for n in ast.walk(fn) if isinstance(n, ast.Call)
-                and (getattr(n.func, "id", None) == name or getattr(n.func, "attr", None) == name)]
-
-    spawning = {fn.name: fn for fn in ast.walk(tree)
-                if isinstance(fn, ast.FunctionDef)
-                and any(isinstance(c.func, ast.Attribute) and getattr(c.func.value, "id", None)
-                        == "subprocess" for c in calls(fn, "run"))}
-    assert set(spawning) == {"_run_applescript", "_run_js", "_close_session_tab"}
-    assert calls(spawning["_run_applescript"], "require_active")
-    assert calls(spawning["_run_js"], "require_active")
-    assert not calls(spawning["_close_session_tab"], "require_active")
-    spawners = {"Popen", "check_output", "check_call", "call", "system", "spawn", "execv"}
-    assert not [n.func.attr for n in ast.walk(tree) if isinstance(n, ast.Call)
-                and isinstance(n.func, ast.Attribute) and n.func.attr in spawners], (
-        "safari.py starts osascript through subprocess.run only")
-    assert not calls(tree, "_close_session_tab"), "safari.py never calls the unchecked close itself"
