@@ -2,10 +2,8 @@
 
 Issue #247 pins the routing measured on main before the call surfaces:
 with AI_CLI, REPLY_LLM_PROVIDER and PROFILE_LLM_PROVIDER all apart, each job
-runs its model setting on the provider shown, with its CLI options. Since
-#248 (the Operator, 2026-09-28) no Reply runs on AI_CLI while
-REPLY_LLM_PROVIDER names a provider: debate, replyback, the VIP scan and a
-Relation whose CLI is missing follow it too.
+runs its model setting on the provider shown, with its CLI options. Debate,
+replyback and the VIP scan still run on AI_CLI (#248, the Operator's call).
 """
 import re
 from pathlib import Path
@@ -18,9 +16,10 @@ EVIDENCE = ("Chat templates convert conversations into the format expected by th
             "A mismatched template quietly degrades the answers of an instruction tuned model.",
             "The tokenizer applies the chat template before generation starts in the pipeline.")
 DEFAULT_TIMEOUT = 120
-# The CLI options a call hands its adapter: output_json, allowed_tools and
-# timeout. The CLI adapter picks the cwd itself (#249).
-DEFAULTS = (True, None, DEFAULT_TIMEOUT)
+# The CLI options a call hands its adapter: output_json, allowed_tools,
+# timeout and cwd.
+DEFAULTS = (True, None, DEFAULT_TIMEOUT, None)
+NEUTRAL_CWD = (True, None, DEFAULT_TIMEOUT, "/tmp")
 
 
 def _reply(job, author="someone"):
@@ -86,7 +85,7 @@ def _draft():
 
 def _review(monkeypatch):
     from src.editorial import editorial_bot as editorial
-    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text, submitted=(): False)
+    monkeypatch.setattr(editorial.content_guard, "is_duplicate", lambda text: False)
     draft = dict(source_id="0", text="Your model expects a particular conversation format. Check its chat "
                                      "template before changing your prompts; the wrapper around your words "
                                      "matters too.",
@@ -102,19 +101,19 @@ def _uninstalled(monkeypatch, cli):
 
 # job: (run it, model setting, provider called, CLI options)
 ROUTES = {
-    "search": (lambda mp: _search(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "search, VIP author": (lambda mp: _search(vip=True), "PRIORITY_REPLY_MODEL", "gemini", DEFAULTS),
-    "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "gemini", DEFAULTS),
+    "search": (lambda mp: _search(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
+    "search, VIP author": (lambda mp: _search(vip=True), "PRIORITY_REPLY_MODEL", "gemini", NEUTRAL_CWD),
+    "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
+    "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
+    "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
+    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", DEFAULTS),
     "Relation, CLI installed": (lambda mp: _vip_scan("Graphseo"), "PRIORITY_REPLY_MODEL", "claude",
-                                (False, None, 60)),
+                                (False, None, 60, None)),
     "Relation, CLI missing": (lambda mp: _uninstalled(mp, "claude") or _vip_scan("Graphseo"),
-                              "PRIORITY_REPLY_MODEL", "gemini", (False, None, 60)),
-    "debate": (lambda mp: _debate(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "gemini", DEFAULTS),
-    "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT)),
+                              "PRIORITY_REPLY_MODEL", "codex", (False, None, 60, None)),
+    "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", DEFAULTS),
+    "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", DEFAULTS),
+    "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT, "/tmp")),
     "Draft": (lambda mp: _draft(), "NEWS_MODEL", "claude", DEFAULTS),
     "review": (_review, "NEWS_MODEL", "claude", DEFAULTS),
 }
@@ -132,42 +131,7 @@ def test_each_job_runs_its_model_setting_on_its_provider(providers, job):
 
     [(called, request)] = providers.calls
     assert (called, request.model) == (provider, model.lower())
-    assert (request.output_json, request.allowed_tools, request.timeout) == options
-
-
-REPLIES = [job for job in ROUTES if job not in ("Draft", "review", "Relation, CLI installed")]
-
-
-@pytest.mark.parametrize("job", REPLIES)
-def test_a_blank_reply_provider_leaves_every_reply_on_ai_cli(providers, job):
-    """A blank REPLY_LLM_PROVIDER means none: every Reply, a Relation whose
-    CLI is missing included, runs on AI_CLI."""
-    run, model, _, options = ROUTES[job]
-    providers.settings(AI_CLI="codex", REPLY_LLM_PROVIDER="", PROFILE_LLM_PROVIDER="claude",
-                       LLM_FALLBACK_CLI="", LLM_TIMEOUT_SECONDS=DEFAULT_TIMEOUT, CONTENT_LANG_PRIMARY="en",
-                       **{name: name.lower() for name in MODELS})
-
-    run(providers.monkeypatch)
-
-    [(called, request)] = providers.calls
-    assert (called, request.model) == ("codex", model.lower())
-    assert (request.output_json, request.allowed_tools, request.timeout) == options
-
-
-@pytest.mark.parametrize("ai_cli, reply_provider", [("codex", "gemini"), ("codex", ""), ("codex", "opencode"),
-                                                    ("opencode", ""), ("ollama", ""), ("codex", " Claude ")])
-def test_a_surface_call_names_the_provider_run_llm_calls_first(providers, ai_cli, reply_provider):
-    """The Relation warning names `SurfaceCall.primary`: it must be the
-    adapter `run_llm` starts, opencode and its reading as Ollama included."""
-    from src.core.llm_client import Surface, resolve, run_llm
-
-    providers.settings(AI_CLI=ai_cli, REPLY_LLM_PROVIDER=reply_provider, LLM_FALLBACK_CLI="")
-    call = resolve(Surface.RELATION_REPLY)
-
-    run_llm("prompt", call.model, label="primary", force_provider=call.provider)
-
-    [(called, _)] = providers.calls
-    assert called == call.primary
+    assert (request.output_json, request.allowed_tools, request.timeout, request.cwd) == options
 
 
 def test_the_jobs_read_no_model_or_provider_setting():
@@ -178,68 +142,4 @@ def test_the_jobs_read_no_model_or_provider_setting():
     found = [f"{path.relative_to(ROOT)}:{number}"
              for package in ("replies", "editorial") for path in sorted((ROOT / "src" / package).glob("*.py"))
              for number, line in enumerate(path.read_text().splitlines(), 1) if setting.search(line)]
-    assert found == []
-
-
-class _FailingCli:
-    """Stands in for subprocess.Popen: records each CLI's name and cwd,
-    then fails, so the ladder reaches its fallback."""
-
-    def __init__(self):
-        self.started = []
-
-    def __call__(self, cmd, **kwargs):
-        from types import SimpleNamespace
-        self.started.append((cmd[0], kwargs.get("cwd"), cmd))
-        return SimpleNamespace(pid=0, returncode=1, communicate=lambda timeout=None: ("", "down"))
-
-
-def _reached_instructions(folder: Path) -> list[str]:
-    """The instruction and config files a CLI started in `folder` loads,
-    walking up."""
-    names = ("CLAUDE.md", "CLAUDE.local.md", "AGENTS.md", "GEMINI.md", ".git",
-             ".claude", ".codex", ".gemini", ".opencode", "opencode.json", "opencode.jsonc")
-    return [str(parent / name) for parent in (folder, *folder.parents) for name in names
-            if (parent / name).exists()]
-
-
-# job: (run it, primary CLI); each falls back on codex.
-NEUTRAL_RUNS = {
-    "Relation": (lambda: _vip_scan("Graphseo"), "claude"),
-    "debate": (_debate, "gemini"),
-    "Draft": (_draft, "claude"),
-}
-
-
-@pytest.mark.parametrize("job", NEUTRAL_RUNS)
-def test_every_cli_runs_from_a_neutral_directory_fallback_included(monkeypatch, settings_override, job):
-    """Issue #249: run from the project, the Claude CLI loaded its CLAUDE.md
-    and git context. The Relation @Graphseo, debate and the Originals had no
-    neutral cwd; now the CLI adapter picks it for every call."""
-    from src.core import llm_client as llm
-
-    run, primary = NEUTRAL_RUNS[job]
-    popen = _FailingCli()
-    monkeypatch.setattr(llm.subprocess, "Popen", popen)
-    monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    settings_override(AI_CLI="gemini", REPLY_LLM_PROVIDER="gemini", PROFILE_LLM_PROVIDER="claude",
-                      LLM_FALLBACK_CLI="codex",
-                      LLM_FALLBACK_MODEL="", LLM_DISABLE_FALLBACK=False, CONTENT_LANG_PRIMARY="en")
-
-    run()
-
-    assert [(name, cwd) for name, cwd, _ in popen.started] == [(primary, str(llm.NEUTRAL_CWD)),
-                                                              ("codex", str(llm.NEUTRAL_CWD))]
-    neutral = llm.NEUTRAL_CWD.resolve()
-    assert neutral.is_dir() and not neutral.is_relative_to(ROOT.resolve())
-    assert _reached_instructions(neutral) == []
-    # Outside a git repository, codex exec refuses to run without this flag.
-    assert "--skip-git-repo-check" in popen.started[1][2]
-
-
-def test_no_job_hands_a_cwd_to_the_model_call():
-    """The CLI adapter alone picks the directory a provider runs from."""
-    found = [f"{path.relative_to(ROOT)}:{number}"
-             for package in ("replies", "editorial") for path in sorted((ROOT / "src" / package).glob("*.py"))
-             for number, line in enumerate(path.read_text().splitlines(), 1) if re.search(r"\bcwd\b", line)]
     assert found == []

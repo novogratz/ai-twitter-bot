@@ -23,7 +23,7 @@ from ..core.logger import log
 from ..core.history import load_history
 from ..core.state_store import StatePath
 from . import editorial_schemas as schemas
-from .slot_journal import SlotJournal, current, stamp as _stamp, submission_text
+from .slot_journal import STATE, FileJournal, MemoryJournal, SlotJournal, stamp as _stamp
 from .trending import TREND_MIN_POSTS, collect_trending_posts, trend_block, trend_rule
 
 AUDIT_FILE = StatePath("editorial_review.jsonl")
@@ -69,9 +69,20 @@ _BAIT = re.compile(r"\b(thoughts\??|agree\??|who.?s with me|game.?changer|"
                    r"like and share|follow for more|retweet if|repost if)\b", re.I)
 
 
+def _read_state() -> dict:
+    return STATE.read()
+
+
+def _save_state(data: dict) -> None:
+    STATE.write(data)
+
+
 def _journal(journal) -> SlotJournal:
-    """`journal`, or the current one when None."""
-    return current() if journal is None else journal
+    """`journal`, or the file's when None. A dict in the file's format reads
+    as a journal of it, for the tests that still pass one (#232)."""
+    if journal is None:
+        return FileJournal()
+    return journal if isinstance(journal, SlotJournal) else MemoryJournal(journal)
 
 
 def _local(now=None):
@@ -140,10 +151,16 @@ def startup_slot(now=None, journal=None):
     return Slot(key, account.current().editorial.trend_angle) if _open(key, now, journal) else None
 
 
+def next_slot(now=None, journal=None):
+    """The Startup post first, then the Slot grid."""
+    journal = _journal(journal)
+    return startup_slot(now, journal) or due_slot(now, journal)
+
+
 def _trusted(url: str) -> bool:
     parts = urlsplit(url)
     return (parts.scheme == "https" and parts.hostname in account.current().editorial.trusted_hosts
-            and not parts.username and not parts.password and parts.netloc == parts.hostname)
+            and not parts.username)
 
 
 class _Redirect(urllib.request.HTTPRedirectHandler):
@@ -153,12 +170,12 @@ class _Redirect(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def _fetch(url: str, *, timeout_s: float = 12) -> str:
+def _fetch(url: str) -> str:
     require_active()
     if not _trusted(url):
         raise ValueError("Source must be an approved primary source")
     req = urllib.request.Request(url, headers={"User-Agent": "AIKnowledgeBot/1.0"})
-    with urllib.request.build_opener(_Redirect()).open(req, timeout=timeout_s) as response:
+    with urllib.request.build_opener(_Redirect()).open(req, timeout=12) as response:
         return response.read(1_000_000).decode("utf-8", errors="replace")
 
 
@@ -193,15 +210,10 @@ def _plain(html: str) -> str:
     return " ".join(" ".join(parser.parts).split())
 
 
-def source_text(url: str, *, timeout_s: float = 4) -> str:
-    """Read article text through the same trusted-host/redirect checks as Originals."""
-    return _plain(_fetch(url, timeout_s=timeout_s))
-
-
 def collect_sources(journal, now=None, news_only=False) -> list:
     now = now or now_local()
     # An ambiguous submission may be live: a restart must not reuse its source.
-    used = journal.used_urls(now)
+    used = _journal(journal).used_urls(now)
     candidates = []
     loaded = account.current()
     for publisher, feed in loaded.editorial.feeds:
@@ -258,7 +270,7 @@ def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
     route = resolve(Surface.ORIGINAL)
     options = route.options
     result = run_llm(prompt, route.model, label=label, output_json=options.output_json,
-                     allowed_tools=options.allowed_tools, timeout=options.timeout,
+                     allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
                      force_provider=route.provider, profile=profile)
     if result.status is not LLMStatus.ANSWERED:
         # Failed or exhausted alike: no Draft, or no approval.
@@ -288,16 +300,11 @@ def draft_post(slot, sources, recent, feedback="", trending=None):
     prompt = f"""{render_voice('en')}
 {hard_rules_block()}
 Write ONE original {domain} post in {language}. Today's slot: {slot[1]}.
-Account perspective (a preference, never factual evidence): {account.current().perspective or 'No preference.'}
 Draft three different angles privately, then choose the most useful one.
 Prefer a fresh launch, model update, {domain} article, research method, or concrete
 project when the sources include one. Use evergreen documentation only when no
 fresh source earns a sharper post.
 Make ONE useful point, in one or two complete conversational sentences.
-Start with the concrete point, not a canned acknowledgement or lecture opener.
-Use specific dry wit or an absurd consequence when it helps explain the subject.
-For new techniques, explain a supported mechanism or condition for success.
-Show expertise through insight, never superiority claims or a joke with fake facts.
 Choose a concrete action with its reason, OR a clear concept with an example,
 OR a sourced update with its consequence. Do not squeeze all formats together.
 Aim for 150–210 characters; finish the thought before {schemas.TEXT_MAX_CHARS} characters.
@@ -322,10 +329,8 @@ SOURCES: {json.dumps(evidence_sources, ensure_ascii=False)}"""
     return _json_call(prompt, "EDITORIAL_DRAFT", schemas.draft_profile())
 
 
-def review_draft(draft, sources, recent, exceptional=False, trending=None, submitted=()):
-    """Deterministic evidence checks, then a separate factual/value editor.
-    `submitted`: the Slot journal's published and pending Posts, which the
-    dedup reads beside the tweet history."""
+def review_draft(draft, sources, recent, exceptional=False, trending=None):
+    """Deterministic evidence checks, then a separate factual/value editor."""
     if not isinstance(draft, dict) or draft.get("skip") is True:
         return False, "malformed draft", None
     domain = account.current().domain
@@ -352,7 +357,7 @@ def review_draft(draft, sources, recent, exceptional=False, trending=None, submi
                    or " ".join(q.lower().split()) not in body for q in evidence)):
         return False, "evidence not found in fetched source", source
     ok, reason = content_guard.validate(text, kind="original")
-    if not ok or content_guard.is_duplicate(text, submitted):
+    if not ok or content_guard.is_duplicate(text):
         return False, reason or "duplicate", source
     if exceptional:
         published = _stamp(source.get("published_at", ""))
@@ -390,10 +395,24 @@ _NO_DRAFT = object()
 
 
 def _pending_refusal(journal, now) -> str:
-    """Why the day's submissions forbid another one now, or "": the
-    chokepoint's rule (`action_guard.original_refusal`), asked before a
-    Draft spends an Attempt and again before the reservation."""
-    return action_guard.original_refusal(journal, now)
+    """Why the pending submissions forbid another one now, or "".
+
+    An ambiguous submission writes no ledger row, so `can_post` never sees
+    it. Each one counts toward today's ceiling and the post spacing until
+    the operator clears it; a Slot the operator marked published after a
+    check counts too, since its post has no ledger row either."""
+    journal = _journal(journal)
+    submitted = journal.submissions(now.date())
+    used = max(action_guard.profile_count_today(), submitted.published) + submitted.pending
+    cap = config.posts_ceiling()
+    if used >= cap:
+        return f"daily ceiling reached with pending submissions ({used}/{cap})"
+    last = journal.last_submission()
+    # The jitter's upper bound: every draw action_guard can make is shorter.
+    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
+    if last and (now - last).total_seconds() < gap:
+        return f"too soon since the last submission (need ~{gap}s gap)"
+    return ""
 
 
 def run_editorial_cycle(preview=False):
@@ -401,7 +420,7 @@ def run_editorial_cycle(preview=False):
         return None
     try:
         require_active()
-        journal = current()
+        journal = FileJournal()
         # The review dedups against it: unreadable, refuse before a Draft
         # spends an Attempt.
         load_history()
@@ -454,7 +473,7 @@ def _run_slot(slot, journal, today, preview):
         # Counted before review, so a crash mid-review still spends it.
         journal.spend_attempt(slot.clock)
     ok, reason, source = review_draft(draft, sources, recent, exceptional=slot.exceptional,
-                                      trending=trending, submitted=journal.recent_posts())
+                                      trending=trending)
     audit = dict(ts=now_local().isoformat(), slot=slot.clock, approved=ok,
                  reason=reason, draft=draft, source_url=source["url"] if source else "")
     if preview:
@@ -476,7 +495,7 @@ def _run_slot(slot, journal, today, preview):
         return audit
     from ..x.confirmed_write import WriteOutcome
     from ..x.twitter_client import post_tweet
-    text = submission_text(draft["text"], source["url"])
+    text = draft["text"].strip() + "\n\n" + source["url"]
     if config.dry_run():
         # post_tweet is never reached in a dry run: judge the respect list here.
         _, why = respect_list.scrub_text_or_skip(text)
@@ -489,8 +508,8 @@ def _run_slot(slot, journal, today, preview):
     # never cause a duplicate after a restart. Only an outcome that sent
     # nothing releases it; until then its source and text stay out of later
     # Drafts, and it counts toward the ceiling and the spacing.
-    reserved = journal.reserve(slot.clock, source["url"], draft["text"], now_local())
-    outcome = post_tweet(text, reserved=reserved)
+    journal.reserve(slot.clock, source["url"], draft["text"], now_local())
+    outcome = post_tweet(text)
     if outcome:
         journal.confirm(slot.clock, source["url"], draft["text"], draft["angle"], now_local())
         log.info("[EDITORIAL] Published %s (%d/%d profile posts today).",

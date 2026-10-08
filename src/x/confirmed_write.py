@@ -1,19 +1,20 @@
 """The confirmed-write sequence shared by every write chokepoint of
-`twitter_client`: admission, dry run, page session, page steps, ledger rows
+`twitter_client`: admission, dry run, Safari lock, page steps, ledger rows
 for a confirmed write only, tab cleanup. A chokepoint supplies its guards,
 its page steps and its ledger rows; the order lives here once.
 
 A guard returns None to go on, or the outcome that ends the write. `steps`
-receives the session's page, opens it first thing and returns the outcome
-of the write; a page that does not open ends it in FAILED. Ledger rows are
-written only when that outcome is truthy, which only a shipped write is."""
+opens the page first thing and returns the outcome of the write; ledger
+rows are written only when that outcome is truthy, which only a shipped
+write is."""
 from enum import Enum
 from typing import Callable, Sequence, TypeVar
 
 from ..core import config
 from ..core.logger import log
 from ..guards import action_guard
-from . import page_session
+from ..guards.active_hours import OutsideActiveHours
+from . import safari
 
 
 class WriteOutcome(Enum):
@@ -54,22 +55,17 @@ _FAILURES = ("FAILED", "UNCONFIRMED")
 
 
 def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
-        steps: Callable[[page_session.Page], O], before_lock: Guards[O] = (),
-        under_lock: Guards[O] = (), after_record: Callable[[], None] | None = None) -> O:
+        steps: Callable[[], O], before_lock: Guards[O] = (), under_lock: Guards[O] = (),
+        after_record: Callable[[], None] | None = None, close_tab: bool = True) -> O:
     """Run one write of `outcomes`, in this order:
 
     1. `before_lock`, in order.
-    2. Take a page session named `tag`, which holds the Safari lock.
-    3. `under_lock`, in order, before any page opens.
-    4. `steps(page)`: the page steps, opening the page first. A page that
-       does not open (`PageNotOpened`) is FAILED.
+    2. Take the Safari lock, released on every path.
+    3. `under_lock`, in order.
+    4. `steps`: the page steps, opening the page first.
     5. On a truthy outcome only: `rows()` in the ledger, then `after_record`.
-    6. The session closes the tab `steps` opened, on every path, a raising
-       step, bedtime and a stop included, and releases the lock. The close
-       raises no stop, so it never hides a shipped write; a stop raised by
-       the steps or `after_record` propagates once the tab is closed. A
-       write nested in another session, a like on a walk's page, opens
-       nothing and closes nothing.
+    6. With `close_tab`, close the tab `steps` opened. A stop raised there
+       never hides a shipped write.
 
     `DRY_RUN_EXIT` sits exactly once in `before_lock` or `under_lock`. When
     DRY_RUN is on there, the write logs "[TAG][DRY_RUN] would <would()>",
@@ -80,18 +76,21 @@ def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
     outcome = _admit(tag, outcomes, would, rows, before_lock)
     if outcome is not None:
         return outcome
-    with page_session.session(tag) as page:
+    with safari._safari_lock:
         outcome = _admit(tag, outcomes, would, rows, under_lock)
         if outcome is not None:
             return outcome
-        try:
-            outcome = steps(page)
-        except page_session.PageNotOpened:
-            outcome = outcomes["FAILED"]
+        outcome = steps()
         if outcome:
             _record(rows())
             if after_record is not None:
                 after_record()
+        if close_tab:
+            try:
+                safari.close_front_tab()
+            except OutsideActiveHours:
+                if not outcome:
+                    raise
     return outcome if outcome else _stopped(tag, outcome)
 
 

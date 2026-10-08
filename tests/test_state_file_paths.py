@@ -11,8 +11,8 @@ def test_state_files_resolve_under_the_accounts_state_folder(monkeypatch, unwall
     account jobs under src/replies and src/account (#116). The state store
     resolves every JSON state file from one root (#159), which is
     state/<BOT_ACCOUNT>/ since #207, the files outside the store too."""
-    from src.account import (engage_bot, follow_engagers_bot, follower_tracker_bot, like_bot,
-                             pin_bot)
+    from src.account import (account_curator, engage_bot, follow_engagers_bot,
+                             follower_tracker_bot, like_bot, pin_bot)
     from src.core import (config, dynamic_strategy, evolution_store, health, history,
                           llm_client, personality_store, state_store)
     from src.editorial import editorial_bot, reach_report
@@ -27,7 +27,7 @@ def test_state_files_resolve_under_the_accounts_state_folder(monkeypatch, unwall
     assert Path(real_root()) == repo / "state" / "theaishrink"
     monkeypatch.setattr(state_store, "root", real_root)
 
-    modules = (engage_bot, follow_engagers_bot, follower_tracker_bot,
+    modules = (account_curator, engage_bot, follow_engagers_bot, follower_tracker_bot,
                like_bot, pin_bot, dynamic_strategy, evolution_store, health, history,
                llm_client, personality_store, editorial_bot, reach_report,
                action_guard, follow_policy, respect_list, safari_hygiene, twitter_client)

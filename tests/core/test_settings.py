@@ -30,47 +30,15 @@ def fresh(monkeypatch, tmp_path):
     return load
 
 
-# --- .env: unknown keys are ignored, bad values stop the start -----------------
+# --- .env: unknown keys and bad values stop the start --------------------------
 
 
-def test_an_unknown_env_key_is_ignored_and_named_in_a_warning(fresh):
-    """An old `.env` still starts: the retired key is dropped, the rest
-    applies."""
-    environ = fresh("MAX_FOLLOWS_PER_DAY=10\nMAX_BREAKOUTS_PER_DAY=4\n")
-    assert settings.get("MAX_FOLLOWS_PER_DAY") == 10
-    assert environ == {"MAX_FOLLOWS_PER_DAY": "10"}, "an ignored key must not reach the environment"
-    assert settings.startup_warnings() == [
-        "MAX_BREAKOUTS_PER_DAY in .env is not a setting the engine reads: ignored, delete the line."]
-
-
-def test_a_misspelled_key_is_ignored_and_the_warning_names_the_setting(fresh):
-    """DRYRUN=1 does not turn the dry run on: the warning says which key was
-    meant."""
-    environ = fresh("DRYRUN=1\n")
-    assert "DRY_RUN" not in environ and "DRYRUN" not in environ
-    assert settings.get("DRY_RUN") is False
-    assert settings.startup_warnings() == [
-        "DRYRUN in .env is not a setting the engine reads: ignored, delete the line. Did you mean DRY_RUN?"]
-
-
-def test_a_retired_key_sharing_a_suffix_gets_no_suggestion(fresh):
-    fresh("REPOST_MAX_AGE_HOURS=6\n")
-    assert "Did you mean" not in settings.startup_warnings()[0]
-
-
-def test_an_export_line_reads_like_the_scripts_that_source_env_read_it(fresh):
-    """bot_watchdog.sh sources .env: `export DRY_RUN=1` is a dry run there,
-    so it must be one under bin/run.sh too."""
-    environ = fresh("export DRY_RUN=1\nexport  MAX_FOLLOWS_PER_DAY=3\n")
-    assert settings.get("DRY_RUN") is True and settings.get("MAX_FOLLOWS_PER_DAY") == 3
-    assert environ == {"DRY_RUN": "1", "MAX_FOLLOWS_PER_DAY": "3"}
-    assert settings.startup_warnings() == []
-
-
-def test_an_ignored_key_is_never_type_checked(fresh):
-    """A key no code reads any more starts whatever its value."""
-    fresh("DIRECT_REPLY_FEED_SCAN_LIMIT=lots\nBESTIE_HANDLE=someone\n")
-    assert [w.split()[0] for w in settings.startup_warnings()] == ["BESTIE_HANDLE", "DIRECT_REPLY_FEED_SCAN_LIMIT"]
+def test_an_unknown_env_key_stops_the_start_and_is_named(fresh):
+    environ = {}
+    with pytest.raises(settings.SettingsError) as stop:
+        fresh("MAX_FOLLOWS_PER_DAY=10\nMAX_BREAKOUTS_PER_DAY=4\n", environ)
+    assert "MAX_BREAKOUTS_PER_DAY" in str(stop.value)
+    assert environ == {}, "a refused .env must not reach the environment"
 
 
 @pytest.mark.parametrize("line, key", [
@@ -205,7 +173,6 @@ OPERATOR_BOUNDS = [
     ("DUP_TOPIC_SHARED_WORDS", "8", 3, 2),
     ("DUP_TEXT_WINDOW_HOURS", "12", 48.0, 96.0),
     ("REPLY_MIN_CHARS", "5", 25, 40),
-    ("REPLY_MAX_CHARS", "278", 160, 120),
 ]
 
 
@@ -303,24 +270,6 @@ def test_main_logs_the_bound_warnings_at_startup(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
     main.main()
     assert logged == ["[SETTINGS] MAX_ORIGINALS_PER_DAY=12 is above its ceiling: using 8."]
-
-
-def test_main_logs_the_ignored_keys_before_refusing_an_unmigrated_start(monkeypatch):
-    """The start that refuses still names in bot.log the .env keys it ignored."""
-    import main
-    from src.core import state_store
-    logged = []
-    warning = "DRYRUN in .env is not a setting the engine reads: ignored, delete the line. Did you mean DRY_RUN?"
-    monkeypatch.setattr(settings, "_warnings", [warning])
-    monkeypatch.setattr(main.log, "warning", logged.append)
-
-    def refuse():
-        raise state_store.Unmigrated("state files still at the project root")
-    monkeypatch.setattr(state_store, "require_migrated", refuse)
-    monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
-    with pytest.raises(SystemExit):
-        main.main()
-    assert logged == [f"[SETTINGS] {warning}"]
 
 
 # --- The override fixture ------------------------------------------------------
@@ -673,8 +622,8 @@ def _unknown_keys(text):
 
 
 def test_the_configuration_doc_names_no_unknown_key():
-    """A key the engine does not know is ignored at start: the doc must not
-    offer one, in backticks, in plain text or in a `KEY=value` line."""
+    """A key the engine does not know stops the start: the doc must not offer
+    one, in backticks, in plain text or in a `KEY=value` line."""
     unknown = _unknown_keys((ROOT / "docs/CONFIGURATION.md").read_text())
     assert not unknown, unknown
 
@@ -701,11 +650,12 @@ def test_env_example_starts_within_every_bound(fresh):
 
 def test_env_example_describes_the_account_with_the_declared_defaults():
     """The defaults carry the policy values: the example sets no other, so
-    it cannot offer more than the policy allows. No key only an older
-    account used either."""
+    it cannot offer more than the policy allows. No setting without effect
+    either, nor a key only an older account used."""
     example = _env_example()
     assert example["BOT_ACCOUNT"] == "theaishrink"
     assert not {"BOT_HANDLE", "CONTENT_LANG_PRIMARY"} & set(example), "the Account carries them"
+    assert not set(example) & settings.UNUSED
     assert set(example) <= set(settings.DECLARED) | {"ENABLE_AI_MAINTENANCE", "ENABLE_CODEX_OPERATOR"}
     for key, raw in example.items():
         if key in settings.DECLARED:
@@ -713,13 +663,11 @@ def test_env_example_describes_the_account_with_the_declared_defaults():
             assert settings._parse(setting, raw) == setting.default, key
 
 
-def test_model_cli_credentials_in_env_file_reach_the_subprocesses(fresh):
+def test_model_cli_credentials_in_env_file_do_not_stop_the_start(tmp_path):
     """A key the model CLIs read from their environment (an API key, the
     Ollama host) may sit in .env for the subprocesses; any other unknown key
-    is ignored, a retired setting with a CLI prefix too."""
-    keys = ("OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_BASE_URL", "OLLAMA_HOST")
-    environ = fresh("".join(f"{key}=x\n" for key in keys) + "MAX_BREAKOUTS_PER_DAY=4\n"
-                    "OPENCODE_FALLBACK_MODEL=opencode/big-pickle\n")
-    assert environ == dict.fromkeys(keys, "x")
-    assert [w.split()[0] for w in settings.startup_warnings()] == ["MAX_BREAKOUTS_PER_DAY",
-                                                                   "OPENCODE_FALLBACK_MODEL"]
+    still stops the start."""
+    from src.core import settings
+    for key in ("OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_BASE_URL", "OLLAMA_HOST"):
+        assert settings._is_known(key), key
+    assert not settings._is_known("MAX_BREAKOUTS_PER_DAY")

@@ -14,47 +14,33 @@ So this module just quits + relaunches Safari, which:
   - PRESERVES cookies (file-based in ~/Library/Cookies) so login survives
   - PRESERVES localStorage / IndexedDB (file-based)
 
-Three trigger paths:
-  1. Preventive — main.py schedules run_session_refresh() every ~2h
+Two trigger paths:
+  1. Preventive — main.py schedules safe_run_session_refresh() every ~2h
      so we restart BEFORE Safari wedges.
-  2. Reactive — health.record_failure asks for a restart once browser
-     failures in a row reach its threshold.
-  3. Blank pages — scraper._trigger_black_screen_recovery.
+  2. Reactive — health.py calls into this when a cycle fails. Already
+     wired through health.record_failure / _restart_safari.
 
-Every restart waits for the Safari lock, so it never quits Safari under a
-session in progress. Its cooldown is the only delay between two restarts,
-whichever path asks, and starts on every restart tried, failed or not; a
-restart that succeeds resets the health failure counter here, the one
-place (issue #302).
+This is intentionally a thin wrapper over the same restart logic that
+health.py uses, so callers can request a fresh Safari without going
+through the consecutive-failure counter.
 """
 import subprocess
 import time
+import traceback
 from datetime import datetime
-from enum import Enum
 
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
-from ..guards.active_hours import OutsideActiveHours, may_act
+from ..guards.active_hours import may_act
 from . import safari
 
 # Disposable: losing it only allows one earlier Safari restart.
 HYGIENE_STATE = StateFile("safari_hygiene_state.json", {}, DISPOSABLE)
 
-# Don't restart Safari more than once in this window, whichever path asks
-# (black_screen_recovery waits 5 min only). The preventive scheduler tick is
-# every ~2h. This guards against a flapping bot causing rapid bounces.
+# Don't restart Safari more than once in this window. The preventive
+# scheduler tick is every ~2h; reactive recovery has its own cooldown
+# in health.py. This guards against a flapping bot causing rapid bounces.
 MIN_GAP_SECONDS = 30 * 60  # 30 min
-
-
-class RestartOutcome(Enum):
-    """What restart_safari did. Truthy only for RESTARTED, so a caller that
-    tests the result acts on a restart that succeeded only."""
-    RESTARTED = "restarted"  # Safari quit, relaunched, x.com rendered
-    REFUSED = "refused"      # cooldown, waking hours or a stop: Safari untouched
-    FAILED = "failed"        # Safari quit and relaunched, x.com never rendered
-
-    def __bool__(self):
-        return self is RestartOutcome.RESTARTED
 
 
 def _last_run_ts() -> float:
@@ -200,68 +186,58 @@ def _launch_safari() -> bool:
         return False
 
 
-def restart_safari(reason: str = "") -> RestartOutcome:
-    """Quit + relaunch Safari: RESTARTED, REFUSED without touching Safari,
-    or FAILED when x.com did not render after the relaunch.
+def restart_safari(reason: str = "") -> bool:
+    """Quit + relaunch Safari. Returns True on success.
 
     Cooldown-guarded — refuses to bounce more than once per MIN_GAP_SECONDS,
     UNLESS reason is 'black_screen_recovery' which uses a shorter 5-min gap
     so reactive recovery isn't blocked by the 30-min preventive cooldown.
-    Every restart tried starts the cooldown, a FAILED one too; a REFUSED
-    one does not.
     Login session survives because cookies live on disk. Outside waking
     hours, or once a stop was requested, it does nothing.
-
-    It waits for the session holding the Safari lock, so a restart never
-    pulls the tab from under a Reply or a read, and reads the cooldown
-    once it has the lock. The lock is reentrant: a job that already holds
-    it restarts at once.
     """
     if not may_act():
         log.info(f"[HYGIENE] Skipping restart outside waking hours. reason={reason}")
-        return RestartOutcome.REFUSED
-    try:
-        with safari._safari_lock:
-            return _restart_holding_lock(reason)
-    except OutsideActiveHours:
-        log.info(f"[HYGIENE] Skipping restart: waking hours ended while it waited for Safari. "
-                 f"reason={reason}")
-        return RestartOutcome.REFUSED
-
-
-def _restart_holding_lock(reason: str) -> RestartOutcome:
+        return False
     last = _last_run_ts()
     gap = time.time() - last
     effective_gap = 5 * 60 if reason == "black_screen_recovery" else MIN_GAP_SECONDS
     if gap < effective_gap:
         log.info(f"[HYGIENE] Skipping restart (last was {int(gap)}s ago, < {effective_gap}s cooldown). reason={reason}")
-        return RestartOutcome.REFUSED
+        return False
 
     log.warning(f"[HYGIENE] Restarting Safari. reason={reason or 'preventive'}")
-    # A tried restart starts the cooldown even when it fails or raises:
-    # otherwise every failure past the threshold bounces Safari again.
-    try:
-        _quit_safari()
-        relaunched = _launch_safari()
-    finally:
+    _quit_safari()
+    ok = _launch_safari()
+    if ok:
         _mark_ran()
-    if not relaunched:
-        return RestartOutcome.FAILED
-    log.info("[HYGIENE] Safari restarted cleanly. Login session preserved.")
-    from ..core import health  # health imports this module at load
-    health.reset_after_restart(reason or "preventive")
-    return RestartOutcome.RESTARTED
+        log.info("[HYGIENE] Safari restarted cleanly. Login session preserved.")
+    return ok
 
 
 def run_session_refresh() -> dict:
     """Preventive hygiene pass — restarts Safari to clear wedged state.
 
     Called by the scheduler every ~2h. Cooldown ensures back-to-back ticks
-    don't bounce Safari twice. A restart that succeeds resets the health
-    failure counter inside restart_safari, as any restart does; the refresh
-    itself never reaches health, and main.py keeps the job out of the
-    counter.
+    don't bounce Safari twice.
     """
     log.info("[HYGIENE] Running preventive session refresh.")
-    outcome = restart_safari(reason="preventive_schedule")
-    return {"restarted": bool(outcome), "ts": datetime.now().isoformat()}
+    ok = restart_safari(reason="preventive_schedule")
+    return {"restarted": ok, "ts": datetime.now().isoformat()}
+
+
+def safe_run_session_refresh():
+    """Scheduler wrapper. Logs failures but never crashes the scheduler.
+
+    Does NOT call health.record_failure on a no-op (cooldown skip) — only on
+    actual restart attempts. This avoids the preventive scheduler tripping
+    the failure counter when it's working as designed.
+    """
+    from ..core import health
+    try:
+        result = run_session_refresh()
+        if result.get("restarted"):
+            health.record_success("hygiene")
+    except Exception:
+        log.info("[HYGIENE] Error during session refresh:")
+        traceback.print_exc()
+        health.record_failure("hygiene")

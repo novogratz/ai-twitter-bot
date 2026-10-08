@@ -93,21 +93,16 @@ def test_theaishrink_loads_the_old_constants():
     assert ed.trend_angle == OLD["TREND_PURPOSE"]
     assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
     assert list(ed.feeds) == OLD["FEEDS"]
-    assert [(t.topic, t.title, t.url) for t in ed.evergreen[:-1]] == OLD["KNOWLEDGE"]
-    assert ed.evergreen[-1].url == "https://docs.x.ai/developers/models"
-    assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"], "xAI docs"}
-    assert ed.trusted_hosts == set(OLD["HOSTS"]) | {
-        "x.ai", "docs.x.ai", "help.openai.com", "platform.claude.com", "ai.google.dev"}
-    assert loaded.relevance.topic.pattern == OLD["AI_TOPIC"][0].replace("gemini|", "gemini|grok|xai|")
-    assert loaded.relevance.topic.flags == OLD["AI_TOPIC"][1]
+    assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
+    assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
+    assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
+    assert (loaded.relevance.topic.pattern, loaded.relevance.topic.flags) == OLD["AI_TOPIC"]
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "AI"
-    assert list(loaded.searches.trending) == [
-        '"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:50 -filter:replies', OLD_TREND_QUERIES[0],
-        '"AI research" OR "LLM training" OR "AI reasoning" lang:en min_faves:200 -filter:replies']
+    assert list(loaded.searches.trending) == OLD_TREND_QUERIES
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -116,21 +111,6 @@ def test_the_editorial_reads_the_loaded_account():
     assert sorted(editorial.trend_slots()) == OLD["TREND_SLOTS"]
     assert [slot.clock for slot in editorial.slots() if slot.exceptional] == [OLD["EXCEPTIONAL_SLOT"]]
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
-
-
-def test_neutral_account_keeps_brand_mentions_relevant_and_sourced():
-    loaded = account.load("theaishrink")
-    assert "sharp, neutral AI analyst" in loaded.perspective
-    assert "same evidence, technical merit and trade-offs" in loaded.perspective
-    assert "Do not pivot a competitor" in loaded.perspective
-    assert "only when the parent discusses them" in loaded.perspective
-    assert "Do not guess the latest version" in loaded.perspective
-    assert "Attribute vendor claims" in loaded.perspective
-    assert "Keep to AI" in loaded.perspective
-    assert loaded.relevance.topic.search("Grok update")
-    assert loaded.relevance.topic.search("xAI release")
-    assert editorial._trusted("https://docs.x.ai/developers/models")
-    assert not editorial._trusted("https://docs.x.ai.attacker.example/models")
 
 
 # --- Loading: BOT_ACCOUNT, and the settings layers ------------------------------
@@ -163,37 +143,6 @@ def fresh(monkeypatch, tmp_path):
         settings.load(env_file=str(env_file), environ=environ)
         return environ
     return load
-
-
-@pytest.mark.parametrize("value, expected", [(None, ""), ('""', ""), ('"  A preference.  "', "A preference.")])
-def test_optional_account_perspective_defaults_blank_and_trims(accounts, fresh, value, expected):
-    text = re.sub(r'perspective = """.*?"""', '' if value is None else f"perspective = {value}",
-                  THEAISHRINK, flags=re.S)
-    accounts("other", text)
-    fresh("BOT_ACCOUNT=other\n")
-    assert account.current().perspective == expected
-
-
-def test_account_perspective_rejects_non_text(accounts, fresh):
-    text = re.sub(r'perspective = """.*?"""', 'perspective = 3', THEAISHRINK, flags=re.S)
-    accounts("other", text)
-    with pytest.raises(settings.SettingsError, match="perspective"):
-        fresh("BOT_ACCOUNT=other\n")
-
-
-@pytest.mark.parametrize("block, error", [
-    ('[[reply_sources]]\npattern = "grok"\nurl = "https://evil.example/news"', "reply_sources"),
-    ('[[reply_sources]]\npattern = "("\nurl = "https://docs.x.ai/news"', "pattern"),
-    ('[[reply_sources]]\npattern = 3\nurl = "https://docs.x.ai/news"', "pattern"),
-    ('[[reply_sources]]\npattern = "grok"\nurl = "https://user@docs.x.ai/news"', "url"),
-    ('[[reply_sources]]\npattern = "grok"\nurl = "https://docs.x.ai:443/news"', "url"),
-    ('[[reply_sources]]\npattern = "grok"\nurl = "https://docs.x.ai/news"\nunknown = true', "unknown"),
-])
-def test_reply_sources_reject_bad_configuration(accounts, fresh, block, error):
-    text = re.sub(r'\[\[reply_sources\]\].*?(?=\[editorial\])', block + "\n\n", THEAISHRINK, flags=re.S)
-    accounts("other", text)
-    with pytest.raises(settings.SettingsError, match=error):
-        fresh("BOT_ACCOUNT=other\n")
 
 
 def test_bot_account_picks_the_folder(accounts, fresh):
@@ -433,9 +382,8 @@ NETWORK = {
         "watcherguru", "wsj", "zerohedge",
     ],
     "NICHE_PATTERN": (
-        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
-        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|"
-        r"super\s+intelligence|genai|"
+        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|"
         r"llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|"
         r"xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|"
         r"(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|"
@@ -445,9 +393,8 @@ NETWORK = {
         r"humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b",
         34),
     "NICHE_BIO_RE": (
-        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?-i:SI)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
-        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|"
-        r"super\s+intelligence|genai|llms?|gpt\w*|"
+        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|"
         r"chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|"
         r"artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|"
         r"deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|"
@@ -457,7 +404,6 @@ NETWORK = {
         '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
         "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
-        '"super intelligence" OR superintelligence OR SI lang:en min_faves:30',
         '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
         '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
         'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
@@ -468,7 +414,6 @@ NETWORK = {
     ],
     "HOT_TAB_QUERIES": [
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
-        '"super intelligence" OR superintelligence OR SI lang:en min_faves:300',
         'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
         '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
         'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
@@ -562,8 +507,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
-    assert list(net.always_reply) == list(dict.fromkeys(
-        NETWORK["ALWAYS_REPLY_ACCOUNTS"]))
+    assert list(net.always_reply) == NETWORK["ALWAYS_REPLY_ACCOUNTS"]
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
     assert list(net.engage_targets) == NETWORK["ENGAGE_TARGET_ACCOUNTS"]
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
@@ -572,16 +516,8 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert (niche.post.pattern, niche.post.flags) == NETWORK["NICHE_PATTERN"]
     assert niche.ticker is None
     assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
-    def current_queries(old, threshold):
-        queries = [f'"LLM evaluation" OR "AI model benchmarks" OR "AI inference" lang:en min_faves:{threshold}', *[
-            q.replace('"super intelligence" OR superintelligence OR SI',
-                      '("super intelligence" OR superintelligence OR SI) AI') for q in old]]
-        queries[3 if threshold == 300 else 1] = (
-            '"AI research" OR "LLM training" OR "AI reasoning" '
-            f'lang:en min_faves:{threshold}')
-        return queries
-    assert list(searches.replies) == current_queries(NETWORK["SEARCH_QUERIES"], 30) + ['(RAG OR retrieval OR embeddings) (LLM OR AI) lang:en', '"LLM fine tuning" OR "LLM distillation" OR "LLM quantization" lang:en', '"AI agent debugging" OR "LLM tool calling" OR "AI agent evaluation" lang:en', '"LLM latency" OR "LLM serving" OR "LLM inference cost" lang:en', '"AI prototype" OR "AI side project" OR "building an AI" lang:en', '"LLM hallucinations" OR "LLM prompt injection" OR "LLM evaluation" lang:en']
-    assert list(searches.hot_tab) == current_queries(NETWORK["HOT_TAB_QUERIES"], 300)
+    assert list(searches.replies) == NETWORK["SEARCH_QUERIES"]
+    assert list(searches.hot_tab) == NETWORK["HOT_TAB_QUERIES"]
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert net.blocked_accounts == ()
 
@@ -600,13 +536,7 @@ def test_the_removed_accounts_and_queries_are_gone():
     for key in ("replies", "hot_tab", "likes"):
         assert not set(REMOVED_205[key]) & queries, key
     for before, after in NARROWED_205.items():
-        assert before not in queries
-        # Operator 2026-10-05: discovery now focuses on neutral AI research.
-        if after.startswith('("why would"'):
-            assert any(q.startswith('"AI research" OR "LLM training"')
-                       for q in searches.replies)
-        else:
-            assert after in queries
+        assert before not in queries and after in queries
 
 
 @pytest.mark.parametrize("text", [
@@ -625,7 +555,6 @@ def test_the_removed_accounts_and_queries_are_gone():
     "Ai-je raté le rallye ?",
     "Je vous ai dit que le marché allait monter",
     "J'en ai marre de la Fed",
-    "Si les taux baissent demain, le marché peut monter",
     # Too broad alone.
     "Real estate agent, 20 years in Miami",
     "Agent immobilier à Lyon",
@@ -654,8 +583,6 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Meta's Llama 4 is out",
     "Google's Veo 3 makes the best videos",
     "Meta superintelligence lab poached another researcher",
-    "Super intelligence is the next frontier after AGI",
-    "SI safety debates are getting louder",
     "1M token context window",
     "vibe coding is a trap",
     "Qwen3 beats everything on coding",
@@ -683,8 +610,6 @@ def test_an_ai_post_is_on_the_niche(text):
     ("Deep learning engineer", True),
     ("Computer vision engineer", True),
     ("LLMs engineer", True),
-    ("Super intelligence researcher", True),
-    ("SI policy analyst", True),
     ("GenAI founder", True),
     ("Robotics engineer @Figure", True),
     ("Building agents @ startup", True),
@@ -736,7 +661,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     accounts("other", other)
     fresh("BOT_ACCOUNT=other\n")
     assert engage_bot._vip_accounts() == ("OtherVip",)
-    assert account.current().network.always_reply[0] == "OtherVip"
+    assert direct_reply.always_reply_accounts()[0] == "OtherVip"
     assert direct_reply.reply_call("othervip").label == "DIRECT_REPLY_VIP"
     assert direct_reply.reply_call("nobody").label == "DIRECT_REPLY"
     assert "othertarget" in notify_bot._influencer_handles()
@@ -772,17 +697,31 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 
 # --- Relations: the per-handle Reply instructions (#203) -------------------------
 
-# sha256 of the Relations' prompts: GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and
-# BUDDY_REPLY_PROMPT of src/replies/direct_reply.py when #203 moved them to
-# relations/, as the Operator edited them since. An Operator edit of these
-# files updates the hash here: all three on 2026-09-27 (AI niche for
-# graphseo, no forced hook, no invented figures, then no length of their
-# own).
-RELATION_PROMPTS = {
-    "graphseo": (2003, "b5aef944267d7b22a5092109165b456af034ce395be2318bb34738fca09f7f6c"),
-    "bestie": (1121, "cb6498c7e6c8fdd86d3f38b53b3365e9f1d5ffc584d98708a41b01b197b5b5db"),
-    "buddy": (656, "742131d272308651a11a604d0013577c3bba83de77ecb31dede963c6cb6985bc"),
+# sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
+# src/replies/direct_reply.py before #203 moved them to relations/. An
+# Operator edit of these files updates the hash here.
+OLD_RELATION_PROMPTS = {
+    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
+    "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
+    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
 }
+# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
+OLD_MCNALLIEM = {
+    "first_seen": "2026-05-02",
+    "last_interaction": "2026-05-02",
+    "interaction_count": 0,
+    "category": "builder",
+    "stance": "fond",
+    "notes": [
+        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
+        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+    ],
+    "predictions": [],
+    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
+    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
+    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
+}
+
 
 def _digest(text):
     import hashlib
@@ -793,13 +732,21 @@ def test_theaishrink_relations_hold_the_old_prompts():
     relations = account.load("theaishrink").relations
     graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
     assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
-            "buddy": _digest(relations.default)} == RELATION_PROMPTS
-    assert (graphseo.handle, graphseo.provider) == ("Graphseo", "claude")
-    assert (bestie.handle, bestie.provider) == ("TheBTCTherapist", None)
+            "buddy": _digest(relations.default)} == OLD_RELATION_PROMPTS
+    assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "claude", None)
+    assert (bestie.handle, bestie.provider, bestie.dossier) == ("TheBTCTherapist", None, None)
     assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
-    assert sorted(relations.handles) == ["graphseo", "thebtctherapist"]
+    mcnallie = relations.get("mcnalliem")
+    assert (mcnallie.prompt, mcnallie.provider) == (None, None)
+    assert sorted(relations.handles) == ["graphseo", "mcnalliem", "thebtctherapist"]
     assert relations.vip_prompt("thebtctherapist") == bestie.prompt
     assert relations.vip_prompt("McnallieM") == relations.vip_prompt("vision_ia") == relations.default
+
+
+def test_a_fixed_dossier_reads_as_the_old_one():
+    from src.core import personality_store
+    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
+    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
 
 
 def test_the_relation_providers_are_llm_client_clis():
@@ -809,16 +756,13 @@ def test_the_relation_providers_are_llm_client_clis():
 
 @pytest.mark.parametrize("old, new, named", [
     ('provider = "claude"', 'provider = "claude"\nlabel = "X"', "relations.handles.Graphseo.label"),
-    # The fixed dossier a Relation could set until 2026-09-27.
-    ('prompt = "relations/bestie.md"\n', 'prompt = "relations/bestie.md"\n\n'
-     '[relations.handles.TheBTCTherapist.dossier]\nstance = "fond"\n',
-     "relations.handles.TheBTCTherapist.dossier is not a key the Account knows"),
+    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.McnallieM.dossier.mood"),
     ('default = "relations/buddy.md"', 'default = "relations/buddy.md"\nbuddy = "x.md"', "relations.buddy"),
     ("[relations.handles.Graphseo]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
     ("[relations.handles.Graphseo]", "[relations.handles.ThisHandleIsTooLong]",
      "relations.handles.ThisHandleIsTooLong"),
-    ("[relations.handles.TheBTCTherapist]", "[relations.handles.graphseo]",
-     "relations.handles.Graphseo repeats graphseo"),
+    ("[relations.handles.McnallieM.dossier]", "[relations.handles.graphseo.dossier]",
+     "relations.handles.graphseo repeats Graphseo"),
 ])
 def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -829,7 +773,9 @@ def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old,
 
 @pytest.mark.parametrize("old, new, named", [
     ('provider = "claude"', 'provider = "claud"', "relations.handles.Graphseo.provider takes one of"),
-    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.prompt is missing"),
+    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.provider needs a prompt"),
+    ('stance = "fond"', "stance = 3", "relations.handles.McnallieM.dossier.stance"),
+    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.McnallieM.dossier.notes[0]"),
     ('prompt = "relations/graphseo.md"', 'prompt = "relations/nope.md"', "relations.handles.Graphseo.prompt"),
     ('prompt = "relations/bestie.md"', 'prompt = "../voice_en.md"', "outside the Account's folder"),
 ])
@@ -837,6 +783,14 @@ def test_a_bad_relation_value_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
     accounts("theaishrink", THEAISHRINK.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
+        fresh()
+
+
+def test_an_empty_fixed_dossier_stops_the_start(accounts, fresh):
+    start = THEAISHRINK.index("[relations.handles.McnallieM.dossier]")
+    end = THEAISHRINK.index("\n\n", THEAISHRINK.index("dont = ", start))
+    accounts("theaishrink", THEAISHRINK[:start] + "[relations.handles.McnallieM.dossier]" + THEAISHRINK[end:])
+    with pytest.raises(settings.SettingsError, match=re.escape("relations.handles.McnallieM.dossier is empty")):
         fresh()
 
 
@@ -850,8 +804,8 @@ def test_the_default_prompt_is_needed_only_for_a_scanned_handle_without_its_own(
     accounts("other", THEAISHRINK.replace('default = "relations/buddy.md"\n', "")
              .replace(scan, 'vip_scan = ["Graphseo", "TheBTCTherapist", "McnallieM"]'))
     with pytest.raises(settings.SettingsError, match=re.escape(
-            "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation, "
-            "so the VIP scan needs a default prompt")):
+            "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation "
+            "with its own prompt")):
         account.load("other")
 
 
@@ -911,7 +865,7 @@ def test_a_link_inside_the_folder_is_followed(accounts, fresh, tmp_path):
     (folder / "relations" / "buddy.md").rename(folder / "buddy_real.md")
     (folder / "relations" / "buddy.md").symlink_to(folder / "buddy_real.md")
     fresh()
-    assert _digest(account.current().relations.default) == RELATION_PROMPTS["buddy"]
+    assert _digest(account.current().relations.default) == OLD_RELATION_PROMPTS["buddy"]
 
 
 @pytest.mark.parametrize("name", account.VOICE_FILES)
@@ -928,13 +882,3 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
     with pytest.raises(settings.SettingsError,
                        match=re.escape(f"theaishrink/{name}: the Voice file {problem}")):
         fresh()
-
-
-def test_quiet_ai_discovery_does_not_require_existing_popularity():
-    searches = account.load("theaishrink").searches
-    quiet = [q for q in searches.replies if "min_faves:" not in q]
-    assert len(quiet) == 6
-    assert all("lang:en" in q for q in quiet)
-    assert any("RAG" in q for q in quiet)
-    assert any("side project" in q for q in quiet)
-    assert any("prompt injection" in q for q in quiet)

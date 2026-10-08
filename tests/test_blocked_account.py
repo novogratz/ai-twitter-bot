@@ -1,13 +1,15 @@
 """A Blocked account is refused at the follow chokepoint, whoever calls it
 (issue #188), with the one match Reply admission and likes use.
 
-Each follow job runs for real on a handle holding a blocklist token;
-`follow_account` is wrapped, never replaced, so the test sees the
-chokepoint's own outcome.
+Each follow job and the seeding script run for real on a handle holding a
+blocklist token; `follow_account` is wrapped, never replaced, so the test
+sees the chokepoint's own outcome.
 """
 import dataclasses
+import importlib.util
 import json
 import time
+from pathlib import Path
 
 import pytest
 
@@ -17,18 +19,19 @@ from src.x import safari
 from src.x import twitter_client as tc
 
 HANDLE = "La_Pique_Off"
+SEED_SCRIPT = Path(__file__).resolve().parent.parent / "bin" / "seed_fr_influencers.py"
 
 
 def _followback(monkeypatch, follow, tmp_path):
     """The scrape drops a Blocked account; with that filter off, the
     chokepoint must refuse it all the same."""
     from src.account import followback_bot as fb
-    from src.x import page_session
     monkeypatch.setattr(fb, "is_blocked_account", lambda handle: False)
     page = json.dumps({"path": f"/{config.BOT_HANDLE}/followers", "handles": [HANDLE]})
-    monkeypatch.setattr(page_session, "BROWSER", page_session.MemoryBrowser(
-        pages={f"https://x.com/{config.BOT_HANDLE}/followers": [page]}))
-    monkeypatch.setattr(tc, "follow_account", follow)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: page)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(fb, "follow_account", follow)
     fb.run_followback_cycle()
 
 
@@ -47,27 +50,37 @@ def _engage(monkeypatch, follow, tmp_path):
     monkeypatch.setattr(eb, "_build_pool", lambda: [HANDLE])
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda pool: pool)
     monkeypatch.setattr(eb, "_profile_visit_allowed", lambda *_: False)
-    monkeypatch.setattr(tc, "follow_account", follow)
+    monkeypatch.setattr(eb, "follow_account", follow)
     eb.run_engage_cycle()
 
 
+def _seed_script(monkeypatch, follow, tmp_path):
+    spec = importlib.util.spec_from_file_location("seed_fr_influencers", SEED_SCRIPT)
+    script = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(script)
+    monkeypatch.setattr(script, "SEED_HANDLES", [HANDLE])
+    monkeypatch.setattr(script, "DYNAMIC_FILE", str(tmp_path / "dynamic_accounts.json"))
+    monkeypatch.setattr(script, "follow_account", follow)
+    script.main()
+
+
 @pytest.mark.parametrize("dry_run", ["0", "1"])
-@pytest.mark.parametrize("caller", [_followback, _follow_engagers, _engage])
+@pytest.mark.parametrize("caller", [_followback, _follow_engagers, _engage, _seed_script])
 def test_every_follow_caller_meets_the_blocked_account_refusal(monkeypatch, tmp_path, memory_ledger,
                                                                settings_override, caller, dry_run, operator_folder):
     monkeypatch.setenv("DRY_RUN", dry_run)
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     monkeypatch.setattr(time, "sleep", lambda *_: None)
-    # A Seed account, so that engage asks to follow it.
+    # A Seed account, so that engage and the seeding script ask to follow it.
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": [HANDLE]}}))
     opened = []
     monkeypatch.setattr(safari, "open_url", opened.append)
     asked = []
     real_follow = tc.follow_account
 
-    def follow(handle, **kwargs):
-        outcome = real_follow(handle, **kwargs)
+    def follow(handle):
+        outcome = real_follow(handle)
         asked.append((handle, outcome))
         return outcome
 
@@ -82,10 +95,10 @@ def test_every_follow_caller_meets_the_blocked_account_refusal(monkeypatch, tmp_
 def test_reply_admission_likes_and_follows_share_one_blocklist_match(monkeypatch, memory_ledger):
     """#188: the follow policy and the job filters copied no match of their
     own: whatever `is_blocked_account` says, every one of them says."""
-    from src.account import engage_bot, followback_bot
-    from src.replies import feed_sweeper_bot, notify_bot, reply_source
+    from src.account import account_curator, engage_bot, followback_bot
+    from src.replies import feed_sweeper_bot, notify_bot
 
-    for module in (engage_bot, feed_sweeper_bot, followback_bot, notify_bot, reply_source):
+    for module in (account_curator, engage_bot, feed_sweeper_bot, followback_bot, notify_bot):
         assert module.is_blocked_account is reply_admission.is_blocked_account, module.__name__
     monkeypatch.setattr(config, "BLOCKLIST", set())
     monkeypatch.setattr(reply_admission, "is_blocked_account", lambda handle: handle.lower() == "anyone")

@@ -7,7 +7,7 @@ import subprocess
 
 import pytest
 
-from tests.helpers import FRESH, SearchPage, posts_script, stop_requested
+from tests.helpers import FRESH, SearchPage, stop_requested
 
 
 POST = "https://x.com/thebtctherapist/status/2063500000000000101"
@@ -26,15 +26,6 @@ REPLY = "https://x.com/engager/status/2063500000000000105"
 
 
 BLOCKED = "https://x.com/BlockedOne/status/2063500000000000107"
-
-
-PROFILE = "https://x.com/TheBTCTherapist"
-
-
-SEARCH = "https://x.com/search?q=AI"
-
-
-FRONT = "https://x.com/front"
 
 
 class FakePage:
@@ -66,21 +57,22 @@ class FakePage:
 
 
 @pytest.fixture
-def browser(monkeypatch, memory_page):
-    """Live write path on the memory page: it shows `state["page"]` in the
-    front tab and on the pages the walks open, which `state["memory"]`
-    records. Ledger rows are recorded."""
-    from src.core import config
+def browser(monkeypatch):
+    """Live write path on a scripted page; ledger rows and tab closes recorded."""
     from src.guards import action_guard
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
-    state = {"page": FakePage(), "recorded": [], "memory": memory_page}
-    for url in (PROFILE, config.BOT_PROFILE_URL, SEARCH, FRONT):
-        memory_page.pages[url] = lambda js: posts_script(state["page"], js)
-    memory_page.front = FRONT
+    state = {"page": FakePage(), "recorded": [], "closed": 0, "opens": True}
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: state["opens"])
+    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: None)
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: state["page"](*a))
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: state["recorded"].append((a, k)))
+
+    def close_front_tab():
+        state["closed"] += 1
+    monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
 
 
@@ -189,9 +181,9 @@ def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch
             held.pop()
 
     monkeypatch.setattr(safari, "_safari_lock", RecordingLock())
-    page = SearchPage([{"url": FRESH, "liked": False}])
+    page = like_job["page"] = SearchPage([{"url": FRESH, "liked": False}])
     seen = []
-    like_job["page"] = lambda *a: seen.append(bool(held)) or page(*a)
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: seen.append(bool(held)) or page(*a))
 
     assert tc.like_tweet(FRESH) is tc.LikeOutcome.LIKED
     assert seen == [True, True]
@@ -236,7 +228,7 @@ def test_dry_run_like_and_pin_paths_drive_no_browser(monkeypatch, tmp_path):
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_blocked_account_post_is_never_liked(browser, monkeypatch, dry_run):
-    """GLOSSARY.md: a Blocked account is barred from any interaction. The
+    """CONTEXT.md: a Blocked account is barred from any interaction. The
     handle comes from the URL and is matched as Reply admission matches it
     (case, underscores ignored); nothing is read, clicked or recorded, not
     even a dry-run row."""
@@ -278,30 +270,7 @@ def test_profile_visit_likes_their_own_posts_and_reports_each(browser):
     outcomes = tc.visit_profile_and_like("TheBTCTherapist", like_count=2)
     assert outcomes == [tc.LikeOutcome.ALREADY_LIKED, tc.LikeOutcome.LIKED]
     assert page.clicks == [NEXT]
-    assert browser["memory"].closed == 1
-
-
-def test_a_like_inside_a_walk_opens_nothing_and_acts_on_the_walks_page(browser):
-    """#255: the walk's session opens the page; each like_tweet it calls
-    runs in a nested session, which opens and closes nothing."""
-    from src.x import twitter_client as tc
-
-    browser["page"] = FakePage(posts=[{"url": POST, "liked": False}])
-    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=1) == [tc.LikeOutcome.LIKED]
-    memory = browser["memory"]
-    assert memory.opened == [PROFILE]
-    assert [s.url for s in memory.scripts] == [PROFILE] * 3  # list, press, read
-    assert memory.closed == 1
-
-
-def test_a_like_on_its_own_opens_and_closes_nothing(browser):
-    from src.x import twitter_client as tc
-
-    browser["page"] = FakePage(page=POST, posts=[{"url": POST, "liked": False}])
-    assert tc.like_tweet(POST) is tc.LikeOutcome.LIKED
-    memory = browser["memory"]
-    assert (memory.opened, memory.closed) == ([], 0)
-    assert [s.url for s in memory.scripts] == [FRONT, FRONT]
+    assert browser["closed"] == 1
 
 
 @pytest.mark.parametrize("dry_run, like_count", [("0", 0), ("1", 2)])
@@ -325,37 +294,17 @@ def test_notify_likes_replies_but_never_our_own_posts(browser, settings_override
     ])
     assert tc.like_own_tweet_replies() == [tc.LikeOutcome.LIKED]
     assert page.clicks == [REPLY]
-    assert browser["memory"].closed == 1
+    assert browser["closed"] == 1
 
 
 def test_notify_clicks_nothing_off_our_own_status_page(browser):
-    """#301: a walk that stayed on our profile lists nothing there."""
-    from src.x import scraper, twitter_client as tc
+    from src.x import twitter_client as tc
 
     page = browser["page"] = FakePage(page="https://x.com/TheAIShrink", posts=[
         {"url": REPOST, "liked": False},
     ])
     assert tc.like_own_tweet_replies() == [tc.LikeOutcome.FAILED]
-    assert page.clicks == [] and browser["recorded"] == []
-    assert [s.js for s in browser["memory"].scripts] == [scraper._LOCATION_JS]
-    assert browser["memory"].closed == 1
-
-
-def test_notify_clicks_nothing_when_the_walk_to_our_latest_post_fails(browser, monkeypatch):
-    from src.x import safari, twitter_client as tc
-
-    memory = browser["memory"]
-    pressed = []
-
-    def keys_fail(applescript, timeout_s):
-        pressed.append(applescript)
-        return False
-    monkeypatch.setattr(memory, "keys", keys_fail)
-    page = browser["page"] = FakePage(page=OWN, posts=[{"url": REPLY, "liked": False}])
-    assert tc.like_own_tweet_replies() == [tc.LikeOutcome.FAILED]
-    assert page.clicks == [] and browser["recorded"] == []
-    assert (pressed, memory.scripts) == ([safari.FIRST_TWEET_KEYS], [])
-    assert memory.closed == 1
+    assert page.clicks == []
 
 
 def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
@@ -372,25 +321,25 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     browser["page"] = FakePage(page=OWN, posts=[{"url": REPLY, "liked": False}])
     with pytest.raises(StateUnreadable):
         tc.like_own_tweet_replies()
-    assert browser["memory"].closed == 2
+    assert browser["closed"] == 2
 
 
 @pytest.mark.parametrize("walk", [
-    lambda tc: tc.like_search_posts(SEARCH, 3, 60),
+    lambda tc: tc.like_search_posts("https://x.com/search?q=AI", 3, 60),
     lambda tc: tc.visit_profile_and_like("TheBTCTherapist", like_count=2),
     lambda tc: tc.like_own_tweet_replies(),
 ], ids=["search", "profile", "notify"])
 def test_a_walk_whose_page_does_not_open_clicks_nothing(browser, monkeypatch, settings_override, walk):
     """#251: a page that does not open leaves the front tab to someone
     else; the walk reads and clicks nothing there and records no row."""
-    from src.x import twitter_client as tc
+    from src.x import safari, twitter_client as tc
 
     settings_override(NOTIFY_LIKE_REPLIES_COUNT=3)
-    memory = browser["memory"]
-    memory.pages.clear()
+    monkeypatch.setattr(safari, "_navigate_to_first_tweet", lambda: pytest.fail("pressed a key"))
+    monkeypatch.setattr(safari, "_scroll_page", lambda: pytest.fail("scrolled"))
+    monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
+    browser["opens"] = False
     assert walk(tc) == [tc.LikeOutcome.FAILED]
-    assert (memory.scripts, memory.scrolls, memory.pressed) == ([], 0, [])
-    assert memory.closed == 1
     assert browser["recorded"] == []
 
 
@@ -461,7 +410,6 @@ function El(spec, parent) {
     var self = this;
     this.children = (spec.children || []).map(function(c) { return new El(c, self); });
 }
-Object.defineProperty(El.prototype, 'parentElement', {get: function() { return this.parent; }});
 Object.defineProperty(El.prototype, 'href', {get: function() { return this.attrs.href || ''; }});
 El.prototype.matchesCompound = function(c) {
     if (c.tag && c.tag !== this.tagName) return false;
@@ -498,8 +446,7 @@ El.prototype.click = function() {
 
 
 def _article(url, button, id_, quoted="", quoted_first=False):
-    children = [{"tag": "div", "attrs": {"data-testid": "User-Name"}, "children": [
-        {"tag": "a", "attrs": {"href": url}, "children": [{"tag": "time"}]}]}]
+    children = [{"tag": "a", "attrs": {"href": url}, "children": [{"tag": "time"}]}]
     if quoted:
         card = {"tag": "div", "children": [{"tag": "article", "children": [
             {"tag": "a", "attrs": {"href": quoted}, "children": [{"tag": "time"}]}]}]}
@@ -509,15 +456,13 @@ def _article(url, button, id_, quoted="", quoted_first=False):
     return {"tag": "article", "attrs": {"data-testid": "tweet", "id": id_}, "children": children}
 
 
-def _run_posts_js(articles, mode, target_id="", path="/home", reply=False):
+def _run_posts_js(articles, mode, target_id="", path="/home"):
     from src.x import twitter_client as tc
 
     node = shutil.which("node")
     if not node:
         pytest.skip("node is not installed: _POSTS_JS cannot be run")
     snippet = tc._POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
-    if reply:
-        snippet = tc._REPLY_CLICK_JS.replace("__TARGET_ID__", target_id).replace("__BOT_HANDLE__", "theaishrink")
     program = _FAKE_DOM_JS + f"""
 var root = new El({json.dumps({"tag": "html", "children": [{"tag": "body", "children": articles}]})});
 var document = {{
@@ -576,50 +521,3 @@ def test_js_lists_the_posts_in_page_order():
     articles = [_article(NEXT, "like", "a"), _article(POST, "unlike", "b", quoted=REPOST)]
     out, clicks = _run_posts_js(articles, "list")
     assert out == {"page": "https://x.com/home", "posts": [NEXT, POST]} and clicks == []
-
-
-@pytest.mark.parametrize("reply", [False, True])
-@pytest.mark.parametrize("wrapper", ["quoteTweet", "role-link"])
-def test_quoted_timestamp_in_same_article_never_selects_outer_own_reply(reply, wrapper):
-    outer = _article("https://x.com/TheAIShrink/status/999", "reply" if reply else "like", "own")
-    quote = _article("https://x.com/someone/status/123", "reply" if reply else "like", "quote")
-    quote["tag"] = "div"  # Quotes need not be nested article elements on X.
-    quote["attrs"] = ({"data-testid": "quoteTweet"} if wrapper == "quoteTweet" else {"role": "link"})
-    outer["children"].insert(0, quote)
-    result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
-    assert not clicks
-    assert result["result"] in {"missing", "failed"}
-
-
-def test_reply_script_refuses_outer_own_post_and_selects_real_parent():
-    own = _article("https://x.com/TheAIShrink/status/999", "reply", "own")
-    parent = _article("https://x.com/someone/status/123", "reply", "parent")
-    result, clicks = _run_posts_js([own, parent], "press", "999", reply=True)
-    assert result["result"] == "own" and not clicks
-    result, clicks = _run_posts_js([own, parent], "press", "123", reply=True)
-    assert result["url"] == "https://x.com/someone/status/123"
-    assert clicks == ["parent-button"]
-
-
-@pytest.mark.parametrize("reply", [False, True])
-def test_outer_post_action_never_clicks_quoted_own_reply_button(reply):
-    outer = _article("https://x.com/someone/status/123", "reply" if reply else "like", "parent")
-    quote = _article("https://x.com/TheAIShrink/status/999", "reply" if reply else "like", "own-quote")
-    quote["tag"] = "div"
-    quote["attrs"] = {"role": "link"}
-    outer["children"].insert(0, quote)
-    result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
-    assert clicks == ["parent-button"]
-    assert result["url"] == "https://x.com/someone/status/123"
-
-
-@pytest.mark.parametrize("reply", [False, True])
-def test_expanded_post_timestamp_can_be_outside_its_author_header(reply):
-    outer = _article("https://x.com/someone/status/123", "reply" if reply else "like", "parent")
-    header = outer["children"][0]
-    timestamp = header["children"][0]
-    header["children"] = [{"tag": "a", "attrs": {"href": "https://x.com/someone"}}]
-    outer["children"].append(timestamp)
-    result, clicks = _run_posts_js([outer], "press", "123", reply=reply)
-    assert result["url"] == "https://x.com/someone/status/123"
-    assert clicks == ["parent-button"]

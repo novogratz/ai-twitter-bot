@@ -8,22 +8,14 @@ What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 `accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
 `[limits]` may tighten an engine bound, never lift it, and `.env` wins over it.
-Optional `perspective` in that file is a text preference for Originals and
-Replies, subordinate to evidence and hard rules, absent from independent review.
 
 - `main.py` reads `.env` once at start. A variable already set in the
   process environment wins over `.env`.
-- A key `settings.py` does not know is ignored, never passed on to the
-  environment, and logged as a `[SETTINGS]` warning that names it, with the
-  declared key it may misspell (`DRYRUN` gives `Did you mean DRY_RUN?`).
-  `main.py --dry-run` lists the same warnings under `settings_warnings`.
-  Credentials the model CLIs read (`*_API_KEY`, `OLLAMA_HOST`, `OPENAI_*`,
-  `ANTHROPIC_*`...) are not ignored: they reach those subprocesses.
-- An `export KEY=value` line reads as `KEY=value`, as the scripts that
-  `source` `.env` read it.
-- A value its type rejects (a switch takes `0` or `1`, a number a number)
-  stops the start with a message naming the key; `main.py --dry-run` stops
-  on the same values.
+- A key `settings.py` does not know, or a value its type rejects (a switch
+  takes `0` or `1`, a number a number), stops the start with a message
+  naming the key; `main.py --dry-run` stops on the same keys. Credentials
+  the model CLIs read (`*_API_KEY`, `OLLAMA_HOST`, `OPENAI_*`,
+  `ANTHROPIC_*`...) may sit in `.env` for those subprocesses.
 - A value past its floor or ceiling is brought back to the bound and logged
   as a `[SETTINGS]` warning.
 - **Any change to a setting takes effect at the next restart.** Nothing
@@ -64,9 +56,7 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
 
 - `AI_CLI` picks the primary provider, `ollama` by default;
   `PROFILE_LLM_PROVIDER` and `REPLY_LLM_PROVIDER` route the profile surfaces
-  and the Replies, `ollama` both; blank, they leave `AI_CLI`. Every Reply
-  follows `REPLY_LLM_PROVIDER`: debate, replyback and the VIP scan too
-  (Operator, 2026-09-28). An unknown provider name fails every call
+  and the Replies, `ollama` both. An unknown provider name fails every call
   it routes without running anything; the start logs it and `--dry-run`
   lists it under `unknown_llm_providers`.
 - `LLM_FALLBACK_CLI` unset means no fallback: a failed call fails, Originals
@@ -77,9 +67,8 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
 - Two calls leave the configured provider without a fallback: the Replies to
   @Graphseo run on the Claude CLI whenever it is installed, with
-  `PRIORITY_REPLY_MODEL` (without it, on `REPLY_LLM_PROVIDER`, and a
-  warning names the Relation and that provider); a codex primary under a
-  cached usage lockout (`codex_lockout.json`) goes to local Ollama.
+  `PRIORITY_REPLY_MODEL`; a codex primary under a cached usage lockout
+  (`codex_lockout.json`) goes to local Ollama.
 - `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of
   the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
@@ -89,8 +78,9 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
 ## Retired keys
 
 A key no code reads any more is not declared: a `.env` that still sets one
-starts, and the start logs a `[SETTINGS]` warning naming it. Delete the
-line. The lists of
+stops the start and names it. Delete the line. The few declared settings
+that no longer have an effect are listed under
+[No effect](#no-effect-remove-from-env) below. The lists of
 keys retired by issues #107, #168 and #170, and the earlier configuration
 tables, are in [HISTORY.md](HISTORY.md).
 
@@ -106,12 +96,12 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
-| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude; runs the Originals and the Replies when their provider setting is blank. |
+| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `PRIORITY_REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
-| `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for the Originals; blank means AI_CLI. |
-| `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for every Reply, a Relation whose CLI is missing included; blank means AI_CLI. |
+| `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for profile surfaces; blank means none. |
+| `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for Replies; blank means none. |
 | `DRY_RUN` | 0 or 1 | `0` |  | 1 logs every write instead of doing it; config.dry_run() reads it at call time. |
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
@@ -142,11 +132,6 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
 | `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
-| `REPLY_MAX_CHARS` | int | `160` | floor `80`, ceiling `160` | Longest Reply that ships: the Reply admission trims a longer one on a sentence end, or refuses it. |
-| `REPLY_MAX_AGE_MINUTES` | int | `15` | floor `1`, ceiling `15` | Oldest post any Reply answers, whatever the job: the Reply admission refuses an older post, or one of unknown age, for good. |
-| `REPLY_RISING_MAX_AGE_MINUTES` | int | `45` | floor `15`, ceiling `45` | Oldest rising post the Reply source may hand to Reply admission; quiet posts still use REPLY_MAX_AGE_MINUTES. |
-| `REPLY_RISING_MIN_LIKES_PER_MINUTE` | finite float | `1.0` | floor `1.0` | Minimum likes per minute for a post older than REPLY_MAX_AGE_MINUTES to count as rising. |
-| `REPLY_RISING_MIN_LIKES` | int | `30` | floor `30` | Minimum likes for a post older than REPLY_MAX_AGE_MINUTES to count as rising. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
@@ -170,18 +155,24 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FR_FORCED_REPLY_HANDLES` | str | blank |  | Comma-separated handles whose posts always get French Replies; the Account's network.fr_forced_reply unless set. |
 | `EDITORIAL_OLLAMA_MODEL` | str | `gemma4:31b` |  | Ollama model that drafts and reviews Originals. |
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
-| `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer; REPLY_MAX_AGE_MINUTES caps it. |
+| `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
-| `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers; REPLY_MAX_AGE_MINUTES caps it. |
+| `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
-| `FEED_SWEEP_SCAN_LIMIT` | int | `120` |  | Posts the feed sweep scrapes per feed. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
-| `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated accounts early_bird (first 30) and mega_watch (first 12) pick from at random, the order deciding which are kept, Blocked accounts left out; the Account's network.pinned_tracked unless set. |
+| `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
+| `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |
+| `CURATOR_TRACKED_MAX` | int | `40` |  | Earned accounts the curator tracks, pinned ones aside. |
+| `CURATOR_MIN_ENGAGEMENTS` | int | `3` |  | On-lane engagements an author needs to be tracked. |
+| `CURATOR_DISCOVERED_PER_DAY` | int | `3` |  | Accounts the curator may add to the whitelist discovered tier per day. |
+| `CURATOR_DISCOVERED_MAX` | int | `50` |  | Accounts the whitelist discovered tier holds at most. |
+| `CURATOR_PROMOTE_MIN_ENGAGEMENTS` | int | `5` |  | On-lane engagements an author needs to be promoted to the whitelist. |
 | `PIN_MIN_LIKES` | int | `2` |  | Likes an own post needs before pin_job may pin it. |
 | `PIN_MAX_AGE_DAYS` | int | `7` |  | Days after which a pin no longer defends its slot with the 1.3x rule. |
 | `LIKE_TOP_TAB_PROBABILITY` | finite float | `0.55` |  | Probability like_job searches the Top tab instead of Live. |
@@ -201,6 +192,21 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `REPLY_MODEL` | `claude-haiku-4-5-20251001` | `gpt-5.4-mini` | `gemini-1.5-flash` |
 | `PRIORITY_REPLY_MODEL` | `claude-haiku-4-5-20251001` | `gpt-5.4-mini` | `gemini-2.0-flash` |
 
+### No effect: remove from `.env`
+
+No code reads these any more. They stay declared so a `.env` that still
+sets them starts; delete them from it.
+
+| Setting | Type | Default | Bounds | Description |
+|---|---|---|---|---|
+| `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
+| `BESTIE_HANDLE` | str | blank |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_FEED_SCAN_LIMIT` | int | `150` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_PROFILE_SCAN_LIMIT` | int | `25` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_HOT_QUERY_LIMIT` | int | `20` |  | No effect: remove it from .env. |
+| `DIRECT_REPLY_LIVE_QUERY_LIMIT` | int | `20` |  | No effect: remove it from .env. |
+
 ### Keys the shell scripts read
 
 Not read by the engine: these scripts read them after sourcing `.env`.
@@ -218,8 +224,3 @@ Not read by the engine: these scripts read them after sourcing `.env`.
 | `ROAST_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
 
 <!-- END settings reference -->
-
-Optional Account `[[reply_sources]]` entries pair a nonblank regex `pattern` with
-a trusted HTTPS `url`, without credentials or a port. They provide reference
-passages for Reply generation and review; no new environment settings. The review
-uses `REPLY_MODEL` and `REPLY_LLM_PROVIDER`, including for Relations.

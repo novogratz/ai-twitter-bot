@@ -1,10 +1,8 @@
 """The confirmed-write sequence of every write chokepoint, step by step
 (#157): no page step on a refusal, no ledger row without a confirmed
-write, the tab closed and the Safari lock released on every path, one
-dry-run line per chokepoint. The writes run on a memory page that traces
-each step (#256), so these tests never reach Safari."""
-import json
-from datetime import datetime
+write, the Safari lock released on every path, one dry-run line per
+chokepoint. Every browser primitive is replaced by a tracer, so these
+tests never reach Safari."""
 from types import SimpleNamespace
 
 import pytest
@@ -16,20 +14,28 @@ from src.guards import content_guard as cg
 from src.guards import follow_policy as fp
 from src.guards import replied_store as rs
 from src.guards import reply_admission as ra
-from src.guards.active_hours import OutsideActiveHours, require_active
-from src.x import confirmed_write, page_session, safari, scraper
+from src.guards.active_hours import OutsideActiveHours
+from src.x import confirmed_write, safari, scraper
 from src.x import twitter_client as tc
 from src.x.confirmed_write import WriteOutcome as W
 from src.x.twitter_client import FollowOutcome as F
-from tests.helpers import TORONTO, WritePage, clock, stop_requested
 
 POST_URL = "https://x.com/someone/status/2063500000000000500"
 QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Jane"}
 
 
+def _script_kind(script):
+    if script == tc._SUBMIT_KEYSTROKE:
+        return "submit"
+    if 'keystroke "r"' in script:
+        return "reply_key"
+    if "activate" in script:
+        return "activate"
+    return "applescript"
+
+
 def _js_kind(js):
-    for marker, kind in (("__REPLY_CLICK__", "reply_key"),
-                         ("confirmationSheetConfirm", "confirm"),
+    for marker, kind in (("confirmationSheetConfirm", "confirm"),
                          ("NO_BTN", "follow"), ("caret", "more"), ("PIN_NOT_FOUND", "pin_item")):
         if marker in js:
             return kind
@@ -38,30 +44,20 @@ def _js_kind(js):
 
 @pytest.fixture
 def trace(monkeypatch):
-    """Every page step, guard and store write of the write path, traced in
-    call order. `fail` names the page steps that fail, `js` and `likes`
-    queue the page answers, `raise_at` names the step that raises
-    OutsideActiveHours; `refuse` the guards that refuse, the follow policy
-    with `follow_refusal`. `page` is the memory page: once a stop was
-    raised, it refuses every later page step, as `require_active()` does in
-    `safari._run_applescript`, save the tab close, which
-    `safari._close_session_tab` runs all the same (#300)."""
+    """Every browser primitive, guard and store write of the write path,
+    traced in call order. `fail` names the AppleScript steps that fail,
+    `js` and `likes` queue the page answers, `raise_at` names the step
+    that raises OutsideActiveHours; `refuse` the guards that refuse, the
+    follow policy with `follow_refusal`."""
     events, logs = [], []
     t = SimpleNamespace(events=events, logs=logs, fail=set(), js=[], likes=[], raise_at=None,
-                        stopped=False, refuse=set(), claimed=set(),
-                        follow_refusal=fp.Refusal.POLICY)
+                        refuse=set(), claimed=set(), follow_refusal=fp.Refusal.POLICY)
 
     def step(name, value=None):
         events.append(name)
         if t.raise_at == name:
-            t.stopped = True
             raise OutsideActiveHours("stop")
         return value
-
-    def page_step(kind):
-        step(kind)
-        if t.stopped and kind != "close":
-            raise OutsideActiveHours("stop")
 
     class Lock:
         def __enter__(self):
@@ -73,10 +69,14 @@ def trace(monkeypatch):
 
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(safari, "_safari_lock", Lock())
-    t.page = WritePage(answers=t.js, fail=t.fail, before=page_step,
-                       script_kind=lambda js: _js_kind(js) if _js_kind(js) == "reply_key"
-                       else f"js:{_js_kind(js)}")
-    monkeypatch.setattr(page_session, "BROWSER", t.page)
+    monkeypatch.setattr(safari, "_run_applescript",
+                        lambda script, *a, **k: step(_script_kind(script), _script_kind(script) not in t.fail))
+    monkeypatch.setattr(safari, "_paste_text", lambda text: step("paste", "paste" not in t.fail))
+    monkeypatch.setattr(safari, "_run_js",
+                        lambda js, *a, **k: step(f"js:{_js_kind(js)}", t.js.pop(0) if t.js else ""))
+    monkeypatch.setattr(safari, "close_front_tab", lambda: step("close"))
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: step("open", "open" not in t.fail))
+    monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: step("maybe_like"))
@@ -97,8 +97,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(ag, "can_post", lambda *a, **k: (
         step("guard:can_post", (False, "refused") if "can_post" in t.refuse else (True, ""))))
     monkeypatch.setattr(fp, "judge", lambda *a, **k: step("guard:judge_follow", (
-        fp.Verdict(t.follow_refusal, "refused") if "judge_follow" in t.refuse
-        else fp.Verdict(None, relation=fp.Relation.FOLLOWER))))
+        fp.Verdict(t.follow_refusal, "refused") if "judge_follow" in t.refuse else fp.ADMITTED)))
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(cg, "is_duplicate", lambda *a, **k: False)
     monkeypatch.setattr(cg, "note_posted", lambda text: step("note_posted"))
@@ -208,70 +207,11 @@ def test_reply_failed_submit_keeps_the_claim(trace):
     assert POST_URL in trace.claimed
 
 
-def _close_through_safari(trace, monkeypatch, unwalled):
-    """The memory page's close runs the real Safari adapter's close, over a
-    fake `subprocess.run`; returns the list of AppleScripts it started."""
-    scripts = []
-    monkeypatch.setattr(safari.subprocess, "run", lambda argv, **k: scripts.append(argv[-1]))
-    monkeypatch.setattr(safari, "_close_session_tab", unwalled["_close_session_tab"])
-
-    def close():
-        trace.events.append("close")
-        page_session.SafariBrowser().close()
-        page_session.MemoryBrowser.close(trace.page)
-    monkeypatch.setattr(trace.page, "close", close)
-    return scripts
-
-
-@pytest.mark.parametrize("why", ["bedtime", "stop"])
-def test_reply_caught_asleep_mid_steps_closes_its_tab_and_ships_nothing(
-        trace, monkeypatch, unwalled, why):
-    """#300: bedtime or a stop mid-Reply closes its tab through the real
-    `safari._close_session_tab`, which skips `require_active()`, releases
-    the claim and the lock, and writes no ledger row."""
-    scripts = _close_through_safari(trace, monkeypatch, unwalled)
-
-    def asleep(kind):
-        trace.events.append(kind)
-        if kind == "reply_key":
-            if why == "bedtime":
-                clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
-            else:
-                stop_requested(monkeypatch)
-            require_active()
-    trace.page.before = asleep
+def test_reply_stop_mid_steps_releases_claim_and_lock(trace):
+    trace.raise_at = "reply_key"
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(POST_URL, REPLY)
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "release", "close",
-                            "unlock"]
-    assert trace.page.closed == 1
-    [close] = scripts
-    assert "close current tab" in close
-    assert POST_URL not in trace.claimed
-
-
-@pytest.mark.parametrize("write", [
-    lambda: tc.post_tweet(TEXT),
-    lambda: tc.reply_to_tweet(POST_URL, REPLY),
-    lambda: tc.follow_account("someone"),
-    lambda: tc.pin_own_tweet(POST_URL),
-], ids=["post", "reply", "follow", "pin"])
-def test_a_step_that_raises_closes_its_tab_and_records_nothing(trace, monkeypatch, write):
-    """#256: `confirmed_write.run` closed the tab only when its steps
-    returned; the page session now closes it when a step raises, and the
-    error reaches the caller. Bedtime and a stop close it too (#300): see
-    the Reply test above."""
-    def crash(*a, **k):
-        trace.events.append("crash")
-        raise RuntimeError("osascript died")
-    for primitive in ("keys", "run_js"):
-        monkeypatch.setattr(trace.page, primitive, crash)
-    with pytest.raises(RuntimeError, match="osascript died"):
-        write()
-    crashed = trace.events.index("crash")
-    assert trace.events[crashed:][-2:] == ["close", "unlock"]
-    assert trace.page.closed == 1
-    assert not [e for e in trace.events if e.startswith("record:")]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "release", "unlock"]
 
 
 def test_reply_dry_run(trace, monkeypatch):
@@ -330,21 +270,15 @@ def test_follow_quality_refusal_closes_without_clicking(trace, monkeypatch):
                             "close", "unlock"]
 
 
-def test_follow_hands_the_relation_judge_found_to_the_quality_gate(trace, monkeypatch):
-    """#262: the relation is found once per follow, by judge, for the
-    relations the caller asked; the gate on the open profile reads none."""
-    asked, gated = [], []
-    monkeypatch.setattr(fp, "judge", lambda handle, relations: asked.append(relations) or (
-        fp.Verdict(None, relation=fp.Relation.SEED)))
-    monkeypatch.setattr(fp, "relation", lambda handle: pytest.fail("relation found again"))
-    monkeypatch.setattr(fp, "_quality_decision", lambda *a, **k: gated.append(k) or (True, ""))
-    trace.js.extend(["CLICKED", "CLICKED"])
-
-    assert tc.follow_account("someone", relations=fp.SEED_ONLY) is F.FOLLOWED
-    assert tc.follow_account("someone") is F.FOLLOWED
-
-    assert asked == [fp.SEED_ONLY, fp.FOLLOWABLE]
-    assert [k["whitelisted"] for k in gated] == [True, True]
+def test_follow_refused_when_the_whitelist_turns_unreadable_after_admission(trace, monkeypatch):
+    """The quality gate reads the whitelist on the open profile: unreadable
+    by then, the follow stops before the page is scored, without a click
+    or a quality reject."""
+    def unreadable(handle):
+        raise StateUnreadable("whitelist.json is unreadable")
+    monkeypatch.setattr(fp, "is_whitelisted", unreadable)
+    assert tc.follow_account("someone") is F.REFUSED
+    assert trace.events == ["guard:judge_follow", "jitter", "lock", "open", "close", "unlock"]
 
 
 @pytest.mark.parametrize("answer", ["NO_BTN", ""])
@@ -456,33 +390,21 @@ def test_a_write_without_exactly_one_dry_run_exit_never_runs(trace, before_lock,
     assert trace.events == []
 
 
-def test_a_stop_once_the_write_shipped_closes_the_tab_and_keeps_it_shipped(
-        trace, monkeypatch, unwalled):
+def test_stop_at_the_final_close_never_hides_a_shipped_write(trace):
     """The cleanup close after a confirmed write is not part of the write: a
-    stop requested once the Reply was submitted still closes the tab, and
-    the caller learns what shipped."""
-    scripts = _close_through_safari(trace, monkeypatch, unwalled)
-    before = trace.page.before
-
-    def stop_after_submit(kind):
-        before(kind)
-        if kind == "submit":
-            stop_requested(monkeypatch)
-    trace.page.before = stop_after_submit
+    stop raised there returns SHIPPED, so the caller logs what shipped."""
+    trace.raise_at = "close"
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
-    assert len(scripts) == 1
     assert POST_URL in trace.claimed
 
 
-def test_stop_in_after_record_still_raises_after_a_shipped_write(trace):
-    """A stop raised by `after_record`, before the write's bookkeeping is
-    done, reaches the caller once the tab is closed, as before #256."""
-    trace.raise_at = "history"
+def test_stop_at_the_close_after_a_failure_still_raises(trace):
+    trace.fail.add("paste")
+    trace.raise_at = "close"
     with pytest.raises(OutsideActiveHours):
-        tc.post_tweet(TEXT)
-    assert trace.events == ["guard:can_post", "lock", "guard:can_post", "open", "submit",
-                            "record:post", "note_posted", "history", "close", "unlock"]
+        tc.reply_to_tweet(POST_URL, REPLY)
+    assert trace.events[-2:] == ["close", "unlock"]
 
 
 @pytest.mark.parametrize("write", [
@@ -491,13 +413,10 @@ def test_stop_in_after_record_still_raises_after_a_shipped_write(trace):
     lambda: tc.pin_own_tweet(POST_URL),
 ])
 def test_a_stop_during_the_page_steps_records_nothing_and_releases_the_lock(trace, write):
-    """An open refused by the stop opened no tab, so the session closes
-    nothing (#300): the front tab is not its own."""
     trace.raise_at = "open"
     with pytest.raises(OutsideActiveHours):
         write()
     assert trace.events[-2:] == ["open", "unlock"]
-    assert trace.page.closed == 0
     assert not [e for e in trace.events if e.startswith("record:")]
 
 
@@ -515,8 +434,7 @@ def test_a_page_that_does_not_open_fails_the_write_before_any_keystroke(trace, w
     """#251: the open's return was ignored, so a reply whose page never
     opened pressed `r`, pasted and submitted into the front tab. A page that
     does not open ends the write in FAILED: no keystroke, paste, click or
-    page read, no ledger row. The reply button is a click now; the open
-    still fails before it."""
+    page read, no ledger row."""
     trace.fail.add("open")
     outcome = write()
     assert outcome.name == "FAILED" and not outcome
@@ -536,7 +454,7 @@ def test_a_reply_whose_page_does_not_open_stays_replayable(trace):
 
 
 @pytest.mark.parametrize("failing, events", [
-    (1, ["lock", "judge", "claim", "activate", "release", "unlock"]),
+    (1, ["lock", "judge", "claim", "activate", "release", "close", "unlock"]),
     (2, ["lock", "judge", "claim", "activate", "open", "activate", "release", "close", "unlock"]),
 ], ids=["before_open", "after_open"])
 def test_a_reply_whose_safari_does_not_come_to_the_front_sends_nothing(trace, monkeypatch,
@@ -544,16 +462,17 @@ def test_a_reply_whose_safari_does_not_come_to_the_front_sends_nothing(trace, mo
     """#251 review: the Reply's activate ran unbounded and its result was
     ignored, so a wedged Safari held the lock before the open's bound, and
     a failed one sent the keystrokes to another app. It now fails the
-    Reply: no keystroke, no ledger row, the post stays replayable. Before
-    the open, the session has no tab to close (#256): the front tab is not
-    the Reply's."""
-    traced = trace.page.activate
+    Reply: no keystroke, no ledger row, the post stays replayable."""
+    traced = safari._run_applescript
     activations = []
 
-    def activate():
-        activations.append(True)
-        return traced() and len(activations) != failing
-    monkeypatch.setattr(trace.page, "activate", activate)
+    def run(script, *a, **k):
+        ok = traced(script, *a, **k)
+        if _script_kind(script) == "activate":
+            activations.append(script)
+            return ok and len(activations) != failing
+        return ok
+    monkeypatch.setattr(safari, "_run_applescript", run)
 
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
     assert trace.events == events
@@ -563,53 +482,21 @@ def test_a_reply_whose_safari_does_not_come_to_the_front_sends_nothing(trace, mo
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
 
 
-def test_every_keystroke_of_the_reply_and_the_post_is_bounded(trace):
+def test_every_applescript_run_of_the_reply_and_the_post_is_bounded(trace, monkeypatch):
     """#251 review: an unbounded osascript under the Safari lock holds it,
-    and every job behind it, while Safari is wedged. The Safari adapter
-    bounds the activate, the paste and the open itself
-    (test_page_session.py). The reply opens its box with the article's
-    reply button, so the only keystrokes left are the two submits."""
+    and every job behind it, while Safari is wedged."""
+    traced = safari._run_applescript
+    unbounded = []
+
+    def run(script, *a, **k):
+        if not k.get("timeout_s"):
+            unbounded.append(_script_kind(script))
+        return traced(script, *a, **k)
+    monkeypatch.setattr(safari, "_run_applescript", run)
+
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
     assert tc.post_tweet(TEXT) is W.SHIPPED
-    assert trace.page.key_timeouts == [safari.KEYSTROKE_TIMEOUT_S] * 2
-    assert not any('keystroke "r"' in script for script in trace.page.pressed)
-
-
-def test_reply_clicks_that_posts_button_and_never_the_r_key(trace):
-    """Operator 2026-10-04: a reply answers the post it was given. The r key
-    answers whatever X has selected, which on a thread is often the
-    account's own previous reply."""
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
-    [script] = trace.page.scripts
-    assert "__REPLY_CLICK__" in script.js
-    assert "2063500000000000500" in script.js
-    assert '[data-testid="reply"]' in script.js
-    assert not any('keystroke "r"' in pressed for pressed in trace.page.pressed)
-
-
-def test_reply_whose_page_post_is_the_accounts_own_sends_nothing(trace):
-    """A scraped URL can name another handle for the account's own status.
-    The permalink on the page is the authority: nothing is clicked, the
-    status stays claimed, and the caller hears a definitive own-post refusal."""
-    refusals = []
-    trace.js.append(json.dumps({
-        "url": "https://x.com/TheAIShrink/status/2063500000000000500",
-        "result": "own",
-    }))
-    assert tc.reply_to_tweet(POST_URL, REPLY, on_refused=refusals.append) is W.REFUSED
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "close", "unlock"]
-    assert POST_URL in trace.claimed
-    assert refusals == [ra.Refusal.OWN_POST]
-    assert not [e for e in trace.events if e.startswith("record:")]
-    assert not trace.page.pasted
-
-
-def test_reply_whose_button_is_missing_leaves_the_post_fresh(trace):
-    trace.js.append(json.dumps({"url": "", "result": "missing"}))
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
-    assert POST_URL not in trace.claimed
-    assert not trace.page.pasted
+    assert unbounded == []
 
 
 def test_refusal_and_failure_read_apart_in_the_log(trace, monkeypatch):
@@ -631,16 +518,3 @@ def test_a_like_walk_skipping_liked_posts_logs_one_line_each(trace, monkeypatch)
     monkeypatch.setattr(tc, "_already_liked", lambda url: True)
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.ALREADY_LIKED
     assert trace.logs == [f"[LIKE] already liked {POST_URL[-50:]}; skipping."]
-
-
-@pytest.mark.parametrize("url,expected", [
-    ("https://x.com/TheAIShrink/status/2063500000000000500", W.REFUSED),
-    ("https://x.com/someone/status/2063500000000000501", W.FAILED),
-    ("https://x.com/another/status/2063500000000000500", W.FAILED),
-    ("", W.FAILED),
-])
-def test_reply_checks_clicked_status_and_author_before_paste(trace, url, expected):
-    trace.js.append(json.dumps({"url": url, "result": "clicked"}))
-    assert tc.reply_to_tweet(POST_URL, REPLY) is expected
-    assert not trace.page.pasted
-    assert not [e for e in trace.events if e.startswith("record:")]

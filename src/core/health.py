@@ -4,25 +4,19 @@ The whole stack runs through Safari + AppleScript. If Safari hangs (memory
 pressure, redirect loop, OS update, captive portal), every cycle silently
 errors and the bot looks alive but accomplishes nothing. This module:
 
-  1. Counts consecutive browser failures across the whole bot (process-wide,
-     persisted so a restart doesn't lose context): a cycle counts only when
-     its error is a `BrowserFailure`, raised by the browser layer (`src/x`).
-     A bug or a model timeout is logged, never counted (issue #298).
-  2. After RECOVERY_THRESHOLD failures in a row, asks
-     safari_hygiene.restart_safari to force-quit Safari and reopen a fresh
-     window — usually clears whatever wedged it. The restart's cooldown is
-     the only delay: a refused restart is counted nowhere (issue #302).
-  3. Writes a single-line flag into autonomous_log.md when a restart was
-     tried, so the user sees it on return.
+  1. Counts consecutive cycle failures across the whole bot (process-wide,
+     persisted so a restart doesn't lose context).
+  2. After RECOVERY_THRESHOLD failures in a row, force-quits Safari and
+     reopens a fresh window — usually clears whatever wedged it.
+  3. Writes a single-line flag into autonomous_log.md when recovery fires
+     so the user sees it on return.
 
-The counter resets on any successful cycle and after any restart that
-succeeded, whichever path asked for it; another failure leaves it as it
-was. By design this is per-bot (across reply / engage / post / etc.) —
-three browser failures in a row from ANY mix of bots is the trigger, since
-they all share Safari.
+The counter resets on any successful cycle. By design this is per-bot
+(across reply / engage / post / etc.) — three failed cycles in a row from
+ANY mix of bots is the trigger, since they all share Safari.
 """
-import math
 import os
+import sys
 import time
 from datetime import datetime
 from functools import wraps
@@ -31,9 +25,6 @@ from .logger import log
 from .state_errors import StateUnreadable
 from .state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import OutsideActiveHours
-from ..x import safari_hygiene
-from ..x.page_session import BrowserFailure
-from ..x.safari_hygiene import RestartOutcome
 
 HEALTH = StateFile("safari_health.json",
                    {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0},
@@ -41,54 +32,17 @@ HEALTH = StateFile("safari_health.json",
 AUTONOMOUS_LOG_FILE = os.path.join(_PROJECT_ROOT, "autonomous_log.md")
 
 RECOVERY_THRESHOLD = 3      # consecutive cycle failures before we restart
-
-# The types each HEALTH field accepts: the two counters are whole numbers,
-# the recovery time a timestamp.
-FIELD_KINDS = {"consecutive_failures": int, "total_recoveries": int,
-               "last_recovery_ts": (int, float)}
-
-
-def _update(fn):
-    """HEALTH.update, with each field checked before `fn` sees it (#303).
-
-    The file is disposable, and valid JSON edited by hand may still hold a
-    field that is not a count: a string, null, a list, a boolean, a
-    negative number, a fraction for a counter. That field alone goes back
-    to its default with a warning naming it; the valid ones are kept."""
-    return HEALTH.update(lambda data: fn(_checked(data)))
-
-
-def _checked(data: dict) -> dict:
-    for field, default in HEALTH.default().items():
-        value = data.get(field, default)
-        # bool is an int to Python; the comparison also refuses NaN and infinity.
-        if (isinstance(value, bool) or not isinstance(value, FIELD_KINDS[field])
-                or not 0 <= value < math.inf):
-            log.warning(f"[HEALTH] {HEALTH.name}: {field} is {value!r}, not a valid "
-                        f"value: reset to {default}.")
-            value = default
-        data[field] = value
-    return data
+COOLDOWN_SECONDS = 600      # don't restart Safari more than once per 10 min
 
 
 def record_success(label: str = ""):
     """Reset the failure counter. Call from any cycle that completed normally."""
-    _reset(f"{label or 'cycle'} OK")
-
-
-def reset_after_restart(reason: str):
-    """Reset the failure counter after a Safari restart that succeeded.
-    safari_hygiene.restart_safari calls it, whichever path asked."""
-    _reset(f"Safari restarted ({reason})")
-
-
-def _reset(event: str):
     def reset(data):
-        if data["consecutive_failures"] > 0:
-            log.info(f"[HEALTH] {event} — resetting failure counter (was {data['consecutive_failures']}).")
+        if data.get("consecutive_failures", 0) > 0:
+            log.info(f"[HEALTH] {label or 'cycle'} OK — resetting failure counter (was {data['consecutive_failures']}).")
         data["consecutive_failures"] = 0
         return data
-    _update(reset)
+    HEALTH.update(reset)
 
 
 def wrap_job(run, label: str, *, safari_health: bool = True):
@@ -96,9 +50,8 @@ def wrap_job(run, label: str, *, safari_health: bool = True):
 
     An error is logged at ERROR with its traceback in bot.log. A job with
     `safari_health` resets the failure counter on success and hands its
-    error to `record_failure`, which counts a BrowserFailure only; without
-    it, the wrapper never touches the health file. StateUnreadable and
-    OutsideActiveHours are never failures.
+    error to `record_failure`; without it, the job never touches the
+    health file. StateUnreadable and OutsideActiveHours are never failures.
     """
     @wraps(run)
     def job():
@@ -116,7 +69,7 @@ def wrap_job(run, label: str, *, safari_health: bool = True):
     return job
 
 
-def _not_a_failure(label: str, exc: BaseException, safari_health: bool) -> bool:
+def _not_a_failure(label: str, exc: BaseException | None, safari_health: bool) -> bool:
     """Log a StateUnreadable or an OutsideActiveHours, never a cycle failure,
     and say whether `exc` was one. Only a job with `safari_health` is told
     that Safari is not restarted."""
@@ -134,51 +87,51 @@ def _not_a_failure(label: str, exc: BaseException, safari_health: bool) -> bool:
     return True
 
 
-def record_failure(label: str, exc: BaseException) -> bool:
-    """Increment the failure counter. Returns True if Safari was restarted.
+def record_failure(label: str = "", exc: BaseException | None = None) -> bool:
+    """Increment the failure counter. Returns True if recovery was triggered.
 
-    From RECOVERY_THRESHOLD failures in a row, each failure asks
-    safari_hygiene.restart_safari for a restart: its cooldown, its lock and
-    its waking-hours check decide, so two threads crossing the threshold
-    together restart Safari once. A refused restart is counted nowhere; a
-    tried one counts in `total_recoveries` and autonomous_log.md, and one
-    that succeeded has reset the counter.
+    Recovery = quit + relaunch Safari. Idempotent and rate-limited via
+    COOLDOWN_SECONDS so a flapping bot doesn't bounce Safari in a loop.
 
-    `exc` is the cycle's error, handed by `wrap_job`: only a BrowserFailure
-    is counted. A StateUnreadable, an OutsideActiveHours or any other error
-    is logged and not counted, and leaves the counter as it was.
+    `exc` is the cycle's error: a StateUnreadable or an OutsideActiveHours is
+    logged and not counted. Without it, the error in flight is read, for the
+    `safe_run_*` still calling it from their `except` block (#234).
     """
+    if exc is None:
+        exc = sys.exc_info()[1]
     if _not_a_failure(label or "cycle", exc, safari_health=True):
         return False
-    if not isinstance(exc, BrowserFailure):
-        log.info(f"[HEALTH] {label or 'cycle'} failed outside the browser "
-                 f"({type(exc).__name__}). Not a Safari failure, no restart.")
-        return False
+    claimed = []
 
     def count(data):
-        data["consecutive_failures"] += 1
+        data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
         log.info(f"[HEALTH] {label or 'cycle'} FAILED — consecutive = {data['consecutive_failures']}.")
+        if data["consecutive_failures"] < RECOVERY_THRESHOLD:
+            return data
+        now = time.time()
+        if now - data.get("last_recovery_ts", 0) < COOLDOWN_SECONDS:
+            log.info(f"[HEALTH] Recovery already fired in last {COOLDOWN_SECONDS}s — skipping.")
+            return data
+        # Claimed before the restart, which runs outside the lock: a second
+        # failing thread meanwhile finds the cooldown and skips.
+        data["last_recovery_ts"] = now
+        data["total_recoveries"] = data.get("total_recoveries", 0) + 1
+        claimed.append(data["total_recoveries"])
         return data
-    failures = _update(count)["consecutive_failures"]
-    if failures < RECOVERY_THRESHOLD:
+    HEALTH.update(count)
+    if not claimed:
         return False
 
-    log.info(f"[HEALTH] {failures} consecutive failures — asking for a Safari restart.")
-    outcome = _restart_safari()
-    if outcome is RestartOutcome.REFUSED:
-        log.info("[HEALTH] Safari restart refused — no recovery counted.")
-        return False
-
-    def tried(data):
-        data["last_recovery_ts"] = time.time()
-        data["total_recoveries"] += 1
-        return data
-    total = _update(tried)["total_recoveries"]
-    _append_autonomous_flag(label, total, bool(outcome))
-    return bool(outcome)
+    log.warning(f"[HEALTH] {RECOVERY_THRESHOLD}+ consecutive failures — restarting Safari.")
+    ok = _restart_safari()
+    if ok:
+        # Reset on successful recovery so the next cycle starts clean.
+        HEALTH.update(lambda data: {**data, "consecutive_failures": 0})
+    _append_autonomous_flag(label, claimed[0], ok)
+    return ok
 
 
-def _restart_safari() -> RestartOutcome:
+def _restart_safari() -> bool:
     """Force-quit Safari and reopen a fresh window. Best-effort, never raises.
 
     Delegates to safari_hygiene.restart_safari which also force-kills
@@ -186,10 +139,11 @@ def _restart_safari() -> RestartOutcome:
     holding network state). Cookies / localStorage survive — login persists.
     """
     try:
+        from ..x import safari_hygiene
         return safari_hygiene.restart_safari(reason="health_recovery")
     except Exception as e:
         log.warning(f"[HEALTH] Safari restart failed: {e}")
-        return RestartOutcome.FAILED
+        return False
 
 
 def _append_autonomous_flag(label: str, total_recoveries: int, ok: bool):

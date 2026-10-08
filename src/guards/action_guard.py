@@ -14,11 +14,9 @@ minimum interval between same-type actions, and randomized jitter so writes
 never burst. Same intent, different mechanism.
 
 Every executed (or dry-run) write is recorded in the action ledger
-(`src/guards/ledger.py`) as {action, target, ts}; an Original's target is
-the Pending slot it was reserved under, if any, so `original_refusal`
-counts it once. The policy asks the ledger for today's counts, the last
-write of an action and the last follow or unfollow of a handle, and never
-knows where it stores them.
+(`src/guards/ledger.py`) as {action, target, ts}. The policy asks the ledger
+for today's counts, the last write of an action and the last follow or
+unfollow of a handle, and never knows where it stores them.
 """
 import os
 import random
@@ -53,12 +51,8 @@ def count_today(action: str) -> int:
     return _ledger().count(action, now_local().date())
 
 
-def _profile_count(day) -> int:
-    return sum(_ledger().count(action, day) for action in (POST, QUOTE, RETWEET))
-
-
 def profile_count_today() -> int:
-    return _profile_count(now_local().date())
+    return sum(count_today(action) for action in (POST, QUOTE, RETWEET))
 
 
 def debate_turn_authors() -> list:
@@ -141,51 +135,6 @@ def too_soon(action: str) -> str:
 
 
 # --- policy decisions -------------------------------------------------------
-
-def original_refusal(journal, now, besides: Optional[str] = None) -> str:
-    """Why the day's submissions forbid another Original at `now`, or "".
-
-    `journal` is the Slot journal (`src/editorial/slot_journal.py`). An
-    UNCONFIRMED submission writes no ledger row, so `can_post` never sees
-    it; the journal does. One count: the ledger's profile publications,
-    plus the journal's submissions of the day that no POST row names
-    (pending ones, and Slots the Operator marked published after a check).
-    A submission that shipped before a crash kept it from being confirmed
-    has its row, so it counts once. The spacing runs from the latest
-    pending or published submission. `besides`, the Pending slot of the
-    submission being judged, counts for neither."""
-    day = now.date()
-    unnamed = [key for key in journal.submissions(day)
-               if key != besides and not _ledger().count(POST, day, key)]
-    used = _profile_count(day) + len(unnamed)
-    cap = config.posts_ceiling()
-    if used >= cap:
-        return f"daily ceiling reached with pending submissions ({used}/{cap})"
-    last = journal.last_submission(besides)
-    # The jitter's upper bound: every draw `_spacing_gap` can make is shorter.
-    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
-    if last and (now - last).total_seconds() < gap:
-        return f"too soon since the last submission (need ~{gap}s gap)"
-    return ""
-
-
-def reservation_refusal(journal, now, reserved: str, text: str) -> str:
-    """Why `reserved` does not stand for the submission of `text` at `now`,
-    or "".
-
-    The key `original_refusal` and the dedup leave out, and the ledger row
-    names, must be a Pending slot of `now`'s day in the Slot journal whose
-    Draft and source make `text`: a wrong or stale key would free a place
-    in the ceiling, the spacing and the dedup."""
-    if not reserved.startswith(f"{now.date().isoformat()}/"):
-        return f"reservation {reserved!r} is not of today"
-    held = journal.pending_submission(reserved)
-    if held is None:
-        return f"reservation {reserved!r} is not pending"
-    if held != text:
-        return f"reservation {reserved!r} holds another text"
-    return ""
-
 
 def can_post(action: str) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""

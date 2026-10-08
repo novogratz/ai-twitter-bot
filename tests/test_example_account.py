@@ -64,11 +64,6 @@ PRE_187_BOUNDED = {
     "LIKE_BOT_PER_CYCLE": 10, "LIKE_BOT_DAILY_CAP": 500, "FOLLOWBACK_CAP": 8,
     "FOLLOW_ENGAGERS_PER_DAY": 10, "FOLLOW_ENGAGERS_PER_CYCLE": 2,
 }
-# Bounded settings declared since, with their value when no .env sets them:
-# the Operator shortened the Replies on 2026-09-27 (278 characters before).
-NEW_BOUNDED = {"REPLY_MAX_CHARS": 160, "REPLY_MAX_AGE_MINUTES": 15,
-               "REPLY_RISING_MAX_AGE_MINUTES": 45, "REPLY_RISING_MIN_LIKES_PER_MINUTE": 1.0,
-               "REPLY_RISING_MIN_LIKES": 30}
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings"}
@@ -98,10 +93,6 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 
     def run(environ):
         settings.load(env_file=str(env_file), environ=dict(environ))
-        # The start refuses without it (1c03629c): a new install writes [].
-        state = Path(state_store.root())
-        state.mkdir(parents=True, exist_ok=True)
-        (state / "whitelist_discovered.json").write_text("[]")
         monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
         main.main()
         assert calls == [], "the dry run called a model"
@@ -114,8 +105,7 @@ def test_theaishrink_keeps_the_jobs_and_ceilings_it_had_before_187(dry_run):
     shown = dry_run({})
     assert set(shown) == set(PRE_187) | NEW_KEYS
     assert {key: shown[key] for key in PRE_187} == PRE_187
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
-        **PRE_187_BOUNDED, **NEW_BOUNDED}
+    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == PRE_187_BOUNDED
     assert shown["settings_warnings"] == []
 
 
@@ -138,12 +128,11 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     # Its [limits] lowers the day's ceiling to 4, and the targets under it.
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
-    assert bounded == {**PRE_187_BOUNDED, **NEW_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
+    assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
-    assert sorted(os.listdir(project / "state")) == ["example", "theaishrink"]
-    assert os.listdir(project / "state" / "example") == ["whitelist_discovered.json"]
+    assert os.listdir(project / "state") == ["theaishrink"]
     assert os.listdir(theirs) == ["action_ledger.json"]
     assert (theirs / "action_ledger.json").read_text() == "not json"
 
@@ -180,7 +169,6 @@ def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
     """The dry run's ceiling is the one the editorial job enforces."""
     from src.core import config
     from src.editorial import editorial_bot
-    from src.editorial.slot_journal import MemoryJournal
     from src.guards import action_guard
 
     monkeypatch.setattr(account, "_loaded", {})
@@ -191,7 +179,7 @@ def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
     now = editorial_bot._local()
     state = {"date": now.date().isoformat(), "published": [],
              "slots": {clock: "published" for clock in ("06:30", "09:00", "10:00", "12:30")}}
-    assert action_guard.original_refusal(MemoryJournal(state), now) == (
+    assert editorial_bot._pending_refusal(state, now) == (
         "daily ceiling reached with pending submissions (4/4)")
 
 

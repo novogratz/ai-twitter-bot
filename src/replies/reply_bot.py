@@ -1,4 +1,5 @@
 """Reply bot: finds AI tweets and posts troll replies."""
+from datetime import timedelta
 from ..x import x_urls
 from ..core import config, settings
 from ..core.logger import log
@@ -72,8 +73,13 @@ def run_reply_cycle():
         if x_urls.is_reply_like_tweet({"url": url, "text": data.get("tweet_text") or data.get("text") or ""}):
             log.info(f"[REPLY] Looks like a thread reply - skipping {url}")
             continue
-        # The Reply admission refuses a post over REPLY_MAX_AGE_MINUTES
-        # (2026-09-29), or of unknown age, before the send.
+
+        # HARD RECENCY CHECK: the status ID carries the post time; no ID, or
+        # older than 48h, is skipped.
+        age = x_urls.age(url)
+        if age is None or age > timedelta(hours=48):
+            log.info(f"[REPLY] No status ID or older than 48h - skipping: {url}")
+            continue
         candidates.append(reply_pipeline.Candidate(
             url, data.get("tweet_text") or data.get("text") or "", "", reply=data["reply"],
             pattern=data.get("pattern", ""), provider=data.get("provider", ""),

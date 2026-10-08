@@ -1,18 +1,18 @@
 """Respect list — handles the bot must NEVER criticize by name.
 
 User incident 2026-05-06 PM: "Some big influencers blocked the bot ...
-you got to be careful not attacking them." A post or reply that names an
-influencer in a sharp commentary reads as a personal attack and gets us
-blocked by the very people we want to engage with.
+you got to be careful not attacking them." The bot's spicy / hot take /
+quote-tweet / breakout paths can occasionally name an influencer in a
+sharp commentary — that reads as a personal attack and gets us blocked
+by the very people we want to engage with.
 
 This module exposes a SOFT list (different from BLOCKLIST in config.py
 which is HARD — never engage at all). Respect list = engage normally
-(reply, like, follow), BUT the prompt block asks never to:
-  - name them in an Original, or in a Reply to someone else's post
-  - criticize them by name, even in a Reply to their own post
-The text check is looser: it refuses their `@handle`, save the addressee's,
-and their name next to a mocking word, but lets a neutral sentence naming
-them pass.
+(reply, like, follow), BUT:
+  - NEVER name them in spicy / hot take / news / breakout content
+  - NEVER quote-tweet them with a critical observation
+  - REPLIES must comment on the IDEA in their tweet, not on them
+  - No "@xxxx" tag in our standalone posts
 
 Public API:
   load() -> set of lowercased handles (no @)
@@ -105,8 +105,8 @@ def render_block() -> str:
         "==================================================\n"
         "You may engage (replies, likes) with these accounts' content,\n"
         "but you must NEVER:\n"
-        "- name them in a post of your own, or in a reply to someone else's post\n"
-        "- criticize them by name, even in a reply to their own post\n"
+        "- name them in a hot take, news post, breakout or spicy take\n"
+        "- quote-tweet them with a critical observation\n"
         "- ridicule them, be ironic about them as people, or mock their work\n"
         "If the idea in their post deserves criticism, criticize the IDEA,\n"
         "never the person. When in doubt -> SKIP.\n\n"

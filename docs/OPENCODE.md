@@ -52,9 +52,9 @@ call profile's model (`OLLAMA_MODEL` for the Replies):
 LLM_FALLBACK_CLI=opencode
 ```
 
-`OPENCODE_FALLBACK_MODEL` has no effect: an old `.env` that sets it starts,
-and the start logs it as ignored. Use `LLM_FALLBACK_MODEL` to force one
-model on a codex or gemini fallback, or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
+`OPENCODE_FALLBACK_MODEL` has no effect; it is still accepted so an old `.env`
+starts. Use `LLM_FALLBACK_MODEL` to force one model on a codex or gemini
+fallback, or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
 news, replies, hot takes, quote commentary, and every other `run_llm()` caller.
 
 ## Skills
@@ -85,20 +85,7 @@ Or via a direct Qwen API endpoint if available.
 `src/core/llm_client.py` builds the CLI command:
 
 ```
-opencode run [--dangerously-skip-permissions] [--format json] "<prompt>"
-```
-
-No `--model` (operator 2026-05-15): the model is the one this repository's
-`opencode.json` sets. The CLI runs in `llm_client.NEUTRAL_CWD`, outside the
-repository (issue #249), where opencode would find no project config and
-read only the global `~/.config/opencode/opencode.json`. The adapter passes
-this one process `OPENCODE_CONFIG=<repository>/opencode.json`: opencode
-merges that file over the global config, so its `model` and `provider` keys
-win ([precedence order](https://opencode.ai/docs/config)). Check what a call
-resolves with, no model called:
-
-```bash
-cd "$(mktemp -d)" && OPENCODE_CONFIG=<repository>/opencode.json opencode debug config
+opencode run --model <model> [--format json] [--dangerously-skip-permissions] "<prompt>"
 ```
 
 - Default format → raw text output, works for most generation

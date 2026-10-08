@@ -5,6 +5,7 @@ import threading
 from zoneinfo import ZoneInfo
 
 from ..core import config
+from ..core.logger import log
 
 
 WAKE = time(4, 30)
@@ -76,14 +77,16 @@ def require_active() -> None:
 
 
 def awake_job(fn):
-    """Also gate queued jobs: one that starts outside waking hours does
-    nothing. A job that reaches bedtime mid-cycle raises OutsideActiveHours,
-    which `health.wrap_job` catches and logs."""
+    """Also gate queued jobs and work that crossed the BEDTIME boundary."""
     @wraps(fn)
     def run(*args, **kwargs):
         if not may_act():
             return None
-        return fn(*args, **kwargs)
+        try:
+            return fn(*args, **kwargs)
+        except OutsideActiveHours:
+            log.info("[%s] Stopped for bedtime.", fn.__name__)
+            return None
     return run
 
 

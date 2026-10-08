@@ -52,8 +52,7 @@ _Avoid_: startup burst, boot post
 **Pending slot**:
 A Slot whose Original was submitted without a definite outcome; it is never
 retried until the operator clears it, and until then it counts as a Profile
-publication for the day's ceiling and the post spacing, and its text as a
-recent post for the dedup.
+publication for the day's ceiling and the post spacing.
 
 **Slot journal**:
 The one owner of the Toronto day's editorial state, kept in
@@ -61,8 +60,7 @@ The one owner of the Toronto day's editorial state, kept in
 Editor's feedback, the Pending slot reserved, confirmed or released, the
 Slots closed for the day, the source URLs already used, the recent texts
 (published and pending), the day's submissions and the latest one. The
-editorial cycle, the reach report and the post chokepoint ask it; none reads
-the file.
+editorial cycle and the reach report ask it; neither reads the file.
 _Avoid_: editorial state, state dict
 
 **Write outcome**:
@@ -119,9 +117,8 @@ Reply, the reply search, a Relation's Reply, an Original. `llm_client`
 declares each once, in `SURFACES`, with its model setting, its provider
 setting and its CLI options; a caller names a surface and reads no model or
 provider setting. Only a Relation's CLI, forced by its caller, overrides the
-provider; a Relation whose CLI is missing runs on the Reply provider. Every
-Reply, debate, replyback and the VIP scan included, follows
-`REPLY_LLM_PROVIDER`, and `AI_CLI` when it is blank.
+provider. Debate, replyback and the VIP scan run, for now, on surfaces bound
+to `AI_CLI` rather than `REPLY_LLM_PROVIDER`, pending the Operator's decision.
 _Avoid_: route, model setting, provider (each only a part of it)
 
 **Reply call**:
@@ -133,9 +130,9 @@ _Avoid_: voice (reserved for the persona)
 
 **Relation**:
 How the Replies treat one particular account, set by the Account under its
-handle: its own Reply prompt, and the CLI that writes it. The Account also
-sets the VIP scan's default prompt, for a scanned handle without a Relation.
-The engine names no one.
+handle: its own Reply prompt and the CLI that writes it, or a fixed dossier.
+The Account also sets the VIP scan's default prompt, for a scanned handle
+without a prompt of its own. The engine names no one.
 _Avoid_: VIP prompt, persona, special case
 
 **Reply generator**:
@@ -158,8 +155,7 @@ _Avoid_: rate-limit code, quota error, exit 75
 The selection that turns the posts a Reply job scraped into its candidates,
 from what the job declares: the oldest post it answers, root posts only or
 not, the author a scanned profile's posts must carry, the Account's niche or
-not, and the order. The oldest post never exceeds the one Reply admission
-accepts. A post without a URL or text, or of unknown or negative
+not, and the order. A post without a URL or text, or of unknown or negative
 age, is never a candidate. The job keeps what it scrapes, its budget and its
 Reply call.
 _Avoid_: selection filters, candidate filter
@@ -178,10 +174,9 @@ _Avoid_: rally, round, comeback
 
 **Reply admission**:
 The Operator's rules a Reply must pass before it ships: first on the post
-it answers (author, Blocked account, own post, already Replied, older than
-the oldest post a Reply answers, Waking hours, Debate turn cap), then again with the spacing since the last Reply and the
-final text, trimmed to the longest Reply on a sentence end. Only a Reply it
-admits is sent.
+it answers (author, Blocked account, own post, already Replied, Waking hours,
+Debate turn cap), then again with the spacing since the last Reply and the
+final text. Only a Reply it admits is sent.
 _Avoid_: gate, prefilter, reply filter
 
 **Replied store**:
@@ -198,19 +193,9 @@ handle and language, the domain its prompts name, the Slots and their angles, th
 topics and trusted hosts, the relevance filter, its network and niche:
 the accounts the jobs answer, scan, visit or skip, the niche patterns and
 the X searches, and the Relations; and next to it the Voice files and the
-Relations' prompts. Optional `perspective` is an editorial preference for
-Originals and Replies, subordinate to evidence and hard rules, never passed
-to the independent review. An Account may tighten an engine ceiling or floor,
+Relations' prompts. An Account may tighten an engine ceiling or floor,
 never lift it, and add Blocked accounts, never remove one.
 _Avoid_: profile (the account's page on X), bot, persona
-
-**Pinned account**:
-An account the Account lists in `network.pinned_tracked`, or
-`PINNED_TRACKED_HANDLES` when `.env` sets it: the profiles early_bird
-(first 30) and mega_watch (first 12) pick from at random, the list's order
-deciding which are kept, a Blocked account left out. The Operator picks
-them; nothing adds to them.
-_Avoid_: tracked account, curated account
 
 **Engager**:
 Someone who replied to or mentioned the account. The follow policy knows
@@ -220,8 +205,8 @@ _Avoid_: commenter, fan
 
 **Seed account**:
 An account the Operator lists as worth following, in the whitelist, or that
-the curator promoted to it before its removal (issue #299); the only kind
-the account follows without a prior relationship, and never unfollows.
+the curator promoted to it; the only kind the account follows without a
+prior relationship, and never unfollows.
 _Avoid_: whitelisted account, tier, discovered account
 
 **Follow-back**:
@@ -230,9 +215,8 @@ _Avoid_: reciprocal follow, reciprocity
 
 **Stranger**:
 An account that is neither a Seed account, a follower, nor an Engager; never
-followed, whoever asks. The follow policy finds the relation itself, once
-per follow; a job may only narrow the relations it follows (engage and the
-`follow` skill ask for Seed accounts), and no job declares it.
+followed, whoever asks. The follow policy finds the relation itself; no job
+declares it.
 _Avoid_: discovered account, feed account
 
 **Follow refusal**:
@@ -241,8 +225,7 @@ Blocked account (matched as Reply admission and likes match it), too soon
 (the follow spacing), cap reached (the daily cap, the following
 ceiling or the ratio brake, reached or unreadable), quality rejected (the
 quality gate, on the profile or within 30 days), or refused (every other
-rule: handle, Stranger, a relation outside the ones the caller follows,
-whitelist, anti-churn). Too soon and cap reached concern the
+rule: handle, Stranger, whitelist, anti-churn). Too soon and cap reached concern the
 account's follow budget, so a later cycle may follow the same account. A
 whitelist or action ledger unreadable before the profile opens is no
 refusal: it stops the job, and no account is marked tried.
@@ -257,8 +240,7 @@ _Avoid_: followed list, registry, follow cache
 
 **Follow run**:
 One cycle of a follow job, from its candidates to the follow chokepoint:
-it skips the Followed accounts and the accounts it already tried, asks for
-the relations the job follows, asks
+it skips the Followed accounts and the accounts it already tried, asks
 nothing more once the follow budget's cap is reached, and hands each
 outcome back to the job, which keeps its own caps. Bedtime or an
 unreadable state file ends it; any other error costs one pick, which the
@@ -303,22 +285,6 @@ A curated AI documentation page used for teaching on quiet news days, never
 presented as new.
 _Avoid_: knowledge doc, knowledge source, curated documentation
 
-### Browser
-
-**Page session**:
-One read's or one write's hold on Safari, from the Safari lock taken to
-the lock released:
-it opens its page when asked, reads nothing when that page does not open,
-and closes each tab it opened on every path, overnight or after a stop too. A session inside another one
-shares its page and opens nothing; asked for another page, it reads nothing.
-_Avoid_: browser session (the x.com login), tab, visit
-
-**Browser failure**:
-An error the browser layer lets reach a job, such as a page that did not
-open. The one kind of error that counts toward a Safari restart; a bug or a
-model timeout never does.
-_Avoid_: Safari error, Safari failure (for any error of a cycle)
-
 ### State
 
 **Guarded state file**:
@@ -340,8 +306,3 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
-
-**Reply approval**: an independent quality review result bound to the prepared
-Reply text and parent status ID. The write requires the matching approval.
-**Reply evidence**: bounded exact passages from trusted parent links or the
-Account’s configured reference pages, supplied as untrusted data to both calls.

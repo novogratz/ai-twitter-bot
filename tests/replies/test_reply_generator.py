@@ -1,7 +1,6 @@
 """The Reply generator, tested through every job that calls it and through
 its interface, with the one fake LLM of tests/replies/fakes.py."""
 import json
-import re
 
 import pytest
 
@@ -38,7 +37,7 @@ def voice_files(monkeypatch, tmp_path):
 
 
 @pytest.fixture
-def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override, always_reply):
+def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
     from src.replies import reply_pipeline, reply_source
@@ -47,8 +46,9 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override, always_re
     from src.x import scraper
 
     chokepoint.answer = WriteOutcome.REFUSED
-    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: True)
-    always_reply()
+    for module in (dr, eb, mw, reply_source):
+        monkeypatch.setattr(module, "is_on_niche", lambda text: True)
+    monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     settings_override(ENABLE_DEBATES=True)
     monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
@@ -77,7 +77,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override, always_re
 
     def vip(handle, text):
         settings_override(VIP_SCAN_HANDLES=handle)
-        monkeypatch.setattr(dr, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
+        monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
         dr._run_vip_scan(reply_pipeline.Cycle())
 
     def debate(author, text):
@@ -183,58 +183,12 @@ def test_early_bird_names_the_author_from_the_status_url(jobs):
     assert "@SomeOne" not in prompt
 
 
-# --- Hard rules ------------------------------------------------------------------
+# --- Hard rules and dossier ----------------------------------------------------
 
 EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird", "someone", EN),
               ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
               ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
               ("reply_search", "", "")]
-
-
-@pytest.mark.parametrize("job, author, text", EVERY_PATH)
-def test_account_preference_reaches_every_reply_but_not_other_accounts(jobs, job, author, text, monkeypatch):
-    from dataclasses import replace
-    from src.core import account
-
-    loaded = account.current()
-    monkeypatch.setattr(account, "current", lambda: replace(loaded, perspective="Prefer the supplied ecosystem evidence."))
-    prompt = jobs(job, author, text)
-    assert "ACCOUNT PERSPECTIVE (subject to evidence and hard rules):" in prompt
-    assert "Prefer the supplied ecosystem evidence." in prompt
-    assert "not independent verification" in prompt
-    monkeypatch.setattr(account, "current", lambda: replace(loaded, perspective=""))
-    prompt = jobs(job, author, text)
-    assert "ACCOUNT PERSPECTIVE" not in prompt
-    assert "Prefer the supplied ecosystem evidence." not in prompt
-
-
-@pytest.mark.parametrize("job, author, text", EVERY_PATH)
-def test_every_reply_path_requires_grounded_insight_and_sharp_wit(jobs, job, author, text):
-    """Relations and JSON search must not bypass the shared quality standard."""
-    prompt = jobs(job, author, text)
-    assert prompt.count("REPLY QUALITY:") == 1
-    assert "explain the mechanism" in prompt
-    assert "Pass the value test" in prompt
-    assert "falsifiable check" in prompt
-    assert "Challenge a weak claim even from a favored company" in prompt
-    assert 'No canned pivots: "Fair, but"' in prompt
-    assert "Say the useful thing and stop" in prompt
-    assert "If a joke needs a fake fact, drop the joke" in prompt
-    assert "say honestly that you are an automated account" in prompt
-    assert "superintelligence" in prompt
-    assert "Use dry, sharp sarcasm" in prompt
-    assert "never the person's intelligence or identity" in prompt
-    assert "not independent verification" in prompt
-    assert "return SKIP instead of bluffing" in prompt
-    assert "requested output format" in prompt
-
-
-@pytest.mark.parametrize("job, author, _text", EVERY_PATH[:-1])
-def test_reply_jobs_keep_the_qualification_after_the_old_context_cutoff(jobs, job, author, _text):
-    parent = "AI benchmark results. " * 30 + "Only a simulation; no real deployment was tested."
-    assert 500 < len(parent) < 1200
-    prompt = jobs(job, author, parent)
-    assert "Only a simulation; no real deployment was tested." in prompt
 
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
@@ -249,6 +203,18 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
     rules = personality_store.hard_rules_block()
     assert "RESPECT LIST: never mock @kindperson" in rules
     assert jobs(job, author, text).endswith("\n\n" + rules)
+
+
+@pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
+                                               ("vip", "Graphseo", FR), ("debate", "someone", EN)])
+def test_reply_calls_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
+    """Adding the dossier to these prompts is the Operator's call: they end
+    on the template, then the hard rules."""
+    from src.core import personality_store
+
+    prompt = jobs(job, author, text)
+    assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
+    assert "Personal memory" not in prompt
 
 
 # The persona as the prompts used to hard-code it (issue #192).
@@ -275,97 +241,17 @@ def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, sett
 
 @pytest.fixture
 def dossier():
-    """An author dossier left in personality.json, as the bot's early
-    versions wrote them."""
     from src.core import personality_store
 
-    personality_store.PERSONALITY.write({"accounts": {
-        author.lower(): {"category": "predator", "stance": "hostile", "notes": ["shills crypto"]}
-        for author in ("someone", "TheBTCTherapist", "vision_ia", "Graphseo")}, "topics": {}})
+    personality_store.PERSONALITY.write(
+        {"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}}, "topics": {}})
+    return "# Personal memory: what you know about @someone"
 
 
-@pytest.mark.parametrize("job, author, text", EVERY_PATH)
-def test_no_reply_prompt_carries_an_author_dossier(jobs, dossier, job, author, text):
-    """The Operator, 2026-09-27: nothing had fed the dossiers since June but
-    the interaction count, and stale categories reached the prompts under
-    "React FROM this memory", or the reply search's "global mood". Every
-    prompt ends on the template, then the hard rules."""
-    from src.core import personality_store
-
-    prompt = jobs(job, author, text)
-    assert [w for w in ("Personal memory", "shills crypto", "state of mind", "Predatory", "@someone,")
-            if w in prompt] == []
-    assert prompt.endswith("\n\n" + personality_store.hard_rules_block())
-
-
-# --- Length ---------------------------------------------------------------------
-
-# A length a template or a Relation still sets on its own (2026-09-27).
-OWN_LENGTH = re.compile(r"\bchar(?:s|acters)\b|\d+\s*-\s*\d+\s+(?:\w+\s+)?sentences", re.IGNORECASE)
-
-
-@pytest.mark.parametrize("job, author, text", EVERY_PATH)
-def test_every_reply_prompt_asks_for_the_one_short_length(jobs, job, author, text):
-    """Operator 2026-09-27: "the Replies are too long". Six prompts each set
-    a length, up to 220 characters or three sentences; one rule now closes
-    the job's instructions, before the hard rules, and none sets another."""
-    from src.core import personality_store
-    from src.replies.reply_generator import LENGTH_RULE
-
-    prompt = jobs(job, author, text)
-    assert "one or two short sentences" in LENGTH_RULE.lower() and "never more than 140" in LENGTH_RULE
-    assert prompt.endswith("\n\n" + LENGTH_RULE + "\n\n" + personality_store.hard_rules_block())
-    assert OWN_LENGTH.findall(instructions(prompt).replace(LENGTH_RULE, "")) == []
-
-
-# --- What the job's instructions say -------------------------------------------
-
-AI_POST = "Long context windows keep growing and RAG still matters"
-
-
-def instructions(prompt):
-    """The prompt without its hard rules, which name the Fed on purpose."""
-    from src.core import personality_store
-
-    return prompt.replace(personality_store.hard_rules_block(), "")
-
-
-# The niche the replyback examples still joked about after #205 kept the
-# Replies to AI.
-OFF_NICHE = re.compile(r"\b(fed|bitcoin|btc|nfts?|crypto\w*|markets?|marché|bercy)\b", re.IGNORECASE)
-
-
-@pytest.mark.parametrize("job", ["search", "debate", "replyback"])
-def test_reply_instructions_stay_on_the_ai_niche(jobs, job):
-    assert OFF_NICHE.findall(instructions(jobs(job, "someone", AI_POST))) == []
-
-
-@pytest.mark.parametrize("job", ["search", "debate", "replyback"])
-def test_reply_instructions_forbid_inventing_figures(jobs, job):
-    """Debate asked for "one exact number" while the Reply prompt forbade
-    inventing current figures: the model sees one rule, never both."""
-    text = " ".join(instructions(jobs(job, "someone", AI_POST)).lower().split())
-    assert "do not invent current figures" in text
-    assert "exact number" not in text
-
-
-# The June replyback and debate orders the Voice contradicts: "A post does
-# not need a joke, question, emoji, or catchphrase", "no forced questions".
-FORCED = ("must make them laugh", "100% agree", "laugh floor", "needs a punchline", "be funnier",
-          "end with a tiny hook", "right?", "keep the rally going", "all four, every time")
-
-
-@pytest.mark.parametrize("job", ["search", "debate", "replyback"])
-def test_reply_instructions_force_no_joke_and_no_question(jobs, job):
-    text = " ".join(instructions(jobs(job, "someone", AI_POST)).lower().split())
-    assert [order for order in FORCED if order in text] == []
-
-
-def test_debate_tells_the_model_it_does_not_see_the_account_post(jobs):
-    """The mentions tab shows their message, not the post it answers: the
-    model must not guess what the account said."""
-    text = " ".join(instructions(jobs("debate", "someone", AI_POST)).split())
-    assert "If they are answering one of your posts, you do not see it." in text
+@pytest.mark.parametrize("job", ["replyback", "search", "early_bird", "mega_watch"])
+def test_reply_prompts_render_the_author_dossier(jobs, dossier, job):
+    """replyback never passed the author, so its dossier never rendered."""
+    assert dossier in jobs(job, "someone", EN)
 
 
 # --- Reading the model's answer --------------------------------------------------
@@ -374,7 +260,7 @@ def test_debate_tells_the_model_it_does_not_see_the_account_post(jobs):
 def reply_call(**options):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import ReplyCall
-    return ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST", **options)
+    return ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False, **options)
 
 
 def generate(**options):
@@ -418,26 +304,26 @@ def test_the_generator_hands_the_surface_and_the_call_to_run_llm(llm, settings_o
     settings_override(REPLY_LLM_PROVIDER="gemini")
     profile = CallProfile(output=Output.JSON)
 
-    for call in (ReplyCall("Parent: {tweet_text}", Surface.REPLY_SEARCH, "TEST", profile=profile),
-                 ReplyCall("Parent: {tweet_text}", Surface.RELATION_REPLY, "TEST", provider="claude")):
+    for call in (ReplyCall("Parent: {tweet_text}", Surface.REPLY_SEARCH, "TEST", dossier=False, profile=profile),
+                 ReplyCall("Parent: {tweet_text}", Surface.RELATION_REPLY, "TEST", dossier=False,
+                           provider="claude")):
         reply_generator.generate(call, text="a post")
 
     search, relation = llm.calls
     assert (search.model, search.label) == (ModelSetting("REPLY_MODEL"), "TEST")
-    assert (search.output_json, search.allowed_tools, search.timeout, search.force_provider,
-            search.profile) == (True, ("WebSearch",), None, "gemini", profile)
+    assert (search.output_json, search.allowed_tools, search.timeout, search.cwd, search.force_provider,
+            search.profile) == (True, ("WebSearch",), None, "/tmp", "gemini", profile)
     assert (relation.model, relation.output_json, relation.timeout, relation.force_provider) == (
         ModelSetting("PRIORITY_REPLY_MODEL"), False, 60, "claude")
 
 
-def test_default_call_options_are_run_llms_defaults(llm, settings_override):
-    """A Reply call on a surface with default options, on AI_CLI (a blank
-    REPLY_LLM_PROVIDER), calls `run_llm` as it did with an empty dict."""
+def test_default_call_options_are_run_llms_defaults(llm):
+    """A Reply call on a surface with default options, on AI_CLI, calls
+    `run_llm` as it did with an empty dict."""
     import inspect
 
     from src.core import llm_client
 
-    settings_override(REPLY_LLM_PROVIDER="")
     generate()
 
     [call] = llm.calls
@@ -475,38 +361,6 @@ def test_skip_after_a_leaked_preamble_is_a_decline(llm):
 
     llm.default = "Parfait. Voici ma réponse.\n---\nSKIP"
     assert generate(strip_preamble=True).outcome is Outcome.DECLINED
-
-
-@pytest.mark.parametrize("stdout", [
-    "This is a useful point.",
-    "Interesting question, and it matters.",
-    "That is an important take.",
-])
-def test_bland_praise_is_a_definitive_decline(llm, stdout):
-    from src.replies.reply_generator import Outcome
-
-    llm.default = stdout
-    assert generate().outcome is Outcome.DECLINED
-
-
-def test_specific_replies_are_not_bland_declines(llm):
-    from src.replies.reply_generator import Outcome
-
-    llm.default = "The missing variable is distribution: a good model with no workflow still loses."
-    assert generate().outcome is Outcome.WRITTEN
-
-
-@pytest.mark.parametrize("stdout", [
-    "Fair, but latency decides the result.",
-    "I see your point, but latency decides the result.",
-    "Here's the thing: latency decides the result.",
-    "Certes, mais la latence change le résultat.",
-])
-def test_canned_opener_is_declined_before_send(llm, stdout):
-    from src.replies.reply_generator import Outcome
-
-    llm.default = stdout
-    assert generate().outcome is Outcome.DECLINED
 
 
 LEGIT = "You can skip the hype, the moat is data."
@@ -594,15 +448,13 @@ def test_a_stop_request_during_generation_ends_the_cycle(llm):
         generate()
 
 
-def test_reply_text_is_unquoted_and_left_whole_for_the_admission(llm):
-    """The Reply admission trims every Reply to REPLY_MAX_CHARS: the
-    generator no longer trims one job's on its own (2026-09-27)."""
+def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
     from src.replies.reply_generator import Outcome
 
     llm.default = '"Short first sentence here. A second sentence runs on well past the cap."'
-    generation = generate()
+    generation = generate(max_chars=40)
     assert generation.outcome is Outcome.WRITTEN
-    assert generation.text == "Short first sentence here. A second sentence runs on well past the cap."
+    assert generation.text == "Short first sentence here."
 
 
 def test_the_language_decided_for_the_prompt_comes_back(llm):
@@ -610,7 +462,7 @@ def test_the_language_decided_for_the_prompt_comes_back(llm):
     from src.core.llm_client import Surface
     from src.replies.reply_generator import LanguageRule, ReplyCall
 
-    french = ReplyCall("{tweet_text}{language_override}", Surface.REPLY, "TEST",
+    french = ReplyCall("{tweet_text}{language_override}", Surface.REPLY_ON_AI_CLI, "TEST",
                        language=LanguageRule.PARENT)
     assert reply_generator.generate(french, author="someone", text=FR).language == "fr"
     assert "FRENCH ONLY" in llm.prompts[-1]

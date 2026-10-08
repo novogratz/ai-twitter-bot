@@ -58,7 +58,7 @@ def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):
     for _ in range(health.RECOVERY_THRESHOLD + 1):
         try:
             rs.load_replied()
-        except Exception as exc:
-            assert health.record_failure("direct_reply", exc) is False
+        except Exception:
+            assert health.record_failure("direct_reply") is False
     assert restarts == [], "a corrupt store is not a Safari failure"
     assert not os.path.exists(health.HEALTH.path), "the failure counter is left alone"

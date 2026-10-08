@@ -8,54 +8,23 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-- **More natural replies**: start with the point and use specific wit rather
-  than canned pivots such as "Fair, but" or lecture openers. Generation and
-  the write checks refuse these prefixes. Humor serves the technical insight;
-  the bot remains honest about its identity when asked.
-- **Openly pro-Grok and pro-xAI**: the Account's `perspective` favors Musk's
-  AI work, supported Grok improvements and useful technical insights. Grok/xAI
-  searches and priority authors get more attention. Praise follows evidence;
-  model versions are never guessed, and the independent editor still checks facts.
-  AI is the central obsession and Musk's AI ecosystem is a recurring focus;
-  author-filtered AI searches emphasize Musk, xAI and Grok with fresh angles.
-  Replies challenge sweeping claims with a testable point and give readers
-  something new to test, decide or understand, even on a favored company's claim.
 - **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
-  and again at the write: blocked accounts, the account's own posts, a post
-  already answered, links without an
-  author handle and quiet posts over 15 minutes old (`REPLY_MAX_AGE_MINUTES`) are refused.
-  The write clicks that post's reply button and never the `r` key, so a reply
-  cannot land on one of the account's own replies in the thread.
-  Rising posts selected by the Reply source can use `REPLY_RISING_MAX_AGE_MINUTES`
-  (45 minutes at most) when their like velocity clears the operator bounds. Every reply prompt carries the Voice, the
+  and again at the write: blocked accounts, the account's own posts and links without an
+  author handle are refused. Every reply prompt carries the Voice, the
   operator's hard rules and the respect list, and a reply or original that
   names a Respected account is refused at the write, dry run included; a
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **English posts and replies in ASD-STE100 Simplified Technical English** for
-  their form, a hard rule; the Voice keeps the tone ([policy](docs/EDITORIAL_POLICY.md#value-and-voice)).
-- **Short replies**: one or two sentences, about 100 characters in every reply
-  prompt; Reply admission trims to `REPLY_MAX_CHARS` (160 at most) on a sentence
-  end ([policy](docs/EDITORIAL_POLICY.md#runtime-rules)).
-- **Reply targets favor active conversations**: search and feed candidates are
-  ranked by likes plus double-weighted replies per minute, and generic praise
-  is declined before sending.
-- **Sharper technical replies**: all reply paths ask for a precise mechanism,
-  missing assumption or useful test, with dry sarcasm aimed at hype and claims.
-  AI and superintelligence claims need evidence; unknown facts are never filled
-  in for effect. Prompts retain up to 1,200 characters of each parent and supplied
-  context, while replies keep the same short length.
 - **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
-  ambiguous outcome counts toward both until the operator clears it, and its
-  story toward the duplicate check of every original.
+  ambiguous outcome counts toward both until the operator clears it.
 - **No automatic quote tweets, reposts, self-recycling, or burst threads.**
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
@@ -101,9 +70,7 @@ the default browser: the bot opens every page in Safari), Python 3.12+,
 default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
 fallback, codex for instance, with one exception: the Replies to @Graphseo run
 on the Claude CLI whenever it is installed (his Relation's `provider` in
-`account.toml`), else on `REPLY_LLM_PROVIDER` with a warning. Every Reply,
-debate, replyback and the VIP scan included, runs on `REPLY_LLM_PROVIDER`,
-and on `AI_CLI` when it is blank. A CLI runs `NEWS_MODEL`,
+`account.toml`). A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the
 call and is logged at start, as is a fallback the code ignores.
@@ -122,9 +89,8 @@ settings commented out at their default, since `.env` would win over an
 Account's `[limits]`; every setting, its default and bounds are in
 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
 `.env` is read once at start, so any change needs a restart: a key the engine
-does not know is ignored with a `[SETTINGS]` warning naming it, a badly typed
-value stops the start with a message naming the key, and `--dry-run` reports
-both.
+does not know, or a badly typed value, stops the start with a message naming
+the key, and `--dry-run` names the same keys.
 
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
 `accounts/<name>/account.toml`, which holds the handle, the language of the
@@ -133,7 +99,7 @@ feeds, Evergreen topics, trusted hosts, the relevance filter and the
 searches of the Trending posts, and the network and niche the reply, like and
 follow jobs use: handle lists, niche patterns, X searches, and the Blocked
 accounts it adds to the engine's `BLOCKLIST`, which it can never shrink. It
-also holds the Relations: the prompt, and the provider, the Replies give a
+also holds the Relations: the prompt, provider or dossier the Replies give a
 particular account, by handle, and the default prompt of the VIP scan, in
 `relations/`. The Voice files sit next to it. It is read once at start, like
 `.env`: a
@@ -150,7 +116,6 @@ uv run --with-requirements requirements.txt python main.py --dry-run  # print po
 uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
 uv run --with-requirements requirements.txt python main.py --post-only   # editorial originals only
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
-uv run --with-requirements requirements.txt python bin/show_prompts.py [LABEL]  # the prompts as the jobs assemble them; no model, browser or state write
 ```
 
 `bot.log`, at the root, contains runtime activity. The state of the Account
@@ -169,7 +134,7 @@ Account folder, versioned; the bot reads them and never writes them, and one
 missing or unreadable stops the job that needs it. While the following count
 (`following_count.json`, else `followed_accounts.json`) or the whitelist
 (`whitelist.json` in the Account folder, `whitelist_discovered.json` for the
-handles the curator promoted before its removal in issue #299) is missing or unreadable, every follow is
+handles the curator promoted) is missing or unreadable, every follow is
 refused; it also stops `bin/mass_unfollow.py`.
 
 Scheduled jobs are defined in `main.py`. `src/editorial/editorial_bot.py`
@@ -184,11 +149,9 @@ whitelist, the ledger's Debate turns and the followers the followers page
 showed (`followers_seen.json`): a Stranger is never followed, whichever job
 asks, and neither is a Blocked account, matched as Reply admission matches
 it. `follow_account` alone adds an account followed, or found already
-followed, to `followed_accounts.json`. `follow_engagers_job`,
-`engage_job` and `followback_job` follow through a Follow run
-(`src/account/follow_run.py`), which skips those accounts before any
-profile opens; `engage_job` asks the
-policy for Seed accounts only, and never finds a relation itself. The reply
+followed, to `followed_accounts.json`. `follow_engagers_job` follows through
+a Follow run (`src/account/follow_run.py`), which skips those accounts
+before any profile opens. The reply
 jobs live in `src/replies/`, the follow, like, pin and follower-count jobs in
 `src/account/`, and shared foundations in `src/core/`. The legacy
 content modules are gone (issue #110): every module under `src/` is reached
@@ -204,64 +167,12 @@ The configured reply provider and browser pacing still apply.
 
 [MIT](LICENSE) — © 2026 Benoit Floch.
 
-
-Reply quality (2026-10-04): all Reply lanes, including prewritten search drafts,
-use `src/replies/reply_quality.py` before the write. The pipeline reads at most
-two HTTPS links from trusted hosts: links in the parent and context first, then
-matching optional `[[reply_sources]]` Account entries (`pattern`, `url`). It uses
-the editorial source reader, rejects untrusted redirects, applies a four-second
-socket timeout per fetch, and caches successes and failures in memory for 60
-seconds. It supplies at most twelve exact passages. Shortened links are not
-expanded; absent evidence permits stable knowledge or clear conditional points,
-not unsupported current claims.
-
-A separate JSON review uses the ordinary Reply model and provider, without the
-Account's brand perspective or Voice. Each provider attempt is capped at twenty
-seconds. The reviewer checks relevance, added value, natural phrasing and factual
-support; current claims need supporting passage IDs. This is an additional model
-call per draft and may reduce reply volume. Model review reduces errors but does
-not prove a claim true. Malformed, failed or negative review sends nothing and
-leaves the parent retryable; exhausted providers stop the cycle. The approval
-binds the exact prepared draft to its parent status ID, and `reply_to_tweet`
-checks that approval under the page lock before claiming or opening the post.
-The existing own-post, duplicate, age, spacing, length and waking-hours rules
-still apply. No new persistent state or change to publishing ceilings.
-
-2026-10-05 — Neutral AI analysis replaces the recurring pro-Grok/xAI stance.
-Replies answer the parent's actual subject, use the same standard across labs,
-and praise specific supported progress when relevant. The independent reviewer
-rejects unrelated brand/executive mentions and promotional pivots. Discovery
-queries now cover evaluation, inference, research, training and reasoning; the
-extra ecosystem-only priority entries are removed. Existing AI coverage, trusted
-sources, Voice files, guardrails, caps and pacing remain in force.
-
-2026-10-05 — Reply and like page selectors use the outer post's unquoted
-User-Name header for its status link. A quote embedded in the same article is
-never the surrounding post's identity. A Reply also checks the clicked status
-and author against admission before pasting; an own author is refused, and an
-unknown or mismatched target fails without submission. Existing dedup and
-publication rules apply. Missing unquoted headers fail closed.
-
-2026-10-05 — Reply quality also requires one useful observation tied to the
-parent. Generic advice, empty contrarian claims, jargon without a point and
-jokes that do not fit the parent are rejected. Missing essential context means
-skip, not invention. The tone stays clear and conversational; wit is optional
-and no human identity or lived experience is fabricated.
-
-2026-10-05 — Operator requested broader Reply coverage. Six additional AI-only
-search queries discover quiet technical questions and builder posts without a
-minimum like count: retrieval, tuning, agent debugging, inference, prototypes
-and reliability. They join the existing rotating query pool; the per-cycle
-slice, schedule, root-post selection, age limits, quality review, own-post and
-duplicate refusal, pacing and waking hours are unchanged. Original, like and
-follow discovery are unchanged. This expands eligibility, not a promise of a
-specific reply count.
-
-2026-10-07 — Operator requested restoration of the version on main on the
-morning of October 6: commit 93c55653. Runtime code, Account configuration and
-tests return to that snapshot. This removes the later composer-permalink check
-that blocked replies, SI wording substitutions, promotional perspective, added
-discovery queries and subsequent topic/cache changes. The snapshot retains its
-own-author refusal, status-ID reply deduplication, independent quality review,
-AI niche, pacing and publishing limits. Production state and .env are preserved.
-Deployment takes effect on the next explicitly requested start or restart.
+2026-10-07 — Operator requested restoration of the code that was on main on
+September 26, 2026. The last main commit before September 27 in Toronto time
+was 348c82bc (September 25 at 21:18); no September 26 commit exists. Tracked
+code, Account files, tests and documentation return to that snapshot. This
+explicit rollback supersedes later behavior mandates and restores the snapshot's
+checks and settings, including its Reply behavior without the later independent
+Reply quality review. Production state, .env and untracked files are preserved.
+The running bot is not restarted; deployment takes effect on the next explicitly
+requested start or restart.

@@ -1,13 +1,5 @@
 """Reading X pages in Safari: feeds, search, profiles, mentions, our latest
-post and its replies, plus the blank-page recovery the scrapes feed.
-
-Each scrape reads its page through a page session. When the page does not
-open, it reads nothing and gives the answer it gives on any failed read:
-[] for the tweet lists, None for our latest post. A tweet scrape whose page
-did not open counts it as a blank page, as a timed-out read, once its
-session has closed its tab and released the Safari lock: a wedged Safari
-whose `open location` times out every time still triggers the restart. The
-feed refresh and our latest post do not count it."""
+post and its replies, plus the blank-page recovery the scrapes feed."""
 import json
 import subprocess
 import threading
@@ -16,8 +8,7 @@ from ..core import config, settings
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
 from ..guards.active_hours import OutsideActiveHours
-from . import page_session, safari, x_urls
-from .page_session import PageNotOpened
+from . import safari
 
 # Reactive black-screen recovery: track consecutive blank pages.
 # When Safari renders an empty app shell (service worker stale state), every
@@ -56,25 +47,22 @@ _LEGIT_EMPTY_LABELS = {"mentions"}
 def _trigger_black_screen_recovery(reason_detail: str) -> None:
     """Serialize reactive dark-screen recovery.
 
-    Called from scrape code that often already holds a page session: the
-    session nested here shares its lock and closes nothing, so that owner
-    restarts Safari immediately; other threads block until the recovered
-    x.com page has been warmed and verified.
+    Called from scrape code that often already holds _safari_lock. The RLock
+    lets that owner restart Safari immediately; other threads block until the
+    recovered x.com page has been warmed and verified.
     """
     if not _blank_recovery_lock.acquire(blocking=False):
         log.info("[SCRAPE] Black-screen recovery already in progress; skipping duplicate trigger.")
         return
     try:
-        with page_session.session("SCRAPE"):
+        with safari._safari_lock:
             try:
                 from . import safari_hygiene
                 ok = safari_hygiene.restart_safari(reason="black_screen_recovery")
                 if ok:
                     log.info(f"[SCRAPE] Black-screen recovery completed ({reason_detail}).")
-                elif ok is safari_hygiene.RestartOutcome.REFUSED:
-                    log.info(f"[SCRAPE] Black-screen recovery refused, Safari untouched ({reason_detail}).")
                 else:
-                    log.warning(f"[SCRAPE] Black-screen recovery failed ({reason_detail}).")
+                    log.warning(f"[SCRAPE] Black-screen recovery skipped/failed ({reason_detail}).")
             except Exception as e:
                 log.warning(f"[SCRAPE] Black-screen recovery crashed ({reason_detail}): {e}")
     finally:
@@ -82,8 +70,7 @@ def _trigger_black_screen_recovery(reason_detail: str) -> None:
 
 
 def _record_timed_out_scrape(label: str) -> None:
-    """Treat repeated Safari JS timeouts, and tweet pages that did not open
-    (an `open location` past its bound among them), like blank X renders."""
+    """Treat repeated Safari JS timeouts like blank X renders."""
     _record_blank_page(is_home_feed="home feed" in label, label=label)
 
 
@@ -133,18 +120,16 @@ def _reset_blank_page_count():
 
 def refresh_feed():
     """Open X home feed and refresh it so new tweets load."""
-    try:
-        with page_session.session("SCRAPE") as page:
-            log.info("Refreshing X feed...")
-            page.open("https://x.com/home", settle_s=3)
-    except PageNotOpened:
-        pass
+    with safari._safari_lock:
+        log.info("Refreshing X feed...")
+        safari.open_url("https://x.com/home")
+        time.sleep(3)
+        safari.close_front_tab()
 
 
 def _scrape_profile_quality() -> dict:
     """Read followers count + bio + name from the CURRENTLY LOADED profile
-    tab (no extra navigation): the page of the enclosing page session, the
-    follow's. Best-effort: {} on any failure."""
+    tab (no extra navigation). Best-effort: {} on any failure."""
     js = """
     (function() {
         var out = {followers: "", bio: "", name: ""};
@@ -161,8 +146,7 @@ def _scrape_profile_quality() -> dict:
     })()
     """
     try:
-        with page_session.session("SCRAPE") as page:
-            raw = page.run_js(js, 15)
+        raw = safari._run_js(js, 15, log_prefix="[SCRAPE]")
         if raw:
             return json.loads(raw)
     except json.JSONDecodeError:
@@ -171,9 +155,8 @@ def _scrape_profile_quality() -> dict:
 
 
 def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int = 200):
-    """Run JS on the page of the enclosing page session to extract tweets,
-    or on the front tab outside one. Returns list of dicts; each `text` is
-    cut to `text_limit` characters."""
+    """Run JS on the current Safari page to extract tweets. Returns list of
+    dicts; each `text` is cut to `text_limit` characters."""
     import json as _json
 
     js_code = """
@@ -249,66 +232,66 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
     # block waiting on a different app being frontmost — that was causing the
     # 15s timeouts to dominate the entire engagement loop.
     def _try_once(timeout_s: int) -> str:
-        return page.run_js(js_code, timeout_s, activate=True, raise_timeout=True)
+        return safari._run_js(js_code, timeout_s, log_prefix="[SCRAPE]",
+                              activate=True, raise_timeout=True)
 
-    with page_session.session("SCRAPE") as page:
-        raw = ""
+    raw = ""
+    try:
+        # First attempt: 30s. Safari can be slow on first JS injection after
+        # a fresh tab load (was 15s — too tight, dominant failure mode).
         try:
-            # First attempt: 30s. Safari can be slow on first JS injection after
-            # a fresh tab load (was 15s — too tight, dominant failure mode).
+            raw = _try_once(30)
+        except subprocess.TimeoutExpired:
+            # One retry: bring Safari to front explicitly, settle, try again.
+            log.info(f"[SCRAPE] First JS attempt timed out for {label}; retrying after activate.")
+            safari._run_applescript('tell application "Safari" to activate')
+            time.sleep(2)
             try:
                 raw = _try_once(30)
             except subprocess.TimeoutExpired:
-                # One retry: bring Safari to front explicitly, settle, try again.
-                log.info(f"[SCRAPE] First JS attempt timed out for {label}; retrying after activate.")
-                page.activate()
-                page.wait(2)
-                try:
-                    raw = _try_once(30)
-                except subprocess.TimeoutExpired:
-                    log.info(f"[SCRAPE] Both attempts timed out for {label}.")
-                    _record_timed_out_scrape(label)
-                    return []
-
-            # The page script always answers, so "" means osascript failed: the
-            # failure is logged by _run_js and is not a blank page.
-            if not raw:
-                log.info(f"[SCRAPE] JS failed for {label}.")
-                return []
-            if raw == 'NO_ARTICLES':
-                log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
-                _record_blank_page(is_home_feed="home feed" in label, label=label)
-                return []
-            if raw.startswith('ARTICLES_'):
-                log.info(f"[SCRAPE] {label}: {raw}")
-                _record_blank_page(is_home_feed="home feed" in label, label=label)
+                log.info(f"[SCRAPE] Both attempts timed out for {label}.")
+                _record_timed_out_scrape(label)
                 return []
 
-            data = sanitize_for_json(_json.loads(raw))
-            tweets = [{
-                "url": t["u"],
-                "text": t["t"],
-                "author": t["a"],
-                "likes": int(t.get("l") or 0),
-                "replies": int(t.get("r") or 0),
-                "translated_from": t.get("tl") or "",
-                "is_reply": bool(t.get("ir") or False),
-                # Bug 2026-06-05 (retweets 140/day → 0): the JS extracted the
-                # <time datetime> but this mapping DROPPED it, so every candidate
-                # had unknown age and the hard 48h freshness gate skipped 100% of
-                # feed/search candidates ("No viable candidates this cycle").
-                "timestamp": t.get("ts") or "",
-                "views": int(t.get("v") or 0),
-            } for t in data]
-            _reset_blank_page_count()
-            log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
-            return tweets
-        except (OutsideActiveHours, PageNotOpened):
-            raise
-        except Exception as e:
-            log.info(f"[SCRAPE] Exception for {label}: {e}")
+        # The page script always answers, so "" means osascript failed: the
+        # failure is logged by _run_js and is not a blank page.
+        if not raw:
+            log.info(f"[SCRAPE] JS failed for {label}.")
+            return []
+        if raw == 'NO_ARTICLES':
+            log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
             _record_blank_page(is_home_feed="home feed" in label, label=label)
             return []
+        if raw.startswith('ARTICLES_'):
+            log.info(f"[SCRAPE] {label}: {raw}")
+            _record_blank_page(is_home_feed="home feed" in label, label=label)
+            return []
+
+        data = sanitize_for_json(_json.loads(raw))
+        tweets = [{
+            "url": t["u"],
+            "text": t["t"],
+            "author": t["a"],
+            "likes": int(t.get("l") or 0),
+            "replies": int(t.get("r") or 0),
+            "translated_from": t.get("tl") or "",
+            "is_reply": bool(t.get("ir") or False),
+            # Bug 2026-06-05 (retweets 140/day → 0): the JS extracted the
+            # <time datetime> but this mapping DROPPED it, so every candidate
+            # had unknown age and the hard 48h freshness gate skipped 100% of
+            # feed/search candidates ("No viable candidates this cycle").
+            "timestamp": t.get("ts") or "",
+            "views": int(t.get("v") or 0),
+        } for t in data]
+        _reset_blank_page_count()
+        log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
+        return tweets
+    except OutsideActiveHours:
+        raise
+    except Exception as e:
+        log.info(f"[SCRAPE] Exception for {label}: {e}")
+        _record_blank_page(is_home_feed="home feed" in label, label=label)
+        return []
 
 
 def is_own_post(tweet: dict) -> bool:
@@ -352,17 +335,16 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
     if not _profile_visit_allowed(username):
         log.info(f"[SCRAPE] profile visit blocked (home/search-only mandate): @{username}")
         return []
-    label = f"@{username}"
-    try:
-        with page_session.session("SCRAPE") as page:
-            profile_url = f"https://x.com/{username}"
-            log.info(f"[SCRAPE] Visiting profile: {profile_url}")
-            page.open(profile_url, settle_s=8)
-            page.scroll()
-            return _scrape_tweets_from_page(label, max_tweets)
-    except PageNotOpened:
-        _record_timed_out_scrape(label)
-        return []
+    with safari._safari_lock:
+        profile_url = f"https://x.com/{username}"
+        log.info(f"[SCRAPE] Visiting profile: {profile_url}")
+        safari.open_url(profile_url)
+        time.sleep(8)
+        safari._scroll_page()
+
+        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets)
+        safari.close_front_tab()
+        return tweets
 
 
 def scrape_mentions(max_tweets: int = 20):
@@ -371,32 +353,32 @@ def scrape_mentions(max_tweets: int = 20):
     debates... reply to other people replies and get her on a roll'). The
     mentions tab renders standard tweet articles, so the shared page scraper
     applies; best-effort [] on any failure."""
-    try:
-        with page_session.session("SCRAPE") as page:
-            log.info("[SCRAPE] Opening mentions notifications...")
-            page.open("https://x.com/notifications/mentions", settle_s=8)
-            page.scroll(2)
-            return _scrape_tweets_from_page("mentions", max_tweets)
-    except PageNotOpened:
-        _record_timed_out_scrape("mentions")
-        return []
+    with safari._safari_lock:
+        log.info("[SCRAPE] Opening mentions notifications...")
+        safari.open_url("https://x.com/notifications/mentions")
+        time.sleep(8)
+        for _ in range(2):
+            safari._scroll_page()
+        tweets = _scrape_tweets_from_page("mentions", max_tweets)
+        safari.close_front_tab()
+        return tweets
 
 
 def scrape_home_feed(max_tweets: int = 15):
     """Scrape tweets from the home feed (For You / algorithmic)."""
-    try:
-        with page_session.session("SCRAPE") as page:
-            log.info("[SCRAPE] Opening home feed...")
-            page.open("https://x.com/home", settle_s=8)
+    with safari._safari_lock:
+        log.info("[SCRAPE] Opening home feed...")
+        safari.open_url("https://x.com/home")
+        time.sleep(8)
 
-            # Scroll deep: the top of For You is often stale or already seen.
-            # Each scroll reveals ~8-12 posts; cap at 24 scrolls to stay bounded.
-            page.scroll(max(6, min(24, max_tweets // 6)))
+        # Scroll deep — reply to everything means we need to surface many tweets.
+        # Each scroll reveals ~8-12 posts; cap at 15 scrolls to stay bounded.
+        for _ in range(max(4, min(15, max_tweets // 7))):
+            safari._scroll_page()
 
-            return _scrape_tweets_from_page("home feed", max_tweets)
-    except PageNotOpened:
-        _record_timed_out_scrape("home feed")
-        return []
+        tweets = _scrape_tweets_from_page("home feed", max_tweets)
+        safari.close_front_tab()
+        return tweets
 
 
 def scrape_following_feed(max_tweets: int = 15):
@@ -406,35 +388,35 @@ def scrape_following_feed(max_tweets: int = 15):
     /home and click the 'Following' tab via JS before scraping. Falls back to
     whatever loaded if the tab can't be located.
     """
-    # Click the "Following" tab.
-    click_js = """
-    (function() {
-        var tabs = document.querySelectorAll('[role="tab"]');
-        for (var i = 0; i < tabs.length; i++) {
-            var t = tabs[i].textContent.trim().toLowerCase();
-            if (t === 'following' || t === 'abonnements' || t === 'suivi(e)s') {
-                tabs[i].click();
-                return 'CLICKED';
+    with safari._safari_lock:
+        log.info("[SCRAPE] Opening Following feed...")
+        safari.open_url("https://x.com/home")
+        time.sleep(8)
+
+        # Click the "Following" tab.
+        click_js = """
+        (function() {
+            var tabs = document.querySelectorAll('[role="tab"]');
+            for (var i = 0; i < tabs.length; i++) {
+                var t = tabs[i].textContent.trim().toLowerCase();
+                if (t === 'following' || t === 'abonnements' || t === 'suivi(e)s') {
+                    tabs[i].click();
+                    return 'CLICKED';
+                }
             }
-        }
-        return 'NO_TAB';
-    })()
-    """
-    try:
-        with page_session.session("SCRAPE") as page:
-            log.info("[SCRAPE] Opening Following feed...")
-            page.open("https://x.com/home", settle_s=8)
-            page.run_js(click_js, 8)
+            return 'NO_TAB';
+        })()
+        """
+        safari._run_js(click_js, 8, log_prefix="[SCRAPE]")
 
-            page.wait(4)
-            # Following is chronological, so go lower than the first viewport
-            # before the 15-minute filter starves the sweep.
-            page.scroll(max(6, min(18, max_tweets // 7)))
+        time.sleep(4)
+        # Scroll proportionally to the requested depth (same as home feed).
+        for _ in range(max(2, min(8, max_tweets // 12))):
+            safari._scroll_page()
 
-            return _scrape_tweets_from_page("following feed", max_tweets)
-    except PageNotOpened:
-        _record_timed_out_scrape("following feed")
-        return []
+        tweets = _scrape_tweets_from_page("following feed", max_tweets)
+        safari.close_front_tab()
+        return tweets
 
 
 def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200):
@@ -445,95 +427,81 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
     dead-tweet filter dropping everything).
     """
     import urllib.parse
-    f_param = "top" if tab == "top" else "live"
-    search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
-    label = f"search '{query}' ({f_param})"
-    try:
-        with page_session.session("SCRAPE") as page:
-            log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
-            page.open(search_url, settle_s=8)
-            page.scroll(2)
-            return _scrape_tweets_from_page(label, max_tweets, text_limit)
-    except PageNotOpened:
-        _record_timed_out_scrape(label)
-        return []
+    with safari._safari_lock:
+        f_param = "top" if tab == "top" else "live"
+        search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
+        log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
+        safari.open_url(search_url)
+        time.sleep(8)
+        safari._scroll_page()
+        safari._scroll_page()
 
-
-_LOCATION_JS = "location.href"
-
-
-def open_latest_own_post(page, tag: str, settle_s: float) -> bool:
-    """From our profile, open our latest post with the keyboard and wait
-    `settle_s`. False, logged, when the keys failed or the front tab is not
-    one of our status pages: a walk that stayed on our profile shows our
-    other posts where a reader expects the replies."""
-    if not page.keys(safari.FIRST_TWEET_KEYS):
-        log.info(f"[{tag}] Could not open our latest post; nothing read.")
-        return False
-    page.wait(settle_s)
-    reached = page.run_js(_LOCATION_JS)
-    if x_urls.author(reached) != config.BOT_HANDLE.lower():
-        log.info(f"[{tag}] Our latest post did not open, front tab is "
-                 f"{reached[:120] or 'unknown'}; nothing read.")
-        return False
-    return True
+        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
+        safari.close_front_tab()
+        return tweets
 
 
 def scrape_own_tweet_and_replies():
     """Visit own profile, open latest tweet, scrape the tweet text and reply texts.
     Returns {"own_tweet": str, "replies": [{"user": str, "text": str}]} or None."""
-    js_code = r"""
-    (function() {
-        var articles = document.querySelectorAll('article[data-testid="tweet"]');
-        if (articles.length < 2) return JSON.stringify({own_tweet: '', replies: []});
-        var ownEl = articles[0].querySelector('[data-testid="tweetText"]');
-        var ownText = ownEl ? ownEl.textContent.trim() : '';
-        var replies = [];
-        for (var i = 1; i < Math.min(articles.length, 8); i++) {
-            var a = articles[i];
-            var textEl = a.querySelector('[data-testid="tweetText"]');
-            var text = textEl ? textEl.textContent.trim() : '';
-            if (!text) continue;
-            var userEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
-            var user = userEl ? userEl.textContent.trim() : '';
-            var url = '';
-            var links = a.querySelectorAll('a[href*="/status/"]');
-            for (var l of links) {
-                var h = l.getAttribute('href');
-                if (h && h.match(/\/status\/\d+$/)) {
-                    url = 'https://x.com' + h;
-                    break;
+    with safari._safari_lock:
+        log.info("[REPLYBACK] Opening own profile...")
+        safari.open_url(config.BOT_PROFILE_URL)
+        time.sleep(5)
+
+        log.info("[REPLYBACK] Opening latest tweet...")
+        safari._navigate_to_first_tweet()
+        time.sleep(5)
+
+        # Scroll down to load replies
+        safari._run_applescript('''
+        tell application "System Events"
+            repeat 3 times
+                key code 125
+                delay 0.5
+            end repeat
+        end tell
+        ''')
+        time.sleep(2)
+
+        js_code = r"""
+        (function() {
+            var articles = document.querySelectorAll('article[data-testid="tweet"]');
+            if (articles.length < 2) return JSON.stringify({own_tweet: '', replies: []});
+            var ownEl = articles[0].querySelector('[data-testid="tweetText"]');
+            var ownText = ownEl ? ownEl.textContent.trim() : '';
+            var replies = [];
+            for (var i = 1; i < Math.min(articles.length, 8); i++) {
+                var a = articles[i];
+                var textEl = a.querySelector('[data-testid="tweetText"]');
+                var text = textEl ? textEl.textContent.trim() : '';
+                if (!text) continue;
+                var userEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
+                var user = userEl ? userEl.textContent.trim() : '';
+                var url = '';
+                var links = a.querySelectorAll('a[href*="/status/"]');
+                for (var l of links) {
+                    var h = l.getAttribute('href');
+                    if (h && h.match(/\/status\/\d+$/)) {
+                        url = 'https://x.com' + h;
+                        break;
+                    }
                 }
+                replies.push({user: user, text: text.substring(0, 200), url: url});
             }
-            replies.push({user: user, text: text.substring(0, 200), url: url});
-        }
-        return JSON.stringify({own_tweet: ownText.substring(0, 200), replies: replies});
-    })()
-    """
-    try:
-        with page_session.session("REPLYBACK") as page:
-            log.info("[REPLYBACK] Opening own profile...")
-            page.open(config.BOT_PROFILE_URL, settle_s=5)
+            return JSON.stringify({own_tweet: ownText.substring(0, 200), replies: replies});
+        })()
+        """
+        import json
+        try:
+            raw = safari._run_js(js_code, 30, log_prefix="[REPLYBACK]", activate=True)
+            if raw:
+                data = json.loads(raw)
+                log.info(f"[REPLYBACK] Found {len(data.get('replies', []))} replies on latest tweet")
+                safari.close_front_tab()
+                return data
+        except json.JSONDecodeError as e:
+            log.info(f"[REPLYBACK] Scraping failed: {e}")
 
-            log.info("[REPLYBACK] Opening latest tweet...")
-            if not open_latest_own_post(page, "REPLYBACK", 5):
-                return None
-
-            # Scroll down to load replies
-            page.keys('''
-            tell application "System Events"
-                repeat 3 times
-                    key code 125
-                    delay 0.5
-                end repeat
-            end tell
-            ''', timeout_s=safari.SCROLL_TIMEOUT_S)
-            page.wait(2)
-
-            data = page.read_json(js_code, 30, activate=True)
-    except PageNotOpened:
+        safari.close_front_tab()
         return None
-    if data is None:
-        return None
-    log.info(f"[REPLYBACK] Found {len(data.get('replies', []))} replies on latest tweet")
-    return data

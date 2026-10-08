@@ -8,7 +8,6 @@ import pytest
 from src.core import state_store
 from src.core.state_errors import StateUnreadable
 from src.core.state_store import DISPOSABLE, GUARDED, StateFile
-from src.x.page_session import PageNotOpened
 
 CORRUPT = '{"handles": {"half'
 
@@ -110,13 +109,13 @@ def _corrupt(tmp_path, name):
 
 def _engage(monkeypatch):
     from src.account import engage_bot
-    monkeypatch.setattr("src.x.twitter_client.follow_account", lambda *a, **k: pytest.fail("followed"))
+    monkeypatch.setattr(engage_bot, "follow_account", lambda *a, **k: pytest.fail("followed"))
     engage_bot.run_engage_cycle()
 
 
 def _followback(monkeypatch):
     from src.account import followback_bot
-    monkeypatch.setattr("src.x.twitter_client.follow_account", lambda *a, **k: pytest.fail("followed"))
+    monkeypatch.setattr(followback_bot, "follow_account", lambda *a, **k: pytest.fail("followed"))
     followback_bot.run_followback_cycle()
 
 
@@ -141,10 +140,10 @@ def _follow_engagers(monkeypatch):
     follow_engagers_bot.run_follow_engagers_cycle()
 
 
-def _follow(monkeypatch):
-    from src.x import twitter_client
-    monkeypatch.setenv("DRY_RUN", "1")
-    twitter_client.follow_account("karpathy")
+def _curator(monkeypatch):
+    from src.account import account_curator as ac
+    monkeypatch.setattr(ac, "_author_engagements", lambda: {"goodfinance": 9})
+    ac.run_curator_cycle()
 
 
 def _editorial(monkeypatch):
@@ -173,6 +172,11 @@ def _validate(monkeypatch):
                            "table, because the eval setup decides the score.", kind="original")
 
 
+def _personality(monkeypatch):
+    from src.core import personality_store
+    personality_store.render_account_block("someone")
+
+
 @pytest.mark.parametrize("name, job", [
     ("followed_accounts.json", _engage),
     ("followed_accounts.json", _followback),
@@ -181,11 +185,12 @@ def _validate(monkeypatch):
     ("pin_daily_state.json", _pin),
     ("pin_history.json", _pin),
     ("follow_engagers_state.json", _follow_engagers),
-    ("whitelist_discovered.json", _follow),
+    ("whitelist_discovered.json", _curator),
     ("editorial_state.json", _editorial),
     ("tweet_history.json", _post),
     ("tweet_history.json", _babysit),
     ("tweet_history.json", _validate),
+    ("personality.json", _personality),
 ])
 def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypatch, tmp_path,
                                                             settings_override):
@@ -204,7 +209,7 @@ def test_an_unreadable_history_stops_the_editorial_cycle_before_a_draft(monkeypa
     """The review dedups the Draft against tweet_history.json: read after
     the Draft, an unreadable history spent the Attempt for nothing."""
     from datetime import datetime
-    from src.editorial import editorial_bot as editorial, slot_journal
+    from src.editorial import editorial_bot as editorial
     from tests.helpers import TORONTO, clock
     path = _corrupt(tmp_path, "tweet_history.json")
     clock(monkeypatch, datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO))
@@ -214,7 +219,7 @@ def test_an_unreadable_history_stops_the_editorial_cycle_before_a_draft(monkeypa
     with pytest.raises(StateUnreadable):
         editorial.run_editorial_cycle()
 
-    assert not slot_journal.STATE.read().get("attempts")
+    assert not editorial._read_state().get("attempts")
     assert path.read_text() == CORRUPT
 
 
@@ -227,9 +232,8 @@ def test_the_history_writer_leaves_an_unreadable_history_alone(tmp_path):
 
 
 def test_an_interaction_never_erases_unreadable_dossiers(tmp_path):
-    """engagement_log.log_reply bumps an interaction count after every
-    Reply, and swallows the error: the Reply stays logged, the file stays
-    intact."""
+    """engagement_log.log_reply bumps a dossier after every Reply, and
+    swallows the error: the Reply stays logged, the dossiers stay intact."""
     from src.core import engagement_log
     path = _corrupt(tmp_path, "personality.json")
     engagement_log.log_reply("https://x.com/someone/status/2063500000000000100", "a reply", "reply")
@@ -340,8 +344,7 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [
         {"url": fresh("someone", n=i), "text": "post"} for i in range(3)])
-    from src.replies import reply_source
-    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: True)
+    monkeypatch.setattr(dr, "is_on_niche", lambda text: True)
     from src.replies import reply_generator
     from src.x import twitter_client
     monkeypatch.setattr(reply_generator, "run_llm", lambda *a, **k: pytest.fail("model called"))
@@ -361,7 +364,7 @@ def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, 
     """The Draft prompt carries the respect list: the cycle stops before the
     model call, and no Attempt is spent."""
     from datetime import datetime
-    from src.editorial import editorial_bot as editorial, slot_journal
+    from src.editorial import editorial_bot as editorial
     from src.x import twitter_client
     from tests.helpers import TORONTO, clock, scheduled_job
     path = _corrupt(operator_folder, "respect_list.json")
@@ -376,7 +379,7 @@ def test_the_editorial_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, 
 
     scheduled_job("editorial_job")()
 
-    assert not slot_journal.STATE.read().get("attempts")
+    assert not editorial._read_state().get("attempts")
     assert "respect_list.json is unreadable" in caplog.text
     assert path.read_text() == CORRUPT
 
@@ -397,13 +400,38 @@ def test_health_updates_are_serialised(monkeypatch):
         return data
     monkeypatch.setattr(health.HEALTH, "read", slow_read)
 
-    threads = [threading.Thread(target=health.record_failure, args=("job", PageNotOpened("job")))
+    threads = [threading.Thread(target=health.record_failure, args=("job", RuntimeError("job")))
                for _ in range(40)]
     for t in threads:
         t.start()
     for t in threads:
         t.join()
     assert real_read()["consecutive_failures"] == 40
+
+
+def test_a_failure_during_a_safari_restart_does_not_restart_it_again(monkeypatch):
+    from src.core import health
+    monkeypatch.setattr(health, "RECOVERY_THRESHOLD", 1)
+    monkeypatch.setattr(health, "_append_autonomous_flag", lambda *a: None)
+    restarting, release = threading.Event(), threading.Event()
+    restarts = []
+
+    def blocked_restart():
+        restarts.append(1)
+        restarting.set()
+        release.wait(5)
+        return True
+    monkeypatch.setattr(health, "_restart_safari", blocked_restart)
+
+    first = threading.Thread(target=health.record_failure, args=("first", RuntimeError("first")))
+    first.start()
+    try:
+        assert restarting.wait(5)
+        assert health.record_failure("second", RuntimeError("second")) is False
+    finally:
+        release.set()
+        first.join()
+    assert restarts == [1]
 
 
 # --- codex_lockout.json ----------------------------------------------------------

@@ -1,4 +1,4 @@
-"""src/core/personality_store: the hard-rules block."""
+"""src/core/personality_store: the hard-rules and dossier blocks."""
 
 
 def test_positive_only_subjects_in_hard_rules():
@@ -15,25 +15,16 @@ def test_positive_only_subjects_in_hard_rules():
     assert "override" in low or "overrides" in low
 
 
-def test_english_text_follows_simplified_technical_english():
-    """Operator 2026-09-27: English posts and replies take the form of
-    ASD-STE100 Simplified Technical English, while the Voice keeps the tone.
-    A hard rule, so every Original and Reply prompt carries it; French text
-    keeps its own form."""
-    from src.core import personality_store as ps
-    block = " ".join(ps.hard_rules_block().split())
-    assert "ASD-STE100 Simplified Technical English" in block
-    assert "in English" in block and "French text keeps its own form" in block
-    assert "The Voice still sets the tone" in block
-    # STE forbids what voice_en.md asks for ("Use contractions"): form is STE's.
-    assert "no contractions" in block and "this rule wins" in block
+def test_the_dossier_block_is_in_english():
+    from src.core import personality_store
 
-
-def test_hard_rule_4_names_no_removed_surface():
-    """Operator 2026-09-27: hard rule 4 still named the snark voice and
-    quotes, both gone; quotes stay at zero."""
-    from src.core import personality_store as ps
-    low = ps._BASE_HARD_RULES.lower()
-    assert [w for w in ("snark voice", "or quote", "quote-tweet") if w in low] == []
-    assert "overrides the voice's wit and criticism" in low
-
+    personality_store.PERSONALITY.write(
+        {"accounts": {"someone": {"category": "builder", "notes": ["ships fast"]}}, "topics": {}})
+    personality_store.upsert_account("someone", stance="fond", feelings="warm", do="tease", dont="dunk",
+                                     predictions_to_add=[{"outcome": "right"}])
+    block = personality_store.render_account_block("someone")
+    assert block.startswith("# Personal memory: what you know about @someone")
+    for line in ("- Category: builder", "- Stance: fond", "- Feeling: warm", "- Accumulated observations:",
+                 "- Prediction track record: 1 right / 0 wrong", "- What works with them: tease",
+                 "- What to avoid with them: dunk", "React FROM this memory."):
+        assert line in block

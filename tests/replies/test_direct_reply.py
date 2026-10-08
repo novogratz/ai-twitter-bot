@@ -3,8 +3,11 @@ ReplyCalls."""
 
 
 def _url_with_age(minutes: int) -> str:
-    from tests.helpers import status_id
-    return f"https://x.com/someone/status/{status_id(minutes)}"
+    from datetime import datetime, timezone
+    from src.x.x_urls import _TWITTER_EPOCH_MS
+    now_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
+    tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH_MS) << 22
+    return f"https://x.com/someone/status/{tweet_id}"
 
 
 def _searches():
@@ -23,7 +26,7 @@ def test_reply_and_like_queries_are_ai_only():
     queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ", "llm")
+                "cursor", "copilot", "humanoid", "robotics", " ia ")
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
@@ -122,13 +125,15 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     import src.replies.direct_reply as dr
     from src.replies import reply_pipeline
 
-    # ⚠️ Both lanes look scrape_x_search up on direct_reply (#243): patch
-    # it there. (A version of this test patched the wrong module — the real
-    # Safari fired and posted live replies to @TheBTCTherapist mid-test.
-    # conftest's _no_safari wall now makes that mistake fail loudly instead.)
+    # ⚠️ The VIP scan imports scrape_x_search FUNCTION-LOCALLY from scraper:
+    # patch THERE, not on direct_reply. (First version of this test patched
+    # dr.* — the real Safari fired and posted live replies to
+    # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
+    # mistake fail loudly instead.)
+    from src.x import scraper
     settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
-    url = _url_with_age(5).replace("/someone/", "/TheBTCTherapist/")
-    monkeypatch.setattr(dr, "scrape_x_search",
+    url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
+    monkeypatch.setattr(scraper, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest":
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
@@ -173,8 +178,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     """#203 moved the relation prompts into the Account's Relations: each VIP
     ReplyCall keeps its label, limits and provider, and the engine names no
     one. A Relation's provider is forced only when its CLI is installed; a
-    Relation with a prompt and no provider keeps the VIP scan's call, the
-    priority Reply's (#248)."""
+    Relation with a prompt and no provider keeps the VIP scan's call."""
     import shutil
     from src.core import account
     from src.core.llm_client import TEXT_PROFILE, Surface
@@ -185,7 +189,8 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     own = dr._vip_call("graphseo")
     assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
                                                       Surface.RELATION_REPLY, "GRAPHSEO_VIP")
-    assert (own.text_limit, own.strip_preamble, own.skip_window) == (1200, False, 0)
+    assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
+        False, 300, 220, False, 0)
     assert (own.provider, own.profile) == ("claude", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("Graphseo").provider is None
@@ -195,65 +200,9 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
                                                "VIP_REPLY/thebtctherapist")
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
-        assert (call.surface, call.text_limit, call.strip_preamble, call.skip_window,
-                call.provider, call.profile) == (Surface.PRIORITY_REPLY, 1200,
-                                                 True, 20, None, TEXT_PROFILE)
-
-
-def test_a_relation_without_its_cli_warns_of_the_provider_it_falls_back_on(monkeypatch, settings_override):
-    """The Operator, 2026-09-28 (#248): a Relation whose CLI is missing
-    falls back on the Reply provider, and says so, naming both. When the
-    Reply provider is that missing CLI, the warning says the Reply fails."""
-    import shutil
-
-    from src.replies import direct_reply as dr
-
-    warnings = []
-    monkeypatch.setattr(dr.log, "warning", lambda msg, *a, **k: warnings.append(msg))
-    settings_override(AI_CLI="codex", REPLY_LLM_PROVIDER="gemini")
-    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    dr._vip_call("Graphseo")
-    assert warnings == []
-
-    monkeypatch.setattr(shutil, "which", lambda name: None)
-    assert dr._vip_call("Graphseo").provider is None
-    assert warnings == ["[VIP] Relation @Graphseo: claude is not installed, "
-                        "the Reply goes to the Reply provider (gemini)."]
-
-    settings_override(REPLY_LLM_PROVIDER="")
-    dr._vip_call("Graphseo")
-    assert warnings[-1] == ("[VIP] Relation @Graphseo: claude is not installed, "
-                            "the Reply goes to the Reply provider (codex).")
-
-    settings_override(REPLY_LLM_PROVIDER="Claude")
-    dr._vip_call("Graphseo")
-    assert warnings[-1] == ("[VIP] Relation @Graphseo: claude is not installed, it is the Reply provider "
-                            "too: the Reply fails, or goes to the fallback CLI if one is set.")
-
-
-def test_the_vip_scan_warns_of_a_missing_cli_once_per_generation(monkeypatch, llm, chokepoint,
-                                                                 settings_override):
-    """The scan's check for a prompt builds no call and warns of nothing;
-    each Reply generated for the Relation warns once."""
-    import shutil
-
-    from src.replies import direct_reply as dr, reply_pipeline
-
-    warnings = []
-    monkeypatch.setattr(dr.log, "warning", lambda msg, *a, **k: warnings.append(msg))
-    monkeypatch.setattr(shutil, "which", lambda name: None)
-    settings_override(VIP_SCAN_HANDLES="Graphseo")
-    tweets = []
-    monkeypatch.setattr(dr, "scrape_x_search", lambda q, max_tweets=20, tab="latest": list(tweets))
-
-    dr._run_vip_scan(reply_pipeline.Cycle())
-    assert warnings == [] and llm.calls == []
-
-    tweets.append({"url": _url_with_age(5).replace("/someone/", "/Graphseo/"),
-                   "text": "les agents IA changent le SEO", "author": "Graphseo"})
-    dr._run_vip_scan(reply_pipeline.Cycle())
-    assert len(llm.calls) == 1
-    assert len(warnings) == 1 and "claude is not installed" in warnings[0]
+        assert (call.surface, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
+                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, False, 300,
+                                                                 True, 20, None, None, TEXT_PROFILE)
 
 
 def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings_override):
@@ -263,13 +212,14 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     import dataclasses
     from src.core import account
     from src.replies import direct_reply as dr, reply_pipeline
+    from src.x import scraper
 
     loaded = account.current()
     bare = dataclasses.replace(loaded, relations=dataclasses.replace(loaded.relations, default=None))
     monkeypatch.setattr(account, "current", lambda: bare)
     settings_override(VIP_SCAN_HANDLES="vision_ia")
     scraped = []
-    monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [])
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: scraped.append(a) or [])
 
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0

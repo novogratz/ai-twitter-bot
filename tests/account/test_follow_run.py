@@ -5,7 +5,6 @@ import pytest
 
 from src.account.follow_run import FollowRun
 from src.core.state_store import StateUnreadable
-from src.guards import follow_policy
 from src.guards.active_hours import OutsideActiveHours
 from src.x import twitter_client as tc
 from src.x.twitter_client import FollowOutcome as F
@@ -16,11 +15,10 @@ def chokepoint(monkeypatch):
     """`follow_account` answering from `answers` (an outcome, or an
     exception to raise) per handle, FOLLOWED by default; `asked` lists the
     handles it was called with."""
-    state = {"asked": [], "answers": {}, "relations": []}
+    state = {"asked": [], "answers": {}}
 
-    def follow(handle, relations):
+    def follow(handle):
         state["asked"].append(handle)
-        state["relations"].append(relations)
         answer = state["answers"].get(handle, F.FOLLOWED)
         if isinstance(answer, BaseException):
             raise answer
@@ -88,15 +86,6 @@ def test_too_soon_leaves_the_chokepoint_open(chokepoint):
     assert run.follow("fan1") is F.TOO_SOON
     assert run.follow("fan2") is F.FOLLOWED
     assert chokepoint["asked"] == ["fan1", "fan2"]
-
-
-def test_the_run_asks_for_the_relations_its_job_follows(chokepoint):
-    """#262: engage follows Seed accounts only, and says so to the policy
-    instead of finding the relation itself."""
-    FollowRun("TEST").follow("fan1")
-    FollowRun("TEST", relations=follow_policy.SEED_ONLY).follow("seed1")
-
-    assert chokepoint["relations"] == [follow_policy.FOLLOWABLE, follow_policy.SEED_ONLY]
 
 
 @pytest.mark.parametrize("stop", [StateUnreadable("whitelist.json"), OutsideActiveHours("asleep")])

@@ -15,9 +15,6 @@ language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # gardening post", "a strict independent gardening editor".
 domain = "gardening"
-# Optional preference for Originals and Replies, subordinate to evidence and
-# hard rules. Omit or leave blank for no preference; keep account names here.
-perspective = ""
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
@@ -68,8 +65,8 @@ topic = '\b(garden\w*|allotment|vegetables?|seeds?|seedlings?|sow\w*|compost\w*|
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|giveaway|airdrop|presale|cannabis)\b'
 
 # No Relation: no account is treated apart, so no [relations] table and an
-# empty network.vip_scan. A handle added to vip_scan later needs a Relation,
-# which always sets its own prompt, or a [relations] default.
+# empty network.vip_scan. A Relation added later needs a prompt of its own,
+# or a [relations] default for the VIP scan.
 
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
 # set stricter for this Account: a value past the engine's bound is brought
@@ -92,8 +89,7 @@ fr_forced_reply = []
 profile_visits = []
 # Accounts the direct_reply VIP scan searches: each needs a Relation prompt.
 vip_scan = []
-# Accounts early_bird (first 30) and mega_watch (first 12) pick from at
-# random; the order decides which are kept.
+# Accounts the curator always tracks first.
 pinned_tracked = []
 # Replies to these authors run the priority model.
 vip_reply = []
@@ -143,8 +139,3 @@ trending = [
     'gardening lang:en min_faves:50 -filter:replies',
     '"vegetable garden" OR allotment lang:en min_faves:100 -filter:replies',
 ]
-
-# Optional reference entries belong at the top level before [editorial]:
-# [[reply_sources]]
-# pattern = "\\bexample-model\\b"
-# url = "https://a-host-in-editorial-trusted-hosts.example/releases"

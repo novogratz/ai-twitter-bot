@@ -12,34 +12,45 @@ from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
 from ..guards import follow_policy
-from . import confirmed_write, page_session, scraper
+from . import confirmed_write, safari, scraper
 from .confirmed_write import WriteOutcome
 
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
 
 
-def _activate_or_abort(page: page_session.Page, tweet_url: str) -> bool:
+def _open_or_abort(url: str, tag: str) -> bool:
+    """Open the page a write acts on. On failure the front tab is not that
+    page, so nothing may be typed or clicked: return False, and the write
+    is FAILED."""
+    if safari.open_url(url):
+        return True
+    log.info(f"[{tag}] Page did not open; nothing sent: {url[:120]}")
+    return False
+
+
+def _activate_or_abort(tweet_url: str) -> bool:
     """Bring Safari to the front before the Reply's keystrokes. On failure
     they would reach another app: return False, and the write is FAILED."""
-    if page.activate():
+    if safari._run_applescript('tell application "Safari" to activate',
+                               timeout_s=safari.ACTIVATE_TIMEOUT_S):
         return True
     log.info(f"[REPLY] Safari did not come to the front; nothing sent: {tweet_url}")
     return False
 
 
-def _paste_or_abort(page: page_session.Page, text: str, tag: str) -> bool:
+def _paste_or_abort(text: str, tag: str) -> bool:
     """Paste into the open composer. On failure nothing was sent: return
     False."""
-    if page.paste(text):
+    if safari._paste_text(text):
         return True
     log.info(f"[{tag}] Paste failed; nothing sent.")
     return False
 
 
-def _submit_or_abort(page: page_session.Page, tag: str, target: str = "") -> bool:
+def _submit_or_abort(tag: str, target: str = "") -> bool:
     """Press Cmd+Return in the open composer. On failure the outcome is
     unknown: return False, and the write is UNCONFIRMED."""
-    if page.keys(_SUBMIT_KEYSTROKE):
+    if safari._run_applescript(_SUBMIT_KEYSTROKE, timeout_s=safari.KEYSTROKE_TIMEOUT_S):
         return True
     log.warning(f"[{tag}] Submit keystroke failed; outcome unknown"
                 f"{': ' + target if target else '.'}")
@@ -160,7 +171,7 @@ class ToolCallLeakError(Exception):
     """
 
 
-def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
+def post_tweet(text: str) -> WriteOutcome:
     """Publish an Original through the intent URL. No URL is stripped and
     nothing casualizes the text, so the source link and the reviewed wording
     reach X. `_scrub_metadata_leaks` still runs first: it removes leaked
@@ -168,22 +179,12 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     echoed prompt lines) and hashtags, a trailing run whole and the `#` of
     an inline one.
 
-    The Slot journal's submissions count toward the ceiling and the spacing
-    (`action_guard.original_refusal`), and their texts toward the dedup.
-    `reserved`: the key of the Pending slot the caller reserved for this
-    very text, left out of those checks and named by the ledger row. It
-    must be a Pending slot of the day whose Draft and source make `text`
-    as received (`action_guard.reservation_refusal`); any other key is
-    REFUSED before the browser, with no ledger row.
-
     Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content, respect list or dedup skip, FAILED when the page did not open or
     a step before the submit failed,
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
-    # The reservation holds the text as submitted, before the scrub.
-    submitted = text
     text = _scrub_metadata_leaks(text)
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
@@ -197,8 +198,6 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
     # Central write policy: originals daily cap + jittered spacing, then the
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
-    # A leaf module (it imports core.state_store only): no import cycle.
-    from ..editorial.slot_journal import FileJournal
     from ..guards import action_guard, content_guard, respect_list
     # ⛔ Callers MUST gate engagement logging on this result — bot.py logged its posts
     # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
@@ -210,17 +209,6 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
         if not ok:
             log.info(f"[POST] policy skip ({why}).")
             return WriteOutcome.REFUSED
-        journal = FileJournal()
-        if reserved is not None:
-            why = action_guard.reservation_refusal(journal, action_guard.now_local(), reserved,
-                                                   submitted)
-            if why:
-                log.warning(f"[POST] reservation skip ({why}).")
-                return WriteOutcome.REFUSED
-        why = action_guard.original_refusal(journal, action_guard.now_local(), reserved)
-        if why:
-            log.info(f"[POST] policy skip ({why}).")
-            return WriteOutcome.REFUSED
         ok, why = content_guard.validate(text, kind="original")
         if not ok:
             log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
@@ -229,7 +217,7 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
         if why:
             log.info(f"[POST] respect list skip ({why}): {text[:120]!r}")
             return WriteOutcome.REFUSED
-        if content_guard.is_duplicate(text, journal.recent_posts(reserved)):
+        if content_guard.is_duplicate(text):
             log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
             return WriteOutcome.REFUSED
         return None
@@ -238,20 +226,20 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
         # The initial check happens before waiting for Safari. Recheck under
         # its lock so concurrent posts cannot both consume the last slot.
         ok, why = action_guard.can_post(action_guard.POST)
-        if ok:
-            why = action_guard.original_refusal(FileJournal(), action_guard.now_local(), reserved)
-        if why:
+        if not ok:
             log.info("[POST] policy skip after browser wait (%s).", why)
             return WriteOutcome.REFUSED
         return None
 
-    def steps(page):
+    def steps():
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
-        page.open(url, settle_s=4)
+        if not _open_or_abort(url, "POST"):
+            return WriteOutcome.FAILED
+        time.sleep(4)
 
         log.info("Auto-clicking Post...")
-        if not _submit_or_abort(page, "POST"):
+        if not _submit_or_abort("POST"):
             return WriteOutcome.UNCONFIRMED
         log.info("Tweet submitted!")
         return WriteOutcome.SHIPPED
@@ -262,7 +250,7 @@ def post_tweet(text: str, reserved: str | None = None) -> WriteOutcome:
 
     return confirmed_write.run(
         "POST", WriteOutcome, would=lambda: f"post: {text[:200]!r}",
-        rows=lambda: [(action_guard.POST, reserved)],
+        rows=lambda: [(action_guard.POST, None)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(recheck,),
         steps=steps, after_record=after_record)
 
@@ -349,98 +337,6 @@ class LikeOutcome(Enum):
         return self is LikeOutcome.LIKED
 
 
-# The reply button of the post with status ID __TARGET_ID__, and no other.
-# The "r" shortcut answers whatever X has selected, which on a thread is
-# often the account's own previous reply (operator 2026-10-04: never answer
-# the account's own messages, and never a second time). This clicks only
-# that article's reply button, and clicks nothing when the permalink is the
-# account's.
-_REPLY_CLICK_JS = r"""
-(function(targetId, ownHandle) {
-    /* __REPLY_CLICK__ */
-    function statusId(href) {
-        var m = (href || '').match(/\/status\/(\d+)/);
-        return m ? m[1] : '';
-    }
-    function statusLink(art) {
-        // Operator 2026-10-05: a quote can share the outer article.
-        // Only the outer post's unquoted User-Name header identifies it.
-        var names = art.querySelectorAll('[data-testid="User-Name"]');
-        var header = null;
-        for (var n = 0; n < names.length; n++) {
-            if (names[n].closest('article') === art &&
-                !names[n].closest('[data-testid="quoteTweet"]') &&
-                !names[n].closest('[role="link"]')) { header = names[n]; break; }
-        }
-        if (!header) return '';
-        var links = header.querySelectorAll('a[href*="/"]');
-        var handle = '';
-        for (var h = 0; h < links.length; h++) {
-            var path = new URL(links[h].href, 'https://x.com').pathname;
-            var match = path.match(/^\/([A-Za-z0-9_]{1,15})(?:\/status\/\d+)?\/?$/);
-            if (match && match[1].toLowerCase() !== 'i') { handle = match[1].toLowerCase(); break; }
-        }
-        if (!handle) return '';
-        // Expanded posts can put their timestamp below the text, outside
-        // User-Name. It must still belong to this header's author.
-        var times = art.querySelectorAll('a[href*="/status/"] time');
-        for (var j = 0; j < times.length; j++) {
-            var a = times[j].closest('a');
-            var owner = a && (a.href || '').match(/\/([A-Za-z0-9_]{1,15})\/status\//);
-            if (a && a.closest('article') === art && owner &&
-                owner[1].toLowerCase() === handle &&
-                !a.closest('[data-testid="quoteTweet"]') &&
-                !(a.parentElement && a.parentElement.closest('[role="link"]')) &&
-                (!a.closest('[data-testid="User-Name"]') ||
-                 a.closest('[data-testid="User-Name"]') === header)) return a.href;
-        }
-        return '';
-    }
-    function authorOf(href) {
-        var m = (href || '').match(/\/([A-Za-z0-9_]{1,15})\/status\//);
-        if (!m || m[1].toLowerCase() === 'i') return '';
-        return m[1].toLowerCase();
-    }
-    var all = document.querySelectorAll('article[data-testid="tweet"]');
-    var art = null;
-    for (var i = 0; targetId && i < all.length; i++) {
-        if (statusId(statusLink(all[i])) === targetId) { art = all[i]; break; }
-    }
-    if (!art) return JSON.stringify({url: '', result: 'missing'});
-    var url = statusLink(art);
-    if (ownHandle && authorOf(url) === ownHandle) {
-        return JSON.stringify({url: url, result: 'own'});
-    }
-    var buttons = art.querySelectorAll('[data-testid="reply"]');
-    var button = null;
-    for (var b = 0; b < buttons.length; b++) {
-        if (buttons[b].closest('article') === art &&
-            !buttons[b].closest('[data-testid="quoteTweet"]') &&
-            !buttons[b].closest('[role="link"]')) { button = buttons[b]; break; }
-    }
-    if (!button) return JSON.stringify({url: url, result: 'failed'});
-    button.click();
-    return JSON.stringify({url: url, result: 'clicked'});
-})("__TARGET_ID__", "__BOT_HANDLE__")
-"""
-
-
-def _click_reply(page, tweet_url: str) -> dict:
-    """Click the reply button of the post `tweet_url` names, on the open page.
-
-    Returns the page's JSON: `clicked` when that article's button was
-    clicked, `own` when its permalink is the account (nothing clicked),
-    `missing` or `failed` otherwise. {} when the page gave no answer."""
-    from ..core import config
-    from . import x_urls
-    target = x_urls.status_id(tweet_url)
-    handle = (config.BOT_HANDLE or "").lower()
-    js = (_REPLY_CLICK_JS.replace("__TARGET_ID__", target)
-          .replace("__BOT_HANDLE__", handle))
-    data = page.read_json(js, 10, activate=True)
-    return data if isinstance(data, dict) else {}
-
-
 # The article is identified before anything is clicked: the post with status
 # ID __TARGET_ID__, and no other. Only a data-testid="like" button is
 # clicked, never "unlike", so a like can neither toggle off nor land on
@@ -455,36 +351,10 @@ _POSTS_JS = r"""
     }
     // A quoted post's timestamp link can come before the post's own.
     function statusLink(art) {
-        // Operator 2026-10-05: a quote can share the outer article.
-        // Only the outer post's unquoted User-Name header identifies it.
-        var names = art.querySelectorAll('[data-testid="User-Name"]');
-        var header = null;
-        for (var n = 0; n < names.length; n++) {
-            if (names[n].closest('article') === art &&
-                !names[n].closest('[data-testid="quoteTweet"]') &&
-                !names[n].closest('[role="link"]')) { header = names[n]; break; }
-        }
-        if (!header) return '';
-        var links = header.querySelectorAll('a[href*="/"]');
-        var handle = '';
-        for (var h = 0; h < links.length; h++) {
-            var path = new URL(links[h].href, 'https://x.com').pathname;
-            var match = path.match(/^\/([A-Za-z0-9_]{1,15})(?:\/status\/\d+)?\/?$/);
-            if (match && match[1].toLowerCase() !== 'i') { handle = match[1].toLowerCase(); break; }
-        }
-        if (!handle) return '';
-        // Expanded posts can put their timestamp below the text, outside
-        // User-Name. It must still belong to this header's author.
         var times = art.querySelectorAll('a[href*="/status/"] time');
         for (var j = 0; j < times.length; j++) {
             var a = times[j].closest('a');
-            var owner = a && (a.href || '').match(/\/([A-Za-z0-9_]{1,15})\/status\//);
-            if (a && a.closest('article') === art && owner &&
-                owner[1].toLowerCase() === handle &&
-                !a.closest('[data-testid="quoteTweet"]') &&
-                !(a.parentElement && a.parentElement.closest('[role="link"]')) &&
-                (!a.closest('[data-testid="User-Name"]') ||
-                 a.closest('[data-testid="User-Name"]') === header)) return a.href;
+            if (a && a.closest('article') === art) return a.href;
         }
         return '';
     }
@@ -504,13 +374,7 @@ _POSTS_JS = r"""
     if (art.querySelector('[data-testid="unlike"]')) {
         return JSON.stringify({url: url, result: 'already_liked'});
     }
-    var buttons = art.querySelectorAll('[data-testid="like"]');
-    var button = null;
-    for (var b = 0; b < buttons.length; b++) {
-        if (buttons[b].closest('article') === art &&
-            !buttons[b].closest('[data-testid="quoteTweet"]') &&
-            !buttons[b].closest('[role="link"]')) { button = buttons[b]; break; }
-    }
+    var button = art.querySelector('[data-testid="like"]');
     if (!button) return JSON.stringify({url: url, result: 'failed'});
     if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
     button.click();
@@ -521,10 +385,8 @@ _POSTS_JS = r"""
 
 def _run_page_js(js: str) -> str:
     """Run `js` in Safari's front tab and return its result, "" when the
-    osascript call fails. Inside a walk's session it reads the walk's page
-    and opens nothing."""
-    with page_session.session("LIKE") as page:
-        return page.run_js(js, 10)
+    osascript call fails."""
+    return safari._run_js(js, 10, log_prefix="[LIKE]")
 
 
 def _page_posts(mode: str, target_id: str = "") -> dict:
@@ -573,7 +435,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
             return LikeOutcome.FAILED
         return None
 
-    def steps(page):
+    def steps():
         nonlocal liked_url
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
@@ -583,7 +445,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         if pressed.get("result") != "clicked":
             log.info(f"[LIKE] Post {target} or its like button not found on the page; nothing clicked.")
             return LikeOutcome.FAILED
-        page.wait(1)
+        time.sleep(1)
         if _page_posts("read", target).get("result") != "already_liked":
             log.info(f"[LIKE] Clicked like on {url} but the page does not show it liked.")
             return LikeOutcome.UNCONFIRMED
@@ -592,17 +454,16 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         _mark_liked(url)
         return LikeOutcome.LIKED
 
-    # The post is on the open page: the like opens nothing, so its session
-    # closes nothing, and inside a walk's or a Reply's it reads their page.
+    # The post is on the open page: nothing to open, no tab to close.
     return confirmed_write.run(
         "LIKE", LikeOutcome, would=lambda: f"like {tweet_url[-50:]}.",
         rows=lambda: [(action_guard.LIKE, liked_url)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT, check_status_id),
-        steps=steps)
+        steps=steps, close_tab=False)
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
-                   on_refused=None, oldest=None, approval=None) -> WriteOutcome:
+                   on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -617,15 +478,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     account, own post, one Reply per post, Debate turn cap, spacing, and the
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
-    slot between the check and the write. The reply itself clicks the reply
-    button of the article with this status ID. The "r" key is never pressed:
-    it would answer the post X has selected, including one of the account's
-    own replies already on the thread. When the article's permalink is the
-    account, nothing is clicked and the status stays claimed. `debate_turn=True`
-    marks an answer to someone who answered the account (GLOSSARY.md).
-    `on_refused`, when given, receives the Refusal of a Reply admission
-    refusal, dry run included, and of a post the page shows as the account's
-    own, so the caller can drop a post refused for good.
+    slot between the check and the write. `debate_turn=True` marks an answer
+    to someone who answered the account (CONTEXT.md). `on_refused`, when
+    given, receives the Refusal of a Reply admission refusal, dry run
+    included, so the caller can drop a post admission refused for good.
 
     ⛔ CALLERS MUST NOT write the replied store before calling this — the
     claim below REFUSES anything already in it. Bug 2026-06-07: five bots
@@ -637,9 +493,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     bot.log 'Reply posted!' said 140). The claim happens here, right before
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped."""
-    from ..core import config
     from ..guards import action_guard, active_hours, replied_store, reply_admission
-    from . import x_urls
     # Set by an admitting verdict: the exact text to send, and its author.
     admitted_text = author = ""
 
@@ -654,11 +508,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def judge():
         nonlocal admitted_text, author
-        if oldest is None:
-            verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
-        else:
-            verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn,
-                                                  oldest=oldest)
+        verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
         if not verdict:
             log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                      f"{tweet_url} {(reply_text or '')[:120]!r}")
@@ -677,83 +527,58 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             return WriteOutcome.REFUSED
         return None
 
-    def quality_admit():
-        verdict = reply_admission.judge_review(tweet_url, reply_text, approval)
-        if not verdict:
-            log.info(f"[REPLY] not reviewed: {tweet_url}")
-            if on_refused is not None:
-                on_refused(verdict.refusal)
-            return WriteOutcome.REFUSED
-        return None
-
-    def steps(page):
+    def steps():
         # Every exit before the submit keystroke sent nothing: a failed step, a
-        # page that does not open, a stop or bedtime releases the claim so a
-        # later cycle may answer.
+        # stop or bedtime releases the claim so a later cycle may answer.
         sent = False
         try:
             # Make sure Safari is focused first
-            if not _activate_or_abort(page, tweet_url):
+            if not _activate_or_abort(tweet_url):
                 return WriteOutcome.FAILED
-            page.wait(0.5)
+            time.sleep(0.5)
 
             log.info(f"Opening tweet: {tweet_url}")
+            if not _open_or_abort(tweet_url, "REPLY"):
+                return WriteOutcome.FAILED
             # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
             # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
-            page.open(tweet_url, settle_s=6)
+            time.sleep(6)
 
             # Make sure Safari is in front
-            if not _activate_or_abort(page, tweet_url):
+            if not _activate_or_abort(tweet_url):
                 return WriteOutcome.FAILED
-            page.wait(0.5)
+            time.sleep(0.5)
 
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
             _maybe_like_parent(tweet_url)
-            page.wait(1)
+            time.sleep(1)
 
             log.info("Clicking reply...")
-            opened = _click_reply(page, tweet_url)
-            result = opened.get("result")
-            if result == "own":
-                shown = opened.get("url") or tweet_url
-                log.info(f"[REPLY] the post on the page is the account's own; nothing sent: {shown}")
-                if on_refused is not None:
-                    on_refused(reply_admission.Refusal.OWN_POST)
-                # Keep the claim. This status is the account's, whatever
-                # handle the caller URL carried, and it is never answered.
-                sent = True
-                return WriteOutcome.REFUSED
-            # Never trust a page result that points to another status or
-            # author, even when it reports a successful click.
-            shown = opened.get("url") or ""
-            if (result == "clicked" and x_urls.author(shown) == config.BOT_HANDLE.lower()):
-                if on_refused is not None:
-                    on_refused(reply_admission.Refusal.OWN_POST)
-                sent = True
-                return WriteOutcome.REFUSED
-            if (result != "clicked" or x_urls.status_id(shown) != x_urls.status_id(tweet_url)
-                    or x_urls.author(shown) != author):
-                log.info(f"[REPLY] Reply button for this post was not on the page; "
-                         f"nothing sent, tweet left fresh: {tweet_url}")
+            if not safari._run_applescript('''
+            tell application "System Events"
+                keystroke "r"
+            end tell
+            ''', timeout_s=safari.KEYSTROKE_TIMEOUT_S):
+                log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
                 return WriteOutcome.FAILED
-            page.wait(3)  # Wait for reply box to open
+            time.sleep(3)  # Wait for reply box to open
 
             # Paste the reply (clipboard handles accents correctly)
             log.info("Pasting reply...")
-            if not _paste_or_abort(page, admitted_text, "REPLY"):
+            if not _paste_or_abort(admitted_text, "REPLY"):
                 return WriteOutcome.FAILED
-            page.wait(2)  # Wait for paste to complete
+            time.sleep(2)  # Wait for paste to complete
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True
-            if not _submit_or_abort(page, "REPLY", target=tweet_url):
+            if not _submit_or_abort("REPLY", target=tweet_url):
                 return WriteOutcome.UNCONFIRMED
-            page.wait(2)  # Wait for submission
+            time.sleep(2)  # Wait for submission
             log.info("Reply posted!")
             return WriteOutcome.SHIPPED
         finally:
@@ -767,14 +592,14 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     # Admission needs the lock, so a dry run stops under it; it never claims.
     return confirmed_write.run(
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
-        rows=rows, before_lock=(admit,), under_lock=(judge, quality_admit, confirmed_write.DRY_RUN_EXIT, claim),
+        rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
         steps=steps)
 
 
 class FollowOutcome(Enum):
     """What `follow_account` did. Truthy only for FOLLOWED, so a caller that
     tests the result counts only the follows that shipped. The refusals
-    name their cause (GLOSSARY.md: Follow refusal): TOO_SOON and CAP_REACHED
+    name their cause (CONTEXT.md: Follow refusal): TOO_SOON and CAP_REACHED
     concern the follow budget and leave the handle for a later cycle,
     BLOCKED, QUALITY_REJECTED and REFUSED are about the handle. An unreadable
     whitelist is no outcome: `follow_account` raises StateUnreadable before
@@ -808,16 +633,13 @@ _REFUSED = {follow_policy.Refusal.BLOCKED_ACCOUNT: FollowOutcome.BLOCKED,
             follow_policy.Refusal.POLICY: FollowOutcome.REFUSED}
 
 
-def follow_account(username: str,
-                   relations: frozenset = follow_policy.FOLLOWABLE) -> FollowOutcome:
+def follow_account(username: str) -> FollowOutcome:
     """Visit a user's profile and click the Follow button.
 
     The follow policy establishes the handle's relation with the account
-    itself (follow_policy.relation), once per follow: a caller declares
-    none, and a Blocked account or a Stranger is refused before the profile
-    opens, whoever asks. `relations` narrows the relations the caller
-    follows, `follow_policy.SEED_ONLY` for engage and the `follow` skill:
-    any other relation is refused before the profile opens.
+    itself (follow_policy.relation): a caller declares none, and a
+    Blocked account or a Stranger is refused before the profile opens,
+    whoever asks.
 
     Returns FOLLOWED only when the JS click actually fired (best-effort
     signal); the ledger row, the following count and the followed accounts
@@ -841,25 +663,23 @@ def follow_account(username: str,
         log.info(f"[FOLLOW] policy refuses @{username} ({verdict.refusal.value}: {verdict.reason}).")
         return _REFUSED[verdict.refusal]
 
-    admitted = None  # judge's verdict, whose relation the quality gate takes
-
     def admit():
-        nonlocal admitted
-        admitted = follow_policy.judge(username, relations)
-        return None if admitted else refused(admitted)
+        verdict = follow_policy.judge(username)
+        return None if verdict else refused(verdict)
 
     def pause():
         action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
-    def steps(page):
+    def steps():
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
-        page.open(profile_url, settle_s=5)
+        if not _open_or_abort(profile_url, "FOLLOW"):
+            return FollowOutcome.FAILED
+        time.sleep(5)
 
         # Quality gate (operator 2026-06-12: no more trash follows) — reads
         # the page we're already on, refuses BEFORE the click.
-        verdict = follow_policy.judge_profile(username, admitted.relation,
-                                              scraper._scrape_profile_quality)
+        verdict = follow_policy.judge_profile(username, scraper._scrape_profile_quality)
         if not verdict:
             return refused(verdict)
 
@@ -895,9 +715,9 @@ def follow_account(username: str,
             return 'CLICKED';
         })()
         """
-        status = page.run_js(follow_js, 15, activate=True)
+        status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
         if status == "CLICKED":
-            page.wait(2)
+            time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
             return FollowOutcome.FOLLOWED
         if status == "ALREADY":
@@ -974,23 +794,26 @@ def like_search_posts(url: str, count: int, seconds: float,
     if _cfg.dry_run():
         log.info(f"[LIKE][DRY_RUN] would like up to {count} posts of {url}.")
         return outcomes
-    with page_session.session("LIKE") as page:
+    with safari._safari_lock:
         deadline = time.monotonic() + seconds
         log.info(f"[LIKE] Opening search: {url}")
+        opened = _open_or_abort(url, "LIKE")
         try:
-            page.open(url, settle_s=7)
-        except page_session.PageNotOpened:
-            outcomes.append(LikeOutcome.FAILED)
-            return outcomes
-        # Scroll twice to populate ~20-30 articles.
-        page.scroll()
-        page.wait(1)
-        page.scroll()
-        page.wait(1)
-        _like_posts_on_page(
-            count, lambda post: True,
-            page_ok=lambda listed: urllib.parse.urlparse(listed).path == "/search",
-            outcomes=outcomes, deadline=deadline)
+            if not opened:
+                outcomes.append(LikeOutcome.FAILED)
+                return outcomes
+            time.sleep(7)
+            # Scroll twice to populate ~20-30 articles.
+            safari._scroll_page()
+            time.sleep(1)
+            safari._scroll_page()
+            time.sleep(1)
+            _like_posts_on_page(
+                count, lambda post: True,
+                page_ok=lambda page: urllib.parse.urlparse(page).path == "/search",
+                outcomes=outcomes, deadline=deadline)
+        finally:
+            safari.close_front_tab()
     return outcomes
 
 
@@ -1014,17 +837,20 @@ def visit_profile_and_like(username: str, like_count: int = 2) -> list[LikeOutco
         log.info(f"[LIKE][DRY_RUN] would like up to {like_count} posts of @{username}.")
         return []
     handle = username.strip().lstrip("@").lower()
-    with page_session.session("LIKE") as page:
+    with safari._safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
+        opened = _open_or_abort(profile_url, "LIKE")
         try:
-            page.open(profile_url, settle_s=5)
-        except page_session.PageNotOpened:
-            return [LikeOutcome.FAILED]
-        outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
-        log.info(f"[LIKE] @{username}: {like_summary(outcomes)}.")
-        page.wait(1)
-        return outcomes
+            if not opened:
+                return [LikeOutcome.FAILED]
+            time.sleep(5)
+            outcomes = _like_posts_on_page(like_count, lambda url: x_urls.author(url) == handle)
+            log.info(f"[LIKE] @{username}: {like_summary(outcomes)}.")
+            time.sleep(1)
+            return outcomes
+        finally:
+            safari.close_front_tab()
 
 
 def pin_own_tweet(tweet_url: str) -> WriteOutcome:
@@ -1082,28 +908,33 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
     })()
     """
 
-    def steps(page):
-        log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
-        page.open(tweet_url, settle_s=7)
+    def _exec_js(js: str, timeout_s: int = 15) -> str:
+        return safari._run_js(js, timeout_s, log_prefix="[PIN]", activate=True)
 
-        step1 = page.run_js(js_code, 15, activate=True)
+    def steps():
+        log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
+        if not _open_or_abort(tweet_url, "PIN"):
+            return WriteOutcome.FAILED
+        time.sleep(7)
+
+        step1 = _exec_js(js_code)
         log.info(f"[PIN] More-menu open: {step1}")
         if step1 != "MORE_CLICKED":
             return WriteOutcome.FAILED
-        page.wait(1.2)
+        time.sleep(1.2)
 
-        step2 = page.run_js(js_pin_item, 15, activate=True)
+        step2 = _exec_js(js_pin_item)
         log.info(f"[PIN] Pin item click: {step2}")
         if step2 != "PIN_CLICKED":
             return WriteOutcome.FAILED
-        page.wait(1.5)
+        time.sleep(1.5)
 
-        step3 = page.run_js(js_confirm, 15, activate=True)
+        step3 = _exec_js(js_confirm)
         log.info(f"[PIN] Confirm modal: {step3}")
         if step3 == "NO_CONFIRM":
             log.info(f"[PIN] No confirm dialog after the Pin click; not counted as a pin: {tweet_url}")
         # Whether the confirm modal appeared or not, we leave the page.
-        page.wait(1)
+        time.sleep(1)
         return WriteOutcome.SHIPPED if step3 == "CONFIRMED" else WriteOutcome.UNCONFIRMED
 
     return confirmed_write.run(
@@ -1115,8 +946,7 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
 def like_own_tweet_replies() -> list[LikeOutcome]:
     """Visit own profile, open latest tweet, and like the replies under it,
     never our own posts, to build loyalty. Returns one LikeOutcome per post
-    handled, [FAILED] when the profile or the latest post does not open;
-    DRY_RUN opens nothing."""
+    handled, [FAILED] when the profile does not open; DRY_RUN opens nothing."""
     from ..core import config as _cfg
     if _cfg.dry_run():
         log.info("[NOTIFY][DRY_RUN] would like replies on our latest tweet.")
@@ -1127,19 +957,23 @@ def like_own_tweet_replies() -> list[LikeOutcome]:
     _n_like = max(0, settings.get("NOTIFY_LIKE_REPLIES_COUNT"))
     if _n_like == 0:
         return []
-    with page_session.session("NOTIFY") as page:
+    with safari._safari_lock:
         log.info("[NOTIFY] Opening own profile...")
+        opened = _open_or_abort(_cfg.BOT_PROFILE_URL, "NOTIFY")
         try:
-            page.open(_cfg.BOT_PROFILE_URL, settle_s=5)
-        except page_session.PageNotOpened:
-            return [LikeOutcome.FAILED]
-        log.info("[NOTIFY] Opening latest tweet...")
-        if not scraper.open_latest_own_post(page, "NOTIFY", 4):
-            return [LikeOutcome.FAILED]
-        log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
-        # Off our own status page, "not ours" would match any post.
-        outcomes = _like_posts_on_page(_n_like, lambda url: True,
-                                       page_ok=lambda listed: scraper.is_own_post({"url": listed}))
-        log.info(f"[NOTIFY] Replies: {like_summary(outcomes)}.")
-        page.wait(2)
-        return outcomes
+            if not opened:
+                return [LikeOutcome.FAILED]
+            time.sleep(5)
+            log.info("[NOTIFY] Opening latest tweet...")
+            safari._navigate_to_first_tweet()
+            time.sleep(4)
+            log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
+            # Off our own status page, "not ours" would match any post.
+            outcomes = _like_posts_on_page(_n_like, lambda url: True,
+                                           page_ok=lambda page: scraper.is_own_post({"url": page}))
+            log.info(f"[NOTIFY] Replies: {like_summary(outcomes)}.")
+            time.sleep(2)
+            return outcomes
+        finally:
+            safari.close_front_tab()
+

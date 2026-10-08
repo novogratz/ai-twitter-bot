@@ -25,7 +25,7 @@ mkdir -p state/theaishrink
 
 The state of the Account lives in `state/<BOT_ACCOUNT>/` ([State files](#state-files)).
 `whitelist_discovered.json` there holds the handles `account_curator`
-promoted to the whitelist before its removal (issue #299). Every follow stops while it is missing, so that a
+promotes to the whitelist. Every follow stops while it is missing, so that a
 checkout not migrated yet never runs without them: a new install starts it
 empty, as above, and a checkout from before issue #206 or #207 runs
 [the migrations](#deploying-issue-207) instead.
@@ -55,14 +55,14 @@ French.
 overriding variables already set in the shell. **Every change to a setting,
 in `.env` or in the shell, needs a restart**: nothing re-reads them while the
 bot runs. A key `settings.py` does not
-know is ignored and logged as a `[SETTINGS]` warning, with the setting it
-may misspell: delete its line from `.env`. A value its type rejects (a
-switch takes `0` or `1`, a number a number) stops the start with a message
-naming the key; a value past its ceiling or floor is brought back to it and
-logged as a `[SETTINGS]` warning.
+know, or a value its type rejects (a switch takes `0` or `1`, a number a
+number), stops the start with a message naming the key; a value past its
+ceiling or floor is brought back to it and logged as a `[SETTINGS]` warning.
+A setting listed under "No effect" in CONFIGURATION.md still starts: delete
+its line from `.env`.
 Check the setup without a browser or a model with the dry-run command from
 [`AGENTS.md#verification`](../AGENTS.md#verification): it stops on the same
-values and lists the same warnings under `settings_warnings`.
+keys and names them.
 
 ### Account
 
@@ -73,16 +73,14 @@ unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
 the language of the Originals (`en` or `fr`), the `domain` the editorial and
 Reply prompts name ("Write ONE original AI post"), the Slots and their
 angles, the feeds, Evergreen topics and trusted hosts, the relevance filter,
-and the Relations; its comments describe each key. Optional `perspective`
-guides Originals and Replies, subordinate to evidence and hard rules, and
-never guides the independent editor. Next to it sit the Voice, the
+and the Relations; its comments describe each key. Next to it sit the Voice, the
 Operator's `voice_fr.md` and `voice_en.md`, read on every prompt, and the
 Relations' prompts under `relations/`, read at start like `account.toml`. A
 Voice file missing or empty, a Relation's handle that is no X handle, an
-unknown key, a Relation without a prompt, a prompt file missing, empty or with a
+unknown key, an empty fixed dossier, a prompt file missing, empty or with a
 `{field}` the Reply generator does not fill, a Voice or prompt file that
 resolves outside the Account's folder (symbolic links followed), or a
-`network.vip_scan` handle without a Relation while
+`network.vip_scan` handle without a prompt of its own while
 `relations.default` is unset stops the start; a `VIP_SCAN_HANDLES` handle
 from `.env` in that case is skipped with a `[VIP]` warning. Settings resolve
 in this order, the later one winning: engine defaults, the Account, `.env`,
@@ -128,7 +126,7 @@ each use and never writes:
 
 | File | Holds | Read by |
 |---|---|---|
-| `whitelist.json` | Follow whitelist: tiers, seeds, the spec's notes | `follow_policy`, `bin/mass_unfollow.py` |
+| `whitelist.json` | Follow whitelist: tiers, seeds, the spec's notes | `follow_policy`, `account_curator`, `bin/mass_unfollow.py` |
 | `respect_list.json` | Respected accounts, `{"handles": {handle: {reason, added}}}` | `respect_list`: the hard-rules prompt block, `post_tweet`, Reply admission, `bin/mass_unfollow.py --keep legacy` |
 | `following_baseline.json` | The following count the Operator stated on 2026-06-02, its date and note | no code; `following_count.json` holds the live count |
 
@@ -136,7 +134,7 @@ Edit them by hand and commit them; a change is read at the next use, with no
 restart. A missing or unreadable one stops the jobs that need it, like a
 guarded state file, and nothing recreates it with defaults
 ([Recovery](#recovery)). What the bot keeps beside them is state: the handles
-`account_curator` promoted are in `whitelist_discovered.json`, the live count in
+`account_curator` promotes go to `whitelist_discovered.json`, the live count to
 `following_count.json`.
 
 #### Creating an Account
@@ -161,7 +159,8 @@ with no Relation, that never runs live.
    the values that hold under `bounded_settings`.
    Some prompt text still speaks of AI whatever the domain: the editorial
    draft's "model update, research method" and "a model generates text",
-   and the review's "misleading benchmark comparisons". The search Reply lane
+   the review's "misleading benchmark comparisons", and the examples of the
+   replyback prompt (GPUs, the Fed, Bitcoin). The search Reply lane
    (`ENABLE_REPLY_SEARCH`, off by default) runs an AI-only prompt with its
    own searches: leave it off for another domain.
 3. The Operator writes `voice_en.md` and `voice_fr.md`, and fills
@@ -264,7 +263,7 @@ real account from a second process. Before any of them:
 
 | Where | What it tells you |
 |---|---|
-| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report`, `engage`, `followback`, `follow_engagers`, `like`, `pin`, `follower_tracker`, `hygiene` |
+| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a reply, editorial or reach-report job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report` |
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
@@ -310,18 +309,12 @@ removes it.
 **A slot is `pending`.** The submission was interrupted or its outcome was
 unclear, and the bot will not retry it. Until you clear it, it counts toward
 today's eight publications and the twenty-minute spacing, and its text stays
-a recent post for later drafts and for the dedup of every Original.
-`post_tweet` reads these from the Slot journal before any submission,
-whoever calls it. A failed submit keystroke logs
-`[EDITORIAL] <slot> stays pending` in `bot.log`. A `post` row of
-`action_ledger.json` whose `target` is the slot's key (`YYYY-MM-DD/<slot>`)
-means the submit went through and the bot stopped before confirming the
-slot; the day's count takes that post once. Check the profile first. If the post
+a recent post for later drafts. A failed submit keystroke logs
+`[EDITORIAL] <slot> stays pending` in `bot.log`. Check the profile first. If the post
 is live, set the slot to `"published"` in `editorial_state.json` and append
 a matching entry (`ts`, `text`, `source_url`, `angle`, `slot`) to
-`published`, so the source rests for seven days, the reach report counts
-the post and the dedup refuses the same story; the published slot keeps
-counting toward today's ceiling. If it is
+`published`, so the source rests for seven days and the reach report counts
+the post; the published slot keeps counting toward today's ceiling. If it is
 not live, delete the slot entry. Either way, delete its entry (keyed
 `YYYY-MM-DD/<slot>`) from `pending_sources`: until then later drafts skip that
 source and text, across days too, and today's ceiling counts it. Do this with the bot
@@ -363,13 +356,13 @@ Safari restart, and nothing writes over the file:
 | File | Stops |
 |---|---|
 | `tweet_history.json` | `editorial_job` before any Draft, `post_tweet` (dedup and rationed openers), `babysit_job`, `reply_job` when enabled |
-| `followed_accounts.json` | `followback_job`, whose Follow run stops before the followers page opens; `engage_job` and `follow_engagers_job`, whose Follow run stops before any follow; every follow while `following_count.json` holds no count, as below. A follow that ships or finds the account already followed is not added to the file |
+| `followed_accounts.json` | `engage_job`, `followback_job`, `follow_engagers_job` (its Follow run, before any follow); every follow while `following_count.json` holds no count, as below. A follow that ships or finds the account already followed is not added to the file |
 | `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
-| `personality.json` | No job: no prompt reads it since 2026-09-27. The interaction count after a Reply is skipped, and the Reply stays logged |
-| `whitelist.json` (Account folder), `whitelist_discovered.json`, missing too | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. Once the profile is open, the quality gate takes the relation `judge` found and reads neither file again. Also `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing `whitelist.json` |
+| `personality.json` | The Reply cycles whose Reply call reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
+| `whitelist.json` (Account folder), `whitelist_discovered.json`, missing too | Every follow: `follow_policy.judge` raises, and `follow_account` stops before opening the profile or writing a ledger row, dry run included. `follow_engagers_job`, `followback_job` and `engage_job` end their cycle as a failure at the first account they judge: no account is marked tried, and `engage_job` likes nothing more that cycle. An unreadable `action_ledger.json` stops the same three jobs the same way, since `follow_policy.relation` reads the Debate turns in it. A whitelist or ledger unreadable once the profile is open is a policy refusal: `follow_account` closes the tab and returns `REFUSED`. Also `account_curator` promotions, and `bin/mass_unfollow.py`, which aborts before any unfollow, even on a missing `whitelist.json` |
 | `respect_list.json` (Account folder, missing too) | Every job whose prompt carries the hard rules, before the model call: `editorial_job`, `direct_reply_job`, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`, `reply_job` when enabled. Also `post_tweet` and Reply admission, before any write, dry run included; `bin/mass_unfollow.py --keep legacy` |
 
 A missing or unreadable `respect_list.json` stops every Original and most Replies
@@ -409,32 +402,11 @@ gitignored, so git holds no copy to restore.
 **x.com renders a blank page.** After 3 consecutive empty scrapes across at
 least 2 different pages (2 in a row on the home feed), `scraper`
 restarts Safari with a 5-minute cooldown. Blank pages in the 120 seconds after
-a restart tried, failed or not, and an empty mentions tab do not count; a tweet scrape whose page
-did not open or whose read timed out counts as empty. `health` also restarts
-Safari after 3 browser failures in a row, all watched jobs counted together
-(`editorial_job`, `reach_report_job` and `session_refresh_job` stay out):
-a cycle counts only when its error comes from the browser layer, such as a
-page that did not open (issue #298). A bug or a model timeout is logged,
-`[HEALTH] <label> failed outside the browser`, and restarts nothing. Few
-jobs let a browser failure through (`followback_job`,
-`follower_tracker_job`), so the blank-page counter above does most of the
-work. `session_refresh_job` restarts Safari preventively every 2 hours.
-Every restart goes through `safari_hygiene.restart_safari`, whose cooldown
-is the one delay: 30 minutes after the last restart tried, 5 for the
-blank-page recovery. A failed restart starts it too, so a Safari that
-does not come back is not bounced at every failure; a refused one starts
-none. A restart that
-succeeded resets the health failure counter, whichever of the three asked.
-From 3 failures in a row, `health` asks for a restart at each failure: a
-refused one logs `[HEALTH] Safari restart refused — no recovery counted.`
-and writes nothing; a tried one counts in `safari_health.json` and adds a
-line to `autonomous_log.md`, `success=False` when x.com never rendered
-after the relaunch (issue #302). Every restart
-waits for the job holding Safari to finish its page. A cycle stopped for
-bedtime is not a failed cycle,
-and no restart runs outside waking hours. A page read or write cut by
-bedtime or a stop still closes its tab, the one AppleScript run allowed
-then (issue #300). Each relaunch
+a restart and an empty mentions tab do not count. `health` also restarts
+Safari after 3 failed cycles in a row, all jobs counted together, and
+`session_refresh_job` does it preventively every 2 hours; both wait 30 minutes
+after the last restart. A cycle stopped for bedtime is not a failed cycle,
+and no restart runs outside waking hours. Each relaunch
 clears x.com service workers and caches. To do it by hand, stop the bot first:
 
 ```bash
@@ -510,8 +482,8 @@ yet. Those root files belong to `theaishrink`, the only Account before
 issue #207 (`state_store.LEGACY_ACCOUNT`). `main.py` refuses to start,
 `--dry-run` included and whichever Account runs, while one of them has no
 copy in `state/theaishrink/` or differs from its copy there, and so do
-`bin/migrate_operator_data.py` and `bin/mass_unfollow.py`: see
-[Deploying issue #207](#deploying-issue-207).
+`bin/migrate_operator_data.py`, `bin/mass_unfollow.py` and
+`bin/seed_fr_influencers.py`: see [Deploying issue #207](#deploying-issue-207).
 
 `bot.log`, `bot.lock`, `autonomous_log.md`, `.bot_disabled` and
 `.watchdog_off` stay at the root: they belong to the process and its
@@ -551,7 +523,7 @@ root:
 
 | File | Written by | Holds | Policy |
 |---|---|---|---|
-| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`; `post_tweet` reads it) | Slots, attempts, feedback, published originals, used sources | guarded |
+| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
@@ -565,23 +537,25 @@ root:
 | `follow_engagers_state.json` | `follow_engagers_bot` | Daily count, handles already tried | guarded |
 | `like_bot_state.json` | `like_bot` | Daily count of like clicks, unconfirmed ones included | guarded |
 | `liked_tweets.json` | `like_tweet` | Tweets already liked | disposable |
-| `personality.json` | `personality_store` (`engagement_log`) | The interaction count bumped after every Reply, per account; no prompt reads it since 2026-09-27 | guarded |
+| `personality.json` | `personality_store` (`engagement_log`) | Per-account interaction dossiers | guarded |
 | `pin_history.json`, `pin_daily_state.json` | `pin_bot` | Pin history, one attempt per day; a dry run marks its own `dry_run_date` | guarded |
 | `follower_history.json` | `follower_tracker_bot` | Follower count samples | disposable |
 | `dynamic_accounts.json` | `feed_sweeper_bot` | Accounts harvested from the feeds | disposable |
-| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Browser failures in a row (reset by a success or a restart that succeeded), last tried recovery and the count of tried recoveries, a field that is not a count reset to its default with a warning; last restart tried, failed or not, which starts the cooldown and the blank-page grace | disposable |
+| `safari_health.json`, `safari_hygiene_state.json` | `health`, `safari_hygiene` | Failure counters, last Safari restart | disposable |
 | `codex_lockout.json` | `llm_client` | End of a codex usage lockout, deleted once past or unreadable | disposable |
-| `autonomous_log.md` (root) | `health` | One line per Safari restart `health` tried, with its `success`; a refused restart writes none | append-only, outside the store |
+| `autonomous_log.md` (root) | `health` | One line per Safari recovery | append-only, outside the store |
 
 Files active code reads but no active job writes, in `state/<BOT_ACCOUNT>/`
 too:
 
 | File | Read by | Holds | Policy |
 |---|---|---|---|
-| `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written only by `bin/migrate_operator_data.py` since the curator's removal (issue #299) | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
+| `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written by `account_curator.run_curator_cycle`, not scheduled | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
 | `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
+| `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
+| `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
 | `replied_back.json` | `follow_policy` (`follow_account`, `follow_engagers_job`) | Frozen Engager list, see below | disposable |
 
 `replied_back.json` has been frozen since 2026-09-23: replyback dedup moved
@@ -589,12 +563,6 @@ to the replied store and the Engager list to the ledger's debate turns.
 The follow policy still reads it until its entries age out of the
 ledger's 90 days; delete it, and the fallback in `follow_policy`,
 around 2026-12-22.
-
-No code reads `tracked_accounts.json` or `engagement_targets_log.json`
-since issue #299 removed the curator: `early_bird` and `mega_watch` scan
-the Account's pinned accounts. A live copy stays in `state/<BOT_ACCOUNT>/`
-and can be deleted with the bot stopped; `bin/migrate_state.py` still
-moves one left at the root.
 
 `operator_prompt.md` stays tracked for `operator_cycle.sh`. Issue #193
 deleted the root files no code read any more: `daily_state.json`,
@@ -734,7 +702,8 @@ refuses while the state waits at the root.
 Given a directory without `whitelist.json`, the script refuses while
 `whitelist_discovered.json` does not exist yet. Until step 2 has created it,
 even empty, every follow stops as on an unreadable guarded file
-([Recovery](#recovery)) and `bin/mass_unfollow.py` aborts: read as empty, the file would take the
+([Recovery](#recovery)), `account_curator` promotes nothing and
+`bin/mass_unfollow.py` aborts: read as empty, the file would take the
 promoted handles' Seed account standing and their protection from an
 unfollow. The old files stay in `$B`: `shasum -a 256 -c "$B/SHA256SUMS"`
 from the checkout reports these two missing.
@@ -837,16 +806,6 @@ mv -n state/theaishrink/* . && rmdir state/theaishrink
 `rmdir` fails while a file is left, because the root holds one of the same
 name: compare them by hand.
 
-### Deploying issue #233
-
-Since issue #233 the `post` row of an editorial Original names its Pending
-slot, and the day's count adds the Slot journal's submissions that no row
-names. The rows written before the deploy name none: on the deploy day,
-each Original the bot published before the restart counts twice until
-midnight Toronto, so fewer Originals ship that day, never more. Restart
-before the day's first Original, overnight for instance, to avoid it;
-nothing needs to be migrated.
-
 ## Legacy tools
 
 - `bin/auto_improve.sh` exits unless `AUTO_IMPROVE_FORCE=1`; its prompt
@@ -874,6 +833,7 @@ nothing needs to be migrated.
   the handles it carries would unfollow them.
   `state/<account>/mass_unfollow_results.json` is rewritten after every
   unfollow.
+- `bin/seed_fr_influencers.py` is a one-off from the French era.
 
 ## Skills
 
@@ -881,7 +841,3 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
-
-Reply review failures do not claim a parent or write a publication ledger row.
-Evidence cache state is disposable and memory-only. Deploy these changes with
-the normal operator-requested restart; merging does not restart the live bot.

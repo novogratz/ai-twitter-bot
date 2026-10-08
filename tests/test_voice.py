@@ -1,6 +1,5 @@
 """Cross-cutting: the Voice in the Account's voice_fr.md and voice_en.md,
 and the reply prompts that carry it."""
-import re
 from pathlib import Path
 
 ACCOUNT = Path(__file__).resolve().parent.parent / "accounts" / "theaishrink"
@@ -16,10 +15,9 @@ def test_voice_has_ai_fan_voice():
 
 
 def test_voice_prioritizes_reader_value():
-    for path in (VOICE_FR, VOICE_EN):
-        text = path.read_text().lower()
-        assert "something useful" in text and "lead with the detail that matters" in text
-        assert "never invent a source or number" in text
+    text = VOICE_FR.read_text().lower()
+    assert "reader takeaway" in text and "source" in text
+    assert "never fill a quota with filler" in text
 
 
 def test_voice_keeps_warmth_and_honest_criticism():
@@ -28,17 +26,12 @@ def test_voice_keeps_warmth_and_honest_criticism():
     assert "honest criticism" in text and "uncertainty" in text
 
 
-def test_voice_carries_no_publishing_policy():
-    """Operator 2026-09-27: the Voice opens every Reply prompt, where the
-    hours, the daily ceiling and the reach target help nothing, and the two
-    files disagreed on the ceiling (seven, eight). The engine enforces the
-    policy and docs/EDITORIAL_POLICY.md states it; the Voice says who writes."""
-    for path in (VOICE_FR, VOICE_EN):
-        text = path.read_text().lower()
-        assert [w for w in ("publishing policy", "ceiling", "per day", "toronto", "500,000")
-                if w in text] == [], path.name
-        # The one line of the policy block the Operator kept.
-        assert "skip a weak story; never fill a quota with filler." in text
+def test_voice_carries_editorial_strategy():
+    text = VOICE_FR.read_text().lower()
+    assert "at least three original ai posts" in text
+    assert "eight is the absolute ceiling" in text
+    assert "no automated quote tweets" in text
+    assert "replies remain uncapped" in text
 
 
 def test_persona_is_woman_mom_in_the_one_voice():
@@ -107,40 +100,3 @@ def test_spicy_dial_suggestive_never_explicit():
         low = personality_store.render_voice(lang).lower()
         assert "flirt" in low and "never explicit" in low, \
             "the Voice every prompt carries must hold the dial WITH its guardrail"
-
-
-def test_the_graphseo_relation_stays_on_ai_without_a_formula():
-    """Operator 2026-09-27: his prompt still bridged to "AI/Space/Investment",
-    the old niche, imposed "THE FORMULA — non-negotiable" ending on a
-    punchline or a question, and its examples carried unsourced figures."""
-    from src.core import account
-
-    low = account.current().relations.get("Graphseo").prompt.lower()
-    assert [w for w in ("space", "investment", "formula", "non-negotiable", "punchline", "their shit")
-            if w in low] == []
-    assert re.findall(r"\b(?!100%)\d+ ?%", low) == [], "an example figure the model would copy"
-    assert "ai" in low.split() and "do not invent" in low
-
-
-def test_the_graphseo_relation_keeps_the_operators_banter():
-    """Operator 2026-06-10: "go back on commenting Julien, it was fun". The
-    2026-09-27 rewrite keeps his fun dial word for word, with no line around
-    it pulling the Reply back to a seminar."""
-    from src.core import account
-
-    prompt = account.current().relations.get("Graphseo").prompt
-    assert "this is BANTER between friends, not a seminar. Tease him, run the bit" in prompt
-    assert "make him laugh FIRST\nand think second" in prompt
-    assert "If it makes him laugh\nor want to reply, you've won." in prompt
-
-
-def test_no_relation_prompt_forces_a_hook():
-    """Operator 2026-09-27: "First 6 words must hook" is the forced formula
-    the Voice rules out, and "never the same angle twice in a row" asks the
-    model for Replies it never sees."""
-    from src.core import account
-
-    relations = account.current().relations
-    for prompt in (relations.default, *(r.prompt for r in relations.handles.values() if r.prompt)):
-        low = prompt.lower()
-        assert [w for w in ("must hook", "twice in a row") if w in low] == []

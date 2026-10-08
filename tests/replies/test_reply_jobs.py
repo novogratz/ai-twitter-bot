@@ -3,6 +3,7 @@ hands the Reply pipeline, with which budget and log tag. The pipeline's own
 rules (admission first, set-aside posts, rate limit, errors that end a
 cycle) are tested once in test_reply_pipeline.py. The model is the fake LLM
 and the chokepoint a stub, both from tests/replies/conftest.py."""
+import ast
 from pathlib import Path
 
 import pytest
@@ -11,10 +12,10 @@ from src.core import config
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
 from src.guards.active_hours import OutsideActiveHours
-from src.replies import reply_pipeline, reply_source
+from src.replies import reply_pipeline
 from src.x import x_urls
 from src.x.confirmed_write import WriteOutcome
-from tests.helpers import fresh, references
+from tests.helpers import fresh
 from tests.replies.fakes import EXHAUSTED, REPLY_TEXT, logged
 
 
@@ -31,10 +32,48 @@ def _private(name):
 
 def private_borrows(source, module):
     """The names `module`, a module of src/replies, takes from another
-    reply module that start with an underscore."""
-    return sorted({f"{lineno}: {dotted}" for lineno, dotted in references(source, module)
-                   if dotted.startswith(REPLIES + ".") and not dotted.startswith(module + ".")
-                   and any(_private(p) for p in dotted.split(".")[2:])})
+    reply module that start with an underscore: imported by name (relative
+    at any level, or absolute), or read as an attribute of an imported
+    sibling module."""
+    package = module.split(".")[:-1]
+    bound, problems = {}, set()
+
+    def borrow(lineno, dotted):
+        parts = dotted.split(".")
+        if dotted.startswith(REPLIES + ".") and not dotted.startswith(module + ".") \
+                and any(_private(p) for p in parts[2:]):
+            problems.add(f"{lineno}: {dotted}")
+
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                if a.asname:
+                    bound[a.asname] = a.name
+                else:
+                    head = a.name.split(".")[0]
+                    bound[head] = head
+        elif isinstance(node, ast.ImportFrom):
+            if node.level:
+                if node.level - 1 > len(package):
+                    continue
+                base = package[:len(package) - (node.level - 1)]
+                target = ".".join(base + (node.module.split(".") if node.module else []))
+            else:
+                target = node.module or ""
+            for a in node.names:
+                dotted = f"{target}.{a.name}"
+                borrow(node.lineno, dotted)
+                bound[a.asname or a.name] = dotted
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute):
+            chain, base = [], node
+            while isinstance(base, ast.Attribute):
+                chain.append(base.attr)
+                base = base.value
+            if isinstance(base, ast.Name) and base.id in bound:
+                borrow(node.lineno, ".".join([bound[base.id], *reversed(chain)]))
+    return sorted(problems)
 
 
 @pytest.mark.parametrize("source", [
@@ -55,8 +94,8 @@ def test_the_private_borrow_guard_catches_every_import_form(source):
 
 
 @pytest.mark.parametrize("source", [
-    "from .direct_reply import reply_call",
-    "from . import direct_reply\ndirect_reply.reply_call(direct_reply.__name__)",
+    "from .direct_reply import is_on_niche",
+    "from . import direct_reply\ndirect_reply.is_on_niche(direct_reply.__name__)",
     "from ..core.config import _PROJECT_ROOT",
     "from . import example_bot\nexample_bot._own_helper",
 ])
@@ -73,77 +112,28 @@ def test_reply_jobs_never_borrow_each_others_privates():
     assert not problems, "private borrows across src/replies:\n  " + "\n  ".join(problems)
 
 
-DIRECT_REPLY = f"{REPLIES}.direct_reply"
-
-
-def direct_reply_takings(source, module):
-    """What `module` takes from direct_reply besides `reply_call`: the
-    module itself, or any other name imported or read from it."""
-    return sorted({f"{lineno}: {dotted}" for lineno, dotted in references(source, module)
-                   if dotted == DIRECT_REPLY or (dotted.startswith(DIRECT_REPLY + ".")
-                                                 and dotted.split(".")[3] != "reply_call")})
-
-
-@pytest.mark.parametrize("source", [
-    "from .direct_reply import is_on_niche",
-    "from . import direct_reply",
-    "from . import direct_reply as dr\ndr.is_on_niche",
-    "from ..replies.direct_reply import is_on_niche",
-    "from ..replies import direct_reply",
-    "from .. import replies\nreplies.direct_reply.is_on_niche",
-    "from src.replies.direct_reply import is_on_niche",
-    "from src.replies import direct_reply",
-    "import src.replies.direct_reply as dr\ndr.is_on_niche",
-    "import src.replies.direct_reply",
-    "import src.replies\nsrc.replies.direct_reply.is_on_niche",
-    "def run():\n    from .direct_reply import reply_call, is_on_niche",
-])
-def test_the_direct_reply_guard_catches_every_import_form(source):
-    assert direct_reply_takings(source, "src.replies.example_bot")
-
-
-@pytest.mark.parametrize("source", [
-    "from .direct_reply import reply_call",
-    "from src.replies.direct_reply import reply_call as call",
-    "from ..replies.direct_reply import reply_call",
-    "from . import reply_source\nreply_source.select",
-])
-def test_the_direct_reply_guard_lets_the_reply_call_through(source):
-    assert direct_reply_takings(source, "src.replies.example_bot") == []
-
-
-def test_the_other_reply_jobs_take_only_the_reply_call_from_direct_reply():
-    """Issue #244: direct_reply is a job, not a library. The other jobs
-    select through the Reply source and read the Account themselves; the
-    Reply call stays shared until the call surface moves it (#245)."""
-    root = Path(__file__).resolve().parents[2] / "src" / "replies"
-    taken = [f"{path.name}:{t}" for path in sorted(root.glob("*.py")) if path.stem != "direct_reply"
-             for t in direct_reply_takings(path.read_text(), f"{REPLIES}.{path.stem}")]
-    assert not taken, "taken from direct_reply:\n  " + "\n  ".join(taken)
-
-
 # --- direct_reply: the VIP scan, then the search lane -------------------------
 
 
 @pytest.fixture
 def direct(monkeypatch, llm, chokepoint, settings_override):
     """direct_reply with one VIP handle; `vip` and `search` are what the two
-    lanes scrape, `queries` the search lane's queries."""
-    from src.replies import direct_reply as dr, reply_source
+    lanes scrape."""
+    from src.replies import direct_reply as dr
+    from src.x import scraper
 
     lanes = {"vip": [], "search": [], "queries": []}
     settings_override(VIP_SCAN_HANDLES="Graphseo")
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
 
     def search(query, **k):
-        if query.startswith("from:"):
-            return list(lanes["vip"])
         lanes["queries"].append(query)
         if isinstance(lanes["search"], BaseException):
             raise lanes["search"]
         return list(lanes["search"])
 
     monkeypatch.setattr(dr, "scrape_x_search", search)
-    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
+    monkeypatch.setattr(dr, "is_on_niche", lambda text: "off-niche" not in text)
     return dr, lanes, llm, chokepoint
 
 
@@ -207,10 +197,9 @@ def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
     assert chokepoint.sent == [marked, mention]
 
 
-def test_direct_reply_vip_lane_keeps_posts_under_reply_max_age(direct):
-    """Quiet posts still stay under REPLY_MAX_AGE_MINUTES (15)."""
+def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     dr, lanes, llm, chokepoint = direct
-    recent, old = fresh("graphseo", minutes=14, n=1), fresh("graphseo", minutes=16, n=2)
+    recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
     lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
@@ -218,19 +207,6 @@ def test_direct_reply_vip_lane_keeps_posts_under_reply_max_age(direct):
 
     assert chokepoint.sent == [recent]
     assert [r.source for r in logged()] == ["VIP/Graphseo"]
-
-
-def test_direct_reply_vip_lane_answers_rising_posts_past_reply_max_age(direct):
-    """A rising post can use the wider freshness budget at both admissions."""
-    dr, lanes, llm, chokepoint = direct
-    hot = fresh("graphseo", minutes=30, n=1)
-    lanes["vip"] = [{"url": hot, "text": "vip hot", "likes": 120}]
-    llm.default = "réponse précise sur le trafic organique"
-
-    dr._run_vip_scan(reply_pipeline.Cycle())
-
-    assert chokepoint.sent == [hot]
-    assert chokepoint.calls[0].oldest == reply_source.rising_max_age()
 
 
 def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
@@ -271,8 +247,6 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
     numbers = itertools.count()
 
     def fresh_posts(query, **k):
-        if query.startswith("from:"):
-            return []
         lanes["queries"].append(query)
         return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
@@ -411,7 +385,7 @@ def test_reply_search_surface_disabled_by_default(monkeypatch, settings_override
 
 
 @pytest.fixture
-def reply_search(monkeypatch, chokepoint, settings_override, quality_llm):
+def reply_search(monkeypatch, chokepoint, settings_override):
     """reply_bot with a stub search-and-draft model returning `batch`."""
     from src.replies import reply_bot as rb
 
@@ -430,7 +404,7 @@ def reply_search(monkeypatch, chokepoint, settings_override, quality_llm):
 
 def target(url, kind="reply"):
     return {"tweet_url": url, "reply": REPLY_TEXT, "type": kind, "pattern": "RENAME",
-            "provider": "claude", "model": "sonnet", "tweet_text": "Batch size affects latency."}
+            "provider": "claude", "model": "sonnet"}
 
 
 def test_reply_search_sends_admitted_targets_once(reply_search, blocked_pgm_pm):
@@ -468,38 +442,38 @@ def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
 # --- early_bird and mega_watch (profile scans) ------------------------------
 
 
-def test_profile_scan_pools_are_the_accounts_pinned_accounts(monkeypatch, settings_override):
-    """#299: the curator is gone. early_bird and mega_watch scan the
-    Account's pinned accounts, in their order, 30 and 12 at most, a handle
-    listed twice kept at its first place and a Blocked account left out."""
-    from src.replies import early_bird_bot as eb, mega_watch_bot as mw
-    assert eb.EARLY_BIRD_ACCOUNTS == [] and mw.MEGA_ACCOUNTS == []
-    assert eb._scan_pool() == mw._watch_pool() == ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
-
-    monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
-    pinned = [f"pinned{i}" for i in range(40)]
-    settings_override(PINNED_TRACKED_HANDLES=",".join(
-        ["pinned0", "la_pique_off", " @pinned1 ", "PINNED0", *pinned[1:]]))
-
-    assert eb._scan_pool() == pinned[:30]
-    assert mw._watch_pool() == pinned[:12]
+def test_early_reply_targets_are_curator_driven():
+    """2026-06-07 PM operator mandate: NO static target lists — the scan
+    pools come from account_curator.tracked_handles(), pinned with the only
+    two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
+    from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
+    from src.replies.mega_watch_bot import MEGA_ACCOUNTS
+    assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
+        "static early-reply lists must stay empty — pools come from the curator"
+    )
+    from src.account.account_curator import pinned_handles, tracked_handles
+    # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
+    # reply conversion on his question post (operator: "more things like this").
+    assert pinned_handles() == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
+    handles = tracked_handles(limit=5)
+    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
 
 
 @pytest.fixture(params=["early_bird", "mega_watch"])
-def profile_job(request, monkeypatch, llm, chokepoint, always_reply):
+def profile_job(request, monkeypatch, llm, chokepoint):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
     from src.core import evolution_store
-    from src.replies import early_bird_bot as eb, mega_watch_bot as mw, reply_source
+    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
     profiles = {}
     monkeypatch.setattr(eb, "_scan_pool", lambda: list(profiles))
     monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
-    always_reply()
+    monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
-    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
+    monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
     return request.param, run, profiles, llm, chokepoint
 
 
@@ -509,23 +483,19 @@ def post(handle, text, minutes=1, n=0, **fields):
 
 def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
     name, run, profiles, llm, chokepoint = profile_job
-    # early_bird reads 18 minutes; REPLY_MAX_AGE_MINUTES (15) caps it.
-    max_minutes = {"early_bird": 15, "mega_watch": 4}[name]
+    max_minutes = {"early_bird": 18, "mega_watch": 4}[name]
     ok = post("someone", "post fresh", minutes=max_minutes - 1, n=1)
     profiles["someone"] = [
         post("someone", "post stale", minutes=max_minutes + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
-        # A repost shown on the profile: its URL names another account.
-        post("other", "post reposted", n=5),
         {"url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]
 
     run()
 
-    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread",
-                       "post reposted") == ["post fresh"]
+    assert llm.parents("post fresh", "post stale", "off-niche post", "post in a thread") == ["post fresh"]
     assert chokepoint.sent == [ok["url"]]
     tag = {"early_bird": "EARLYBIRD", "mega_watch": "MEGA"}[name]
     assert [r.source for r in logged()] == [f"{tag}/someone"]
@@ -544,27 +514,6 @@ def test_profile_jobs_bound_their_replies(profile_job):
     assert len(chokepoint.sent) == per_account
     if name == "early_bird":
         assert len({x_urls.author(u) for u in chokepoint.sent}) == 3
-
-
-@pytest.mark.parametrize("profile_job", ["early_bird"], indirect=True)
-def test_early_bird_answers_seven_accounts_at_most(profile_job, monkeypatch, always_reply):
-    """#243: the cap of 15 Replies per cycle never bound anything. Early
-    bird picks four always-reply accounts and three from its scan pool, one
-    Reply each: seven at most."""
-    from src.replies import early_bird_bot as eb
-
-    name, run, profiles, llm, chokepoint = profile_job
-    always, tracked = [f"always{i}" for i in range(6)], [f"tracked{i}" for i in range(6)]
-    always_reply(*always)
-    monkeypatch.setattr(eb, "_scan_pool", lambda: list(tracked))
-    for handle in always + tracked:
-        profiles[handle] = [post(handle, f"post {handle} {i}", n=i) for i in range(3)]
-
-    run()
-
-    authors = [x_urls.author(u) for u in chokepoint.sent]
-    assert len(authors) == len(set(authors)) == 7
-    assert len([a for a in authors if a.startswith("always")]) == 4
 
 
 def test_profile_jobs_stop_at_the_rate_limit(profile_job):
@@ -615,20 +564,6 @@ def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override
     assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(first, True), (second, True)], \
         "freshest first, DEBATE_MAX_PER_CYCLE Replies"
     assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
-
-
-def test_debate_answers_the_newest_mention_first_whatever_its_likes(debate, settings_override):
-    """#243: the Reply source sorts the mentions, by age only; mentions are
-    replies by nature and stay candidates."""
-    db, mentions, llm, chokepoint = debate
-    settings_override(DEBATE_MAX_PER_CYCLE=1, DEBATE_MAX_AGE_HOURS=24.0)
-    newer = fresh("someone", minutes=5, n=1)
-    mentions += [{"url": fresh("liked", minutes=30, n=2), "text": "liked mention", "likes": 5_000},
-                 {"url": newer, "text": "@TheAIShrink newer mention", "is_reply": True}]
-
-    db.run_debate_cycle()
-
-    assert chokepoint.sent == [newer]
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_override):

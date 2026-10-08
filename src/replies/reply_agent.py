@@ -497,6 +497,13 @@ def generate_replies(recent_topics=None, already_replied=None):
     if directives_block:
         discovered_section = (discovered_section or "") + directives_block
 
+    # Global mood: this path searches broadly, so no author dossier. The
+    # generator adds the Voice and the hard rules.
+    from ..core import personality_store
+    mood = personality_store.render_global_mood()
+    if mood:
+        discovered_section = (discovered_section or "") + "\n\n" + mood
+
     from datetime import timedelta
     from ..guards.active_hours import now_local
     today = now_local().date()
@@ -507,7 +514,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     log.info("[REPLY] Running LLM CLI (searching X)...")
     # Reply agent is English-first: the Voice file in EN, but the prompt
     # still tells it to reply in each tweet's language. Its surface carries
-    # the WebSearch tool.
+    # the WebSearch tool and the neutral cwd.
     call = ReplyCall(REPLY_PROMPT_TEMPLATE, Surface.REPLY_SEARCH, "REPLY_SEARCH", language=LanguageRule.ENGLISH,
                      # A Reply's profile, read as JSON: the answer is a JSON array.
                      profile=CallProfile(output=Output.JSON))
