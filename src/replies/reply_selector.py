@@ -57,12 +57,12 @@ def _rank(batch: list) -> list | None:
         return None
 
 
-def run_reply_selection_cycle() -> int:
+def run_reply_selection_cycle(*, concise=False) -> int:
     require_active()
     if not _SELECTION_LOCK.acquire(blocking=False):
         return 0
     try:
-        return _select()
+        return _select(concise=concise)
     finally:
         _SELECTION_LOCK.release()
 
@@ -95,7 +95,7 @@ def comparison_order(rows: list) -> list:
     return waiting + fresh + ready
 
 
-def _select() -> int:
+def _select(*, concise=False) -> int:
     if action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count() >= reply_allowance():
         return 0
     batch = []
@@ -136,6 +136,14 @@ def _select() -> int:
                 return replace(selected, text_limit=2000)
         language = LanguageRule.PARENT if source.startswith(("EARLYBIRD/", "MEGA/")) else LanguageRule.PARENT_OR_FR_FORCED
         return replace(reply_call(author, language), text_limit=2000)
+    base_call = call
+    if concise:
+        def call(author):
+            selected = base_call(author)
+            return replace(selected, template=selected.template +
+                           "\nSTARTUP REPLY: use one clean, smart thought in at most 20 words. "
+                           "No emojis or smileys. No greeting or startup announcement. "
+                           "Choose SKIP if brevity would make the answer misleading.")
     job = reply_pipeline.Job("reply_selection", "SELECTED", reply_call=call, pipelined=True)
     candidate = reply_pipeline.Candidate(winner["url"], winner["text"], source,
                                         angle=winner["angle"])
@@ -151,3 +159,8 @@ def _select() -> int:
     else:
         reply_pool.mark(winner["id"], "queued", reason="write or generation failed; compare again later")
     return shipped
+
+
+def run_startup_reply_cycle() -> int:
+    """One startup attempt through the same selection and write guards."""
+    return run_reply_selection_cycle(concise=True)

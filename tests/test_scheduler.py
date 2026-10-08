@@ -108,3 +108,15 @@ def test_each_reply_job_counts_toward_safari_health_under_its_label(
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == f"[{label}] Cycle failed."
     assert "RuntimeError: page never loaded" in caplog.text
+
+
+@pytest.mark.parametrize("post_only, present", [(False, True), (True, False)])
+def test_startup_reply_is_one_shot_and_respects_mode(post_only, present):
+    from main import build_scheduler
+    from apscheduler.triggers.date import DateTrigger
+    scheduler = build_scheduler(post_only=post_only)
+    job = scheduler.get_job("startup_reply_job")
+    assert (job is not None) == present
+    if job:
+        assert isinstance(job.trigger, DateTrigger)
+        assert job.misfire_grace_time is None

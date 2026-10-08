@@ -2898,3 +2898,5 @@ check X and the Replied store before repairing its pool status. An unreadable
 pool or an unsavable archive stops collection/selection without overwriting
 state. Existing active windows, caps and evidence rules remain. No live X
 writes or restart are performed by this implementation.
+
+2026-10-08 — Startup now attempts one selected Reply after a 90-second discovery/comparison period. It uses the shared saved pool, quality threshold, active windows, hourly allowance, ten-per-day cap and existing write guards. The draft requests one smart thought in at most 20 words, without emojis or smileys. A weak pool or exhausted allowance sends nothing. No automatic restart is performed.
