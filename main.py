@@ -65,7 +65,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
             "editorial_job", executor="editorial", first_seconds=10)
 
     if not post_only:
-        from src.replies.reply_selector import run_reply_selection_cycle
+        from src.replies.reply_selector import run_reply_selection_cycle, run_startup_reply_cycle
         from src.replies.direct_reply import run_direct_reply_cycle
         from src.replies.feed_sweeper_bot import run_feed_sweep_cycle
         from src.replies.early_bird_bot import run_early_bird_cycle
@@ -74,6 +74,11 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.replies.mega_watch_bot import run_mega_watch_cycle
         from src.replies.first_hour_babysitter import run_babysit_cycle
 
+        # Allow the immediate discovery scan and the pool's comparison delay.
+        scheduler.add_job(awake_job(health.wrap_job(run_startup_reply_cycle,
+                          "startup_reply", safari_health=False)), trigger="date",
+                          run_date=datetime.now(timezone.utc) + timedelta(seconds=90),
+                          id="startup_reply_job", misfire_grace_time=None)
         add(health.wrap_job(run_reply_selection_cycle, "reply_selection", safari_health=False),
             10, "reply_selection_job", first_seconds=600)
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)

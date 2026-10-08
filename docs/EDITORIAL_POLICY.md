@@ -344,3 +344,5 @@ state. Existing active windows, caps and evidence rules remain. No live X
 writes or restart are performed by this implementation.
 
 Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
+
+2026-10-08 — Startup now attempts one selected Reply after a 90-second discovery/comparison period. It uses the shared saved pool, quality threshold, active windows, hourly allowance, ten-per-day cap and existing write guards. The draft requests one smart thought in at most 20 words, without emojis or smileys. A weak pool or exhausted allowance sends nothing. No automatic restart is performed.

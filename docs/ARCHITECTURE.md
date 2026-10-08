@@ -92,6 +92,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
+| `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
 | `reply_selection_job` | 10 min | Compares up to thirty saved, admitted posts; records scores, reasons and angles; drafts at most one candidate scoring at least 85/100. All daily budgets and write guards still apply. |
 | `direct_reply_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `feed_sweep_job` | 8 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |

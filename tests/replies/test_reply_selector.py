@@ -111,3 +111,24 @@ def test_comparison_batch_includes_waiting_and_fresh_discoveries():
     assert [row["id"] for row in picked[:10]] == [str(n) for n in range(10)]
     assert picked[10]["id"] == "59"
     assert len({row["id"] for row in picked}) == 30
+
+
+def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [20, 96, 90]))
+    calls = []
+    def dispatch(job, candidates, cycle, **kwargs):
+        calls.append((job.reply_call("second"), candidates, kwargs))
+        return 1
+    monkeypatch.setattr(pipeline, "dispatch", dispatch)
+    assert selector.run_startup_reply_cycle() == 1
+    call, candidates, kwargs = calls[0]
+    assert candidates[0].url == saved[1]
+    assert "at most 20 words" in call.template
+    assert "No emojis or smileys" in call.template
+    assert kwargs["max_shipped"] == 1
+
+
+def test_startup_does_not_override_spent_allowance(saved, monkeypatch):
+    monkeypatch.setattr(ag, "count_today", lambda action: selector.reply_allowance())
+    monkeypatch.setattr(selector, "_rank", lambda batch: pytest.fail("spent allowance"))
+    assert selector.run_startup_reply_cycle() == 0
