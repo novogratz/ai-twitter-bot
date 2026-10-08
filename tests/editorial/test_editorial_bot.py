@@ -26,20 +26,20 @@ def use_editorial(monkeypatch, **fields):
 
 def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
-    assert editorial.due_slot(at(5, 45), {}) is None
+    assert editorial.due_slot(at(5, 5), {})[0] == "05:05"
+    assert editorial.due_slot(at(5, 50), {}) is None
     assert editorial.due_slot(at(10, 15), {})[0] == "10:00"
     assert editorial.due_slot(at(10, 45), {}) is None
-    state = {"date": "2026-09-20", "slots": {"05:00": "published"}}
+    state = {"date": "2026-09-20", "slots": {"05:05": "published"}}
     assert editorial.due_slot(at(5, 30), state) is None
-    state["slots"]["05:00"] = "pending"
+    state["slots"]["05:05"] = "pending"
     assert editorial.due_slot(at(5, 30), state) is None
     assert editorial.due_slot(at(20, 45), {})[0] == "20:45"
     assert editorial.due_slot(at(21, 29), {})[0] == "20:45"
     assert editorial.due_slot(at(21, 30), {}) is None
     assert editorial.due_slot(at(22, 0), {}) is None
     assert editorial.due_slot(at(23, 0), {}) is None
-    assert editorial.due_slot(at(23, 30), {}) is None
+    assert editorial.due_slot(at(23, 45), {}) is None
 
 
 def test_evening_slots_stay_inside_waking_hours():
@@ -712,11 +712,11 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
-    clock(monkeypatch, datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 5, 5, tzinfo=TORONTO))
     editorial.open_startup_window()
     monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: [])
-    assert editorial.run_editorial_cycle()["slot"] == "05:00"
-    assert editorial._read_state()["slots"] == {"05:00": "published"}
+    assert editorial.run_editorial_cycle()["slot"] == "05:05"
+    assert editorial._read_state()["slots"] == {"05:05": "published"}
     assert trend_fixture["sources"] == [False]
     assert len(posted) == 1
 
@@ -725,9 +725,9 @@ def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     editorial.open_startup_window(at(23, 10))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(23, 29), {})[0] == key
-    assert not editorial._in_window(key, at(23, 30))
-    assert editorial.startup_slot(at(23, 30), {}) is None
+    assert editorial.startup_slot(at(23, 44), {})[0] == key
+    assert not editorial._in_window(key, at(23, 45))
+    assert editorial.startup_slot(at(23, 45), {}) is None
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):
@@ -781,7 +781,7 @@ def test_a_crash_loop_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
         monkeypatch, trend_fixture, crash_every):
     """UNCONFIRMED writes no ledger row: without the pending count, every
     restart submitted a Startup post, 63 a day at a crash every 20 minutes."""
-    first = datetime(2026, 9, 20, 4, 30, tzinfo=TORONTO)
+    first = datetime(2026, 9, 20, 5, 5, tzinfo=TORONTO)
     starts = [first + timedelta(minutes=crash_every * i)
               for i in range(int(17.5 * 60 / crash_every))]
     _assert_ceiling_and_spacing(_unconfirmed_day(monkeypatch, starts))
@@ -792,7 +792,7 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
     """Eleven Slots and the Startup post, all UNCONFIRMED: 12 submissions
     before pending ones counted."""
     _assert_ceiling_and_spacing(
-        _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 4, 30, tzinfo=TORONTO)]))
+        _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 5, 5, tzinfo=TORONTO)]))
 
 
 def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):

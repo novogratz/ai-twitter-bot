@@ -11,7 +11,7 @@ def test_voice_has_ai_fan_voice():
     for path in (VOICE_FR, VOICE_EN):
         text = path.read_text().lower()
         assert "obsessed with ai" in text and "excited" in text
-        assert "45-year-old woman and mom" in text
+        assert "40-year-old woman and mom" in text
 
 
 def test_voice_prioritizes_reader_value():
@@ -41,7 +41,7 @@ def test_persona_is_woman_mom_in_the_one_voice():
     the Voice block carries into every prompt (issue #192: no surface keeps
     its own copy). Also pins that the bestie bit moved big brother -> sister."""
     spine = VOICE_FR.read_text().lower()
-    assert "woman" in spine and "mom" in spine and "45-year-old" in spine
+    assert "woman" in spine and "mom" in spine and "40-year-old" in spine
     assert "sharpest ai mind" in spine
     assert "bro" in spine  # the no-bro-speak rule is stated
 
@@ -77,7 +77,7 @@ def test_savvy_tech_mom_register():
     The spine carries the savvy-tech-mom-not-a-troll register so every
     surface inherits it."""
     spine = VOICE_FR.read_text().lower()
-    assert "45-year-old woman and mom" in spine and "never cruel" in spine
+    assert "40-year-old woman and mom" in spine and "never cruel" in spine
     assert "something useful" in spine, "helpful register must be stated"
 
 

@@ -127,7 +127,7 @@ def due_slot(now=None, journal=None):
 def open_startup_window(now=None) -> None:
     """main() calls this once when the bot starts. A start overnight opens
     nothing: the watchdog relaunches the bot at night, and a window left open
-    across 04:30 would publish at wake."""
+    across 05:05 would publish at wake."""
     global _startup_opened_at
     now = _local(now)
     _startup_opened_at = now if is_active(now) else None

@@ -9,7 +9,7 @@ real account. Setup and run commands live in [`README.md`](README.md).
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active 04:30–23:30 America/Toronto only; nothing external happens overnight.
+- Active 05:05–23:45 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
@@ -207,3 +207,16 @@ checks and settings, including its Reply behavior without the later independent
 Reply quality review. Production state, .env and untracked files are preserved.
 The running bot is not restarted; deployment takes effect on the next explicitly
 requested start or restart.
+
+2026-10-07 — Operator updated the Account Voice: a sexy, funny, sarcastic
+40-year-old woman and mom with deep expertise in AI models and news. AI-generated
+videos are a new interest, and the Account has started publishing them. Specific
+video descriptions and production claims need supplied context. Flirtation stays
+non-explicit and occasional; sarcasm targets claims. Identity honesty, evidence
+requirements, publishing limits and scheduling are unchanged. This changes the
+Voice only and does not add automated video generation or uploading.
+
+2026-10-07 — Operator changed Toronto sleeping hours to 23:45–05:05.
+The shared waking guard now permits external work from 05:05 through 23:44.
+The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
+Caps and pacing are unchanged; this takes effect on the next explicit restart.

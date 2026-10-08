@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "04:30–23:30",
+    "active": "05:05–23:45",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
@@ -31,7 +31,7 @@ PRE_187 = {
     "quotes": 0,
     "reposts": 0,
     "slots": [
-        ["05:00", "Priority: the AI update worth understanding this morning"],
+        ["05:05", "Priority: the AI update worth understanding this morning"],
         ["07:15", "A useful AI workflow with a concrete first step"],
         ["09:30", "Priority: an AI article or model update with a sharp consequence"],
         ["10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],

@@ -8,8 +8,8 @@ from ..core import config
 from ..core.logger import log
 
 
-WAKE = time(4, 30)
-BEDTIME = time(23, 30)
+WAKE = time(5, 5)
+BEDTIME = time(23, 45)
 
 _STOP = threading.Event()
 

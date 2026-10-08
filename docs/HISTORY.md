@@ -2845,3 +2845,16 @@ checks and settings, including its Reply behavior without the later independent
 Reply quality review. Production state, .env and untracked files are preserved.
 The running bot is not restarted; deployment takes effect on the next explicitly
 requested start or restart.
+
+2026-10-07 — Operator updated the Account Voice: a sexy, funny, sarcastic
+40-year-old woman and mom with deep expertise in AI models and news. AI-generated
+videos are a new interest, and the Account has started publishing them. Specific
+video descriptions and production claims need supplied context. Flirtation stays
+non-explicit and occasional; sarcasm targets claims. Identity honesty, evidence
+requirements, publishing limits and scheduling are unchanged. This changes the
+Voice only and does not add automated video generation or uploading.
+
+2026-10-07 — Operator changed Toronto sleeping hours to 23:45–05:05.
+The shared waking guard now permits external work from 05:05 through 23:44.
+The first Original slot moves from 05:00 to 05:05 so it remains in waking hours.
+Caps and pacing are unchanged; this takes effect on the next explicit restart.

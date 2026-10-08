@@ -34,7 +34,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Working hours 04:30–23:30 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Working hours 05:05–23:45 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
