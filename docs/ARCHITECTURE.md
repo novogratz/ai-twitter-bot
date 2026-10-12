@@ -102,6 +102,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
+| `repost_job` | 2 min, first run 150 seconds after start; full mode only, opt-in cap > 0 | Discover priority originals and review rising generated videos from the shared pool; native repost confirmation, 50/day hard cap, ten-minute spacing, permanent dedup. |
 | `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
 | `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to eight posts when none remain or waiting discoveries are due after five minutes. A failed refresh can still use a current approval. Logs review outcomes; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 with a target of 300 and a maximum of 400 Replies/day. All daily budgets and write guards still apply. |
 | `direct_reply_job` | 2 min | Rotates one VIP profile and three Top searches by default; saves candidates without drafting or sending. |
@@ -468,12 +469,12 @@ dry-run row; `pin_job` marks the day under `dry_run_date` in
 `pin_daily_state.json`, which stops further dry runs that day without
 spending the live attempt. A `pin` row is not a profile publication.
 
-No write function exists for quotes, reposts, threads, GIF posts or
+No legacy write function exists for quotes, self-reposts, threads, GIF posts or
 self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 `retweet_post`, `retweet_own_latest`, `reboost_tweet`, `post_thread`,
 `reply_to_own_latest` and `reply_to_reply` were removed with their helpers
-(issue #111). `can_post` refusing quotes and retweets stays as a second
-line. The writes no job called went too (issue #168): the unfollow
+(issue #111). Quotes remain refused. The 2026-10-12 operator request adds
+`repost_tweet`, with its separate capped, deduplicated and confirmed write path. The writes no job called went too (issue #168): the unfollow
 chokepoint with its cap, the nested-reply alias, and `post_tweet`'s image
 path and non-editorial branch. The bot never unfollows;
 `bin/mass_unfollow.py` clicks on its own page and writes its ledger rows
@@ -1005,3 +1006,15 @@ repeating the topic expression; ad-hoc queries receive the compact `scope` too.
 A 677-character expanded query produced X's “Something went wrong” screen while
 a short equivalent returned posts. Niche and semantic approval still apply after
 scraping; the query is not a substitute for content checks.
+
+2026-10-12 — Generated-video discovery adds `searches.videos` (one query per
+sweep, Latest then Top), video caption patterns and own-attachment/repost-count
+metadata. Reply comparison reserves up to four video opportunities and gives
+approved videos a small ordering preference without changing the 85 threshold.
+`repost_bot` uses the same saved discoveries, plus dedicated priority searches.
+`REPOST_SELECTION` uses the priority Reply model/provider for caption-only review.
+`repost_policy` owns permanent history, ambiguous counts, pacing, priority-author
+exceptions and video approval checks. `twitter_client.repost_tweet` opens and
+verifies the exact parent, uses native repost controls, reserves before submit,
+and records only a confirmed state via `confirmed_write`. Reposts no longer
+consume the Original publication budget. No automatic restart is introduced.

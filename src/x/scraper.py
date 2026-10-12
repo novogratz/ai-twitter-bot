@@ -170,7 +170,10 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             return parseInt(s, 10) || 0;
         }
         function extractCount(article, testid) {
-            var btn = article.querySelector('[data-testid="' + testid + '"]');
+            var btn = Array.from(article.querySelectorAll('[data-testid="' + testid + '"]')).find(function(node) {
+                return node.closest('article') === article && !node.closest('div[role="link"]')
+                    && !node.closest('[data-testid="quoteTweet"]');
+            });
             if (!btn) return 0;
             var label = btn.getAttribute('aria-label') || '';
             var m = label.match(/(\\d[\\d,\\.KMkm]*)/);
@@ -196,21 +199,29 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         if (articles.length === 0) return 'NO_ARTICLES';
         for (var i = 0; i < Math.min(articles.length, MAX_TWEETS); i++) {
             var a = articles[i];
-            var textEl = a.querySelector('[data-testid="tweetText"]');
+            function ownNodes(selector) {
+                return Array.from(a.querySelectorAll(selector)).filter(function(node) {
+                    return node.closest('article') === a && !node.closest('div[role="link"]')
+                        && !node.closest('[data-testid="quoteTweet"]');
+                });
+            }
+            var textEl = ownNodes('[data-testid="tweetText"]')[0];
             var text = textEl ? textEl.textContent.trim() : '';
-            if (!text) continue;
-            var links = a.querySelectorAll('a[href*="/status/"]');
+            var hasVideo = ownNodes('video').length > 0 || ownNodes('[data-testid="videoPlayer"]').length > 0;
+            if (!text && !hasVideo && !ownNodes('[data-testid="tweetPhoto"]').length) continue;
+            var links = ownNodes('a[href*="/status/"] time').map(function(t) { return t.closest('a'); });
             var url = '';
             for (var l of links) {
                 var h = l.getAttribute('href');
                 if (h && h.match(/\\/status\\/\\d+$/)) {
-                    url = 'https://x.com' + h;
+                    url = h.startsWith('https://') ? h : 'https://x.com' + h;
                     break;
                 }
             }
             var authorEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
             var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
-            var likes = extractCount(a, 'like');
+            var likes = Math.max(extractCount(a, 'like'), extractCount(a, 'unlike'));
+            var reposts = Math.max(extractCount(a, 'retweet'), extractCount(a, 'unretweet'));
             var replies = extractCount(a, 'reply');
             var tl = detectTranslatedLang(a);
             var isReply = detectReplyArticle(a, text);
@@ -219,9 +230,9 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             // Views: the analytics link's aria-label carries the count
             // ("12.3K views"). Powers performance.scrape_own_metrics.
             var views = 0;
-            var an = a.querySelector('a[href*="/analytics"]');
+            var an = ownNodes('a[href*="/analytics"]')[0];
             if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), ft: text, a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), ft: text, a: author || 'unknown', l: likes, r: replies, v: views, rt: reposts, hv: hasVideo, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -275,6 +286,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             "author": t["a"],
             "likes": int(t.get("l") or 0),
             "replies": int(t.get("r") or 0),
+            "reposts": int(t.get("rt") or 0),
+            "has_video": bool(t.get("hv") or False),
             "translated_from": t.get("tl") or "",
             "is_reply": bool(t.get("ir") or False),
             # Bug 2026-06-05 (retweets 140/day → 0): the JS extracted the

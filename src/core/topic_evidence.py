@@ -24,11 +24,19 @@ def _check(records: dict) -> dict:
                     or not isinstance(row.get("sources"), list)
                     or any(not isinstance(source, str) for source in row["sources"])
                     or ("eligible" in row and type(row["eligible"]) is not bool)
+                    or ("has_video" in row and type(row["has_video"]) is not bool)
                     or ("on_topic" in row and type(row["on_topic"]) is not bool)):
                 raise ValueError("invalid Reply pool record")
             for field in ("first_seen", "last_seen"):
                 if datetime.fromisoformat(row[field]).tzinfo is None:
                     raise ValueError("naive Reply pool timestamp")
+            if "repost_review" in row:
+                review = row["repost_review"]
+                if (not isinstance(review, dict) or type(review.get("approved")) is not bool
+                        or not isinstance(review.get("text"), str)
+                        or not isinstance(review.get("reason"), str) or not review["reason"].strip()
+                        or datetime.fromisoformat(review["at"]).tzinfo is None):
+                    raise ValueError("invalid repost review")
             if row["state"] == "ready":
                 if (type(row.get("score")) is not int or not MIN_SCORE <= row["score"] <= 100
                         or not isinstance(row.get("angle"), str) or not row["angle"].strip()

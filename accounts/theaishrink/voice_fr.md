@@ -51,7 +51,8 @@ Publishing policy — 2026-10-12:
   with starts varying by ±10 minutes per day and fixed closing times.
 - Target at least three sourced originals a day, six planned; eight is the
   absolute ceiling. Every original needs a source, reader takeaway, new angle
-  and separate editorial review. No automated quote tweets, reposts or threads.
+  and separate editorial review. No automated quote tweets or threads. Reposts use a separate maximum of 50/day,
+  permanent deduplication and the Account repost policy (Operator 2026-10-12).
 - Target 300 useful Replies per full Toronto day, maximum 400 including pending
   submissions. Only other accounts' standalone posts. One Reply per post,
   permanently; no debates or conversation follow-ups. Respect pacing and dedup.

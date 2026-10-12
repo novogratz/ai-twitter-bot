@@ -49,7 +49,9 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   including SpaceXAI and SpaceXSI; current profile scans use `@SpaceXSI`.
   Verified names such as OpenAI and Google AI, URLs and handles keep their spelling.
 - **Discovery rotates For You, Following Recent and Following Popular**, one view
-  plus one Latest topic search every two minutes. Each native feed selection is
+  plus one Latest topic search and one dedicated video search every two minutes.
+  Video queries alternate Latest and Top, including Seedance, Grok Imagine,
+  @grok/@imagine, Sora, Veo, Kling, Runway, Hailuo, Luma, Wan, ComfyUI and more. Each native feed selection is
   verified before reading. Posts are saved before and after scrolling, with status
   IDs deduplicated; an unchanged page ends the scan. Latest searches have no like
   minimum, so new posts and small builders can qualify. Top searches rotate across
@@ -61,7 +63,13 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.
-- **No automatic quote tweets, reposts, self-recycling, or burst threads.**
+- **Up to 50 reposts per Toronto day**, separate from Originals and Replies, at least
+  ten minutes apart. New standalone Elon posts take priority, including unrelated
+  topics except Bitcoin/crypto. Other reposts require an attached generated video,
+  popular/rising engagement and caption-based model approval. All retain author,
+  age, active-hours and crypto checks. Status IDs are kept permanently, including
+  uncertain submissions: nothing already reposted is automatically reshared.
+- **No automatic quote tweets, self-recycling, or burst threads.**
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.
@@ -289,3 +297,14 @@ Scheduled pauses keep one overdue run of each job available at wake. Missed
 intervals coalesce into one current cycle; every activity and publication guard
 still applies. This prevents the 60-second misfire grace from skipping the
 first collection and editorial cycles after a pause.
+
+2026-10-12 — Operator expanded generated-video discovery and requested automatic
+reposts, up to fifty/day, with permanent status-ID deduplication. Search catalogs
+include Seedance, Grok Imagine and additional video/image tools, workflows, memes
+and fresh AI/SI research. Reply comparison gives qualified video opportunities
+more attention. Reposts prioritize new standalone Elon originals (crypto remains
+excluded), then popular/rising generated videos with caption-based approval.
+This supersedes zero automatic reposts; the fifty-repost budget is separate from
+Originals and Replies. Native state checks prevent toggling an existing repost;
+uncertain submissions stay reserved across restarts. No bot restart accompanies
+this implementation. The operator requested a merged PR and a new release.

@@ -14,8 +14,9 @@ link. At least three are targeted per day, six planned, eight at most.
 _Avoid_: post, tweet, profile post
 
 **Profile publication**:
-Anything that appears on the account's profile timeline as its own: Originals,
-quotes and reposts. Eight per Toronto calendar day, all kinds combined.
+Anything that appears on the account's profile timeline as its own: Originals
+and quotes. Eight per Toronto calendar day; quotes remain disabled.
+Reposts now have their own budget (Operator 2026-10-12).
 _Avoid_: profile post, post
 
 **Slot**:
@@ -333,3 +334,8 @@ scoring at least 85/100 per cycle, within Reply admission and the daily cap.
 
 **Previous handles**: Account-owned aliases used to recognize saved own-post URLs
 after a public rename. They do not change `BOT_ACCOUNT`, the stable storage key.
+
+**Repost**:
+A native share of another account's original, without new text. At most fifty
+per Toronto day including uncertain submissions, separate from Originals and
+Replies. Permanent status-ID history prevents resharing the same post.

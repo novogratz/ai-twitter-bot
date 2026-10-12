@@ -2,6 +2,51 @@
 import pytest
 
 
+@pytest.mark.parametrize("own_video", [True, False])
+def test_scraper_reads_parent_video_and_counts_without_borrowing_a_quote(monkeypatch, own_video):
+    import json
+    import shutil
+    import subprocess
+    from tests.x.test_likes import _FAKE_DOM_JS, _article
+    from src.x import safari, scraper
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("node is required for the scraper DOM check")
+    post = _article("https://x.com/creator/status/123", "retweet", "parent",
+                    quoted="https://x.com/other/status/456", quoted_first=True)
+    quote = post["children"][0]["children"][0]
+    quote["children"] += [{"tag": "video"}, {"tag": "button", "attrs": {
+        "data-testid": "like", "aria-label": "999K Likes"}}]
+    post["children"] += [{"tag": "button", "attrs": {"data-testid": "like", "aria-label": "75 Likes"}}]
+    post["children"][-2]["children"][0]["attrs"]["aria-label"] = "20 Reposts"
+    if own_video:
+        post["children"].append({"tag": "video"})
+    spec = {"tag": "html", "children": [post]}
+    def run(js, *a, **k):
+        program = _FAKE_DOM_JS + f'''
+var oldParse = parseCompound;
+parseCompound = function(s) {{
+    var m = s.match(/^([a-z]*)\\[([\\w-]+)\\]$/);
+    return m ? {{tag:m[1], attr:m[2], op:'*=', val:''}} : oldParse(s);
+}};
+El.prototype.getAttribute = function(k) {{ return this.attrs[k] || ''; }};
+El.prototype.innerHTML = '';
+Object.defineProperty(El.prototype, 'textContent', {{get: function() {{ return this.innerText; }}}});
+var root = new El({json.dumps(spec)});
+var document = {{querySelectorAll: s => root.querySelectorAll(s)}};
+console.log(eval({json.dumps(js)}));
+'''
+        result = subprocess.run([node, "-e", program], capture_output=True, text=True, timeout=20)
+        assert result.returncode == 0, result.stderr
+        return result.stdout.strip()
+    monkeypatch.setattr(safari, "_run_js", run)
+    rows = scraper._scrape_tweets_from_page("VIDEO", text_limit=2000)
+    parent = next(row for row in rows if row["url"].endswith('/123'))
+    assert parent["has_video"] is own_video
+    assert parent["likes"] == 75 and parent["reposts"] == 20
+    assert parent["full_text"] == "AI inference latency"
+
+
 def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override):
     """The operator's AI profile list is read at call time; exclusions always win."""
     from src.x import safari, scraper, twitter_client as tc

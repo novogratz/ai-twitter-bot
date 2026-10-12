@@ -134,6 +134,8 @@ def _script_keys(*names):
 _declare("BOT_ACCOUNT", str, "theaishrink", "Account the bot runs: the folder accounts/<name>/ holding its account.toml.")
 _declare("BOT_HANDLE", str, "", "X handle the bot runs, without @; the Account's handle unless set.")
 _declare("MAX_REPLIES_PER_DAY", int, 400, "Replies per Toronto day across every job, ambiguous submissions included.", floor=0, ceiling=400)
+_declare("MAX_REPOSTS_PER_DAY", int, 0, "Reposts per Toronto day, ambiguous submissions included; opt in per Account.", floor=0, ceiling=50)
+_declare("MIN_SECONDS_BETWEEN_REPOSTS", int, 600, "Minimum gap between repost submissions, including ambiguous ones.", floor=600)
 _declare("TARGET_REPLIES_PER_DAY", int, 300, "Useful Replies targeted per Toronto day, at most MAX_REPLIES_PER_DAY; quality and availability can reduce the count.", floor=0, ceiling=400)
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
 _declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")

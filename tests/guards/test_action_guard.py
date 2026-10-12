@@ -23,9 +23,10 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     ledger = MemoryLedger(rows)
     monkeypatch.setattr(ag, "LEDGER", ledger)
     assert ledger.count(ag.POST, now.date()) == 5
-    assert ag.profile_count_today() == 7
+    assert ag.profile_count_today() == 6
     assert ag.can_post(ag.POST)[0]
     assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
+    ag.record(ag.POST)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST)[0]
@@ -45,8 +46,10 @@ def test_replies_capped_across_jobs_and_dry_runs_excluded(monkeypatch, memory_le
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_quotes_and_reposts_are_refused(memory_ledger):
+def test_quotes_remain_disabled_and_reposts_require_an_account_opt_in(memory_ledger, settings_override):
     assert not ag.can_post(ag.QUOTE)[0]
+    assert ag.can_post(ag.RETWEET)[0]
+    settings_override(MAX_REPOSTS_PER_DAY=0)
     assert not ag.can_post(ag.RETWEET)[0]
 
 

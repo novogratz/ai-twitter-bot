@@ -70,9 +70,10 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         dr.run_direct_reply_cycle()
 
     def feed(author, text):
+        url = fresh(author)  # video and general queries find the same parent
         monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [])
         monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
-        monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: [{"url": fresh(author), "text": text}])
+        monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: [{"url": url, "text": text}])
         fs.run_feed_sweep_cycle()
 
     def profile(module, pool, cycle):

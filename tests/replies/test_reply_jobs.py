@@ -273,6 +273,7 @@ def feed(monkeypatch, llm, chokepoint):
     feeds = {"FEED": [], "FOLLOWING": [], "read": []}
     monkeypatch.setattr(fs, "_FEED_OFFSET", 0)
     monkeypatch.setattr(fs, "_SEARCH_OFFSET", 0)
+    monkeypatch.setattr(fs, "_VIDEO_OFFSET", 0)
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
     monkeypatch.setattr(scraper, "scrape_x_search",
                         lambda query, **k: feeds["read"].append(query) or [])
@@ -700,12 +701,15 @@ def test_sweeper_rotates_all_feed_views_and_latest_queries(monkeypatch):
     searched, feeds = [], []
     monkeypatch.setattr(sweeper, "_FEED_OFFSET", 0)
     monkeypatch.setattr(sweeper, "_SEARCH_OFFSET", 0)
+    monkeypatch.setattr(sweeper, "_VIDEO_OFFSET", 0)
     monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: feeds.append("for_you") or [])
     monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: feeds.append(k["sort"]) or [])
     monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: searched.append((query, k)) or [])
     for _ in range(4):
         sweeper.run_feed_sweep_cycle()
     assert feeds == ["for_you", "recent", "popular", "for_you"]
-    assert [q for q, _ in searched] == list(account.current().searches.replies[:4])
+    assert [q for q, _ in searched[1::2]] == list(account.current().searches.replies[:4])
+    assert [q for q, _ in searched[::2]] == [q for q in account.current().searches.videos[:2] for _ in range(2)]
+    assert [options["tab"] for _, options in searched[::2]] == ["live", "top", "live", "top"]
     assert all(options["tab"] == "live" and options["text_limit"] == 2000
-               for _, options in searched)
+               for _, options in searched[1::2])
