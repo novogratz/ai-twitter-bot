@@ -9,9 +9,9 @@ from ..core.logger import log
 
 
 WAKE = time(5)
-BEDTIME = time(0)
+BEDTIME = time(23)
 ACTIVE_WINDOWS = ((time(5), time(10)), (time(14), time(15)),
-                  (time(17), time(19)), (time(22), time(0)))
+                  (time(17), BEDTIME))
 
 _STOP = threading.Event()
 

@@ -9,14 +9,14 @@ real account. Setup and run commands live in [`README.md`](README.md).
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active only 05:00–10:00, 14:00–15:00, 17:00–19:00 and 22:00–24:00 America/Toronto.
+- Active only 05:00–10:00, 14:00–15:00 and 17:00–23:00 America/Toronto.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (09:45, 14:20, 17:00) and a Startup post on every start
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
 - Quotes, reposts, self-recycling and threads stay at zero.
-- Replies are capped at ten per Toronto day, standalone posts only, paced and deduplicated per tweet;
+- Replies are capped at five per Toronto day, standalone posts only, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
@@ -24,7 +24,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Replies, likes and follows keep to AI (2026-09-25): the Account's niche
   patterns and searches look for AI, and its lists drop crypto, markets and
   space accounts, save those the Operator picked by hand and a few still to
-  confirm. The patterns' known false positives are listed in the policy.
+  confirm. Replies now require AI/SI relevance for every author, including
+  those manually selected accounts (2026-10-12). The patterns' known false
+  positives need semantic rejection during selection, as described in the policy.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -266,3 +268,19 @@ writes or restart are performed by this implementation.
 Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
 
 2026-10-08 — Startup now attempts one selected Reply after a 90-second discovery/comparison period. It uses the shared saved pool, quality threshold, active windows, hourly allowance, ten-per-day cap and existing write guards. The draft requests one smart thought in at most 20 words, without emojis or smileys. A weak pool or exhausted allowance sends nothing. No automatic restart is performed.
+
+2026-10-12 — Operator requested reactivation with three Toronto activity windows:
+05:00–10:00, 14:00–15:00 and 17:00–23:00, end exclusive. This supersedes the
+October 8 schedule. The Reply ceiling is halved from ten to five per Toronto
+day across all jobs, including ambiguous submissions and existing ledger rows.
+Configuration may only tighten it. With five Replies, cumulative allowances
+open at 05:00, 07:24, 09:48, 18:12 and 20:36; unused allowance carries forward
+that day, with no requirement to fill it. Replies must substantively concern
+AI or superintelligence (SI/ASI), including AI-generated videos and brainrot.
+Unrelated posts from VIPs have no exemption. The shared pool checks post text,
+selection requires an explicit on-topic verdict and a score of at least 85,
+and the write checks the opened standalone post's own text for niche terms.
+Handles and URLs alone never establish relevance. Previously scored pool rows
+without a topic verdict need a fresh review. Account topic instructions guide
+selection and drafting; unsupported video details and empty praise are skipped.
+The Operator requested the PR merged to main and the bot started after validation.

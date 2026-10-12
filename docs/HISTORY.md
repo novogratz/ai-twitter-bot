@@ -1,4 +1,4 @@
-# History — mandates and incidents, June to September 2026
+# History — mandates and incidents, June to October 2026
 
 Archive of the former `CLAUDE.md` / `CODEX.md`, moved here on 2026-09-23.
 Everything below the line predates the editorial policy of 2026-09-20
@@ -7,6 +7,19 @@ caps, schedules, personas and lifecycle instructions here are historical.
 Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
+
+## October 12, 2026 — selective reactivation
+
+The Operator requested reactivation during three Toronto windows, ending at
+23:00, with half the current Reply volume and only AI/SI discussion, including
+AI-generated video and brainrot. The ten-Reply ceiling becomes five across
+all jobs and ambiguous submissions; accumulated counts survive deployment.
+Inspection found that VIP candidates bypassed the niche filter and old pool
+scores carried no explicit topic judgement. All collected candidates now pass
+the same text filter; ranking requires an explicit topic verdict; prior scores
+need re-review; and the opened standalone post's own text is checked at submission.
+The topic instructions require a specific useful contribution and reject unrelated
+posts even when they contain an AI name. PR merge and live start were requested.
 
 > **2026-09-25 — a write whose page does not open fails (issue #251):**
 > every write chokepoint ignored the result of `safari.open_url`. A Reply

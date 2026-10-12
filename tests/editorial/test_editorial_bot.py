@@ -214,7 +214,7 @@ def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("published overnight"))
     draft = draft_fixture[0]
     def past_bedtime(*a):
-        clock(monkeypatch, datetime(2026, 9, 20, 19, 0, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, 23, 0, tzinfo=TORONTO))
         return draft
     monkeypatch.setattr(editorial, "draft_post", past_bedtime)
 
@@ -715,11 +715,11 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
 
 def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    editorial.open_startup_window(at(23, 10))
+    editorial.open_startup_window(at(22, 40))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(23, 44), {})[0] == key
-    assert not editorial._in_window(key, at(19, 0))
-    assert editorial.startup_slot(at(19, 0), {}) is None
+    assert editorial.startup_slot(at(22, 59), {})[0] == key
+    assert not editorial._in_window(key, at(23, 0))
+    assert editorial.startup_slot(at(23, 0), {}) is None
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):

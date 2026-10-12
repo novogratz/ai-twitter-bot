@@ -7,7 +7,7 @@ import pytest
 from src.replies import reply_pool as pool, reply_pipeline as pipeline
 from src.core.state_errors import StateUnreadable
 from src.guards import active_hours
-from tests.helpers import fresh, clock
+from tests.helpers import fresh_local as fresh, clock
 
 
 def test_every_scraped_post_is_saved_before_filters(monkeypatch):
@@ -71,3 +71,50 @@ def test_conversation_candidates_are_saved_but_never_eligible():
                  [pipeline.Candidate(url, "a comment", "THREAD", context="our post")])
     row = next(iter(pool.read().values()))
     assert row["state"] == "rejected" and row["eligible"] is False
+
+
+@pytest.mark.parametrize("source", ["FEED", "SEARCH", "VIP/Graphseo", "EARLYBIRD", "MEGA"])
+def test_every_source_saves_but_rejects_unrelated_posts(source):
+    url = fresh("someone")
+    pool.collect(pipeline.Job("scan", "SCAN", None),
+                 [pipeline.Candidate(url, "My lunch with @OpenAI https://ai.example.org", source)])
+    row = next(iter(pool.read().values()))
+    assert row["state"] == "rejected" and row["eligible"] is False
+    with open(pool.ARCHIVE) as stream:
+        events = [json.loads(line) for line in stream]
+    assert [event["kind"] for event in events] == ["discovered", "decision"]
+
+
+def test_saved_eligibility_never_bypasses_current_topic_filter(monkeypatch):
+    url = fresh("someone")
+    pool.collect(pipeline.Job("scan", "SCAN", None), [pipeline.Candidate(url, "AI post", "FEED")])
+    records = pool.read()
+    next(iter(records.values()))["text"] = "My unrelated lunch"
+    pool.POOL.write(records)
+    clock(monkeypatch, active_hours.now_local() + timedelta(seconds=61))
+    assert pool.contenders() == []
+
+
+def test_negative_topic_verdict_cannot_be_overridden_by_a_high_score(monkeypatch):
+    url = fresh("someone")
+    pool.collect(pipeline.Job("scan", "SCAN", None), [pipeline.Candidate(url, "Claude's birthday", "VIP")])
+    clock(monkeypatch, active_hours.now_local() + timedelta(seconds=61))
+    batch = pool.contenders()
+    pool.decide(batch, [dict(id=batch[0]["id"], on_topic=False, score=100,
+                             reason="Person's birthday, unrelated to AI", angle="Birthday joke")])
+    row = pool.read()[batch[0]["id"]]
+    assert row["state"] == "rejected" and row["score"] == 0
+    assert not pool.contenders()
+
+
+@pytest.mark.parametrize("state", ["processing", "shipped", "closed", "skipped"])
+def test_collection_preserves_final_or_ambiguous_outcomes(state):
+    url = fresh("someone")
+    job = pipeline.Job("scan", "SCAN", None)
+    candidate = pipeline.Candidate(url, "AI post", "FEED")
+    pool.collect(job, [candidate])
+    key = next(iter(pool.read()))
+    pool.mark(key, state)
+    pool.observe([dict(url=url, text="Unrelated edited post")], "FEED")
+    pool.collect(job, [candidate])
+    assert pool.read()[key]["state"] == state

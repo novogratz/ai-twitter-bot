@@ -463,7 +463,8 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
 
 def _standalone_reply_target(url: str) -> bool:
-    """Verify the opened target, not a feed's incomplete reply metadata."""
+    """Verify standalone status and topic from the opened target's own text."""
+    from ..core import account
     from .x_urls import status_id
     sid = status_id(url)
     js = """(() => {
@@ -473,12 +474,15 @@ def _standalone_reply_target(url: str) -> bool:
         .some(l => l.querySelector('time') && l.pathname.endsWith('/status/' + id)));
       if (index !== 0) return 'refused';
       const article = articles[index];
-      if (!article.querySelector('[data-testid="tweetText"]')) return 'refused';
+      const text = article.querySelector('[data-testid="tweetText"]')?.innerText;
+      if (!text || text.trim().startsWith('@')) return 'refused';
       if (/Replying to|En réponse à/i.test(article.innerText)) return 'refused';
-      return 'standalone';
+      return JSON.stringify({text});
     })()""".replace("TARGET", json.dumps(sid))
     try:
-        return safari._run_js(js, 10, log_prefix="[REPLY]") == "standalone"
+        target = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]"))
+        return (isinstance(target, dict) and isinstance(target.get("text"), str)
+                and account.current().niche.matches_post(target["text"]))
     except Exception:
         return False
 
@@ -570,9 +574,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.FAILED
             time.sleep(0.5)
 
-            # Operator 2026-10-08: fail closed unless this is a standalone post.
+            # Operator 2026-10-12: every caller verifies standalone status and topic.
             if not _standalone_reply_target(tweet_url):
-                log.info("[REPLY] Conversation or unreadable target: refusing %s", tweet_url)
+                log.info("[REPLY] Conversation, off-topic or unreadable target: refusing %s", tweet_url)
                 return WriteOutcome.REFUSED
 
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every

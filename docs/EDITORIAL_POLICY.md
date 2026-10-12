@@ -1,9 +1,9 @@
 # Editorial policy — September 23, 2026
 
-The operator's current mandate (2026-10-08) permits at most ten replies per
+The operator's current mandate (2026-10-12) permits at most five replies per
 Toronto day, to other accounts' standalone posts only. Never answer own
 posts or comments on them. All external activity runs only during 05:00–10:00,
-14:00–15:00, 17:00–19:00 and 22:00–24:00 Toronto time, end exclusive.
+14:00–15:00 and 17:00–23:00 Toronto time, end exclusive.
 The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
@@ -43,31 +43,30 @@ Trusted AI feeds supply news and articles no older than 48 hours: first-party
 labs, model/tool launch blogs, The Decoder and arXiv. Fresh launches, methods,
 projects and sharp recent articles are preferred; on quiet days, curated AI
 documentation supplies practical, evergreen topics, without calling them new
-announcements. Used source URLs are rested for seven days. The optional 20:45
+announcements. Used source URLs are rested for seven days. The optional 22:15
 slot needs news from the last twelve hours or a useful AI teaching source, plus
 an exceptional-value approval.
 
 ## Niche of Replies, likes and follows
 
-Operator, 2026-09-25: AI only, like the Originals. The Account's `[niche]`
-patterns, `[searches]` queries and `[network]` lists in
-`accounts/theaishrink/account.toml` keep to AI (issue #205). A post that
-speaks only of crypto, markets or space is off the niche for the search
-lane, the feed sweep, early bird and mega watch; the follow quality gate
-refuses a non-Engager whose bio shows no AI term; the reply and like
-searches look for AI posts only. Crypto, markets and space accounts left
-the reply and scan lists. The accounts the Operator picked by hand stay
-whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
-Mindset4Money_X in the curator's pins, and so do the few handles whose
-topic is still to be confirmed by the Operator. The VIP scan still answers
-Graphseo's and TheBTCTherapist's posts without the niche filter, and
-answers to Engagers still follow the conversation.
+Operator, 2026-10-12: Replies concern AI or superintelligence (SI/ASI) only,
+including models, agents, research, AI infrastructure, robotics and AI-generated
+images, videos or brainrot. Related technology needs a clear AI connection.
+Unrelated lifestyle, politics, sports, celebrity gossip, crypto and stock-price
+chatter are excluded. An AI name used incidentally is not sufficient. These
+rules apply to every author, including VIPs and manually selected accounts.
+Only other accounts' standalone posts qualify; conversation turns stay disabled.
 
-The search lane, the feed sweep, early bird and mega watch answer root
-posts only: a post X marks as a reply, or whose text opens on a mention,
-never reaches the model, which would see it without the post it answers
-(issue #241). The VIP scan still answers everything its accounts post,
-their replies included.
+Every discovery is saved. The shared pool rejects off-niche text before model
+selection and rechecks older saved candidates. URLs and handles are stripped
+before matching. Selection requires a boolean `on_topic=true` and at least 85/100;
+a negative topic verdict forces the score to zero, and an absent or malformed
+verdict cancels the review. Cached scores without a topic verdict cannot win.
+The actual opened post is checked again for standalone status and niche text
+before a Reply is typed or its parent liked. An unreadable target is refused.
+The Account's `niche.reply_instructions` supplies the same topic and quality
+requirements to selection and drafting. Model review reduces relevance errors;
+keywords alone cannot prove that a post fits the topic.
 
 The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
 artificial intelligence, machine and deep learning, computer vision,
@@ -81,8 +80,9 @@ agents, coding agents, Meta AI). `ai` in lower or mixed case skips the
 French verb (j'ai, J’ai, je vous ai, ai-je); AI in capitals always counts.
 `bio` leaves out the model names that are also first names or common
 words (Claude, Sora, Gemini, Cursor), since it reads the display name too.
-Known false positives, kept: Nvidia, an AI hardware maker, keeps its stock
-and earnings chatter on the niche, and `robot` keeps a trading robot.
+The post pattern also recognises uppercase SI/ASI. Ambiguous keywords can pass discovery: Nvidia may refer only to its stock,
+`robot` to a trading robot, Claude to a person, or Gemini to astrology. The
+selector must reject those posts when their actual subject is outside AI/SI.
 
 Every reply and like query finds posts `post` keeps, read with AND before
 OR or OR before AND: a company or energy word goes with AI (TSMC AI,
@@ -151,7 +151,7 @@ must not repeat.
   no scheduled job carries such a branch (issue #107):
   `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
   code and an operator request, not a config change.
-- Replies have a hard ten-per-day cap. Browser pacing, per-tweet dedup and bounded
+- Replies have a hard five-per-day cap. Browser pacing, per-tweet dedup and bounded
   standalone-post verification protect conversation quality. Conversation
   turns and comments on our posts are no longer scheduled or admitted by the
   Reply pipeline.
@@ -218,7 +218,8 @@ must not repeat.
 
 ## Bounds on volume and check settings
 
-The Operator set these bounds on 2026-09-25 (issue #201). They live in the
+The Operator set these bounds on 2026-09-25 (issue #201), with the Reply
+ceiling revised on 2026-10-12. They live in the
 declarations of `src/core/settings.py`; `.env` and an Account's `[limits]`
 may only tighten them. A value past a bound is brought back to it with a
 `[SETTINGS]` warning at start; `main.py --dry-run` lists every bounded
@@ -227,6 +228,7 @@ warnings under `settings_warnings`.
 
 | Setting | Bound | Default |
 |---|---|---|
+| `MAX_REPLIES_PER_DAY`, Replies per Toronto day, ambiguous submissions included | 0 to 5 | 5 |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
 | `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 8 s | 8 |
 | `REPLY_JITTER_SECONDS`, Reply jitter | at least 0 | 7 |
@@ -346,3 +348,19 @@ writes or restart are performed by this implementation.
 Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
 
 2026-10-08 — Startup now attempts one selected Reply after a 90-second discovery/comparison period. It uses the shared saved pool, quality threshold, active windows, hourly allowance, ten-per-day cap and existing write guards. The draft requests one smart thought in at most 20 words, without emojis or smileys. A weak pool or exhausted allowance sends nothing. No automatic restart is performed.
+
+2026-10-12 — Operator requested reactivation with three Toronto activity windows:
+05:00–10:00, 14:00–15:00 and 17:00–23:00, end exclusive. This supersedes the
+October 8 schedule. The Reply ceiling is halved from ten to five per Toronto
+day across all jobs, including ambiguous submissions and existing ledger rows.
+Configuration may only tighten it. With five Replies, cumulative allowances
+open at 05:00, 07:24, 09:48, 18:12 and 20:36; unused allowance carries forward
+that day, with no requirement to fill it. Replies must substantively concern
+AI or superintelligence (SI/ASI), including AI-generated videos and brainrot.
+Unrelated posts from VIPs have no exemption. The shared pool checks post text,
+selection requires an explicit on-topic verdict and a score of at least 85,
+and the write checks the opened standalone post's own text for niche terms.
+Handles and URLs alone never establish relevance. Previously scored pool rows
+without a topic verdict need a fresh review. Account topic instructions guide
+selection and drafting; unsupported video details and empty praise are skipped.
+The Operator requested the PR merged to main and the bot started after validation.

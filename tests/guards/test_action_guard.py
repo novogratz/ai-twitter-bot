@@ -35,11 +35,11 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
 def test_replies_capped_across_jobs_and_dry_runs_excluded(monkeypatch, memory_ledger):
     now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(9):
+    for n in range(4):
         memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=6))
     memory_ledger.append(ag.REPLY, "dry", True, now - timedelta(hours=6))
     assert ag.can_post(ag.REPLY)[0]
-    memory_ledger.append(ag.REPLY, "tenth", False, now - timedelta(hours=6))
+    memory_ledger.append(ag.REPLY, "fifth", False, now - timedelta(hours=6))
     assert not ag.can_post(ag.REPLY)[0]
     clock(monkeypatch, now + timedelta(days=1))
     assert ag.can_post(ag.REPLY)[0]

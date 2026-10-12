@@ -7,7 +7,7 @@ import pytest
 from src.replies import reply_pool as pool, reply_selector as selector, reply_pipeline as pipeline
 from src.core.llm_client import LLMResult
 from src.guards import action_guard as ag, active_hours
-from tests.helpers import fresh, clock
+from tests.helpers import fresh_local as fresh, clock
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ def saved(monkeypatch):
 
 
 def reviews(batch, scores):
-    return [{"id": row["id"], "score": scores[i], "reason": f"Specific assessment {i}",
+    return [{"id": row["id"], "on_topic": True, "score": scores[i], "reason": f"Specific assessment {i}",
              "angle": f"Concrete useful implication {i}"} for i, row in enumerate(batch)]
 
 
@@ -84,10 +84,14 @@ def test_pool_is_rechecked_before_write_if_parent_changes(saved, monkeypatch):
     assert pool.read()[saved[1].rsplit("/", 1)[1]]["state"] == "closed"
 
 
-@pytest.mark.parametrize("hour,allowance", [(5,1),(6,2),(9,5),(14,6),(17,7),(18,8),(22,9),(23,10)])
-def test_reply_allowances_preserve_budget_for_later_windows(hour, allowance, settings_override):
-    settings_override(MAX_REPLIES_PER_DAY=10)
-    assert selector.reply_allowance(active_hours.now_local().replace(hour=hour, minute=0)) == allowance
+@pytest.mark.parametrize("hour,minute,allowance", [
+    (5,0,1),(7,23,1),(7,24,2),(9,47,2),(9,48,3),
+    (10,0,3),(14,0,3),(15,0,3),(17,0,3),
+    (18,11,3),(18,12,4),(20,35,4),(20,36,5),(22,59,5),
+])
+def test_reply_allowances_preserve_budget_for_later_windows(hour, minute, allowance, settings_override):
+    settings_override(MAX_REPLIES_PER_DAY=5)
+    assert selector.reply_allowance(active_hours.now_local().replace(hour=hour, minute=minute)) == allowance
 
 
 def test_used_allowance_prevents_spending_every_reply_in_the_morning(saved, monkeypatch, memory_ledger, settings_override):
@@ -132,3 +136,40 @@ def test_startup_does_not_override_spent_allowance(saved, monkeypatch):
     monkeypatch.setattr(ag, "count_today", lambda action: selector.reply_allowance())
     monkeypatch.setattr(selector, "_rank", lambda batch: pytest.fail("spent allowance"))
     assert selector.run_startup_reply_cycle() == 0
+
+
+@pytest.mark.parametrize("topic", [None, "true", 1])
+def test_missing_or_malformed_topic_verdict_fails_closed(saved, monkeypatch, topic):
+    batch = pool.contenders()
+    output = reviews(batch, [99, 99, 99])
+    if topic is None:
+        del output[0]["on_topic"]
+    else:
+        output[0]["on_topic"] = topic
+    monkeypatch.setattr(selector, "run_llm", lambda *a, **k: LLMResult(0, json.dumps({"reviews": output}), ""))
+    assert selector._rank(batch) is None
+
+
+def test_rank_rejects_irrelevant_high_score_and_includes_account_topic_rules(saved, monkeypatch):
+    batch = pool.contenders()
+    output = reviews(batch, [100, 90, 90])
+    output[0]["on_topic"] = False
+    prompts = []
+    monkeypatch.setattr(selector, "run_llm", lambda prompt, *a, **k:
+                        prompts.append(prompt) or LLMResult(0, json.dumps({"reviews": output}), ""))
+    assert selector._rank(batch)[0]["score"] == 0
+    assert "VIPs have no topic exemption" in prompts[0]
+    assert "AI-generated images, videos and brainrot" in prompts[0]
+
+
+def test_old_ready_selection_needs_explicit_topic_review(saved, monkeypatch):
+    batch = pool.contenders()
+    pool.decide(batch, reviews(batch, [99, 99, 99]))
+    records = pool.read()
+    for row in records.values():
+        del row["on_topic"]
+    pool.POOL.write(records)
+    # Simulate one batch still awaiting review; old scores cannot win globally.
+    monkeypatch.setattr(selector, "_rank", lambda batch: [])
+    monkeypatch.setattr(pipeline, "dispatch", lambda *a, **k: pytest.fail("unreviewed old selection sent"))
+    assert selector.run_reply_selection_cycle() == 0

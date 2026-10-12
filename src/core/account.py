@@ -216,6 +216,12 @@ class Niche:
     post: re.Pattern
     ticker: re.Pattern | None  # case-sensitive: a $TICKER, not any dollar word; None when absent
     bio: re.Pattern
+    reply_instructions: str = ""
+
+    def matches_post(self, text: str) -> bool:
+        """Judge the post's words, never a topic found only in a handle or URL."""
+        text = re.sub(r"https?://\S+|(?:\b[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?|(?<!\w)@\w+", " ", text)
+        return bool(self.post.search(text) or (self.ticker and self.ticker.search(text)))
 
 
 @dataclass(frozen=True)
@@ -245,9 +251,10 @@ def _network(top) -> Network:
 
 def _niche(top) -> Niche:
     table = _Table(top.file, "niche", top["niche"], required={"post": str, "bio": str},
-                   optional={"ticker": str})
+                   optional={"ticker": str, "reply_instructions": str})
     ticker = _pattern(table, "ticker", flags=0) if "ticker" in table else None
-    return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"))
+    return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"),
+                 reply_instructions=table.get("reply_instructions", ""))
 
 
 def _searches(top) -> Searches:
