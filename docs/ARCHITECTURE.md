@@ -93,7 +93,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
-| `reply_selection_job` | 10 min | Compares up to thirty saved, admitted posts; records scores, reasons and angles; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 within five Replies/day. All daily budgets and write guards still apply. |
+| `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to thirty posts when none remain or waiting discoveries are due after five minutes; records scores, reasons and angles; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 with a target of 300 and a maximum of 400 Replies/day. All daily budgets and write guards still apply. |
 | `direct_reply_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `feed_sweep_job` | 8 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `early_bird_job` | 5 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
@@ -918,3 +918,12 @@ five Replies/day including ambiguous submissions. AI/SI topic review applies
 to every author, including VIPs; AI-generated videos and brainrot qualify.
 Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
 editorial policy for selection, quality and recovery rules.
+
+2026-10-12 — Reply volume is now a target of 300 per full day and a hard cap
+of 400. The selector runs each minute after an initial 120-second delay; startup
+retains its one attempt at 90 seconds. It consumes the best fresh topic-approved
+review, rescoring a batch when approvals run out or queued discoveries have
+waited five minutes since the latest remaining approval. Reviews expire after
+one hour. Admission is checked for every cached winner; a definitively refused
+winner is closed before considering the next. Every cycle attempts at most one
+Reply and the shared ledger, reservations, allowance and write guards still apply.

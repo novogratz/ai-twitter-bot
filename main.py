@@ -80,7 +80,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
                           run_date=datetime.now(timezone.utc) + timedelta(seconds=90),
                           id="startup_reply_job", misfire_grace_time=None)
         add(health.wrap_job(run_reply_selection_cycle, "reply_selection", safari_health=False),
-            10, "reply_selection_job", first_seconds=600)
+            1, "reply_selection_job", first_seconds=120)
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
@@ -140,6 +140,7 @@ def main():
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
                           "replies": settings.get("MAX_REPLIES_PER_DAY"),
+                          "target_replies": config.reply_target(),
                           "quotes": 0, "reposts": 0, "slots": slots(),
                           "trend_slots": sorted(trend_slots()),
                           "startup_post": "every start in waking hours, restarts included",
@@ -168,7 +169,8 @@ def main():
     scheduler.start(paused=True)
     was_active = None
     log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
-             f"(max {config.posts_ceiling()}); replies max {settings.get('MAX_REPLIES_PER_DAY')}/day; active {window_label()}.")
+             f"(max {config.posts_ceiling()}); replies target {config.reply_target()}/day, "
+             f"max {settings.get('MAX_REPLIES_PER_DAY')}/day; active {window_label()}.")
     try:
         while not stop.is_set():
             active = is_active()

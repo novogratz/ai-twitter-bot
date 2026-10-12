@@ -16,7 +16,7 @@ real account. Setup and run commands live in [`README.md`](README.md).
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
 - Quotes, reposts, self-recycling and threads stay at zero.
-- Replies are capped at five per Toronto day, standalone posts only, paced and deduplicated per tweet;
+- Replies target at least 300 per full Toronto day, with a hard cap of 400, standalone posts only, paced and deduplicated per tweet;
   debate turns are capped per engager per day.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
@@ -284,3 +284,17 @@ Handles and URLs alone never establish relevance. Previously scored pool rows
 without a topic verdict need a fresh review. Account topic instructions guide
 selection and drafting; unsupported video details and empty praise are skipped.
 The Operator requested the PR merged to main and the bot started after validation.
+
+2026-10-12 — Operator clarified Reply volume: target at least 300 useful Replies
+per full Toronto day, with a hard maximum of 400, superseding the five-Reply cap
+above. Existing ledger rows and ambiguous submissions count. The selector runs
+every minute, one submission attempt per cycle, with its first regular run at
+120 seconds after start so the 90-second Startup attempt comes first. It reuses
+explicit on-topic approvals younger than one hour and compares queued discoveries
+after five minutes, or immediately when no fresh approved candidate remains.
+The allowance releases the 400-reply budget proportionally across the twelve
+active hours. TARGET_REPLIES_PER_DAY defaults to 300 and is clamped to the
+effective maximum; it never forces weak Replies or overrides refusal rules.
+The three active windows, AI/SI-only scope, standalone rule, 85/100 selection
+threshold, evidence checks, deduplication and write pacing remain in force.
+The Operator requested a PR merged and pushed to main for the running bot.

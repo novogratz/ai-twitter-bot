@@ -11,7 +11,8 @@ from tests.helpers import fresh_local as fresh, clock
 
 
 @pytest.fixture
-def saved(monkeypatch):
+def saved(monkeypatch, settings_override):
+    settings_override(MAX_REPLIES_PER_DAY=5)
     urls = [fresh("first", n=1), fresh("second", n=2), fresh("third", n=3)]
     job = pipeline.Job("scan", "SCAN", None)
     pool.collect(job, [pipeline.Candidate(url, f"AI post number {i}", "FEED") for i, url in enumerate(urls)])
@@ -173,3 +174,92 @@ def test_old_ready_selection_needs_explicit_topic_review(saved, monkeypatch):
     monkeypatch.setattr(selector, "_rank", lambda batch: [])
     monkeypatch.setattr(pipeline, "dispatch", lambda *a, **k: pytest.fail("unreviewed old selection sent"))
     assert selector.run_reply_selection_cycle() == 0
+
+
+def test_recent_reviews_supply_the_next_reply_without_repeating_model_work(saved, monkeypatch):
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [90, 96, 88]))
+    sent = []
+    monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
+    assert selector.run_reply_selection_cycle() == 1
+    monkeypatch.setattr(selector, "_rank", lambda *a: pytest.fail("fresh approvals reviewed again"))
+    assert selector.run_reply_selection_cycle() == 1
+    assert [candidate.url for candidate in sent] == [saved[1], saved[0]]
+
+
+def test_new_discoveries_compete_with_cached_approvals_within_five_minutes(saved, monkeypatch):
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [90, 96, 88]))
+    sent = []
+    monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
+    assert selector.run_reply_selection_cycle() == 1
+    new = fresh("newauthor", n=4)
+    pool.collect(pipeline.Job("scan", "SCAN", None), [pipeline.Candidate(new, "AI video opportunity", "FEED")])
+    clock(monkeypatch, active_hours.now_local() + timedelta(minutes=2))
+    monkeypatch.setattr(selector, "_rank", lambda *a: pytest.fail("reviewed before comparison interval"))
+    assert selector.run_reply_selection_cycle() == 1
+    clock(monkeypatch, active_hours.now_local() + timedelta(minutes=3))
+    compared = []
+    monkeypatch.setattr(selector, "_rank", lambda batch: compared.extend(batch) or reviews(batch, [99, 88]))
+    assert selector.run_reply_selection_cycle() == 1
+    assert compared[0]["url"] == new
+    assert [candidate.url for candidate in sent] == [saved[1], saved[0], new]
+
+
+@pytest.mark.parametrize("review_offset", [timedelta(hours=-1), timedelta(minutes=1)])
+def test_expired_or_future_reviews_need_new_approval(saved, monkeypatch, review_offset):
+    batch = pool.contenders()
+    pool.decide(batch, reviews(batch, [99, 99, 99]))
+    records = pool.read()
+    for row in records.values():
+        row["reviewed_at"] = (active_hours.now_local() + review_offset).isoformat()
+    pool.POOL.write(records)
+    compared = []
+    monkeypatch.setattr(selector, "_rank", lambda batch: compared.extend(batch) or reviews(batch, [0, 0, 0]))
+    monkeypatch.setattr(pipeline, "dispatch", lambda *a, **k: pytest.fail("stale approval sent"))
+    assert selector.run_reply_selection_cycle() == 0
+    assert len(compared) == 3
+
+
+def test_cached_winner_rechecks_dedup_and_moves_to_next_admitted_post(saved, monkeypatch):
+    from src.guards import replied_store
+    batch = pool.contenders()
+    pool.decide(batch, reviews(batch, [99, 90, 88]))
+    replied_store.claim(saved[0])
+    monkeypatch.setattr(selector, "_rank", lambda *a: pytest.fail("fresh approvals reviewed again"))
+    sent = []
+    monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
+    assert selector.run_reply_selection_cycle() == 1
+    assert [candidate.url for candidate in sent] == [saved[1]]
+    assert pool.read()[batch[0]["id"]]["state"] == "closed"
+
+
+def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, memory_ledger):
+    """A supply of approved posts and successful writes exercises the real
+    scheduler cadence, active windows, cumulative allowance and day ledger."""
+    from main import build_scheduler
+    from src.core import config
+    job = build_scheduler().get_job("reply_selection_job")
+    interval = int(job.trigger.interval.total_seconds())
+    start = active_hours.now_local().replace(hour=0, minute=0, second=0, microsecond=0)
+    posted = []
+    def approved():
+        url = fresh("candidate")
+        stamp = active_hours.now_local().isoformat()
+        return [dict(id=url.rsplit("/", 1)[1], url=url, text="AI research insight", state="ready",
+                     on_topic=True, score=95, reason="Useful consequence", angle="Explain the tradeoff",
+                     first_seen=stamp, reviewed_at=stamp, source="FEED")]
+    def dispatch(job, candidates, cycle, **kwargs):
+        assert kwargs["max_shipped"] == 1
+        ag.record(ag.REPLY, candidates[0].url)
+        posted.append(active_hours.now_local())
+        return 1
+    monkeypatch.setattr(pool, "contenders", approved)
+    monkeypatch.setattr(pool, "mark", lambda *a, **k: None)
+    monkeypatch.setattr(selector, "_rank", lambda *a: pytest.fail("approved supply reviewed again"))
+    monkeypatch.setattr(pipeline, "dispatch", dispatch)
+    for elapsed in range(0, 24 * 60 * 60, interval):
+        clock(monkeypatch, start + timedelta(seconds=elapsed))
+        job.func()
+    assert config.reply_target() <= len(posted) == 400
+    assert all(active_hours.is_active(stamp) for stamp in posted)
+    assert len({stamp for stamp in posted}) == len(posted)
+    assert ag.count_today(ag.REPLY) == 400

@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+## October 12, 2026 — Reply volume clarification
+
+The Operator clarified the desired volume to at least 300 useful Replies per
+full day and a maximum of 400. A one-per-ten-minute selector could attempt only
+about 72 Replies in the twelve active hours, so changing the cap alone would
+not support the request. The selector now runs every minute, reuses recent
+explicit topic approvals, and compares waiting discoveries at five-minute
+intervals while approved candidates remain. The target is reported separately
+from the hard cap and never overrides quality or admission; existing counts and
+ambiguous submissions survive deployment.
+
 ## October 12, 2026 — selective reactivation
 
 The Operator requested reactivation during three Toronto windows, ending at

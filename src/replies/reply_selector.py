@@ -4,7 +4,7 @@ import threading
 from datetime import datetime, timedelta
 from dataclasses import replace
 
-from ..core import account, personality_store, settings
+from ..core import account, config, personality_store, settings
 from ..core.llm_client import CallProfile, Output, Surface, LLMStatus, resolve, run_llm
 from ..core.logger import log
 from ..core.humanizer import smart_trim
@@ -29,6 +29,8 @@ def _rank(batch: list) -> list | None:
     prompt = "\n\n".join([personality_store.render_voice(account.current().language),
         f"Compare the saved {account.current().domain} posts below. We can send at most "
         f"{settings.get('MAX_REPLIES_PER_DAY')} replies per Toronto day. This is selection, not drafting. "
+        f"Target at least {config.reply_target()} useful replies over a full day when opportunities support it. "
+        "The target never makes an off-topic or weak post worth answering. "
         "First judge the actual subject of each post: on_topic is true only when it substantively concerns "
         f"{account.current().domain} under the topic instructions below. An author's identity, a keyword, "
         "a linked domain or a passing reference is not enough. VIPs have no topic exemption. "
@@ -75,7 +77,7 @@ def run_reply_selection_cycle(*, concise=False) -> int:
 
 
 def reply_allowance(now=None) -> int:
-    """Release the day's scarce replies gradually across the active windows."""
+    """Release the day's ceiling gradually across the active windows."""
     cap = settings.get("MAX_REPLIES_PER_DAY")
     if cap == 0:
         return 0
@@ -102,11 +104,17 @@ def comparison_order(rows: list) -> list:
     return waiting + fresh + ready
 
 
-def _select(*, concise=False) -> int:
-    if action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count() >= reply_allowance():
-        return 0
+def _ready(rows: list) -> list:
+    """Only explicit topic approvals reviewed within the last hour may ship."""
+    now = now_local()
+    return [row for row in rows if row["state"] == "ready" and row.get("on_topic") is True
+            and timedelta(0) <= now - datetime.fromisoformat(row["reviewed_at"]) < timedelta(hours=1)]
+
+
+def _review(rows: list) -> bool:
+    """Compare fresh opportunities in batches, preserving admission and refusals."""
     batch = []
-    for row in comparison_order(reply_pool.contenders()):
+    for row in comparison_order(rows):
         verdict = judge_parent(row["url"])
         if verdict:
             batch.append(row)
@@ -115,24 +123,41 @@ def _select(*, concise=False) -> int:
         if len(batch) >= reply_pool.BATCH_SIZE:
             break
     if not batch:
-        return 0
+        return False
     reviews = _rank(batch)
     require_active()
     if reviews is None:
         log.info("[SELECTION] Incomplete or failed review: no Reply selected.")
-        return 0
+        return False
     reply_pool.decide(batch, reviews)
-    ready = [row for row in reply_pool.contenders() if row["state"] == "ready"
-             and row.get("on_topic") is True
-             and now_local() - datetime.fromisoformat(row["reviewed_at"]) < timedelta(hours=1)]
-    if not ready:
-        log.info("[SELECTION] No saved post earned a Reply.")
+    return True
+
+
+def _select(*, concise=False) -> int:
+    if action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count() >= reply_allowance():
         return 0
-    winner = max(ready, key=lambda row: (row["score"], row["first_seen"], row["id"]))
-    verdict = judge_parent(winner["url"])
-    if not verdict:
+    rows = reply_pool.contenders()
+    ready = _ready(rows)
+    # One-minute sending must not pay for the same thirty reviews each time.
+    # Compare waiting discoveries at least every five minutes while approved
+    # candidates remain; compare immediately when none remains. Old scores retain
+    # their one-hour expiry and compete globally with every new review.
+    if (not ready or (any(row["state"] == "queued" for row in rows)
+                      and now_local() - max(datetime.fromisoformat(row["reviewed_at"])
+                                            for row in ready) >= timedelta(minutes=5))):
+        if not _review(rows):
+            return 0
+        ready = _ready(reply_pool.contenders())
+    for winner in sorted(ready, key=lambda row: (row["score"], row["first_seen"], row["id"]), reverse=True):
+        verdict = judge_parent(winner["url"])
+        if verdict:
+            break
         if verdict.refusal.definitive:
             reply_pool.mark(winner["id"], "closed", reason=verdict.reason)
+        else:
+            return 0
+    else:
+        log.info("[SELECTION] No saved post earned a Reply.")
         return 0
     from .direct_reply import reply_call, vip_reply_call
     from .reply_generator import LanguageRule

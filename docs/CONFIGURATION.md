@@ -41,7 +41,7 @@ hold whatever `.env` says:
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Replies per day | `MAX_REPLIES_PER_DAY` has default and ceiling 5, including ambiguous submissions; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
+| Replies per day | `TARGET_REPLIES_PER_DAY` defaults to 300 and never exceeds the effective cap; `MAX_REPLIES_PER_DAY` has default and ceiling 400, including ambiguous submissions; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The Debate turn, Reply spacing, like, follow, price-target and duplicate
@@ -95,7 +95,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 |---|---|---|---|---|
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
-| `MAX_REPLIES_PER_DAY` | int | `5` | floor `0`, ceiling `5` | Replies per Toronto day across every job, ambiguous submissions included. |
+| `MAX_REPLIES_PER_DAY` | int | `400` | floor `0`, ceiling `400` | Replies per Toronto day across every job, ambiguous submissions included. |
+| `TARGET_REPLIES_PER_DAY` | int | `300` | floor `0`, ceiling `400` | Useful Replies targeted per Toronto day, at most MAX_REPLIES_PER_DAY; quality and availability can reduce the count. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
 | `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |

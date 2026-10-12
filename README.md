@@ -12,9 +12,9 @@ English prompts): every post and reply prompt carries it as one block.
 
 - **Active daily: 05:00–10:00, 14:00–15:00 and 17:00–23:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
-- **At most five replies per Toronto day**, only to other accounts’ standalone posts.
+- **At least 300 useful replies targeted per full Toronto day; 400 is the hard maximum**, only to other accounts’ standalone posts.
   Never answer our own posts or comments on them. Spacing and duplicate protection remain.
-  Reply scans save posts to a shared pool; a ten-minute selector compares them
+  Reply scans save posts to a shared pool; a one-minute selector chooses among them
   and drafts at most one candidate explicitly judged on-topic and scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
@@ -235,3 +235,10 @@ five Replies/day including ambiguous submissions. AI/SI topic review applies
 to every author, including VIPs; AI-generated videos and brainrot qualify.
 Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
 editorial policy for selection, quality and recovery rules.
+
+2026-10-12 — Reply volume was clarified to a target of at least 300 useful
+Replies per full Toronto day, maximum 400 including pending submissions. The
+selector now runs each minute and reuses recent topic-approved reviews, comparing
+new candidates at least every five minutes while approved candidates remain.
+Quality, available posts and service speed determine the actual count. The
+three Toronto windows and AI/SI-only selection still apply.

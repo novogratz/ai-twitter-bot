@@ -12,6 +12,15 @@ def test_reply_only_still_registers_the_reply_engine():
     assert scheduler.get_job("editorial_job") is None
 
 
+def test_selector_runs_each_minute_after_the_startup_attempt():
+    from main import build_scheduler
+    scheduler = build_scheduler(reply_only=True)
+    selector = scheduler.get_job("reply_selection_job")
+    startup = scheduler.get_job("startup_reply_job")
+    assert selector.trigger.interval.total_seconds() == 60
+    assert selector.next_run_time > startup.trigger.run_date
+
+
 def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
     """Building the scheduler publishes nothing: the Startup post goes
     through the editorial job, inside its window and the daily ceiling."""
