@@ -1,5 +1,5 @@
 {
-  "_README": "Operator-selected AI/SI follow seeds, updated 2026-10-12. Elon Musk leads, followed by AI researchers, builders and enthusiasts. Tiers order priority; every follow still passes the shared policy. Crypto/trading targets are excluded, including mixed AI/crypto bios. The curator stores its discovered candidates separately in production state; those candidates must pass the positive AI/SI bio check.",
+  "_README": "Operator-selected AI/SI follow seeds, updated 2026-10-12. Elon Musk and SpaceXSI lead, followed by AI researchers, builders and enthusiasts. Tiers order priority; every follow still passes the shared policy. Crypto/trading targets are excluded, including mixed AI/crypto bios. The curator stores its discovered candidates separately in production state; those candidates must pass the positive AI/SI bio check.",
   "review_required": true,
   "generated": "2026-10-12",
   "generated_from": [
@@ -16,7 +16,7 @@
   "tiers": {
     "tier1": [
       "elonmusk",
-      "xai",
+      "SpaceXSI",
       "karpathy",
       "demishassabis"
     ],
@@ -57,14 +57,15 @@
     },
     {
       "priority": 2,
-      "handle": "xai",
+      "handle": "SpaceXSI",
       "tier": "tier1",
       "keywords": [
         "AI",
         "SI",
         "research",
         "AI tools"
-      ]
+      ],
+      "note": "Official account linked by https://x.ai/; verified 2026-10-12."
     },
     {
       "priority": 3,

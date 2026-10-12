@@ -54,7 +54,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
 
     ac.run_curator_cycle()
     handles = ac.tracked_handles(limit=30)
-    assert handles[0] == "elonmusk" and handles[1] == "xai", "pins lead"
+    assert handles[0] == "elonmusk" and handles[1] == "SpaceXSI", "pins lead"
     assert "goodai" in handles, "on-lane author must be tracked"
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 

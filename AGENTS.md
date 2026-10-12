@@ -27,6 +27,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
   Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
   opened post text; discovered follows and Engagers need AI/SI bios. Replies
   require relevance for every author and semantic approval during selection.
+- Replies vary between a few words, short observations, fuller explanations
+  and occasional smileys (2026-10-12). They use SI/super intelligence in their
+  own prose, preserving verified names and literal links. Discovery keeps both
+  AI and SI terms; the current SpaceXSI name and profile replace older branding.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -63,6 +67,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
+| Reply format: weighted lengths and rare smileys, informed by shipped Reply history | `src/core/reply_style.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |

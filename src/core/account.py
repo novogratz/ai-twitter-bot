@@ -218,6 +218,17 @@ class Niche:
     bio: re.Pattern
     reply_instructions: str = ""
     excluded: re.Pattern | None = None
+    reply_forbidden: re.Pattern | None = None
+    reply_preserve: re.Pattern | None = None
+
+    def reply_wording_problem(self, text: str) -> str:
+        # Literal links, handles and inline code retain their verified spelling.
+        prose = re.sub(r"https?://\S+|(?:\b[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?|(?<!\w)@\w+|`[^`]+`", " ", text)
+        if self.reply_preserve:
+            prose = self.reply_preserve.sub(" ", prose)
+        if self.reply_forbidden and self.reply_forbidden.search(prose):
+            return "use the Account's current Reply terminology and company names"
+        return ""
 
     def excludes(self, text: str) -> bool:
         return bool(self.excluded and self.excluded.search(text or ""))
@@ -257,11 +268,14 @@ def _network(top) -> Network:
 
 def _niche(top) -> Niche:
     table = _Table(top.file, "niche", top["niche"], required={"post": str, "bio": str},
-                   optional={"ticker": str, "reply_instructions": str, "excluded": str})
+                   optional={"ticker": str, "reply_instructions": str, "excluded": str,
+                             "reply_forbidden": str, "reply_preserve": str})
     ticker = _pattern(table, "ticker", flags=0) if "ticker" in table else None
     return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"),
                  reply_instructions=table.get("reply_instructions", ""),
-                 excluded=_pattern(table, "excluded") if "excluded" in table else None)
+                 excluded=_pattern(table, "excluded") if "excluded" in table else None,
+                 reply_forbidden=_pattern(table, "reply_forbidden") if "reply_forbidden" in table else None,
+                 reply_preserve=_pattern(table, "reply_preserve") if "reply_preserve" in table else None)
 
 
 def _searches(top) -> Searches:

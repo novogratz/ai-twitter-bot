@@ -99,9 +99,15 @@ _Avoid_: try, cycle, poll
 ### Conversation
 
 **Reply**:
-A post answering someone else's post. Never a Profile publication, and no
-daily total applies to Replies.
+A post answering someone else's standalone post, once per status ID. Never a
+Profile publication. At least 300 targeted per full Toronto day, 400 maximum.
 _Avoid_: comment, response, draft (reserved for Originals)
+
+**SI**:
+Super intelligence, the Operator's preferred generic wording in Reply prose
+(2026-10-12). Discovery also uses AI and artificial intelligence, so existing
+source language remains searchable. This is an editorial term, not evidence
+of a model's capabilities or permission to invent company renames.
 
 **Voice**:
 The account's persona, written by the Operator in the Account's folder,

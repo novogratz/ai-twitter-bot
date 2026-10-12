@@ -169,3 +169,8 @@ def test_judges_write_nothing(monkeypatch, memory_ledger):
     assert judge_reply(url("someone"), TEXT, debate_turn=True)
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []
+def test_reply_terminology_is_enforced_after_final_text_changes(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: "AI needs better evals.")
+    verdict = judge_reply(url("someone"), "SI needs better evals.")
+    assert verdict.refusal is Refusal.TEXT and "terminology" in verdict.reason
+    assert judge_parent(url("someone")), "a refused draft must not claim the parent"

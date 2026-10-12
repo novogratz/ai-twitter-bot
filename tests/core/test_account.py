@@ -71,7 +71,7 @@ OLD = {
     "KNOWLEDGE_PUBLISHER": "Hugging Face docs",
     "HOSTS": ["arxiv.org", "blog.google", "blogs.nvidia.com", "deepmind.google", "huggingface.co",
               "mistral.ai", "openai.com", "replicate.com", "the-decoder.com", "www.microsoft.com"],
-    "AI_TOPIC": ("\\b(ai|artificial intelligence|model|llm|agent|machine "
+    "AI_TOPIC": ("\\b(ai|(?-i:SI|ASI)|super[\\s-]*intelligence|spacexai|spacexsi|artificial intelligence|model|llm|agent|machine "
                  "learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|"
                  "robotics|transformer|inference|training|neural|diffusion|gpu)\\b", 34),
     "OFF_TOPIC": ("\\$[A-Za-z]{2,6}\\b|\\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\\b", 34),
@@ -80,6 +80,8 @@ OLD = {
 }
 # trending.TREND_QUERIES before #208 moved them to [searches] trending.
 OLD_TREND_QUERIES = [
+    '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
+    '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
     'AI lang:en min_faves:200 -filter:replies',
 ]
@@ -310,12 +312,12 @@ def test_a_stricter_account_value_holds_for_the_operator_bounds(accounts, fresh)
 # only, like the policy) removed REMOVED_205 from them and narrowed
 # NARROWED_205. A pattern is (source, flags).
 NETWORK = {
-    "PROFILE_VISIT_ALLOWLIST": 'elonmusk,xai,karpathy,demishassabis,sama,ylecun,AndrewYNg,DrJimFan,GoogleDeepMind,AnthropicAI,MistralAI,OpenAI,rowancheung,minchoi,heybarsee,swyx,_akhaliq,emollick,simonw,rasbt,goodside',
-    "VIP_SCAN_HANDLES": 'elonmusk,xai,karpathy',
-    "PINNED_TRACKED_HANDLES": 'elonmusk,xai,karpathy,demishassabis,sama,ylecun,AndrewYNg,DrJimFan,GoogleDeepMind,AnthropicAI,MistralAI,OpenAI',
-    "VIP_REPLY_ACCOUNTS": ['elonmusk', 'xai', 'vision_ia', 'jbelizaireCEO', 'ylecun', 'arthurmensch', 'GuillaumeLample',
+    "PROFILE_VISIT_ALLOWLIST": 'elonmusk,SpaceXSI,karpathy,demishassabis,sama,ylecun,AndrewYNg,DrJimFan,GoogleDeepMind,AnthropicAI,MistralAI,OpenAI,rowancheung,minchoi,heybarsee,swyx,_akhaliq,emollick,simonw,rasbt,goodside',
+    "VIP_SCAN_HANDLES": 'elonmusk,SpaceXSI,karpathy',
+    "PINNED_TRACKED_HANDLES": 'elonmusk,SpaceXSI,karpathy,demishassabis,sama,ylecun,AndrewYNg,DrJimFan,GoogleDeepMind,AnthropicAI,MistralAI,OpenAI',
+    "VIP_REPLY_ACCOUNTS": ['elonmusk', 'SpaceXSI', 'vision_ia', 'jbelizaireCEO', 'ylecun', 'arthurmensch', 'GuillaumeLample',
  'fchollet', 'karpathy', 'demishassabis', 'sama'],
-    "BIG_AI_HYPE_ACCOUNTS": ['elonmusk', 'xai', 'sama', 'DarioAmodei', 'demishassabis', 'satyanadella', 'sundarpichai',
+    "BIG_AI_HYPE_ACCOUNTS": ['elonmusk', 'SpaceXSI', 'sama', 'DarioAmodei', 'demishassabis', 'satyanadella', 'sundarpichai',
  'JensenHuang', 'gdb', 'miramurati', 'AravSrinivas', 'karpathy', 'ylecun', 'AndrewYNg', 'drfeifei',
  'lexfridman', 'ID_AA_Carmack', 'fchollet', 'EMostaque', 'clementdelangue', 'OpenAI', 'AnthropicAI',
  'GoogleDeepMind', 'GoogleAI', 'MistralAI', 'perplexity_ai', 'nvidia', 'Microsoft', 'Meta',
@@ -332,7 +334,7 @@ NETWORK = {
     "HIGH_TRACTION_REPLY_ACCOUNTS": ['arthurmensch', 'GuillaumeLample', 'GaelVaroquaux', 'fchollet', 'MistralAI'],
     "BIG_FR_ACCOUNTS": ['Korben', 'micode', 'Underscore_', 'presse_citron', 'numerama', 'siecledigital', 'BFMTech',
  'frandroid', 'journaldugeek', 'FlavienChervet', 'MistralAI', 'arthurmensch', 'GuillaumeLample'],
-    "ALWAYS_REPLY_ACCOUNTS": ['elonmusk', 'xai', 'vision_ia', 'jbelizaireCEO', 'ylecun', 'arthurmensch', 'GuillaumeLample',
+    "ALWAYS_REPLY_ACCOUNTS": ['elonmusk', 'SpaceXSI', 'vision_ia', 'jbelizaireCEO', 'ylecun', 'arthurmensch', 'GuillaumeLample',
  'fchollet', 'karpathy', 'demishassabis', 'sama', 'DarioAmodei', 'satyanadella', 'sundarpichai',
  'JensenHuang', 'gdb', 'miramurati', 'AravSrinivas', 'AndrewYNg', 'drfeifei', 'lexfridman',
  'ID_AA_Carmack', 'EMostaque', 'clementdelangue', 'OpenAI', 'AnthropicAI', 'GoogleDeepMind',
@@ -346,9 +348,9 @@ NETWORK = {
  'alexalbert__', 'goodside', 'simonw', 'karinanguyen_', 'charliebholtz', 'amanrsanger',
  'mathemagic1an', 'GaelVaroquaux', 'Korben', 'micode', 'Underscore_', 'presse_citron', 'numerama',
  'siecledigital', 'BFMTech', 'frandroid', 'journaldugeek', 'FlavienChervet'],
-    "ENGAGE_VIP_ACCOUNTS": ['elonmusk', 'xai'],
-    "ENGAGE_TARGET_ACCOUNTS": ['elonmusk', 'xai'],
-    "REPLY_TARGET_ACCOUNTS": ['elonmusk', 'xai', 'vision_ia', 'jbelizaireCEO', 'sama', 'OpenAI', 'AnthropicAI', 'GoogleDeepMind',
+    "ENGAGE_VIP_ACCOUNTS": ['elonmusk', 'SpaceXSI'],
+    "ENGAGE_TARGET_ACCOUNTS": ['elonmusk', 'SpaceXSI'],
+    "REPLY_TARGET_ACCOUNTS": ['elonmusk', 'SpaceXSI', 'vision_ia', 'jbelizaireCEO', 'sama', 'OpenAI', 'AnthropicAI', 'GoogleDeepMind',
  'karpathy', 'ylecun', 'fchollet', 'demishassabis', 'MistralAI', 'arthurmensch', 'GuillaumeLample',
  'GaelVaroquaux', 'nvidia', 'AMD', 'intel', 'CoreWeave', 'LambdaAPI', 'BostonDynamics',
  'Figure_robot', 'ID_AA_Carmack', 'drfeifei', 'Korben', 'underscore_', 'presse_citron',
@@ -362,18 +364,20 @@ NETWORK = {
         r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
         r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|"
         r"llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|"
-        r"xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|"
+        r"xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|"
         r"(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|"
         r"machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|"
         r"reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|"
         r"(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|"
         r"humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b",
         34),
-    "NICHE_BIO_RE": ('\\b((?<![Jj][\\x27’])(?-i:AIs?)|(?<![\\x27’])(?<!\\by\\s)(?<!\\ben\\s)(?<!\\bles\\s)(?<!\\blui\\s)(?<!vous\\s)(?<!nous\\s)(?<!leur\\s)ai(?!-je\\b)|a\\.i|i\\.a|ia|agi|(?-i:SI|ASI)|super[\\s-]*intelligence|xai|grok|genai|llms?|gpt\\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\\s+intelligence|intelligence\\s+artificielle|machine\\s*learning|deep\\s*learning|neural|computer\\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\\s+agents?|building\\s+agents?|ml|nvidia)\\b',
+    "NICHE_BIO_RE": ('\\b((?<![Jj][\\x27’])(?-i:AIs?)|(?<![\\x27’])(?<!\\by\\s)(?<!\\ben\\s)(?<!\\bles\\s)(?<!\\blui\\s)(?<!vous\\s)(?<!nous\\s)(?<!leur\\s)ai(?!-je\\b)|a\\.i|i\\.a|ia|agi|(?-i:SI|ASI)|super[\\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\\s+intelligence|intelligence\\s+artificielle|machine\\s*learning|deep\\s*learning|neural|computer\\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\\s+agents?|building\\s+agents?|ml|nvidia)\\b',
  34),
     "SEARCH_QUERIES": [
+        '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
+        '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
         '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
-        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
+        'OpenAI OR Anthropic OR xAI OR SpaceXAI OR SpaceXSI OR "GPT-5" lang:en min_faves:50',
         "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
         '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
         '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
@@ -385,12 +389,16 @@ NETWORK = {
         '"AI video" OR "AI brainrot" OR "generative video" AI OR "superintelligence" OR "ASI models" lang:en min_faves:30',
     ],
     "HOT_TAB_QUERIES": [
-        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
+        '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
+        '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
+        'OpenAI OR Anthropic OR xAI OR SpaceXAI OR SpaceXSI OR "GPT-5" lang:en min_faves:500',
         'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
         '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
         'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
     ],
     "LIKE_QUERIES": [
+        '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
+        '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
         "AI datacenter OR AI power demand lang:en min_faves:50",
         "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
         "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
@@ -634,7 +642,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     from src.guards import follow_policy
     from src.replies import direct_reply, notify_bot, reply_source
     other = (THEAISHRINK
-             .replace('engage_vip = ["elonmusk", "xai"]', 'engage_vip = ["OtherVip"]')
+             .replace('engage_vip = ["elonmusk", "SpaceXSI"]', 'engage_vip = ["OtherVip"]')
              .replace('vip_reply = [', 'vip_reply = ["OtherVip", ')
              .replace('engage_targets = [', 'engage_targets = ["OtherTarget", ')
              .replace("post = '", "post = '\\bzebra\\b|")
@@ -653,8 +661,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('vip_scan = ["elonmusk", "xai", "karpathy"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
-    ('engage_vip = ["elonmusk", "xai"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
+    ('vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
+    ('engage_vip = ["elonmusk", "SpaceXSI"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
     ('blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]', 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
     ('blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]', "blocked_accounts = [3]", "network.blocked_accounts[0]"),
     ('fr_forced_reply = []', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
@@ -665,7 +673,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ("trending = [", "trending = [\n    ' ',", "searches.trending[0]"),
     ("trending = [", "trending_queries = [", "searches.trending_queries"),
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
-    ('vip_scan = ["elonmusk", "xai", "karpathy"]\n', "", "network.vip_scan"),
+    ('vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.
     ('blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]', 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
      "network.unblocked_accounts"),
@@ -685,7 +693,7 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 OLD_RELATION_PROMPTS = {
     "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
     "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
-    "buddy": (610, 'd4fa03fd457293c6de999422162f62690473ef2f10f7cb65264a1a8a0297d8ca'),
+    "buddy": (712, '605ea7ea7333c55d40f1f2f018b0d4d983d05ce28a659c13a0971d679c4ecc8f'),
 }
 # personality_store.get_account("mcnalliem") before #203, a dossier in the code.
 OLD_MCNALLIEM = {
@@ -778,7 +786,7 @@ def test_an_empty_fixed_dossier_stops_the_start(accounts, fresh):
 
 def test_the_default_prompt_is_needed_only_for_a_scanned_handle_without_its_own(accounts, fresh):
     # A test account may scan only handles with their own templates.
-    custom = THEAISHRINK.replace('vip_scan = ["elonmusk", "xai", "karpathy"]',
+    custom = THEAISHRINK.replace('vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]',
                                  'vip_scan = ["Graphseo", "TheBTCTherapist"]')
     custom = custom.replace('default = "relations/buddy.md"\n', "")
     accounts("theaishrink", custom)
@@ -800,7 +808,7 @@ def test_an_account_without_relations_starts_when_it_scans_no_vip(accounts, fres
     with pytest.raises(settings.SettingsError, match=re.escape(
             "relations.default is missing: network.vip_scan lists elonmusk")):
         fresh()
-    old = 'vip_scan = ["elonmusk", "xai", "karpathy"]'
+    old = 'vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]'
     assert bare.count(old) == 1
     accounts("other", bare.replace(old, "vip_scan = []"))
     fresh("BOT_ACCOUNT=other\n")
@@ -866,3 +874,27 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
     with pytest.raises(settings.SettingsError,
                        match=re.escape(f"theaishrink/{name}: the Voice file {problem}")):
         fresh()
+@pytest.mark.parametrize("key", ["reply_forbidden", "reply_preserve"])
+def test_bad_reply_wording_patterns_stop_start(accounts, fresh, key):
+    broken = re.sub(rf"^{key} = .*$", f"{key} = '('", THEAISHRINK, flags=re.MULTILINE)
+    accounts("theaishrink", broken)
+    with pytest.raises(settings.SettingsError, match=f"niche.{key}"):
+        fresh()
+
+
+def test_example_account_does_not_inherit_reply_terminology(monkeypatch, unwalled):
+    monkeypatch.setattr(account, "ACCOUNTS_DIR", unwalled["accounts_dir"])
+    assert account.load("example").niche.reply_wording_problem("AI helps in the garden.") == ""
+
+
+def test_all_search_surfaces_keep_ai_and_add_si_aliases():
+    current = account.load("theaishrink")
+    for surface in ("replies", "hot_tab", "likes", "trending"):
+        queries = " ".join(getattr(current.searches, surface))
+        assert "AI" in queries and '"SI"' in queries and '"super intelligence"' in queries
+        assert "SpaceXAI" in queries and "SpaceXSI" in queries
+    for text in ("SpaceXSI improved the context window.", "SpaceXAI improved the context window.",
+                 "Super intelligence needs evaluations.", "SI research needs evaluations."):
+        assert current.niche.post.search(text)
+        assert current.niche.bio.search(text)
+        assert current.relevance.topic.search(text)

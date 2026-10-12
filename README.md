@@ -32,8 +32,14 @@ English prompts): every post and reply prompt carries it as one block.
   Profile scans start with Elon, then AI researchers, builders and enthusiasts.
   Former crypto/trading targets are blocked. Bitcoin/crypto posts stay excluded
   even when they mention AI; likes check the actual post text, and discovered
-  follows and Engagers need AI/SI bios. The voice favors Elon, Grok and xAI with
+  follows and Engagers need AI/SI bios. The voice favors Elon, Grok and SpaceXSI with
   grounded insight and wit ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
+- **Replies vary in length:** a few words, a short observation, a fuller
+  explanation or an occasional apt smiley. Shipped history prevents repeated
+  lengths; a smiley cannot be chosen if one appeared in the last twenty replies.
+  Reply prose uses **SI / super intelligence**. Discovery searches both AI and SI,
+  including SpaceXAI and SpaceXSI; current profile scans use `@SpaceXSI`.
+  Verified names such as OpenAI and Google AI, URLs and handles keep their spelling.
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.

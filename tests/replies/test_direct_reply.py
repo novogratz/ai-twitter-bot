@@ -31,8 +31,9 @@ def test_reply_and_like_queries_are_ai_only():
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
+    assert "spacex " not in joined, "standalone space company is outside the niche"
     for banned in ("bitcoin", "btc", "crypto", "ethereum", "bittensor", "stock", "market",
-                   "earnings", "etf", "portfolio", "sell off", "vix", "spacex", "starlink",
+                   "earnings", "etf", "portfolio", "sell off", "vix", "starlink",
                    "starship", "nasa", "satellite", "orbit"):
         assert banned not in joined, f"{banned!r} is off the AI niche"
 
@@ -216,5 +217,5 @@ def test_priority_scan_starts_on_elons_profile_and_collects_only(monkeypatch, ll
         return []
     monkeypatch.setattr(dr, "scrape_profile_tweets", profile)
     dr._run_vip_scan(reply_pipeline.Cycle())
-    assert visited == ["elonmusk", "xai", "karpathy"]
+    assert visited == ["elonmusk", "SpaceXSI", "karpathy"]
     assert llm.calls == [] and chokepoint.calls == []

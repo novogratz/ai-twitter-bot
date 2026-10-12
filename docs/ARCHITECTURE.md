@@ -963,3 +963,13 @@ debate, replyback and conversation follow-ups remain disabled. The requested
 Voice favors Elon, Grok, xAI and related products when relevant and supported,
 with technical insight, apt wit and honest uncertainty. Existing follower
 relationships and production state are preserved. Deployment requires restart.
+2026-10-12 — Reply selection chooses a format through `core.reply_style`:
+weighted brief, standard, detailed or reaction, informed by the existing shipped
+engagement log. Startup excludes detailed Replies. `ReplyCall.style` supplies
+the format to the shared generator, which validates its word/character bounds
+and the Account's optional wording patterns. A failed format or wording check
+gets one rewrite; persistent failure returns no text. Rate limits stop immediately.
+The final content guard applies wording checks to every Reply path and admits
+approved smileys separately from the five-character text floor. Account-owned
+patterns preserve verified proper names and literal links, handles and code.
+No new scheduler job or production state file is introduced.

@@ -30,8 +30,31 @@ their task instructions but no copy of the persona, and the model client adds
 none (#192). Per-person instructions are the Account's Relations, in
 `account.toml` and `relations/`: the engine names no one (#203). Legacy finance
 Relations remain inactive behind the Account's blocklist. The requested voice
-favors Elon, Grok, xAI and his products on relevant AI topics, with grounded
+favors Elon, Grok, SpaceXSI and his products on relevant AI topics, with grounded
 claims, specific insight and wit.
+
+Operator, 2026-10-12: vary Reply format with weighted choices: a few words
+(2–8 words, 35), a short observation (9–23, 40), an explanation (24–50, 20),
+or one approved smiley (5). These are relative weights, not quotas. All prose
+stays within 278 characters. Recent shipped Replies exclude a third consecutive
+format and another smiley while one remains in the last twenty. Startup Replies
+keep their twenty-word limit. A format that does not suit the post yields SKIP;
+a smiley must suit on-topic humor or a creative result, never dodge a question.
+Generic textual praise stays blocked. `REPLY_MIN_CHARS` is now five, with a
+specific exception for approved smileys; `REPLY_ALLOW_REACTIONS=false` tightens
+the policy. This supersedes the earlier twenty-five-character floor and emoji ban.
+
+Reply prose uses SI or super intelligence for the generic field. This editorial
+choice does not assert that every model has superhuman general intelligence.
+Discovery retains AI, artificial intelligence, SI/ASI, super intelligence and
+both historical and current company aliases. [The official site](https://x.ai/)
+was checked on 2026-10-12: it presents SpaceXSI and links `@SpaceXSI`.
+Current profile lists and Reply prose use that name. Other verified names,
+legal names, URLs, handles and inline code retain their spelling; no automatic
+company renames or altered source quotations. Optional Account patterns
+`niche.reply_forbidden` and `niche.reply_preserve` enforce this distinction in
+generation and final Reply validation. Invalid format or wording gets one
+rewrite, then no Reply if it still fails. No schedule, volume or restart change.
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
@@ -63,7 +86,7 @@ Only other accounts' standalone posts qualify; conversation turns stay disabled.
 Every status ID remains protected permanently; the Replied store never evicts old IDs.
 
 The profile allowlist, priority scans, pinned tracking and manual follow seeds
-now focus on AI researchers, builders and enthusiasts, led by Elon Musk, xAI
+now focus on AI researchers, builders and enthusiasts, led by Elon Musk, SpaceXSI
 and Karpathy. Former crypto/trading exceptions, including TheBTCTherapist and
 Graphseo, are blocked even if stale `.env` lists or saved discoveries name them.
 The optional Account `niche.excluded` pattern rejects Bitcoin/crypto text even
@@ -103,13 +126,14 @@ selector must reject those posts when their actual subject is outside AI/SI.
 
 Every reply and like query finds posts `post` keeps, read with AND before
 OR or OR before AND: a company or energy word goes with AI (TSMC AI,
-CoreWeave AI, megawatt AI). The like job checks no niche, so its queries
-are its only filter.
+CoreWeave AI, megawatt AI). SI and super intelligence queries supplement these;
+the like write also checks the actual opened post against the niche.
 
 ## Trend slots and the Startup post
 
 The 09:45, 12:20 and 17:00 slots, and the Startup post, take their topic from
-X. Two Top-tab searches for AI and "artificial intelligence" (`[searches]
+X. Top-tab searches for AI, "artificial intelligence", SI, "super intelligence"
+and the SpaceXAI/SpaceXSI aliases (`[searches]
 trending` in `account.toml`) supply posts from
 the last 24 hours; the five with the most likes per minute are kept. Own posts,
 Blocked accounts, nested replies, posts without AI vocabulary and crypto or
@@ -262,7 +286,8 @@ warnings under `settings_warnings`.
 | `DUP_TOPIC_SHARED_WORDS`, shared words that make a same story | 0 to 3 | 3 |
 | `DUP_TOPIC_WINDOW_HOURS`, same-story window | at least 24 h | 24 |
 | `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
-| `REPLY_MIN_CHARS`, shortest Reply | at least 25 characters | 25 |
+| `REPLY_MIN_CHARS`, shortest text Reply | at least 5 characters; approved smileys exempt | 5 |
+| `REPLY_ALLOW_REACTIONS`, approved standalone smileys | may be disabled | true |
 
 The duplicate settings may only get stricter: a lower threshold or count, or
 a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,

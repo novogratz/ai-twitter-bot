@@ -280,8 +280,53 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
         assert not ok and "violence" in why, f"{kind} must refuse the live leak"
     ok, _ = validate("drone strikes are basically a subscription business", kind="reply")
     assert not ok, "monetized-violence framing must be refused"
-    for benign in ("AI didn't kill your job. It took Kevin's job.",
+    for benign in ("SI didn't kill your job. It took Kevin's job.",
                    "made a killing on NVDA earnings today",
-                   "this is the killer app for AI agents"):
+                   "this is the killer app for SI agents"):
         ok, why = validate(benign, kind="reply")
         assert ok, f"idiom must pass: {benign!r} ({why})"
+@pytest.mark.parametrize("text", ["Latency wins.", "🙂", ":)", ";)", ":D", "This is SI."])
+def test_short_replies_and_approved_smileys_are_allowed(text):
+    from src.guards.content_guard import validate
+    assert validate(text, kind="reply") == (True, "")
+
+
+@pytest.mark.parametrize("text", ["...", "!!!", "🚀", "🙂🙂", "lol", "Great point!"])
+def test_brief_formats_do_not_allow_punctuation_spam_or_generic_praise(text):
+    from src.guards.content_guard import validate
+    assert not validate(text, kind="reply")[0]
+
+
+def test_stricter_text_floor_and_disabled_reactions_apply_at_validation(settings_override):
+    from src.guards.content_guard import validate
+    settings_override(REPLY_MIN_CHARS=40)
+    assert not validate("Latency wins.", kind="reply")[0]
+    assert validate("🙂", kind="reply")[0]
+    settings_override(REPLY_ALLOW_REACTIONS=False)
+    assert not validate("🙂", kind="reply")[0]
+
+
+@pytest.mark.parametrize("text", [
+    "AI needs better evals.", "ai agents need better tests.",
+    "Artificial intelligence needs better evals.", "Artificial-intelligence tools need tests.",
+    "SpaceXAI needs better evals.", "xAI needs better evals.",
+    "Google AI is building AI tools.",
+])
+def test_outdated_reply_wording_is_refused_without_silent_replacement(text):
+    from src.guards.content_guard import validate
+    ok, why = validate(text, kind="reply")
+    assert not ok and "terminology" in why
+
+
+@pytest.mark.parametrize("text", [
+    "SI needs better evals.", "Super intelligence needs better evals.",
+    "SpaceXSI needs better evals.", "OpenAI needs better evals.",
+    "Google AI and Meta AI need better evals.", "AnthropicAI needs better evals.",
+    "The EU AI Act still applies.", "The legal name is SpaceXAI LLC.",
+    "The source is https://x.ai/AI and the account is @xAI.",
+    "The docs at docs.x.ai/AI explain the API.", "The variable is `artificial intelligence`.",
+    "J'ai testé cette idée.", "Je vous ai donné le contexte.", "J’en ai parlé hier.",
+])
+def test_reply_wording_preserves_names_links_code_and_french_verbs(text):
+    from src.guards.content_guard import validate
+    assert validate(text, kind="reply") == (True, "")

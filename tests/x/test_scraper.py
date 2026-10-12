@@ -8,7 +8,7 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override
     from src.core import account
     from src.core.config import BOT_HANDLE
     default = ",".join(account.current().network.profile_visits)
-    assert default.startswith("elonmusk,xai,karpathy,")
+    assert default.startswith("elonmusk,SpaceXSI,karpathy,")
     settings_override(PROFILE_VISIT_ALLOWLIST=default)
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: pytest.fail("opened excluded profile"))
     for handle in ("TheBTCTherapist", "Graphseo", "unusual_whales", "unlisted"):

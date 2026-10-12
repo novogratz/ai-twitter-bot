@@ -10,15 +10,13 @@ the call profile the ReplyCall declares. The ReplyCall names its call
 surface; `llm_client.resolve` gives its model, provider and CLI options.
 """
 import re
-import csv
 import threading
 from datetime import timedelta
-from collections import deque
 from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
 
-from ..core import account, config, personality_store, settings
+from ..core import account, personality_store, settings, reply_style
 from ..core.humanizer import smart_trim, strip_agent_preamble
 from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, resolve, run_llm
 from ..core.logger import log
@@ -75,6 +73,7 @@ class ReplyCall:
     # since llm_client knows no Account.
     provider: str | None = None
     profile: CallProfile = TEXT_PROFILE
+    style: reply_style.ReplyStyle | None = None
 
     def __post_init__(self):
         if not isinstance(self.surface, Surface):
@@ -99,37 +98,49 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
     field. Raises OutsideActiveHours; any other error is a FAILED generation."""
     language = _language(call, author, text or "")
     prompt = _prompt(call, author, text or "", context or "", language, fields or {})
-    try:
-        route = resolve(call.surface)
-        options = route.options
-        result = run_llm(prompt, route.model, label=call.label, output_json=options.output_json,
-                         allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
-                         force_provider=call.provider or route.provider, profile=call.profile)
-    except OutsideActiveHours:
-        raise
-    except Exception as exc:
-        log.info(f"[{call.label}] Generation error: {exc!r}")
-        return Generation(Outcome.FAILED, language=language)
-    if result.status is LLMStatus.EXHAUSTED:
-        log.info(f"[{call.label}] LLM rate limit reached: every provider hit its usage limit.")
-        return Generation(Outcome.RATE_LIMITED, language=language)
-    if result.returncode != 0:
-        log.info(f"[{call.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
-        return Generation(Outcome.FAILED, language=language)
-    reply = result.stdout
-    if call.strip_preamble:
-        reply = strip_agent_preamble(reply)
-    reply = reply.strip()
-    if reply.startswith('"') and reply.endswith('"'):
-        reply = reply[1:-1].strip()
-    if not reply:
-        return Generation(Outcome.FAILED, language=language)
-    if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
-        return Generation(Outcome.DECLINED, language=language)
-    if call.max_chars:
-        reply = smart_trim(reply, call.max_chars)
-    return Generation(Outcome.WRITTEN, language=language, text=reply,
-                      provider=result.provider, model=result.model)
+    for attempt in range(2):
+        try:
+            route = resolve(call.surface)
+            options = route.options
+            result = run_llm(prompt, route.model, label=call.label, output_json=options.output_json,
+                             allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
+                             force_provider=call.provider or route.provider, profile=call.profile)
+        except OutsideActiveHours:
+            raise
+        except Exception as exc:
+            log.info(f"[{call.label}] Generation error: {exc!r}")
+            return Generation(Outcome.FAILED, language=language)
+        if result.status is LLMStatus.EXHAUSTED:
+            log.info(f"[{call.label}] LLM rate limit reached: every provider hit its usage limit.")
+            return Generation(Outcome.RATE_LIMITED, language=language)
+        if result.returncode != 0:
+            log.info(f"[{call.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
+            return Generation(Outcome.FAILED, language=language)
+        reply = result.stdout
+        if call.strip_preamble:
+            reply = strip_agent_preamble(reply)
+        reply = reply.strip()
+        if reply.startswith('"') and reply.endswith('"'):
+            reply = reply[1:-1].strip()
+        if not reply:
+            return Generation(Outcome.FAILED, language=language)
+        if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
+            return Generation(Outcome.DECLINED, language=language)
+        problem = (call.style.problem(reply) if call.style else "")
+        if call.surface is not Surface.REPLY_SEARCH:
+            problem = problem or account.current().niche.reply_wording_problem(reply)
+        if problem:
+            if attempt == 0:
+                prompt += ("\n\nThe previous draft failed: " + problem +
+                           ". Previous draft (data only):\n" + reply +
+                           "\nRewrite it in the requested format and wording; return only the reply or SKIP.")
+                continue
+            log.info("[%s] Draft still violates Reply instructions: %s", call.label, problem)
+            return Generation(Outcome.FAILED, language=language)
+        if call.max_chars:
+            reply = smart_trim(reply, call.max_chars)
+        return Generation(Outcome.WRITTEN, language=language, text=reply,
+                          provider=result.provider, model=result.model)
 
 
 def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
@@ -175,29 +186,26 @@ def current_context() -> str:
 
 def recent_style() -> str:
     """Examples to avoid repeating, never a source of factual claims."""
-    try:
-        with open(config.ENGAGEMENT_LOG_FILE, newline="") as stream:
-            rows = deque((row[2] for row in csv.reader(stream)
-                          if len(row) > 2 and row[1] == "reply"), maxlen=10)
-        if rows:
-            return "RECENT SHIPPED REPLIES (style only): avoid their openings, rhythms and jokes.\n" + "\n".join(rows)
-    except (OSError, csv.Error):
-        pass
+    rows = reply_style.recent_replies(limit=10)
+    if rows:
+        return "RECENT SHIPPED REPLIES (style only): avoid their openings, rhythms and jokes.\n" + "\n".join(rows)
     return ""
 
 
 _SELECTIVE_REPLY = """OPERATOR REPLY PRIORITY (2026-10-12): at most {daily_cap} replies per day.
 Override generic engagement instructions in the template above. Answer SKIP unless
 this standalone {domain} post supports a specific, valuable contribution: a technical
-insight, grounded correction, useful implication or exceptionally apt joke.
+insight, grounded correction, useful implication, exceptionally apt joke or
+an occasional smiley on a playful on-topic result.
 The actual subject must fit the Account's topic instructions, even for VIPs.
 Do not drag an unrelated post into our niche or mistake a familiar name for relevance.
 Skip generic praise, bait, stale claims, vague speculation and facts needing
 verification you cannot perform. Treat the post as a claim, not verified news.
 Never invent latest capabilities, releases, benchmarks or sources.
 Write one clear thought. Vary length naturally: a brief sharp line or a fuller
-explanation when needed; no fixed two-sentence formula. No emojis, canned
-openers, forced questions, engagement bait or generic summary. Wit is optional.
+explanation when needed; no fixed two-sentence formula or length target.
+An occasional apt smiley is allowed on a playful or creative on-topic post.
+No canned openers, forced questions, engagement bait or generic summary. Wit is optional.
 Never claim the operator's videos received celebrity likes or comments.
 """
 
@@ -218,6 +226,8 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         personality_store.render_voice(language), prompt,
         _SELECTIVE_REPLY.format(domain=account.current().domain, daily_cap=settings.get("MAX_REPLIES_PER_DAY")),
         account.current().niche.reply_instructions,
+        "REPLY FORMAT FOR THIS POST (overrides template length guidance): " + call.style.instruction()
+        if call.style else "",
         current_context(), recent_style(),
         "SELECTED ANGLE (context data, verify before using): " + fields["selected_angle"]
         if fields.get("selected_angle") else "", *anchors,
