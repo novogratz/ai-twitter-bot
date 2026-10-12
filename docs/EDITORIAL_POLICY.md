@@ -13,6 +13,13 @@ start; they compete for the same eight publications (see below).
 There is no guarantee of virality or a minimum post count on a day with weak
 sources or service failures.
 
+Operator, 2026-10-12: the shared Reply pool considers standalone posts from
+the last 24 hours. Early-bird and mega-watch profile scans use that same
+window; their former eighteen- and four-minute cutoffs are removed. Frequent
+scans can discover new posts promptly without excluding useful older ones.
+There is no fifteen-minute post-age limit. All topic, quality and write checks
+still apply; this changes neither job cadence nor publication spacing.
+
 ## Value and voice
 
 The character is a confident, sexy 40-year-old mom with sharp AI expertise:

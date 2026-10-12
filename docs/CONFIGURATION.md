@@ -76,7 +76,7 @@ across the actual windows, including each day’s earlier or later starts.
   without `LLM_FALLBACK_MODEL`. A fallback runs `LLM_FALLBACK_MODEL`, else
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
 - An Account Relation may select its own provider with `PRIORITY_REPLY_MODEL`;
-  the former finance Relations are inactive behind the Account blocklist.
+  the former finance Relations were removed and their handles remain blocked.
   A codex primary under a cached usage lockout (`codex_lockout.json`) goes to local Ollama.
 - `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of

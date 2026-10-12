@@ -2971,3 +2971,13 @@ trends and outgoing text. Retired Relations, positive seeding lists and
 contradictory prompts were removed. SI research and generated stock imagery
 remain eligible. Production state and follow relationships were preserved;
 no automatic restart or live social actions accompany the change.
+
+2026-10-12 — Operator reported a crash after an APScheduler warning about a
+direct-reply scan already running. The process had received the agent's scoped
+stop command under an earlier stop request; the log recorded a normal stop,
+not a crash traceback. Overlapping scan instances remain disabled. The operator
+also requested removal of a suspected fifteen-minute post-age limit. The pool
+already accepted 24 hours, but two profile collectors imposed separate four-
+and eighteen-minute limits. They now use the pool's shared age limit through
+Reply source declarations, with regression tests for older posts reaching the
+pool while stale, future, nested and wrong-author posts remain excluded.

@@ -177,10 +177,12 @@ def _daylight_default(monkeypatch):
     Boundary tests replace this clock with their own explicit instants.
     """
     from src.guards import active_hours
-    real_now = active_hours.now_local
+    now = active_hours.now_local().replace(hour=12, minute=0)
     _UNWALLED.setdefault("wake_offset", active_hours._wake_offset)
     monkeypatch.setattr(active_hours, "_wake_offset", lambda day, start: 0)
-    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
+    # Freeze one instant per test. Replacing the real hour/minute on every
+    # read made the fixture clock jump backward whenever a minute rolled over.
+    monkeypatch.setattr(active_hours, "now_local", lambda: now)
     from src.replies import reply_pool, reply_selector
     monkeypatch.setattr(reply_pool, "now_local", lambda: active_hours.now_local())
     monkeypatch.setattr(reply_selector, "now_local", lambda: active_hours.now_local())

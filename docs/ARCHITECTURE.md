@@ -578,7 +578,11 @@ answers to the Reply source, `src/replies/reply_source.py`: the oldest post
 Account's niche, fresh and rising first. `reply_source.select` applies the
 declaration without side effects and never keeps a post without a URL or
 text, or of unknown or negative age; a declaration can also require the
-author a scanned profile's posts carry in their URL. The other jobs still
+author a scanned profile's posts carry in their URL. Early-bird and mega-watch
+also use declarations: the shared pool's 24-hour age window, expected profile
+author, standalone posts and the Account's niche. Their scan intervals are
+independent of post age; there is no four- or eighteen-minute cutoff.
+The other jobs still
 select their candidates themselves (niche, age threshold, thread-reply
 shape) until they move to it. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
