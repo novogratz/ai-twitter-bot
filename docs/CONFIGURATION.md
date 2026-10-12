@@ -1,5 +1,10 @@
 # Configuration
 
+The Account's optional `[searches] scope` adds its topic terms and exclusions to
+every browser and model-assisted X search. The live Account uses SI and AI
+alternatives plus crypto/trading exclusions. Search scope, niche patterns and
+editorial relevance checks complement each other; X can still return noisy results.
+
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
 `.env.example` is the starting point for @TheAIShrink; its bounded settings
@@ -170,9 +175,9 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
-| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
-| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
-| `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the topic sweep scrapes per Latest search. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Legacy dispatch generation budget per topic search; live sweeps only collect candidates. |
+| `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes needed to record a topic-search author in dynamic_accounts.json; selection evidence is required for engagement. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |
 | `CURATOR_TRACKED_MAX` | int | `40` |  | Earned accounts the curator tracks, pinned ones aside. |

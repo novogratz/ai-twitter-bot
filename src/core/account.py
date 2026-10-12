@@ -247,6 +247,10 @@ class Searches:
     hot_tab: tuple
     likes: tuple
     trending: tuple  # the Top searches of the Trend slots and the Startup post
+    scope: str = ""  # Account topic alternatives and exclusions, on every search
+
+    def scoped(self, query: str) -> str:
+        return f"({query}) {self.scope}" if self.scope else query
 
 
 def _network(top) -> Network:
@@ -279,12 +283,13 @@ def _niche(top) -> Niche:
 
 
 def _searches(top) -> Searches:
-    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES})
+    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
+                   optional={"scope": str})
     for key in _SEARCHES:
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
-    return Searches(**{key: tuple(table[key]) for key in _SEARCHES})
+    return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""))
 
 
 class _Table:

@@ -105,7 +105,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
 | `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to thirty posts when none remain or waiting discoveries are due after five minutes; records scores, reasons and angles; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 with a target of 300 and a maximum of 400 Replies/day. All daily budgets and write guards still apply. |
 | `direct_reply_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
-| `feed_sweep_job` | 8 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
+| `feed_sweep_job` | 8 min | Runs two Latest topic searches, saves discoveries and queues eligible standalone candidates; never browses For You/Following or drafts/sends Replies. |
 | `early_bird_job` | 5 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `mega_watch_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
@@ -592,7 +592,7 @@ temporary refusal, a failed generation or a failed write leaves the post
 replayable. A model rate limit, every provider exhausted, ends the job's
 generations for the cycle, with the post left replayable; in `direct_reply`
 it also stops the search
-lane, in `feed_sweep` the Following pass. `StateUnreadable` and
+lane, in `feed_sweep` the next topic search. `StateUnreadable` and
 `OutsideActiveHours` end the cycle from any step, a job's scrape included;
 any other error in a scrape, a generation or a write is logged and the
 cycle moves on.
@@ -737,7 +737,7 @@ These are how the code behaves today, not design intent:
   past its bound may still deliver a late `r` or paste to whatever is in
   front then. A late submit is the only one that could publish, and its
   write is already UNCONFIRMED with its claim kept.
-- The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
+- The debate, VIP and provider-specific Relation Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
 - Account Relations may override the provider through `direct_reply._own_call`;
   legacy finance Relations are inactive because their authors are blocked.
@@ -973,3 +973,15 @@ The final content guard applies wording checks to every Reply path and admits
 approved smileys separately from the five-character text floor. Account-owned
 patterns preserve verified proper names and literal links, handles and code.
 No new scheduler job or production state file is introduced.
+
+2026-10-12 — All X searches pass through `Searches.scoped` in the shared
+scraper; optional model-assisted discovery uses the same queries and scope.
+The topic sweep samples two Latest searches. Browser refresh/recovery uses the
+own profile. Shared guarded candidates moved to `core.topic_evidence`, so
+account jobs can read fresh topic-approved authors without importing Reply
+jobs. Saved tracked handles must still have current topic evidence in the
+engagement log; legacy dynamic/discovered lists no longer seed engagement.
+The source collector, trending filter and final text guard apply exclusions.
+Retired finance Relations and positive topic examples were removed; the
+historical metrics tag `ai_news_take` also covers SI, while no new finance or
+feud tags are assigned. Existing state files and job cadence are preserved.

@@ -1,4 +1,4 @@
-# @TheAIShrink — AI knowledge, useful updates, and conversation
+# @TheAIShrink — SI knowledge, useful updates, and conversation
 
 A Safari-driven AI account with the voice of a confident, warm, playfully flirty
 40-year-old mom: sexy, funny, sarcastic, and deeply knowledgeable about AI
@@ -40,6 +40,13 @@ English prompts): every post and reply prompt carries it as one block.
   Reply prose uses **SI / super intelligence**. Discovery searches both AI and SI,
   including SpaceXAI and SpaceXSI; current profile scans use `@SpaceXSI`.
   Verified names such as OpenAI and Google AI, URLs and handles keep their spelling.
+- **Discovery stays on SI/AI.** Every X search includes the Account's topic scope
+  and exclusions. The sweeper uses two Latest topic searches, and browser refresh
+  and recovery open our own profile. For You and Following are no longer discovery sources.
+  Saved handles need fresh topic approval or current on-topic engagement evidence;
+  old crypto discoveries cannot rejoin through a saved list. News, trends, bios,
+  likes and outgoing text also reject excluded topics. Stock photography remains
+  eligible generated-media content; stock trading does not.
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.
@@ -58,22 +65,22 @@ a new action outside those three windows. An already-issued request may still fi
 
 | Toronto time | Reader value |
 |---|---|
-| 05:00 | Priority AI update worth understanding |
-| 07:15 | A practical AI workflow |
-| 09:30 | Priority AI article or model update with a sharp consequence |
-| 09:45 | Trend: the AI topic X is talking about, told from a trusted article |
-| 12:00 | A clear explanation of an AI concept |
+| 05:00 | Priority SI update worth understanding |
+| 07:15 | A practical SI workflow |
+| 09:30 | Priority SI article or model update with a sharp consequence |
+| 09:45 | Trend: the SI topic X is talking about, told from a trusted article |
+| 12:00 | A clear explanation of an SI concept |
 | 12:20 | Trend |
 | 12:40 | A model or tool update and its consequences |
 | 17:00 | Trend |
-| 17:45 | Priority informed take on an AI tradeoff |
+| 17:45 | Priority informed take on an SI tradeoff |
 | 18:30 | An idea worth saving or sharing |
 | 22:15 | Optional post for an exceptional update or unusually useful source |
 
 Each slot has a short retry window and missed slots are not caught up. Every
 start in waking hours opens one extra trend post, the Startup post. Eleven
 slots plus the Startup post compete for eight publications a day. Trend posts
-pick their topic from the five fastest-rising AI posts on X from the last 24
+pick their topic from the five fastest-rising SI posts on X from the last 24
 hours; the facts and the link still come from a trusted article.
 Originals have their own scheduler worker so reply scans cannot starve them.
 See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details.
@@ -87,7 +94,7 @@ the default browser: the bot opens every page in Safari), Python 3.12+,
 `qwen3.6:35b-a3b`), the model `bin/run.sh` pre-warms. With the
 default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
 fallback, codex for instance. An Account can give a Relation its own provider;
-the former finance Relations are inactive because those accounts are blocked.
+the former finance Relations have been removed and those accounts remain blocked.
 A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the

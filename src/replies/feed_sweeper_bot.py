@@ -1,6 +1,6 @@
-"""Feed sweeper — useful replies to fresh on-niche posts in the For You / Following feed.
+"""Topic sweeper — discover fresh posts through the Account's topic searches.
 
-Scroll For You and Following, archive discovered posts and queue eligible
+Search topic queries on the Latest tab, archive discovered posts and queue eligible
 standalone posts for comparison by the shared Reply selector. The quote
 lane that once amplified viral posts is gone (2026-09-20 policy: quotes are
 zero). Authors of high-engagement feed posts are added to
@@ -13,10 +13,11 @@ Hard rules preserved:
   - all writes go through the twitter_client chokepoints
 """
 import traceback
+import random
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline, reply_source
@@ -63,11 +64,14 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """Sweep BOTH For You and Following every cycle — the primary loop."""
-    from ..x.scraper import scrape_home_feed, scrape_following_feed
-    for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
+    """Two focused Latest searches; never browse unfiltered recommendation feeds."""
+    from functools import partial
+    from ..x.scraper import scrape_x_search
+    queries = list(account.current().searches.replies)
+    for query in random.sample(queries, min(2, len(queries))):
         cycle = reply_pipeline.Cycle()
-        _sweep_one_feed(source, scraper, cycle)
+        _sweep_one_feed("TOPIC/" + query[:60],
+                        partial(scrape_x_search, query, tab="live", text_limit=2000), cycle)
         if cycle.rate_limited:
             break
 

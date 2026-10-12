@@ -60,3 +60,19 @@ def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
     scraper._record_blank_page(label="@TheAIShrink")
     assert restarts == ["black_screen_recovery"], "diverse-label blanks = wedge = restart"
     scraper._reset_blank_page_count()
+@pytest.mark.parametrize("query", ["from:someone", "Grok OR Claude", "bitcoin OR lunch"])
+def test_every_search_gets_account_scope_before_safari_opens(monkeypatch, query):
+    from urllib.parse import parse_qs, urlparse
+    from src.core import account
+    from src.x import safari, scraper
+    opened = []
+    monkeypatch.setattr(safari, "open_url", opened.append)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(scraper.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: [])
+    assert scraper.scrape_x_search(query) == []
+    actual = parse_qs(urlparse(opened[0]).query)["q"][0]
+    assert actual == f"({query}) {account.current().searches.scope}"
+    assert "SI OR AI" in actual and "-crypto" in actual and "-bitcoin" in actual
+    assert "-bittensor" in actual and "-filter:replies" in actual

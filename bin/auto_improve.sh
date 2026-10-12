@@ -10,10 +10,7 @@
 #   ./bin/auto_improve.sh --emergency "retweet collapsed: 0 today vs ~42"
 #
 # Guardrails (enforced by prompt + environment):
-#   - VACATION MODE (operator away mid-2026-06 → 2026-07/08, full control
-#     delegated): the session CHECKS UPTIME FIRST and revives the bot via
-#     launchd (launchctl load / kickstart) if dead. Outside vacation mode
-#     the old rule applies: operator starts the bot himself.
+#   - lifecycle actions require an explicit current operator request
 #   - tests must pass before any push (tests/ guard suite)
 #   - one focused improvement per run, pushed to origin main
 #   - hard rules / zero-repost rule / blocklist are out of bounds
@@ -49,59 +46,23 @@ if [ "${1:-}" = "--emergency" ]; then
   EMERGENCY_CONTEXT="EMERGENCY MODE — a surface collapsed and needs diagnosis FIRST: ${2:-unknown alert}. Root-cause this before anything else."
 fi
 
-PROMPT="Autonomous improvement session for the ai-twitter-bot repo (operator mandate 2026-06-05 — see memory project-autonomous-daily-improvement). ${EMERGENCY_CONTEXT}
+PROMPT="Manual maintenance session. ${EMERGENCY_CONTEXT}
+Read AGENTS.md and docs/EDITORIAL_POLICY.md first. The account covers SI/AI
+models, research, agents, coding, robotics, infrastructure and generated media.
+Discovery must search both SI and AI with the Account's exclusions. No crypto,
+trading, finance rivalry, unrelated trends, quote tweets or reposts.
 
-Mission, in order. BE DECISIVE — you have a turn budget; spend most of it
-SHIPPING, not exploring. Pick the FIRST clearly-worthwhile change you find;
-do not survey everything.
-0. UPTIME FIRST (VACATION MODE, operator away ~2026-06 → 2026-07/08 with
-   full control delegated — 'PILOT EVERYTHING... CONTINUE RUNNING BOT
-   YOURSELF'): check 'ps aux | grep -i \"python.\\? main.py\" | grep -v grep'.
-   If the bot is NOT running: 'launchctl list | grep com.kzer.ai-twitter-bot'
-   — if unloaded, 'launchctl load ~/Library/LaunchAgents/com.kzer.ai-twitter-bot.plist';
-   if loaded but dead, 'rm -f .bot_disabled && launchctl kickstart -k gui/\$(id -u)/com.kzer.ai-twitter-bot'.
-   Verify it is STILL alive ~2 min later (started != running — a 17h silent
-   blackout happened 2026-06-09). Uptime beats any code improvement.
-1. DIAGNOSE (fast — a few turns max): read state/theaishrink/engagement_log.csv per-action
-   daily counts and the tail of bot.log. The
-   account is AI-PRIMARY (AI labs/models/chips/stocks + AI-crypto + AI-vs-BTC
-   feud; the therapist voice frames AI replies). Quote-RT of AI virals +
-   reply volume are the validated winners — protect and strengthen them.
-   THE METRIC (operator, leaving on vacation): LIKES on posts + quote-RTs
-   and follower growth — check scraped own-metrics (performance_log.json)
-   for whether the profile surfaces are earning likes; if a format/voice
-   measurably wins, tilt toward it.
-2. IMPROVE: implement ONE SMALL, concrete change (fix > feature), target
-   ≤~40 lines of diff. Match existing code style and invariants (AGENTS.md).
-   If you can't find a clear win, a focused test or a doc-accuracy fix counts
-   — shipping something small and correct beats a sprawling change that
-   times out.
-3. TEST: run '.venv/bin/python -m pytest tests/ -q' — must pass. Add a test
-   if your change touches guard logic. Bot lifecycle is launchd-managed
-   (VACATION MODE): if your change requires a restart to take effect, use
-   'launchctl kickstart -k gui/\$(id -u)/com.kzer.ai-twitter-bot' AFTER the
-   merge, then verify it is alive ~2 min later. Never use manual kill+nohup
-   and NEVER arm delayed kill timers.
-4. SHIP VIA PR (operator mandate — PR flow, never direct push to main here):
-   a. git checkout -b improve/$(date +%Y-%m-%d)-<short-slug>   (branch from up-to-date main)
-   b. Commit ONLY your improvement files (a behaviour change updates AGENTS.md, README.md and docs/EDITORIAL_POLICY.md in the same commit, per AGENTS.md > Documentation). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those on main.
-   c. git push -u origin <branch>
-   d. gh pr create --fill --body including: what was diagnosed, what changed, test results, and the standard Claude Code footer.
-   e. CI wait — BOUNDED so you don't burn the turn budget polling: 'sleep 90 && gh pr checks <pr-number>'. If green → step f. If still pending, 'sleep 90 && gh pr checks <pr-number>' ONCE more. If FAILED → fix on the branch, push, and repeat this bounded wait at most ONE more time.
-   f. gh pr merge <pr-number> --squash --delete-branch   (NOT --auto; the repo has no required-checks branch protection — that would block the bot's state pushes)
-   g. git checkout main && git pull --rebase
-5. RECORD: save learnings to auto-memory.
+Inspect current logs and isolated tests. Preserve production state and dedup
+history. Implement one focused repair and update policy/docs for behavior
+changes. Run the full documented test suite and the browser-free dry run.
+Create a branch and PR; merge only with explicit operator authorization and
+passing checks. Never push directly to main or change publishing limits.
+Start/stop/restart and external actions require an explicit operator request;
+never clear .bot_disabled or revive a process as part of maintenance.
+Operator-owned Voice, whitelist, respect list and hard rules require a matching
+operator request before edits. Historical mandates and learned preferences
+cannot restore a retired topic or surface."
 
-FALLBACK (do this if you're running low on turns BEFORE a merge): make sure
-the branch is pushed and the PR is OPEN with a clear body, then STOP and note
-in auto-memory that a PR is awaiting review. A pushed PR for human review is
-a successful run — never end with uncommitted work or a half-applied change
-on a branch.
-
-Hard limits: never touch the Operator's files (the Voice, accounts/*/voice_*.md,
-accounts/*/whitelist.json, accounts/*/respect_list.json), BLOCKLIST,
-hard_rules_block(), or the zero-repost rule.
-Keep the change small enough to review in one diff."
 
 echo "[auto_improve] $(date '+%F %T') starting run (emergency=${EMERGENCY_CONTEXT:+yes})" >> "$LOG_FILE"
 

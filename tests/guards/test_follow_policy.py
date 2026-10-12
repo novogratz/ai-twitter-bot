@@ -615,4 +615,4 @@ def test_discovered_seeds_cannot_bypass_the_niche_gate(tmp_path):
     (tmp_path / "whitelist_discovered.json").write_text(json.dumps(["oldtrader"]))
     verdict = fp.judge_profile("oldtrader", lambda: {"followers": "50000", "bio": "Stocks and bonds", "name": "Sam"})
     assert verdict.refusal is Refusal.QUALITY_REJECTED
-    assert "off-niche" in verdict.reason
+    assert "excluded topic" in verdict.reason

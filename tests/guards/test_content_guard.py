@@ -330,3 +330,20 @@ def test_outdated_reply_wording_is_refused_without_silent_replacement(text):
 def test_reply_wording_preserves_names_links_code_and_french_verbs(text):
     from src.guards.content_guard import validate
     assert validate(text, kind="reply") == (True, "")
+@pytest.mark.parametrize("text", [
+    "SI models can predict Bitcoin prices.", "Try these Bittensor SI staking rewards.",
+    "SI agents run the memecoin presale.", "SI stock trading returns look impressive.",
+    "SI bots trade crypto-monnaies.", "Use SI to choose $TAO.",
+])
+@pytest.mark.parametrize("kind", ["original", "reply"])
+def test_excluded_topics_are_blocked_in_every_outgoing_text(text, kind):
+    ok, why = cg.validate(text, kind=kind)
+    assert not ok and "excluded topic" in why
+
+
+def test_generated_stock_photography_is_distinct_from_stock_trading():
+    from src.core import account
+    niche = account.current().niche
+    assert niche.matches_post("SI-generated stock photography is improving.")
+    assert niche.matches_post("SI-generated stock footage is improving.")
+    assert not niche.matches_post("SI stock trading signals are improving.")

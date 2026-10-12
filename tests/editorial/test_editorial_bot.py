@@ -865,3 +865,20 @@ def test_the_pending_count_is_checked_again_right_before_the_submit(monkeypatch,
     monkeypatch.setattr(editorial, "_json_call", shipped_during_review)
     assert editorial.run_editorial_cycle()["approved"]
     assert "07:15" not in editorial._read_state()["slots"]
+def test_news_sources_include_si_and_exclude_crypto_before_fetching_articles(monkeypatch):
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    feed = "https://openai.com/news/rss.xml"
+    use_editorial(monkeypatch, feeds=(("OpenAI", feed),), evergreen=())
+    titles = ["SI evaluation release", "AI Bitcoin agent launch", "SI Bittensor staking launch",
+              "Super intelligence research", "AI stock trading forecast", "Fashion model release"]
+    items = "".join(f"<item><title>{title}</title><link>https://openai.com/{i}</link>"
+                    "<pubDate>2026-09-20T10:00:00-04:00</pubDate></item>" for i, title in enumerate(titles))
+    fetched = []
+    def fetch(url):
+        fetched.append(url)
+        return f"<rss><channel>{items}</channel></rss>" if url == feed else (
+            "<article>" + "A useful SI evaluation update with sourced details. " * 10 + "</article>")
+    monkeypatch.setattr(editorial, "_fetch", fetch)
+    sources = editorial.collect_sources({}, now)
+    assert {s["url"] for s in sources} == {"https://openai.com/0", "https://openai.com/3"}
+    assert fetched == [feed, "https://openai.com/0", "https://openai.com/3"]

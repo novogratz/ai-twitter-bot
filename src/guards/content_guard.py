@@ -476,6 +476,10 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if config.ban_short_term_price_targets() and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
 
+    from ..core import account
+    if account.current().niche.excludes(text):
+        return (False, "excluded topic in outgoing content")
+
     # ALL surfaces — replies included (the 2026-07-29 leak WAS a reply).
     if _violence_content(text):
         return (False, "violence/cruelty content (killing, terrorism, casualties) — never on-brand, SKIP")
@@ -492,7 +496,6 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
                 return (False, f"wrong language: need {primary}, detected {lang} @ {conf:.0%}")
 
     if kind == "reply":
-        from ..core import account
         why = account.current().niche.reply_wording_problem(text)
         if why:
             return (False, why)

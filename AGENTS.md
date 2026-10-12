@@ -31,6 +31,11 @@ real account. Setup and run commands live in [`README.md`](README.md).
   and occasional smileys (2026-10-12). They use SI/super intelligence in their
   own prose, preserving verified names and literal links. Discovery keeps both
   AI and SI terms; the current SpaceXSI name and profile replace older branding.
+- Discovery uses scoped SI/AI searches and curated profiles. The topic sweeper
+  uses two Latest searches; no live discovery job browses For You or Following.
+  Crypto/trading exclusions apply to search, news titles, trends, bios and
+  outgoing text. Old saved handles need current topic evidence before reuse.
+  Retired crypto relationship prompts and seeding lists are removed (2026-10-12).
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -68,6 +73,7 @@ Account.
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
 | Reply format: weighted lengths and rare smileys, informed by shipped Reply history | `src/core/reply_style.py` |
+| Shared Reply candidate schema and fresh topic evidence for account discovery | `src/core/topic_evidence.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |

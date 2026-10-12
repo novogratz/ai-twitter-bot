@@ -233,7 +233,9 @@ def collect_sources(journal, now=None, news_only=False) -> list:
                 title = field("title")
                 if (not stamp or not now - timedelta(hours=48) <= stamp <= now
                         or not _trusted(link) or link in used
-                        or not loaded.relevance.topic.search(title)):
+                        or not loaded.relevance.topic.search(title)
+                        or loaded.relevance.off_topic.search(title)
+                        or loaded.niche.excludes(title)):
                     continue
                 candidates.append(dict(title=title, url=link, publisher=publisher,
                                        published_at=stamp.isoformat(), kind="news"))

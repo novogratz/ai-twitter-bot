@@ -119,10 +119,10 @@ def _reset_blank_page_count():
 
 
 def refresh_feed():
-    """Open X home feed and refresh it so new tweets load."""
+    """Refresh our own profile without opening unfiltered recommendations."""
     with safari._safari_lock:
-        log.info("Refreshing X feed...")
-        safari.open_url("https://x.com/home")
+        log.info("Refreshing the account profile...")
+        safari.open_url(config.BOT_PROFILE_URL)
         time.sleep(3)
         safari.close_front_tab()
 
@@ -431,6 +431,8 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
     dead-tweet filter dropping everything).
     """
     import urllib.parse
+    from ..core import account
+    query = account.current().searches.scoped(query)
     with safari._safari_lock:
         f_param = "top" if tab == "top" else "live"
         search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"

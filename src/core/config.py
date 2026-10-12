@@ -117,7 +117,7 @@ RETRY_DELAY_SECONDS = 5
 
 
 # ---------------------------------------------------------------------------
-# 2026-06-02 pivot tunables — French-language AI + Space + Stocks niche.
+# Legacy setting aliases; topic policy comes from the current Account (2026-10-12).
 # Everything here is config, not hardcoded logic (per the revision mandate).
 # Enforced centrally at the write chokepoints (twitter_client.post_tweet /
 # reply_to_tweet / follow_account) via
@@ -173,9 +173,8 @@ def reply_target() -> int:
 #     exceed it, keep following <= followers.
 #   - Max 20 follows/day, randomized gaps >= 10 min (MIN_SECONDS_BETWEEN_
 #     FOLLOWS + FOLLOW_SPACING_JITTER_SECONDS). Never burst-follow.
-#   - Whitelist-only: the tiered seed list in whitelist.json (tier1 foils →
-#     tier4 crypto/markets). Discovery candidates go to suggestions[] for
-#     human approval — the bot never auto-adds.
+#   - Whitelist-only: the Account's tiered topic-expert seeds, with discovered
+#     accounts admitted only through current topic evidence and follow policy.
 #   - 30-day anti-churn stays ON; no follow→unfollow cycles.
 def follow_whitelist_only() -> bool:
     return settings.get("FOLLOW_WHITELIST_ONLY")
