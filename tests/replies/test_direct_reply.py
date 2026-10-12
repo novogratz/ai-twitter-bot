@@ -167,20 +167,26 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     from src.core.llm_client import TEXT_PROFILE, Surface
     from src.replies import direct_reply as dr
 
-    relations = account.current().relations
+    from dataclasses import replace
+    loaded = account.current()
+    relations = account.Relations(loaded.relations.default, {
+        "modelresearcher": account.Relation("ModelResearcher", "Read {tweet_text}", "claude", None),
+        "labfriend": account.Relation("LabFriend", "Discuss {tweet_text}", None, None),
+    })
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, relations=relations))
     monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    own = dr._vip_call("graphseo")
-    assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
-                                                      Surface.RELATION_REPLY, "GRAPHSEO_VIP")
+    own = dr._vip_call("modelresearcher")
+    assert (own.template, own.surface, own.label) == (relations.get("ModelResearcher").prompt,
+                                                      Surface.RELATION_REPLY, "MODELRESEARCHER_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
         False, 800, 270, False, 0)
     assert (own.provider, own.profile) == ("claude", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
-    assert dr._vip_call("Graphseo").provider is None
+    assert dr._vip_call("ModelResearcher").provider is None
 
-    bestie, buddy = dr._vip_call("thebtctherapist"), dr._vip_call("vision_ia")
-    assert (bestie.template, bestie.label) == (relations.get("TheBTCTherapist").prompt,
-                                               "VIP_REPLY/thebtctherapist")
+    bestie, buddy = dr._vip_call("labfriend"), dr._vip_call("vision_ia")
+    assert (bestie.template, bestie.label) == (relations.get("LabFriend").prompt,
+                                               "VIP_REPLY/labfriend")
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.surface, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,

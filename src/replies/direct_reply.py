@@ -8,7 +8,7 @@ from ..x import x_urls
 from ..core import account, settings
 from ..core.llm_client import Surface
 from ..core.logger import log
-from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
+from ..x.scraper import scrape_profile_tweets, scrape_x_search
 from . import reply_pipeline
 from .reply_generator import LanguageRule, ReplyCall
 from .reply_source import freshness_sort_key, is_on_niche
@@ -169,7 +169,7 @@ def _queries_for_cycle(all_queries: list) -> list:
 
 
 def run_direct_reply_cycle(max_replies=None):
-    """Collect priority profiles first, then search for more AI opportunities.
+    """Collect priority profiles first, then search for more topic opportunities.
 
     `max_replies` bounds the cycle and returns Safari to the scheduler. When
     omitted, the steady-state default is DIRECT_REPLY_MAX_PER_CYCLE; pass 0
@@ -192,8 +192,8 @@ def run_direct_reply_cycle(max_replies=None):
         remaining -= total
 
     # 2. SEARCH — primary reply engine for direct_reply.
-    #    Feed sweeper owns For You / Following; this cycle owns search so
-    #    the two engines don't waste time deduping the same feed tweets.
+    #    The sweeper samples Latest results; this cycle scans Top results.
+    #    Both collect into the same pool, deduplicated by status ID.
     #    Scan a ROTATING SLICE of the queries per cycle (2026-07-10): the
     #    old scan-ALL-26-queries-every-cycle burned most of each cycle's
     #    Safari time re-scraping pools that churn slower than the 1-2 min

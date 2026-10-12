@@ -58,7 +58,7 @@ def collect_trending_posts(slot, now=None) -> list:
                     or is_blocked_account(handle) or age is None
                     or not timedelta(0) <= age <= TREND_MAX_AGE
                     or x_urls.is_reply_like_tweet(tweet) or not relevance.topic.search(text)
-                    or relevance.off_topic.search(text)):
+                    or relevance.off_topic.search(text) or loaded.niche.excludes(text)):
                 continue
             seen.add(sid)
             minutes = max(age.total_seconds() / 60, 1.0)

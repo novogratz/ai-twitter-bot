@@ -2960,3 +2960,14 @@ and occasional approved smileys are allowed. The same request adds SI search
 terms alongside AI and uses SI/super intelligence in Reply prose. SpaceXSI
 branding and its profile were checked against https://x.ai/; other verified
 names and literal references retain their spelling. The bot remains stopped.
+
+2026-10-12 — Operator reported continued crypto discovery after the topic
+pivot. The sweeper still opened For You/Following, legacy handle lists still
+fed engagement, the optional search prompt retained crypto targets and stock
+examples, and the manual seeder/maintenance instructions could restore them.
+Scoped SI/AI searches replace feed browsing. Current topic evidence gates
+saved discoveries; crypto/trading exclusions now also protect feed news,
+trends and outgoing text. Retired Relations, positive seeding lists and
+contradictory prompts were removed. SI research and generated stock imagery
+remain eligible. Production state and follow relationships were preserved;
+no automatic restart or live social actions accompany the change.

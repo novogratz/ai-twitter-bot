@@ -272,10 +272,11 @@ def feed(monkeypatch, llm, chokepoint):
 
     feeds = {"FEED": [], "FOLLOWING": [], "read": []}
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
-    monkeypatch.setattr(scraper, "scrape_home_feed",
-                        lambda **k: feeds["read"].append("FEED") or list(feeds["FEED"]))
-    monkeypatch.setattr(scraper, "scrape_following_feed",
-                        lambda **k: feeds["read"].append("FOLLOWING") or list(feeds["FOLLOWING"]))
+    monkeypatch.setattr(fs.random, "sample", lambda queries, n: ["FEED", "FOLLOWING"])
+    monkeypatch.setattr(scraper, "scrape_x_search",
+                        lambda query, **k: feeds["read"].append(query) or list(feeds[query]))
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: pytest.fail("unfiltered home feed"))
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: pytest.fail("unfiltered following feed"))
     return fs, feeds, llm, chokepoint
 
 
@@ -293,7 +294,7 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
     fs.run_feed_sweep_cycle()
 
     assert chokepoint.sent == [ok], "only replies, even to a viral post"
-    assert [r.source for r in logged()] == ["FEED-SWEEP-FEED"]
+    assert [r.source for r in logged()] == ["FEED-SWEEP-TOPIC/FEED"]
     assert set_aside("feed_sweep") == {ok} and set_aside("direct_reply") == set()
 
 
@@ -668,3 +669,15 @@ def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     assert "[RECIPROCATE] Nothing liked on @stale." in lines
     assert "[RECIPROCATE] Nothing liked on @broken." in lines
     assert "[RECIPROCATE] Nothing liked on @unsure." in lines
+def test_sweeper_uses_two_latest_topic_searches_without_home_feeds(monkeypatch):
+    from src.core import account
+    from src.replies import feed_sweeper_bot as sweeper
+    from src.x import scraper
+    searched = []
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: pytest.fail("home discovery"))
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: pytest.fail("following discovery"))
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: searched.append((query, k)) or [])
+    sweeper.run_feed_sweep_cycle()
+    assert len(searched) == 2 and searched[0][0] != searched[1][0]
+    assert all(query in account.current().searches.replies and options["tab"] == "live"
+               for query, options in searched)

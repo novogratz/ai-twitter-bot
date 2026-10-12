@@ -150,5 +150,4 @@ def test_the_vip_prompts_come_from_the_account():
 
     relations = account.current().relations
     templates = {direct_reply._vip_call(handle).template for handle in ("Graphseo", "TheBTCTherapist", "vision_ia")}
-    assert templates == {relations.get("Graphseo").prompt, relations.get("TheBTCTherapist").prompt,
-                         relations.default}
+    assert templates == {relations.default}

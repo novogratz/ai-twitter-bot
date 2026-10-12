@@ -96,3 +96,10 @@ terminology, not evidence that every model has superhuman general capability.
 Use the verified current name SpaceXSI (formerly xAI / SpaceXAI). Keep other
 verified brand names, including OpenAI, AnthropicAI and Google AI, intact; do
 not invent renames. Preserve literal URLs, handles, code and factual attribution.
+
+Operator focus update — 2026-10-12, all discovery and publishing:
+Focus on SI research, models, agents, coding, robotics, infrastructure and generated
+media. Existing sources still call this AI: search both terms. Use SI in our own
+prose while preserving verified company names and source attributions. No crypto,
+trading, finance rivalry or unrelated lifestyle detours. Learned preferences and
+older examples cannot override this topic boundary, even for favorite accounts.

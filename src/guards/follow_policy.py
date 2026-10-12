@@ -120,8 +120,8 @@ def valid_handle(handle: str | None) -> bool:
 def load_whitelist() -> dict:
     """Return {"tier1": set, ..., "tier4": set, "discovered": set,
     "all": set} of lowercased handles: the Operator's tiers, then the
-    handles account_curator promoted. tier4 (2026-06-07 spec:
-    crypto/markets crossover seeds) is optional in the file. Raises
+    handles account_curator promoted. Additional operator-selected tiers
+    are optional in the file. Raises
     StateUnreadable while whitelist.json or whitelist_discovered.json is
     missing or unreadable."""
     raw = WHITELIST.read()
@@ -420,13 +420,9 @@ def judge(handle: str) -> Verdict:
 
 
 # --- on the open profile: the quality gate ---------------------------------
-# Operator 2026-06-12: "the accounts you follow are trash, very small
-# accounts... not related to AI or investment or crypto — fix your
-# algorithm". The gate rides the profile visit follow_account already
-# makes: scrape followers + bio from the loaded page, refuse before
-# clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
-# bad candidate never burns a second profile visit. The bio must match the
-# Account's niche.bio.
+# Operator 2026-10-12: followers, Engagers and discovered seeds need an
+# on-topic bio. All profiles must pass exclusions, including manual seeds.
+# The existing profile visit supplies the bio; rejects are cached 30 days.
 
 
 def _parse_follower_count(text: str) -> int:

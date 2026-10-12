@@ -4,7 +4,8 @@ import json
 import os
 import fcntl
 
-from ..core.state_store import StateFile, StatePath, GUARDED
+from ..core.state_store import StatePath
+from ..core.topic_evidence import POOL, MIN_SCORE, MAX_AGE, _check, read
 from ..core.state_errors import StateUnreadable
 from ..core import account, config
 from ..guards.reply_admission import is_blocked_account
@@ -12,41 +13,8 @@ from ..guards.active_hours import now_local
 from ..x import x_urls
 
 ARCHIVE = StatePath("reply_archive.jsonl")
-POOL = StateFile("reply_candidates.json", {}, GUARDED)
 BATCH_SIZE = 30
-MIN_SCORE = 85
 COLLECT_SECONDS = 60
-MAX_AGE = timedelta(hours=24)
-
-
-def _check(records: dict) -> dict:
-    try:
-        for key, row in records.items():
-            if (not key.isdigit() or not isinstance(row, dict)
-                    or not isinstance(row.get("url"), str)
-                    or x_urls.status_id(row["url"]) != key
-                    or not isinstance(row.get("text"), str)
-                    or row.get("state") not in {"observed", "queued", "ready", "rejected", "processing", "shipped", "closed", "skipped"}
-                    or not isinstance(row.get("sources"), list)
-                    or any(not isinstance(source, str) for source in row["sources"])
-                    or ("eligible" in row and type(row["eligible"]) is not bool)
-                    or ("on_topic" in row and type(row["on_topic"]) is not bool)):
-                raise ValueError("invalid Reply pool record")
-            for field in ("first_seen", "last_seen"):
-                if datetime.fromisoformat(row[field]).tzinfo is None:
-                    raise ValueError("naive Reply pool timestamp")
-            if row["state"] == "ready":
-                if (type(row.get("score")) is not int or not MIN_SCORE <= row["score"] <= 100
-                        or not isinstance(row.get("angle"), str) or not row["angle"].strip()
-                        or datetime.fromisoformat(row["reviewed_at"]).tzinfo is None):
-                    raise ValueError("invalid Reply selection")
-    except (KeyError, TypeError, ValueError) as exc:
-        raise StateUnreadable("reply_candidates.json is unreadable; repair the Reply pool") from exc
-    return records
-
-
-def read() -> dict:
-    return _check(POOL.read())
 
 
 def _archive(events: list) -> None:

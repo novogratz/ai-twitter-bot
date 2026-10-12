@@ -40,10 +40,8 @@ in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
 default is the policy value, and a line set in `.env` wins over an Account's
 `[limits]`. Set `LLM_FALLBACK_CLI=codex` only
 to let a failed call fall back to the cloud. Blank, as in the example, there
-is no fallback and no call leaves the machine, except the Replies to
-@Graphseo: they run on the Claude CLI whenever it is installed (his
-Relation's `provider` in `account.toml`, applied by
-`direct_reply._own_call`). The start logs a fallback the code ignores,
+is no fallback and the live Account has no Relation forcing a cloud CLI.
+Another Account can explicitly configure a Relation provider. The start logs a fallback the code ignores,
 and `--dry-run` lists it under `ignored_llm_fallbacks`.
 
 Keep `BOT_HANDLE` and `CONTENT_LANG_PRIMARY` out of `.env`: the Account
@@ -119,8 +117,11 @@ each call, and compare a handle with the one read from a status URL.
   requirements; every author, including VIPs, must pass. @TheAIShrink sets no
   `ticker`: Replies cover AI/SI, including AI-generated videos.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
-  `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
-  it finds without the niche check; the Trend slots and the Startup post run
+  `replies` then `hot_tab`; the topic sweeper picks two `replies` queries on
+  Latest, and `like_job` picks one of `likes`. Every like checks the actual post's
+  niche. The optional `scope` groups all caller queries with the Account's
+  topic terms and exclusions before Safari opens; model-assisted search uses it
+  too. The Trend slots and the Startup post run
   every `trending` query on the Top tab and keep what passes the relevance
   filter.
 
@@ -162,10 +163,9 @@ with no Relation, that never runs live.
    the values that hold under `bounded_settings`.
    Some prompt text still speaks of AI whatever the domain: the editorial
    draft's "model update, research method" and "a model generates text",
-   the review's "misleading benchmark comparisons", and the examples of the
-   replyback prompt (GPUs, the Fed, Bitcoin). The search Reply lane
-   (`ENABLE_REPLY_SEARCH`, off by default) runs an AI-only prompt with its
-   own searches: leave it off for another domain.
+   and the review's "misleading benchmark comparisons". The optional search
+   Reply lane uses this Account's searches and scope. Conversation follow-ups
+   remain disabled; their inactive generator returns SKIP.
 3. The Operator writes `voice_en.md` and `voice_fr.md`, and fills
    `whitelist.json`, `respect_list.json` and `following_baseline.json`.
 4. Check it without a browser or a model:
@@ -533,7 +533,7 @@ root:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
-| `reply_candidates.json` | `reply_pool` | Last-day discovered posts, eligibility, selection score/reason/angle, outcome; keyed by status ID | guarded |
+| `reply_candidates.json` | `reply_pool`; shared schema/read in `core.topic_evidence` | Last-day discoveries, eligibility, topic verdict, score/reason/angle and outcome; also gates account discovery. An unreadable file stops its readers. | guarded |
 | `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
 | `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward 400/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |

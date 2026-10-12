@@ -29,7 +29,7 @@ Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
 their task instructions but no copy of the persona, and the model client adds
 none (#192). Per-person instructions are the Account's Relations, in
 `account.toml` and `relations/`: the engine names no one (#203). Legacy finance
-Relations remain inactive behind the Account's blocklist. The requested voice
+Relations were removed; their handles remain blocked. The requested voice
 favors Elon, Grok, SpaceXSI and his products on relevant AI topics, with grounded
 claims, specific insight and wit.
 
@@ -75,6 +75,31 @@ slot needs news from the last twelve hours or a useful AI teaching source, plus
 an exceptional-value approval.
 
 ## Niche of Replies, likes and follows
+
+Operator, 2026-10-12, complete topic cleanup: the Account's prompt domain and
+editorial angles use SI; discovery retains AI and historical company aliases.
+`searches.scope` is appended to every X search inside the shared scraper and
+to optional model-assisted search instructions. Each query is grouped before
+the scope so an OR alternative cannot escape it. Scope includes SI/AI terms,
+crypto/trading exclusions and standalone posts only. Searches cover research,
+models, agents, coding, infrastructure, robotics and generated media.
+
+The sweeper now runs two Latest topic searches, never For You or Following.
+Browser warm-up and refresh open our own profile. Profile discovery keeps the
+curated SI/AI list, led by Elon and SpaceXSI. A saved tracked handle must still
+have current on-topic engagement evidence; a new discovery must have a fresh
+explicit topic approval in the shared Reply pool. Legacy dynamic/discovered
+handle lists alone are insufficient. Guarded unreadable candidate state stops
+the discovery jobs that depend on it.
+
+Crypto, Bittensor, staking, memecoins, token sales and trading/stock content
+are excluded even when they mention SI. Exclusions apply to feed news titles,
+trends, profile quality and every outgoing text as well as Reply parents.
+Generated stock photography/footage is allowed. Historical state, follow
+relationships and permanent one-Reply records are retained; old crypto
+relationship prompts, positive seeding lists and contradictory maintenance
+instructions are removed. No live follows, unfollows, posts or restart are
+part of this cleanup.
 
 Operator, 2026-10-12: Replies concern AI or superintelligence (SI/ASI) only,
 including models, agents, research, AI infrastructure, robotics and AI-generated

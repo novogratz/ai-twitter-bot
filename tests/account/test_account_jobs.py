@@ -1256,6 +1256,6 @@ def test_old_crypto_tracking_cannot_restore_scan_targets(settings_override):
     from src.replies import early_bird_bot as eb, mega_watch_bot as mw
     settings_override(PINNED_TRACKED_HANDLES="TheBTCTherapist,elonmusk,Graphseo")
     ac.TRACKED.write({"tracked": [{"handle": "McnallieM"}, {"handle": "xai"}]})
-    assert ac.tracked_handles() == ["elonmusk", "xai"]
-    assert eb._scan_pool() == ["elonmusk", "xai"]
-    assert mw._watch_pool() == ["elonmusk", "xai"]
+    assert ac.tracked_handles() == ["elonmusk"]
+    assert eb._scan_pool() == ["elonmusk"]
+    assert mw._watch_pool() == ["elonmusk"]

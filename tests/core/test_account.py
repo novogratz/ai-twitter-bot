@@ -18,19 +18,9 @@ THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 # The constants of src/editorial/editorial_bot.py and src/editorial/trending.py,
 # and the settings defaults, printed from the code before #202 moved them to
 # accounts/theaishrink/account.toml.
-TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
+TREND_PURPOSE = "Trending: the SI topic X is talking about right now, told from a trusted source"
 OLD = {
-    "SLOTS": [("05:00", "Priority: the AI update worth understanding this morning"),
-              ("07:15", "A useful AI workflow with a concrete first step"),
-              ("09:30", "Priority: an AI article or model update with a sharp consequence"),
-              ("09:45", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("12:00", "An AI concept explained through a clear example"),
-              ("12:20", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("12:40", "A model or tool update and what changes for its users"),
-              ("17:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("17:45", "Priority: an evidence-backed take on an AI tradeoff"),
-              ("18:30", "A practical AI idea worth saving or sharing"),
-              ("22:15", "Optional: an exceptional fresh AI update or unusually useful source")],
+    "SLOTS": [('05:00', 'Priority: the SI update worth understanding this morning'), ('07:15', 'A useful SI workflow with a concrete first step'), ('09:30', 'Priority: an SI article or model update with a sharp consequence'), ('09:45', 'Trending: the SI topic X is talking about right now, told from a trusted source'), ('12:00', 'An SI concept explained through a clear example'), ('12:20', 'Trending: the SI topic X is talking about right now, told from a trusted source'), ('12:40', 'A model or tool update and what changes for its users'), ('17:00', 'Trending: the SI topic X is talking about right now, told from a trusted source'), ('17:45', 'Priority: an evidence-backed take on an SI tradeoff'), ('18:30', 'A practical SI idea worth saving or sharing'), ('22:15', 'Optional: an exceptional fresh SI update or unusually useful source')],
     "TREND_SLOTS": ["09:45", "12:20", "17:00"],
     "TREND_PURPOSE": TREND_PURPOSE,
     "EXCEPTIONAL_SLOT": "22:15",
@@ -44,47 +34,17 @@ OLD = {
               ("Replicate", "https://replicate.com/blog/rss"),
               ("The Decoder", "https://the-decoder.com/feed/"),
               ("arXiv cs.AI", "https://rss.arxiv.org/rss/cs.AI")],
-    "KNOWLEDGE": [("chat_templates", "Why a chat template changes model behavior",
-                   "https://huggingface.co/docs/transformers/chat_templating"),
-                  ("evaluation", "How to evaluate an AI model on your own examples",
-                   "https://huggingface.co/docs/evaluate/index"),
-                  ("quantization", "What quantization trades for smaller AI models",
-                   "https://huggingface.co/docs/transformers/quantization/overview"),
-                  ("retrieval", "When retrieval can improve a language model's answers",
-                   "https://huggingface.co/learn/cookbook/en/advanced_rag"),
-                  ("structured_output", "Why structured output still needs factual checks",
-                   "https://huggingface.co/docs/inference-providers/guides/structured-output"),
-                  ("agents", "When an agent loop is useful and when it adds complexity",
-                   "https://huggingface.co/docs/smolagents/conceptual/tutorial"),
-                  ("tool_use", "What changes when a model can call tools",
-                   "https://huggingface.co/docs/transformers/chat_extras"),
-                  ("generation", "What temperature actually changes in generated text",
-                   "https://huggingface.co/docs/transformers/main_classes/text_generation"),
-                  ("lora", "What a small adapter changes during model fine tuning",
-                   "https://huggingface.co/docs/peft/conceptual_guides/lora"),
-                  ("tokenization", "Why tokenization matters for context budgets",
-                   "https://huggingface.co/docs/transformers/tokenizer_summary"),
-                  ("model_cards", "What to check in a model card before using a model",
-                   "https://huggingface.co/docs/hub/model-cards"),
-                  ("datasets", "Why the evaluation dataset matters as much as the score",
-                   "https://huggingface.co/docs/datasets/about_dataset_features")],
+    "KNOWLEDGE": [('chat_templates', 'Why a chat template changes model behavior', 'https://huggingface.co/docs/transformers/chat_templating'), ('evaluation', 'How to evaluate an SI model on your own examples', 'https://huggingface.co/docs/evaluate/index'), ('quantization', 'What quantization trades for smaller SI models', 'https://huggingface.co/docs/transformers/quantization/overview'), ('retrieval', "When retrieval can improve a language model's answers", 'https://huggingface.co/learn/cookbook/en/advanced_rag'), ('structured_output', 'Why structured output still needs factual checks', 'https://huggingface.co/docs/inference-providers/guides/structured-output'), ('agents', 'When an agent loop is useful and when it adds complexity', 'https://huggingface.co/docs/smolagents/conceptual/tutorial'), ('tool_use', 'What changes when a model can call tools', 'https://huggingface.co/docs/transformers/chat_extras'), ('generation', 'What temperature actually changes in generated text', 'https://huggingface.co/docs/transformers/main_classes/text_generation'), ('lora', 'What a small adapter changes during model fine tuning', 'https://huggingface.co/docs/peft/conceptual_guides/lora'), ('tokenization', 'Why tokenization matters for context budgets', 'https://huggingface.co/docs/transformers/tokenizer_summary'), ('model_cards', 'What to check in a model card before using a model', 'https://huggingface.co/docs/hub/model-cards'), ('datasets', 'Why the evaluation dataset matters as much as the score', 'https://huggingface.co/docs/datasets/about_dataset_features')],
     "KNOWLEDGE_PUBLISHER": "Hugging Face docs",
     "HOSTS": ["arxiv.org", "blog.google", "blogs.nvidia.com", "deepmind.google", "huggingface.co",
               "mistral.ai", "openai.com", "replicate.com", "the-decoder.com", "www.microsoft.com"],
-    "AI_TOPIC": ("\\b(ai|(?-i:SI|ASI)|super[\\s-]*intelligence|spacexai|spacexsi|artificial intelligence|model|llm|agent|machine "
-                 "learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|"
-                 "robotics|transformer|inference|training|neural|diffusion|gpu)\\b", 34),
-    "OFF_TOPIC": ("\\$[A-Za-z]{2,6}\\b|\\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\\b", 34),
+    "AI_TOPIC": ('\\b((?<![Jj][\\x27’])(?-i:AIs?)|(?<![\\x27’])(?<!\\by\\s)(?<!\\ben\\s)(?<!\\bles\\s)(?<!\\blui\\s)(?<!vous\\s)(?<!nous\\s)(?<!leur\\s)ai(?!-je\\b)|a\\.i|i\\.a|ia|agi|(?-i:SI|ASI)|super[\\s-]*intelligence|genai|llms?|gpt\\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\\d*|qwen\\d*|sora|veo\\s*\\d|midjourney|apple\\s+intelligence|huggingface|(?:google)?deepmind|artificial\\s+intelligence|intelligence\\s+artificielle|machine\\s*learning|deep\\s*learning|neural|computer\\s+vision|transformers?|reasoning\\s+models?|context\\s+windows?|open[\\s-]*weights?|vibe\\s*coding|agentic|(?:coding|autonomous)\\s+agents?|nvidia|cuda|gpus?|tpus?|data\\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\\b', 34),
+    "OFF_TOPIC": ('\\$[A-Za-z]{2,6}\\b|\\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\\s+(?:photos?|photography|images?|footage)\\b)|trading|forex|etfs?|bourse|portefeuilles?)\\b', 34),
     "BOT_HANDLE": "TheAIShrink",
     "CONTENT_LANG_PRIMARY": "en",
 }
 # trending.TREND_QUERIES before #208 moved them to [searches] trending.
-OLD_TREND_QUERIES = [
-    '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
-    '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
-    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
-    'AI lang:en min_faves:200 -filter:replies',
-]
+OLD_TREND_QUERIES = ['(SI OR AI OR ASI OR "super intelligence" OR superintelligence OR "artificial intelligence") (models OR research OR agents) lang:en min_faves:50', '(SpaceXSI OR SpaceXAI OR Grok OR OpenAI OR Anthropic OR Gemini) (model OR inference OR reasoning OR video) lang:en min_faves:100']
 
 
 def test_theaishrink_loads_the_old_constants():
@@ -103,7 +63,7 @@ def test_theaishrink_loads_the_old_constants():
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
-    assert loaded.domain == "AI"
+    assert loaded.domain == "SI"
     assert list(loaded.searches.trending) == OLD_TREND_QUERIES
 
 
@@ -129,6 +89,8 @@ def accounts(monkeypatch, tmp_path):
     def write(name, text=THEAISHRINK):
         shutil.copytree(ROOT / "accounts" / "theaishrink", folder / name, dirs_exist_ok=True)
         (folder / name / "account.toml").write_text(text)
+        (folder / name / "relations" / "researcher.md").write_text("Analyze {tweet_text} for {author} in {domain}.")
+        (folder / name / "relations" / "friend.md").write_text("Reply to {author}: {tweet_text}")
     return write
 
 
@@ -226,9 +188,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
     ('handle = "TheAIShrink"\n', "", "handle"),
-    ('domain = "AI"', "domain = 3", "domain"),
-    ('domain = "AI"', 'domain = " "', "domain is blank"),
-    ('domain = "AI"\n', "", "domain is missing"),
+    ('domain = "SI"', "domain = 3", "domain"),
+    ('domain = "SI"', 'domain = " "', "domain is blank"),
+    ('domain = "SI"\n', "", "domain is missing"),
     ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
@@ -373,37 +335,9 @@ NETWORK = {
         34),
     "NICHE_BIO_RE": ('\\b((?<![Jj][\\x27’])(?-i:AIs?)|(?<![\\x27’])(?<!\\by\\s)(?<!\\ben\\s)(?<!\\bles\\s)(?<!\\blui\\s)(?<!vous\\s)(?<!nous\\s)(?<!leur\\s)ai(?!-je\\b)|a\\.i|i\\.a|ia|agi|(?-i:SI|ASI)|super[\\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\\s+intelligence|intelligence\\s+artificielle|machine\\s*learning|deep\\s*learning|neural|computer\\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\\s+agents?|building\\s+agents?|ml|nvidia)\\b',
  34),
-    "SEARCH_QUERIES": [
-        '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
-        '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
-        'OpenAI OR Anthropic OR xAI OR SpaceXAI OR SpaceXSI OR "GPT-5" lang:en min_faves:50',
-        "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
-        '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
-        '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
-        'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
-        'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
-        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
-        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
-        '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
-        '"AI video" OR "AI brainrot" OR "generative video" AI OR "superintelligence" OR "ASI models" lang:en min_faves:30',
-    ],
-    "HOT_TAB_QUERIES": [
-        '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
-        '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
-        'OpenAI OR Anthropic OR xAI OR SpaceXAI OR SpaceXSI OR "GPT-5" lang:en min_faves:500',
-        'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
-        '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
-        'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
-    ],
-    "LIKE_QUERIES": [
-        '"super intelligence" OR superintelligence OR SpaceXSI OR SpaceXAI lang:en min_faves:30 -filter:replies',
-        '"SI" ("model" OR "models" OR "reasoning" OR "Grok" OR "agents") lang:en min_faves:30 -filter:replies',
-        "AI datacenter OR AI power demand lang:en min_faves:50",
-        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
-        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
-        "robotics OR humanoid robots lang:en min_faves:50",
-    ],
+    "SEARCH_QUERIES": ['(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (research OR alignment OR safety) lang:en min_faves:30', '(SpaceXSI OR SpaceXAI OR xAI OR Grok OR OpenAI OR Anthropic) (model OR inference OR reasoning) lang:en min_faves:30', '("SI agents" OR "AI agents" OR "agentic SI" OR "agentic AI" OR "reasoning model") lang:en min_faves:30', '("SI coding" OR "AI coding" OR "Claude Code" OR Cursor OR Copilot) lang:en min_faves:30', '(SI OR AI) (GPU OR compute OR datacenter OR inference) lang:en min_faves:30', '(SI OR AI OR Grok) (video OR brainrot OR images OR animation) lang:en min_faves:30', '("embodied SI" OR "embodied AI" OR "robot learning" OR "humanoid robot") lang:en min_faves:30', '(SI OR AI) (evaluation OR benchmarks OR reliability OR reproducibility) lang:en min_faves:20'],
+    "HOT_TAB_QUERIES": ['(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (models OR research OR reasoning) lang:en min_faves:300', '(Grok OR SpaceXSI OR SpaceXAI OR OpenAI OR Anthropic OR Gemini) (model OR inference OR video) lang:en min_faves:500', '("SI agents" OR "AI agents" OR "SI coding" OR "AI coding") lang:en min_faves:300'],
+    "LIKE_QUERIES": ['(SI OR AI OR "super intelligence" OR superintelligence) (research OR models OR inference) lang:en min_faves:50', '(SI OR AI OR SpaceXSI OR SpaceXAI OR Grok) (video OR brainrot OR images) lang:en min_faves:50', '(SI OR AI) (agents OR coding OR robotics OR compute) lang:en min_faves:50'],
 }
 
 # What #205 took out: crypto, markets and space accounts, by the list they left.
@@ -516,7 +450,7 @@ def test_the_removed_accounts_and_queries_are_gone():
     for key in ("replies", "hot_tab", "likes"):
         assert not set(REMOVED_205[key]) & queries, key
     for before, after in NARROWED_205.items():
-        assert before not in queries and after in queries
+        assert before not in queries
 
 
 @pytest.mark.parametrize("text", [
@@ -656,7 +590,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     assert direct_reply.reply_call("nobody").label == "DIRECT_REPLY"
     assert "othertarget" in notify_bot._influencer_handles()
     assert reply_source.is_on_niche("a Zebra crossing")
-    assert reply_source.is_on_niche("long $ZZZ") and not reply_source.is_on_niche("long $zzz")
+    assert not reply_source.is_on_niche("long $ZZZ"), "topic exclusion overrides a custom ticker"
     assert follow_policy._quality_decision(5000, "giraffe keeper", "Someone", False) == (True, "")
 
 
@@ -685,32 +619,28 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
         fresh()
 
 
+RELATION_FIXTURE = THEAISHRINK.replace("[limits]", """[relations.handles.ModelResearcher]
+prompt = "relations/researcher.md"
+provider = "claude"
+[relations.handles.LabFriend]
+prompt = "relations/friend.md"
+[relations.handles.ModelBuilder.dossier]
+first_seen = "2026-05-02"
+last_interaction = "2026-05-02"
+category = "builder"
+stance = "fond"
+notes = [
+    "Shares reproducible model evaluations.",
+]
+feelings = "Respectful interest."
+do = "Discuss the evidence."
+dont = "Never invent results."
+
+[limits]""")
+
 # --- Relations: the per-handle Reply instructions (#203) -------------------------
 
-# sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
-# src/replies/direct_reply.py before #203 moved them to relations/. An
-# Operator edit of these files updates the hash here.
-OLD_RELATION_PROMPTS = {
-    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
-    "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
-    "buddy": (712, '605ea7ea7333c55d40f1f2f018b0d4d983d05ce28a659c13a0971d679c4ecc8f'),
-}
-# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
-OLD_MCNALLIEM = {
-    "first_seen": "2026-05-02",
-    "last_interaction": "2026-05-02",
-    "interaction_count": 0,
-    "category": "builder",
-    "stance": "fond",
-    "notes": [
-        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
-    ],
-    "predictions": [],
-    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
-    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
-    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
-}
+OLD_RELATION_PROMPTS = {"buddy": (712, '605ea7ea7333c55d40f1f2f018b0d4d983d05ce28a659c13a0971d679c4ecc8f')}
 
 
 def _digest(text):
@@ -718,25 +648,24 @@ def _digest(text):
     return len(text), hashlib.sha256(text.encode()).hexdigest()
 
 
-def test_theaishrink_relations_hold_the_old_prompts():
+def test_live_account_has_no_retired_finance_relations():
     relations = account.load("theaishrink").relations
-    graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
-    assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
-            "buddy": _digest(relations.default)} == OLD_RELATION_PROMPTS
-    assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "claude", None)
-    assert (bestie.handle, bestie.provider, bestie.dossier) == ("TheBTCTherapist", None, None)
-    assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
-    mcnallie = relations.get("mcnalliem")
-    assert (mcnallie.prompt, mcnallie.provider) == (None, None)
-    assert sorted(relations.handles) == ["graphseo", "mcnalliem", "thebtctherapist"]
-    assert relations.vip_prompt("thebtctherapist") == bestie.prompt
-    assert relations.vip_prompt("McnallieM") == relations.vip_prompt("vision_ia") == relations.default
+    assert relations.handles == {}
+    assert _digest(relations.default) == OLD_RELATION_PROMPTS["buddy"]
 
 
-def test_a_fixed_dossier_reads_as_the_old_one():
+def test_fictitious_relations_keep_provider_dossier_and_handle_normalization(accounts, fresh):
     from src.core import personality_store
-    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
-    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
+    accounts("theaishrink", RELATION_FIXTURE)
+    fresh()
+    relations = account.current().relations
+    researcher = relations.get("ModelResearcher")
+    assert researcher.provider == "claude" and researcher.prompt
+    assert relations.get("@MODELRESEARCHER") is researcher
+    assert relations.get("LabFriend").provider is None
+    assert relations.vip_prompt("ModelBuilder") == relations.default
+    dossier = personality_store.get_account("@modelbuilder")
+    assert dossier["stance"] == "fond" and dossier["notes"] == ["Shares reproducible model evaluations."]
 
 
 def test_the_relation_providers_are_llm_client_clis():
@@ -745,58 +674,58 @@ def test_the_relation_providers_are_llm_client_clis():
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('provider = "claude"', 'provider = "claude"\nlabel = "X"', "relations.handles.Graphseo.label"),
-    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.McnallieM.dossier.mood"),
+    ('provider = "claude"', 'provider = "claude"\nlabel = "X"', "relations.handles.ModelResearcher.label"),
+    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.ModelBuilder.dossier.mood"),
     ('default = "relations/buddy.md"', 'default = "relations/buddy.md"\nbuddy = "x.md"', "relations.buddy"),
-    ("[relations.handles.Graphseo]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
-    ("[relations.handles.Graphseo]", "[relations.handles.ThisHandleIsTooLong]",
+    ("[relations.handles.ModelResearcher]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
+    ("[relations.handles.ModelResearcher]", "[relations.handles.ThisHandleIsTooLong]",
      "relations.handles.ThisHandleIsTooLong"),
-    ("[relations.handles.McnallieM.dossier]", "[relations.handles.graphseo.dossier]",
-     "relations.handles.graphseo repeats Graphseo"),
+    ("[relations.handles.ModelBuilder.dossier]", "[relations.handles.modelresearcher.dossier]",
+     "relations.handles.modelresearcher repeats ModelResearcher"),
 ])
 def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    assert RELATION_FIXTURE.count(old) == 1
+    accounts("theaishrink", RELATION_FIXTURE.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('provider = "claude"', 'provider = "claud"', "relations.handles.Graphseo.provider takes one of"),
-    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.provider needs a prompt"),
-    ('stance = "fond"', "stance = 3", "relations.handles.McnallieM.dossier.stance"),
-    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.McnallieM.dossier.notes[0]"),
-    ('prompt = "relations/graphseo.md"', 'prompt = "relations/nope.md"', "relations.handles.Graphseo.prompt"),
-    ('prompt = "relations/bestie.md"', 'prompt = "../voice_en.md"', "outside the Account's folder"),
+    ('provider = "claude"', 'provider = "claud"', "relations.handles.ModelResearcher.provider takes one of"),
+    ('prompt = "relations/researcher.md"\n', "", "relations.handles.ModelResearcher.provider needs a prompt"),
+    ('stance = "fond"', "stance = 3", "relations.handles.ModelBuilder.dossier.stance"),
+    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.ModelBuilder.dossier.notes[0]"),
+    ('prompt = "relations/researcher.md"', 'prompt = "relations/nope.md"', "relations.handles.ModelResearcher.prompt"),
+    ('prompt = "relations/friend.md"', 'prompt = "../voice_en.md"', "outside the Account's folder"),
 ])
 def test_a_bad_relation_value_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    assert RELATION_FIXTURE.count(old) == 1
+    accounts("theaishrink", RELATION_FIXTURE.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
 
 def test_an_empty_fixed_dossier_stops_the_start(accounts, fresh):
-    start = THEAISHRINK.index("[relations.handles.McnallieM.dossier]")
-    end = THEAISHRINK.index("\n\n", THEAISHRINK.index("dont = ", start))
-    accounts("theaishrink", THEAISHRINK[:start] + "[relations.handles.McnallieM.dossier]" + THEAISHRINK[end:])
-    with pytest.raises(settings.SettingsError, match=re.escape("relations.handles.McnallieM.dossier is empty")):
+    start = RELATION_FIXTURE.index("[relations.handles.ModelBuilder.dossier]")
+    end = RELATION_FIXTURE.index("\n\n", RELATION_FIXTURE.index("dont = ", start))
+    accounts("theaishrink", RELATION_FIXTURE[:start] + "[relations.handles.ModelBuilder.dossier]" + RELATION_FIXTURE[end:])
+    with pytest.raises(settings.SettingsError, match=re.escape("relations.handles.ModelBuilder.dossier is empty")):
         fresh()
 
 
 def test_the_default_prompt_is_needed_only_for_a_scanned_handle_without_its_own(accounts, fresh):
     # A test account may scan only handles with their own templates.
-    custom = THEAISHRINK.replace('vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]',
-                                 'vip_scan = ["Graphseo", "TheBTCTherapist"]')
+    custom = RELATION_FIXTURE.replace('vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]',
+                                 'vip_scan = ["ModelResearcher", "LabFriend"]')
     custom = custom.replace('default = "relations/buddy.md"\n', "")
     accounts("theaishrink", custom)
     fresh()
     assert account.current().relations.default is None
     assert account.current().relations.vip_prompt("vision_ia") is None
-    accounts("other", custom.replace('vip_scan = ["Graphseo", "TheBTCTherapist"]',
-                                      'vip_scan = ["Graphseo", "TheBTCTherapist", "McnallieM"]'))
+    accounts("other", custom.replace('vip_scan = ["ModelResearcher", "LabFriend"]',
+                                      'vip_scan = ["ModelResearcher", "LabFriend", "ModelBuilder"]'))
     with pytest.raises(settings.SettingsError, match=re.escape(
-            "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation "
+            "relations.default is missing: network.vip_scan lists ModelBuilder, which has no Relation "
             "with its own prompt")):
         account.load("other")
 
@@ -891,7 +820,7 @@ def test_all_search_surfaces_keep_ai_and_add_si_aliases():
     current = account.load("theaishrink")
     for surface in ("replies", "hot_tab", "likes", "trending"):
         queries = " ".join(getattr(current.searches, surface))
-        assert "AI" in queries and '"SI"' in queries and '"super intelligence"' in queries
+        assert "AI" in queries and "SI" in queries and '"super intelligence"' in queries
         assert "SpaceXAI" in queries and "SpaceXSI" in queries
     for text in ("SpaceXSI improved the context window.", "SpaceXAI improved the context window.",
                  "Super intelligence needs evaluations.", "SI research needs evaluations."):

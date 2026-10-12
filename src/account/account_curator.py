@@ -1,9 +1,4 @@
-"""Self-curated account tracking (operator mandate 2026-06-07 PM).
-
-Operator, 2026-06-07 PM: "Stop going to the static accounts we discussed
-in the past and develop yourself the list of accounts you want to follow
-and track their posts so you use it as content. The only ones you should
-continue: TheBTCTherapist and Graphseo."
+"""Account tracking from current topic evidence (operator 2026-10-12).
 
 Replaces the hand-curated EARLY_BIRD/MEGA lists with a list the bot earns
 from its OWN evidence, recomputed every 4h into `tracked_accounts.json`:
@@ -110,14 +105,21 @@ def tracked_handles(limit: int = 30) -> list:
     rows = doc.get("tracked") or []
     out = [h for h in pinned_handles() if not is_blocked_account(h)]
     seen = {h.lower() for h in out}
+    evidence = set(_author_engagements())
     for r in rows:
         h = r.get("handle", "")
-        if h and h.lower() not in seen and not is_blocked_account(h):
+        if h and h.lower() in evidence and h.lower() not in seen and not is_blocked_account(h):
             out.append(h)
             seen.add(h.lower())
         if len(out) >= limit:
             break
     return out
+
+
+def discovery_handles() -> list[str]:
+    """Current tracked evidence plus the shared pool's approved topic discoveries."""
+    from ..core.topic_evidence import approved_authors
+    return list(dict.fromkeys([*tracked_handles(), *approved_authors()]))
 
 
 def _promotable(cand: dict) -> bool:

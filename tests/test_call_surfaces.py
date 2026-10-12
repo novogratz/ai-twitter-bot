@@ -52,6 +52,16 @@ def _mega_watch():
     _reply(lambda: mega_watch_bot.JOB)
 
 
+def _relation_scan(monkeypatch):
+    from dataclasses import replace
+    from src.core import account
+    loaded = account.current()
+    relation = account.Relation("ModelResearcher", "Read {tweet_text}", "claude", None)
+    relations = replace(loaded.relations, handles={"modelresearcher": relation})
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, relations=relations))
+    _vip_scan("ModelResearcher")
+
+
 def _vip_scan(handle):
     from src.replies import direct_reply
     _reply(lambda: direct_reply._vip_job(handle), handle)
@@ -106,10 +116,10 @@ ROUTES = {
     "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
     "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
     "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", DEFAULTS),
-    "Relation, CLI installed": (lambda mp: _vip_scan("Graphseo"), "PRIORITY_REPLY_MODEL", "claude",
+    "VIP scan": (lambda mp: _vip_scan("elonmusk"), "PRIORITY_REPLY_MODEL", "codex", DEFAULTS),
+    "Relation, CLI installed": (lambda mp: _relation_scan(mp), "PRIORITY_REPLY_MODEL", "claude",
                                 (False, None, 60, None)),
-    "Relation, CLI missing": (lambda mp: _uninstalled(mp, "claude") or _vip_scan("Graphseo"),
+    "Relation, CLI missing": (lambda mp: _uninstalled(mp, "claude") or _relation_scan(mp),
                               "PRIORITY_REPLY_MODEL", "codex", (False, None, 60, None)),
     "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", DEFAULTS),
     "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", DEFAULTS),

@@ -33,6 +33,9 @@ def test_safari_warmup_verifies_render_and_retries_blank(monkeypatch):
     assert sh._warm_up_xcom()
     joined = "\n".join(script for script, _ in commands)
     assert "bot_recover=" in joined, "blank render must trigger cache-busted retry"
+    from src.core import config
+    assert config.BOT_PROFILE_URL in joined
+    assert "x.com/home" not in joined, "recovery must not open unfiltered recommendations"
     assert all(timeout for _, timeout in commands), "a wedged Safari must not hang the warm-up"
 
 
