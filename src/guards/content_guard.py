@@ -317,7 +317,7 @@ def detect_language(text: str) -> Tuple[str, float]:
 # post'"). Matched only when they're ~the WHOLE reply, so a longer substantive
 # reply that merely starts with "Exactement, mais…" still passes.
 _LAZY_REPLIES = {
-    "great post", "nice", "exactly", "this", "so true", "well said", "agreed",
+    "great post", "great point", "nice", "exactly", "this", "so true", "well said", "agreed",
     "facts", "based", "real", "lol", "lmao", "amazing", "incredible", "wow",
     "bien vu", "exactement", "tellement vrai", "trop vrai", "carrement",
     "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
@@ -326,7 +326,12 @@ _LAZY_REPLIES = {
 
 
 def _is_lazy_reply(text: str) -> bool:
+    from ..core.reply_style import is_reaction
     stripped = (text or "").strip()
+    if is_reaction(stripped):
+        return not settings.get("REPLY_ALLOW_REACTIONS")
+    if not any(char.isalnum() for char in stripped):
+        return True
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
     norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
@@ -353,7 +358,7 @@ def looks_truncated(text: str) -> bool:
     m = re.search(r"(\w{3,})\s+([A-Za-zÀ-ÿ]{1,2})$", t)
     if m and m.group(2).lower() not in {
         # legit short final words (EN + FR)
-        "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+        "ai", "si", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
         "to", "of", "at", "by", "ça", "là", "où", "eu", "vu", "du", "un",
         "en", "et", "or", "if", "we", "be", "me", "my", "do",
     }:
@@ -486,8 +491,14 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             if lang != "unknown" and lang != primary:
                 return (False, f"wrong language: need {primary}, detected {lang} @ {conf:.0%}")
 
+    if kind == "reply":
+        from ..core import account
+        why = account.current().niche.reply_wording_problem(text)
+        if why:
+            return (False, why)
+
     if kind == "reply" and _is_lazy_reply(text):
-        return (False, "low-effort reply (too short / generic — must be substantive)")
+        return (False, "low-effort reply (too short / generic / unapproved reaction)")
 
     if kind == "original":
         # Burned-catchphrase backstop (2026-06-09). The prompts planted these

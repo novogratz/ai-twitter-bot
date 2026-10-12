@@ -656,3 +656,51 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
 
     model = settings.get("OLLAMA_MODEL") if route == "ollama" else config.REPLY_MODEL.for_provider(route)
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]
+@pytest.mark.parametrize("bad", [
+    "AI needs better evals.",
+    "This reply keeps adding words until it no longer fits the brief format.",
+])
+def test_invalid_format_or_old_wording_gets_one_rewrite(llm, bad):
+    from dataclasses import replace
+    from src.core import reply_style
+    from src.replies import direct_reply, reply_generator as generator
+    replies = iter([bad, LLMResult(0, "SI needs better evals.", "", provider="codex", model="test-model")])
+    llm.default = lambda prompt: next(replies)
+    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[1], max_chars=None)
+    result = generator.generate(call, author="someone", text=EN)
+    assert result.outcome is generator.Outcome.WRITTEN
+    assert result.text == "SI needs better evals."
+    assert (result.provider, result.model) == ("codex", "test-model")
+    assert len(llm.calls) == 2
+    assert bad in llm.prompts[-1] and "previous draft failed" in llm.prompts[-1]
+
+
+@pytest.mark.parametrize("text", ["AI needs better evals.", "".join(["word "] * 70)])
+def test_repeated_invalid_reply_fails_without_silent_trimming(llm, text):
+    from dataclasses import replace
+    from src.core import reply_style
+    from src.replies import direct_reply, reply_generator as generator
+    llm.default = text
+    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[1], max_chars=None)
+    result = generator.generate(call, author="someone", text=EN)
+    assert result.outcome is generator.Outcome.FAILED and not result.text
+    assert len(llm.calls) == 2
+
+
+@pytest.mark.parametrize("answer, outcome, count", [
+    ("SKIP", "declined", 1), ("exhausted", "rate limited", 1),
+    ("rewrite_exhausted", "rate limited", 2),
+])
+def test_format_rewrite_respects_skip_and_provider_exhaustion(llm, answer, outcome, count):
+    from dataclasses import replace
+    from src.core import reply_style
+    from src.replies import direct_reply, reply_generator as generator
+    from tests.replies.fakes import EXHAUSTED
+    if answer == "rewrite_exhausted":
+        replies = iter(["AI needs better evals.", EXHAUSTED])
+        llm.default = lambda prompt: next(replies)
+    else:
+        llm.default = EXHAUSTED if answer == "exhausted" else answer
+    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[1], max_chars=None)
+    assert generator.generate(call, author="someone", text=EN).outcome.value == outcome
+    assert len(llm.calls) == count

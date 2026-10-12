@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from dataclasses import replace
 from zoneinfo import ZoneInfo
 
-from ..core import account, config, personality_store, settings
+from ..core import account, config, personality_store, settings, reply_style
 from ..core.llm_client import CallProfile, Output, Surface, LLMStatus, resolve, run_llm
 from ..core.logger import log
 from ..core.humanizer import smart_trim
@@ -37,7 +37,8 @@ def _rank(batch: list) -> list | None:
         "a linked domain or a passing reference is not enough. VIPs have no topic exemption. "
         "If the subject is unrelated or uncertain, set on_topic=false and score=0. "
         "Return one review for EVERY supplied ID. Score the opportunity 0–100: 85+ only for an "
-        "exceptional concrete technical insight, useful implication, grounded correction or apt original joke. "
+        "exceptional concrete technical insight, useful implication, grounded correction, apt original joke "
+        "or a playful creative result that earns a brief reaction. A longer explanation is not inherently better. "
         "Generic praise, bait, repetition, unsupported news and a forced product plug score below 85. "
         "Popularity and famous authors do not substitute for substance. It is valid to reject the entire batch. "
         "Give a specific reason and a reply angle, each at most eight words; an angle is not permission to invent facts. "
@@ -163,20 +164,21 @@ def _select(*, concise=False) -> int:
     from .direct_reply import reply_call, vip_reply_call
     from .reply_generator import LanguageRule
     source = winner.get("source", "POOL")
+    style = reply_style.choose(concise=concise)
     def call(author):
         if source.startswith("VIP/"):
             selected = vip_reply_call(author)
             if selected:
-                return replace(selected, text_limit=2000)
+                return replace(selected, text_limit=2000, max_chars=None, style=style)
         language = LanguageRule.PARENT if source.startswith(("EARLYBIRD/", "MEGA/")) else LanguageRule.PARENT_OR_FR_FORCED
-        return replace(reply_call(author, language), text_limit=2000)
+        return replace(reply_call(author, language), text_limit=2000, max_chars=None, style=style)
     base_call = call
     if concise:
         def call(author):
             selected = base_call(author)
             return replace(selected, template=selected.template +
                            "\nSTARTUP REPLY: use one clean, smart thought in at most 20 words. "
-                           "No emojis or smileys. No greeting or startup announcement. "
+                           "An apt smiley is allowed. No greeting or startup announcement. "
                            "Choose SKIP if brevity would make the answer misleading.")
     job = reply_pipeline.Job("reply_selection", "SELECTED", reply_call=call, pipelined=True)
     candidate = reply_pipeline.Candidate(winner["url"], winner["text"], source,

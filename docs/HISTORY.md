@@ -2951,3 +2951,12 @@ checks mixed crypto/AI text at the Reply and like writes, and requires AI/SI
 bios for discovered follows and Engagers. Old reply IDs no longer expire at
 50,000 entries. Regression tests cover stale lists, mixed-topic posts, quoted
 text, all follow relations and permanent status-ID deduplication.
+2026-10-12 — Operator reported repetitive Reply lengths. Template limits near
+200–220 characters and a twenty-five-character minimum discouraged brief
+Replies; the explicit emoji ban prevented standalone smileys. Selected Replies
+now receive weighted formats with shipped-history variety checks, up to 278
+characters, and one corrective generation attempt. Five-character text Replies
+and occasional approved smileys are allowed. The same request adds SI search
+terms alongside AI and uses SI/super intelligence in Reply prose. SpaceXSI
+branding and its profile were checked against https://x.ai/; other verified
+names and literal references retain their spelling. The bot remains stopped.

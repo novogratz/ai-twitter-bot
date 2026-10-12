@@ -6,6 +6,7 @@ import pytest
 
 from src.replies import reply_pool as pool, reply_selector as selector, reply_pipeline as pipeline
 from src.core.llm_client import LLMResult
+from src.core import reply_style
 from src.guards import action_guard as ag, active_hours
 from tests.helpers import fresh_local as fresh, clock
 
@@ -112,6 +113,7 @@ def test_used_allowance_prevents_spending_every_reply_in_the_morning(saved, monk
 
 
 def test_selected_angle_reaches_drafting(saved, monkeypatch, llm, chokepoint):
+    monkeypatch.setattr(reply_style, "choose", lambda **k: reply_style.STYLES[2])
     monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [20, 97, 75]))
     assert selector.run_reply_selection_cycle() == 1
     assert chokepoint.sent == [saved[1]]
@@ -137,7 +139,8 @@ def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
     call, candidates, kwargs = calls[0]
     assert candidates[0].url == saved[1]
     assert "at most 20 words" in call.template
-    assert "No emojis or smileys" in call.template
+    assert "An apt smiley is allowed" in call.template
+    assert call.style.max_words <= 20
     assert kwargs["max_shipped"] == 1
 
 
@@ -273,3 +276,25 @@ def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, mem
     assert all(active_hours.is_active(stamp) for stamp in posted)
     assert len({stamp for stamp in posted}) == len(posted)
     assert ag.count_today(ag.REPLY) == 400
+@pytest.mark.parametrize("shape, draft", [
+    ("reaction", "🙂"),
+    ("brief", "Latency wins here."),
+    ("standard", "Smaller batches can cut latency, but throughput is a different tradeoff."),
+    ("detailed", "A benchmark average can hide the cases that matter in production. Check the slowest requests, count failed tool calls, and compare costs at the same level of quality before choosing a model."),
+])
+def test_selected_formats_reach_real_text_admission(saved, monkeypatch, llm, chokepoint, shape, draft):
+    from src.guards.reply_admission import judge_reply
+    from src.x import twitter_client
+    chosen = next(s for s in reply_style.STYLES if s.name == shape)
+    monkeypatch.setattr(reply_style, "choose", lambda **k: chosen)
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [20, 97, 75]))
+    llm.default = draft
+    def send(url, text, **kwargs):
+        verdict = judge_reply(url, text)
+        assert verdict, verdict.reason
+        return chokepoint(url, verdict.text, **kwargs)
+    monkeypatch.setattr(twitter_client, "reply_to_tweet", send)
+    assert selector.run_reply_selection_cycle() == 1
+    assert chokepoint.sent == [saved[1]]
+    assert chosen.problem(chokepoint.calls[0].text) == ""
+    assert len(llm.calls) == 1

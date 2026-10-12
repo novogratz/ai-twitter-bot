@@ -450,8 +450,8 @@ def test_early_reply_targets_are_curator_driven():
     from src.replies.mega_watch_bot import MEGA_ACCOUNTS
     from src.account.account_curator import pinned_handles, tracked_handles
     assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == []
-    assert pinned_handles()[:3] == ("elonmusk", "xai", "karpathy")
-    assert tracked_handles(limit=5)[:3] == ["elonmusk", "xai", "karpathy"]
+    assert pinned_handles()[:3] == ("elonmusk", "SpaceXSI", "karpathy")
+    assert tracked_handles(limit=5)[:3] == ["elonmusk", "SpaceXSI", "karpathy"]
 
 
 @pytest.fixture(params=["early_bird", "mega_watch"])
