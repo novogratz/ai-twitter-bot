@@ -3,7 +3,6 @@
 Scans accept standalone topic posts throughout the pool's 24-hour window
 (operator 2026-10-12). The shared selector decides which earn a Reply.
 """
-import random
 
 from ..core.logger import log
 from ..core.topic_evidence import MAX_AGE
@@ -28,15 +27,18 @@ def _watch_pool() -> list:
     return tracked_handles(limit=12)
 
 MAX_REPLIES_PER_CYCLE = 2
+_SCAN_OFFSET = 0
 
 
 def run_mega_watch_cycle():
-    """Pick five watched accounts and queue eligible fresh posts for selection."""
+    """Rotate one watched profile per pass, leaving Safari available for Replies."""
+    global _SCAN_OFFSET
     posted = 0
 
     from ..x.scraper import _profile_visit_allowed
     pool = [h for h in _watch_pool() if _profile_visit_allowed(h)]
-    sample = pool[:1] + random.sample(pool[1:], k=min(4, max(0, len(pool) - 1)))
+    sample = [pool[_SCAN_OFFSET % len(pool)]] if pool else []
+    _SCAN_OFFSET += 1
     log.info(f"[MEGA] Polling: {sample}")
 
     cycle = reply_pipeline.Cycle()

@@ -13,7 +13,9 @@ from ..guards.active_hours import now_local
 from ..x import x_urls
 
 ARCHIVE = StatePath("reply_archive.jsonl")
-BATCH_SIZE = 30
+# Operator incident 2026-10-12: thirty reviews exceeded the local model's
+# 1,800-token output budget and stalled every selection cycle.
+BATCH_SIZE = 8
 COLLECT_SECONDS = 60
 
 
@@ -100,7 +102,7 @@ def collect(job, candidates) -> int:
             if row["state"] in {"processing", "shipped", "closed", "skipped"}:
                 continue
             author = x_urls.author(candidate.url)
-            if author == config.BOT_HANDLE.lower() or is_blocked_account(author):
+            if config.is_own_handle(author) or is_blocked_account(author):
                 row.update(eligible=False, state="rejected", reason="own or Blocked account")
                 events.append(dict(kind="decision", id=key, state="rejected", reason=row["reason"], ts=stamp))
                 continue
@@ -111,7 +113,11 @@ def collect(job, candidates) -> int:
                 row.update(eligible=False, state="rejected", reason="post is outside the Account's niche")
                 events.append(dict(kind="decision", id=key, state="rejected", reason=row["reason"], ts=stamp))
                 continue
-            if row["state"] in {"observed", "queued"}:
+            # A widened topic policy may admit a rediscovered post previously
+            # refused by the keyword gate. Never recycle a model rejection.
+            if row["state"] in {"observed", "queued"} or (
+                    row["state"] == "rejected" and row.get("score") is None
+                    and row.get("reason") == "post is outside the Account's niche"):
                 row.update(eligible=True, state="queued", source=candidate.source,
                            reason="awaiting comparison with the Reply pool")
         _archive(events)

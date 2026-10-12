@@ -1,4 +1,4 @@
-"""Like-aggressive bot — like AI infra / asymmetric investing tweets every cycle.
+"""Like posts found through the Account's scoped topic searches.
 
 Why: a like is the cheapest social signal on X. Each like sends a
 notification → the recipient checks their notifs → many click through
@@ -71,7 +71,8 @@ def run_like_cycle():
         log.info(f"[LIKE] Daily cap reached ({daily_cap}) — skipping.")
         return
     cycle_cap = min(_likes_per_cycle(), remaining)
-    query = random.choice(account.current().searches.likes)
+    searches = account.current().searches
+    query = searches.scoped(random.choice(searches.likes))
     encoded = urllib.parse.quote(query)
     tab = "top" if random.random() < settings.get("LIKE_TOP_TAB_PROBABILITY") else "live"
     url = f"https://x.com/search?q={encoded}&f={tab}"

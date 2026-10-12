@@ -271,12 +271,13 @@ def feed(monkeypatch, llm, chokepoint):
     from src.x import scraper
 
     feeds = {"FEED": [], "FOLLOWING": [], "read": []}
+    monkeypatch.setattr(fs, "_FEED_OFFSET", 0)
+    monkeypatch.setattr(fs, "_SEARCH_OFFSET", 0)
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
-    monkeypatch.setattr(fs.random, "sample", lambda queries, n: ["FEED", "FOLLOWING"])
     monkeypatch.setattr(scraper, "scrape_x_search",
-                        lambda query, **k: feeds["read"].append(query) or list(feeds[query]))
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: pytest.fail("unfiltered home feed"))
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: pytest.fail("unfiltered following feed"))
+                        lambda query, **k: feeds["read"].append(query) or [])
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: feeds["read"].append("FEED") or list(feeds["FEED"]))
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: list(feeds["FOLLOWING"]))
     return fs, feeds, llm, chokepoint
 
 
@@ -294,7 +295,7 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
     fs.run_feed_sweep_cycle()
 
     assert chokepoint.sent == [ok], "only replies, even to a viral post"
-    assert [r.source for r in logged()] == ["FEED-SWEEP-TOPIC/FEED"]
+    assert [r.source for r in logged()] == ["FEED-SWEEP-FOR-YOU"]
     assert set_aside("feed_sweep") == {ok} and set_aside("direct_reply") == set()
 
 
@@ -463,6 +464,7 @@ def profile_job(request, monkeypatch, llm, chokepoint, settings_override):
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
+    monkeypatch.setattr(module, "_SCAN_OFFSET", 0)
     profiles = {}
     monkeypatch.setattr(eb, "_scan_pool", lambda: list(profiles))
     monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
@@ -474,6 +476,26 @@ def profile_job(request, monkeypatch, llm, chokepoint, settings_override):
         settings_override(PROFILE_VISIT_ALLOWLIST=",".join(profiles))
         return run()
     return request.param, allowed_run, profiles, llm, chokepoint
+
+
+@pytest.mark.parametrize("which,per_pass", [("early_bird", 2), ("mega_watch", 1)])
+def test_profile_collection_rotates_through_the_whole_allowed_pool(monkeypatch, settings_override, which, per_pass):
+    from src.replies import early_bird_bot, mega_watch_bot, direct_reply
+    from src.core import evolution_store
+    module = early_bird_bot if which == "early_bird" else mega_watch_bot
+    handles = ["first", "second", "third", "fourth"]
+    visits = []
+    settings_override(PROFILE_VISIT_ALLOWLIST=",".join(handles))
+    monkeypatch.setattr(module, "_SCAN_OFFSET", 0)
+    monkeypatch.setattr(module, "_scan_pool" if which == "early_bird" else "_watch_pool", lambda: handles)
+    monkeypatch.setattr(direct_reply, "always_reply_accounts", lambda: ())
+    monkeypatch.setattr(evolution_store, "filter_and_weight", lambda rows: list(rows))
+    monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: visits.append(handle) or [])
+    run = module.run_early_bird_cycle if which == "early_bird" else module.run_mega_watch_cycle
+    for i in range(4 // per_pass):
+        run()
+        assert len(visits) == (i + 1) * per_pass
+    assert visits == handles
 
 
 def post(handle, text, minutes=1, n=0, **fields):
@@ -511,10 +533,10 @@ def test_profile_jobs_bound_their_replies(profile_job):
 
     run()
 
-    per_account = {"early_bird": 3, "mega_watch": 2}[name]
+    per_account = {"early_bird": 2, "mega_watch": 2}[name]
     assert len(chokepoint.sent) == per_account
     if name == "early_bird":
-        assert len({x_urls.author(u) for u in chokepoint.sent}) == 3
+        assert len({x_urls.author(u) for u in chokepoint.sent}) == 2
 
 
 def test_profile_jobs_stop_at_the_rate_limit(profile_job):
@@ -671,15 +693,19 @@ def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     assert "[RECIPROCATE] Nothing liked on @stale." in lines
     assert "[RECIPROCATE] Nothing liked on @broken." in lines
     assert "[RECIPROCATE] Nothing liked on @unsure." in lines
-def test_sweeper_uses_two_latest_topic_searches_without_home_feeds(monkeypatch):
+def test_sweeper_rotates_all_feed_views_and_latest_queries(monkeypatch):
     from src.core import account
     from src.replies import feed_sweeper_bot as sweeper
     from src.x import scraper
-    searched = []
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: pytest.fail("home discovery"))
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: pytest.fail("following discovery"))
+    searched, feeds = [], []
+    monkeypatch.setattr(sweeper, "_FEED_OFFSET", 0)
+    monkeypatch.setattr(sweeper, "_SEARCH_OFFSET", 0)
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: feeds.append("for_you") or [])
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: feeds.append(k["sort"]) or [])
     monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: searched.append((query, k)) or [])
-    sweeper.run_feed_sweep_cycle()
-    assert len(searched) == 2 and searched[0][0] != searched[1][0]
-    assert all(query in account.current().searches.replies and options["tab"] == "live"
-               for query, options in searched)
+    for _ in range(4):
+        sweeper.run_feed_sweep_cycle()
+    assert feeds == ["for_you", "recent", "popular", "for_you"]
+    assert [q for q, _ in searched] == list(account.current().searches.replies[:4])
+    assert all(options["tab"] == "live" and options["text_limit"] == 2000
+               for _, options in searched)

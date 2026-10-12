@@ -103,11 +103,11 @@ The reply jobs live in `src/replies/`; `engage_job`,
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
-| `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to thirty posts when none remain or waiting discoveries are due after five minutes; records scores, reasons and angles; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 with a target of 300 and a maximum of 400 Replies/day. All daily budgets and write guards still apply. |
-| `direct_reply_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
-| `feed_sweep_job` | 8 min | Runs two Latest topic searches, saves discoveries and queues eligible standalone candidates; never browses For You/Following or drafts/sends Replies. |
-| `early_bird_job` | 5 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
-| `mega_watch_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
+| `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to eight posts when none remain or waiting discoveries are due after five minutes. A failed refresh can still use a current approval. Logs review outcomes; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 with a target of 300 and a maximum of 400 Replies/day. All daily budgets and write guards still apply. |
+| `direct_reply_job` | 2 min | Rotates one VIP profile and three Top searches by default; saves candidates without drafting or sending. |
+| `feed_sweep_job` | 2 min, first at 20 seconds | Rotates For You, Following Recent/Popular, plus one rotating Latest topic search. Verifies the native view and saves unique posts across bounded scrolling; only collects. |
+| `early_bird_job` | 5 min | Rotates two profiles and queues eligible standalone posts without drafting or sending. |
+| `mega_watch_job` | 2 min | Rotates one tracked profile and queues eligible standalone posts without drafting or sending. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
@@ -120,7 +120,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 Two settings decide how much of the table does anything:
 
 - `PROFILE_VISIT_ALLOWLIST` (the Account's `network.profile_visits` unless
-  `.env` sets it: AI profiles led by `elonmusk,xai,karpathy` for @TheAIShrink).
+  `.env` sets it: AI profiles led by `elonmusk,SpaceXSI,karpathy` for @thesimaximalist).
   Blocked accounts remain barred even when `.env` lists them. Profile
   scrapes and profile likes return nothing for other handles, so
   `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
@@ -908,8 +908,8 @@ discoveries and selection decisions. Guarded `reply_candidates.json` holds the
 last day’s discoveries and their eligibility, score, reason, proposed angle
 and outcome. Own posts, comments and off-niche posts are saved without making
 them eligible. A shared `reply_selection_job` runs every ten minutes, after a
-one-minute collection delay, and compares up to thirty admitted posts per
-review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+one-minute collection delay, and compares up to eight admitted posts per
+review. The batch mixes two waiting discoveries with six fresh opportunities before revisiting reviewed posts; the
 highest fresh score across the reviewed pool wins. Only scores of at least
 85/100 may reach drafting, one post per selector cycle, and the model may
 reject every post. Scans never consume reply budget or draft replies. The
@@ -980,7 +980,8 @@ No new scheduler job or production state file is introduced.
 
 2026-10-12 — All X searches pass through `Searches.scoped` in the shared
 scraper; optional model-assisted discovery uses the same queries and scope.
-The topic sweep samples two Latest searches. Browser refresh/recovery uses the
+The earlier topic sweep sampled two Latest searches; the later expansion below
+restores native feeds. Browser refresh/recovery uses the
 own profile. Shared guarded candidates moved to `core.topic_evidence`, so
 account jobs can read fresh topic-approved authors without importing Reply
 jobs. Saved tracked handles must still have current topic evidence in the
@@ -989,3 +990,18 @@ The source collector, trending filter and final text guard apply exclusions.
 Retired finance Relations and positive topic examples were removed; the
 historical metrics tag `ai_news_take` also covers SI, while no new finance or
 feud tags are assigned. Existing state files and job cadence are preserved.
+
+2026-10-12 — The SI Maximalist expands to substantive technology and restores
+native For You/Following discovery. The selector and Startup Reply share a
+single dedicated `replies` worker; discovery cannot exhaust their executor.
+`_collect_scrolling_tweets` retains all viewports, including search results,
+and `_scroll_page` moves the document regardless of keyboard focus. Feed tabs
+and Following's checked sort option must be verified before collection.
+Historical `previous_handles` protect saved own-post URLs after renames; the
+public identity changes without moving or resetting the Account's state folder.
+
+`Searches.scoped` always appends Account `exclusions`. Declared topic queries avoid
+repeating the topic expression; ad-hoc queries receive the compact `scope` too.
+A 677-character expanded query produced X's “Something went wrong” screen while
+a short equivalent returned posts. Niche and semantic approval still apply after
+scraping; the query is not a substitute for content checks.

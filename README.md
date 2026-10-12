@@ -1,12 +1,15 @@
-# @TheAIShrink — SI knowledge, useful updates, and conversation
+# The SI Maximalist — @thesimaximalist
 
-A Safari-driven AI account with the voice of a confident, warm, playfully flirty
-40-year-old mom: sexy, funny, sarcastic, and deeply knowledgeable about AI
-models and news. She also loves AI-generated videos, which the account has
-started publishing. The bot aims to give readers something useful in
-every post and respond naturally in conversations. That Voice lives only in
-the Account's folder, `accounts/theaishrink/voice_fr.md` (`voice_en.md` for
-English prompts): every post and reply prompt carries it as one block.
+A Safari-driven SI and technology account: SI brainrot, super intelligence,
+news, generated media, clearly fictional celebrity parodies and tech chaos.
+The voice is an informed, direct, funny commentator who adds a concrete insight
+or an apt original joke. The current identity replaces the former therapist
+persona in both Voice files; every generation prompt carries that Voice.
+
+The storage key stays `BOT_ACCOUNT=theaishrink` so existing daily counts, reply
+deduplication, ambiguous submissions and history survive the handle change.
+`account.toml` names `thesimaximalist` and lists the previous handle for own-post
+protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
 
 ## Current publishing policy
 
@@ -29,12 +32,15 @@ English prompts): every post and reply prompt carries it as one block.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Replies cover AI/SI, including AI-generated videos and brainrot**, with no VIP topic exemptions.
+  Selection reviews at most eight candidates per call so the local model can
+  finish its structured answer. Logs report review counts, provider errors and
+  allowance waits; a failed refresh can still use a current approved candidate.
+- **Replies cover AI, SI and substantive technology, including generated videos and brainrot**, with no VIP topic exemptions.
   A specific insight or apt original joke earns a reply; unrelated posts and empty praise are skipped.
   Profile scans start with Elon, then AI researchers, builders and enthusiasts.
   Former crypto/trading targets are blocked. Bitcoin/crypto posts stay excluded
   even when they mention AI; likes check the actual post text, and discovered
-  follows and Engagers need AI/SI bios. The voice favors Elon, Grok and SpaceXSI with
+  follows and Engagers need AI/SI or technology bios. The voice favors Elon, Grok and SpaceXSI with
   grounded insight and wit ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **Replies vary in length:** a few words, a short observation, a fuller
   explanation or an occasional apt smiley. Shipped history prevents repeated
@@ -42,13 +48,16 @@ English prompts): every post and reply prompt carries it as one block.
   Reply prose uses **SI / super intelligence**. Discovery searches both AI and SI,
   including SpaceXAI and SpaceXSI; current profile scans use `@SpaceXSI`.
   Verified names such as OpenAI and Google AI, URLs and handles keep their spelling.
-- **Discovery stays on SI/AI.** Every X search includes the Account's topic scope
-  and exclusions. The sweeper uses two Latest topic searches, and browser refresh
-  and recovery open our own profile. For You and Following are no longer discovery sources.
-  Saved handles need fresh topic approval or current on-topic engagement evidence;
-  old crypto discoveries cannot rejoin through a saved list. News, trends, bios,
-  likes and outgoing text also reject excluded topics. Stock photography remains
-  eligible generated-media content; stock trading does not.
+- **Discovery rotates For You, Following Recent and Following Popular**, one view
+  plus one Latest topic search every two minutes. Each native feed selection is
+  verified before reading. Posts are saved before and after scrolling, with status
+  IDs deduplicated; an unchanged page ends the scan. Latest searches have no like
+  minimum, so new posts and small builders can qualify. Top searches rotate across
+  SI, models, generated media, software, hardware, security and space engineering.
+  Queries keep exclusions without repeating oversized topic expressions.
+  Shorter rotating profile scans leave Safari available for Replies; the selector
+  has its own scheduler worker. Crypto/trading exclusions and the 85/100 selection
+  threshold apply throughout. A subject can be technology without mentioning SI.
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.
@@ -111,7 +120,7 @@ mkdir -p state/theaishrink
 uv run python main.py
 ```
 
-`.env.example` describes @TheAIShrink with the policy values, its bounded
+`.env.example` describes @thesimaximalist with the policy values, its bounded
 settings commented out at their default, since `.env` would win over an
 Account's `[limits]`; every setting, its default and bounds are in
 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
@@ -233,8 +242,8 @@ discoveries and selection decisions. Guarded `reply_candidates.json` holds the
 last day’s discoveries and their eligibility, score, reason, proposed angle
 and outcome. Own posts, comments and off-niche posts are saved without making
 them eligible. A shared `reply_selection_job` runs every ten minutes, after a
-one-minute collection delay, and compares up to thirty admitted posts per
-review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+one-minute collection delay, and compares up to eight admitted posts per
+review. The batch mixes two waiting discoveries with six fresh opportunities before revisiting reviewed posts; the
 highest fresh score across the reviewed pool wins. Only scores of at least
 85/100 may reach drafting, one post per selector cycle, and the model may
 reject every post. Scans never consume reply budget or draft replies. The
@@ -262,7 +271,7 @@ Replies per full Toronto day, maximum 400 including pending submissions. The
 selector now runs each minute and reuses recent topic-approved reviews, comparing
 new candidates at least every five minutes while approved candidates remain.
 Quality, available posts and service speed determine the actual count. The
-three Toronto windows and AI/SI-only selection still apply.
+three Toronto windows and AI/SI/technology selection still apply.
 
 2026-10-12 — Operator moved the midday window to lunch and the evening start
 to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and

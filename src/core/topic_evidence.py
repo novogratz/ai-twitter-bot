@@ -52,7 +52,7 @@ def approved_authors() -> list[str]:
         age = x_urls.age(row["url"], now)
         if (row.get("on_topic") is True and row.get("eligible") is True
                 and row["state"] in {"ready", "processing", "shipped", "closed", "skipped"}
-                and not row.get("is_reply") and author and author != config.BOT_HANDLE.lower()
+                and not row.get("is_reply") and author and not config.is_own_handle(author)
                 and not is_blocked_account(author) and age is not None
                 and timedelta(0) <= age <= MAX_AGE
                 and account.current().niche.matches_post(row["text"])):

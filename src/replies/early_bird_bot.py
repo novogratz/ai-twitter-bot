@@ -4,7 +4,6 @@ Frequent scans discover new posts quickly, but accept the pool's full 24-hour
 window (operator 2026-10-12). Selection, drafting and publishing stay in the
 shared selector. Discoveries retain the EARLYBIRD/<handle> source tag.
 """
-import random
 from ..core.logger import log
 from ..core.topic_evidence import MAX_AGE
 from ..x.scraper import scrape_profile_tweets
@@ -37,10 +36,12 @@ def _scan_pool() -> list:
 # the single highest impressions multiplier we have (10-100x), and we
 # only fire 4-5x per hour, so capping at 2 was leaving slots on the table.
 EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 15
+_SCAN_OFFSET = 0
 
 
 def run_early_bird_cycle():
     """One scan: save discoveries and queue eligible fresh posts for selection."""
+    global _SCAN_OFFSET
     posted = 0
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
@@ -50,13 +51,11 @@ def run_early_bird_cycle():
     pool = [h for h in filter_and_weight(_scan_pool()) if _profile_visit_allowed(h)]
     always_pool = list(dict.fromkeys(h for h in filter_and_weight(always_reply_accounts()) if _profile_visit_allowed(h)))
 
-    # Growth push: scan the always-reply accounts first, then fill with random
-    # mega accounts. Early replies under big accounts are the highest upside
-    # surface, so avoid pure random sampling.
-    priority_picks = always_pool[:1] + random.sample(always_pool[1:], k=min(3, max(0, len(always_pool) - 1)))
-    filler = [h for h in pool if h not in priority_picks]
-    random_picks = random.sample(filler, k=min(3, len(filler)))
-    picks = list(dict.fromkeys(priority_picks + random_picks))
+    # Bounded rotation covers quieter builders without revisiting the same
+    # priority profile in every collector (operator 2026-10-12).
+    ordered = list(dict.fromkeys(always_pool + pool))
+    picks = [ordered[(_SCAN_OFFSET + i) % len(ordered)] for i in range(min(2, len(ordered)))]
+    _SCAN_OFFSET = (_SCAN_OFFSET + len(picks)) % max(1, len(ordered))
 
     cycle = reply_pipeline.Cycle()
     for username in picks:

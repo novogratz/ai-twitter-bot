@@ -1,19 +1,9 @@
-"""Topic sweeper — discover fresh posts through the Account's topic searches.
+"""Collect For You, Following Recent/Popular and rotating Latest topic searches.
 
-Search topic queries on the Latest tab, archive discovered posts and queue eligible
-standalone posts for comparison by the shared Reply selector. The quote
-lane that once amplified viral posts is gone (2026-09-20 policy: quotes are
-zero). Authors of high-engagement feed posts are added to
-dynamic_accounts.json so the engage_bot visits them.
-
-Hard rules preserved:
-  - replies obey DIRECT_REPLY_MAX_AGE_MINUTES (72h since 2026-06-05)
-  - Reply admission (Blocked account, own post, already Replied) judges
-    each post before generation, in the Reply pipeline
-  - all writes go through the twitter_client chokepoints
+Every discovery is archived before filtering; only on-topic standalone posts
+enter comparison. Saved authors still need current topic evidence for engagement.
 """
 import traceback
-import random
 from datetime import timedelta
 
 from ..x import x_urls
@@ -23,12 +13,15 @@ from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline, reply_source
 from .direct_reply import reply_call
 
+_FEED_OFFSET = 0
+_SEARCH_OFFSET = 0
+
 
 def _harvest_active_authors(tweets: list) -> None:
     """Add authors of high-engagement feed posts to dynamic_accounts.json.
 
-    This is the main way the engage_bot discovers NEW profiles to visit — it
-    no longer relies on the old hardcoded list. The handle comes from the
+    This record alone never authorizes engagement: current topic evidence is
+    required by the discovery policy. The handle comes from the
     status URL: the scraped `author` is a display name, and a one-word name
     ("Claude", "Tesla") once landed in the pool as another account's handle.
     """
@@ -47,7 +40,7 @@ def _harvest_active_authors(tweets: list) -> None:
             if likes < min_likes:
                 continue
             handle = x_urls.author(t.get("url") or "")
-            if not handle or handle in known or is_blocked_account(handle):
+            if not handle or handle in known or config.is_own_handle(handle) or is_blocked_account(handle):
                 continue
             if not reply_source.is_on_niche(t.get("text") or ""):
                 continue
@@ -64,16 +57,25 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """Two focused Latest searches; never browse unfiltered recommendation feeds."""
+    """One rotating feed view plus one Latest search, yielding between pages."""
+    global _FEED_OFFSET, _SEARCH_OFFSET
     from functools import partial
-    from ..x.scraper import scrape_x_search
+    from ..x.scraper import scrape_x_search, scrape_home_feed, scrape_following_feed
+    views = [("FOR-YOU", scrape_home_feed),
+             ("FOLLOWING-RECENT", partial(scrape_following_feed, sort="recent")),
+             ("FOLLOWING-POPULAR", partial(scrape_following_feed, sort="popular"))]
+    source, read = views[_FEED_OFFSET % len(views)]
+    _FEED_OFFSET += 1
+    cycle = reply_pipeline.Cycle()
+    _sweep_one_feed(source, read, cycle)
+    if cycle.rate_limited:
+        return
     queries = list(account.current().searches.replies)
-    for query in random.sample(queries, min(2, len(queries))):
-        cycle = reply_pipeline.Cycle()
+    if queries:
+        query = queries[_SEARCH_OFFSET % len(queries)]
+        _SEARCH_OFFSET += 1
         _sweep_one_feed("TOPIC/" + query[:60],
                         partial(scrape_x_search, query, tab="live", text_limit=2000), cycle)
-        if cycle.rate_limited:
-            break
 
 
 def _sweep_one_feed(source, scraper, cycle):

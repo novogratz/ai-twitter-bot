@@ -98,7 +98,7 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
     handles = []
     for h in page.get("handles") or []:
         h = str(h)
-        if h.lower() == config.BOT_HANDLE.lower():
+        if config.is_own_handle(h):
             continue
         if not _looks_like_real_handle(h):
             log.info(f"[FOLLOWBACK] Skipping suspicious handle @{h}")

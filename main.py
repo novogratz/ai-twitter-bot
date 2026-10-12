@@ -45,7 +45,8 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
-        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1)},
+        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1),
+                   "replies": ThreadPoolExecutor(1)},
         # A scheduled pause can leave jobs overdue by minutes. Run one fresh
         # cycle at wake; coalescing prevents replaying the missed intervals.
         job_defaults={"misfire_grace_time": None, "coalesce": True, "max_instances": 1},
@@ -80,11 +81,11 @@ def build_scheduler(*, post_only=False, reply_only=False):
         scheduler.add_job(awake_job(health.wrap_job(run_startup_reply_cycle,
                           "startup_reply", safari_health=False)), trigger="date",
                           run_date=datetime.now(timezone.utc) + timedelta(seconds=90),
-                          id="startup_reply_job", misfire_grace_time=None)
+                          id="startup_reply_job", executor="replies", misfire_grace_time=None)
         add(health.wrap_job(run_reply_selection_cycle, "reply_selection", safari_health=False),
-            1, "reply_selection_job", first_seconds=120)
+            1, "reply_selection_job", executor="replies", first_seconds=120)
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
-        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
+        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 2, "feed_sweep_job", first_seconds=20)
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
         if settings.get("ENABLE_REPLY_SEARCH"):

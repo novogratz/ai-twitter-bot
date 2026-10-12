@@ -70,7 +70,8 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         dr.run_direct_reply_cycle()
 
     def feed(author, text):
-        monkeypatch.setattr(fs.random, "sample", lambda queries, n: [queries[0]])
+        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [])
+        monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
         monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: [{"url": fresh(author), "text": text}])
         fs.run_feed_sweep_cycle()
 

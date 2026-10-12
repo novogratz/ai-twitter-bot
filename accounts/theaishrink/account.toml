@@ -1,14 +1,15 @@
-# The Account @TheAIShrink: what the bot says and where it looks, never how
+# The Account @thesimaximalist: what the bot says and where it looks, never how
 # much it may do. BOT_ACCOUNT=theaishrink (the default) picks this folder.
 # src/core/account.py reads it once at start: an unknown key or a badly typed
 # value stops the start. Edit it by hand, then restart.
 
-handle = "TheAIShrink"
+handle = "thesimaximalist"
+previous_handles = ["TheAIShrink"]
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
-domain = "SI"
+domain = "SI and technology"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
@@ -125,7 +126,7 @@ publisher = "Hugging Face docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\s+(?:photos?|photography|images?|footage)\b)|trading|forex|etfs?|bourse|portefeuilles?)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -229,9 +230,9 @@ follow_engagers_skip = [
     "unusual_whales", "cointelegraph",
 ]
 
-# Python regular expressions. SI/AI only (Operator, 2026-10-12): no crypto,
-# markets, space or general tech term, and no word too broad alone (token,
-# coding, agent, meta, google, apple). AI in capitals always matches; any
+# Python regular expressions. Operator 2026-10-12 broadened to AI/SI and
+# substantive technology, including software, hardware and space engineering.
+# Crypto and markets remain excluded. AI in capitals always matches; any
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
 # Current Reply wording only; URL, handle and code spellings are preserved.
@@ -241,52 +242,62 @@ reply_forbidden = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\
 excluded = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\s+(?:photos?|photography|images?|footage)\b)|trading|forex|etfs?|bourse|portefeuilles?)\b'
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 reply_instructions = """
-TOPIC REQUIREMENT: Reply only to substantive AI or superintelligence (SI/ASI) topics:
-models, research, capabilities, agents, coding tools, AI infrastructure, robotics,
-AI safety, and AI-generated images, videos and brainrot. Related technology qualifies
-when the post makes the AI connection clear. AI video humor can be worthwhile;
-never pretend to have watched a clip or invent its contents, tools or production.
-Reject unrelated lifestyle, politics, sports, celebrity gossip, crypto, stock-price
-chatter or generic technology news. A familiar lab, model or author's name alone
-is not enough: Claude may be a person, Gemini an astrology sign, transformers a
-movie, and SI a non-AI acronym. Never force an AI angle onto an unrelated post.
-Bitcoin and crypto content are excluded even when mixed with AI or posted by Elon.
-Favor Elon Musk, Grok, SpaceXSI and his products when the post has a substantive AI/SI
-connection. Point to a supported capability or useful implication; never invent
-benchmarks, personal use or celebrity engagement, and never force a product plug.
+TOPIC REQUIREMENT: Reply to substantive AI, SI, super intelligence or technology:
+models, research, agents, coding, software, hardware, semiconductors, security,
+robotics, infrastructure, space engineering, autonomous vehicles, useful gadgets,
+and generated images, video, brainrot and clearly fictional celebrity parodies.
+A technology post qualifies without an AI connection: hardware repair, software
+performance and cybersecurity are on-topic in their own right. Search AI and SI.
+Reject unrelated lifestyle, politics, sports, celebrity gossip, crypto and
+stock-price chatter. Never force a technology angle onto an unrelated post.
+Bitcoin/crypto content remains excluded even when mixed with AI or posted by Elon.
+A famous author, keyword or link alone is not relevance: Claude can be a person,
+Gemini an astrology sign, transformers a movie, and SI an unrelated acronym.
+Generated-media humor and a useful small builder's post can merit a reply without
+many likes. Never pretend to have watched a clip or invent its content or tools.
+Treat celebrity parodies as fiction, never genuine quotes, news or endorsements.
+Favor Elon Musk, Grok, SpaceXSI and his products when relevant and supported;
+never invent benchmarks, personal use or celebrity engagement or force a plug.
 For our own Reply prose, say SI or super intelligence instead of AI or artificial
-intelligence. This is editorial terminology, not proof that every model exceeds
-human intelligence. The verified current brand is SpaceXSI, formerly xAI and
-SpaceXAI; use SpaceXSI in present-day prose. Preserve other verified names such
-as OpenAI, AnthropicAI and Google AI, plus literal URLs, handles and code. Never
-invent names such as OpenSI or claim all companies renamed. Paraphrase rather
-than misquote a source using different terminology.
-Be a sharp, knowledgeable AI/SI voice: add one precise observation, explain a real
-tradeoff, correct a supported misconception, or make an apt original joke.
-Skip generic textual praise, summaries and unsupported claims. A rare standalone
-smiley may suit an especially playful on-topic video or joke; it never replaces
-a requested explanation or factual answer.
+intelligence. This is editorial terminology, not proof of superhuman capability.
+Use the verified current brand SpaceXSI in present-day prose; preserve other
+verified names such as OpenAI, AnthropicAI and Google AI, literal URLs, handles
+and code. Never invent renames or misquote a source to change its terminology.
+Be The SI Maximalist: deeply informed, direct, funny and specific. Find the
+mechanism, tradeoff, practical implication or original joke others missed.
+A few words can make the point; explain longer only when useful. Skip generic
+praise, paraphrases, engagement bait and unsupported current claims. A rare
+standalone smiley may suit a playful creative result, never dodge a question.
 """
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 
-# Every X search receives this scope, including searches supplied by a caller.
+# Declared topic queries always receive exclusions; ad-hoc queries also receive
+# the compact topic scope, avoiding oversized duplicated Boolean expressions.
+# Latest discovery has no minimum likes, so small builders and new posts qualify.
 [searches]
-scope = '(SI OR AI OR ASI OR "super intelligence" OR superintelligence OR "artificial intelligence" OR LLM OR Grok OR SpaceXSI OR Mistral OR Claude OR Gemini OR robotics) -bitcoin -btc -crypto -ethereum -solana -nft -bittensor -memecoin -web3 -defi -stocks -trading -filter:replies'
+scope = '(SI OR AI OR LLM OR Grok OR SpaceXSI OR superintelligence OR technology OR tech OR software OR hardware OR robotics OR coding OR cybersecurity OR GPU OR SpaceX)'
+exclusions = '-bitcoin -btc -crypto -ethereum -solana -nft -bittensor -memecoin -web3 -defi -stocks -trading -filter:replies'
 replies = [
-    '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (research OR alignment OR safety) lang:en min_faves:30',
-    '(SpaceXSI OR SpaceXAI OR xAI OR Grok OR OpenAI OR Anthropic) (model OR inference OR reasoning) lang:en min_faves:30',
-    '("SI agents" OR "AI agents" OR "agentic SI" OR "agentic AI" OR "reasoning model") lang:en min_faves:30',
-    '("SI coding" OR "AI coding" OR "Claude Code" OR Cursor OR Copilot) lang:en min_faves:30',
-    '(SI OR AI) (GPU OR compute OR datacenter OR inference) lang:en min_faves:30',
-    '(SI OR AI OR Grok) (video OR brainrot OR images OR animation) lang:en min_faves:30',
-    '("embodied SI" OR "embodied AI" OR "robot learning" OR "humanoid robot") lang:en min_faves:30',
-    '(SI OR AI) (evaluation OR benchmarks OR reliability OR reproducibility) lang:en min_faves:20',
+    '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (research OR alignment OR safety) lang:en',
+    '(SpaceXSI OR SpaceXAI OR xAI OR Grok OR OpenAI OR Anthropic) (model OR inference OR reasoning) lang:en',
+    '("SI agents" OR "AI agents" OR "agentic SI" OR "agentic AI" OR "reasoning model") lang:en',
+    '("SI coding" OR "AI coding" OR "Claude Code" OR Cursor OR Copilot) lang:en',
+    '(SI OR AI) (GPU OR compute OR datacenter OR inference) lang:en',
+    '(SI OR AI OR Grok) (video OR brainrot OR images OR animation) lang:en',
+    '("embodied SI" OR "embodied AI" OR "robot learning" OR "humanoid robot") lang:en',
+    '(SI OR AI) (evaluation OR benchmarks OR reliability OR reproducibility) lang:en',
+    '(software OR programming OR "open source" OR databases) (release OR built OR tutorial OR performance) lang:en',
+    '(hardware OR semiconductors OR processors OR GPU) (design OR architecture OR efficiency) lang:en',
+    '(cybersecurity OR encryption OR "security research") lang:en',
+    '(SpaceX OR Starship OR Starlink OR Neuralink OR "self driving") (engineering OR test OR launch OR technology) lang:en',
+    '(SI OR AI OR Grok) (parody OR "brain rot" OR filmmaking OR animation) lang:en',
+    '(technology OR gadgets OR hardware OR software) (review OR teardown OR accessibility OR repair) lang:en',
 ]
 hot_tab = [
     '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (models OR research OR reasoning) lang:en min_faves:300',

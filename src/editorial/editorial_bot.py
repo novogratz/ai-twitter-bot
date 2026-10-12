@@ -276,7 +276,8 @@ def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
                      force_provider=route.provider, profile=profile)
     if result.status is not LLMStatus.ANSWERED:
         # Failed or exhausted alike: no Draft, or no approval.
-        log.info("[EDITORIAL] %s generation unavailable (%s).", label, result.status.value)
+        log.warning("[EDITORIAL] %s generation unavailable (%s): %s", label, result.status.value,
+                    result.stderr[:500] or "no provider detail")
         return {}
     try:
         value = json.loads(result.stdout)

@@ -20,25 +20,32 @@ scans can discover new posts promptly without excluding useful older ones.
 There is no fifteen-minute post-age limit. All topic, quality and write checks
 still apply; this changes neither job cadence nor publication spacing.
 
+2026-10-12 reliability correction: selection compares at most eight posts per
+model call, mixing two waiting discoveries and six fresh ones before revisiting
+reviewed posts. The schema fixes the response count and permits only supplied
+IDs; incomplete or token-truncated output cannot approve a candidate. A failed
+comparison refresh does not invalidate an existing explicit approval less than
+one hour old. Reload the pool and apply every normal check before using it.
+Quality remains 85/100, with no guaranteed minimum number of replies.
+
 ## Value and voice
 
-The character is a confident, sexy 40-year-old mom with sharp AI expertise:
-warm, clear, funny, sarcastic and occasionally flirty. She covers AI models and
-news and now loves AI-generated videos, which the account has started publishing.
-Video claims require supplied context; sarcasm targets claims, never harassment. AI knowledge, news and updates are the focus.
-She explains a consequence, teaches something, or offers a useful action. A
-question, joke, emoji or flirty line is optional. Forced formulas, engagement
-bait, stale numbers, copied headlines and fabricated lived experience are out.
-The AI identity remains honest; the therapist name is a brand persona.
-That character is the Voice, written only in the Account's folder,
-`accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
-Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
-their task instructions but no copy of the persona, and the model client adds
-none (#192). Per-person instructions are the Account's Relations, in
-`account.toml` and `relations/`: the engine names no one (#203). Legacy finance
-Relations were removed; their handles remain blocked. The requested voice
-favors Elon, Grok, SpaceXSI and his products on relevant AI topics, with grounded
-claims, specific insight and wit.
+The Account is **The SI Maximalist, @thesimaximalist** (Operator, 2026-10-12).
+The Voice covers SI brainrot, super intelligence, news, generated media, clearly
+fictional celebrity parodies and substantive technology. It is direct, informed,
+funny and specific: explain the mechanism, tradeoff or useful implication, or make
+an original joke tied to the post. It replaces the therapist/mom/flirtation persona.
+Identity stays honest: no fabricated human life, experiments or personal product
+use. Media descriptions need supplied context. Parody is never presented as real
+news, endorsement or a quote. No automatic video generation/upload is introduced.
+The Voice lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`; every
+Original and Reply prompt carries it. Older learned examples cannot override it.
+The pro-Elon/Grok preference, hard rules and respect list still apply.
+
+The storage identity remains `BOT_ACCOUNT=theaishrink`; changing the public handle
+does not reset ledger counts, reservations, permanent Reply IDs or history.
+Optional `previous_handles` in the Account protects saved own-post URLs from before
+the rename. `.env` must not retain a stale public `BOT_HANDLE` override.
 
 Operator, 2026-10-12: vary Reply format with weighted choices: a few words
 (2–8 words, 35), a short observation (9–23, 40), an explanation (24–50, 20),
@@ -68,7 +75,7 @@ strict output schema and a bounded cold-load timeout. The reply model retains
 its own configuration. The draft generator sees fetched primary-source text. The generator selects numbered source
 passages; the application attaches their exact text as evidence. It cannot
 substitute a fabricated quotation for the supplied source text. A separate editor must explicitly approve
-factual grounding, AI relevance, added value, natural voice, and novelty. Any
+factual grounding, topic relevance, added value, natural voice, and novelty. Any
 missing/malformed approval, rejection, stale item, duplicate or provider error
 skips publishing. An LLM review reduces risk but is not proof that a claim is true.
 The checked draft and its source link survive publishing without random rewrites.
@@ -83,21 +90,31 @@ an exceptional-value approval.
 
 ## Niche of Replies, likes and follows
 
-Operator, 2026-10-12, complete topic cleanup: the Account's prompt domain and
-editorial angles use SI; discovery retains AI and historical company aliases.
-`searches.scope` is appended to every X search inside the shared scraper and
-to optional model-assisted search instructions. Each query is grouped before
-the scope so an OR alternative cannot escape it. Scope includes SI/AI terms,
-crypto/trading exclusions and standalone posts only. Searches cover research,
-models, agents, coding, infrastructure, robotics and generated media.
+Operator, 2026-10-12, expanded discovery: substantive technology now qualifies
+without an AI connection. This supersedes the earlier SI-only scope and the
+removal of Home discovery. Keywords and searches cover AI/SI plus software,
+hardware, security, chips, robotics, space engineering and autonomous vehicles.
+Generated media, brainrot and clearly fictional tech celebrity parodies qualify;
+unrelated celebrity gossip, lifestyle, politics, sports and trading do not.
 
-The sweeper now runs two Latest topic searches, never For You or Following.
-Browser warm-up and refresh open our own profile. Profile discovery keeps the
-curated SI/AI list, led by Elon and SpaceXSI. A saved tracked handle must still
-have current on-topic engagement evidence; a new discovery must have a fresh
-explicit topic approval in the shared Reply pool. Legacy dynamic/discovered
-handle lists alone are insufficient. Guarded unreadable candidate state stops
-the discovery jobs that depend on it.
+Every two minutes, the sweeper rotates one native view (For You, Following Recent,
+Following Popular) and one Latest topic query. Feed tabs and Following sort state
+must be verified; missing controls skip the view rather than mislabel a fallback.
+Scraping collects each viewport before scrolling, deduplicates status IDs and stops
+at a bounded scroll count or two unchanged reads. Scrolling moves the document
+rather than relying on keyboard focus. All discoveries are archived before filters.
+Latest queries remove minimum-like gates; Top queries retain their popular lane.
+All searches receive crypto exclusions; declared topic queries are not duplicated
+inside a second topic expression. Ad-hoc queries receive a compact topic scope. Direct discovery
+rotates one priority profile and three Top queries by default; early-bird scans
+two profiles and mega-watch one. The Reply selector has a dedicated worker and
+keeps its one-minute cadence, one candidate per cycle and 85/100 approval threshold.
+
+Saved tracked handles still require current topic evidence. A new discovery needs
+fresh explicit topic approval in the shared pool; legacy saved handle lists alone
+are insufficient. Unreadable guarded state stops jobs that depend on it. A post
+previously rejected solely by the keyword gate can re-enter on rediscovery after
+a topic expansion, but an explicit model rejection is not recycled.
 
 Crypto, Bittensor, staking, memecoins, token sales and trading/stock content
 are excluded even when they mention SI. Exclusions apply to feed news titles,
@@ -108,14 +125,9 @@ relationship prompts, positive seeding lists and contradictory maintenance
 instructions are removed. No live follows, unfollows, posts or restart are
 part of this cleanup.
 
-Operator, 2026-10-12: Replies concern AI or superintelligence (SI/ASI) only,
-including models, agents, research, AI infrastructure, robotics and AI-generated
-images, videos or brainrot. Related technology needs a clear AI connection.
-Unrelated lifestyle, politics, sports, celebrity gossip, crypto and stock-price
-chatter are excluded. An AI name used incidentally is not sufficient. These
-rules apply to every author, including VIPs and manually selected accounts.
-Only other accounts' standalone posts qualify; conversation turns stay disabled.
-Every status ID remains protected permanently; the Replied store never evicts old IDs.
+All authors, including VIPs, must meet the topic rules. Only other accounts'
+standalone posts qualify; conversation turns stay disabled. Every status ID stays
+protected permanently, including when a URL's handle changes.
 
 The profile allowlist, priority scans, pinned tracking and manual follow seeds
 now focus on AI researchers, builders and enthusiasts, led by Elon Musk, SpaceXSI
@@ -125,7 +137,7 @@ The optional Account `niche.excluded` pattern rejects Bitcoin/crypto text even
 when AI words are present. `like_tweet` checks actual parent text before any
 click and does not borrow text from quoted posts. Feed author harvesting and
 curator promotion require on-niche evidence. Followers, Engagers and discovered
-seeds require an AI/SI bio; only manual seeds bypass positive bio/size/language
+seeds require an AI/SI or technology bio; only manual seeds bypass positive bio/size/language
 checks. Topic exclusions apply to everyone. `FOLLOW_REQUIRE_NICHE` cannot be
 disabled. Existing following relationships are not automatically removed.
 
@@ -140,26 +152,10 @@ The Account's `niche.reply_instructions` supplies the same topic and quality
 requirements to selection and drafting. Model review reduces relevance errors;
 keywords alone cannot prove that a post fits the topic.
 
-The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
-artificial intelligence, machine and deep learning, computer vision,
-superintelligence, agentic, context windows, open weights, vibe coding),
-its labs and models (OpenAI, Anthropic, DeepMind, Mistral, Llama, Qwen,
-Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
-TPUs, data centers) and robotics. Some words no longer suffice alone:
-`token`, `coding`, `agent`, `meta`, `google`, `apple`, `software`, `tech`,
-`engineer`, `founder`; a post or bio needs an AI term beside them (AI
-agents, coding agents, Meta AI). `ai` in lower or mixed case skips the
-French verb (j'ai, J’ai, je vous ai, ai-je); AI in capitals always counts.
-`bio` leaves out the model names that are also first names or common
-words (Claude, Sora, Gemini, Cursor), since it reads the display name too.
-The post pattern also recognises uppercase SI/ASI. Ambiguous keywords can pass discovery: Nvidia may refer only to its stock,
-`robot` to a trading robot, Claude to a person, or Gemini to astrology. The
-selector must reject those posts when their actual subject is outside AI/SI.
-
-Every reply and like query finds posts `post` keeps, read with AND before
-OR or OR before AND: a company or energy word goes with AI (TSMC AI,
-CoreWeave AI, megawatt AI). SI and super intelligence queries supplement these;
-the like write also checks the actual opened post against the niche.
+The `post` and `bio` patterns cover SI/AI terms and substantive technology.
+Names, URLs and ambiguous keywords alone never establish relevance; semantic
+selection still rejects an incidental mention, an unrelated meaning of SI or
+ordinary French “si”. Generic founder/agent labels alone remain insufficient.
 
 ## Trend slots and the Startup post
 
@@ -405,8 +401,8 @@ discoveries and selection decisions. Guarded `reply_candidates.json` holds the
 last day’s discoveries and their eligibility, score, reason, proposed angle
 and outcome. Own posts, comments and off-niche posts are saved without making
 them eligible. A shared `reply_selection_job` runs every ten minutes, after a
-one-minute collection delay, and compares up to thirty admitted posts per
-review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+one-minute collection delay, and compares up to eight admitted posts per
+review. The batch mixes two waiting discoveries with six fresh opportunities before revisiting reviewed posts; the
 highest fresh score across the reviewed pool wins. Only scores of at least
 85/100 may reach drafting, one post per selector cycle, and the model may
 reject every post. Scans never consume reply budget or draft replies. The

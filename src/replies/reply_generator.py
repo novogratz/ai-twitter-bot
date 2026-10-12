@@ -223,12 +223,15 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "domain": account.current().domain,
     })
     return "\n\n".join(filter(None, [
-        personality_store.render_voice(language), prompt,
+        personality_store.render_voice(language),
         _SELECTIVE_REPLY.format(domain=account.current().domain, daily_cap=settings.get("MAX_REPLIES_PER_DAY")),
         account.current().niche.reply_instructions,
+        current_context(), recent_style(), prompt,
+        "Address this parent's specific claim or question. For a how-to question, give a concrete "
+        "step or decision criterion. Do not substitute adjacent jargon or an unrelated tradeoff. "
+        "Check that every technical term actually applies here; return SKIP if it does not.",
         "REPLY FORMAT FOR THIS POST (overrides template length guidance): " + call.style.instruction()
         if call.style else "",
-        current_context(), recent_style(),
         "SELECTED ANGLE (context data, verify before using): " + fields["selected_angle"]
         if fields.get("selected_angle") else "", *anchors,
     ]))

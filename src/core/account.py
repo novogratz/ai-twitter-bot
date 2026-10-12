@@ -82,6 +82,7 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
+    previous_handles: tuple = ()  # historical own-post URLs survive a rename
 
 
 def current() -> Account:
@@ -113,11 +114,16 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict})
+                 optional={"limits": dict, "relations": dict, "previous_handles": list})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
         top.fail("domain", "is blank")
+    previous = top.items("previous_handles", str) if "previous_handles" in top else []
+    for handle in [top["handle"], *previous]:
+        if not _HANDLE.fullmatch(handle):
+            top.fail("handle" if handle == top["handle"] else "previous_handles",
+                     "takes X handles without @, at most 15 letters, digits or underscores")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list})
@@ -130,7 +136,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top),
+        searches=_searches(top), previous_handles=tuple(previous),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -248,9 +254,15 @@ class Searches:
     likes: tuple
     trending: tuple  # the Top searches of the Trend slots and the Startup post
     scope: str = ""  # Account topic alternatives and exclusions, on every search
+    exclusions: str = ""  # Always appended, including to declared topic queries
 
     def scoped(self, query: str) -> str:
-        return f"({query}) {self.scope}" if self.scope else query
+        # Declared queries already encode their topic. Repeating a large OR
+        # scope made X return an error (browser incident 2026-10-12).
+        declared = query in self.replies + self.hot_tab + self.likes + self.trending
+        scope = "" if declared and self.exclusions else self.scope
+        suffix = " ".join(part for part in (scope, self.exclusions) if part)
+        return f"({query}) {suffix}" if suffix else query
 
 
 def _network(top) -> Network:
@@ -284,12 +296,13 @@ def _niche(top) -> Niche:
 
 def _searches(top) -> Searches:
     table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
-                   optional={"scope": str})
+                   optional={"scope": str, "exclusions": str})
     for key in _SEARCHES:
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
-    return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""))
+    return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""),
+                    exclusions=table.get("exclusions", ""))
 
 
 class _Table:

@@ -19,6 +19,10 @@ def test_selector_runs_each_minute_after_the_startup_attempt():
     startup = scheduler.get_job("startup_reply_job")
     assert selector.trigger.interval.total_seconds() == 60
     assert selector.next_run_time > startup.trigger.run_date
+    assert selector.executor == startup.executor == "replies"
+    sweep = scheduler.get_job("feed_sweep_job")
+    assert sweep.trigger.interval.total_seconds() == 120
+    assert sweep.next_run_time < startup.trigger.run_date
 
 
 @pytest.mark.parametrize("job_id,module,run", [
