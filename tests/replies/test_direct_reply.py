@@ -1,5 +1,6 @@
 """src/replies/direct_reply: reply lane, query rotation and the VIP
 ReplyCalls."""
+import pytest
 
 
 def _url_with_age(minutes: int) -> str:
@@ -116,36 +117,17 @@ def test_prompts_are_english_only():
     assert not any("lang:fr" in q for q in replies), "FR reply query still present"
 
 
-def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):
-    """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
-    to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
-    generator (French + deliberate-typo style) to @TheBTCTherapist's
-    English post. Pin: VIP replies to the bestie use the EN bestie prompt,
-    never the Graphseo prompt (its own Relation prompt); output passes through humanize."""
-    import src.replies.direct_reply as dr
-    from src.replies import reply_pipeline
-
-    # ⚠️ The VIP scan imports scrape_x_search FUNCTION-LOCALLY from scraper:
-    # patch THERE, not on direct_reply. (First version of this test patched
-    # dr.* — the real Safari fired and posted live replies to
-    # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
-    # mistake fail loudly instead.)
+@pytest.mark.parametrize("handle", ["TheBTCTherapist", "Graphseo", "McnallieM"])
+def test_vip_scan_never_reopens_former_crypto_targets(monkeypatch, llm, chokepoint, settings_override, handle):
+    from src.replies import direct_reply as dr, reply_pipeline
     from src.x import scraper
-    settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
-    url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
-    monkeypatch.setattr(scraper, "scrape_x_search",
-                        lambda q, max_tweets=20, tab="latest":
-                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
-
-    llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
-
+    settings_override(VIP_SCAN_HANDLES=handle, PROFILE_VISIT_ALLOWLIST=handle)
+    def forbidden(*args, **kwargs):
+        pytest.fail("blocked former target reached a scrape")
+    monkeypatch.setattr(scraper, "scrape_x_search", forbidden)
+    monkeypatch.setattr(dr, "scrape_profile_tweets", forbidden)
     dr._run_vip_scan(reply_pipeline.Cycle())
-
-    assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
-        "Graphseo FR generator must NEVER run for the bestie"
-    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
-    assert len(chokepoint.calls) == 1
-    assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
+    assert llm.calls == [] and chokepoint.calls == []
 
 
 def test_direct_reply_scans_rotating_query_subset(settings_override):
@@ -224,3 +206,15 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
     assert scraped == [] and llm.calls == []
+
+
+def test_priority_scan_starts_on_elons_profile_and_collects_only(monkeypatch, llm, chokepoint):
+    from src.replies import direct_reply as dr, reply_pipeline
+    visited = []
+    def profile(handle, **kwargs):
+        visited.append(handle)
+        return []
+    monkeypatch.setattr(dr, "scrape_profile_tweets", profile)
+    dr._run_vip_scan(reply_pipeline.Cycle())
+    assert visited == ["elonmusk", "xai", "karpathy"]
+    assert llm.calls == [] and chokepoint.calls == []

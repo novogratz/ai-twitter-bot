@@ -127,10 +127,10 @@ def test_a_reply_naming_a_respected_account_is_set_aside(llm, chokepoint, monkey
 
     monkeypatch.setattr(tc, "reply_to_tweet", REAL_REPLY_TO_TWEET)
     monkeypatch.setenv("DRY_RUN", "1")
-    named, addressed = fresh("graphseo", n=1), fresh("graphseo", n=2)
+    named, addressed = fresh("arthurmensch", n=1), fresh("arthurmensch", n=2)
     llm.answers.update({
         "post named": "Le support tient tant que les volumes suivent, @micode l'a montré.",
-        "post addressed": "@graphseo le support tient tant que les volumes suivent.",
+        "post addressed": "@arthurmensch le support tient tant que les volumes suivent.",
     })
     candidates = [candidate(named, "post named"), candidate(addressed, "post addressed")]
 
@@ -491,7 +491,7 @@ def spacing(llm, chokepoint, monkeypatch, memory_ledger):
 
     s = SimpleNamespace(chokepoint=chokepoint, slept=[], waited_at_send=[], gap_after_send=[],
                         on_sleep=lambda: None, ledger=memory_ledger,
-                        now=datetime(2026, 9, 21, 14, tzinfo=ZoneInfo("America/Toronto")))
+                        now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
     monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
     monkeypatch.setattr(ag, "now_local", lambda: s.now)
 

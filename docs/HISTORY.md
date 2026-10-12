@@ -8,6 +8,21 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+## October 12, 2026 — lunch break and daily wake variation
+
+The Operator moved the midday activity window from 14:00–15:00 to
+12:00–13:00 and the evening start from 17:00 to 16:45, then requested
+±10 minutes of daily variation in each wake time. A stable Account/date
+derivation reproduces the daily schedule across restarts without new state.
+Closing times stay fixed; admission, next wake and Reply pacing all use the
+actual windows. Midday Originals move to 12:00, 12:20 and 12:40.
+
+At 17:00, the Operator reported two missed jobs after a scheduled pause.
+Their 60-second misfire grace had expired while the scheduler was paused,
+skipping the first Direct Reply and editorial cycles. Jobs now retain one
+overdue run, with missed intervals coalesced and all current activity guards
+enforced.
+
 ## October 12, 2026 — Reply volume clarification
 
 The Operator clarified the desired volume to at least 300 useful Replies per
@@ -2924,3 +2939,15 @@ state. Existing active windows, caps and evidence rules remain. No live X
 writes or restart are performed by this implementation.
 
 2026-10-08 — Startup now attempts one selected Reply after a 90-second discovery/comparison period. It uses the shared saved pool, quality threshold, active windows, hourly allowance, ten-per-day cap and existing write guards. The draft requests one smart thought in at most 20 words, without emojis or smileys. A weak pool or exhausted allowance sends nothing. No automatic restart is performed.
+
+## 2026-10-12 — Crypto targets survived the AI-only pivot
+
+The operator still saw visits to TheBTCTherapist and Graphseo. The Account
+explicitly listed them as profile/VIP exceptions and follow seeds; cached
+tracking could restore them. Likes trusted an AI search query without reading
+the individual post, and Engagers bypassed the positive bio check. The fix
+replaces the seeds with AI accounts led by Elon, blocks former finance targets,
+checks mixed crypto/AI text at the Reply and like writes, and requires AI/SI
+bios for discovered follows and Engagers. Old reply IDs no longer expire at
+50,000 entries. Regression tests cover stale lists, mixed-topic posts, quoted
+text, all follow relations and permanent status-ID deduplication.

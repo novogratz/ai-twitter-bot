@@ -18,8 +18,10 @@ folder, `state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
    outside the whitelist only a follower or an Engager, and only while
    `FOLLOWBACK_BYPASS_WHITELIST` is on.
 3. Profile visits: `PROFILE_VISIT_ALLOWLIST` in `.env`, else the Account's
-   `network.profile_visits` (`TheBTCTherapist,Graphseo`), gates the profile
-   likes.
+   `network.profile_visits` (AI accounts led by `elonmusk,xai,karpathy`), gates
+   profile scans and likes. The Account's blocked former crypto/trading targets
+   remain barred even if an old override lists them. Follows require AI/SI
+   bios except operator-selected seeds; crypto exclusions apply to all.
 4. Read `followed_accounts.json` - show which are already followed.
 5. Ask if the operator wants to add or remove accounts; edit
    the Account's `[network]` lists or `accounts/theaishrink/whitelist.json`

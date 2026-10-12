@@ -205,7 +205,9 @@ a Startup post: a restart publishes one trend post within 45 minutes when the
 daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
-waits until the next active window: 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time.
+waits until the next actual daily window. Nominal hours are 05:00–10:00,
+12:00–13:00 and 16:45–23:00 Toronto time; each start varies ±10 minutes per day,
+with fixed closing times. The startup log and dry run show today’s actual hours.
 
 ## Stop
 
@@ -891,3 +893,22 @@ defaults to and cannot exceed 400. The target is clamped to a tighter cap.
 Startup and dry run display both numbers. The selector now runs each minute,
 with the same active windows, pending reservations and Reply eligibility checks.
 The actual count can be lower when the pool or services cannot support the target.
+
+2026-10-12 — Operator moved the midday window to lunch and the evening start
+to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and
+16:45–23:00. Each window's start varies independently by up to ten minutes
+earlier or later each Toronto day; closing times remain exactly 10:00, 13:00
+and 23:00, end exclusive. The daily offsets are derived from the Account,
+Toronto date and nominal start, so restarts reproduce the same day's schedule
+without a new state file. The next wake, browser and model guards, and Reply
+allowance all use the actual daily windows. Afternoon Original slots move to
+12:00, 12:20 (trend) and 12:40. The Reply target remains 300 per full day,
+with a hard maximum of 400 including pending submissions. The Operator
+requested a PR merged and pushed to main for the running bot.
+
+2026-10-12 — The AI-only target update preserves production state and existing
+follows. Blocked former crypto targets cannot regain eligibility from old
+profile overrides, saved tracking or Reply candidates. Do not delete those
+files or the Replied store to deploy this change. The Replied store now keeps
+all answered IDs permanently. Restart loads the Account's new AI profile lists,
+Elon-first scan order, exclusions and updated Voice.

@@ -38,9 +38,10 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time, DST
-handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
-`window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
+`src/guards/active_hours.py` owns nominal windows 05:00–10:00, 12:00–13:00 and 16:45–23:00 Toronto time, DST
+handled by `zoneinfo`. `ACTIVE_WINDOWS` defines the nominal bounds and
+`active_windows()` derives the actual daily windows; `window_label()` renders
+them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
 next `require_active()`. `is_active()` reads the clock only: the scheduler's
@@ -63,6 +64,15 @@ run. The check is repeated at each point where work leaves the process:
 
 A request already sent to X or to a model can finish after the active window ends; it cannot
 authorize a new action.
+
+Actual starts vary independently by ±10 minutes each Toronto day; ends stay
+fixed. The Account, date and nominal start determine each offset, consistently
+across restarts. All activity guards and Reply allowances use the same daily
+windows; the next morning’s wake uses the following day’s offset.
+
+Scheduled pauses preserve one overdue cycle per job: the scheduler has no
+misfire timeout, coalesces missed intervals, and permits one running instance
+per job. Each resumed cycle evaluates the current clock and normal guards.
 
 ## Jobs
 
@@ -110,7 +120,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 Two settings decide how much of the table does anything:
 
 - `PROFILE_VISIT_ALLOWLIST` (the Account's `network.profile_visits` unless
-  `.env` sets it: `TheBTCTherapist,Graphseo` for @TheAIShrink). Profile
+  `.env` sets it: AI profiles led by `elonmusk,xai,karpathy` for @TheAIShrink).
+  Blocked accounts remain barred even when `.env` lists them. Profile
   scrapes and profile likes return nothing for other handles, so
   `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
   replyback profile likes only act on allowlisted accounts.
@@ -142,8 +153,8 @@ file once, keeps the state in memory and saves it whole at each change; a
 new Toronto day is saved with the pass's first change.
 
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 09:45,
-   14:00, 14:20, 14:40, 17:00, 17:45, 18:30 and an optional 22:15, the
-   exceptional one; those with `trend = true` are 09:45, 14:20 and 17:00. A slot is due for 45 minutes, never past the current active window, only if
+   12:00, 12:20, 12:40, 17:00, 17:45, 18:30 and an optional 22:15, the
+   exceptional one; those with `trend = true` are 09:45, 12:20 and 17:00. A slot is due for 45 minutes, never past the current active window, only if
    the Slot journal has not closed it today and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
@@ -533,8 +544,10 @@ Five modules sit behind them:
   `FOLLOWBACK_BYPASS_WHITELIST` is on), anti-churn, the daily cap, the
   spacing, the following ceiling and ratio brake, then the quality-reject
   cache. `judge_profile` runs the quality gate on the open profile, by
-  relation (a Seed account is exempt, an Engager skips the size and niche
-  checks; the niche is the Account's `niche.bio`), and caches a reject for 30 days. Each
+  relation: manual seeds bypass positive niche/size/language checks; Engagers
+  skip only size; discovered seeds and followers get the full checks. All
+  profiles must pass `niche.excluded`, and positive bios use `niche.bio`.
+  Rejections are cached for 30 days. Each
   returns a `Verdict` whose `Refusal` names the cause; `follow_account`
   turns it into its `FollowOutcome`, and the jobs act on that outcome
   without checking a rule again. `followed()` reads the followed accounts
@@ -726,14 +739,10 @@ These are how the code behaves today, not design intent:
   write is already UNCONFIRMED with its claim kept.
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
-- The Graphseo Reply call forces the Claude CLI whenever it is installed
-  (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
-  `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the
-  one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
-  It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
-- `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
-  English-looking post from @Graphseo gets English reply text, which
-  `judge_reply` then refuses.
+- Account Relations may override the provider through `direct_reply._own_call`;
+  legacy finance Relations are inactive because their authors are blocked.
+- `early_bird` and `mega_watch` use the parent language rather than
+  `FR_FORCED_REPLY_HANDLES`; the write still enforces any explicit override.
 - The replyback language test matches substrings, so "honestly" or "best"
   ("est") selects the French Voice file.
 - `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
@@ -927,3 +936,30 @@ waited five minutes since the latest remaining approval. Reviews expire after
 one hour. Admission is checked for every cached winner; a definitively refused
 winner is closed before considering the next. Every cycle attempts at most one
 Reply and the shared ledger, reservations, allowance and write guards still apply.
+
+2026-10-12 — Operator moved the midday window to lunch and the evening start
+to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and
+16:45–23:00. Each window's start varies independently by up to ten minutes
+earlier or later each Toronto day; closing times remain exactly 10:00, 13:00
+and 23:00, end exclusive. The daily offsets are derived from the Account,
+Toronto date and nominal start, so restarts reproduce the same day's schedule
+without a new state file. The next wake, browser and model guards, and Reply
+allowance all use the actual daily windows. Afternoon Original slots move to
+12:00, 12:20 (trend) and 12:40. The Reply target remains 300 per full day,
+with a hard maximum of 400 including pending submissions. The Operator
+requested a PR merged and pushed to main for the running bot.
+
+2026-10-12 — Operator requested AI/SI-only engagement, led by Elon Musk.
+The Account's profile visits, priority scans, pinned tracking and follow seeds
+now cover AI researchers, builders and enthusiasts, with Elon first. Former
+crypto/trading exceptions, including TheBTCTherapist and Graphseo, are blocked
+even when old settings or saved discoveries still list them. Bitcoin/crypto
+text is excluded even alongside AI terms. The shared like write checks the
+actual post text; Replies retain their pool and opened-target checks. Feed
+harvesting and curator promotion require AI evidence; discovered follows and
+Engagers require an AI/SI bio, and topic exclusions apply even to manual seeds.
+One Reply per standalone post is permanent: reply IDs are never evicted, and
+debate, replyback and conversation follow-ups remain disabled. The requested
+Voice favors Elon, Grok, xAI and related products when relevant and supported,
+with technical insight, apt wit and honest uncertainty. Existing follower
+relationships and production state are preserved. Deployment requires restart.

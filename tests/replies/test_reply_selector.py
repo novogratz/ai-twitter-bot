@@ -1,6 +1,6 @@
 """The selector compares saved posts, may reject all, and spends no extra budget."""
 import json
-from datetime import timedelta
+from datetime import timedelta, timezone
 
 import pytest
 
@@ -86,13 +86,21 @@ def test_pool_is_rechecked_before_write_if_parent_changes(saved, monkeypatch):
 
 
 @pytest.mark.parametrize("hour,minute,allowance", [
-    (5,0,1),(7,23,1),(7,24,2),(9,47,2),(9,48,3),
-    (10,0,3),(14,0,3),(15,0,3),(17,0,3),
-    (18,11,3),(18,12,4),(20,35,4),(20,36,5),(22,59,5),
+    (5,0,1),(7,26,1),(7,27,2),(9,53,2),(9,54,3),
+    (10,0,3),(12,0,3),(13,0,3),(14,0,3),(16,45,3),
+    (18,5,3),(18,6,4),(20,32,4),(20,33,5),(22,59,5),
 ])
 def test_reply_allowances_preserve_budget_for_later_windows(hour, minute, allowance, settings_override):
     settings_override(MAX_REPLIES_PER_DAY=5)
     assert selector.reply_allowance(active_hours.now_local().replace(hour=hour, minute=minute)) == allowance
+
+
+@pytest.mark.parametrize("offset,allowance", [(-10, 184), (10, 176)])
+def test_reply_allowance_tracks_actual_daily_windows(monkeypatch, offset, allowance):
+    monkeypatch.setattr(active_hours, "_wake_offset", lambda day, start: offset)
+    now = active_hours.now_local().replace(hour=12, minute=30)
+    assert selector.reply_allowance(now) == allowance
+    assert selector.reply_allowance(now.astimezone(timezone.utc)) == allowance
 
 
 def test_used_allowance_prevents_spending_every_reply_in_the_morning(saved, monkeypatch, memory_ledger, settings_override):
@@ -232,11 +240,13 @@ def test_cached_winner_rechecks_dedup_and_moves_to_next_admitted_post(saved, mon
     assert pool.read()[batch[0]["id"]]["state"] == "closed"
 
 
-def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, memory_ledger):
+@pytest.mark.parametrize("wake_offset", [-10, 0, 10])
+def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, memory_ledger, wake_offset):
     """A supply of approved posts and successful writes exercises the real
     scheduler cadence, active windows, cumulative allowance and day ledger."""
     from main import build_scheduler
     from src.core import config
+    monkeypatch.setattr(active_hours, "_wake_offset", lambda day, start: wake_offset)
     job = build_scheduler().get_job("reply_selection_job")
     interval = int(job.trigger.interval.total_seconds())
     start = active_hours.now_local().replace(hour=0, minute=0, second=0, microsecond=0)

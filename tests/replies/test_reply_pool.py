@@ -85,11 +85,12 @@ def test_every_source_saves_but_rejects_unrelated_posts(source):
     assert [event["kind"] for event in events] == ["discovered", "decision"]
 
 
-def test_saved_eligibility_never_bypasses_current_topic_filter(monkeypatch):
+@pytest.mark.parametrize("text", ["My unrelated lunch", "AI trading Bitcoin", "Grok crypto prediction"])
+def test_saved_eligibility_never_bypasses_current_topic_filter(monkeypatch, text):
     url = fresh("someone")
     pool.collect(pipeline.Job("scan", "SCAN", None), [pipeline.Candidate(url, "AI post", "FEED")])
     records = pool.read()
-    next(iter(records.values()))["text"] = "My unrelated lunch"
+    next(iter(records.values()))["text"] = text
     pool.POOL.write(records)
     clock(monkeypatch, active_hours.now_local() + timedelta(seconds=61))
     assert pool.contenders() == []

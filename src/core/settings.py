@@ -211,7 +211,7 @@ _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape b
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")
 _declare("FOLLOW_REQUIRE_ENGLISH", bool, True, "Refuse to follow a profile that does not read English.")
-_declare("FOLLOW_REQUIRE_NICHE", bool, True, "Refuse to follow a non-Engager whose bio is off-niche.")
+_declare("FOLLOW_REQUIRE_NICHE", bool, True, "Require an on-niche bio for followers, Engagers and discovered accounts; only operator-selected seeds bypass it.", floor=True)
 _declare("HUMAN_TYPO_HANDLES", str, "", "Comma-separated handles whose Replies get a human typo.")
 _declare("BLANK_GRACE_AFTER_RESTART_SECONDS", int, 120, "Seconds after a Safari restart when blank pages do not count.")
 _declare("PROFILE_VISIT_ALLOWLIST", str, "", "Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set.")

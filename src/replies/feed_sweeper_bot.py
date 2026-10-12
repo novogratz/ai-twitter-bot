@@ -48,6 +48,8 @@ def _harvest_active_authors(tweets: list) -> None:
             handle = x_urls.author(t.get("url") or "")
             if not handle or handle in known or is_blocked_account(handle):
                 continue
+            if not reply_source.is_on_niche(t.get("text") or ""):
+                continue
             new_handles.append(handle)
             known.add(handle)
 

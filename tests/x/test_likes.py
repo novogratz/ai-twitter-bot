@@ -10,10 +10,10 @@ import pytest
 from tests.helpers import FRESH, SearchPage, stop_requested
 
 
-POST = "https://x.com/thebtctherapist/status/2063500000000000101"
+POST = "https://x.com/elonmusk/status/2063500000000000101"
 
 
-NEXT = "https://x.com/thebtctherapist/status/2063500000000000102"
+NEXT = "https://x.com/elonmusk/status/2063500000000000102"
 
 
 REPOST = "https://x.com/someoneelse/status/2063500000000000103"
@@ -31,7 +31,7 @@ BLOCKED = "https://x.com/BlockedOne/status/2063500000000000107"
 class FakePage:
     """Answers `_page_posts` like `_POSTS_JS` would on a page of posts."""
 
-    def __init__(self, page="https://x.com/thebtctherapist", posts=()):
+    def __init__(self, page="https://x.com/elonmusk", posts=()):
         self.page = page
         self.posts = [dict(p) for p in posts]
         self.clicks = []
@@ -50,7 +50,8 @@ class FakePage:
         if post["liked"]:
             return {"url": post["url"], "result": "already_liked"}
         if mode != "press":
-            return {"url": post["url"], "result": "not_liked"}
+            return {"url": post["url"], "result": "not_liked",
+                    "text": post.get("text", "AI model inference and reasoning")}
         self.clicks.append(post["url"])
         post["liked"] = self.click_sticks
         return {"url": post["url"], "result": "clicked"}
@@ -148,14 +149,14 @@ def test_walk_stops_at_an_unconfirmed_click(browser):
     page = browser["page"] = FakePage(
         posts=[{"url": POST, "liked": False}, {"url": NEXT, "liked": False}])
     page.click_sticks = False
-    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=2) == [tc.LikeOutcome.UNCONFIRMED]
+    assert tc.visit_profile_and_like("elonmusk", like_count=2) == [tc.LikeOutcome.UNCONFIRMED]
     assert page.clicks == [POST]
 
 
 @pytest.mark.parametrize("page_url, url", [
     (POST, ""),                                 # no URL: the open status page is not a target
     (POST, NEXT),                               # requested post not on the page
-    (POST, "https://x.com/thebtctherapist"),    # URL without a status ID
+    (POST, "https://x.com/elonmusk"),    # URL without a status ID
 ])
 def test_nothing_clicked_when_the_post_is_not_identified(browser, page_url, url):
     from src.x import twitter_client as tc
@@ -186,7 +187,7 @@ def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch
     monkeypatch.setattr(tc, "_page_posts", lambda *a: seen.append(bool(held)) or page(*a))
 
     assert tc.like_tweet(FRESH) is tc.LikeOutcome.LIKED
-    assert seen == [True, True]
+    assert seen == [True, True, True]
     assert held == []
 
 
@@ -267,7 +268,7 @@ def test_profile_visit_likes_their_own_posts_and_reports_each(browser):
         {"url": POST, "liked": True},
         {"url": NEXT, "liked": False},
     ])
-    outcomes = tc.visit_profile_and_like("TheBTCTherapist", like_count=2)
+    outcomes = tc.visit_profile_and_like("elonmusk", like_count=2)
     assert outcomes == [tc.LikeOutcome.ALREADY_LIKED, tc.LikeOutcome.LIKED]
     assert page.clicks == [NEXT]
     assert browser["closed"] == 1
@@ -280,7 +281,7 @@ def test_profile_visit_opens_nothing_for_zero_likes_or_dry_run(monkeypatch, dry_
     # conftest fails the test on any safari.open_url or _run_applescript.
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
-    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=like_count) == []
+    assert tc.visit_profile_and_like("elonmusk", like_count=like_count) == []
 
 
 def test_notify_likes_replies_but_never_our_own_posts(browser, settings_override):
@@ -317,7 +318,7 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     monkeypatch.setattr(action_guard, "record", unreadable)
     browser["page"] = FakePage(posts=[{"url": POST, "liked": False}])
     with pytest.raises(StateUnreadable):
-        tc.visit_profile_and_like("TheBTCTherapist", like_count=1)
+        tc.visit_profile_and_like("elonmusk", like_count=1)
     browser["page"] = FakePage(page=OWN, posts=[{"url": REPLY, "liked": False}])
     with pytest.raises(StateUnreadable):
         tc.like_own_tweet_replies()
@@ -326,7 +327,7 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
 
 @pytest.mark.parametrize("walk", [
     lambda tc: tc.like_search_posts("https://x.com/search?q=AI", 3, 60),
-    lambda tc: tc.visit_profile_and_like("TheBTCTherapist", like_count=2),
+    lambda tc: tc.visit_profile_and_like("elonmusk", like_count=2),
     lambda tc: tc.like_own_tweet_replies(),
 ], ids=["search", "profile", "notify"])
 def test_a_walk_whose_page_does_not_open_clicks_nothing(browser, monkeypatch, settings_override, walk):
@@ -405,6 +406,7 @@ function parseCompound(s) {
 }
 function El(spec, parent) {
     this.tagName = spec.tag;
+    this.innerText = spec.text || "";
     this.attrs = spec.attrs || {};
     this.parent = parent || null;
     var self = this;
@@ -451,6 +453,7 @@ def _article(url, button, id_, quoted="", quoted_first=False):
         card = {"tag": "div", "children": [{"tag": "article", "children": [
             {"tag": "a", "attrs": {"href": quoted}, "children": [{"tag": "time"}]}]}]}
         children.insert(0 if quoted_first else 1, card)
+    children.append({"tag": "div", "attrs": {"data-testid": "tweetText"}, "text": "AI inference latency"})
     children.append({"tag": "div", "children": [
         {"tag": "button", "attrs": {"data-testid": button, "id": f"{id_}-button"}}]})
     return {"tag": "article", "attrs": {"data-testid": "tweet", "id": id_}, "children": children}
@@ -491,17 +494,17 @@ def test_js_clicks_like_on_the_target_article_only():
 
 def test_js_never_clicks_an_unlike_button():
     articles = [_article(POST, "unlike", "a")]
-    assert _run_posts_js(articles, "press", POST_ID) == ({"url": POST, "result": "already_liked"}, [])
+    assert _run_posts_js(articles, "press", POST_ID) == ({"url": POST, "result": "already_liked", "text": "AI inference latency"}, [])
 
 
 def test_js_read_mode_clicks_nothing():
     articles = [_article(POST, "like", "a")]
-    assert _run_posts_js(articles, "read", POST_ID) == ({"url": POST, "result": "not_liked"}, [])
+    assert _run_posts_js(articles, "read", POST_ID) == ({"url": POST, "result": "not_liked", "text": "AI inference latency"}, [])
 
 
 @pytest.mark.parametrize("articles, target, path", [
     ([_article(POST, "like", "a")], "", "/home"),                 # no target
-    ([_article(POST, "like", "a")], "", f"/thebtctherapist/status/{POST_ID}"),  # not even the status page's post
+    ([_article(POST, "like", "a")], "", f"/elonmusk/status/{POST_ID}"),  # not even the status page's post
     ([_article(POST, "like", "a")], NEXT_ID, "/home"),            # requested post absent
     ([_article(POST, "like", "a", quoted=NEXT)], NEXT_ID, "/home"),  # only quoted
     ([_article(POST, "like", "a", quoted=NEXT, quoted_first=True)], NEXT_ID, "/home"),
@@ -521,3 +524,23 @@ def test_js_lists_the_posts_in_page_order():
     articles = [_article(NEXT, "like", "a"), _article(POST, "unlike", "b", quoted=REPOST)]
     out, clicks = _run_posts_js(articles, "list")
     assert out == {"page": "https://x.com/home", "posts": [NEXT, POST]} and clicks == []
+
+
+@pytest.mark.parametrize("text", [
+    "Bitcoin miners are using AI datacenters", "Grok says buy BTC",
+    "AI meets crypto", "DOGE to the moon", "My lunch today @OpenAI", "",
+])
+def test_like_chokepoint_rejects_off_topic_posts_even_from_elon(browser, text):
+    from src.x import twitter_client as tc
+    page = browser["page"] = FakePage(page=POST, posts=[{"url": POST, "text": text, "liked": False}])
+    assert tc.like_tweet(POST) is tc.LikeOutcome.BLOCKED
+    assert page.clicks == [] and browser["recorded"] == []
+
+
+def test_like_reads_the_parent_text_without_borrowing_a_quoted_ai_post():
+    article = _article(POST, "like", "a", quoted=NEXT, quoted_first=True)
+    quote = article["children"][0]["children"][0]
+    quote["children"].append({"tag": "div", "attrs": {"data-testid": "tweetText"}, "text": "AI is exciting"})
+    article["children"] = [c for c in article["children"] if c.get("attrs", {}).get("data-testid") != "tweetText"]
+    out, clicks = _run_posts_js([article], "read", POST_ID)
+    assert out["text"] == "" and clicks == []

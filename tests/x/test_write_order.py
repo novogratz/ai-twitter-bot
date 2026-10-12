@@ -311,9 +311,9 @@ def test_follow_dry_run(trace, monkeypatch):
 
 
 def test_like_confirmed_then_marked_then_recorded(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "not_liked", "text": "AI inference latency"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.LIKED
-    assert trace.events == ["lock", "press", "read", "mark_liked", "record:like", "unlock"]
+    assert trace.events == ["lock", "read", "press", "read", "mark_liked", "record:like", "unlock"]
 
 
 def test_like_blocked_never_touches_the_page(trace, monkeypatch):
@@ -323,9 +323,9 @@ def test_like_blocked_never_touches_the_page(trace, monkeypatch):
 
 
 def test_like_unconfirmed_records_nothing(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "not_liked", "text": "AI inference latency"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.UNCONFIRMED
-    assert trace.events == ["lock", "press", "read", "unlock"]
+    assert trace.events == ["lock", "read", "press", "read", "unlock"]
 
 
 def test_like_without_status_id_never_takes_the_lock(trace):

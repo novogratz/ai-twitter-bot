@@ -3,13 +3,14 @@ import json
 import threading
 from datetime import datetime, timedelta
 from dataclasses import replace
+from zoneinfo import ZoneInfo
 
 from ..core import account, config, personality_store, settings
 from ..core.llm_client import CallProfile, Output, Surface, LLMStatus, resolve, run_llm
 from ..core.logger import log
 from ..core.humanizer import smart_trim
 from ..guards import action_guard, replied_store
-from ..guards.active_hours import now_local, require_active, ACTIVE_WINDOWS
+from ..guards.active_hours import now_local, require_active, active_windows
 from ..guards.reply_admission import judge_parent
 from . import reply_pool, reply_pipeline, reply_generator
 
@@ -81,10 +82,10 @@ def reply_allowance(now=None) -> int:
     cap = settings.get("MAX_REPLIES_PER_DAY")
     if cap == 0:
         return 0
-    now = now or now_local()
+    now = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     minute = now.hour * 60 + now.minute
     elapsed = total = 0
-    for start, end in ACTIVE_WINDOWS:
+    for start, end in active_windows(now):
         first = start.hour * 60 + start.minute
         last = end.hour * 60 + end.minute or 24 * 60
         total += last - first

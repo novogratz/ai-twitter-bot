@@ -31,7 +31,7 @@ import re
 from collections import defaultdict
 from datetime import datetime, timedelta
 
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards import active_hours
@@ -78,6 +78,8 @@ def _author_engagements(window_days: int | None = None) -> dict:
                 a = m.group(1).lower()
                 if a == own or is_blocked_account(a):
                     continue
+                if not account.current().niche.matches_post(row[2] if len(row) > 2 else ""):
+                    continue
                 pillar = (row[6].strip() if len(row) > 6 and row[6] else
                           _classify_pillar(row[2] if len(row) > 2 else "", row[1]))
                 if pillar == "other":
@@ -106,11 +108,11 @@ def tracked_handles(limit: int = 30) -> list:
     early-reply bots scan — no static fallback by operator mandate."""
     doc = _load_tracked_doc()
     rows = doc.get("tracked") or []
-    out = list(pinned_handles())
+    out = [h for h in pinned_handles() if not is_blocked_account(h)]
     seen = {h.lower() for h in out}
     for r in rows:
         h = r.get("handle", "")
-        if h and h.lower() not in seen:
+        if h and h.lower() not in seen and not is_blocked_account(h):
             out.append(h)
             seen.add(h.lower())
         if len(out) >= limit:

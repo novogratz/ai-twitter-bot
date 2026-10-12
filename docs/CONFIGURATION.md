@@ -34,7 +34,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Working hours 05:00–10:00, 14:00–15:00 and 17:00–23:00 America/Toronto, DST aware | `active_hours.ACTIVE_WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Nominal hours 05:00–10:00, 12:00–13:00 and 16:45–23:00 America/Toronto; daily starts vary ±10 minutes, fixed ends, DST aware | `active_hours.ACTIVE_WINDOWS` sets nominal hours; `active_hours.active_windows()` derives the day’s actual hours; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
@@ -52,6 +52,11 @@ and in the Bounds column below. `BAN_SHORT_TERM_PRICE_TARGETS` has floor `1`:
 `0` reads as `1`. `main.py --dry-run` prints each bounded setting's effective
 value under `bounded_settings`, and the warnings under `settings_warnings`.
 
+`main.py --dry-run` and the startup log show the actual windows for the current
+Toronto day. Daily variation is stable across restarts and needs no state file.
+The dry run also reports `wake_jitter_minutes` (10). Reply allowances accrue
+across the actual windows, including each day’s earlier or later starts.
+
 ## Models and providers
 
 - `AI_CLI` picks the primary provider, `ollama` by default;
@@ -65,10 +70,9 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
   `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself
   without `LLM_FALLBACK_MODEL`. A fallback runs `LLM_FALLBACK_MODEL`, else
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
-- Two calls leave the configured provider without a fallback: the Replies to
-  @Graphseo run on the Claude CLI whenever it is installed, with
-  `PRIORITY_REPLY_MODEL`; a codex primary under a cached usage lockout
-  (`codex_lockout.json`) goes to local Ollama.
+- An Account Relation may select its own provider with `PRIORITY_REPLY_MODEL`;
+  the former finance Relations are inactive behind the Account blocklist.
+  A codex primary under a cached usage lockout (`codex_lockout.json`) goes to local Ollama.
 - `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of
   the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
@@ -138,7 +142,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
 | `FOLLOW_REQUIRE_ENGLISH` | 0 or 1 | `1` |  | Refuse to follow a profile that does not read English. |
-| `FOLLOW_REQUIRE_NICHE` | 0 or 1 | `1` |  | Refuse to follow a non-Engager whose bio is off-niche. |
+| `FOLLOW_REQUIRE_NICHE` | 0 or 1 | `1` | floor `1` | Require an on-niche bio for followers, Engagers and discovered accounts; only operator-selected seeds bypass it. |
 | `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
 | `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |

@@ -9,24 +9,24 @@ real account. Setup and run commands live in [`README.md`](README.md).
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active only 05:00–10:00, 14:00–15:00 and 17:00–23:00 America/Toronto.
+- Nominal activity windows: 05:00–10:00, 12:00–13:00 and 16:45–23:00 America/Toronto.
+  Each start varies by ±10 minutes per day; closing times are fixed, end exclusive.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
-- Three trend slots (09:45, 14:20, 17:00) and a Startup post on every start
+- Three trend slots (09:45, 12:20, 17:00) and a Startup post on every start
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
 - Quotes, reposts, self-recycling and threads stay at zero.
 - Replies target at least 300 per full Toronto day, with a hard cap of 400, standalone posts only, paced and deduplicated per tweet;
-  debate turns are capped per engager per day.
+  one Reply per post permanently; debates and conversation follow-ups stay disabled.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
-- Replies, likes and follows keep to AI (2026-09-25): the Account's niche
-  patterns and searches look for AI, and its lists drop crypto, markets and
-  space accounts, save those the Operator picked by hand and a few still to
-  confirm. Replies now require AI/SI relevance for every author, including
-  those manually selected accounts (2026-10-12). The patterns' known false
-  positives need semantic rejection during selection, as described in the policy.
+- Replies, likes and follows keep to AI/SI (2026-10-12), including AI videos.
+  Elon leads the AI profile scans. Former crypto/trading exceptions are blocked;
+  Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
+  opened post text; discovered follows and Engagers need AI/SI bios. Replies
+  require relevance for every author and semantic approval during selection.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -298,3 +298,35 @@ effective maximum; it never forces weak Replies or overrides refusal rules.
 The three active windows, AI/SI-only scope, standalone rule, 85/100 selection
 threshold, evidence checks, deduplication and write pacing remain in force.
 The Operator requested a PR merged and pushed to main for the running bot.
+
+2026-10-12 — Operator moved the midday window to lunch and the evening start
+to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and
+16:45–23:00. Each window's start varies independently by up to ten minutes
+earlier or later each Toronto day; closing times remain exactly 10:00, 13:00
+and 23:00, end exclusive. The daily offsets are derived from the Account,
+Toronto date and nominal start, so restarts reproduce the same day's schedule
+without a new state file. The next wake, browser and model guards, and Reply
+allowance all use the actual daily windows. Afternoon Original slots move to
+12:00, 12:20 (trend) and 12:40. The Reply target remains 300 per full day,
+with a hard maximum of 400 including pending submissions. The Operator
+requested a PR merged and pushed to main for the running bot.
+
+Scheduled pauses keep one overdue run of each job available at wake. Missed
+intervals coalesce into one current cycle; every activity and publication guard
+still applies. This prevents the 60-second misfire grace from skipping the
+first collection and editorial cycles after a pause.
+
+2026-10-12 — Operator requested AI/SI-only engagement, led by Elon Musk.
+The Account's profile visits, priority scans, pinned tracking and follow seeds
+now cover AI researchers, builders and enthusiasts, with Elon first. Former
+crypto/trading exceptions, including TheBTCTherapist and Graphseo, are blocked
+even when old settings or saved discoveries still list them. Bitcoin/crypto
+text is excluded even alongside AI terms. The shared like write checks the
+actual post text; Replies retain their pool and opened-target checks. Feed
+harvesting and curator promotion require AI evidence; discovered follows and
+Engagers require an AI/SI bio, and topic exclusions apply even to manual seeds.
+One Reply per standalone post is permanent: reply IDs are never evicted, and
+debate, replyback and conversation follow-ups remain disabled. The requested
+Voice favors Elon, Grok, xAI and related products when relevant and supported,
+with technical insight, apt wit and honest uncertainty. Existing follower
+relationships and production state are preserved. Deployment requires restart.

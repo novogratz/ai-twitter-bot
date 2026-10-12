@@ -3,38 +3,27 @@ import pytest
 
 
 def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override):
-    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
-    scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
-    A non-allowlisted profile must return [] BEFORE any Safari work, and the
-    allowlist must be read at call time (side-effect-gate rule)."""
+    """The operator's AI profile list is read at call time; exclusions always win."""
     from src.x import safari, scraper, twitter_client as tc
     from src.core import account
     from src.core.config import BOT_HANDLE
-
     default = ",".join(account.current().network.profile_visits)
-    assert default == "TheBTCTherapist,Graphseo"
-    settings_override(PROFILE_VISIT_ALLOWLIST=default)  # whatever .env says
-    monkeypatch.setattr(
-        safari, "open_url",
-        lambda *a, **k: pytest.fail("Safari was opened for a blocked profile"))
-    assert scraper.scrape_profile_tweets("unusual_whales") == []
-    assert scraper.scrape_profile_tweets("karpathy") == []
-    tc.visit_profile_and_like("unusual_whales")  # must not open Safari either
-
-    # Allowlist semantics (pure check, no Safari), on the Account's list
-    # pinned above: the two reply-everything friends (operator 2026-06-07).
+    assert default.startswith("elonmusk,xai,karpathy,")
+    settings_override(PROFILE_VISIT_ALLOWLIST=default)
+    monkeypatch.setattr(safari, "open_url", lambda *a, **k: pytest.fail("opened excluded profile"))
+    for handle in ("TheBTCTherapist", "Graphseo", "unusual_whales", "unlisted"):
+        assert scraper.scrape_profile_tweets(handle) == []
+        assert tc.visit_profile_and_like(handle) == []
     assert scraper._profile_visit_allowed(BOT_HANDLE)
     assert scraper._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
-    assert scraper._profile_visit_allowed("TheBTCTherapist")
-    assert scraper._profile_visit_allowed("@thebtctherapist")
-    assert scraper._profile_visit_allowed("Graphseo")
-    assert not scraper._profile_visit_allowed("zerohedge")
+    assert scraper._profile_visit_allowed("@ElonMusk")
+    assert scraper._profile_visit_allowed("karpathy")
     assert not scraper._profile_visit_allowed("")
-
-    # Read at CALL time: a later override reaches the next check.
-    settings_override(PROFILE_VISIT_ALLOWLIST="TheBTCTherapist")
-    assert not scraper._profile_visit_allowed("graphseo")
-    assert scraper._profile_visit_allowed("thebtctherapist")
+    settings_override(PROFILE_VISIT_ALLOWLIST="xai,TheBTCTherapist,Graphseo")
+    assert scraper._profile_visit_allowed("xai")
+    assert not scraper._profile_visit_allowed("elonmusk")
+    assert not scraper._profile_visit_allowed("TheBTCTherapist")
+    assert not scraper._profile_visit_allowed("Graphseo")
 
 
 def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):

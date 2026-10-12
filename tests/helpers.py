@@ -99,7 +99,8 @@ class SearchPage:
         if post["liked"]:
             return {"url": post["url"], "result": "already_liked"}
         if mode != "press":
-            return {"url": post["url"], "result": "not_liked"}
+            return {"url": post["url"], "result": "not_liked",
+                    "text": post.get("text", "AI model inference and reasoning")}
         self.clicks.append(post["url"])
         post["liked"] = self.click_sticks
         self.on_click()

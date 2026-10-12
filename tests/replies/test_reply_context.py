@@ -22,7 +22,7 @@ def test_current_sources_refresh_hourly_and_never_reuse_expired_facts(monkeypatc
     assert "Verified model facts" in context()
     assert len(calls) == 1 and calls[0][1] is True
     sources.clear()
-    clock(monkeypatch, now.replace(hour=14))
+    clock(monkeypatch, now.replace(hour=12))
     assert "No verified current news" in context()
     assert "Verified model facts" not in context()
     assert len(calls) == 2
@@ -31,7 +31,7 @@ def test_current_sources_refresh_hourly_and_never_reuse_expired_facts(monkeypatc
 def test_context_fetch_starts_nothing_in_a_pause(monkeypatch, unwalled):
     import pytest
     from src.guards.active_hours import OutsideActiveHours
-    clock(monkeypatch, datetime(2026, 10, 8, 12, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 10, 8, 14, tzinfo=TORONTO))
     monkeypatch.setattr(editorial_bot, "collect_sources", lambda *a, **k: pytest.fail("network during pause"))
     with pytest.raises(OutsideActiveHours):
         unwalled["reply_context"]()
