@@ -20,7 +20,7 @@ def test_target_reader_errors_fail_closed(monkeypatch):
     assert not tc._standalone_reply_target(numbered_url(1))
 
 
-@pytest.mark.parametrize("configured_cap,cap", [(5, 5), (999, 5), (2, 2)])
+@pytest.mark.parametrize("configured_cap,cap", [(400, 400), (999, 400), (2, 2)])
 def test_daily_reply_ceiling_is_checked_at_write(monkeypatch, memory_ledger, settings_override, configured_cap, cap):
     from tests.x.test_write_path import _fake_safari
     from src.guards.active_hours import now_local
@@ -31,7 +31,7 @@ def test_daily_reply_ceiling_is_checked_at_write(monkeypatch, memory_ledger, set
     monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: True)
     for n in range(cap - 1):
         memory_ledger.append(ag.REPLY, numbered_url(n), False, now_local() - timedelta(hours=2))
-    last, extra = numbered_url(20), numbered_url(21)
+    last, extra = numbered_url(500), numbered_url(501)
     text = "Batching improves throughput; latency still depends on the queue."
     assert tc.reply_to_tweet(last, text) is WriteOutcome.SHIPPED
     assert tc.reply_to_tweet(extra, text) is WriteOutcome.REFUSED
@@ -67,23 +67,24 @@ def test_opened_off_topic_post_never_gets_a_reply_or_parent_like(monkeypatch, me
     assert ag.count_today(ag.REPLY) == ag.pending_reply_count() == 0
 
 
-def test_ambiguous_fifth_reply_consumes_budget_across_restart(monkeypatch, memory_ledger, settings_override):
+@pytest.mark.parametrize("cap", [5, 400])
+def test_ambiguous_last_reply_consumes_budget_across_restart(monkeypatch, memory_ledger, settings_override, cap):
     from tests.x.test_write_path import _fake_safari
     from src.guards.active_hours import now_local
     from datetime import timedelta
-    settings_override(MAX_REPLIES_PER_DAY=5)
+    settings_override(MAX_REPLIES_PER_DAY=cap)
     _fake_safari(monkeypatch)
     monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: False)
-    for n in range(4):
+    for n in range(cap - 1):
         memory_ledger.append(ag.REPLY, numbered_url(n), False, now_local() - timedelta(hours=2))
-    assert tc.reply_to_tweet(numbered_url(30), "Batching improves throughput; latency depends on queueing.") is WriteOutcome.UNCONFIRMED
-    assert ag.count_today(ag.REPLY) == 4
+    assert tc.reply_to_tweet(numbered_url(500), "Batching improves throughput; latency depends on queueing.") is WriteOutcome.UNCONFIRMED
+    assert ag.count_today(ag.REPLY) == cap - 1
     assert ag.pending_reply_count() == 1
     # A new StateFile adapter sees the persisted reservation after a restart.
     from src.core.state_store import StateFile, GUARDED
     monkeypatch.setattr(ag, "REPLY_SUBMISSIONS", StateFile("reply_submissions.json", {}, GUARDED))
-    assert tc.reply_to_tweet(numbered_url(31), "Another insight about inference batching and latency.") is WriteOutcome.REFUSED
+    assert tc.reply_to_tweet(numbered_url(501), "Another insight about inference batching and latency.") is WriteOutcome.REFUSED
 
 
 def test_corrupt_reply_reservation_stops_writes_without_overwriting(monkeypatch):

@@ -27,7 +27,8 @@ PRE_187 = {
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
-    "replies": 5,
+    "replies": 400,
+    "target_replies": 300,
     "quotes": 0,
     "reposts": 0,
     "slots": [
@@ -55,7 +56,8 @@ PRE_187 = {
 # The values the code at 9748c36d used with no .env, for each setting that
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
-    "MAX_REPLIES_PER_DAY": 5,
+    "MAX_REPLIES_PER_DAY": 400,
+    "TARGET_REPLIES_PER_DAY": 300,
     "MAX_ORIGINALS_PER_DAY": 8, "MIN_SECONDS_BETWEEN_POSTS": 1200, "POST_JITTER_SECONDS": 0,
     "MIN_SECONDS_BETWEEN_REPLIES": 8, "REPLY_JITTER_SECONDS": 7, "FOLLOW_TOTAL_CAP": 300,
     "MAX_FOLLOWS_PER_DAY": 20, "BAN_SHORT_TERM_PRICE_TARGETS": True,

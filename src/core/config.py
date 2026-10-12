@@ -54,7 +54,7 @@ REPLIED_FILE = state_store.StatePath("replied_tweets.json")
 ENGAGEMENT_LOG_FILE = state_store.StatePath("engagement_log.csv")
 
 # Operator policy (2026-09-23): at least three editorial posts targeted, up
-# to eight profile publications per Toronto day, and ten replies per Toronto day (2026-10-08). These
+# to eight profile publications per Toronto day, and 400 replies per Toronto day (2026-10-12). These
 # ceilings cannot be raised by stale .env files.
 BOT_TIMEZONE = "America/Toronto"
 MIN_TARGET_POSTS_PER_DAY = 3
@@ -156,8 +156,13 @@ def post_targets() -> tuple[int, int]:
 # Floored at 0 in settings: a negative jitter would shorten the floor above.
 _served("POST_JITTER_SECONDS")
 
-# Replies share a ten-per-day ceiling plus browser pacing and URL dedup.
+# Operator 2026-10-12: target 300 useful Replies, with a shared ceiling of 400.
 _served("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS")
+
+
+def reply_target() -> int:
+    """The daily target never overrides a tighter ceiling or quality checks."""
+    return min(settings.get("TARGET_REPLIES_PER_DAY"), settings.get("MAX_REPLIES_PER_DAY"))
 
 # Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero
 # after the full purge). Following is a tool for exactly two things: curating

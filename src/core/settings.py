@@ -133,7 +133,8 @@ def _script_keys(*names):
 # keeps starting on the Account it always ran.
 _declare("BOT_ACCOUNT", str, "theaishrink", "Account the bot runs: the folder accounts/<name>/ holding its account.toml.")
 _declare("BOT_HANDLE", str, "", "X handle the bot runs, without @; the Account's handle unless set.")
-_declare("MAX_REPLIES_PER_DAY", int, 5, "Replies per Toronto day across every job, ambiguous submissions included.", floor=0, ceiling=5)
+_declare("MAX_REPLIES_PER_DAY", int, 400, "Replies per Toronto day across every job, ambiguous submissions included.", floor=0, ceiling=400)
+_declare("TARGET_REPLIES_PER_DAY", int, 300, "Useful Replies targeted per Toronto day, at most MAX_REPLIES_PER_DAY; quality and availability can reduce the count.", floor=0, ceiling=400)
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
 _declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")
 _declare("NEWS_MODEL", str, None, "CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")

@@ -533,7 +533,7 @@ root:
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `reply_candidates.json` | `reply_pool` | Last-day discovered posts, eligibility, selection score/reason/angle, outcome; keyed by status ID | guarded |
 | `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
-| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward five/day until checked | guarded |
+| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward 400/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -885,3 +885,9 @@ five Replies/day including ambiguous submissions. AI/SI topic review applies
 to every author, including VIPs; AI-generated videos and brainrot qualify.
 Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
 editorial policy for selection, quality and recovery rules.
+
+2026-10-12 — TARGET_REPLIES_PER_DAY defaults to 300; MAX_REPLIES_PER_DAY
+defaults to and cannot exceed 400. The target is clamped to a tighter cap.
+Startup and dry run display both numbers. The selector now runs each minute,
+with the same active windows, pending reservations and Reply eligibility checks.
+The actual count can be lower when the pool or services cannot support the target.

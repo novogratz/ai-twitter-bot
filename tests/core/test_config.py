@@ -1,5 +1,12 @@
 """src/core/config: hard ceilings `.env` cannot lift."""
 from src.core import config
+import pytest
+
+
+@pytest.mark.parametrize("target,cap,expected", [(300, 400, 300), (300, 5, 5), (300, 0, 0), (999, 999, 400)])
+def test_reply_target_respects_the_effective_ceiling(settings_override, target, cap, expected):
+    settings_override(TARGET_REPLIES_PER_DAY=target, MAX_REPLIES_PER_DAY=cap)
+    assert config.reply_target() == expected
 
 
 def test_post_spacing_floor_is_twenty_minutes():

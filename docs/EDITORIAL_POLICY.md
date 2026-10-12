@@ -1,7 +1,7 @@
 # Editorial policy — September 23, 2026
 
-The operator's current mandate (2026-10-12) permits at most five replies per
-Toronto day, to other accounts' standalone posts only. Never answer own
+The operator's current mandate (2026-10-12) targets at least 300 useful replies per full
+Toronto day and permits at most 400, to other accounts' standalone posts only. Never answer own
 posts or comments on them. All external activity runs only during 05:00–10:00,
 14:00–15:00 and 17:00–23:00 Toronto time, end exclusive.
 The schedule aims for six originals, with more opportunities
@@ -151,7 +151,7 @@ must not repeat.
   no scheduled job carries such a branch (issue #107):
   `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
   code and an operator request, not a config change.
-- Replies have a hard five-per-day cap. Browser pacing, per-tweet dedup and bounded
+- Replies have a hard 400-per-day cap, with a target of at least 300 useful Replies. Browser pacing, per-tweet dedup and bounded
   standalone-post verification protect conversation quality. Conversation
   turns and comments on our posts are no longer scheduled or admitted by the
   Reply pipeline.
@@ -228,7 +228,8 @@ warnings under `settings_warnings`.
 
 | Setting | Bound | Default |
 |---|---|---|
-| `MAX_REPLIES_PER_DAY`, Replies per Toronto day, ambiguous submissions included | 0 to 5 | 5 |
+| `MAX_REPLIES_PER_DAY`, Replies per Toronto day, ambiguous submissions included | 0 to 400 | 400 |
+| `TARGET_REPLIES_PER_DAY`, useful Replies targeted per Toronto day, clamped to the effective cap | 0 to 400 | 300 |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
 | `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 8 s | 8 |
 | `REPLY_JITTER_SECONDS`, Reply jitter | at least 0 | 7 |
@@ -364,3 +365,16 @@ Handles and URLs alone never establish relevance. Previously scored pool rows
 without a topic verdict need a fresh review. Account topic instructions guide
 selection and drafting; unsupported video details and empty praise are skipped.
 The Operator requested the PR merged to main and the bot started after validation.
+
+2026-10-12 — Reply volume clarification supersedes the five-per-day limit:
+at least 300 useful Replies targeted over a full Toronto day, at most 400
+including ambiguous submissions. The target depends on eligible posts and model
+and browser availability; it never lowers the quality or topic threshold. A
+partial day need not reach 300. The selector runs every minute and attempts one
+Reply at most; its first regular run is 120 seconds after start, after the
+90-second Startup attempt. Reviews remain usable for less than one hour;
+queued discoveries are compared after five minutes or as soon as approved
+candidates run out. Each selected candidate passes admission again. The day's
+400 allowances accrue proportionally across the twelve active hours (about
+33 per active hour); unused allowances carry forward that day, with no burst
+catchup. Original publication, Reply topic and evidence rules are unchanged.
