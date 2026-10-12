@@ -14,7 +14,7 @@ from src.core import settings
 settings.load()
 
 from src.core import account, config, health, state_store
-from src.guards.active_hours import awake_job, is_active, next_wake, window_label
+from src.guards.active_hours import awake_job, is_active, next_wake, window_label, WAKE_JITTER_MINUTES
 from src.editorial.editorial_bot import open_startup_window, run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
 
@@ -46,7 +46,9 @@ def build_scheduler(*, post_only=False, reply_only=False):
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
         executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1)},
-        job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
+        # A scheduled pause can leave jobs overdue by minutes. Run one fresh
+        # cycle at wake; coalescing prevents replaying the missed intervals.
+        job_defaults={"misfire_grace_time": None, "coalesce": True, "max_instances": 1},
     )
 
     def add(fn, minutes, job_id, *, executor="default", first_seconds=None):
@@ -136,6 +138,7 @@ def main():
     min_target, target = config.post_targets()
     if args.dry_run:
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": window_label(),
+                          "wake_jitter_minutes": WAKE_JITTER_MINUTES,
                           "min_target_posts": min_target,
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
@@ -170,7 +173,8 @@ def main():
     was_active = None
     log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
              f"(max {config.posts_ceiling()}); replies target {config.reply_target()}/day, "
-             f"max {settings.get('MAX_REPLIES_PER_DAY')}/day; active {window_label()}.")
+             f"max {settings.get('MAX_REPLIES_PER_DAY')}/day; active today {window_label()} "
+             f"(wake variation ±{WAKE_JITTER_MINUTES} min/day).")
     try:
         while not stop.is_set():
             active = is_active()

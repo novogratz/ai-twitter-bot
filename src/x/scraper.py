@@ -324,6 +324,9 @@ def _profile_visit_allowed(username: str) -> bool:
         return False
     if base == BOT_HANDLE.lower():
         return True  # own profile (incl. BOT_HANDLE/with_replies callers)
+    from ..guards.reply_admission import is_blocked_account
+    if is_blocked_account(base):
+        return False
     allow = settings.get("PROFILE_VISIT_ALLOWLIST")
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
 

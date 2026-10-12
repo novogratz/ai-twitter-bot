@@ -2,8 +2,10 @@
 
 The operator's current mandate (2026-10-12) targets at least 300 useful replies per full
 Toronto day and permits at most 400, to other accounts' standalone posts only. Never answer own
-posts or comments on them. All external activity runs only during 05:00–10:00,
-14:00–15:00 and 17:00–23:00 Toronto time, end exclusive.
+posts or comments on them. Nominal activity windows are 05:00–10:00,
+12:00–13:00 and 16:45–23:00 Toronto time. Each start varies independently
+by ±10 minutes per Toronto day, stable across restarts. Closing times are fixed
+and end exclusive. All external activity uses those actual daily windows.
 The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
@@ -25,9 +27,11 @@ That character is the Voice, written only in the Account's folder,
 `accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
 Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
 their task instructions but no copy of the persona, and the model client adds
-none (#192). The per-person relations (Graphseo, bestie, buddy) are the
-Account's Relations, in `account.toml` and `relations/`: the engine names no
-one (#203).
+none (#192). Per-person instructions are the Account's Relations, in
+`account.toml` and `relations/`: the engine names no one (#203). Legacy finance
+Relations remain inactive behind the Account's blocklist. The requested voice
+favors Elon, Grok, xAI and his products on relevant AI topics, with grounded
+claims, specific insight and wit.
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
@@ -56,6 +60,19 @@ Unrelated lifestyle, politics, sports, celebrity gossip, crypto and stock-price
 chatter are excluded. An AI name used incidentally is not sufficient. These
 rules apply to every author, including VIPs and manually selected accounts.
 Only other accounts' standalone posts qualify; conversation turns stay disabled.
+Every status ID remains protected permanently; the Replied store never evicts old IDs.
+
+The profile allowlist, priority scans, pinned tracking and manual follow seeds
+now focus on AI researchers, builders and enthusiasts, led by Elon Musk, xAI
+and Karpathy. Former crypto/trading exceptions, including TheBTCTherapist and
+Graphseo, are blocked even if stale `.env` lists or saved discoveries name them.
+The optional Account `niche.excluded` pattern rejects Bitcoin/crypto text even
+when AI words are present. `like_tweet` checks actual parent text before any
+click and does not borrow text from quoted posts. Feed author harvesting and
+curator promotion require on-niche evidence. Followers, Engagers and discovered
+seeds require an AI/SI bio; only manual seeds bypass positive bio/size/language
+checks. Topic exclusions apply to everyone. `FOLLOW_REQUIRE_NICHE` cannot be
+disabled. Existing following relationships are not automatically removed.
 
 Every discovery is saved. The shared pool rejects off-niche text before model
 selection and rechecks older saved candidates. URLs and handles are stripped
@@ -91,7 +108,7 @@ are its only filter.
 
 ## Trend slots and the Startup post
 
-The 09:45, 14:20 and 17:00 slots, and the Startup post, take their topic from
+The 09:45, 12:20 and 17:00 slots, and the Startup post, take their topic from
 X. Two Top-tab searches for AI and "artificial intelligence" (`[searches]
 trending` in `account.toml`) supply posts from
 the last 24 hours; the five with the most likes per minute are kept. Own posts,
@@ -112,8 +129,8 @@ watchdog relaunch or a deploy each opens one. It has its own three attempts
 and pending guard per start, goes before a slot whose window is open, and
 obeys the waking hours, the eight-publication ceiling and the post spacing. A
 pass that gives it no draft falls through to the open slots in the same pass,
-so a restart never hides a slot. A start overnight opens nothing, even just
-before 05:00. A restart loop in daytime therefore publishes
+so a restart never hides a slot. A start outside the actual daily windows opens
+nothing. A restart loop in daytime therefore publishes
 up to one post every twenty minutes until the daily ceiling, at the expense of
 later slots. An ambiguous submission counts as a publication for that: the
 next Startup post waits twenty minutes after it, the day's pending submissions
@@ -128,7 +145,7 @@ must not repeat.
   remote work can finish; it cannot authorize a later out-of-hours submission.
   A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
   write is admitted after it.
-- Slots: 05:00, 07:15, 09:30, 09:45 (trend), 14:00, 14:20 (trend), 14:40,
+- Slots: 05:00, 07:15, 09:30, 09:45 (trend), 12:00, 12:20 (trend), 12:40,
   17:00 (trend), 17:45, 18:30, optional 22:15, plus the Startup post.
   Eleven slots and the Startup post compete for eight publications: on a full
   day the evening slots are the ones left out.
@@ -190,11 +207,9 @@ must not repeat.
   explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
-  (issue #189). One exception, pending the Operator's decision: the Replies
-  to @Graphseo run on the Claude CLI whenever it is installed (his
-  Relation's `provider` in `account.toml`), with
-  `PRIORITY_REPLY_MODEL`, unset Claude's default `claude-haiku-4-5-20251001`
-  (issue #197).
+  (issue #189). Account Relations can select their own provider with
+  `PRIORITY_REPLY_MODEL` (issue #197); the old finance Relations cannot run
+  because their authors are blocked.
 - An outgoing text that names a Respected account, by `@handle` or by its
   handle in a sentence with a derisive word, is refused at the write
   chokepoint, dry run included: `post_tweet` for an Original, Reply
@@ -378,3 +393,35 @@ candidates run out. Each selected candidate passes admission again. The day's
 400 allowances accrue proportionally across the twelve active hours (about
 33 per active hour); unused allowances carry forward that day, with no burst
 catchup. Original publication, Reply topic and evidence rules are unchanged.
+
+2026-10-12 — Operator moved the midday window to lunch and the evening start
+to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and
+16:45–23:00. Each window's start varies independently by up to ten minutes
+earlier or later each Toronto day; closing times remain exactly 10:00, 13:00
+and 23:00, end exclusive. The daily offsets are derived from the Account,
+Toronto date and nominal start, so restarts reproduce the same day's schedule
+without a new state file. The next wake, browser and model guards, and Reply
+allowance all use the actual daily windows. Afternoon Original slots move to
+12:00, 12:20 (trend) and 12:40. The Reply target remains 300 per full day,
+with a hard maximum of 400 including pending submissions. The Operator
+requested a PR merged and pushed to main for the running bot.
+
+Scheduled pauses keep one overdue run of each job available at wake. Missed
+intervals coalesce into one current cycle; every activity and publication guard
+still applies. This prevents the 60-second misfire grace from skipping the
+first collection and editorial cycles after a pause.
+
+2026-10-12 — Operator requested AI/SI-only engagement, led by Elon Musk.
+The Account's profile visits, priority scans, pinned tracking and follow seeds
+now cover AI researchers, builders and enthusiasts, with Elon first. Former
+crypto/trading exceptions, including TheBTCTherapist and Graphseo, are blocked
+even when old settings or saved discoveries still list them. Bitcoin/crypto
+text is excluded even alongside AI terms. The shared like write checks the
+actual post text; Replies retain their pool and opened-target checks. Feed
+harvesting and curator promotion require AI evidence; discovered follows and
+Engagers require an AI/SI bio, and topic exclusions apply even to manual seeds.
+One Reply per standalone post is permanent: reply IDs are never evicted, and
+debate, replyback and conversation follow-ups remain disabled. The requested
+Voice favors Elon, Grok, xAI and related products when relevant and supported,
+with technical insight, apt wit and honest uncertainty. Existing follower
+relationships and production state are preserved. Deployment requires restart.

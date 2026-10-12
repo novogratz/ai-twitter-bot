@@ -59,13 +59,14 @@ def run_early_bird_cycle():
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     from ..core.evolution_store import filter_and_weight
     from .direct_reply import always_reply_accounts
-    pool = filter_and_weight(_scan_pool())
-    always_pool = filter_and_weight(always_reply_accounts())
+    from ..x.scraper import _profile_visit_allowed
+    pool = [h for h in filter_and_weight(_scan_pool()) if _profile_visit_allowed(h)]
+    always_pool = list(dict.fromkeys(h for h in filter_and_weight(always_reply_accounts()) if _profile_visit_allowed(h)))
 
     # Growth push: scan the always-reply accounts first, then fill with random
     # mega accounts. Early replies under big accounts are the highest upside
     # surface, so avoid pure random sampling.
-    priority_picks = random.sample(always_pool, k=min(4, len(always_pool)))
+    priority_picks = always_pool[:1] + random.sample(always_pool[1:], k=min(3, max(0, len(always_pool) - 1)))
     filler = [h for h in pool if h not in priority_picks]
     random_picks = random.sample(filler, k=min(3, len(filler)))
     picks = list(dict.fromkeys(priority_picks + random_picks))
@@ -105,12 +106,7 @@ def _fresh_candidates(username: str, tweets: list) -> list:
         if age > timedelta(minutes=EARLY_BIRD_AGE_MAX_MIN):
             continue  # too late — drops down to standard reply bot territory
 
-        # Niche gate — earlybird scans broad media accounts (BFMTV, France24,
-        # unusual_whales, etc.), so fresh tweets are often off-mission
-        # (aviation pricing, foreign politics, sports). The bot still produced
-        # OK punchlines but it drifts the account brand and burns cap budget on
-        # tweets that won't convert FR AI/crypto/bourse readers. Reuse the same
-        # word-boundary regex direct_reply uses for its search lane.
+        # Priority authors still need an on-topic standalone post.
         if not is_on_niche(text):
             log.info(f"[EARLYBIRD] Off-niche topic — skipping @{username}: {text[:60]}")
             continue

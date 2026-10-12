@@ -34,7 +34,7 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     assert editorial.due_slot(at(22, 15), {})[0] == "22:15"
     assert editorial.due_slot(at(22, 59), {})[0] == "22:15"
     assert editorial.due_slot(at(23, 0), {}) is None
-    for hour in (10, 12, 15, 20, 0):
+    for hour in (10, 13, 14, 15, 20, 0):
         assert editorial.due_slot(at(hour, 0), {}) is None
 
 
@@ -301,7 +301,7 @@ def test_source_dates_and_domains_are_checked():
 
 
 def test_source_pool_keeps_more_fresh_news_before_evergreen(monkeypatch):
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
 
     def fake_fetch(url):
@@ -518,7 +518,7 @@ def test_evidence_ids_resolve_to_exact_fetched_text(draft_fixture):
 
 
 def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     feed = "https://openai.com/news/rss.xml"
     use_editorial(monkeypatch, feeds=(("OpenAI", feed),), evergreen=())
     items = "".join(
@@ -545,9 +545,9 @@ def test_a_spent_slot_does_not_hold_the_overlapping_next_one():
 
 
 def test_trend_slots_sit_in_the_grid():
-    assert editorial.trend_slots() == {"09:45", "14:20", "17:00"}
+    assert editorial.trend_slots() == {"09:45", "12:20", "17:00"}
     assert editorial.trend_slots() <= set(dict(editorial.slots()))
-    assert [slot.clock for slot in editorial.slots() if slot.trend] == ["09:45", "14:20", "17:00"]
+    assert [slot.clock for slot in editorial.slots() if slot.trend] == ["09:45", "12:20", "17:00"]
 
 
 def test_startup_window_opens_on_every_waking_start():
@@ -629,7 +629,7 @@ def test_trend_slot_without_enough_trending_posts_spends_no_attempt(monkeypatch,
     clock(monkeypatch, datetime(2026, 9, 20, 17, 5, tzinfo=TORONTO))
     monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: TRENDING[:2])
     assert editorial.run_editorial_cycle() is None
-    assert not editorial._read_state().get("attempts", {}).get("14:20")
+    assert not editorial._read_state().get("attempts", {}).get("12:20")
     assert not trend_fixture["drafts"]
 
 
@@ -660,7 +660,7 @@ def test_trend_review_needs_news_no_mention_and_editor_trend_approval(draft_fixt
 def test_a_restart_after_an_ambiguous_submission_skips_its_source(monkeypatch):
     """A crash mid-submission leaves the Startup post pending under the old
     process key; the next process's Startup post must not reuse the source."""
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     feed = "https://openai.com/news/rss.xml"
     use_editorial(monkeypatch, feeds=(("OpenAI", feed),), evergreen=())
     xml = ("<rss><channel><item><title>AI model launch</title><link>https://openai.com/launch</link>"
@@ -789,14 +789,14 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
 
 
 def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
     entry = lambda ago: dict(url="https://openai.com/x", text="An AI post",
                              ts=(now - ago).isoformat())
     pending = {f"2026-09-20/startup@{h:02d}:00:00": entry(timedelta(hours=1)) for h in range(5, 11)}
     # Yesterday's pending may be live, but it counts toward yesterday.
     pending["2026-09-19/22:15"] = entry(timedelta(hours=15))
-    state = {"date": "2026-09-20", "slots": {"14:00": "published"},
+    state = {"date": "2026-09-20", "slots": {"12:00": "published"},
              "pending_sources": pending, "published": []}
     memory_ledger.append(editorial.action_guard.POST, "", False, now - timedelta(minutes=30))
     assert editorial._pending_refusal(state, now) == ""  # 1 shipped + 6 pending

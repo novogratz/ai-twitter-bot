@@ -21,6 +21,46 @@ def test_selector_runs_each_minute_after_the_startup_attempt():
     assert selector.next_run_time > startup.trigger.run_date
 
 
+@pytest.mark.parametrize("job_id,module,run", [
+    ("editorial_job", "main", "run_editorial_cycle"),
+    ("direct_reply_job", "src.replies.direct_reply", "run_direct_reply_cycle"),
+])
+@pytest.mark.parametrize("awake", [True, False])
+def test_resume_runs_one_overdue_cycle_and_keeps_the_waking_guard(monkeypatch, job_id, module, run, awake):
+    import importlib
+    from datetime import datetime, timedelta, timezone
+    from types import SimpleNamespace
+    from apscheduler.executors.base import run_job
+    from apscheduler.events import EVENT_JOB_EXECUTED
+    from apscheduler.schedulers.base import STATE_RUNNING, STATE_PAUSED
+    from main import build_scheduler
+    from tests.helpers import TORONTO, clock
+
+    clock(monkeypatch, datetime(2026, 10, 12, 12 if awake else 14, 30, tzinfo=TORONTO))
+    called, events, submitted = [], [], []
+    monkeypatch.setattr(importlib.import_module(module), run, lambda: called.append(job_id))
+    scheduler = build_scheduler()
+    for job in scheduler.get_jobs():
+        if job.id != job_id:
+            scheduler.remove_job(job.id)
+    scheduler.start(paused=True)
+    try:
+        job = scheduler.get_job(job_id)
+        job.modify(next_run_time=datetime.now(timezone.utc) - 3 * job.trigger.interval - timedelta(seconds=90))
+        def submit(job, times):
+            submitted.extend(times)
+            events.extend(run_job(job, "default", times, "test.scheduler"))
+        monkeypatch.setattr(scheduler, "_lookup_executor", lambda name: SimpleNamespace(submit_job=submit))
+        scheduler.state = STATE_RUNNING
+        scheduler._process_jobs()
+        assert len(submitted) == 1
+        assert [event.code for event in events] == [EVENT_JOB_EXECUTED]
+        assert called == ([job_id] if awake else [])
+    finally:
+        scheduler.state = STATE_PAUSED
+        scheduler.shutdown()
+
+
 def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
     """Building the scheduler publishes nothing: the Startup post goes
     through the editorial job, inside its window and the daily ceiling."""

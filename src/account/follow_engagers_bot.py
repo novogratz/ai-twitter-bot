@@ -6,8 +6,8 @@ just engaged US. We already have them on disk for free: every Debate turn
 the account shipped (replyback or debate) leaves a ledger row naming the
 Engager it answered. This lane follows a small daily trickle of them
 through the full follow chokepoint, which finds them Engagers in the same
-ledger (follow_policy.engagers): size/niche gates skipped — their behavior
-proves both — English gate + caps + spacing + churn kept. An Engager the
+ledger (follow_policy.engagers). Operator 2026-10-12: Engagers skip the size
+gate only; AI/SI bios, English, caps, spacing and churn checks remain. An Engager the
 followers page showed is a follower to the policy, and gets the full gate.
 The Follow run skips the Followed accounts, so an Engager already followed
 opens no profile.

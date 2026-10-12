@@ -371,12 +371,20 @@ _POSTS_JS = r"""
     }
     var url = art ? statusLink(art) : '';
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
+    var bodies = art.querySelectorAll('[data-testid="tweetText"]');
+    var text = '';
+    for (i = 0; i < bodies.length; i++) {
+        if (bodies[i].closest('article') === art && !bodies[i].closest('[role="link"]')) {
+            text = bodies[i].innerText;
+            break;
+        }
+    }
     if (art.querySelector('[data-testid="unlike"]')) {
-        return JSON.stringify({url: url, result: 'already_liked'});
+        return JSON.stringify({url: url, text: text, result: 'already_liked'});
     }
     var button = art.querySelector('[data-testid="like"]');
     if (!button) return JSON.stringify({url: url, result: 'failed'});
-    if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
+    if (mode !== 'press') return JSON.stringify({url: url, text: text, result: 'not_liked'});
     button.click();
     return JSON.stringify({url: url, result: 'clicked'});
 })("__MODE__", "__TARGET_ID__")
@@ -437,6 +445,16 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
     def steps():
         nonlocal liked_url
+        from ..core import account
+        parent = _page_posts("read", target)
+        if parent.get("result") == "already_liked":
+            return LikeOutcome.ALREADY_LIKED
+        if x_urls.status_id(parent.get("url", "")) != target:
+            return LikeOutcome.FAILED
+        if (reply_admission.is_blocked_account(x_urls.author(parent.get("url", "")))
+                or not account.current().niche.matches_post(parent.get("text", ""))):
+            log.info("[LIKE] Post %s is outside the Account's topic policy; nothing clicked.", target)
+            return LikeOutcome.BLOCKED
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
         if pressed.get("result") == "already_liked":

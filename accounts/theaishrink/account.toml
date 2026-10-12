@@ -20,9 +20,9 @@ slots = [
     { clock = "07:15", angle = "A useful AI workflow with a concrete first step" },
     { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
     { clock = "09:45", trend = true },
-    { clock = "14:00", angle = "An AI concept explained through a clear example" },
-    { clock = "14:20", trend = true },
-    { clock = "14:40", angle = "A model or tool update and what changes for its users" },
+    { clock = "12:00", angle = "An AI concept explained through a clear example" },
+    { clock = "12:20", trend = true },
+    { clock = "12:40", angle = "A model or tool update and what changes for its users" },
     { clock = "17:00", trend = true },
     { clock = "17:45", angle = "Priority: an evidence-backed take on an AI tradeoff" },
     { clock = "18:30", angle = "A practical AI idea worth saving or sharing" },
@@ -140,7 +140,8 @@ off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|g
 # handle has no prompt of its own.
 default = "relations/buddy.md"
 
-# A Relation's own VIP prompt, in place of the default one.
+# Legacy Relations below are inactive: these authors are blocked by
+# network.blocked_accounts (Operator 2026-10-12).
 [relations.handles.TheBTCTherapist]
 prompt = "relations/bestie.md"
 
@@ -177,88 +178,83 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 # a display name, and case-insensitively unless a comment says otherwise.
 
 [network]
-# AI only (Operator, 2026-09-25): the lists below hold AI accounts, the
-# accounts the Operator picked by hand whatever their topic (Graphseo,
-# TheBTCTherapist, McnallieM, Mindset4Money_X) and handles still to
-# confirm, never a crypto, markets or space account.
+# Operator 2026-10-12: AI/SI profiles only, starting with Elon Musk.
+# Former crypto/trading exceptions are blocked even in saved discoveries.
 # Blocked accounts this Account adds to the engine's BLOCKLIST
 # (src/core/config.py), matched the same way: the token anywhere in the
 # handle, case, spaces, dashes and underscores ignored. An Account adds to
 # the engine's list and never removes from it: no key here unblocks anyone.
-blocked_accounts = []
+blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]
 # Authors whose posts always get French Replies, whatever one short post
 # looks like: FR_FORCED_REPLY_HANDLES unless .env sets it. Optional.
-fr_forced_reply = ["Graphseo"]
+fr_forced_reply = []
 # Profiles the scraper may visit besides our own: PROFILE_VISIT_ALLOWLIST
 # unless .env sets it.
-profile_visits = ["TheBTCTherapist", "Graphseo"]
-# Accounts the direct_reply VIP scan searches: VIP_SCAN_HANDLES unless .env
-# sets it.
-vip_scan = ["Graphseo", "TheBTCTherapist"]
+profile_visits = [
+    "elonmusk", "xai", "karpathy", "demishassabis", "sama", "ylecun", "AndrewYNg", "DrJimFan",
+    "GoogleDeepMind", "AnthropicAI", "MistralAI", "OpenAI", "rowancheung", "minchoi",
+    "heybarsee", "swyx", "_akhaliq", "emollick", "simonw", "rasbt", "goodside",
+]
+# Accounts the priority scan visits first (search fallback for other Accounts):
+# VIP_SCAN_HANDLES unless .env sets it.
+vip_scan = ["elonmusk", "xai", "karpathy"]
 # Accounts the curator always tracks first: PINNED_TRACKED_HANDLES unless
 # .env sets it.
-pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
+pinned_tracked = [
+    "elonmusk", "xai", "karpathy", "demishassabis", "sama", "ylecun", "AndrewYNg", "DrJimFan",
+    "GoogleDeepMind", "AnthropicAI", "MistralAI", "OpenAI",
+]
 # Replies to these authors run the priority model.
 vip_reply = [
-    "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun",
-    "arthurmensch", "GuillaumeLample", "fchollet", "karpathy",
-    "demishassabis", "sama",
+    "elonmusk", "xai", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
+    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
 ]
 # early_bird scans the always-reply accounts first: vip_reply, then the four
 # lists below in this order, a handle listed twice kept at its first place.
 big_ai_hype = [
-    "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella",
-    "sundarpichai", "JensenHuang", "gdb", "miramurati", "AravSrinivas",
-    "karpathy", "ylecun", "AndrewYNg", "drfeifei", "lexfridman",
-    "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue", "OpenAI",
-    "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai", "MistralAI",
-    "perplexity_ai", "nvidia", "Microsoft", "Meta", "OpenAIDevs",
-    "huggingface", "cursor_ai", "rowancheung", "TheRundownAI", "minchoi",
-    "kimmonismus", "slow_developer", "mreflow", "bentossell", "venturetwins",
-    "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq",
-    "GaryMarcus", "testingcatalog", "btibor91", "AISafetyMemes", "amasad",
-    "OfficialLoganK", "DrJimFan", "sytelus",
+    "elonmusk", "xai", "sama", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
+    "JensenHuang", "gdb", "miramurati", "AravSrinivas", "karpathy", "ylecun", "AndrewYNg",
+    "drfeifei", "lexfridman", "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
+    "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "MistralAI", "perplexity_ai",
+    "nvidia", "Microsoft", "Meta", "OpenAIDevs", "huggingface", "cursor_ai", "rowancheung",
+    "TheRundownAI", "minchoi", "kimmonismus", "slow_developer", "mreflow", "bentossell",
+    "venturetwins", "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq", "GaryMarcus",
+    "testingcatalog", "btibor91", "AISafetyMemes", "amasad", "OfficialLoganK", "DrJimFan",
+    "sytelus",
 ]
 mid_size_ai = [
-    "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt",
-    "Teknium1", "abacaj", "corbtt", "Yuchenj_UW", "nutlope", "skirano",
-    "steph_palazzolo", "saranormous", "packyM", "nearcyan", "giffmana",
-    "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
+    "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt", "Teknium1", "abacaj",
+    "corbtt", "Yuchenj_UW", "nutlope", "skirano", "steph_palazzolo", "saranormous", "packyM",
+    "nearcyan", "giffmana", "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
     "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
 ]
 high_traction_reply = [
-    "Dark_Emi_", "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample",
-    "GaelVaroquaux", "fchollet", "MistralAI",
+    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI",
 ]
 big_fr = [
-    "Korben", "micode", "Underscore_", "presse_citron", "numerama",
-    "siecledigital", "BFMTech", "frandroid", "journaldugeek",
-    "FlavienChervet", "MistralAI", "arthurmensch", "GuillaumeLample",
-    "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
+    "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
+    "frandroid", "journaldugeek", "FlavienChervet", "MistralAI", "arthurmensch",
+    "GuillaumeLample",
 ]
 # The engage job puts these in every cycle and likes two of their posts;
 # compared case-sensitively with the pool's handles.
-engage_vip = ["Graphseo"]
+engage_vip = ["elonmusk", "xai"]
 # The replyback reciprocity likes skip an engager listed in engage_targets
 # or reply_targets; bin/mass_unfollow.py never unfollows engage_targets.
-engage_targets = ["Graphseo", "XFenaux"]
+engage_targets = ["elonmusk", "xai"]
 reply_targets = [
-    "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI",
-    "AnthropicAI", "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun",
-    "fchollet", "demishassabis", "MistralAI", "arthurmensch",
-    "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
-    "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
-    "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho",
-    "DereeperVivre", "Phil_RX", "Korben", "underscore_", "MichaelBenabou",
-    "presse_citron", "siecledigital", "usine_digitale", "numerama", "01net",
-    "frandroid", "LesNumeriques", "FrenchWeb", "MaddyNess", "arthurmensch",
-    "GuillaumeLample", "GaelVaroquaux", "vision_ia", "Palantir",
+    "elonmusk", "xai", "vision_ia", "jbelizaireCEO", "sama", "OpenAI", "AnthropicAI",
+    "GoogleDeepMind", "karpathy", "ylecun", "fchollet", "demishassabis", "MistralAI",
+    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
+    "LambdaAPI", "BostonDynamics", "Figure_robot", "ID_AA_Carmack", "drfeifei", "Korben",
+    "underscore_", "presse_citron", "siecledigital", "usine_digitale", "numerama", "01net",
+    "frandroid", "LesNumeriques", "FrenchWeb", "MaddyNess", "Palantir",
 ]
 # follow_engagers never follows these Engagers: media accounts do not follow
 # back. Lowercase, compared with the ledger's lowercase handles.
 follow_engagers_skip = [
-    "business", "cnbc", "reuters", "wsj", "ft", "bloomberg", "watcherguru",
-    "zerohedge", "unusual_whales", "cointelegraph",
+    "business", "cnbc", "reuters", "wsj", "ft", "bloomberg", "watcherguru", "zerohedge",
+    "unusual_whales", "cointelegraph",
 ]
 
 # Python regular expressions. AI only (Operator, 2026-09-25): no crypto,
@@ -266,6 +262,8 @@ follow_engagers_skip = [
 # coding, agent, meta, google, apple). AI in capitals always matches; any
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
+# A disallowed topic always wins, even when a post also mentions AI.
+excluded = '\b(bitcoins?|btc|crypto(?:currenc(?:y|ies))?|ethereum|eth|solana|memecoins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale)\b'
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
 post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
@@ -279,6 +277,10 @@ Reject unrelated lifestyle, politics, sports, celebrity gossip, crypto, stock-pr
 chatter or generic technology news. A familiar lab, model or author's name alone
 is not enough: Claude may be a person, Gemini an astrology sign, transformers a
 movie, and SI a non-AI acronym. Never force an AI angle onto an unrelated post.
+Bitcoin and crypto content are excluded even when mixed with AI or posted by Elon.
+Favor Elon Musk, Grok, xAI and his products when the post has a substantive AI/SI
+connection. Point to a supported capability or useful implication; never invent
+benchmarks, personal use or celebrity engagement, and never force a product plug.
 Be a sharp, knowledgeable AI/SI voice: add one precise observation, explain a real
 tradeoff, correct a supported misconception, or make an apt original joke.
 Skip when the only contribution is praise, a summary or an unsupported claim.
@@ -287,7 +289,7 @@ Skip when the only contribution is praise, a summary or an unsupported claim.
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|xai|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
 # X search queries.
 [searches]
@@ -315,7 +317,7 @@ hot_tab = [
     'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
 # like_job picks one per cycle, on the Top or the Latest tab, and likes
-# what it finds without the niche check: the query is the only filter.
+# eligible AI posts through the shared text check; crypto is always excluded.
 likes = [
     'AI datacenter OR AI power demand lang:en min_faves:50',
     'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',

@@ -10,10 +10,13 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-- **Active daily: 05:00–10:00, 14:00–15:00 and 17:00–23:00 America/Toronto**, with daylight saving handled automatically.
+- **Nominal daily hours: 05:00–10:00, 12:00–13:00 and 16:45–23:00 America/Toronto.**
+  Each start varies by up to ten minutes each day; closing times are fixed.
+  Daily times survive restarts, and daylight saving is handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **At least 300 useful replies targeted per full Toronto day; 400 is the hard maximum**, only to other accounts’ standalone posts.
-  Never answer our own posts or comments on them. Spacing and duplicate protection remain.
+  One reply per post, permanently; no debates, follow-ups, own posts or comments on them.
+  Spacing and duplicate protection remain.
   Reply scans save posts to a shared pool; a one-minute selector chooses among them
   and drafts at most one candidate explicitly judged on-topic and scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
@@ -26,8 +29,11 @@ English prompts): every post and reply prompt carries it as one block.
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **Replies cover AI/SI, including AI-generated videos and brainrot**, with no VIP topic exemptions.
   A specific insight or apt original joke earns a reply; unrelated posts and empty praise are skipped.
-  Likes and follows retain their AI filters: `[niche]`, `[searches]` and `[network]`
-  in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
+  Profile scans start with Elon, then AI researchers, builders and enthusiasts.
+  Former crypto/trading targets are blocked. Bitcoin/crypto posts stay excluded
+  even when they mention AI; likes check the actual post text, and discovered
+  follows and Engagers need AI/SI bios. The voice favors Elon, Grok and xAI with
+  grounded insight and wit ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.
@@ -50,9 +56,9 @@ a new action outside those three windows. An already-issued request may still fi
 | 07:15 | A practical AI workflow |
 | 09:30 | Priority AI article or model update with a sharp consequence |
 | 09:45 | Trend: the AI topic X is talking about, told from a trusted article |
-| 14:00 | A clear explanation of an AI concept |
-| 14:20 | Trend |
-| 14:40 | A model or tool update and its consequences |
+| 12:00 | A clear explanation of an AI concept |
+| 12:20 | Trend |
+| 12:40 | A model or tool update and its consequences |
 | 17:00 | Trend |
 | 17:45 | Priority informed take on an AI tradeoff |
 | 18:30 | An idea worth saving or sharing |
@@ -74,9 +80,9 @@ the default browser: the bot opens every page in Safari), Python 3.12+,
 (`EDITORIAL_OLLAMA_MODEL`); replies use `OLLAMA_MODEL` (default
 `qwen3.6:35b-a3b`), the model `bin/run.sh` pre-warms. With the
 default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
-fallback, codex for instance, with one exception: the Replies to @Graphseo run
-on the Claude CLI whenever it is installed (his Relation's `provider` in
-`account.toml`). A CLI runs `NEWS_MODEL`,
+fallback, codex for instance. An Account can give a Relation its own provider;
+the former finance Relations are inactive because those accounts are blocked.
+A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the
 call and is logged at start, as is a fallback the code ignores.
@@ -242,3 +248,20 @@ selector now runs each minute and reuses recent topic-approved reviews, comparin
 new candidates at least every five minutes while approved candidates remain.
 Quality, available posts and service speed determine the actual count. The
 three Toronto windows and AI/SI-only selection still apply.
+
+2026-10-12 — Operator moved the midday window to lunch and the evening start
+to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and
+16:45–23:00. Each window's start varies independently by up to ten minutes
+earlier or later each Toronto day; closing times remain exactly 10:00, 13:00
+and 23:00, end exclusive. The daily offsets are derived from the Account,
+Toronto date and nominal start, so restarts reproduce the same day's schedule
+without a new state file. The next wake, browser and model guards, and Reply
+allowance all use the actual daily windows. Afternoon Original slots move to
+12:00, 12:20 (trend) and 12:40. The Reply target remains 300 per full day,
+with a hard maximum of 400 including pending submissions. The Operator
+requested a PR merged and pushed to main for the running bot.
+
+Scheduled pauses keep one overdue run of each job available at wake. Missed
+intervals coalesce into one current cycle; every activity and publication guard
+still applies. This prevents the 60-second misfire grace from skipping the
+first collection and editorial cycles after a pause.

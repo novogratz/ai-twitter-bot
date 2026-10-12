@@ -23,12 +23,13 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "05:00–10:00, 14:00–15:00, 17:00–23:00 America/Toronto",
+    "active": "05:00–10:00, 12:00–13:00, 16:45–23:00 America/Toronto",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
     "replies": 400,
     "target_replies": 300,
+    "wake_jitter_minutes": 10,
     "quotes": 0,
     "reposts": 0,
     "slots": [
@@ -36,15 +37,15 @@ PRE_187 = {
         ["07:15", "A useful AI workflow with a concrete first step"],
         ["09:30", "Priority: an AI article or model update with a sharp consequence"],
         ["09:45", "Trending: the AI topic X is talking about right now, told from a trusted source"],
-        ["14:00", "An AI concept explained through a clear example"],
-        ["14:20", "Trending: the AI topic X is talking about right now, told from a trusted source"],
-        ["14:40", "A model or tool update and what changes for its users"],
+        ["12:00", "An AI concept explained through a clear example"],
+        ["12:20", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["12:40", "A model or tool update and what changes for its users"],
         ["17:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
         ["17:45", "Priority: an evidence-backed take on an AI tradeoff"],
         ["18:30", "A practical AI idea worth saving or sharing"],
         ["22:15", "Optional: an exceptional fresh AI update or unusually useful source"],
     ],
-    "trend_slots": ["09:45", "14:20", "17:00"],
+    "trend_slots": ["09:45", "12:20", "17:00"],
     "startup_post": "every start in waking hours, restarts included",
     "jobs": [
         "editorial_job", "startup_reply_job", "reply_selection_job", "direct_reply_job", "feed_sweep_job", "early_bird_job",
@@ -57,6 +58,7 @@ PRE_187 = {
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
     "MAX_REPLIES_PER_DAY": 400,
+    "FOLLOW_REQUIRE_NICHE": True,
     "TARGET_REPLIES_PER_DAY": 300,
     "MAX_ORIGINALS_PER_DAY": 8, "MIN_SECONDS_BETWEEN_POSTS": 1200, "POST_JITTER_SECONDS": 0,
     "MIN_SECONDS_BETWEEN_REPLIES": 8, "REPLY_JITTER_SECONDS": 7, "FOLLOW_TOTAL_CAP": 300,

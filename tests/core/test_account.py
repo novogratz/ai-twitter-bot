@@ -24,14 +24,14 @@ OLD = {
               ("07:15", "A useful AI workflow with a concrete first step"),
               ("09:30", "Priority: an AI article or model update with a sharp consequence"),
               ("09:45", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("14:00", "An AI concept explained through a clear example"),
-              ("14:20", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("14:40", "A model or tool update and what changes for its users"),
+              ("12:00", "An AI concept explained through a clear example"),
+              ("12:20", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("12:40", "A model or tool update and what changes for its users"),
               ("17:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
               ("17:45", "Priority: an evidence-backed take on an AI tradeoff"),
               ("18:30", "A practical AI idea worth saving or sharing"),
               ("22:15", "Optional: an exceptional fresh AI update or unusually useful source")],
-    "TREND_SLOTS": ["09:45", "14:20", "17:00"],
+    "TREND_SLOTS": ["09:45", "12:20", "17:00"],
     "TREND_PURPOSE": TREND_PURPOSE,
     "EXCEPTIONAL_SLOT": "22:15",
     "FEEDS": [("OpenAI", "https://openai.com/news/rss.xml"),
@@ -310,73 +310,50 @@ def test_a_stricter_account_value_holds_for_the_operator_bounds(accounts, fresh)
 # only, like the policy) removed REMOVED_205 from them and narrowed
 # NARROWED_205. A pattern is (source, flags).
 NETWORK = {
-    "PROFILE_VISIT_ALLOWLIST": "TheBTCTherapist,Graphseo",
-    "VIP_SCAN_HANDLES": "Graphseo,TheBTCTherapist",
-    "PINNED_TRACKED_HANDLES": "TheBTCTherapist,Graphseo,Mindset4Money_X",
-    "VIP_REPLY_ACCOUNTS": [
-        "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
-        "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
-    ],
-    "BIG_AI_HYPE_ACCOUNTS": [
-        "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
-        "JensenHuang", "gdb", "miramurati", "AravSrinivas", "karpathy", "ylecun", "AndrewYNg",
-        "drfeifei", "lexfridman", "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
-        "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai", "MistralAI", "perplexity_ai",
-        "nvidia", "Microsoft", "Meta", "OpenAIDevs", "huggingface", "cursor_ai", "rowancheung",
-        "TheRundownAI", "minchoi", "kimmonismus", "slow_developer", "mreflow", "bentossell",
-        "venturetwins", "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq", "GaryMarcus",
-        "testingcatalog", "btibor91", "AISafetyMemes", "amasad", "OfficialLoganK", "DrJimFan",
-        "sytelus",
-    ],
+    "PROFILE_VISIT_ALLOWLIST": 'elonmusk,xai,karpathy,demishassabis,sama,ylecun,AndrewYNg,DrJimFan,GoogleDeepMind,AnthropicAI,MistralAI,OpenAI,rowancheung,minchoi,heybarsee,swyx,_akhaliq,emollick,simonw,rasbt,goodside',
+    "VIP_SCAN_HANDLES": 'elonmusk,xai,karpathy',
+    "PINNED_TRACKED_HANDLES": 'elonmusk,xai,karpathy,demishassabis,sama,ylecun,AndrewYNg,DrJimFan,GoogleDeepMind,AnthropicAI,MistralAI,OpenAI',
+    "VIP_REPLY_ACCOUNTS": ['elonmusk', 'xai', 'vision_ia', 'jbelizaireCEO', 'ylecun', 'arthurmensch', 'GuillaumeLample',
+ 'fchollet', 'karpathy', 'demishassabis', 'sama'],
+    "BIG_AI_HYPE_ACCOUNTS": ['elonmusk', 'xai', 'sama', 'DarioAmodei', 'demishassabis', 'satyanadella', 'sundarpichai',
+ 'JensenHuang', 'gdb', 'miramurati', 'AravSrinivas', 'karpathy', 'ylecun', 'AndrewYNg', 'drfeifei',
+ 'lexfridman', 'ID_AA_Carmack', 'fchollet', 'EMostaque', 'clementdelangue', 'OpenAI', 'AnthropicAI',
+ 'GoogleDeepMind', 'GoogleAI', 'MistralAI', 'perplexity_ai', 'nvidia', 'Microsoft', 'Meta',
+ 'OpenAIDevs', 'huggingface', 'cursor_ai', 'rowancheung', 'TheRundownAI', 'minchoi', 'kimmonismus',
+ 'slow_developer', 'mreflow', 'bentossell', 'venturetwins', 'heybarsee', 'alexandr_wang',
+ 'emollick', 'swyx', '_akhaliq', 'GaryMarcus', 'testingcatalog', 'btibor91', 'AISafetyMemes',
+ 'amasad', 'OfficialLoganK', 'DrJimFan', 'sytelus'],
     "MID_SIZE_AI_ACCOUNTS": [
         "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt", "Teknium1", "abacaj",
         "corbtt", "Yuchenj_UW", "nutlope", "skirano", "steph_palazzolo", "saranormous", "packyM",
         "nearcyan", "giffmana", "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
         "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
     ],
-    "HIGH_TRACTION_REPLY_ACCOUNTS": [
-        "Dark_Emi_", "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
-        "fchollet", "MistralAI",
-    ],
-    "BIG_FR_ACCOUNTS": [
-        "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
-        "frandroid", "journaldugeek", "FlavienChervet", "MistralAI", "arthurmensch",
-        "GuillaumeLample", "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
-    ],
-    "ALWAYS_REPLY_ACCOUNTS": [
-        "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
-        "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama", "elonmusk",
-        "DarioAmodei", "satyanadella", "sundarpichai", "JensenHuang", "gdb", "miramurati",
-        "AravSrinivas", "AndrewYNg", "drfeifei", "lexfridman", "ID_AA_Carmack", "EMostaque",
-        "clementdelangue", "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai",
-        "MistralAI", "perplexity_ai", "nvidia", "Microsoft", "Meta", "OpenAIDevs", "huggingface",
-        "cursor_ai", "rowancheung", "TheRundownAI", "minchoi", "kimmonismus", "slow_developer",
-        "mreflow", "bentossell", "venturetwins", "heybarsee", "alexandr_wang", "emollick", "swyx",
-        "_akhaliq", "GaryMarcus", "testingcatalog", "btibor91", "AISafetyMemes", "amasad",
-        "OfficialLoganK", "DrJimFan", "sytelus", "hwchase17", "jerryjliu0", "yoheinakajima",
-        "mckaywrigley", "rasbt", "Teknium1", "abacaj", "corbtt", "Yuchenj_UW", "nutlope", "skirano",
-        "steph_palazzolo", "saranormous", "packyM", "nearcyan", "giffmana", "vikhyatk",
-        "mattshumer_", "alexalbert__", "goodside", "simonw", "karinanguyen_", "charliebholtz",
-        "amanrsanger", "mathemagic1an", "Dark_Emi_", "ABaradez", "Phil_RX", "GaelVaroquaux",
-        "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
-        "frandroid", "journaldugeek", "FlavienChervet", "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
-    ],
-    "ENGAGE_VIP_ACCOUNTS": [
-        "Graphseo",
-    ],
-    "ENGAGE_TARGET_ACCOUNTS": [
-        "Graphseo", "XFenaux",
-    ],
-    "REPLY_TARGET_ACCOUNTS": [
-        "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI", "AnthropicAI",
-        "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis",
-        "MistralAI", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel",
-        "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
-        "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho", "DereeperVivre",
-        "Phil_RX", "Korben", "underscore_", "MichaelBenabou", "presse_citron", "siecledigital",
-        "usine_digitale", "numerama", "01net", "frandroid", "LesNumeriques", "FrenchWeb",
-        "MaddyNess", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "vision_ia", "Palantir",
-    ],
+    "HIGH_TRACTION_REPLY_ACCOUNTS": ['arthurmensch', 'GuillaumeLample', 'GaelVaroquaux', 'fchollet', 'MistralAI'],
+    "BIG_FR_ACCOUNTS": ['Korben', 'micode', 'Underscore_', 'presse_citron', 'numerama', 'siecledigital', 'BFMTech',
+ 'frandroid', 'journaldugeek', 'FlavienChervet', 'MistralAI', 'arthurmensch', 'GuillaumeLample'],
+    "ALWAYS_REPLY_ACCOUNTS": ['elonmusk', 'xai', 'vision_ia', 'jbelizaireCEO', 'ylecun', 'arthurmensch', 'GuillaumeLample',
+ 'fchollet', 'karpathy', 'demishassabis', 'sama', 'DarioAmodei', 'satyanadella', 'sundarpichai',
+ 'JensenHuang', 'gdb', 'miramurati', 'AravSrinivas', 'AndrewYNg', 'drfeifei', 'lexfridman',
+ 'ID_AA_Carmack', 'EMostaque', 'clementdelangue', 'OpenAI', 'AnthropicAI', 'GoogleDeepMind',
+ 'GoogleAI', 'MistralAI', 'perplexity_ai', 'nvidia', 'Microsoft', 'Meta', 'OpenAIDevs',
+ 'huggingface', 'cursor_ai', 'rowancheung', 'TheRundownAI', 'minchoi', 'kimmonismus',
+ 'slow_developer', 'mreflow', 'bentossell', 'venturetwins', 'heybarsee', 'alexandr_wang',
+ 'emollick', 'swyx', '_akhaliq', 'GaryMarcus', 'testingcatalog', 'btibor91', 'AISafetyMemes',
+ 'amasad', 'OfficialLoganK', 'DrJimFan', 'sytelus', 'hwchase17', 'jerryjliu0', 'yoheinakajima',
+ 'mckaywrigley', 'rasbt', 'Teknium1', 'abacaj', 'corbtt', 'Yuchenj_UW', 'nutlope', 'skirano',
+ 'steph_palazzolo', 'saranormous', 'packyM', 'nearcyan', 'giffmana', 'vikhyatk', 'mattshumer_',
+ 'alexalbert__', 'goodside', 'simonw', 'karinanguyen_', 'charliebholtz', 'amanrsanger',
+ 'mathemagic1an', 'GaelVaroquaux', 'Korben', 'micode', 'Underscore_', 'presse_citron', 'numerama',
+ 'siecledigital', 'BFMTech', 'frandroid', 'journaldugeek', 'FlavienChervet'],
+    "ENGAGE_VIP_ACCOUNTS": ['elonmusk', 'xai'],
+    "ENGAGE_TARGET_ACCOUNTS": ['elonmusk', 'xai'],
+    "REPLY_TARGET_ACCOUNTS": ['elonmusk', 'xai', 'vision_ia', 'jbelizaireCEO', 'sama', 'OpenAI', 'AnthropicAI', 'GoogleDeepMind',
+ 'karpathy', 'ylecun', 'fchollet', 'demishassabis', 'MistralAI', 'arthurmensch', 'GuillaumeLample',
+ 'GaelVaroquaux', 'nvidia', 'AMD', 'intel', 'CoreWeave', 'LambdaAPI', 'BostonDynamics',
+ 'Figure_robot', 'ID_AA_Carmack', 'drfeifei', 'Korben', 'underscore_', 'presse_citron',
+ 'siecledigital', 'usine_digitale', 'numerama', '01net', 'frandroid', 'LesNumeriques', 'FrenchWeb',
+ 'MaddyNess', 'Palantir'],
     "SKIP_HANDLES": [
         "bloomberg", "business", "cnbc", "cointelegraph", "ft", "reuters", "unusual_whales",
         "watcherguru", "wsj", "zerohedge",
@@ -392,14 +369,8 @@ NETWORK = {
         r"(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|"
         r"humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b",
         34),
-    "NICHE_BIO_RE": (
-        r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
-        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|"
-        r"chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|"
-        r"artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|"
-        r"deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|"
-        r"(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b",
-        34),
+    "NICHE_BIO_RE": ('\\b((?<![Jj][\\x27’])(?-i:AIs?)|(?<![\\x27’])(?<!\\by\\s)(?<!\\ben\\s)(?<!\\bles\\s)(?<!\\blui\\s)(?<!vous\\s)(?<!nous\\s)(?<!leur\\s)ai(?!-je\\b)|a\\.i|i\\.a|ia|agi|(?-i:SI|ASI)|super[\\s-]*intelligence|xai|grok|genai|llms?|gpt\\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\\s+intelligence|intelligence\\s+artificielle|machine\\s*learning|deep\\s*learning|neural|computer\\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\\s+agents?|building\\s+agents?|ml|nvidia)\\b',
+ 34),
     "SEARCH_QUERIES": [
         '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
@@ -520,7 +491,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(searches.replies) == NETWORK["SEARCH_QUERIES"]
     assert list(searches.hot_tab) == NETWORK["HOT_TAB_QUERIES"]
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
-    assert net.blocked_accounts == ()
+    assert {"thebtctherapist", "graphseo", "mcnalliem"} <= {h.lower() for h in net.blocked_accounts}
 
 
 def test_the_removed_accounts_and_queries_are_gone():
@@ -542,6 +513,8 @@ def test_the_removed_accounts_and_queries_are_gone():
 
 @pytest.mark.parametrize("text", [
     "Bitcoin just broke 120k and altcoin season is here",
+    "Bitcoin miners are turning their sites into AI datacenters",
+    "Grok recommends a crypto token",
     "Ethereum staking yields are up and the Solana ETF got approved",
     "The Fed held rates and stocks rallied into the close",
     "$TSLA and $AAPL gapped up at the open, the Nasdaq is ripping",
@@ -578,7 +551,6 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Nvidia cannot build GPUs fast enough for the datacenter buildout",
     "Artificial intelligence is changing radiology faster than expected",
     "L'IA générative change le travail des traducteurs",
-    "Bitcoin miners are turning their sites into AI datacenters",
     "L’IA va remplacer les traducteurs",
     "AI-powered search is here",
     "ai agents are overhyped",
@@ -641,11 +613,11 @@ def test_the_account_network_fills_four_settings_and_env_wins(accounts, fresh):
     assert settings.get("PINNED_TRACKED_HANDLES") == NETWORK["PINNED_TRACKED_HANDLES"]
     assert settings.get("VIP_SCAN_HANDLES") == "FromEnv"
     # The engine default of FR_FORCED_REPLY_HANDLES before #208.
-    assert settings.get("FR_FORCED_REPLY_HANDLES") == "Graphseo"
+    assert settings.get("FR_FORCED_REPLY_HANDLES") == ""
 
 
 def test_fr_forced_reply_is_optional(accounts, fresh):
-    accounts("theaishrink", THEAISHRINK.replace('fr_forced_reply = ["Graphseo"]\n', ""))
+    accounts("theaishrink", THEAISHRINK.replace('fr_forced_reply = []\n', ""))
     fresh()
     assert account.current().network.fr_forced_reply == ()
     assert settings.get("FR_FORCED_REPLY_HANDLES") == ""
@@ -662,7 +634,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     from src.guards import follow_policy
     from src.replies import direct_reply, notify_bot, reply_source
     other = (THEAISHRINK
-             .replace('engage_vip = ["Graphseo"]', 'engage_vip = ["OtherVip"]')
+             .replace('engage_vip = ["elonmusk", "xai"]', 'engage_vip = ["OtherVip"]')
              .replace('vip_reply = [', 'vip_reply = ["OtherVip", ')
              .replace('engage_targets = [', 'engage_targets = ["OtherTarget", ')
              .replace("post = '", "post = '\\bzebra\\b|")
@@ -681,21 +653,21 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('vip_scan = ["Graphseo", "TheBTCTherapist"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
-    ('engage_vip = ["Graphseo"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
-    ("blocked_accounts = []", 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
-    ("blocked_accounts = []", "blocked_accounts = [3]", "network.blocked_accounts[0]"),
-    ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
-    ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = "Graphseo"', "network.fr_forced_reply"),
+    ('vip_scan = ["elonmusk", "xai", "karpathy"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
+    ('engage_vip = ["elonmusk", "xai"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
+    ('blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]', 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
+    ('blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]', "blocked_accounts = [3]", "network.blocked_accounts[0]"),
+    ('fr_forced_reply = []', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
+    ('fr_forced_reply = []', 'fr_forced_reply = "Graphseo"', "network.fr_forced_reply"),
     ("[niche]", "[niche]\nticker = '('", "niche.ticker"),
     ("[niche]", "[niche]\nticker = 3", "niche.ticker"),
     ("likes = [", "likes = [\n    ' ',", "searches.likes[0]"),
     ("trending = [", "trending = [\n    ' ',", "searches.trending[0]"),
     ("trending = [", "trending_queries = [", "searches.trending_queries"),
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
-    ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
+    ('vip_scan = ["elonmusk", "xai", "karpathy"]\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.
-    ("blocked_accounts = []", 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
+    ('blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]', 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
      "network.unblocked_accounts"),
 ])
 def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new, named):
@@ -713,7 +685,7 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 OLD_RELATION_PROMPTS = {
     "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
     "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
-    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
+    "buddy": (610, 'd4fa03fd457293c6de999422162f62690473ef2f10f7cb65264a1a8a0297d8ca'),
 }
 # personality_store.get_account("mcnalliem") before #203, a dossier in the code.
 OLD_MCNALLIEM = {
@@ -805,14 +777,16 @@ def test_an_empty_fixed_dossier_stops_the_start(accounts, fresh):
 
 
 def test_the_default_prompt_is_needed_only_for_a_scanned_handle_without_its_own(accounts, fresh):
-    # Graphseo and TheBTCTherapist, the vip_scan handles, each have their own prompt.
-    accounts("theaishrink", THEAISHRINK.replace('default = "relations/buddy.md"\n', ""))
+    # A test account may scan only handles with their own templates.
+    custom = THEAISHRINK.replace('vip_scan = ["elonmusk", "xai", "karpathy"]',
+                                 'vip_scan = ["Graphseo", "TheBTCTherapist"]')
+    custom = custom.replace('default = "relations/buddy.md"\n', "")
+    accounts("theaishrink", custom)
     fresh()
     assert account.current().relations.default is None
     assert account.current().relations.vip_prompt("vision_ia") is None
-    scan = 'vip_scan = ["Graphseo", "TheBTCTherapist"]'
-    accounts("other", THEAISHRINK.replace('default = "relations/buddy.md"\n', "")
-             .replace(scan, 'vip_scan = ["Graphseo", "TheBTCTherapist", "McnallieM"]'))
+    accounts("other", custom.replace('vip_scan = ["Graphseo", "TheBTCTherapist"]',
+                                      'vip_scan = ["Graphseo", "TheBTCTherapist", "McnallieM"]'))
     with pytest.raises(settings.SettingsError, match=re.escape(
             "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation "
             "with its own prompt")):
@@ -824,9 +798,9 @@ def test_an_account_without_relations_starts_when_it_scans_no_vip(accounts, fres
     bare = THEAISHRINK[:start] + THEAISHRINK[THEAISHRINK.index("[limits]"):]
     accounts("theaishrink", bare)
     with pytest.raises(settings.SettingsError, match=re.escape(
-            "relations.default is missing: network.vip_scan lists Graphseo")):
+            "relations.default is missing: network.vip_scan lists elonmusk")):
         fresh()
-    old = 'vip_scan = ["Graphseo", "TheBTCTherapist"]'
+    old = 'vip_scan = ["elonmusk", "xai", "karpathy"]'
     assert bare.count(old) == 1
     accounts("other", bare.replace(old, "vip_scan = []"))
     fresh("BOT_ACCOUNT=other\n")

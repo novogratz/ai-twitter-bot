@@ -48,8 +48,9 @@ def run_mega_watch_cycle():
     """Pick five watched accounts and queue eligible fresh posts for selection."""
     posted = 0
 
-    pool = _watch_pool()
-    sample = random.sample(pool, k=min(5, len(pool)))
+    from ..x.scraper import _profile_visit_allowed
+    pool = [h for h in _watch_pool() if _profile_visit_allowed(h)]
+    sample = pool[:1] + random.sample(pool[1:], k=min(4, max(0, len(pool) - 1)))
     log.info(f"[MEGA] Polling: {sample}")
 
     cycle = reply_pipeline.Cycle()

@@ -50,18 +50,18 @@ def test_refused_page_releases_claim_and_never_submits(monkeypatch, memory_ledge
     assert ag.count_today(ag.REPLY) == 0
 
 
-@pytest.mark.parametrize("author", ["someone", "Graphseo", "TheBTCTherapist"])
-def test_opened_off_topic_post_never_gets_a_reply_or_parent_like(monkeypatch, memory_ledger, author):
+@pytest.mark.parametrize("author", ["someone", "elonmusk", "xai"])
+@pytest.mark.parametrize("text", ["My lunch today", "AI predicts Bitcoin prices", "Grok DOGE fan"] )
+def test_opened_off_topic_post_never_gets_a_reply_or_parent_like(monkeypatch, memory_ledger, author, text):
     import json
     from tests.x.test_write_path import _fake_safari
     real_target_guard = tc._standalone_reply_target
     _fake_safari(monkeypatch)
     monkeypatch.setattr(tc, "_standalone_reply_target", real_target_guard)
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps({"text": "My lunch today"}))
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps({"text": text}))
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked an unrelated parent"))
     monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("replied to an unrelated parent"))
     url = numbered_url(51, author)
-    # French also satisfies the language guard for a French-forced VIP.
     assert tc.reply_to_tweet(url, "La taille du lot change le débit du modèle, pas sa précision.") is WriteOutcome.REFUSED
     assert url not in replied_store.load_replied()
     assert ag.count_today(ag.REPLY) == ag.pending_reply_count() == 0

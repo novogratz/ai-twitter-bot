@@ -34,7 +34,7 @@ _Avoid_: eighth post, breaking slot
 
 **Trend slot**:
 A Slot whose topic is the common thread of the Trending posts, told from a
-fresh trusted article: 09:45, 14:20, 17:00 and the Startup post.
+fresh trusted article: 09:45, 12:20, 17:00 and the Startup post.
 _Avoid_: viral slot, hot take
 
 **Trending posts**:
@@ -181,7 +181,8 @@ _Avoid_: gate, prefilter, reply filter
 
 **Replied store**:
 The record of every post the account has Replied to, keyed on the post's
-status ID: one Reply per post, ever. While it is unreadable, no Reply ships.
+status ID: one Reply per post, ever. IDs are never evicted as the history grows.
+While it is unreadable, no Reply ships.
 _Avoid_: replied set, replied cache, dedup file
 
 ### Accounts
@@ -261,8 +262,10 @@ _Avoid_: protected account, influencer
 ### Time and people
 
 **Waking hours**:
-The three windows when the account acts externally: 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto
-time. `active_hours.ACTIVE_WINDOWS` holds the start-inclusive, end-exclusive bounds.
+The three nominal windows when the account acts externally: 05:00–10:00, 12:00–13:00 and 16:45–23:00 Toronto
+time. Each start varies by ±10 minutes per Toronto day, stable across restarts;
+closing times are fixed. `active_hours.active_windows()` returns the actual
+start-inclusive, end-exclusive bounds used by all guards and Reply allowances.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:

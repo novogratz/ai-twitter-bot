@@ -14,7 +14,7 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 
 def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkeypatch):
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
     rows = [{"action": ag.POST, "ts": "2026-09-20T03:59:00+00:00"},
             {"action": ag.POST, "ts": "2026-09-20T04:00:00+00:00", "dry_run": True}]
@@ -25,7 +25,7 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ledger.count(ag.POST, now.date()) == 5
     assert ag.profile_count_today() == 7
     assert ag.can_post(ag.POST)[0]
-    assert ledger.last_write(ag.POST) == now - timedelta(hours=8)
+    assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST)[0]
@@ -33,7 +33,7 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
 
 
 def test_replies_capped_across_jobs_and_dry_runs_excluded(monkeypatch, memory_ledger):
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
     for n in range(399):
         memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=6))
@@ -61,7 +61,7 @@ def test_can_post_refuses_after_stop(monkeypatch):
 
 
 def _noon(monkeypatch):
-    now = datetime(2026, 9, 20, 14, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
     return now
 

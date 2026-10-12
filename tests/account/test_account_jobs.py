@@ -42,9 +42,9 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     now = datetime.now().isoformat()
     log_file = tmp_path / "log.csv"
     rows = []
-    # 3 on-lane engagements with an EN markets author
+    # 3 on-lane engagements with an AI author
     for i in range(3):
-        rows.append(f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",https://x.com/goodfinance/status/12345{i},SEARCH,,market_trauma')
+        rows.append(f'{now},reply,"AI inference needs a latency budget before deployment {i}",https://x.com/goodai/status/12345{i},SEARCH,,market_trauma')
     # 4 FR-era engagements (classify "other") with a legacy author
     for i in range(4):
         rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
@@ -53,9 +53,9 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {}}))
 
     ac.run_curator_cycle()
-    handles = ac.tracked_handles(limit=10)
-    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo", "pins lead"
-    assert "goodfinance" in handles, "on-lane author must be tracked"
+    handles = ac.tracked_handles(limit=30)
+    assert handles[0] == "elonmusk" and handles[1] == "xai", "pins lead"
+    assert "goodai" in handles, "on-lane author must be tracked"
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
 
@@ -66,17 +66,17 @@ def test_a_negative_tracked_max_tracks_nobody(monkeypatch, tmp_path, settings_ov
     from src.account import account_curator as ac
     settings_override(CURATOR_TRACKED_MAX=-1)
     now = datetime.now().isoformat()
-    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
+    rows = [f'{now},reply,"AI inference needs a latency budget before deployment {i}",'
             f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
-            for author in ("goodfinance", "otherfinance") for i in range(6)]
+            for author in ("goodai", "otherai") for i in range(6)]
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
 
     ac.run_curator_cycle()
 
-    handles = ac.tracked_handles(limit=10)
-    assert "goodfinance" not in handles and "otherfinance" not in handles
+    handles = ac.tracked_handles(limit=30)
+    assert "goodai" not in handles and "otherai" not in handles
 
 
 def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path, operator_folder):
@@ -88,9 +88,9 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
     from src.core import config
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     now = datetime.now().isoformat()
-    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
+    rows = [f'{now},reply,"AI inference needs a latency budget before deployment {i}",'
             f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
-            for author in ("la_pique_off", "goodfinance") for i in range(6)]
+            for author in ("la_pique_off", "goodai") for i in range(6)]
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
@@ -98,8 +98,8 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
 
     ac.run_curator_cycle()
 
-    assert "la_pique_off" not in ac.tracked_handles(limit=10)
-    assert follow_policy.DISCOVERED.read() == ["goodfinance"]
+    assert "la_pique_off" not in ac.tracked_handles(limit=30)
+    assert follow_policy.DISCOVERED.read() == ["goodai"]
     assert json.loads((operator_folder / "whitelist.json").read_text()) == {"tiers": {}}
 
 
@@ -598,7 +598,7 @@ def test_engagers_are_debate_turn_authors_newest_first_then_the_frozen_file():
 
 def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path, settings_override):
     """2026-07-19 likes+follows push: (1) the engager quality path skips
-    size/niche (behavior proves both; small engagers follow back at the
+    size (the niche check still applies; small engagers follow back at the
     highest rate) but KEEPS the English gate; (2) follow_engagers_bot pulls
     Engagers from the ledger's Debate turns (newest first), never retries an
     attempted handle, respects caps, and routes through follow_account,
@@ -606,9 +606,9 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path, settings_ov
     from src.guards.follow_policy import _quality_decision as _follow_quality_decision
     from src.x.twitter_client import FollowOutcome
     settings_override(FOLLOW_MIN_FOLLOWERS=10000, FOLLOW_REQUIRE_NICHE=True, FOLLOW_REQUIRE_ENGLISH=True)
-    ok, _ = _follow_quality_decision(42, "just a person who likes computers", "Sam", False, engager=True)
-    assert ok, "engager must bypass min-followers and niche gates"
-    ok, why = _follow_quality_decision(42, "Analyse crypto et IA pour les investisseurs. Avec vous dans les marchés.", "Jean", False, engager=True)
+    ok, _ = _follow_quality_decision(42, "AI enthusiast building agents", "Sam", False, engager=True)
+    assert ok, "AI engager may bypass the minimum follower count"
+    ok, why = _follow_quality_decision(42, "Recherche IA pour les entreprises. Avec vous dans les laboratoires.", "Jean", False, engager=True)
     assert not ok and "non-English" in why, "engager must NOT bypass the English gate"
     ok, _ = _follow_quality_decision(42, "just a person", "Sam", False)
     assert not ok, "non-engager path keeps the size gate"
@@ -990,7 +990,7 @@ def test_follow_engagers_follows_an_engager_through_the_real_policy(live_follow,
 
     settings_override(ENABLE_FOLLOW_ENGAGERS=True)
     monkeypatch.setattr(scraper, "_scrape_profile_quality",
-                        lambda: {"followers": "12", "bio": "hi", "name": "Sam"})
+                        lambda: {"followers": "12", "bio": "AI enthusiast", "name": "Sam"})
     ag.record(ag.DEBATE_TURN, "SmallFan")
 
     fe.run_follow_engagers_cycle()
@@ -1133,15 +1133,15 @@ def test_engage_follows_a_seed_account_from_its_pool(engage, monkeypatch, memory
     from src.x.twitter_client import FollowOutcome
 
     eb, state = engage
-    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["Graphseo"]}}))
-    monkeypatch.setattr(eb, "_build_pool", lambda: ["Graphseo", "feedaccount"])
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["elonmusk"]}}))
+    monkeypatch.setattr(eb, "_build_pool", lambda: ["elonmusk", "feedaccount"])
     outcomes = _follow_outcomes(monkeypatch, eb)
 
     eb.run_engage_cycle()
 
-    assert outcomes == [("Graphseo", FollowOutcome.FOLLOWED)]
-    assert state["visits"] == ["https://x.com/Graphseo"]
-    assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "graphseo")]
+    assert outcomes == [("elonmusk", FollowOutcome.FOLLOWED)]
+    assert state["visits"] == ["https://x.com/elonmusk"]
+    assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "elonmusk")]
 
 
 # The followers page script, run by node against a page whose sidebar holds
@@ -1249,3 +1249,13 @@ def test_the_followers_scrape_accepts_a_trailing_slash_and_any_case(monkeypatch,
     _run_followers_script(monkeypatch, _followers_page(path="/theaishrink/followers/"))
 
     assert fb._scrape_followers_list(50) == ["fan_one", "fan_two"]
+
+
+def test_old_crypto_tracking_cannot_restore_scan_targets(settings_override):
+    from src.account import account_curator as ac
+    from src.replies import early_bird_bot as eb, mega_watch_bot as mw
+    settings_override(PINNED_TRACKED_HANDLES="TheBTCTherapist,elonmusk,Graphseo")
+    ac.TRACKED.write({"tracked": [{"handle": "McnallieM"}, {"handle": "xai"}]})
+    assert ac.tracked_handles() == ["elonmusk", "xai"]
+    assert eb._scan_pool() == ["elonmusk", "xai"]
+    assert mw._watch_pool() == ["elonmusk", "xai"]

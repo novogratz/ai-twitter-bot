@@ -86,19 +86,13 @@ def _fresh_enough(url: str, limit: timedelta) -> bool:
 
 
 def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
-    """Scan VIP friend accounts via search and reply to recent posts.
+    """Collect priority profiles in Account order, otherwise search their posts.
 
-    Operator 2026-10-08: consider standalone posts only, with the same
-    selective generation and daily ceiling as every lane. The VIP lane is exactly those (supersedes the 2026-06-06
-    four-handle FR list: XFenaux/RodolpheSteffan/FinTales_ cost ~3 min of
-    serialized Safari per cycle and converted to zero on the EN persona).
-    Each handle is a cheap `from:` search, no profile visit; the 6h
-    btc_blitz converges full coverage, this lane keeps pickup fast.
-
-    `remaining` bounds the Replies shipped; `cycle` is shared with the
-    search lane.
+    Operator 2026-10-12: approved AI profiles lead, without exemptions from
+    topic, standalone-post, quality or one-Reply-per-post checks.
     """
-    from ..x.scraper import scrape_x_search
+    from ..x.scraper import scrape_x_search, _profile_visit_allowed
+    from ..guards.reply_admission import is_blocked_account
 
     vip_scan_handles = [h.strip().lstrip("@") for h in settings.get("VIP_SCAN_HANDLES").split(",")
                         if h.strip()]
@@ -106,12 +100,18 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     for handle in vip_scan_handles:
         if cycle.rate_limited or (remaining is not None and posted >= remaining):
             break
+        if is_blocked_account(handle):
+            continue
         if _vip_call(handle) is None:
             log.warning(f"[VIP] @{handle} skipped: no Relation prompt and no default prompt in the Account.")
             continue
-        log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
-        tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
-                                       max_tweets=20, tab="latest")
+        if _profile_visit_allowed(handle):
+            log.info(f"[VIP] Scanning priority profile @{handle}...")
+            tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_profile_tweets, handle, max_tweets=10)
+        else:
+            log.info(f"[VIP] Searching @{handle}'s recent posts...")
+            tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
+                                           max_tweets=20, tab="latest")
         candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
                       if t.get("url") and t.get("text") and not x_urls.is_reply_like_tweet(t, handle) and _fresh_enough(t["url"], timedelta(hours=48))]
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
@@ -168,7 +168,7 @@ def _queries_for_cycle(all_queries: list) -> list:
 
 
 def run_direct_reply_cycle(max_replies=None):
-    """Reply cycle — feed-first, no profile visits.
+    """Collect priority profiles first, then search for more AI opportunities.
 
     `max_replies` bounds the cycle and returns Safari to the scheduler. When
     omitted, the steady-state default is DIRECT_REPLY_MAX_PER_CYCLE; pass 0
@@ -185,7 +185,7 @@ def run_direct_reply_cycle(max_replies=None):
     cycle = reply_pipeline.Cycle()  # a post tried by one lane is not retried by the other
     remaining = max_replies  # None = unbounded
 
-    # 1. VIP scan — VIP_SCAN_HANDLES via search (fast, no profile page)
+    # 1. Approved priority profiles first; other Accounts may use search.
     total = _run_vip_scan(cycle, remaining=remaining)
     if remaining is not None:
         remaining -= total

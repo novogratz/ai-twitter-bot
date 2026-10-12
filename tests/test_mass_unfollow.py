@@ -103,7 +103,7 @@ def script(monkeypatch, tmp_path):
     monkeypatch.setattr(follow_policy, "adjust_following", lambda delta: None)
     monkeypatch.setattr(sys, "argv", ["mass_unfollow.py"])
 
-    clock = {"now": _toronto(14)}
+    clock = {"now": _toronto(12)}
     monkeypatch.setattr(active_hours, "now_local", lambda: clock["now"])
 
     mod.browser, mod.clock, mod.ledger, mod.handlers = browser, clock, ledger, handlers
@@ -201,7 +201,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, c
     assert json.loads(script.results.read_text()) == []
     assert "var keep" in script.browser.calls[-1][0], "a page script ran after the refusal"
     out = capsys.readouterr().out
-    assert "STOP: Waking hours ended (05:00–10:00, 14:00–15:00, 17:00–23:00 America/Toronto)" in out
+    assert "STOP: Waking hours ended (05:00–10:00, 12:00–13:00, 16:45–23:00 America/Toronto)" in out
     assert "TOTAL unfollowed: 0" in out
 
 
