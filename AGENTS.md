@@ -1,6 +1,6 @@
 # AGENTS.md
 
-@TheAIShrink is a live X account driven by Safari + AppleScript from the
+@thesimaximalist is a live X account driven by Safari + AppleScript from the
 operator's Mac: no X API. Every change here can publish, like or follow on a
 real account. Setup and run commands live in [`README.md`](README.md).
 
@@ -22,20 +22,25 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
-- Replies, likes and follows keep to AI/SI (2026-10-12), including AI videos.
+- Replies, likes and follows cover AI/SI and substantive technology (2026-10-12), including AI videos.
   Elon leads the AI profile scans. Former crypto/trading exceptions are blocked;
   Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
-  opened post text; discovered follows and Engagers need AI/SI bios. Replies
+  opened post text; discovered follows and Engagers need AI/SI or technology bios. Replies
   require relevance for every author and semantic approval during selection.
 - Replies vary between a few words, short observations, fuller explanations
   and occasional smileys (2026-10-12). They use SI/super intelligence in their
   own prose, preserving verified names and literal links. Discovery keeps both
   AI and SI terms; the current SpaceXSI name and profile replace older branding.
-- Discovery uses scoped SI/AI searches and curated profiles. The topic sweeper
-  uses two Latest searches; no live discovery job browses For You or Following.
-  Crypto/trading exclusions apply to search, news titles, trends, bios and
-  outgoing text. Old saved handles need current topic evidence before reuse.
-  Retired crypto relationship prompts and seeding lists are removed (2026-10-12).
+- Discovery rotates For You, Following Recent/Popular and Latest topic searches
+  every two minutes; native views must be verified. It saves every viewport while
+  scrolling, deduplicates posts, and rejects off-topic/crypto candidates. New-post
+  searches have no minimum likes. Direct scans rotate one VIP and three Top queries;
+  early-bird scans two profiles, mega-watch one. Selection has its own worker.
+- The Account is The SI Maximalist, @thesimaximalist: an informed, witty SI/tech
+  commentator covering brainrot, news and clearly fictional celebrity parodies.
+  This replaces the therapist persona. Storage stays `theaishrink`; historical
+  handles in `previous_handles` remain own posts. Production history is preserved.
+
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -263,8 +268,8 @@ discoveries and selection decisions. Guarded `reply_candidates.json` holds the
 last day’s discoveries and their eligibility, score, reason, proposed angle
 and outcome. Own posts, comments and off-niche posts are saved without making
 them eligible. A shared `reply_selection_job` runs every ten minutes, after a
-one-minute collection delay, and compares up to thirty admitted posts per
-review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+one-minute collection delay, and compares up to eight admitted posts per
+review. The batch mixes two waiting discoveries with six fresh opportunities before revisiting reviewed posts; the
 highest fresh score across the reviewed pool wins. Only scores of at least
 85/100 may reach drafting, one post per selector cycle, and the model may
 reject every post. Scans never consume reply budget or draft replies. The
@@ -349,3 +354,22 @@ Both now use the shared Reply pool's 24-hour age window through Reply source
 declarations. Frequent scanning does not require minute-old posts. Topic,
 standalone-post, author, score, pacing and permanent dedup checks still apply.
 No automatic start or restart accompanies this change.
+
+2026-10-12 — Reply selection stalled after discovery filled its thirty-post
+batch: the local model exhausted its 1,800-token output limit and every
+incomplete review was discarded. Compare at most eight posts, constrain the
+JSON count and IDs, and report provider errors, truncation, review counts and
+allowance waits. A failed refresh may use a still-current explicitly approved
+candidate after normal rechecks. Never publish a token-truncated model answer.
+Topic, score, evidence, daily caps and dedup requirements are unchanged.
+
+2026-10-12 — Operator requested For You and Following (Recent and Popular), more
+new opportunities and a complete rebrand to The SI Maximalist, @thesimaximalist.
+Substantive technology now qualifies without an SI connection; crypto stays out.
+This supersedes the earlier Home-feed removal and therapist persona. Discovery
+uses verified native views, viewport collection, direct document scrolling,
+rotating profiles and searches without a minimum-like gate in the Latest lane.
+The selector's eight-post review and dedicated worker address stalled Replies.
+The public handle and both Voices change; the storage key, ledger, reservations,
+permanent dedup, 300 target/400 cap, active windows and one-Reply rule remain.
+No bot start or restart accompanies this implementation.

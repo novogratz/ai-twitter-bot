@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the @TheAIShrink bot in the FOREGROUND of this terminal.
+# Run the configured Account in the FOREGROUND of this terminal.
 #
 # Press Ctrl-C to stop it cleanly (graceful shutdown via SIGTERM).
 # Close the terminal → bot stops too. Manual control, no system service.
@@ -47,7 +47,8 @@ fi
 # Clear stale bytecode so code changes take effect immediately.
 find "$REPO_DIR" -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 
-echo "[run] Starting @TheAIShrink bot. Press Ctrl-C to stop."
+BOT_DISPLAY_HANDLE="$(uv run python -c 'from src.core import settings; print(settings.get("BOT_HANDLE"))')"
+echo "[run] Starting @$BOT_DISPLAY_HANDLE bot. Press Ctrl-C to stop."
 echo "[run] Logs also stream to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"
 

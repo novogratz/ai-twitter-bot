@@ -614,6 +614,30 @@ class OllamaServer:
         return io.BytesIO(json.dumps({"response": answer}).encode())
 
 
+@pytest.mark.parametrize("text,output", [(TEXT, Output.TEXT), ('{"reviews": []}', Output.JSON)])
+def test_ollama_token_exhaustion_refuses_even_parseable_partial_output(monkeypatch, text, output):
+    import io
+    import urllib.request
+    monkeypatch.setattr(urllib.request, "urlopen", lambda *a, **k: io.BytesIO(json.dumps(
+        {"response": text, "done": True, "done_reason": "length", "eval_count": 1800}).encode()))
+    result = ask(CallProfile(output=output), provider="ollama")
+    assert result.status is LLMStatus.FAILED and result.stdout == ""
+    assert "output token limit reached" in result.stderr and "1800" in result.stderr
+
+
+def test_ollama_http_failure_preserves_server_explanation(monkeypatch):
+    import io
+    import urllib.request
+    import urllib.error
+    def busy(request, **kwargs):
+        raise urllib.error.HTTPError(request.full_url, 503, "busy", {},
+                                     io.BytesIO(b'{"error":"maximum pending requests exceeded"}'))
+    monkeypatch.setattr(urllib.request, "urlopen", busy)
+    result = ask(provider="ollama")
+    assert result.status is LLMStatus.FAILED
+    assert "HTTP 503" in result.stderr and "maximum pending requests exceeded" in result.stderr
+
+
 def test_ollama_requests_follow_the_profile_never_the_label(monkeypatch, settings_override):
     """Issue #174: the caller's profile sets the model, schema, temperature
     and timeout floor; the label only names the call, the suffixes the

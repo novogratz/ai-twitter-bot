@@ -75,7 +75,7 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
-    if author == config.BOT_HANDLE.lower():
+    if config.is_own_handle(author):
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)

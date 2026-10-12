@@ -1,6 +1,7 @@
 """Compare saved posts before spending the day's limited Replies."""
 import json
 import threading
+import time
 from datetime import datetime, timedelta
 from dataclasses import replace
 from zoneinfo import ZoneInfo
@@ -18,8 +19,10 @@ _SELECTION_LOCK = threading.Lock()
 
 
 def _rank(batch: list) -> list | None:
-    schema = {"type": "object", "properties": {"reviews": {"type": "array", "items": {
-        "type": "object", "properties": {"id": {"type": "string"},
+    expected = {row["id"] for row in batch}
+    schema = {"type": "object", "properties": {"reviews": {"type": "array",
+        "minItems": len(batch), "maxItems": len(batch), "items": {
+        "type": "object", "properties": {"id": {"type": "string", "enum": sorted(expected)},
         "on_topic": {"type": "boolean"},
         "score": {"type": "integer", "minimum": 0, "maximum": 100},
         "reason": {"type": "string", "maxLength": 160}, "angle": {"type": "string", "maxLength": 160}},
@@ -47,14 +50,18 @@ def _rank(batch: list) -> list | None:
         reply_generator.current_context(), reply_generator.recent_style(),
         "POSTS: " + json.dumps(posts, ensure_ascii=False), personality_store.hard_rules_block()])
     route = resolve(Surface.REPLY_SELECTION)
+    started = time.monotonic()
+    log.info("[SELECTION] Reviewing %s saved posts.", len(batch))
     result = run_llm(prompt, route.model, label="REPLY_SELECTION", output_json=True,
                      force_provider=route.provider, cwd=route.options.cwd, timeout=route.options.timeout,
                      profile=CallProfile(schema=schema, temperature=0.2, output=Output.JSON))
     if result.status is not LLMStatus.ANSWERED or result.returncode:
+        log.warning("[SELECTION] Review failed after %.1fs (%s/%s): %s",
+                    time.monotonic() - started, result.provider, result.model,
+                    result.stderr[:500] or result.status.value)
         return None
     try:
         reviews = json.loads(result.stdout)["reviews"]
-        expected = {row["id"] for row in batch}
         if (not isinstance(reviews, list) or len(reviews) != len(expected)
                 or {r["id"] for r in reviews} != expected
                 or any(type(r["score"]) is not int or not 0 <= r["score"] <= 100
@@ -62,9 +69,14 @@ def _rank(batch: list) -> list | None:
                        or not isinstance(r["reason"], str) or not r["reason"].strip()
                        or not isinstance(r["angle"], str)
                        or (r["score"] >= reply_pool.MIN_SCORE and not r["angle"].strip()) for r in reviews)):
+            log.warning("[SELECTION] Invalid review: expected %s unique IDs with topic verdicts, scores and angles.", len(expected))
             return None
+        log.info("[SELECTION] Reviewed %s posts in %.1fs; %s scored at least %s and passed topic review.",
+                 len(reviews), time.monotonic() - started,
+                 sum(r["on_topic"] and r["score"] >= reply_pool.MIN_SCORE for r in reviews), reply_pool.MIN_SCORE)
         return [{**r, "score": r["score"] if r["on_topic"] else 0} for r in reviews]
-    except (ValueError, KeyError, TypeError):
+    except (ValueError, KeyError, TypeError) as exc:
+        log.warning("[SELECTION] Malformed review JSON (%s, %s output characters).", type(exc).__name__, len(result.stdout))
         return None
 
 
@@ -136,19 +148,27 @@ def _review(rows: list) -> bool:
 
 
 def _select(*, concise=False) -> int:
-    if action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count() >= reply_allowance():
+    used = action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count()
+    allowance = reply_allowance()
+    if used >= allowance:
+        log.info("[SELECTION] Waiting for allowance: %s used/pending, %s currently available, daily cap %s.",
+                 used, allowance, settings.get("MAX_REPLIES_PER_DAY"))
         return 0
     rows = reply_pool.contenders()
+    if not rows:
+        log.info("[SELECTION] No eligible saved posts are ready for comparison yet.")
+        return 0
     ready = _ready(rows)
-    # One-minute sending must not pay for the same thirty reviews each time.
+    # One-minute sending must not pay for the same reviews each time.
     # Compare waiting discoveries at least every five minutes while approved
     # candidates remain; compare immediately when none remains. Old scores retain
     # their one-hour expiry and compete globally with every new review.
     if (not ready or (any(row["state"] == "queued" for row in rows)
                       and now_local() - max(datetime.fromisoformat(row["reviewed_at"])
                                             for row in ready) >= timedelta(minutes=5))):
-        if not _review(rows):
-            return 0
+        _review(rows)
+        # A failed refresh does not invalidate a still-fresh prior approval.
+        # Reload to retain current text, topic, expiry and admission checks.
         ready = _ready(reply_pool.contenders())
     for winner in sorted(ready, key=lambda row: (row["score"], row["first_seen"], row["id"]), reverse=True):
         verdict = judge_parent(winner["url"])

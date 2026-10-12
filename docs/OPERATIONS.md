@@ -1,11 +1,28 @@
 # Operations
 
-Running, watching and recovering the bot under the 2026-09-20 policy. The
-design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
+Running, watching and recovering the bot under the current editorial policy.
+The design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
 
 The bot publishes on a real account. Start, stop and restart it only when the
 operator asks.
+
+## Repeated scans with no Replies
+
+`[SELECTION] Reviewing N saved posts` starts a bounded comparison; the completion
+line reports how many passed topic review and scored at least 85. An output-token
+limit or malformed JSON is a model failure, not a decision to reject every post.
+The selector uses batches of at most eight; provider and HTTP errors now include
+their reason. Fresh approvals can still be used when a later comparison fails.
+`Waiting for allowance` and `No eligible saved posts` identify different idle
+conditions. An APScheduler `maximum number of running instances` warning means
+the previous cycle is still running; it does not terminate the bot.
+
+The 2026-10-12 incident also found the configured Original model returning
+HTTP 503 `maximum pending requests exceeded`, even in an isolated request.
+Original failures now retain that server explanation. Check the local model
+service separately; changing reply batches does not repair an unavailable
+Original model. A model probe or preview must never call a publishing function.
 
 ## Setup
 
@@ -34,7 +51,7 @@ The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
-`.env.example` describes @TheAIShrink with the policy values; every key is
+`.env.example` describes @thesimaximalist with the policy values; every key is
 in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
 (`MAX_ORIGINALS_PER_DAY`, `LIKE_BOT_DAILY_CAP`…) stay commented: their
 default is the policy value, and a line set in `.env` wins over an Account's
@@ -114,7 +131,7 @@ each call, and compare a handle with the one read from a status URL.
   `bio` must match the name and bio of a non-Engager the follow quality
   gate judges. Mentions and URLs are removed before matching post text.
   Optional `reply_instructions` gives selection and drafting the Account's topic
-  requirements; every author, including VIPs, must pass. @TheAIShrink sets no
+  requirements; every author, including VIPs, must pass. @thesimaximalist sets no
   `ticker`: Replies cover AI/SI, including AI-generated videos.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; the topic sweeper picks two `replies` queries on
@@ -866,8 +883,8 @@ discoveries and selection decisions. Guarded `reply_candidates.json` holds the
 last day’s discoveries and their eligibility, score, reason, proposed angle
 and outcome. Own posts, comments and off-niche posts are saved without making
 them eligible. A shared `reply_selection_job` runs every ten minutes, after a
-one-minute collection delay, and compares up to thirty admitted posts per
-review. The batch mixes ten waiting discoveries with twenty fresh opportunities before revisiting reviewed posts; the
+one-minute collection delay, and compares up to eight admitted posts per
+review. The batch mixes two waiting discoveries with six fresh opportunities before revisiting reviewed posts; the
 highest fresh score across the reviewed pool wins. Only scores of at least
 85/100 may reach drafting, one post per selector cycle, and the model may
 reject every post. Scans never consume reply budget or draft replies. The
@@ -912,3 +929,17 @@ profile overrides, saved tracking or Reply candidates. Do not delete those
 files or the Replied store to deploy this change. The Replied store now keeps
 all answered IDs permanently. Restart loads the Account's new AI profile lists,
 Elon-first scan order, exclusions and updated Voice.
+
+## The SI Maximalist rename and discovery (2026-10-12)
+
+The public handle is `thesimaximalist`, while `BOT_ACCOUNT=theaishrink` and the
+existing Account/state folders stay in place. Remove a stale `BOT_HANDLE` override
+or set it to `thesimaximalist`; do not create an empty state folder for the rename.
+`previous_handles` protects historical own-post URLs. All counts, reservations
+and permanent replied IDs survive. `bin/run.sh` displays the resolved handle.
+
+The feed job rotates For You, Following Recent and Following Popular, plus Latest
+searches. Logs report the verified view and unique posts collected while scrolling.
+An unavailable tab/sort is skipped. Direct scans default to three queries per
+cycle; a local `DIRECT_REPLY_QUERIES_PER_CYCLE` override still wins. Short rotating
+profile scans and a dedicated selection worker leave room for Replies.

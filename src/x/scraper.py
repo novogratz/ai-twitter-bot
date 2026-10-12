@@ -305,9 +305,8 @@ def is_own_post(tweet: dict) -> bool:
     own posts and own QRTs live under /BOT_HANDLE/status/; retweets of
     others on our profile carry the ORIGINAL author's URL and are correctly
     excluded."""
-    from ..core.config import BOT_HANDLE
-    url = (tweet.get("url") or "").lower()
-    return f"x.com/{BOT_HANDLE.lower()}/status/" in url
+    from .x_urls import author
+    return config.is_own_handle(author(tweet.get("url") or ""))
 
 
 def _profile_visit_allowed(username: str) -> bool:
@@ -368,59 +367,126 @@ def scrape_mentions(max_tweets: int = 20):
         return tweets
 
 
-def scrape_home_feed(max_tweets: int = 15):
-    """Scrape tweets from the home feed (For You / algorithmic)."""
+def _feed_tab_script(tab: str, action: str) -> str:
+    import json
+    labels = ["for you", "pour vous"] if tab == "for_you" else ["following", "abonnements", "suivi(e)s", "suivis"]
+    return """(() => {
+        if (location.pathname !== '/home') return 'WRONG_PAGE';
+        const tab = Array.from(document.querySelectorAll('[role="tab"]'))
+            .find(e => LABELS.includes(e.textContent.trim().toLowerCase()));
+        if (!tab) return 'MISSING';
+        const action = ACTION;
+        const selected = tab.getAttribute('aria-selected') === 'true';
+        if (action === 'select' && !selected) { tab.click(); return 'CLICKED'; }
+        if (!selected) return 'UNSELECTED';
+        if (action === 'menu') {
+            if (tab.getAttribute('aria-haspopup') !== 'menu') return 'NO_MENU';
+            if (tab.getAttribute('aria-expanded') !== 'true') tab.click();
+            return 'MENU';
+        }
+        if (action === 'close' && tab.getAttribute('aria-expanded') === 'true') tab.click();
+        return 'SELECTED';
+    })()""".replace("LABELS", json.dumps(labels)).replace("ACTION", json.dumps(action))
+
+
+def _following_sort_script(sort: str, *, select: bool) -> str:
+    import json
+    labels = ["recent", "latest", "récent", "récents", "récentes"] if sort == "recent" else ["popular", "populaire", "populaires"]
+    # Observed 2026-10-12: X uses a checkmark path, without aria-checked.
+    return """(() => {
+        const item = Array.from(document.querySelectorAll('[role="menu"] [role^="menuitem"]'))
+            .find(e => LABELS.includes(e.textContent.trim().toLowerCase()));
+        if (!item) return 'MISSING';
+        const checked = item.getAttribute('aria-checked') === 'true' ||
+            item.getAttribute('aria-selected') === 'true' ||
+            Array.from(item.querySelectorAll('svg path')).some(p =>
+                (p.getAttribute('d') || '').startsWith('M9.64 18.952'));
+        if (checked) return 'SELECTED';
+        if (__SELECT__) { item.click(); return 'CLICKED'; }
+        return 'UNSELECTED';
+    })()""".replace("LABELS", json.dumps(labels)).replace("__SELECT__", json.dumps(select))
+
+
+def _select_feed(tab: str, sort: str | None) -> bool:
+    def run(js):
+        return safari._run_js(js, 8, log_prefix="[SCRAPE]")
+    result = run(_feed_tab_script(tab, "select"))
+    for _ in range(2):
+        if result != "MISSING":
+            break
+        time.sleep(1)
+        result = run(_feed_tab_script(tab, "select"))
+    if result == "CLICKED":
+        time.sleep(3)
+        result = run(_feed_tab_script(tab, "verify"))
+    if result != "SELECTED":
+        log.info("[SCRAPE] Feed tab %s was not selected: %s", tab, result)
+        return False
+    if sort is None:
+        return True
+    if run(_feed_tab_script(tab, "menu")) != "MENU":
+        return False
+    time.sleep(1)
+    result = run(_following_sort_script(sort, select=True))
+    if result == "CLICKED":
+        time.sleep(3)
+        if run(_feed_tab_script(tab, "menu")) != "MENU":
+            return False
+        time.sleep(1)
+        result = run(_following_sort_script(sort, select=False))
+    closed = run(_feed_tab_script(tab, "close"))
+    return result == "SELECTED" and closed == "SELECTED"
+
+
+def _collect_scrolling_tweets(label: str, max_tweets: int, text_limit: int, *, max_scrolls: int) -> list:
+    """Collect each viewport before X virtualizes its articles away."""
+    from .x_urls import status_id
+    found = {}
+    stale = 0
+    for step in range(max_scrolls + 1):
+        before = len(found)
+        for tweet in _scrape_tweets_from_page(label, max_tweets, text_limit):
+            key = status_id(tweet.get("url", ""))
+            if key:
+                old = found.get(key)
+                if not old or len(tweet.get("full_text") or tweet.get("text", "")) >= len(old.get("full_text") or old.get("text", "")):
+                    found[key] = tweet
+        stale = stale + 1 if len(found) == before else 0
+        if len(found) >= max_tweets or stale >= 2 or step == max_scrolls:
+            break
+        safari._scroll_page()
+    log.info("[SCRAPE] %s: %s unique posts across %s viewports.", label, len(found), step + 1)
+    return list(found.values())[:max_tweets]
+
+
+def _scrape_feed(tab: str, sort: str | None, max_tweets: int, text_limit: int) -> list:
+    if max_tweets <= 0:
+        return []
+    label = "home feed (For You)" if tab == "for_you" else f"following feed ({sort})"
     with safari._safari_lock:
-        log.info("[SCRAPE] Opening home feed...")
-        safari.open_url("https://x.com/home")
-        time.sleep(8)
+        log.info("[SCRAPE] Opening %s...", label)
+        if not safari.open_url("https://x.com/home"):
+            return []
+        try:
+            time.sleep(6)
+            if not _select_feed(tab, sort):
+                log.warning("[SCRAPE] Cannot verify %s; skipping this view.", label)
+                return []
+            return _collect_scrolling_tweets(label, max_tweets, text_limit, max_scrolls=8)
+        finally:
+            safari.close_front_tab()
 
-        # Scroll deep — reply to everything means we need to surface many tweets.
-        # Each scroll reveals ~8-12 posts; cap at 15 scrolls to stay bounded.
-        for _ in range(max(4, min(15, max_tweets // 7))):
-            safari._scroll_page()
 
-        tweets = _scrape_tweets_from_page("home feed", max_tweets)
-        safari.close_front_tab()
-        return tweets
+def scrape_home_feed(max_tweets: int = 15, text_limit: int = 2000):
+    """Explicitly select For You, then collect posts while scrolling."""
+    return _scrape_feed("for_you", None, max_tweets, text_limit)
 
 
-def scrape_following_feed(max_tweets: int = 15):
-    """Scrape the chronological 'Following' tab — only accounts we follow.
-
-    The Following tab is a JS-rendered tab on /home (not its own URL). We open
-    /home and click the 'Following' tab via JS before scraping. Falls back to
-    whatever loaded if the tab can't be located.
-    """
-    with safari._safari_lock:
-        log.info("[SCRAPE] Opening Following feed...")
-        safari.open_url("https://x.com/home")
-        time.sleep(8)
-
-        # Click the "Following" tab.
-        click_js = """
-        (function() {
-            var tabs = document.querySelectorAll('[role="tab"]');
-            for (var i = 0; i < tabs.length; i++) {
-                var t = tabs[i].textContent.trim().toLowerCase();
-                if (t === 'following' || t === 'abonnements' || t === 'suivi(e)s') {
-                    tabs[i].click();
-                    return 'CLICKED';
-                }
-            }
-            return 'NO_TAB';
-        })()
-        """
-        safari._run_js(click_js, 8, log_prefix="[SCRAPE]")
-
-        time.sleep(4)
-        # Scroll proportionally to the requested depth (same as home feed).
-        for _ in range(max(2, min(8, max_tweets // 12))):
-            safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page("following feed", max_tweets)
-        safari.close_front_tab()
-        return tweets
+def scrape_following_feed(max_tweets: int = 15, *, sort: str = "recent", text_limit: int = 2000):
+    """Select and verify Following's native Recent or Popular menu option."""
+    if sort not in {"recent", "popular"}:
+        raise ValueError("Following sort must be recent or popular")
+    return _scrape_feed("following", sort, max_tweets, text_limit)
 
 
 def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200):
@@ -438,13 +504,12 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
         search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
         log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
         safari.open_url(search_url)
-        time.sleep(8)
-        safari._scroll_page()
-        safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
-        safari.close_front_tab()
-        return tweets
+        try:
+            time.sleep(8)
+            return _collect_scrolling_tweets(f"search '{query}' ({f_param})", max_tweets,
+                                            text_limit, max_scrolls=2)
+        finally:
+            safari.close_front_tab()
 
 
 def scrape_own_tweet_and_replies():

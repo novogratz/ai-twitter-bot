@@ -48,6 +48,14 @@ def __getattr__(name):
 _served("BOT_HANDLE")
 _served_as("BOT_PROFILE_URL")(lambda: f"https://x.com/{settings.get('BOT_HANDLE')}")
 
+
+def is_own_handle(handle: str) -> bool:
+    """Current handle plus the Account's historical handles, for saved URLs."""
+    from . import account
+    normalized = (handle or "").strip().lstrip("@").lower()
+    return normalized in {settings.get("BOT_HANDLE").lower(),
+                          *(h.lower() for h in account.current().previous_handles)}
+
 # State files outside the state store, under state/<BOT_ACCOUNT>/
 # (src/core/state_store.py)
 REPLIED_FILE = state_store.StatePath("replied_tweets.json")

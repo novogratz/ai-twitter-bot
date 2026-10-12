@@ -1,6 +1,7 @@
-# @TheAIShrink
+# @thesimaximalist
 
-A persona-driven X account that publishes a few sourced AI posts a day and
+The SI Maximalist: a knowledgeable, irreverent SI and technology account covering
+news, generated media, brainrot and clearly fictional celebrity parodies. It publishes sourced posts and
 converses through replies, within a ceiling set by the operator.
 
 ## Language
@@ -329,3 +330,6 @@ It retains posts removed from the working Reply pool.
 The one scheduled job that compares saved candidates before drafting. It
 reviews batches, may reject them all, and chooses at most one candidate
 scoring at least 85/100 per cycle, within Reply admission and the daily cap.
+
+**Previous handles**: Account-owned aliases used to recognize saved own-post URLs
+after a public rename. They do not change `BOT_ACCOUNT`, the stable storage key.

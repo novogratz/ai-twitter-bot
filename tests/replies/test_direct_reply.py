@@ -18,24 +18,15 @@ def _searches():
     return list(searches.replies), list(searches.hot_tab)
 
 
-def test_reply_and_like_queries_are_ai_only():
-    """Operator 2026-09-25: AI only, like the policy (#205). Every reply and
-    like query carries an AI term, and none looks for crypto, markets or
-    space posts."""
+def test_discovery_covers_si_and_technology_without_crypto_queries():
     from src.core import account
-    replies, hot_tab = _searches()
-    queries = replies + hot_tab + list(account.current().searches.likes)
-    ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
-                "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ")
-    for q in queries:
-        assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
-    joined = " ".join(queries).lower()
-    assert "spacex " not in joined, "standalone space company is outside the niche"
-    for banned in ("bitcoin", "btc", "crypto", "ethereum", "bittensor", "stock", "market",
-                   "earnings", "etf", "portfolio", "sell off", "vix", "starlink",
-                   "starship", "nasa", "satellite", "orbit"):
-        assert banned not in joined, f"{banned!r} is off the AI niche"
+    searches = account.current().searches
+    joined = " ".join(searches.replies + searches.hot_tab + searches.likes).lower()
+    for topic in ("si", "ai", "software", "hardware", "cybersecurity", "starship", "parody"):
+        assert topic in joined
+    for banned in ("bitcoin", "crypto", "bittensor", "trading", "ethereum"):
+        assert banned not in joined
+    assert all("min_faves:" not in q for q in searches.replies)
 
 
 def _query_clauses(query: str, and_first: bool) -> list:
@@ -109,6 +100,17 @@ def test_the_query_reader_splits_alternatives_both_ways():
         ["x y", "n"], ["x y", "m"], ["z", "n"], ["z", "m"]]
     assert _query_clauses('("x y" OR z) (n OR m)', False) == [
         ["x y", "n"], ["x y", "m"], ["z", "n"], ["z", "m"]]
+
+
+def test_scheduled_priority_scans_rotate_instead_of_reopening_every_vip(monkeypatch, settings_override):
+    from src.replies import direct_reply as dr, reply_pipeline
+    visits = []
+    settings_override(VIP_SCAN_HANDLES="first,second,third", PROFILE_VISIT_ALLOWLIST="first,second,third")
+    monkeypatch.setattr(dr, "_VIP_OFFSET", 0)
+    monkeypatch.setattr(dr, "scrape_profile_tweets", lambda handle, **k: visits.append(handle) or [])
+    for _ in range(4):
+        dr._run_vip_scan(reply_pipeline.Cycle(), max_profiles=1)
+    assert visits == ["first", "second", "third", "first"]
 
 
 def test_prompts_are_english_only():

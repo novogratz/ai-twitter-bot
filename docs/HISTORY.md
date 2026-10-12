@@ -2981,3 +2981,43 @@ already accepted 24 hours, but two profile collectors imposed separate four-
 and eighteen-minute limits. They now use the pool's shared age limit through
 Reply source declarations, with regression tests for older posts reaching the
 pool while stale, future, nested and wrong-author posts remain excluded.
+
+2026-10-12 — The operator watched repeated scans without any Replies. The pool
+held over 100 eligible contenders, with budget available. Replaying a full
+thirty-post selection returned `done_reason=length`, exactly 1,800 generated
+tokens and invalid JSON cut inside a review. Smaller earlier batches had worked,
+which hid the defect until discovery filled the pool. An eight-post replay
+finished with all eight valid reviews using 617 tokens in 27 seconds. Selection
+now bounds batch size, JSON count and allowed IDs, logs actual failure reasons,
+and can use still-current approvals after a failed refresh. All model surfaces
+refuse token-truncated answers. HTTP errors retain the server response; the
+configured Original model was separately returning HTTP 503 while the Reply
+model worked. The like job's separately constructed search URL now also carries
+the Account's shared SI/AI scope and crypto exclusions.
+
+## 2026-10-12 — The SI Maximalist and broader discovery
+
+Operator requested For You, Following Recent and Popular, more reply opportunities,
+and a complete replacement of the therapist persona with The SI Maximalist,
+@thesimaximalist. Substantive technology now qualifies without an AI connection.
+Both Voice files, the Account handle, topic patterns, searches, relation prompt
+and run banner reflect the change. The storage key remains `theaishrink`, retaining
+all daily counts, reservations and replied IDs; historical own handles stay protected.
+
+The browser check found native Following sort options and another cause of the
+small repeated loop: keyboard scrolling left the same articles visible when focus
+was on a tab. Direct document scrolling plus collection before each scroll found
+18 distinct For You posts and 22 in each Following view in read-only probes.
+Sorts must be verified; missing controls skip rather than scrape the wrong view.
+The sweeper rotates one feed view plus one Latest query every two minutes. Fresh
+queries have no minimum-like gate. Direct, early-bird and mega-watch profile passes
+are bounded and rotate, reducing repeated visits; selection has a dedicated worker.
+
+The new Voice and broader topic instructions produced a complete eight-post review
+in 22.2 seconds on the configured local model. It approved several zero-like topic
+examples while rejecting Bitcoin and unrelated lunch examples. Draft probes were
+not published and are not a guarantee of technical accuracy; prompts now keep the
+specific parent and response task after general context to reduce tangents.
+All topic checks, 85/100 approval, one Reply per post, active windows and the
+300-target/400-cap remain. Production state was not modified, and the bot was not
+started or restarted by this change.

@@ -141,7 +141,7 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
         "bigrams": {f"{a} {b}" for a, b in zip(toks, toks[1:])},
         "entities": _entities(text),
         # Normalized full text — catches exact/near-exact rehash of SHORT
-        # stopword-heavy posts (therapist one-liners) that fall under the
+        # stopword-heavy one-liners that fall under the
         # min-content-words guard below.
         "norm": " ".join(_dedup_clean(text).split()),
         "age_h": age_hours,
@@ -395,8 +395,7 @@ _BURNED_PATTERNS = (
 # terrorist = higher ROI on every contract" as a PLTR reply, 2026-07-28
 # 15:29). The persona's "never cruel" rule is prompt-level; the reply lane
 # runs on an uncensored local model that ignores it. The account has ZERO
-# need to tweet about killing people — glib violence torches the warm-
-# therapist brand in one screenshot. Refused at the chokepoint for EVERY
+# need to tweet about killing people — glib violence damages trust. Refused at the chokepoint for EVERY
 # surface. Idioms stay allowed ("killer app", "made a killing", "AI killed
 # my job" — no human target).
 _VIOLENCE_TERMS_RE = re.compile(

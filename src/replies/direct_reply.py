@@ -86,17 +86,26 @@ def _fresh_enough(url: str, limit: timedelta) -> bool:
     return age is not None and age <= limit
 
 
-def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
+_VIP_OFFSET = 0
+
+
+def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None, *, max_profiles=None) -> int:
     """Collect priority profiles in Account order, otherwise search their posts.
 
     Operator 2026-10-12: approved AI profiles lead, without exemptions from
     topic, standalone-post, quality or one-Reply-per-post checks.
     """
+    global _VIP_OFFSET
     from ..x.scraper import scrape_x_search, _profile_visit_allowed
     from ..guards.reply_admission import is_blocked_account
 
     vip_scan_handles = [h.strip().lstrip("@") for h in settings.get("VIP_SCAN_HANDLES").split(",")
                         if h.strip()]
+    if max_profiles and vip_scan_handles:
+        total = len(vip_scan_handles)
+        vip_scan_handles = [vip_scan_handles[(_VIP_OFFSET + i) % total]
+                            for i in range(min(max_profiles, total))]
+        _VIP_OFFSET = (_VIP_OFFSET + len(vip_scan_handles)) % total
     posted = 0
     for handle in vip_scan_handles:
         if cycle.rate_limited or (remaining is not None and posted >= remaining):
@@ -187,7 +196,7 @@ def run_direct_reply_cycle(max_replies=None):
     remaining = max_replies  # None = unbounded
 
     # 1. Approved priority profiles first; other Accounts may use search.
-    total = _run_vip_scan(cycle, remaining=remaining)
+    total = _run_vip_scan(cycle, remaining=remaining, max_profiles=1)
     if remaining is not None:
         remaining -= total
 

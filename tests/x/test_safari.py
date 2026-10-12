@@ -135,6 +135,7 @@ def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, pr
     monkeypatch.setattr(safari.subprocess, "run",
                         lambda argv, **k: real_run(["sleep", "30"], **k))
     monkeypatch.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
+    monkeypatch.setattr(safari, "_run_js", unwalled["_run_js"])
     monkeypatch.setattr(safari, "open_url", unwalled["open_url"])
     monkeypatch.setattr(safari, "_paste_text", unwalled["_paste_text"])
     monkeypatch.setattr(safari.time, "sleep", lambda *_: None)

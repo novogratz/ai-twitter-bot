@@ -2,12 +2,12 @@
 
 The Account's optional `[searches] scope` adds its topic terms and exclusions to
 every browser and model-assisted X search. The live Account uses SI and AI
-alternatives plus crypto/trading exclusions. Search scope, niche patterns and
+and technology alternatives plus crypto/trading exclusions. Search scope, niche patterns and
 editorial relevance checks complement each other; X can still return noisy results.
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
-`.env.example` is the starting point for @TheAIShrink; its bounded settings
+`.env.example` is the starting point for @thesimaximalist; its bounded settings
 stay commented, at their default, so that an Account's `[limits]` holds.
 What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
@@ -170,14 +170,14 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
-| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
+| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `3` |  | Rotating Top searches per direct_reply cycle; shorter scans leave browser time for Replies; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
-| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the topic sweep scrapes per Latest search. |
-| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Legacy dispatch generation budget per topic search; live sweeps only collect candidates. |
-| `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes needed to record a topic-search author in dynamic_accounts.json; selection evidence is required for engagement. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Maximum unique posts per feed view or Latest search; scrolling also has a bounded page budget. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Legacy dispatch generation budget per feed or search; live sweeps only collect candidates. |
+| `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes needed to record a feed/search author in dynamic_accounts.json; selection evidence is required for engagement. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |
 | `CURATOR_TRACKED_MAX` | int | `40` |  | Earned accounts the curator tracks, pinned ones aside. |

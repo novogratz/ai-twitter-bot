@@ -82,6 +82,7 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
+    previous_handles: tuple = ()  # historical own-post URLs survive a rename
 
 
 def current() -> Account:
@@ -113,11 +114,16 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict})
+                 optional={"limits": dict, "relations": dict, "previous_handles": list})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
         top.fail("domain", "is blank")
+    previous = top.items("previous_handles", str) if "previous_handles" in top else []
+    for handle in [top["handle"], *previous]:
+        if not _HANDLE.fullmatch(handle):
+            top.fail("handle" if handle == top["handle"] else "previous_handles",
+                     "takes X handles without @, at most 15 letters, digits or underscores")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list})
@@ -130,7 +136,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top),
+        searches=_searches(top), previous_handles=tuple(previous),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

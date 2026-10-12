@@ -330,6 +330,9 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             raw = resp.read().decode("utf-8")
         data = json.loads(raw)
+    except urllib.error.HTTPError as e:
+        detail = e.read(1024).decode("utf-8", errors="replace").strip()
+        return LLMResult(1, "", f"{label}: ollama HTTP {e.code}: {detail}")
     except urllib.error.URLError as e:
         return LLMResult(1, "", f"{label}: ollama HTTP error: {e}")
     except (json.JSONDecodeError, ValueError) as e:
@@ -338,6 +341,12 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
         return LLMResult(124, "", f"{label}: ollama HTTP timed out after {timeout}s")
     except Exception as e:
         return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
+    if data.get("done_reason") == "length":
+        msg = (f"{label}: ollama output token limit reached "
+               f"(generated={data.get('eval_count')}, limit={settings.get('OLLAMA_NUM_PREDICT')}); "
+               "incomplete response refused")
+        log.warning("[LLM] %s", msg)
+        return LLMResult(1, "", msg)
     # /api/generate returns {"response": "..."}
     text = (data.get("response") or "").strip()
     if not text:

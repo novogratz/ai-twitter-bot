@@ -70,7 +70,9 @@ def test_rank_requires_exact_ids_real_scores_and_specific_angles(saved, monkeypa
     calls = []
     monkeypatch.setattr(selector, "run_llm", lambda prompt, model, **k: calls.append(k) or LLMResult(0, json.dumps({"reviews": output}), ""))
     assert selector._rank(batch) == output
-    assert calls[0]["profile"].schema is not None
+    schema = calls[0]["profile"].schema["properties"]["reviews"]
+    assert schema["minItems"] == schema["maxItems"] == len(batch)
+    assert set(schema["items"]["properties"]["id"]["enum"]) == {row["id"] for row in batch}
     output[1]["score"] = True
     assert selector._rank(batch) is None
 
@@ -123,9 +125,43 @@ def test_selected_angle_reaches_drafting(saved, monkeypatch, llm, chokepoint):
 def test_comparison_batch_includes_waiting_and_fresh_discoveries():
     rows = [dict(id=str(n), state="queued", first_seen=str(n)) for n in range(60)]
     picked = selector.comparison_order(rows)[:pool.BATCH_SIZE]
-    assert [row["id"] for row in picked[:10]] == [str(n) for n in range(10)]
-    assert picked[10]["id"] == "59"
-    assert len({row["id"] for row in picked}) == 30
+    assert [row["id"] for row in picked[:2]] == ["0", "1"]
+    assert picked[2]["id"] == "59"
+    assert len({row["id"] for row in picked}) == 8
+
+
+def test_large_pool_reviews_only_a_bounded_batch(saved, monkeypatch):
+    job = pipeline.Job("scan", "SCAN", None)
+    pool.collect(job, [pipeline.Candidate(fresh("builder", n=i), "SI model evaluation", "SEARCH")
+                       for i in range(40)])
+    clock(monkeypatch, active_hours.now_local() + timedelta(seconds=61))
+    compared = []
+    monkeypatch.setattr(selector, "_rank", lambda batch: compared.append(batch) or reviews(batch, [90] * len(batch)))
+    monkeypatch.setattr(pipeline, "dispatch", lambda *a, **k: 1)
+    assert selector.run_reply_selection_cycle() == 1
+    assert len(compared) == 1 and len(compared[0]) == 8
+
+
+def test_failed_new_review_does_not_block_fresh_existing_approval(saved, monkeypatch):
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [90, 96, 88]))
+    sent = []
+    monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
+    assert selector.run_reply_selection_cycle() == 1
+    new = fresh("newauthor", n=4)
+    pool.collect(pipeline.Job("scan", "SCAN", None), [pipeline.Candidate(new, "SI video opportunity", "SEARCH")])
+    clock(monkeypatch, active_hours.now_local() + timedelta(minutes=6))
+    compared = []
+    monkeypatch.setattr(selector, "_rank", lambda batch: compared.extend(batch) or None)
+    assert selector.run_reply_selection_cycle() == 1
+    assert compared and [candidate.url for candidate in sent] == [saved[1], saved[0]]
+
+
+def test_failed_review_logs_provider_reason(saved, monkeypatch, caplog):
+    monkeypatch.setattr(selector.log, "propagate", True)
+    monkeypatch.setattr(selector, "run_llm", lambda *a, **k:
+                        LLMResult(1, "", "output token limit reached", provider="ollama", model="local-model"))
+    assert selector._rank(pool.contenders()) is None
+    assert "output token limit reached" in caplog.text and "ollama/local-model" in caplog.text
 
 
 def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
@@ -171,7 +207,8 @@ def test_rank_rejects_irrelevant_high_score_and_includes_account_topic_rules(sav
                         prompts.append(prompt) or LLMResult(0, json.dumps({"reviews": output}), ""))
     assert selector._rank(batch)[0]["score"] == 0
     assert "VIPs have no topic exemption" in prompts[0]
-    assert "AI-generated images, videos and brainrot" in prompts[0]
+    assert "generated images, video, brainrot" in prompts[0]
+    assert "A technology post qualifies without an AI connection" in prompts[0]
 
 
 def test_old_ready_selection_needs_explicit_topic_review(saved, monkeypatch):

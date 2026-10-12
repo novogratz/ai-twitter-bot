@@ -23,7 +23,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
-NAMED = re.compile(r"theaishrink|graphseo|thebtctherapist", re.I)
+NAMED = re.compile(r"theaishrink|thesimaximalist|graphseo|thebtctherapist", re.I)
 HISTORICAL = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|#\d+\b")
 
 # The places the code may name one, each a value: the default of the

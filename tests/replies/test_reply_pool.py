@@ -32,6 +32,20 @@ def test_scan_collects_without_generating_or_sending(monkeypatch):
     assert next(iter(pool.read().values()))["state"] == "queued"
 
 
+def test_rediscovery_can_reconsider_a_keyword_refusal_but_never_a_model_rejection():
+    url = fresh("builder")
+    job = pipeline.Job("scan", "SCAN", None)
+    candidates = [pipeline.Candidate(url, "software release", "FEED")]
+    pool.collect(job, candidates)
+    key = next(iter(pool.read()))
+    pool.mark(key, "rejected", eligible=False, reason="post is outside the Account's niche")
+    pool.collect(job, candidates)
+    assert pool.read()[key]["state"] == "queued"
+    pool.mark(key, "rejected", score=30, on_topic=True, reason="generic praise only")
+    pool.collect(job, candidates)
+    assert pool.read()[key]["state"] == "rejected"
+
+
 @pytest.mark.parametrize("job_name", ["early_bird", "mega_watch"])
 @pytest.mark.parametrize("minutes", [20, 180, 23 * 60])
 def test_profile_scans_keep_older_posts_eligible_in_the_shared_pool(monkeypatch, job_name, minutes):

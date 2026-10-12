@@ -40,7 +40,7 @@ OLD = {
               "mistral.ai", "openai.com", "replicate.com", "the-decoder.com", "www.microsoft.com"],
     "AI_TOPIC": ('\\b((?<![Jj][\\x27’])(?-i:AIs?)|(?<![\\x27’])(?<!\\by\\s)(?<!\\ben\\s)(?<!\\bles\\s)(?<!\\blui\\s)(?<!vous\\s)(?<!nous\\s)(?<!leur\\s)ai(?!-je\\b)|a\\.i|i\\.a|ia|agi|(?-i:SI|ASI)|super[\\s-]*intelligence|genai|llms?|gpt\\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\\d*|qwen\\d*|sora|veo\\s*\\d|midjourney|apple\\s+intelligence|huggingface|(?:google)?deepmind|artificial\\s+intelligence|intelligence\\s+artificielle|machine\\s*learning|deep\\s*learning|neural|computer\\s+vision|transformers?|reasoning\\s+models?|context\\s+windows?|open[\\s-]*weights?|vibe\\s*coding|agentic|(?:coding|autonomous)\\s+agents?|nvidia|cuda|gpus?|tpus?|data\\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\\b', 34),
     "OFF_TOPIC": ('\\$[A-Za-z]{2,6}\\b|\\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\\s+(?:photos?|photography|images?|footage)\\b)|trading|forex|etfs?|bourse|portefeuilles?)\\b', 34),
-    "BOT_HANDLE": "TheAIShrink",
+    "BOT_HANDLE": "thesimaximalist",
     "CONTENT_LANG_PRIMARY": "en",
 }
 # trending.TREND_QUERIES before #208 moved them to [searches] trending.
@@ -58,12 +58,12 @@ def test_theaishrink_loads_the_old_constants():
     assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
     assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
-    assert (loaded.relevance.topic.pattern, loaded.relevance.topic.flags) == OLD["AI_TOPIC"]
+    assert loaded.relevance.topic.search("SI software hardware")
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {}
     # The prompts said "AI" in the code before #208.
-    assert loaded.domain == "SI"
+    assert loaded.domain == "SI and technology"
     assert list(loaded.searches.trending) == OLD_TREND_QUERIES
 
 
@@ -73,6 +73,24 @@ def test_the_editorial_reads_the_loaded_account():
     assert sorted(editorial.trend_slots()) == OLD["TREND_SLOTS"]
     assert [slot.clock for slot in editorial.slots() if slot.exceptional] == [OLD["EXCEPTIONAL_SLOT"]]
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
+
+
+def test_public_rename_preserves_the_storage_identity_and_own_handles():
+    loaded = account.current()
+    assert loaded.handle == "thesimaximalist"
+    assert loaded.name == settings.get("BOT_ACCOUNT") == "theaishrink"
+    assert loaded.previous_handles == ("TheAIShrink",)
+    assert config.is_own_handle("@THESIMAXIMALIST")
+    assert config.is_own_handle("theaishrink")
+    assert not config.is_own_handle("anotherbuilder")
+
+
+@pytest.mark.parametrize("value", ['["@bad"]', '[3]', '"oldname"'])
+def test_invalid_previous_handles_stop_start(accounts, fresh, value):
+    accounts("theaishrink", THEAISHRINK.replace('previous_handles = ["TheAIShrink"]',
+                                              'previous_handles = ' + value))
+    with pytest.raises(settings.SettingsError, match="previous_handles"):
+        fresh()
 
 
 # --- Loading: BOT_ACCOUNT, and the settings layers ------------------------------
@@ -110,7 +128,7 @@ def fresh(monkeypatch, tmp_path):
 
 
 def test_bot_account_picks_the_folder(accounts, fresh):
-    accounts("other", THEAISHRINK.replace('handle = "TheAIShrink"', 'handle = "OtherBot"')
+    accounts("other", THEAISHRINK.replace('handle = "thesimaximalist"', 'handle = "OtherBot"')
              .replace('language = "en"', 'language = "fr"'))
     fresh("BOT_ACCOUNT=other\n")
     assert account.current().name == "other"
@@ -159,7 +177,7 @@ def test_main_stops_on_an_unknown_bot_account():
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "TheAIShrink"', 'handle = "TheAIShrink"\nnickname = "shrink"', "nickname"),
+    ('handle = "thesimaximalist"', 'handle = "thesimaximalist"\nnickname = "shrink"', "nickname"),
     ('trend_angle =', 'trend_hours = 3\ntrend_angle =', "editorial.trend_hours"),
     ('{ clock = "09:45", trend = true }', '{ clock = "09:45", trend = true, weight = 2 }',
      "editorial.slots[3].weight"),
@@ -177,7 +195,7 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "TheAIShrink"', "handle = 3", "handle"),
+    ('handle = "thesimaximalist"', "handle = 3", "handle"),
     ('language = "en"', 'language = "de"', "language"),
     ('{ clock = "09:45", trend = true }', '{ clock = "09:45", trend = "yes" }', "editorial.slots[3].trend"),
     ('{ clock = "09:45", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
@@ -187,11 +205,11 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
      "editorial.evergreen[0].publisher"),
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
-    ('handle = "TheAIShrink"\n', "", "handle"),
-    ('domain = "SI"', "domain = 3", "domain"),
-    ('domain = "SI"', 'domain = " "', "domain is blank"),
-    ('domain = "SI"\n', "", "domain is missing"),
-    ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
+    ('handle = "thesimaximalist"\n', "", "handle"),
+    ('domain = "SI and technology"', "domain = 3", "domain"),
+    ('domain = "SI and technology"', 'domain = " "', "domain is blank"),
+    ('domain = "SI and technology"\n', "", "domain is missing"),
+    ('handle = "thesimaximalist"', 'handle = "TheAIShrink', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -427,10 +445,11 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
     assert sorted(net.follow_engagers_skip) == NETWORK["SKIP_HANDLES"]
     assert len(set(net.follow_engagers_skip)) == len(net.follow_engagers_skip)
-    assert (niche.post.pattern, niche.post.flags) == NETWORK["NICHE_PATTERN"]
+    assert niche.matches_post("New software release") and niche.matches_post("SI reasoning")
     assert niche.ticker is None
-    assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
-    assert list(searches.replies) == NETWORK["SEARCH_QUERIES"]
+    assert niche.bio.search("Software engineer building SI tools")
+    assert len(searches.replies) > len(NETWORK["SEARCH_QUERIES"])
+    assert all("min_faves:" not in q for q in searches.replies)
     assert list(searches.hot_tab) == NETWORK["HOT_TAB_QUERIES"]
     assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
     assert {"thebtctherapist", "graphseo", "mcnalliem"} <= {h.lower() for h in net.blocked_accounts}
@@ -461,8 +480,6 @@ def test_the_removed_accounts_and_queries_are_gone():
     "The Fed held rates and stocks rallied into the close",
     "$TSLA and $AAPL gapped up at the open, the Nasdaq is ripping",
     "Le CAC 40 recule, la BCE maintient ses taux",
-    "SpaceX Starship reached orbit and Starlink passed 8,000 satellites",
-    "NASA picked a new rocket for the Moon landing",
     # The French verb avoir is not AI.
     "J'ai acheté du Bitcoin ce matin",
     "J’ai acheté du Bitcoin ce matin",
@@ -482,13 +499,17 @@ def test_the_removed_accounts_and_queries_are_gone():
     "My holiday pictures claude.ai/gallery",
     "si on allait manger ce soir ?",
 ])
-def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
+def test_crypto_markets_and_unrelated_posts_are_off_the_niche(text):
     from src.replies import reply_source
     assert not reply_source.is_on_niche(text)
 
 
 @pytest.mark.parametrize("text", [
     "OpenAI shipped a new reasoning model today",
+    "SpaceX Starship reached orbit and Starlink passed 8,000 satellites",
+    "NASA picked a new rocket for the Moon landing",
+    "A database release improves query performance",
+    "Open-source software security needs reproducible builds",
     "Claude Code wrote the whole migration in an afternoon",
     "Nvidia cannot build GPUs fast enough for the datacenter buildout",
     "Artificial intelligence is changing radiology faster than expected",
@@ -516,6 +537,8 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Super-intelligence needs a definition we can test",
     "AI-generated brainrot videos are getting weirder",
     "Grok Imagine makes another absurd video",
+    "Replit added a tool",
+    "La programmation évolue",
 ])
 def test_an_ai_post_is_on_the_niche(text):
     from src.replies import reply_source
@@ -525,7 +548,7 @@ def test_an_ai_post_is_on_the_niche(text):
 @pytest.mark.parametrize("bio, on_niche", [
     ("Bitcoin maximalist. HODL. Not financial advice.", False),
     ("Macro trader: stocks, ETFs and the Fed", False),
-    ("Space nerd, rocket launches and Mars", False),
+    ("Space nerd, rocket launches and Mars", True),
     ("Investisseur en bourse, dividendes et PEA", False),
     ("AI researcher, ex-DeepMind", True),
     ("Building LLM tools for lawyers", True),
@@ -541,10 +564,11 @@ def test_an_ai_post_is_on_the_niche(text):
     ("Chercheur en IA", True),
     ("J'ai 30 ans, investisseur", False),
     ("Real estate agent, dad of 3", False),
-    ("Software engineer, founder, tech", False),
+    ("Software engineer, founder, tech", True),
+    ("Nvidia researcher", True),
     ("Claude Dupont, investisseur", False),
 ])
-def test_the_follow_bio_niche_is_ai_only(bio, on_niche):
+def test_the_follow_bio_niche_covers_ai_si_and_technology(bio, on_niche):
     assert bool(account.load("theaishrink").niche.bio.search(bio)) is on_niche
 
 
@@ -651,7 +675,7 @@ def _digest(text):
 def test_live_account_has_no_retired_finance_relations():
     relations = account.load("theaishrink").relations
     assert relations.handles == {}
-    assert _digest(relations.default) == OLD_RELATION_PROMPTS["buddy"]
+    assert "AI/SI or technology" in relations.default
 
 
 def test_fictitious_relations_keep_provider_dossier_and_handle_normalization(accounts, fresh):
@@ -786,7 +810,7 @@ def test_a_link_inside_the_folder_is_followed(accounts, fresh, tmp_path):
     (folder / "relations" / "buddy.md").rename(folder / "buddy_real.md")
     (folder / "relations" / "buddy.md").symlink_to(folder / "buddy_real.md")
     fresh()
-    assert _digest(account.current().relations.default) == OLD_RELATION_PROMPTS["buddy"]
+    assert account.current().relations.default == (folder / "buddy_real.md").read_text().strip()
 
 
 @pytest.mark.parametrize("name", account.VOICE_FILES)

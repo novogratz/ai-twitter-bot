@@ -7,6 +7,7 @@ from ..guards.active_hours import now_local, require_active
 from .slot_journal import FileJournal, stamp
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile, StatePath
+from ..x import scraper
 
 # Disposable: rebuilt from the profile every hour.
 REPORT = StateFile("editorial_reach.json", {}, DISPOSABLE)
@@ -23,7 +24,7 @@ def summarize(published, scraped, now=None):
         prefix = " ".join(post["text"].split())[:100]
         matches = [t for t in scraped
                    if not t.get("is_reply")
-                   and f"x.com/{config.BOT_HANDLE.lower()}/status/" in (t.get("url") or "").lower()
+                   and scraper.is_own_post(t)
                    and " ".join((t.get("text") or "").split()).startswith(prefix)]
         if matches:
             tweet = max(matches, key=lambda t: int(t.get("views") or 0))
