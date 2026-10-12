@@ -137,6 +137,7 @@ def run_js(articles, mode, target, menu="retweetConfirm"):
     spec = {"tag": "html", "children": articles + ([{"tag": "button", "attrs": {"id": "confirm", "data-testid": menu}}] if menu else [])}
     program = _FAKE_DOM_JS + "\nEl.prototype.getAttribute = function(k) { return this.attrs[k] || ''; };\n" + f'''
 var root = new El({json.dumps(spec)});
+Object.defineProperty(El.prototype, 'textContent', {{get: function() {{ return this.attrs['data-caption'] || this.innerText; }}}});
 var document = {{querySelectorAll: s => root.querySelectorAll(s), querySelector: s => root.querySelector(s)}};
 var location = {{pathname: '/author/status/{target}'}};
 var out = eval({json.dumps(snippet)});
@@ -176,3 +177,10 @@ def test_native_script_refuses_a_conversation_parent_or_an_undo_menu():
     post = _article("https://x.com/author/status/123", "retweet", "parent")
     assert run_js([before, post], "open", "123")["clicks"] == []
     assert run_js([post], "confirm", "123", menu="unretweetConfirm")["clicks"] == []
+
+
+def test_native_caption_uses_the_same_text_content_as_discovery():
+    post = _article("https://x.com/author/status/123", "retweet", "parent")
+    body = next(c for c in post["children"] if c.get("attrs", {}).get("data-testid") == "tweetText")
+    body["attrs"]["data-caption"] = "SI video\nGenerated animation workflow"
+    assert run_js([post], "read", "123")["out"]["text"] == body["attrs"]["data-caption"]

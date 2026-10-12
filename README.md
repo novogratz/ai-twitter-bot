@@ -66,8 +66,9 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
 - **Up to 50 reposts per Toronto day**, separate from Originals and Replies, at least
   ten minutes apart. New standalone Elon posts take priority, including unrelated
   topics except Bitcoin/crypto. Other reposts require an attached generated video,
-  popular/rising engagement and caption-based model approval. All retain author,
-  age, active-hours and crypto checks. Status IDs are kept permanently, including
+  popular/rising engagement and caption-based model approval, rechecked against
+  the discovery text before sharing. All retain author, age, active-hours and
+  crypto checks. Status IDs are kept permanently, including
   uncertain submissions: nothing already reposted is automatically reshared.
 - **No automatic quote tweets, self-recycling, or burst threads.**
 - Every scheduled original uses a fetched trusted source, prefers fresh AI

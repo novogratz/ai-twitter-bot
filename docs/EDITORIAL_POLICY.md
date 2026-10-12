@@ -188,6 +188,7 @@ cannot qualify. A separate caption review must approve the context; uncertain,
 unrelated, misleading, promotional or insufficiently described clips are skipped.
 The review has caption/engagement metadata, not decoded video frames or audio.
 Approvals expire after one hour and are bound to the exact caption. The write
+reads the same DOM text content as discovery, avoiding presentation-only differences, and
 rechecks actual post text, media, author, standalone state and current counts.
 A quoted video's media cannot stand in for the parent's own attachment.
 

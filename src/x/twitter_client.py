@@ -509,7 +509,8 @@ _REPOST_JS = r"""
         return m ? Math.round(Number(m[1]) * (m[2] ? (m[2].toLowerCase() === 'm' ? 1000000 : 1000) : 1)) : 0;
     }
     var bodies = own('[data-testid="tweetText"]');
-    var text = bodies.length ? bodies[0].innerText.trim() : '';
+    // Match the discovery scraper's caption representation for bound approvals.
+    var text = bodies.length ? (bodies[0].textContent || bodies[0].innerText || '').trim() : '';
     var out = {url: url, text: text, quoted_text: art.innerText || '',
         has_video: own('video').length > 0 || own('[data-testid="videoPlayer"]').length > 0,
         is_reply: text.startsWith('@') || /Replying to|En réponse à|En reponse a/i.test(art.innerText || ''),

@@ -19,6 +19,7 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Reposts have a separate hard ceiling of 50/day, including uncertain submissions.
   New Elon originals have priority; generated videos need rising/popular engagement
   and caption-based model approval. Repost IDs persist permanently. Crypto stays out.
+  Repost approval checks use the same caption text source as discovery.
   Quotes, self-recycling and threads stay at zero.
 - Replies target at least 300 per full Toronto day, with a hard cap of 400, standalone posts only, paced and deduplicated per tweet;
   one Reply per post permanently; debates and conversation follow-ups stay disabled.
