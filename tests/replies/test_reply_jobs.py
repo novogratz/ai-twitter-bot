@@ -459,7 +459,7 @@ def test_early_reply_targets_are_curator_driven():
 def profile_job(request, monkeypatch, llm, chokepoint, settings_override):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
     from src.core import evolution_store
-    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
+    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw, reply_source
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
@@ -469,7 +469,7 @@ def profile_job(request, monkeypatch, llm, chokepoint, settings_override):
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
-    monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
+    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
     def allowed_run():
         settings_override(PROFILE_VISIT_ALLOWLIST=",".join(profiles))
         return run()
@@ -480,14 +480,16 @@ def post(handle, text, minutes=1, n=0, **fields):
     return {"url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
 
 
-def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
+@pytest.mark.parametrize("minutes", [20, 180, 24 * 60 - 1])
+def test_profile_jobs_use_the_full_day_for_on_niche_posts(profile_job, minutes):
     name, run, profiles, llm, chokepoint = profile_job
-    max_minutes = {"early_bird": 18, "mega_watch": 4}[name]
-    ok = post("someone", "post fresh", minutes=max_minutes - 1, n=1)
+    ok = post("someone", "post fresh", minutes=minutes, n=1)
     profiles["someone"] = [
-        post("someone", "post stale", minutes=max_minutes + 1, n=2),
+        post("someone", "post stale", minutes=24 * 60 + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
+        post("someone", "post from the future", minutes=-5, n=5),
+        post("other", "another author's post", n=6),
         {"url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]

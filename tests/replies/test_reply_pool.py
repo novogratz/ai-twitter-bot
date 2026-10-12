@@ -32,6 +32,22 @@ def test_scan_collects_without_generating_or_sending(monkeypatch):
     assert next(iter(pool.read().values()))["state"] == "queued"
 
 
+@pytest.mark.parametrize("job_name", ["early_bird", "mega_watch"])
+@pytest.mark.parametrize("minutes", [20, 180, 23 * 60])
+def test_profile_scans_keep_older_posts_eligible_in_the_shared_pool(monkeypatch, job_name, minutes):
+    from src.replies import early_bird_bot, mega_watch_bot
+    from src.x import x_urls
+    module = {"early_bird": early_bird_bot, "mega_watch": mega_watch_bot}[job_name]
+    now = active_hours.now_local()
+    real_age = x_urls.age
+    monkeypatch.setattr(x_urls, "age", lambda url, at=None: real_age(url, at or now))
+    url = fresh("modelbuilder", minutes=minutes)
+    candidates = module._fresh_candidates("modelbuilder", [{"url": url, "text": "SI model evaluation"}])
+    assert [candidate.url for candidate in candidates] == [url]
+    assert pipeline.run(module.JOB, candidates, pipeline.Cycle()) == 0
+    assert [row["url"] for row in pool.contenders(now + timedelta(seconds=61))] == [url]
+
+
 def test_full_text_and_ids_are_preserved_and_deduplicated():
     url = fresh("someone")
     pool.observe([{"url": url, "text": "short", "full_text": "The complete AI post", "likes": 1}], "FEED")

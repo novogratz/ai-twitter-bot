@@ -18,7 +18,9 @@ English prompts): every post and reply prompt carries it as one block.
   One reply per post, permanently; no debates, follow-ups, own posts or comments on them.
   Spacing and duplicate protection remain.
   Reply scans save posts to a shared pool; a one-minute selector chooses among them
-  and drafts at most one candidate explicitly judged on-topic and scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
+  across the last **24 hours**, including the frequent priority-profile scans;
+  there is no 4-, 15- or 18-minute post-age cutoff. It
+  drafts at most one candidate explicitly judged on-topic and scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
   author handle are refused. Every reply prompt carries the Voice, the

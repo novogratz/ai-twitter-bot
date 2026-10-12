@@ -53,7 +53,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         return original_admit(job, candidate, cycle)
     monkeypatch.setattr(reply_pipeline, "_admit", admit)
     chokepoint.answer = WriteOutcome.REFUSED
-    for module in (dr, eb, mw, reply_source):
+    for module in (dr, reply_source):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))

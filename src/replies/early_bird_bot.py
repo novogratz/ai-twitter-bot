@@ -1,24 +1,15 @@
-"""Early-bird bot: catch fresh tweets from mega accounts within minutes.
+"""Collect watched profiles' standalone topic posts for the shared Reply pool.
 
-Why this matters more than any other reply path: being in the TOP 5 replies
-on a viral tweet is a 10-100x impressions multiplier vs. landing as reply
-#50 an hour later. The standard reply bot fires every 20 min — too slow to
-consistently land top-5 on a fresh banger from sama / OpenAI / Mathieu.
-
-Strategy:
-- Every 5 min, pick a few mega accounts at random.
-- Scrape their latest tweets (existing scraper).
-- If any tweet is < 18 min old and Reply admission lets it through → reply NOW.
-- One reply per scanned account per cycle; the chokepoint owns the dedup.
-- Source-tagged "EARLYBIRD/<handle>" so the strategy agent sees it.
+Frequent scans discover new posts quickly, but accept the pool's full 24-hour
+window (operator 2026-10-12). Selection, drafting and publishing stay in the
+shared selector. Discoveries retain the EARLYBIRD/<handle> source tag.
 """
 import random
-from datetime import timedelta
-from ..x import x_urls
 from ..core.logger import log
+from ..core.topic_evidence import MAX_AGE
 from ..x.scraper import scrape_profile_tweets
-from . import reply_pipeline
-from .direct_reply import is_on_niche, reply_call
+from . import reply_pipeline, reply_source
+from .direct_reply import reply_call
 from .reply_generator import LanguageRule
 
 # The author Reply admission read from the status URL names the parent in
@@ -42,10 +33,6 @@ def _scan_pool() -> list:
     from ..account.account_curator import tracked_handles
     return tracked_handles(limit=30)
 
-# A tweet is "early-bird eligible" if it's at most this many minutes old.
-# Goal: land in top ~5 replies. Sweet spot is ~5-15 min depending on the
-# account's audience size. 12 is a balance.
-EARLY_BIRD_AGE_MAX_MIN = 18
 # 2 -> 4 (2026-05-06 PM growth push). Top-5-reply on a viral tweet is
 # the single highest impressions multiplier we have (10-100x), and we
 # only fire 4-5x per hour, so capping at 2 was leaving slots on the table.
@@ -77,7 +64,7 @@ def run_early_bird_cycle():
             break
 
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")
-        # Only the top 3 tweets — anything older isn't fresh anyway.
+        # Sample the latest posts; age eligibility uses the full pool window.
         tweets = reply_pipeline.scrape("EARLYBIRD", f"@{username}", scrape_profile_tweets, username,
                                        max_tweets=3)
         # One reply per scanned account, then move on.
@@ -90,27 +77,6 @@ def run_early_bird_cycle():
 
 
 def _fresh_candidates(username: str, tweets: list) -> list:
-    candidates = []
-    for tweet in tweets:
-        url = tweet.get("url", "")
-        text = tweet.get("text", "")
-        if not url:
-            continue
-        if x_urls.is_reply_like_tweet(tweet, expected_author=username):
-            log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
-            continue
-
-        age = x_urls.age(url)
-        if age is None or age < timedelta(0):
-            continue  # no status ID / clock skew
-        if age > timedelta(minutes=EARLY_BIRD_AGE_MAX_MIN):
-            continue  # too late — drops down to standard reply bot territory
-
-        # Priority authors still need an on-topic standalone post.
-        if not is_on_niche(text):
-            log.info(f"[EARLYBIRD] Off-niche topic — skipping @{username}: {text[:60]}")
-            continue
-
-        log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
-        candidates.append(reply_pipeline.Candidate(url, text, f"EARLYBIRD/{username}"))
-    return candidates
+    declaration = reply_source.Declaration(max_age=MAX_AGE, root_only=True,
+                                           author=username, niche=True)
+    return reply_source.select(tweets, declaration, f"EARLYBIRD/{username}")

@@ -341,3 +341,11 @@ debate, replyback and conversation follow-ups remain disabled. The requested
 Voice favors Elon, Grok, xAI and related products when relevant and supported,
 with technical insight, apt wit and honest uncertainty. Existing follower
 relationships and production state are preserved. Deployment requires restart.
+
+2026-10-12 — Operator requested removal of a suspected fifteen-minute Reply
+post-age cutoff. There was no global fifteen-minute limit, but early-bird and
+mega-watch scans still rejected posts older than eighteen and four minutes.
+Both now use the shared Reply pool's 24-hour age window through Reply source
+declarations. Frequent scanning does not require minute-old posts. Topic,
+standalone-post, author, score, pacing and permanent dedup checks still apply.
+No automatic start or restart accompanies this change.
