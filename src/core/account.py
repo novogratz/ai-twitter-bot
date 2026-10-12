@@ -83,6 +83,7 @@ class Account:
     searches: "Searches"
     relations: "Relations"
     previous_handles: tuple = ()  # historical own-post URLs survive a rename
+    reposts: "Reposts" = None
 
 
 def current() -> Account:
@@ -114,7 +115,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "previous_handles": list})
+                 optional={"limits": dict, "relations": dict, "previous_handles": list, "reposts": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -136,7 +137,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top), previous_handles=tuple(previous),
+        searches=_searches(top), previous_handles=tuple(previous), reposts=_reposts(top),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -226,6 +227,22 @@ class Niche:
     excluded: re.Pattern | None = None
     reply_forbidden: re.Pattern | None = None
     reply_preserve: re.Pattern | None = None
+    video: re.Pattern | None = None
+    video_credit: re.Pattern | None = None
+
+    @staticmethod
+    def prose(text: str, *, keep_mentions=False) -> str:
+        pattern = r"https?://\S+|(?:\b[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?"
+        if not keep_mentions:
+            pattern += r"|(?<!\w)@\w+"
+        return re.sub(pattern, " ", text or "")
+
+    def matches_video(self, text: str) -> bool:
+        """Discovery hint from the caption; never proof of unseen video content."""
+        if self.excludes(text):
+            return False
+        return bool((self.video and self.video.search(self.prose(text)))
+                    or (self.video_credit and self.video_credit.search(self.prose(text, keep_mentions=True))))
 
     def reply_wording_problem(self, text: str) -> str:
         # Literal links, handles and inline code retain their verified spelling.
@@ -243,7 +260,9 @@ class Niche:
         """Judge the post's words, never a topic found only in a handle or URL."""
         if self.excludes(text):
             return False
-        text = re.sub(r"https?://\S+|(?:\b[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?|(?<!\w)@\w+", " ", text)
+        if self.matches_video(text):
+            return True
+        text = self.prose(text)
         return bool(self.post.search(text) or (self.ticker and self.ticker.search(text)))
 
 
@@ -255,11 +274,13 @@ class Searches:
     trending: tuple  # the Top searches of the Trend slots and the Startup post
     scope: str = ""  # Account topic alternatives and exclusions, on every search
     exclusions: str = ""  # Always appended, including to declared topic queries
+    videos: tuple = ()
+    priority_reposts: tuple = ()
 
     def scoped(self, query: str) -> str:
         # Declared queries already encode their topic. Repeating a large OR
         # scope made X return an error (browser incident 2026-10-12).
-        declared = query in self.replies + self.hot_tab + self.likes + self.trending
+        declared = query in self.replies + self.hot_tab + self.likes + self.trending + self.videos + self.priority_reposts
         scope = "" if declared and self.exclusions else self.scope
         suffix = " ".join(part for part in (scope, self.exclusions) if part)
         return f"({query}) {suffix}" if suffix else query
@@ -285,24 +306,45 @@ def _network(top) -> Network:
 def _niche(top) -> Niche:
     table = _Table(top.file, "niche", top["niche"], required={"post": str, "bio": str},
                    optional={"ticker": str, "reply_instructions": str, "excluded": str,
-                             "reply_forbidden": str, "reply_preserve": str})
+                             "reply_forbidden": str, "reply_preserve": str, "video": str, "video_credit": str})
     ticker = _pattern(table, "ticker", flags=0) if "ticker" in table else None
     return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"),
                  reply_instructions=table.get("reply_instructions", ""),
                  excluded=_pattern(table, "excluded") if "excluded" in table else None,
                  reply_forbidden=_pattern(table, "reply_forbidden") if "reply_forbidden" in table else None,
-                 reply_preserve=_pattern(table, "reply_preserve") if "reply_preserve" in table else None)
+                 reply_preserve=_pattern(table, "reply_preserve") if "reply_preserve" in table else None,
+                 video=_pattern(table, "video") if "video" in table else None,
+                 video_credit=_pattern(table, "video_credit") if "video_credit" in table else None)
 
 
 def _searches(top) -> Searches:
     table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
-                   optional={"scope": str, "exclusions": str})
-    for key in _SEARCHES:
+                   optional={"scope": str, "exclusions": str, "videos": list, "priority_reposts": list})
+    for key in (*_SEARCHES, "videos", "priority_reposts"):
+        if key not in table:
+            continue
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
     return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""),
-                    exclusions=table.get("exclusions", ""))
+                    exclusions=table.get("exclusions", ""), videos=tuple(table.get("videos", [])),
+                    priority_reposts=tuple(table.get("priority_reposts", [])))
+
+
+@dataclass(frozen=True)
+class Reposts:
+    priority_handles: tuple = ()
+    allow_off_topic_priority: bool = False
+
+
+def _reposts(top) -> Reposts:
+    table = _Table(top.file, "reposts", top.get("reposts", {}), required={},
+                   optional={"priority_handles": list, "allow_off_topic_priority": bool})
+    handles = table.items("priority_handles", str) if "priority_handles" in table else []
+    for i, handle in enumerate(handles):
+        if not _HANDLE.fullmatch(handle):
+            table.fail(f"priority_handles[{i}]", "takes an X handle without @")
+    return Reposts(tuple(h.lower() for h in handles), table.get("allow_off_topic_priority", False))
 
 
 class _Table:

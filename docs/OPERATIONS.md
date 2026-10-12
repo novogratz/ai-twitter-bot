@@ -552,6 +552,7 @@ root:
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `reply_candidates.json` | `reply_pool`; shared schema/read in `core.topic_evidence` | Last-day discoveries, eligibility, topic verdict, score/reason/angle and outcome; also gates account discovery. An unreadable file stops its readers. | guarded |
 | `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
+| `repost_history.json` | `repost_policy` via `repost_tweet` | Permanent status-ID records: pending, confirmed or observed; ambiguous/observed entries count against 50/day. Never delete to reset deduplication. | guarded |
 | `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward 400/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
@@ -943,3 +944,14 @@ searches. Logs report the verified view and unique posts collected while scrolli
 An unavailable tab/sort is skipped. Direct scans default to three queries per
 cycle; a local `DIRECT_REPLY_QUERIES_PER_CYCLE` override still wins. Short rotating
 profile scans and a dedicated selection worker leave room for Replies.
+
+### Repost recovery (2026-10-12)
+
+`repost_history.json` is the permanent no-repeat record. `pending` means the
+submit may have reached X; it is not automatically retried. Check the native
+repost state on X before repairing an entry. Keep confirmed/observed IDs forever.
+A crash after the ledger append still counts once; the history reservation is
+reconciled with ledger status IDs. Unreadable history stops the repost job.
+Video approvals in `reply_candidates.json` contain exact caption, verdict,
+reason and review time, expire after one hour, and do not imply the video frames
+were analyzed. Originals and Replies retain their independent recovery rules.

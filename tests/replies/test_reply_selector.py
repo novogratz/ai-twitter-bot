@@ -130,6 +130,29 @@ def test_comparison_batch_includes_waiting_and_fresh_discoveries():
     assert len({row["id"] for row in picked}) == 8
 
 
+def test_video_discoveries_get_half_the_review_batch_without_crowding_out_waiting_posts():
+    rows = [dict(id=str(n), state="queued", text="SI research", first_seen=str(n)) for n in range(40)]
+    for row in rows[2:8]:
+        row["text"] = "Seedance generated video"
+    picked = selector.comparison_order(rows)[:pool.BATCH_SIZE]
+    assert [row["id"] for row in picked[:2]] == ["0", "1"]
+    assert sum(row["text"].startswith("Seedance") for row in picked) == 4
+    assert picked[-1]["id"] == "38"
+    assert len({row["id"] for row in picked}) == pool.BATCH_SIZE
+
+
+@pytest.mark.parametrize("video_score,other_score,winner", [(86, 88, 0), (86, 96, 1), (84, 85, 1)])
+def test_video_preference_only_compares_qualified_opportunities(saved, monkeypatch, video_score, other_score, winner):
+    rows = pool.read()
+    rows[saved[0].rsplit('/', 1)[1]]["text"] = "Seedance generated video"
+    pool.POOL.write(rows)
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [video_score, other_score, 10]))
+    sent = []
+    monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, *a, **k: sent.extend(candidates) or 1)
+    assert selector.run_reply_selection_cycle() == 1
+    assert sent[0].url == saved[winner]
+
+
 def test_large_pool_reviews_only_a_bounded_batch(saved, monkeypatch):
     job = pipeline.Job("scan", "SCAN", None)
     pool.collect(job, [pipeline.Candidate(fresh("builder", n=i), "SI model evaluation", "SEARCH")

@@ -3027,3 +3027,17 @@ search showed X's error screen, while a shorter equivalent found posts. Declared
 topic queries now append exclusions without repeating a large scope; ad-hoc queries
 retain a compact topic scope and the same exclusions. This preserves crypto and
 standalone filters while making the searches usable.
+
+## 2026-10-12 — Generated-video specialization and bounded reposts
+
+The operator requested more AI/SI video comments, wider model/workflow/meme
+searches, automatic reposts of standout clips, all new Elon originals and a
+strict maximum of fifty reposts/day without repeats. The prior zero-repost
+mandate is superseded for this Account. Discovery uses short rotating queries,
+Latest and Top, and explicit own-video metadata. Rising/popular videos need a
+caption-based semantic approval; the bot does not claim to watch their frames.
+Native repost controls never toggle an existing repost. Permanent guarded
+history reserves ambiguous submissions before a possible click, preventing
+repeat attempts after crashes, restarts, URL aliases and day boundaries.
+The earlier reply target, one-reply rule, active windows and crypto exclusions
+remain; the named priority author gets an off-topic repost exception only.

@@ -15,6 +15,7 @@ from .direct_reply import reply_call
 
 _FEED_OFFSET = 0
 _SEARCH_OFFSET = 0
+_VIDEO_OFFSET = 0
 
 
 def _harvest_active_authors(tweets: list) -> None:
@@ -57,8 +58,8 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """One rotating feed view plus one Latest search, yielding between pages."""
-    global _FEED_OFFSET, _SEARCH_OFFSET
+    """A native feed, a dedicated video search and a Latest topic search."""
+    global _FEED_OFFSET, _SEARCH_OFFSET, _VIDEO_OFFSET
     from functools import partial
     from ..x.scraper import scrape_x_search, scrape_home_feed, scrape_following_feed
     views = [("FOR-YOU", scrape_home_feed),
@@ -68,6 +69,15 @@ def run_feed_sweep_cycle():
     _FEED_OFFSET += 1
     cycle = reply_pipeline.Cycle()
     _sweep_one_feed(source, read, cycle)
+    if cycle.rate_limited:
+        return
+    videos = account.current().searches.videos
+    if videos:
+        query = videos[(_VIDEO_OFFSET // 2) % len(videos)]
+        tab = "live" if _VIDEO_OFFSET % 2 == 0 else "top"
+        _VIDEO_OFFSET += 1
+        _sweep_one_feed("VIDEO/" + tab + "/" + query[:60],
+                        partial(scrape_x_search, query, tab=tab, text_limit=2000), cycle)
     if cycle.rate_limited:
         return
     queries = list(account.current().searches.replies)

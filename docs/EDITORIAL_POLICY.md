@@ -1,4 +1,4 @@
-# Editorial policy — September 23, 2026
+# Editorial policy — October 12, 2026
 
 The operator's current mandate (2026-10-12) targets at least 300 useful replies per full
 Toronto day and permits at most 400, to other accounts' standalone posts only. Never answer own
@@ -6,6 +6,8 @@ posts or comments on them. Nominal activity windows are 05:00–10:00,
 12:00–13:00 and 16:45–23:00 Toronto time. Each start varies independently
 by ±10 minutes per Toronto day, stable across restarts. Closing times are fixed
 and end exclusive. All external activity uses those actual daily windows.
+Reposts have a separate 50/day maximum, permanent duplicate protection and
+the priority-author/generated-video admission rules below.
 The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
@@ -98,7 +100,8 @@ Generated media, brainrot and clearly fictional tech celebrity parodies qualify;
 unrelated celebrity gossip, lifestyle, politics, sports and trading do not.
 
 Every two minutes, the sweeper rotates one native view (For You, Following Recent,
-Following Popular) and one Latest topic query. Feed tabs and Following sort state
+Following Popular), one Latest topic query and one dedicated generated-video query.
+Each video query is searched in Latest, then Top; no minimum-like gate applies. Feed tabs and Following sort state
 must be verified; missing controls skip the view rather than mislabel a fallback.
 Scraping collects each viewport before scrolling, deduplicates status IDs and stops
 at a bounded scroll count or two unchanged reads. Scrolling moves the document
@@ -157,6 +160,68 @@ Names, URLs and ambiguous keywords alone never establish relevance; semantic
 selection still rejects an incidental mention, an unrelated meaning of SI or
 ordinary French “si”. Generic founder/agent labels alone remain insufficient.
 
+## Video discovery and reposts — Operator 2026-10-12
+
+This mandate supersedes the earlier zero-repost rule. Reposts have a separate
+hard ceiling of **50 per Toronto day**, including ambiguous submissions and
+already-reposted posts first observed that day. The operator welcomes 40–50
+when supply supports it; there is no forced minimum. Originals retain their
+8/day ceiling and twenty-minute spacing; Replies retain 300 target/400 maximum.
+Reposts are at least ten minutes apart and only within the same active windows.
+The job checks every two minutes and attempts at most two targets, stopping
+immediately after a shipped or ambiguous submission. Already-recorded status
+IDs are never reposted again, even after a restart, a handle change or a new day.
+Quotes, threads and self-recycling remain disabled.
+
+New standalone posts from the Account's `reposts.priority_handles` (Elon Musk)
+take priority, oldest first within 24 hours. The requested “all” allows their
+subjects outside AI/SI/technology, but Bitcoin/crypto, blocked/own authors and
+conversation replies remain excluded. This exception applies to reposts only.
+The shared 50/day ceiling always wins if more priority posts arrive. A dedicated
+Latest search improves discovery of new originals rather than recycling history.
+
+Other authors require an attached video belonging to the actual parent post,
+caption evidence of generated video, and either 500 likes, 100 reposts, or rapid
+engagement (at least 75 likes with weighted velocity >=5/min, or 20 reposts with
+velocity >=4/min; velocity is `(likes + 4 * reposts) / age_minutes`). Views alone
+cannot qualify. A separate caption review must approve the context; uncertain,
+unrelated, misleading, promotional or insufficiently described clips are skipped.
+The review has caption/engagement metadata, not decoded video frames or audio.
+Approvals expire after one hour and are bound to the exact caption. The write
+reads the same DOM text content as discovery, avoiding presentation-only differences, and
+rechecks actual post text, media, author, standalone state and current counts.
+A quoted video's media cannot stand in for the parent's own attachment.
+
+Searches cover AI/SI video generation, Seedance, Grok Imagine, Grok AI/image,
+@grok/@imagine, Sora, Veo, Kling, Runway, Pika, Luma, Hailuo, Wan, Hunyuan,
+LTX, PixVerse, Higgsfield, ComfyUI, workflows, prompts, lip sync, camera control,
+image-to-video, animation, memes, brainrot and clearly fictional parodies.
+Broader Latest searches also cover new models, research, reasoning, agents,
+MCP, RAG, multimodal inputs, open weights, inference, distillation and robotics.
+Short grouped queries preserve search reliability. Model/tool names and current
+claims still need context; adding a keyword never proves factual expertise.
+Explicit video-generation credits such as “Video generated with @grok” qualify
+as caption evidence; bare handles and unrelated videos do not. Keywords were
+checked against primary references including [Seedance](https://seed.bytedance.com/en/seedance2_0/),
+[Grok Imagine](https://docs.x.ai/developers/models/grok-imagine-video), and
+[Diffusers video pipelines](https://huggingface.co/docs/diffusers/main/using-diffusers/cogvideox).
+
+Up to four positions in each eight-post Reply comparison prioritize video
+candidates, alongside two older waiting discoveries and fresh general posts.
+Approved video candidates receive a three-point ordering preference; raw scores
+below 85, off-topic verdicts and expired approvals remain ineligible. Reply
+length varies with the existing style choices. Replies never invent having
+watched a clip, model versions, benchmarks, visual details or production tools.
+
+The repost write clicks only the matched post's native `retweet` and explicit
+`retweetConfirm` controls, never a toggle shortcut or undo control. Before the
+possible submit it reserves the status ID in guarded `repost_history.json`.
+Only a confirmed native `unretweet` state records a shipped ledger row. An
+uncertain result stays reserved and consumes budget; check X before repairing it.
+An unreadable history stops reposting without replacement. A temporary browser
+failure pauses that candidate for ten minutes so others can still be considered.
+Code/config changes take effect on the next explicitly requested start/restart.
+
 ## Trend slots and the Startup post
 
 The 09:45, 12:20 and 17:00 slots, and the Startup post, take their topic from
@@ -208,18 +273,16 @@ must not repeat.
   spends none. A slot out of attempts, or one whose pass yields no draft, no
   longer holds an overlapping one; a pass still submits once at most.
   There is no backlog catchup. At least twenty minutes separate originals.
-- Eight profile publications per local day is absolute. The ledger includes
-  originals, quotes and reposts already made that day. Deploying this change
+- Eight Original/quote publications per local day is absolute. The ledger includes
+  originals and historical quotes already made that day; reposts use a separate budget. Deploying this change
   does not erase history or grant extra slots. A `pending` submission, whose
   outcome was ambiguous, has no ledger row: it counts toward the day's eight
   and toward the twenty-minute spacing until the operator clears it, and so
   does a slot the operator marked published after a check.
-- Quote/repost caps are zero, including urgency and mega-viral exceptions.
-  Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
-  write functions are removed from `src/x/twitter_client.py` (issue #111), and
-  no scheduled job carries such a branch (issue #107):
-  `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
-  code and an operator request, not a config change.
+- Quotes remain disabled. Reposts use the separately authorized 50/day policy above.
+  The legacy quote, toggle-repost, thread, GIF-post and self-reply writers remain
+  absent (issue #111), as `tests/test_disabled_surfaces.py` pins. Only the newly
+  authorized `repost_tweet` path restores reposting with independent guards.
 - Replies have a hard 400-per-day cap, with a target of at least 300 useful Replies. Browser pacing, per-tweet dedup and bounded
   standalone-post verification protect conversation quality. Conversation
   turns and comments on our posts are no longer scheduled or admitted by the
@@ -478,3 +541,14 @@ debate, replyback and conversation follow-ups remain disabled. The requested
 Voice favors Elon, Grok, xAI and related products when relevant and supported,
 with technical insight, apt wit and honest uncertainty. Existing follower
 relationships and production state are preserved. Deployment requires restart.
+
+2026-10-12 — Operator expanded generated-video discovery and requested automatic
+reposts, up to fifty/day, with permanent status-ID deduplication. Search catalogs
+include Seedance, Grok Imagine and additional video/image tools, workflows, memes
+and fresh AI/SI research. Reply comparison gives qualified video opportunities
+more attention. Reposts prioritize new standalone Elon originals (crypto remains
+excluded), then popular/rising generated videos with caption-based approval.
+This supersedes zero automatic reposts; the fifty-repost budget is separate from
+Originals and Replies. Native state checks prevent toggling an existing repost;
+uncertain submissions stay reserved across restarts. No bot restart accompanies
+this implementation. The operator requested a merged PR and a new release.

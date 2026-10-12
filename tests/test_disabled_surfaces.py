@@ -1,4 +1,7 @@
-"""No live module can reach a quote, repost or thread write (issues #107, #111).
+"""No live module can reach a quote, self-repost or thread write (issues #107, #111).
+
+Operator 2026-10-12 restored capped reposts of other accounts through
+repost_tweet; legacy toggles, self-recycling and quote/thread writers stay absent.
 
 The 2026-09-20 policy sets these surfaces to zero. Caps at zero kept the old
 branches silent; this test pins that the branches themselves are gone, so a

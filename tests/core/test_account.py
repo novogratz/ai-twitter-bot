@@ -61,7 +61,7 @@ def test_theaishrink_loads_the_old_constants():
     assert loaded.relevance.topic.search("SI software hardware")
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
-    assert loaded.limits == {}
+    assert loaded.limits == {"MAX_REPOSTS_PER_DAY": 50}
     # The prompts said "AI" in the code before #208.
     assert loaded.domain == "SI and technology"
     assert list(loaded.searches.trending) == OLD_TREND_QUERIES
@@ -85,9 +85,44 @@ def test_public_rename_preserves_the_storage_identity_and_own_handles():
     assert not config.is_own_handle("anotherbuilder")
 
 
+@pytest.mark.parametrize("text", [
+    "Seedance video workflow", "Grok Imagine animation", "Grok AI video", "Grok image to video",
+    "#GrokImagine cinematic clip", "Kling camera control video", "Runway film generation",
+    "Pika animated short", "Luma Dream Machine clip", "Hailuo video", "HunyuanVideo workflow",
+    "Wan 2.2 video", "LTX-2 video", "PixVerse clip", "Higgsfield cinematic video",
+    "ComfyUI video LoRA workflow", "AI generated lip sync", "SI brainrot meme",
+    "Text-to-video workflow", "Image-to-video prompt", "t2v benchmark", "i2v workflow",
+    "Video generated with @grok", "Animation created using @imagine", "#AIVideo workflow",
+    "#Seedance2 video", "#GrokImagine clip", "CogVideoX video", "Adobe Firefly video",
+])
+def test_video_terms_qualify_without_requiring_a_generic_ai_label(text):
+    niche = account.current().niche
+    assert niche.matches_video(text)
+    assert niche.matches_post(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Holiday video with @grok", "My lunch @imagine", "Runway fashion show", "Pika is a small animal",
+    "SI video Bitcoin token launch", "https://grok.com/imagine my sandwich",
+])
+def test_video_search_labels_do_not_admit_unrelated_or_crypto_captions(text):
+    assert not account.current().niche.matches_video(text)
+
+
+def test_keyword_catalog_is_split_into_bounded_queries():
+    searches = account.current().searches
+    catalog = " ".join(searches.videos).lower()
+    for term in ("seedance", "grok imagine", "@grok", "@imagine", "grok image", "grok ai", "brainrot",
+                 "kling", "runway", "sora", "veo", "comfyui", "lip sync", "image to video"):
+        assert term in catalog
+    assert all("min_faves:" not in query for query in searches.videos)
+    assert all(len(searches.scoped(query)) < 400 for query in searches.videos)
+    assert len(searches.videos) >= 14
+
+
 def test_topic_searches_keep_exclusions_without_duplicating_the_topic_scope():
     searches = account.current().searches
-    for query in searches.replies + searches.hot_tab + searches.likes + searches.trending:
+    for query in searches.replies + searches.hot_tab + searches.likes + searches.trending + searches.videos + searches.priority_reposts:
         combined = searches.scoped(query)
         assert combined == f"({query}) {searches.exclusions}"
         assert len(combined) < 400

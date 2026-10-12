@@ -7,16 +7,20 @@ real account. Setup and run commands live in [`README.md`](README.md).
 ## Current policy — the ceiling you never lift
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(2026-09-23) and supersedes every older mandate. It encodes:
+(updated 2026-10-12) and supersedes every older mandate. It encodes:
 
 - Nominal activity windows: 05:00–10:00, 12:00–13:00 and 16:45–23:00 America/Toronto.
   Each start varies by ±10 minutes per day; closing times are fixed, end exclusive.
 - At least three sourced AI originals targeted a day, six planned, and eight
-  combined profile publications at most, twenty minutes apart at least.
+  Original/quote publications at most, twenty minutes apart at least.
 - Three trend slots (09:45, 12:20, 17:00) and a Startup post on every start
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
-- Quotes, reposts, self-recycling and threads stay at zero.
+- Reposts have a separate hard ceiling of 50/day, including uncertain submissions.
+  New Elon originals have priority; generated videos need rising/popular engagement
+  and caption-based model approval. Repost IDs persist permanently. Crypto stays out.
+  Repost approval checks use the same caption text source as discovery.
+  Quotes, self-recycling and threads stay at zero.
 - Replies target at least 300 per full Toronto day, with a hard cap of 400, standalone posts only, paced and deduplicated per tweet;
   one Reply per post permanently; debates and conversation follow-ups stay disabled.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
@@ -32,7 +36,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
   own prose, preserving verified names and literal links. Discovery keeps both
   AI and SI terms; the current SpaceXSI name and profile replace older branding.
 - Discovery rotates For You, Following Recent/Popular and Latest topic searches
-  every two minutes; native views must be verified. It saves every viewport while
+  every two minutes, plus a dedicated video query alternating Latest and Top;
+  native views must be verified. It saves every viewport while
   scrolling, deduplicates posts, and rejects off-topic/crypto candidates. New-post
   searches have no minimum likes. Declared queries keep exclusions without duplicating
   topic scope; ad-hoc queries also get a compact topic scope. Direct scans rotate
@@ -48,7 +53,7 @@ A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
 change. The same holds for the operator-owned guardrails: the Account's
 Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
-edits, `BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
+edits, `BLOCKLIST` in `src/core/config.py`, the repost ceiling and deduplication,
 `accounts/<BOT_ACCOUNT>/respect_list.json`, and
 `personality_store.hard_rules_block()`.
 
@@ -83,6 +88,8 @@ Account.
 | Shared Reply candidate schema and fresh topic evidence for account discovery | `src/core/topic_evidence.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
+| Reposts: priority-original discovery and caption review | `src/replies/repost_bot.py` |
+| Repost admission, permanent history, uncertain submissions, topic/media checks | `src/guards/repost_policy.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Follow run: one cycle's follows, Followed accounts skipped whatever the case, each handle tried once, no call past CAP_REACHED, bedtime and `StateUnreadable` raised, any other error one pick, counted and raised once the job saved its state; follow_engagers uses it | `src/account/follow_run.py` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |
@@ -375,3 +382,14 @@ The selector's eight-post review and dedicated worker address stalled Replies.
 The public handle and both Voices change; the storage key, ledger, reservations,
 permanent dedup, 300 target/400 cap, active windows and one-Reply rule remain.
 No bot start or restart accompanies this implementation.
+
+2026-10-12 — Operator expanded generated-video discovery and requested automatic
+reposts, up to fifty/day, with permanent status-ID deduplication. Search catalogs
+include Seedance, Grok Imagine and additional video/image tools, workflows, memes
+and fresh AI/SI research. Reply comparison gives qualified video opportunities
+more attention. Reposts prioritize new standalone Elon originals (crypto remains
+excluded), then popular/rising generated videos with caption-based approval.
+This supersedes zero automatic reposts; the fifty-repost budget is separate from
+Originals and Replies. Native state checks prevent toggling an existing repost;
+uncertain submissions stay reserved across restarts. No bot restart accompanies
+this implementation. The operator requested a merged PR and a new release.

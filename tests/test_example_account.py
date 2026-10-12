@@ -31,7 +31,7 @@ PRE_187 = {
     "target_replies": 300,
     "wake_jitter_minutes": 10,
     "quotes": 0,
-    "reposts": 0,
+    "reposts": 50,
     "slots": [
         ["05:00", "Priority: the SI update worth understanding this morning"],
         ["07:15", "A useful SI workflow with a concrete first step"],
@@ -49,7 +49,7 @@ PRE_187 = {
     "startup_post": "every start in waking hours, restarts included",
     "jobs": [
         "editorial_job", "startup_reply_job", "reply_selection_job", "direct_reply_job", "feed_sweep_job", "early_bird_job",
-         "mega_watch_job",   "engage_job", "followback_job",
+         "mega_watch_job", "repost_job", "engage_job", "followback_job",
         "follow_engagers_job", "like_job", "pin_job", "session_refresh_job", "follower_tracker_job",
         "reach_report_job",
     ],
@@ -57,6 +57,7 @@ PRE_187 = {
 # The values the code at 9748c36d used with no .env, for each setting that
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
+    "MAX_REPOSTS_PER_DAY": 50, "MIN_SECONDS_BETWEEN_REPOSTS": 600,
     "MAX_REPLIES_PER_DAY": 400,
     "FOLLOW_REQUIRE_NICHE": True,
     "TARGET_REPLIES_PER_DAY": 300,
@@ -125,7 +126,8 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
 
     assert account.current().name == "example"
     assert settings.get("BOT_HANDLE") == "ExampleGardener"
-    assert shown["jobs"] == PRE_187["jobs"]
+    assert shown["jobs"] == [job for job in PRE_187["jobs"] if job != "repost_job"]
+    assert shown["reposts"] == 0
     assert shown["trend_slots"] == ["10:00", "15:00"]
     assert [clock for clock, _ in shown["slots"]] == ["06:30", "09:00", "10:00", "12:30", "15:00",
                                                      "17:30", "19:45"]
@@ -133,7 +135,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     # Its [limits] lowers the day's ceiling to 4, and the targets under it.
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
-    assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
+    assert bounded == {**PRE_187_BOUNDED, "MAX_REPOSTS_PER_DAY": 0, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")

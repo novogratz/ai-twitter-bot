@@ -126,7 +126,7 @@ publisher = "Hugging Face docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
+topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI|IA)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|grokimagine|flux\s+model|stable\s+diffusion|diffusion\s+models?|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora\d*|veo(?:\s*\d)?|seedance\d*|seedream|kling(?:ai)?\d*|hailuo|minimax|hunyuan(?:video)?|pixverse|higgsfield|comfyui|ltx[ -]?(?:video|studio|2)|wan\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\s+(?:photos?|photography|images?|footage)\b)|trading|forex|etfs?|bourse|portefeuilles?)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -145,6 +145,12 @@ default = "relations/buddy.md"
 # set stricter for this Account: a value past the engine's bound is brought
 # back to it, with a [SETTINGS] warning at start. .env still wins over it.
 [limits]
+MAX_REPOSTS_PER_DAY = 50
+
+# Operator 2026-10-12: all new standalone priority posts, crypto always excluded.
+[reposts]
+priority_handles = ["elonmusk"]
+allow_off_topic_priority = true
 
 # ── Network and niche: the accounts, searches and patterns the jobs use ──────
 # A handle here is compared with the handle read from a status URL, never with
@@ -235,6 +241,9 @@ follow_engagers_skip = [
 # Crypto and markets remain excluded. AI in capitals always matches; any
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
+video_credit = '(?s)\A(?=.*\b(?:videos?|clips?|films?|animations?)\b)(?=.*\b(?:generated|created|made|animated|rendered)\s+(?:\w+\s+){0,3}(?:with|using|by)\s+@(?:grok|imagine)\b)'
+# Caption evidence for generated-video discovery; semantic review still decides.
+video = '\b(?:videogen|i2v|t2v|hunyuanvideo|cogvideox|animatediff|framepack|ai[ _-]?videos?|(?-i:SI)[ _-]?videos?)\b|(?s:\A(?=.*\b(?:AI|(?-i:SI|ASI|IA)|super[\s-]*intelligence|artificial\s+intelligence|generative|genai|grok(?:imagine)?|sora\d*|veo|seedance\d*|kling(?:ai)?\d*|runway(?:ml)?|pika|luma|dream\s*machine|hailuo|minimax|hunyuan(?:video)?|wan|ltx|pixverse|higgsfield|comfyui|cogvideox|animatediff|framepack|adobe\s+firefly|heygen|text[ -]to[ -]video|image[ -]to[ -]video)\b)(?=.*\b(?:videos?|vid[eé]os?|clips?|films?|filmmaking|cinematic|footage|animations?|animated|brain[ -]*rot|memes?|parod(?:y|ies)|imagine|grokimagine|seedance\d*|videogen|lip[ -]?sync)\b))'
 # Current Reply wording only; URL, handle and code spellings are preserved.
 reply_preserve = '\b(?:Google\s+AI|Meta\s+AI|SpaceXAI\s+LLC|AI\s+Act)\b'
 reply_forbidden = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|artificial[\s-]+intelligence|spacexai|xai)\b'
@@ -242,7 +251,7 @@ reply_forbidden = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\
 excluded = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\s+(?:photos?|photography|images?|footage)\b)|trading|forex|etfs?|bourse|portefeuilles?)\b'
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI|IA)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|grokimagine|flux\s+model|stable\s+diffusion|diffusion\s+models?|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora\d*|veo(?:\s*\d)?|seedance\d*|seedream|kling(?:ai)?\d*|hailuo|minimax|hunyuan(?:video)?|pixverse|higgsfield|comfyui|ltx[ -]?(?:video|studio|2)|wan\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 reply_instructions = """
 TOPIC REQUIREMENT: Reply to substantive AI, SI, super intelligence or technology:
 models, research, agents, coding, software, hardware, semiconductors, security,
@@ -256,7 +265,19 @@ Bitcoin/crypto content remains excluded even when mixed with AI or posted by Elo
 A famous author, keyword or link alone is not relevance: Claude can be a person,
 Gemini an astrology sign, transformers a movie, and SI an unrelated acronym.
 Generated-media humor and a useful small builder's post can merit a reply without
-many likes. Never pretend to have watched a clip or invent its content or tools.
+many likes. Prioritize creative SI videos, generation workflows, memes and brainrot.
+Be precise about temporal consistency, identity drift, motion and physics,
+prompt adherence, camera control, first/last frames, reference conditioning,
+audio-video alignment, lip sync, editing, latency and cost only when the supplied
+caption, workflow or trusted source supports the point. A keyword is not proof
+of which model made a clip. Do not invent model versions, limits or benchmarks.
+For a playful video, an original joke or a few words can beat a technical lecture.
+Never pretend to have watched a clip or invent its content or tools.
+Distinguish text-to-video, image-to-video, video-to-video, first/last-frame control,
+reference images, character consistency, camera motion, inpainting, outpainting,
+retiming, interpolation, upscaling, lip sync and sound design. Discuss model
+reasoning, agents, tool use, MCP, RAG, memory, multimodal inputs, open weights,
+distillation, quantization and evaluation with the same concrete, grounded voice.
 Treat celebrity parodies as fiction, never genuine quotes, news or endorsements.
 Favor Elon Musk, Grok, SpaceXSI and his products when relevant and supported;
 never invent benchmarks, personal use or celebrity engagement or force a plug.
@@ -275,7 +296,7 @@ standalone smiley may suit a playful creative result, never dodge a question.
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI|IA)|super[\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 
 # Declared topic queries always receive exclusions; ad-hoc queries also receive
 # the compact topic scope, avoiding oversized duplicated Boolean expressions.
@@ -283,6 +304,30 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 [searches]
 scope = '(SI OR AI OR LLM OR Grok OR SpaceXSI OR superintelligence OR technology OR tech OR software OR hardware OR robotics OR coding OR cybersecurity OR GPU OR SpaceX)'
 exclusions = '-bitcoin -btc -crypto -ethereum -solana -nft -bittensor -memecoin -web3 -defi -stocks -trading -filter:replies'
+# Each cycle searches one video query, alternating Latest and Top for each query.
+# No minimum likes: new clips and small creators can reach the comparison pool.
+videos = [
+    '("Grok Imagine" OR "Grok video" OR "Grok AI" OR "Grok image" OR grokimagine) filter:videos',
+    '(@grok OR @imagine) (video OR animation OR generated OR meme) filter:videos',
+    '(Seedance OR Seedream OR "Dreamina AI" OR "Jimeng AI") (video OR clip OR animation) filter:videos',
+    '("AI video" OR "SI video" OR "AI filmmaking" OR "SI filmmaking" OR "generative video") filter:videos',
+    '(SI OR AI OR Grok OR Seedance) (brainrot OR "brain rot" OR meme OR parody) filter:videos',
+    '(Sora OR Veo OR Kling OR Runway) (generated OR cinematic OR animation OR video) filter:videos',
+    '(Hailuo OR MiniMax OR Luma OR "Dream Machine" OR Pika) (video OR film OR animation) filter:videos',
+    '(Wan OR HunyuanVideo OR "Hunyuan Video" OR "LTX Video" OR "LTX-2") (video OR generation) filter:videos',
+    '(PixVerse OR Higgsfield OR Krea OR "LTX Studio") (video OR cinematic OR animation) filter:videos',
+    '("text to video" OR "image to video" OR "video to video" OR videogen OR i2v OR t2v) filter:videos',
+    '(SI OR AI OR Grok OR Seedance) ("lip sync" OR "motion control" OR "camera control" OR "character consistency")',
+    '(ComfyUI OR diffusion OR LoRA) (video OR animation OR "frame interpolation" OR upscaling)',
+    '("AI video" OR "SI video" OR Seedance OR "Grok Imagine") (workflow OR tutorial OR prompt OR comparison OR benchmark)',
+    '("vidéo IA" OR "vidéo SI" OR "animation IA" OR "film IA") filter:videos',
+    '(CogVideoX OR AnimateDiff OR FramePack OR "Stable Video Diffusion") (video OR workflow OR generation) filter:videos',
+    '("Adobe Firefly" OR HeyGen) (video OR animation OR "lip sync" OR avatar) filter:videos',
+    '(SI OR AI OR Grok OR Seedance) (storyboard OR "first frame" OR "last frame" OR "reference image" OR "multi shot")',
+    '(SI OR AI OR ComfyUI) ("video editing" OR inpainting OR outpainting OR retiming OR interpolation OR "sound design")',
+
+]
+priority_reposts = ['from:elonmusk -filter:replies']
 replies = [
     '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (research OR alignment OR safety) lang:en',
     '(SpaceXSI OR SpaceXAI OR xAI OR Grok OR OpenAI OR Anthropic) (model OR inference OR reasoning) lang:en',
@@ -298,6 +343,14 @@ replies = [
     '(SpaceX OR Starship OR Starlink OR Neuralink OR "self driving") (engineering OR test OR launch OR technology) lang:en',
     '(SI OR AI OR Grok) (parody OR "brain rot" OR filmmaking OR animation) lang:en',
     '(technology OR gadgets OR hardware OR software) (review OR teardown OR accessibility OR repair) lang:en',
+    '(SI OR AI OR ASI) ("just released" OR "new model" OR "open weights" OR "research paper") lang:en',
+    '(Grok OR Claude OR Gemini OR DeepSeek OR Qwen OR Mistral) (release OR evaluation OR reasoning OR coding) lang:en',
+    '(SI OR AI OR LLM) (multimodal OR "world model" OR "long context" OR "test time compute") lang:en',
+    '(SI OR AI OR LLM OR "AI agents" OR "SI agents") (MCP OR "tool use" OR memory OR "computer use" OR RAG) lang:en',
+    '(SI OR AI OR "diffusion model") (images OR memes OR voice OR speech OR music) lang:en',
+    '(Seedream OR "FLUX model" OR Midjourney OR "Stable Diffusion" OR ComfyUI) (image OR workflow OR generation) lang:en',
+    '(SI OR AI) (distillation OR quantization OR inference OR alignment OR interpretability) lang:en',
+    '(SI OR AI OR robotics) (simulation OR humanoid OR "embodied intelligence" OR "spatial intelligence") lang:en',
 ]
 hot_tab = [
     '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (models OR research OR reasoning) lang:en min_faves:300',

@@ -88,7 +88,8 @@ def count_today(action: str) -> int:
 
 
 def profile_count_today() -> int:
-    return sum(count_today(action) for action in (POST, QUOTE, RETWEET))
+    # Operator 2026-10-12: reposts have a separate fifty-per-day allowance.
+    return sum(count_today(action) for action in (POST, QUOTE))
 
 
 def debate_turn_authors() -> list:
@@ -178,8 +179,15 @@ def can_post(action: str) -> Tuple[bool, str]:
         return False, "stop requested"
     if not is_active():
         return False, f"asleep (active {window_label()})"
-    if action in (QUOTE, RETWEET):
-        return False, "automatic quote/repost cap is 0 (editorial originals only)"
+    if action == QUOTE:
+        return False, "automatic quote cap is 0"
+    if action == RETWEET:
+        from . import repost_policy
+        cap = settings.get("MAX_REPOSTS_PER_DAY")
+        if count_today(RETWEET) + repost_policy.pending_count() >= cap:
+            return False, f"daily repost cap reached ({cap})"
+        wait = repost_policy.spacing_remaining()
+        return (False, f"repost spacing: wait {int(wait) + 1}s") if wait else (True, "")
     if action == POST:
         if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
             return False, f"daily profile publication cap reached ({config.MAX_PROFILE_POSTS_PER_DAY})"

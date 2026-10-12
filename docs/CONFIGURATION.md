@@ -6,6 +6,17 @@ encode their topic, so when exclusions are configured they do not repeat the
 scope. This avoids the oversized Boolean expressions that made X return errors.
 The live Account covers SI, AI and technology, with crypto/trading exclusions.
 Niche checks and semantic selection still validate the actual returned posts.
+Optional `searches.videos` supplies the dedicated Latest/Top rotation;
+`searches.priority_reposts` supplies explicit priority-author queries.
+`niche.video` recognizes generated-video caption evidence; it never bypasses
+excluded topics, semantic approval or media verification.
+Optional `niche.video_credit` recognizes explicit caption credits such as
+“Video generated with @grok”; a bare mention or unrelated clip still fails.
+The optional `reposts` table sets `priority_handles` and
+`allow_off_topic_priority` (default false). The live Account opts into
+`MAX_REPOSTS_PER_DAY = 50` through `[limits]`; the engine default is zero.
+No Account or environment may exceed 50. `MIN_SECONDS_BETWEEN_REPOSTS` has a
+600-second floor. Repost budget and spacing include uncertain submissions.
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
@@ -47,7 +58,8 @@ hold whatever `.env` says:
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
-| Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
+| Quotes | 0: `action_guard.can_post` refuses them, and no setting restores them |
+| Reposts | Separate ceiling 50 including uncertain submissions; opt-in default 0, live Account 50; spacing at least 600 seconds, permanent status-ID dedup |
 | Replies per day | `TARGET_REPLIES_PER_DAY` defaults to 300 and never exceeds the effective cap; `MAX_REPLIES_PER_DAY` has default and ceiling 400, including ambiguous submissions; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
@@ -107,6 +119,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_DAY` | int | `400` | floor `0`, ceiling `400` | Replies per Toronto day across every job, ambiguous submissions included. |
+| `MAX_REPOSTS_PER_DAY` | int | `0` | floor `0`, ceiling `50` | Reposts per Toronto day, ambiguous submissions included; opt in per Account. |
+| `MIN_SECONDS_BETWEEN_REPOSTS` | int | `600` | floor `600` | Minimum gap between repost submissions, including ambiguous ones. |
 | `TARGET_REPLIES_PER_DAY` | int | `300` | floor `0`, ceiling `400` | Useful Replies targeted per Toronto day, at most MAX_REPLIES_PER_DAY; quality and availability can reduce the count. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
 | `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |

@@ -107,15 +107,19 @@ def reply_allowance(now=None) -> int:
 
 
 def comparison_order(rows: list) -> list:
-    """Mix fresh opportunities with older discoveries waiting for review."""
+    """Reserve half the review batch for the Account's video interests when present."""
     queued = [row for row in rows if row["state"] == "queued"]
     waiting = queued[:reply_pool.BATCH_SIZE // 3]
     chosen = {row["id"] for row in waiting}
+    video = sorted((row for row in queued if row["id"] not in chosen
+                    and account.current().niche.matches_video(row.get("text", ""))),
+                   key=lambda row: int(row["id"]), reverse=True)[:reply_pool.BATCH_SIZE // 2]
+    chosen.update(row["id"] for row in video)
     fresh = sorted((row for row in queued if row["id"] not in chosen),
                    key=lambda row: int(row["id"]), reverse=True)
     ready = sorted((row for row in rows if row["state"] == "ready"),
                    key=lambda row: row["score"], reverse=True)
-    return waiting + fresh + ready
+    return waiting + video + fresh + ready
 
 
 def _ready(rows: list) -> list:
@@ -170,7 +174,10 @@ def _select(*, concise=False) -> int:
         # A failed refresh does not invalidate a still-fresh prior approval.
         # Reload to retain current text, topic, expiry and admission checks.
         ready = _ready(reply_pool.contenders())
-    for winner in sorted(ready, key=lambda row: (row["score"], row["first_seen"], row["id"]), reverse=True):
+    # A modest preference among already approved posts never lifts a weak score
+    # above the quality threshold or displaces a clearly stronger opportunity.
+    for winner in sorted(ready, key=lambda row: (row["score"] + 3 * account.current().niche.matches_video(row["text"]),
+                                               row["score"], row["first_seen"], row["id"]), reverse=True):
         verdict = judge_parent(winner["url"])
         if verdict:
             break

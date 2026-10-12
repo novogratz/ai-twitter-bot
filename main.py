@@ -93,6 +93,10 @@ def build_scheduler(*, post_only=False, reply_only=False):
             add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
 
     if not post_only and not reply_only:
+        if settings.get("MAX_REPOSTS_PER_DAY"):
+            from src.replies.repost_bot import run_repost_cycle
+            add(health.wrap_job(run_repost_cycle, "repost", safari_health=False), 2,
+                "repost_job", first_seconds=150)
         from src.account.engage_bot import safe_run_engage_cycle
         from src.account.followback_bot import safe_run_followback_cycle
         from src.account.follow_engagers_bot import safe_run_follow_engagers_cycle
@@ -145,7 +149,7 @@ def main():
                           "max_profile_posts": config.posts_ceiling(),
                           "replies": settings.get("MAX_REPLIES_PER_DAY"),
                           "target_replies": config.reply_target(),
-                          "quotes": 0, "reposts": 0, "slots": slots(),
+                          "quotes": 0, "reposts": settings.get("MAX_REPOSTS_PER_DAY"), "slots": slots(),
                           "trend_slots": sorted(trend_slots()),
                           "startup_post": "every start in waking hours, restarts included",
                           "unknown_llm_providers": unknown,
@@ -174,7 +178,7 @@ def main():
     was_active = None
     log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
              f"(max {config.posts_ceiling()}); replies target {config.reply_target()}/day, "
-             f"max {settings.get('MAX_REPLIES_PER_DAY')}/day; active today {window_label()} "
+             f"max {settings.get('MAX_REPLIES_PER_DAY')}/day; reposts max {settings.get('MAX_REPOSTS_PER_DAY')}/day; active today {window_label()} "
              f"(wake variation ±{WAKE_JITTER_MINUTES} min/day).")
     try:
         while not stop.is_set():

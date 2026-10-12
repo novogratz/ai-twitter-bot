@@ -66,6 +66,8 @@ def observe(tweets: list, source: str) -> None:
                    "sources": sorted(set(old.get("sources", [])) | {source}),
                    "likes": tweet.get("likes") or old.get("likes", 0),
                    "views": tweet.get("views") or old.get("views", 0),
+                   "reposts": tweet.get("reposts") or old.get("reposts", 0),
+                   "has_video": bool(tweet.get("has_video", old.get("has_video", False))),
                    "is_reply": bool(tweet.get("is_reply") or text.lstrip().startswith("@")),
                    "state": old.get("state", "observed"),
                    "reason": old.get("reason", "not yet admitted by a scan’s filters")}
