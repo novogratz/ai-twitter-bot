@@ -277,10 +277,12 @@ standalone smiley may suit a playful creative result, never dodge a question.
 # Gemini, Cursor…): the name is part of what `bio` reads.
 bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
 
-# Every X search receives this topic scope and the crypto exclusions.
+# Declared topic queries always receive exclusions; ad-hoc queries also receive
+# the compact topic scope, avoiding oversized duplicated Boolean expressions.
 # Latest discovery has no minimum likes, so small builders and new posts qualify.
 [searches]
-scope = '(SI OR AI OR ASI OR "super intelligence" OR superintelligence OR "artificial intelligence" OR LLM OR Grok OR SpaceXSI OR Mistral OR Claude OR Gemini OR robotics OR technology OR tech OR software OR hardware OR programming OR "open source" OR databases OR processors OR GPU OR encryption OR "security research" OR gadgets OR coding OR cybersecurity OR semiconductors OR SpaceX OR Starship OR Starlink OR Neuralink OR "self driving" OR "electric vehicles") -bitcoin -btc -crypto -ethereum -solana -nft -bittensor -memecoin -web3 -defi -stocks -trading -filter:replies'
+scope = '(SI OR AI OR LLM OR Grok OR SpaceXSI OR superintelligence OR technology OR tech OR software OR hardware OR robotics OR coding OR cybersecurity OR GPU OR SpaceX)'
+exclusions = '-bitcoin -btc -crypto -ethereum -solana -nft -bittensor -memecoin -web3 -defi -stocks -trading -filter:replies'
 replies = [
     '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (research OR alignment OR safety) lang:en',
     '(SpaceXSI OR SpaceXAI OR xAI OR Grok OR OpenAI OR Anthropic) (model OR inference OR reasoning) lang:en',

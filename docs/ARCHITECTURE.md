@@ -999,3 +999,9 @@ and `_scroll_page` moves the document regardless of keyboard focus. Feed tabs
 and Following's checked sort option must be verified before collection.
 Historical `previous_handles` protect saved own-post URLs after renames; the
 public identity changes without moving or resetting the Account's state folder.
+
+`Searches.scoped` always appends Account `exclusions`. Declared topic queries avoid
+repeating the topic expression; ad-hoc queries receive the compact `scope` too.
+A 677-character expanded query produced X's “Something went wrong” screen while
+a short equivalent returned posts. Niche and semantic approval still apply after
+scraping; the query is not a substitute for content checks.

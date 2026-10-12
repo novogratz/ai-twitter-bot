@@ -254,9 +254,15 @@ class Searches:
     likes: tuple
     trending: tuple  # the Top searches of the Trend slots and the Startup post
     scope: str = ""  # Account topic alternatives and exclusions, on every search
+    exclusions: str = ""  # Always appended, including to declared topic queries
 
     def scoped(self, query: str) -> str:
-        return f"({query}) {self.scope}" if self.scope else query
+        # Declared queries already encode their topic. Repeating a large OR
+        # scope made X return an error (browser incident 2026-10-12).
+        declared = query in self.replies + self.hot_tab + self.likes + self.trending
+        scope = "" if declared and self.exclusions else self.scope
+        suffix = " ".join(part for part in (scope, self.exclusions) if part)
+        return f"({query}) {suffix}" if suffix else query
 
 
 def _network(top) -> Network:
@@ -290,12 +296,13 @@ def _niche(top) -> Niche:
 
 def _searches(top) -> Searches:
     table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
-                   optional={"scope": str})
+                   optional={"scope": str, "exclusions": str})
     for key in _SEARCHES:
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
-    return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""))
+    return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""),
+                    exclusions=table.get("exclusions", ""))
 
 
 class _Table:

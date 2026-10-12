@@ -54,6 +54,7 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   IDs deduplicated; an unchanged page ends the scan. Latest searches have no like
   minimum, so new posts and small builders can qualify. Top searches rotate across
   SI, models, generated media, software, hardware, security and space engineering.
+  Queries keep exclusions without repeating oversized topic expressions.
   Shorter rotating profile scans leave Safari available for Replies; the selector
   has its own scheduler worker. Crypto/trading exclusions and the 85/100 selection
   threshold apply throughout. A subject can be technology without mentioning SI.

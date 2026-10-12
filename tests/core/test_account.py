@@ -85,6 +85,18 @@ def test_public_rename_preserves_the_storage_identity_and_own_handles():
     assert not config.is_own_handle("anotherbuilder")
 
 
+def test_topic_searches_keep_exclusions_without_duplicating_the_topic_scope():
+    searches = account.current().searches
+    for query in searches.replies + searches.hot_tab + searches.likes + searches.trending:
+        combined = searches.scoped(query)
+        assert combined == f"({query}) {searches.exclusions}"
+        assert len(combined) < 400
+        assert "-bitcoin" in combined and "-crypto" in combined and "-filter:replies" in combined
+    combined = searches.scoped("from:builder")
+    assert combined == f"(from:builder) {searches.scope} {searches.exclusions}"
+    assert "SI OR AI" in combined
+
+
 @pytest.mark.parametrize("value", ['["@bad"]', '[3]', '"oldname"'])
 def test_invalid_previous_handles_stop_start(accounts, fresh, value):
     accounts("theaishrink", THEAISHRINK.replace('previous_handles = ["TheAIShrink"]',

@@ -3021,3 +3021,9 @@ specific parent and response task after general context to reduce tangents.
 All topic checks, 85/100 approval, one Reply per post, active windows and the
 300-target/400-cap remain. Production state was not modified, and the bot was not
 started or restarted by this change.
+
+The final browser check caught another discovery failure: the expanded 677-character
+search showed X's error screen, while a shorter equivalent found posts. Declared
+topic queries now append exclusions without repeating a large scope; ad-hoc queries
+retain a compact topic scope and the same exclusions. This preserves crypto and
+standalone filters while making the searches usable.

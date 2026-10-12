@@ -1,9 +1,11 @@
 # Configuration
 
-The Account's optional `[searches] scope` adds its topic terms and exclusions to
-every browser and model-assisted X search. The live Account uses SI and AI
-and technology alternatives plus crypto/trading exclusions. Search scope, niche patterns and
-editorial relevance checks complement each other; X can still return noisy results.
+The Account's optional `[searches] scope` supplies compact topic terms for ad-hoc
+queries; `exclusions` is appended to every query. Declared Account queries already
+encode their topic, so when exclusions are configured they do not repeat the
+scope. This avoids the oversized Boolean expressions that made X return errors.
+The live Account covers SI, AI and technology, with crypto/trading exclusions.
+Niche checks and semantic selection still validate the actual returned posts.
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.

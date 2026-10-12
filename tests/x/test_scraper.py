@@ -73,7 +73,7 @@ def test_every_search_gets_account_scope_before_safari_opens(monkeypatch, query)
     monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: [])
     assert scraper.scrape_x_search(query) == []
     actual = parse_qs(urlparse(opened[0]).query)["q"][0]
-    assert actual == f"({query}) {account.current().searches.scope}"
+    assert actual == account.current().searches.scoped(query)
     assert "SI OR AI" in actual and "-crypto" in actual and "-bitcoin" in actual
     assert "-bittensor" in actual and "-filter:replies" in actual
 

@@ -104,7 +104,8 @@ Scraping collects each viewport before scrolling, deduplicates status IDs and st
 at a bounded scroll count or two unchanged reads. Scrolling moves the document
 rather than relying on keyboard focus. All discoveries are archived before filters.
 Latest queries remove minimum-like gates; Top queries retain their popular lane.
-All searches receive grouped topic scope and crypto exclusions. Direct discovery
+All searches receive crypto exclusions; declared topic queries are not duplicated
+inside a second topic expression. Ad-hoc queries receive a compact topic scope. Direct discovery
 rotates one priority profile and three Top queries by default; early-bird scans
 two profiles and mega-watch one. The Reply selector has a dedicated worker and
 keeps its one-minute cadence, one candidate per cycle and 85/100 approval threshold.

@@ -34,7 +34,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
 - Discovery rotates For You, Following Recent/Popular and Latest topic searches
   every two minutes; native views must be verified. It saves every viewport while
   scrolling, deduplicates posts, and rejects off-topic/crypto candidates. New-post
-  searches have no minimum likes. Direct scans rotate one VIP and three Top queries;
+  searches have no minimum likes. Declared queries keep exclusions without duplicating
+  topic scope; ad-hoc queries also get a compact topic scope. Direct scans rotate
+  one VIP and three Top queries;
   early-bird scans two profiles, mega-watch one. Selection has its own worker.
 - The Account is The SI Maximalist, @thesimaximalist: an informed, witty SI/tech
   commentator covering brainrot, news and clearly fictional celebrity parodies.
