@@ -23,11 +23,11 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "05:00–10:00, 14:00–15:00, 17:00–19:00, 22:00–24:00 America/Toronto",
+    "active": "05:00–10:00, 14:00–15:00, 17:00–23:00 America/Toronto",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
-    "replies": 10,
+    "replies": 5,
     "quotes": 0,
     "reposts": 0,
     "slots": [
@@ -55,7 +55,7 @@ PRE_187 = {
 # The values the code at 9748c36d used with no .env, for each setting that
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
-    "MAX_REPLIES_PER_DAY": 10,
+    "MAX_REPLIES_PER_DAY": 5,
     "MAX_ORIGINALS_PER_DAY": 8, "MIN_SECONDS_BETWEEN_POSTS": 1200, "POST_JITTER_SECONDS": 0,
     "MIN_SECONDS_BETWEEN_REPLIES": 8, "REPLY_JITTER_SECONDS": 7, "FOLLOW_TOTAL_CAP": 300,
     "MAX_FOLLOWS_PER_DAY": 20, "BAN_SHORT_TERM_PRICE_TARGETS": True,

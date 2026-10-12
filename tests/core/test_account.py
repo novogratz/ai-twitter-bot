@@ -383,7 +383,7 @@ NETWORK = {
     ],
     "NICHE_PATTERN": (
         r"\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)"
-        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|"
+        r"(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|"
         r"llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|"
         r"xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|"
         r"(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|"
@@ -411,6 +411,7 @@ NETWORK = {
         'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
         'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
         '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
+        '"AI video" OR "AI brainrot" OR "generative video" AI OR "superintelligence" OR "ASI models" lang:en min_faves:30',
     ],
     "HOT_TAB_QUERIES": [
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
@@ -561,6 +562,10 @@ def test_the_removed_accounts_and_queries_are_gone():
     "FBI agents raided the office",
     "Meta and Google beat on earnings, Apple lagged",
     "This token is up 40% today",
+    "My lunch today @OpenAI",
+    "Birthday pictures https://example.org/AI",
+    "My holiday pictures claude.ai/gallery",
+    "si on allait manger ce soir ?",
 ])
 def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     from src.replies import reply_source
@@ -592,6 +597,11 @@ def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
     "Sora and Midjourney are eating stock photography",
     "GenAI budgets are exploding",
     "Agentic workflows need evals",
+    "SI alignment research needs better evaluations",
+    "ASI could change how research gets done",
+    "Super-intelligence needs a definition we can test",
+    "AI-generated brainrot videos are getting weirder",
+    "Grok Imagine makes another absurd video",
 ])
 def test_an_ai_post_is_on_the_niche(text):
     from src.replies import reply_source

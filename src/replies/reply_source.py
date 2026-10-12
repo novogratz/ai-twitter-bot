@@ -38,8 +38,7 @@ class Declaration:
 
 
 def is_on_niche(text: str) -> bool:
-    niche = account.current().niche
-    return bool(niche.post.search(text) or (niche.ticker and niche.ticker.search(text)))
+    return account.current().niche.matches_post(text)
 
 
 def freshness_sort_key(tweet):

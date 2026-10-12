@@ -111,7 +111,7 @@ def script(monkeypatch, tmp_path):
     return mod
 
 
-@pytest.mark.parametrize("now", [_toronto(19, 0), _toronto(0, 0), _toronto(4, 29)])
+@pytest.mark.parametrize("now", [_toronto(23, 0), _toronto(0, 0), _toronto(4, 29)])
 def test_refuses_to_start_overnight(script, now):
     script.clock["now"] = now
     with pytest.raises(SystemExit) as exit_:
@@ -140,7 +140,7 @@ def test_stops_between_two_unfollows_when_waking_hours_end(script):
     script.clock["now"] = _toronto(18, 59, 50)
 
     def ten_seconds_pass():
-        script.clock["now"] = _toronto(19, 0)
+        script.clock["now"] = _toronto(23, 0)
 
     script.browser.on_confirm = ten_seconds_pass
     script.main()
@@ -154,7 +154,7 @@ def test_never_confirms_a_click_made_before_bedtime(script):
     script.clock["now"] = _toronto(18, 59, 59)
 
     def one_second_passes():
-        script.clock["now"] = _toronto(19, 0)
+        script.clock["now"] = _toronto(23, 0)
 
     script.browser.on_pick = one_second_passes
     script.main()
@@ -191,7 +191,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, c
 
     def bedtime_at_confirm(js):
         if js == script.CONFIRM_JS:
-            script.clock["now"] = _toronto(19, 0)
+            script.clock["now"] = _toronto(23, 0)
 
     script.browser.before_js = bedtime_at_confirm
     script.main()
@@ -201,7 +201,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, c
     assert json.loads(script.results.read_text()) == []
     assert "var keep" in script.browser.calls[-1][0], "a page script ran after the refusal"
     out = capsys.readouterr().out
-    assert "STOP: Waking hours ended (05:00–10:00, 14:00–15:00, 17:00–19:00, 22:00–24:00 America/Toronto)" in out
+    assert "STOP: Waking hours ended (05:00–10:00, 14:00–15:00, 17:00–23:00 America/Toronto)" in out
     assert "TOTAL unfollowed: 0" in out
 
 

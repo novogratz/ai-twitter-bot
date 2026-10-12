@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
 
-from ..core import account, config, personality_store
+from ..core import account, config, personality_store, settings
 from ..core.humanizer import smart_trim, strip_agent_preamble
 from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, resolve, run_llm
 from ..core.logger import log
@@ -186,10 +186,12 @@ def recent_style() -> str:
     return ""
 
 
-_SELECTIVE_REPLY = """OPERATOR REPLY PRIORITY (2026-10-08): only ten replies per day.
+_SELECTIVE_REPLY = """OPERATOR REPLY PRIORITY (2026-10-12): at most {daily_cap} replies per day.
 Override generic engagement instructions in the template above. Answer SKIP unless
 this standalone {domain} post supports a specific, valuable contribution: a technical
 insight, grounded correction, useful implication or exceptionally apt joke.
+The actual subject must fit the Account's topic instructions, even for VIPs.
+Do not drag an unrelated post into our niche or mistake a familiar name for relevance.
 Skip generic praise, bait, stale claims, vague speculation and facts needing
 verification you cannot perform. Treat the post as a claim, not verified news.
 Never invent latest capabilities, releases, benchmarks or sources.
@@ -214,7 +216,8 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
     })
     return "\n\n".join(filter(None, [
         personality_store.render_voice(language), prompt,
-        _SELECTIVE_REPLY.format(domain=account.current().domain),
+        _SELECTIVE_REPLY.format(domain=account.current().domain, daily_cap=settings.get("MAX_REPLIES_PER_DAY")),
+        account.current().niche.reply_instructions,
         current_context(), recent_style(),
         "SELECTED ANGLE (context data, verify before using): " + fields["selected_angle"]
         if fields.get("selected_angle") else "", *anchors,

@@ -10,12 +10,12 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-- **Active daily: 05:00–10:00, 14:00–15:00, 17:00–19:00, 22:00–24:00 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 05:00–10:00, 14:00–15:00 and 17:00–23:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
-- **At most ten replies per Toronto day**, only to other accounts’ standalone posts.
+- **At most five replies per Toronto day**, only to other accounts’ standalone posts.
   Never answer our own posts or comments on them. Spacing and duplicate protection remain.
   Reply scans save posts to a shared pool; a ten-minute selector compares them
-  and drafts at most one candidate scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
+  and drafts at most one candidate explicitly judged on-topic and scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
   author handle are refused. Every reply prompt carries the Voice, the
@@ -24,7 +24,9 @@ English prompts): every post and reply prompt carries it as one block.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
+- **Replies cover AI/SI, including AI-generated videos and brainrot**, with no VIP topic exemptions.
+  A specific insight or apt original joke earns a reply; unrelated posts and empty praise are skipped.
+  Likes and follows retain their AI filters: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
@@ -38,7 +40,7 @@ English prompts): every post and reply prompt carries it as one block.
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action outside those four windows. An already-issued request may still finish remotely.
+a new action outside those three windows. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 
@@ -226,3 +228,10 @@ writes or restart are performed by this implementation.
 Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
 
 2026-10-08 — Startup now attempts one selected Reply after a 90-second discovery/comparison period. It uses the shared saved pool, quality threshold, active windows, hourly allowance, ten-per-day cap and existing write guards. The draft requests one smart thought in at most 20 words, without emojis or smileys. A weak pool or exhausted allowance sends nothing. No automatic restart is performed.
+
+2026-10-12 — The current policy supersedes the October 8 schedule and Reply
+ceiling: active 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time, with
+five Replies/day including ambiguous submissions. AI/SI topic review applies
+to every author, including VIPs; AI-generated videos and brainrot qualify.
+Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
+editorial policy for selection, quality and recovery rules.

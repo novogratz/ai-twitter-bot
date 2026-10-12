@@ -10,8 +10,8 @@ from tests.helpers import TORONTO, stop_requested, clock
 @pytest.mark.parametrize("hour,minute,awake", [
     (4,59,False),(5,0,True),(9,59,True),(10,0,False),
     (13,59,False),(14,0,True),(14,59,True),(15,0,False),
-    (16,59,False),(17,0,True),(18,59,True),(19,0,False),
-    (21,59,False),(22,0,True),(23,59,True),(0,0,False),
+    (16,59,False),(17,0,True),(18,59,True),(19,0,True),
+    (21,59,True),(22,0,True),(22,59,True),(23,0,False),(23,59,False),(0,0,False),
 ])
 @pytest.mark.parametrize("day", [(2026,9,20),(2026,11,1),(2026,3,8)])
 def test_exact_waking_boundaries_and_dst(hour, minute, awake, day):
@@ -23,8 +23,10 @@ def test_next_window_and_midnight(monkeypatch):
     assert hours.next_wake(now) == now.replace(hour=14)
     clock(monkeypatch, now.replace(hour=14,minute=30))
     assert hours.seconds_until_bedtime() == 1800
-    clock(monkeypatch, now.replace(hour=23))
+    clock(monkeypatch, now.replace(hour=22))
     assert hours.seconds_until_bedtime() == 3600
+    clock(monkeypatch, now.replace(hour=23))
+    assert hours.seconds_until_bedtime() == 0
     assert hours.next_wake(now.replace(hour=23)).day == 21
 
 

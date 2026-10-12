@@ -20,22 +20,23 @@ def test_target_reader_errors_fail_closed(monkeypatch):
     assert not tc._standalone_reply_target(numbered_url(1))
 
 
-def test_daily_reply_ceiling_is_checked_at_write(monkeypatch, memory_ledger, settings_override):
+@pytest.mark.parametrize("configured_cap,cap", [(5, 5), (999, 5), (2, 2)])
+def test_daily_reply_ceiling_is_checked_at_write(monkeypatch, memory_ledger, settings_override, configured_cap, cap):
     from tests.x.test_write_path import _fake_safari
     from src.guards.active_hours import now_local
     from datetime import timedelta
-    settings_override(MAX_REPLIES_PER_DAY=10)
+    settings_override(MAX_REPLIES_PER_DAY=configured_cap)
     _fake_safari(monkeypatch)
     monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: True)
-    for n in range(9):
+    for n in range(cap - 1):
         memory_ledger.append(ag.REPLY, numbered_url(n), False, now_local() - timedelta(hours=2))
-    tenth, eleventh = numbered_url(20), numbered_url(21)
+    last, extra = numbered_url(20), numbered_url(21)
     text = "Batching improves throughput; latency still depends on the queue."
-    assert tc.reply_to_tweet(tenth, text) is WriteOutcome.SHIPPED
-    assert tc.reply_to_tweet(eleventh, text) is WriteOutcome.REFUSED
-    assert ag.count_today(ag.REPLY) == 10
-    assert eleventh not in replied_store.load_replied()
+    assert tc.reply_to_tweet(last, text) is WriteOutcome.SHIPPED
+    assert tc.reply_to_tweet(extra, text) is WriteOutcome.REFUSED
+    assert ag.count_today(ag.REPLY) == cap
+    assert extra not in replied_store.load_replied()
 
 
 def test_refused_page_releases_claim_and_never_submits(monkeypatch, memory_ledger):
@@ -49,18 +50,35 @@ def test_refused_page_releases_claim_and_never_submits(monkeypatch, memory_ledge
     assert ag.count_today(ag.REPLY) == 0
 
 
-def test_ambiguous_tenth_reply_consumes_budget_across_restart(monkeypatch, memory_ledger, settings_override):
+@pytest.mark.parametrize("author", ["someone", "Graphseo", "TheBTCTherapist"])
+def test_opened_off_topic_post_never_gets_a_reply_or_parent_like(monkeypatch, memory_ledger, author):
+    import json
+    from tests.x.test_write_path import _fake_safari
+    real_target_guard = tc._standalone_reply_target
+    _fake_safari(monkeypatch)
+    monkeypatch.setattr(tc, "_standalone_reply_target", real_target_guard)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps({"text": "My lunch today"}))
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked an unrelated parent"))
+    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("replied to an unrelated parent"))
+    url = numbered_url(51, author)
+    # French also satisfies the language guard for a French-forced VIP.
+    assert tc.reply_to_tweet(url, "La taille du lot change le débit du modèle, pas sa précision.") is WriteOutcome.REFUSED
+    assert url not in replied_store.load_replied()
+    assert ag.count_today(ag.REPLY) == ag.pending_reply_count() == 0
+
+
+def test_ambiguous_fifth_reply_consumes_budget_across_restart(monkeypatch, memory_ledger, settings_override):
     from tests.x.test_write_path import _fake_safari
     from src.guards.active_hours import now_local
     from datetime import timedelta
-    settings_override(MAX_REPLIES_PER_DAY=10)
+    settings_override(MAX_REPLIES_PER_DAY=5)
     _fake_safari(monkeypatch)
     monkeypatch.setattr(ag, "too_soon", lambda action: "")
     monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: False)
-    for n in range(9):
+    for n in range(4):
         memory_ledger.append(ag.REPLY, numbered_url(n), False, now_local() - timedelta(hours=2))
     assert tc.reply_to_tweet(numbered_url(30), "Batching improves throughput; latency depends on queueing.") is WriteOutcome.UNCONFIRMED
-    assert ag.count_today(ag.REPLY) == 9
+    assert ag.count_today(ag.REPLY) == 4
     assert ag.pending_reply_count() == 1
     # A new StateFile adapter sees the persisted reservation after a restart.
     from src.core.state_store import StateFile, GUARDED
@@ -78,6 +96,11 @@ def test_corrupt_reply_reservation_stops_writes_without_overwriting(monkeypatch)
 
 @pytest.mark.parametrize("articles,expected", [
     ([{"id": "50", "text": "An independent AI post"}], True),
+    ([{"id": "50", "text": "SI model alignment research"}], True),
+    ([{"id": "50", "text": "AI-generated brainrot video made with Grok"}], True),
+    ([{"id": "50", "text": "My lunch today"}], False),
+    ([{"id": "50", "text": "My lunch today @OpenAI https://ai.example.org/menu"}], False),
+    ([{"id": "50", "text": "@someone AI models", "has_text": True}], False),
     ([{"id": "49", "text": "Our own post"}, {"id": "50", "text": "A comment"}], False),
     ([{"id": "50", "text": "Replying to @ouraccount"}], False),
     ([{"id": "50", "text": "En réponse à @ouraccount"}], False),
@@ -99,7 +122,7 @@ def test_opened_page_classification(articles, expected, monkeypatch):
           innerText: f.text,
           querySelectorAll: () => [{pathname: '/author/status/' + f.id,
                                     querySelector: () => ({})}],
-          querySelector: () => f.has_text === false ? null : ({})
+          querySelector: () => f.has_text === false ? null : ({innerText: f.text})
         }))};
         process.stdout.write(String(eval(process.argv[2])));
         """

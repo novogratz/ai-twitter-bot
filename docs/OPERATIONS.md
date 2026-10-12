@@ -114,7 +114,10 @@ each call, and compare a handle with the one read from a status URL.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
   optional `ticker` (case-sensitive) must match a post the reply jobs find;
   `bio` must match the name and bio of a non-Engager the follow quality
-  gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
+  gate judges. Mentions and URLs are removed before matching post text.
+  Optional `reply_instructions` gives selection and drafting the Account's topic
+  requirements; every author, including VIPs, must pass. @TheAIShrink sets no
+  `ticker`: Replies cover AI/SI, including AI-generated videos.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
   it finds without the niche check; the Trend slots and the Startup post run
@@ -202,7 +205,7 @@ a Startup post: a restart publishes one trend post within 45 minutes when the
 daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
-waits. Nothing external happens until 04:30 Toronto time.
+waits until the next active window: 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time.
 
 ## Stop
 
@@ -280,7 +283,7 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence between 23:30 and 04:30 Toronto time is normal. There is no
+Silence outside the three Toronto activity windows is normal. There is no
 heartbeat line.
 
 ## Recovery
@@ -530,7 +533,7 @@ root:
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `reply_candidates.json` | `reply_pool` | Last-day discovered posts, eligibility, selection score/reason/angle, outcome; keyed by status ID | guarded |
 | `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
-| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward ten/day until checked | guarded |
+| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward five/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -846,7 +849,7 @@ match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
 
 2026-10-08 — Reply submission recovery: `reply_submissions.json` reserves one
-of the ten daily Replies before the submit step. Confirmed ledger rows count
+of the five daily Replies before the submit step. Confirmed ledger rows count
 only once even if a crash prevents reservation cleanup. An ambiguous submit
 keeps its reservation across restarts and is never retried. Check X before
 manually removing an entry; keep it for the day if the reply may be live.
@@ -875,3 +878,10 @@ state. Existing active windows, caps and evidence rules remain. No live X
 writes or restart are performed by this implementation.
 
 Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
+
+2026-10-12 — The current policy supersedes the October 8 schedule and Reply
+ceiling: active 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time, with
+five Replies/day including ambiguous submissions. AI/SI topic review applies
+to every author, including VIPs; AI-generated videos and brainrot qualify.
+Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
+editorial policy for selection, quality and recovery rules.

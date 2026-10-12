@@ -268,7 +268,21 @@ follow_engagers_skip = [
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+reply_instructions = """
+TOPIC REQUIREMENT: Reply only to substantive AI or superintelligence (SI/ASI) topics:
+models, research, capabilities, agents, coding tools, AI infrastructure, robotics,
+AI safety, and AI-generated images, videos and brainrot. Related technology qualifies
+when the post makes the AI connection clear. AI video humor can be worthwhile;
+never pretend to have watched a clip or invent its contents, tools or production.
+Reject unrelated lifestyle, politics, sports, celebrity gossip, crypto, stock-price
+chatter or generic technology news. A familiar lab, model or author's name alone
+is not enough: Claude may be a person, Gemini an astrology sign, transformers a
+movie, and SI a non-AI acronym. Never force an AI angle onto an unrelated post.
+Be a sharp, knowledgeable AI/SI voice: add one precise observation, explain a real
+tradeoff, correct a supported misconception, or make an apt original joke.
+Skip when the only contribution is praise, a summary or an unsupported claim.
+"""
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
@@ -292,6 +306,7 @@ replies = [
     'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
     'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
+    '"AI video" OR "AI brainrot" OR "generative video" AI OR "superintelligence" OR "ASI models" lang:en min_faves:30',
 ]
 hot_tab = [
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',

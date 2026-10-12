@@ -6,7 +6,7 @@ import fcntl
 
 from ..core.state_store import StateFile, StatePath, GUARDED
 from ..core.state_errors import StateUnreadable
-from ..core import config
+from ..core import account, config
 from ..guards.reply_admission import is_blocked_account
 from ..guards.active_hours import now_local
 from ..x import x_urls
@@ -29,7 +29,8 @@ def _check(records: dict) -> dict:
                     or row.get("state") not in {"observed", "queued", "ready", "rejected", "processing", "shipped", "closed", "skipped"}
                     or not isinstance(row.get("sources"), list)
                     or any(not isinstance(source, str) for source in row["sources"])
-                    or ("eligible" in row and type(row["eligible"]) is not bool)):
+                    or ("eligible" in row and type(row["eligible"]) is not bool)
+                    or ("on_topic" in row and type(row["on_topic"]) is not bool)):
                 raise ValueError("invalid Reply pool record")
             for field in ("first_seen", "last_seen"):
                 if datetime.fromisoformat(row[field]).tzinfo is None:
@@ -98,7 +99,7 @@ def observe(tweets: list, source: str) -> None:
                    "is_reply": bool(tweet.get("is_reply") or text.lstrip().startswith("@")),
                    "state": old.get("state", "observed"),
                    "reason": old.get("reason", "not yet admitted by a scan’s filters")}
-            if changed and row["state"] not in {"shipped", "closed", "processing"}:
+            if changed and row["state"] not in {"shipped", "closed", "processing", "skipped"}:
                 row.update(state="observed", eligible=False, score=None, reason="post text changed")
             records[key] = row
             if not old or changed:
@@ -128,6 +129,8 @@ def collect(job, candidates) -> int:
             if new:
                 events.append(dict(kind="discovered", id=key, ts=stamp, post=dict(row)))
             row["sources"] = sorted(set(row["sources"]) | {candidate.source})
+            if row["state"] in {"processing", "shipped", "closed", "skipped"}:
+                continue
             author = x_urls.author(candidate.url)
             if author == config.BOT_HANDLE.lower() or is_blocked_account(author):
                 row.update(eligible=False, state="rejected", reason="own or Blocked account")
@@ -135,6 +138,10 @@ def collect(job, candidates) -> int:
                 continue
             if job.debate_turn or candidate.context or row.get("is_reply") or candidate.text.lstrip().startswith("@"):
                 row.update(eligible=False, state="rejected", reason="conversation replies are disabled")
+                continue
+            if not account.current().niche.matches_post(row["text"]):
+                row.update(eligible=False, state="rejected", reason="post is outside the Account's niche")
+                events.append(dict(kind="decision", id=key, state="rejected", reason=row["reason"], ts=stamp))
                 continue
             if row["state"] in {"observed", "queued"}:
                 row.update(eligible=True, state="queued", source=candidate.source,
@@ -150,6 +157,9 @@ def contenders(now=None) -> list:
     candidates = []
     for key, row in read().items():
         if not row.get("eligible") or row["state"] not in {"queued", "ready"}:
+            continue
+        # Recheck saved candidates after a policy change or a restart too.
+        if not account.current().niche.matches_post(row["text"]):
             continue
         age = x_urls.age(row["url"], now)
         try:
@@ -174,9 +184,11 @@ def decide(batch: list, reviews: list) -> None:
             row = records.get(key)
             if not row or row["text"] != by_id[key]["text"] or row["state"] not in {"queued", "ready"}:
                 continue
-            row.update(score=review["score"], reason=review["reason"], angle=review["angle"],
-                       reviewed_at=stamp, state="ready" if review["score"] >= MIN_SCORE else "rejected")
-            events.append(dict(kind="reviewed", ts=stamp, **review))
+            on_topic = review.get("on_topic") is True
+            score = review["score"] if on_topic else 0
+            row.update(score=score, on_topic=on_topic, reason=review["reason"], angle=review["angle"],
+                       reviewed_at=stamp, state="ready" if score >= MIN_SCORE else "rejected")
+            events.append(dict(kind="reviewed", ts=stamp, **{**review, "score": score, "on_topic": on_topic}))
         _archive(events)
         return records
     POOL.update(save)

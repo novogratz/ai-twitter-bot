@@ -38,7 +38,7 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 05:00–10:00, 14:00–15:00, 17:00–19:00 and 22:00–24:00 Toronto time, DST
+`src/guards/active_hours.py` owns the clock: 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
@@ -93,7 +93,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
-| `reply_selection_job` | 10 min | Compares up to thirty saved, admitted posts; records scores, reasons and angles; drafts at most one candidate scoring at least 85/100. All daily budgets and write guards still apply. |
+| `reply_selection_job` | 10 min | Compares up to thirty saved, admitted posts; records scores, reasons and angles; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 within five Replies/day. All daily budgets and write guards still apply. |
 | `direct_reply_job` | 2 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `feed_sweep_job` | 8 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
 | `early_bird_job` | 5 min | Saves discovered posts and queues eligible standalone candidates for the shared selector; this job never drafts or sends Replies. |
@@ -911,3 +911,10 @@ writes or restart are performed by this implementation.
 The Reply selector uses the `REPLY_SELECTION` Call surface, `PRIORITY_REPLY_MODEL` and `REPLY_LLM_PROVIDER`, with a structured JSON review profile. The ordinary Reply surface still drafts the selected response (VIP relations retain their configured prompt/provider). The working pool is guarded; the append-only archive records discoveries and decisions before mutable state is saved.
 
 Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
+
+2026-10-12 — The current policy supersedes the October 8 schedule and Reply
+ceiling: active 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time, with
+five Replies/day including ambiguous submissions. AI/SI topic review applies
+to every author, including VIPs; AI-generated videos and brainrot qualify.
+Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
+editorial policy for selection, quality and recovery rules.
