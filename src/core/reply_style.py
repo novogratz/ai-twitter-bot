@@ -12,6 +12,8 @@ REACTIONS = frozenset({":)", ";)", ":D", "🙂", "😊", "😂", "🤣", "😄",
 
 # Operator 2026-10-12: every Reply gets one of these endings, never a reaction alone.
 REPLY_ENDINGS = ("😂", "💀", "😂💀")
+REPLY_MAX_WORDS = 12
+REPLY_MAX_CHARS = 120
 
 
 def split_ending(text: str) -> tuple[str, str]:
@@ -60,7 +62,7 @@ class ReplyStyle:
 
     def instruction(self) -> str:
         return (f"Use {self.min_words}–{self.max_words} words, at most {self.max_chars} characters. "
-                "Choose the sentence count to fit the point. No padding, greeting or signature. "
+                "One very short, sharp stance or punchline. No padding, greeting, signature or explanation after the joke. "
                 "Write only the body, without emojis or text smileys; the publisher adds a laughing/skull ending. "
                 "The words must carry the insight or joke. If this length cannot express an honest useful response, return SKIP.")
 
@@ -74,9 +76,8 @@ class ReplyStyle:
 
 
 STYLES = (
-    ReplyStyle("brief", 2, 8, 72, 35),
-    ReplyStyle("standard", 9, 23, 170, 40),
-    ReplyStyle("detailed", 24, 50, 275, 20),
+    ReplyStyle("brief", 2, 6, 72, 60),
+    ReplyStyle("standard", 7, REPLY_MAX_WORDS, REPLY_MAX_CHARS - 3, 40),
 )
 
 
@@ -85,24 +86,21 @@ def _shape(text: str) -> str:
         return "reaction"
     text, _ = split_ending(text)
     words = len(text.split())
-    if words <= 8:
+    if words <= 6:
         return "brief"
-    return "standard" if words <= 23 else "detailed"
+    return "standard" if words <= REPLY_MAX_WORDS else "detailed"
 
 
 def choose(*, concise=False, rng=None) -> ReplyStyle:
-    """Weighted text lengths; avoid three alike and never select a reaction."""
+    """Two short formats for every job, startup included; no long explanations."""
     recent = recent_replies()
     shapes = [_shape(text) for text in recent]
     choices = [style for style in STYLES
-               if not (len(shapes) >= 2 and shapes[-2:] == [style.name, style.name])
-               and not (concise and style.name == "detailed")]
+               if not (len(shapes) >= 2 and shapes[-2:] == [style.name, style.name])]
     # Respect an operator's stricter text floor when selecting a format.
     minimum = settings.get("REPLY_MIN_CHARS")
     choices = [style for style in choices if style.max_chars >= minimum]
     if not choices:
-        choices = [STYLES[1] if concise else STYLES[-1]]
+        choices = [STYLES[-1]]
     selected = (rng or random).choices(choices, weights=[style.weight for style in choices], k=1)[0]
-    if concise and selected.name == "standard":
-        return ReplyStyle("standard", 9, 20, 150, selected.weight)
     return selected

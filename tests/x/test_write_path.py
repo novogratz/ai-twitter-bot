@@ -48,7 +48,7 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
 
     url = "https://x.com/arthurmensch/status/1234567890123456789"
-    reply = "le signal des fautes tient exactement un cycle de finetuning, profites-en tant que ça marche"
+    reply = "le signal des fautes tient un seul cycle de finetuning."
     tc.reply_to_tweet(url, reply)
     tc.reply_to_tweet(url, reply + " v2")          # same tweet, second bot
     tc.reply_to_tweet(url + "?s=20", reply + " v3")  # same tweet, different URL form
@@ -68,7 +68,7 @@ def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
     _fake_safari(monkeypatch)
 
     url = "https://x.com/foo/status/2063500000000000042"
-    text = "Naming the fear is step one. The number says 40 billion in capex."
+    text = "Naming the fear helps. Compute needs infrastructure."
     assert tc.reply_to_tweet(url, text) is W.SHIPPED
     # Store was marked by the chokepoint itself — second attempt refuses.
     assert tc.reply_to_tweet(url, text) is W.REFUSED
@@ -140,7 +140,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path, settings_
     assert tc.reply_to_tweet(url, english) is W.REFUSED
     # Post must stay UNMARKED — a later FR draft can still ship.
     assert url not in rs.load_replied()
-    french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
+    french = "Le marché évalue ta conviction cette semaine."
     assert tc.reply_to_tweet(url, french) is W.DRY_RUN
 
     # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.

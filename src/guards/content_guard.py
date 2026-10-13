@@ -18,10 +18,8 @@ from typing import Tuple
 
 from ..core import config, settings
 from ..core.humanizer import has_emoji_or_smiley
+from ..core.reply_style import REPLY_MAX_CHARS, REPLY_MAX_WORDS
 from ..core.state_errors import StateUnreadable
-
-# X composer limit for replies; Reply admission trims to it.
-REPLY_MAX_CHARS = 278
 
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
@@ -524,8 +522,9 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             return (False, "rationed shape overused (\"me [verb]ing…\" already posted in window) — vary the opener")
 
     if kind == "reply":
-        # Hard X limit for replies — an over-limit draft gets cut by
-        # the composer mid-sentence, which reads as a botched AI paste.
+        # Operator brevity limit includes the automatically chosen ending.
+        if len(text.split()) > REPLY_MAX_WORDS:
+            return (False, f"Reply body exceeds {REPLY_MAX_WORDS} words; rewrite as one short stance")
         if final_length > REPLY_MAX_CHARS:
             return (False, f"too long for a reply ({final_length} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
         if looks_truncated(text):

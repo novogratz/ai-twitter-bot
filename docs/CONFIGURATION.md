@@ -60,7 +60,7 @@ hold whatever `.env` says:
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes | 0: `action_guard.can_post` refuses them, and no setting restores them |
 | Reposts | Separate ceiling 50 including uncertain submissions; opt-in default 0, live Account 50; spacing at least 600 seconds, permanent status-ID dedup |
-| Replies per day | `TARGET_REPLIES_PER_DAY` defaults to 300 and never exceeds the effective cap; `MAX_REPLIES_PER_DAY` has default and ceiling 400, including ambiguous submissions; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
+| Replies per day | `TARGET_REPLIES_PER_DAY` is clamped to 0 (no quota); `MAX_REPLIES_PER_DAY` has default and ceiling 10, including ambiguous submissions; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The Debate turn, Reply spacing, like, follow, price-target and duplicate
@@ -118,10 +118,10 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 |---|---|---|---|---|
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
-| `MAX_REPLIES_PER_DAY` | int | `400` | floor `0`, ceiling `400` | Replies per Toronto day across every job, ambiguous submissions included. |
+| `MAX_REPLIES_PER_DAY` | int | `10` | floor `0`, ceiling `10` | Replies per Toronto day across every job, ambiguous submissions included; a ceiling, not a quota. |
 | `MAX_REPOSTS_PER_DAY` | int | `0` | floor `0`, ceiling `50` | Reposts per Toronto day, ambiguous submissions included; opt in per Account. |
 | `MIN_SECONDS_BETWEEN_REPOSTS` | int | `600` | floor `600` | Minimum gap between repost submissions, including ambiguous ones. |
-| `TARGET_REPLIES_PER_DAY` | int | `300` | floor `0`, ceiling `400` | Useful Replies targeted per Toronto day, at most MAX_REPLIES_PER_DAY; quality and availability can reduce the count. |
+| `TARGET_REPLIES_PER_DAY` | int | `0` | floor `0`, ceiling `0` | Legacy volume target, clamped off: selective Replies have no minimum quota. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
 | `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |

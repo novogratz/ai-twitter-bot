@@ -21,18 +21,19 @@ real account. Setup and run commands live in [`README.md`](README.md).
   and caption-based model approval. Repost IDs persist permanently. Crypto stays out.
   Repost approval checks use the same caption text source as discovery.
   Quotes, self-recycling and threads stay at zero.
-- Replies target at least 300 per full Toronto day, with a hard cap of 400, standalone posts only, paced and deduplicated per tweet;
+- Replies have a hard cap of ten per Toronto day, no minimum quota, standalone posts only, paced and deduplicated per tweet;
   one Reply per post permanently; debates and conversation follow-ups stay disabled.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
 - Replies, likes and follows cover AI/SI and substantive technology (2026-10-12), including AI videos.
-  Elon leads the AI profile scans. Former crypto/trading exceptions are blocked;
+  Elon leads scans, comparison and selection: at least 92/100; other authors
+  require exceptional opportunities scoring at least 97/100. Former crypto/trading exceptions are blocked;
   Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
   opened post text; discovered follows and Engagers need AI/SI or technology bios. Replies
   require relevance for every author and semantic approval during selection.
-- Replies vary between a few words, short observations and fuller explanations
-  (2026-10-12). Every Reply ends with exactly one random choice of 😂, 💀 or 😂💀;
+- Replies use 2–12 words and at most 120 characters including the ending
+  (2026-10-12): one sharp stance or funny punchline. Every Reply ends with exactly one random choice of 😂, 💀 or 😂💀;
   draft bodies and Originals have no emojis or text smileys. The write chokepoint
   enforces the ending without weakening text checks. They use SI/super intelligence in their
   own prose, preserving verified names and literal links. Discovery keeps both
@@ -49,7 +50,7 @@ real account. Setup and run commands live in [`README.md`](README.md).
   commentator covering brainrot, news and clearly fictional celebrity parodies.
   This replaces the therapist persona. Storage stays `theaishrink`; historical
   handles in `previous_handles` remain own posts. Production history is preserved.
-- The Voice uses occasional dry, playful teasing of inflated claims, marketing
+- The Voice brings fangirl energy for Elon, Grok and Grok Imagine, with dry, playful teasing of inflated claims, marketing
   or demonstrated limitations (2026-10-12). One gentle jab tied to supplied
   context; no invented flaws, personal insults or forced joke quota. Serious
   questions get useful answers. Named-account and positive-only rules still win.
@@ -92,7 +93,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
-| Reply format: weighted text lengths from shipped history and a random laughing/skull ending; no standalone reactions | `src/core/reply_style.py` |
+| Reply format: two short lengths from shipped history and a random laughing/skull ending; no standalone reactions | `src/core/reply_style.py` |
 | Shared Reply candidate schema and fresh topic evidence for account discovery | `src/core/topic_evidence.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
@@ -417,3 +418,14 @@ The shared pipeline and write chokepoint preserve a single chosen ending;
 body checks still reject filler, truncation and unsupported decorations.
 Standalone reactions stay disabled; scheduling, caps, one-Reply-per-post and
 protected-account rules remain. No start or restart accompanies this change.
+
+2026-10-12 — Operator replaced high-volume replying with at most ten Replies
+per Toronto day and no minimum quota. Existing shipped Replies and ambiguous
+submissions still count, including those sent under the earlier policy. Replies
+are 2–12 words, at most 120 characters including the required laughing/skull
+ending. Elon’s relevant standalone posts lead comparison and selection at 92/100
+or higher; exceptional other posts require 97/100. Cached approvals face the new
+thresholds. The Voice brings delighted, sharp fangirl energy for Elon, Grok and
+Grok Imagine; humor targets hype or the situation, with no invented facts or
+personal insults. One Reply per post and topic checks remain. No live publishing
+or restart accompanies this change; it takes effect on the next start/restart.

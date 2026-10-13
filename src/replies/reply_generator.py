@@ -128,6 +128,8 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
             return Generation(Outcome.DECLINED, language=language)
         problem = (call.style.problem(reply) if call.style else "")
         if call.surface is not Surface.REPLY_SEARCH:
+            if len(reply.split()) > reply_style.REPLY_MAX_WORDS:
+                problem = "use at most 12 words: one sharp stance or post-specific punchline, without a follow-up explanation"
             if has_emoji_or_smiley(reply):
                 problem = "emojis and text smileys are not allowed in the draft body; the publisher adds the ending"
             problem = problem or account.current().niche.reply_wording_problem(reply)
@@ -203,12 +205,13 @@ Do not drag an unrelated post into our niche or mistake a familiar name for rele
 Skip generic praise, bait, stale claims, vague speculation and facts needing
 verification you cannot perform. Treat the post as a claim, not verified news.
 Never invent latest capabilities, releases, benchmarks or sources.
-Write one clear thought. Vary length naturally: a brief sharp line or a fuller
-explanation when needed; no fixed two-sentence formula or length target.
+Write one very short, sharp stance or original punchline in at most 12 words.
+No lecture, hedge paragraph or explanation after the joke. Skip a post when a
+short reply would be misleading or generic. Fewer than ten replies is fine.
 Write only the body, without emojis or text smileys. The publisher automatically
 adds one ending: 😂, 💀 or 😂💀. The words must make the joke land on their own;
 the ending cannot rescue generic snark or a bland paraphrase.
-No canned openers, forced questions, engagement bait or generic summary. Wit is optional.
+No canned openers, forced questions, engagement bait or generic summary.
 Never claim the operator's videos received celebrity likes or comments.
 """
 

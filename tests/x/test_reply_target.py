@@ -20,7 +20,7 @@ def test_target_reader_errors_fail_closed(monkeypatch):
     assert not tc._standalone_reply_target(numbered_url(1))
 
 
-@pytest.mark.parametrize("configured_cap,cap", [(400, 400), (999, 400), (2, 2)])
+@pytest.mark.parametrize("configured_cap,cap", [(400, 10), (999, 10), (10, 10), (2, 2)])
 def test_daily_reply_ceiling_is_checked_at_write(monkeypatch, memory_ledger, settings_override, configured_cap, cap):
     from tests.x.test_write_path import _fake_safari
     from src.guards.active_hours import now_local
@@ -67,7 +67,7 @@ def test_opened_off_topic_post_never_gets_a_reply_or_parent_like(monkeypatch, me
     assert ag.count_today(ag.REPLY) == ag.pending_reply_count() == 0
 
 
-@pytest.mark.parametrize("cap", [5, 400])
+@pytest.mark.parametrize("cap", [5, 10])
 def test_ambiguous_last_reply_consumes_budget_across_restart(monkeypatch, memory_ledger, settings_override, cap):
     from tests.x.test_write_path import _fake_safari
     from src.guards.active_hours import now_local

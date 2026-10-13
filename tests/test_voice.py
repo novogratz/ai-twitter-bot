@@ -31,7 +31,7 @@ def test_voice_carries_current_volume_and_one_reply_rule():
     text = VOICE_FR.read_text().lower()
     assert "eight is the" in text and "absolute ceiling" in text
     assert "no automated quote tweets" in text
-    assert "maximum 400" in text and "one reply per post" in text
+    assert "maximum 10" in text and "one reply per post" in text
     assert "no debates" in text and "no crypto" in text
 
 

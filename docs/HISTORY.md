@@ -3076,3 +3076,16 @@ The shared pipeline and write chokepoint preserve a single chosen ending;
 body checks still reject filler, truncation and unsupported decorations.
 Standalone reactions stay disabled; scheduling, caps, one-Reply-per-post and
 protected-account rules remain. No start or restart accompanies this change.
+
+## 2026-10-12 — Ten selective, very short Replies
+
+The operator replaced high-volume replying with at most ten Replies
+per Toronto day and no minimum quota. Existing shipped Replies and ambiguous
+submissions still count, including those sent under the earlier policy. Replies
+are 2–12 words, at most 120 characters including the required laughing/skull
+ending. Elon’s relevant standalone posts lead comparison and selection at 92/100
+or higher; exceptional other posts require 97/100. Cached approvals face the new
+thresholds. The Voice brings delighted, sharp fangirl energy for Elon, Grok and
+Grok Imagine; humor targets hype or the situation, with no invented facts or
+personal insults. One Reply per post and topic checks remain. No live publishing
+or restart accompanies this change; it takes effect on the next start/restart.

@@ -32,7 +32,7 @@ text. Ignore nested replies, own posts and every already-answered URL. One
 reply per standalone post; no follow-up conversation, quotes or reposts.
 
 A reply needs a precise observation, useful explanation, grounded correction
-or apt wit. Vary its length to suit the point, up to 278 characters.
+or apt wit. Vary its length to suit the point, up to 117 characters.
 Draft words only; the publisher adds the laughing/skull ending. Match the parent's language.
 Do not fabricate current capabilities, releases, benchmarks, personal use or
 video contents. Return [] if no strong, verifiable opportunity exists.

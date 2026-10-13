@@ -119,9 +119,9 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
 
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = "Batching decides the margin. " * 12
+    draft = "Parallelization improves throughput. " * 12
     verdict = judge_reply(url("someone"), draft)
-    assert verdict and len(verdict.text) <= 278
+    assert verdict and len(verdict.text) <= 120
     body, ending = reply_style.split_ending(verdict.text)
     assert body.endswith(".") and ending in reply_style.REPLY_ENDINGS
 
@@ -132,7 +132,7 @@ def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override)
     english = judge_reply(url("ArthurMensch"), "The market just told you what your conviction is worth this week.")
     assert english.refusal is Refusal.TEXT and not english.refusal.definitive
     assert judge_parent(url("ArthurMensch")), "nothing was written: the post stays fresh"
-    assert judge_reply(url("ArthurMensch"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
+    assert judge_reply(url("ArthurMensch"), "Le marché évalue ta conviction cette semaine.")
 
 
 def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
@@ -190,9 +190,9 @@ def test_final_text_cannot_gain_an_emoji_after_generation(monkeypatch):
 @pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
 def test_chokepoint_keeps_one_ending_and_reserves_room_before_trimming(monkeypatch, ending):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = ("Batching decides the margin. " * 12).strip()
+    draft = ("Parallelization improves throughput. " * 12).strip()
     verdict = judge_reply(url("someone"), f"{draft} {ending}")
-    assert verdict and len(verdict.text) <= 278
+    assert verdict and len(verdict.text) <= 120
     body, actual = reply_style.split_ending(verdict.text)
     assert actual == ending
     assert draft.startswith(body) and body.endswith(".")
@@ -201,6 +201,6 @@ def test_chokepoint_keeps_one_ending_and_reserves_room_before_trimming(monkeypat
 
 def test_draft_decoration_cannot_disappear_in_trimming(monkeypatch):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = "Batching decides the margin. " * 12 + "🙂"
+    draft = "Parallelization improves throughput. " * 12 + "🙂"
     verdict = judge_reply(url("someone"), draft)
     assert verdict.refusal is Refusal.TEXT and "emojis" in verdict.reason

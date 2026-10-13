@@ -27,8 +27,8 @@ PRE_187 = {
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
-    "replies": 400,
-    "target_replies": 300,
+    "replies": 10,
+    "target_replies": 0,
     "wake_jitter_minutes": 10,
     "quotes": 0,
     "reposts": 50,
@@ -58,9 +58,9 @@ PRE_187 = {
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
     "MAX_REPOSTS_PER_DAY": 50, "MIN_SECONDS_BETWEEN_REPOSTS": 600,
-    "MAX_REPLIES_PER_DAY": 400,
+    "MAX_REPLIES_PER_DAY": 10,
     "FOLLOW_REQUIRE_NICHE": True,
-    "TARGET_REPLIES_PER_DAY": 300,
+    "TARGET_REPLIES_PER_DAY": 0,
     "MAX_ORIGINALS_PER_DAY": 8, "MIN_SECONDS_BETWEEN_POSTS": 1200, "POST_JITTER_SECONDS": 0,
     "MIN_SECONDS_BETWEEN_REPLIES": 8, "REPLY_JITTER_SECONDS": 7, "FOLLOW_TOTAL_CAP": 300,
     "MAX_FOLLOWS_PER_DAY": 20, "BAN_SHORT_TERM_PRICE_TARGETS": True,

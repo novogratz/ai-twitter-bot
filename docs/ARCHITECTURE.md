@@ -104,7 +104,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `repost_job` | 2 min, first run 150 seconds after start; full mode only, opt-in cap > 0 | Discover priority originals and review rising generated videos from the shared pool; native repost confirmation, 50/day hard cap, ten-minute spacing, permanent dedup. |
 | `startup_reply_job` | Once, 90 seconds after startup (deferred to the next active window if asleep) | Compare the saved pool and attempt one concise Reply through existing admission and caps; absent in post-only mode. |
-| `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to eight posts when none remain or waiting discoveries are due after five minutes. A failed refresh can still use a current approval. Logs review outcomes; requires an explicit on-topic verdict and drafts at most one candidate scoring at least 85/100 with a target of 300 and a maximum of 400 Replies/day. All daily budgets and write guards still apply. |
+| `reply_selection_job` | 1 min, first regular run 120 seconds after start | Reuses approvals for less than one hour; compares up to eight posts when none remain or waiting discoveries are due after five minutes. A failed refresh can still use a current approval. Logs review outcomes; requires an explicit on-topic verdict and drafts at most one candidate clearing the Account’s thresholds (92 priority, 97 others). Priority authors lead comparison and selection. At most ten Replies/day, no quota, at most twelve words each. All daily budgets and write guards still apply. |
 | `direct_reply_job` | 2 min | Rotates one VIP profile and three Top searches by default; saves candidates without drafting or sending. |
 | `feed_sweep_job` | 2 min, first at 20 seconds | Rotates For You, Following Recent/Popular, plus one rotating Latest topic search. Verifies the native view and saves unique posts across bounded scrolling; only collects. |
 | `early_bird_job` | 5 min | Rotates two profiles and queues eligible standalone posts without drafting or sending. |
@@ -1025,3 +1025,14 @@ exceptions and video approval checks. `twitter_client.repost_tweet` opens and
 verifies the exact parent, uses native repost controls, reserves before submit,
 and records only a confirmed state via `confirmed_write`. Reposts no longer
 consume the Original publication budget. No automatic restart is introduced.
+
+2026-10-12 — Operator replaced high-volume replying with at most ten Replies
+per Toronto day and no minimum quota. Existing shipped Replies and ambiguous
+submissions still count, including those sent under the earlier policy. Replies
+are 2–12 words, at most 120 characters including the required laughing/skull
+ending. Elon’s relevant standalone posts lead comparison and selection at 92/100
+or higher; exceptional other posts require 97/100. Cached approvals face the new
+thresholds. The Voice brings delighted, sharp fangirl energy for Elon, Grok and
+Grok Imagine; humor targets hype or the situation, with no invented facts or
+personal insults. One Reply per post and topic checks remain. No live publishing
+or restart accompanies this change; it takes effect on the next start/restart.

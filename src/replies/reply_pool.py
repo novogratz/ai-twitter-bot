@@ -162,8 +162,9 @@ def decide(batch: list, reviews: list) -> None:
                 continue
             on_topic = review.get("on_topic") is True
             score = review["score"] if on_topic else 0
+            minimum = account.current().replies.minimum_score(x_urls.author(row["url"]))
             row.update(score=score, on_topic=on_topic, reason=review["reason"], angle=review["angle"],
-                       reviewed_at=stamp, state="ready" if score >= MIN_SCORE else "rejected")
+                       reviewed_at=stamp, state="ready" if score >= minimum else "rejected")
             events.append(dict(kind="reviewed", ts=stamp, **{**review, "score": score, "on_topic": on_topic}))
         _archive(events)
         return records

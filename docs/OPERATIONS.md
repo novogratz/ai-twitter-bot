@@ -10,7 +10,7 @@ operator asks.
 ## Repeated scans with no Replies
 
 `[SELECTION] Reviewing N saved posts` starts a bounded comparison; the completion
-line reports how many passed topic review and scored at least 85. An output-token
+line reports topic approvals that also cleared the Account’s score threshold (92 priority, 97 others). An output-token
 limit or malformed JSON is a model failure, not a decision to reject every post.
 The selector uses batches of at most eight; provider and HTTP errors now include
 their reason. Fresh approvals can still be used when a later comparison fails.
@@ -553,7 +553,7 @@ root:
 | `reply_candidates.json` | `reply_pool`; shared schema/read in `core.topic_evidence` | Last-day discoveries, eligibility, topic verdict, score/reason/angle and outcome; also gates account discovery. An unreadable file stops its readers. | guarded |
 | `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
 | `repost_history.json` | `repost_policy` via `repost_tweet` | Permanent status-ID records: pending, confirmed or observed; ambiguous/observed entries count against 50/day. Never delete to reset deduplication. | guarded |
-| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward 400/day until checked | guarded |
+| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward ten/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |

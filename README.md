@@ -17,13 +17,13 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   Each start varies by up to ten minutes each day; closing times are fixed.
   Daily times survive restarts, and daylight saving is handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
-- **At least 300 useful replies targeted per full Toronto day; 400 is the hard maximum**, only to other accounts’ standalone posts.
+- **At most ten Replies per Toronto day, with no minimum quota**, only to other accounts’ standalone posts.
   One reply per post, permanently; no debates, follow-ups, own posts or comments on them.
   Spacing and duplicate protection remain.
   Reply scans save posts to a shared pool; a one-minute selector chooses among them
   across the last **24 hours**, including the frequent priority-profile scans;
   there is no 4-, 15- or 18-minute post-age cutoff. It
-  drafts at most one candidate explicitly judged on-topic and scoring 85/100 or higher. Every reply passes Reply admission before generation (before sending for
+  drafts at most one candidate explicitly judged on-topic and scoring at least 92/100 for Elon or 97/100 for anyone else. Elon is reviewed and selected first among qualifying posts. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
   author handle are refused. Every reply prompt carries the Voice, the
@@ -42,12 +42,13 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   even when they mention AI; likes check the actual post text, and discovered
   follows and Engagers need AI/SI or technology bios. The voice favors Elon, Grok and SpaceXSI with
   grounded insight and wit ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
-- **Replies vary in length:** a few words, a short observation, a fuller
-  explanation. Shipped history prevents repeated lengths. **Every Reply ends
+- **Replies are very short:** 2–12 words, at most 120 characters including the
+  ending. One sharp stance or funny punchline; skip posts that need a lecture. **Every Reply ends
   with exactly one of 😂, 💀 or 😂💀**, chosen randomly and enforced before
   publishing. The words must carry the joke. No other emojis or text smileys;
   standalone reactions stay disabled. Originals remain emoji-free.
-  The voice can lightly tease SI hype, sales pitches and demonstrated limitations
+  The voice brings delighted fangirl energy for Elon, Grok and Grok Imagine.
+  It can lightly tease SI hype, sales pitches and demonstrated limitations
   with a specific, playful observation. Serious questions still get useful
   answers; jokes never invent flaws or target someone's personal traits.
   Playful SI posts aim for an actual laugh: an unexpected connection or absurd
@@ -65,7 +66,7 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   SI, models, generated media, software, hardware, security and space engineering.
   Queries keep exclusions without repeating oversized topic expressions.
   Shorter rotating profile scans leave Safari available for Replies; the selector
-  has its own scheduler worker. Crypto/trading exclusions and the 85/100 selection
+  has its own scheduler worker. Crypto/trading exclusions and the selective score
   threshold apply throughout. A subject can be technology without mentioning SI.
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
