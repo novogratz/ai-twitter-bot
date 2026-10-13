@@ -3041,3 +3041,15 @@ history reserves ambiguous submissions before a possible click, preventing
 repeat attempts after crashes, restarts, URL aliases and day boundaries.
 The earlier reply target, one-reply rule, active windows and crypto exclusions
 remain; the named priority author gets an off-topic repost exception only.
+
+## 2026-10-12 — Remove emoji and smiley replies
+
+The operator noticed repetitive smileys and then clarified that no emojis
+should be used. The old format selector rationed standalone smileys but let
+every prose draft append an emoji. Reaction formats are now removed, and all
+Reply prompts and both Account Voices request words without emoji or ASCII
+smileys. The shared generator rewrites decorated Replies once, including calls
+without a selected format. Final content validation rejects decorations in
+both Replies and Originals after text transformations. The old reaction setting
+is retained for existing configuration files but clamped off. Text lengths,
+topics, caps and scheduling stay in place; deployment takes effect at restart.

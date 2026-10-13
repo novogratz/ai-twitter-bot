@@ -31,8 +31,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
   Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
   opened post text; discovered follows and Engagers need AI/SI or technology bios. Replies
   require relevance for every author and semantic approval during selection.
-- Replies vary between a few words, short observations, fuller explanations
-  and occasional smileys (2026-10-12). They use SI/super intelligence in their
+- Replies vary between a few words, short observations and fuller explanations
+  (2026-10-12). Originals and Replies use no emojis or text smileys; generation
+  and final content validation enforce this. They use SI/super intelligence in their
   own prose, preserving verified names and literal links. Discovery keeps both
   AI and SI terms; the current SpaceXSI name and profile replace older branding.
 - Discovery rotates For You, Following Recent/Popular and Latest topic searches
@@ -84,7 +85,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
-| Reply format: weighted lengths and rare smileys, informed by shipped Reply history | `src/core/reply_style.py` |
+| Reply format: weighted text lengths, informed by shipped Reply history; no reactions | `src/core/reply_style.py` |
 | Shared Reply candidate schema and fresh topic evidence for account discovery | `src/core/topic_evidence.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
@@ -393,3 +394,11 @@ This supersedes zero automatic reposts; the fifty-repost budget is separate from
 Originals and Replies. Native state checks prevent toggling an existing repost;
 uncertain submissions stay reserved across restarts. No bot restart accompanies
 this implementation. The operator requested a merged PR and a new release.
+
+2026-10-12 — Operator replaced occasional smileys with no emojis at all.
+Originals and Replies use words only, including no ASCII smileys appended to
+text. Reply format selection no longer offers standalone reactions. Generation
+rewrites a decorated Reply once, then fails if it still violates the rule; final
+content validation blocks decorated text from every publishing path. The legacy
+REPLY_ALLOW_REACTIONS key is retained but clamped off. Voice, length variation,
+topic relevance, caps and scheduling otherwise stay in place. No bot restart.

@@ -1,8 +1,9 @@
 """Reply variety follows actual shipped history and survives process restarts."""
 import csv
 import random
+import pytest
 
-from src.core import config, reply_style as style
+from src.core import config, reply_style as style, settings
 
 
 BRIEF = "Latency wins here."
@@ -17,8 +18,8 @@ def history(texts, kind="reply", mode="w"):
 def test_empty_history_can_choose_every_format_without_a_rotation():
     rng = random.Random(12)
     picked = [style.choose(rng=rng).name for _ in range(1000)]
-    assert set(picked) == {"brief", "standard", "detailed", "reaction"}
-    assert picked.count("reaction") < picked.count("detailed") < picked.count("brief")
+    assert set(picked) == {"brief", "standard", "detailed"}
+    assert picked.count("detailed") < picked.count("brief") < picked.count("standard")
 
 
 def test_shipped_history_prevents_three_replies_of_the_same_shape():
@@ -36,12 +37,14 @@ def test_likes_and_failed_writes_do_not_shape_replies():
     assert style.recent_replies() == []
 
 
-def test_a_smiley_waits_for_twenty_other_shipped_replies():
+def test_historical_smileys_never_reenable_reaction_formats(settings_override):
+    settings_override(REPLY_ALLOW_REACTIONS=True)
+    assert settings.get("REPLY_ALLOW_REACTIONS") is False
     history(["🙂"] + [BRIEF, STANDARD] * 9 + [BRIEF])
     rng = random.Random(12)
     assert all(style.choose(rng=rng).name != "reaction" for _ in range(50))
     history([STANDARD], mode="a")
-    assert "reaction" in {style.choose(rng=rng).name for _ in range(100)}
+    assert "reaction" not in {style.choose(rng=rng).name for _ in range(100)}
 
 
 def test_operator_can_disable_reactions_and_tighten_text_floor(settings_override):
@@ -53,5 +56,10 @@ def test_operator_can_disable_reactions_and_tighten_text_floor(settings_override
 def test_startup_formats_remain_at_most_twenty_words():
     rng = random.Random(12)
     selected = [style.choose(concise=True, rng=rng) for _ in range(100)]
-    assert {s.name for s in selected} == {"brief", "standard", "reaction"}
+    assert {s.name for s in selected} == {"brief", "standard"}
     assert all(s.max_words <= 20 for s in selected)
+
+
+@pytest.mark.parametrize("text", ["Latency wins 🙂", "Latency wins:)", "Latency wins ;-)"])
+def test_text_formats_refuse_smileys_appended_to_prose(text):
+    assert "not allowed" in style.STYLES[0].problem(text)

@@ -43,8 +43,9 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   follows and Engagers need AI/SI or technology bios. The voice favors Elon, Grok and SpaceXSI with
   grounded insight and wit ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **Replies vary in length:** a few words, a short observation, a fuller
-  explanation or an occasional apt smiley. Shipped history prevents repeated
-  lengths; a smiley cannot be chosen if one appeared in the last twenty replies.
+  explanation. Shipped history prevents repeated lengths. **No emojis or text
+  smileys** in Originals or Replies, enforced before publishing. Standalone
+  reactions are disabled; warmth and humor come from the words.
   Reply prose uses **SI / super intelligence**. Discovery searches both AI and SI,
   including SpaceXAI and SpaceXSI; current profile scans use `@SpaceXSI`.
   Verified names such as OpenAI and Google AI, URLs and handles keep their spelling.
