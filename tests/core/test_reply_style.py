@@ -63,3 +63,24 @@ def test_startup_formats_remain_at_most_twenty_words():
 @pytest.mark.parametrize("text", ["Latency wins 🙂", "Latency wins:)", "Latency wins ;-)"])
 def test_text_formats_refuse_smileys_appended_to_prose(text):
     assert "not allowed" in style.STYLES[0].problem(text)
+
+
+def test_every_reply_gets_one_of_the_three_random_endings():
+    rng = random.Random(12)
+    endings = [style.split_ending(style.finish_reply(BRIEF, rng=rng))[1] for _ in range(100)]
+    assert set(endings) == {"😂", "💀", "😂💀"}
+    assert any(a == b for a, b in zip(endings, endings[1:])), "no fixed rotation"
+
+
+@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
+def test_chosen_endings_survive_repeated_finishing(ending):
+    draft = f"{BRIEF} {ending}"
+    assert style.finish_reply(draft) == draft
+    assert style.split_ending(draft) == (BRIEF, ending)
+
+
+def test_endings_do_not_change_shipped_length_history():
+    body = "One two three four five six seven eight."
+    history([body + " 😂", body + " 😂💀"])
+    rng = random.Random(12)
+    assert all(style.choose(rng=rng).name != "brief" for _ in range(30))

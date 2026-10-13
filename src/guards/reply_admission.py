@@ -28,7 +28,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import account, config, humanizer, reply_language, settings
+from ..core import account, config, humanizer, reply_language, reply_style, settings
 from ..x import x_urls
 from ..core.logger import log
 
@@ -102,12 +102,16 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
+    text, ending = reply_style.split_ending(reply_style.finish_reply(draft))
+    if humanizer.has_emoji_or_smiley(text):
+        return Verdict(Refusal.TEXT, "emojis and text smileys are only allowed as one approved Reply ending", author)
     # Every Reply loses its dashes here, including paths that skip humanize().
-    text = humanizer.strip_dashes(draft)
-    if len(text) > content_guard.REPLY_MAX_CHARS:
+    text = humanizer.strip_dashes(text)
+    body_limit = content_guard.REPLY_MAX_CHARS - len(ending) - 1
+    if len(text) > body_limit:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
-        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
+        trimmed = humanizer.smart_trim(text, body_limit)
         log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
         text = trimmed
     text = humanizer.casualize(text)
@@ -117,6 +121,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if author in _handles("HUMAN_TYPO_HANDLES"):
         text = humanizer.inject_human_typo(text)
         log.info(f"[REPLY] human-typo injected for @{author}.")
+    text = f"{text} {ending}".strip()
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:

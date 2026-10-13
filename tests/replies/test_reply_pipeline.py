@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src.core import config
+from src.core import config, reply_style
 from src.core.llm_client import LLMResult
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
@@ -403,6 +403,7 @@ def test_a_shipped_reply_is_logged_once_with_its_source(llm, chokepoint):
     run(job(), [candidate(shipped, "post one"), candidate(refused, "post two")])
 
     sent = chokepoint.calls[0].text
+    assert reply_style.split_ending(sent)[1] in reply_style.REPLY_ENDINGS
     assert "—" not in sent and "[PATTERN" not in sent, "humanized, pattern tag stripped"
     assert [(r.url, r.source, r.text, r.pattern) for r in logged()] == [(shipped, "TEST/post one", sent, "RENAME")]
     assert personality_store.get_account("someone")["interaction_count"] == 1, "the dossier bump"
@@ -426,7 +427,7 @@ def test_a_written_reply_skips_the_generation(llm, chokepoint):
 
     assert run(job(reply_call=None), [written]) == 1
 
-    assert llm.calls == [] and chokepoint.calls[0].text == "Batching wins."
+    assert llm.calls == [] and reply_style.split_ending(chokepoint.calls[0].text)[0] == "Batching wins."
     assert [(r.source, r.pattern) for r in logged()] == [("", "RENAME")]
 
 

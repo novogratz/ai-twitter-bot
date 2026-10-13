@@ -3066,3 +3066,13 @@ guidance; no new job, model review, cap or publishing action is introduced.
 The operator further clarified that the goal is to make people laugh: playful
 posts should get a specific surprising connection, absurd image or compact
 punchline, with no explanatory lecture appended to the joke.
+
+## 2026-10-12 — Laughing/skull Reply endings
+
+The operator requires a laughing/skull ending on every Reply: one
+random choice of 😂, 💀 or 😂💀. This supersedes the Reply emoji ban; Originals
+remain emoji-free. Models draft words only, with humor in the text itself.
+The shared pipeline and write chokepoint preserve a single chosen ending;
+body checks still reject filler, truncation and unsupported decorations.
+Standalone reactions stay disabled; scheduling, caps, one-Reply-per-post and
+protected-account rules remain. No start or restart accompanies this change.

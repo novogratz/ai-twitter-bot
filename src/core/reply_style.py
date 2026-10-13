@@ -10,6 +10,31 @@ from .humanizer import has_emoji_or_smiley
 # Historical reactions remain classifiable in engagement reports, never selected.
 REACTIONS = frozenset({":)", ";)", ":D", "🙂", "😊", "😂", "🤣", "😄", "😅", "😏", "😉", "🤔", "🙃", "😮", "😍"})
 
+# Operator 2026-10-12: every Reply gets one of these endings, never a reaction alone.
+REPLY_ENDINGS = ("😂", "💀", "😂💀")
+
+
+def split_ending(text: str) -> tuple[str, str]:
+    """Separate one approved suffix; leave every other decoration for validation."""
+    text = text.strip()
+    for ending in reversed(REPLY_ENDINGS):
+        if text == ending:
+            return "", ending
+        if text.endswith(" " + ending):
+            return text[:-(len(ending) + 1)].rstrip(), ending
+    return text, ""
+
+
+def finish_reply(text: str, *, rng=None) -> str:
+    """Choose an ending once, preserving it through the pipeline and write guard.
+
+    Admission reserves room and trims the body before final validation. This
+    helper never deletes an invalid decoration or substitutes for a text check.
+    """
+    body, ending = split_ending(text)
+    ending = ending or (rng or random).choice(REPLY_ENDINGS)
+    return f"{body} {ending}".strip()
+
 
 def is_reaction(text: str) -> bool:
     return text.strip() in REACTIONS
@@ -36,7 +61,8 @@ class ReplyStyle:
     def instruction(self) -> str:
         return (f"Use {self.min_words}–{self.max_words} words, at most {self.max_chars} characters. "
                 "Choose the sentence count to fit the point. No padding, greeting or signature. "
-                "No emojis or text smileys. If this length cannot express an honest useful response, return SKIP.")
+                "Write only the body, without emojis or text smileys; the publisher adds a laughing/skull ending. "
+                "The words must carry the insight or joke. If this length cannot express an honest useful response, return SKIP.")
 
     def problem(self, text: str) -> str:
         if has_emoji_or_smiley(text):
@@ -50,13 +76,14 @@ class ReplyStyle:
 STYLES = (
     ReplyStyle("brief", 2, 8, 72, 35),
     ReplyStyle("standard", 9, 23, 170, 40),
-    ReplyStyle("detailed", 24, 50, 278, 20),
+    ReplyStyle("detailed", 24, 50, 275, 20),
 )
 
 
 def _shape(text: str) -> str:
     if is_reaction(text):
         return "reaction"
+    text, _ = split_ending(text)
     words = len(text.split())
     if words <= 8:
         return "brief"

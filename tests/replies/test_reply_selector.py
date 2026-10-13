@@ -198,7 +198,7 @@ def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
     call, candidates, kwargs = calls[0]
     assert candidates[0].url == saved[1]
     assert "at most 20 words" in call.template
-    assert "No emojis or text smileys" in call.template
+    assert "Draft words only" in call.template
     assert call.style.max_words <= 20
     assert kwargs["max_shipped"] == 1
 
@@ -355,5 +355,7 @@ def test_selected_formats_reach_real_text_admission(saved, monkeypatch, llm, cho
     monkeypatch.setattr(twitter_client, "reply_to_tweet", send)
     assert selector.run_reply_selection_cycle() == 1
     assert chokepoint.sent == [saved[1]]
-    assert chosen.problem(chokepoint.calls[0].text) == ""
+    body, ending = reply_style.split_ending(chokepoint.calls[0].text)
+    assert chosen.problem(body) == ""
+    assert ending in reply_style.REPLY_ENDINGS
     assert len(llm.calls) == 1

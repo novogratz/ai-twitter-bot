@@ -974,10 +974,15 @@ engagement log. Startup excludes detailed Replies. `ReplyCall.style` supplies
 the format to the shared generator, which validates its word/character bounds
 and the Account's optional wording patterns. A failed format or wording check
 gets one rewrite; persistent failure returns no text. Rate limits stop immediately.
-The final content guard applies wording checks to every Reply path and refuses
-emojis and text smileys in Originals and Replies (Operator clarification, 2026-10-12).
-The shared generator rewrites decorated Replies once before declining to publish.
-The five-character text floor has no reaction exemption. Account-owned
+The shared generator rewrites decorated draft bodies once before declining to publish.
+Under the latest Operator clarification (2026-10-12), `reply_style.finish_reply`
+adds one random 😂, 💀 or 😂💀 ending in the pipeline and preserves it through
+`reply_admission.judge_reply`. The admission guard also adds it for callers that
+skip the pipeline, reserves its character budget before trimming, and validates
+the final text. `content_guard` strips only that approved suffix for body checks,
+so an ending cannot hide generic praise, a short body or a dangling fragment.
+Other emojis and text smileys remain refused; Originals stay emoji-free.
+The five-character text floor has no standalone reaction exemption. Account-owned
 patterns preserve verified proper names and literal links, handles and code.
 No new scheduler job or production state file is introduced.
 
