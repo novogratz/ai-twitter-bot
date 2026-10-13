@@ -84,6 +84,7 @@ class Account:
     relations: "Relations"
     previous_handles: tuple = ()  # historical own-post URLs survive a rename
     reposts: "Reposts" = None
+    replies: "Replies" = None
 
 
 def current() -> Account:
@@ -115,7 +116,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "previous_handles": list, "reposts": dict})
+                 optional={"limits": dict, "relations": dict, "previous_handles": list, "reposts": dict, "replies": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -137,7 +138,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top), previous_handles=tuple(previous), reposts=_reposts(top),
+        searches=_searches(top), previous_handles=tuple(previous), reposts=_reposts(top), replies=_replies(top),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -329,6 +330,35 @@ def _searches(top) -> Searches:
     return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""),
                     exclusions=table.get("exclusions", ""), videos=tuple(table.get("videos", [])),
                     priority_reposts=tuple(table.get("priority_reposts", [])))
+
+
+@dataclass(frozen=True)
+class Replies:
+    priority_handles: tuple = ()
+    min_score: int = 92
+    other_min_score: int = 97
+
+    def is_priority(self, author: str) -> bool:
+        return (author or "").lower() in self.priority_handles
+
+    def minimum_score(self, author: str) -> int:
+        return self.min_score if not self.priority_handles or self.is_priority(author) else self.other_min_score
+
+
+def _replies(top) -> Replies:
+    table = _Table(top.file, "replies", top.get("replies", {}), required={},
+                   optional={"priority_handles": list, "min_score": int, "other_min_score": int})
+    handles = table.items("priority_handles", str) if "priority_handles" in table else []
+    for i, handle in enumerate(handles):
+        if not _HANDLE.fullmatch(handle):
+            table.fail(f"priority_handles[{i}]", "takes an X handle without @")
+    minimum = table.get("min_score", 92)
+    other = table.get("other_min_score", 97)
+    if not 92 <= minimum <= 100:
+        table.fail("min_score", "must be between 92 and 100")
+    if not max(97, minimum) <= other <= 100:
+        table.fail("other_min_score", "must be at least 97 and min_score, and at most 100")
+    return Replies(tuple(h.lower() for h in handles), minimum, other)
 
 
 @dataclass(frozen=True)

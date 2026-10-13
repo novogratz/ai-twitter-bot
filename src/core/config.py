@@ -164,12 +164,12 @@ def post_targets() -> tuple[int, int]:
 # Floored at 0 in settings: a negative jitter would shorten the floor above.
 _served("POST_JITTER_SECONDS")
 
-# Operator 2026-10-12: target 300 useful Replies, with a shared ceiling of 400.
+# Operator 2026-10-12: at most ten selective Replies, no minimum quota.
 _served("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS")
 
 
 def reply_target() -> int:
-    """The daily target never overrides a tighter ceiling or quality checks."""
+    """Legacy reporting key; the selective policy disables volume targets."""
     return min(settings.get("TARGET_REPLIES_PER_DAY"), settings.get("MAX_REPLIES_PER_DAY"))
 
 # Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero

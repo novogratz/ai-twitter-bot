@@ -102,7 +102,8 @@ _Avoid_: try, cycle, poll
 
 **Reply**:
 A post answering someone else's standalone post, once per status ID. Never a
-Profile publication. At least 300 targeted per full Toronto day, 400 maximum.
+Profile publication. At most ten per Toronto day, no minimum quota. A sharp
+stance or punchline of at most twelve words, with one laughing/skull ending.
 _Avoid_: comment, response, draft (reserved for Originals)
 
 **SI**:
@@ -330,7 +331,9 @@ It retains posts removed from the working Reply pool.
 **Reply selector**:
 The one scheduled job that compares saved candidates before drafting. It
 reviews batches, may reject them all, and chooses at most one candidate
-scoring at least 85/100 per cycle, within Reply admission and the daily cap.
+clearing the Account’s score threshold per cycle (92 for priority authors, 97
+for others), within Reply admission and the daily cap. Priority authors lead
+comparison and selection; famous names never waive topic or evidence rules.
 
 **Previous handles**: Account-owned aliases used to recognize saved own-post URLs
 after a public rename. They do not change `BOT_ACCOUNT`, the stable storage key.

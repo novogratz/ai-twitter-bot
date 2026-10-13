@@ -36,13 +36,25 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
 def test_replies_capped_across_jobs_and_dry_runs_excluded(monkeypatch, memory_ledger):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(399):
+    for n in range(9):
         memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=6))
     memory_ledger.append(ag.REPLY, "dry", True, now - timedelta(hours=6))
     assert ag.can_post(ag.REPLY)[0]
-    memory_ledger.append(ag.REPLY, "four_hundredth", False, now - timedelta(hours=6))
+    memory_ledger.append(ag.REPLY, "tenth", False, now - timedelta(hours=6))
     assert not ag.can_post(ag.REPLY)[0]
     clock(monkeypatch, now + timedelta(days=1))
+    assert ag.can_post(ag.REPLY)[0]
+
+
+def test_existing_high_volume_history_still_counts_after_lowering_the_cap(monkeypatch, memory_ledger):
+    now = datetime(2026, 10, 12, 12, tzinfo=TORONTO)
+    clock(monkeypatch, now)
+    for n in range(24):
+        memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=1))
+    assert not ag.can_post(ag.REPLY)[0]
+    assert ag.count_today(ag.REPLY) == 24
+    clock(monkeypatch, now + timedelta(days=1))
+    assert ag.count_today(ag.REPLY) == 0
     assert ag.can_post(ag.REPLY)[0]
 
 

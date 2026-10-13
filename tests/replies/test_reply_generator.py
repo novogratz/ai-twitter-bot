@@ -462,7 +462,7 @@ def test_a_stop_request_during_generation_ends_the_cycle(llm):
 def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
     from src.replies.reply_generator import Outcome
 
-    llm.default = '"Short first sentence here. A second sentence runs on well past the cap."'
+    llm.default = '"Short first sentence here. Another sentence exceeds the requested character budget."'
     generation = generate(max_chars=40)
     assert generation.outcome is Outcome.WRITTEN
     assert generation.text == "Short first sentence here."

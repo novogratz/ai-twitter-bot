@@ -27,7 +27,7 @@ def reviews(batch, scores):
 
 
 def test_higher_scored_post_wins_not_first_seen(saved, monkeypatch):
-    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [42, 96, 88]))
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [42, 99, 98]))
     dispatched = []
     monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: dispatched.extend(candidates) or 1)
     assert selector.run_reply_selection_cycle() == 1
@@ -98,7 +98,7 @@ def test_reply_allowances_preserve_budget_for_later_windows(hour, minute, allowa
     assert selector.reply_allowance(active_hours.now_local().replace(hour=hour, minute=minute)) == allowance
 
 
-@pytest.mark.parametrize("offset,allowance", [(-10, 184), (10, 176)])
+@pytest.mark.parametrize("offset,allowance", [(-10, 5), (10, 5)])
 def test_reply_allowance_tracks_actual_daily_windows(monkeypatch, offset, allowance):
     monkeypatch.setattr(active_hours, "_wake_offset", lambda day, start: offset)
     now = active_hours.now_local().replace(hour=12, minute=30)
@@ -141,7 +141,7 @@ def test_video_discoveries_get_half_the_review_batch_without_crowding_out_waitin
     assert len({row["id"] for row in picked}) == pool.BATCH_SIZE
 
 
-@pytest.mark.parametrize("video_score,other_score,winner", [(86, 88, 0), (86, 96, 1), (84, 85, 1)])
+@pytest.mark.parametrize("video_score,other_score,winner", [(97, 99, 0), (96, 99, 1), (96, 97, 1)])
 def test_video_preference_only_compares_qualified_opportunities(saved, monkeypatch, video_score, other_score, winner):
     rows = pool.read()
     rows[saved[0].rsplit('/', 1)[1]]["text"] = "Seedance generated video"
@@ -159,14 +159,14 @@ def test_large_pool_reviews_only_a_bounded_batch(saved, monkeypatch):
                        for i in range(40)])
     clock(monkeypatch, active_hours.now_local() + timedelta(seconds=61))
     compared = []
-    monkeypatch.setattr(selector, "_rank", lambda batch: compared.append(batch) or reviews(batch, [90] * len(batch)))
+    monkeypatch.setattr(selector, "_rank", lambda batch: compared.append(batch) or reviews(batch, [97] * len(batch)))
     monkeypatch.setattr(pipeline, "dispatch", lambda *a, **k: 1)
     assert selector.run_reply_selection_cycle() == 1
     assert len(compared) == 1 and len(compared[0]) == 8
 
 
 def test_failed_new_review_does_not_block_fresh_existing_approval(saved, monkeypatch):
-    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [90, 96, 88]))
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [98, 99, 96]))
     sent = []
     monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
     assert selector.run_reply_selection_cycle() == 1
@@ -188,7 +188,7 @@ def test_failed_review_logs_provider_reason(saved, monkeypatch, caplog):
 
 
 def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
-    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [20, 96, 90]))
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [20, 99, 97]))
     calls = []
     def dispatch(job, candidates, cycle, **kwargs):
         calls.append((job.reply_call("second"), candidates, kwargs))
@@ -197,9 +197,9 @@ def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
     assert selector.run_startup_reply_cycle() == 1
     call, candidates, kwargs = calls[0]
     assert candidates[0].url == saved[1]
-    assert "at most 20 words" in call.template
+    assert "at most 12 words" in call.template
     assert "Draft words only" in call.template
-    assert call.style.max_words <= 20
+    assert call.style.max_words <= 12
     assert kwargs["max_shipped"] == 1
 
 
@@ -248,7 +248,7 @@ def test_old_ready_selection_needs_explicit_topic_review(saved, monkeypatch):
 
 
 def test_recent_reviews_supply_the_next_reply_without_repeating_model_work(saved, monkeypatch):
-    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [90, 96, 88]))
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [98, 99, 96]))
     sent = []
     monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
     assert selector.run_reply_selection_cycle() == 1
@@ -258,7 +258,7 @@ def test_recent_reviews_supply_the_next_reply_without_repeating_model_work(saved
 
 
 def test_new_discoveries_compete_with_cached_approvals_within_five_minutes(saved, monkeypatch):
-    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [90, 96, 88]))
+    monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [98, 99, 96]))
     sent = []
     monkeypatch.setattr(pipeline, "dispatch", lambda job, candidates, cycle, **k: sent.extend(candidates) or 1)
     assert selector.run_reply_selection_cycle() == 1
@@ -293,7 +293,7 @@ def test_expired_or_future_reviews_need_new_approval(saved, monkeypatch, review_
 def test_cached_winner_rechecks_dedup_and_moves_to_next_admitted_post(saved, monkeypatch):
     from src.guards import replied_store
     batch = pool.contenders()
-    pool.decide(batch, reviews(batch, [99, 90, 88]))
+    pool.decide(batch, reviews(batch, [99, 98, 97]))
     replied_store.claim(saved[0])
     monkeypatch.setattr(selector, "_rank", lambda *a: pytest.fail("fresh approvals reviewed again"))
     sent = []
@@ -304,7 +304,7 @@ def test_cached_winner_rechecks_dedup_and_moves_to_next_admitted_post(saved, mon
 
 
 @pytest.mark.parametrize("wake_offset", [-10, 0, 10])
-def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, memory_ledger, wake_offset):
+def test_full_day_never_exceeds_ten_even_with_unlimited_approved_posts(monkeypatch, memory_ledger, wake_offset):
     """A supply of approved posts and successful writes exercises the real
     scheduler cadence, active windows, cumulative allowance and day ledger."""
     from main import build_scheduler
@@ -318,7 +318,7 @@ def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, mem
         url = fresh("candidate")
         stamp = active_hours.now_local().isoformat()
         return [dict(id=url.rsplit("/", 1)[1], url=url, text="AI research insight", state="ready",
-                     on_topic=True, score=95, reason="Useful consequence", angle="Explain the tradeoff",
+                     on_topic=True, score=99, reason="Useful consequence", angle="Explain the tradeoff",
                      first_seen=stamp, reviewed_at=stamp, source="FEED")]
     def dispatch(job, candidates, cycle, **kwargs):
         assert kwargs["max_shipped"] == 1
@@ -332,14 +332,13 @@ def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, mem
     for elapsed in range(0, 24 * 60 * 60, interval):
         clock(monkeypatch, start + timedelta(seconds=elapsed))
         job.func()
-    assert config.reply_target() <= len(posted) == 400
+    assert config.reply_target() == 0 and len(posted) == 10
     assert all(active_hours.is_active(stamp) for stamp in posted)
     assert len({stamp for stamp in posted}) == len(posted)
-    assert ag.count_today(ag.REPLY) == 400
+    assert ag.count_today(ag.REPLY) == 10
 @pytest.mark.parametrize("shape, draft", [
     ("brief", "Latency wins here."),
     ("standard", "Smaller batches can cut latency, but throughput is a different tradeoff."),
-    ("detailed", "A benchmark average can hide the cases that matter in production. Check the slowest requests, count failed tool calls, and compare costs at the same level of quality before choosing a model."),
 ])
 def test_selected_formats_reach_real_text_admission(saved, monkeypatch, llm, chokepoint, shape, draft):
     from src.guards.reply_admission import judge_reply

@@ -117,7 +117,7 @@ def test_lazy_reply_rejected():
 
 def test_substantive_reply_passes():
     ok, reason = cg.validate(
-        "datacenter is 88% of revenue now — that fear you feel is just concentration risk wearing a hoodie",
+        "That fear is concentration risk wearing a hoodie.",
         kind="reply",
     )
     assert ok
@@ -128,14 +128,14 @@ def test_substantive_reply_passes():
 
 def test_validate_rejects_truncated_reply():
     ok, reason = cg.validate(
-        "les vrais gagnants n'ont pas tous misé sur Cisco en 2000, ils ont construit des boîtes dessus. la vraie question n",
+        "Le vrai problème est la question n",
         kind="reply",
     )
     assert not ok and "truncat" in reason
 
 
 def test_validate_rejects_overlong_reply():
-    ok, reason = cg.validate("a sharp take " * 30, kind="reply")
+    ok, reason = cg.validate("antidisestablishmentarianism " * 5, kind="reply")
     assert not ok and "too long" in reason
 
 
@@ -185,8 +185,7 @@ def test_burned_catchphrases_blocked_at_chokepoint():
     assert not ok and "catchphrase" in why, f"original must refuse burned phrase: {why}"
 
     ok, _ = cg.validate(
-        "We are so early on this one — the benchmark gap doubled in a single "
-        "release and the pricing didn't move.", kind="reply")
+        "We are so early; this benchmark needs a reality check.", kind="reply")
     assert ok, "replies are not gated on catchphrases"
 
     fresh, _ = cg.validate("Nvidia's quarter was a therapy session disguised as an earnings call.", kind="original")
@@ -291,6 +290,19 @@ def test_short_textual_replies_are_allowed(text):
     assert validate(text, kind="reply") == (True, "")
 
 
+@pytest.mark.parametrize("ending", ["", " 😂", " 💀", " 😂💀"])
+def test_twelve_word_limit_counts_the_body_and_refuses_thirteen(ending):
+    body = "One two three four five six seven eight nine ten eleven twelve"
+    assert cg.validate(body + ending, kind="reply") == (True, "")
+    ok, why = cg.validate(body + " thirteen" + ending, kind="reply")
+    assert not ok and "12 words" in why
+
+
+def test_reply_brevity_does_not_shorten_originals():
+    text = "One two three four five six seven eight nine ten eleven twelve thirteen."
+    assert cg.validate(text, kind="original") == (True, "")
+
+
 @pytest.mark.parametrize("text", ["...", "!!!", "🚀", "🙂🙂", "lol", "Great point!"])
 def test_brief_formats_do_not_allow_punctuation_spam_or_generic_praise(text):
     from src.guards.content_guard import validate
@@ -348,7 +360,7 @@ def test_an_ending_cannot_hide_a_truncated_body(body):
 
 
 def test_reply_length_includes_the_ending_and_floor_excludes_it(settings_override):
-    body = "A" * 277
+    body = "A" * 119
     assert not cg.validate(body + " 😂", kind="reply")[0]
     settings_override(REPLY_MIN_CHARS=40)
     ok, why = cg.validate("A" * 38 + " 😂💀", kind="reply")
@@ -358,7 +370,7 @@ def test_reply_length_includes_the_ending_and_floor_excludes_it(settings_overrid
 @pytest.mark.parametrize("text", [
     "Latency wins (batch size: 2).",
     "The ratio is 1:2; latency falls below 3 ms.",
-    "The calculation is x < 3 and y ≥ 2; input → output.",
+    "Calculate x < 3; y ≥ 2; input → output.",
     "The total is ∑x, so keep the denominator fixed.",
     "The docs are at https://example.com/model?path=C:/data.",
     "The code is `items[::-1]`; the path is `C:\\Data`.",

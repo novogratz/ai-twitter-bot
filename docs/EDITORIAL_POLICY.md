@@ -1,7 +1,7 @@
 # Editorial policy — October 12, 2026
 
-The operator's current mandate (2026-10-12) targets at least 300 useful replies per full
-Toronto day and permits at most 400, to other accounts' standalone posts only. Never answer own
+The operator's latest mandate (2026-10-12) permits at most ten Replies per
+Toronto calendar day, with no minimum quota, to other accounts' standalone posts only. Never answer own
 posts or comments on them. Nominal activity windows are 05:00–10:00,
 12:00–13:00 and 16:45–23:00 Toronto time. Each start varies independently
 by ±10 minutes per Toronto day, stable across restarts. Closing times are fixed
@@ -28,7 +28,14 @@ reviewed posts. The schema fixes the response count and permits only supplied
 IDs; incomplete or token-truncated output cannot approve a candidate. A failed
 comparison refresh does not invalidate an existing explicit approval less than
 one hour old. Reload the pool and apply every normal check before using it.
-Quality remains 85/100, with no guaranteed minimum number of replies.
+The latest selection thresholds are 92/100 for priority authors and 97/100
+for others. `[replies]` in the Account stores priority handles and can tighten
+these thresholds. This Account prioritizes Elon: queued posts from him are
+reviewed first, immediately compared against cached approvals, and qualifying
+posts from him win before other authors. Topic and evidence rules still apply.
+Old cached scores are rechecked against the current threshold before drafting.
+The ten allowances accrue across the active windows; unused budget never
+forces a Reply. Shipped and ambiguous submissions from earlier today count.
 
 ## Value and voice
 
@@ -64,12 +71,15 @@ does not reset ledger counts, reservations, permanent Reply IDs or history.
 Optional `previous_handles` in the Account protects saved own-post URLs from before
 the rename. `.env` must not retain a stale public `BOT_HANDLE` override.
 
-Operator, 2026-10-12: vary Reply format with weighted choices: a few words
-(2–8 words, 35), a short observation (9–23, 40), or an explanation (24–50, 20).
-These are relative weights, not quotas. Detailed draft bodies have 275 characters
-available; the final Reply, including its ending, stays within 278 characters.
-Recent shipped Replies exclude a third consecutive format. Startup Replies keep
-their twenty-word limit. A format that does not suit the post yields SKIP.
+Latest Operator direction, 2026-10-12: every Reply is very short, sharp and
+funny. Choose a 2–6 word line (weight 60) or a 7–12 word stance (weight 40);
+never a long explanation. All Replies, startup included, have at most twelve
+body words and 120 characters including the ending. The generator rewrites
+word-limit violations once; final validation enforces the limits for every
+caller. Shipped history avoids three consecutive lengths. A post that cannot
+support a useful, funny short stance yields SKIP. The Account brings delighted
+fangirl energy for Elon, Grok and Grok Imagine; teasing targets the situation,
+hype or a supplied detail while staying positive toward them. No fake claims.
 Generic textual praise stays blocked; `REPLY_MIN_CHARS` is five.
 
 Latest clarification, 2026-10-12: **every Reply ends with exactly one of 😂, 💀
@@ -139,7 +149,7 @@ All searches receive crypto exclusions; declared topic queries are not duplicate
 inside a second topic expression. Ad-hoc queries receive a compact topic scope. Direct discovery
 rotates one priority profile and three Top queries by default; early-bird scans
 two profiles and mega-watch one. The Reply selector has a dedicated worker and
-keeps its one-minute cadence, one candidate per cycle and 85/100 approval threshold.
+keeps its one-minute cadence, one candidate per cycle and Account-specific 92/97 approval thresholds.
 
 Saved tracked handles still require current topic evidence. A new discovery needs
 fresh explicit topic approval in the shared pool; legacy saved handle lists alone
@@ -174,7 +184,7 @@ disabled. Existing following relationships are not automatically removed.
 
 Every discovery is saved. The shared pool rejects off-niche text before model
 selection and rechecks older saved candidates. URLs and handles are stripped
-before matching. Selection requires a boolean `on_topic=true` and at least 85/100;
+before matching. Selection requires a boolean `on_topic=true` and at least the author's 92/97 threshold;
 a negative topic verdict forces the score to zero, and an absent or malformed
 verdict cancels the review. Cached scores without a topic verdict cannot win.
 The actual opened post is checked again for standalone status and niche text
@@ -194,7 +204,7 @@ This mandate supersedes the earlier zero-repost rule. Reposts have a separate
 hard ceiling of **50 per Toronto day**, including ambiguous submissions and
 already-reposted posts first observed that day. The operator welcomes 40–50
 when supply supports it; there is no forced minimum. Originals retain their
-8/day ceiling and twenty-minute spacing; Replies retain 300 target/400 maximum.
+8/day ceiling and twenty-minute spacing; Replies have a ten-per-day maximum with no quota.
 Reposts are at least ten minutes apart and only within the same active windows.
 The job checks every two minutes and attempts at most two targets, stopping
 immediately after a shipped or ambiguous submission. Already-recorded status
@@ -234,10 +244,10 @@ checked against primary references including [Seedance](https://seed.bytedance.c
 [Grok Imagine](https://docs.x.ai/developers/models/grok-imagine-video), and
 [Diffusers video pipelines](https://huggingface.co/docs/diffusers/main/using-diffusers/cogvideox).
 
-Up to four positions in each eight-post Reply comparison prioritize video
-candidates, alongside two older waiting discoveries and fresh general posts.
+Priority authors lead each eight-post Reply comparison. Remaining positions
+mix up to four video candidates with older waiting and fresh general posts.
 Approved video candidates receive a three-point ordering preference; raw scores
-below 85, off-topic verdicts and expired approvals remain ineligible. Reply
+below the author's 92/97 threshold, off-topic verdicts and expired approvals remain ineligible. Reply
 length varies with the existing style choices. Replies never invent having
 watched a clip, model versions, benchmarks, visual details or production tools.
 
@@ -311,7 +321,7 @@ must not repeat.
   The legacy quote, toggle-repost, thread, GIF-post and self-reply writers remain
   absent (issue #111), as `tests/test_disabled_surfaces.py` pins. Only the newly
   authorized `repost_tweet` path restores reposting with independent guards.
-- Replies have a hard 400-per-day cap, with a target of at least 300 useful Replies. Browser pacing, per-tweet dedup and bounded
+- Replies have a hard ten-per-day cap with no minimum quota. Browser pacing, per-tweet dedup and bounded
   standalone-post verification protect conversation quality. Conversation
   turns and comments on our posts are no longer scheduled or admitted by the
   Reply pipeline.
@@ -386,8 +396,8 @@ warnings under `settings_warnings`.
 
 | Setting | Bound | Default |
 |---|---|---|
-| `MAX_REPLIES_PER_DAY`, Replies per Toronto day, ambiguous submissions included | 0 to 400 | 400 |
-| `TARGET_REPLIES_PER_DAY`, useful Replies targeted per Toronto day, clamped to the effective cap | 0 to 400 | 300 |
+| `MAX_REPLIES_PER_DAY`, Replies per Toronto day, ambiguous submissions included | 0 to 10 | 10 |
+| `TARGET_REPLIES_PER_DAY`, legacy volume target disabled | clamped to 0 | 0 |
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
 | `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 8 s | 8 |
 | `REPLY_JITTER_SECONDS`, Reply jitter | at least 0 | 7 |
@@ -580,3 +590,14 @@ This supersedes zero automatic reposts; the fifty-repost budget is separate from
 Originals and Replies. Native state checks prevent toggling an existing repost;
 uncertain submissions stay reserved across restarts. No bot restart accompanies
 this implementation. The operator requested a merged PR and a new release.
+
+2026-10-12 — Operator replaced high-volume replying with at most ten Replies
+per Toronto day and no minimum quota. Existing shipped Replies and ambiguous
+submissions still count, including those sent under the earlier policy. Replies
+are 2–12 words, at most 120 characters including the required laughing/skull
+ending. Elon’s relevant standalone posts lead comparison and selection at 92/100
+or higher; exceptional other posts require 97/100. Cached approvals face the new
+thresholds. The Voice brings delighted, sharp fangirl energy for Elon, Grok and
+Grok Imagine; humor targets hype or the situation, with no invented facts or
+personal insults. One Reply per post and topic checks remain. No live publishing
+or restart accompanies this change; it takes effect on the next start/restart.

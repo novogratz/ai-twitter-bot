@@ -184,6 +184,28 @@ def test_bot_account_picks_the_folder(accounts, fresh):
     assert settings.get("CONTENT_LANG_PRIMARY") == "fr"
 
 
+def test_reply_priority_is_account_owned_and_case_insensitive(accounts):
+    accounts("other", THEAISHRINK.replace('priority_handles = ["elonmusk"]', 'priority_handles = ["ExampleBuilder"]'))
+    policy = account.load("other").replies
+    assert policy.is_priority("EXAMPLEBUILDER")
+    assert policy.minimum_score("examplebuilder") == 92
+    assert policy.minimum_score("anotherbuilder") == 97
+
+
+@pytest.mark.parametrize("old,new", [
+    ('min_score = 92', 'min_score = 91'),
+    ('other_min_score = 97', 'other_min_score = 96'),
+    ('min_score = 92', 'min_score = 101'),
+    ('min_score = 92', 'min_score = 98'),
+    ('min_score = 92', 'min_score = true'),
+    ('priority_handles = ["elonmusk"]', 'priority_handles = ["@bad"]'),
+])
+def test_reply_selection_thresholds_cannot_be_relaxed(accounts, old, new):
+    accounts("other", THEAISHRINK.replace(old, new))
+    with pytest.raises(account.AccountError):
+        account.load("other")
+
+
 def test_the_account_folder_is_absolute_and_follows_accounts_dir(accounts, fresh, tmp_path):
     accounts("other")
     fresh("BOT_ACCOUNT=other\n")
