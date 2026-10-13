@@ -46,6 +46,9 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   explanation. Shipped history prevents repeated lengths. **No emojis or text
   smileys** in Originals or Replies, enforced before publishing. Standalone
   reactions are disabled; warmth and humor come from the words.
+  The voice can lightly tease SI hype, sales pitches and demonstrated limitations
+  with a specific, playful observation. Serious questions still get useful
+  answers; jokes never invent flaws or target someone's personal traits.
   Reply prose uses **SI / super intelligence**. Discovery searches both AI and SI,
   including SpaceXAI and SpaceXSI; current profile scans use `@SpaceXSI`.
   Verified names such as OpenAI and Google AI, URLs and handles keep their spelling.

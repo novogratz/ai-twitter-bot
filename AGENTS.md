@@ -48,6 +48,10 @@ real account. Setup and run commands live in [`README.md`](README.md).
   commentator covering brainrot, news and clearly fictional celebrity parodies.
   This replaces the therapist persona. Storage stays `theaishrink`; historical
   handles in `previous_handles` remain own posts. Production history is preserved.
+- The Voice uses occasional dry, playful teasing of inflated claims, marketing
+  or demonstrated limitations (2026-10-12). One gentle jab tied to supplied
+  context; no invented flaws, personal insults or forced joke quota. Serious
+  questions get useful answers. Named-account and positive-only rules still win.
 
 
 A change that raises volume, restores a disabled surface or relaxes a check

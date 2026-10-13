@@ -44,6 +44,17 @@ The Voice lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`; every
 Original and Reply prompt carries it. Older learned examples cannot override it.
 The pro-Elon/Grok preference, hard rules and respect list still apply.
 
+Operator, 2026-10-12: add light trolling through dry, playful teasing of inflated
+claims, marketing and demonstrated limitations. Use at most one gentle jab in
+a Reply, anchored in a supplied detail. Understatement, an inconvenient test
+case or a literal reading of sales language can carry the point. Vary the
+approach; no recurring roast formula, forced punchline or joke quota. Serious
+questions deserve a useful answer. No name-calling, contempt, personal attacks,
+invented flaws or claims about unseen media. Named-account protections and
+positive-only rules continue to override teasing. No examples are inserted into
+production prompts for the model to repeat verbatim. No emoji, volume or
+one-Reply-per-post rule changes accompany this Voice adjustment.
+
 The storage identity remains `BOT_ACCOUNT=theaishrink`; changing the public handle
 does not reset ledger counts, reservations, permanent Reply IDs or history.
 Optional `previous_handles` in the Account protects saved own-post URLs from before
