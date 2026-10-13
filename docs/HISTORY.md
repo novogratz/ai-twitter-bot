@@ -3063,3 +3063,6 @@ Straight technical help stays appropriate, and jokes have no quota or stock
 examples to copy. Supplied evidence, kindness toward people, named-account
 protections and positive-only subjects remain binding. This changes prompt
 guidance; no new job, model review, cap or publishing action is introduced.
+The operator further clarified that the goal is to make people laugh: playful
+posts should get a specific surprising connection, absurd image or compact
+punchline, with no explanatory lecture appended to the joke.

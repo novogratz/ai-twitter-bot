@@ -52,6 +52,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
   or demonstrated limitations (2026-10-12). One gentle jab tied to supplied
   context; no invented flaws, personal insults or forced joke quota. Serious
   questions get useful answers. Named-account and positive-only rules still win.
+  Playful SI posts should aim for a laugh through a specific surprising connection
+  or absurd image. The punchline can stand alone without an explanatory lecture.
 
 
 A change that raises volume, restores a disabled surface or relaxes a check
