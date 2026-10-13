@@ -7,7 +7,7 @@ import re
 
 from .logger import log
 
-# Operator 2026-10-12: no emoji or text smileys in published prose.
+# Operator 2026-10-12: detect decorations; Reply guards allow only approved endings.
 # Keep ordinary mathematical notation, arrows and punctuation usable.
 _EMOJI_RE = re.compile(
     r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F\u20E3"

@@ -56,8 +56,8 @@ approach; no recurring roast formula, forced punchline or joke quota. Serious
 questions deserve a useful answer. No name-calling, contempt, personal attacks,
 invented flaws or claims about unseen media. Named-account protections and
 positive-only rules continue to override teasing. No examples are inserted into
-production prompts for the model to repeat verbatim. No emoji, volume or
-one-Reply-per-post rule changes accompany this Voice adjustment.
+production prompts for the model to repeat verbatim. Volume and the
+one-Reply-per-post rule are unchanged. The later ending mandate below applies.
 
 The storage identity remains `BOT_ACCOUNT=theaishrink`; changing the public handle
 does not reset ledger counts, reservations, permanent Reply IDs or history.
@@ -66,20 +66,27 @@ the rename. `.env` must not retain a stale public `BOT_HANDLE` override.
 
 Operator, 2026-10-12: vary Reply format with weighted choices: a few words
 (2–8 words, 35), a short observation (9–23, 40), or an explanation (24–50, 20).
-These are relative weights, not quotas. All prose stays within 278 characters.
+These are relative weights, not quotas. Detailed draft bodies have 275 characters
+available; the final Reply, including its ending, stays within 278 characters.
 Recent shipped Replies exclude a third consecutive format. Startup Replies keep
 their twenty-word limit. A format that does not suit the post yields SKIP.
 Generic textual praise stays blocked; `REPLY_MIN_CHARS` is five.
 
-Later clarification, 2026-10-12: **no emojis or text smileys in Originals or
-Replies**, including decorations appended to otherwise substantive text. This
-supersedes the earlier permission for occasional smileys. Standalone reaction
-formats are removed. The legacy `REPLY_ALLOW_REACTIONS` key remains accepted for
-compatibility but always clamps to false. Reply generation requests plain text
-and gives a decorated draft one rewrite; persistent violations publish nothing.
-Final content validation applies the ban to every publishing path. Ordinary
-punctuation, mathematical notation, URLs and literal code remain usable. No
-silent deletion of a smiley that could alter the intended meaning.
+Latest clarification, 2026-10-12: **every Reply ends with exactly one of 😂, 💀
+or 😂💀**, selected randomly with equal probability. This supersedes the earlier
+Reply emoji ban. Originals still contain no emojis or text smileys. Reply
+generation drafts words only and gives a decorated body one rewrite; persistent
+violations publish nothing. The shared pipeline chooses the ending once, records
+it with shipped Replies, and the write chokepoint adds it for any other caller.
+An existing approved ending is preserved, never doubled. The chokepoint reserves
+room before trimming the body at a word/sentence boundary and validates the final
+text. Length floor, generic-praise and truncation checks judge the body without
+the ending; an emoji cannot make an empty or weak Reply eligible. Unsupported,
+repeated or embedded emojis and text smileys are refused, never silently removed.
+The words must carry the post-specific joke before its ending is added.
+Standalone reactions stay disabled: the legacy `REPLY_ALLOW_REACTIONS` key
+remains accepted but clamps to false. Shipped length history ignores the ending.
+Ordinary punctuation, mathematical notation, URLs and literal code remain usable.
 
 Reply prose uses SI or super intelligence for the generic field. This editorial
 choice does not assert that every model has superhuman general intelligence.

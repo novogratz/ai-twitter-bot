@@ -129,7 +129,7 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         problem = (call.style.problem(reply) if call.style else "")
         if call.surface is not Surface.REPLY_SEARCH:
             if has_emoji_or_smiley(reply):
-                problem = "emojis and text smileys are not allowed"
+                problem = "emojis and text smileys are not allowed in the draft body; the publisher adds the ending"
             problem = problem or account.current().niche.reply_wording_problem(reply)
         if problem:
             if attempt == 0:
@@ -205,7 +205,9 @@ verification you cannot perform. Treat the post as a claim, not verified news.
 Never invent latest capabilities, releases, benchmarks or sources.
 Write one clear thought. Vary length naturally: a brief sharp line or a fuller
 explanation when needed; no fixed two-sentence formula or length target.
-No emojis or text smileys, including at the end of an otherwise useful reply.
+Write only the body, without emojis or text smileys. The publisher automatically
+adds one ending: 😂, 💀 or 😂💀. The words must make the joke land on their own;
+the ending cannot rescue generic snark or a bland paraphrase.
 No canned openers, forced questions, engagement bait or generic summary. Wit is optional.
 Never claim the operator's videos received celebrity likes or comments.
 """

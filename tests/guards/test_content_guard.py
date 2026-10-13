@@ -307,14 +307,52 @@ def test_stricter_text_floor_has_no_reaction_exemption(settings_override):
 
 @pytest.mark.parametrize("kind", ["original", "reply"])
 @pytest.mark.parametrize("decoration", [
-    "🙂", "😉", "😂", "🚀", "☺", "❤️", "👩🏽‍💻", "🇨🇦", "1️⃣",
+    "🙂", "😉", "🚀", "☺", "❤️", "👩🏽‍💻", "🇨🇦", "1️⃣",
     ":)", ";)", ":D", ":-)", ";-)", ":P", "<3",
 ])
-def test_no_emojis_or_text_smileys_on_any_written_surface(kind, decoration):
+def test_unapproved_emojis_and_text_smileys_stay_forbidden(kind, decoration):
     from src.guards.content_guard import validate
     for text in (decoration, f"Latency wins here. {decoration}", f"{decoration} Latency wins here."):
         ok, why = validate(text, kind=kind)
         assert not ok and "emojis and text smileys" in why
+
+
+@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
+def test_only_replies_allow_one_approved_ending(ending):
+    assert cg.validate(f"Latency wins here. {ending}", kind="reply") == (True, "")
+    for text in (ending, f"Latency wins here. {ending}"):
+        assert not cg.validate(text, kind="original")[0]
+
+
+@pytest.mark.parametrize("text", [
+    "😂 Latency wins here.", "Latency 😂 wins here.", "Latency wins here. 😂 😂",
+    "Latency wins here. 💀😂", "Latency wins here. 😂💀😂💀", "Latency wins here. 😂 💀",
+    "Latency wins here. 🙂 😂", "Latency wins here. ;-) 💀",
+])
+def test_embedded_repeated_or_unapproved_combinations_are_refused(text):
+    ok, why = cg.validate(text, kind="reply")
+    assert not ok and "emojis and text smileys" in why
+
+
+@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
+@pytest.mark.parametrize("body", ["", "lol", "Great point!", "nice", "...", "Why"])
+def test_an_ending_cannot_rescue_a_low_effort_body(body, ending):
+    ok, why = cg.validate(f"{body} {ending}", kind="reply")
+    assert not ok and "low-effort" in why
+
+
+@pytest.mark.parametrize("body", ["Latency wins because,", "La vraie question n"])
+def test_an_ending_cannot_hide_a_truncated_body(body):
+    ok, why = cg.validate(body + " 😂💀", kind="reply")
+    assert not ok and "truncated" in why
+
+
+def test_reply_length_includes_the_ending_and_floor_excludes_it(settings_override):
+    body = "A" * 277
+    assert not cg.validate(body + " 😂", kind="reply")[0]
+    settings_override(REPLY_MIN_CHARS=40)
+    ok, why = cg.validate("A" * 38 + " 😂💀", kind="reply")
+    assert not ok and "low-effort" in why
 
 
 @pytest.mark.parametrize("text", [

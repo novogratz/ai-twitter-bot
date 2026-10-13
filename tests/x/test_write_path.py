@@ -5,6 +5,8 @@ from datetime import datetime
 
 import pytest
 
+from src.core.reply_style import REPLY_ENDINGS, split_ending
+
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag
 from src.guards import follow_policy
@@ -260,7 +262,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
 
     url = "https://x.com/typofriend/status/2063500000000000101"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
-    assert validated and validated[-1].endswith("(typo)")
+    assert validated and split_ending(validated[-1])[0].endswith("(typo)")
 
 
 def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_override):
@@ -281,7 +283,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_ov
     url = "https://x.com/typofriend/status/2063500000000000103"
     assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
-    assert validated[-1].endswith("(typo)")
+    assert split_ending(validated[-1])[0].endswith("(typo)")
 
 
 def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
@@ -294,7 +296,7 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override
     settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     monkeypatch.setattr(content_guard, "validate",
-                        lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
+                        lambda text, kind="post": (not split_ending(text)[0].endswith("(typo)"), "typo refused"))
 
     url = "https://x.com/typofriend/status/2063500000000000102"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.REFUSED
@@ -460,7 +462,8 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
 
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is W.SHIPPED
     assert pasted == [validated[-1]]
-    assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
+    assert split_ending(pasted[0])[1] in REPLY_ENDINGS
+    assert split_ending(pasted[0])[0].endswith("(typo)") and "—" not in pasted[0]
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
@@ -491,7 +494,7 @@ def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, r
     addressed = f"@kindperson {REPLY}"
     shipped = tc.reply_to_tweet(url, addressed)
     assert shipped is (W.DRY_RUN if dry_run == "1" else W.SHIPPED)
-    assert pasted == ([] if dry_run == "1" else [addressed])
+    assert [split_ending(text)[0] for text in pasted] == ([] if dry_run == "1" else [addressed])
 
 
 def test_spacing_is_judged_under_the_safari_lock(monkeypatch):

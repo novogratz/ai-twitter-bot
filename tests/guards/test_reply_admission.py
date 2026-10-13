@@ -13,7 +13,7 @@ from src.guards import (
     content_guard,
     replied_store,
 )
-from src.core import config, humanizer
+from src.core import config, humanizer, reply_style
 from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
 from tests.helpers import url
@@ -112,14 +112,18 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
     verdict = judge_reply(url("typofriend"), "Targets are easy — conviction is the hard part of the trade.")
     assert verdict
     assert verdict.text == validated[-1]
-    assert verdict.text.endswith("(typo)") and "—" not in verdict.text
+    body, ending = reply_style.split_ending(verdict.text)
+    assert body.endswith("(typo)") and "—" not in verdict.text
+    assert ending in reply_style.REPLY_ENDINGS
 
 
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     draft = "Batching decides the margin. " * 12
     verdict = judge_reply(url("someone"), draft)
-    assert verdict and len(verdict.text) <= 278 and verdict.text.endswith(".")
+    assert verdict and len(verdict.text) <= 278
+    body, ending = reply_style.split_ending(verdict.text)
+    assert body.endswith(".") and ending in reply_style.REPLY_ENDINGS
 
 
 def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override):
@@ -137,7 +141,7 @@ def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     draft = "@arthurmensch le support tient tant que les volumes suivent, pas plus."
     verdict = judge_reply(url("ArthurMensch"), draft)
-    assert verdict and verdict.text == draft
+    assert verdict and reply_style.split_ending(verdict.text)[0] == draft
 
 
 @pytest.mark.parametrize("draft,named", [
@@ -161,7 +165,7 @@ def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, re
     respected("kindperson")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     verdict = judge_reply(url("kindperson"), TEXT)
-    assert verdict and verdict.text == TEXT
+    assert verdict and reply_style.split_ending(verdict.text)[0] == TEXT
 
 
 def test_judges_write_nothing(monkeypatch, memory_ledger):
@@ -181,3 +185,22 @@ def test_final_text_cannot_gain_an_emoji_after_generation(monkeypatch):
     verdict = judge_reply(url("someone"), TEXT)
     assert verdict.refusal is Refusal.TEXT and "emojis" in verdict.reason
     assert judge_parent(url("someone")), "a refused draft must not claim the parent"
+
+
+@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
+def test_chokepoint_keeps_one_ending_and_reserves_room_before_trimming(monkeypatch, ending):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    draft = ("Batching decides the margin. " * 12).strip()
+    verdict = judge_reply(url("someone"), f"{draft} {ending}")
+    assert verdict and len(verdict.text) <= 278
+    body, actual = reply_style.split_ending(verdict.text)
+    assert actual == ending
+    assert draft.startswith(body) and body.endswith(".")
+    assert not humanizer.has_emoji_or_smiley(body)
+
+
+def test_draft_decoration_cannot_disappear_in_trimming(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    draft = "Batching decides the margin. " * 12 + "🙂"
+    verdict = judge_reply(url("someone"), draft)
+    assert verdict.refusal is Refusal.TEXT and "emojis" in verdict.reason

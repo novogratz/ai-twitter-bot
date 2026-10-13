@@ -43,9 +43,10 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   follows and Engagers need AI/SI or technology bios. The voice favors Elon, Grok and SpaceXSI with
   grounded insight and wit ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **Replies vary in length:** a few words, a short observation, a fuller
-  explanation. Shipped history prevents repeated lengths. **No emojis or text
-  smileys** in Originals or Replies, enforced before publishing. Standalone
-  reactions are disabled; warmth and humor come from the words.
+  explanation. Shipped history prevents repeated lengths. **Every Reply ends
+  with exactly one of 😂, 💀 or 😂💀**, chosen randomly and enforced before
+  publishing. The words must carry the joke. No other emojis or text smileys;
+  standalone reactions stay disabled. Originals remain emoji-free.
   The voice can lightly tease SI hype, sales pitches and demonstrated limitations
   with a specific, playful observation. Serious questions still get useful
   answers; jokes never invent flaws or target someone's personal traits.

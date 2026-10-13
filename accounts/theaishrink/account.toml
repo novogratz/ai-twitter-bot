@@ -300,7 +300,10 @@ with straight insights, without a fixed joke quota or recurring roast formula.
 Keep the named-account protections and positive-only rules above all teasing.
 A few words can make the point; explain longer only when useful. Skip generic
 praise, paraphrases, engagement bait and unsupported current claims.
-No emojis or text smileys; express humor and warmth with words.
+Draft words only, without emojis or text smileys. Every published Reply receives
+one automatic ending, chosen from 😂, 💀 and 😂💀. Do not add the ending yourself.
+Make the words funny on their own; an emoji cannot substitute for a punchline.
+Original posts keep the no-emoji rule.
 """
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model

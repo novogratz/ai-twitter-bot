@@ -158,8 +158,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TOPIC_WINDOW_HOURS` | finite float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
 | `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
-| `REPLY_MIN_CHARS` | int | `5` | floor `5` | Shortest textual Reply; emojis and text smileys are forbidden. |
-| `REPLY_ALLOW_REACTIONS` | 0 or 1 | `0` | ceiling `0` | Legacy key retained for compatibility; emoji/smiley Replies are disabled. |
+| `REPLY_MIN_CHARS` | int | `5` | floor `5` | Shortest Reply body, excluding the required laughing/skull ending. |
+| `REPLY_ALLOW_REACTIONS` | 0 or 1 | `0` | ceiling `0` | Legacy key retained for compatibility; standalone emoji/smiley reactions stay disabled. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |

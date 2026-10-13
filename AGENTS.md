@@ -32,8 +32,9 @@ real account. Setup and run commands live in [`README.md`](README.md).
   opened post text; discovered follows and Engagers need AI/SI or technology bios. Replies
   require relevance for every author and semantic approval during selection.
 - Replies vary between a few words, short observations and fuller explanations
-  (2026-10-12). Originals and Replies use no emojis or text smileys; generation
-  and final content validation enforce this. They use SI/super intelligence in their
+  (2026-10-12). Every Reply ends with exactly one random choice of 😂, 💀 or 😂💀;
+  draft bodies and Originals have no emojis or text smileys. The write chokepoint
+  enforces the ending without weakening text checks. They use SI/super intelligence in their
   own prose, preserving verified names and literal links. Discovery keeps both
   AI and SI terms; the current SpaceXSI name and profile replace older branding.
 - Discovery rotates For You, Following Recent/Popular and Latest topic searches
@@ -91,7 +92,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
-| Reply format: weighted text lengths, informed by shipped Reply history; no reactions | `src/core/reply_style.py` |
+| Reply format: weighted text lengths from shipped history and a random laughing/skull ending; no standalone reactions | `src/core/reply_style.py` |
 | Shared Reply candidate schema and fresh topic evidence for account discovery | `src/core/topic_evidence.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
@@ -408,3 +409,11 @@ rewrites a decorated Reply once, then fails if it still violates the rule; final
 content validation blocks decorated text from every publishing path. The legacy
 REPLY_ALLOW_REACTIONS key is retained but clamped off. Voice, length variation,
 topic relevance, caps and scheduling otherwise stay in place. No bot restart.
+
+2026-10-12 — Operator requires a laughing/skull ending on every Reply: one
+random choice of 😂, 💀 or 😂💀. This supersedes the Reply emoji ban; Originals
+remain emoji-free. Models draft words only, with humor in the text itself.
+The shared pipeline and write chokepoint preserve a single chosen ending;
+body checks still reject filler, truncation and unsupported decorations.
+Standalone reactions stay disabled; scheduling, caps, one-Reply-per-post and
+protected-account rules remain. No start or restart accompanies this change.

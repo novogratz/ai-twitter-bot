@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import engagement_log
+from ..core import engagement_log, reply_style
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -217,6 +217,8 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0
+    # Pick once so the shipped-history log keeps the same ending as the write.
+    reply = reply_style.finish_reply(reply)
     if job.pipelined:
         _wait_out_reply_spacing(job.label)
     log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")

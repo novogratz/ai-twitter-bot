@@ -459,8 +459,13 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         raise ValueError(f"unknown content kind: {kind!r}")
     if not text or not text.strip():
         return (False, "empty")
+    final_length = len(text)
+    if kind == "reply":
+        from ..core.reply_style import split_ending
+        # Judge the words themselves: an ending cannot hide filler or truncation.
+        text, _ = split_ending(text)
     if has_emoji_or_smiley(text):
-        return (False, "emojis and text smileys are not allowed")
+        return (False, "emojis and text smileys are not allowed except one approved Reply ending")
 
     # SKIP-rationale leak (2026-06-07, shipped live: "SKIP. The tweet is
     # incomplete (cuts off mid-sentence)... LOL BRO" — operator). Generators
@@ -521,8 +526,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if kind == "reply":
         # Hard X limit for replies — an over-limit draft gets cut by
         # the composer mid-sentence, which reads as a botched AI paste.
-        if len(text) > REPLY_MAX_CHARS:
-            return (False, f"too long for a reply ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
+        if final_length > REPLY_MAX_CHARS:
+            return (False, f"too long for a reply ({final_length} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 
