@@ -3053,3 +3053,16 @@ without a selected format. Final content validation rejects decorations in
 both Replies and Originals after text transformations. The old reaction setting
 is retained for existing configuration files but clamped off. Text lengths,
 topics, caps and scheduling stay in place; deployment takes effect at restart.
+
+## 2026-10-12 — Playful SI commentary
+
+The operator requested mild trolling to replace banal Replies while avoiding
+rudeness. The Account Voice and topic/priority instructions now encourage one
+specific, dry jab at hype, marketing or a demonstrated limitation when it fits.
+Straight technical help stays appropriate, and jokes have no quota or stock
+examples to copy. Supplied evidence, kindness toward people, named-account
+protections and positive-only subjects remain binding. This changes prompt
+guidance; no new job, model review, cap or publishing action is introduced.
+The operator further clarified that the goal is to make people laugh: playful
+posts should get a specific surprising connection, absurd image or compact
+punchline, with no explanatory lecture appended to the joke.
