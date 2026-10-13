@@ -17,6 +17,7 @@ import re
 from typing import Tuple
 
 from ..core import config, settings
+from ..core.humanizer import has_emoji_or_smiley
 from ..core.state_errors import StateUnreadable
 
 # X composer limit for replies; Reply admission trims to it.
@@ -326,10 +327,7 @@ _LAZY_REPLIES = {
 
 
 def _is_lazy_reply(text: str) -> bool:
-    from ..core.reply_style import is_reaction
     stripped = (text or "").strip()
-    if is_reaction(stripped):
-        return not settings.get("REPLY_ALLOW_REACTIONS")
     if not any(char.isalnum() for char in stripped):
         return True
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
@@ -461,6 +459,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         raise ValueError(f"unknown content kind: {kind!r}")
     if not text or not text.strip():
         return (False, "empty")
+    if has_emoji_or_smiley(text):
+        return (False, "emojis and text smileys are not allowed")
 
     # SKIP-rationale leak (2026-06-07, shipped live: "SKIP. The tweet is
     # incomplete (cuts off mid-sentence)... LOL BRO" — operator). Generators

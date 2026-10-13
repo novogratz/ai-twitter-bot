@@ -174,3 +174,10 @@ def test_reply_terminology_is_enforced_after_final_text_changes(monkeypatch):
     verdict = judge_reply(url("someone"), "SI needs better evals.")
     assert verdict.refusal is Refusal.TEXT and "terminology" in verdict.reason
     assert judge_parent(url("someone")), "a refused draft must not claim the parent"
+
+
+def test_final_text_cannot_gain_an_emoji_after_generation(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text + " 🙂")
+    verdict = judge_reply(url("someone"), TEXT)
+    assert verdict.refusal is Refusal.TEXT and "emojis" in verdict.reason
+    assert judge_parent(url("someone")), "a refused draft must not claim the parent"

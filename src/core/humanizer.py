@@ -7,6 +7,25 @@ import re
 
 from .logger import log
 
+# Operator 2026-10-12: no emoji or text smileys in published prose.
+# Keep ordinary mathematical notation, arrows and punctuation usable.
+_EMOJI_RE = re.compile(
+    r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F\u20E3"
+    r"\u231A\u231B\u23E9-\u23F3\u23F8-\u23FA\u2B1B\u2B1C\u2B50\u2B55]"
+)
+_SMILEY_RE = re.compile(
+    r"[:;=][-^']?[()DPp/\\|](?!\w)|(?<!\w)(?:8[-^']?[)D]|[xX]D|<3)(?!\w)"
+)
+
+
+def has_emoji_or_smiley(text: str) -> bool:
+    """Detect decorations without treating URL or inline-code syntax as a face."""
+    if _EMOJI_RE.search(text):
+        return True
+    prose = re.sub(r"https?://\S+|`[^`\n]*`", "", text)
+    return bool(_SMILEY_RE.search(prose))
+
+
 # em/en dash → cleaner punctuation
 _DASH_PAIRS = [
     (" — ", ". "),

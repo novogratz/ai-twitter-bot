@@ -285,8 +285,8 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
                    "this is the killer app for SI agents"):
         ok, why = validate(benign, kind="reply")
         assert ok, f"idiom must pass: {benign!r} ({why})"
-@pytest.mark.parametrize("text", ["Latency wins.", "🙂", ":)", ";)", ":D", "This is SI."])
-def test_short_replies_and_approved_smileys_are_allowed(text):
+@pytest.mark.parametrize("text", ["Latency wins.", "This is SI."])
+def test_short_textual_replies_are_allowed(text):
     from src.guards.content_guard import validate
     assert validate(text, kind="reply") == (True, "")
 
@@ -297,13 +297,37 @@ def test_brief_formats_do_not_allow_punctuation_spam_or_generic_praise(text):
     assert not validate(text, kind="reply")[0]
 
 
-def test_stricter_text_floor_and_disabled_reactions_apply_at_validation(settings_override):
+def test_stricter_text_floor_has_no_reaction_exemption(settings_override):
     from src.guards.content_guard import validate
     settings_override(REPLY_MIN_CHARS=40)
     assert not validate("Latency wins.", kind="reply")[0]
-    assert validate("🙂", kind="reply")[0]
-    settings_override(REPLY_ALLOW_REACTIONS=False)
+    settings_override(REPLY_ALLOW_REACTIONS=True)
     assert not validate("🙂", kind="reply")[0]
+
+
+@pytest.mark.parametrize("kind", ["original", "reply"])
+@pytest.mark.parametrize("decoration", [
+    "🙂", "😉", "😂", "🚀", "☺", "❤️", "👩🏽‍💻", "🇨🇦", "1️⃣",
+    ":)", ";)", ":D", ":-)", ";-)", ":P", "<3",
+])
+def test_no_emojis_or_text_smileys_on_any_written_surface(kind, decoration):
+    from src.guards.content_guard import validate
+    for text in (decoration, f"Latency wins here. {decoration}", f"{decoration} Latency wins here."):
+        ok, why = validate(text, kind=kind)
+        assert not ok and "emojis and text smileys" in why
+
+
+@pytest.mark.parametrize("text", [
+    "Latency wins (batch size: 2).",
+    "The ratio is 1:2; latency falls below 3 ms.",
+    "The calculation is x < 3 and y ≥ 2; input → output.",
+    "The total is ∑x, so keep the denominator fixed.",
+    "The docs are at https://example.com/model?path=C:/data.",
+    "The code is `items[::-1]`; the path is `C:\\Data`.",
+])
+def test_plain_technical_prose_is_not_mistaken_for_a_smiley(text):
+    from src.guards.content_guard import validate
+    assert validate(text, kind="reply") == (True, "")
 
 
 @pytest.mark.parametrize("text", [

@@ -661,6 +661,8 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
 @pytest.mark.parametrize("bad", [
     "AI needs better evals.",
     "This reply keeps adding words until it no longer fits the brief format.",
+    "SI needs better evals 🙂",
+    "SI needs better evals ;-)",
 ])
 def test_invalid_format_or_old_wording_gets_one_rewrite(llm, bad):
     from dataclasses import replace
@@ -668,7 +670,7 @@ def test_invalid_format_or_old_wording_gets_one_rewrite(llm, bad):
     from src.replies import direct_reply, reply_generator as generator
     replies = iter([bad, LLMResult(0, "SI needs better evals.", "", provider="codex", model="test-model")])
     llm.default = lambda prompt: next(replies)
-    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[1], max_chars=None)
+    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
     result = generator.generate(call, author="someone", text=EN)
     assert result.outcome is generator.Outcome.WRITTEN
     assert result.text == "SI needs better evals."
@@ -677,13 +679,13 @@ def test_invalid_format_or_old_wording_gets_one_rewrite(llm, bad):
     assert bad in llm.prompts[-1] and "previous draft failed" in llm.prompts[-1]
 
 
-@pytest.mark.parametrize("text", ["AI needs better evals.", "".join(["word "] * 70)])
+@pytest.mark.parametrize("text", ["AI needs better evals.", "".join(["word "] * 70), "SI needs better evals 🙂"])
 def test_repeated_invalid_reply_fails_without_silent_trimming(llm, text):
     from dataclasses import replace
     from src.core import reply_style
     from src.replies import direct_reply, reply_generator as generator
     llm.default = text
-    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[1], max_chars=None)
+    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
     result = generator.generate(call, author="someone", text=EN)
     assert result.outcome is generator.Outcome.FAILED and not result.text
     assert len(llm.calls) == 2
@@ -703,6 +705,18 @@ def test_format_rewrite_respects_skip_and_provider_exhaustion(llm, answer, outco
         llm.default = lambda prompt: next(replies)
     else:
         llm.default = EXHAUSTED if answer == "exhausted" else answer
-    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[1], max_chars=None)
+    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
     assert generator.generate(call, author="someone", text=EN).outcome.value == outcome
     assert len(llm.calls) == count
+
+
+def test_reply_without_a_selected_style_still_rewrites_emojis(llm):
+    from src.replies import direct_reply, reply_generator as generator
+    replies = iter(["SI needs better evals 🙂", "SI needs better evals."])
+    llm.default = lambda prompt: next(replies)
+    call = direct_reply.reply_call("someone")
+    assert call.style is None
+    result = generator.generate(call, author="someone", text=EN)
+    assert result.outcome is generator.Outcome.WRITTEN
+    assert result.text == "SI needs better evals."
+    assert len(llm.calls) == 2

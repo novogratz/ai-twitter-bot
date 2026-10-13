@@ -115,7 +115,7 @@ def test_used_allowance_prevents_spending_every_reply_in_the_morning(saved, monk
 
 
 def test_selected_angle_reaches_drafting(saved, monkeypatch, llm, chokepoint):
-    monkeypatch.setattr(reply_style, "choose", lambda **k: reply_style.STYLES[2])
+    monkeypatch.setattr(reply_style, "choose", lambda **k: reply_style.STYLES[1])
     monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [20, 97, 75]))
     assert selector.run_reply_selection_cycle() == 1
     assert chokepoint.sent == [saved[1]]
@@ -198,7 +198,7 @@ def test_startup_selects_best_with_concise_instructions(saved, monkeypatch):
     call, candidates, kwargs = calls[0]
     assert candidates[0].url == saved[1]
     assert "at most 20 words" in call.template
-    assert "An apt smiley is allowed" in call.template
+    assert "No emojis or text smileys" in call.template
     assert call.style.max_words <= 20
     assert kwargs["max_shipped"] == 1
 
@@ -337,7 +337,6 @@ def test_full_day_has_capacity_for_target_without_exceeding_400(monkeypatch, mem
     assert len({stamp for stamp in posted}) == len(posted)
     assert ag.count_today(ag.REPLY) == 400
 @pytest.mark.parametrize("shape, draft", [
-    ("reaction", "🙂"),
     ("brief", "Latency wins here."),
     ("standard", "Smaller batches can cut latency, but throughput is a different tradeoff."),
     ("detailed", "A benchmark average can hide the cases that matter in production. Check the slowest requests, count failed tool calls, and compare costs at the same level of quality before choosing a model."),

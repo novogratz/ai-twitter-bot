@@ -208,8 +208,8 @@ _declare("DUP_TOPIC_WINDOW_HOURS", float, 24.0, "Hours a post counts for the sam
 _declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-entity post that make a same story.",
          floor=0, ceiling=3)
 _declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.", floor=48.0)
-_declare("REPLY_MIN_CHARS", int, 5, "Shortest textual Reply; approved standalone smileys are exempt when enabled.", floor=5)
-_declare("REPLY_ALLOW_REACTIONS", bool, True, "Allow an occasional standalone smiley on an admitted on-topic post.", ceiling=True)
+_declare("REPLY_MIN_CHARS", int, 5, "Shortest textual Reply; emojis and text smileys are forbidden.", floor=5)
+_declare("REPLY_ALLOW_REACTIONS", bool, False, "Legacy key retained for compatibility; emoji/smiley Replies are disabled.", ceiling=False)
 _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")

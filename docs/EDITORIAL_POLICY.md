@@ -50,15 +50,21 @@ Optional `previous_handles` in the Account protects saved own-post URLs from bef
 the rename. `.env` must not retain a stale public `BOT_HANDLE` override.
 
 Operator, 2026-10-12: vary Reply format with weighted choices: a few words
-(2–8 words, 35), a short observation (9–23, 40), an explanation (24–50, 20),
-or one approved smiley (5). These are relative weights, not quotas. All prose
-stays within 278 characters. Recent shipped Replies exclude a third consecutive
-format and another smiley while one remains in the last twenty. Startup Replies
-keep their twenty-word limit. A format that does not suit the post yields SKIP;
-a smiley must suit on-topic humor or a creative result, never dodge a question.
-Generic textual praise stays blocked. `REPLY_MIN_CHARS` is now five, with a
-specific exception for approved smileys; `REPLY_ALLOW_REACTIONS=false` tightens
-the policy. This supersedes the earlier twenty-five-character floor and emoji ban.
+(2–8 words, 35), a short observation (9–23, 40), or an explanation (24–50, 20).
+These are relative weights, not quotas. All prose stays within 278 characters.
+Recent shipped Replies exclude a third consecutive format. Startup Replies keep
+their twenty-word limit. A format that does not suit the post yields SKIP.
+Generic textual praise stays blocked; `REPLY_MIN_CHARS` is five.
+
+Later clarification, 2026-10-12: **no emojis or text smileys in Originals or
+Replies**, including decorations appended to otherwise substantive text. This
+supersedes the earlier permission for occasional smileys. Standalone reaction
+formats are removed. The legacy `REPLY_ALLOW_REACTIONS` key remains accepted for
+compatibility but always clamps to false. Reply generation requests plain text
+and gives a decorated draft one rewrite; persistent violations publish nothing.
+Final content validation applies the ban to every publishing path. Ordinary
+punctuation, mathematical notation, URLs and literal code remain usable. No
+silent deletion of a smiley that could alter the intended meaning.
 
 Reply prose uses SI or super intelligence for the generic field. This editorial
 choice does not assert that every model has superhuman general intelligence.
@@ -377,8 +383,8 @@ warnings under `settings_warnings`.
 | `DUP_TOPIC_SHARED_WORDS`, shared words that make a same story | 0 to 3 | 3 |
 | `DUP_TOPIC_WINDOW_HOURS`, same-story window | at least 24 h | 24 |
 | `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
-| `REPLY_MIN_CHARS`, shortest text Reply | at least 5 characters; approved smileys exempt | 5 |
-| `REPLY_ALLOW_REACTIONS`, approved standalone smileys | may be disabled | true |
+| `REPLY_MIN_CHARS`, shortest text Reply | at least 5 characters | 5 |
+| `REPLY_ALLOW_REACTIONS`, legacy reaction switch | always off: true reads as false | false |
 
 The duplicate settings may only get stricter: a lower threshold or count, or
 a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,

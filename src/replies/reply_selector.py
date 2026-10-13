@@ -205,7 +205,7 @@ def _select(*, concise=False) -> int:
             selected = base_call(author)
             return replace(selected, template=selected.template +
                            "\nSTARTUP REPLY: use one clean, smart thought in at most 20 words. "
-                           "An apt smiley is allowed. No greeting or startup announcement. "
+                           "No emojis or text smileys. No greeting or startup announcement. "
                            "Choose SKIP if brevity would make the answer misleading.")
     job = reply_pipeline.Job("reply_selection", "SELECTED", reply_call=call, pipelined=True)
     candidate = reply_pipeline.Candidate(winner["url"], winner["text"], source,

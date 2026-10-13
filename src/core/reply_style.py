@@ -5,8 +5,9 @@ from collections import deque
 from dataclasses import dataclass
 
 from . import config, settings
+from .humanizer import has_emoji_or_smiley
 
-# Operator 2026-10-12: occasional standalone smileys are allowed.
+# Historical reactions remain classifiable in engagement reports, never selected.
 REACTIONS = frozenset({":)", ";)", ":D", "🙂", "😊", "😂", "🤣", "😄", "😅", "😏", "😉", "🤔", "🙃", "😮", "😍"})
 
 
@@ -33,17 +34,13 @@ class ReplyStyle:
     weight: int
 
     def instruction(self) -> str:
-        if self.name == "reaction":
-            return ("Use ONE standalone smiley, with no words, only if the on-topic post's humor or "
-                    "creative result makes the reaction apt. Choose from " + " ".join(sorted(REACTIONS)) +
-                    ". Never use a reaction to dodge a question or endorse an unverified claim; SKIP instead.")
         return (f"Use {self.min_words}–{self.max_words} words, at most {self.max_chars} characters. "
                 "Choose the sentence count to fit the point. No padding, greeting or signature. "
-                "An emoji is optional. If this length cannot express an honest useful response, return SKIP.")
+                "No emojis or text smileys. If this length cannot express an honest useful response, return SKIP.")
 
     def problem(self, text: str) -> str:
-        if self.name == "reaction":
-            return "expected one standalone smiley" if not is_reaction(text) else ""
+        if has_emoji_or_smiley(text):
+            return "emojis and text smileys are not allowed"
         words = len(text.split())
         if is_reaction(text) or not self.min_words <= words <= self.max_words or len(text) > self.max_chars:
             return f"expected {self.name}: {self.min_words}–{self.max_words} words, at most {self.max_chars} characters"
@@ -51,7 +48,6 @@ class ReplyStyle:
 
 
 STYLES = (
-    ReplyStyle("reaction", 0, 0, 3, 5),
     ReplyStyle("brief", 2, 8, 72, 35),
     ReplyStyle("standard", 9, 23, 170, 40),
     ReplyStyle("detailed", 24, 50, 278, 20),
@@ -68,20 +64,17 @@ def _shape(text: str) -> str:
 
 
 def choose(*, concise=False, rng=None) -> ReplyStyle:
-    """Weighted variety; avoid three alike or a smiley in the last 20 Replies."""
+    """Weighted text lengths; avoid three alike and never select a reaction."""
     recent = recent_replies()
     shapes = [_shape(text) for text in recent]
     choices = [style for style in STYLES
-               if not (style.name == "reaction" and
-                       (not settings.get("REPLY_ALLOW_REACTIONS") or "reaction" in shapes))
-               and not (len(shapes) >= 2 and shapes[-2:] == [style.name, style.name])
+               if not (len(shapes) >= 2 and shapes[-2:] == [style.name, style.name])
                and not (concise and style.name == "detailed")]
     # Respect an operator's stricter text floor when selecting a format.
     minimum = settings.get("REPLY_MIN_CHARS")
-    choices = [style for style in choices
-               if style.name == "reaction" or style.max_chars >= minimum]
+    choices = [style for style in choices if style.max_chars >= minimum]
     if not choices:
-        choices = [STYLES[2] if concise else STYLES[-1]]
+        choices = [STYLES[1] if concise else STYLES[-1]]
     selected = (rng or random).choices(choices, weights=[style.weight for style in choices], k=1)[0]
     if concise and selected.name == "standard":
         return ReplyStyle("standard", 9, 20, 150, selected.weight)

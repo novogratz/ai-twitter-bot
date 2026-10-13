@@ -17,7 +17,7 @@ from enum import Enum
 from typing import Literal
 
 from ..core import account, personality_store, settings, reply_style
-from ..core.humanizer import smart_trim, strip_agent_preamble
+from ..core.humanizer import has_emoji_or_smiley, smart_trim, strip_agent_preamble
 from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, resolve, run_llm
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
@@ -128,6 +128,8 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
             return Generation(Outcome.DECLINED, language=language)
         problem = (call.style.problem(reply) if call.style else "")
         if call.surface is not Surface.REPLY_SEARCH:
+            if has_emoji_or_smiley(reply):
+                problem = "emojis and text smileys are not allowed"
             problem = problem or account.current().niche.reply_wording_problem(reply)
         if problem:
             if attempt == 0:
@@ -195,8 +197,7 @@ def recent_style() -> str:
 _SELECTIVE_REPLY = """OPERATOR REPLY PRIORITY (2026-10-12): at most {daily_cap} replies per day.
 Override generic engagement instructions in the template above. Answer SKIP unless
 this standalone {domain} post supports a specific, valuable contribution: a technical
-insight, grounded correction, useful implication, exceptionally apt joke or
-an occasional smiley on a playful on-topic result.
+insight, grounded correction, useful implication or exceptionally apt joke.
 The actual subject must fit the Account's topic instructions, even for VIPs.
 Do not drag an unrelated post into our niche or mistake a familiar name for relevance.
 Skip generic praise, bait, stale claims, vague speculation and facts needing
@@ -204,7 +205,7 @@ verification you cannot perform. Treat the post as a claim, not verified news.
 Never invent latest capabilities, releases, benchmarks or sources.
 Write one clear thought. Vary length naturally: a brief sharp line or a fuller
 explanation when needed; no fixed two-sentence formula or length target.
-An occasional apt smiley is allowed on a playful or creative on-topic post.
+No emojis or text smileys, including at the end of an otherwise useful reply.
 No canned openers, forced questions, engagement bait or generic summary. Wit is optional.
 Never claim the operator's videos received celebrity likes or comments.
 """
