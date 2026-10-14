@@ -6,7 +6,7 @@ from datetime import datetime
 import pytest
 
 # These engine tests exercise an Account explicitly permitted to publish Originals.
-pytestmark = pytest.mark.usefixtures("originals_account")
+pytestmark = pytest.mark.usefixtures("originals_account", "unranked_account")
 
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag

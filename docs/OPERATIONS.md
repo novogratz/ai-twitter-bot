@@ -268,6 +268,11 @@ real account from a second process. Before any of them:
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
+| `reply_draft_queue.json` | Guarded shared drafts, comparison scores/support, selected and attempted outcomes; never treat a selected draft left by a crash as permission to retry |
+| `reply_draft_queue.lock` | Serializes preparation, review and selection updates across threads and processes |
+| `reply_ranking.lock` | Allows one independent comparison/publication worker at a time |
+| `reply_pacing.json` | Guarded submit timestamp and next permitted Reply time, including uncertain submits; preserve across restarts |
+| `reply_pacing.lock` | Atomic global cooldown reservation immediately before submit |
 | `replied_tweets.lock` | Process lock for permanent Reply claims; never clear a live lock to bypass deduplication |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
 
@@ -282,10 +287,18 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence outside the three Toronto activity windows is normal. There is no
+Silence outside the four Toronto activity windows is normal. There is no
 heartbeat line.
 
 ## Recovery
+
+For Replies, preserve `reply_pacing.json` even after an unconfirmed submit.
+A missing first-use store starts empty; malformed contents halt admission rather
+than resetting the cooldown. Queue drafts expire after 30 minutes and reviews
+after 10 minutes. A selected draft has a five-minute write authorization, and
+is never automatically replayed after a crash. Check X and the permanent Replied
+store before repairing an ambiguous submission; do not clear a live process
+lock or pacing deadline to force another reply.
 
 The state files named below are in `state/<BOT_ACCOUNT>/`
 ([State files](#state-files)), the Operator files in `accounts/<BOT_ACCOUNT>/`.
@@ -531,6 +544,9 @@ root:
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
+| `reply_draft_queue.json` | `reply_queue` (collectors and selector) | Prepared drafts, reviewed parent text, scores/support and selection outcomes | guarded |
+| `reply_pacing.json` | `reply_pacing` (`reply_to_tweet`) | Last submit attempt and persisted next permitted Reply time | guarded |
+| `reply_draft_queue.lock`, `reply_ranking.lock`, `reply_pacing.lock` | `state_store.process_lock` | Cross-process exclusion for queue transactions, selection and final cooldown reservation | lock files, never clear to bypass a live lock |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | `follow_policy.record_followed` (`follow_account`) | Accounts followed by the bot or found already followed | guarded |

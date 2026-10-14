@@ -336,7 +336,7 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
     assert path.read_text() == CORRUPT
 
 
-def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operator_folder, caplog):
+def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(unranked_account, monkeypatch, operator_folder, caplog):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
     cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health

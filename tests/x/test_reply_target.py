@@ -5,6 +5,9 @@ import subprocess
 
 import pytest
 
+# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
+pytestmark = pytest.mark.usefixtures("unranked_account")
+
 from src.guards import replied_store
 from src.guards.active_hours import OutsideActiveHours
 from src.guards.reply_admission import Refusal
@@ -96,6 +99,12 @@ process.stdout.write(JSON.stringify({answer, clicks}));
 ])
 @pytest.mark.parametrize("click", [False, True])
 def test_page_script_targets_only_the_verified_original(monkeypatch, articles, page, allowed, click):
+    clicks = mock_page(monkeypatch, articles, page)
+    assert tc._standalone_reply_target(PARENT, click=click) is allowed
+    assert clicks == ([articles[0]["url"]] if allowed and click else [])
+
+
+def mock_page(monkeypatch, articles, page):
     node = shutil.which("node")
     if node is None:
         pytest.skip("Node is needed to execute the browser script fixture")
@@ -110,5 +119,33 @@ def test_page_script_targets_only_the_verified_original(monkeypatch, articles, p
         return output["answer"]
 
     monkeypatch.setattr(safari, "_run_js", run)
-    assert tc._standalone_reply_target(PARENT, click=click) is allowed
-    assert clicks == ([articles[0]["url"]] if allowed and click else [])
+    return clicks
+
+
+@pytest.mark.parametrize("changed,allowed", [
+    ("AI inference depends on memory bandwidth.", True),
+    ("AI inference\n depends on memory bandwidth.", True),
+    ("AI inference costs fell 90% today.", False),
+    ("A different unrelated claim", False),
+])
+def test_ranked_parent_must_match_reviewed_text_before_click(unranked_account, monkeypatch, changed, allowed):
+    from dataclasses import replace
+    from src.core import account, reply_queue
+    from src.guards import active_hours
+    from src.replies.reply_pipeline import Candidate
+    from src.replies.reply_generator import Generation, Outcome
+    profile = account.current()
+    monkeypatch.setattr(account, "current", lambda: replace(
+        profile, replies=replace(profile.replies, ranked_selection=True)))
+    sid = reply_queue.reserve(Candidate(PARENT, "AI inference depends on memory bandwidth.", "TEST"))
+    reply_queue.prepared(sid, TEXT, Generation(Outcome.WRITTEN, "en", TEXT), "OTHER")
+    row = reply_queue.ready()[sid]
+    reply_queue.reviewed({sid: row}, {sid: {
+        "impact": 5, "sharpness": 5, "interest": 5, "grounded": True, "on_topic": True,
+        "support": "Parent describes memory bandwidth.", "reason": "Useful detail.",
+        "reviewed_at": active_hours.now_local().isoformat(),
+    }})
+    assert reply_queue.select(sid, reply_queue.ready()[sid])
+    clicks = mock_page(monkeypatch, [{"url": PARENT, "text": changed}], PARENT)
+    assert tc._standalone_reply_target(PARENT, click=True) is allowed
+    assert clicks == ([PARENT] if allowed else [])

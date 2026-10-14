@@ -101,7 +101,18 @@ _Avoid_: try, cycle, poll
 **Reply**:
 A post answering someone else's post. Never a Profile publication, and no
 daily total applies to Replies.
-_Avoid_: comment, response, draft (reserved for Originals)
+_Avoid_: comment, response
+
+**Reply draft**: An unpublished answer saved with its parent, source, provider
+and model in the shared queue. Independent comparison must approve its impact,
+sharpness, interest, relevance and factual support before selection.
+
+**Reply selection**: The single worker that compares prepared Replies and
+publishes at most one approved winner when the shared cooldown expires.
+
+**Reply cooldown**: The persisted random 5–8 minute gap before another submit,
+including uncertain submissions. A lack of strong drafts or closed activity
+windows may extend the gap; no Reply is required to fill it.
 
 **Voice**:
 The account's persona, written by the Operator in the Account's folder,
@@ -116,7 +127,7 @@ _Avoid_: core identity, persona prompt, spine
 
 **Call surface**:
 What a model call is for, as its caller names it: a Reply, a priority
-Reply, the reply search, a Relation's Reply, an Original. `llm_client`
+Reply, independent Reply comparison, the reply search, a Relation's Reply, an Original. `llm_client`
 declares each once, in `SURFACES`, with its model setting, its provider
 setting and its CLI options; a caller names a surface and reads no model or
 provider setting. Only a Relation's CLI, forced by its caller, overrides the
@@ -165,8 +176,8 @@ _Avoid_: selection filters, candidate filter
 
 **Reply pipeline**:
 The one path from a job's candidates to shipped Replies: Reply admission
-before the Reply generator, the write, then the engagement log for a Reply
-that shipped. It sets aside, until restart, the posts a job is done with
+before the Reply generator, shared preparation and independent selection for
+ranked Accounts, the write, then the engagement log for a Reply that shipped. It sets aside, until restart, the posts a job is done with
 (refused for good, declined, answered) and leaves the others replayable.
 _Avoid_: reply loop, reply engine
 

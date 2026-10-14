@@ -204,6 +204,7 @@ class Surface(Enum):
     """What a model call is for, named by its caller; `SURFACES` resolves it."""
     REPLY = "Reply"
     PRIORITY_REPLY = "priority Reply"
+    REPLY_REVIEW = "Reply comparison"
     REPLY_SEARCH = "reply search"
     RELATION_REPLY = "Relation Reply"
     # Provisional (#248): debate, replyback and the VIP scan's template run
@@ -235,6 +236,7 @@ SURFACES: dict[Surface, Route] = {
     # replies (operator 2026-06-24). cwd=/tmp: see REPLY_SEARCH.
     Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
+    Surface.REPLY_REVIEW: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s
     # (op 2026-06-24). cwd=/tmp: run from the project, the Claude CLI loaded
     # its CLAUDE.md and git context, and parallel searches answered in prose

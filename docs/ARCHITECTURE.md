@@ -67,7 +67,7 @@ authorize a new action.
 
 ## Jobs
 
-`build_scheduler()` registers 11 jobs for the live Reply-only Account, plus
+`build_scheduler()` registers 12 jobs for the live Reply-only Account, plus
 `reply_job` when `ENABLE_REPLY_SEARCH=1`. Editorial and pin jobs require explicit
 Account permission for Originals. Replyback, Debate, babysitter and notification
 registrations are disabled; retained manual paths still pass the conversation
@@ -84,10 +84,11 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
-| `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
-| `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
+| `direct_reply_job` | 2 min | Scans permitted VIP profiles and rotating searches, preparing drafts in the shared queue; per-cycle bounds limit preparation. Never publishes for the ranked Account. |
+| `feed_sweep_job` | 8 min | Reads For You and Following and prepares eligible drafts in the shared queue. |
+| `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
+| `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
+| `reply_selection_job` | 15 sec; first run after 60 sec | Dedicated worker independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
@@ -467,14 +468,16 @@ Five modules sit behind them:
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
-  retweets are always refused; replies only need their spacing
-  (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
+  retweets are always refused. Reply spacing is 300 seconds plus 0–180 seconds
+  of jitter; independent review and the rest of admission also apply. The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
   caller sees the same gap, and retrying cannot fish for a smaller draw. `seconds_until_allowed` returns what is left of it,
   capped at one gap so that a ledger row stamped in the future (clock set
   back, copied ledger) cannot park a waiting job; `can_post` still refuses
-  until the spacing clears.
+  until the spacing clears. Reply waits also include the persisted deadline in
+  `reply_pacing.json`, reserved atomically just before submit under a process
+  lock. An uncertain result keeps this deadline and its permanent parent claim.
 - `src/guards/ledger.py` is that ledger (90 days, Toronto timestamps). Its
   interface answers four questions: shipped rows of an action on a Toronto
   day (per target for Debate turns), the last shipped write of an action,
@@ -544,49 +547,35 @@ ship between the spacing check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
 
-Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
-`mega_watch`, `debate`, `replyback` and `babysit`, the disabled reply
-search) hands its candidates to the Reply pipeline,
-`src/replies/reply_pipeline.py`. A job keeps its sub-sources (the feeds,
-searches or handle pools it scrapes), its budgets, its Reply call, its pace
-after a shipped Reply and its log tag. `feed_sweep` declares what it
-answers to the Reply source, `src/replies/reply_source.py`: the oldest post
-(`DIRECT_REPLY_MAX_AGE_MINUTES`, read on each pass), root posts only, the
-Account's niche, fresh and rising first. `reply_source.select` applies the
-declaration without side effects and never keeps a post without a URL or
-text, or of unknown or negative age; a declaration can also require the
-author a scanned profile's posts carry in their URL. The other jobs still
-select their candidates themselves (niche, age threshold, thread-reply
-shape) until they move to it. The
-pipeline alone calls `judge_parent` before paying for a generation, writes
-through `twitter_client.reply_to_tweet`, and calls
-`engagement_log.log_reply` after a shipped Reply only, with the provider and
-model the Generation names (the reply search's, for its candidates); the
-log never guesses them from `AI_CLI`. It keeps, per job and
-lost at restart, the posts refused definitively, declined by the model
-(SKIP) or answered; `direct_reply`'s VIP and search lanes share theirs. A
-temporary refusal, a failed generation or a failed write leaves the post
-replayable. A model rate limit, every provider exhausted, ends the job's
-generations for the cycle, with the post left replayable; in `direct_reply`
-it also stops the search
-lane, in `feed_sweep` the Following pass. `StateUnreadable` and
-`OutsideActiveHours` end the cycle from any step, a job's scrape included;
-any other error in a scrape, a generation or a write is logged and the
-cycle moves on.
+Every Reply job hands candidates to `src/replies/reply_pipeline.py`. With
+`replies.ranked_selection = true`, its preparation path applies parent admission,
+root/niche/blocked-mention checks, reserves one draft per status ID, generates
+and validates the text, and saves the provider/model and parent snapshot in
+`reply_draft_queue.json`. Collectors do not publish or wait out the cooldown.
+The queue has at most eight active drafts; drafts expire after 30 minutes.
 
-The `direct_reply` search lane and `feed_sweep` run pipelined: the pipeline
-generates reply N+1 while reply N is posted, so its text is ready as soon
-as reply N's ledger row is written. Before calling `reply_to_tweet`,
-outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
-one-second slices and raises `OutsideActiveHours` on a stop request or when
-the window closes. The chokepoint still judges: when another job's reply lands during
-the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
-post stays replayable in a later cycle, at the cost of a new generation.
-On a rate limit, bedtime or an unreadable state file the pipelined job
-returns at once: the generation in flight finishes in the worker thread,
-unread, and its post stays replayable.
-The other jobs answer their candidates in turn and never wait: a Reply they
-send too early is refused on spacing and stays replayable.
+`reply_selection_job` has its own worker and process lock. Startup gives the
+collectors at least 60 seconds. During a cooldown it waits until the final 90
+seconds to request an independent comparison on `Surface.REPLY_REVIEW`, using
+the Reply model/provider settings. Strict JSON requires exactly one review per
+supplied ID. Impact, sharpness and interest must each score at least 4/5, with
+explicit factual support and topic approval. A model failure or malformed
+comparison authorizes nothing. Reviews expire after ten minutes.
+
+When the shared cooldown is clear, the selector chooses the approved draft with
+the highest total score, breaking ties by its weakest dimension and freshness.
+Only one selected draft reaches `reply_pipeline.send` and the browser write.
+Every admission check runs again; the writer requires that exact selected text
+and compares the actual opened parent text with the reviewed snapshot before
+clicking. Selection expires after five minutes. Attempted and interrupted selected
+drafts are never automatically replayed. A weak pool leaves the slot empty.
+
+The Reply source still supplies each collector's age, niche and ordering rules;
+`StateUnreadable` and `OutsideActiveHours` stop collection/selection. A provider
+rate limit stops preparation for that cycle. The generic unranked Account path
+retains sequential and overlapping generation; it still shares the five-minute
+engine floor, persisted submit cooldown and all other write guards. It is not
+the live Account's publishing path.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
@@ -728,10 +717,9 @@ These are how the code behaves today, not design intent:
   ("est") selects the French Voice file.
 - The retained babysitter and replyback modules call the same
   `run_replyback_cycle`; both are unscheduled and conversation Replies are refused.
-- Only the pipelined Reply jobs wait out the reply spacing. A Reply that
-  `early_bird`, `mega_watch`, `debate`, replyback or the VIP lane generates
-  inside the gap is refused on spacing, and its generation is paid again in
-  a later cycle.
+- Ranked Reply comparison uses supplied parent text and stable model knowledge;
+  it does not independently retrieve sources. Unsupported current facts must fail
+  review, and a changed opened parent invalidates the selected draft.
 - The state store lock is per process: `bin/seed_fr_influencers.py`
   following while the bot runs can still lose a follow from
   `followed_accounts.json`.

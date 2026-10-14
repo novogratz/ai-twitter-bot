@@ -116,7 +116,7 @@ def test_prompts_are_english_only():
     assert not any("lang:fr" in q for q in replies), "FR reply query still present"
 
 
-def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(unranked_account, monkeypatch, llm, chokepoint, settings_override):
     """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's

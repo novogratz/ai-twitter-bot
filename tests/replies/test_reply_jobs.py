@@ -8,6 +8,9 @@ from pathlib import Path
 
 import pytest
 
+# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
+pytestmark = pytest.mark.usefixtures("unranked_account")
+
 from src.core import config
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store

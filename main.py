@@ -45,7 +45,8 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
-        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1)},
+        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1),
+                   "reply_selection": ThreadPoolExecutor(1)},
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
     )
 
@@ -82,6 +83,10 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job", enabled=False)
         add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job", enabled=False)
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
+        from src.replies.reply_selection import run_selection_cycle
+        add(health.wrap_job(run_selection_cycle, "reply_selection", safari_health=False), 0.25,
+            "reply_selection_job", executor="reply_selection", first_seconds=60,
+            enabled=account.current().replies.ranked_selection)
         add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job", enabled=False)
         add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job", enabled=False)
         if settings.get("ENABLE_REPLY_SEARCH"):
@@ -141,6 +146,9 @@ def main():
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
                           "replies": "unlimited",
+                          "reply_gap_seconds": [config.MIN_SECONDS_BETWEEN_REPLIES,
+                                                config.MIN_SECONDS_BETWEEN_REPLIES + config.REPLY_JITTER_SECONDS],
+                          "ranked_reply_selection": account.current().replies.ranked_selection,
                           "quotes": 0, "reposts": 0,
                           "slots": slots() if config.originals_enabled() else [],
                           "trend_slots": sorted(trend_slots()) if config.originals_enabled() else [],

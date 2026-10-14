@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import engagement_log, outgoing_text
+from ..core import account, config, engagement_log, outgoing_text, reply_queue
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -99,6 +99,8 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
         candidates = list(candidates)
         if any(not c.reply for c in candidates):
             raise ValueError(f"[{job.label}] a job without a ReplyCall needs candidates that carry their reply")
+    if account.current().replies.ranked_selection:
+        return _prepare(job, candidates, cycle, max_generations=max_generations, max_shipped=max_shipped)
     if job.pipelined:
         return _run_pipelined(job, iter(candidates), cycle, max_generations, max_shipped)
     shipped = generations = 0
@@ -119,8 +121,51 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
         if generation.outcome is Outcome.RATE_LIMITED:
             _stop_for_rate_limit(job, cycle)
             break
-        shipped += _send(job, candidate, author, generation)
+        shipped += send(job, candidate, author, generation)
     return shipped
+
+
+def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
+    """Collect and draft during cooldown; only the shared selector publishes."""
+    from ..guards.reply_admission import judge_text, mentions_blocked
+    from .reply_source import is_on_niche
+    from ..x import x_urls
+    if config.dry_run():
+        return 0
+    prepared = 0
+    for candidate in candidates:
+        if cycle.rate_limited or _reached(prepared, max_generations) or _reached(prepared, max_shipped):
+            break
+        author = _admit(job, candidate, cycle)
+        if (author is None or not is_on_niche(candidate.text)
+                or account.current().relevance.off_topic.search(candidate.text)
+                or mentions_blocked(candidate.text)
+                or x_urls.is_reply_like_tweet({"url": candidate.url, "text": candidate.text})):
+            continue
+        sid = reply_queue.reserve(candidate)
+        if not sid:
+            continue
+        prepared += 1
+        try:
+            generation = _generate(job, candidate, author)
+            if generation.outcome is Outcome.RATE_LIMITED:
+                _stop_for_rate_limit(job, cycle)
+            if generation.outcome is not Outcome.WRITTEN:
+                reply_queue.discard(sid, generation.outcome.value)
+                continue
+            text, pattern = extract_pattern(generation.text)
+            verdict = judge_text(author, humanize(text))
+            if not verdict:
+                reply_queue.discard(sid, verdict.reason)
+                continue
+            reply_queue.prepared(sid, verdict.text, generation, pattern or candidate.pattern)
+            log.info("[%s] Prepared %s for independent comparison; not published.", job.label, sid)
+        except (OutsideActiveHours, StateUnreadable):
+            raise
+        except Exception:
+            reply_queue.discard(sid, "generation failed")
+            log.exception("[%s] Draft preparation failed for %s", job.label, sid)
+    return 0
 
 
 def scrape(label: str, what: str, read: Callable[..., list | None], *args, **kwargs) -> list:
@@ -184,7 +229,7 @@ def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:
     cycle.rate_limited = True
 
 
-def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -> int:
+def send(job: Job, candidate: Candidate, author: str, generation: Generation) -> int:
     """Send a generation that is not a rate limit; 1 when the Reply shipped."""
     url = candidate.url
     if generation.outcome is Outcome.DECLINED:
@@ -281,7 +326,7 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
                 break
             # No sleep after a ship: the spacing is waited out before the
             # next send, for the gap action_guard drew.
-            shipped += _send(job, candidate, author, generation)
+            shipped += send(job, candidate, author, generation)
             pending = upcoming
     finally:
         # Leave without waiting for the generation in flight: at a rate

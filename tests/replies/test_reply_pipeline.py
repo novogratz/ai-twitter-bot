@@ -12,6 +12,9 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
+pytestmark = pytest.mark.usefixtures("unranked_account")
+
 from src.core import config
 from src.core.llm_client import LLMResult
 from src.core.state_errors import StateUnreadable
@@ -539,7 +542,7 @@ def test_a_pipelined_job_does_not_wait_when_the_spacing_is_clear(spacing):
 
     s = spacing
     ag.record(ag.REPLY, fresh("earlier"))
-    s.now += timedelta(seconds=60)
+    s.now += timedelta(seconds=ag.seconds_until_allowed(ag.REPLY) + 1)
     url = fresh("someone", n=1)
 
     assert run(job(pipelined=True), [candidate(url, "post")]) == 1

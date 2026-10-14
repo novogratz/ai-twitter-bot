@@ -126,7 +126,7 @@ def test_no_scheduled_job_writes_the_operator_files(watched, walled, monkeypatch
     import main
     monkeypatch.setenv("DRY_RUN", dry_run)
     jobs = main.build_scheduler().get_jobs()
-    assert len(jobs) == 11
+    assert len(jobs) == 12
     for job in jobs:
         try:
             job.func()

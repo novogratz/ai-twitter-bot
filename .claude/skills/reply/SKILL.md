@@ -1,12 +1,15 @@
 ---
 name: reply
-description: Trigger one direct reply cycle by hand - scan the feeds and searches, reply through Reply admission
+description: Prepare Reply drafts by hand through the shared admission and ranked queue
 disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 
 Trigger one reply scan, the same one `direct_reply_job` runs every 2 minutes.
-Only on an explicit operator request: it replies on the real account.
+Only on an explicit operator request: it scans the real account and uses models.
+For the ranked live Account this prepares drafts only. The scheduler's separate
+selector compares and publishes at most one approved draft after the shared
+5–8 minute cooldown. This skill does not start that scheduler or bypass review.
 
 1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and
@@ -18,7 +21,8 @@ Only on an explicit operator request: it replies on the real account.
      generation; `reply_to_tweet` checks and marks `replied_tweets.json`.
      Never pre-mark that store by hand.
 3. Report from the `[DIRECT]` and `[REPLY]` lines of `bot.log`: how many
-   replies shipped and to which status URLs. A failed cycle logs
+   drafts were prepared and their status URLs. Do not report a queued draft as
+   published; the collector returns zero shipped Replies in ranked mode. A failed cycle logs
    `[direct_reply] Cycle failed.` with its traceback, and an unreadable
    state file `[HEALTH] direct_reply halted`, in `bot.log` only: report
    those too.

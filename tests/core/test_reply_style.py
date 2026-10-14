@@ -27,19 +27,19 @@ def test_outgoing_terminology_preserves_identifiers_and_is_idempotent(source, ex
     "Quantization lowers memory traffic, but batching changes utilization too. Compare throughput at the same latency budget before treating the smaller model as the cheaper deployment.",
 ])
 def test_admission_preserves_context_chosen_length_punctuation_and_optional_smiley(text):
-    verdict = reply_admission.judge_reply(numbered_url(900), text)
+    verdict = reply_admission.judge_text("someone", text)
     assert verdict and verdict.text == text
 
 
 @pytest.mark.parametrize("text", ["Great post 😂", "😂", "That GPU needs a vacation 😂💀", "Latency wins :) 😂"])
 def test_empty_praise_or_multiple_reactions_are_refused(text):
-    assert not reply_admission.judge_reply(numbered_url(901), text)
+    assert not reply_admission.judge_text("someone", text)
 
 
 def test_write_admission_rewrites_si_and_blocks_a_protected_mention():
-    verdict = reply_admission.judge_reply(numbered_url(902), "AI inference is memory-bound.")
+    verdict = reply_admission.judge_text("someone", "AI inference is memory-bound.")
     assert verdict and verdict.text == "SI inference is memory-bound."
-    assert not reply_admission.judge_reply(numbered_url(903), "Ask @ElonMusk about inference costs.")
+    assert not reply_admission.judge_text("someone", "Ask @ElonMusk about inference costs.")
 
 
 def test_style_guidance_reads_recent_shipped_replies_without_changing_history():
