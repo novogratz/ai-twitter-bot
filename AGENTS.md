@@ -1,6 +1,6 @@
 # AGENTS.md
 
-@TheAIShrink is a live X account driven by Safari + AppleScript from the
+@thesimaximalist is a live X account driven by Safari + AppleScript from the
 operator's Mac: no X API. Every change here can publish, like or follow on a
 real account. Setup and run commands live in [`README.md`](README.md).
 
@@ -30,8 +30,22 @@ Unknown or mismatched targets fail closed. Existing state and `.env` are
 preserved. Other snapshot settings and the Voice stay in place. The bot stays
 stopped; the requested PR and merge do not authorize a start or restart.
 
+2026-10-14 — The Operator replaced the former therapist persona with The SI
+Maximalist, @thesimaximalist. The supplied motto is: "SI Maximalist: SI brain rot,
+Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos." The Account
+creates and publishes AI videos with Grok Imagine; the Operator reports strong
+engagement. Voice, Relations, search prompts, topic matching, video discovery and
+new engagement tags use this identity. News remains sourced, celebrity parodies
+stay explicitly fictional, and details or results of a particular video need
+supplied evidence. Old learned directives cannot restore the previous persona.
+Storage remains `theaishrink`; historical handles remain own posts and production
+history is preserved. Activity windows, protected authors, one Reply per entire
+conversation, caps, pacing and sourcing checks are unchanged. This updates code
+and configuration; it neither starts the bot nor edits the live profile or adds
+automated video generation/uploading.
+
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(updated 2026-10-13) and supersedes every older mandate. It encodes:
+(updated 2026-10-14) and supersedes every older mandate. It encodes:
 
 - Active 05:00–10:00, 12:00–13:00 and 17:00–22:00 America/Toronto only,
   every day with fixed starts and exclusive closing times.
@@ -48,7 +62,10 @@ stopped; the requested PR and merge do not authorize a start or restart.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
-- Replies, likes and follows keep to AI (2026-09-25): the Account's niche
+- The Account is The SI Maximalist: SI/AI news, generated videos, brainrot and
+  explicitly fictional celebrity parodies. Grok Imagine enthusiasm is grounded
+  in the Operator's video work; clip details and metrics need supplied context.
+- Replies, likes and follows keep to SI/AI, including AI videos (2026-10-14): the Account's niche
   patterns and searches look for AI, and its lists drop crypto, markets and
   space accounts, save those the Operator picked by hand and a few still to
   confirm. The patterns' known false positives are listed in the policy.
@@ -81,7 +98,7 @@ Account.
 
 | Concern | Where |
 |---|---|
-| Account: handle, language, domain the prompts name, Slots and angles, feeds, Evergreen topics, trusted hosts, relevance filter, stricter limits; network handle lists, French-forced authors, added Blocked accounts, niche patterns, X searches (Trending posts' included); Relations (per-handle Reply prompt, provider or dossier) and the default VIP scan prompt | `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked at start by `src/core/account.py`; the Voice files and the Relations' prompts next to it |
+| Account: handle, display name, bio, historical handles, language, domain the prompts name, Slots and angles, feeds, Evergreen topics, trusted hosts, relevance filter, stricter limits; network handle lists, French-forced authors, added Blocked accounts, niche patterns, X searches (Trending posts' included); Relations (per-handle Reply prompt, provider or dossier) and the default VIP scan prompt | `accounts/<BOT_ACCOUNT>/account.toml`, loaded and checked at start by `src/core/account.py`; the Voice files and the Relations' prompts next to it |
 | Originals: sources, evidence, draft, separate review, pending submissions in the ceiling and spacing | `src/editorial/editorial_bot.py` |
 | Slot journal: the day's editorial state (day change, Attempts and feedback, Pending slot reserved, confirmed or released, closed Slots, used URLs, recent texts, the day's submissions and the latest); file and in-memory adapters | `src/editorial/slot_journal.py` |
 | Draft and review limits, their JSON schemas and call profiles | `src/editorial/editorial_schemas.py` |

@@ -26,7 +26,7 @@ def test_reply_and_like_queries_are_ai_only():
     queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ")
+                "cursor", "copilot", "humanoid", "robotics", " ia ", "super intelligence", "superintelligence", "si brain")
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
@@ -143,7 +143,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
-    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
+    assert "You are replying to a familiar account, @thebtctherapist" in llm.prompts[0]
     assert len(chokepoint.calls) == 1
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 

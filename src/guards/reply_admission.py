@@ -78,7 +78,7 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.PROTECTED_ACCOUNT, f"@{author} is protected from every Reply", author)
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
-    if author == config.BOT_HANDLE.lower():
+    if config.is_own_handle(author):
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if debate_turn:
         return Verdict(Refusal.CONVERSATION, "one Reply to an original post; no follow-ups", author)

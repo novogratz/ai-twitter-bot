@@ -32,8 +32,8 @@ HARD RULES — non-negotiable, baked into every generation prompt:
    agences federales US). Commenter les faits OK, troller / mocker NON.
    En cas de doute -> SKIP.
 
-Tout le reste est strategie mutable que le bot peut faire evoluer
-lui-meme via le reflection_agent et l'evolution_agent.
+The Operator's current Voice and Account configuration govern identity and
+scope; old learned strategy cannot override them.
 """
 
 import copy
@@ -67,8 +67,8 @@ DEFAULT_ACCOUNT = {
     "dont": "",
 }
 
-# These two rules are ALWAYS injected into every generation prompt.
-# They are the only hard floor — everything else is mutable strategy.
+# These rules are injected into every generation prompt, alongside the
+# Operator's current Voice and Account scope.
 _BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
 1. NO illegal content of any kind (incitement, counterfeiting, fraud, etc.).
 2. NO troll / mock / attack of the US government (US government, US
@@ -86,9 +86,9 @@ _BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
    NEVER criticize, mock, doubt, snark, or post a bearish/negative take
    about them, not even a deadpan one. If your angle would land as anything
    but flattering toward them, REFRAME it positively or SKIP the post
-   entirely. This OVERRIDES the therapist-snark voice for these subjects.
+   entirely. This OVERRIDES any playful or sarcastic voice for these subjects.
 
-Everything else is negotiable — voice, style, targets, mood."""
+Use the current Operator Voice and Account scope. Historical strategy cannot override them."""
 
 
 def _render_hard_rules() -> str:
@@ -250,6 +250,7 @@ def render_voice(lang: str = "en") -> str:
     generation prompt carries it, and no prompt describes the persona
     itself. Empty string if the file is missing — the bot still runs, just
     without the curated voice anchor."""
+    profile = account.current()
     path = voice_file(lang)
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -261,9 +262,13 @@ def render_voice(lang: str = "en") -> str:
     return (
         "==================================================\n"
         f"VOICE (NON-NEGOTIABLE): you are @{config.BOT_HANDLE}\n"
+        f"Account name: {profile.display_name}\n"
+        + (f"Profile: {profile.bio}\n" if profile.bio else "") +
         "==================================================\n"
         "This is who writes every post and reply, and how they sound. The\n"
-        "task below only says what to write this time.\n\n"
+        "task below only says what to write this time. Current operator Voice\n"
+        "overrides old examples, learned memories and legacy directives.\n"
+        "Hard rules and publication guards still apply.\n\n"
         + raw
     )
 

@@ -1,4 +1,4 @@
-# @TheAIShrink
+# The SI Maximalist — @thesimaximalist
 
 A persona-driven X account that publishes a few sourced AI posts a day and
 converses through replies, within a ceiling set by the operator.
@@ -109,6 +109,9 @@ The account's persona, written by the Operator in the Account's folder,
 Original, and rendered as one block, under the
 configured handle, at the top of every Original and Reply prompt. A prompt
 says what to write; only the Voice says who writes it.
+The current Voice takes precedence over old examples and learned memories.
+The SI Maximalist covers sourced SI/AI news, AI videos, SI brainrot and fictional
+celebrity parodies; specific clip claims need supplied context.
 _Avoid_: core identity, persona prompt, spine
 
 **Call surface**:
@@ -189,7 +192,7 @@ _Avoid_: replied set, replied cache, dedup file
 **Account**:
 The X account the bot runs, one per process, chosen at start by
 `BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
-handle and language, the domain its prompts name, the Slots and their angles, the feeds, Evergreen
+current handle, display name, bio, historical handles and language, the domain its prompts name, the Slots and their angles, the feeds, Evergreen
 topics and trusted hosts, the relevance filter, its network and niche:
 the accounts the jobs answer, scan, visit or skip, the niche patterns and
 the X searches, and the Relations; and next to it the Voice files and the

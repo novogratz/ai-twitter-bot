@@ -34,7 +34,7 @@ The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
-`.env.example` describes @TheAIShrink with the policy values; every key is
+`.env.example` describes @thesimaximalist with the policy values; every key is
 in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
 (`MAX_ORIGINALS_PER_DAY`, `LIKE_BOT_DAILY_CAP`…) stay commented: their
 default is the policy value, and a line set in `.env` wins over an Account's
@@ -69,7 +69,7 @@ keys and names them.
 One process runs one Account: the Safari lock and `bot.lock` stay global,
 and the state goes to `state/<BOT_ACCOUNT>/`.
 `BOT_ACCOUNT`, in `.env` or the shell, names its folder under `accounts/`;
-unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
+unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle, optional `display_name`, `bio` and `previous_handles`,
 the language of the Originals (`en` or `fr`), the `domain` the editorial and
 Reply prompts name ("Write ONE original AI post"), the Slots and their
 angles, the feeds, Evergreen topics and trusted hosts, the relevance filter,
@@ -114,7 +114,7 @@ each call, and compare a handle with the one read from a status URL.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
   optional `ticker` (case-sensitive) must match a post the reply jobs find;
   `bio` must match the name and bio of a non-Engager the follow quality
-  gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
+  gate judges. @thesimaximalist sets no `ticker`: its niche is SI/AI, including generated videos.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
   it finds without the niche check; the Trend slots and the Startup post run
@@ -553,7 +553,7 @@ too:
 |---|---|---|---|
 | `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written by `account_curator.run_curator_cycle`, not scheduled | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
-| `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
+| `directives.md` | `evolution_store` | Archived rules; no longer injected into prompts | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
 | `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
 | `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
@@ -842,3 +842,13 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
+
+## Identity changes
+
+The SI Maximalist uses `BOT_ACCOUNT=theaishrink` and the same production state.
+Update the current handle, display name and bio in `account.toml`; keep prior
+handles in `previous_handles` so older posts remain our own. Check any `.env`
+`BOT_HANDLE` override too. Do not rename the storage folder or recreate history.
+Profile metadata documents the supplied identity; changing it does not edit X.
+Code and loaded Account configuration take effect on the next explicitly
+requested start or restart.

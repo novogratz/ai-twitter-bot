@@ -38,3 +38,11 @@ def test_reply_like_tweet_ignores_the_display_name():
     assert not x_urls.is_reply_like_tweet(sama, expected_author="sama")
     reposted = {"url": url("someone"), "text": "hi", "author": "sama"}
     assert x_urls.is_reply_like_tweet(reposted, expected_author="sama")
+
+
+def test_author_supports_historical_hosts_without_matching_lookalike_urls():
+    for host in ("x.com", "www.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com"):
+        assert x_urls.author(f"https://{host}/OldHandle/status/123?s=20") == "oldhandle"
+    for url in ("https://notx.com/OldHandle/status/123", "https://example.com/x.com/OldHandle/status/123",
+                "https://x.com.evil.test/OldHandle/status/123", "https://example.com/?next=https://x.com/OldHandle/status/123"):
+        assert x_urls.author(url) == ""

@@ -8,17 +8,24 @@ the reply jobs which scraped tweets are nested replies they should not
 target.
 """
 import re
+from urllib.parse import urlsplit
 from datetime import datetime, timedelta, timezone
 
 # Snowflake epoch: ms since 2010-11-04T01:42:54.657Z.
 _TWITTER_EPOCH_MS = 1288834974657
-_AUTHOR_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/\d")
+_AUTHOR_RE = re.compile(r"^/([A-Za-z0-9_]{1,15})/status/\d")
 _STATUS_RE = re.compile(r"/status/(\d+)")
 
 
 def author(url: str) -> str:
     """Lowercase author handle, or "" when the URL names none (`/i/`)."""
-    m = _AUTHOR_RE.search(url or "")
+    try:
+        parsed = urlsplit(url or "")
+    except ValueError:
+        return ""
+    if parsed.hostname not in ("x.com", "www.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com"):
+        return ""
+    m = _AUTHOR_RE.match(parsed.path)
     if not m or m.group(1).lower() == "i":
         return ""
     return m.group(1).lower()

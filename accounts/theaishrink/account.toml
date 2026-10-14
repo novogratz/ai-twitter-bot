@@ -1,23 +1,27 @@
-# The Account @TheAIShrink: what the bot says and where it looks, never how
+# The Account @thesimaximalist: what the bot says and where it looks, never how
 # much it may do. BOT_ACCOUNT=theaishrink (the default) picks this folder.
 # src/core/account.py reads it once at start: an unknown key or a badly typed
 # value stops the start. Edit it by hand, then restart.
 
-handle = "TheAIShrink"
+handle = "thesimaximalist"
+display_name = "The SI Maximalist"
+bio = "SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos."
+# Keep old URLs recognized as our own without moving production history.
+previous_handles = ["TheAIShrink"]
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
-domain = "AI"
+domain = "SI / super intelligence and AI"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
-trend_angle = "Trending: the AI topic X is talking about right now, told from a trusted source"
+trend_angle = "Trending: SI or AI news, models and video creation, told from a trusted source"
 # Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
 # only news under twelve hours old or an unusually useful source.
 slots = [
-    { clock = "05:00", angle = "Priority: the AI update worth understanding this morning" },
-    { clock = "07:15", angle = "A useful AI workflow with a concrete first step" },
+    { clock = "05:00", angle = "Priority: the SI or AI update worth understanding this morning" },
+    { clock = "07:15", angle = "An AI video or Grok Imagine workflow grounded in supplied evidence" },
     { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
     { clock = "10:00", trend = true },
     { clock = "11:45", angle = "An AI concept explained through a clear example" },
@@ -25,7 +29,7 @@ slots = [
     { clock = "14:00", angle = "A model or tool update and what changes for its users" },
     { clock = "15:00", trend = true },
     { clock = "16:15", angle = "Priority: an evidence-backed take on an AI tradeoff" },
-    { clock = "18:30", angle = "A practical AI idea worth saving or sharing" },
+    { clock = "18:30", angle = "A sharp SI or AI video insight, with playful tech chaos when the evidence fits" },
     { clock = "20:45", angle = "Optional: an exceptional fresh AI update or unusually useful source", exceptional = true },
 ]
 # News items: RSS or Atom feeds, read on a host of trusted_hosts only.
@@ -45,7 +49,7 @@ feeds = [
 trusted_hosts = [
     "openai.com", "blog.google", "deepmind.google", "huggingface.co",
     "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
-    "replicate.com", "the-decoder.com", "arxiv.org",
+    "replicate.com", "the-decoder.com", "arxiv.org", "x.ai", "docs.x.ai",
 ]
 
 # Evergreen topics fill quiet news days, rotated daily; never presented as new.
@@ -121,11 +125,18 @@ title = "Why the evaluation dataset matters as much as the score"
 url = "https://huggingface.co/docs/datasets/about_dataset_features"
 publisher = "Hugging Face docs"
 
+# First-party documentation for video workflows; never presented as breaking news.
+[[editorial.evergreen]]
+topic = "video_generation"
+title = "Grok Imagine video generation: what the documented workflow supports"
+url = "https://docs.x.ai/developers/model-capabilities/video/overview"
+publisher = "Grok Imagine docs"
+
 # Python regular expressions, matched case-insensitively. A news item's title
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+topic = '\b((?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|grok|xai|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -160,11 +171,11 @@ last_interaction = "2026-05-02"
 category = "builder"
 stance = "fond"
 notes = [
-    "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-    "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+    "The Operator likes this account. Discuss its supplied AI and data-center work when relevant.",
+    "Be friendly and specific about relevant SI/AI posts; topic and Reply protections still apply.",
 ]
 feelings = "Warm respect. Treat him as a useful operator sharing real results."
-do = "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity."
+do = "Be playful and specific about supplied AI and data-center claims without inventing results."
 dont = "Do not mock him, his work, his results, or his credibility. Never make him upset."
 
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
@@ -265,19 +276,19 @@ follow_engagers_skip = [
     "zerohedge", "unusual_whales", "cointelegraph",
 ]
 
-# Python regular expressions. AI only (Operator, 2026-09-25): no crypto,
+# Python regular expressions. SI/AI and generated videos (Operator, 2026-10-14): no crypto,
 # markets, space or general tech term, and no word too broad alone (token,
 # coding, agent, meta, google, apple). AI in capitals always matches; any
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|grok|xai|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
 # X search queries.
 [searches]
@@ -286,6 +297,9 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
 # on the Top tab; a result must be on the niche.
 replies = [
+    '"Grok Imagine" OR "AI video" OR "AI generated video" lang:en min_faves:30 -filter:replies',
+    '"super intelligence" OR superintelligence OR "SI brainrot" OR "SI brain rot" lang:en min_faves:30 -filter:replies',
+    '"AI parody" OR "AI brainrot" OR "AI filmmaking" lang:en min_faves:30 -filter:replies',
     '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
     'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
@@ -298,6 +312,7 @@ replies = [
     '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
 ]
 hot_tab = [
+    '"Grok Imagine" OR "AI video" OR "AI brainrot" lang:en min_faves:300 -filter:replies',
     'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
     'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
     '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
@@ -306,6 +321,8 @@ hot_tab = [
 # like_job picks one per cycle, on the Top or the Latest tab, and likes
 # what it finds without the niche check: the query is the only filter.
 likes = [
+    '("Grok Imagine" OR "AI video" OR "AI generated") filter:videos lang:en min_faves:50',
+    '("SI brainrot" OR "SI brain rot" OR "AI parody") filter:videos lang:en min_faves:50',
     'AI datacenter OR AI power demand lang:en min_faves:50',
     'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',
     'Nvidia OR GPU OR AI compute cluster lang:en min_faves:50',
@@ -315,6 +332,7 @@ likes = [
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
+    '"Grok Imagine" OR "AI video" OR "super intelligence" OR superintelligence lang:en min_faves:50 -filter:replies',
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
     'AI lang:en min_faves:200 -filter:replies',
 ]

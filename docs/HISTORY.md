@@ -1,5 +1,21 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — The SI Maximalist identity
+
+2026-10-14 — The Operator replaced the former therapist persona with The SI
+Maximalist, @thesimaximalist. The supplied motto is: "SI Maximalist: SI brain rot,
+Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos." The Account
+creates and publishes AI videos with Grok Imagine; the Operator reports strong
+engagement. Voice, Relations, search prompts, topic matching, video discovery and
+new engagement tags use this identity. News remains sourced, celebrity parodies
+stay explicitly fictional, and details or results of a particular video need
+supplied evidence. Old learned directives cannot restore the previous persona.
+Storage remains `theaishrink`; historical handles remain own posts and production
+history is preserved. Activity windows, protected authors, one Reply per entire
+conversation, caps, pacing and sourcing checks are unchanged. This updates code
+and configuration; it neither starts the bot nor edits the live profile or adds
+automated video generation/uploading.
+
 Archive of the former `CLAUDE.md` / `CODEX.md`, moved here on 2026-09-23.
 Everything below the line predates the editorial policy of 2026-09-20
 ([`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md)), which supersedes it: volumes,

@@ -1,4 +1,4 @@
-"""Like-aggressive bot — like AI infra / asymmetric investing tweets every cycle.
+"""Like posts from the Account's SI/AI, news and video searches.
 
 Why: a like is the cheapest social signal on X. Each like sends a
 notification → the recipient checks their notifs → many click through

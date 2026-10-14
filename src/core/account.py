@@ -81,6 +81,9 @@ class Account:
     folder: str  # absolute: accounts/<name>/, where the Account's other files live
     file: str  # account.toml relative to the project root, for messages
     handle: str
+    display_name: str
+    bio: str
+    previous_handles: tuple
     language: str
     domain: str  # the domain the prompts name: "one original {domain} post"
     editorial: Editorial
@@ -122,7 +125,18 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "replies": dict})
+                 optional={"limits": dict, "relations": dict, "replies": dict,
+                           "display_name": str, "bio": str, "previous_handles": list})
+    if not _HANDLE.fullmatch(top["handle"]):
+        top.fail("handle", "takes an X handle without @")
+    previous = top.items("previous_handles", str) if "previous_handles" in top else []
+    for i, handle in enumerate(previous):
+        if not _HANDLE.fullmatch(handle):
+            top.fail(f"previous_handles[{i}]", "takes an X handle without @")
+    if not top.get("display_name", top["handle"]).strip():
+        top.fail("display_name", "is blank")
+    if len(top.get("bio", "")) > 160:
+        top.fail("bio", "must fit the 160-character X bio")
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -136,6 +150,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     network = _network(top)
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
+        display_name=top.get("display_name", top["handle"]), bio=top.get("bio", ""),
+        previous_handles=tuple(previous),
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
