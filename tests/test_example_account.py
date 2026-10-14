@@ -107,9 +107,14 @@ def test_live_account_reports_reply_only_policy_and_current_windows(dry_run):
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (0, 0, 0)
     assert shown["startup_post"] == "disabled"
     assert shown["slots"] == [] and shown["trend_slots"] == []
-    assert shown["jobs"] == [j for j in PRE_187["jobs"] if j not in {
-        "editorial_job", "pin_job", "replyback_job", "debate_job", "babysit_job", "notify_job"}]
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == PRE_187_BOUNDED
+    assert shown["jobs"] == [
+        "direct_reply_job", "feed_sweep_job", "early_bird_job", "mega_watch_job", "reply_selection_job",
+        "engage_job", "followback_job", "follow_engagers_job", "like_job", "session_refresh_job",
+        "follower_tracker_job", "reach_report_job",
+    ]
+    assert shown["reply_gap_seconds"] == [300, 480]
+    assert shown["ranked_reply_selection"] is True
+    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {**PRE_187_BOUNDED, "MIN_SECONDS_BETWEEN_REPLIES": 300, "REPLY_JITTER_SECONDS": 180}
     assert shown["settings_warnings"] == []
 
 
@@ -123,6 +128,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     shown = dry_run({"BOT_ACCOUNT": "example"})
 
     assert account.current().name == "example"
+    assert shown["ranked_reply_selection"] is False
     assert settings.get("BOT_HANDLE") == "ExampleGardener"
     assert shown["jobs"] == [j for j in PRE_187["jobs"] if j not in {"replyback_job", "debate_job", "babysit_job", "notify_job"}]
     assert shown["trend_slots"] == ["10:00", "15:00"]
@@ -133,7 +139,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
     assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
-                       "LIKE_BOT_DAILY_CAP": 100}
+                       "LIKE_BOT_DAILY_CAP": 100, "MIN_SECONDS_BETWEEN_REPLIES": 300, "REPLY_JITTER_SECONDS": 180}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
     assert os.listdir(project / "state") == ["theaishrink"]
@@ -162,6 +168,7 @@ def test_the_example_operator_files_read(monkeypatch, settings_override):
     shutil.copytree(ROOT / "accounts" / "example", Path(account.ACCOUNTS_DIR) / "example")
     settings_override(BOT_ACCOUNT="example")
     assert account.current().name == "example"
+    assert account.current().replies.ranked_selection is False
     assert respect_list.RESPECT.read() == {"handles": {}}
     wl = follow_policy.load_whitelist()
     assert wl["all"] == set()

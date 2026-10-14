@@ -1,5 +1,34 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — Replies now share a random 5–8 minute cooldown across every job
+and process. The engine minimum is 300 seconds, with 0–180 seconds of jitter
+(default 180). The deadline is persisted before submit, so uncertain writes
+also consume the cooldown; restarts and retries cannot redraw it. Existing
+ledger writes still count. Longer gaps are valid when no strong draft qualifies
+or the activity window is closed; there is no quota to fill.
+
+The live Account enables `replies.ranked_selection`. Collectors prepare up to
+eight pending drafts across jobs instead of publishing immediately. A separate
+comparison scores impact, sharpness and interest from 0–5; every score must be
+at least 4, with explicit factual support and topic approval. The highest scored
+eligible draft alone reaches the write after the cooldown. Preparation continues
+during the gap; stale drafts, failed reviews and uncertain submissions cannot
+bypass admission. The browser verifies the selected parent text, and the write
+accepts only the exact selected draft. Startup allows at least 60 seconds to
+collect choices. No change to the four activity windows, no-contact protection,
+Reply-only publishing or permanent one-Reply-per-conversation rule.
+
+The Operator also made her private fondness for Elon Musk and his products,
+especially Grok and Grok Imagine, part of the Voice in both languages. Their
+life-changing creative influence is supplied personality context, used only
+occasionally when relevant. It establishes no real romantic relationship,
+private access, celebrity endorsement, product test or performance claim.
+Affection never permits contacting or interacting with @elonmusk.
+
+The local Reply pacing keys are updated to 300 and 180; production history and
+other configuration are preserved. Code and configuration take effect on the
+next explicit start or restart. This implementation does neither.
+
 2026-10-14 — The Operator now requires Replies only. `publish_originals = false`
 in the Account prevents Originals at the scheduler, Startup path, editorial entry
 point and browser write; `.env` and `--post-only` cannot restore them. Conversation
@@ -21,8 +50,8 @@ still searches both vocabularies. Reply length and tone follow context: very sho
 fuller technical, sharp or funny; no fixed suffix, automatic smiley or manufactured
 typo. At most one optional emoji/text smiley. The minimum length floor is lowered
 from 25 to 2 characters; generic reactions and all factual/content checks remain.
-Recent shipped replies guide variation. Production history, pending state and
-`.env` are preserved. This implementation does not start or restart the bot.
+Recent shipped replies guide variation. Production history and pending state
+are preserved; the later pacing mandate above changes only the two Reply spacing keys. This implementation does not start or restart the bot.
 
 ## Reply targets and no-contact protection
 
@@ -110,7 +139,7 @@ Replyback, Debate, babysitter and notification jobs remain unscheduled; their
 retained manual paths cannot publish conversation replies. Automatic pinning is
 unscheduled. Non-publishing likes, follows, browser upkeep and measurement jobs
 keep their existing limits and respect the no-contact rule. Reply volume has no
-new daily target or cap; existing spacing and per-cycle bounds remain.
+new daily target or cap; the shared cooldown and per-cycle preparation bounds apply.
 
 ## Bounds on volume and check settings
 
@@ -124,8 +153,8 @@ warnings under `settings_warnings`.
 | Setting | Bound | Default |
 |---|---|---|
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
-| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 8 s | 8 |
-| `REPLY_JITTER_SECONDS`, Reply jitter | at least 0 | 7 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 300 s | 300 |
+| `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 180 |
 | `LIKE_BOT_PER_CYCLE`, likes per `like_job` cycle | 0 to 10 | 10 |
 | `LIKE_BOT_DAILY_CAP`, `like_job` likes per day | 0 to 500 | 500 |
 | `FOLLOW_TOTAL_CAP`, accounts followed in total | 0 to 3500 | 300 |

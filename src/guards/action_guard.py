@@ -111,8 +111,12 @@ def _spacing_gap(action: str) -> float:
     """
     if action not in _SPACING:
         raise ValueError(f"no write spacing for {action!r}")
-    base, jitter = (getattr(config, name) for name in _SPACING[action])
     last = _ledger().last_write(action)
+    return spacing_gap_after(action, last)
+
+
+def spacing_gap_after(action: str, last) -> float:
+    base, jitter = (getattr(config, name) for name in _SPACING[action])
     seed = f"{action}:{last.isoformat() if last else ''}"
     return base + random.Random(seed).uniform(0, jitter)
 
@@ -123,13 +127,17 @@ def seconds_until_allowed(action: str) -> float:
     gap: a ledger row stamped in the future (clock set back, copied ledger)
     must not park a waiting job for hours; can_post still refuses it."""
     gap = _spacing_gap(action)
-    return min(gap, max(0.0, gap - _seconds_since_last(action)))
+    wait = min(gap, max(0.0, gap - _seconds_since_last(action)))
+    if action == REPLY:
+        from . import reply_pacing
+        wait = max(wait, reply_pacing.remaining())
+    return wait
 
 
 def too_soon(action: str) -> str:
     """Why the spacing refuses the next write of `action`, "" when clear."""
     gap = _spacing_gap(action)
-    if _seconds_since_last(action) < gap:
+    if _seconds_since_last(action) < gap or (action == REPLY and seconds_until_allowed(action) > 0):
         return f"too soon since last {action} (need ~{int(gap)}s gap)"
     return ""
 

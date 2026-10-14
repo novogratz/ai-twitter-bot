@@ -26,6 +26,10 @@ def test_voice_grounds_video_claims_and_keeps_parody_fictional():
     assert "creates and publishes si-generated videos with grok imagine" in text
     assert "no comments, responses or follow-ups" in text
     assert "never interact with @elonmusk" in text
+    assert "private fangirl crush on elon musk" in text
+    assert "occasional, playful personality preference" in text
+    assert "never imply a real romance" in text
+    assert "this affection never permits contact" in text
 
 
 def test_legacy_relation_and_conversation_templates_cannot_restore_old_persona():

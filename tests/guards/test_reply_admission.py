@@ -7,6 +7,9 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
+pytestmark = pytest.mark.usefixtures("unranked_account")
+
 from src.guards import (
     action_guard,
     active_hours,

@@ -408,7 +408,7 @@ def decision(jobs, llm, chokepoint, monkeypatch):
 
 @pytest.mark.parametrize("job, author, text", PATHS)
 @pytest.mark.parametrize("answer", [LEGIT, HEDGE, *SKIPS])
-def test_each_job_decides_on_a_skip_as_before_the_generator(decision, job, author, text, answer):
+def test_each_job_decides_on_a_skip_as_before_the_generator(unranked_account, decision, job, author, text, answer):
     """Issue #155 adds the hard rules and changes nothing else that ships.
     Two deliberate exceptions, logged in docs/HISTORY.md 2026-09-23: a quoted
     "SKIP" on debate and Graphseo used to reach the chokepoint, and is now a

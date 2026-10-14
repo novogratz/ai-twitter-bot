@@ -227,6 +227,16 @@ def settings_override():
         yield override
 
 
+@_pytest.fixture
+def unranked_account(monkeypatch):
+    """Exercise the retained engine path for Accounts without ranked selection."""
+    from dataclasses import replace
+    from src.core import account
+    loaded = account.current()
+    monkeypatch.setattr(account, "current", lambda: replace(
+        loaded, replies=replace(loaded.replies, ranked_selection=False)))
+
+
 @_pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_teardown(item, nextitem):
     """config serves its settings through a module `__getattr__`. Undoing

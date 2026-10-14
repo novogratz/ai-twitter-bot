@@ -70,6 +70,7 @@ class Relevance:
 @dataclass(frozen=True)
 class Replies:
     protected_handles: frozenset
+    ranked_selection: bool = False
 
     def is_protected(self, handle: str) -> bool:
         return handle.strip().lstrip("@").lower() in self.protected_handles
@@ -220,12 +221,12 @@ _SEARCHES = ("replies", "hot_tab", "likes", "trending")
 
 def _replies(top) -> Replies:
     table = _Table(top.file, "replies", top.get("replies", {}), required={},
-                   optional={"protected_handles": list})
+                   optional={"protected_handles": list, "ranked_selection": bool})
     handles = table.items("protected_handles", str) if "protected_handles" in table else []
     for i, handle in enumerate(handles):
         if not _HANDLE.fullmatch(handle):
             table.fail(f"protected_handles[{i}]", f"takes an X handle without @, not {handle!r}")
-    return Replies(frozenset(handle.lower() for handle in handles))
+    return Replies(frozenset(handle.lower() for handle in handles), table.get("ranked_selection", False))
 
 
 @dataclass(frozen=True)

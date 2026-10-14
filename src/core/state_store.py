@@ -43,6 +43,7 @@ import json
 import os
 import tempfile
 import threading
+from contextlib import contextmanager
 
 from . import account, settings
 from .json_safety import sanitize_for_json
@@ -195,6 +196,35 @@ class StatePath(os.PathLike):
 
 GUARDED = "guarded"
 DISPOSABLE = "disposable"
+
+_PROCESS_LOCKS: dict = {}
+_PROCESS_LOCKS_GUARD = threading.Lock()
+
+
+@contextmanager
+def process_lock(path: StatePath, *, blocking: bool = True):
+    """Thread and process exclusion for a shared state transaction; yield ownership."""
+    with _PROCESS_LOCKS_GUARD:
+        mutex = _PROCESS_LOCKS.setdefault(os.fspath(path), threading.Lock())
+    acquired = mutex.acquire(blocking=blocking)
+    if not acquired:
+        yield False
+        return
+    try:
+        with open(path, "a+") as handle:
+            try:
+                fcntl.flock(handle, fcntl.LOCK_EX | (0 if blocking else fcntl.LOCK_NB))
+            except BlockingIOError:
+                yield False
+                return
+            try:
+                yield True
+            finally:
+                fcntl.flock(handle, fcntl.LOCK_UN)
+    except OSError as exc:
+        raise StateUnreadable(f"Cannot lock {path.name}; refusing the operation") from exc
+    finally:
+        mutex.release()
 
 # One file, one policy and one lock: two modules declaring the same file
 # must agree, and share its lock.

@@ -505,6 +505,12 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
     if (not sid or not expected or config.is_own_handle(expected)
             or is_blocked_account(expected) or account.current().replies.is_protected(expected)):
         return False
+    expected_parent = None
+    if account.current().replies.ranked_selection:
+        from ..core import reply_queue
+        expected_parent = reply_queue.selected_parent(url)
+        if expected_parent is None:
+            return False
     js = r"""(() => {
       const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__, blocked = __BLOCKED__;
       const articles = [...document.querySelectorAll('article')];
@@ -520,6 +526,11 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
       const article = articles[index], link = permalink(article);
       if (status(link)[1].toLowerCase() !== author) return 'refused';
       const text = own(article, '[data-testid="tweetText"]')[0]?.innerText || '';
+      const expectedParent = __PARENT__;
+      const normalize = s => s.replace(/\s+/g, ' ').trim();
+      if (expectedParent !== null && normalize(text) !== normalize(expectedParent)
+          && !(expectedParent.length === 4000 && normalize(text).startsWith(normalize(expectedParent))))
+        return 'refused';
       const mentions = text.match(/@[A-Za-z0-9_]+/g) || [];
       if (mentions.some(h => blocked.some(b => h.toLowerCase().replace(/[\s_\-@]/g, '').includes(b))))
         return 'refused';
@@ -531,10 +542,11 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
       const button = own(article, '[data-testid="reply"]')[0];
       if (!button) return 'refused';
       if (click) button.click();
-      return JSON.stringify({url: link.href, clicked: click});
+      return JSON.stringify({url: link.href, text: text, clicked: click});
     })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
     js = js.replace("__CLICK__", "true" if click else "false").replace(
         "__SELF__", json.dumps(sorted(config.own_handles())))
+    js = js.replace("__PARENT__", json.dumps(expected_parent))
     from ..guards.reply_admission import _normalise
     js = js.replace("__BLOCKED__", json.dumps([
         _normalise(h) for h in (*config.BLOCKLIST, *account.current().network.blocked_accounts) if _normalise(h)]))
@@ -544,6 +556,10 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
         return False
     if not isinstance(opened, dict) or not isinstance(opened.get("url"), str):
         return False
+    if account.current().replies.ranked_selection:
+        from ..core import reply_queue
+        if not isinstance(opened.get("text"), str) or not reply_queue.matches_parent(url, opened["text"]):
+            return False
     return (x_urls.status_id(opened["url"]) == sid
             and x_urls.author(opened["url"]) == expected
             and not account.current().replies.is_protected(x_urls.author(opened["url"]))
@@ -661,6 +677,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
+            from ..guards import reply_pacing
+            if not reply_pacing.reserve(tweet_url):
+                log.info("[REPLY] Another submission took the pacing window.")
+                return WriteOutcome.REFUSED
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True

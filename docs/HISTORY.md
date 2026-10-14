@@ -1,5 +1,36 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Paced, independently ranked Replies and occasional Grok affection
+
+2026-10-14 — Replies now share a random 5–8 minute cooldown across every job
+and process. The engine minimum is 300 seconds, with 0–180 seconds of jitter
+(default 180). The deadline is persisted before submit, so uncertain writes
+also consume the cooldown; restarts and retries cannot redraw it. Existing
+ledger writes still count. Longer gaps are valid when no strong draft qualifies
+or the activity window is closed; there is no quota to fill.
+
+The live Account enables `replies.ranked_selection`. Collectors prepare up to
+eight pending drafts across jobs instead of publishing immediately. A separate
+comparison scores impact, sharpness and interest from 0–5; every score must be
+at least 4, with explicit factual support and topic approval. The highest scored
+eligible draft alone reaches the write after the cooldown. Preparation continues
+during the gap; stale drafts, failed reviews and uncertain submissions cannot
+bypass admission. The browser verifies the selected parent text, and the write
+accepts only the exact selected draft. Startup allows at least 60 seconds to
+collect choices. No change to the four activity windows, no-contact protection,
+Reply-only publishing or permanent one-Reply-per-conversation rule.
+
+The Operator also made her private fondness for Elon Musk and his products,
+especially Grok and Grok Imagine, part of the Voice in both languages. Their
+life-changing creative influence is supplied personality context, used only
+occasionally when relevant. It establishes no real romantic relationship,
+private access, celebrity endorsement, product test or performance claim.
+Affection never permits contacting or interacting with @elonmusk.
+
+The local Reply pacing keys are updated to 300 and 180; production history and
+other configuration are preserved. Code and configuration take effect on the
+next explicit start or restart. This implementation does neither.
+
 ## 2026-10-14 — Replies only, SI wording and complete no-contact protection
 
 2026-10-14 — The Operator now requires Replies only. `publish_originals = false`

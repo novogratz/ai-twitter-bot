@@ -30,6 +30,7 @@ def test_current_identity_keeps_the_storage_key_and_editorial_bounds():
     assert ed.trend_clocks == {"10:00", "13:00", "15:00"}
     assert ed.exceptional_clocks == {"20:45"}
     assert loaded.replies.is_protected("elonmusk")
+    assert loaded.replies.ranked_selection is True
     assert any(t.topic == "video_generation" and t.url.startswith("https://docs.x.ai/") for t in ed.evergreen)
     assert {"x.ai", "docs.x.ai"} <= ed.trusted_hosts
     assert loaded.relevance.off_topic.search("Bitcoin giveaway")
@@ -191,7 +192,7 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     # The Operator's bounds of #201.
     ("FOLLOW_TOTAL_CAP = 5000", "FOLLOW_TOTAL_CAP", 3500),
     ("LIKE_BOT_DAILY_CAP = 1800", "LIKE_BOT_DAILY_CAP", 500),
-    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 8),
+    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 300),
     ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
     ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
     ("FOLLOWBACK_CAP = -1", "FOLLOWBACK_CAP", 0),

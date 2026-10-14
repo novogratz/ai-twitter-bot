@@ -43,6 +43,7 @@ class Refusal(Enum):
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
+    UNSELECTED = "reply has not won independent draft comparison"
     TEXT = "text refused"
     RESPECTED_ACCOUNT = "text names a Respected account"
 
@@ -100,6 +101,19 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
+    verdict = judge_text(author, draft)
+    if not verdict:
+        return verdict
+    if account.current().replies.ranked_selection:
+        from ..core import reply_queue
+        if not reply_queue.is_selected(url, verdict.text):
+            return Verdict(Refusal.UNSELECTED, "only the selected, reviewed draft may publish", author)
+    return verdict
+
+
+def judge_text(author: str, draft: str) -> Verdict:
+    """Validate a prepared draft without waiting for its future publishing slot."""
+
     # Every Reply loses its dashes here, including paths that skip humanize().
     text = outgoing_text.normalize(humanizer.strip_dashes(draft))
     if len(text) > content_guard.REPLY_MAX_CHARS:
@@ -113,7 +127,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
     if reply_style.reaction_count(text) > 1:
         return Verdict(Refusal.TEXT, "at most one optional emoji or text smiley", author)
-    if any(is_blocked_account(h) for h in re.findall(r"(?<!\w)@([A-Za-z0-9_]{1,15})\b", text)):
+    if mentions_blocked(text):
         return Verdict(Refusal.TEXT, "reply mentions an account protected from interactions", author)
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
@@ -123,6 +137,10 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if why:
         return Verdict(Refusal.RESPECTED_ACCOUNT, why, author)
     return Verdict(None, author=author, text=text)
+
+
+def mentions_blocked(text: str) -> bool:
+    return any(is_blocked_account(h) for h in re.findall(r"(?<!\w)@([A-Za-z0-9_]{1,15})\b", text))
 
 
 def _normalise(handle: str) -> str:

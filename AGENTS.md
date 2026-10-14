@@ -6,6 +6,35 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — Replies now share a random 5–8 minute cooldown across every job
+and process. The engine minimum is 300 seconds, with 0–180 seconds of jitter
+(default 180). The deadline is persisted before submit, so uncertain writes
+also consume the cooldown; restarts and retries cannot redraw it. Existing
+ledger writes still count. Longer gaps are valid when no strong draft qualifies
+or the activity window is closed; there is no quota to fill.
+
+The live Account enables `replies.ranked_selection`. Collectors prepare up to
+eight pending drafts across jobs instead of publishing immediately. A separate
+comparison scores impact, sharpness and interest from 0–5; every score must be
+at least 4, with explicit factual support and topic approval. The highest scored
+eligible draft alone reaches the write after the cooldown. Preparation continues
+during the gap; stale drafts, failed reviews and uncertain submissions cannot
+bypass admission. The browser verifies the selected parent text, and the write
+accepts only the exact selected draft. Startup allows at least 60 seconds to
+collect choices. No change to the four activity windows, no-contact protection,
+Reply-only publishing or permanent one-Reply-per-conversation rule.
+
+The Operator also made her private fondness for Elon Musk and his products,
+especially Grok and Grok Imagine, part of the Voice in both languages. Their
+life-changing creative influence is supplied personality context, used only
+occasionally when relevant. It establishes no real romantic relationship,
+private access, celebrity endorsement, product test or performance claim.
+Affection never permits contacting or interacting with @elonmusk.
+
+The local Reply pacing keys are updated to 300 and 180; production history and
+other configuration are preserved. Code and configuration take effect on the
+next explicit start or restart. This implementation does neither.
+
 2026-10-14 — The Operator now requires Replies only. `publish_originals = false`
 in the Account prevents Originals at the scheduler, Startup path, editorial entry
 point and browser write; `.env` and `--post-only` cannot restore them. Conversation
@@ -27,13 +56,13 @@ still searches both vocabularies. Reply length and tone follow context: very sho
 fuller technical, sharp or funny; no fixed suffix, automatic smiley or manufactured
 typo. At most one optional emoji/text smiley. The minimum length floor is lowered
 from 25 to 2 characters; generic reactions and all factual/content checks remain.
-Recent shipped replies guide variation. Production history, pending state and
-`.env` are preserved. This implementation does not start or restart the bot.
+Recent shipped replies guide variation. Production history and pending state
+are preserved; the later pacing mandate above changes only the two Reply spacing keys. This implementation does not start or restart the bot.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the current source of
 truth. This mandate supersedes the September 26 snapshot's publishing behavior
 and the October 13 activity windows. The rollback history is in `docs/HISTORY.md`.
-Replies retain their existing spacing and no daily quota; likes and follows
+Replies use the shared 5–8 minute cooldown and independent comparison, with no daily quota; likes and follows
 retain their existing caps and exclude Blocked accounts. Quotes, reposts,
 self-recycling and threads remain disabled. The Account remains The SI Maximalist:
 SI news, Grok Imagine videos, brainrot and clearly fictional celebrity parodies.
@@ -73,9 +102,11 @@ Account.
 | Model calls: the Call surfaces, each with its model setting, provider setting and CLI options (`SURFACES`; callers name a surface, only a Relation's CLI overrides its provider), provider adapters, the one fallback ladder (no fallback unless `LLM_FALLBACK_CLI` names one; an unknown provider fails the call and runs nothing), the CLI model a model setting gives the provider called, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
+| Draft queue, independent comparison and one selected publication | `src/core/reply_queue.py`, `src/replies/reply_selection.py` |
+| Persistent global Reply cooldown, including uncertain submits | `src/guards/reply_pacing.py` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
-| Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
+| Reply pipeline: admission before generation, shared preparation queue for ranked Accounts, write and log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
 | Follow run: one cycle's follows, Followed accounts skipped whatever the case, each handle tried once, no call past CAP_REACHED, bedtime and `StateUnreadable` raised, any other error one pick, counted and raised once the job saved its state; follow_engagers uses it | `src/account/follow_run.py` |
 | Toronto clock, bedtime checks | `src/guards/active_hours.py` |

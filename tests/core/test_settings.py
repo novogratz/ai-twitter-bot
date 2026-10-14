@@ -156,7 +156,7 @@ def test_a_stricter_value_is_kept_without_warning(fresh):
 # bound, a value stricter than the default.
 OPERATOR_BOUNDS = [
     ("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "9", 4, 2),
-    ("MIN_SECONDS_BETWEEN_REPLIES", "0", 8, 30),
+    ("MIN_SECONDS_BETWEEN_REPLIES", "0", 300, 600),
     ("REPLY_JITTER_SECONDS", "-5", 0, 3),
     ("LIKE_BOT_PER_CYCLE", "22", 10, 5),
     ("LIKE_BOT_DAILY_CAP", "1800", 500, 200),
@@ -249,7 +249,7 @@ def test_the_dry_run_shows_every_bounded_value_and_the_warnings(monkeypatch, set
     import main
     monkeypatch.setattr(settings, "_warnings", ["LIKE_BOT_DAILY_CAP=1800 is above its ceiling: using 500."])
     monkeypatch.setattr(sys, "argv", ["main.py", "--dry-run"])
-    settings_override(LIKE_BOT_DAILY_CAP=200, MIN_SECONDS_BETWEEN_REPLIES=30)
+    settings_override(LIKE_BOT_DAILY_CAP=200, MIN_SECONDS_BETWEEN_REPLIES=600)
     main.main()
     shown = json.loads(capsys.readouterr().out)
     bounded = shown["bounded_settings"]
@@ -257,7 +257,7 @@ def test_the_dry_run_shows_every_bounded_value_and_the_warnings(monkeypatch, set
                             if s.floor is not None or s.ceiling is not None}
     assert {name for name, *_ in OPERATOR_BOUNDS} <= set(bounded)
     assert bounded["LIKE_BOT_DAILY_CAP"] == {"value": 200, "floor": 0, "ceiling": 500}
-    assert bounded["MIN_SECONDS_BETWEEN_REPLIES"] == {"value": 30, "floor": 8}
+    assert bounded["MIN_SECONDS_BETWEEN_REPLIES"] == {"value": 600, "floor": 300}
     assert bounded["BAN_SHORT_TERM_PRICE_TARGETS"] == {"value": True, "floor": True}
     assert shown["settings_warnings"] == ["LIKE_BOT_DAILY_CAP=1800 is above its ceiling: using 500."]
 

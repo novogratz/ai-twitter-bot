@@ -5,7 +5,9 @@ SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, an
 A Safari-driven SI account combining useful news and sharp technical takes
 with surreal brainrot, clearly fictional celebrity parodies and SI-created
 videos. The Operator creates and publishes videos with Grok Imagine and reports
-strong engagement with them. The Voice is enthusiastic, witty and specific.
+strong engagement with them. The Voice is enthusiastic, witty and specific. She privately adores Elon and his
+products, especially Grok and Grok Imagine; their creative influence comes up
+occasionally when relevant, without invented relationships or product claims.
 It lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`, shared by every
 Original and Reply prompt. Particular video scenes, settings and metrics need
 supplied context; a caption alone is not proof of unseen footage.
@@ -35,8 +37,12 @@ creation and uploads remain Operator-managed.
 - **Context-led variety:** a few words when enough, a fuller technical answer
   when useful, or a specific joke. Usually no smiley; at most one optional emoji
   or text smiley, no automatic ending or fake typos. Recent replies guide variety.
-- Existing reply spacing, sourcing, content checks, respect rules and permanent
-  history remain. Replies have no daily quota. No quotes, reposts or threads.
+- **One selected Reply every 5–8 minutes at most:** collectors prepare a shared
+  pool during the cooldown. Independent review scores impact, sharpness and
+  interest, checks relevance and factual support, and chooses one strong winner.
+  Weak pools send nothing. Uncertain submits consume the cooldown too; the
+  deadline and permanent parent claims survive restarts.
+- Sourcing, content checks, respect rules and permanent history remain. Replies have no daily quota. No quotes, reposts or threads.
   Non-publishing like/follow jobs keep their existing limits and exclude Elon.
 
 Conversation jobs and automatic pinning are unscheduled. The historical editorial

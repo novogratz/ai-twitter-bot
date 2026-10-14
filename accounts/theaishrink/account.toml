@@ -190,6 +190,7 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 # a display name, and case-insensitively unless a comment says otherwise.
 
 [replies]
+ranked_selection = true
 # Operator 2026-10-13: never answer this author's posts, comments or follow-ups.
 protected_handles = ["elonmusk"]
 
