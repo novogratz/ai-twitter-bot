@@ -14,6 +14,7 @@ TTL = timedelta(minutes=30)
 REVIEW_TTL = timedelta(minutes=10)
 STATUSES = {"preparing", "ready", "reviewed", "rejected", "selected", "attempted"}
 DIMENSIONS = ("impact", "sharpness", "interest")
+VERDICTS = ("grounded", "on_topic", "positive")
 
 
 def _stamp(value):
@@ -27,10 +28,12 @@ def _stamp(value):
 
 
 def _checked_review(review):
+    keys = {*DIMENSIONS, *VERDICTS, "support", "reason", "reviewed_at"}
     if (not isinstance(review, dict)
-            or set(review) != {*DIMENSIONS, "grounded", "on_topic", "support", "reason", "reviewed_at"}
+            # A saved pre-positivity review remains readable, but never approved.
+            or set(review) not in (keys, keys - {"positive"})
             or any(type(review.get(k)) is not int or not 0 <= review[k] <= 5 for k in DIMENSIONS)
-            or any(type(review.get(k)) is not bool for k in ("grounded", "on_topic"))
+            or any(type(review[k]) is not bool for k in VERDICTS if k in review)
             or any(not isinstance(review.get(k), str) or not review[k].strip() for k in ("support", "reason"))):
         raise StateUnreadable("Reply queue has an invalid review")
     _stamp(review["reviewed_at"])
@@ -104,7 +107,7 @@ def approved(row) -> bool:
         return False
     _checked_review(review)
     age = active_hours.now_local() - _stamp(review["reviewed_at"])
-    return (timedelta(0) <= age < REVIEW_TTL and review["grounded"] and review["on_topic"]
+    return (timedelta(0) <= age < REVIEW_TTL and all(review.get(key) is True for key in VERDICTS)
             and all(review[key] >= 4 for key in DIMENSIONS))
 
 

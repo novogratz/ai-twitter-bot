@@ -559,7 +559,10 @@ collectors at least 60 seconds. During a cooldown it waits until the final 90
 seconds to request an independent comparison on `Surface.REPLY_REVIEW`, using
 the Reply model/provider settings. Strict JSON requires exactly one review per
 supplied ID. Impact, sharpness and interest must each score at least 4/5, with
-explicit factual support and topic approval. A model failure or malformed
+explicit factual support, topic approval and `positive=true`. Kindness covers
+every person and product: a clever insult, sarcastic dig or negative take fails
+regardless of score. Existing reviews missing `positive` require fresh review;
+selected rows without it cannot pass the write. A model failure or malformed
 comparison authorizes nothing. Reviews expire after ten minutes.
 
 When the shared cooldown is clear, the selector chooses the approved draft with

@@ -1,8 +1,8 @@
 """Reply agent: finds tweets from target influencers and generates witty replies.
 
 Language strategy: reply in the parent post's own language
-(English replies for English tweets, French for French). Tone: troll the IDEA, never
-the person. Make influencers laugh with us, not feel attacked.
+(English replies for English tweets, French for French). Tone: kind, positive
+and useful, with gentle humor when it fits the post.
 """
 import json
 import re
@@ -34,9 +34,11 @@ Never select our current or historical handles: {own_handles}.
 Only standalone originals qualify. No comments, replies, conversation follow-ups,
 quotes of our own posts, or previously answered posts. One Reply per conversation.
 
-Read the actual parent text. Add one grounded observation, an apt punchline or
+Read the actual parent text. Add one grounded observation, a gentle punchline or
 a useful answer to a serious question. Avoid generic praise, forced jokes,
 unsourced numbers, artificial outrage and promises to follow or engage.
+Stay positive, humble and encouraging toward everyone and every product.
+Never insult, roast or use backhanded compliments. Skip if kindness requires inventing facts.
 Match the parent's language; do not force French references into English Replies.
 Vary length and tone with context, up to 278 characters. No hashtags or promotional plugs.
 Usually use no smiley; at most one optional emoji or text smiley when it fits.

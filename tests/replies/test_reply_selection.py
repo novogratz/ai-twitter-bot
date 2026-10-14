@@ -36,7 +36,7 @@ def stage(handle="builder", n=1, text=TEXT):
 
 
 def review(score=4, **overrides):
-    return dict(impact=score, sharpness=score, interest=score, grounded=True, on_topic=True,
+    return dict(impact=score, sharpness=score, interest=score, grounded=True, on_topic=True, positive=True,
                 support="The parent explicitly identifies memory bandwidth.",
                 reason="A precise, useful answer to this parent.", **overrides)
 
@@ -110,6 +110,7 @@ def test_startup_collects_choices_then_publishes_the_best_one(clock, reviewer, p
 
 @pytest.mark.parametrize("bad", [
     {"impact": 3}, {"sharpness": 3}, {"interest": 3}, {"grounded": False}, {"on_topic": False},
+    {"positive": False},
 ])
 def test_no_weak_or_unsupported_draft_is_forced_when_the_slot_is_due(clock, reviewer, publisher, bad):
     sid = stage()
@@ -125,6 +126,9 @@ def test_no_weak_or_unsupported_draft_is_forced_when_the_slot_is_due(clock, revi
     json.dumps({"123": {**review(), "impact": True}}),
     json.dumps({"123": {**review(), "support": ""}}),
     json.dumps({"123": {**review(), "interest": 6}}),
+    json.dumps({"123": {**review(), "positive": "true"}}),
+    json.dumps({"123": {**review(), "positive": None}}),
+    json.dumps({"123": {k: v for k, v in review().items() if k != "positive"}}),
 ])
 def test_comparison_rejects_missing_duplicate_or_malformed_scores(response):
     with pytest.raises((ValueError, TypeError)):
@@ -269,4 +273,52 @@ def test_final_write_refuses_unselected_text_before_browser(clock, monkeypatch, 
     sid = stage()
     monkeypatch.setattr(twitter_client, "_activate_or_abort", lambda *a: pytest.fail("unreviewed browser write"))
     assert twitter_client.reply_to_tweet(reply_queue.ready()[sid]["url"], TEXT) is WriteOutcome.REFUSED
+    assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}
+
+
+@pytest.mark.parametrize("unkind", [
+    "Great, another useless model.",
+    "Not bad for someone who barely understands batching.",
+])
+def test_an_unkind_high_score_cannot_beat_a_kind_draft(clock, reviewer, publisher, unkind):
+    rejected = stage("one", 1, unkind)
+    accepted = stage("two", 2, "Batching makes better use of that memory bandwidth.")
+    reviewer[1][rejected] = {**review(5), "positive": False, "reason": "A put-down instead of encouragement."}
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 1
+    assert x_urls.status_id(publisher[0][0]) == accepted
+    assert reply_queue.QUEUE.read()[rejected]["status"] == "rejected"
+    prompt, options = reviewer[0][0]
+    assert "backhanded" in prompt and "positive=true ONLY" in prompt
+    assert "Positive tone never excuses an unsupported claim" in prompt
+    assert "positive" in options["profile"].schema["properties"][rejected]["required"]
+
+
+def test_legacy_review_requires_positive_reapproval(clock, reviewer, publisher):
+    sid = stage()
+    data = reply_queue.QUEUE.read()
+    legacy = {k: v for k, v in review(5).items() if k != "positive"}
+    data[sid].update(status="reviewed", review={**legacy, "reviewed_at": clock[0].isoformat()})
+    reply_queue.QUEUE.write(data)
+    assert not reply_queue.approved(reply_queue.ready()[sid])
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 1
+    assert len(reviewer[0]) == len(publisher) == 1
+    assert reply_queue.QUEUE.read()[sid]["review"]["positive"] is True
+
+
+@pytest.mark.parametrize("positive", [False, None])
+def test_saved_selected_draft_cannot_bypass_positive_gate(clock, monkeypatch, memory_ledger, positive):
+    sid = stage()
+    data = reply_queue.QUEUE.read()
+    verdict = {**review(5), "positive": positive, "reviewed_at": clock[0].isoformat()}
+    if positive is None:
+        del verdict["positive"]  # A selection saved by the previous release.
+    data[sid].update(status="selected", review=verdict, selected_at=clock[0].isoformat())
+    reply_queue.QUEUE.write(data)
+    before = Path(reply_queue.QUEUE.path).read_bytes()
+    monkeypatch.setattr(twitter_client, "_activate_or_abort", lambda *a: pytest.fail("unapproved browser write"))
+    assert twitter_client.reply_to_tweet(data[sid]["url"], TEXT) is WriteOutcome.REFUSED
+    assert reply_queue.ready() == {}  # No automatic retry of a saved selection.
+    assert Path(reply_queue.QUEUE.path).read_bytes() == before
     assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}

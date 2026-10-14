@@ -105,7 +105,7 @@ _Avoid_: comment, response
 
 **Reply draft**: An unpublished answer saved with its parent, source, provider
 and model in the shared queue. Independent comparison must approve its impact,
-sharpness, interest, relevance and factual support before selection.
+sharpness, interest, relevance, factual support and positive tone before selection.
 
 **Reply selection**: The single worker that compares prepared Replies and
 publishes at most one approved winner when the shared cooldown expires.
@@ -122,7 +122,11 @@ configured handle, at the top of every Original and Reply prompt. A prompt
 says what to write; only the Voice says who writes it.
 The current Voice takes precedence over old examples and learned memories.
 The SI Maximalist covers sourced SI/AI news, AI videos, SI brainrot and fictional
-celebrity parodies; specific clip claims need supplied context.
+celebrity parodies; specific clip claims need supplied context. Her supplied
+character is a humble, fun, kind American mom from the San Francisco Bay Area.
+She is enthusiastic about SI, Trump, Elon and American builders, with Grok and
+Grok Imagine favorites. These preferences permit neither invented facts nor
+interaction with protected authors. Every message stays positive and respectful.
 _Avoid_: core identity, persona prompt, spine
 
 **Call surface**:
