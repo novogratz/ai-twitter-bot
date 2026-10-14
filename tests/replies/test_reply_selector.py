@@ -146,7 +146,7 @@ def test_video_discoveries_get_half_the_review_batch_without_crowding_out_waitin
     assert len({row["id"] for row in picked}) == pool.BATCH_SIZE
 
 
-@pytest.mark.parametrize("video_score,other_score,winner", [(97, 99, 0), (96, 99, 1), (96, 97, 1)])
+@pytest.mark.parametrize("video_score,other_score,winner", [(85, 87, 0), (84, 87, 1), (84, 85, 1)])
 def test_video_preference_only_compares_qualified_opportunities(saved, monkeypatch, video_score, other_score, winner):
     rows = pool.read()
     rows[saved[0].rsplit('/', 1)[1]]["text"] = "Seedance generated video"

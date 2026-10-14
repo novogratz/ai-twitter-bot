@@ -13,6 +13,11 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
 
 ## Current publishing policy
 
+**2026-10-13: Reply opportunities now qualify from 85/100.** A useful,
+post-specific observation or apt original joke can pass; exceptional work earns
+higher scores. The ten-per-day cap, Elon protection, topic/evidence checks,
+standalone parents, pacing and permanent duplicate protection remain.
+
 - **Nominal daily hours: 05:00–10:00, 12:00–13:00 and 16:45–23:00 America/Toronto.**
   Each start varies by up to ten minutes each day; closing times are fixed.
   Daily times survive restarts, and daylight saving is handled automatically.
@@ -27,7 +32,7 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   Reply scans save posts to a shared pool; a one-minute selector chooses among them
   across the last **24 hours**, including the frequent priority-profile scans;
   there is no 4-, 15- or 18-minute post-age cutoff. It
-  drafts at most one eligible candidate explicitly judged on-topic and scoring at least 97/100. Every reply passes Reply admission before generation (before sending for
+  drafts at most one eligible candidate explicitly judged on-topic and scoring at least 85/100. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
   author handle are refused. Every reply prompt carries the Voice, the

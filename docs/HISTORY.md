@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+## October 13, 2026 — lower the Reply opportunity bar
+
+After automatic selection resumed, the 97/100 opportunity threshold rejected
+most posts. The Operator explicitly requested a lower bar. The live Account
+now accepts useful, post-specific opportunities from 85/100, and the scoring
+prompt reserves higher marks for unusually strong or exceptional opportunities.
+The engine allows 85–100, preserving stricter omitted defaults and the ordering
+between priority and other thresholds. The ten-per-day cap, protected authors,
+topic/evidence checks, standalone parents, pacing and permanent deduplication
+remain intact.
+
 ## October 13, 2026 — repeated IDs stalled comparison
 
 The local model returned eight reviews for the first post ID and none for the

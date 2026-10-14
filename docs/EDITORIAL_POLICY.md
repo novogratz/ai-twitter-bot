@@ -1,5 +1,11 @@
 # Editorial policy — October 13, 2026
 
+Latest Operator direction, 2026-10-13: lower the Reply opportunity threshold
+from 97 to 85/100. A useful, post-specific observation or apt original joke
+can qualify; exceptional opportunities receive higher scores. Ten/day, the
+Elon block, topic and factual checks, standalone parents, pacing and permanent
+duplicate protection remain unchanged.
+
 Operator, 2026-10-13: **never reply to @elonmusk**, whether the target is his
 original post, comment, response or conversation follow-up. This supersedes
 every earlier instruction to prioritize his posts for Replies. The Account's
@@ -10,7 +16,7 @@ opened post must expose its own author and status ID, matching the requested
 URL; quoted posts cannot supply that identity. Native permalink anchors remain
 valid even with `role="link"`; only quoted-content wrappers are excluded. Unreadable or misattributed
 targets are refused before liking the parent or opening the Reply composer.
-Other eligible authors still require 97/100. Likes, follows, reposts and Voice
+Other eligible authors now require 85/100. Likes, follows, reposts and Voice
 keep their existing rules. Code and Account changes take effect on the next
 explicitly requested start or restart; this change does not restart the bot.
 
@@ -47,11 +53,11 @@ reviewed posts. The schema fixes the response count and permits only supplied
 IDs; incomplete or token-truncated output cannot approve a candidate. A failed
 comparison refresh does not invalidate an existing explicit approval less than
 one hour old. Reload the pool and apply every normal check before using it.
-The engine permits thresholds of at least 92/100 for priority authors and
-97/100 for others. `[replies]` in the Account stores priority and protected
-handles and can tighten these thresholds. This Account has no Reply priority
-authors, protects Elon from every Reply and requires 97/100 for all eligible
-authors. Topic and evidence rules still apply.
+The engine permits thresholds of at least 85/100 for both priority and other
+authors; omitted settings retain defaults of 92 and 97. `[replies]` in the
+Account stores priority and protected handles and can tighten these thresholds.
+This Account has no Reply priority authors, protects Elon from every Reply
+and requires 85/100 for all eligible authors. Topic and evidence rules still apply.
 Old cached scores are rechecked against the current threshold before drafting.
 The ten allowances accrue across the active windows; unused budget never
 forces a Reply. Shipped and ambiguous submissions from earlier today count.
@@ -170,7 +176,7 @@ All searches receive crypto exclusions; declared topic queries are not duplicate
 inside a second topic expression. Ad-hoc queries receive a compact topic scope. Direct discovery
 rotates one priority profile and three Top queries by default; early-bird scans
 two profiles and mega-watch one. The Reply selector has a dedicated worker and
-keeps its one-minute cadence, one candidate per cycle and Account-specific 92/97 approval thresholds.
+keeps its one-minute cadence, one candidate per cycle and Account-specific approval thresholds (85/100 for the live Account).
 
 Saved tracked handles still require current topic evidence. A new discovery needs
 fresh explicit topic approval in the shared pool; legacy saved handle lists alone
@@ -205,7 +211,7 @@ disabled. Existing following relationships are not automatically removed.
 
 Every discovery is saved. The shared pool rejects off-niche text before model
 selection and rechecks older saved candidates. URLs and handles are stripped
-before matching. Selection requires a boolean `on_topic=true` and at least the author's 92/97 threshold;
+before matching. Selection requires a boolean `on_topic=true` and at least the author's configured threshold (85/100 for the live Account);
 a negative topic verdict forces the score to zero, and an absent or malformed
 verdict cancels the review. Cached scores without a topic verdict cannot win.
 The actual opened post is checked again for standalone status and niche text
@@ -268,7 +274,7 @@ checked against primary references including [Seedance](https://seed.bytedance.c
 Priority authors lead each eight-post Reply comparison. Remaining positions
 mix up to four video candidates with older waiting and fresh general posts.
 Approved video candidates receive a three-point ordering preference; raw scores
-below the author's 92/97 threshold, off-topic verdicts and expired approvals remain ineligible. Reply
+below the author's configured threshold (85/100 for the live Account), off-topic verdicts and expired approvals remain ineligible. Reply
 length varies with the existing style choices. Replies never invent having
 watched a clip, model versions, benchmarks, visual details or production tools.
 

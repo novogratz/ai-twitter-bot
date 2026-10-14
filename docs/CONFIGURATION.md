@@ -3,9 +3,11 @@
 The optional `[replies] protected_handles` list contains exact X handles without
 `@`, matched without case, that must never receive Replies. It overrides Reply
 priority, model approvals and saved candidates. The live Account protects
-`elonmusk`, has no Reply priority handles and requires 97/100 from every eligible
+`elonmusk`, has no Reply priority handles and requires 85/100 from every eligible
 author. This is Account policy, with no `.env` override; other interaction rules
-remain separate. Invalid handles or a malformed list stop startup.
+remain separate. `min_score` and `other_min_score` may be 85–100, with
+`other_min_score` at least `min_score`; omitted values retain the stricter
+92 and 97 defaults. Invalid handles or a malformed list stop startup.
 
 The Account's optional `[searches] scope` supplies compact topic terms for ad-hoc
 queries; `exclusions` is appended to every query. Declared Account queries already
