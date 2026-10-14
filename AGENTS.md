@@ -11,24 +11,40 @@ September 26, 2026. Commit `348c82bcade1230abcd670682b1e10be9cf6f1c7`
 (September 25 at 21:18 Toronto time) is that snapshot; no main commit was
 made on September 26. This explicit rollback supersedes later behavior
 mandates and restores the snapshot's code, Account files, tests and policy,
-including uncapped daytime Replies and conversation jobs. Later Reply caps,
-independent draft review and protected-handle checks are absent. Newer local
+including uncapped daytime Replies and the conversation job registrations.
+Later Reply caps and independent draft review remain absent; the new Reply
+restrictions below amend that snapshot. Newer local
 edits and untracked source/test additions were backed up outside the repo.
 Production state, `.env`, logs and stop flags are preserved. The bot remains
 stopped; starting it still requires an explicit Operator request.
 
-[`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(2026-09-23) and supersedes every older mandate. It encodes:
+2026-10-13 — After the September 26 rollback, the Operator restricted all
+external activity to fixed Toronto windows 05:00–10:00, 12:00–13:00 and
+17:00–22:00 every day (start inclusive, end exclusive; no jitter). Replies
+may target standalone original posts only, once per post permanently; comments,
+responses and conversation follow-ups are refused, including VIPs and Debate
+callers. Replied IDs are never evicted. The Account's `replies.protected_handles`
+contains `elonmusk`: no Reply to any of his posts or responses, with the actual
+opened author checked before clicking that original's own Reply button.
+Unknown or mismatched targets fail closed. Existing state and `.env` are
+preserved. Other snapshot settings and the Voice stay in place. The bot stays
+stopped; the requested PR and merge do not authorize a start or restart.
 
-- Active 04:30–23:30 America/Toronto only; nothing external happens overnight.
+[`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
+(updated 2026-10-13) and supersedes every older mandate. It encodes:
+
+- Active 05:00–10:00, 12:00–13:00 and 17:00–22:00 America/Toronto only,
+  every day with fixed starts and exclusive closing times.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
-- Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
-  in waking hours take their topic from rising AI posts on X, and their facts
-  from a trusted article.
+- The restored slot grid includes three trend slots (10:00, 13:00, 15:00),
+  now outside active windows. A Startup post on every start in waking hours
+  takes its topic from rising AI posts on X and its facts from a trusted article.
 - Quotes, reposts, self-recycling and threads stay at zero.
-- Replies are uncapped in waking hours, paced and deduplicated per tweet;
-  debate turns are capped per engager per day.
+- Replies are uncapped per day in waking hours, paced and permanently limited
+  to one Reply per standalone original; comments and follow-ups are refused.
+  Never reply to @elonmusk, including his comments and responses. The opened
+  author is verified; VIP and Debate flags grant no exception.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
@@ -43,7 +59,8 @@ change. The same holds for the operator-owned guardrails: the Account's
 Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
 edits, `BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
 `accounts/<BOT_ACCOUNT>/respect_list.json`, and
-`personality_store.hard_rules_block()`.
+`personality_store.hard_rules_block()`. Removing an Account's
+`replies.protected_handles` protection requires an explicit Operator request.
 
 ## Active code
 
@@ -80,7 +97,7 @@ Account.
 | Caps, pacing, anti-churn; the ledger facts the follow policy reads | `src/guards/action_guard.py` |
 | Follow policy: handle, Blocked account, the account's relation it finds itself (Seed account, follower, Engager; a Stranger never), whitelist, caps, ceiling, quality gate, named Follow refusals, followed accounts and the other follow files | `src/guards/follow_policy.py` |
 | Write ledger: today's counts, last write, last follow or unfollow; file and in-memory adapters | `src/guards/ledger.py` |
-| Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
+| Reply admission: protected or Blocked account, own post, permanent one Reply per original, conversation refusal, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |

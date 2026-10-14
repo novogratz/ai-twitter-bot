@@ -202,7 +202,8 @@ a Startup post: a restart publishes one trend post within 45 minutes when the
 daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
-waits. Nothing external happens until 04:30 Toronto time.
+waits until the next opening: 05:00, 12:00 or 17:00 Toronto time. Windows
+close at 10:00, 13:00 and 22:00 respectively, every day without jitter.
 
 ## Stop
 
@@ -238,7 +239,7 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
   paused scheduler logs almost nothing overnight, so this watchdog restarts
-  the bot roughly every 15 minutes between 23:30 and 04:30; each restart
+  the bot roughly every 15 minutes outside the three activity windows; each restart
   comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
@@ -257,7 +258,7 @@ real account from a second process. Before any of them:
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
-   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 23:30.
+   and `bin/mass_unfollow.py` refuses to start Overnight and stops at the current activity-window close.
 
 ## Watching
 
@@ -280,7 +281,7 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence between 23:30 and 04:30 Toronto time is normal. There is no
+Silence outside the three Toronto activity windows is normal. There is no
 heartbeat line.
 
 ## Recovery
@@ -816,7 +817,7 @@ name: compare them by hand.
   ledger. Keep the bot stopped even with `--force`: the ledger has a single
   writer, and a row written beside the running bot can be lost. It drives
   Safari through the `safari` primitives and checks the bot's Toronto clock:
-  it refuses to start Overnight and stops before its next unfollow at 23:30
+  it refuses to start Overnight and stops before its next unfollow at the current activity-window close
   or on SIGTERM. A primitive also refuses to start a page script at that
   point; between a click and its confirm, the run then ends with the modal
   open and nothing unfollowed or recorded, and the next run cancels that

@@ -73,11 +73,11 @@ def test_stop_request_refuses_as_overnight(monkeypatch):
     assert judge_parent(url("someone")).refusal is Refusal.OVERNIGHT
 
 
-def test_debate_turn_cap_is_temporary_and_only_for_turns(settings_override):
+def test_followups_are_refused_even_with_unused_debate_budget(settings_override):
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
     action_guard.record(action_guard.DEBATE_TURN, target="challenger")
     capped = judge_parent(url("challenger"), debate_turn=True)
-    assert capped.refusal is Refusal.DEBATE_TURN_CAP and not capped.refusal.definitive
+    assert capped.refusal is Refusal.CONVERSATION and capped.refusal.definitive
     assert judge_parent(url("challenger")), "plain Replies stay uncapped"
 
 
@@ -166,6 +166,16 @@ def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, re
 
 def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    assert judge_reply(url("someone"), TEXT, debate_turn=True)
+    assert judge_reply(url("someone"), TEXT)
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []
+
+
+@pytest.mark.parametrize("handle", ["elonmusk", "ElonMusk", "ELONMUSK"])
+@pytest.mark.parametrize("debate_turn", [False, True])
+def test_protected_author_never_reaches_generation_or_writing(handle, debate_turn):
+    parent = url(handle)
+    verdict = judge_parent(parent, debate_turn=debate_turn)
+    assert verdict.refusal is Refusal.PROTECTED_ACCOUNT and verdict.refusal.definitive
+    assert judge_reply(parent, TEXT, debate_turn=debate_turn).refusal is Refusal.PROTECTED_ACCOUNT
+    assert parent not in replied_store.load_replied()

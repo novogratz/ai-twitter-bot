@@ -79,7 +79,7 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     assert set_aside() == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
-def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override):
+def test_followups_are_set_aside_before_generation(llm, chokepoint, settings_override):
     from src.guards import action_guard
     from src.guards.reply_admission import Refusal
 
@@ -90,10 +90,10 @@ def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override
 
     run(job(debate_turn=True), [candidate(capped, "post capped"), candidate(admitted, "post admitted")], cycle)
 
-    assert llm.parents("post capped", "post admitted") == ["post admitted"]
-    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
-    assert set_aside() == {admitted}, "the Debate turn cap is temporary"
-    assert cycle.refusals == {Refusal.DEBATE_TURN_CAP.value: 1}, "counted for the job's summary"
+    assert llm.parents("post capped", "post admitted") == []
+    assert chokepoint.calls == []
+    assert set_aside() == {capped, admitted}
+    assert cycle.refusals == {Refusal.CONVERSATION.value: 2}, "counted for the job's summary"
 
 
 def test_each_job_sets_aside_its_own_posts(llm, chokepoint):

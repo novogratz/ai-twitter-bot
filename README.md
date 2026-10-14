@@ -12,13 +12,19 @@ Operator rollback, 2026-10-13: code and Account configuration are restored
 to the September 26, 2026 main snapshot, `348c82bc` (September 25 at 21:18
 Toronto time; no main commit on September 26). The policy below is restored
 with it, including uncapped daytime Replies and conversation jobs. Later
-Reply caps, independent draft review and protected-handle checks are absent.
+Reply caps and independent draft review remain absent. The restrictions below
+were added after the rollback at the Operator's request.
 Newer local work is backed up outside the repository. Production state,
 `.env`, logs and stop flags are preserved, and the bot remains stopped.
 
-- **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 05:00–10:00, 12:00–13:00 and 17:00–22:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
-- **Unlimited replies during waking hours**, with spacing and duplicate protection.
+- **No daily Reply cap, but only one Reply per entire conversation.** Replies
+  target standalone originals only; comments and follow-ups are refused. IDs
+  remain in permanent history, including uncertain submissions.
+- **Never reply to @elonmusk**, including his comments and responses. Account
+  `replies.protected_handles` wins over VIP and Debate callers, and the browser
+  checks the actual opened author and status before clicking its Reply button.
   Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
@@ -42,7 +48,7 @@ Newer local work is backed up outside the repository. Production state,
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action after 23:30. An already-issued request may still finish remotely.
+a new action at or after 10:00, 13:00 or 22:00, until the next window opens. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 
@@ -60,7 +66,8 @@ a new action after 23:30. An already-issued request may still finish remotely.
 | 18:30 | An idea worth saving or sharing |
 | 20:45 | Optional post for an exceptional update or unusually useful source |
 
-Each slot has a short retry window and missed slots are not caught up. Every
+The historical slot grid is retained. Slots run only where their retry windows
+overlap an active window; closed-window slots are not caught up. Every
 start in waking hours opens one extra trend post, the Startup post. Eleven
 slots plus the Startup post compete for eight publications a day. Trend posts
 pick their topic from the five fastest-rising AI posts on X from the last 24

@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "04:30–23:30",
+    "active": "05:00–10:00, 12:00–13:00, 17:00–22:00 America/Toronto",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,

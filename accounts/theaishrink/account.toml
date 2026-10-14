@@ -176,6 +176,10 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 # A handle here is compared with the handle read from a status URL, never with
 # a display name, and case-insensitively unless a comment says otherwise.
 
+[replies]
+# Operator 2026-10-13: never answer this author's posts, comments or follow-ups.
+protected_handles = ["elonmusk"]
+
 [network]
 # AI only (Operator, 2026-09-25): the lists below hold AI accounts, the
 # accounts the Operator picked by hand whatever their topic (Graphseo,

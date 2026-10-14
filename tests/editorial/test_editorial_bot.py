@@ -28,7 +28,7 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
     assert editorial.due_slot(at(5, 45), {}) is None
-    assert editorial.due_slot(at(10, 15), {})[0] == "10:00"
+    assert editorial.due_slot(at(10, 15), {}) is None
     assert editorial.due_slot(at(10, 45), {}) is None
     state = {"date": "2026-09-20", "slots": {"05:00": "published"}}
     assert editorial.due_slot(at(5, 30), state) is None
@@ -543,12 +543,12 @@ def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
     assert [s["url"] for s in sources] == ["https://openai.com/fresh"]
 
 
-def test_a_spent_slot_does_not_hold_the_overlapping_next_one():
-    """09:30 and 10:00 overlap: a published or spent 09:30 frees 10:00."""
-    at = datetime(2026, 9, 20, 10, 5, tzinfo=TORONTO)
+def test_a_spent_slot_does_not_hold_the_overlapping_next_one(trend_fixture):
+    """09:30 and 09:45 overlap: a published or spent 09:30 frees 09:45."""
+    at = datetime(2026, 9, 20, 9, 50, tzinfo=TORONTO)
     assert editorial.due_slot(at, {})[0] == "09:30"
-    assert editorial.due_slot(at, {"date": "2026-09-20", "slots": {"09:30": "published"}})[0] == "10:00"
-    assert editorial.due_slot(at, {"date": "2026-09-20", "attempts": {"09:30": 3}})[0] == "10:00"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "slots": {"09:30": "published"}})[0] == "09:45"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "attempts": {"09:30": 3}})[0] == "09:45"
     assert editorial.due_slot(at, {"date": "2026-09-19", "attempts": {"09:30": 3}})[0] == "09:30"
 
 
@@ -560,20 +560,20 @@ def test_trend_slots_sit_in_the_grid():
 
 def test_startup_window_opens_on_every_waking_start():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    assert editorial.startup_slot(at(11, 10), {}) is None
-    editorial.open_startup_window(at(11, 10))
+    assert editorial.startup_slot(at(17, 10), {}) is None
+    editorial.open_startup_window(at(17, 10))
     key = editorial.startup_key()
-    assert key == "startup@11:10:00"
-    assert editorial.startup_slot(at(11, 20), {}) == (key, account.current().editorial.trend_angle)
-    assert editorial.startup_slot(at(11, 55), {}) is None
-    assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "slots": {key: "pending"}}) is None
-    assert editorial.startup_slot(at(11, 20), {"date": "2026-09-20", "attempts": {key: 3}}) is None
+    assert key == "startup@17:10:00"
+    assert editorial.startup_slot(at(17, 20), {}) == (key, account.current().editorial.trend_angle)
+    assert editorial.startup_slot(at(17, 55), {}) is None
+    assert editorial.startup_slot(at(17, 20), {"date": "2026-09-20", "slots": {key: "pending"}}) is None
+    assert editorial.startup_slot(at(17, 20), {"date": "2026-09-20", "attempts": {key: 3}}) is None
     # A restart the same day opens a fresh window, even after a published one.
-    editorial.open_startup_window(at(11, 30))
+    editorial.open_startup_window(at(17, 30))
     done = {"date": "2026-09-20", "slots": {key: "published"}}
-    assert editorial.startup_slot(at(11, 31), done)[0] == "startup@11:30:00"
+    assert editorial.startup_slot(at(17, 31), done)[0] == "startup@17:30:00"
     # Nothing overnight: the watchdog relaunches at night, and a 04:20 start
-    # must not publish at 04:30.
+    # must not publish at the next wake.
     editorial.open_startup_window(at(4, 20))
     assert editorial.startup_key() is None
     assert editorial.startup_slot(at(4, 35), {}) is None
@@ -581,10 +581,10 @@ def test_startup_window_opens_on_every_waking_start():
 
 
 def test_startup_post_goes_before_an_open_slot():
-    at = datetime(2026, 9, 20, 10, 20, tzinfo=TORONTO)
-    assert editorial.next_slot(at, {})[0] == "10:00"
+    at = datetime(2026, 9, 20, 7, 30, tzinfo=TORONTO)
+    assert editorial.next_slot(at, {})[0] == "07:15"
     editorial.open_startup_window(at)
-    assert editorial.next_slot(at, {})[0] == "startup@10:20:00"
+    assert editorial.next_slot(at, {})[0] == "startup@07:30:00"
 
 
 TRENDING = [dict(text=f"AI model story {i}", likes=100, views=1000, age_minutes=60,
@@ -593,6 +593,13 @@ TRENDING = [dict(text=f"AI model story {i}", likes=100, views=1000, age_minutes=
 
 @pytest.fixture
 def trend_fixture(monkeypatch, draft_fixture):
+    # Synthetic trend slots inside the activity windows for editor/review tests.
+    # The shipped Account's historical slot grid is tested separately above.
+    clocks = {"10:00": "09:45", "13:00": "12:00", "15:00": "17:00"}
+    loaded = account.current().editorial
+    use_editorial(monkeypatch,
+                  slots=tuple(sorted((clocks.get(c, c), angle) for c, angle in loaded.slots)),
+                  trend_clocks=frozenset(clocks.values()))
     draft, source, review = draft_fixture
     source.update(kind="news", published_at="2026-09-20T09:00:00-04:00")
     review["trending"] = True
@@ -613,19 +620,19 @@ def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture):
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
-    clock(monkeypatch, datetime(2026, 9, 20, 11, 10, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 17, 10, tzinfo=TORONTO))
     editorial.open_startup_window()
     assert editorial.run_editorial_cycle()["approved"]
     assert len(posted) == 1
     assert trend_fixture["sources"] == [True]
     assert trend_fixture["drafts"][0][4] == TRENDING
-    assert editorial._read_state()["slots"]["startup@11:10:00"] == "published"
+    assert editorial._read_state()["slots"]["startup@17:10:00"] == "published"
     assert editorial._read_state()["pending_sources"] == {}
     # Same process: the window is spent.
     assert editorial.run_editorial_cycle() is None
     assert len(posted) == 1
     # A restart publishes again.
-    clock(monkeypatch, datetime(2026, 9, 20, 11, 40, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 17, 40, tzinfo=TORONTO))
     editorial.open_startup_window()
     assert editorial.run_editorial_cycle()["approved"]
     assert len(posted) == 2
@@ -634,10 +641,10 @@ def test_every_restart_publishes_one_startup_post(monkeypatch, trend_fixture):
 def test_trend_slot_without_enough_trending_posts_spends_no_attempt(monkeypatch, trend_fixture):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("posted without a trend"))
-    clock(monkeypatch, datetime(2026, 9, 20, 13, 5, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 12, 35, tzinfo=TORONTO))
     monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: TRENDING[:2])
     assert editorial.run_editorial_cycle() is None
-    assert not editorial._read_state().get("attempts", {}).get("13:00")
+    assert not editorial._read_state().get("attempts", {}).get("12:00")
     assert not trend_fixture["drafts"]
 
 
@@ -645,10 +652,10 @@ def test_trend_slot_drafts_from_news_only(monkeypatch, trend_fixture):
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
-    clock(monkeypatch, datetime(2026, 9, 20, 13, 5, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 12, 35, tzinfo=TORONTO))
     assert editorial.run_editorial_cycle()["approved"]
     assert trend_fixture["sources"] == [True]
-    assert editorial._read_state()["slots"]["13:00"] == "published"
+    assert editorial._read_state()["slots"]["12:00"] == "published"
 
 
 def test_trend_review_needs_news_no_mention_and_editor_trend_approval(draft_fixture):
@@ -723,28 +730,28 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
 
 def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    editorial.open_startup_window(at(23, 10))
+    editorial.open_startup_window(at(21, 40))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(23, 29), {})[0] == key
-    assert not editorial._in_window(key, at(23, 30))
-    assert editorial.startup_slot(at(23, 30), {}) is None
+    assert editorial.startup_slot(at(21, 59), {})[0] == key
+    assert not editorial._in_window(key, at(22, 0))
+    assert editorial.startup_slot(at(22, 0), {}) is None
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):
-    """At 10:05, 09:30 yields no Draft: 10:00 gets its pass at once, and a
+    """At 09:50, 09:30 yields no Draft: 09:45 gets its pass at once, and a
     pass with two Drafts available still submits once."""
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
-    clock(monkeypatch, datetime(2026, 9, 20, 10, 5, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 9, 50, tzinfo=TORONTO))
     draft = editorial.draft_post
     monkeypatch.setattr(editorial, "draft_post",
                         lambda slot, *a: {} if slot.clock == "09:30" else draft(slot, *a))
-    assert editorial.run_editorial_cycle()["slot"] == "10:00"
-    assert editorial._read_state()["slots"] == {"10:00": "published"}
+    assert editorial.run_editorial_cycle()["slot"] == "09:45"
+    assert editorial._read_state()["slots"] == {"09:45": "published"}
     assert not editorial._read_state()["attempts"].get("09:30")
     monkeypatch.setattr(editorial, "draft_post", draft)
-    clock(monkeypatch, datetime(2026, 9, 21, 10, 5, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 21, 9, 50, tzinfo=TORONTO))
     assert editorial.run_editorial_cycle()["slot"] == "09:30"
     assert len(posted) == 2
 
@@ -764,7 +771,8 @@ def _unconfirmed_day(monkeypatch, starts):
         at = start + timedelta(seconds=10)
         while at < end:
             clock(monkeypatch, at)
-            editorial.run_editorial_cycle()
+            if hours.is_active(at):
+                editorial.run_editorial_cycle()
             at += timedelta(minutes=10)
     return submitted
 
@@ -781,7 +789,7 @@ def test_a_crash_loop_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
         monkeypatch, trend_fixture, crash_every):
     """UNCONFIRMED writes no ledger row: without the pending count, every
     restart submitted a Startup post, 63 a day at a crash every 20 minutes."""
-    first = datetime(2026, 9, 20, 4, 30, tzinfo=TORONTO)
+    first = datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO)
     starts = [first + timedelta(minutes=crash_every * i)
               for i in range(int(17.5 * 60 / crash_every))]
     _assert_ceiling_and_spacing(_unconfirmed_day(monkeypatch, starts))
@@ -792,7 +800,7 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
     """Eleven Slots and the Startup post, all UNCONFIRMED: 12 submissions
     before pending ones counted."""
     _assert_ceiling_and_spacing(
-        _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 4, 30, tzinfo=TORONTO)]))
+        _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO)]))
 
 
 def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):
@@ -830,11 +838,11 @@ def test_a_pending_text_is_a_recent_post_for_the_next_draft_and_review(monkeypat
     monkeypatch.setattr(editorial, "_json_call",
                         lambda prompt, label, profile: prompts.append(prompt) or draft_fixture[2])
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: WriteOutcome.UNCONFIRMED)
-    clock(monkeypatch, datetime(2026, 9, 20, 11, 10, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 17, 10, tzinfo=TORONTO))
     editorial.open_startup_window()
     editorial.run_editorial_cycle()
-    text = editorial._read_state()["pending_sources"]["2026-09-20/startup@11:10:00"]["text"]
-    clock(monkeypatch, datetime(2026, 9, 20, 11, 40, tzinfo=TORONTO))
+    text = editorial._read_state()["pending_sources"]["2026-09-20/startup@17:10:00"]["text"]
+    clock(monkeypatch, datetime(2026, 9, 20, 17, 40, tzinfo=TORONTO))
     editorial.open_startup_window()
     editorial.run_editorial_cycle()
     assert trend_fixture["drafts"][1][2] == [text]

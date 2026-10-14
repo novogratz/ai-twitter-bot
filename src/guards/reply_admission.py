@@ -35,6 +35,8 @@ from ..core.logger import log
 
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
+    PROTECTED_ACCOUNT = "protected account"
+    CONVERSATION = "comments and conversation follow-ups are disabled"
     BLOCKED_ACCOUNT = "Blocked account"
     OWN_POST = "own post"
     ALREADY_REPLIED = "already Replied"
@@ -51,8 +53,8 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
-                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.PROTECTED_ACCOUNT, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
+                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
 
 
 @dataclass(frozen=True)
@@ -72,18 +74,18 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     author = x_urls.author(url)
     if not author:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
+    if account.current().replies.is_protected(author):
+        return Verdict(Refusal.PROTECTED_ACCOUNT, f"@{author} is protected from every Reply", author)
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
     if author == config.BOT_HANDLE.lower():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
+    if debate_turn:
+        return Verdict(Refusal.CONVERSATION, "one Reply to an original post; no follow-ups", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
-    if debate_turn:
-        ok, why = action_guard.can_debate_turn(author)
-        if not ok:
-            return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
     return Verdict(None, author=author)
 
 

@@ -97,3 +97,10 @@ def test_release_drops_only_the_claimed_tweet(monkeypatch):
     replied_store.release(f"https://x.com/b/status/{drop}")
 
     assert json.load(open(config.REPLIED_FILE)) == [f"https://x.com/a/status/{keep}"]
+
+
+def test_history_is_permanent_past_the_old_fifty_thousand_entry_limit():
+    entries = [str(2063500000000000000 + i) for i in range(50001)]
+    rs.save_replied(entries)
+    assert not rs.claim("https://x.com/other/status/" + entries[0])
+    assert len(rs.load_replied()) == len(entries)

@@ -462,6 +462,57 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         steps=steps, close_tab=False)
 
 
+def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
+    """Verify the opened original's identity; optionally click its own Reply button.
+
+    Never use X's keyboard selection: it may point at a comment or a quote.
+    An unreadable or ambiguous page cannot authorize a Reply.
+    """
+    from ..core import account, config
+    from . import x_urls
+
+    sid, expected = x_urls.status_id(url), x_urls.author(url)
+    if not sid or not expected or account.current().replies.is_protected(expected):
+        return False
+    js = r"""(() => {
+      const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__;
+      const articles = [...document.querySelectorAll('article')];
+      const own = (article, selector) => [...article.querySelectorAll(selector)]
+        .filter(el => el.closest('article') === article
+          && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
+      const permalink = article => own(article, 'a[href]').find(l => l.querySelector('time'));
+      const status = link => link?.pathname.match(/^\/([A-Za-z0-9_]+)\/status\/(\d+)\/?$/);
+      const page = location.pathname.match(/\/status\/(\d+)\/?$/);
+      if (!page || page[1] !== id) return 'refused';
+      const index = articles.findIndex(a => status(permalink(a))?.[2] === id);
+      if (index !== 0) return 'refused';
+      const article = articles[index], link = permalink(article);
+      if (status(link)[1].toLowerCase() !== author) return 'refused';
+      const text = own(article, '[data-testid="tweetText"]')[0]?.innerText || '';
+      if (text.trim().startsWith('@') || /Replying to|En réponse à/i.test(article.innerText))
+        return 'refused';
+      // A visible prior answer also closes this thread, including older history.
+      if (articles.slice(1).some(a => self.includes(status(permalink(a))?.[1].toLowerCase())))
+        return 'refused';
+      const button = own(article, '[data-testid="reply"]')[0];
+      if (!button) return 'refused';
+      if (click) button.click();
+      return JSON.stringify({url: link.href, clicked: click});
+    })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
+    js = js.replace("__CLICK__", "true" if click else "false").replace(
+        "__SELF__", json.dumps([config.BOT_HANDLE.lower(), account.current().handle.lower()]))
+    try:
+        opened = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]") or "null")
+    except (TypeError, ValueError):
+        return False
+    if not isinstance(opened, dict) or not isinstance(opened.get("url"), str):
+        return False
+    return (x_urls.status_id(opened["url"]) == sid
+            and x_urls.author(opened["url"]) == expected
+            and not account.current().replies.is_protected(x_urls.author(opened["url"]))
+            and opened.get("clicked") is click)
+
+
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
                    on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
@@ -552,17 +603,16 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
+            if not _standalone_reply_target(tweet_url):
+                log.info("[REPLY] Opened target is protected, nested, already answered or unreadable: %s", tweet_url)
+                return WriteOutcome.REFUSED
             _maybe_like_parent(tweet_url)
             time.sleep(1)
 
             log.info("Clicking reply...")
-            if not safari._run_applescript('''
-            tell application "System Events"
-                keystroke "r"
-            end tell
-            ''', timeout_s=safari.KEYSTROKE_TIMEOUT_S):
-                log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
-                return WriteOutcome.FAILED
+            if not _standalone_reply_target(tweet_url, click=True):
+                log.info(f"[REPLY] Reply target changed or its button is unreadable: {tweet_url}")
+                return WriteOutcome.REFUSED
             time.sleep(3)  # Wait for reply box to open
 
             # Paste the reply (clipboard handles accents correctly)

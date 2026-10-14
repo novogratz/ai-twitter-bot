@@ -256,17 +256,24 @@ _Avoid_: banned, blacklisted
 An account engaged normally but never criticised or named in the account's
 own commentary. A Reply to its post may address it by its `@handle`, never
 mock it by name.
-_Avoid_: protected account, influencer
+_Avoid_: influencer
+
+**Protected account**:
+An author listed in the Account's `replies.protected_handles` who may never
+receive a Reply, including to comments and follow-ups. This does not change
+like or follow policy.
 
 ### Time and people
 
 **Waking hours**:
-The only period when the account acts externally, 04:30 to 23:30 Toronto
-time. `active_hours.WAKE` and `active_hours.BEDTIME` hold the two bounds.
+The fixed daily Toronto windows when the account acts externally: 05:00–10:00,
+12:00–13:00 and 17:00–22:00. `active_hours.WINDOWS` owns the bounds; starts
+are inclusive and closing times exclusive, with no daily jitter.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:
-The rest of the Toronto day, when nothing external happens.
+The rest of the Toronto day, including the daytime breaks, when nothing
+external happens.
 _Avoid_: bedtime, asleep, off hours
 
 **Operator**:

@@ -34,7 +34,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Working hours 04:30–23:30 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Daily windows 05:00–10:00, 12:00–13:00, 17:00–22:00 America/Toronto; closing times exclusive, DST aware | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
@@ -224,3 +224,9 @@ Not read by the engine: these scripts read them after sourcing `.env`.
 | `ROAST_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
 
 <!-- END settings reference -->
+
+Account Reply protection is configured in `[replies] protected_handles` in
+`account.toml`, with exact X handles without `@`, compared case-insensitively.
+The live Account protects `elonmusk`. Only an explicit Operator request may
+remove that protection. Conversation follow-ups are refused regardless of
+legacy Debate settings; only standalone originals may receive one Reply.

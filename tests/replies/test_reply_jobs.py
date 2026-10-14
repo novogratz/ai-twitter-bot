@@ -183,9 +183,8 @@ def test_direct_reply_search_skips_nested_replies(direct):
     assert chokepoint.sent == [root]
 
 
-def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
-    """Issue #241 leaves the VIP scan as it was: it answers everything its
-    accounts post, their replies included."""
+def test_direct_reply_vip_scan_never_answers_comments(direct):
+    """VIP status never exempts comments from the one-Reply-per-thread rule."""
     dr, lanes, llm, chokepoint = direct
     marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
     lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
@@ -194,7 +193,8 @@ def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
-    assert chokepoint.sent == [marked, mention]
+    assert chokepoint.sent == []
+    assert llm.prompts == []
 
 
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
@@ -550,7 +550,7 @@ def debate(monkeypatch, llm, chokepoint, settings_override):
     return db, mentions, llm, chokepoint
 
 
-def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override):
+def test_debate_never_answers_mentions(debate, settings_override):
     db, mentions, llm, chokepoint = debate
     settings_override(DEBATE_MAX_PER_CYCLE=2, DEBATE_MAX_AGE_HOURS=24.0)
     old = fresh("old", minutes=25 * 60, n=1)
@@ -561,9 +561,9 @@ def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override
 
     db.run_debate_cycle()
 
-    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(first, True), (second, True)], \
-        "freshest first, DEBATE_MAX_PER_CYCLE Replies"
-    assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
+    assert chokepoint.calls == []
+    assert llm.prompts == []
+    assert logged() == []
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_override):
@@ -592,7 +592,7 @@ def replyback(monkeypatch, llm, chokepoint):
     return nb, replies, llm, chokepoint
 
 
-def test_replyback_answers_engagers_in_thread_and_logs_it(replyback, blocked_pgm_pm):
+def test_replyback_never_answers_comments_on_own_posts(replyback, blocked_pgm_pm):
     """Issue #156: replyback logs its shipped Replies like every other job."""
     nb, replies, llm, chokepoint = replyback
     admitted = fresh("someone", n=1)
@@ -604,21 +604,21 @@ def test_replyback_answers_engagers_in_thread_and_logs_it(replyback, blocked_pgm
 
     nb.run_replyback_cycle()
 
-    assert llm.parents("no status URL", "display name is not an identity") == ["display name is not an identity"]
-    assert "our post about GPUs" in llm.prompts[0], "the post they answered is in the prompt"
-    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
-    assert [(r.url, r.source) for r in logged()] == [(admitted, "REPLYBACK/someone")]
+    assert llm.prompts == []
+    assert chokepoint.calls == []
+    assert logged() == []
     assert set_aside("replyback") == {admitted}
 
 
-def test_replyback_answers_more_engagers_under_a_busier_post(replyback):
+def test_replyback_never_answers_multiple_comments_under_a_busy_post(replyback):
     nb, replies, llm, chokepoint = replyback
     replies += [{"user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
                 for i in range(12)]
 
     nb.run_replyback_cycle()
 
-    assert len(chokepoint.sent) == 9, "10 to 19 replies under the post: 9 answered"
+    assert chokepoint.sent == []
+    assert llm.prompts == []
 
 
 def test_replyback_reciprocity_never_follows(monkeypatch):

@@ -8,8 +8,9 @@ from ..core import config
 from ..core.logger import log
 
 
-WAKE = time(4, 30)
-BEDTIME = time(23, 30)
+WINDOWS = ((time(5), time(10)), (time(12), time(13)), (time(17), time(22)))
+WAKE = WINDOWS[0][0]
+BEDTIME = WINDOWS[-1][1]
 
 _STOP = threading.Event()
 
@@ -23,7 +24,8 @@ class OutsideActiveHours(RuntimeError):
 
 
 def window_label() -> str:
-    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    windows = ", ".join(f"{start:%H:%M}–{end:%H:%M}" for start, end in WINDOWS)
+    return f"{windows} {config.BOT_TIMEZONE}"
 
 
 def now_local() -> datetime:
@@ -49,7 +51,8 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    return WAKE <= local.time().replace(tzinfo=None) < BEDTIME
+    clock = local.time().replace(tzinfo=None)
+    return any(start <= clock < end for start, end in WINDOWS)
 
 
 def stop_requested() -> bool:
@@ -67,8 +70,12 @@ def may_act(now: datetime | None = None) -> bool:
 
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
-    return wake if local < wake else wake + timedelta(days=1)
+    for start, _ in WINDOWS:
+        wake = local.replace(hour=start.hour, minute=start.minute, second=0, microsecond=0)
+        if local < wake:
+            return wake
+    return (local + timedelta(days=1)).replace(
+        hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
 
 
 def require_active() -> None:
@@ -77,7 +84,7 @@ def require_active() -> None:
 
 
 def awake_job(fn):
-    """Also gate queued jobs and work that crossed the BEDTIME boundary."""
+    """Also gate queued jobs and work that crossed an activity boundary."""
     @wraps(fn)
     def run(*args, **kwargs):
         if not may_act():
@@ -91,10 +98,19 @@ def awake_job(fn):
 
 
 def bedtime(now: datetime) -> datetime:
-    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
-    return now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    """Close of the current or next window, in `now`'s timezone.
+
+    An editorial slot opened during a break may still overlap the next
+    window; the activity guard separately refuses all work during the break.
+    """
+    local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    clock = local.time().replace(tzinfo=None)
+    end = next((end for _, end in WINDOWS if clock < end), BEDTIME)
+    return local.replace(hour=end.hour, minute=end.minute, second=0, microsecond=0).astimezone(now.tzinfo)
 
 
 def seconds_until_bedtime() -> float:
     now = now_local()
+    if not may_act(now):
+        return 0.0
     return max(0.0, (bedtime(now) - now).total_seconds())

@@ -156,7 +156,7 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None
-    verdict = judge_parent(url, debate_turn=job.debate_turn)
+    verdict = judge_parent(url, debate_turn=job.debate_turn or bool(candidate.context))
     if not verdict:
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:

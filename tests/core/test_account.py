@@ -882,3 +882,23 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
     with pytest.raises(settings.SettingsError,
                        match=re.escape(f"theaishrink/{name}: the Voice file {problem}")):
         fresh()
+
+
+def test_protected_reply_handles_are_normalized_and_account_owned(accounts):
+    accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', 'protected_handles = ["SomeAuthor"]'))
+    loaded = account.load("custom")
+    assert loaded.replies.is_protected("@SOMEAUTHOR")
+    assert not loaded.replies.is_protected("SomeAuthorFan")
+    assert not loaded.replies.is_protected("elonmusk")
+
+
+@pytest.mark.parametrize("raw", ['["@bad"]', '["bad-handle"]', '[17]', '"someone"'])
+def test_invalid_protected_reply_handles_stop_loading(accounts, raw):
+    accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', 'protected_handles = ' + raw))
+    with pytest.raises(account.AccountError, match="protected_handles"):
+        account.load("custom")
+
+
+def test_protected_reply_handles_are_optional_for_other_accounts(accounts):
+    accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', ""))
+    assert account.load("custom").replies.protected_handles == frozenset()

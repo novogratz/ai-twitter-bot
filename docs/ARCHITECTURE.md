@@ -1,6 +1,6 @@
 # Architecture
 
-How the running bot is built, as of the 2026-09-20 policy (PR #97). The rules
+How the restored September 26 bot is built, with the October 13 restrictions. The rules
 it enforces are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md); how to run and
 debug it is in [OPERATIONS.md](OPERATIONS.md). `main.py` is the source of truth
 for what runs: where this page and the code disagree, trust the code.
@@ -30,7 +30,7 @@ At start, `main()`:
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
    `--reply-only`;
 4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at the 04:30 and 23:30 boundaries.
+   pauses or resumes it at each daily activity-window boundary.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
@@ -38,15 +38,16 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 23:30, DST
-handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
+`src/guards/active_hours.py` owns fixed windows 05:00–10:00, 12:00–13:00 and
+17:00–22:00 Toronto time, with closing times exclusive and DST handled by
+`zoneinfo`. `WINDOWS` owns the bounds;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
-that window or once a stop was requested; `awake_job()` turns a job into a
+those windows or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
 next `require_active()`. `is_active()` reads the clock only: the scheduler's
 pause/resume loop must not treat a stop as a wake-up boundary.
 
-Pausing the scheduler is not enough, because a job queued at 23:29 would still
+Pausing the scheduler is not enough, because a job queued just before a window closes would still
 run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
@@ -57,14 +58,22 @@ run. The check is repeated at each point where work leaves the process:
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
-  also caps every model call's timeout at the time left before 23:30;
+  also caps every model call's timeout at the time left before the current window closes;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
   `editorial_bot` before fetching a source and again before publishing.
 
-A request already sent to X or to a model can finish after 23:30; it cannot
+A request already sent to X or to a model can finish after the window closes; it cannot
 authorize a new action.
 
 ## Jobs
+
+The restored job table is retained, but Reply admission now refuses Debate
+turns and conversation context before generation. Replyback and babysitter
+candidates cannot publish follow-ups; notification likes retain their existing
+rules. All jobs, browser work and model calls obey the three daily windows.
+The write also verifies the actual original post and protected author, and
+clicks that post's own Reply button. Permanent status-ID history admits at most
+one Reply per original; comments are never Reply targets.
 
 `build_scheduler()` registers 17 jobs, plus `reply_job` when
 `ENABLE_REPLY_SEARCH=1`. The reply jobs register their `run_*` under
@@ -96,9 +105,9 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
-| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
-| `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
-| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
+| `replyback_job` | 3 min | Retains its scan and profile likes, but Reply admission refuses every conversation candidate before generation. It never follows: `follow_engagers_job` owns engager follows. |
+| `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old; the same conversation refusal applies. |
+| `debate_job` | 12 min | Retains its mentions scan; Reply admission refuses every Debate turn before generation. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
@@ -145,7 +154,7 @@ new Toronto day is saved with the pass's first change.
 
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
-   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
+   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, only within waking hours, only if
    the Slot journal has not closed it today and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
@@ -545,13 +554,13 @@ Five modules sit behind them:
 
 `reply_to_tweet` takes every rule from `src/guards/reply_admission.py` (Reply
 admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
-handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
-answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
+handle from the URL (`src/x/x_urls.py`), protected or Blocked account, own post,
+already answered, Waking hours and conversation refusal. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
 (dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
 validates it last. `reply_to_tweet` calls `judge_reply` once under the
-Safari lock, the lock that also records the reply, so the spacing and the
-Debate turn cap cannot move between the check and the write. Each refusal
+Safari lock, the lock that also records the reply, so another caller cannot
+ship between the spacing check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
 
@@ -589,8 +598,8 @@ The `direct_reply` search lane and `feed_sweep` run pipelined: the pipeline
 generates reply N+1 while reply N is posted, so its text is ready as soon
 as reply N's ledger row is written. Before calling `reply_to_tweet`,
 outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
-one-second slices and raises `OutsideActiveHours` on a stop request or at
-23:30. The chokepoint still judges: when another job's reply lands during
+one-second slices and raises `OutsideActiveHours` on a stop request or when
+the window closes. The chokepoint still judges: when another job's reply lands during
 the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
 post stays replayable in a later cycle, at the cost of a new generation.
 On a rate limit, bedtime or an unreadable state file the pipelined job
@@ -603,10 +612,10 @@ After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
 tweet already answered, and marks it just before writing, all under one lock.
 A dry run stops before the claim and writes only a dry-run ledger row.
-The store is keyed on status ID, written through a temp file and
+The permanent store is keyed on status ID, never evicted, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty. If the reply keystroke or the paste fails, or a
-stop or 23:30 interrupts the sequence before the submit keystroke, nothing
+instead of reading as empty. If the target check, Reply button or paste fails, or a
+stop or a window close interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second

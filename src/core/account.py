@@ -68,6 +68,14 @@ class Relevance:
 
 
 @dataclass(frozen=True)
+class Replies:
+    protected_handles: frozenset
+
+    def is_protected(self, handle: str) -> bool:
+        return handle.strip().lstrip("@").lower() in self.protected_handles
+
+
+@dataclass(frozen=True)
 class Account:
     name: str
     folder: str  # absolute: accounts/<name>/, where the Account's other files live
@@ -82,6 +90,7 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
+    replies: Replies
 
 
 def current() -> Account:
@@ -113,7 +122,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict})
+                 optional={"limits": dict, "relations": dict, "replies": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -130,7 +139,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top),
+        searches=_searches(top), replies=_replies(top),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -183,6 +192,16 @@ _NETWORK_HANDLES = ("profile_visits", "vip_scan", "pinned_tracked", "vip_reply",
                     "mid_size_ai", "high_traction_reply", "big_fr", "engage_vip",
                     "engage_targets", "reply_targets", "follow_engagers_skip")
 _SEARCHES = ("replies", "hot_tab", "likes", "trending")
+
+
+def _replies(top) -> Replies:
+    table = _Table(top.file, "replies", top.get("replies", {}), required={},
+                   optional={"protected_handles": list})
+    handles = table.items("protected_handles", str) if "protected_handles" in table else []
+    for i, handle in enumerate(handles):
+        if not _HANDLE.fullmatch(handle):
+            table.fail(f"protected_handles[{i}]", f"takes an X handle without @, not {handle!r}")
+    return Replies(frozenset(handle.lower() for handle in handles))
 
 
 @dataclass(frozen=True)

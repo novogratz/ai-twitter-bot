@@ -1,19 +1,31 @@
-# Editorial policy — September 23, 2026
+# Editorial policy — September 26 snapshot, amended October 13, 2026
 
 Operator rollback, 2026-10-13: this is the policy restored with the code on
 main on September 26, 2026, commit `348c82bcade1230abcd670682b1e10be9cf6f1c7`
 (September 25 at 21:18 Toronto time; no main commit on September 26).
 The explicit rollback supersedes later behavior mandates, restoring this
 snapshot's Account files, checks, settings and jobs. Replies are uncapped
-during waking hours and conversation jobs return; the later Reply caps,
-independent draft review and protected-handle checks are absent. Production
+during waking hours and conversation job registrations return; the later Reply
+caps and independent draft review remain absent. The restrictions below amend
+that snapshot. Production
 history and pending state are preserved, along with `.env`, logs and stop
 flags. The bot remains stopped until an explicit Operator start request.
 
+2026-10-13 — After the September 26 rollback, the Operator restricted all
+external activity to fixed Toronto windows 05:00–10:00, 12:00–13:00 and
+17:00–22:00 every day (start inclusive, end exclusive; no jitter). Replies
+may target standalone original posts only, once per post permanently; comments,
+responses and conversation follow-ups are refused, including VIPs and Debate
+callers. Replied IDs are never evicted. The Account's `replies.protected_handles`
+contains `elonmusk`: no Reply to any of his posts or responses, with the actual
+opened author checked before clicking that original's own Reply button.
+Unknown or mismatched targets fail closed. Existing state and `.env` are
+preserved. Other snapshot settings and the Voice stay in place. The bot stays
+stopped; the requested PR and merge do not authorize a start or restart.
+
 The operator requested at least three valuable AI posts a day, up to eight
 profile posts, uncapped replies, a more natural voice, and a working day from
-04:30 to 23:30 (22:00 until 2026-09-23; the later bedtime added no slot and
-changed no cap or pacing). The schedule aims for six originals, with more opportunities
+05:00–10:00, 12:00–13:00 and 17:00–22:00 Toronto time. The schedule aims for six originals, with more opportunities
 than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
 The same day the operator added three trend slots and a Startup post on every
 start; they compete for the same eight publications (see below).
@@ -66,15 +78,17 @@ searches look for AI posts only. Crypto, markets and space accounts left
 the reply and scan lists. The accounts the Operator picked by hand stay
 whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
 Mindset4Money_X in the curator's pins, and so do the few handles whose
-topic is still to be confirmed by the Operator. The VIP scan still answers
-Graphseo's and TheBTCTherapist's posts without the niche filter, and
-answers to Engagers still follow the conversation.
+topic is still to be confirmed by the Operator. The VIP scan still selects
+its configured accounts without the niche filter;
+Replies to comments and Engager follow-ups are now refused by Reply admission.
 
 The search lane, the feed sweep, early bird and mega watch answer root
 posts only: a post X marks as a reply, or whose text opens on a mention,
 never reaches the model, which would see it without the post it answers
-(issue #241). The VIP scan still answers everything its accounts post,
-their replies included.
+(issue #241). The VIP scan also skips comments. No caller can publish a Reply to a nested
+response: the opened page must identify a standalone original. `elonmusk` is
+protected from every Reply via the Account's `replies.protected_handles`, even
+when a discovered URL names someone else; the actual author must match.
 
 The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
 artificial intelligence, machine and deep learning, computer vision,
@@ -120,7 +134,7 @@ and pending guard per start, goes before a slot whose window is open, and
 obeys the waking hours, the eight-publication ceiling and the post spacing. A
 pass that gives it no draft falls through to the open slots in the same pass,
 so a restart never hides a slot. A start overnight opens nothing, even just
-before 04:30. A restart loop in daytime therefore publishes
+before the next window opens. A restart loop in daytime therefore publishes
 up to one post every twenty minutes until the daily ceiling, at the expense of
 later slots. An ambiguous submission counts as a publication for that: the
 next Startup post waits twenty minutes after it, the day's pending submissions
@@ -137,10 +151,10 @@ must not repeat.
   write is admitted after it.
 - Slots: 05:00, 07:15, 09:30, 10:00 (trend), 11:45, 13:00 (trend), 14:00,
   15:00 (trend), 16:15, 18:30, optional 20:45, plus the Startup post.
-  Eleven slots and the Startup post compete for eight publications: on a full
-  day the evening slots are the ones left out.
+  The slot grid stays as restored. A slot can run only where its 45-minute
+  retry window overlaps waking hours; it never catches up after expiry.
 - A slot permits at most three attempts over 45 minutes, and no window runs
-  past 23:30: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
+  past the current window's closing time: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
   An attempt is a draft submitted to the editor; a pass without a draft
   spends none. A slot out of attempts, or one whose pass yields no draft, no
   longer holds an overlapping one; a pass still submits once at most.
@@ -157,17 +171,21 @@ must not repeat.
   no scheduled job carries such a branch (issue #107):
   `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
   code and an operator request, not a config change.
-- Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
-  per-author debate turns protect conversation quality. Every answer to
-  someone who answered the account is a debate turn, whichever job sends it.
-  The per-tweet dedup store fails closed: while it is unreadable, no reply
-  ships. The gap after each reply is `MIN_SECONDS_BETWEEN_REPLIES` plus a
-  jitter drawn once per reply, the same for every caller: retrying cannot
-  shorten it. The direct-reply and feed-sweep pipeline waits out that gap
-  before sending instead of discarding a paid generation; the chokepoint
-  still judges, and the wait ends on a stop request or at 23:30.
+- Replies have no daily cap but at most one Reply per entire conversation.
+  Only standalone original posts qualify; comments, responses, Debate turns
+  and conversation-context candidates are refused. The Replied store keeps
+  every status ID permanently, across restarts and days, including uncertain
+  submissions. Confirmed writes alone enter the action ledger. An unreadable
+  store refuses all Replies. A failed pre-submit step releases only its own
+  claim; a possibly submitted Reply remains claimed and is never retried.
+  Pacing remains `MIN_SECONDS_BETWEEN_REPLIES` plus the per-Reply jitter.
+  Waiting ends on a stop request or at any activity-window close.
 - Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
-  for every job: a reply is refused when the author handle in the parent's
+  for every job: protected authors and conversation follow-ups are refused
+  before drafting and again before writing. The browser verifies a standalone
+  original's author/status, refuses unknown or mismatched pages, and clicks
+  that article's Reply button rather than X's keyboard selection. A reply is
+  also refused when the author handle in the parent's
   URL contains a `BLOCKLIST` token or one of the Account's
   `network.blocked_accounts`, which add to it and never remove from it
   (case, spaces, dashes and underscores ignored on both sides), when the parent is the account's own post, or

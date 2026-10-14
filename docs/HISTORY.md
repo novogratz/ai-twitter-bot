@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+> **2026-10-13 — fixed windows, protected author and one Reply per conversation:**
+> after the rollback, the Operator requested daily Toronto windows 05:00–10:00,
+> 12:00–13:00 and 17:00–22:00; no Replies to @elonmusk under any circumstance;
+> and at most one Reply per entire post and its responses. Only standalone
+> originals can now be answered. Conversation context and Debate turns are
+> refused before generation. The write checks the actual author/status and
+> clicks the original's own Reply button. Replied IDs no longer expire at
+> 50,000 entries; uncertain submissions remain claimed across restarts.
+> State and `.env` are preserved. The Operator requested a pushed, merged PR,
+> with the bot left stopped.
+
 > **2026-10-13 — Operator rollback to September 26:** the latest main commit
 > before September 27 Toronto time was `348c82bcade1230abcd670682b1e10be9cf6f1c7`,
 > made September 25 at 21:18; September 26 had no main commit. Tracked code,

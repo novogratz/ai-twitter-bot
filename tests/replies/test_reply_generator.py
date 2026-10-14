@@ -38,7 +38,11 @@ def voice_files(monkeypatch, tmp_path):
 
 @pytest.fixture
 def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
-    """Each live Reply job run on one parent post; returns the prompt it sent."""
+    """Live job prompts plus direct rendering of retained conversation templates.
+
+    Conversation jobs are refused before generation; their refusal is tested
+    in test_reply_jobs. These calls test only the shared prompt assembler.
+    """
     from src.core import evolution_store
     from src.replies import reply_pipeline, reply_source
     from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
@@ -81,14 +85,13 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         dr._run_vip_scan(reply_pipeline.Cycle())
 
     def debate(author, text):
-        monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: [{"url": fresh(author), "text": text}])
-        db.run_debate_cycle()
+        from src.replies import reply_generator
+        reply_generator.generate(db.reply_call(), author=author, text=text)
 
     def replyback(author, text):
-        monkeypatch.setattr(nb, "scrape_own_tweet_and_replies", lambda: {
-            "own_tweet": "our post about GPUs",
-            "replies": [{"user": f"@{author}", "text": text, "url": fresh(author)}]})
-        nb.run_replyback_cycle()
+        from src.replies import reply_generator, replyback_agent
+        reply_generator.generate(replyback_agent.reply_call(), author=author, text=text,
+                                 context="our post about GPUs")
 
     def reply_search(author, text):
         ra.generate_replies()
@@ -368,7 +371,7 @@ HEDGE = "I'd skip this one honestly."
 SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
 PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
          ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
-         ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
+         ("vip", "Graphseo", FR)]
 # Only the bestie and buddy ReplyCalls declined "skip" in the first 20
 # characters before issue #155; every other path read SKIP as a prefix.
 VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}

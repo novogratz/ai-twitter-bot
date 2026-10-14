@@ -108,7 +108,8 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
                                        max_tweets=20, tab="latest")
         candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
-                      if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))]
+                      if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))
+                      and not x_urls.is_reply_like_tweet(t, handle)]
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - posted)
         log.info(f"[VIP] @{handle} done.")
