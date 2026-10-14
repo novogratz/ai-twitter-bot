@@ -142,7 +142,7 @@ def test_fr_forced_handles_override_only_the_search_and_feed_pipeline(jobs, job,
     assert language(jobs(job, "karpathy", EN)) == (lang, lang)
 
 
-@pytest.mark.parametrize("handle, text, lang", [("elonmusk", EN, "en"), ("vision_ia", FR, "fr"),
+@pytest.mark.parametrize("handle, text, lang", [("vipbuilder", EN, "en"), ("vision_ia", FR, "fr"),
                                                ("karpathy", EN, "en")])
 def test_vip_prompts_leave_the_language_line_to_their_template(jobs, handle, text, lang):
     """They carry the Voice of the parent's language, and no override line."""
@@ -197,7 +197,7 @@ def test_early_bird_names_the_author_from_the_status_url(jobs):
 # --- Hard rules and dossier ----------------------------------------------------
 
 EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird", "someone", EN),
-              ("mega_watch", "someone", EN), ("vip", "elonmusk", EN), ("vip", "vision_ia", FR),
+              ("mega_watch", "someone", EN), ("vip", "vipbuilder", EN), ("vip", "vision_ia", FR),
               ("vip", "karpathy", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
               ("reply_search", "", "")]
 
@@ -216,7 +216,7 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
     assert jobs(job, author, text).endswith("\n\n" + rules)
 
 
-@pytest.mark.parametrize("job, author, text", [("vip", "elonmusk", EN), ("vip", "vision_ia", FR),
+@pytest.mark.parametrize("job, author, text", [("vip", "vipbuilder", EN), ("vip", "vision_ia", FR),
                                                ("vip", "karpathy", FR), ("debate", "someone", EN)])
 def test_reply_calls_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
     """Adding the dossier to these prompts is the Operator's call: they end
@@ -378,11 +378,11 @@ LEGIT = "You can skip the hype, the moat is data."
 HEDGE = "I'd skip this one honestly."
 SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
 PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
-         ("mega_watch", "someone", EN), ("vip", "elonmusk", EN), ("vip", "vision_ia", FR),
+         ("mega_watch", "someone", EN), ("vip", "vipbuilder", EN), ("vip", "vision_ia", FR),
          ("vip", "karpathy", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
 # The current AI priority profiles use the default buddy template, whose
 # skip window covers the first 20 characters.
-VIP_WINDOW = {"elonmusk", "vision_ia", "karpathy"}
+VIP_WINDOW = {"vipbuilder", "vision_ia", "karpathy"}
 
 
 @pytest.fixture
@@ -506,7 +506,7 @@ def job_reply_call(name):
         "search": lambda: dr.reply_call("someone"),
         "search VIP": lambda: dr.reply_call(sorted(account.current().network.vip_reply)[0]),
         "karpathy": lambda: dr._vip_call("karpathy"),
-        "bestie": lambda: dr._vip_call("elonmusk"),
+        "bestie": lambda: dr._vip_call("vipbuilder"),
         "buddy": lambda: dr._vip_call("vision_ia"),
         "debate": debate_bot.reply_call,
         "replyback": replyback_agent.reply_call,

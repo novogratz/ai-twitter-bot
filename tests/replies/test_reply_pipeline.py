@@ -63,6 +63,7 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     answered = fresh("someone", n=1)
     replied_store.claim(answered)
     refused = {
+        fresh("ELONMUSK", n=6): "post protected",
         fresh("pgm_pm", n=2): "post blocked",
         fresh(config.BOT_HANDLE, n=3): "post own",
         answered: "post answered",

@@ -36,6 +36,7 @@ from ..core.logger import log
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
+    PROTECTED_ACCOUNT = "account protected from Replies"
     OWN_POST = "own post"
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
@@ -52,7 +53,7 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.PROTECTED_ACCOUNT, Refusal.OWN_POST,
                          Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
 
 
@@ -69,10 +70,12 @@ class Verdict:
 
 def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     """May the account answer this post at all? Definitive rules first, so a
-    Blocked account is dropped for good even when judged Overnight."""
+    protected or Blocked account is dropped for good even when judged Overnight."""
     author = x_urls.author(url)
     if not author:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
+    if account.current().replies.is_protected(author):
+        return Verdict(Refusal.PROTECTED_ACCOUNT, f"@{author} is protected from every Reply", author)
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
     if config.is_own_handle(author):

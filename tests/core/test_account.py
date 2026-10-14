@@ -185,23 +185,51 @@ def test_bot_account_picks_the_folder(accounts, fresh):
 
 
 def test_reply_priority_is_account_owned_and_case_insensitive(accounts):
-    accounts("other", THEAISHRINK.replace('priority_handles = ["elonmusk"]', 'priority_handles = ["ExampleBuilder"]'))
+    accounts("other", THEAISHRINK.replace('priority_handles = []', 'priority_handles = ["ExampleBuilder"]')
+             .replace('min_score = 97\n', 'min_score = 92\n', 1))
     policy = account.load("other").replies
     assert policy.is_priority("EXAMPLEBUILDER")
     assert policy.minimum_score("examplebuilder") == 92
     assert policy.minimum_score("anotherbuilder") == 97
 
 
+def test_live_reply_protection_overrides_priority_and_keeps_other_thresholds():
+    from dataclasses import replace
+    policy = account.current().replies
+    assert policy.protected_handles == ("elonmusk",)
+    assert policy.is_protected("@ELONMUSK")
+    assert not policy.is_priority("elonmusk")
+    assert policy.minimum_score("anotherbuilder") == 97
+    assert not replace(policy, priority_handles=("elonmusk",)).is_priority("elonmusk")
+
+
+@pytest.mark.parametrize("value", ['["@bad"]', '["bad-handle"]', '[""]', '[3]', '"elonmusk"'])
+def test_invalid_reply_protection_stops_start(accounts, value):
+    accounts("other", THEAISHRINK.replace('protected_handles = ["elonmusk"]', 'protected_handles = ' + value))
+    with pytest.raises(account.AccountError, match="replies.protected_handles"):
+        account.load("other")
+
+
+def test_reply_protection_is_account_owned_and_optional(accounts):
+    accounts("other", THEAISHRINK.replace('protected_handles = ["elonmusk"]',
+                                         'protected_handles = ["ExampleBuilder"]'))
+    policy = account.load("other").replies
+    assert policy.is_protected("@EXAMPLEBUILDER")
+    assert not policy.is_protected("elonmusk")
+    accounts("plain", THEAISHRINK.replace('protected_handles = ["elonmusk"]\n', ''))
+    assert account.load("plain").replies.protected_handles == ()
+
+
 @pytest.mark.parametrize("old,new", [
-    ('min_score = 92', 'min_score = 91'),
+    ('min_score = 97', 'min_score = 91'),
     ('other_min_score = 97', 'other_min_score = 96'),
-    ('min_score = 92', 'min_score = 101'),
-    ('min_score = 92', 'min_score = 98'),
-    ('min_score = 92', 'min_score = true'),
-    ('priority_handles = ["elonmusk"]', 'priority_handles = ["@bad"]'),
+    ('min_score = 97', 'min_score = 101'),
+    ('min_score = 97', 'min_score = 98'),
+    ('min_score = 97', 'min_score = true'),
+    ('priority_handles = []', 'priority_handles = ["@bad"]'),
 ])
 def test_reply_selection_thresholds_cannot_be_relaxed(accounts, old, new):
-    accounts("other", THEAISHRINK.replace(old, new))
+    accounts("other", THEAISHRINK.replace(old, new, 1))
     with pytest.raises(account.AccountError):
         account.load("other")
 

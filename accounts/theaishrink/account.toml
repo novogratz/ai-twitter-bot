@@ -147,10 +147,12 @@ default = "relations/buddy.md"
 [limits]
 MAX_REPOSTS_PER_DAY = 50
 
-# Operator 2026-10-12: ten selective, very short Replies at most, priority first.
+# Operator 2026-10-13: never answer Elon, including his comments or follow-ups.
+# Keep the existing 97/100 threshold for every other author.
 [replies]
-priority_handles = ["elonmusk"]
-min_score = 92
+protected_handles = ["elonmusk"]
+priority_handles = []
+min_score = 97
 other_min_score = 97
 
 # Operator 2026-10-12: all new standalone priority posts, crypto always excluded.

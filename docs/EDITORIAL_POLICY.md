@@ -1,4 +1,17 @@
-# Editorial policy — October 12, 2026
+# Editorial policy — October 13, 2026
+
+Operator, 2026-10-13: **never reply to @elonmusk**, whether the target is his
+original post, comment, response or conversation follow-up. This supersedes
+every earlier instruction to prioritize his posts for Replies. The Account's
+`replies.protected_handles` is a hard refusal, enforced before drafting, when
+reading saved candidates and again at the Reply write chokepoint. Priority,
+perfect scores, cached approvals and Debate flags cannot override it. The
+opened post must expose its own author and status ID, matching the requested
+URL; quoted posts cannot supply that identity. Unreadable or misattributed
+targets are refused before liking the parent or opening the Reply composer.
+Other eligible authors still require 97/100. Likes, follows, reposts and Voice
+keep their existing rules. Code and Account changes take effect on the next
+explicitly requested start or restart; this change does not restart the bot.
 
 The operator's latest mandate (2026-10-12) permits at most ten Replies per
 Toronto calendar day, with no minimum quota, to other accounts' standalone posts only. Never answer own
@@ -28,11 +41,11 @@ reviewed posts. The schema fixes the response count and permits only supplied
 IDs; incomplete or token-truncated output cannot approve a candidate. A failed
 comparison refresh does not invalidate an existing explicit approval less than
 one hour old. Reload the pool and apply every normal check before using it.
-The latest selection thresholds are 92/100 for priority authors and 97/100
-for others. `[replies]` in the Account stores priority handles and can tighten
-these thresholds. This Account prioritizes Elon: queued posts from him are
-reviewed first, immediately compared against cached approvals, and qualifying
-posts from him win before other authors. Topic and evidence rules still apply.
+The engine permits thresholds of at least 92/100 for priority authors and
+97/100 for others. `[replies]` in the Account stores priority and protected
+handles and can tighten these thresholds. This Account has no Reply priority
+authors, protects Elon from every Reply and requires 97/100 for all eligible
+authors. Topic and evidence rules still apply.
 Old cached scores are rechecked against the current threshold before drafting.
 The ten allowances accrue across the active windows; unused budget never
 forces a Reply. Shipped and ambiguous submissions from earlier today count.
