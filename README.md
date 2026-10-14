@@ -36,6 +36,8 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
+  Comparison schemas require one distinct entry per supplied post ID, so a
+  model cannot fill a batch by repeatedly reviewing its first item.
   Selection reviews at most eight candidates per call so the local model can
   finish its structured answer. Logs report review counts, provider errors and
   allowance waits; a failed refresh can still use a current approved candidate.

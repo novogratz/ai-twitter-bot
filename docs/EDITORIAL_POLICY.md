@@ -36,6 +36,11 @@ scans can discover new posts promptly without excluding useful older ones.
 There is no fifteen-minute post-age limit. All topic, quality and write checks
 still apply; this changes neither job cadence nor publication spacing.
 
+2026-10-13 comparison reliability: require one distinct review object entry per
+supplied post ID, preventing repeated first-item reviews from filling a batch.
+Missing, invented and duplicate keys still fail closed. The batch limit, scores,
+topic verdicts and publication checks remain unchanged.
+
 2026-10-12 reliability correction: selection compares at most eight posts per
 model call, mixing two waiting discoveries and six fresh ones before revisiting
 reviewed posts. The schema fixes the response count and permits only supplied

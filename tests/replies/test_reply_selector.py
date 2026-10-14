@@ -26,6 +26,11 @@ def reviews(batch, scores):
              "angle": f"Concrete useful implication {i}"} for i, row in enumerate(batch)]
 
 
+def review_answer(rows):
+    return json.dumps({"reviews": {row["id"]: {k: v for k, v in row.items() if k != "id"}
+                                   for row in rows}})
+
+
 def test_higher_scored_post_wins_not_first_seen(saved, monkeypatch):
     monkeypatch.setattr(selector, "_rank", lambda batch: reviews(batch, [42, 99, 98]))
     dispatched = []
@@ -68,11 +73,11 @@ def test_rank_requires_exact_ids_real_scores_and_specific_angles(saved, monkeypa
     batch = pool.contenders()
     output = reviews(batch, [25, 92, 75])
     calls = []
-    monkeypatch.setattr(selector, "run_llm", lambda prompt, model, **k: calls.append(k) or LLMResult(0, json.dumps({"reviews": output}), ""))
+    monkeypatch.setattr(selector, "run_llm", lambda prompt, model, **k: calls.append(k) or LLMResult(0, review_answer(output), ""))
     assert selector._rank(batch) == output
     schema = calls[0]["profile"].schema["properties"]["reviews"]
-    assert schema["minItems"] == schema["maxItems"] == len(batch)
-    assert set(schema["items"]["properties"]["id"]["enum"]) == {row["id"] for row in batch}
+    assert schema["type"] == "object" and schema["additionalProperties"] is False
+    assert set(schema["required"]) == set(schema["properties"]) == {row["id"] for row in batch}
     output[1]["score"] = True
     assert selector._rank(batch) is None
 
@@ -217,7 +222,7 @@ def test_missing_or_malformed_topic_verdict_fails_closed(saved, monkeypatch, top
         del output[0]["on_topic"]
     else:
         output[0]["on_topic"] = topic
-    monkeypatch.setattr(selector, "run_llm", lambda *a, **k: LLMResult(0, json.dumps({"reviews": output}), ""))
+    monkeypatch.setattr(selector, "run_llm", lambda *a, **k: LLMResult(0, review_answer(output), ""))
     assert selector._rank(batch) is None
 
 
@@ -227,7 +232,7 @@ def test_rank_rejects_irrelevant_high_score_and_includes_account_topic_rules(sav
     output[0]["on_topic"] = False
     prompts = []
     monkeypatch.setattr(selector, "run_llm", lambda prompt, *a, **k:
-                        prompts.append(prompt) or LLMResult(0, json.dumps({"reviews": output}), ""))
+                        prompts.append(prompt) or LLMResult(0, review_answer(output), ""))
     assert selector._rank(batch)[0]["score"] == 0
     assert "VIPs have no topic exemption" in prompts[0]
     assert "generated images, video, brainrot" in prompts[0]
