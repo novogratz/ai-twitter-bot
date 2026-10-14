@@ -108,7 +108,8 @@ def render_block() -> str:
         "- name them in a hot take, news post, breakout or spicy take\n"
         "- quote-tweet them with a critical observation\n"
         "- ridicule them, be ironic about them as people, or mock their work\n"
-        "If the idea in their post deserves criticism, criticize the IDEA,\n"
-        "never the person. When in doubt -> SKIP.\n\n"
+        "Contribute a kind, useful observation that follows the current Voice.\n"
+        "This list never authorizes criticism or bypasses protected-author rules.\n"
+        "If nothing positive and truthful fits, SKIP.\n\n"
         f"Current list: {names}.\n"
     )

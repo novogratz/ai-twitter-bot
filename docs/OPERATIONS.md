@@ -295,7 +295,10 @@ heartbeat line.
 For Replies, preserve `reply_pacing.json` even after an unconfirmed submit.
 A missing first-use store starts empty; malformed contents halt admission rather
 than resetting the cooldown. Queue drafts expire after 30 minutes and reviews
-after 10 minutes. A selected draft has a five-minute write authorization, and
+after 10 minutes. Reviews saved before the required `positive` verdict remain
+readable, but never count as approved. Waiting drafts are independently reviewed
+again; old selected drafts cannot publish or be automatically replayed.
+A selected draft has a five-minute write authorization, and
 is never automatically replayed after a crash. Check X and the permanent Replied
 store before repairing an ambiguous submission; do not clear a live process
 lock or pacing deadline to force another reply.

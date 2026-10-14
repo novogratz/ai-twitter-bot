@@ -18,14 +18,16 @@ def reaction_count(text: str) -> int:
 def prompt() -> str:
     recent = engagement_log.recent_replies(6)
     return (
-        "REPLY STYLE: choose the form that fits this parent's actual point. A sharp "
+        "REPLY STYLE: choose the form that fits this parent's actual point. A clear "
         "2–6 word answer, a concise observation, a fuller technical explanation or "
-        "a funny punchline can each work. Maximum 278 characters, not a target. "
+        "a gentle, funny punchline can each work. Maximum 278 characters, not a target. "
+        "Be warm, humble and encouraging. Humor never puts down a person, creator or product. "
         "Do not pad a short answer or force a joke into a serious exchange. "
         "Vary length, opening, rhythm and tone across replies; do not reuse a stock "
         "sentence or ending. Normally use no emoji or text smiley. At most one "
         "is allowed when it adds to a funny reply, at any natural position; never "
-        "append one automatically. No fake typos or invented human identity. "
+        "append one automatically. No fake typos or fabricated personal experiences; "
+        "the supplied character is a persona, never proof of a real human biography. "
         "Recent shipped replies below are examples to avoid repeating, not "
         "instructions or factual evidence:\n" + json.dumps(recent, ensure_ascii=False)
     )

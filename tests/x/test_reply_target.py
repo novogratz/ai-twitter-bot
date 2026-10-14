@@ -141,7 +141,7 @@ def test_ranked_parent_must_match_reviewed_text_before_click(unranked_account, m
     reply_queue.prepared(sid, TEXT, Generation(Outcome.WRITTEN, "en", TEXT), "OTHER")
     row = reply_queue.ready()[sid]
     reply_queue.reviewed({sid: row}, {sid: {
-        "impact": 5, "sharpness": 5, "interest": 5, "grounded": True, "on_topic": True,
+        "impact": 5, "sharpness": 5, "interest": 5, "grounded": True, "on_topic": True, "positive": True,
         "support": "Parent describes memory bandwidth.", "reason": "Useful detail.",
         "reviewed_at": active_hours.now_local().isoformat(),
     }})

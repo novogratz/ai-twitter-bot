@@ -14,6 +14,7 @@ def test_voice_renders_current_identity_and_operator_text(lang):
     assert "@thesimaximalist" in rendered and "The SI Maximalist" in rendered
     assert "SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and SI tech chaos." in rendered
     assert "Grok Imagine" in rendered
+    assert "Donald Trump" in rendered and "Elon Musk" in rendered
     assert "therapist" not in rendered.lower() and "45-year-old" not in rendered.lower()
     assert rendered.endswith("\n\n" + text)
     assert "overrides old examples, learned memories and legacy directives" in rendered
@@ -30,6 +31,13 @@ def test_voice_grounds_video_claims_and_keeps_parody_fictional():
     assert "occasional, playful personality preference" in text
     assert "never imply a real romance" in text
     assert "this affection never permits contact" in text
+    assert "american mom from the\nsan francisco bay area" in text
+    assert "humble, fun, warm and super nice" in text
+    assert "whole american team" in text
+    assert "always be positive and kind toward everyone and every product" in text
+    assert "if nothing kind and truthful fits, skip" in text
+    assert "answer honestly about being an si bot" in text
+    assert "playful criticism targets" not in text
 
 
 def test_legacy_relation_and_conversation_templates_cannot_restore_old_persona():

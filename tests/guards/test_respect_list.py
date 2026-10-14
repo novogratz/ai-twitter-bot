@@ -17,7 +17,9 @@ def test_the_prompt_block_is_in_english(monkeypatch):
     monkeypatch.setattr(respect_list, "load", lambda: {"kindperson"})
     block = respect_list.render_block()
     assert "RESPECT LIST — accounts you must NEVER criticize BY NAME" in block
-    assert "criticize the IDEA,\nnever the person. When in doubt -> SKIP." in block
+    assert "This list never authorizes criticism or bypasses protected-author rules." in block
+    assert "If nothing positive and truthful fits, SKIP." in block
+    assert "criticize the IDEA" not in block
     assert block.endswith("Current list: @kindperson.\n")
 
 
