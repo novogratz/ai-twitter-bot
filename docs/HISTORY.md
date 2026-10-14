@@ -8,6 +8,15 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+## October 13, 2026 — repeated IDs stalled comparison
+
+The local model returned eight reviews for the first post ID and none for the
+other seven. The array schema required eight items but allowed the same ID in
+each, so strict validation rejected each batch and discoveries stayed queued.
+Require a review object with a distinct mandatory key for every supplied ID.
+Parsing rejects duplicate keys as well as missing or invented IDs. Existing
+quality and publication checks remain; invalid output never grants approval.
+
 ## October 13, 2026 — approved endings stalled Reply drafting
 
 Selection approved a post at 98/100, but the model kept supplying a permitted

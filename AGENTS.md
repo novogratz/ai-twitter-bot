@@ -125,6 +125,11 @@ Account.
 
 ## Invariants
 
+2026-10-13 — Opportunity comparisons require one JSON object entry per
+supplied ID. Repeated first-item reviews must not stall the whole pool. The
+schema fixes distinct required keys; parsing rejects missing, invented or
+duplicate keys, and every topic, score and final-write check remains.
+
 2026-10-13 — A model-supplied approved Reply ending is separated before draft
 body validation; the publisher still chooses the ending. Other emojis, repeated
 endings, empty bodies and invalid wording remain refused. An exhausted format
