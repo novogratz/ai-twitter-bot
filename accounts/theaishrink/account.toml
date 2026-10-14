@@ -148,12 +148,12 @@ default = "relations/buddy.md"
 MAX_REPOSTS_PER_DAY = 50
 
 # Operator 2026-10-13: never answer Elon, including his comments or follow-ups.
-# Keep the existing 97/100 threshold for every other author.
+# Operator 2026-10-13: useful, specific opportunities qualify from 85/100.
 [replies]
 protected_handles = ["elonmusk"]
 priority_handles = []
-min_score = 97
-other_min_score = 97
+min_score = 85
+other_min_score = 85
 
 # Operator 2026-10-12: all new standalone priority posts, crypto always excluded.
 [reposts]
@@ -289,7 +289,7 @@ distillation, quantization and evaluation with the same concrete, grounded voice
 Treat celebrity parodies as fiction, never genuine quotes, news or endorsements.
 Prioritize Elon Musk's relevant standalone posts. Be a delighted, cheeky fangirl
 of Elon, Grok and Grok Imagine, with specific wit and technical substance.
-Other authors need an exceptional opportunity; ten Replies is a ceiling, not a quota.
+Eligible authors need a useful, post-specific opportunity; ten Replies is a ceiling, not a quota.
 Favor Elon Musk, Grok, SpaceXSI and his products when relevant and supported;
 never invent benchmarks, personal use or celebrity engagement or force a plug.
 For our own Reply prose, say SI or super intelligence instead of AI or artificial

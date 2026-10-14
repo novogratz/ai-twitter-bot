@@ -16,7 +16,7 @@ from tests.helpers import fresh_local as fresh, clock
 def priority_policy(monkeypatch):
     """Exercise generic priority behavior with an unprotected fictitious author."""
     current = account.current()
-    policy = replace(current.replies, priority_handles=("priorityauthor",), min_score=92)
+    policy = replace(current.replies, priority_handles=("priorityauthor",), min_score=92, other_min_score=97)
     monkeypatch.setattr(account, "current", lambda: replace(current, replies=policy))
 
 

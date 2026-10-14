@@ -30,8 +30,8 @@ real account. Setup and run commands live in [`README.md`](README.md).
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
 - Replies, likes and follows cover AI/SI and substantive technology (2026-10-12), including AI videos.
-  Elon is excluded from Replies; eligible authors require exceptional
-  opportunities scoring at least 97/100. Former crypto/trading exceptions are blocked;
+  Elon is excluded from Replies; useful, post-specific opportunities qualify
+  from 85/100. Former crypto/trading exceptions are blocked;
   Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
   opened post text; discovered follows and Engagers need AI/SI or technology bios. Replies
   require relevance for every author and semantic approval during selection.
@@ -124,6 +124,12 @@ Account.
 | Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `accounts/<BOT_ACCOUNT>/voice_fr.md`, `voice_en.md` |
 
 ## Invariants
+
+2026-10-13 — The Operator lowered the Reply opportunity threshold to 85/100
+after useful posts repeatedly failed the exceptional-only bar. Stricter Account
+thresholds remain valid; the engine floor is 85. Ten/day, protected authors,
+topic/evidence checks, standalone parents, pacing and permanent deduplication
+remain unchanged.
 
 2026-10-13 — Opportunity comparisons require one JSON object entry per
 supplied ID. Repeated first-item reviews must not stall the whole pool. The

@@ -186,7 +186,8 @@ def test_bot_account_picks_the_folder(accounts, fresh):
 
 def test_reply_priority_is_account_owned_and_case_insensitive(accounts):
     accounts("other", THEAISHRINK.replace('priority_handles = []', 'priority_handles = ["ExampleBuilder"]')
-             .replace('min_score = 97\n', 'min_score = 92\n', 1))
+             .replace('min_score = 85\n', 'min_score = 92\n', 1)
+             .replace('other_min_score = 85\n', 'other_min_score = 97\n', 1))
     policy = account.load("other").replies
     assert policy.is_priority("EXAMPLEBUILDER")
     assert policy.minimum_score("examplebuilder") == 92
@@ -199,8 +200,16 @@ def test_live_reply_protection_overrides_priority_and_keeps_other_thresholds():
     assert policy.protected_handles == ("elonmusk",)
     assert policy.is_protected("@ELONMUSK")
     assert not policy.is_priority("elonmusk")
-    assert policy.minimum_score("anotherbuilder") == 97
+    assert policy.minimum_score("anotherbuilder") == 85
     assert not replace(policy, priority_handles=("elonmusk",)).is_priority("elonmusk")
+
+
+def test_omitted_reply_thresholds_keep_stricter_defaults(accounts):
+    accounts("other", THEAISHRINK.replace('min_score = 85\n', '', 1)
+             .replace('other_min_score = 85\n', '', 1))
+    policy = account.load("other").replies
+    assert policy.min_score == 92
+    assert policy.other_min_score == 97
 
 
 @pytest.mark.parametrize("value", ['["@bad"]', '["bad-handle"]', '[""]', '[3]', '"elonmusk"'])
@@ -221,14 +230,14 @@ def test_reply_protection_is_account_owned_and_optional(accounts):
 
 
 @pytest.mark.parametrize("old,new", [
-    ('min_score = 97', 'min_score = 91'),
-    ('other_min_score = 97', 'other_min_score = 96'),
-    ('min_score = 97', 'min_score = 101'),
-    ('min_score = 97', 'min_score = 98'),
-    ('min_score = 97', 'min_score = true'),
+    ('min_score = 85', 'min_score = 84'),
+    ('other_min_score = 85', 'other_min_score = 84'),
+    ('min_score = 85', 'min_score = 101'),
+    ('min_score = 85', 'min_score = 86'),
+    ('min_score = 85', 'min_score = true'),
     ('priority_handles = []', 'priority_handles = ["@bad"]'),
 ])
-def test_reply_selection_thresholds_cannot_be_relaxed(accounts, old, new):
+def test_reply_selection_thresholds_respect_floor_and_order(accounts, old, new):
     accounts("other", THEAISHRINK.replace(old, new, 1))
     with pytest.raises(account.AccountError):
         account.load("other")

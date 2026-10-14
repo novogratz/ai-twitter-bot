@@ -19,7 +19,7 @@ on the real account. Scanning alone saves posts and never sends Replies.
 3. Wait at least sixty seconds after new discoveries, then run
    `uv run python -c "from src.core import health; from src.replies.reply_selector import run_reply_selection_cycle; health.wrap_job(run_reply_selection_cycle, 'reply_selection', safari_health=False)()"`.
    The selector compares saved candidates and drafts at most one scoring
-   92/100 or higher for priority authors, 97/100 for others; it can reject them all. Hourly allowances, active windows,
+   the Account threshold (85/100 for eligible live Account authors); it can reject them all. Hourly allowances, active windows,
    the ten-per-day cap including ambiguous submissions, and all Reply
    admission/write guards still apply. An allowance is never a quota to fill.
 4. Report the saved count and the `[SELECTION]`, `[SELECTED]` and `[REPLY]`

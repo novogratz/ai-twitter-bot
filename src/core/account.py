@@ -361,10 +361,10 @@ def _replies(top) -> Replies:
                 table.fail(f"{key}[{i}]", "takes an X handle without @")
     minimum = table.get("min_score", 92)
     other = table.get("other_min_score", 97)
-    if not 92 <= minimum <= 100:
-        table.fail("min_score", "must be between 92 and 100")
-    if not max(97, minimum) <= other <= 100:
-        table.fail("other_min_score", "must be at least 97 and min_score, and at most 100")
+    if not 85 <= minimum <= 100:
+        table.fail("min_score", "must be between 85 and 100")
+    if not max(85, minimum) <= other <= 100:
+        table.fail("other_min_score", "must be at least 85 and min_score, and at most 100")
     return Replies(tuple(h.lower() for h in handles["priority_handles"]), minimum, other,
                    tuple(h.lower() for h in handles["protected_handles"]))
 
