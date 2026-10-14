@@ -337,9 +337,13 @@ class Replies:
     priority_handles: tuple = ()
     min_score: int = 92
     other_min_score: int = 97
+    protected_handles: tuple = ()
+
+    def is_protected(self, author: str) -> bool:
+        return (author or "").strip().lstrip("@").lower() in self.protected_handles
 
     def is_priority(self, author: str) -> bool:
-        return (author or "").lower() in self.priority_handles
+        return not self.is_protected(author) and (author or "").lower() in self.priority_handles
 
     def minimum_score(self, author: str) -> int:
         return self.min_score if not self.priority_handles or self.is_priority(author) else self.other_min_score
@@ -347,18 +351,22 @@ class Replies:
 
 def _replies(top) -> Replies:
     table = _Table(top.file, "replies", top.get("replies", {}), required={},
-                   optional={"priority_handles": list, "min_score": int, "other_min_score": int})
-    handles = table.items("priority_handles", str) if "priority_handles" in table else []
-    for i, handle in enumerate(handles):
-        if not _HANDLE.fullmatch(handle):
-            table.fail(f"priority_handles[{i}]", "takes an X handle without @")
+                   optional={"priority_handles": list, "min_score": int, "other_min_score": int,
+                             "protected_handles": list})
+    handles = {}
+    for key in ("priority_handles", "protected_handles"):
+        handles[key] = table.items(key, str) if key in table else []
+        for i, handle in enumerate(handles[key]):
+            if not _HANDLE.fullmatch(handle):
+                table.fail(f"{key}[{i}]", "takes an X handle without @")
     minimum = table.get("min_score", 92)
     other = table.get("other_min_score", 97)
     if not 92 <= minimum <= 100:
         table.fail("min_score", "must be between 92 and 100")
     if not max(97, minimum) <= other <= 100:
         table.fail("other_min_score", "must be at least 97 and min_score, and at most 100")
-    return Replies(tuple(h.lower() for h in handles), minimum, other)
+    return Replies(tuple(h.lower() for h in handles["priority_handles"]), minimum, other,
+                   tuple(h.lower() for h in handles["protected_handles"]))
 
 
 @dataclass(frozen=True)

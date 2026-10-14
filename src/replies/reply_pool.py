@@ -104,6 +104,10 @@ def collect(job, candidates) -> int:
             if row["state"] in {"processing", "shipped", "closed", "skipped"}:
                 continue
             author = x_urls.author(candidate.url)
+            if account.current().replies.is_protected(author):
+                row.update(eligible=False, state="rejected", reason="account protected from Replies")
+                events.append(dict(kind="decision", id=key, state="rejected", reason=row["reason"], ts=stamp))
+                continue
             if config.is_own_handle(author) or is_blocked_account(author):
                 row.update(eligible=False, state="rejected", reason="own or Blocked account")
                 events.append(dict(kind="decision", id=key, state="rejected", reason=row["reason"], ts=stamp))
@@ -135,6 +139,8 @@ def contenders(now=None) -> list:
         if not row.get("eligible") or row["state"] not in {"queued", "ready"}:
             continue
         # Recheck saved candidates after a policy change or a restart too.
+        if account.current().replies.is_protected(x_urls.author(row["url"])):
+            continue
         if not account.current().niche.matches_post(row["text"]):
             continue
         age = x_urls.age(row["url"], now)

@@ -7,7 +7,7 @@ real account. Setup and run commands live in [`README.md`](README.md).
 ## Current policy — the ceiling you never lift
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(updated 2026-10-12) and supersedes every older mandate. It encodes:
+(updated 2026-10-13) and supersedes every older mandate. It encodes:
 
 - Nominal activity windows: 05:00–10:00, 12:00–13:00 and 16:45–23:00 America/Toronto.
   Each start varies by ±10 minutes per day; closing times are fixed, end exclusive.
@@ -23,12 +23,15 @@ real account. Setup and run commands live in [`README.md`](README.md).
   Quotes, self-recycling and threads stay at zero.
 - Replies have a hard cap of ten per Toronto day, no minimum quota, standalone posts only, paced and deduplicated per tweet;
   one Reply per post permanently; debates and conversation follow-ups stay disabled.
+  Never reply to @elonmusk: originals, comments, responses and follow-ups are
+  protected. Account `replies.protected_handles` overrides priority, saved
+  approvals and every Reply caller; the write also verifies the opened author.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
 - Replies, likes and follows cover AI/SI and substantive technology (2026-10-12), including AI videos.
-  Elon leads scans, comparison and selection: at least 92/100; other authors
-  require exceptional opportunities scoring at least 97/100. Former crypto/trading exceptions are blocked;
+  Elon is excluded from Replies; eligible authors require exceptional
+  opportunities scoring at least 97/100. Former crypto/trading exceptions are blocked;
   Bitcoin/crypto content is excluded even when it mentions AI. Likes check the
   opened post text; discovered follows and Engagers need AI/SI or technology bios. Replies
   require relevance for every author and semantic approval during selection.
@@ -64,7 +67,8 @@ change. The same holds for the operator-owned guardrails: the Account's
 Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
 edits, `BLOCKLIST` in `src/core/config.py`, the repost ceiling and deduplication,
 `accounts/<BOT_ACCOUNT>/respect_list.json`, and
-`personality_store.hard_rules_block()`.
+`personality_store.hard_rules_block()`. Removing an Account's
+`replies.protected_handles` protection also requires an explicit Operator request.
 
 ## Active code
 
@@ -120,6 +124,13 @@ Account.
 | Voice, operator-managed: the one persona every prompt carries, rendered by `personality_store.render_voice` | `accounts/<BOT_ACCOUNT>/voice_fr.md`, `voice_en.md` |
 
 ## Invariants
+
+2026-10-13 — The Operator permanently protected @elonmusk from all Replies,
+including replies to his comments or responses. Protection is enforced before
+drafting, on saved opportunities and at the write, with the actual opened
+post's author checked against the requested URL. No priority, score or Debate
+flag bypasses it. The existing likes, follows, reposts and Voice rules remain.
+This supersedes earlier Reply priority for Elon. No restart accompanies it.
 
 Each one is a bug that shipped live. The full incident stories are in
 [`docs/HISTORY.md`](docs/HISTORY.md).

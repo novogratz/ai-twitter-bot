@@ -25,6 +25,27 @@ TEXT = "Batching is where inference margins are won or lost."
 # --- rules on the post ------------------------------------------------------
 
 
+@pytest.mark.parametrize("handle", ["elonmusk", "ElonMusk", "ELONMUSK"])
+@pytest.mark.parametrize("debate_turn", [False, True])
+def test_protected_author_is_always_refused(handle, debate_turn, monkeypatch, memory_ledger):
+    # Protection wins even outside active hours, before any publication-state read.
+    monkeypatch.setattr(active_hours, "may_act", lambda: False)
+    monkeypatch.setattr(replied_store, "load_replied", lambda: pytest.fail("read state before protection"))
+    parent = url(handle) + "?s=20"
+    for verdict in (judge_parent(parent, debate_turn=debate_turn),
+                    judge_reply(parent, TEXT, debate_turn=debate_turn)):
+        assert verdict.refusal is Refusal.PROTECTED_ACCOUNT
+        assert verdict.refusal.definitive
+        assert verdict.author == "elonmusk"
+    assert memory_ledger.rows == []
+
+
+def test_reply_protection_is_separate_from_the_general_blocklist():
+    from src.guards.reply_admission import is_blocked_account
+    assert not is_blocked_account("elonmusk"), "likes, follows and reposts keep their own policy"
+    assert judge_parent(url("elonmuskfan")), "protection matches an exact handle"
+
+
 @pytest.mark.parametrize("handle,token", [
     ("pgm_pm", "pgm_pm"),
     ("PGM_PM", "pgm_pm"),

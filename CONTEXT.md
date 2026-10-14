@@ -183,9 +183,13 @@ _Avoid_: rally, round, comeback
 
 **Reply admission**:
 The Operator's rules a Reply must pass before it ships: first on the post
-it answers (author, Blocked account, own post, already Replied, Waking hours,
+it answers (author, account protected from Replies, Blocked account, own post, already Replied, Waking hours,
 Debate turn cap), then again with the spacing since the last Reply and the
 final text. Only a Reply it admits is sent.
+Account `replies.protected_handles` forbids answering those authors in any
+Reply path, independently of likes, follows, reposts and the respect list.
+Protection overrides priority and saved scores; the opened author must match
+the requested post before the Reply composer opens.
 _Avoid_: gate, prefilter, reply filter
 
 **Replied store**:

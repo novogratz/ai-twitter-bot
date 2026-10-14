@@ -19,11 +19,14 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **At most ten Replies per Toronto day, with no minimum quota**, only to other accounts’ standalone posts.
   One reply per post, permanently; no debates, follow-ups, own posts or comments on them.
+  **Never reply to @elonmusk**, including his originals, comments or responses.
+  Account `replies.protected_handles` is checked before drafting and at the
+  write, including saved approvals and the actual author of the opened post.
   Spacing and duplicate protection remain.
   Reply scans save posts to a shared pool; a one-minute selector chooses among them
   across the last **24 hours**, including the frequent priority-profile scans;
   there is no 4-, 15- or 18-minute post-age cutoff. It
-  drafts at most one candidate explicitly judged on-topic and scoring at least 92/100 for Elon or 97/100 for anyone else. Elon is reviewed and selected first among qualifying posts. Every reply passes Reply admission before generation (before sending for
+  drafts at most one eligible candidate explicitly judged on-topic and scoring at least 97/100. Every reply passes Reply admission before generation (before sending for
   the optional search job, whose one model call finds and drafts together)
   and again at the write: blocked accounts, the account's own posts and links without an
   author handle are refused. Every reply prompt carries the Voice, the

@@ -611,25 +611,34 @@ def repost_tweet(tweet_url: str) -> WriteOutcome:
 
 
 def _standalone_reply_target(url: str) -> bool:
-    """Verify standalone status and topic from the opened target's own text."""
+    """Verify the opened author's identity, Reply protection, status and topic."""
     from ..core import account
-    from .x_urls import status_id
-    sid = status_id(url)
+    from . import x_urls
+    sid = x_urls.status_id(url)
     js = """(() => {
       const id = TARGET;
       const articles = [...document.querySelectorAll('article')];
-      const index = articles.findIndex(a => [...a.querySelectorAll('a[href]')]
-        .some(l => l.querySelector('time') && l.pathname.endsWith('/status/' + id)));
+      const own = (article, selector) => [...article.querySelectorAll(selector)]
+        .filter(el => el.closest('article') === article
+          && !el.closest('[data-testid="quoteTweet"], [role="link"]'));
+      const permalink = article => own(article, 'a[href]').find(l => l.querySelector('time'));
+      const index = articles.findIndex(a => permalink(a)?.pathname.endsWith('/status/' + id));
       if (index !== 0) return 'refused';
       const article = articles[index];
-      const text = article.querySelector('[data-testid="tweetText"]')?.innerText;
+      const text = own(article, '[data-testid="tweetText"]')[0]?.innerText;
       if (!text || text.trim().startsWith('@')) return 'refused';
       if (/Replying to|En réponse à/i.test(article.innerText)) return 'refused';
-      return JSON.stringify({text});
+      return JSON.stringify({text, url: permalink(article).href});
     })()""".replace("TARGET", json.dumps(sid))
     try:
         target = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]"))
-        return (isinstance(target, dict) and isinstance(target.get("text"), str)
+        if not isinstance(target, dict) or not isinstance(target.get("text"), str):
+            return False
+        opened_url = target.get("url", "")
+        author = x_urls.author(opened_url)
+        return (bool(author) and author == x_urls.author(url)
+                and x_urls.status_id(opened_url) == sid
+                and not account.current().replies.is_protected(author)
                 and account.current().niche.matches_post(target["text"]))
     except Exception:
         return False
@@ -647,7 +656,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
-    Reply admission (src/guards/reply_admission.py) owns every rule: Blocked
+    Reply admission (src/guards/reply_admission.py) owns every rule: protected
+    account, Blocked
     account, own post, one Reply per post, Debate turn cap, spacing, and the
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
@@ -724,7 +734,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             # Operator 2026-10-12: every caller verifies standalone status and topic.
             if not _standalone_reply_target(tweet_url):
-                log.info("[REPLY] Conversation, off-topic or unreadable target: refusing %s", tweet_url)
+                log.info("[REPLY] Protected, misattributed, conversation, off-topic or unreadable target: refusing %s", tweet_url)
                 return WriteOutcome.REFUSED
 
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every

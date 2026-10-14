@@ -103,6 +103,33 @@ def test_conversation_candidates_are_saved_but_never_eligible():
     assert row["state"] == "rejected" and row["eligible"] is False
 
 
+@pytest.mark.parametrize("source", ["FEED", "SEARCH", "VIP", "EARLYBIRD", "MEGA", "INBOX"])
+@pytest.mark.parametrize("context", ["", "A post he answered"])
+def test_protected_author_is_saved_but_never_queued(source, context):
+    parent = fresh("ELONMUSK")
+    pool.collect(pipeline.Job("scan", "SCAN", None),
+                 [pipeline.Candidate(parent, "Grok Imagine generated video", source, context=context)])
+    row = next(iter(pool.read().values()))
+    assert row["state"] == "rejected" and row["eligible"] is False
+    assert row["reason"] == "account protected from Replies"
+
+
+@pytest.mark.parametrize("state", ["queued", "ready"])
+def test_saved_protected_author_cannot_reach_comparison_or_drafting(monkeypatch, state):
+    from src.replies import reply_selector as selector
+    parent = fresh("ELONMUSK")
+    pool.observe([dict(url=parent, text="Grok Imagine generated video")], "FEED")
+    key = parent.rsplit("/", 1)[1]
+    pool.mark(key, state, eligible=True, score=100, on_topic=True, author="untrusted display name",
+              angle="Production meetings become redundant", reviewed_at=active_hours.now_local().isoformat())
+    clock(monkeypatch, active_hours.now_local() + timedelta(seconds=61))
+    monkeypatch.setattr(selector, "_rank", lambda *a: pytest.fail("reviewed protected post"))
+    monkeypatch.setattr(pipeline, "dispatch", lambda *a, **k: pytest.fail("drafted protected post"))
+    assert pool.contenders() == []
+    assert selector.run_reply_selection_cycle() == 0
+    assert pool.read()[key]["state"] == state, "keep publication history intact"
+
+
 @pytest.mark.parametrize("source", ["FEED", "SEARCH", "VIP/Graphseo", "EARLYBIRD", "MEGA"])
 def test_every_source_saves_but_rejects_unrelated_posts(source):
     url = fresh("someone")
