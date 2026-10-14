@@ -154,10 +154,16 @@ def dry_run() -> bool:
 # minutes apart and the Startup post can land next to any slot.
 _served("MAX_ORIGINALS_PER_DAY", "MIN_SECONDS_BETWEEN_POSTS")
 
+def originals_enabled() -> bool:
+    """An Account's publishing permission cannot be raised by an engine setting."""
+    from . import account
+    return account.current().publish_originals
+
+
 def posts_ceiling() -> int:
     """The day's ceiling of profile publications: the policy's eight, or
     MAX_ORIGINALS_PER_DAY when an Account or .env sets it lower."""
-    return min(MAX_PROFILE_POSTS_PER_DAY, settings.get("MAX_ORIGINALS_PER_DAY"))
+    return min(MAX_PROFILE_POSTS_PER_DAY, settings.get("MAX_ORIGINALS_PER_DAY")) if originals_enabled() else 0
 
 def post_targets() -> tuple[int, int]:
     """The minimum and the planned Originals of a day, neither above

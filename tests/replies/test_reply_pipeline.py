@@ -501,7 +501,7 @@ def spacing(llm, chokepoint, monkeypatch, memory_ledger):
 
     s = SimpleNamespace(chokepoint=chokepoint, slept=[], waited_at_send=[], gap_after_send=[],
                         on_sleep=lambda: None, ledger=memory_ledger,
-                        now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
+                        now=datetime(2026, 9, 21, 12, 15, tzinfo=ZoneInfo("America/Toronto")))
     monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
     monkeypatch.setattr(ag, "now_local", lambda: s.now)
 

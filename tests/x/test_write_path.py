@@ -5,6 +5,9 @@ from datetime import datetime
 
 import pytest
 
+# These engine tests exercise an Account explicitly permitted to publish Originals.
+pytestmark = pytest.mark.usefixtures("originals_account")
+
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag
 from src.guards import follow_policy
@@ -219,7 +222,7 @@ def _dry_run_reply_path(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
 
 
-def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
+def test_legacy_typo_setting_does_not_mutate_validated_text(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import humanizer
     from src.x import twitter_client
@@ -234,10 +237,10 @@ def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
 
     url = "https://x.com/typofriend/status/2063500000000000101"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
-    assert validated and validated[-1].endswith("(typo)")
+    assert validated and not validated[-1].endswith("(typo)")
 
 
-def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_override):
+def test_language_and_content_checks_judge_the_same_text(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import reply_language
     from src.core import humanizer
@@ -255,10 +258,10 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_ov
     url = "https://x.com/typofriend/status/2063500000000000103"
     assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
-    assert validated[-1].endswith("(typo)")
+    assert not validated[-1].endswith("(typo)")
 
 
-def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
+def test_refused_normalized_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import humanizer
     from src.x import twitter_client
@@ -268,7 +271,7 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override
     settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     monkeypatch.setattr(content_guard, "validate",
-                        lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
+                        lambda text, kind="post": (False, "content refused"))
 
     url = "https://x.com/typofriend/status/2063500000000000102"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.REFUSED
@@ -438,7 +441,7 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
 
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is W.SHIPPED
     assert pasted == [validated[-1]]
-    assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
+    assert not pasted[0].endswith("(typo)") and "—" not in pasted[0]
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
@@ -684,7 +687,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_overr
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
     from src.x import safari, twitter_client as tc
-    clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
     settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)

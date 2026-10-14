@@ -138,12 +138,14 @@ def too_soon(action: str) -> str:
 
 def can_post(action: str) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
+    if action == POST and not config.originals_enabled():
+        return False, "Originals disabled: this Account publishes Replies only"
     if stop_requested():
         return False, "stop requested"
     if not is_active():
         return False, f"asleep (active {window_label()})"
     if action in (QUOTE, RETWEET):
-        return False, "automatic quote/repost cap is 0 (editorial originals only)"
+        return False, "automatic quote/repost cap is 0"
     if action == POST:
         if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
             return False, f"daily profile publication cap reached ({config.MAX_PROFILE_POSTS_PER_DAY})"

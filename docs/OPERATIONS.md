@@ -196,14 +196,14 @@ Because stdout is a pipe, the logger adds no console handler: log lines go
 only to `bot.log`, while stdout and tracebacks reach both the terminal and
 `bot.log`. Follow `tail -F bot.log`.
 
-Flags for `main.py`: `--post-only`, `--reply-only`, `--dry-run`. There is no
-other mode; `--monthly-recap-now` is gone. Every start in waking hours opens
-a Startup post: a restart publishes one trend post within 45 minutes when the
-daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
+Flags: `--reply-only` limits work to standalone Reply jobs; `--dry-run` prints
+policy and jobs without external calls. The live Account has `publish_originals`
+false: `--post-only` errors, no Startup window opens and no original publishes on
+restart. A start/restart still requires an explicit Operator request.
 
-Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
-waits until the next opening: 05:00, 12:00 or 17:00 Toronto time. Windows
-close at 10:00, 13:00 and 22:00 respectively, every day without jitter.
+The next daily openings are 05:00, 12:05, 17:15 and 22:00 Toronto time. Closing
+times are 09:30, 13:00, 20:00 and 23:00, exclusive, without jitter. Outside these
+windows the bot waits. Existing history, pending submissions and `.env` survive.
 
 ## Stop
 
@@ -268,6 +268,7 @@ real account from a second process. Before any of them:
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
+| `replied_tweets.lock` | Process lock for permanent Reply claims; never clear a live lock to bypass deduplication |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
 
 The other files of the table are in the same `state/<account>/` folder,
@@ -852,3 +853,9 @@ handles in `previous_handles` so older posts remain our own. Check any `.env`
 Profile metadata documents the supplied identity; changing it does not edit X.
 Code and loaded Account configuration take effect on the next explicitly
 requested start or restart.
+
+The Account's `publish_originals` and `text_replacements` fields are Operator-owned.
+The former cannot be overridden by `.env`; the latter affects only outgoing
+prose, not source evidence or URLs. `network.blocked_accounts` now includes
+@elonmusk for likes/follows as well as the existing Reply protection. Never clear
+his protected status as part of a routine configuration or whitelist update.

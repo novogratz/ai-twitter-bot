@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
 
-from ..core import account, personality_store
+from ..core import account, personality_store, reply_style
 from ..core.humanizer import smart_trim, strip_agent_preamble
 from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, resolve, run_llm
 from ..core.logger import log
@@ -153,4 +153,5 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
     })
-    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, *anchors]))
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
+                                   reply_style.prompt(), *anchors]))

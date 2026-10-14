@@ -5,6 +5,9 @@ import threading
 
 import pytest
 
+# These engine tests exercise an Account explicitly permitted to publish Originals.
+pytestmark = pytest.mark.usefixtures("originals_account")
+
 from src.core import state_store
 from src.core.state_errors import StateUnreadable
 from src.core.state_store import DISPOSABLE, GUARDED, StateFile

@@ -6,69 +6,37 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
-2026-10-13 — The Operator requested rollback to the code on main on
-September 26, 2026. Commit `348c82bcade1230abcd670682b1e10be9cf6f1c7`
-(September 25 at 21:18 Toronto time) is that snapshot; no main commit was
-made on September 26. This explicit rollback supersedes later behavior
-mandates and restores the snapshot's code, Account files, tests and policy,
-including uncapped daytime Replies and the conversation job registrations.
-Later Reply caps and independent draft review remain absent; the new Reply
-restrictions below amend that snapshot. Newer local
-edits and untracked source/test additions were backed up outside the repo.
-Production state, `.env`, logs and stop flags are preserved. The bot remains
-stopped; starting it still requires an explicit Operator request.
+2026-10-14 — The Operator now requires Replies only. `publish_originals = false`
+in the Account prevents Originals at the scheduler, Startup path, editorial entry
+point and browser write; `.env` and `--post-only` cannot restore them. Conversation
+jobs and automatic pinning are unscheduled. Daily Toronto activity windows are
+05:00–09:30, 12:05–13:00, 17:15–20:00 and 22:00–23:00, start inclusive and end
+exclusive, without jitter. Never interact with @elonmusk: no Reply, like, follow,
+unfollow or @mention. Both `replies.protected_handles` and `network.blocked_accounts`
+protect him, regardless of saved priorities or whitelist entries. Actual opened
+authors are checked before browser clicks; a Reply parent mentioning a Blocked
+account is refused too. Only another account's standalone original qualifies,
+once per entire conversation permanently. Our current and historical handles,
+comments, replies and follow-ups are forbidden. Permanent claims use a process
+lock, and uncertain submissions stay claimed across restarts.
 
-2026-10-13 — After the September 26 rollback, the Operator restricted all
-external activity to fixed Toronto windows 05:00–10:00, 12:00–13:00 and
-17:00–22:00 every day (start inclusive, end exclusive; no jitter). Replies
-may target standalone original posts only, once per post permanently; comments,
-responses and conversation follow-ups are refused, including VIPs and Debate
-callers. Replied IDs are never evicted. The Account's `replies.protected_handles`
-contains `elonmusk`: no Reply to any of his posts or responses, with the actual
-opened author checked before clicking that original's own Reply button.
-Unknown or mismatched targets fail closed. Existing state and `.env` are
-preserved. Other snapshot settings and the Voice stay in place. The bot stays
-stopped; the requested PR and merge do not authorize a start or restart.
+Outgoing prose replaces standalone AI with SI and artificial intelligence
+(including Airtificial intelligence) with Super intelligence. Literal URLs,
+@handles, embedded names such as OpenAI and French verbs are preserved. Discovery
+still searches both vocabularies. Reply length and tone follow context: very short,
+fuller technical, sharp or funny; no fixed suffix, automatic smiley or manufactured
+typo. At most one optional emoji/text smiley. The minimum length floor is lowered
+from 25 to 2 characters; generic reactions and all factual/content checks remain.
+Recent shipped replies guide variation. Production history, pending state and
+`.env` are preserved. This implementation does not start or restart the bot.
 
-2026-10-14 — The Operator replaced the former therapist persona with The SI
-Maximalist, @thesimaximalist. The supplied motto is: "SI Maximalist: SI brain rot,
-Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos." The Account
-creates and publishes AI videos with Grok Imagine; the Operator reports strong
-engagement. Voice, Relations, search prompts, topic matching, video discovery and
-new engagement tags use this identity. News remains sourced, celebrity parodies
-stay explicitly fictional, and details or results of a particular video need
-supplied evidence. Old learned directives cannot restore the previous persona.
-Storage remains `theaishrink`; historical handles remain own posts and production
-history is preserved. Activity windows, protected authors, one Reply per entire
-conversation, caps, pacing and sourcing checks are unchanged. This updates code
-and configuration; it neither starts the bot nor edits the live profile or adds
-automated video generation/uploading.
-
-[`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(updated 2026-10-14) and supersedes every older mandate. It encodes:
-
-- Active 05:00–10:00, 12:00–13:00 and 17:00–22:00 America/Toronto only,
-  every day with fixed starts and exclusive closing times.
-- At least three sourced AI originals targeted a day, six planned, and eight
-  combined profile publications at most, twenty minutes apart at least.
-- The restored slot grid includes three trend slots (10:00, 13:00, 15:00),
-  now outside active windows. A Startup post on every start in waking hours
-  takes its topic from rising AI posts on X and its facts from a trusted article.
-- Quotes, reposts, self-recycling and threads stay at zero.
-- Replies are uncapped per day in waking hours, paced and permanently limited
-  to one Reply per standalone original; comments and follow-ups are refused.
-  Never reply to @elonmusk, including his comments and responses. The opened
-  author is verified; VIP and Debate flags grant no exception.
-- Likes, follows, Reply spacing, Debate turns and the content checks carry
-  the Operator's bounds (2026-09-25) in their `src/core/settings.py`
-  declarations; `.env` and `account.toml` may only tighten them.
-- The Account is The SI Maximalist: SI/AI news, generated videos, brainrot and
-  explicitly fictional celebrity parodies. Grok Imagine enthusiasm is grounded
-  in the Operator's video work; clip details and metrics need supplied context.
-- Replies, likes and follows keep to SI/AI, including AI videos (2026-10-14): the Account's niche
-  patterns and searches look for AI, and its lists drop crypto, markets and
-  space accounts, save those the Operator picked by hand and a few still to
-  confirm. The patterns' known false positives are listed in the policy.
+[`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the current source of
+truth. This mandate supersedes the September 26 snapshot's publishing behavior
+and the October 13 activity windows. The rollback history is in `docs/HISTORY.md`.
+Replies retain their existing spacing and no daily quota; likes and follows
+retain their existing caps and exclude Blocked accounts. Quotes, reposts,
+self-recycling and threads remain disabled. The Account remains The SI Maximalist:
+SI news, Grok Imagine videos, brainrot and clearly fictional celebrity parodies.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -116,7 +84,7 @@ Account.
 | Write ledger: today's counts, last write, last follow or unfollow; file and in-memory adapters | `src/guards/ledger.py` |
 | Reply admission: protected or Blocked account, own post, permanent one Reply per original, conversation refusal, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
-| Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
+| Replied store: permanent one Reply per post, keyed on status ID, with thread and process locks | `src/guards/replied_store.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |
 | Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides; the only reader of the environment with `config.dry_run()` | `src/core/settings.py` |
 | Settings reference of `docs/CONFIGURATION.md`, generated from the declarations | `bin/configuration_doc.py` |

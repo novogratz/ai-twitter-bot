@@ -13,6 +13,9 @@ The script refuses to start Overnight, stops before its next unfollow at
 the current Toronto activity-window close or on SIGTERM, and stops after `--max` unfollows (150 by
 default).
 
+Blocked accounts are always skipped, regardless of the keep-set. The profile
+link and the button's author label must agree before any unfollow click.
+
 1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`

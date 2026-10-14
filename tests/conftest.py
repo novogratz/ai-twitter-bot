@@ -176,7 +176,7 @@ def _daylight_default(monkeypatch):
     """
     from src.guards import active_hours
     real_now = active_hours.now_local
-    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
+    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=15))
     yield
 
 
@@ -288,3 +288,17 @@ def like_job(monkeypatch, memory_ledger, settings_override):
         state["closed"] += 1
     monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
+
+
+@_pytest.fixture
+def originals_account(monkeypatch):
+    """Exercise retained original-writing machinery for a permitted Account.
+
+    The live Account's default refusal is tested without this fixture in
+    test_reply_only_policy.py. This changes no production configuration.
+    """
+    from dataclasses import replace
+    from src.core import account
+    profile = replace(account.current(), publish_originals=True)
+    monkeypatch.setattr(account, "current", lambda: profile)
+    return profile

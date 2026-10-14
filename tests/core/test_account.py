@@ -21,8 +21,8 @@ def test_current_identity_keeps_the_storage_key_and_editorial_bounds():
     assert loaded.display_name == "The SI Maximalist"
     assert loaded.previous_handles == ("TheAIShrink",)
     assert loaded.bio == ("SI Maximalist: SI brain rot, Super Intelligence, SI news, "
-                          "celebrity parodies, and AI SI tech chaos.")
-    assert loaded.language == "en" and loaded.domain == "SI / super intelligence and AI"
+                          "celebrity parodies, and SI tech chaos.")
+    assert loaded.language == "en" and loaded.domain == "SI / Super intelligence"
     assert loaded.limits == {}
     ed = loaded.editorial
     assert [clock for clock, _ in ed.slots] == [
@@ -155,9 +155,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
     ('handle = "thesimaximalist"\n', "", "handle"),
-    ('domain = "SI / super intelligence and AI"', "domain = 3", "domain"),
-    ('domain = "SI / super intelligence and AI"', 'domain = " "', "domain is blank"),
-    ('domain = "SI / super intelligence and AI"\n', "", "domain is missing"),
+    ('domain = "SI / Super intelligence"', "domain = 3", "domain"),
+    ('domain = "SI / Super intelligence"', 'domain = " "', "domain is blank"),
+    ('domain = "SI / Super intelligence"\n', "", "domain is missing"),
     ('handle = "thesimaximalist"', 'handle = "thesimaximalist', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
@@ -249,7 +249,7 @@ NETWORK = {
         "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
     ],
     "BIG_AI_HYPE_ACCOUNTS": [
-        "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
+        "sama", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
         "JensenHuang", "gdb", "miramurati", "AravSrinivas", "karpathy", "ylecun", "AndrewYNg",
         "drfeifei", "lexfridman", "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
         "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai", "MistralAI", "perplexity_ai",
@@ -276,7 +276,7 @@ NETWORK = {
     ],
     "ALWAYS_REPLY_ACCOUNTS": [
         "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
-        "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama", "elonmusk",
+        "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
         "DarioAmodei", "satyanadella", "sundarpichai", "JensenHuang", "gdb", "miramurati",
         "AravSrinivas", "AndrewYNg", "drfeifei", "lexfridman", "ID_AA_Carmack", "EMostaque",
         "clementdelangue", "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai",
@@ -300,7 +300,7 @@ NETWORK = {
     ],
     "REPLY_TARGET_ACCOUNTS": [
         "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI", "AnthropicAI",
-        "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis",
+        "GoogleDeepMind", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis",
         "MistralAI", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel",
         "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
         "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho", "DereeperVivre",
@@ -448,7 +448,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert set(NETWORK["SEARCH_QUERIES"]) <= set(searches.replies)
     assert set(NETWORK["HOT_TAB_QUERIES"]) <= set(searches.hot_tab)
     assert set(NETWORK["LIKE_QUERIES"]) <= set(searches.likes)
-    assert net.blocked_accounts == ()
+    assert net.blocked_accounts == ("elonmusk",)
 
 
 def test_the_removed_accounts_and_queries_are_gone():
@@ -602,8 +602,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
 @pytest.mark.parametrize("old, new, named", [
     ('vip_scan = ["Graphseo", "TheBTCTherapist"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
     ('engage_vip = ["Graphseo"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
-    ("blocked_accounts = []", 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
-    ("blocked_accounts = []", "blocked_accounts = [3]", "network.blocked_accounts[0]"),
+    ('blocked_accounts = ["elonmusk"]', 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
+    ('blocked_accounts = ["elonmusk"]', "blocked_accounts = [3]", "network.blocked_accounts[0]"),
     ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
     ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = "Graphseo"', "network.fr_forced_reply"),
     ("[niche]", "[niche]\nticker = '('", "niche.ticker"),
@@ -614,7 +614,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
     ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.
-    ("blocked_accounts = []", 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
+    ('blocked_accounts = ["elonmusk"]', 'blocked_accounts = ["elonmusk"]\nunblocked_accounts = ["pgm_pm"]',
      "network.unblocked_accounts"),
 ])
 def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new, named):
@@ -831,6 +831,9 @@ def test_ordinary_si_and_unrelated_videos_do_not_match_the_niche(text):
     ("previous_handles", '["@old"]'), ("previous_handles", '[7]'),
     ("previous_handles", '"old"'), ("display_name", '" "'),
     ("bio", '"' + "x" * 161 + '"'),
+    ("publish_originals", '"false"'), ("publish_originals", '1'),
+    ("text_replacements", '["AI"]'), ("text_replacements", '{ "AI" = 1 }'),
+    ("text_replacements", '{ "AI" = " " }'), ("text_replacements", '{ " " = "SI" }'),
 ])
 def test_invalid_profile_metadata_stops_loading(accounts, fresh, field, value):
     updated = re.sub(r"^" + field + r" = .*", field + " = " + value, THEAISHRINK, flags=re.M, count=1)
@@ -841,10 +844,11 @@ def test_invalid_profile_metadata_stops_loading(accounts, fresh, field, value):
 
 def test_profile_metadata_defaults_for_existing_accounts(accounts, fresh):
     header, body = THEAISHRINK.split("[editorial]", 1)
-    header = re.sub(r"^(display_name|bio|previous_handles) = .*\n", "", header, flags=re.M)
+    header = re.sub(r"^(display_name|bio|previous_handles|publish_originals|text_replacements) = .*\n", "", header, flags=re.M)
     text = header + "[editorial]" + body
     accounts("minimal", text)
     fresh("BOT_ACCOUNT=minimal\n")
     loaded = account.current()
     assert loaded.display_name == loaded.handle
     assert loaded.bio == "" and loaded.previous_handles == ()
+    assert loaded.publish_originals is True and loaded.text_replacements == {}

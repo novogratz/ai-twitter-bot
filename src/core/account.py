@@ -84,6 +84,8 @@ class Account:
     display_name: str
     bio: str
     previous_handles: tuple
+    publish_originals: bool
+    text_replacements: dict
     language: str
     domain: str  # the domain the prompts name: "one original {domain} post"
     editorial: Editorial
@@ -126,7 +128,12 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
                  optional={"limits": dict, "relations": dict, "replies": dict,
-                           "display_name": str, "bio": str, "previous_handles": list})
+                           "display_name": str, "bio": str, "previous_handles": list,
+                           "publish_originals": bool, "text_replacements": dict})
+    replacements = top.get("text_replacements", {})
+    for term, replacement in replacements.items():
+        if not term.strip() or type(replacement) is not str or not replacement.strip():
+            top.fail("text_replacements", "takes nonempty terms and replacement strings")
     if not _HANDLE.fullmatch(top["handle"]):
         top.fail("handle", "takes an X handle without @")
     previous = top.items("previous_handles", str) if "previous_handles" in top else []
@@ -152,6 +159,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
         display_name=top.get("display_name", top["handle"]), bio=top.get("bio", ""),
         previous_handles=tuple(previous),
+        publish_originals=top.get("publish_originals", True), text_replacements=dict(replacements),
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),

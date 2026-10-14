@@ -2,6 +2,11 @@
 
 The policy asks an in-memory ledger (the `memory_ledger` fixture); the file
 adapter has its own tests in test_ledger.py."""
+import pytest
+
+# These engine tests exercise an Account explicitly permitted to publish Originals.
+pytestmark = pytest.mark.usefixtures("originals_account")
+
 from datetime import datetime, timedelta
 
 from src.core import config
@@ -14,7 +19,7 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 
 def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkeypatch):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
     clock(monkeypatch, now)
     rows = [{"action": ag.POST, "ts": "2026-09-20T03:59:00+00:00"},
             {"action": ag.POST, "ts": "2026-09-20T04:00:00+00:00", "dry_run": True}]
@@ -25,7 +30,7 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ledger.count(ag.POST, now.date()) == 5
     assert ag.profile_count_today() == 7
     assert ag.can_post(ag.POST)[0]
-    assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
+    assert ledger.last_write(ag.POST) == now - timedelta(hours=6, minutes=15)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST)[0]
@@ -33,7 +38,7 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
 
 
 def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
     clock(monkeypatch, now)
     for n in range(500):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
@@ -59,7 +64,7 @@ def test_can_post_refuses_after_stop(monkeypatch):
 
 
 def _noon(monkeypatch):
-    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
     clock(monkeypatch, now)
     return now
 
@@ -92,7 +97,7 @@ def _ledger_clock(monkeypatch):
     over an empty in-memory ledger."""
     from src.guards import active_hours
 
-    now = [datetime(2026, 9, 21, 12, tzinfo=TORONTO)]
+    now = [datetime(2026, 9, 21, 12, 15, tzinfo=TORONTO)]
     monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "LEDGER", MemoryLedger())

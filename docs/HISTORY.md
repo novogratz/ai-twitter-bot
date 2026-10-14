@@ -1,5 +1,32 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Replies only, SI wording and complete no-contact protection
+
+2026-10-14 — The Operator now requires Replies only. `publish_originals = false`
+in the Account prevents Originals at the scheduler, Startup path, editorial entry
+point and browser write; `.env` and `--post-only` cannot restore them. Conversation
+jobs and automatic pinning are unscheduled. Daily Toronto activity windows are
+05:00–09:30, 12:05–13:00, 17:15–20:00 and 22:00–23:00, start inclusive and end
+exclusive, without jitter. Never interact with @elonmusk: no Reply, like, follow,
+unfollow or @mention. Both `replies.protected_handles` and `network.blocked_accounts`
+protect him, regardless of saved priorities or whitelist entries. Actual opened
+authors are checked before browser clicks; a Reply parent mentioning a Blocked
+account is refused too. Only another account's standalone original qualifies,
+once per entire conversation permanently. Our current and historical handles,
+comments, replies and follow-ups are forbidden. Permanent claims use a process
+lock, and uncertain submissions stay claimed across restarts.
+
+Outgoing prose replaces standalone AI with SI and artificial intelligence
+(including Airtificial intelligence) with Super intelligence. Literal URLs,
+@handles, embedded names such as OpenAI and French verbs are preserved. Discovery
+still searches both vocabularies. Reply length and tone follow context: very short,
+fuller technical, sharp or funny; no fixed suffix, automatic smiley or manufactured
+typo. At most one optional emoji/text smiley. The minimum length floor is lowered
+from 25 to 2 characters; generic reactions and all factual/content checks remain.
+Recent shipped replies guide variation. Production history, pending state and
+`.env` are preserved. This implementation does not start or restart the bot.
+
+
 ## 2026-10-14 — The SI Maximalist identity
 
 2026-10-14 — The Operator replaced the former therapist persona with The SI

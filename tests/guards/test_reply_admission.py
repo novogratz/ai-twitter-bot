@@ -112,7 +112,7 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
     verdict = judge_reply(url("typofriend"), "Targets are easy — conviction is the hard part of the trade.")
     assert verdict
     assert verdict.text == validated[-1]
-    assert verdict.text.endswith("(typo)") and "—" not in verdict.text
+    assert not verdict.text.endswith("(typo)") and "—" not in verdict.text
 
 
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):

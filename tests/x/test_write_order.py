@@ -3,9 +3,15 @@
 write, the Safari lock released on every path, one dry-run line per
 chokepoint. Every browser primitive is replaced by a tracer, so these
 tests never reach Safari."""
+import json
+import shutil
+import subprocess
 from types import SimpleNamespace
 
 import pytest
+
+# These engine tests exercise an Account explicitly permitted to publish Originals.
+pytestmark = pytest.mark.usefixtures("originals_account")
 
 from src.core.logger import log
 from src.core.state_errors import StateUnreadable
@@ -22,6 +28,39 @@ from src.x.twitter_client import FollowOutcome as F
 
 POST_URL = "https://x.com/someone/status/2063500000000000500"
 QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Jane"}
+
+
+@pytest.mark.parametrize("path,label,allowed", [
+    ("/someone", "Follow @someone", True),
+    ("/SOMEONE", "Suivre @someone", True),
+    ("/elonmusk", "Follow @elonmusk", False),
+    ("/someone", "Follow @elonmusk", False),
+    ("/someone", "Follow", False),
+])
+def test_follow_click_verifies_the_opened_profile_and_button_author(trace, monkeypatch, path, label, allowed):
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("node is required to exercise the browser script")
+    clicks = []
+
+    def page(js, *args, **kwargs):
+        program = """
+let clicked = false;
+const location = {pathname: PATH};
+const button = {getAttribute: () => LABEL, click: () => { clicked = true; }};
+const document = {querySelector: () => button};
+const status = eval(SCRIPT);
+console.log(JSON.stringify({status, clicked}));
+""".replace("PATH", json.dumps(path)).replace("LABEL", json.dumps(label)).replace("SCRIPT", json.dumps(js))
+        result = subprocess.run([node, "-e", program], capture_output=True, text=True, timeout=10)
+        assert result.returncode == 0, result.stderr
+        answer = json.loads(result.stdout)
+        clicks.append(answer["clicked"])
+        return answer["status"]
+
+    monkeypatch.setattr(safari, "_run_js", page)
+    assert tc.follow_account("someone") is (F.FOLLOWED if allowed else F.REFUSED)
+    assert clicks == [allowed]
 
 
 def _script_kind(script):
@@ -313,9 +352,9 @@ def test_follow_dry_run(trace, monkeypatch):
 
 
 def test_like_confirmed_then_marked_then_recorded(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "not_liked"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.LIKED
-    assert trace.events == ["lock", "press", "read", "mark_liked", "record:like", "unlock"]
+    assert trace.events == ["lock", "read", "press", "read", "mark_liked", "record:like", "unlock"]
 
 
 def test_like_blocked_never_touches_the_page(trace, monkeypatch):
@@ -325,9 +364,9 @@ def test_like_blocked_never_touches_the_page(trace, monkeypatch):
 
 
 def test_like_unconfirmed_records_nothing(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "not_liked"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.UNCONFIRMED
-    assert trace.events == ["lock", "press", "read", "unlock"]
+    assert trace.events == ["lock", "read", "press", "read", "unlock"]
 
 
 def test_like_without_status_id_never_takes_the_lock(trace):

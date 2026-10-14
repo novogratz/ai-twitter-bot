@@ -60,7 +60,7 @@ PRE_187_BOUNDED = {
     "MAX_FOLLOWS_PER_DAY": 20, "BAN_SHORT_TERM_PRICE_TARGETS": True,
     "DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY": 4, "DUP_JACCARD_THRESHOLD": 0.45,
     "DUP_CONTAINMENT_THRESHOLD": 0.6, "DUP_SHARED_BIGRAMS": 3, "DUP_TOPIC_WINDOW_HOURS": 24.0,
-    "DUP_TOPIC_SHARED_WORDS": 3, "DUP_TEXT_WINDOW_HOURS": 48.0, "REPLY_MIN_CHARS": 25,
+    "DUP_TOPIC_SHARED_WORDS": 3, "DUP_TEXT_WINDOW_HOURS": 48.0, "REPLY_MIN_CHARS": 2,
     "LIKE_BOT_PER_CYCLE": 10, "LIKE_BOT_DAILY_CAP": 500, "FOLLOWBACK_CAP": 8,
     "FOLLOW_ENGAGERS_PER_DAY": 10, "FOLLOW_ENGAGERS_PER_CYCLE": 2,
 }
@@ -101,13 +101,14 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
     return run
 
 
-def test_theaishrink_keeps_the_jobs_and_ceilings_it_had_before_187(dry_run):
+def test_live_account_reports_reply_only_policy_and_current_windows(dry_run):
     shown = dry_run({})
-    assert set(shown) == set(PRE_187) | NEW_KEYS
-    assert {key: shown[key] for key in PRE_187 if key != "slots"} == {
-        key: value for key, value in PRE_187.items() if key != "slots"}
-    # The rebrand changes angles, while the slot clocks and all ceilings stay fixed.
-    assert [clock for clock, _ in shown["slots"]] == [clock for clock, _ in PRE_187["slots"]]
+    assert shown["active"] == "05:00–09:30, 12:05–13:00, 17:15–20:00, 22:00–23:00 America/Toronto"
+    assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (0, 0, 0)
+    assert shown["startup_post"] == "disabled"
+    assert shown["slots"] == [] and shown["trend_slots"] == []
+    assert shown["jobs"] == [j for j in PRE_187["jobs"] if j not in {
+        "editorial_job", "pin_job", "replyback_job", "debate_job", "babysit_job", "notify_job"}]
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == PRE_187_BOUNDED
     assert shown["settings_warnings"] == []
 
@@ -123,7 +124,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
 
     assert account.current().name == "example"
     assert settings.get("BOT_HANDLE") == "ExampleGardener"
-    assert shown["jobs"] == PRE_187["jobs"]
+    assert shown["jobs"] == [j for j in PRE_187["jobs"] if j not in {"replyback_job", "debate_job", "babysit_job", "notify_job"}]
     assert shown["trend_slots"] == ["10:00", "15:00"]
     assert [clock for clock, _ in shown["slots"]] == ["06:30", "09:00", "10:00", "12:30", "15:00",
                                                      "17:30", "19:45"]
