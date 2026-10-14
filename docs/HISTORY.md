@@ -8,6 +8,14 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+## October 13, 2026 — native Reply permalink verification
+
+The protected-author browser check used a broad `[role="link"]` ancestor
+selector, which matched native permalink anchors and rejected valid targets.
+Match quoted-content div wrappers instead, as the scraper and repost reader
+do. DOM tests now model the permalink anchor's own role. Author/status
+verification, protected authors and quoted-content exclusions remain enforced.
+
 ## October 12, 2026 — lunch break and daily wake variation
 
 The Operator moved the midday activity window from 14:00–15:00 to

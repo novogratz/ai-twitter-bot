@@ -22,6 +22,7 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   **Never reply to @elonmusk**, including his originals, comments or responses.
   Account `replies.protected_handles` is checked before drafting and at the
   write, including saved approvals and the actual author of the opened post.
+  Native post links remain eligible; quoted content cannot supply the target identity.
   Spacing and duplicate protection remain.
   Reply scans save posts to a shared pool; a one-minute selector chooses among them
   across the last **24 hours**, including the frequent priority-profile scans;

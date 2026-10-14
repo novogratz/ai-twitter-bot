@@ -620,7 +620,7 @@ def _standalone_reply_target(url: str) -> bool:
       const articles = [...document.querySelectorAll('article')];
       const own = (article, selector) => [...article.querySelectorAll(selector)]
         .filter(el => el.closest('article') === article
-          && !el.closest('[data-testid="quoteTweet"], [role="link"]'));
+          && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
       const permalink = article => own(article, 'a[href]').find(l => l.querySelector('time'));
       const index = articles.findIndex(a => permalink(a)?.pathname.endsWith('/status/' + id));
       if (index !== 0) return 'refused';
