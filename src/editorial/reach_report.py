@@ -4,6 +4,7 @@ from pathlib import Path
 
 from ..core import account, config
 from ..guards.active_hours import now_local, require_active
+from ..x.scraper import is_own_post
 from .slot_journal import FileJournal, stamp
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile, StatePath
@@ -23,7 +24,7 @@ def summarize(published, scraped, now=None):
         prefix = " ".join(post["text"].split())[:100]
         matches = [t for t in scraped
                    if not t.get("is_reply")
-                   and f"x.com/{config.BOT_HANDLE.lower()}/status/" in (t.get("url") or "").lower()
+                   and is_own_post(t)
                    and " ".join((t.get("text") or "").split()).startswith(prefix)]
         if matches:
             tweet = max(matches, key=lambda t: int(t.get("views") or 0))

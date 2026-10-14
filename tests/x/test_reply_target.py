@@ -91,6 +91,7 @@ process.stdout.write(JSON.stringify({answer, clicks}));
     ([{"url": PARENT}], numbered_url(799), False),
     ([], PARENT, False),
     ([{"url": PARENT}, {"url": numbered_url(801, "TheAIShrink")}], PARENT, False),
+    ([{"url": PARENT}, {"url": numbered_url(801, "thesimaximalist")}], PARENT, False),
 ])
 @pytest.mark.parametrize("click", [False, True])
 def test_page_script_targets_only_the_verified_original(monkeypatch, articles, page, allowed, click):

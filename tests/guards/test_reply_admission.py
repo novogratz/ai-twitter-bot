@@ -179,3 +179,9 @@ def test_protected_author_never_reaches_generation_or_writing(handle, debate_tur
     assert verdict.refusal is Refusal.PROTECTED_ACCOUNT and verdict.refusal.definitive
     assert judge_reply(parent, TEXT, debate_turn=debate_turn).refusal is Refusal.PROTECTED_ACCOUNT
     assert parent not in replied_store.load_replied()
+
+
+@pytest.mark.parametrize("handle", ["thesimaximalist", "TheAIShrink", "THEAISHrink"])
+def test_rebrand_does_not_make_current_or_historical_posts_reply_targets(handle):
+    from src.guards.reply_admission import Refusal, judge_parent
+    assert judge_parent(f"https://x.com/{handle}/status/123").refusal is Refusal.OWN_POST

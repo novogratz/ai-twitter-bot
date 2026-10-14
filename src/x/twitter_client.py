@@ -500,7 +500,7 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
       return JSON.stringify({url: link.href, clicked: click});
     })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
     js = js.replace("__CLICK__", "true" if click else "false").replace(
-        "__SELF__", json.dumps([config.BOT_HANDLE.lower(), account.current().handle.lower()]))
+        "__SELF__", json.dumps(sorted(config.own_handles())))
     try:
         opened = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]") or "null")
     except (TypeError, ValueError):

@@ -1,4 +1,4 @@
-# Editorial policy — September 26 snapshot, amended October 13, 2026
+# Editorial policy — September 26 snapshot, amended October 14, 2026
 
 Operator rollback, 2026-10-13: this is the policy restored with the code on
 main on September 26, 2026, commit `348c82bcade1230abcd670682b1e10be9cf6f1c7`
@@ -32,21 +32,45 @@ start; they compete for the same eight publications (see below).
 There is no guarantee of virality or a minimum post count on a day with weak
 sources or service failures.
 
+2026-10-14 — The Operator replaced the former therapist persona with The SI
+Maximalist, @thesimaximalist. The supplied motto is: "SI Maximalist: SI brain rot,
+Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos." The Account
+creates and publishes AI videos with Grok Imagine; the Operator reports strong
+engagement. Voice, Relations, search prompts, topic matching, video discovery and
+new engagement tags use this identity. News remains sourced, celebrity parodies
+stay explicitly fictional, and details or results of a particular video need
+supplied evidence. Old learned directives cannot restore the previous persona.
+Storage remains `theaishrink`; historical handles remain own posts and production
+history is preserved. Activity windows, protected authors, one Reply per entire
+conversation, caps, pacing and sourcing checks are unchanged. This updates code
+and configuration; it neither starts the bot nor edits the live profile or adds
+automated video generation/uploading.
+
 ## Value and voice
 
-The character is a confident 45-year-old mom and AI enthusiast: warm, clear,
-witty and occasionally flirty. AI knowledge, news and updates are the focus.
-She explains a consequence, teaches something, or offers a useful action. A
-question, joke, emoji or flirty line is optional. Forced formulas, engagement
-bait, stale numbers, copied headlines and fabricated lived experience are out.
-The AI identity remains honest; the therapist name is a brand persona.
-That character is the Voice, written only in the Account's folder,
-`accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
-Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
-their task instructions but no copy of the persona, and the model client adds
-none (#192). The per-person relations (Graphseo, bestie, buddy) are the
-Account's Relations, in `account.toml` and `relations/`: the engine names no
-one (#203).
+The Account is The SI Maximalist, @thesimaximalist: informed, funny and excited
+about SI, super intelligence and AI. It covers news, models, useful workflows,
+AI videos, SI brainrot and fictional celebrity parodies. The Operator creates
+videos with Grok Imagine and reports strong engagement; that general fact may
+inform the Voice. A specific clip's content, authorship, settings or performance
+still needs supplied context. Caption-only observations never become invented
+visual descriptions. Parody must be recognizable as fiction, never a claim that
+a celebrity really said or did something. SI enthusiasm does not establish that
+super intelligence already exists.
+
+The former professional and family persona is retired. Current identity is
+honest about being an AI bot. No invented personal experience, forced joke quota,
+generic praise or engagement bait. News remains useful and evidence-based; a
+serious question gets a useful answer. Product names, quotes and URLs stay exact.
+The existing respect-list and positive-only rules remain in force.
+
+The Operator's Voice lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`.
+Every Original and Reply prompt opens on it with the current handle, display name
+and bio. Relations specify how to address supplied posts, without reviving old
+family roles or trading rivalries. The optional search Reply uses the Account's
+queries and excludes protected/own authors. Legacy `directives.md` stays on disk
+but is no longer injected into generation prompts. Current Voice overrides
+learned memories; hard rules and publication guards still win.
 
 Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
 strict output schema and a bounded cold-load timeout. The reply model retains
@@ -60,7 +84,8 @@ The checked draft and its source link survive publishing without random rewrites
 
 Trusted AI feeds supply news and articles no older than 48 hours: first-party
 labs, model/tool launch blogs, The Decoder and arXiv. Fresh launches, methods,
-projects and sharp recent articles are preferred; on quiet days, curated AI
+projects and sharp recent articles are preferred; Grok Imagine video documentation
+from `docs.x.ai` also provides a sourced evergreen workflow; on quiet days, curated AI
 documentation supplies practical, evergreen topics, without calling them new
 announcements. Used source URLs are rested for seven days. The optional 20:45
 slot needs news from the last twelve hours or a useful AI teaching source, plus
@@ -68,9 +93,9 @@ an exceptional-value approval.
 
 ## Niche of Replies, likes and follows
 
-Operator, 2026-09-25: AI only, like the Originals. The Account's `[niche]`
+Operator, 2026-10-14: SI/AI remains the focus, with AI videos and SI brainrot added. The Account's `[niche]`
 patterns, `[searches]` queries and `[network]` lists in
-`accounts/theaishrink/account.toml` keep to AI (issue #205). A post that
+`accounts/theaishrink/account.toml` keep to SI/AI (issue #205, expanded 2026-10-14). A post that
 speaks only of crypto, markets or space is off the niche for the search
 lane, the feed sweep, early bird and mega watch; the follow quality gate
 refuses a non-Engager whose bio shows no AI term; the reply and like
@@ -90,16 +115,19 @@ response: the opened page must identify a standalone original. `elonmusk` is
 protected from every Reply via the Account's `replies.protected_handles`, even
 when a discovered URL names someone else; the actual author must match.
 
-The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
+The `post` and `bio` patterns name SI/AI itself (SI, ASI, AI, IA, AGI, LLMs, GenAI,
 artificial intelligence, machine and deep learning, computer vision,
-superintelligence, agentic, context windows, open weights, vibe coding),
+super intelligence, superintelligence, agentic, context windows, open weights, vibe coding),
 its labs and models (OpenAI, Anthropic, DeepMind, Mistral, Llama, Qwen,
-Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
+Grok Imagine, Kling, RunwayML, Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
 TPUs, data centers) and robotics. Some words no longer suffice alone:
 `token`, `coding`, `agent`, `meta`, `google`, `apple`, `software`, `tech`,
 `engineer`, `founder`; a post or bio needs an AI term beside them (AI
 agents, coding agents, Meta AI). `ai` in lower or mixed case skips the
 French verb (j'ai, J’ai, je vous ai, ai-je); AI in capitals always counts.
+Standalone SI and ASI are case-sensitive so the French word `si` is not a topic signal.
+Video searches explicitly seek AI/Grok Imagine clips and SI brainrot; an unrelated
+video or celebrity mention alone does not qualify.
 `bio` leaves out the model names that are also first names or common
 words (Claude, Sora, Gemini, Cursor), since it reads the display name too.
 Known false positives, kept: Nvidia, an AI hardware maker, keeps its stock
@@ -113,8 +141,8 @@ are its only filter.
 ## Trend slots and the Startup post
 
 The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from
-X. Two Top-tab searches for AI and "artificial intelligence" (`[searches]
-trending` in `account.toml`) supply posts from
+X. Top-tab searches for AI, super intelligence and Grok Imagine/video topics
+(`[searches] trending` in `account.toml`) supply posts from
 the last 24 hours; the five with the most likes per minute are kept. Own posts,
 Blocked accounts, nested replies, posts without AI vocabulary and crypto or
 ticker posts are dropped. Handles, mentions and links, with or without a

@@ -59,7 +59,7 @@ def run_follow_engagers_cycle():
 
     run = FollowRun("FOLLOW-ENGAGERS")
     attempted = set(st.get("attempted", []))
-    own = config.BOT_HANDLE.lower()
+    own = config.own_handles()
     # Big-media accounts get Debate turns too (we reply back under news
     # posts): following them back is pointless for follow-backs.
     skip = {h.lower() for h in account.current().network.follow_engagers_skip}
@@ -76,7 +76,7 @@ def run_follow_engagers_cycle():
     for h in run.fresh(follow_policy.engagers()[:200]):
         if followed + run.failed >= per_cycle or st["count_today"] >= per_day:
             break
-        if h == own or h in skip or h in attempted:
+        if h in own or h in skip or h in attempted:
             continue
         result = run.follow(h)
         if result is None:

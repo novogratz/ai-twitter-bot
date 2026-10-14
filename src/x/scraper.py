@@ -297,16 +297,16 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
 def is_own_post(tweet: dict) -> bool:
     """Authoritative ownership check for scraped tweets (2026-06-07).
 
-    The scraper's `author` field is the DISPLAY NAME ("The AI Therapist"),
+    The scraper's `author` field is the DISPLAY NAME,
     not the @handle — five bots compared it against BOT_HANDLE and silently
     classified every own post as foreign (the boost engine never once picked
     a banger; suppression_watch measured nothing). The URL is ground truth:
     own posts and own QRTs live under /BOT_HANDLE/status/; retweets of
     others on our profile carry the ORIGINAL author's URL and are correctly
     excluded."""
-    from ..core.config import BOT_HANDLE
-    url = (tweet.get("url") or "").lower()
-    return f"x.com/{BOT_HANDLE.lower()}/status/" in url
+    from ..core import config
+    from . import x_urls
+    return config.is_own_handle(x_urls.author(tweet.get("url") or ""))
 
 
 def _profile_visit_allowed(username: str) -> bool:
@@ -317,11 +317,11 @@ def _profile_visit_allowed(username: str) -> bool:
     feed (For You + Following tab), and search terms. Our own profile stays
     visitable (boost/pin/metrics/with_replies callers need it). Env read at
     CALL time (side-effect gate — never an import-time constant)."""
-    from ..core.config import BOT_HANDLE
+    from ..core import config
     base = (username or "").strip().lstrip("@").split("/")[0].lower()
     if not base:
         return False
-    if base == BOT_HANDLE.lower():
+    if config.is_own_handle(base):
         return True  # own profile (incl. BOT_HANDLE/with_replies callers)
     allow = settings.get("PROFILE_VISIT_ALLOWLIST")
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}

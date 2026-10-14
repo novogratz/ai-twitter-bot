@@ -238,7 +238,9 @@ def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, sett
     assert prompt.startswith(voice + "\n\n")
     assert "VOICE (NON-NEGOTIABLE): you are @SomeOtherBot\n" in voice
     assert prompt.count("VOICE (NON-NEGOTIABLE)") == 1
-    rest = prompt[len(voice):].lower()
+    # Historical handles may appear as forbidden targets, never as the persona.
+    rest = "\n".join(line for line in prompt[len(voice):].splitlines()
+                     if not line.startswith("Never select our current or historical handles:")).lower()
     assert [marker for marker in PERSONA if marker in rest] == []
 
 
@@ -650,3 +652,17 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
 
     model = settings.get("OLLAMA_MODEL") if route == "ollama" else config.REPLY_MODEL.for_provider(route)
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]
+
+
+def test_search_uses_current_identity_scope_and_ignores_retired_directives(monkeypatch, llm):
+    from pathlib import Path
+    from src.core import evolution_store
+    from src.replies import reply_agent
+    Path(evolution_store.DIRECTIVES_FILE).write_text("RETIRED_PERSONA: pretend to be a clinician")
+    llm.default = "[]"
+    reply_agent.generate_replies()
+    prompt = llm.prompts[-1]
+    assert "@thesimaximalist" in prompt and "The SI Maximalist" in prompt
+    assert "Grok Imagine" in prompt and "SI brainrot" in prompt
+    assert "Never select a protected author: elonmusk" in prompt
+    assert "RETIRED_PERSONA" not in prompt

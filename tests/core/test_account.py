@@ -15,102 +15,33 @@ from src.editorial import editorial_bot as editorial
 ROOT = Path(__file__).resolve().parents[2]
 THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 
-# The constants of src/editorial/editorial_bot.py and src/editorial/trending.py,
-# and the settings defaults, printed from the code before #202 moved them to
-# accounts/theaishrink/account.toml.
-TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
-OLD = {
-    "SLOTS": [("05:00", "Priority: the AI update worth understanding this morning"),
-              ("07:15", "A useful AI workflow with a concrete first step"),
-              ("09:30", "Priority: an AI article or model update with a sharp consequence"),
-              ("10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("11:45", "An AI concept explained through a clear example"),
-              ("13:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("14:00", "A model or tool update and what changes for its users"),
-              ("15:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("16:15", "Priority: an evidence-backed take on an AI tradeoff"),
-              ("18:30", "A practical AI idea worth saving or sharing"),
-              ("20:45", "Optional: an exceptional fresh AI update or unusually useful source")],
-    "TREND_SLOTS": ["10:00", "13:00", "15:00"],
-    "TREND_PURPOSE": TREND_PURPOSE,
-    "EXCEPTIONAL_SLOT": "20:45",
-    "FEEDS": [("OpenAI", "https://openai.com/news/rss.xml"),
-              ("Google AI", "https://blog.google/technology/ai/rss/"),
-              ("DeepMind", "https://deepmind.google/blog/rss.xml"),
-              ("Hugging Face", "https://huggingface.co/blog/feed.xml"),
-              ("NVIDIA", "https://blogs.nvidia.com/feed/"),
-              ("Microsoft Research", "https://www.microsoft.com/en-us/research/feed/"),
-              ("Mistral AI", "https://mistral.ai/rss.xml"),
-              ("Replicate", "https://replicate.com/blog/rss"),
-              ("The Decoder", "https://the-decoder.com/feed/"),
-              ("arXiv cs.AI", "https://rss.arxiv.org/rss/cs.AI")],
-    "KNOWLEDGE": [("chat_templates", "Why a chat template changes model behavior",
-                   "https://huggingface.co/docs/transformers/chat_templating"),
-                  ("evaluation", "How to evaluate an AI model on your own examples",
-                   "https://huggingface.co/docs/evaluate/index"),
-                  ("quantization", "What quantization trades for smaller AI models",
-                   "https://huggingface.co/docs/transformers/quantization/overview"),
-                  ("retrieval", "When retrieval can improve a language model's answers",
-                   "https://huggingface.co/learn/cookbook/en/advanced_rag"),
-                  ("structured_output", "Why structured output still needs factual checks",
-                   "https://huggingface.co/docs/inference-providers/guides/structured-output"),
-                  ("agents", "When an agent loop is useful and when it adds complexity",
-                   "https://huggingface.co/docs/smolagents/conceptual/tutorial"),
-                  ("tool_use", "What changes when a model can call tools",
-                   "https://huggingface.co/docs/transformers/chat_extras"),
-                  ("generation", "What temperature actually changes in generated text",
-                   "https://huggingface.co/docs/transformers/main_classes/text_generation"),
-                  ("lora", "What a small adapter changes during model fine tuning",
-                   "https://huggingface.co/docs/peft/conceptual_guides/lora"),
-                  ("tokenization", "Why tokenization matters for context budgets",
-                   "https://huggingface.co/docs/transformers/tokenizer_summary"),
-                  ("model_cards", "What to check in a model card before using a model",
-                   "https://huggingface.co/docs/hub/model-cards"),
-                  ("datasets", "Why the evaluation dataset matters as much as the score",
-                   "https://huggingface.co/docs/datasets/about_dataset_features")],
-    "KNOWLEDGE_PUBLISHER": "Hugging Face docs",
-    "HOSTS": ["arxiv.org", "blog.google", "blogs.nvidia.com", "deepmind.google", "huggingface.co",
-              "mistral.ai", "openai.com", "replicate.com", "the-decoder.com", "www.microsoft.com"],
-    "AI_TOPIC": ("\\b(ai|artificial intelligence|model|llm|agent|machine "
-                 "learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|"
-                 "robotics|transformer|inference|training|neural|diffusion|gpu)\\b", 34),
-    "OFF_TOPIC": ("\\$[A-Za-z]{2,6}\\b|\\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\\b", 34),
-    "BOT_HANDLE": "TheAIShrink",
-    "CONTENT_LANG_PRIMARY": "en",
-}
-# trending.TREND_QUERIES before #208 moved them to [searches] trending.
-OLD_TREND_QUERIES = [
-    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
-    'AI lang:en min_faves:200 -filter:replies',
-]
-
-
-def test_theaishrink_loads_the_old_constants():
+def test_current_identity_keeps_the_storage_key_and_editorial_bounds():
     loaded = account.load("theaishrink")
-    ed = loaded.editorial
-    assert list(ed.slots) == OLD["SLOTS"]
-    assert sorted(ed.trend_clocks) == OLD["TREND_SLOTS"]
-    assert ed.trend_angle == OLD["TREND_PURPOSE"]
-    assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
-    assert list(ed.feeds) == OLD["FEEDS"]
-    assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
-    assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
-    assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
-    assert (loaded.relevance.topic.pattern, loaded.relevance.topic.flags) == OLD["AI_TOPIC"]
-    assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
-    assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
+    assert loaded.handle == "thesimaximalist"
+    assert loaded.display_name == "The SI Maximalist"
+    assert loaded.previous_handles == ("TheAIShrink",)
+    assert loaded.bio == ("SI Maximalist: SI brain rot, Super Intelligence, SI news, "
+                          "celebrity parodies, and AI SI tech chaos.")
+    assert loaded.language == "en" and loaded.domain == "SI / super intelligence and AI"
     assert loaded.limits == {}
-    # The prompts said "AI" in the code before #208.
-    assert loaded.domain == "AI"
-    assert list(loaded.searches.trending) == OLD_TREND_QUERIES
+    ed = loaded.editorial
+    assert [clock for clock, _ in ed.slots] == [
+        "05:00", "07:15", "09:30", "10:00", "11:45", "13:00", "14:00", "15:00", "16:15", "18:30", "20:45"]
+    assert ed.trend_clocks == {"10:00", "13:00", "15:00"}
+    assert ed.exceptional_clocks == {"20:45"}
+    assert loaded.replies.is_protected("elonmusk")
+    assert any(t.topic == "video_generation" and t.url.startswith("https://docs.x.ai/") for t in ed.evergreen)
+    assert {"x.ai", "docs.x.ai"} <= ed.trusted_hosts
+    assert loaded.relevance.off_topic.search("Bitcoin giveaway")
 
 
 def test_the_editorial_reads_the_loaded_account():
+    loaded = account.current()
     assert settings.get("BOT_ACCOUNT") == "theaishrink"
-    assert [tuple(slot) for slot in editorial.slots()] == OLD["SLOTS"]
-    assert sorted(editorial.trend_slots()) == OLD["TREND_SLOTS"]
-    assert [slot.clock for slot in editorial.slots() if slot.exceptional] == [OLD["EXCEPTIONAL_SLOT"]]
-    assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
+    assert [tuple(slot) for slot in editorial.slots()] == list(loaded.editorial.slots)
+    assert set(editorial.trend_slots()) == loaded.editorial.trend_clocks
+    assert config.BOT_HANDLE == "thesimaximalist"
+    assert config.BOT_PROFILE_URL == "https://x.com/thesimaximalist"
 
 
 # --- Loading: BOT_ACCOUNT, and the settings layers ------------------------------
@@ -146,7 +77,7 @@ def fresh(monkeypatch, tmp_path):
 
 
 def test_bot_account_picks_the_folder(accounts, fresh):
-    accounts("other", THEAISHRINK.replace('handle = "TheAIShrink"', 'handle = "OtherBot"')
+    accounts("other", THEAISHRINK.replace('handle = "thesimaximalist"', 'handle = "OtherBot"')
              .replace('language = "en"', 'language = "fr"'))
     fresh("BOT_ACCOUNT=other\n")
     assert account.current().name == "other"
@@ -195,7 +126,7 @@ def test_main_stops_on_an_unknown_bot_account():
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "TheAIShrink"', 'handle = "TheAIShrink"\nnickname = "shrink"', "nickname"),
+    ('handle = "thesimaximalist"', 'handle = "thesimaximalist"\nnickname = "shrink"', "nickname"),
     ('trend_angle =', 'trend_hours = 3\ntrend_angle =', "editorial.trend_hours"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = true, weight = 2 }',
      "editorial.slots[3].weight"),
@@ -213,7 +144,7 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "TheAIShrink"', "handle = 3", "handle"),
+    ('handle = "thesimaximalist"', "handle = 3", "handle"),
     ('language = "en"', 'language = "de"', "language"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = "yes" }', "editorial.slots[3].trend"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
@@ -223,11 +154,11 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
      "editorial.evergreen[0].publisher"),
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
-    ('handle = "TheAIShrink"\n', "", "handle"),
-    ('domain = "AI"', "domain = 3", "domain"),
-    ('domain = "AI"', 'domain = " "', "domain is blank"),
-    ('domain = "AI"\n', "", "domain is missing"),
-    ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
+    ('handle = "thesimaximalist"\n', "", "handle"),
+    ('domain = "SI / super intelligence and AI"', "domain = 3", "domain"),
+    ('domain = "SI / super intelligence and AI"', 'domain = " "', "domain is blank"),
+    ('domain = "SI / super intelligence and AI"\n', "", "domain is missing"),
+    ('handle = "thesimaximalist"', 'handle = "thesimaximalist', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -513,12 +444,10 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
     assert sorted(net.follow_engagers_skip) == NETWORK["SKIP_HANDLES"]
     assert len(set(net.follow_engagers_skip)) == len(net.follow_engagers_skip)
-    assert (niche.post.pattern, niche.post.flags) == NETWORK["NICHE_PATTERN"]
     assert niche.ticker is None
-    assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
-    assert list(searches.replies) == NETWORK["SEARCH_QUERIES"]
-    assert list(searches.hot_tab) == NETWORK["HOT_TAB_QUERIES"]
-    assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
+    assert set(NETWORK["SEARCH_QUERIES"]) <= set(searches.replies)
+    assert set(NETWORK["HOT_TAB_QUERIES"]) <= set(searches.hot_tab)
+    assert set(NETWORK["LIKE_QUERIES"]) <= set(searches.likes)
     assert net.blocked_accounts == ()
 
 
@@ -697,42 +626,13 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 
 # --- Relations: the per-handle Reply instructions (#203) -------------------------
 
-# sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
-# src/replies/direct_reply.py before #203 moved them to relations/. An
-# Operator edit of these files updates the hash here.
-OLD_RELATION_PROMPTS = {
-    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
-    "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
-    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
-}
-# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
-OLD_MCNALLIEM = {
-    "first_seen": "2026-05-02",
-    "last_interaction": "2026-05-02",
-    "interaction_count": 0,
-    "category": "builder",
-    "stance": "fond",
-    "notes": [
-        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
-    ],
-    "predictions": [],
-    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
-    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
-    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
-}
-
-
-def _digest(text):
-    import hashlib
-    return len(text), hashlib.sha256(text.encode()).hexdigest()
-
-
-def test_theaishrink_relations_hold_the_old_prompts():
+def test_relations_load_current_operator_prompts_and_keep_routing():
     relations = account.load("theaishrink").relations
     graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
-    assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
-            "buddy": _digest(relations.default)} == OLD_RELATION_PROMPTS
+    folder = Path(account.current().folder) / "relations"
+    assert graphseo.prompt == (folder / "graphseo.md").read_text().strip()
+    assert bestie.prompt == (folder / "bestie.md").read_text().strip()
+    assert relations.default == (folder / "buddy.md").read_text().strip()
     assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "claude", None)
     assert (bestie.handle, bestie.provider, bestie.dossier) == ("TheBTCTherapist", None, None)
     assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
@@ -743,10 +643,13 @@ def test_theaishrink_relations_hold_the_old_prompts():
     assert relations.vip_prompt("McnallieM") == relations.vip_prompt("vision_ia") == relations.default
 
 
-def test_a_fixed_dossier_reads_as_the_old_one():
+def test_current_fixed_dossier_overrides_old_learned_memory():
     from src.core import personality_store
-    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
-    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
+    personality_store.PERSONALITY.write({"accounts": {"mcnalliem": {"do": "OLD_PERSONA"}}, "topics": {}})
+    expected = {**personality_store.DEFAULT_ACCOUNT, **account.current().relations.get("McnallieM").dossier}
+    assert personality_store.get_account("McnallieM") == expected
+    assert personality_store.get_account("@mcnalliem") == expected
+    assert "OLD_PERSONA" not in personality_store.render_account_block("McnallieM")
 
 
 def test_the_relation_providers_are_llm_client_clis():
@@ -865,7 +768,7 @@ def test_a_link_inside_the_folder_is_followed(accounts, fresh, tmp_path):
     (folder / "relations" / "buddy.md").rename(folder / "buddy_real.md")
     (folder / "relations" / "buddy.md").symlink_to(folder / "buddy_real.md")
     fresh()
-    assert _digest(account.current().relations.default) == OLD_RELATION_PROMPTS["buddy"]
+    assert account.current().relations.default == (folder / "buddy_real.md").read_text().strip()
 
 
 @pytest.mark.parametrize("name", account.VOICE_FILES)
@@ -902,3 +805,46 @@ def test_invalid_protected_reply_handles_stop_loading(accounts, raw):
 def test_protected_reply_handles_are_optional_for_other_accounts(accounts):
     accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', ""))
     assert account.load("custom").replies.protected_handles == frozenset()
+
+
+@pytest.mark.parametrize("text", [
+    "SI news and Super Intelligence", "SI brainrot with Grok Imagine",
+    "Super intelligence video creators", "ASI research is accelerating",
+    "Grok Imagine generated this clip", "Kling image-to-video workflow", "RunwayML filmmaker",
+])
+def test_si_and_video_creators_match_the_account_scope(text):
+    from src.replies.reply_source import is_on_niche
+    loaded = account.current()
+    assert is_on_niche(text)
+    assert loaded.niche.bio.search(text)
+    assert loaded.relevance.topic.search(text)
+
+
+@pytest.mark.parametrize("text", ["Si tu viens demain", "si j'avais su", "My vacation video", "Celebrity gossip today"])
+def test_ordinary_si_and_unrelated_videos_do_not_match_the_niche(text):
+    from src.replies.reply_source import is_on_niche
+    assert not is_on_niche(text)
+    assert not account.current().niche.bio.search(text)
+
+
+@pytest.mark.parametrize("field,value", [
+    ("previous_handles", '["@old"]'), ("previous_handles", '[7]'),
+    ("previous_handles", '"old"'), ("display_name", '" "'),
+    ("bio", '"' + "x" * 161 + '"'),
+])
+def test_invalid_profile_metadata_stops_loading(accounts, fresh, field, value):
+    updated = re.sub(r"^" + field + r" = .*", field + " = " + value, THEAISHRINK, flags=re.M, count=1)
+    accounts("theaishrink", updated)
+    with pytest.raises(settings.SettingsError, match=field):
+        fresh()
+
+
+def test_profile_metadata_defaults_for_existing_accounts(accounts, fresh):
+    header, body = THEAISHRINK.split("[editorial]", 1)
+    header = re.sub(r"^(display_name|bio|previous_handles) = .*\n", "", header, flags=re.M)
+    text = header + "[editorial]" + body
+    accounts("minimal", text)
+    fresh("BOT_ACCOUNT=minimal\n")
+    loaded = account.current()
+    assert loaded.display_name == loaded.handle
+    assert loaded.bio == "" and loaded.previous_handles == ()

@@ -1,6 +1,6 @@
 """Stores left by the removed evolution agent, now read-only.
 
-- `directives.md`            — rules `reply_agent` injects into its prompt.
+- `directives.md`            — archived strategy, no longer injected into prompts.
 - `pruned_accounts.json`     — handles selectors skip. Each entry has an
                                `until` timestamp; expired entries are dropped
                                on read.
@@ -9,7 +9,6 @@
 No job writes these files any more: they hold what the evolution agent last
 proposed, and the selection code reads them at runtime.
 """
-import os
 from datetime import datetime
 from .state_store import DISPOSABLE, StateFile, StatePath
 
@@ -20,22 +19,6 @@ REINFORCED = StateFile("reinforced_accounts.json", {"entries": []}, DISPOSABLE)
 
 
 # ---------- DIRECTIVES (loaded by generation agents) ----------
-
-def get_directives_block() -> str:
-    """Return a compact block to inject into generation prompts. Empty if
-    no directives have been generated yet (first run / clean state)."""
-    if not os.path.exists(DIRECTIVES_FILE):
-        return ""
-    try:
-        with open(DIRECTIVES_FILE, "r") as f:
-            content = f.read().strip()
-        if not content:
-            return ""
-        # Trim to keep the prompt size reasonable
-        return f"\n\n=== DIRECTIVES AUTONOMES (issues de l'analyse de performance) ===\n{content[:1500]}\n=== FIN DIRECTIVES ===\n"
-    except IOError:
-        return ""
-
 
 # ---------- PRUNED ACCOUNTS (filtered by selectors) ----------
 

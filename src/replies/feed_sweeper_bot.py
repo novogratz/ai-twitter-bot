@@ -36,7 +36,7 @@ def _harvest_active_authors(tweets: list) -> None:
         from ..core.dynamic_strategy import add_dynamic_accounts, get_dynamic_accounts
         existing = get_dynamic_accounts()
         known = set(h.lower() for bucket in ("en", "fr") for h in existing.get(bucket, []))
-        known.add(config.BOT_HANDLE.lower())
+        known.update(config.own_handles())
 
         min_likes = settings.get("FEED_SWEEP_HARVEST_MIN_LIKES")
         new_handles = []

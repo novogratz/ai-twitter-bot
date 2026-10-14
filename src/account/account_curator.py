@@ -53,18 +53,14 @@ def pinned_handles() -> tuple:
 def _author_engagements(window_days: int | None = None) -> dict:
     """{author_lc: count} of our ON-LANE replies/quotes per parent author.
 
-    Lane gate: only engagements whose outgoing text classified into a real
-    pillar count as evidence — rows tagged "other" (which is where FR-era
-    replies and off-voice noise land) are ignored. This is what lets the
-    curator survive a persona pivot: stale-lane evidence stops scoring the
-    moment the voice changed, even though the rows are still in the window.
+    Only current content pillars count. Historical off-topic tags remain
+    in the CSV but cannot promote accounts after an identity change.
     """
-    from ..core.pillar_tags import classify as _classify_pillar
+    from ..core.pillar_tags import ACTIVE_PILLARS, classify as _classify_pillar
     if window_days is None:
         window_days = settings.get("CURATOR_WINDOW_DAYS")
     cutoff = (datetime.now() - timedelta(days=window_days)).isoformat()
     counts: dict = defaultdict(int)
-    own = (config.BOT_HANDLE or "").lower()
     try:
         with open(config.ENGAGEMENT_LOG_FILE, newline="") as f:
             for row in csv.reader(f):
@@ -76,11 +72,11 @@ def _author_engagements(window_days: int | None = None) -> dict:
                 if not m:
                     continue
                 a = m.group(1).lower()
-                if a == own or is_blocked_account(a):
+                if config.is_own_handle(a) or is_blocked_account(a):
                     continue
                 pillar = (row[6].strip() if len(row) > 6 and row[6] else
                           _classify_pillar(row[2] if len(row) > 2 else "", row[1]))
-                if pillar == "other":
+                if pillar not in ACTIVE_PILLARS:
                     continue
                 counts[a] += 1
     except OSError:

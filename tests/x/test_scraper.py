@@ -71,3 +71,12 @@ def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
     scraper._record_blank_page(label="@TheAIShrink")
     assert restarts == ["black_screen_recovery"], "diverse-label blanks = wedge = restart"
     scraper._reset_blank_page_count()
+
+
+def test_ownership_recognizes_new_and_historical_handles_but_not_display_names():
+    from src.x import scraper
+    for handle in ("thesimaximalist", "TheAIShrink", "THEAISHrink"):
+        assert scraper.is_own_post({"url": f"https://x.com/{handle}/status/123", "author": "Some display name"})
+        assert scraper.is_own_post({"url": f"https://twitter.com/{handle}/status/123?s=20"})
+    assert not scraper.is_own_post({"url": "https://x.com/other/status/123", "author": "The SI Maximalist"})
+    assert not scraper.is_own_post({"url": "https://example.com/thesimaximalist/status/123"})

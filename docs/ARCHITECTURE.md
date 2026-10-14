@@ -121,7 +121,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 Two settings decide how much of the table does anything:
 
 - `PROFILE_VISIT_ALLOWLIST` (the Account's `network.profile_visits` unless
-  `.env` sets it: `TheBTCTherapist,Graphseo` for @TheAIShrink). Profile
+  `.env` sets it: `TheBTCTherapist,Graphseo` for @thesimaximalist). Profile
   scrapes and profile likes return nothing for other handles, so
   `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
   replyback profile likes only act on allowlisted accounts.
@@ -768,9 +768,10 @@ bots that no job reached were deleted (issue #110); git history keeps them.
 Every module under `src/` is now reached from `main.py`, and
 `tests/test_disabled_surfaces.py` fails when one is not. Live code still reads
 some files those bots used to write, as frozen data with no writer left:
-`directives.md` (`reply_agent`), `pruned_accounts.json` and
+`pruned_accounts.json` and
 `reinforced_accounts.json` (`evolution_store.filter_and_weight`, used by
-`engage_bot` and `early_bird_bot`).
+`engage_bot` and `early_bird_bot`). `directives.md` remains archived but no longer
+enters a generation prompt.
 
 ## Adding a job
 
@@ -831,7 +832,7 @@ state file resolves under `state/<BOT_ACCOUNT>/`), `test_migrate_state.py`
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (the Account's Voice files
 and the Voice block rendered from them), `test_engine_names_no_account.py`
-(no token of `main.py` or `src/` names TheAIShrink, Graphseo or
+(no token of `main.py` or `src/` names thesimaximalist, TheAIShrink, Graphseo or
 TheBTCTherapist, save two listed values that name the theaishrink folder,
 and a comment or docstring only in a passage dated or numbered),
 `test_example_account.py` (the dry run of the fictitious `accounts/example/`,
@@ -873,3 +874,18 @@ content guard's dedup memory of this run's posts.
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and
 every push to `main`.
+
+## Account identity and current content tags
+
+`account.toml` supplies the handle, display name, bio and historical handles.
+The shared Voice renderer names the current Account and places its operator
+Voice ahead of legacy examples and learned memories. Ownership checks use
+`config.own_handles()` across Reply admission, browser target verification,
+feed discovery, follows, pin candidates and reach matching. State stays in its
+existing Account folder; no publication history is migrated or erased.
+
+New engagement tags are `ai_news_take`, `ai_video`, `si_brainrot`,
+`celebrity_parody`, `meme_reaction` or `other`. Existing CSV rows keep their old
+tags. The curator counts only current pillars, so historical therapy/finance
+rows do not drive new discovery. Video tags reflect supplied text or an explicit
+source label, not visual analysis of an unseen clip.

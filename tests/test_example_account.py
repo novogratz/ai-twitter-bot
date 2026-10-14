@@ -104,7 +104,10 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 def test_theaishrink_keeps_the_jobs_and_ceilings_it_had_before_187(dry_run):
     shown = dry_run({})
     assert set(shown) == set(PRE_187) | NEW_KEYS
-    assert {key: shown[key] for key in PRE_187} == PRE_187
+    assert {key: shown[key] for key in PRE_187 if key != "slots"} == {
+        key: value for key, value in PRE_187.items() if key != "slots"}
+    # The rebrand changes angles, while the slot clocks and all ceilings stay fixed.
+    assert [clock for clock, _ in shown["slots"]] == [clock for clock, _ in PRE_187["slots"]]
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == PRE_187_BOUNDED
     assert shown["settings_warnings"] == []
 

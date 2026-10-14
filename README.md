@@ -1,10 +1,20 @@
-# @TheAIShrink — AI knowledge, useful updates, and conversation
+# The SI Maximalist — @thesimaximalist
 
-A Safari-driven AI account with the voice of a confident, warm, playfully flirty
-45-year-old mom who loves AI. The bot aims to give readers something useful in
-every post and respond naturally in conversations. That Voice lives only in
-the Account's folder, `accounts/theaishrink/voice_fr.md` (`voice_en.md` for
-English prompts): every post and reply prompt carries it as one block.
+SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos.
+
+A Safari-driven SI/AI account combining useful news and sharp technical takes
+with surreal brainrot, clearly fictional celebrity parodies and AI-created
+videos. The Operator creates and publishes videos with Grok Imagine and reports
+strong engagement with them. The Voice is enthusiastic, witty and specific.
+It lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`, shared by every
+Original and Reply prompt. Particular video scenes, settings and metrics need
+supplied context; a caption alone is not proof of unseen footage.
+
+`account.toml` holds the current handle, display name and exact bio. The existing
+`theaishrink` folder remains the storage key, and `previous_handles` keeps old
+posts recognized as our own. Publication history and duplicate protection survive
+the rebrand. This change updates the text bot's identity and discovery; video
+creation and uploads remain Operator-managed.
 
 ## Current publishing policy
 
@@ -34,7 +44,7 @@ Newer local work is backed up outside the repository. Production state,
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
+- **Replies, likes and follows focus on SI/AI, including AI-created videos**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
@@ -55,7 +65,7 @@ a new action at or after 10:00, 13:00 or 22:00, until the next window opens. An 
 | Toronto time | Reader value |
 |---|---|
 | 05:00 | Priority AI update worth understanding |
-| 07:15 | A practical AI workflow |
+| 07:15 | A sourced AI video or Grok Imagine workflow |
 | 09:30 | Priority AI article or model update with a sharp consequence |
 | 10:00 | Trend: the AI topic X is talking about, told from a trusted article |
 | 11:45 | A clear explanation of an AI concept |
@@ -63,7 +73,7 @@ a new action at or after 10:00, 13:00 or 22:00, until the next window opens. An 
 | 14:00 | A model or tool update and its consequences |
 | 15:00 | Trend |
 | 16:15 | Priority informed take on an AI tradeoff |
-| 18:30 | An idea worth saving or sharing |
+| 18:30 | A sharp SI or AI video insight with grounded humor |
 | 20:45 | Optional post for an exceptional update or unusually useful source |
 
 The historical slot grid is retained. Slots run only where their retry windows
@@ -99,7 +109,7 @@ mkdir -p state/theaishrink
 uv run python main.py
 ```
 
-`.env.example` describes @TheAIShrink with the policy values, its bounded
+`.env.example` describes @thesimaximalist with the policy values, its bounded
 settings commented out at their default, since `.env` would win over an
 Account's `[limits]`; every setting, its default and bounds are in
 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
@@ -108,7 +118,7 @@ does not know, or a badly typed value, stops the start with a message naming
 the key, and `--dry-run` names the same keys.
 
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
-`accounts/<name>/account.toml`, which holds the handle, the language of the
+`accounts/<name>/account.toml`, which holds the handle, display name, bio, historical handles and the language of the
 Originals, the domain its prompts name, the Slots and their angles, the
 feeds, Evergreen topics, trusted hosts, the relevance filter and the
 searches of the Trending posts, and the network and niche the reply, like and

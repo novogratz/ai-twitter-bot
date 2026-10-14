@@ -2,7 +2,7 @@
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
-`.env.example` is the starting point for @TheAIShrink; its bounded settings
+`.env.example` is the starting point for @thesimaximalist; its bounded settings
 stay commented, at their default, so that an Account's `[limits]` holds.
 What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
@@ -230,3 +230,9 @@ Account Reply protection is configured in `[replies] protected_handles` in
 The live Account protects `elonmusk`. Only an explicit Operator request may
 remove that protection. Conversation follow-ups are refused regardless of
 legacy Debate settings; only standalone originals may receive one Reply.
+
+The Account's optional `display_name` and `bio` are included in every Voice block;
+`bio` must fit 160 characters. `previous_handles` lists old X handles without `@`.
+Own-post checks recognize those aliases as well as the current Account handle
+and any `BOT_HANDLE` override. The live identity is The SI Maximalist,
+@thesimaximalist; `BOT_ACCOUNT=theaishrink` continues to select its existing data.
