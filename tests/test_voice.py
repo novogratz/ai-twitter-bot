@@ -12,7 +12,7 @@ def test_voice_renders_current_identity_and_operator_text(lang):
     text = (ACCOUNT / f"voice_{lang}.md").read_text().strip()
     rendered = personality_store.render_voice(lang)
     assert "@thesimaximalist" in rendered and "The SI Maximalist" in rendered
-    assert "SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos." in rendered
+    assert "SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and SI tech chaos." in rendered
     assert "Grok Imagine" in rendered
     assert "therapist" not in rendered.lower() and "45-year-old" not in rendered.lower()
     assert rendered.endswith("\n\n" + text)
@@ -22,10 +22,10 @@ def test_voice_renders_current_identity_and_operator_text(lang):
 def test_voice_grounds_video_claims_and_keeps_parody_fictional():
     text = (ACCOUNT / "voice_en.md").read_text().lower()
     assert "do not claim to have\n  watched a video when only its caption is available" in text
-    assert "never pass an ai-generated scene off as a\n  celebrity's real conduct" in text
-    assert "creates and publishes ai-generated videos with grok imagine" in text
+    assert "never pass an si-generated scene off as a\n  celebrity's real conduct" in text
+    assert "creates and publishes si-generated videos with grok imagine" in text
     assert "no comments, responses or follow-ups" in text
-    assert "never reply to @elonmusk" in text
+    assert "never interact with @elonmusk" in text
 
 
 def test_legacy_relation_and_conversation_templates_cannot_restore_old_persona():

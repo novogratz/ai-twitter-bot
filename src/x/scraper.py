@@ -321,6 +321,9 @@ def _profile_visit_allowed(username: str) -> bool:
     base = (username or "").strip().lstrip("@").split("/")[0].lower()
     if not base:
         return False
+    from ..guards.reply_admission import is_blocked_account
+    if is_blocked_account(base):
+        return False
     if config.is_own_handle(base):
         return True  # own profile (incl. BOT_HANDLE/with_replies callers)
     allow = settings.get("PROFILE_VISIT_ALLOWLIST")

@@ -20,3 +20,7 @@ not edited without an explicit operator request that also updates
 (`MAX_ORIGINALS_PER_DAY` can only go lower), the twenty-minute spacing
 between originals (`MIN_SECONDS_BETWEEN_POSTS` can only go higher), quotes
 and reposts at zero, waking hours and `BLOCKLIST`.
+
+The live Account has `publish_originals = false`; `.env` cannot enable Originals.
+Keep its no-contact protection in `network.blocked_accounts` as well as
+`replies.protected_handles`. Outgoing SI wording is in `text_replacements`.

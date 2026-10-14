@@ -8,10 +8,11 @@ def test_reply_only_still_registers_the_reply_engine():
     from main import build_scheduler
     scheduler = build_scheduler(reply_only=True)
     assert scheduler.get_job("direct_reply_job") is not None
-    assert scheduler.get_job("replyback_job") is not None
+    assert scheduler.get_job("replyback_job") is None
     assert scheduler.get_job("editorial_job") is None
 
 
+@pytest.mark.usefixtures("originals_account")
 def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
     """Building the scheduler publishes nothing: the Startup post goes
     through the editorial job, inside its window and the daily ceiling."""
@@ -24,6 +25,7 @@ def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
     assert not any("quote" in j.id or "boost" in j.id or "thread" in j.id for j in scheduler.get_jobs())
 
 
+@pytest.mark.usefixtures("originals_account")
 @pytest.mark.parametrize("flags, opened", [(["--reply-only"], False), ([], True), (["--post-only"], True)])
 def test_only_a_run_with_the_editorial_job_opens_a_startup_post(monkeypatch, flags, opened):
     import sys
@@ -80,11 +82,7 @@ REPLY_JOBS = [
     ("direct_reply_job", "src.replies.direct_reply", "run_direct_reply_cycle", "direct_reply"),
     ("feed_sweep_job", "src.replies.feed_sweeper_bot", "run_feed_sweep_cycle", "feed_sweep"),
     ("early_bird_job", "src.replies.early_bird_bot", "run_early_bird_cycle", "early_bird"),
-    ("replyback_job", "src.replies.notify_bot", "run_replyback_cycle", "replyback"),
-    ("debate_job", "src.replies.debate_bot", "run_debate_cycle", "debate"),
     ("mega_watch_job", "src.replies.mega_watch_bot", "run_mega_watch_cycle", "mega_watch"),
-    ("babysit_job", "src.replies.first_hour_babysitter", "run_babysit_cycle", "babysitter"),
-    ("notify_job", "src.replies.notify_bot", "run_notify_cycle", "notify"),
     ("reply_job", "src.replies.reply_bot", "run_reply_cycle", "reply"),
 ]
 

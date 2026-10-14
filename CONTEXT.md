@@ -269,8 +269,8 @@ like or follow policy.
 ### Time and people
 
 **Waking hours**:
-The fixed daily Toronto windows when the account acts externally: 05:00–10:00,
-12:00–13:00 and 17:00–22:00. `active_hours.WINDOWS` owns the bounds; starts
+The fixed daily Toronto windows when the account acts externally: 05:00–09:30,
+12:05–13:00, 17:15–20:00 and 22:00–23:00. `active_hours.WINDOWS` owns the bounds; starts
 are inclusive and closing times exclusive, with no daily jitter.
 _Avoid_: active hours, working day, awake
 
@@ -316,3 +316,9 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
+
+**Reply-only Account**: `publish_originals = false` makes original publishing
+unavailable at every entry point, including startup. Existing editorial terms
+above describe retained engine support and history, not live publishing.
+**Outgoing wording**: Account `text_replacements` applied before final validation;
+SI / Super intelligence in prose, exact literal links and handles.

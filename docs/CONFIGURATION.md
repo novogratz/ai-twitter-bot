@@ -29,12 +29,16 @@ not know.
 
 ## Policy ceilings
 
+The live Account has `publish_originals = false`: original targets and ceiling are
+zero, and neither `.env` nor CLI flags enable them. `text_replacements` declares
+the SI wording applied before validating outgoing prose. The existing engine
+original limits below apply only to Accounts permitted to publish Originals.
 The current rules are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). These
 hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Daily windows 05:00–10:00, 12:00–13:00, 17:00–22:00 America/Toronto; closing times exclusive, DST aware | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Daily windows 05:00–09:30, 12:05–13:00, 17:15–20:00, 22:00–23:00 America/Toronto; closing times exclusive, DST aware | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
@@ -131,13 +135,12 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TOPIC_WINDOW_HOURS` | finite float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
 | `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
-| `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
+| `REPLY_MIN_CHARS` | int | `2` | floor `2` | Shortest Reply; substantive short answers are allowed, generic reactions still refused. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
 | `FOLLOW_REQUIRE_ENGLISH` | 0 or 1 | `1` |  | Refuse to follow a profile that does not read English. |
 | `FOLLOW_REQUIRE_NICHE` | 0 or 1 | `1` |  | Refuse to follow a non-Engager whose bio is off-niche. |
-| `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
 | `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |
 | `REPLY_LIKE_PARENT_PROB` | finite float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
@@ -199,6 +202,7 @@ sets them starts; delete them from it.
 
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
+| `HUMAN_TYPO_HANDLES` | str | blank |  | No effect: remove it from .env. |
 | `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
 | `BESTIE_HANDLE` | str | blank |  | No effect: remove it from .env. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |

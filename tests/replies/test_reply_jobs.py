@@ -526,14 +526,14 @@ def test_profile_jobs_stop_at_the_rate_limit(profile_job):
     assert len(llm.calls) == 1 and chokepoint.sent == []
 
 
-def test_mega_watch_sends_replies_of_10_to_270_characters(profile_job):
+def test_mega_watch_leaves_context_length_to_shared_admission(profile_job):
     name, run, profiles, llm, chokepoint = profile_job
     profiles["someone"] = [post("someone", "post", n=1)]
     llm.default = "Yes."
 
     run()
 
-    assert chokepoint.sent == ([] if name == "mega_watch" else [profiles["someone"][0]["url"]])
+    assert chokepoint.sent == [profiles["someone"][0]["url"]]
 
 
 # --- debate (mentions) ------------------------------------------------------

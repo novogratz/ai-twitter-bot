@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import engagement_log
+from ..core import engagement_log, outgoing_text
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -194,7 +194,7 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     if generation.outcome is not Outcome.WRITTEN:
         return 0  # a failed generation: the post stays replayable
     reply, pattern_id = extract_pattern(generation.text)
-    reply = humanize(reply)
+    reply = outgoing_text.normalize(humanize(reply))
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0

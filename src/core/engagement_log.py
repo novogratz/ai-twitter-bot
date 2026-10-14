@@ -7,6 +7,23 @@ from .pattern_tags import normalize as _normalize_pattern
 from .pillar_tags import classify as _classify_pillar
 
 
+def recent_replies(limit: int = 6) -> list[str]:
+    """Bounded tail of the existing CSV, for style guidance only; never rewrite it."""
+    import io
+    try:
+        with open(config.ENGAGEMENT_LOG_FILE, "rb") as f:
+            f.seek(0, os.SEEK_END)
+            start = max(0, f.tell() - 65536)
+            f.seek(start)
+            if start:
+                f.readline()  # discard the partial first physical line
+            tail = f.read().decode("utf-8", errors="replace")
+        rows = csv.reader(io.StringIO(tail))
+        return [row[2] for row in rows if len(row) >= 4 and row[1] == "reply"][-limit:]
+    except (OSError, csv.Error):
+        return []  # style advice never changes publication history or admission
+
+
 def _extract_author(target_url: str) -> str:
     """Pull @handle from a tweet URL like https://x.com/<author>/status/<id>."""
     if not target_url:

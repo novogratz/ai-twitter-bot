@@ -330,7 +330,7 @@ def _is_lazy_reply(text: str) -> bool:
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
     norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
-    return norm in _LAZY_REPLIES
+    return not norm or not any(c.isalnum() for c in norm) or norm in _LAZY_REPLIES
 
 
 def looks_truncated(text: str) -> bool:
@@ -353,7 +353,7 @@ def looks_truncated(text: str) -> bool:
     m = re.search(r"(\w{3,})\s+([A-Za-zÀ-ÿ]{1,2})$", t)
     if m and m.group(2).lower() not in {
         # legit short final words (EN + FR)
-        "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+        "ai", "si", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
         "to", "of", "at", "by", "ça", "là", "où", "eu", "vu", "du", "un",
         "en", "et", "or", "if", "we", "be", "me", "my", "do",
     }:

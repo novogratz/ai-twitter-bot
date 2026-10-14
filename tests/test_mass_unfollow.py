@@ -10,6 +10,7 @@ import io
 import json
 import logging
 import signal
+import shutil
 import subprocess
 import sys
 import threading
@@ -25,6 +26,36 @@ from src.core import config
 from src.x import safari
 
 SCRIPT = Path(__file__).resolve().parent.parent / "bin" / "mass_unfollow.py"
+
+
+@pytest.mark.parametrize("handle,label,allowed", [
+    ("elonmusk", "Following @elonmusk", False),
+    ("ElonMusk", "Following @ElonMusk", False),
+    ("someone", "Following @elonmusk", False),
+    ("someone", "Following", False),
+    ("someone", "Following @someone", True),
+])
+def test_unfollow_click_refuses_protected_or_unverified_authors(handle, label, allowed):
+    spec = importlib.util.spec_from_file_location("mass_unfollow_dom", SCRIPT)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("node is required to exercise the browser script")
+    program = """
+let clicked = false;
+const link = {getAttribute: () => '/' + HANDLE};
+const cell = {querySelectorAll: () => [link]};
+const button = {closest: () => cell, getAttribute: () => LABEL,
+                setAttribute: () => {}, click: () => { clicked = true; }};
+const document = {querySelectorAll: () => [button]};
+const result = eval(SCRIPT);
+console.log(JSON.stringify({result, clicked}));
+""".replace("HANDLE", json.dumps(handle)).replace("LABEL", json.dumps(label)).replace("SCRIPT", json.dumps(mod._pick_js(set())))
+    result = subprocess.run([node, "-e", program], capture_output=True, text=True, timeout=10)
+    assert result.returncode == 0, result.stderr
+    answer = json.loads(result.stdout)
+    assert answer == {"result": "CLICK:someone" if allowed else "NONE", "clicked": allowed}
 
 
 def _toronto(hour, minute=0, second=0):
@@ -103,7 +134,7 @@ def script(monkeypatch, tmp_path):
     monkeypatch.setattr(follow_policy, "adjust_following", lambda delta: None)
     monkeypatch.setattr(sys, "argv", ["mass_unfollow.py"])
 
-    clock = {"now": _toronto(12)}
+    clock = {"now": _toronto(12, 15)}
     monkeypatch.setattr(active_hours, "now_local", lambda: clock["now"])
 
     mod.browser, mod.clock, mod.ledger, mod.handlers = browser, clock, ledger, handlers
@@ -201,7 +232,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, c
     assert json.loads(script.results.read_text()) == []
     assert "var keep" in script.browser.calls[-1][0], "a page script ran after the refusal"
     out = capsys.readouterr().out
-    assert "STOP: Waking hours ended (05:00–10:00, 12:00–13:00, 17:00–22:00 America/Toronto)" in out
+    assert "STOP: Waking hours ended (05:00–09:30, 12:05–13:00, 17:15–20:00, 22:00–23:00 America/Toronto)" in out
     assert "TOTAL unfollowed: 0" in out
 
 

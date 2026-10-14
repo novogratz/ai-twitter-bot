@@ -4,7 +4,7 @@ Handle: @thesimaximalist
 
 Bio:
 
-SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos.
+SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and SI tech chaos.
 
 The Operator creates and publishes AI videos with Grok Imagine and reports
 strong engagement with them. The account combines that enthusiasm and clearly

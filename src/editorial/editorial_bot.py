@@ -130,7 +130,7 @@ def open_startup_window(now=None) -> None:
     across 04:30 would publish at wake."""
     global _startup_opened_at
     now = _local(now)
-    _startup_opened_at = now if is_active(now) else None
+    _startup_opened_at = now if config.originals_enabled() and is_active(now) else None
 
 
 def startup_key():
@@ -418,6 +418,8 @@ def _pending_refusal(journal, now) -> str:
 
 
 def run_editorial_cycle(preview=False):
+    if not config.originals_enabled():
+        return None
     if not _CYCLE_LOCK.acquire(blocking=False):
         return None
     try:

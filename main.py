@@ -1,4 +1,4 @@
-"""Run the Account BOT_ACCOUNT names: sourced Originals and active daytime conversations."""
+"""Run the Account's permitted publishing jobs inside its activity windows."""
 import argparse
 import fcntl
 import json
@@ -49,14 +49,16 @@ def build_scheduler(*, post_only=False, reply_only=False):
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
     )
 
-    def add(fn, minutes, job_id, *, executor="default", first_seconds=None):
+    def add(fn, minutes, job_id, *, executor="default", first_seconds=None, enabled=True):
+        if not enabled:
+            return
         options = {}
         if first_seconds is not None:
             options["next_run_time"] = datetime.now(timezone.utc) + timedelta(seconds=first_seconds)
         scheduler.add_job(awake_job(fn), trigger=IntervalTrigger(minutes=minutes),
                           id=job_id, executor=executor, **options)
 
-    if not reply_only:
+    if not reply_only and config.originals_enabled():
         # Polling retries only the current window. State survives restarts;
         # a dedicated worker prevents reply scans from starving originals.
         # Its failures are model timeouts, not Safari outages: kept out of
@@ -76,11 +78,12 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
-        add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
-        add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
+        # Retained manual entry points share admission, but never run automatically.
+        add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job", enabled=False)
+        add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job", enabled=False)
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
-        add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
-        add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job")
+        add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job", enabled=False)
+        add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job", enabled=False)
         if settings.get("ENABLE_REPLY_SEARCH"):
             from src.replies.reply_bot import run_reply_cycle
             add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
@@ -99,7 +102,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(safe_run_followback_cycle, 20, "followback_job")
         add(safe_run_follow_engagers_cycle, 50, "follow_engagers_job")
         add(safe_run_like_cycle, 4, "like_job")
-        add(safe_run_pin_cycle, 60, "pin_job")
+        add(safe_run_pin_cycle, 60, "pin_job", enabled=config.originals_enabled())
         add(safe_run_session_refresh, 120, "session_refresh_job")
         add(safe_run_follower_tracker_cycle, 30, "follower_tracker_job")
         add(health.wrap_job(run_reach_report, "reach_report", safari_health=False), 60, "reach_report_job")
@@ -107,12 +110,14 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Sourced editorial posts and uncapped daytime replies")
+    parser = argparse.ArgumentParser(description="Account publishing policy and standalone replies")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--post-only", action="store_true")
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
     args = parser.parse_args()
+    if args.post_only and not config.originals_enabled():
+        parser.error("Originals are disabled by the Account; only Replies may publish")
     try:
         state_store.require_migrated()
     except state_store.Unmigrated as exc:
@@ -136,9 +141,10 @@ def main():
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
                           "replies": "unlimited",
-                          "quotes": 0, "reposts": 0, "slots": slots(),
-                          "trend_slots": sorted(trend_slots()),
-                          "startup_post": "every start in waking hours, restarts included",
+                          "quotes": 0, "reposts": 0,
+                          "slots": slots() if config.originals_enabled() else [],
+                          "trend_slots": sorted(trend_slots()) if config.originals_enabled() else [],
+                          "startup_post": "every start in waking hours, restarts included" if config.originals_enabled() else "disabled",
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
                           "bounded_settings": settings.bounded(),
@@ -148,7 +154,7 @@ def main():
 
     _acquire_singleton_lock()
     state_store.ensure_root()
-    if not args.reply_only:
+    if not args.reply_only and config.originals_enabled():
         # The editorial job publishes it, after every restart too.
         open_startup_window()
     stop = threading.Event()
@@ -163,15 +169,16 @@ def main():
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
     scheduler.start(paused=True)
     was_active = None
-    log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
-             f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
+    publishing = (f"at least {min_target} useful {account.current().domain} originals targeted "
+                  f"(max {config.posts_ceiling()})" if config.originals_enabled() else "Replies only")
+    log.info(f"Bot started: {publishing}; active {window_label()}.")
     try:
         while not stop.is_set():
             active = is_active()
             if active != was_active:
                 if active:
                     scheduler.resume()
-                    log.info("[HOURS] Awake. Editorial posts and conversations resumed.")
+                    log.info("[HOURS] Awake. Permitted jobs resumed.")
                 else:
                     scheduler.pause()
                     log.info("[HOURS] Asleep. Next wake: %s", next_wake().isoformat())

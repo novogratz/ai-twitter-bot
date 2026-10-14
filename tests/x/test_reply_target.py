@@ -87,6 +87,7 @@ process.stdout.write(JSON.stringify({answer, clicks}));
     ([{"url": PARENT, "text": "Replying to @someone"}], PARENT, False),
     ([{"url": PARENT, "text": "En réponse à @someone"}], PARENT, False),
     ([{"url": PARENT, "text": "@someone a nested reply"}], PARENT, False),
+    ([{"url": PARENT, "text": "A question for @ElonMusk about inference"}], PARENT, False),
     ([{"url": PARENT, "noButton": True}], PARENT, False),
     ([{"url": PARENT}], numbered_url(799), False),
     ([], PARENT, False),

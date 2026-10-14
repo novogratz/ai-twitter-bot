@@ -5,14 +5,16 @@
 
 handle = "thesimaximalist"
 display_name = "The SI Maximalist"
-bio = "SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and AI SI tech chaos."
+bio = "SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and SI tech chaos."
+publish_originals = false
+text_replacements = { "AI" = "SI", "artificial intelligence" = "Super intelligence", "airtificial intelligence" = "Super intelligence" }
 # Keep old URLs recognized as our own without moving production history.
 previous_handles = ["TheAIShrink"]
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
-domain = "SI / super intelligence and AI"
+domain = "SI / Super intelligence"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
@@ -200,7 +202,7 @@ protected_handles = ["elonmusk"]
 # (src/core/config.py), matched the same way: the token anywhere in the
 # handle, case, spaces, dashes and underscores ignored. An Account adds to
 # the engine's list and never removes from it: no key here unblocks anyone.
-blocked_accounts = []
+blocked_accounts = ["elonmusk"]
 # Authors whose posts always get French Replies, whatever one short post
 # looks like: FR_FORCED_REPLY_HANDLES unless .env sets it. Optional.
 fr_forced_reply = ["Graphseo"]
@@ -222,7 +224,7 @@ vip_reply = [
 # early_bird scans the always-reply accounts first: vip_reply, then the four
 # lists below in this order, a handle listed twice kept at its first place.
 big_ai_hype = [
-    "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella",
+    "sama", "DarioAmodei", "demishassabis", "satyanadella",
     "sundarpichai", "JensenHuang", "gdb", "miramurati", "AravSrinivas",
     "karpathy", "ylecun", "AndrewYNg", "drfeifei", "lexfridman",
     "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue", "OpenAI",
@@ -259,7 +261,7 @@ engage_vip = ["Graphseo"]
 engage_targets = ["Graphseo", "XFenaux"]
 reply_targets = [
     "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI",
-    "AnthropicAI", "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun",
+    "AnthropicAI", "GoogleDeepMind", "xAI", "karpathy", "ylecun",
     "fchollet", "demishassabis", "MistralAI", "arthurmensch",
     "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
     "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",

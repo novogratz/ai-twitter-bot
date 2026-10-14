@@ -25,7 +25,7 @@ from .reply_generator import LanguageRule
 
 # No FR-forced override on this job (pinned in the tests).
 JOB = reply_pipeline.Job("mega_watch", "MEGA", reply_call=lambda author: reply_call(author, LanguageRule.PARENT),
-                         pause=(8, 14), text_bounds=(10, 270))
+                         pause=(8, 14))
 
 # 2026-06-07 PM (operator): static list GONE.
 

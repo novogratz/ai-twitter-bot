@@ -675,6 +675,7 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]
 
 
+@pytest.mark.usefixtures("originals_account")
 def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path,
                                                                      settings_override):
     """2026-07-28 nine-day health read — shipped features were dead:

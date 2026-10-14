@@ -28,7 +28,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import account, config, humanizer, reply_language, settings
+from ..core import account, config, humanizer, outgoing_text, reply_language, reply_style
 from ..x import x_urls
 from ..core.logger import log
 
@@ -91,8 +91,7 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
 
 def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
-    exact text to send. Casualize and the typo are random: call it once per
-    send and ship `verdict.text`, never the draft."""
+    exact text to send. Ship `verdict.text`, never the unchecked draft."""
     verdict = judge_parent(url, debate_turn=debate_turn)
     if not verdict:
         return verdict
@@ -102,20 +101,20 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.SPACING, why, author)
 
     # Every Reply loses its dashes here, including paths that skip humanize().
-    text = humanizer.strip_dashes(draft)
+    text = outgoing_text.normalize(humanizer.strip_dashes(draft))
     if len(text) > content_guard.REPLY_MAX_CHARS:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
         trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
         log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
         text = trimmed
-    text = humanizer.casualize(text)
-    # The language is judged on the text as written, before the typo.
+    # Preserve the chosen voice and punctuation; never manufacture typos.
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
-    if author in _handles("HUMAN_TYPO_HANDLES"):
-        text = humanizer.inject_human_typo(text)
-        log.info(f"[REPLY] human-typo injected for @{author}.")
+    if reply_style.reaction_count(text) > 1:
+        return Verdict(Refusal.TEXT, "at most one optional emoji or text smiley", author)
+    if any(is_blocked_account(h) for h in re.findall(r"(?<!\w)@([A-Za-z0-9_]{1,15})\b", text)):
+        return Verdict(Refusal.TEXT, "reply mentions an account protected from interactions", author)
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
@@ -137,7 +136,3 @@ def is_blocked_account(author: str) -> bool:
     handle = _normalise(author)
     tokens = (*config.BLOCKLIST, *account.current().network.blocked_accounts)
     return any(token and token in handle for token in map(_normalise, tokens))
-
-
-def _handles(name: str) -> set:
-    return {h.strip().lstrip("@").lower() for h in settings.get(name).split(",") if h.strip()}
