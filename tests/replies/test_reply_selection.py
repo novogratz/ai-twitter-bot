@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from src.core import account, reply_queue
+from src.core import account, reply_queue, reply_style
 from src.core.llm_client import LLMResult, Surface
 from src.core.state_errors import StateUnreadable
 from src.guards import action_guard, active_hours, reply_admission, reply_pacing, replied_store
@@ -69,6 +69,7 @@ def publisher(monkeypatch, memory_ledger):
 
 def test_collectors_prepare_without_publishing_and_deduplicate_model_work(clock, monkeypatch):
     generated = []
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
     monkeypatch.setattr(pipeline, "_generate", lambda *a: generated.append(a) or Generation(Outcome.WRITTEN, "en", TEXT))
     monkeypatch.setattr(twitter_client, "reply_to_tweet", lambda *a, **k: pytest.fail("collector published"))
     job = pipeline.Job("one", "ONE", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
@@ -321,4 +322,84 @@ def test_saved_selected_draft_cannot_bypass_positive_gate(clock, monkeypatch, me
     assert twitter_client.reply_to_tweet(data[sid]["url"], TEXT) is WriteOutcome.REFUSED
     assert reply_queue.ready() == {}  # No automatic retry of a saved selection.
     assert Path(reply_queue.QUEUE.path).read_bytes() == before
+    assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}
+
+
+def test_few_word_reply_reaches_independent_review_and_publication(clock, monkeypatch, llm, reviewer, publisher):
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FEW_WORDS)
+    llm.default = "Bandwidth matters."
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    job = pipeline.Job("brief", "BRIEF", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "BRIEF"))
+    assert pipeline.run(job, [candidate], pipeline.Cycle()) == 0
+    sid, row = next(iter(reply_queue.ready().items()))
+    assert row["text"] == llm.default and row["length"] == "FEW_WORDS"
+    assert "at most 60 characters and at most 5 words" in llm.calls[0].prompt
+    # The same parent cannot redraw its limit or regenerate before selection.
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
+    assert pipeline.run(job, [candidate], pipeline.Cycle()) == 0
+    assert reply_queue.ready()[sid]["length"] == "FEW_WORDS" and len(llm.calls) == 1
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 1
+    assert publisher == [(candidate.url, "Bandwidth matters.")]
+    assert "two-to-five-word answer can earn full marks" in reviewer[0][0][0]
+
+
+@pytest.mark.parametrize("text", [
+    "More memory bandwidth helps those GPUs.",  # Six words, below 60 characters.
+    "Bandwidth " + "a" * 55 + ".",  # Two words, above 60 characters.
+    "Great post",  # Brief still has to be useful.
+])
+def test_prepared_search_drafts_cannot_bypass_assigned_limit_or_quality(clock, monkeypatch, text):
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FEW_WORDS)
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST", reply=text)
+    assert pipeline.run(pipeline.Job("search", "SEARCH", None), [candidate], pipeline.Cycle()) == 0
+    assert reply_queue.ready() == {}
+    row = next(iter(reply_queue.QUEUE.read().values()))
+    assert row["length"] == "FEW_WORDS" and row["status"] == "rejected"
+
+
+def test_queue_refuses_a_draft_longer_than_its_saved_limit(clock):
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    sid = reply_queue.reserve(candidate, length=reply_style.Length.FEW_WORDS)
+    assert not reply_queue.prepared(sid, TEXT, Generation(Outcome.WRITTEN, "en", TEXT), "OTHER")
+    assert reply_queue.ready() == {}
+    assert reply_queue.QUEUE.read()[sid]["status"] == "rejected"
+
+
+def test_old_queue_records_keep_the_previous_ceiling(clock, reviewer, publisher):
+    sid = stage()
+    data = reply_queue.QUEUE.read()
+    del data[sid]["length"]
+    reply_queue.QUEUE.write(data)
+    assert reply_queue.length_for(reply_queue.ready()[sid]) is reply_style.Length.FULL
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 1
+    assert publisher[0][1] == TEXT
+
+
+@pytest.mark.parametrize("length", [None, 500, [], "invented"])
+def test_corrupt_length_metadata_stops_queue_without_overwriting(clock, length):
+    sid = stage()
+    data = reply_queue.QUEUE.read()
+    data[sid]["length"] = length
+    reply_queue.QUEUE.write(data)
+    before = Path(reply_queue.QUEUE.path).read_bytes()
+    with pytest.raises(StateUnreadable):
+        selection.run_selection_cycle()
+    assert Path(reply_queue.QUEUE.path).read_bytes() == before
+
+
+@pytest.mark.parametrize("status", ["ready", "selected"])
+def test_saved_overlength_draft_cannot_reach_review_or_browser(clock, monkeypatch, memory_ledger, status):
+    sid = stage()
+    data = reply_queue.QUEUE.read()
+    data[sid].update(length="FEW_WORDS", status=status,
+                     review={**review(5), "reviewed_at": clock[0].isoformat()},
+                     selected_at=clock[0].isoformat())
+    reply_queue.QUEUE.write(data)
+    monkeypatch.setattr(selection, "run_llm", lambda *a, **k: pytest.fail("overlong draft reviewed"))
+    monkeypatch.setattr(twitter_client, "_activate_or_abort", lambda *a: pytest.fail("overlong browser write"))
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 0
+    assert twitter_client.reply_to_tweet(data[sid]["url"], TEXT) is WriteOutcome.REFUSED
     assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}

@@ -41,7 +41,11 @@ creation and uploads remain Operator-managed.
   use gentle humor. No roasts, sarcastic digs, put-downs or negative takes about
   anyone or any product. Admit uncertainty; skip when no kind, truthful detail fits.
 - **Context-led variety:** a few words when enough, a fuller technical answer
-  when useful, or a specific joke. Usually no smiley; at most one optional emoji
+  when useful, or a specific joke. Each new draft gets a random ceiling: five
+  words/60 characters (30%), 120 characters (30%), 200 (20%) or 278 (20%).
+  The existing 278-character maximum stays fixed. Limits include spaces and
+  reactions, never require padding, and remain enforced through publication.
+  Oversized drafts are skipped. Usually no smiley; at most one optional emoji
   or text smiley, no automatic ending or fake typos. Recent replies guide variety.
 - **One selected Reply every 5–8 minutes at most:** collectors prepare a shared
   pool during the cooldown. Independent review scores impact, sharpness and

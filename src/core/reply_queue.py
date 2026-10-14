@@ -2,6 +2,7 @@
 import re
 from datetime import datetime, timedelta
 
+from .reply_style import Length
 from .state_errors import StateUnreadable
 from .state_store import GUARDED, StateFile, StatePath, process_lock
 from ..guards import active_hours
@@ -49,6 +50,7 @@ def _read():
                 or x_urls.status_id(row["url"]) != sid or not row["parent"].strip()):
             raise StateUnreadable("Reply queue has an invalid draft record")
         _stamp(row["created_at"])
+        length_for(row)
         if row["status"] in {"reviewed", "selected"}:
             _checked_review(row.get("review"))
         if row["status"] == "selected":
@@ -61,7 +63,15 @@ def _fresh(row):
     return timedelta(0) <= age < TTL
 
 
-def reserve(candidate) -> str:
+def length_for(row) -> Length:
+    """Pre-budget drafts keep the old ceiling until their normal expiry."""
+    try:
+        return Length[row.get("length", "FULL")]
+    except (KeyError, TypeError) as exc:
+        raise StateUnreadable("Reply queue has an invalid length limit") from exc
+
+
+def reserve(candidate, *, length: Length = Length.FULL) -> str:
     """Reserve model work once per parent across all collecting jobs."""
     sid = x_urls.status_id(candidate.url)
     if not sid or not candidate.text.strip():
@@ -73,19 +83,26 @@ def reserve(candidate) -> str:
             return ""
         data[sid] = dict(url=candidate.url, parent=candidate.text[:4000], source=candidate.source,
                          text="", provider="", model="", language="", pattern="", status="preparing",
+                         length=length.name,
                          created_at=active_hours.now_local().isoformat())
         QUEUE.write(data)
     return sid
 
 
-def prepared(sid: str, text: str, generation, pattern: str):
+def prepared(sid: str, text: str, generation, pattern: str) -> bool:
     with process_lock(LOCK):
         data = _read()
         row = data.get(sid)
         if row and row["status"] == "preparing" and _fresh(row):
+            if not length_for(row).accepts(text):
+                row.update(status="rejected", outcome="assigned length limit exceeded")
+                QUEUE.write(data)
+                return False
             row.update(text=text, provider=generation.provider, model=generation.model,
                        language=generation.language, pattern=pattern, status="ready")
             QUEUE.write(data)
+            return True
+    return False
 
 
 def discard(sid: str, reason: str, *, attempted: bool = False):
@@ -102,6 +119,8 @@ def ready() -> dict:
 
 
 def approved(row) -> bool:
+    if not length_for(row).accepts(row["text"]):
+        return False
     review = row.get("review")
     if not review:
         return False
