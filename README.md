@@ -51,6 +51,8 @@ protection. Remove an old `BOT_HANDLE` override from `.env` or update it too.
   with exactly one of 😂, 💀 or 😂💀**, chosen randomly and enforced before
   publishing. The words must carry the joke. No other emojis or text smileys;
   standalone reactions stay disabled. Originals remain emoji-free.
+  A model-supplied approved ending is separated before draft body validation;
+  the publisher still chooses the ending. Other decorations remain refused.
   The voice brings delighted fangirl energy for Elon, Grok and Grok Imagine.
   It can lightly tease SI hype, sales pitches and demonstrated limitations
   with a specific, playful observation. Serious questions still get useful

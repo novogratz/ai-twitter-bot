@@ -99,8 +99,10 @@ Generic textual praise stays blocked; `REPLY_MIN_CHARS` is five.
 Latest clarification, 2026-10-12: **every Reply ends with exactly one of 😂, 💀
 or 😂💀**, selected randomly with equal probability. This supersedes the earlier
 Reply emoji ban. Originals still contain no emojis or text smileys. Reply
-generation drafts words only and gives a decorated body one rewrite; persistent
-violations publish nothing. The shared pipeline chooses the ending once, records
+generation returns words only, separating one approved suffix if the model
+supplies it. Other decorated bodies get one rewrite; persistent violations
+publish nothing. An exhausted rewrite is reported as invalid content, distinct
+from a failed provider call. The shared pipeline chooses the ending once, records
 it with shipped Replies, and the write chokepoint adds it for any other caller.
 An existing approved ending is preserved, never doubled. The chokepoint reserves
 room before trimming the body at a word/sentence boundary and validates the final
