@@ -65,7 +65,7 @@ def _compare(rows):
         "Do not rewrite drafts. Score each dimension from 0 to 5: impact (useful contribution to THIS "
         "parent), sharpness (precise and clear, never cutting), interest (fresh insight or gentle wit). "
         "4 is strong; 5 is exceptional. Every dimension must be at least 4 to qualify. "
-        "A short or serious answer can earn full marks; length, jokes, favorite brands and flattery "
+        "Even a specific two-to-five-word answer can earn full marks; length, jokes, favorite brands and flattery "
         "earn no automatic points. Penalize stock reactions, repeated wording or forced product plugs. "
         "Set positive=true ONLY for a kind, humble, supportive contribution that follows the Voice. "
         "Reject insults, roasts, sarcasm at anyone's expense, contempt, condescension, backhanded "
@@ -102,7 +102,8 @@ def _eligible():
     for sid, row in list(rows.items()):
         parent = judge_parent(row["url"])
         text = judge_text(parent.author, row["text"]) if parent else parent
-        if not parent or not text or text.text != row["text"]:
+        if (not parent or not text or text.text != row["text"]
+                or not reply_queue.length_for(row).accepts(row["text"])):
             reply_queue.discard(sid, "admission changed before selection")
             del rows[sid]
     return rows

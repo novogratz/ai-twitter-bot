@@ -6,6 +6,18 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator requested occasional few-word Replies and varying
+maximum lengths without raising the existing 278-character ceiling. Each new
+ranked draft receives one random limit before generation: five words/60 characters
+(30%), 120 characters (30%), 200 (20%) or 278 (20%). These are ceilings, never
+targets or publication quotas. The chosen limit stays in the shared draft queue;
+preparation, selection and the final write enforce it on the complete outgoing
+text, including spaces and an optional reaction. Oversized drafts are skipped,
+never chopped to fit the smaller limit. Existing saved drafts without a limit
+retain 278 until their normal expiry. Brief replies still need a specific,
+kind, supported contribution and independent approval. The Operator requested
+the PR pushed and merged and a release; the bot remains stopped.
+
 2026-10-14 — The Operator clarified a consistently positive persona: an
 American mom from the San Francisco Bay Area, a knowledgeable SI geek who is
 humble, fun, welcoming and super nice. She supports Super intelligence, SI/AI,

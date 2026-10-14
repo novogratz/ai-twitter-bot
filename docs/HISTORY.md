@@ -1,5 +1,19 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Dynamic Reply limits and occasional few-word answers
+
+The Operator requested varied maximum lengths, including Replies of just a few
+words, without increasing the current maximum. New ranked drafts now randomly
+receive five words/60 characters (30%), 120 characters (30%), 200 (20%) or 278
+(20%). Every size may be shorter. The shared queue preserves the choice;
+preparation, independent selection and final admission enforce it on the complete
+outgoing text. Oversized drafts are skipped, not chopped to fit. Brief answers
+still need a specific, kind, supported contribution and independent approval.
+Old queue rows retain their prior ceiling until expiry. Malformed limits fail
+closed. Existing pacing, protected authors, standalone targets, permanent
+deduplication, publishing permissions and production history remain unchanged.
+The Operator requested a PR, push, merge and release. The bot is not started.
+
 ## 2026-10-14 — Positive Bay Area mom persona and required kindness review
 
 2026-10-14 — The Operator clarified a consistently positive persona: an

@@ -1,9 +1,10 @@
 import csv
+import random
 
 import pytest
 
 from src.core import config, engagement_log, outgoing_text, reply_style
-from src.guards import reply_admission
+from src.guards import content_guard, reply_admission
 from tests.helpers import numbered_url
 
 
@@ -53,3 +54,33 @@ def test_style_guidance_reads_recent_shipped_replies_without_changing_history():
     assert "Specific thought 7" in prompt and "not reply text" not in prompt
     assert "never append one automatically" in prompt
     assert open(config.ENGAGEMENT_LOG_FILE, "rb").read() == before
+
+
+def test_dynamic_limits_include_few_words_and_never_raise_the_existing_ceiling(monkeypatch):
+    monkeypatch.setattr(reply_style.random, "choices", random.Random(42).choices)
+    chosen = [reply_style.choose_length() for _ in range(100)]
+    assert set(chosen) == set(reply_style.Length)
+    assert all(length.max_chars <= content_guard.REPLY_MAX_CHARS == 278 for length in chosen)
+    assert 20 <= chosen.count(reply_style.Length.FEW_WORDS) <= 40
+
+
+@pytest.mark.parametrize("length", list(reply_style.Length))
+def test_assigned_character_limit_counts_spaces_and_reactions(length):
+    text = "a" * (length.max_chars - 2) + " 😂"
+    assert length.accepts(text)
+    assert not length.accepts(text + ".")
+    assert length.accepts("Bandwidth matters.")  # No minimum or padding target.
+
+
+def test_few_word_limit_counts_the_entire_reply():
+    brief = reply_style.Length.FEW_WORDS
+    assert brief.accepts("More bandwidth helps those GPUs.")
+    assert not brief.accepts("More memory bandwidth helps those GPUs.")
+    assert not brief.accepts("More bandwidth helps those GPUs. 😂")
+
+
+def test_every_length_also_respects_a_tighter_global_ceiling(monkeypatch):
+    monkeypatch.setattr(content_guard, "REPLY_MAX_CHARS", 40)
+    for length in reply_style.Length:
+        assert length.max_chars <= 40
+        assert not length.accepts("a" * 41)

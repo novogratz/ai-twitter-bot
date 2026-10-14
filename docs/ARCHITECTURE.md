@@ -554,6 +554,14 @@ and validates the text, and saves the provider/model and parent snapshot in
 `reply_draft_queue.json`. Collectors do not publish or wait out the cooldown.
 The queue has at most eight active drafts; drafts expire after 30 minutes.
 
+`reply_style.choose_length()` assigns each new ranked draft a random ceiling:
+five words/60 characters, 120, 200 or the unchanged 278-character maximum.
+The queue saves the enum name with the draft so retries and restarts keep its
+limit. Preparation checks the normalized, complete text without trimming to a
+smaller ceiling. Queue admission, selection and the write's selected-draft gate
+recheck that limit. Old rows without it retain the previous 278-character ceiling
+until expiry; invalid length metadata stops the queue without overwriting it.
+
 `reply_selection_job` has its own worker and process lock. Startup gives the
 collectors at least 60 seconds. During a cooldown it waits until the final 90
 seconds to request an independent comparison on `Surface.REPLY_REVIEW`, using

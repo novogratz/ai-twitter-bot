@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import account, config, engagement_log, outgoing_text, reply_queue
+from ..core import account, config, engagement_log, outgoing_text, reply_queue, reply_style
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -142,24 +142,30 @@ def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
                 or mentions_blocked(candidate.text)
                 or x_urls.is_reply_like_tweet({"url": candidate.url, "text": candidate.text})):
             continue
-        sid = reply_queue.reserve(candidate)
+        length = reply_style.choose_length()
+        sid = reply_queue.reserve(candidate, length=length)
         if not sid:
             continue
         prepared += 1
         try:
-            generation = _generate(job, candidate, author)
+            generation = _generate(job, candidate, author, length)
             if generation.outcome is Outcome.RATE_LIMITED:
                 _stop_for_rate_limit(job, cycle)
             if generation.outcome is not Outcome.WRITTEN:
                 reply_queue.discard(sid, generation.outcome.value)
                 continue
             text, pattern = extract_pattern(generation.text)
-            verdict = judge_text(author, humanize(text))
+            text = outgoing_text.normalize(humanize(text))
+            if not length.accepts(text):
+                reply_queue.discard(sid, "assigned length limit exceeded")
+                continue
+            verdict = judge_text(author, text)
             if not verdict:
                 reply_queue.discard(sid, verdict.reason)
                 continue
-            reply_queue.prepared(sid, verdict.text, generation, pattern or candidate.pattern)
-            log.info("[%s] Prepared %s for independent comparison; not published.", job.label, sid)
+            if reply_queue.prepared(sid, verdict.text, generation, pattern or candidate.pattern):
+                log.info("[%s] Prepared %s (%s) for independent comparison; not published.",
+                         job.label, sid, length.name)
         except (OutsideActiveHours, StateUnreadable):
             raise
         except Exception:
@@ -214,14 +220,15 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     return verdict.author
 
 
-def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
+def _generate(job: Job, candidate: Candidate, author: str,
+              length: reply_style.Length | None = None) -> Generation:
     if candidate.reply:
         # The reply search prompt is English (LanguageRule.ENGLISH).
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
     return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
-                                    context=candidate.context)
+                                    context=candidate.context, length=length)
 
 
 def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:
