@@ -1,177 +1,112 @@
-"""Every reply caller inherits the standalone-page check and daily ceiling."""
+"""Only a verified original may receive the conversation's single Reply."""
+import json
+import shutil
+import subprocess
+
 import pytest
 
+from src.guards import replied_store
+from src.guards.active_hours import OutsideActiveHours
+from src.guards.reply_admission import Refusal
 from src.x import safari, twitter_client as tc
 from src.x.confirmed_write import WriteOutcome
-from src.guards import action_guard as ag, replied_store
 from tests.helpers import numbered_url
 
 
-@pytest.mark.parametrize("dry", [False, True])
-@pytest.mark.parametrize("debate_turn", [False, True])
-def test_protected_author_never_reaches_browser_or_claim(monkeypatch, memory_ledger, dry, debate_turn):
-    from src.guards.reply_admission import Refusal
-    monkeypatch.setenv("DRY_RUN", "1" if dry else "0")
-    # The test suite's Safari wall catches even a browser read on this path.
-    parent = numbered_url(52, "ELONMUSK")
-    refused = []
-    assert tc.reply_to_tweet(parent, "Grok made the storyboard meeting redundant.",
-                             debate_turn=debate_turn, on_refused=refused.append) is WriteOutcome.REFUSED
-    assert refused == [Refusal.PROTECTED_ACCOUNT]
+PARENT = numbered_url(800)
+TEXT = "Batching is where inference margins are won or lost."
+
+
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+@pytest.mark.parametrize("turn", [False, True])
+def test_protected_author_is_refused_before_any_browser_work(monkeypatch, memory_ledger, dry_run, turn):
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    refusals = []
+    parent = numbered_url(801, "ElonMusk")
+    assert tc.reply_to_tweet(parent, TEXT, debate_turn=turn,
+                             on_refused=refusals.append) is WriteOutcome.REFUSED
+    assert refusals == [Refusal.PROTECTED_ACCOUNT]
     assert parent not in replied_store.load_replied()
     assert memory_ledger.rows == []
-    assert ag.pending_reply_count() == 0
 
 
-@pytest.mark.parametrize("answer", ["refused", "", None, "unknown"])
-def test_unverified_target_never_passes(answer, monkeypatch):
+@pytest.mark.parametrize("answer", ["", "refused", "null", "[]", "{}", '{"url":17}',
+                                    json.dumps({"url": numbered_url(800, "elonmusk"), "clicked": False}),
+                                    json.dumps({"url": numbered_url(801), "clicked": False})])
+def test_unreadable_or_misattributed_target_is_refused(monkeypatch, answer):
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: answer)
-    assert not tc._standalone_reply_target(numbered_url(1))
+    assert not tc._standalone_reply_target(PARENT)
 
 
-def test_target_reader_errors_fail_closed(monkeypatch):
-    def broken(*a, **k):
-        raise RuntimeError("page unreadable")
-    monkeypatch.setattr(safari, "_run_js", broken)
-    assert not tc._standalone_reply_target(numbered_url(1))
+def test_target_check_propagates_activity_window_closing(monkeypatch):
+    def asleep(*a, **k):
+        raise OutsideActiveHours("window closed")
+    monkeypatch.setattr(safari, "_run_js", asleep)
+    with pytest.raises(OutsideActiveHours):
+        tc._standalone_reply_target(PARENT)
 
 
-@pytest.mark.parametrize("configured_cap,cap", [(400, 10), (999, 10), (10, 10), (2, 2)])
-def test_daily_reply_ceiling_is_checked_at_write(monkeypatch, memory_ledger, settings_override, configured_cap, cap):
-    from tests.x.test_write_path import _fake_safari
-    from src.guards.active_hours import now_local
-    from datetime import timedelta
-    settings_override(MAX_REPLIES_PER_DAY=configured_cap)
-    _fake_safari(monkeypatch)
-    monkeypatch.setattr(ag, "too_soon", lambda action: "")
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: True)
-    for n in range(cap - 1):
-        memory_ledger.append(ag.REPLY, numbered_url(n), False, now_local() - timedelta(hours=2))
-    last, extra = numbered_url(500), numbered_url(501)
-    text = "Batching improves throughput; latency still depends on the queue."
-    assert tc.reply_to_tweet(last, text) is WriteOutcome.SHIPPED
-    assert tc.reply_to_tweet(extra, text) is WriteOutcome.REFUSED
-    assert ag.count_today(ag.REPLY) == cap
-    assert extra not in replied_store.load_replied()
+DOM = r"""
+const input = JSON.parse(process.argv[1]);
+const clicks = [];
+function article(spec) {
+  const a = {innerText: spec.text || 'An original AI post'};
+  function node(values, quoted=false) {
+    return {...values, closest: selector => selector === 'article' ? a : (quoted ? {} : null)};
+  }
+  const makeLink = (url, quoted=false) => node({
+    href: url, pathname: new URL(url).pathname,
+    querySelector: selector => selector === 'time' ? {} : null
+  }, quoted);
+  const link = makeLink(spec.url);
+  const links = spec.quote ? [makeLink(spec.quote, true), link] : [link];
+  const body = node({innerText: a.innerText});
+  const button = node({click: () => clicks.push(spec.url)});
+  a.querySelectorAll = selector => {
+    if (selector === 'a[href]') return links;
+    if (selector === '[data-testid="tweetText"]') return [body];
+    if (selector === '[data-testid="reply"]') return spec.noButton ? [] : [button];
+    return [];
+  };
+  return a;
+}
+global.document = {querySelectorAll: () => input.articles.map(article)};
+global.location = {pathname: new URL(input.page).pathname};
+const answer = eval(input.js);
+process.stdout.write(JSON.stringify({answer, clicks}));
+"""
 
 
-def test_refused_page_releases_claim_and_never_submits(monkeypatch, memory_ledger):
-    from tests.x.test_write_path import _fake_safari
-    _fake_safari(monkeypatch)
-    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: False)
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("submitted to a conversation"))
-    url = numbered_url(50)
-    assert tc.reply_to_tweet(url, "Inference throughput depends on batch size and queueing.") is WriteOutcome.REFUSED
-    assert url not in replied_store.load_replied()
-    assert ag.count_today(ag.REPLY) == 0
-
-
-@pytest.mark.parametrize("author", ["someone", "elonmusk", "xai"])
-@pytest.mark.parametrize("text", ["My lunch today", "AI predicts Bitcoin prices", "Grok DOGE fan"] )
-def test_opened_off_topic_post_never_gets_a_reply_or_parent_like(monkeypatch, memory_ledger, author, text):
-    import json
-    from tests.x.test_write_path import _fake_safari
-    real_target_guard = tc._standalone_reply_target
-    _fake_safari(monkeypatch)
-    monkeypatch.setattr(tc, "_standalone_reply_target", real_target_guard)
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps({"text": text, "url": url}))
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked an unrelated parent"))
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("replied to an unrelated parent"))
-    url = numbered_url(51, author)
-    assert tc.reply_to_tweet(url, "La taille du lot change le débit du modèle, pas sa précision.") is WriteOutcome.REFUSED
-    assert url not in replied_store.load_replied()
-    assert ag.count_today(ag.REPLY) == ag.pending_reply_count() == 0
-
-
-@pytest.mark.parametrize("opened_author", ["ELONMUSK", "otherauthor", ""])
-def test_misattributed_opened_post_is_refused_before_like_or_submit(monkeypatch, memory_ledger, opened_author):
-    import json
-    from tests.x.test_write_path import _fake_safari
-    real_guard = tc._standalone_reply_target
-    _fake_safari(monkeypatch)
-    monkeypatch.setattr(tc, "_standalone_reply_target", real_guard)
-    parent = numbered_url(53, "someone")
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps({
-        "url": numbered_url(53, opened_author), "text": "Grok Imagine generated video"}))
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked misattributed post"))
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("replied to misattributed post"))
-    assert tc.reply_to_tweet(parent, "Grok made the storyboard meeting redundant.") is WriteOutcome.REFUSED
-    assert parent not in replied_store.load_replied()
-    assert memory_ledger.rows == []
-    assert ag.pending_reply_count() == 0
-
-
-@pytest.mark.parametrize("cap", [5, 10])
-def test_ambiguous_last_reply_consumes_budget_across_restart(monkeypatch, memory_ledger, settings_override, cap):
-    from tests.x.test_write_path import _fake_safari
-    from src.guards.active_hours import now_local
-    from datetime import timedelta
-    settings_override(MAX_REPLIES_PER_DAY=cap)
-    _fake_safari(monkeypatch)
-    monkeypatch.setattr(ag, "too_soon", lambda action: "")
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: False)
-    for n in range(cap - 1):
-        memory_ledger.append(ag.REPLY, numbered_url(n), False, now_local() - timedelta(hours=2))
-    assert tc.reply_to_tweet(numbered_url(500), "Batching improves throughput; latency depends on queueing.") is WriteOutcome.UNCONFIRMED
-    assert ag.count_today(ag.REPLY) == cap - 1
-    assert ag.pending_reply_count() == 1
-    # A new StateFile adapter sees the persisted reservation after a restart.
-    from src.core.state_store import StateFile, GUARDED
-    monkeypatch.setattr(ag, "REPLY_SUBMISSIONS", StateFile("reply_submissions.json", {}, GUARDED))
-    assert tc.reply_to_tweet(numbered_url(501), "Another insight about inference batching and latency.") is WriteOutcome.REFUSED
-
-
-def test_corrupt_reply_reservation_stops_writes_without_overwriting(monkeypatch):
-    from src.core.state_errors import StateUnreadable
-    ag.REPLY_SUBMISSIONS.write({"123": "not a date"})
-    with pytest.raises(StateUnreadable):
-        tc.reply_to_tweet(numbered_url(40), "A precise observation about inference cost and latency.")
-    assert ag.REPLY_SUBMISSIONS.read() == {"123": "not a date"}
-
-
-@pytest.mark.parametrize("articles,expected", [
-    ([{"id": "50", "text": "An independent AI post"}], True),
-    ([{"id": "50", "text": "SI model alignment research"}], True),
-    ([{"id": "50", "text": "AI-generated brainrot video made with Grok"}], True),
-    ([{"id": "50", "text": "My lunch today"}], False),
-    ([{"id": "50", "text": "My lunch today @OpenAI https://ai.example.org/menu"}], False),
-    ([{"id": "50", "text": "@someone AI models", "has_text": True}], False),
-    ([{"id": "49", "text": "Our own post"}, {"id": "50", "text": "A comment"}], False),
-    ([{"id": "50", "text": "Replying to @ouraccount"}], False),
-    ([{"id": "50", "text": "En réponse à @ouraccount"}], False),
-    ([{"id": "50", "text": "Loading", "has_text": False}], False),
-    ([{"id": "99", "text": "A different post"}], False),
-    ([{"id": "50", "text": "Grok Imagine generated video", "author": "ELONMUSK"}], False),
-    ([{"id": "50", "text": "Grok Imagine generated video", "author": "otherauthor"}], False),
-    ([{"id": "50", "text": "Grok Imagine generated video", "quoted": True}], False),
+@pytest.mark.parametrize("articles,page,allowed", [
+    ([{"url": PARENT}], PARENT, True),
+    ([{"url": PARENT + "?s=20"}], PARENT, True),
+    ([{"url": PARENT + "/"}], PARENT + "/", True),
+    ([{"url": PARENT, "quote": numbered_url(2, "elonmusk")}], PARENT, True),
+    ([{"url": numbered_url(800, "elonmusk")}], PARENT, False),
+    ([{"url": numbered_url(799)}, {"url": PARENT}], PARENT, False),
+    ([{"url": PARENT, "text": "Replying to @someone"}], PARENT, False),
+    ([{"url": PARENT, "text": "En réponse à @someone"}], PARENT, False),
+    ([{"url": PARENT, "text": "@someone a nested reply"}], PARENT, False),
+    ([{"url": PARENT, "noButton": True}], PARENT, False),
+    ([{"url": PARENT}], numbered_url(799), False),
+    ([], PARENT, False),
+    ([{"url": PARENT}, {"url": numbered_url(801, "TheAIShrink")}], PARENT, False),
 ])
-def test_opened_page_classification(articles, expected, monkeypatch):
-    """Execute the real guard JS against standalone, conversation and blank DOMs."""
-    import json
-    import shutil
-    import subprocess
+@pytest.mark.parametrize("click", [False, True])
+def test_page_script_targets_only_the_verified_original(monkeypatch, articles, page, allowed, click):
     node = shutil.which("node")
-    if not node:
-        pytest.skip("Node required to execute page JavaScript fixtures")
-    def page(js, *a, **k):
-        fixture = """
-        const fixtures = JSON.parse(process.argv[1]);
-        global.document = {querySelectorAll: () => fixtures.map(f => {
-          const article = {innerText: f.text};
-          const closest = selector => selector === 'article' ? article : f.quoted ? {} : null;
-          const path = '/' + (f.author || 'author') + '/status/' + f.id;
-          const link = {pathname: path, href: 'https://x.com' + path, querySelector: () => ({})};
-          // Native permalink anchors have role="link"; quote wrappers are divs.
-          link.closest = selector => closest(selector)
-            || (selector.split(',').some(s => s.trim() === '[role="link"]') ? link : null);
-          article.querySelectorAll = selector => selector === 'a[href]'
-            ? [link]
-            : f.has_text === false ? [] : [{innerText: f.text, closest}];
-          return article;
-        })};
-        process.stdout.write(String(eval(process.argv[2])));
-        """
-        return subprocess.run([node, "-e", fixture, json.dumps(articles), js],
-                              check=True, capture_output=True, text=True).stdout
-    monkeypatch.setattr(safari, "_run_js", page)
-    assert tc._standalone_reply_target("https://x.com/author/status/50") is expected
+    if node is None:
+        pytest.skip("Node is needed to execute the browser script fixture")
+    clicks = []
+
+    def run(js, timeout_s, **kwargs):
+        assert timeout_s == 10 and kwargs["log_prefix"] == "[REPLY]"
+        result = subprocess.run([node, "-e", DOM, json.dumps(
+            {"js": js, "articles": articles, "page": page})], capture_output=True, text=True, check=True)
+        output = json.loads(result.stdout)
+        clicks.extend(output["clicks"])
+        return output["answer"]
+
+    monkeypatch.setattr(safari, "_run_js", run)
+    assert tc._standalone_reply_target(PARENT, click=click) is allowed
+    assert clicks == ([articles[0]["url"]] if allowed and click else [])

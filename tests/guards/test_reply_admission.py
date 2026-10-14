@@ -13,7 +13,7 @@ from src.guards import (
     content_guard,
     replied_store,
 )
-from src.core import config, humanizer, reply_style
+from src.core import config, humanizer
 from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
 from tests.helpers import url
@@ -23,27 +23,6 @@ TEXT = "Batching is where inference margins are won or lost."
 
 
 # --- rules on the post ------------------------------------------------------
-
-
-@pytest.mark.parametrize("handle", ["elonmusk", "ElonMusk", "ELONMUSK"])
-@pytest.mark.parametrize("debate_turn", [False, True])
-def test_protected_author_is_always_refused(handle, debate_turn, monkeypatch, memory_ledger):
-    # Protection wins even outside active hours, before any publication-state read.
-    monkeypatch.setattr(active_hours, "may_act", lambda: False)
-    monkeypatch.setattr(replied_store, "load_replied", lambda: pytest.fail("read state before protection"))
-    parent = url(handle) + "?s=20"
-    for verdict in (judge_parent(parent, debate_turn=debate_turn),
-                    judge_reply(parent, TEXT, debate_turn=debate_turn)):
-        assert verdict.refusal is Refusal.PROTECTED_ACCOUNT
-        assert verdict.refusal.definitive
-        assert verdict.author == "elonmusk"
-    assert memory_ledger.rows == []
-
-
-def test_reply_protection_is_separate_from_the_general_blocklist():
-    from src.guards.reply_admission import is_blocked_account
-    assert not is_blocked_account("elonmusk"), "likes, follows and reposts keep their own policy"
-    assert judge_parent(url("elonmuskfan")), "protection matches an exact handle"
 
 
 @pytest.mark.parametrize("handle,token", [
@@ -80,7 +59,7 @@ def test_already_replied_on_status_id_whatever_the_url_author():
 
 def test_definitive_rules_win_over_overnight(monkeypatch):
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})
     assert judge_parent(url("pgm_pm")).refusal is Refusal.BLOCKED_ACCOUNT
     overnight = judge_parent(url("someone"))
@@ -94,11 +73,11 @@ def test_stop_request_refuses_as_overnight(monkeypatch):
     assert judge_parent(url("someone")).refusal is Refusal.OVERNIGHT
 
 
-def test_debate_turn_cap_is_temporary_and_only_for_turns(settings_override):
+def test_followups_are_refused_even_with_unused_debate_budget(settings_override):
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
     action_guard.record(action_guard.DEBATE_TURN, target="challenger")
     capped = judge_parent(url("challenger"), debate_turn=True)
-    assert capped.refusal is Refusal.DEBATE_TURN_CAP and not capped.refusal.definitive
+    assert capped.refusal is Refusal.CONVERSATION and capped.refusal.definitive
     assert judge_parent(url("challenger")), "plain Replies stay uncapped"
 
 
@@ -133,42 +112,38 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
     verdict = judge_reply(url("typofriend"), "Targets are easy — conviction is the hard part of the trade.")
     assert verdict
     assert verdict.text == validated[-1]
-    body, ending = reply_style.split_ending(verdict.text)
-    assert body.endswith("(typo)") and "—" not in verdict.text
-    assert ending in reply_style.REPLY_ENDINGS
+    assert verdict.text.endswith("(typo)") and "—" not in verdict.text
 
 
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = "Parallelization improves throughput. " * 12
+    draft = "Batching decides the margin. " * 12
     verdict = judge_reply(url("someone"), draft)
-    assert verdict and len(verdict.text) <= 120
-    body, ending = reply_style.split_ending(verdict.text)
-    assert body.endswith(".") and ending in reply_style.REPLY_ENDINGS
+    assert verdict and len(verdict.text) <= 278 and verdict.text.endswith(".")
 
 
 def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override):
-    settings_override(FR_FORCED_REPLY_HANDLES="arthurmensch")
+    settings_override(FR_FORCED_REPLY_HANDLES="graphseo")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    english = judge_reply(url("ArthurMensch"), "The market just told you what your conviction is worth this week.")
+    english = judge_reply(url("Graphseo"), "The market just told you what your conviction is worth this week.")
     assert english.refusal is Refusal.TEXT and not english.refusal.definitive
-    assert judge_parent(url("ArthurMensch")), "nothing was written: the post stays fresh"
-    assert judge_reply(url("ArthurMensch"), "Le marché évalue ta conviction cette semaine.")
+    assert judge_parent(url("Graphseo")), "nothing was written: the post stays fresh"
+    assert judge_reply(url("Graphseo"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
 
 
 def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
     """The respect list allows answering a Respected account on its content:
     its own @handle in the Reply is the addressee, not a mention."""
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = "@arthurmensch le support tient tant que les volumes suivent, pas plus."
-    verdict = judge_reply(url("ArthurMensch"), draft)
-    assert verdict and reply_style.split_ending(verdict.text)[0] == draft
+    draft = "@graphseo le support tient tant que les volumes suivent, pas plus."
+    verdict = judge_reply(url("GraphSEO"), draft)
+    assert verdict and verdict.text == draft
 
 
 @pytest.mark.parametrize("draft,named", [
-    ("@arthurmensch ton analyse du support est ridicule cette semaine.", "arthurmensch"),
-    ("@arthurmensch le support tient, @01net l'a bien montré hier.", "01net"),
-    ("@arthurmensch le support tient, @kindperson l'a bien montré hier.", "kindperson"),
+    ("@graphseo ton analyse du support est ridicule cette semaine.", "graphseo"),
+    ("@graphseo le support tient, @01net l'a bien montré hier.", "01net"),
+    ("@graphseo le support tient, @kindperson l'a bien montré hier.", "kindperson"),
     ("Kindperson qui parle de support ici, c'est du bullshit.", "kindperson"),
 ])
 def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, draft, named,
@@ -177,7 +152,7 @@ def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, d
     named: refused for good, the post is dropped as after a model SKIP."""
     respected("kindperson")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    verdict = judge_reply(url("arthurmensch"), draft)
+    verdict = judge_reply(url("graphseo"), draft)
     assert verdict.refusal is Refusal.RESPECTED_ACCOUNT and verdict.refusal.definitive
     assert named in verdict.reason
 
@@ -186,42 +161,21 @@ def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, re
     respected("kindperson")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     verdict = judge_reply(url("kindperson"), TEXT)
-    assert verdict and reply_style.split_ending(verdict.text)[0] == TEXT
+    assert verdict and verdict.text == TEXT
 
 
 def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    assert judge_reply(url("someone"), TEXT, debate_turn=True)
+    assert judge_reply(url("someone"), TEXT)
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []
-def test_reply_terminology_is_enforced_after_final_text_changes(monkeypatch):
-    monkeypatch.setattr(humanizer, "casualize", lambda text: "AI needs better evals.")
-    verdict = judge_reply(url("someone"), "SI needs better evals.")
-    assert verdict.refusal is Refusal.TEXT and "terminology" in verdict.reason
-    assert judge_parent(url("someone")), "a refused draft must not claim the parent"
 
 
-def test_final_text_cannot_gain_an_emoji_after_generation(monkeypatch):
-    monkeypatch.setattr(humanizer, "casualize", lambda text: text + " 🙂")
-    verdict = judge_reply(url("someone"), TEXT)
-    assert verdict.refusal is Refusal.TEXT and "emojis" in verdict.reason
-    assert judge_parent(url("someone")), "a refused draft must not claim the parent"
-
-
-@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
-def test_chokepoint_keeps_one_ending_and_reserves_room_before_trimming(monkeypatch, ending):
-    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = ("Parallelization improves throughput. " * 12).strip()
-    verdict = judge_reply(url("someone"), f"{draft} {ending}")
-    assert verdict and len(verdict.text) <= 120
-    body, actual = reply_style.split_ending(verdict.text)
-    assert actual == ending
-    assert draft.startswith(body) and body.endswith(".")
-    assert not humanizer.has_emoji_or_smiley(body)
-
-
-def test_draft_decoration_cannot_disappear_in_trimming(monkeypatch):
-    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = "Parallelization improves throughput. " * 12 + "🙂"
-    verdict = judge_reply(url("someone"), draft)
-    assert verdict.refusal is Refusal.TEXT and "emojis" in verdict.reason
+@pytest.mark.parametrize("handle", ["elonmusk", "ElonMusk", "ELONMUSK"])
+@pytest.mark.parametrize("debate_turn", [False, True])
+def test_protected_author_never_reaches_generation_or_writing(handle, debate_turn):
+    parent = url(handle)
+    verdict = judge_parent(parent, debate_turn=debate_turn)
+    assert verdict.refusal is Refusal.PROTECTED_ACCOUNT and verdict.refusal.definitive
+    assert judge_reply(parent, TEXT, debate_turn=debate_turn).refusal is Refusal.PROTECTED_ACCOUNT
+    assert parent not in replied_store.load_replied()

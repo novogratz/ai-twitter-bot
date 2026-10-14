@@ -335,15 +335,15 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
 
 def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operator_folder, caplog):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
-    collector can save discoveries; the selector halts before a model call."""
+    cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health
     from src.replies import direct_reply as dr
-    from tests.helpers import fresh_local as fresh, scheduled_job
+    from tests.helpers import fresh, scheduled_job
     path = _corrupt(operator_folder, "respect_list.json")
     scraped = []
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [
-        {"url": fresh("someone", n=i), "text": "AI post"} for i in range(3)])
+        {"url": fresh("someone", n=i), "text": "post"} for i in range(3)])
     monkeypatch.setattr(dr, "is_on_niche", lambda text: True)
     from src.replies import reply_generator
     from src.x import twitter_client
@@ -353,12 +353,9 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
 
     scheduled_job("direct_reply_job")()
 
-    from src.replies import reply_pool
-    assert scraped and reply_pool.read(), "collection is saved without drafting"
-    monkeypatch.setattr(reply_pool, "COLLECT_SECONDS", 0)
-    scheduled_job("reply_selection_job")()
+    assert len(scraped) == 1, "the cycle stops, it does not move to the next query"
     assert "respect_list.json is unreadable" in caplog.text
-    assert "[reply_selection] halted" in caplog.text
+    assert "direct_reply halted" in caplog.text
     assert path.read_text() == CORRUPT
 
 

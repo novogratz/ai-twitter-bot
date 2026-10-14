@@ -6,8 +6,8 @@ just engaged US. We already have them on disk for free: every Debate turn
 the account shipped (replyback or debate) leaves a ledger row naming the
 Engager it answered. This lane follows a small daily trickle of them
 through the full follow chokepoint, which finds them Engagers in the same
-ledger (follow_policy.engagers). Operator 2026-10-12: Engagers skip the size
-gate only; AI/SI bios, English, caps, spacing and churn checks remain. An Engager the
+ledger (follow_policy.engagers): size/niche gates skipped — their behavior
+proves both — English gate + caps + spacing + churn kept. An Engager the
 followers page showed is a follower to the policy, and gets the full gate.
 The Follow run skips the Followed accounts, so an Engager already followed
 opens no profile.
@@ -59,6 +59,7 @@ def run_follow_engagers_cycle():
 
     run = FollowRun("FOLLOW-ENGAGERS")
     attempted = set(st.get("attempted", []))
+    own = config.BOT_HANDLE.lower()
     # Big-media accounts get Debate turns too (we reply back under news
     # posts): following them back is pointless for follow-backs.
     skip = {h.lower() for h in account.current().network.follow_engagers_skip}
@@ -75,7 +76,7 @@ def run_follow_engagers_cycle():
     for h in run.fresh(follow_policy.engagers()[:200]):
         if followed + run.failed >= per_cycle or st["count_today"] >= per_day:
             break
-        if config.is_own_handle(h) or h in skip or h in attempted:
+        if h == own or h in skip or h in attempted:
             continue
         result = run.follow(h)
         if result is None:

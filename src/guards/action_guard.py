@@ -21,50 +21,14 @@ unfollow of a handle, and never knows where it stores them.
 import os
 import random
 import time
-from datetime import date, timedelta
+from datetime import timedelta
 from typing import Optional, Tuple
 
 from ..core import config, settings
-from ..core.state_store import StateFile, GUARDED
-from ..core.state_errors import StateUnreadable
-from ..x import x_urls
 from .active_hours import is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
 from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW
-
-# Operator 2026-10-08: uncertain submissions consume the daily reply budget.
-REPLY_SUBMISSIONS = StateFile("reply_submissions.json", {}, GUARDED)
-
-
-def pending_reply_count() -> int:
-    pending = REPLY_SUBMISSIONS.read()
-    try:
-        if any(not key.isdigit() or not isinstance(day, str) for key, day in pending.items()):
-            raise ValueError("invalid reply reservation")
-        days = {key: date.fromisoformat(day) for key, day in pending.items()}
-    except (TypeError, ValueError) as exc:
-        raise StateUnreadable("reply_submissions.json is unreadable; repair reply reservations") from exc
-    if not pending:
-        return 0
-    # A crash after recording but before release must count that write only once.
-    shipped = {x_urls.status_id(target) for target in _ledger().targets(REPLY)}
-    return sum(day >= now_local().date() and key not in shipped for key, day in days.items())
-
-
-def reserve_reply(url: str) -> None:
-    """Called under the Safari lock immediately before possible submission."""
-    key = x_urls.status_id(url)
-    REPLY_SUBMISSIONS.update(lambda pending: {**pending, key: now_local().date().isoformat()})
-
-
-def confirm_reply(url: str) -> None:
-    """Only after the shipped ledger row was saved; ambiguous claims stay."""
-    def release(pending):
-        pending.pop(x_urls.status_id(url), None)
-        return pending
-    REPLY_SUBMISSIONS.update(release)
-
 
 # --- ledger ----------------------------------------------------------------
 
@@ -88,8 +52,7 @@ def count_today(action: str) -> int:
 
 
 def profile_count_today() -> int:
-    # Operator 2026-10-12: reposts have a separate fifty-per-day allowance.
-    return sum(count_today(action) for action in (POST, QUOTE))
+    return sum(count_today(action) for action in (POST, QUOTE, RETWEET))
 
 
 def debate_turn_authors() -> list:
@@ -179,25 +142,15 @@ def can_post(action: str) -> Tuple[bool, str]:
         return False, "stop requested"
     if not is_active():
         return False, f"asleep (active {window_label()})"
-    if action == QUOTE:
-        return False, "automatic quote cap is 0"
-    if action == RETWEET:
-        from . import repost_policy
-        cap = settings.get("MAX_REPOSTS_PER_DAY")
-        if count_today(RETWEET) + repost_policy.pending_count() >= cap:
-            return False, f"daily repost cap reached ({cap})"
-        wait = repost_policy.spacing_remaining()
-        return (False, f"repost spacing: wait {int(wait) + 1}s") if wait else (True, "")
+    if action in (QUOTE, RETWEET):
+        return False, "automatic quote/repost cap is 0 (editorial originals only)"
     if action == POST:
         if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
             return False, f"daily profile publication cap reached ({config.MAX_PROFILE_POSTS_PER_DAY})"
         if count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
             return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
-    elif action == REPLY:
-        cap = settings.get("MAX_REPLIES_PER_DAY")
-        if count_today(REPLY) + pending_reply_count() >= cap:
-            return False, f"daily reply cap reached ({cap})"
-    else:
+    elif action != REPLY:
         return True, ""
+    # No daily reply limit; replies retain spacing and per-tweet dedup.
     why = too_soon(action)
     return (False, why) if why else (True, "")

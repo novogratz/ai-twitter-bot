@@ -120,8 +120,8 @@ def valid_handle(handle: str | None) -> bool:
 def load_whitelist() -> dict:
     """Return {"tier1": set, ..., "tier4": set, "discovered": set,
     "all": set} of lowercased handles: the Operator's tiers, then the
-    handles account_curator promoted. Additional operator-selected tiers
-    are optional in the file. Raises
+    handles account_curator promoted. tier4 (2026-06-07 spec:
+    crypto/markets crossover seeds) is optional in the file. Raises
     StateUnreadable while whitelist.json or whitelist_discovered.json is
     missing or unreadable."""
     raw = WHITELIST.read()
@@ -420,9 +420,13 @@ def judge(handle: str) -> Verdict:
 
 
 # --- on the open profile: the quality gate ---------------------------------
-# Operator 2026-10-12: followers, Engagers and discovered seeds need an
-# on-topic bio. All profiles must pass exclusions, including manual seeds.
-# The existing profile visit supplies the bio; rejects are cached 30 days.
+# Operator 2026-06-12: "the accounts you follow are trash, very small
+# accounts... not related to AI or investment or crypto — fix your
+# algorithm". The gate rides the profile visit follow_account already
+# makes: scrape followers + bio from the loaded page, refuse before
+# clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
+# bad candidate never burns a second profile visit. The bio must match the
+# Account's niche.bio.
 
 
 def _parse_follower_count(text: str) -> int:
@@ -480,11 +484,11 @@ def _quality_decision(followers: int, bio: str, name: str,
                       whitelisted: bool, engager: bool = False) -> tuple:
     """Pure gate logic → (ok, reason). Settings read at call time.
 
-    Operator 2026-10-12: Engagers skip only the follower-count requirement.
-    Topic exclusions apply to everyone; only operator-selected seeds may
-    bypass the positive niche, size and language checks."""
-    if account.current().niche.excludes(f"{name or ''} {bio or ''}"):
-        return (False, "excluded topic in profile")
+    `engager=True` (2026-07-19 follow-your-engagers lane): the candidate
+    already replied to/engaged US, which is the highest follow-back-
+    probability signal there is AND proves the niche by behavior — so the
+    min-followers and bio-niche gates are skipped. The English gate,
+    blocklist, caps, spacing and churn cooldown still apply."""
     if whitelisted:
         return (True, "whitelisted seed (gate exempt)")
     min_followers = settings.get("FOLLOW_MIN_FOLLOWERS")
@@ -497,7 +501,7 @@ def _quality_decision(followers: int, bio: str, name: str,
         why = _looks_non_english_profile(name, bio)
         if why:
             return (False, why)
-    if settings.get("FOLLOW_REQUIRE_NICHE"):
+    if not engager and settings.get("FOLLOW_REQUIRE_NICHE"):
         blob = f"{name or ''} {bio or ''}"
         if not account.current().niche.bio.search(blob):
             return (False, "off-niche bio (no match for the Account's niche.bio)")
@@ -518,8 +522,8 @@ def _record_quality_reject(handle: str) -> None:
 
 
 def judge_profile(handle: str, read_profile: Callable[[], dict]) -> Verdict:
-    """The quality gate on the open profile, by the handle's relation: an
-    operator-selected seed bypasses positive niche/size, an Engager skips size, a
+    """The quality gate on the open profile, by the handle's relation: a
+    Seed account passes, an Engager skips the size and niche checks, a
     Stranger is refused. `read_profile` returns its followers, bio and
     name; it runs only once the relation is known. A rejected handle is
     cached for 30 days, where `judge` finds it.
@@ -528,8 +532,6 @@ def judge_profile(handle: str, read_profile: Callable[[], dict]) -> Verdict:
     profile is open, and the refusal lets `follow_account` close its tab."""
     try:
         rel = relation(handle)
-        manual_seed = rel is Relation.SEED and is_whitelisted(
-            handle, tiers=("tier1", "tier2", "tier3", "tier4"))
     except StateUnreadable as exc:
         return Verdict(Refusal.POLICY, f"relation unreadable ({exc})")
     if rel is Relation.STRANGER:
@@ -538,8 +540,7 @@ def judge_profile(handle: str, read_profile: Callable[[], dict]) -> Verdict:
     ok, why = _quality_decision(
         _parse_follower_count(profile.get("followers", "")),
         profile.get("bio", ""), profile.get("name", ""),
-        whitelisted=manual_seed,
-        engager=rel is Relation.ENGAGER)
+        whitelisted=rel is Relation.SEED, engager=rel is Relation.ENGAGER)
     if not ok:
         _record_quality_reject(handle)
         return Verdict(Refusal.QUALITY_REJECTED, why)

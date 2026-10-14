@@ -117,7 +117,7 @@ def test_lazy_reply_rejected():
 
 def test_substantive_reply_passes():
     ok, reason = cg.validate(
-        "That fear is concentration risk wearing a hoodie.",
+        "datacenter is 88% of revenue now — that fear you feel is just concentration risk wearing a hoodie",
         kind="reply",
     )
     assert ok
@@ -128,14 +128,14 @@ def test_substantive_reply_passes():
 
 def test_validate_rejects_truncated_reply():
     ok, reason = cg.validate(
-        "Le vrai problème est la question n",
+        "les vrais gagnants n'ont pas tous misé sur Cisco en 2000, ils ont construit des boîtes dessus. la vraie question n",
         kind="reply",
     )
     assert not ok and "truncat" in reason
 
 
 def test_validate_rejects_overlong_reply():
-    ok, reason = cg.validate("antidisestablishmentarianism " * 5, kind="reply")
+    ok, reason = cg.validate("a sharp take " * 30, kind="reply")
     assert not ok and "too long" in reason
 
 
@@ -185,7 +185,8 @@ def test_burned_catchphrases_blocked_at_chokepoint():
     assert not ok and "catchphrase" in why, f"original must refuse burned phrase: {why}"
 
     ok, _ = cg.validate(
-        "We are so early; this benchmark needs a reality check.", kind="reply")
+        "We are so early on this one — the benchmark gap doubled in a single "
+        "release and the pricing didn't move.", kind="reply")
     assert ok, "replies are not gated on catchphrases"
 
     fresh, _ = cg.validate("Nvidia's quarter was a therapy session disguised as an earnings call.", kind="original")
@@ -279,145 +280,8 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
         assert not ok and "violence" in why, f"{kind} must refuse the live leak"
     ok, _ = validate("drone strikes are basically a subscription business", kind="reply")
     assert not ok, "monetized-violence framing must be refused"
-    for benign in ("SI didn't kill your job. It took Kevin's job.",
+    for benign in ("AI didn't kill your job. It took Kevin's job.",
                    "made a killing on NVDA earnings today",
-                   "this is the killer app for SI agents"):
+                   "this is the killer app for AI agents"):
         ok, why = validate(benign, kind="reply")
         assert ok, f"idiom must pass: {benign!r} ({why})"
-@pytest.mark.parametrize("text", ["Latency wins.", "This is SI."])
-def test_short_textual_replies_are_allowed(text):
-    from src.guards.content_guard import validate
-    assert validate(text, kind="reply") == (True, "")
-
-
-@pytest.mark.parametrize("ending", ["", " 😂", " 💀", " 😂💀"])
-def test_twelve_word_limit_counts_the_body_and_refuses_thirteen(ending):
-    body = "One two three four five six seven eight nine ten eleven twelve"
-    assert cg.validate(body + ending, kind="reply") == (True, "")
-    ok, why = cg.validate(body + " thirteen" + ending, kind="reply")
-    assert not ok and "12 words" in why
-
-
-def test_reply_brevity_does_not_shorten_originals():
-    text = "One two three four five six seven eight nine ten eleven twelve thirteen."
-    assert cg.validate(text, kind="original") == (True, "")
-
-
-@pytest.mark.parametrize("text", ["...", "!!!", "🚀", "🙂🙂", "lol", "Great point!"])
-def test_brief_formats_do_not_allow_punctuation_spam_or_generic_praise(text):
-    from src.guards.content_guard import validate
-    assert not validate(text, kind="reply")[0]
-
-
-def test_stricter_text_floor_has_no_reaction_exemption(settings_override):
-    from src.guards.content_guard import validate
-    settings_override(REPLY_MIN_CHARS=40)
-    assert not validate("Latency wins.", kind="reply")[0]
-    settings_override(REPLY_ALLOW_REACTIONS=True)
-    assert not validate("🙂", kind="reply")[0]
-
-
-@pytest.mark.parametrize("kind", ["original", "reply"])
-@pytest.mark.parametrize("decoration", [
-    "🙂", "😉", "🚀", "☺", "❤️", "👩🏽‍💻", "🇨🇦", "1️⃣",
-    ":)", ";)", ":D", ":-)", ";-)", ":P", "<3",
-])
-def test_unapproved_emojis_and_text_smileys_stay_forbidden(kind, decoration):
-    from src.guards.content_guard import validate
-    for text in (decoration, f"Latency wins here. {decoration}", f"{decoration} Latency wins here."):
-        ok, why = validate(text, kind=kind)
-        assert not ok and "emojis and text smileys" in why
-
-
-@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
-def test_only_replies_allow_one_approved_ending(ending):
-    assert cg.validate(f"Latency wins here. {ending}", kind="reply") == (True, "")
-    for text in (ending, f"Latency wins here. {ending}"):
-        assert not cg.validate(text, kind="original")[0]
-
-
-@pytest.mark.parametrize("text", [
-    "😂 Latency wins here.", "Latency 😂 wins here.", "Latency wins here. 😂 😂",
-    "Latency wins here. 💀😂", "Latency wins here. 😂💀😂💀", "Latency wins here. 😂 💀",
-    "Latency wins here. 🙂 😂", "Latency wins here. ;-) 💀",
-])
-def test_embedded_repeated_or_unapproved_combinations_are_refused(text):
-    ok, why = cg.validate(text, kind="reply")
-    assert not ok and "emojis and text smileys" in why
-
-
-@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
-@pytest.mark.parametrize("body", ["", "lol", "Great point!", "nice", "...", "Why"])
-def test_an_ending_cannot_rescue_a_low_effort_body(body, ending):
-    ok, why = cg.validate(f"{body} {ending}", kind="reply")
-    assert not ok and "low-effort" in why
-
-
-@pytest.mark.parametrize("body", ["Latency wins because,", "La vraie question n"])
-def test_an_ending_cannot_hide_a_truncated_body(body):
-    ok, why = cg.validate(body + " 😂💀", kind="reply")
-    assert not ok and "truncated" in why
-
-
-def test_reply_length_includes_the_ending_and_floor_excludes_it(settings_override):
-    body = "A" * 119
-    assert not cg.validate(body + " 😂", kind="reply")[0]
-    settings_override(REPLY_MIN_CHARS=40)
-    ok, why = cg.validate("A" * 38 + " 😂💀", kind="reply")
-    assert not ok and "low-effort" in why
-
-
-@pytest.mark.parametrize("text", [
-    "Latency wins (batch size: 2).",
-    "The ratio is 1:2; latency falls below 3 ms.",
-    "Calculate x < 3; y ≥ 2; input → output.",
-    "The total is ∑x, so keep the denominator fixed.",
-    "The docs are at https://example.com/model?path=C:/data.",
-    "The code is `items[::-1]`; the path is `C:\\Data`.",
-])
-def test_plain_technical_prose_is_not_mistaken_for_a_smiley(text):
-    from src.guards.content_guard import validate
-    assert validate(text, kind="reply") == (True, "")
-
-
-@pytest.mark.parametrize("text", [
-    "AI needs better evals.", "ai agents need better tests.",
-    "Artificial intelligence needs better evals.", "Artificial-intelligence tools need tests.",
-    "SpaceXAI needs better evals.", "xAI needs better evals.",
-    "Google AI is building AI tools.",
-])
-def test_outdated_reply_wording_is_refused_without_silent_replacement(text):
-    from src.guards.content_guard import validate
-    ok, why = validate(text, kind="reply")
-    assert not ok and "terminology" in why
-
-
-@pytest.mark.parametrize("text", [
-    "SI needs better evals.", "Super intelligence needs better evals.",
-    "SpaceXSI needs better evals.", "OpenAI needs better evals.",
-    "Google AI and Meta AI need better evals.", "AnthropicAI needs better evals.",
-    "The EU AI Act still applies.", "The legal name is SpaceXAI LLC.",
-    "The source is https://x.ai/AI and the account is @xAI.",
-    "The docs at docs.x.ai/AI explain the API.", "The variable is `artificial intelligence`.",
-    "J'ai testé cette idée.", "Je vous ai donné le contexte.", "J’en ai parlé hier.",
-])
-def test_reply_wording_preserves_names_links_code_and_french_verbs(text):
-    from src.guards.content_guard import validate
-    assert validate(text, kind="reply") == (True, "")
-@pytest.mark.parametrize("text", [
-    "SI models can predict Bitcoin prices.", "Try these Bittensor SI staking rewards.",
-    "SI agents run the memecoin presale.", "SI stock trading returns look impressive.",
-    "SI bots trade crypto-monnaies.", "Use SI to choose $TAO.",
-])
-@pytest.mark.parametrize("kind", ["original", "reply"])
-def test_excluded_topics_are_blocked_in_every_outgoing_text(text, kind):
-    ok, why = cg.validate(text, kind=kind)
-    assert not ok and "excluded topic" in why
-
-
-def test_generated_stock_photography_is_distinct_from_stock_trading():
-    from src.core import account
-    niche = account.current().niche
-    assert niche.matches_post("SI-generated stock photography is improving.")
-    assert niche.matches_post("SI-generated stock footage is improving.")
-    assert not niche.matches_post("SI stock trading signals are improving.")

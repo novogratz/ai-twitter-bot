@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
-"""Manual seeder for the Account's curated French topic experts.
+"""One-shot seeder: add a curated batch of francophone IA/crypto/bourse
+influencers to dynamic_accounts.json AND follow them immediately.
 
-Run only on an explicit operator request. Follow admission, the whitelist,
-active hours and all write caps apply to every follow.
+User directive 2026-05-09: "find all the influencers you can that are
+francophones on twitter related to ia ai crypto ou bourse investissements,
+add them, follow them, and reshare their news + reply to those all day long"
+
+After this runs:
+  - The bot will follow them once (best-effort via twitter_client).
+
+Run: python3 bin/seed_fr_influencers.py
 """
+import json
 import os
 import sys
 import time
@@ -13,27 +21,55 @@ import random
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.core import state_store
-from src.core.dynamic_strategy import DYNAMIC_ACCOUNTS
 from src.core.logger import log
 from src.guards import follow_policy
 from src.x.twitter_client import follow_account
 
-# Operator 2026-10-12: only the Account's curated subject experts.
-from src.core import account
-SEED_HANDLES = list(account.current().network.big_fr)
+# 50+ francophone handles, IA / Crypto / Bourse / Macro / Tech press.
+# Curated for likelihood of being active accounts.
+SEED_HANDLES = [
+    # FR Crypto / DeFi
+    "JulienBouteloup", "cryptaa", "crypto_etudiant", "KEvinDOR",
+    "CrypTAlphaFR", "BitcoinerFR", "JFR_Crypto", "CryptoSushi_",
+    "HackoBoss", "0xCryptoLab", "MaxOpti_", "BastienBronnec",
+    "bitcoin_FR", "MisterCrypto_FR", "sentinelcrypt0", "JeromeAtangana",
+    "investirsimple", "oui_oui_crypto",
+
+    # FR AI / Tech
+    "clemdelangue", "gilles_babinet", "stanislaspolu", "aurelien_geron",
+    "mihalgrouv", "lex_lhomme", "datageek_FR", "le_tech_FR",
+    "KIVU_AI", "BorisJabes",
+
+    # FR Finance / Bourse / Macro
+    "marc_touati", "PatrickArtus", "CMS_Bordier", "CarminFinance",
+    "TheoTrader_", "HappyTradingFR", "FrenchMacro", "CafeDeLaBourse",
+    "BoursorMa", "Trader_Officiel", "Albizzia", "JoeBoursoFR",
+    "Marc_Fiorentino", "thomas_porcher", "Charles_Sannat",
+
+    # FR Media + journalists
+    "Le_Figaro_Eco", "OlivierBabeau", "ContexteTech", "BFMTechIA",
+    "FrenchWeb", "AgnesLaszczyk",
+]
 
 DYNAMIC_FILE = state_store.StatePath("dynamic_accounts.json")
 
 
 def _load_dynamic():
-    data = DYNAMIC_ACCOUNTS.read()
-    data.setdefault("fr", [])
-    data.setdefault("en", [])
-    return data
+    if not os.path.exists(DYNAMIC_FILE):
+        return {"fr": [], "en": []}
+    try:
+        with open(DYNAMIC_FILE, "r") as f:
+            d = json.load(f) or {}
+        d.setdefault("fr", [])
+        d.setdefault("en", [])
+        return d
+    except Exception:
+        return {"fr": [], "en": []}
 
 
-def _save_dynamic(data):
-    DYNAMIC_ACCOUNTS.write(data)
+def _save_dynamic(d):
+    with open(DYNAMIC_FILE, "w") as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
 
 
 def main():

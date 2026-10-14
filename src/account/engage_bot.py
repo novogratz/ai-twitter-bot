@@ -1,7 +1,8 @@
-"""Engage with curated profiles and discoveries supported by current topic evidence.
+"""Engage bot — visit active profiles discovered from the live feed, not a static list.
 
 Strategy (2026-06-06 operator mandate):
-  - Primary pool: current tracked evidence and topic-approved Reply candidates.
+  - Primary pool: handles captured from For You / Following feed by the feed
+    sweeper (dynamic_accounts.json "en"/"fr" buckets) + legacy discovered.json.
   - VIP: the Account's network.engage_vip, included every cycle.
   - Blocked / pruned accounts are filtered out automatically.
   - Only a Seed account of the pool is followed (issue #173): followers
@@ -14,6 +15,7 @@ import traceback
 from ..core import account
 from ..core.logger import log
 from ..core.state_store import StateUnreadable
+from ..core.dynamic_strategy import DISCOVERED_ACCOUNTS, get_dynamic_accounts
 from ..guards import follow_policy
 from ..guards.reply_admission import is_blocked_account
 from ..x.scraper import _profile_visit_allowed
@@ -26,15 +28,27 @@ def _vip_accounts() -> tuple:
 
 
 def _load_discovered_handles() -> list:
-    from .account_curator import discovery_handles
-    return discovery_handles()
+    """Read autonomously-discovered handles from discovered_accounts.json."""
+    return [d.get("handle") for d in DISCOVERED_ACCOUNTS.read()
+            if d.get("handle") and not is_blocked_account(d["handle"])]
+
+
+def _load_dynamic_handles() -> list:
+    """Read handles from dynamic_accounts.json (populated by feed sweeper)."""
+    data = get_dynamic_accounts()
+    handles = []
+    for bucket in ("en", "fr"):
+        for h in data[bucket]:
+            if h and not is_blocked_account(h):
+                handles.append(h)
+    return handles
 
 
 def _build_pool() -> list:
-    """VIPs plus evidenced discoveries; legacy saved handles cannot rejoin alone."""
+    """VIPs + dynamic + discovered, deduped and blocklist-filtered."""
     seen = set()
     pool = []
-    for h in [*_vip_accounts(), *_load_discovered_handles()]:
+    for h in [*_vip_accounts(), *_load_dynamic_handles(), *_load_discovered_handles()]:
         h_lower = h.lower() if h else ""
         if h and h_lower not in seen and not is_blocked_account(h):
             pool.append(h)

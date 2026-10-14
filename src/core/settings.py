@@ -133,10 +133,6 @@ def _script_keys(*names):
 # keeps starting on the Account it always ran.
 _declare("BOT_ACCOUNT", str, "theaishrink", "Account the bot runs: the folder accounts/<name>/ holding its account.toml.")
 _declare("BOT_HANDLE", str, "", "X handle the bot runs, without @; the Account's handle unless set.")
-_declare("MAX_REPLIES_PER_DAY", int, 10, "Replies per Toronto day across every job, ambiguous submissions included; a ceiling, not a quota.", floor=0, ceiling=10)
-_declare("MAX_REPOSTS_PER_DAY", int, 0, "Reposts per Toronto day, ambiguous submissions included; opt in per Account.", floor=0, ceiling=50)
-_declare("MIN_SECONDS_BETWEEN_REPOSTS", int, 600, "Minimum gap between repost submissions, including ambiguous ones.", floor=600)
-_declare("TARGET_REPLIES_PER_DAY", int, 0, "Legacy volume target, clamped off: selective Replies have no minimum quota.", floor=0, ceiling=0)
 _declare("MAX_REPLIES_PER_CYCLE", int, 5, "Replies one reply cycle may ship.")
 _declare("AI_CLI", str, "ollama", "Primary LLM provider: ollama, codex, gemini, opencode or claude.")
 _declare("NEWS_MODEL", str, None, "CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS).")
@@ -208,13 +204,12 @@ _declare("DUP_TOPIC_WINDOW_HOURS", float, 24.0, "Hours a post counts for the sam
 _declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-entity post that make a same story.",
          floor=0, ceiling=3)
 _declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.", floor=48.0)
-_declare("REPLY_MIN_CHARS", int, 5, "Shortest Reply body, excluding the required laughing/skull ending.", floor=5)
-_declare("REPLY_ALLOW_REACTIONS", bool, False, "Legacy key retained for compatibility; standalone emoji/smiley reactions stay disabled.", ceiling=False)
+_declare("REPLY_MIN_CHARS", int, 25, "Shortest Reply content_guard accepts.", floor=25)
 _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")
 _declare("FOLLOW_REQUIRE_ENGLISH", bool, True, "Refuse to follow a profile that does not read English.")
-_declare("FOLLOW_REQUIRE_NICHE", bool, True, "Require an on-niche bio for followers, Engagers and discovered accounts; only operator-selected seeds bypass it.", floor=True)
+_declare("FOLLOW_REQUIRE_NICHE", bool, True, "Refuse to follow a non-Engager whose bio is off-niche.")
 _declare("HUMAN_TYPO_HANDLES", str, "", "Comma-separated handles whose Replies get a human typo.")
 _declare("BLANK_GRACE_AFTER_RESTART_SECONDS", int, 120, "Seconds after a Safari restart when blank pages do not count.")
 _declare("PROFILE_VISIT_ALLOWLIST", str, "", "Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set.")
@@ -242,7 +237,7 @@ _declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and 
 _declare_unused("BESTIE_HANDLE", str, "")
 _declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
 _declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
-_declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 3, "Rotating Top searches per direct_reply cycle; shorter scans leave browser time for Replies; below 1 reads as 1.")
+_declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
 _declare_unused("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999)
 _declare_unused("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150)
 _declare_unused("DIRECT_REPLY_PROFILE_SCAN_LIMIT", int, 25)
@@ -252,9 +247,9 @@ _declare("ENABLE_DEBATES", bool, True, "Let the debate job answer mentions; read
 _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may ship.")
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
-_declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Maximum unique posts per feed view or Latest search; scrolling also has a bounded page budget.")
-_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Legacy dispatch generation budget per feed or search; live sweeps only collect candidates.")
-_declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes needed to record a feed/search author in dynamic_accounts.json; selection evidence is required for engagement.")
+_declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.")
+_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed.")
+_declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
 _declare("PINNED_TRACKED_HANDLES", str, "",

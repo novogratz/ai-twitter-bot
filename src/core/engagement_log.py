@@ -43,7 +43,7 @@ def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
     """Log a reply or quote tweet.
 
     `source` is a short tag identifying which path produced this reply
-    (e.g., "TOPIC/model evaluations", "SEARCH-HOT/SI reasoning lang:en"). The
+    (e.g., "PROFILE-FR/MathieuL1", "SEARCH-FR-HOT/Bitcoin lang:fr"). The
     strategy agent uses this to compute per-source ROI and propose changes.
     `pattern_id` is the comedy-pattern bucket (see pattern_tags.py) — drives
     the per-pattern ROI signal the evolution agent uses to rewrite its

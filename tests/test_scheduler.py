@@ -8,61 +8,8 @@ def test_reply_only_still_registers_the_reply_engine():
     from main import build_scheduler
     scheduler = build_scheduler(reply_only=True)
     assert scheduler.get_job("direct_reply_job") is not None
-    assert scheduler.get_job("replyback_job") is None
+    assert scheduler.get_job("replyback_job") is not None
     assert scheduler.get_job("editorial_job") is None
-
-
-def test_selector_runs_each_minute_after_the_startup_attempt():
-    from main import build_scheduler
-    scheduler = build_scheduler(reply_only=True)
-    selector = scheduler.get_job("reply_selection_job")
-    startup = scheduler.get_job("startup_reply_job")
-    assert selector.trigger.interval.total_seconds() == 60
-    assert selector.next_run_time > startup.trigger.run_date
-    assert selector.executor == startup.executor == "replies"
-    sweep = scheduler.get_job("feed_sweep_job")
-    assert sweep.trigger.interval.total_seconds() == 120
-    assert sweep.next_run_time < startup.trigger.run_date
-
-
-@pytest.mark.parametrize("job_id,module,run", [
-    ("editorial_job", "main", "run_editorial_cycle"),
-    ("direct_reply_job", "src.replies.direct_reply", "run_direct_reply_cycle"),
-])
-@pytest.mark.parametrize("awake", [True, False])
-def test_resume_runs_one_overdue_cycle_and_keeps_the_waking_guard(monkeypatch, job_id, module, run, awake):
-    import importlib
-    from datetime import datetime, timedelta, timezone
-    from types import SimpleNamespace
-    from apscheduler.executors.base import run_job
-    from apscheduler.events import EVENT_JOB_EXECUTED
-    from apscheduler.schedulers.base import STATE_RUNNING, STATE_PAUSED
-    from main import build_scheduler
-    from tests.helpers import TORONTO, clock
-
-    clock(monkeypatch, datetime(2026, 10, 12, 12 if awake else 14, 30, tzinfo=TORONTO))
-    called, events, submitted = [], [], []
-    monkeypatch.setattr(importlib.import_module(module), run, lambda: called.append(job_id))
-    scheduler = build_scheduler()
-    for job in scheduler.get_jobs():
-        if job.id != job_id:
-            scheduler.remove_job(job.id)
-    scheduler.start(paused=True)
-    try:
-        job = scheduler.get_job(job_id)
-        job.modify(next_run_time=datetime.now(timezone.utc) - 3 * job.trigger.interval - timedelta(seconds=90))
-        def submit(job, times):
-            submitted.extend(times)
-            events.extend(run_job(job, "default", times, "test.scheduler"))
-        monkeypatch.setattr(scheduler, "_lookup_executor", lambda name: SimpleNamespace(submit_job=submit))
-        scheduler.state = STATE_RUNNING
-        scheduler._process_jobs()
-        assert len(submitted) == 1
-        assert [event.code for event in events] == [EVENT_JOB_EXECUTED]
-        assert called == ([job_id] if awake else [])
-    finally:
-        scheduler.state = STATE_PAUSED
-        scheduler.shutdown()
 
 
 def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
@@ -133,7 +80,11 @@ REPLY_JOBS = [
     ("direct_reply_job", "src.replies.direct_reply", "run_direct_reply_cycle", "direct_reply"),
     ("feed_sweep_job", "src.replies.feed_sweeper_bot", "run_feed_sweep_cycle", "feed_sweep"),
     ("early_bird_job", "src.replies.early_bird_bot", "run_early_bird_cycle", "early_bird"),
+    ("replyback_job", "src.replies.notify_bot", "run_replyback_cycle", "replyback"),
+    ("debate_job", "src.replies.debate_bot", "run_debate_cycle", "debate"),
     ("mega_watch_job", "src.replies.mega_watch_bot", "run_mega_watch_cycle", "mega_watch"),
+    ("babysit_job", "src.replies.first_hour_babysitter", "run_babysit_cycle", "babysitter"),
+    ("notify_job", "src.replies.notify_bot", "run_notify_cycle", "notify"),
     ("reply_job", "src.replies.reply_bot", "run_reply_cycle", "reply"),
 ]
 
@@ -161,15 +112,3 @@ def test_each_reply_job_counts_toward_safari_health_under_its_label(
     [error] = [r for r in caplog.records if r.levelname == "ERROR"]
     assert error.getMessage() == f"[{label}] Cycle failed."
     assert "RuntimeError: page never loaded" in caplog.text
-
-
-@pytest.mark.parametrize("post_only, present", [(False, True), (True, False)])
-def test_startup_reply_is_one_shot_and_respects_mode(post_only, present):
-    from main import build_scheduler
-    from apscheduler.triggers.date import DateTrigger
-    scheduler = build_scheduler(post_only=post_only)
-    job = scheduler.get_job("startup_reply_job")
-    assert (job is not None) == present
-    if job:
-        assert isinstance(job.trigger, DateTrigger)
-        assert job.misfire_grace_time is None

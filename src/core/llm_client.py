@@ -204,8 +204,6 @@ class Surface(Enum):
     """What a model call is for, named by its caller; `SURFACES` resolves it."""
     REPLY = "Reply"
     PRIORITY_REPLY = "priority Reply"
-    REPLY_SELECTION = "Reply selection"
-    REPOST_SELECTION = "Video repost selection"
     REPLY_SEARCH = "reply search"
     RELATION_REPLY = "Relation Reply"
     # Provisional (#248): debate, replyback and the VIP scan's template run
@@ -235,8 +233,6 @@ class Route:
 SURFACES: dict[Surface, Route] = {
     # REPLY_LLM_PROVIDER: the local Ollama qwen 503'd and silently dropped
     # replies (operator 2026-06-24). cwd=/tmp: see REPLY_SEARCH.
-    Surface.REPLY_SELECTION: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
-    Surface.REPOST_SELECTION: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s
@@ -332,9 +328,6 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             raw = resp.read().decode("utf-8")
         data = json.loads(raw)
-    except urllib.error.HTTPError as e:
-        detail = e.read(1024).decode("utf-8", errors="replace").strip()
-        return LLMResult(1, "", f"{label}: ollama HTTP {e.code}: {detail}")
     except urllib.error.URLError as e:
         return LLMResult(1, "", f"{label}: ollama HTTP error: {e}")
     except (json.JSONDecodeError, ValueError) as e:
@@ -343,12 +336,6 @@ def _run_ollama_http(prompt: str, label: str, timeout: int,
         return LLMResult(124, "", f"{label}: ollama HTTP timed out after {timeout}s")
     except Exception as e:
         return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
-    if data.get("done_reason") == "length":
-        msg = (f"{label}: ollama output token limit reached "
-               f"(generated={data.get('eval_count')}, limit={settings.get('OLLAMA_NUM_PREDICT')}); "
-               "incomplete response refused")
-        log.warning("[LLM] %s", msg)
-        return LLMResult(1, "", msg)
     # /api/generate returns {"response": "..."}
     text = (data.get("response") or "").strip()
     if not text:

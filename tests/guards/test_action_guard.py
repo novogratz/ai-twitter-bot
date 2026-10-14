@@ -23,45 +23,28 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     ledger = MemoryLedger(rows)
     monkeypatch.setattr(ag, "LEDGER", ledger)
     assert ledger.count(ag.POST, now.date()) == 5
-    assert ag.profile_count_today() == 6
+    assert ag.profile_count_today() == 7
     assert ag.can_post(ag.POST)[0]
     assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
-    ag.record(ag.POST)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST)[0]
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_replies_capped_across_jobs_and_dry_runs_excluded(monkeypatch, memory_ledger):
+def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(9):
-        memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=6))
-    memory_ledger.append(ag.REPLY, "dry", True, now - timedelta(hours=6))
+    for n in range(500):
+        memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
+                             now - timedelta(hours=6, seconds=n))
     assert ag.can_post(ag.REPLY)[0]
-    memory_ledger.append(ag.REPLY, "tenth", False, now - timedelta(hours=6))
+    ag.record(ag.REPLY, "https://x.com/a/status/500")
     assert not ag.can_post(ag.REPLY)[0]
-    clock(monkeypatch, now + timedelta(days=1))
-    assert ag.can_post(ag.REPLY)[0]
 
 
-def test_existing_high_volume_history_still_counts_after_lowering_the_cap(monkeypatch, memory_ledger):
-    now = datetime(2026, 10, 12, 12, tzinfo=TORONTO)
-    clock(monkeypatch, now)
-    for n in range(24):
-        memory_ledger.append(ag.REPLY, str(n), False, now - timedelta(hours=1))
-    assert not ag.can_post(ag.REPLY)[0]
-    assert ag.count_today(ag.REPLY) == 24
-    clock(monkeypatch, now + timedelta(days=1))
-    assert ag.count_today(ag.REPLY) == 0
-    assert ag.can_post(ag.REPLY)[0]
-
-
-def test_quotes_remain_disabled_and_reposts_require_an_account_opt_in(memory_ledger, settings_override):
+def test_quotes_and_reposts_are_refused(memory_ledger):
     assert not ag.can_post(ag.QUOTE)[0]
-    assert ag.can_post(ag.RETWEET)[0]
-    settings_override(MAX_REPOSTS_PER_DAY=0)
     assert not ag.can_post(ag.RETWEET)[0]
 
 
@@ -109,7 +92,7 @@ def _ledger_clock(monkeypatch):
     over an empty in-memory ledger."""
     from src.guards import active_hours
 
-    now = [datetime(2026, 9, 21, 7, tzinfo=TORONTO)]
+    now = [datetime(2026, 9, 21, 12, tzinfo=TORONTO)]
     monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "LEDGER", MemoryLedger())

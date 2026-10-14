@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src.core import config, reply_style
+from src.core import config
 from src.core.llm_client import LLMResult
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
@@ -63,7 +63,6 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     answered = fresh("someone", n=1)
     replied_store.claim(answered)
     refused = {
-        fresh("ELONMUSK", n=6): "post protected",
         fresh("pgm_pm", n=2): "post blocked",
         fresh(config.BOT_HANDLE, n=3): "post own",
         answered: "post answered",
@@ -80,11 +79,21 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     assert set_aside() == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
-def test_conversation_candidates_never_generate(llm, chokepoint):
-    post = fresh("someone")
-    assert run(job(debate_turn=True), [candidate(post, "comment")]) == 0
-    assert run(job(), [rp.Candidate(post, "comment", "tag", context="our post")]) == 0
-    assert not llm.calls and not chokepoint.calls
+def test_followups_are_set_aside_before_generation(llm, chokepoint, settings_override):
+    from src.guards import action_guard
+    from src.guards.reply_admission import Refusal
+
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
+    action_guard.record(action_guard.DEBATE_TURN, target="capped")
+    capped, admitted = fresh("capped", n=1), fresh("someone", n=2)
+    cycle = rp.Cycle()
+
+    run(job(debate_turn=True), [candidate(capped, "post capped"), candidate(admitted, "post admitted")], cycle)
+
+    assert llm.parents("post capped", "post admitted") == []
+    assert chokepoint.calls == []
+    assert set_aside() == {capped, admitted}
+    assert cycle.refusals == {Refusal.CONVERSATION.value: 2}, "counted for the job's summary"
 
 
 def test_each_job_sets_aside_its_own_posts(llm, chokepoint):
@@ -128,10 +137,10 @@ def test_a_reply_naming_a_respected_account_is_set_aside(llm, chokepoint, monkey
 
     monkeypatch.setattr(tc, "reply_to_tweet", REAL_REPLY_TO_TWEET)
     monkeypatch.setenv("DRY_RUN", "1")
-    named, addressed = fresh("arthurmensch", n=1), fresh("arthurmensch", n=2)
+    named, addressed = fresh("graphseo", n=1), fresh("graphseo", n=2)
     llm.answers.update({
         "post named": "Le support tient tant que les volumes suivent, @micode l'a montré.",
-        "post addressed": "@arthurmensch le support tient tant que les volumes suivent.",
+        "post addressed": "@graphseo le support tient tant que les volumes suivent.",
     })
     candidates = [candidate(named, "post named"), candidate(addressed, "post addressed")]
 
@@ -404,7 +413,6 @@ def test_a_shipped_reply_is_logged_once_with_its_source(llm, chokepoint):
     run(job(), [candidate(shipped, "post one"), candidate(refused, "post two")])
 
     sent = chokepoint.calls[0].text
-    assert reply_style.split_ending(sent)[1] in reply_style.REPLY_ENDINGS
     assert "—" not in sent and "[PATTERN" not in sent, "humanized, pattern tag stripped"
     assert [(r.url, r.source, r.text, r.pattern) for r in logged()] == [(shipped, "TEST/post one", sent, "RENAME")]
     assert personality_store.get_account("someone")["interaction_count"] == 1, "the dossier bump"
@@ -428,7 +436,7 @@ def test_a_written_reply_skips_the_generation(llm, chokepoint):
 
     assert run(job(reply_call=None), [written]) == 1
 
-    assert llm.calls == [] and reply_style.split_ending(chokepoint.calls[0].text)[0] == "Batching wins."
+    assert llm.calls == [] and chokepoint.calls[0].text == "Batching wins."
     assert [(r.source, r.pattern) for r in logged()] == [("", "RENAME")]
 
 
@@ -601,7 +609,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
         if cut == "stop":
             stop.set()
         else:
-            s.now = s.now.replace(hour=23, minute=0, second=0)
+            s.now = s.now.replace(hour=23, minute=30, second=0)
 
     ag.record(ag.REPLY, fresh("earlier"))
     s.on_sleep = cut_short

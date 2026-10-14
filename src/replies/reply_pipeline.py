@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import engagement_log, reply_style
+from ..core import engagement_log
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -65,7 +65,6 @@ class Candidate:
     # Reply text the reply search wrote while finding the post: no generation.
     reply: str = ""
     pattern: str = ""
-    angle: str = ""  # the selector's proposed contribution, supplied as context data
     provider: str = ""  # the provider and model that wrote `reply`
     model: str = ""
 
@@ -88,14 +87,7 @@ _SPACING_WAIT_SLICE_SECONDS = 1.0
 _sleep = time.sleep
 
 
-def run(job: Job, candidates, cycle: Cycle, *, max_generations=None, max_shipped=None) -> int:
-    """Scans save their candidates; only the selector dispatches Replies."""
-    from .reply_pool import collect
-    require_active()
-    return collect(job, candidates)
-
-
-def dispatch(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
+def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
         max_shipped: int | None = None) -> int:
     """Answer `candidates` in order; returns the Replies shipped.
 
@@ -135,10 +127,7 @@ def scrape(label: str, what: str, read: Callable[..., list | None], *args, **kwa
     """A job's scrape, `read(*args, **kwargs)`. A failed one reads as nothing
     found; bedtime and an unreadable state file end the cycle."""
     try:
-        tweets = read(*args, **kwargs) or []
-        from .reply_pool import observe
-        observe(tweets, f"{label}/{what}")
-        return tweets
+        return read(*args, **kwargs) or []
     except (OutsideActiveHours, StateUnreadable):
         raise
     except Exception:
@@ -159,22 +148,15 @@ def _set_aside(job: Job) -> set:
     return _skipped.setdefault(job.name, set())
 
 
-def is_set_aside(job_name: str, url: str) -> bool:
-    return url in _skipped.get(job_name, set())
-
-
 def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     """Reply admission, just before the model call: it re-reads the Replied
     store, so a post another job answered since the scrape is dropped here,
     not after a paid generation. Returns the author it read, or None."""
     require_active()
-    # Operator 2026-10-08: standalone posts only, never conversation turns.
-    if job.debate_turn or candidate.context or candidate.text.lstrip().startswith("@"):
-        return None
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None
-    verdict = judge_parent(url, debate_turn=job.debate_turn)
+    verdict = judge_parent(url, debate_turn=job.debate_turn or bool(candidate.context))
     if not verdict:
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:
@@ -194,8 +176,7 @@ def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
     return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
-                                    context=candidate.context,
-                                    fields={"selected_angle": candidate.angle} if candidate.angle else None)
+                                    context=candidate.context)
 
 
 def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:
@@ -217,8 +198,6 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0
-    # Pick once so the shipped-history log keeps the same ending as the write.
-    reply = reply_style.finish_reply(reply)
     if job.pipelined:
         _wait_out_reply_spacing(job.label)
     log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")

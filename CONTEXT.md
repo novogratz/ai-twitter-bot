@@ -1,7 +1,6 @@
-# @thesimaximalist
+# @TheAIShrink
 
-The SI Maximalist: a knowledgeable, irreverent SI and technology account covering
-news, generated media, brainrot and clearly fictional celebrity parodies. It publishes sourced posts and
+A persona-driven X account that publishes a few sourced AI posts a day and
 converses through replies, within a ceiling set by the operator.
 
 ## Language
@@ -14,9 +13,8 @@ link. At least three are targeted per day, six planned, eight at most.
 _Avoid_: post, tweet, profile post
 
 **Profile publication**:
-Anything that appears on the account's profile timeline as its own: Originals
-and quotes. Eight per Toronto calendar day; quotes remain disabled.
-Reposts now have their own budget (Operator 2026-10-12).
+Anything that appears on the account's profile timeline as its own: Originals,
+quotes and reposts. Eight per Toronto calendar day, all kinds combined.
 _Avoid_: profile post, post
 
 **Slot**:
@@ -30,13 +28,13 @@ shares the Account's trend angle.
 _Avoid_: purpose, brief
 
 **Exceptional slot**:
-The optional 22:15 Slot, reserved for news under twelve hours old or a useful
+The optional 20:45 Slot, reserved for news under twelve hours old or a useful
 teaching source that the Editor judges exceptional.
 _Avoid_: eighth post, breaking slot
 
 **Trend slot**:
 A Slot whose topic is the common thread of the Trending posts, told from a
-fresh trusted article: 09:45, 12:20, 17:00 and the Startup post.
+fresh trusted article: 10:00, 13:00, 15:00 and the Startup post.
 _Avoid_: viral slot, hot take
 
 **Trending posts**:
@@ -101,16 +99,9 @@ _Avoid_: try, cycle, poll
 ### Conversation
 
 **Reply**:
-A post answering someone else's standalone post, once per status ID. Never a
-Profile publication. At most ten per Toronto day, no minimum quota. A sharp
-stance or punchline of at most twelve words, with one laughing/skull ending.
+A post answering someone else's post. Never a Profile publication, and no
+daily total applies to Replies.
 _Avoid_: comment, response, draft (reserved for Originals)
-
-**SI**:
-Super intelligence, the Operator's preferred generic wording in Reply prose
-(2026-10-12). Discovery also uses AI and artificial intelligence, so existing
-source language remains searchable. This is an editorial term, not evidence
-of a model's capabilities or permission to invent company renames.
 
 **Voice**:
 The account's persona, written by the Operator in the Account's folder,
@@ -183,19 +174,14 @@ _Avoid_: rally, round, comeback
 
 **Reply admission**:
 The Operator's rules a Reply must pass before it ships: first on the post
-it answers (author, account protected from Replies, Blocked account, own post, already Replied, Waking hours,
+it answers (author, Blocked account, own post, already Replied, Waking hours,
 Debate turn cap), then again with the spacing since the last Reply and the
 final text. Only a Reply it admits is sent.
-Account `replies.protected_handles` forbids answering those authors in any
-Reply path, independently of likes, follows, reposts and the respect list.
-Protection overrides priority and saved scores; the opened author must match
-the requested post before the Reply composer opens.
 _Avoid_: gate, prefilter, reply filter
 
 **Replied store**:
 The record of every post the account has Replied to, keyed on the post's
-status ID: one Reply per post, ever. IDs are never evicted as the history grows.
-While it is unreadable, no Reply ships.
+status ID: one Reply per post, ever. While it is unreadable, no Reply ships.
 _Avoid_: replied set, replied cache, dedup file
 
 ### Accounts
@@ -270,19 +256,24 @@ _Avoid_: banned, blacklisted
 An account engaged normally but never criticised or named in the account's
 own commentary. A Reply to its post may address it by its `@handle`, never
 mock it by name.
-_Avoid_: protected account, influencer
+_Avoid_: influencer
+
+**Protected account**:
+An author listed in the Account's `replies.protected_handles` who may never
+receive a Reply, including to comments and follow-ups. This does not change
+like or follow policy.
 
 ### Time and people
 
 **Waking hours**:
-The three nominal windows when the account acts externally: 05:00–10:00, 12:00–13:00 and 16:45–23:00 Toronto
-time. Each start varies by ±10 minutes per Toronto day, stable across restarts;
-closing times are fixed. `active_hours.active_windows()` returns the actual
-start-inclusive, end-exclusive bounds used by all guards and Reply allowances.
+The fixed daily Toronto windows when the account acts externally: 05:00–10:00,
+12:00–13:00 and 17:00–22:00. `active_hours.WINDOWS` owns the bounds; starts
+are inclusive and closing times exclusive, with no daily jitter.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:
-The rest of the Toronto day, when nothing external happens.
+The rest of the Toronto day, including the daytime breaks, when nothing
+external happens.
 _Avoid_: bedtime, asleep, off hours
 
 **Operator**:
@@ -322,27 +313,3 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
-
-**Reply pool**:
-The shared, guarded working set of the last day’s discovered posts and their
-eligibility, score, reason, proposed angle and outcome, keyed by status ID.
-Reply scans collect into it; the Reply selector chooses from it.
-
-**Reply archive**:
-The permanent append-only record of discoveries and selection decisions.
-It retains posts removed from the working Reply pool.
-
-**Reply selector**:
-The one scheduled job that compares saved candidates before drafting. It
-reviews batches, may reject them all, and chooses at most one candidate
-clearing the Account’s score threshold per cycle (92 for priority authors, 97
-for others), within Reply admission and the daily cap. Priority authors lead
-comparison and selection; famous names never waive topic or evidence rules.
-
-**Previous handles**: Account-owned aliases used to recognize saved own-post URLs
-after a public rename. They do not change `BOT_ACCOUNT`, the stable storage key.
-
-**Repost**:
-A native share of another account's original, without new text. At most fifty
-per Toronto day including uncertain submissions, separate from Originals and
-Replies. Permanent status-ID history prevents resharing the same post.

@@ -180,9 +180,13 @@ def close_front_tab():
 
 
 def _scroll_page():
-    """Scroll the document, even when keyboard focus remains on a feed tab."""
-    _run_js("""(() => {
-        window.scrollBy({top: Math.max(window.innerHeight * 0.85, 650), behavior: 'instant'});
-        return String(document.scrollingElement.scrollTop);
-    })()""", SCROLL_TIMEOUT_S, log_prefix="[SCROLL]", activate=True)
+    """Scroll down the page to load more content."""
+    _run_applescript('''
+    tell application "System Events"
+        repeat 5 times
+            key code 125
+            delay 0.4
+        end repeat
+    end tell
+    ''', timeout_s=SCROLL_TIMEOUT_S)
     time.sleep(2)

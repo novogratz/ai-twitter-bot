@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from src.core.llm_client import LLMResult, LLMStatus
 from src.x.confirmed_write import WriteOutcome
 
-REPLY_TEXT = "Batching wins inference margins; the model gets all the applause."
+REPLY_TEXT = "Batching is where inference margins are won or lost, not in the model."
 # Every provider hit its usage limit.
 EXHAUSTED = LLMResult(1, "", "hourly budget", LLMStatus.EXHAUSTED, "codex", "gpt-5.4-mini")
 

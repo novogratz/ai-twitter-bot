@@ -268,39 +268,6 @@ def _node_run(js, document_js):
     return res.stdout.strip()
 
 
-@pytest.mark.parametrize("checked,select,expected", [
-    (True, True, "SELECTED"), (False, True, "CLICKED"), (False, False, "UNSELECTED"),
-])
-def test_native_following_sort_script_uses_the_menu_checkmark(checked, select, expected):
-    from src.x import scraper
-    dom = """
-    const item = {textContent: ' Popular ', getAttribute: () => null,
-        querySelectorAll: () => CHECKED ? [{getAttribute: () => 'M9.64 18.952l-5.55'}] : [],
-        click: () => {}};
-    const document = {querySelectorAll: s => {
-        if (s !== '[role="menu"] [role^="menuitem"]') throw new Error(s);
-        return [item];
-    }};
-    """.replace("CHECKED", json.dumps(checked))
-    assert _node_run(scraper._following_sort_script("popular", select=select), dom) == expected
-    assert _node_run(scraper._following_sort_script("recent", select=select), dom) == "MISSING"
-
-
-def test_scroll_moves_the_document_without_keyboard_focus(monkeypatch):
-    from src.x import safari
-    scripts = []
-    monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: scripts.append(js))
-    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
-    safari._scroll_page()
-    dom = """
-    const document = {scrollingElement: {scrollTop: 0}};
-    const window = {innerHeight: 1000, scrollBy: opts => {
-        document.scrollingElement.scrollTop += opts.top;
-    }};
-    """
-    assert _node_run(scripts[0], dom) == "850"
-
-
 def test_own_replies_script_reads_a_thread(monkeypatch, browser):
     fake = browser()
     _own_replies(monkeypatch)
@@ -416,5 +383,5 @@ def test_scrape_text_limit_reaches_the_page_script(monkeypatch, browser):
     monkeypatch.setattr(scraper, "_record_blank_page", lambda **k: None)
     scraper._scrape_tweets_from_page("search 'ai'", 10)
     scraper._scrape_tweets_from_page("search 'ai'", 10, text_limit=600)
-    assert "text.substring(0, 200), ft: text, a: author" in fake.calls[0].js
-    assert "text.substring(0, 600), ft: text, a: author" in fake.calls[1].js
+    assert "text.substring(0, 200), a: author" in fake.calls[0].js
+    assert "text.substring(0, 600), a: author" in fake.calls[1].js

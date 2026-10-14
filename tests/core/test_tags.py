@@ -10,19 +10,12 @@ def test_pattern_tag_stripped():
 
 def test_pillar_classifier_buckets():
     from src.core.pillar_tags import classify
-    assert classify("Your portfolio isn't down. It's processing trauma. Sit with it.") == "other"
-    assert classify("Saylor buys more bitcoin while the AI agents trade against him.") == "other"
+    assert classify("Your portfolio isn't down. It's processing trauma. Sit with it.") == "market_trauma"
+    assert classify("Saylor buys more bitcoin while the AI agents trade against him.") == "ai_vs_btc"
     assert classify("OpenAI ships a new model and the GPU bill doubles overnight.") == "ai_news_take"
-    assert classify("Group session: what's the most you've ever panic-sold?") == "other"
+    assert classify("Group session: what's the most you've ever panic-sold?") == "reply_bait"
     # Explicit signals beat text heuristics.
-    assert classify("anything", action_type="quote_gif") == "other"
-    assert classify("anything", source="GIF/this is fine") == "other"
-    assert classify("Honest take on markets today.", source="QUESTION") == "other"
+    assert classify("anything", action_type="quote_gif") == "meme_reaction"
+    assert classify("anything", source="GIF/this is fine") == "meme_reaction"
+    assert classify("Honest take on markets today.", source="QUESTION") == "reply_bait"
     assert classify("") == "other"
-
-
-def test_si_wording_uses_the_existing_topic_metric_and_smileys_are_reactions():
-    from src.core.pillar_tags import classify
-    assert classify("SI agents need repeatable evaluations.") == "ai_news_take"
-    assert classify("🙂") == "meme_reaction"
-    assert classify("Bittensor SI staking yields are up.") == "other"

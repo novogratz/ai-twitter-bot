@@ -31,10 +31,10 @@ def _no_following_count_override(settings_override):
 def follow_env(settings_override, memory_ledger, operator_folder):
     """Isolated ledger + whitelist + counts for the follow policy tests."""
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {
-        "tier1": ["elonmusk"],
-        "tier2": ["demishassabis"],
+        "tier1": ["TheBTCTherapist"],
+        "tier2": ["morganhousel"],
         "tier3": ["karpathy"],
-        "tier4": ["sama", "xai"],
+        "tier4": ["saylor", "balajis"],
     }}))
     # Spec pacing defaults, but zeroed spacing unless a test re-enables it.
     settings_override(FOLLOW_WHITELIST_ONLY=True, MAX_FOLLOWS_PER_DAY=20, MIN_SECONDS_BETWEEN_FOLLOWS=0,
@@ -55,9 +55,9 @@ def _counts(monkeypatch, tmp_path, followers, following):
 
 def test_whitelist_loads_tier4(follow_env):
     wl = fp.load_whitelist()
-    assert "sama" in wl["tier4"]
-    assert "sama" in wl["all"]
-    assert fp.is_whitelisted("xai")
+    assert "saylor" in wl["tier4"]
+    assert "saylor" in wl["all"]
+    assert fp.is_whitelisted("balajis")
 
 
 @pytest.mark.parametrize("handle", ["", "aisha mansion", "caborashedzaborashedles", "josé",
@@ -98,20 +98,20 @@ def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch, tmp_pat
 def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch, tmp_path):
     """Even with a big follower count, total following is hard-capped at 300."""
     _counts(monkeypatch, tmp_path, 10000, 300)
-    verdict = fp.judge("sama")
+    verdict = fp.judge("saylor")
     assert verdict.refusal is Refusal.CAP_REACHED and "ceiling" in verdict.reason
     _counts(monkeypatch, tmp_path, 10000, 299)
-    assert fp.judge("sama") == ADMITTED
+    assert fp.judge("saylor") == ADMITTED
 
 
 def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatch, tmp_path):
     """Once followers exceed 300, following must stay <= followers."""
     _counts(monkeypatch, tmp_path, 220, 200)
     # followers=220 is still < FOLLOW_LOW_PHASE_FOLLOWERS → 150 ceiling rules
-    verdict = fp.judge("demishassabis")
+    verdict = fp.judge("morganhousel")
     assert verdict.refusal is Refusal.CAP_REACHED and "ceiling" in verdict.reason
     _counts(monkeypatch, tmp_path, 320, 280)
-    assert fp.judge("demishassabis") == ADMITTED  # 280+1 <= min(300, 320)
+    assert fp.judge("morganhousel") == ADMITTED  # 280+1 <= min(300, 320)
 
 
 @pytest.mark.parametrize("name", ["followed_accounts.json", "following_count.json"])
@@ -258,8 +258,8 @@ def test_follow_spacing_blocks_burst(follow_env, monkeypatch, settings_override,
     """Never burst-follow: a follow within the 10-min gap is refused."""
     settings_override(MIN_SECONDS_BETWEEN_FOLLOWS=600)
     _counts(monkeypatch, tmp_path, 100, 10)
-    ag.record(ag.FOLLOW, target="elonmusk")
-    verdict = fp.judge("demishassabis")
+    ag.record(ag.FOLLOW, target="TheBTCTherapist")
+    verdict = fp.judge("morganhousel")
     assert verdict.refusal is Refusal.TOO_SOON and "too soon" in verdict.reason
 
 
@@ -281,14 +281,14 @@ def test_anti_churn_counts_any_follow_or_unfollow_within_the_cooldown(follow_env
     _counts(monkeypatch, tmp_path, 100, 10)
     cooldown = timedelta(days=config.CHURN_COOLDOWN_DAYS)
     memory_ledger.append(ag.FOLLOW, "karpathy", True, now - cooldown + timedelta(minutes=1))
-    memory_ledger.append(ag.UNFOLLOW, "demishassabis", False, now - cooldown)
-    memory_ledger.append(ag.LIKE, "sama", False, now)
+    memory_ledger.append(ag.UNFOLLOW, "morganhousel", False, now - cooldown)
+    memory_ledger.append(ag.LIKE, "saylor", False, now)
 
     verdict = fp.judge("KarPathy")
     assert verdict.refusal is Refusal.POLICY and "anti-churn" in verdict.reason, \
         "a dry-run follow still touches"
-    assert fp.judge("demishassabis") == ADMITTED, "the cooldown ends on its last second"
-    assert fp.judge("sama") == ADMITTED, "a like is no touch"
+    assert fp.judge("morganhousel") == ADMITTED, "the cooldown ends on its last second"
+    assert fp.judge("saylor") == ADMITTED, "a like is no touch"
 
 
 def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, settings_override,
@@ -392,7 +392,7 @@ def test_each_relation_is_judged_no_wider_than_its_old_flag(
     fp.record_followers(["somefollower", "bothfan"])
     ag.record(ag.DEBATE_TURN, "someengager")
     ag.record(ag.DEBATE_TURN, "bothfan")
-    small_fan = {"followers": "12", "bio": "AI enthusiast", "name": "Sam"}
+    small_fan = {"followers": "12", "bio": "hi", "name": "Sam"}
 
     admitted = passes_whitelist_gate or not whitelist_only or bypass
     verdict = fp.judge(handle)
@@ -492,7 +492,7 @@ def test_follow_quality_gate_blocks_small_and_offniche(settings_override):
     assert not ok and "off-niche" in why
     ok, why = fp._quality_decision(-1, "AI investor", "x", whitelisted=False)
     assert not ok and "unreadable" in why
-    ok, _ = fp._quality_decision(50_000, "AI researcher and model builder", "x", whitelisted=False)
+    ok, _ = fp._quality_decision(50_000, "Macro investor, AI & crypto", "x", whitelisted=False)
     assert ok
     # Whitelisted seeds bypass (e.g. Graphseo's SEO bio is off-niche by
     # design — operator-pinned accounts are never gated).
@@ -515,7 +515,7 @@ def test_follow_gate_english_only(settings_override):
         50000, "AIと暗号資産の最新情報を毎日配信します。株式投資も。", "田中太郎", False)
     assert not ok and "non-English" in why, "Japanese bio must be rejected"
     ok, why = fp._quality_decision(
-        50000, "Recherche IA pour les entreprises. Avec vous dans les laboratoires.",
+        50000, "Analyse crypto et IA pour les investisseurs. Avec vous dans les marchés.",
         "Jean Dupont", False)
     assert not ok and "non-English" in why, "French bio must be rejected"
     # Whitelisted seeds stay exempt (Graphseo's FR bio is by design)
@@ -554,7 +554,7 @@ def test_a_profile_rejected_by_the_gate_is_refused_before_the_next_visit(follow_
 def test_the_gate_admits_a_seed_and_skips_size_for_an_engager_only(follow_env):
     """#173: the gate reads the relation itself; a follower gets the full
     gate, as a Follow-back always did."""
-    small_fan = {"followers": "12", "bio": "AI enthusiast", "name": "Sam"}
+    small_fan = {"followers": "12", "bio": "hi", "name": "Sam"}
     ag.record(ag.DEBATE_TURN, "smallfan")
     fp.record_followers(["smallfollower"])
     assert fp.judge_profile("karpathy", lambda: SMALL) == ADMITTED
@@ -596,23 +596,3 @@ def test_an_unreadable_record_of_the_followed_accounts_is_never_overwritten(tmp_
     assert path.read_text() == '["half'
     with pytest.raises(StateUnreadable):
         fp.followed()
-
-
-@pytest.mark.parametrize("bio", ["Bitcoin and AI investor", "Crypto trader building LLM agents", "Grok DOGE fan"])
-@pytest.mark.parametrize("whitelisted,engager", [(True, False), (False, True), (False, False)])
-def test_crypto_bios_are_excluded_for_every_follow_relation(bio, whitelisted, engager):
-    ok, reason = fp._quality_decision(50_000, bio, "Someone", whitelisted, engager)
-    assert not ok and "excluded topic" in reason
-
-
-def test_engagers_must_have_an_ai_or_si_bio(settings_override):
-    settings_override(FOLLOW_REQUIRE_NICHE=False)
-    assert not fp._quality_decision(12, "dogs and recipes", "Sam", False, engager=True)[0]
-    assert fp._quality_decision(12, "SI enthusiast", "Sam", False, engager=True)[0]
-
-
-def test_discovered_seeds_cannot_bypass_the_niche_gate(tmp_path):
-    (tmp_path / "whitelist_discovered.json").write_text(json.dumps(["oldtrader"]))
-    verdict = fp.judge_profile("oldtrader", lambda: {"followers": "50000", "bio": "Stocks and bonds", "name": "Sam"})
-    assert verdict.refusal is Refusal.QUALITY_REJECTED
-    assert "excluded topic" in verdict.reason

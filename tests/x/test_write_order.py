@@ -68,7 +68,6 @@ def trace(monkeypatch):
             events.append("unlock")
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     monkeypatch.setattr(safari, "_safari_lock", Lock())
     monkeypatch.setattr(safari, "_run_applescript",
                         lambda script, *a, **k: step(_script_kind(script), _script_kind(script) not in t.fail))
@@ -80,6 +79,9 @@ def trace(monkeypatch):
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
+    monkeypatch.setattr(tc, "_standalone_reply_target",
+                        lambda url, click=False: step("reply_button" if click else "target",
+                                                     ("reply_button" if click else "target") not in t.fail))
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: step("maybe_like"))
     monkeypatch.setattr(tc, "_mark_liked", lambda url: step("mark_liked"))
     monkeypatch.setattr(tc, "_already_liked", lambda url: False)
@@ -172,13 +174,13 @@ def test_post_dry_run(trace, monkeypatch):
 # --- reply_to_tweet -------------------------------------------------------------
 
 REPLY = "Batching is where inference margins are won or lost."
-REPLY_STEPS = ["activate", "open", "activate", "maybe_like", "reply_key", "paste", "submit"]
+REPLY_STEPS = ["activate", "open", "activate", "target", "maybe_like", "reply_button", "paste", "submit"]
 
 
 def test_reply_ships_then_records_then_closes(trace):
-    assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is W.SHIPPED
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS,
-                            "record:reply", "record:debate_turn", "close", "unlock"]
+                            "record:reply", "close", "unlock"]
 
 
 def test_reply_refused_never_claims_nor_opens(trace):
@@ -193,10 +195,10 @@ def test_reply_already_claimed_never_opens(trace):
     assert trace.events == ["lock", "judge", "claim", "unlock"]
 
 
-@pytest.mark.parametrize("failing", ["reply_key", "paste"])
-def test_reply_failing_before_submit_releases_the_claim(trace, failing):
+@pytest.mark.parametrize("failing,outcome", [("target", W.REFUSED), ("reply_button", W.REFUSED), ("paste", W.FAILED)])
+def test_reply_failing_before_submit_releases_the_claim(trace, failing, outcome):
     trace.fail.add(failing)
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    assert tc.reply_to_tweet(POST_URL, REPLY) is outcome
     sent = REPLY_STEPS[:REPLY_STEPS.index(failing) + 1]
     assert trace.events == ["lock", "judge", "claim", *sent, "release", "close", "unlock"]
 
@@ -209,16 +211,16 @@ def test_reply_failed_submit_keeps_the_claim(trace):
 
 
 def test_reply_stop_mid_steps_releases_claim_and_lock(trace):
-    trace.raise_at = "reply_key"
+    trace.raise_at = "reply_button"
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(POST_URL, REPLY)
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "release", "unlock"]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:6], "release", "unlock"]
 
 
 def test_reply_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is W.DRY_RUN
-    assert trace.events == ["lock", "judge", "dry:reply", "dry:debate_turn", "unlock"]
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.DRY_RUN
+    assert trace.events == ["lock", "judge", "dry:reply", "unlock"]
     assert _dry_run_line(trace, "REPLY")
 
 
@@ -311,9 +313,9 @@ def test_follow_dry_run(trace, monkeypatch):
 
 
 def test_like_confirmed_then_marked_then_recorded(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "not_liked", "text": "AI inference latency"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.LIKED
-    assert trace.events == ["lock", "read", "press", "read", "mark_liked", "record:like", "unlock"]
+    assert trace.events == ["lock", "press", "read", "mark_liked", "record:like", "unlock"]
 
 
 def test_like_blocked_never_touches_the_page(trace, monkeypatch):
@@ -323,9 +325,9 @@ def test_like_blocked_never_touches_the_page(trace, monkeypatch):
 
 
 def test_like_unconfirmed_records_nothing(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "not_liked", "text": "AI inference latency"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.UNCONFIRMED
-    assert trace.events == ["lock", "read", "press", "read", "unlock"]
+    assert trace.events == ["lock", "press", "read", "unlock"]
 
 
 def test_like_without_status_id_never_takes_the_lock(trace):

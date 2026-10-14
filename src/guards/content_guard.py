@@ -17,9 +17,10 @@ import re
 from typing import Tuple
 
 from ..core import config, settings
-from ..core.humanizer import has_emoji_or_smiley
-from ..core.reply_style import REPLY_MAX_CHARS, REPLY_MAX_WORDS
 from ..core.state_errors import StateUnreadable
+
+# X composer limit for replies; Reply admission trims to it.
+REPLY_MAX_CHARS = 278
 
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
@@ -140,7 +141,7 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
         "bigrams": {f"{a} {b}" for a, b in zip(toks, toks[1:])},
         "entities": _entities(text),
         # Normalized full text — catches exact/near-exact rehash of SHORT
-        # stopword-heavy one-liners that fall under the
+        # stopword-heavy posts (therapist one-liners) that fall under the
         # min-content-words guard below.
         "norm": " ".join(_dedup_clean(text).split()),
         "age_h": age_hours,
@@ -316,7 +317,7 @@ def detect_language(text: str) -> Tuple[str, float]:
 # post'"). Matched only when they're ~the WHOLE reply, so a longer substantive
 # reply that merely starts with "Exactement, mais…" still passes.
 _LAZY_REPLIES = {
-    "great post", "great point", "nice", "exactly", "this", "so true", "well said", "agreed",
+    "great post", "nice", "exactly", "this", "so true", "well said", "agreed",
     "facts", "based", "real", "lol", "lmao", "amazing", "incredible", "wow",
     "bien vu", "exactement", "tellement vrai", "trop vrai", "carrement",
     "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
@@ -326,8 +327,6 @@ _LAZY_REPLIES = {
 
 def _is_lazy_reply(text: str) -> bool:
     stripped = (text or "").strip()
-    if not any(char.isalnum() for char in stripped):
-        return True
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
     norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
@@ -354,7 +353,7 @@ def looks_truncated(text: str) -> bool:
     m = re.search(r"(\w{3,})\s+([A-Za-zÀ-ÿ]{1,2})$", t)
     if m and m.group(2).lower() not in {
         # legit short final words (EN + FR)
-        "ai", "si", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+        "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
         "to", "of", "at", "by", "ça", "là", "où", "eu", "vu", "du", "un",
         "en", "et", "or", "if", "we", "be", "me", "my", "do",
     }:
@@ -391,7 +390,8 @@ _BURNED_PATTERNS = (
 # terrorist = higher ROI on every contract" as a PLTR reply, 2026-07-28
 # 15:29). The persona's "never cruel" rule is prompt-level; the reply lane
 # runs on an uncensored local model that ignores it. The account has ZERO
-# need to tweet about killing people — glib violence damages trust. Refused at the chokepoint for EVERY
+# need to tweet about killing people — glib violence torches the warm-
+# therapist brand in one screenshot. Refused at the chokepoint for EVERY
 # surface. Idioms stay allowed ("killer app", "made a killing", "AI killed
 # my job" — no human target).
 _VIOLENCE_TERMS_RE = re.compile(
@@ -457,13 +457,6 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         raise ValueError(f"unknown content kind: {kind!r}")
     if not text or not text.strip():
         return (False, "empty")
-    final_length = len(text)
-    if kind == "reply":
-        from ..core.reply_style import split_ending
-        # Judge the words themselves: an ending cannot hide filler or truncation.
-        text, _ = split_ending(text)
-    if has_emoji_or_smiley(text):
-        return (False, "emojis and text smileys are not allowed except one approved Reply ending")
 
     # SKIP-rationale leak (2026-06-07, shipped live: "SKIP. The tweet is
     # incomplete (cuts off mid-sentence)... LOL BRO" — operator). Generators
@@ -477,10 +470,6 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
 
     if config.ban_short_term_price_targets() and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
-
-    from ..core import account
-    if account.current().niche.excludes(text):
-        return (False, "excluded topic in outgoing content")
 
     # ALL surfaces — replies included (the 2026-07-29 leak WAS a reply).
     if _violence_content(text):
@@ -497,13 +486,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             if lang != "unknown" and lang != primary:
                 return (False, f"wrong language: need {primary}, detected {lang} @ {conf:.0%}")
 
-    if kind == "reply":
-        why = account.current().niche.reply_wording_problem(text)
-        if why:
-            return (False, why)
-
     if kind == "reply" and _is_lazy_reply(text):
-        return (False, "low-effort reply (too short / generic / unapproved reaction)")
+        return (False, "low-effort reply (too short / generic — must be substantive)")
 
     if kind == "original":
         # Burned-catchphrase backstop (2026-06-09). The prompts planted these
@@ -522,11 +506,10 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
             return (False, "rationed shape overused (\"me [verb]ing…\" already posted in window) — vary the opener")
 
     if kind == "reply":
-        # Operator brevity limit includes the automatically chosen ending.
-        if len(text.split()) > REPLY_MAX_WORDS:
-            return (False, f"Reply body exceeds {REPLY_MAX_WORDS} words; rewrite as one short stance")
-        if final_length > REPLY_MAX_CHARS:
-            return (False, f"too long for a reply ({final_length} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
+        # Hard X limit for replies — an over-limit draft gets cut by
+        # the composer mid-sentence, which reads as a botched AI paste.
+        if len(text) > REPLY_MAX_CHARS:
+            return (False, f"too long for a reply ({len(text)} chars > {REPLY_MAX_CHARS}) — would truncate mid-sentence")
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 

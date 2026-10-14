@@ -45,14 +45,6 @@ def test_claim_is_once_per_status_id():
     assert rs.claim("") is False
 
 
-def test_reply_claims_never_expire_when_the_history_grows():
-    rs.save_replied(numbered_url(i) for i in range(50_001))
-    assert len(rs.load_replied()) == 50_001
-    assert not rs.claim(numbered_url(0, "different_author") + "?s=20")
-    assert rs.claim(numbered_url(50_001))
-    assert not rs.claim(numbered_url(0))
-
-
 def test_parallel_claims_ship_each_tweet_once():
     wins = []
     barrier = threading.Barrier(16)
@@ -105,3 +97,10 @@ def test_release_drops_only_the_claimed_tweet(monkeypatch):
     replied_store.release(f"https://x.com/b/status/{drop}")
 
     assert json.load(open(config.REPLIED_FILE)) == [f"https://x.com/a/status/{keep}"]
+
+
+def test_history_is_permanent_past_the_old_fifty_thousand_entry_limit():
+    entries = [str(2063500000000000000 + i) for i in range(50001)]
+    rs.save_replied(entries)
+    assert not rs.claim("https://x.com/other/status/" + entries[0])
+    assert len(rs.load_replied()) == len(entries)

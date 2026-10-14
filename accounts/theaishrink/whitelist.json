@@ -1,9 +1,9 @@
 {
-  "_README": "Operator-selected AI/SI follow seeds, updated 2026-10-12. Elon Musk and SpaceXSI lead, followed by AI researchers, builders and enthusiasts. Tiers order priority; every follow still passes the shared policy. Crypto/trading targets are excluded, including mixed AI/crypto bios. The curator stores its discovered candidates separately in production state; those candidates must pass the positive AI/SI bio check.",
+  "_README": "Curated whitelist for @TheAIShrink (2026-06-07 agent spec \u2014 Part 1 Following). The bot may ONLY follow accounts listed here (whitelist-only mode) and uses tier1/tier2 as the source list for replies, quote-reposts and engagement targeting. Tiers follow the spec's priority order: tier1 = foils / persona ecosystem (follow FIRST, highest ROI); tier2 = niche reply targets (behavioral finance + fin-meme, primary reply/QRT targets); tier3 = AI signal (content fuel, occasional reply); tier4 = crypto/markets crossover (AI-vs-BTC lane). Handles are HINTS, not ground truth \u2014 resolve by display name + keywords in seeds[] before following; skip and log anything unresolved, suspended, or off-niche. Auto-add exception (operator grant 2026-06-07): account_curator may promote its strongest finds into tiers['discovered'] (capped 3/day, 50 total, logged). Other discovery candidates (Phase 2: peers of tier1-2, 1k-200k followers, active <14d, on-niche, no spam/airdrop/shill) go to suggestions[] for human approval.",
   "review_required": true,
-  "generated": "2026-10-12",
+  "generated": "2026-06-07",
   "generated_from": [
-    "Operator request: AI/SI only, Elon first; remove former crypto/trading targets"
+    "operator agent spec 2026-06-07 (Part 1 \u2014 Following, seed list)"
   ],
   "follow_policy": {
     "total_cap": 300,
@@ -15,281 +15,237 @@
   },
   "tiers": {
     "tier1": [
-      "elonmusk",
-      "SpaceXSI",
-      "karpathy",
-      "demishassabis"
+      "TheBTCTherapist"
     ],
     "tier2": [
-      "sama",
-      "ylecun",
-      "AndrewYNg",
-      "DrJimFan",
-      "GoogleDeepMind",
-      "AnthropicAI",
-      "MistralAI",
-      "OpenAI"
+      "morganhousel",
+      "ParikPatelCFA",
+      "litcapital",
+      "greg16676935420",
+      "ReformedBroker",
+      "jasonzweigwsj"
     ],
     "tier3": [
-      "rowancheung",
-      "minchoi",
-      "heybarsee",
-      "swyx",
-      "_akhaliq",
-      "emollick",
-      "simonw",
-      "rasbt",
-      "goodside"
+      "karpathy",
+      "sama",
+      "steipete",
+      "mattwolfe",
+      "gregisenberg",
+      "AndrewYNg",
+      "lexfridman",
+      "kaifulee"
     ],
-    "tier4": []
+    "tier4": [
+      "saylor",
+      "APompliano",
+      "balajis"
+    ]
   },
   "seeds": [
     {
       "priority": 1,
-      "handle": "elonmusk",
+      "handle": "TheBTCTherapist",
+      "display_name": "The Bitcoin Therapist",
       "tier": "tier1",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
-      ]
-    },
-    {
-      "priority": 2,
-      "handle": "SpaceXSI",
-      "tier": "tier1",
-      "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "bitcoin",
+        "therapist",
+        "persona"
       ],
-      "note": "Official account linked by https://x.ai/; verified 2026-10-12."
+      "why": "Already dueting our pinned post. AI-vs-Bitcoin feud = free engagement."
     },
     {
       "priority": 3,
-      "handle": "karpathy",
-      "tier": "tier1",
+      "handle": "morganhousel",
+      "display_name": "Morgan Housel",
+      "tier": "tier2",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "psychology of money",
+        "behavior",
+        "risk"
       ]
     },
     {
       "priority": 4,
-      "handle": "demishassabis",
-      "tier": "tier1",
+      "handle": "ParikPatelCFA",
+      "display_name": "Parik Patel",
+      "tier": "tier2",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "fin-meme",
+        "satire",
+        "markets"
       ]
     },
     {
       "priority": 5,
-      "handle": "sama",
+      "handle": "litcapital",
+      "display_name": "Litquidity",
       "tier": "tier2",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "finance memes",
+        "markets"
       ]
     },
     {
       "priority": 6,
-      "handle": "ylecun",
+      "handle": "greg16676935420",
+      "display_name": "greg",
       "tier": "tier2",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "markets",
+        "doge",
+        "meme"
       ]
     },
     {
       "priority": 7,
-      "handle": "AndrewYNg",
+      "handle": "ReformedBroker",
+      "display_name": "Josh Brown",
       "tier": "tier2",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "markets",
+        "sarcasm",
+        "Ritholtz"
       ]
     },
     {
       "priority": 8,
-      "handle": "DrJimFan",
+      "handle": "jasonzweigwsj",
+      "display_name": "Jason Zweig",
       "tier": "tier2",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
-      ]
-    },
-    {
-      "priority": 9,
-      "handle": "GoogleDeepMind",
-      "tier": "tier2",
-      "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "WSJ",
+        "behavioral",
+        "retail investors"
       ]
     },
     {
       "priority": 10,
-      "handle": "AnthropicAI",
-      "tier": "tier2",
+      "handle": "karpathy",
+      "display_name": "Andrej Karpathy",
+      "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
-      ]
+        "LLMs",
+        "AI research"
+      ],
+      "note": "reportedly at Anthropic as of 2026 \u2014 verify"
     },
     {
       "priority": 11,
-      "handle": "MistralAI",
-      "tier": "tier2",
+      "handle": "sama",
+      "display_name": "Sam Altman",
+      "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "OpenAI"
       ]
     },
     {
       "priority": 12,
-      "handle": "OpenAI",
-      "tier": "tier2",
+      "handle": "steipete",
+      "display_name": "Peter Steinberger",
+      "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "agentic AI",
+        "building"
       ]
     },
     {
       "priority": 13,
-      "handle": "rowancheung",
+      "handle": "mattwolfe",
+      "display_name": "Matt Wolfe",
       "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "daily AI tools"
       ]
     },
     {
       "priority": 14,
-      "handle": "minchoi",
+      "handle": "gregisenberg",
+      "display_name": "Greg Isenberg",
       "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "startup",
+        "build ideas"
       ]
     },
     {
       "priority": 15,
-      "handle": "heybarsee",
+      "handle": "AndrewYNg",
+      "display_name": "Andrew Ng",
       "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "AI education"
       ]
     },
     {
       "priority": 16,
-      "handle": "swyx",
+      "handle": "lexfridman",
+      "display_name": "Lex Fridman",
       "tier": "tier3",
       "keywords": [
         "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "long-form"
       ]
     },
     {
       "priority": 17,
-      "handle": "_akhaliq",
+      "handle": "kaifulee",
+      "display_name": "Kai-Fu Lee",
       "tier": "tier3",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "AI strategy"
       ]
     },
     {
       "priority": 18,
-      "handle": "emollick",
-      "tier": "tier3",
+      "handle": "saylor",
+      "display_name": "Michael Saylor",
+      "tier": "tier4",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "Bitcoin maxi",
+        "natural foil"
       ]
     },
     {
       "priority": 19,
-      "handle": "simonw",
-      "tier": "tier3",
+      "handle": "APompliano",
+      "display_name": "Anthony Pompliano",
+      "tier": "tier4",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "crypto",
+        "markets"
       ]
     },
     {
       "priority": 20,
-      "handle": "rasbt",
-      "tier": "tier3",
+      "handle": "balajis",
+      "display_name": "Balaji Srinivasan",
+      "tier": "tier4",
       "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
-      ]
-    },
-    {
-      "priority": 21,
-      "handle": "goodside",
-      "tier": "tier3",
-      "keywords": [
-        "AI",
-        "SI",
-        "research",
-        "AI tools"
+        "crypto",
+        "tech",
+        "macro"
       ]
     }
   ],
   "discovery_rule": {
+    "phase": "after seed list, expand following to ~120-150 then stop and hold",
     "sources": [
-      "AI/SI researchers, builders and enthusiasts from approved posts"
+      "accounts tier1-2 seeds frequently converse with",
+      "accounts in replies under our own reply targets"
     ],
     "filters_all_required": [
-      "Substantive AI/SI niche; no Bitcoin, crypto or trading accounts",
-      "Existing follow quality, language, pacing and volume policy"
+      "bio/recent posts on-niche: AI, markets, trading, finance, crypto, fin-meme/persona",
+      "1k-200k followers (skip mega >1M beyond named anchors)",
+      "active within ~14 days",
+      "not spam/airdrop/giveaway/shill"
     ],
     "do_not_follow": [
-      "Bitcoin or crypto accounts",
-      "Trading/finance engagement accounts",
-      "Blocked accounts",
-      "Spam or irrelevant accounts"
+      "follow-for-follow / engagement-pod spam",
+      "airdrop & giveaway accounts",
+      "crypto-shill bots",
+      "off-niche mega-accounts",
+      "anything failing resolution / active / niche checks"
     ]
   },
   "suggestions": []

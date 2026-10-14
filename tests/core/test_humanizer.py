@@ -26,10 +26,17 @@ def test_smart_trim_salvages_overlong_reply():
     pass the content_guard length + truncation checks (instead of being
     discarded along with the LLM call that produced them)."""
     from src.core.humanizer import smart_trim
-    long_reply = "Parallelization improves throughput. " * 12
-    assert len(long_reply) > cg.REPLY_MAX_CHARS
-    trimmed = smart_trim(long_reply, cg.REPLY_MAX_CHARS - 3)
-    assert 0 < len(trimmed) <= cg.REPLY_MAX_CHARS - 3
+    long_reply = (
+        "The market is not punishing you, it is teaching you. "
+        "You bought the top because hope felt cheaper than patience. "
+        "Diagnosis: chronic dip-denial with acute leverage exposure. "
+        "Treatment starts with closing the app for one full week. "
+        "Then we talk about your relationship with green candles and why "
+        "you call panic-selling risk management."
+    )
+    assert len(long_reply) > 278
+    trimmed = smart_trim(long_reply, 278)
+    assert 0 < len(trimmed) <= 278
     ok, why = cg.validate(trimmed, kind="reply")
     assert ok, why
 

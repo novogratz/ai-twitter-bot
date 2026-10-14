@@ -11,13 +11,13 @@ from tests.helpers import TORONTO, clock
 
 def test_browser_wait_rechecks_bedtime(monkeypatch):
     from src.x.safari import _AwakeSafariLock
-    clock(monkeypatch, datetime(2026, 9, 20, 22, 59, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 9, 59, tzinfo=TORONTO))
     browser = _AwakeSafariLock()
     released = []
 
     class SlowLock:
         def acquire(self):
-            clock(monkeypatch, datetime(2026, 9, 20, 23, 0, tzinfo=TORONTO))
+            clock(monkeypatch, datetime(2026, 9, 20, 10, 0, tzinfo=TORONTO))
 
         def release(self):
             released.append(True)
@@ -36,7 +36,7 @@ def test_submit_checks_bedtime_before_applescript(monkeypatch):
     from unittest.mock import patch
     with patch("subprocess.run") as run:
         safari = importlib.reload(safari)
-        clock(monkeypatch, datetime(2026, 9, 20, 23, 0, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, 10, 0, tzinfo=TORONTO))
         with pytest.raises(hours.OutsideActiveHours):
             safari._run_applescript("submission")
         run.assert_not_called()
@@ -135,7 +135,6 @@ def test_a_wedged_osascript_gives_the_safari_lock_back(monkeypatch, unwalled, pr
     monkeypatch.setattr(safari.subprocess, "run",
                         lambda argv, **k: real_run(["sleep", "30"], **k))
     monkeypatch.setattr(safari, "_run_applescript", unwalled["_run_applescript"])
-    monkeypatch.setattr(safari, "_run_js", unwalled["_run_js"])
     monkeypatch.setattr(safari, "open_url", unwalled["open_url"])
     monkeypatch.setattr(safari, "_paste_text", unwalled["_paste_text"])
     monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
