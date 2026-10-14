@@ -28,7 +28,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import account, config, humanizer, reply_language, reply_style, settings
+from ..core import account, config, humanizer, reply_language, settings
 from ..x import x_urls
 from ..core.logger import log
 
@@ -36,12 +36,10 @@ from ..core.logger import log
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
-    PROTECTED_ACCOUNT = "account protected from Replies"
     OWN_POST = "own post"
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
-    DAILY_CAP = "daily Reply cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     RESPECTED_ACCOUNT = "text names a Respected account"
@@ -53,7 +51,7 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.PROTECTED_ACCOUNT, Refusal.OWN_POST,
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
                          Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
 
 
@@ -70,22 +68,18 @@ class Verdict:
 
 def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     """May the account answer this post at all? Definitive rules first, so a
-    protected or Blocked account is dropped for good even when judged Overnight."""
+    Blocked account is dropped for good even when judged Overnight."""
     author = x_urls.author(url)
     if not author:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
-    if account.current().replies.is_protected(author):
-        return Verdict(Refusal.PROTECTED_ACCOUNT, f"@{author} is protected from every Reply", author)
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
-    if config.is_own_handle(author):
+    if author == config.BOT_HANDLE.lower():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
-    if action_guard.count_today(action_guard.REPLY) + action_guard.pending_reply_count() >= settings.get("MAX_REPLIES_PER_DAY"):
-        return Verdict(Refusal.DAILY_CAP, f"{settings.get('MAX_REPLIES_PER_DAY')} Replies per Toronto day at most, ambiguous submits included", author)
     if debate_turn:
         ok, why = action_guard.can_debate_turn(author)
         if not ok:
@@ -105,16 +99,12 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
-    text, ending = reply_style.split_ending(reply_style.finish_reply(draft))
-    if humanizer.has_emoji_or_smiley(text):
-        return Verdict(Refusal.TEXT, "emojis and text smileys are only allowed as one approved Reply ending", author)
     # Every Reply loses its dashes here, including paths that skip humanize().
-    text = humanizer.strip_dashes(text)
-    body_limit = content_guard.REPLY_MAX_CHARS - len(ending) - 1
-    if len(text) > body_limit:
+    text = humanizer.strip_dashes(draft)
+    if len(text) > content_guard.REPLY_MAX_CHARS:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
-        trimmed = humanizer.smart_trim(text, body_limit)
+        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
         log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
         text = trimmed
     text = humanizer.casualize(text)
@@ -124,7 +114,6 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if author in _handles("HUMAN_TYPO_HANDLES"):
         text = humanizer.inject_human_typo(text)
         log.info(f"[REPLY] human-typo injected for @{author}.")
-    text = f"{text} {ending}".strip()
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:

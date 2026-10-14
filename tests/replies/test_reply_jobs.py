@@ -123,7 +123,7 @@ def direct(monkeypatch, llm, chokepoint, settings_override):
     from src.x import scraper
 
     lanes = {"vip": [], "search": [], "queries": []}
-    settings_override(VIP_SCAN_HANDLES="aivip")
+    settings_override(VIP_SCAN_HANDLES="Graphseo")
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
 
     def search(query, **k):
@@ -141,7 +141,7 @@ def test_direct_reply_lanes_share_the_cycle(direct):
     """Defect 3: the VIP lane and the search lane both marked candidates that
     never shipped. A post one lane tried is not tried again by the other."""
     dr, lanes, llm, chokepoint = direct
-    vip, searched = fresh("aivip", n=1), fresh("someone", n=2)
+    vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
     lanes["vip"] = [{"url": vip, "text": "vip post"}]
     lanes["search"] = [{"url": searched, "text": "search post"}, {"url": vip, "text": "vip post"}]
     llm.answers["vip post"] = "réponse précise sur le trafic organique"
@@ -150,7 +150,7 @@ def test_direct_reply_lanes_share_the_cycle(direct):
     dr.run_direct_reply_cycle()
 
     assert chokepoint.sent == [vip, searched], "each candidate tried once per cycle"
-    assert [c.label for c in llm.calls] == ["VIP_REPLY/aivip", "DIRECT_REPLY"]
+    assert [c.label for c in llm.calls] == ["GRAPHSEO_VIP", "DIRECT_REPLY"]
     assert replied_store.load_replied() == set()
 
 
@@ -183,36 +183,36 @@ def test_direct_reply_search_skips_nested_replies(direct):
     assert chokepoint.sent == [root]
 
 
-def test_direct_reply_vip_scan_refuses_nested_replies(direct):
-    """Operator 2026-10-08: VIP relations cannot bypass standalone filtering."""
+def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
+    """Issue #241 leaves the VIP scan as it was: it answers everything its
+    accounts post, their replies included."""
     dr, lanes, llm, chokepoint = direct
-    marked, mention = fresh("aivip", n=1), fresh("aivip", n=2)
+    marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
     lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
                     {"url": mention, "text": "@someone vip mention"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
-    assert chokepoint.sent == []
-    assert not llm.calls
+    assert chokepoint.sent == [marked, mention]
 
 
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     dr, lanes, llm, chokepoint = direct
-    recent, old = fresh("aivip", minutes=47 * 60, n=1), fresh("aivip", minutes=49 * 60, n=2)
+    recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
     lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
     assert chokepoint.sent == [recent]
-    assert [r.source for r in logged()] == ["VIP/aivip"]
+    assert [r.source for r in logged()] == ["VIP/Graphseo"]
 
 
 def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
     """A rate limit in the VIP lane ends the whole cycle, the search lane included."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"url": fresh("aivip", n=i), "text": f"vip post {i}"} for i in (1, 2)]
+    lanes["vip"] = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
     llm.default = EXHAUSTED
 
     dr.run_direct_reply_cycle()
@@ -225,7 +225,7 @@ def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
 def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     """Both lanes ran inside `except Exception`, which swallowed bedtime."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"url": fresh("aivip"), "text": "vip post"}]
+    lanes["vip"] = [{"url": fresh("graphseo"), "text": "vip post"}]
     chokepoint.answer = error
     with pytest.raises(type(error)):
         dr.run_direct_reply_cycle()
@@ -271,14 +271,11 @@ def feed(monkeypatch, llm, chokepoint):
     from src.x import scraper
 
     feeds = {"FEED": [], "FOLLOWING": [], "read": []}
-    monkeypatch.setattr(fs, "_FEED_OFFSET", 0)
-    monkeypatch.setattr(fs, "_SEARCH_OFFSET", 0)
-    monkeypatch.setattr(fs, "_VIDEO_OFFSET", 0)
     monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: None)
-    monkeypatch.setattr(scraper, "scrape_x_search",
-                        lambda query, **k: feeds["read"].append(query) or [])
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: feeds["read"].append("FEED") or list(feeds["FEED"]))
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: list(feeds["FOLLOWING"]))
+    monkeypatch.setattr(scraper, "scrape_home_feed",
+                        lambda **k: feeds["read"].append("FEED") or list(feeds["FEED"]))
+    monkeypatch.setattr(scraper, "scrape_following_feed",
+                        lambda **k: feeds["read"].append("FOLLOWING") or list(feeds["FOLLOWING"]))
     return fs, feeds, llm, chokepoint
 
 
@@ -296,7 +293,7 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
     fs.run_feed_sweep_cycle()
 
     assert chokepoint.sent == [ok], "only replies, even to a viral post"
-    assert [r.source for r in logged()] == ["FEED-SWEEP-FOR-YOU"]
+    assert [r.source for r in logged()] == ["FEED-SWEEP-FEED"]
     assert set_aside("feed_sweep") == {ok} and set_aside("direct_reply") == set()
 
 
@@ -331,13 +328,11 @@ def test_feed_sweep_harvests_the_handle_from_the_status_url():
     from src.replies import feed_sweeper_bot as fs
 
     fs._harvest_active_authors([
-        {"url": "https://x.com/sama/status/1", "author": "Sam Altman", "text": "AI model reasoning", "likes": 500},
-        {"url": "https://x.com/someone/status/2", "author": "Claude", "text": "AI model reasoning", "likes": 500},
-        {"url": "https://x.com/i/web/status/3", "author": "Tesla", "text": "AI model reasoning", "likes": 500},
-        {"url": "https://x.com/pgm_pm/status/4", "author": "Friendly", "text": "AI model reasoning", "likes": 500},
-        {"url": "https://x.com/quiet/status/5", "author": "quiet", "text": "AI model reasoning", "likes": 1},
-        {"url": "https://x.com/trader/status/6", "text": "AI predicts Bitcoin prices", "likes": 500},
-        {"url": "https://x.com/unrelated/status/7", "text": "A wonderful lunch", "likes": 500},
+        {"url": "https://x.com/sama/status/1", "author": "Sam Altman", "likes": 500},
+        {"url": "https://x.com/someone/status/2", "author": "Claude", "likes": 500},
+        {"url": "https://x.com/i/web/status/3", "author": "Tesla", "likes": 500},
+        {"url": "https://x.com/pgm_pm/status/4", "author": "Friendly", "likes": 500},
+        {"url": "https://x.com/quiet/status/5", "author": "quiet", "likes": 1},
     ])
 
     assert get_dynamic_accounts()["en"] == ["sama", "someone"]
@@ -352,8 +347,8 @@ def test_feed_sweep_never_harvests_a_blocked_account(monkeypatch):
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
 
     fs._harvest_active_authors([
-        {"url": "https://x.com/La_Pique_Off/status/1", "author": "La Pique", "text": "AI model reasoning", "likes": 500},
-        {"url": "https://x.com/sama/status/2", "author": "Sam Altman", "text": "AI model reasoning", "likes": 500},
+        {"url": "https://x.com/La_Pique_Off/status/1", "author": "La Pique", "likes": 500},
+        {"url": "https://x.com/sama/status/2", "author": "Sam Altman", "likes": 500},
     ])
 
     assert get_dynamic_accounts()["en"] == ["sama"]
@@ -448,71 +443,52 @@ def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
 
 
 def test_early_reply_targets_are_curator_driven():
-    """Operator 2026-10-12: curated AI profiles, led by Elon, seed the scans."""
+    """2026-06-07 PM operator mandate: NO static target lists — the scan
+    pools come from account_curator.tracked_handles(), pinned with the only
+    two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
     from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
     from src.replies.mega_watch_bot import MEGA_ACCOUNTS
+    assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
+        "static early-reply lists must stay empty — pools come from the curator"
+    )
     from src.account.account_curator import pinned_handles, tracked_handles
-    assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == []
-    assert pinned_handles()[:3] == ("elonmusk", "SpaceXSI", "karpathy")
-    assert tracked_handles(limit=5)[:3] == ["elonmusk", "SpaceXSI", "karpathy"]
+    # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
+    # reply conversion on his question post (operator: "more things like this").
+    assert pinned_handles() == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
+    handles = tracked_handles(limit=5)
+    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
 
 
 @pytest.fixture(params=["early_bird", "mega_watch"])
-def profile_job(request, monkeypatch, llm, chokepoint, settings_override):
+def profile_job(request, monkeypatch, llm, chokepoint):
     """A profile-scanning job whose scan pool is `profiles` (handle → posts)."""
     from src.core import evolution_store
-    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw, reply_source
+    from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
 
     module, run = {"early_bird": (eb, eb.run_early_bird_cycle),
                    "mega_watch": (mw, mw.run_mega_watch_cycle)}[request.param]
-    monkeypatch.setattr(module, "_SCAN_OFFSET", 0)
     profiles = {}
     monkeypatch.setattr(eb, "_scan_pool", lambda: list(profiles))
     monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
     monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
-    monkeypatch.setattr(reply_source, "is_on_niche", lambda text: "off-niche" not in text)
-    def allowed_run():
-        settings_override(PROFILE_VISIT_ALLOWLIST=",".join(profiles))
-        return run()
-    return request.param, allowed_run, profiles, llm, chokepoint
-
-
-@pytest.mark.parametrize("which,per_pass", [("early_bird", 2), ("mega_watch", 1)])
-def test_profile_collection_rotates_through_the_whole_allowed_pool(monkeypatch, settings_override, which, per_pass):
-    from src.replies import early_bird_bot, mega_watch_bot, direct_reply
-    from src.core import evolution_store
-    module = early_bird_bot if which == "early_bird" else mega_watch_bot
-    handles = ["first", "second", "third", "fourth"]
-    visits = []
-    settings_override(PROFILE_VISIT_ALLOWLIST=",".join(handles))
-    monkeypatch.setattr(module, "_SCAN_OFFSET", 0)
-    monkeypatch.setattr(module, "_scan_pool" if which == "early_bird" else "_watch_pool", lambda: handles)
-    monkeypatch.setattr(direct_reply, "always_reply_accounts", lambda: ())
-    monkeypatch.setattr(evolution_store, "filter_and_weight", lambda rows: list(rows))
-    monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: visits.append(handle) or [])
-    run = module.run_early_bird_cycle if which == "early_bird" else module.run_mega_watch_cycle
-    for i in range(4 // per_pass):
-        run()
-        assert len(visits) == (i + 1) * per_pass
-    assert visits == handles
+    monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
+    return request.param, run, profiles, llm, chokepoint
 
 
 def post(handle, text, minutes=1, n=0, **fields):
     return {"url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
 
 
-@pytest.mark.parametrize("minutes", [20, 180, 24 * 60 - 1])
-def test_profile_jobs_use_the_full_day_for_on_niche_posts(profile_job, minutes):
+def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
     name, run, profiles, llm, chokepoint = profile_job
-    ok = post("someone", "post fresh", minutes=minutes, n=1)
+    max_minutes = {"early_bird": 18, "mega_watch": 4}[name]
+    ok = post("someone", "post fresh", minutes=max_minutes - 1, n=1)
     profiles["someone"] = [
-        post("someone", "post stale", minutes=24 * 60 + 1, n=2),
+        post("someone", "post stale", minutes=max_minutes + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
-        post("someone", "post from the future", minutes=-5, n=5),
-        post("other", "another author's post", n=6),
         {"url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]
@@ -534,10 +510,10 @@ def test_profile_jobs_bound_their_replies(profile_job):
 
     run()
 
-    per_account = {"early_bird": 2, "mega_watch": 2}[name]
+    per_account = {"early_bird": 3, "mega_watch": 2}[name]
     assert len(chokepoint.sent) == per_account
     if name == "early_bird":
-        assert len({x_urls.author(u) for u in chokepoint.sent}) == 2
+        assert len({x_urls.author(u) for u in chokepoint.sent}) == 3
 
 
 def test_profile_jobs_stop_at_the_rate_limit(profile_job):
@@ -574,7 +550,7 @@ def debate(monkeypatch, llm, chokepoint, settings_override):
     return db, mentions, llm, chokepoint
 
 
-def test_debate_never_generates_conversation_turns(debate, settings_override):
+def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override):
     db, mentions, llm, chokepoint = debate
     settings_override(DEBATE_MAX_PER_CYCLE=2, DEBATE_MAX_AGE_HOURS=24.0)
     old = fresh("old", minutes=25 * 60, n=1)
@@ -585,9 +561,9 @@ def test_debate_never_generates_conversation_turns(debate, settings_override):
 
     db.run_debate_cycle()
 
-    assert not chokepoint.calls
-    assert not llm.calls
-    assert not logged()
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(first, True), (second, True)], \
+        "freshest first, DEBATE_MAX_PER_CYCLE Replies"
+    assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_override):
@@ -616,8 +592,8 @@ def replyback(monkeypatch, llm, chokepoint):
     return nb, replies, llm, chokepoint
 
 
-def test_replyback_never_answers_comments_on_our_post(replyback, blocked_pgm_pm):
-    """Operator 2026-10-08: comments on our posts never reach generation."""
+def test_replyback_answers_engagers_in_thread_and_logs_it(replyback, blocked_pgm_pm):
+    """Issue #156: replyback logs its shipped Replies like every other job."""
     nb, replies, llm, chokepoint = replyback
     admitted = fresh("someone", n=1)
     replies += [
@@ -628,21 +604,21 @@ def test_replyback_never_answers_comments_on_our_post(replyback, blocked_pgm_pm)
 
     nb.run_replyback_cycle()
 
-    assert not llm.calls
-    assert not chokepoint.calls
-    assert not logged()
-    assert not set_aside("replyback")
+    assert llm.parents("no status URL", "display name is not an identity") == ["display name is not an identity"]
+    assert "our post about GPUs" in llm.prompts[0], "the post they answered is in the prompt"
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
+    assert [(r.url, r.source) for r in logged()] == [(admitted, "REPLYBACK/someone")]
+    assert set_aside("replyback") == {admitted}
 
 
-def test_replyback_refuses_even_a_busy_comment_thread(replyback):
+def test_replyback_answers_more_engagers_under_a_busier_post(replyback):
     nb, replies, llm, chokepoint = replyback
     replies += [{"user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
                 for i in range(12)]
 
     nb.run_replyback_cycle()
 
-    assert not chokepoint.sent
-    assert not llm.calls
+    assert len(chokepoint.sent) == 9, "10 to 19 replies under the post: 9 answered"
 
 
 def test_replyback_reciprocity_never_follows(monkeypatch):
@@ -694,22 +670,3 @@ def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     assert "[RECIPROCATE] Nothing liked on @stale." in lines
     assert "[RECIPROCATE] Nothing liked on @broken." in lines
     assert "[RECIPROCATE] Nothing liked on @unsure." in lines
-def test_sweeper_rotates_all_feed_views_and_latest_queries(monkeypatch):
-    from src.core import account
-    from src.replies import feed_sweeper_bot as sweeper
-    from src.x import scraper
-    searched, feeds = [], []
-    monkeypatch.setattr(sweeper, "_FEED_OFFSET", 0)
-    monkeypatch.setattr(sweeper, "_SEARCH_OFFSET", 0)
-    monkeypatch.setattr(sweeper, "_VIDEO_OFFSET", 0)
-    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: feeds.append("for_you") or [])
-    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: feeds.append(k["sort"]) or [])
-    monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: searched.append((query, k)) or [])
-    for _ in range(4):
-        sweeper.run_feed_sweep_cycle()
-    assert feeds == ["for_you", "recent", "popular", "for_you"]
-    assert [q for q, _ in searched[1::2]] == list(account.current().searches.replies[:4])
-    assert [q for q, _ in searched[::2]] == [q for q in account.current().searches.videos[:2] for _ in range(2)]
-    assert [options["tab"] for _, options in searched[::2]] == ["live", "top", "live", "top"]
-    assert all(options["tab"] == "live" and options["text_limit"] == 2000
-               for _, options in searched[1::2])

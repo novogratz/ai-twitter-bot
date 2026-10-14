@@ -20,8 +20,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def pytest_configure(config):
-    from src.core import settings
-    settings.load(env_file="/dev/null", environ={})
     from src.core.logger import setup_logging
 
     logger = setup_logging()
@@ -177,15 +175,8 @@ def _daylight_default(monkeypatch):
     Boundary tests replace this clock with their own explicit instants.
     """
     from src.guards import active_hours
-    now = active_hours.now_local().replace(hour=12, minute=0)
-    _UNWALLED.setdefault("wake_offset", active_hours._wake_offset)
-    monkeypatch.setattr(active_hours, "_wake_offset", lambda day, start: 0)
-    # Freeze one instant per test. Replacing the real hour/minute on every
-    # read made the fixture clock jump backward whenever a minute rolled over.
-    monkeypatch.setattr(active_hours, "now_local", lambda: now)
-    from src.replies import reply_pool, reply_selector
-    monkeypatch.setattr(reply_pool, "now_local", lambda: active_hours.now_local())
-    monkeypatch.setattr(reply_selector, "now_local", lambda: active_hours.now_local())
+    real_now = active_hours.now_local
+    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
     yield
 
 
@@ -297,17 +288,3 @@ def like_job(monkeypatch, memory_ledger, settings_override):
         state["closed"] += 1
     monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
-
-@_pytest.fixture(autouse=True)
-def _capture_bot_logs(caplog):
-    # The production logger deliberately does not propagate to root.
-    from src.core.logger import log
-    log.addHandler(caplog.handler)
-    yield
-    log.removeHandler(caplog.handler)
-
-@_pytest.fixture(autouse=True)
-def _no_reply_news_network(monkeypatch):
-    from src.replies import reply_generator
-    _UNWALLED.setdefault("reply_context", reply_generator.current_context)
-    monkeypatch.setattr(reply_generator, "current_context", lambda: "")

@@ -1,33 +1,32 @@
-# The Account @thesimaximalist: what the bot says and where it looks, never how
+# The Account @TheAIShrink: what the bot says and where it looks, never how
 # much it may do. BOT_ACCOUNT=theaishrink (the default) picks this folder.
 # src/core/account.py reads it once at start: an unknown key or a badly typed
 # value stops the start. Edit it by hand, then restart.
 
-handle = "thesimaximalist"
-previous_handles = ["TheAIShrink"]
+handle = "TheAIShrink"
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
-domain = "SI and technology"
+domain = "AI"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
-trend_angle = "Trending: the SI topic X is talking about right now, told from a trusted source"
+trend_angle = "Trending: the AI topic X is talking about right now, told from a trusted source"
 # Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
 # only news under twelve hours old or an unusually useful source.
 slots = [
-    { clock = "05:00", angle = "Priority: the SI update worth understanding this morning" },
-    { clock = "07:15", angle = "A useful SI workflow with a concrete first step" },
-    { clock = "09:30", angle = "Priority: an SI article or model update with a sharp consequence" },
-    { clock = "09:45", trend = true },
-    { clock = "12:00", angle = "An SI concept explained through a clear example" },
-    { clock = "12:20", trend = true },
-    { clock = "12:40", angle = "A model or tool update and what changes for its users" },
-    { clock = "17:00", trend = true },
-    { clock = "17:45", angle = "Priority: an evidence-backed take on an SI tradeoff" },
-    { clock = "18:30", angle = "A practical SI idea worth saving or sharing" },
-    { clock = "22:15", angle = "Optional: an exceptional fresh SI update or unusually useful source", exceptional = true },
+    { clock = "05:00", angle = "Priority: the AI update worth understanding this morning" },
+    { clock = "07:15", angle = "A useful AI workflow with a concrete first step" },
+    { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
+    { clock = "10:00", trend = true },
+    { clock = "11:45", angle = "An AI concept explained through a clear example" },
+    { clock = "13:00", trend = true },
+    { clock = "14:00", angle = "A model or tool update and what changes for its users" },
+    { clock = "15:00", trend = true },
+    { clock = "16:15", angle = "Priority: an evidence-backed take on an AI tradeoff" },
+    { clock = "18:30", angle = "A practical AI idea worth saving or sharing" },
+    { clock = "20:45", angle = "Optional: an exceptional fresh AI update or unusually useful source", exceptional = true },
 ]
 # News items: RSS or Atom feeds, read on a host of trusted_hosts only.
 feeds = [
@@ -58,13 +57,13 @@ publisher = "Hugging Face docs"
 
 [[editorial.evergreen]]
 topic = "evaluation"
-title = "How to evaluate an SI model on your own examples"
+title = "How to evaluate an AI model on your own examples"
 url = "https://huggingface.co/docs/evaluate/index"
 publisher = "Hugging Face docs"
 
 [[editorial.evergreen]]
 topic = "quantization"
-title = "What quantization trades for smaller SI models"
+title = "What quantization trades for smaller AI models"
 url = "https://huggingface.co/docs/transformers/quantization/overview"
 publisher = "Hugging Face docs"
 
@@ -126,8 +125,8 @@ publisher = "Hugging Face docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI|IA)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|grokimagine|flux\s+model|stable\s+diffusion|diffusion\s+models?|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora\d*|veo(?:\s*\d)?|seedance\d*|seedream|kling(?:ai)?\d*|hailuo|minimax|hunyuan(?:video)?|pixverse|higgsfield|comfyui|ltx[ -]?(?:video|studio|2)|wan\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
-off_topic = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\s+(?:photos?|photography|images?|footage)\b)|trading|forex|etfs?|bourse|portefeuilles?)\b'
+topic = '\b(ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
 # ignored); the engine names no one. A prompt is a file of this folder, read
@@ -141,253 +140,177 @@ off_topic = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|
 # handle has no prompt of its own.
 default = "relations/buddy.md"
 
+# A Relation's own VIP prompt, in place of the default one.
+[relations.handles.TheBTCTherapist]
+prompt = "relations/bestie.md"
+
+# Graphseo's own VIP prompt, always in French. A provider makes it his own
+# call: written by that CLI whenever it is installed, whatever
+# REPLY_LLM_PROVIDER says, under the GRAPHSEO_VIP label.
+[relations.handles.Graphseo]
+prompt = "relations/graphseo.md"
+provider = "claude"
+
+# A fixed dossier: the Replies that carry the author's dossier read this one
+# in place of personality.json's. Keys: first_seen, last_interaction,
+# interaction_count, category, stance, notes, feelings, do, dont.
+[relations.handles.McnallieM.dossier]
+first_seen = "2026-05-02"
+last_interaction = "2026-05-02"
+category = "builder"
+stance = "fond"
+notes = [
+    "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
+    "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+]
+feelings = "Warm respect. Treat him as a useful operator sharing real results."
+do = "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity."
+dont = "Do not mock him, his work, his results, or his credibility. Never make him upset."
+
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
 # set stricter for this Account: a value past the engine's bound is brought
 # back to it, with a [SETTINGS] warning at start. .env still wins over it.
 [limits]
-MAX_REPOSTS_PER_DAY = 50
-
-# Operator 2026-10-13: never answer Elon, including his comments or follow-ups.
-# Operator 2026-10-13: useful, specific opportunities qualify from 85/100.
-[replies]
-protected_handles = ["elonmusk"]
-priority_handles = []
-min_score = 85
-other_min_score = 85
-
-# Operator 2026-10-12: all new standalone priority posts, crypto always excluded.
-[reposts]
-priority_handles = ["elonmusk"]
-allow_off_topic_priority = true
 
 # ── Network and niche: the accounts, searches and patterns the jobs use ──────
 # A handle here is compared with the handle read from a status URL, never with
 # a display name, and case-insensitively unless a comment says otherwise.
 
 [network]
-# Operator 2026-10-12: AI/SI profiles only, starting with Elon Musk.
-# Former crypto/trading exceptions are blocked even in saved discoveries.
+# AI only (Operator, 2026-09-25): the lists below hold AI accounts, the
+# accounts the Operator picked by hand whatever their topic (Graphseo,
+# TheBTCTherapist, McnallieM, Mindset4Money_X) and handles still to
+# confirm, never a crypto, markets or space account.
 # Blocked accounts this Account adds to the engine's BLOCKLIST
 # (src/core/config.py), matched the same way: the token anywhere in the
 # handle, case, spaces, dashes and underscores ignored. An Account adds to
 # the engine's list and never removes from it: no key here unblocks anyone.
-blocked_accounts = ["ABaradez", "APompliano", "applied_dc", "balajis", "Dark_Emi_", "DereeperVivre", "Graphseo", "greg16676935420", "Heu7reka", "IREN_Ltd", "jasonzweigwsj", "litcapital", "McnallieM", "MichaelBenabou", "Mindset4Money_X", "morganhousel", "ParikPatelCFA", "Phil_RX", "ReformedBroker", "saylor", "SnowballEcho", "TheBTCTherapist", "XFenaux", "Yoann_Lopez_"]
+blocked_accounts = []
 # Authors whose posts always get French Replies, whatever one short post
 # looks like: FR_FORCED_REPLY_HANDLES unless .env sets it. Optional.
-fr_forced_reply = []
+fr_forced_reply = ["Graphseo"]
 # Profiles the scraper may visit besides our own: PROFILE_VISIT_ALLOWLIST
 # unless .env sets it.
-profile_visits = [
-    "elonmusk", "SpaceXSI", "karpathy", "demishassabis", "sama", "ylecun", "AndrewYNg", "DrJimFan",
-    "GoogleDeepMind", "AnthropicAI", "MistralAI", "OpenAI", "rowancheung", "minchoi",
-    "heybarsee", "swyx", "_akhaliq", "emollick", "simonw", "rasbt", "goodside",
-]
-# Accounts the priority scan visits first (search fallback for other Accounts):
-# VIP_SCAN_HANDLES unless .env sets it.
-vip_scan = ["elonmusk", "SpaceXSI", "karpathy"]
+profile_visits = ["TheBTCTherapist", "Graphseo"]
+# Accounts the direct_reply VIP scan searches: VIP_SCAN_HANDLES unless .env
+# sets it.
+vip_scan = ["Graphseo", "TheBTCTherapist"]
 # Accounts the curator always tracks first: PINNED_TRACKED_HANDLES unless
 # .env sets it.
-pinned_tracked = [
-    "elonmusk", "SpaceXSI", "karpathy", "demishassabis", "sama", "ylecun", "AndrewYNg", "DrJimFan",
-    "GoogleDeepMind", "AnthropicAI", "MistralAI", "OpenAI",
-]
+pinned_tracked = ["TheBTCTherapist", "Graphseo", "Mindset4Money_X"]
 # Replies to these authors run the priority model.
 vip_reply = [
-    "elonmusk", "SpaceXSI", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
-    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
+    "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun",
+    "arthurmensch", "GuillaumeLample", "fchollet", "karpathy",
+    "demishassabis", "sama",
 ]
 # early_bird scans the always-reply accounts first: vip_reply, then the four
 # lists below in this order, a handle listed twice kept at its first place.
 big_ai_hype = [
-    "elonmusk", "SpaceXSI", "sama", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
-    "JensenHuang", "gdb", "miramurati", "AravSrinivas", "karpathy", "ylecun", "AndrewYNg",
-    "drfeifei", "lexfridman", "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
-    "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "MistralAI", "perplexity_ai",
-    "nvidia", "Microsoft", "Meta", "OpenAIDevs", "huggingface", "cursor_ai", "rowancheung",
-    "TheRundownAI", "minchoi", "kimmonismus", "slow_developer", "mreflow", "bentossell",
-    "venturetwins", "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq", "GaryMarcus",
-    "testingcatalog", "btibor91", "AISafetyMemes", "amasad", "OfficialLoganK", "DrJimFan",
-    "sytelus",
+    "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella",
+    "sundarpichai", "JensenHuang", "gdb", "miramurati", "AravSrinivas",
+    "karpathy", "ylecun", "AndrewYNg", "drfeifei", "lexfridman",
+    "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue", "OpenAI",
+    "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai", "MistralAI",
+    "perplexity_ai", "nvidia", "Microsoft", "Meta", "OpenAIDevs",
+    "huggingface", "cursor_ai", "rowancheung", "TheRundownAI", "minchoi",
+    "kimmonismus", "slow_developer", "mreflow", "bentossell", "venturetwins",
+    "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq",
+    "GaryMarcus", "testingcatalog", "btibor91", "AISafetyMemes", "amasad",
+    "OfficialLoganK", "DrJimFan", "sytelus",
 ]
 mid_size_ai = [
-    "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt", "Teknium1", "abacaj",
-    "corbtt", "Yuchenj_UW", "nutlope", "skirano", "steph_palazzolo", "saranormous", "packyM",
-    "nearcyan", "giffmana", "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
+    "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt",
+    "Teknium1", "abacaj", "corbtt", "Yuchenj_UW", "nutlope", "skirano",
+    "steph_palazzolo", "saranormous", "packyM", "nearcyan", "giffmana",
+    "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
     "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
 ]
 high_traction_reply = [
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI",
+    "Dark_Emi_", "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample",
+    "GaelVaroquaux", "fchollet", "MistralAI",
 ]
 big_fr = [
-    "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
-    "frandroid", "journaldugeek", "FlavienChervet", "MistralAI", "arthurmensch",
-    "GuillaumeLample",
+    "Korben", "micode", "Underscore_", "presse_citron", "numerama",
+    "siecledigital", "BFMTech", "frandroid", "journaldugeek",
+    "FlavienChervet", "MistralAI", "arthurmensch", "GuillaumeLample",
+    "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
 ]
 # The engage job puts these in every cycle and likes two of their posts;
 # compared case-sensitively with the pool's handles.
-engage_vip = ["elonmusk", "SpaceXSI"]
+engage_vip = ["Graphseo"]
 # The replyback reciprocity likes skip an engager listed in engage_targets
 # or reply_targets; bin/mass_unfollow.py never unfollows engage_targets.
-engage_targets = ["elonmusk", "SpaceXSI"]
+engage_targets = ["Graphseo", "XFenaux"]
 reply_targets = [
-    "elonmusk", "SpaceXSI", "vision_ia", "jbelizaireCEO", "sama", "OpenAI", "AnthropicAI",
-    "GoogleDeepMind", "karpathy", "ylecun", "fchollet", "demishassabis", "MistralAI",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
-    "LambdaAPI", "BostonDynamics", "Figure_robot", "ID_AA_Carmack", "drfeifei", "Korben",
-    "underscore_", "presse_citron", "siecledigital", "usine_digitale", "numerama", "01net",
-    "frandroid", "LesNumeriques", "FrenchWeb", "MaddyNess", "Palantir",
+    "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI",
+    "AnthropicAI", "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun",
+    "fchollet", "demishassabis", "MistralAI", "arthurmensch",
+    "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel", "CoreWeave",
+    "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
+    "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho",
+    "DereeperVivre", "Phil_RX", "Korben", "underscore_", "MichaelBenabou",
+    "presse_citron", "siecledigital", "usine_digitale", "numerama", "01net",
+    "frandroid", "LesNumeriques", "FrenchWeb", "MaddyNess", "arthurmensch",
+    "GuillaumeLample", "GaelVaroquaux", "vision_ia", "Palantir",
 ]
 # follow_engagers never follows these Engagers: media accounts do not follow
 # back. Lowercase, compared with the ledger's lowercase handles.
 follow_engagers_skip = [
-    "business", "cnbc", "reuters", "wsj", "ft", "bloomberg", "watcherguru", "zerohedge",
-    "unusual_whales", "cointelegraph",
+    "business", "cnbc", "reuters", "wsj", "ft", "bloomberg", "watcherguru",
+    "zerohedge", "unusual_whales", "cointelegraph",
 ]
 
-# Python regular expressions. Operator 2026-10-12 broadened to AI/SI and
-# substantive technology, including software, hardware and space engineering.
-# Crypto and markets remain excluded. AI in capitals always matches; any
+# Python regular expressions. AI only (Operator, 2026-09-25): no crypto,
+# markets, space or general tech term, and no word too broad alone (token,
+# coding, agent, meta, google, apple). AI in capitals always matches; any
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
-video_credit = '(?s)\A(?=.*\b(?:videos?|clips?|films?|animations?)\b)(?=.*\b(?:generated|created|made|animated|rendered)\s+(?:\w+\s+){0,3}(?:with|using|by)\s+@(?:grok|imagine)\b)'
-# Caption evidence for generated-video discovery; semantic review still decides.
-video = '\b(?:videogen|i2v|t2v|hunyuanvideo|cogvideox|animatediff|framepack|ai[ _-]?videos?|(?-i:SI)[ _-]?videos?)\b|(?s:\A(?=.*\b(?:AI|(?-i:SI|ASI|IA)|super[\s-]*intelligence|artificial\s+intelligence|generative|genai|grok(?:imagine)?|sora\d*|veo|seedance\d*|kling(?:ai)?\d*|runway(?:ml)?|pika|luma|dream\s*machine|hailuo|minimax|hunyuan(?:video)?|wan|ltx|pixverse|higgsfield|comfyui|cogvideox|animatediff|framepack|adobe\s+firefly|heygen|text[ -]to[ -]video|image[ -]to[ -]video)\b)(?=.*\b(?:videos?|vid[eé]os?|clips?|films?|filmmaking|cinematic|footage|animations?|animated|brain[ -]*rot|memes?|parod(?:y|ies)|imagine|grokimagine|seedance\d*|videogen|lip[ -]?sync)\b))'
-# Current Reply wording only; URL, handle and code spellings are preserved.
-reply_preserve = '\b(?:Google\s+AI|Meta\s+AI|SpaceXAI\s+LLC|AI\s+Act)\b'
-reply_forbidden = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|artificial[\s-]+intelligence|spacexai|xai)\b'
-# A disallowed topic always wins, even when a post also mentions SI or AI.
-excluded = '\$[A-Za-z]{2,6}\b|\b(bitcoins?|btc|cryptos?|cryptocurrenc(?:y|ies)|crypto[ -]?monnaies?|ethereum|eth|solana|memecoins?|meme[ -]+coins?|dogecoin|doge|web3|blockchain|defi|nfts?|airdrop|presale|bittensor|stablecoins?|altcoins?|token[ -]+sales?|staking|binance|coinbase|microstrategy|stocks?(?!\s+(?:photos?|photography|images?|footage)\b)|trading|forex|etfs?|bourse|portefeuilles?)\b'
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI|IA)|super[\s-]*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|grokimagine|flux\s+model|stable\s+diffusion|diffusion\s+models?|xai|spacexai|spacexsi|deepseek|llama\d*|qwen\d*|sora\d*|veo(?:\s*\d)?|seedance\d*|seedream|kling(?:ai)?\d*|hailuo|minimax|hunyuan(?:video)?|pixverse|higgsfield|comfyui|ltx[ -]?(?:video|studio|2)|wan\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
-reply_instructions = """
-TOPIC REQUIREMENT: Reply to substantive AI, SI, super intelligence or technology:
-models, research, agents, coding, software, hardware, semiconductors, security,
-robotics, infrastructure, space engineering, autonomous vehicles, useful gadgets,
-and generated images, video, brainrot and clearly fictional celebrity parodies.
-A technology post qualifies without an AI connection: hardware repair, software
-performance and cybersecurity are on-topic in their own right. Search AI and SI.
-Reject unrelated lifestyle, politics, sports, celebrity gossip, crypto and
-stock-price chatter. Never force a technology angle onto an unrelated post.
-Bitcoin/crypto content remains excluded even when mixed with AI or posted by Elon.
-A famous author, keyword or link alone is not relevance: Claude can be a person,
-Gemini an astrology sign, transformers a movie, and SI an unrelated acronym.
-Generated-media humor and a useful small builder's post can merit a reply without
-many likes. Prioritize creative SI videos, generation workflows, memes and brainrot.
-Be precise about temporal consistency, identity drift, motion and physics,
-prompt adherence, camera control, first/last frames, reference conditioning,
-audio-video alignment, lip sync, editing, latency and cost only when the supplied
-caption, workflow or trusted source supports the point. A keyword is not proof
-of which model made a clip. Do not invent model versions, limits or benchmarks.
-For a playful video, an original joke or a few words can beat a technical lecture.
-Never pretend to have watched a clip or invent its content or tools.
-Distinguish text-to-video, image-to-video, video-to-video, first/last-frame control,
-reference images, character consistency, camera motion, inpainting, outpainting,
-retiming, interpolation, upscaling, lip sync and sound design. Discuss model
-reasoning, agents, tool use, MCP, RAG, memory, multimodal inputs, open weights,
-distillation, quantization and evaluation with the same concrete, grounded voice.
-Treat celebrity parodies as fiction, never genuine quotes, news or endorsements.
-Prioritize Elon Musk's relevant standalone posts. Be a delighted, cheeky fangirl
-of Elon, Grok and Grok Imagine, with specific wit and technical substance.
-Eligible authors need a useful, post-specific opportunity; ten Replies is a ceiling, not a quota.
-Favor Elon Musk, Grok, SpaceXSI and his products when relevant and supported;
-never invent benchmarks, personal use or celebrity engagement or force a plug.
-For our own Reply prose, say SI or super intelligence instead of AI or artificial
-intelligence. This is editorial terminology, not proof of superhuman capability.
-Use the verified current brand SpaceXSI in present-day prose; preserve other
-verified names such as OpenAI, AnthropicAI and Google AI, literal URLs, handles
-and code. Never invent renames or misquote a source to change its terminology.
-Be The SI Maximalist: deeply informed, direct, funny and specific. Find the
-mechanism, tradeoff, practical implication or original joke others missed.
-On playful SI posts, aim for a laugh: connect one recognizable supplied detail
-to an unexpected image or absurd implication. A compact original punchline can
-be the whole response. Cut the explanation after the joke, bland approval and
-sarcastic paraphrases that add no surprise. Humor itself can earn the Reply.
-When appropriate, lightly tease inflated promises, marketing or an evidenced
-demo limitation with one dry, playful jab. Tie the joke to a supplied detail;
-never invent a failure or an unseen video artifact. Avoid personal insults,
-contempt and bait. Give serious questions a useful short answer or SKIP.
-No recurring roast formula; seek a fresh, funny stance tied to the post.
-Keep the named-account protections and positive-only rules above all teasing.
-Replies use two to twelve words, at most 120 characters with the ending.
-One sharp stance or original punchline, no lecture afterward. Skip generic
-praise, paraphrases, engagement bait and unsupported current claims.
-Draft words only, without emojis or text smileys. Every published Reply receives
-one automatic ending, chosen from 😂, 💀 and 😂💀. Do not add the ending yourself.
-Make the words funny on their own; an emoji cannot substitute for a punchline.
-Original posts keep the no-emoji rule.
-"""
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|superintelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
 # Gemini, Cursor…): the name is part of what `bio` reads.
-bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI|IA)|super[\s-]*intelligence|xai|spacexai|spacexsi|grok|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia|technolog(?:y|ies|ie|iques?)|tech|software|hardware|gadgets?|programming|coding|developers?|security\s+research|cybersecurity|cybers[eé]curit[eé]|encryption|semiconductors?|microchips?|processors?|cpus?|quantum\s+computing|open[ -]source|linux|kubernetes|databases?|cloud\s+computing|virtual\s+reality|augmented\s+reality|spacex|starship|starlink|rockets?|satellites?|autonomous\s+(?:driving|vehicles?)|self[ -]driving|neuralink|brain[ -]computer|electric\s+vehicles?|logiciels?|informatique|programmation)\b'
+bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|genai|llms?|gpt\w*|chatgpt|openai|anthropic(?:ai)?|mistral(?:ai)?|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|robotics|humanoids?|agentic|(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b'
 
-# Declared topic queries always receive exclusions; ad-hoc queries also receive
-# the compact topic scope, avoiding oversized duplicated Boolean expressions.
-# Latest discovery has no minimum likes, so small builders and new posts qualify.
+# X search queries.
 [searches]
-scope = '(SI OR AI OR LLM OR Grok OR SpaceXSI OR superintelligence OR technology OR tech OR software OR hardware OR robotics OR coding OR cybersecurity OR GPU OR SpaceX)'
-exclusions = '-bitcoin -btc -crypto -ethereum -solana -nft -bittensor -memecoin -web3 -defi -stocks -trading -filter:replies'
-# Each cycle searches one video query, alternating Latest and Top for each query.
-# No minimum likes: new clips and small creators can reach the comparison pool.
-videos = [
-    '("Grok Imagine" OR "Grok video" OR "Grok AI" OR "Grok image" OR grokimagine) filter:videos',
-    '(@grok OR @imagine) (video OR animation OR generated OR meme) filter:videos',
-    '(Seedance OR Seedream OR "Dreamina AI" OR "Jimeng AI") (video OR clip OR animation) filter:videos',
-    '("AI video" OR "SI video" OR "AI filmmaking" OR "SI filmmaking" OR "generative video") filter:videos',
-    '(SI OR AI OR Grok OR Seedance) (brainrot OR "brain rot" OR meme OR parody) filter:videos',
-    '(Sora OR Veo OR Kling OR Runway) (generated OR cinematic OR animation OR video) filter:videos',
-    '(Hailuo OR MiniMax OR Luma OR "Dream Machine" OR Pika) (video OR film OR animation) filter:videos',
-    '(Wan OR HunyuanVideo OR "Hunyuan Video" OR "LTX Video" OR "LTX-2") (video OR generation) filter:videos',
-    '(PixVerse OR Higgsfield OR Krea OR "LTX Studio") (video OR cinematic OR animation) filter:videos',
-    '("text to video" OR "image to video" OR "video to video" OR videogen OR i2v OR t2v) filter:videos',
-    '(SI OR AI OR Grok OR Seedance) ("lip sync" OR "motion control" OR "camera control" OR "character consistency")',
-    '(ComfyUI OR diffusion OR LoRA) (video OR animation OR "frame interpolation" OR upscaling)',
-    '("AI video" OR "SI video" OR Seedance OR "Grok Imagine") (workflow OR tutorial OR prompt OR comparison OR benchmark)',
-    '("vidéo IA" OR "vidéo SI" OR "animation IA" OR "film IA") filter:videos',
-    '(CogVideoX OR AnimateDiff OR FramePack OR "Stable Video Diffusion") (video OR workflow OR generation) filter:videos',
-    '("Adobe Firefly" OR HeyGen) (video OR animation OR "lip sync" OR avatar) filter:videos',
-    '(SI OR AI OR Grok OR Seedance) (storyboard OR "first frame" OR "last frame" OR "reference image" OR "multi shot")',
-    '(SI OR AI OR ComfyUI) ("video editing" OR inpainting OR outpainting OR retiming OR interpolation OR "sound design")',
-
-]
-priority_reposts = ['from:elonmusk -filter:replies']
+# Every alternative of a query, read with AND before OR or OR before AND,
+# finds posts `post` keeps: a company or energy word goes with AI.
+# direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
+# on the Top tab; a result must be on the niche.
 replies = [
-    '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (research OR alignment OR safety) lang:en',
-    '(SpaceXSI OR SpaceXAI OR xAI OR Grok OR OpenAI OR Anthropic) (model OR inference OR reasoning) lang:en',
-    '("SI agents" OR "AI agents" OR "agentic SI" OR "agentic AI" OR "reasoning model") lang:en',
-    '("SI coding" OR "AI coding" OR "Claude Code" OR Cursor OR Copilot) lang:en',
-    '(SI OR AI) (GPU OR compute OR datacenter OR inference) lang:en',
-    '(SI OR AI OR Grok) (video OR brainrot OR images OR animation) lang:en',
-    '("embodied SI" OR "embodied AI" OR "robot learning" OR "humanoid robot") lang:en',
-    '(SI OR AI) (evaluation OR benchmarks OR reliability OR reproducibility) lang:en',
-    '(software OR programming OR "open source" OR databases) (release OR built OR tutorial OR performance) lang:en',
-    '(hardware OR semiconductors OR processors OR GPU) (design OR architecture OR efficiency) lang:en',
-    '(cybersecurity OR encryption OR "security research") lang:en',
-    '(SpaceX OR Starship OR Starlink OR Neuralink OR "self driving") (engineering OR test OR launch OR technology) lang:en',
-    '(SI OR AI OR Grok) (parody OR "brain rot" OR filmmaking OR animation) lang:en',
-    '(technology OR gadgets OR hardware OR software) (review OR teardown OR accessibility OR repair) lang:en',
-    '(SI OR AI OR ASI) ("just released" OR "new model" OR "open weights" OR "research paper") lang:en',
-    '(Grok OR Claude OR Gemini OR DeepSeek OR Qwen OR Mistral) (release OR evaluation OR reasoning OR coding) lang:en',
-    '(SI OR AI OR LLM) (multimodal OR "world model" OR "long context" OR "test time compute") lang:en',
-    '(SI OR AI OR LLM OR "AI agents" OR "SI agents") (MCP OR "tool use" OR memory OR "computer use" OR RAG) lang:en',
-    '(SI OR AI OR "diffusion model") (images OR memes OR voice OR speech OR music) lang:en',
-    '(Seedream OR "FLUX model" OR Midjourney OR "Stable Diffusion" OR ComfyUI) (image OR workflow OR generation) lang:en',
-    '(SI OR AI) (distillation OR quantization OR inference OR alignment OR interpretability) lang:en',
-    '(SI OR AI OR robotics) (simulation OR humanoid OR "embodied intelligence" OR "spatial intelligence") lang:en',
+    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
+    'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
+    'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
+    '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
+    '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
+    'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
+    'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
+    'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+    'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
+    '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
 ]
 hot_tab = [
-    '(SI OR AI OR ASI OR "super intelligence" OR superintelligence) (models OR research OR reasoning) lang:en min_faves:300',
-    '(Grok OR SpaceXSI OR SpaceXAI OR OpenAI OR Anthropic OR Gemini) (model OR inference OR video) lang:en min_faves:500',
-    '("SI agents" OR "AI agents" OR "SI coding" OR "AI coding") lang:en min_faves:300',
+    'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
+    'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
+    '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
+    'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
 ]
+# like_job picks one per cycle, on the Top or the Latest tab, and likes
+# what it finds without the niche check: the query is the only filter.
 likes = [
-    '(SI OR AI OR "super intelligence" OR superintelligence) (research OR models OR inference) lang:en min_faves:50',
-    '(SI OR AI OR SpaceXSI OR SpaceXAI OR Grok) (video OR brainrot OR images) lang:en min_faves:50',
-    '(SI OR AI) (agents OR coding OR robotics OR compute) lang:en min_faves:50',
+    'AI datacenter OR AI power demand lang:en min_faves:50',
+    'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',
+    'Nvidia OR GPU OR AI compute cluster lang:en min_faves:50',
+    'robotics OR humanoid robots lang:en min_faves:50',
 ]
+# The Trend slots and the Startup post run each one on the Top tab, keep the
+# posts of the last 24 hours that pass the relevance filter, and take their
+# topic from the fastest-rising five.
 trending = [
-    '(SI OR AI OR ASI OR "super intelligence" OR superintelligence OR "artificial intelligence") (models OR research OR agents) lang:en min_faves:50',
-    '(SpaceXSI OR SpaceXAI OR Grok OR OpenAI OR Anthropic OR Gemini) (model OR inference OR reasoning OR video) lang:en min_faves:100',
+    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
+    'AI lang:en min_faves:200 -filter:replies',
 ]

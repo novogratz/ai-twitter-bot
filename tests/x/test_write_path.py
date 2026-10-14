@@ -5,8 +5,6 @@ from datetime import datetime
 
 import pytest
 
-from src.core.reply_style import REPLY_ENDINGS, split_ending
-
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag
 from src.guards import follow_policy
@@ -26,7 +24,6 @@ def _fake_safari(monkeypatch):
     import src.x.twitter_client as tc
     from src.x import safari
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
@@ -47,8 +44,8 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
 
-    url = "https://x.com/arthurmensch/status/1234567890123456789"
-    reply = "le signal des fautes tient un seul cycle de finetuning."
+    url = "https://x.com/Graphseo/status/1234567890123456789"
+    reply = "le signal des fautes tient exactement un cycle de finetuning, profites-en tant que ça marche"
     tc.reply_to_tweet(url, reply)
     tc.reply_to_tweet(url, reply + " v2")          # same tweet, second bot
     tc.reply_to_tweet(url + "?s=20", reply + " v3")  # same tweet, different URL form
@@ -68,7 +65,7 @@ def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
     _fake_safari(monkeypatch)
 
     url = "https://x.com/foo/status/2063500000000000042"
-    text = "Naming the fear helps. Compute needs infrastructure."
+    text = "Naming the fear is step one. The number says 40 billion in capex."
     assert tc.reply_to_tweet(url, text) is W.SHIPPED
     # Store was marked by the chokepoint itself — second attempt refuses.
     assert tc.reply_to_tweet(url, text) is W.REFUSED
@@ -120,9 +117,9 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     assert "conviction is the hard part" in seen["text"]
 
 
-def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path, settings_override):
+def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     """Operator 2026-06-07: 'i saw some english on Julien response'.
-    @arthurmensch is always-French; the chokepoint refuses an English reply to
+    @Graphseo is always-French; the chokepoint refuses an English reply to
     him from ANY bot, BEFORE the dedup mark (post stays fresh for an FR
     retry). SKIPPED-variant leaks are also pinned here."""
     from src.x import twitter_client as tc
@@ -134,13 +131,12 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path, settings_
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setenv("DRY_RUN", "1")
 
-    settings_override(FR_FORCED_REPLY_HANDLES="arthurmensch")
-    url = "https://x.com/arthurmensch/status/2063500000000000099"
+    url = "https://x.com/Graphseo/status/2063500000000000099"
     english = "The market just told you what your conviction is worth this week."
     assert tc.reply_to_tweet(url, english) is W.REFUSED
     # Post must stay UNMARKED — a later FR draft can still ship.
     assert url not in rs.load_replied()
-    french = "Le marché évalue ta conviction cette semaine."
+    french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
     assert tc.reply_to_tweet(url, french) is W.DRY_RUN
 
     # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.
@@ -194,7 +190,6 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
-    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
 
     text = "Inference cost falls when batching works, so the margin story depends on utilisation."
@@ -262,7 +257,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
 
     url = "https://x.com/typofriend/status/2063500000000000101"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
-    assert validated and split_ending(validated[-1])[0].endswith("(typo)")
+    assert validated and validated[-1].endswith("(typo)")
 
 
 def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_override):
@@ -283,7 +278,7 @@ def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_ov
     url = "https://x.com/typofriend/status/2063500000000000103"
     assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
-    assert split_ending(validated[-1])[0].endswith("(typo)")
+    assert validated[-1].endswith("(typo)")
 
 
 def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
@@ -296,7 +291,7 @@ def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override
     settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     monkeypatch.setattr(content_guard, "validate",
-                        lambda text, kind="post": (not split_ending(text)[0].endswith("(typo)"), "typo refused"))
+                        lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
 
     url = "https://x.com/typofriend/status/2063500000000000102"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.REFUSED
@@ -338,7 +333,6 @@ def _live_browser(monkeypatch, failing_step=None):
     from src.guards.active_hours import OutsideActiveHours
 
     monkeypatch.setenv("DRY_RUN", "0")
-    monkeypatch.setattr(tc, "_standalone_reply_target", lambda url: True)
     monkeypatch.setattr(action_guard, "can_post", lambda *a, **k: (True, ""))
     monkeypatch.setattr(action_guard, "can_debate_turn", lambda *a, **k: (True, ""))
     recorded = []
@@ -462,8 +456,7 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
 
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is W.SHIPPED
     assert pasted == [validated[-1]]
-    assert split_ending(pasted[0])[1] in REPLY_ENDINGS
-    assert split_ending(pasted[0])[0].endswith("(typo)") and "—" not in pasted[0]
+    assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
@@ -494,7 +487,7 @@ def test_reply_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, r
     addressed = f"@kindperson {REPLY}"
     shipped = tc.reply_to_tweet(url, addressed)
     assert shipped is (W.DRY_RUN if dry_run == "1" else W.SHIPPED)
-    assert [split_ending(text)[0] for text in pasted] == ([] if dry_run == "1" else [addressed])
+    assert pasted == ([] if dry_run == "1" else [addressed])
 
 
 def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
@@ -535,7 +528,7 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 

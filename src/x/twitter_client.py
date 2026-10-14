@@ -371,20 +371,12 @@ _POSTS_JS = r"""
     }
     var url = art ? statusLink(art) : '';
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
-    var bodies = art.querySelectorAll('[data-testid="tweetText"]');
-    var text = '';
-    for (i = 0; i < bodies.length; i++) {
-        if (bodies[i].closest('article') === art && !bodies[i].closest('[role="link"]')) {
-            text = bodies[i].innerText;
-            break;
-        }
-    }
     if (art.querySelector('[data-testid="unlike"]')) {
-        return JSON.stringify({url: url, text: text, result: 'already_liked'});
+        return JSON.stringify({url: url, result: 'already_liked'});
     }
     var button = art.querySelector('[data-testid="like"]');
     if (!button) return JSON.stringify({url: url, result: 'failed'});
-    if (mode !== 'press') return JSON.stringify({url: url, text: text, result: 'not_liked'});
+    if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
     button.click();
     return JSON.stringify({url: url, result: 'clicked'});
 })("__MODE__", "__TARGET_ID__")
@@ -445,16 +437,6 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
     def steps():
         nonlocal liked_url
-        from ..core import account
-        parent = _page_posts("read", target)
-        if parent.get("result") == "already_liked":
-            return LikeOutcome.ALREADY_LIKED
-        if x_urls.status_id(parent.get("url", "")) != target:
-            return LikeOutcome.FAILED
-        if (reply_admission.is_blocked_account(x_urls.author(parent.get("url", "")))
-                or not account.current().niche.matches_post(parent.get("text", ""))):
-            log.info("[LIKE] Post %s is outside the Account's topic policy; nothing clicked.", target)
-            return LikeOutcome.BLOCKED
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
         if pressed.get("result") == "already_liked":
@@ -480,170 +462,6 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         steps=steps, close_tab=False)
 
 
-_REPOST_JS = r"""
-(function(mode, targetId) {
-    var arts = Array.from(document.querySelectorAll('article[data-testid="tweet"]'));
-    var art = arts[0];
-    if (!art) return JSON.stringify({result: 'failed'});
-    function owns(node) {
-        return node.closest('article') === art && !node.closest('div[role="link"]')
-            && !node.closest('[data-testid="quoteTweet"]');
-    }
-    function own(selector) { return Array.from(art.querySelectorAll(selector)).filter(owns); }
-    var url = '';
-    own('a[href*="/status/"] time').some(function(t) {
-        var a = t.closest('a');
-        var m = (a.href || '').match(/\/status\/(\d+)(?:\?|$)/);
-        if (m) { url = a.href; return true; }
-        return false;
-    });
-    var match = url.match(/\/status\/(\d+)/);
-    var page = location.pathname.match(/\/status\/(\d+)\/?$/);
-    if (!match || match[1] !== targetId || !page || page[1] !== targetId)
-        return JSON.stringify({result: 'failed'});
-    function count(selector) {
-        var button = own(selector)[0];
-        if (!button) return 0;
-        var s = button.getAttribute('aria-label') || button.innerText || '';
-        var m = s.replace(/,/g, '').match(/(\d+(?:\.\d+)?)\s*([KM])?/i);
-        return m ? Math.round(Number(m[1]) * (m[2] ? (m[2].toLowerCase() === 'm' ? 1000000 : 1000) : 1)) : 0;
-    }
-    var bodies = own('[data-testid="tweetText"]');
-    // Match the discovery scraper's caption representation for bound approvals.
-    var text = bodies.length ? (bodies[0].textContent || bodies[0].innerText || '').trim() : '';
-    var out = {url: url, text: text, quoted_text: art.innerText || '',
-        has_video: own('video').length > 0 || own('[data-testid="videoPlayer"]').length > 0,
-        is_reply: text.startsWith('@') || /Replying to|En réponse à|En reponse a/i.test(art.innerText || ''),
-        likes: Math.max(count('[data-testid="like"]'), count('[data-testid="unlike"]')),
-        reposts: Math.max(count('[data-testid="retweet"]'), count('[data-testid="unretweet"]'))};
-    if (own('[data-testid="unretweet"]').length) {
-        out.result = 'already_reposted';
-        return JSON.stringify(out);
-    }
-    var button = own('[data-testid="retweet"]')[0];
-    if (!button) { out.result = 'failed'; return JSON.stringify(out); }
-    out.result = 'not_reposted';
-    if (mode === 'open') { button.click(); out.result = 'opened'; }
-    if (mode === 'confirm') {
-        var confirm = document.querySelector('[data-testid="retweetConfirm"]');
-        if (!confirm) { out.result = 'failed'; return JSON.stringify(out); }
-        confirm.click(); out.result = 'clicked';
-    }
-    return JSON.stringify(out);
-})("__MODE__", "__TARGET_ID__")
-"""
-
-
-def _repost_page(mode: str, target: str) -> dict:
-    if mode not in {"read", "open", "confirm"} or not target.isdigit():
-        return {}
-    js = _REPOST_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target)
-    try:
-        result = json.loads(safari._run_js(js, 10, log_prefix="[REPOST]") or "null")
-        return result if isinstance(result, dict) else {}
-    except ValueError:
-        return {}
-
-
-def repost_tweet(tweet_url: str) -> WriteOutcome:
-    """Repost one verified original, never toggle, with permanent ID dedup."""
-    from ..guards import action_guard, repost_policy, reply_admission
-    from ..core import config
-    from . import x_urls
-    target = x_urls.status_id(tweet_url)
-    shipped_url = tweet_url
-
-    def admit():
-        author = x_urls.author(tweet_url)
-        if (not target or not author or config.is_own_handle(author)
-                or reply_admission.is_blocked_account(author) or repost_policy.known(tweet_url)):
-            return WriteOutcome.REFUSED
-        ok, why = action_guard.can_post(action_guard.RETWEET)
-        if not ok:
-            log.info("[REPOST] %s", why)
-            return WriteOutcome.REFUSED
-        return None
-
-    def steps():
-        nonlocal shipped_url
-        if not _open_or_abort(tweet_url, "REPOST"):
-            return WriteOutcome.FAILED
-        time.sleep(3)
-        parent = _repost_page("read", target)
-        if (x_urls.status_id(parent.get("url", "")) != target
-                or x_urls.author(parent.get("url", "")) != x_urls.author(tweet_url)):
-            return WriteOutcome.FAILED
-        shipped_url = parent["url"]
-        if parent.get("result") == "already_reposted":
-            repost_policy.remember(shipped_url, "observed")
-            return WriteOutcome.REFUSED
-        why = repost_policy.refusal(parent)
-        if parent.get("result") != "not_reposted" or why:
-            log.info("[REPOST] Opened post refused: %s", why or "unreadable state")
-            return WriteOutcome.REFUSED
-        if _repost_page("open", target).get("result") != "opened":
-            return WriteOutcome.FAILED
-        time.sleep(1)
-        # Time and page text can change while the menu opens. Recheck before
-        # reserving; a crash after reservation must never retry this status.
-        require_active()
-        current = _repost_page("read", target)
-        if current.get("result") != "not_reposted" or repost_policy.refusal(current):
-            return WriteOutcome.REFUSED
-        if not action_guard.can_post(action_guard.RETWEET)[0]:
-            return WriteOutcome.REFUSED
-        repost_policy.remember(shipped_url, "pending")
-        if _repost_page("confirm", target).get("result") != "clicked":
-            return WriteOutcome.UNCONFIRMED
-        for _ in range(3):
-            time.sleep(1)
-            confirmation = _repost_page("read", target)
-            if (confirmation.get("result") == "already_reposted"
-                    and x_urls.status_id(confirmation.get("url", "")) == target):
-                log.info("[REPOST] Confirmed %s", shipped_url)
-                return WriteOutcome.SHIPPED
-        return WriteOutcome.UNCONFIRMED
-
-    return confirmed_write.run("REPOST", WriteOutcome, would=lambda: f"repost {tweet_url}",
-        rows=lambda: [(action_guard.RETWEET, shipped_url)],
-        before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(admit,), steps=steps,
-        after_record=lambda: repost_policy.remember(shipped_url, "confirmed"))
-
-
-def _standalone_reply_target(url: str) -> bool:
-    """Verify the opened author's identity, Reply protection, status and topic."""
-    from ..core import account
-    from . import x_urls
-    sid = x_urls.status_id(url)
-    js = """(() => {
-      const id = TARGET;
-      const articles = [...document.querySelectorAll('article')];
-      const own = (article, selector) => [...article.querySelectorAll(selector)]
-        .filter(el => el.closest('article') === article
-          && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
-      const permalink = article => own(article, 'a[href]').find(l => l.querySelector('time'));
-      const index = articles.findIndex(a => permalink(a)?.pathname.endsWith('/status/' + id));
-      if (index !== 0) return 'refused';
-      const article = articles[index];
-      const text = own(article, '[data-testid="tweetText"]')[0]?.innerText;
-      if (!text || text.trim().startsWith('@')) return 'refused';
-      if (/Replying to|En réponse à/i.test(article.innerText)) return 'refused';
-      return JSON.stringify({text, url: permalink(article).href});
-    })()""".replace("TARGET", json.dumps(sid))
-    try:
-        target = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]"))
-        if not isinstance(target, dict) or not isinstance(target.get("text"), str):
-            return False
-        opened_url = target.get("url", "")
-        author = x_urls.author(opened_url)
-        return (bool(author) and author == x_urls.author(url)
-                and x_urls.status_id(opened_url) == sid
-                and not account.current().replies.is_protected(author)
-                and account.current().niche.matches_post(target["text"]))
-    except Exception:
-        return False
-
-
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
                    on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
@@ -656,8 +474,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     Raises StateUnreadable when the ledger or the replied store cannot be
     read: nothing ships until the file is repaired.
 
-    Reply admission (src/guards/reply_admission.py) owns every rule: protected
-    account, Blocked
+    Reply admission (src/guards/reply_admission.py) owns every rule: Blocked
     account, own post, one Reply per post, Debate turn cap, spacing, and the
     final text. It runs once under the Safari lock, which also records the
     Reply, so no other thread can take the last Debate turn or the spacing
@@ -732,11 +549,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.FAILED
             time.sleep(0.5)
 
-            # Operator 2026-10-12: every caller verifies standalone status and topic.
-            if not _standalone_reply_target(tweet_url):
-                log.info("[REPLY] Protected, misattributed, conversation, off-topic or unreadable target: refusing %s", tweet_url)
-                return WriteOutcome.REFUSED
-
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
@@ -761,7 +573,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
-            action_guard.reserve_reply(tweet_url)
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True
@@ -782,7 +593,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     return confirmed_write.run(
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
         rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
-        steps=steps, after_record=lambda: action_guard.confirm_reply(tweet_url))
+        steps=steps)
 
 
 class FollowOutcome(Enum):

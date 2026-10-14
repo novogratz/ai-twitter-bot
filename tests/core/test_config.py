@@ -1,12 +1,5 @@
 """src/core/config: hard ceilings `.env` cannot lift."""
 from src.core import config
-import pytest
-
-
-@pytest.mark.parametrize("target,cap,expected", [(300, 400, 0), (300, 5, 0), (300, 0, 0), (999, 999, 0)])
-def test_old_volume_targets_cannot_restore_a_daily_quota(settings_override, target, cap, expected):
-    settings_override(TARGET_REPLIES_PER_DAY=target, MAX_REPLIES_PER_DAY=cap)
-    assert config.reply_target() == expected
 
 
 def test_post_spacing_floor_is_twenty_minutes():

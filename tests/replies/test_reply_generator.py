@@ -45,15 +45,8 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
     from src.x import scraper
 
-    original_admit = reply_pipeline._admit
-    def admit(job, candidate, cycle):
-        if job.debate_turn or candidate.context:
-            from src.x.x_urls import author
-            return author(candidate.url)
-        return original_admit(job, candidate, cycle)
-    monkeypatch.setattr(reply_pipeline, "_admit", admit)
     chokepoint.answer = WriteOutcome.REFUSED
-    for module in (dr, reply_source):
+    for module in (dr, eb, mw, reply_source):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
@@ -70,15 +63,12 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         dr.run_direct_reply_cycle()
 
     def feed(author, text):
-        url = fresh(author)  # video and general queries find the same parent
-        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [])
+        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh(author), "text": text}])
         monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
-        monkeypatch.setattr(scraper, "scrape_x_search", lambda query, **k: [{"url": url, "text": text}])
         fs.run_feed_sweep_cycle()
 
     def profile(module, pool, cycle):
         def run(handle, text):
-            settings_override(PROFILE_VISIT_ALLOWLIST=handle)
             monkeypatch.setattr(module, pool, lambda: [handle])
             monkeypatch.setattr(module, "scrape_profile_tweets", lambda username, **k: [
                 {"url": fresh(handle, minutes=1), "text": text, "author": handle}])
@@ -86,7 +76,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         return run
 
     def vip(handle, text):
-        settings_override(VIP_SCAN_HANDLES=handle, PROFILE_VISIT_ALLOWLIST="")
+        settings_override(VIP_SCAN_HANDLES=handle)
         monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
         dr._run_vip_scan(reply_pipeline.Cycle())
 
@@ -134,16 +124,15 @@ def test_reply_prompt_jobs_follow_the_parent_language(jobs, job, text, lang):
 
 @pytest.mark.parametrize("job, lang", [("search", "fr"), ("feed", "fr"),
                                        ("early_bird", "en"), ("mega_watch", "en")])
-def test_fr_forced_handles_override_only_the_search_and_feed_pipeline(jobs, job, lang, settings_override):
+def test_fr_forced_handles_override_only_the_search_and_feed_pipeline(jobs, job, lang):
     """The early_bird and mega_watch scans never applied the override: an
-    English-looking post from @karpathy gets English reply text, which the
+    English-looking post from @Graphseo gets English reply text, which the
     chokepoint then refuses for an FR-forced parent."""
-    settings_override(FR_FORCED_REPLY_HANDLES="karpathy")
-    assert language(jobs(job, "karpathy", EN)) == (lang, lang)
+    assert language(jobs(job, "Graphseo", EN)) == (lang, lang)
 
 
-@pytest.mark.parametrize("handle, text, lang", [("vipbuilder", EN, "en"), ("vision_ia", FR, "fr"),
-                                               ("karpathy", EN, "en")])
+@pytest.mark.parametrize("handle, text, lang", [("TheBTCTherapist", EN, "en"), ("vision_ia", FR, "fr"),
+                                               ("Graphseo", EN, "en")])
 def test_vip_prompts_leave_the_language_line_to_their_template(jobs, handle, text, lang):
     """They carry the Voice of the parent's language, and no override line."""
     assert language(jobs("vip", handle, text)) == (lang, None)
@@ -173,8 +162,8 @@ def test_fr_forced_handles_are_read_at_call_time(jobs, settings_override):
 
 
 @pytest.mark.parametrize("env, author, forced", [
-    (None, "karpathy", False), (None, "@karpathy", False), (None, "someone", False),
-    (" @SomeOne , other", "someone", True), ("", "karpathy", False), ("someone", "", False),
+    (None, "Graphseo", True), (None, "@graphseo", True), (None, "someone", False),
+    (" @SomeOne , other", "someone", True), ("", "graphseo", False), ("someone", "", False),
 ])
 def test_one_reader_decides_fr_forced_parents(settings_override, env, author, forced):
     """The generator and Reply admission share this reader: one value, the
@@ -197,14 +186,14 @@ def test_early_bird_names_the_author_from_the_status_url(jobs):
 # --- Hard rules and dossier ----------------------------------------------------
 
 EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird", "someone", EN),
-              ("mega_watch", "someone", EN), ("vip", "vipbuilder", EN), ("vip", "vision_ia", FR),
-              ("vip", "karpathy", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
+              ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
+              ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
               ("reply_search", "", "")]
 
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
 def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monkeypatch):
-    """Issue #155: debate and the VIP and karpathy paths used to build their
+    """Issue #155: debate and the VIP and Graphseo paths used to build their
     prompts without the hard rules or the respect list. They close every
     prompt, the reply search's included."""
     from src.core import personality_store
@@ -216,8 +205,8 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
     assert jobs(job, author, text).endswith("\n\n" + rules)
 
 
-@pytest.mark.parametrize("job, author, text", [("vip", "vipbuilder", EN), ("vip", "vision_ia", FR),
-                                               ("vip", "karpathy", FR), ("debate", "someone", EN)])
+@pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
+                                               ("vip", "Graphseo", FR), ("debate", "someone", EN)])
 def test_reply_calls_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
     """Adding the dossier to these prompts is the Operator's call: they end
     on the template, then the hard rules."""
@@ -378,11 +367,11 @@ LEGIT = "You can skip the hype, the moat is data."
 HEDGE = "I'd skip this one honestly."
 SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
 PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
-         ("mega_watch", "someone", EN), ("vip", "vipbuilder", EN), ("vip", "vision_ia", FR),
-         ("vip", "karpathy", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
-# The current AI priority profiles use the default buddy template, whose
-# skip window covers the first 20 characters.
-VIP_WINDOW = {"vipbuilder", "vision_ia", "karpathy"}
+         ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
+         ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
+# Only the bestie and buddy ReplyCalls declined "skip" in the first 20
+# characters before issue #155; every other path read SKIP as a prefix.
+VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}
 
 
 @pytest.fixture
@@ -417,7 +406,7 @@ def decision(jobs, llm, chokepoint, monkeypatch):
 def test_each_job_decides_on_a_skip_as_before_the_generator(decision, job, author, text, answer):
     """Issue #155 adds the hard rules and changes nothing else that ships.
     Two deliberate exceptions, logged in docs/HISTORY.md 2026-09-23: a quoted
-    "SKIP" on debate and karpathy used to reach the chokepoint, and is now a
+    "SKIP" on debate and Graphseo used to reach the chokepoint, and is now a
     definitive decline."""
     declines = answer in SKIPS or author in VIP_WINDOW
     assert decision(job, author, text, answer) == ("DECLINED" if declines else "sent")
@@ -462,7 +451,7 @@ def test_a_stop_request_during_generation_ends_the_cycle(llm):
 def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
     from src.replies.reply_generator import Outcome
 
-    llm.default = '"Short first sentence here. Another sentence exceeds the requested character budget."'
+    llm.default = '"Short first sentence here. A second sentence runs on well past the cap."'
     generation = generate(max_chars=40)
     assert generation.outcome is Outcome.WRITTEN
     assert generation.text == "Short first sentence here."
@@ -495,7 +484,7 @@ class OllamaServer:
         return io.BytesIO(json.dumps({"response": self.answer}).encode())
 
 
-REPLY_CALLS = ("search", "search VIP", "karpathy", "bestie", "buddy", "debate", "replyback")
+REPLY_CALLS = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", "replyback")
 
 
 def job_reply_call(name):
@@ -505,8 +494,8 @@ def job_reply_call(name):
     return {
         "search": lambda: dr.reply_call("someone"),
         "search VIP": lambda: dr.reply_call(sorted(account.current().network.vip_reply)[0]),
-        "karpathy": lambda: dr._vip_call("karpathy"),
-        "bestie": lambda: dr._vip_call("vipbuilder"),
+        "Graphseo": lambda: dr._vip_call("Graphseo"),
+        "bestie": lambda: dr._vip_call("TheBTCTherapist"),
         "buddy": lambda: dr._vip_call("vision_ia"),
         "debate": debate_bot.reply_call,
         "replyback": replyback_agent.reply_call,
@@ -658,100 +647,3 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
 
     model = settings.get("OLLAMA_MODEL") if route == "ollama" else config.REPLY_MODEL.for_provider(route)
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]
-@pytest.mark.parametrize("bad", [
-    "AI needs better evals.",
-    "This reply keeps adding words until it no longer fits the brief format.",
-    "SI needs better evals 🙂",
-    "SI needs better evals ;-)",
-])
-def test_invalid_format_or_old_wording_gets_one_rewrite(llm, bad):
-    from dataclasses import replace
-    from src.core import reply_style
-    from src.replies import direct_reply, reply_generator as generator
-    replies = iter([bad, LLMResult(0, "SI needs better evals.", "", provider="codex", model="test-model")])
-    llm.default = lambda prompt: next(replies)
-    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
-    result = generator.generate(call, author="someone", text=EN)
-    assert result.outcome is generator.Outcome.WRITTEN
-    assert result.text == "SI needs better evals."
-    assert (result.provider, result.model) == ("codex", "test-model")
-    assert len(llm.calls) == 2
-    assert bad in llm.prompts[-1] and "previous draft failed" in llm.prompts[-1]
-
-
-@pytest.mark.parametrize("text", ["AI needs better evals.", "".join(["word "] * 70), "SI needs better evals 🙂"])
-def test_repeated_invalid_reply_fails_without_silent_trimming(llm, text):
-    from dataclasses import replace
-    from src.core import reply_style
-    from src.replies import direct_reply, reply_generator as generator
-    llm.default = text
-    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
-    result = generator.generate(call, author="someone", text=EN)
-    assert result.outcome is generator.Outcome.INVALID and not result.text
-    assert len(llm.calls) == 2
-
-
-@pytest.mark.parametrize("answer, outcome, count", [
-    ("SKIP", "declined", 1), ("exhausted", "rate limited", 1),
-    ("rewrite_exhausted", "rate limited", 2),
-])
-def test_format_rewrite_respects_skip_and_provider_exhaustion(llm, answer, outcome, count):
-    from dataclasses import replace
-    from src.core import reply_style
-    from src.replies import direct_reply, reply_generator as generator
-    from tests.replies.fakes import EXHAUSTED
-    if answer == "rewrite_exhausted":
-        replies = iter(["AI needs better evals.", EXHAUSTED])
-        llm.default = lambda prompt: next(replies)
-    else:
-        llm.default = EXHAUSTED if answer == "exhausted" else answer
-    call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
-    assert generator.generate(call, author="someone", text=EN).outcome.value == outcome
-    assert len(llm.calls) == count
-
-
-def test_reply_without_a_selected_style_still_rewrites_emojis(llm):
-    from src.replies import direct_reply, reply_generator as generator
-    replies = iter(["SI needs better evals 🙂", "SI needs better evals."])
-    llm.default = lambda prompt: next(replies)
-    call = direct_reply.reply_call("someone")
-    assert call.style is None
-    result = generator.generate(call, author="someone", text=EN)
-    assert result.outcome is generator.Outcome.WRITTEN
-    assert result.text == "SI needs better evals."
-    assert len(llm.calls) == 2
-
-
-@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
-@pytest.mark.parametrize("styled", [False, True])
-def test_model_supplied_reply_ending_leaves_words_only_for_validation(llm, ending, styled):
-    from dataclasses import replace
-    from src.core import reply_style
-    from src.replies import direct_reply, reply_generator as generator
-    body = "SI needs better evals."
-    llm.default = LLMResult(0, f'"{body} {ending}"', "", provider="writer", model="draft-model")
-    call = replace(direct_reply.reply_call("someone"),
-                   style=reply_style.STYLES[0] if styled else None, max_chars=None)
-    result = generator.generate(call, author="someone", text=EN)
-    assert result.outcome is generator.Outcome.WRITTEN
-    assert result.text == body
-    assert (result.provider, result.model) == ("writer", "draft-model")
-    assert len(llm.calls) == 1
-
-
-@pytest.mark.parametrize("text", [
-    "😂", "💀", "😂💀",
-    "SI needs better evals 🙂 😂",
-    "SI needs 😂 better evals 💀",
-    "SI needs better evals 😂 😂",
-    "SI needs better evals ;-) 💀",
-    "SI needs better evals. 😂💀💀",
-    "AI needs better evals. 😂",
-    "These thirteen words still fail the requested format even with an approved ending. 😂",
-])
-def test_approved_suffix_cannot_hide_invalid_reply_body(llm, text):
-    from src.replies import direct_reply, reply_generator as generator
-    llm.default = text
-    result = generator.generate(direct_reply.reply_call("someone"), author="someone", text=EN)
-    assert result.outcome is generator.Outcome.INVALID and not result.text
-    assert len(llm.calls) == 2

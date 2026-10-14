@@ -1,28 +1,32 @@
-"""Collect For You, Following Recent/Popular and rotating Latest topic searches.
+"""Feed sweeper — useful replies to fresh on-niche posts in the For You / Following feed.
 
-Every discovery is archived before filtering; only on-topic standalone posts
-enter comparison. Saved authors still need current topic evidence for engagement.
+Scroll For You and Following and reply to every on-niche post. The quote
+lane that once amplified viral posts is gone (2026-09-20 policy: quotes are
+zero). Authors of high-engagement feed posts are added to
+dynamic_accounts.json so the engage_bot visits them.
+
+Hard rules preserved:
+  - replies obey DIRECT_REPLY_MAX_AGE_MINUTES (72h since 2026-06-05)
+  - Reply admission (Blocked account, own post, already Replied) judges
+    each post before generation, in the Reply pipeline
+  - all writes go through the twitter_client chokepoints
 """
 import traceback
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core import account, config, settings
+from ..core import config, settings
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline, reply_source
 from .direct_reply import reply_call
 
-_FEED_OFFSET = 0
-_SEARCH_OFFSET = 0
-_VIDEO_OFFSET = 0
-
 
 def _harvest_active_authors(tweets: list) -> None:
     """Add authors of high-engagement feed posts to dynamic_accounts.json.
 
-    This record alone never authorizes engagement: current topic evidence is
-    required by the discovery policy. The handle comes from the
+    This is the main way the engage_bot discovers NEW profiles to visit — it
+    no longer relies on the old hardcoded list. The handle comes from the
     status URL: the scraped `author` is a display name, and a one-word name
     ("Claude", "Tesla") once landed in the pool as another account's handle.
     """
@@ -41,9 +45,7 @@ def _harvest_active_authors(tweets: list) -> None:
             if likes < min_likes:
                 continue
             handle = x_urls.author(t.get("url") or "")
-            if not handle or handle in known or config.is_own_handle(handle) or is_blocked_account(handle):
-                continue
-            if not reply_source.is_on_niche(t.get("text") or ""):
+            if not handle or handle in known or is_blocked_account(handle):
                 continue
             new_handles.append(handle)
             known.add(handle)
@@ -58,38 +60,17 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """A native feed, a dedicated video search and a Latest topic search."""
-    global _FEED_OFFSET, _SEARCH_OFFSET, _VIDEO_OFFSET
-    from functools import partial
-    from ..x.scraper import scrape_x_search, scrape_home_feed, scrape_following_feed
-    views = [("FOR-YOU", scrape_home_feed),
-             ("FOLLOWING-RECENT", partial(scrape_following_feed, sort="recent")),
-             ("FOLLOWING-POPULAR", partial(scrape_following_feed, sort="popular"))]
-    source, read = views[_FEED_OFFSET % len(views)]
-    _FEED_OFFSET += 1
-    cycle = reply_pipeline.Cycle()
-    _sweep_one_feed(source, read, cycle)
-    if cycle.rate_limited:
-        return
-    videos = account.current().searches.videos
-    if videos:
-        query = videos[(_VIDEO_OFFSET // 2) % len(videos)]
-        tab = "live" if _VIDEO_OFFSET % 2 == 0 else "top"
-        _VIDEO_OFFSET += 1
-        _sweep_one_feed("VIDEO/" + tab + "/" + query[:60],
-                        partial(scrape_x_search, query, tab=tab, text_limit=2000), cycle)
-    if cycle.rate_limited:
-        return
-    queries = list(account.current().searches.replies)
-    if queries:
-        query = queries[_SEARCH_OFFSET % len(queries)]
-        _SEARCH_OFFSET += 1
-        _sweep_one_feed("TOPIC/" + query[:60],
-                        partial(scrape_x_search, query, tab="live", text_limit=2000), cycle)
+    """Sweep BOTH For You and Following every cycle — the primary loop."""
+    from ..x.scraper import scrape_home_feed, scrape_following_feed
+    for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
+        cycle = reply_pipeline.Cycle()
+        _sweep_one_feed(source, scraper, cycle)
+        if cycle.rate_limited:
+            break
 
 
 def _sweep_one_feed(source, scraper, cycle):
-    log.info(f"[SWEEP] Sweeping {source} (save posts for selective replies)...")
+    log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
     tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
@@ -109,4 +90,4 @@ def _sweep_one_feed(source, scraper, cycle):
     job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)
     replies_done = reply_pipeline.run(job, reply_candidates, cycle,
                                       max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
-    log.info(f"[SWEEP] {source} done: {len(reply_candidates)} candidates saved for selection.")
+    log.info(f"[SWEEP] {source} done: {replies_done} replies.")

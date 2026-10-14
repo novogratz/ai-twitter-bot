@@ -172,7 +172,7 @@ OPERATOR_BOUNDS = [
     ("DUP_TOPIC_WINDOW_HOURS", "6", 24.0, 72.0),
     ("DUP_TOPIC_SHARED_WORDS", "8", 3, 2),
     ("DUP_TEXT_WINDOW_HOURS", "12", 48.0, 96.0),
-    ("REPLY_MIN_CHARS", "0", 5, 40),
+    ("REPLY_MIN_CHARS", "5", 25, 40),
 ]
 
 
@@ -582,7 +582,7 @@ _KEY_TOKEN = re.compile(r"\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b")
 _KEY_ASSIGNMENT = re.compile(r"^\s*(?:#\s*)?(?:export\s+)?([A-Z][A-Z0-9_]*)=", re.MULTILINE)
 # Named in the doc without being `.env` keys: the ceilings of
 # src/core/config.py, the table of per-provider models, the policy file.
-_NOT_KEYS = {name for name in dir(config) if name.isupper()} | {"MODEL_DEFAULTS", "EDITORIAL_POLICY", "ACTIVE_WINDOWS"}
+_NOT_KEYS = {name for name in dir(config) if name.isupper()} | {"MODEL_DEFAULTS", "EDITORIAL_POLICY"}
 
 
 def _configuration_doc():

@@ -9,10 +9,8 @@ folder, `state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
 
 1. Engage pool (`engage_job`), built at each cycle, not a static list:
    `network.engage_vip` in `accounts/<BOT_ACCOUNT>/account.toml`, plus the
-   current tracked accounts with on-topic engagement evidence and the shared
-   Reply pool's fresh, explicitly topic-approved authors. Legacy
-   `dynamic_accounts.json` and `discovered_accounts.json` entries alone no
-   longer qualify. Show counts per source.
+   handles the feed sweeper harvested in `dynamic_accounts.json` (`en`/`fr`
+   buckets) and `discovered_accounts.json`. Show counts per source.
 2. Follow whitelist: `accounts/theaishrink/whitelist.json` (`tiers`,
    `seeds`), plus the handles the curator promoted in
    `whitelist_discovered.json`. `follow_account`
@@ -20,10 +18,8 @@ folder, `state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
    outside the whitelist only a follower or an Engager, and only while
    `FOLLOWBACK_BYPASS_WHITELIST` is on.
 3. Profile visits: `PROFILE_VISIT_ALLOWLIST` in `.env`, else the Account's
-   `network.profile_visits` (SI/AI accounts led by `elonmusk,SpaceXSI,karpathy`), gates
-   profile scans and likes. The Account's blocked former crypto/trading targets
-   remain barred even if an old override lists them. Follows require AI/SI
-   bios except operator-selected seeds; crypto exclusions apply to all.
+   `network.profile_visits` (`TheBTCTherapist,Graphseo`), gates the profile
+   likes.
 4. Read `followed_accounts.json` - show which are already followed.
 5. Ask if the operator wants to add or remove accounts; edit
    the Account's `[network]` lists or `accounts/theaishrink/whitelist.json`

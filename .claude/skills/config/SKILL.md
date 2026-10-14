@@ -18,4 +18,5 @@ Hard ceilings cannot be lifted from `.env`, and are
 not edited without an explicit operator request that also updates
 `docs/EDITORIAL_POLICY.md` in the same change: the eight-post ceiling
 (`MAX_ORIGINALS_PER_DAY` can only go lower), the twenty-minute spacing
-between originals (`MIN_SECONDS_BETWEEN_POSTS` can only go higher), quotes at zero, reposts at fifty/day maximum (opt-in per Account), waking hours and `BLOCKLIST`.
+between originals (`MIN_SECONDS_BETWEEN_POSTS` can only go higher), quotes
+and reposts at zero, waking hours and `BLOCKLIST`.

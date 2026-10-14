@@ -1,6 +1,5 @@
 """src/replies/direct_reply: reply lane, query rotation and the VIP
 ReplyCalls."""
-import pytest
 
 
 def _url_with_age(minutes: int) -> str:
@@ -18,15 +17,23 @@ def _searches():
     return list(searches.replies), list(searches.hot_tab)
 
 
-def test_discovery_covers_si_and_technology_without_crypto_queries():
+def test_reply_and_like_queries_are_ai_only():
+    """Operator 2026-09-25: AI only, like the policy (#205). Every reply and
+    like query carries an AI term, and none looks for crypto, markets or
+    space posts."""
     from src.core import account
-    searches = account.current().searches
-    joined = " ".join(searches.replies + searches.hot_tab + searches.likes).lower()
-    for topic in ("si", "ai", "software", "hardware", "cybersecurity", "starship", "parody"):
-        assert topic in joined
-    for banned in ("bitcoin", "crypto", "bittensor", "trading", "ethereum"):
-        assert banned not in joined
-    assert all("min_faves:" not in q for q in searches.replies)
+    replies, hot_tab = _searches()
+    queries = replies + hot_tab + list(account.current().searches.likes)
+    ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
+                "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
+                "cursor", "copilot", "humanoid", "robotics", " ia ")
+    for q in queries:
+        assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
+    joined = " ".join(queries).lower()
+    for banned in ("bitcoin", "btc", "crypto", "ethereum", "bittensor", "stock", "market",
+                   "earnings", "etf", "portfolio", "sell off", "vix", "spacex", "starlink",
+                   "starship", "nasa", "satellite", "orbit"):
+        assert banned not in joined, f"{banned!r} is off the AI niche"
 
 
 def _query_clauses(query: str, and_first: bool) -> list:
@@ -102,17 +109,6 @@ def test_the_query_reader_splits_alternatives_both_ways():
         ["x y", "n"], ["x y", "m"], ["z", "n"], ["z", "m"]]
 
 
-def test_scheduled_priority_scans_rotate_instead_of_reopening_every_vip(monkeypatch, settings_override):
-    from src.replies import direct_reply as dr, reply_pipeline
-    visits = []
-    settings_override(VIP_SCAN_HANDLES="first,second,third", PROFILE_VISIT_ALLOWLIST="first,second,third")
-    monkeypatch.setattr(dr, "_VIP_OFFSET", 0)
-    monkeypatch.setattr(dr, "scrape_profile_tweets", lambda handle, **k: visits.append(handle) or [])
-    for _ in range(4):
-        dr._run_vip_scan(reply_pipeline.Cycle(), max_profiles=1)
-    assert visits == ["first", "second", "third", "first"]
-
-
 def test_prompts_are_english_only():
     """Operator 2026-06-09: 'we are english only bro'. The reply lane must
     not seek French posts."""
@@ -120,17 +116,36 @@ def test_prompts_are_english_only():
     assert not any("lang:fr" in q for q in replies), "FR reply query still present"
 
 
-@pytest.mark.parametrize("handle", ["TheBTCTherapist", "Graphseo", "McnallieM"])
-def test_vip_scan_never_reopens_former_crypto_targets(monkeypatch, llm, chokepoint, settings_override, handle):
-    from src.replies import direct_reply as dr, reply_pipeline
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):
+    """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
+    to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
+    generator (French + deliberate-typo style) to @TheBTCTherapist's
+    English post. Pin: VIP replies to the bestie use the EN bestie prompt,
+    never the Graphseo prompt (its own Relation prompt); output passes through humanize."""
+    import src.replies.direct_reply as dr
+    from src.replies import reply_pipeline
+
+    # ⚠️ The VIP scan imports scrape_x_search FUNCTION-LOCALLY from scraper:
+    # patch THERE, not on direct_reply. (First version of this test patched
+    # dr.* — the real Safari fired and posted live replies to
+    # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
+    # mistake fail loudly instead.)
     from src.x import scraper
-    settings_override(VIP_SCAN_HANDLES=handle, PROFILE_VISIT_ALLOWLIST=handle)
-    def forbidden(*args, **kwargs):
-        pytest.fail("blocked former target reached a scrape")
-    monkeypatch.setattr(scraper, "scrape_x_search", forbidden)
-    monkeypatch.setattr(dr, "scrape_profile_tweets", forbidden)
+    settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
+    url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
+    monkeypatch.setattr(scraper, "scrape_x_search",
+                        lambda q, max_tweets=20, tab="latest":
+                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
+
+    llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
+
     dr._run_vip_scan(reply_pipeline.Cycle())
-    assert llm.calls == [] and chokepoint.calls == []
+
+    assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
+        "Graphseo FR generator must NEVER run for the bestie"
+    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
+    assert len(chokepoint.calls) == 1
+    assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 
 
 def test_direct_reply_scans_rotating_query_subset(settings_override):
@@ -169,30 +184,24 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     from src.core.llm_client import TEXT_PROFILE, Surface
     from src.replies import direct_reply as dr
 
-    from dataclasses import replace
-    loaded = account.current()
-    relations = account.Relations(loaded.relations.default, {
-        "modelresearcher": account.Relation("ModelResearcher", "Read {tweet_text}", "claude", None),
-        "labfriend": account.Relation("LabFriend", "Discuss {tweet_text}", None, None),
-    })
-    monkeypatch.setattr(account, "current", lambda: replace(loaded, relations=relations))
+    relations = account.current().relations
     monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    own = dr._vip_call("modelresearcher")
-    assert (own.template, own.surface, own.label) == (relations.get("ModelResearcher").prompt,
-                                                      Surface.RELATION_REPLY, "MODELRESEARCHER_VIP")
+    own = dr._vip_call("graphseo")
+    assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
+                                                      Surface.RELATION_REPLY, "GRAPHSEO_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
-        False, 800, 270, False, 0)
+        False, 300, 220, False, 0)
     assert (own.provider, own.profile) == ("claude", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
-    assert dr._vip_call("ModelResearcher").provider is None
+    assert dr._vip_call("Graphseo").provider is None
 
-    bestie, buddy = dr._vip_call("labfriend"), dr._vip_call("vision_ia")
-    assert (bestie.template, bestie.label) == (relations.get("LabFriend").prompt,
-                                               "VIP_REPLY/labfriend")
+    bestie, buddy = dr._vip_call("thebtctherapist"), dr._vip_call("vision_ia")
+    assert (bestie.template, bestie.label) == (relations.get("TheBTCTherapist").prompt,
+                                               "VIP_REPLY/thebtctherapist")
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.surface, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
-                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, False, 800,
+                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, False, 300,
                                                                  True, 20, None, None, TEXT_PROFILE)
 
 
@@ -215,15 +224,3 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
     assert scraped == [] and llm.calls == []
-
-
-def test_priority_scan_starts_on_elons_profile_and_collects_only(monkeypatch, llm, chokepoint):
-    from src.replies import direct_reply as dr, reply_pipeline
-    visited = []
-    def profile(handle, **kwargs):
-        visited.append(handle)
-        return []
-    monkeypatch.setattr(dr, "scrape_profile_tweets", profile)
-    dr._run_vip_scan(reply_pipeline.Cycle())
-    assert visited == ["elonmusk", "SpaceXSI", "karpathy"]
-    assert llm.calls == [] and chokepoint.calls == []

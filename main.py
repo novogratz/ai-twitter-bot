@@ -14,7 +14,7 @@ from src.core import settings
 settings.load()
 
 from src.core import account, config, health, state_store
-from src.guards.active_hours import awake_job, is_active, next_wake, window_label, WAKE_JITTER_MINUTES
+from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
 from src.editorial.editorial_bot import open_startup_window, run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
 
@@ -45,11 +45,8 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
-        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1),
-                   "replies": ThreadPoolExecutor(1)},
-        # A scheduled pause can leave jobs overdue by minutes. Run one fresh
-        # cycle at wake; coalescing prevents replaying the missed intervals.
-        job_defaults={"misfire_grace_time": None, "coalesce": True, "max_instances": 1},
+        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1)},
+        job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
     )
 
     def add(fn, minutes, job_id, *, executor="default", first_seconds=None):
@@ -68,7 +65,6 @@ def build_scheduler(*, post_only=False, reply_only=False):
             "editorial_job", executor="editorial", first_seconds=10)
 
     if not post_only:
-        from src.replies.reply_selector import run_reply_selection_cycle, run_startup_reply_cycle
         from src.replies.direct_reply import run_direct_reply_cycle
         from src.replies.feed_sweeper_bot import run_feed_sweep_cycle
         from src.replies.early_bird_bot import run_early_bird_cycle
@@ -77,26 +73,19 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.replies.mega_watch_bot import run_mega_watch_cycle
         from src.replies.first_hour_babysitter import run_babysit_cycle
 
-        # Allow the immediate discovery scan and the pool's comparison delay.
-        scheduler.add_job(awake_job(health.wrap_job(run_startup_reply_cycle,
-                          "startup_reply", safari_health=False)), trigger="date",
-                          run_date=datetime.now(timezone.utc) + timedelta(seconds=90),
-                          id="startup_reply_job", executor="replies", misfire_grace_time=None)
-        add(health.wrap_job(run_reply_selection_cycle, "reply_selection", safari_health=False),
-            1, "reply_selection_job", executor="replies", first_seconds=120)
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
-        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 2, "feed_sweep_job", first_seconds=20)
+        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
+        add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
+        add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
+        add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
+        add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job")
         if settings.get("ENABLE_REPLY_SEARCH"):
             from src.replies.reply_bot import run_reply_cycle
             add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
 
     if not post_only and not reply_only:
-        if settings.get("MAX_REPOSTS_PER_DAY"):
-            from src.replies.repost_bot import run_repost_cycle
-            add(health.wrap_job(run_repost_cycle, "repost", safari_health=False), 2,
-                "repost_job", first_seconds=150)
         from src.account.engage_bot import safe_run_engage_cycle
         from src.account.followback_bot import safe_run_followback_cycle
         from src.account.follow_engagers_bot import safe_run_follow_engagers_cycle
@@ -118,7 +107,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Sourced editorial posts and selective capped replies")
+    parser = argparse.ArgumentParser(description="Sourced editorial posts and uncapped daytime replies")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--post-only", action="store_true")
     mode.add_argument("--reply-only", action="store_true")
@@ -142,14 +131,12 @@ def main():
         log.error(f"[LLM] Fallback ignored: {note}. A call that fails there fails.")
     min_target, target = config.post_targets()
     if args.dry_run:
-        print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": window_label(),
-                          "wake_jitter_minutes": WAKE_JITTER_MINUTES,
+        print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "min_target_posts": min_target,
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
-                          "replies": settings.get("MAX_REPLIES_PER_DAY"),
-                          "target_replies": config.reply_target(),
-                          "quotes": 0, "reposts": settings.get("MAX_REPOSTS_PER_DAY"), "slots": slots(),
+                          "replies": "unlimited",
+                          "quotes": 0, "reposts": 0, "slots": slots(),
                           "trend_slots": sorted(trend_slots()),
                           "startup_post": "every start in waking hours, restarts included",
                           "unknown_llm_providers": unknown,
@@ -177,9 +164,7 @@ def main():
     scheduler.start(paused=True)
     was_active = None
     log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
-             f"(max {config.posts_ceiling()}); replies target {config.reply_target()}/day, "
-             f"max {settings.get('MAX_REPLIES_PER_DAY')}/day; reposts max {settings.get('MAX_REPOSTS_PER_DAY')}/day; active today {window_label()} "
-             f"(wake variation ±{WAKE_JITTER_MINUTES} min/day).")
+             f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
     try:
         while not stop.is_set():
             active = is_active()

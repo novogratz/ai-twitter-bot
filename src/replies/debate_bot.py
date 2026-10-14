@@ -1,8 +1,22 @@
-"""Legacy conversation job, disabled by the current one-Reply-per-post policy.
+"""Debate bot — she argues back, warmly, and keeps the rally going.
 
-The module remains wired for compatibility and tests; scheduled discovery uses
-standalone posts and the shared Reply pool. The Reply pipeline and write guards
-reject conversation turns even if this function is invoked directly.
+Operator 2026-07-19: "make her do more debates with people and reply to
+other people replies and get her on a roll. She is the sharpest AI
+therapist that has the highest knowledge in AI of the world."
+
+Mechanic: scrape the mentions tab (people replying to our replies/posts
+anywhere on X — the one surface the replyback bot's own-latest-tweet scan
+never sees), and answer the fresh ones with a sharp, warm comeback that
+lands one number/mechanism and invites the next round. Each further
+response from them is a new mention, so the rally continues naturally —
+bounded by the per-author daily Debate turn cap, counted at the reply
+chokepoint and shared with replyback, so no thread spirals.
+
+Contracts honored in the Reply pipeline: Reply admission judges each
+mention, Debate turn cap included, before the model call; the
+reply_to_tweet chokepoint judges it again with the text — NO caller-side
+premark; log only on a confirmed ship; Safari work only inside the client
+primitives.
 """
 from collections import Counter
 from datetime import timedelta
@@ -33,7 +47,7 @@ HOW TO DEBATE (all four, every time):
 
 RULES:
 - MATCH THEIR LANGUAGE (EN reply to EN, FR to FR). Default EN if unsure.
-- 80-220 chars. No em dashes, hashtags, emojis or text smileys in the draft body; the publisher adds the ending.
+- 80-220 chars. No em dashes, no hashtags, no emojis needed.
 - Never insult them, their intelligence, or their work. Debate the CLAIM.
 - If their message is pure abuse, spam, a bot, or has nothing to engage with → output SKIP.
 - If it's simple praise/agreement with no debatable content → a warm one-line thank-you

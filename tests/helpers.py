@@ -57,15 +57,10 @@ def numbered_url(n, author="someone"):
     return f"https://x.com/{author}/status/20635000000000{n:05d}"
 
 
-def fresh(handle, minutes=5, n=0, *, now=None):
+def fresh(handle, minutes=5, n=0):
     """A status URL posted `minutes` ago; `n` keeps URLs distinct."""
-    ms = int((now or datetime.now(tz=timezone.utc)).timestamp() * 1000) - minutes * 60_000
+    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes * 60_000
     return f"https://x.com/{handle}/status/{((ms - x_urls._TWITTER_EPOCH_MS) << 22) + n}"
-
-
-def fresh_local(handle, minutes=5, n=0):
-    """A status relative to the controlled Toronto clock used by the Reply pool."""
-    return fresh(handle, minutes, n, now=hours.now_local())
 
 
 SEARCH = "https://x.com/search?q=gpu&f=live"
@@ -99,8 +94,7 @@ class SearchPage:
         if post["liked"]:
             return {"url": post["url"], "result": "already_liked"}
         if mode != "press":
-            return {"url": post["url"], "result": "not_liked",
-                    "text": post.get("text", "AI model inference and reasoning")}
+            return {"url": post["url"], "result": "not_liked"}
         self.clicks.append(post["url"])
         post["liked"] = self.click_sticks
         self.on_click()

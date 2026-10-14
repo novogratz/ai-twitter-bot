@@ -1,28 +1,11 @@
 # Operations
 
-Running, watching and recovering the bot under the current editorial policy.
-The design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
+Running, watching and recovering the bot under the 2026-09-20 policy. The
+design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
 
 The bot publishes on a real account. Start, stop and restart it only when the
 operator asks.
-
-## Repeated scans with no Replies
-
-`[SELECTION] Reviewing N saved posts` starts a bounded comparison; the completion
-line reports topic approvals that also cleared the Account’s score threshold (92 priority, 97 others). An output-token
-limit or malformed JSON is a model failure, not a decision to reject every post.
-The selector uses batches of at most eight; provider and HTTP errors now include
-their reason. Fresh approvals can still be used when a later comparison fails.
-`Waiting for allowance` and `No eligible saved posts` identify different idle
-conditions. An APScheduler `maximum number of running instances` warning means
-the previous cycle is still running; it does not terminate the bot.
-
-The 2026-10-12 incident also found the configured Original model returning
-HTTP 503 `maximum pending requests exceeded`, even in an isolated request.
-Original failures now retain that server explanation. Check the local model
-service separately; changing reply batches does not repair an unavailable
-Original model. A model probe or preview must never call a publishing function.
 
 ## Setup
 
@@ -51,14 +34,16 @@ The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
-`.env.example` describes @thesimaximalist with the policy values; every key is
+`.env.example` describes @TheAIShrink with the policy values; every key is
 in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
 (`MAX_ORIGINALS_PER_DAY`, `LIKE_BOT_DAILY_CAP`…) stay commented: their
 default is the policy value, and a line set in `.env` wins over an Account's
 `[limits]`. Set `LLM_FALLBACK_CLI=codex` only
 to let a failed call fall back to the cloud. Blank, as in the example, there
-is no fallback and the live Account has no Relation forcing a cloud CLI.
-Another Account can explicitly configure a Relation provider. The start logs a fallback the code ignores,
+is no fallback and no call leaves the machine, except the Replies to
+@Graphseo: they run on the Claude CLI whenever it is installed (his
+Relation's `provider` in `account.toml`, applied by
+`direct_reply._own_call`). The start logs a fallback the code ignores,
 and `--dry-run` lists it under `ignored_llm_fallbacks`.
 
 Keep `BOT_HANDLE` and `CONTENT_LANG_PRIMARY` out of `.env`: the Account
@@ -129,16 +114,10 @@ each call, and compare a handle with the one read from a status URL.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
   optional `ticker` (case-sensitive) must match a post the reply jobs find;
   `bio` must match the name and bio of a non-Engager the follow quality
-  gate judges. Mentions and URLs are removed before matching post text.
-  Optional `reply_instructions` gives selection and drafting the Account's topic
-  requirements; every author, including VIPs, must pass. @thesimaximalist sets no
-  `ticker`: Replies cover AI/SI, including AI-generated videos.
+  gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
-  `replies` then `hot_tab`; the topic sweeper picks two `replies` queries on
-  Latest, and `like_job` picks one of `likes`. Every like checks the actual post's
-  niche. The optional `scope` groups all caller queries with the Account's
-  topic terms and exclusions before Safari opens; model-assisted search uses it
-  too. The Trend slots and the Startup post run
+  `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
+  it finds without the niche check; the Trend slots and the Startup post run
   every `trending` query on the Top tab and keep what passes the relevance
   filter.
 
@@ -180,9 +159,10 @@ with no Relation, that never runs live.
    the values that hold under `bounded_settings`.
    Some prompt text still speaks of AI whatever the domain: the editorial
    draft's "model update, research method" and "a model generates text",
-   and the review's "misleading benchmark comparisons". The optional search
-   Reply lane uses this Account's searches and scope. Conversation follow-ups
-   remain disabled; their inactive generator returns SKIP.
+   the review's "misleading benchmark comparisons", and the examples of the
+   replyback prompt (GPUs, the Fed, Bitcoin). The search Reply lane
+   (`ENABLE_REPLY_SEARCH`, off by default) runs an AI-only prompt with its
+   own searches: leave it off for another domain.
 3. The Operator writes `voice_en.md` and `voice_fr.md`, and fills
    `whitelist.json`, `respect_list.json` and `following_baseline.json`.
 4. Check it without a browser or a model:
@@ -222,9 +202,7 @@ a Startup post: a restart publishes one trend post within 45 minutes when the
 daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
-waits until the next actual daily window. Nominal hours are 05:00–10:00,
-12:00–13:00 and 16:45–23:00 Toronto time; each start varies ±10 minutes per day,
-with fixed closing times. The startup log and dry run show today’s actual hours.
+waits. Nothing external happens until 04:30 Toronto time.
 
 ## Stop
 
@@ -302,7 +280,7 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence outside the three Toronto activity windows is normal. There is no
+Silence between 23:30 and 04:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery
@@ -550,10 +528,6 @@ root:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
-| `reply_candidates.json` | `reply_pool`; shared schema/read in `core.topic_evidence` | Last-day discoveries, eligibility, topic verdict, score/reason/angle and outcome; also gates account discovery. An unreadable file stops its readers. | guarded |
-| `reply_archive.jsonl` | `reply_pool` | Permanent append-only discovery and decision events; one JSON object per line | audit log; append failures stop collection |
-| `repost_history.json` | `repost_policy` via `repost_tweet` | Permanent status-ID records: pending, confirmed or observed; ambiguous/observed entries count against 50/day. Never delete to reset deduplication. | guarded |
-| `reply_submissions.json` | `action_guard` (`reply_to_tweet`) | Ambiguous Reply submissions, keyed by status ID with Toronto date; count toward ten/day until checked | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -867,91 +841,3 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
-
-2026-10-08 — Reply submission recovery: `reply_submissions.json` reserves one
-of the five daily Replies before the submit step. Confirmed ledger rows count
-only once even if a crash prevents reservation cleanup. An ambiguous submit
-keeps its reservation across restarts and is never retried. Check X before
-manually removing an entry; keep it for the day if the reply may be live.
-Past-day entries do not consume today's budget. A malformed file stops reply
-admission and must be repaired, never deleted or overwritten with defaults.
-
-2026-10-08 — Operator requested saving discovered posts and choosing Replies
-from a shared pool. Reply scans now collect only: every discovered post is
-saved before filters, keyed by status ID, with the full text exposed by the
-browser, source and engagement counts. `reply_archive.jsonl` permanently keeps
-discoveries and selection decisions. Guarded `reply_candidates.json` holds the
-last day’s discoveries and their eligibility, score, reason, proposed angle
-and outcome. Own posts, comments and off-niche posts are saved without making
-them eligible. A shared `reply_selection_job` runs every ten minutes, after a
-one-minute collection delay, and compares up to eight admitted posts per
-review. The batch mixes two waiting discoveries with six fresh opportunities before revisiting reviewed posts; the
-highest fresh score across the reviewed pool wins. Only scores of at least
-85/100 may reach drafting, one post per selector cycle, and the model may
-reject every post. Scans never consume reply budget or draft replies. The
-selector rechecks admission before drafting and every write retains the
-standalone-page check and the ten-per-day ceiling including ambiguous
-submissions. Nothing is automatically retried from `processing` after a crash;
-check X and the Replied store before repairing its pool status. An unreadable
-pool or an unsavable archive stops collection/selection without overwriting
-state. Existing active windows, caps and evidence rules remain. No live X
-writes or restart are performed by this implementation.
-
-Reply selection releases the day’s budget gradually across the active windows: with a ten-reply ceiling, one more allowance opens per active hour (05:00, 06:00, 07:00, 08:00, 09:00, 14:00, 17:00, 18:00, 22:00, 23:00). Unspent allowances carry forward that day; no post must be answered to fill them. Tighter daily caps scale the allowance proportionally.
-
-2026-10-12 — The current policy supersedes the October 8 schedule and Reply
-ceiling: active 05:00–10:00, 14:00–15:00 and 17:00–23:00 Toronto time, with
-five Replies/day including ambiguous submissions. AI/SI topic review applies
-to every author, including VIPs; AI-generated videos and brainrot qualify.
-Allowances open at 05:00, 07:24, 09:48, 18:12 and 20:36. See the current
-editorial policy for selection, quality and recovery rules.
-
-2026-10-12 — TARGET_REPLIES_PER_DAY defaults to 300; MAX_REPLIES_PER_DAY
-defaults to and cannot exceed 400. The target is clamped to a tighter cap.
-Startup and dry run display both numbers. The selector now runs each minute,
-with the same active windows, pending reservations and Reply eligibility checks.
-The actual count can be lower when the pool or services cannot support the target.
-
-2026-10-12 — Operator moved the midday window to lunch and the evening start
-to 16:45. Nominal Toronto windows are 05:00–10:00, 12:00–13:00 and
-16:45–23:00. Each window's start varies independently by up to ten minutes
-earlier or later each Toronto day; closing times remain exactly 10:00, 13:00
-and 23:00, end exclusive. The daily offsets are derived from the Account,
-Toronto date and nominal start, so restarts reproduce the same day's schedule
-without a new state file. The next wake, browser and model guards, and Reply
-allowance all use the actual daily windows. Afternoon Original slots move to
-12:00, 12:20 (trend) and 12:40. The Reply target remains 300 per full day,
-with a hard maximum of 400 including pending submissions. The Operator
-requested a PR merged and pushed to main for the running bot.
-
-2026-10-12 — The AI-only target update preserves production state and existing
-follows. Blocked former crypto targets cannot regain eligibility from old
-profile overrides, saved tracking or Reply candidates. Do not delete those
-files or the Replied store to deploy this change. The Replied store now keeps
-all answered IDs permanently. Restart loads the Account's new AI profile lists,
-Elon-first scan order, exclusions and updated Voice.
-
-## The SI Maximalist rename and discovery (2026-10-12)
-
-The public handle is `thesimaximalist`, while `BOT_ACCOUNT=theaishrink` and the
-existing Account/state folders stay in place. Remove a stale `BOT_HANDLE` override
-or set it to `thesimaximalist`; do not create an empty state folder for the rename.
-`previous_handles` protects historical own-post URLs. All counts, reservations
-and permanent replied IDs survive. `bin/run.sh` displays the resolved handle.
-
-The feed job rotates For You, Following Recent and Following Popular, plus Latest
-searches. Logs report the verified view and unique posts collected while scrolling.
-An unavailable tab/sort is skipped. Direct scans default to three queries per
-cycle; a local `DIRECT_REPLY_QUERIES_PER_CYCLE` override still wins. Short rotating
-profile scans and a dedicated selection worker leave room for Replies.
-
-### Repost recovery (2026-10-12)
-
-`repost_history.json` is the permanent no-repeat record. `pending` means the
-submit may have reached X; it is not automatically retried. Check the native
-repost state on X before repairing an entry. Keep confirmed/observed IDs forever.
-A crash after the ledger append still counts once; the history reservation is
-reconciled with ledger status IDs. Unreadable history stops the repost job.
-Video approvals in `reply_candidates.json` contain exact caption, verdict,
-reason and review time, expire after one hour, and do not imply the video frames
-were analyzed. Originals and Replies retain their independent recovery rules.

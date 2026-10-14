@@ -23,7 +23,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
-NAMED = re.compile(r"theaishrink|thesimaximalist|graphseo|thebtctherapist", re.I)
+NAMED = re.compile(r"theaishrink|graphseo|thebtctherapist", re.I)
 HISTORICAL = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|#\d+\b")
 
 # The places the code may name one, each a value: the default of the
@@ -150,4 +150,5 @@ def test_the_vip_prompts_come_from_the_account():
 
     relations = account.current().relations
     templates = {direct_reply._vip_call(handle).template for handle in ("Graphseo", "TheBTCTherapist", "vision_ia")}
-    assert templates == {relations.default}
+    assert templates == {relations.get("Graphseo").prompt, relations.get("TheBTCTherapist").prompt,
+                         relations.default}

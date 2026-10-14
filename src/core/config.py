@@ -48,21 +48,13 @@ def __getattr__(name):
 _served("BOT_HANDLE")
 _served_as("BOT_PROFILE_URL")(lambda: f"https://x.com/{settings.get('BOT_HANDLE')}")
 
-
-def is_own_handle(handle: str) -> bool:
-    """Current handle plus the Account's historical handles, for saved URLs."""
-    from . import account
-    normalized = (handle or "").strip().lstrip("@").lower()
-    return normalized in {settings.get("BOT_HANDLE").lower(),
-                          *(h.lower() for h in account.current().previous_handles)}
-
 # State files outside the state store, under state/<BOT_ACCOUNT>/
 # (src/core/state_store.py)
 REPLIED_FILE = state_store.StatePath("replied_tweets.json")
 ENGAGEMENT_LOG_FILE = state_store.StatePath("engagement_log.csv")
 
 # Operator policy (2026-09-23): at least three editorial posts targeted, up
-# to eight profile publications per Toronto day, and 400 replies per Toronto day (2026-10-12). These
+# to eight profile publications per Toronto day, and uncapped replies while awake. These
 # ceilings cannot be raised by stale .env files.
 BOT_TIMEZONE = "America/Toronto"
 MIN_TARGET_POSTS_PER_DAY = 3
@@ -125,7 +117,7 @@ RETRY_DELAY_SECONDS = 5
 
 
 # ---------------------------------------------------------------------------
-# Legacy setting aliases; topic policy comes from the current Account (2026-10-12).
+# 2026-06-02 pivot tunables — French-language AI + Space + Stocks niche.
 # Everything here is config, not hardcoded logic (per the revision mandate).
 # Enforced centrally at the write chokepoints (twitter_client.post_tweet /
 # reply_to_tweet / follow_account) via
@@ -164,13 +156,8 @@ def post_targets() -> tuple[int, int]:
 # Floored at 0 in settings: a negative jitter would shorten the floor above.
 _served("POST_JITTER_SECONDS")
 
-# Operator 2026-10-12: at most ten selective Replies, no minimum quota.
+# Replies have no daily cap. Keep browser pacing and URL dedup.
 _served("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS")
-
-
-def reply_target() -> int:
-    """Legacy reporting key; the selective policy disables volume targets."""
-    return min(settings.get("TARGET_REPLIES_PER_DAY"), settings.get("MAX_REPLIES_PER_DAY"))
 
 # Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero
 # after the full purge). Following is a tool for exactly two things: curating
@@ -181,8 +168,9 @@ def reply_target() -> int:
 #     exceed it, keep following <= followers.
 #   - Max 20 follows/day, randomized gaps >= 10 min (MIN_SECONDS_BETWEEN_
 #     FOLLOWS + FOLLOW_SPACING_JITTER_SECONDS). Never burst-follow.
-#   - Whitelist-only: the Account's tiered topic-expert seeds, with discovered
-#     accounts admitted only through current topic evidence and follow policy.
+#   - Whitelist-only: the tiered seed list in whitelist.json (tier1 foils →
+#     tier4 crypto/markets). Discovery candidates go to suggestions[] for
+#     human approval — the bot never auto-adds.
 #   - 30-day anti-churn stays ON; no follow→unfollow cycles.
 def follow_whitelist_only() -> bool:
     return settings.get("FOLLOW_WHITELIST_ONLY")

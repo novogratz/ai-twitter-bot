@@ -126,13 +126,12 @@ def _warm_up_xcom() -> bool:
     Prevents the 'black screen' where Safari restarts with stale SW cache
     and renders an empty app shell. Must run after Safari is fully up.
     """
-    from ..core import config
-    safari._run_applescript(f'''
+    safari._run_applescript('''
 tell application "Safari"
   activate
   if (count of windows) = 0 then make new document
   tell window 1
-    set URL of current tab to "{config.BOT_PROFILE_URL}"
+    set URL of current tab to "https://x.com/home"
   end tell
 end tell
 ''', timeout_s=20)
@@ -158,7 +157,7 @@ end tell
 tell application "Safari"
   activate
   tell window 1
-    set URL of current tab to "{config.BOT_PROFILE_URL}?bot_recover={cache_bust}"
+    set URL of current tab to "https://x.com/home?bot_recover={cache_bust}"
   end tell
 end tell
 ''', timeout_s=20)

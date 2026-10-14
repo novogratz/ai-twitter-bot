@@ -23,33 +23,31 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "05:00–10:00, 12:00–13:00, 16:45–23:00 America/Toronto",
+    "active": "04:30–23:30",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
-    "replies": 10,
-    "target_replies": 0,
-    "wake_jitter_minutes": 10,
+    "replies": "unlimited",
     "quotes": 0,
-    "reposts": 50,
+    "reposts": 0,
     "slots": [
-        ["05:00", "Priority: the SI update worth understanding this morning"],
-        ["07:15", "A useful SI workflow with a concrete first step"],
-        ["09:30", "Priority: an SI article or model update with a sharp consequence"],
-        ["09:45", "Trending: the SI topic X is talking about right now, told from a trusted source"],
-        ["12:00", "An SI concept explained through a clear example"],
-        ["12:20", "Trending: the SI topic X is talking about right now, told from a trusted source"],
-        ["12:40", "A model or tool update and what changes for its users"],
-        ["17:00", "Trending: the SI topic X is talking about right now, told from a trusted source"],
-        ["17:45", "Priority: an evidence-backed take on an SI tradeoff"],
-        ["18:30", "A practical SI idea worth saving or sharing"],
-        ["22:15", "Optional: an exceptional fresh SI update or unusually useful source"],
+        ["05:00", "Priority: the AI update worth understanding this morning"],
+        ["07:15", "A useful AI workflow with a concrete first step"],
+        ["09:30", "Priority: an AI article or model update with a sharp consequence"],
+        ["10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["11:45", "An AI concept explained through a clear example"],
+        ["13:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["14:00", "A model or tool update and what changes for its users"],
+        ["15:00", "Trending: the AI topic X is talking about right now, told from a trusted source"],
+        ["16:15", "Priority: an evidence-backed take on an AI tradeoff"],
+        ["18:30", "A practical AI idea worth saving or sharing"],
+        ["20:45", "Optional: an exceptional fresh AI update or unusually useful source"],
     ],
-    "trend_slots": ["09:45", "12:20", "17:00"],
+    "trend_slots": ["10:00", "13:00", "15:00"],
     "startup_post": "every start in waking hours, restarts included",
     "jobs": [
-        "editorial_job", "startup_reply_job", "reply_selection_job", "direct_reply_job", "feed_sweep_job", "early_bird_job",
-         "mega_watch_job", "repost_job", "engage_job", "followback_job",
+        "editorial_job", "direct_reply_job", "feed_sweep_job", "early_bird_job", "replyback_job",
+        "debate_job", "mega_watch_job", "babysit_job", "notify_job", "engage_job", "followback_job",
         "follow_engagers_job", "like_job", "pin_job", "session_refresh_job", "follower_tracker_job",
         "reach_report_job",
     ],
@@ -57,16 +55,12 @@ PRE_187 = {
 # The values the code at 9748c36d used with no .env, for each setting that
 # has a bound today: its os.environ.get defaults and config constants.
 PRE_187_BOUNDED = {
-    "MAX_REPOSTS_PER_DAY": 50, "MIN_SECONDS_BETWEEN_REPOSTS": 600,
-    "MAX_REPLIES_PER_DAY": 10,
-    "FOLLOW_REQUIRE_NICHE": True,
-    "TARGET_REPLIES_PER_DAY": 0,
     "MAX_ORIGINALS_PER_DAY": 8, "MIN_SECONDS_BETWEEN_POSTS": 1200, "POST_JITTER_SECONDS": 0,
     "MIN_SECONDS_BETWEEN_REPLIES": 8, "REPLY_JITTER_SECONDS": 7, "FOLLOW_TOTAL_CAP": 300,
     "MAX_FOLLOWS_PER_DAY": 20, "BAN_SHORT_TERM_PRICE_TARGETS": True,
     "DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY": 4, "DUP_JACCARD_THRESHOLD": 0.45,
     "DUP_CONTAINMENT_THRESHOLD": 0.6, "DUP_SHARED_BIGRAMS": 3, "DUP_TOPIC_WINDOW_HOURS": 24.0,
-    "DUP_TOPIC_SHARED_WORDS": 3, "DUP_TEXT_WINDOW_HOURS": 48.0, "REPLY_MIN_CHARS": 5, "REPLY_ALLOW_REACTIONS": False,
+    "DUP_TOPIC_SHARED_WORDS": 3, "DUP_TEXT_WINDOW_HOURS": 48.0, "REPLY_MIN_CHARS": 25,
     "LIKE_BOT_PER_CYCLE": 10, "LIKE_BOT_DAILY_CAP": 500, "FOLLOWBACK_CAP": 8,
     "FOLLOW_ENGAGERS_PER_DAY": 10, "FOLLOW_ENGAGERS_PER_CYCLE": 2,
 }
@@ -126,8 +120,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
 
     assert account.current().name == "example"
     assert settings.get("BOT_HANDLE") == "ExampleGardener"
-    assert shown["jobs"] == [job for job in PRE_187["jobs"] if job != "repost_job"]
-    assert shown["reposts"] == 0
+    assert shown["jobs"] == PRE_187["jobs"]
     assert shown["trend_slots"] == ["10:00", "15:00"]
     assert [clock for clock, _ in shown["slots"]] == ["06:30", "09:00", "10:00", "12:30", "15:00",
                                                      "17:30", "19:45"]
@@ -135,7 +128,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     # Its [limits] lowers the day's ceiling to 4, and the targets under it.
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
-    assert bounded == {**PRE_187_BOUNDED, "MAX_REPOSTS_PER_DAY": 0, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
+    assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
@@ -185,7 +178,7 @@ def test_the_example_ceiling_holds_at_runtime(monkeypatch, settings_override):
     assert config.posts_ceiling() == 4 and config.post_targets() == (3, 4)
     now = editorial_bot._local()
     state = {"date": now.date().isoformat(), "published": [],
-             "slots": {clock: "published" for clock in ("06:30", "09:00", "09:45", "12:30")}}
+             "slots": {clock: "published" for clock in ("06:30", "09:00", "10:00", "12:30")}}
     assert editorial_bot._pending_refusal(state, now) == (
         "daily ceiling reached with pending submissions (4/4)")
 

@@ -129,6 +129,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
     engaged = 0  # engagers with at least one like that shipped
     liked = 0
     seen_handles = set()
+    own_handle = config.BOT_HANDLE.lower()
     candidates = list(replies)
     random.shuffle(candidates)  # don't always hit the same top-of-list person
 
@@ -143,7 +144,7 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
             continue
         seen_handles.add(handle)
         # Hardened blocklist: catches display-name variants from scraper.
-        if _is_blocklisted(user_str, handle) or config.is_own_handle(handle):
+        if _is_blocklisted(user_str, handle) or handle == own_handle:
             continue
         if handle in influencers:
             continue  # influencers already notice us via the in-thread reply

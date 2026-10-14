@@ -1,33 +1,15 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
 from datetime import date, datetime, time, timedelta
 from functools import wraps
-import hashlib
 import threading
 from zoneinfo import ZoneInfo
 
-from ..core import config, settings
+from ..core import config
 from ..core.logger import log
 
 
-BEDTIME = time(23)
-ACTIVE_WINDOWS = ((time(5), time(10)), (time(12), time(13)),
-                  (time(16, 45), BEDTIME))
-WAKE_JITTER_MINUTES = 10
-
-
-def _wake_offset(day: date, start: time) -> int:
-    """Daily variation, stable for this Account across processes and restarts."""
-    seed = f"{settings.get('BOT_ACCOUNT')}:{day.isoformat()}:{start.isoformat()}"
-    value = int.from_bytes(hashlib.sha256(seed.encode()).digest()[:8], "big")
-    return value % (2 * WAKE_JITTER_MINUTES + 1) - WAKE_JITTER_MINUTES
-
-
-def active_windows(now: datetime | None = None) -> tuple:
-    """Today's actual Toronto windows; only their starts vary, by at most 10 min."""
-    local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    return tuple(((datetime.combine(local.date(), start) +
-                   timedelta(minutes=_wake_offset(local.date(), start))).time(), end)
-                 for start, end in ACTIVE_WINDOWS)
+WAKE = time(4, 30)
+BEDTIME = time(23, 30)
 
 _STOP = threading.Event()
 
@@ -40,10 +22,8 @@ class OutsideActiveHours(RuntimeError):
     """A running cycle reached bedtime; it must stop doing external work."""
 
 
-def window_label(now: datetime | None = None) -> str:
-    windows = ", ".join(f"{start:%H:%M}–{end:%H:%M}" if end != time(0)
-                        else f"{start:%H:%M}–24:00" for start, end in active_windows(now))
-    return windows + " " + config.BOT_TIMEZONE
+def window_label() -> str:
+    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
 
 
 def now_local() -> datetime:
@@ -69,9 +49,7 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    clock = local.time().replace(tzinfo=None)
-    return any(start <= clock and (end == time(0) or clock < end)
-               for start, end in active_windows(local))
+    return WAKE <= local.time().replace(tzinfo=None) < BEDTIME
 
 
 def stop_requested() -> bool:
@@ -89,13 +67,8 @@ def may_act(now: datetime | None = None) -> bool:
 
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    for start, _ in active_windows(local):
-        wake = local.replace(hour=start.hour, minute=start.minute, second=0, microsecond=0)
-        if local < wake:
-            return wake
-    tomorrow = local + timedelta(days=1)
-    start = active_windows(tomorrow)[0][0]
-    return tomorrow.replace(hour=start.hour, minute=start.minute, second=0, microsecond=0)
+    wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
+    return wake if local < wake else wake + timedelta(days=1)
 
 
 def require_active() -> None:
@@ -118,13 +91,8 @@ def awake_job(fn):
 
 
 def bedtime(now: datetime) -> datetime:
-    """End of the current Toronto active window; now itself while asleep."""
-    now = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    for start, end in active_windows(now):
-        if start <= now.time().replace(tzinfo=None) and (end == time(0) or now.time().replace(tzinfo=None) < end):
-            day = now + timedelta(days=1) if end == time(0) else now
-            return day.replace(hour=end.hour, minute=end.minute, second=0, microsecond=0)
-    return now
+    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
+    return now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
 
 
 def seconds_until_bedtime() -> float:

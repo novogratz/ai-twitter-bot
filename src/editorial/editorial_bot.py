@@ -127,7 +127,7 @@ def due_slot(now=None, journal=None):
 def open_startup_window(now=None) -> None:
     """main() calls this once when the bot starts. A start overnight opens
     nothing: the watchdog relaunches the bot at night, and a window left open
-    across 05:05 would publish at wake."""
+    across 04:30 would publish at wake."""
     global _startup_opened_at
     now = _local(now)
     _startup_opened_at = now if is_active(now) else None
@@ -233,9 +233,7 @@ def collect_sources(journal, now=None, news_only=False) -> list:
                 title = field("title")
                 if (not stamp or not now - timedelta(hours=48) <= stamp <= now
                         or not _trusted(link) or link in used
-                        or not loaded.relevance.topic.search(title)
-                        or loaded.relevance.off_topic.search(title)
-                        or loaded.niche.excludes(title)):
+                        or not loaded.relevance.topic.search(title)):
                     continue
                 candidates.append(dict(title=title, url=link, publisher=publisher,
                                        published_at=stamp.isoformat(), kind="news"))
@@ -276,8 +274,7 @@ def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
                      force_provider=route.provider, profile=profile)
     if result.status is not LLMStatus.ANSWERED:
         # Failed or exhausted alike: no Draft, or no approval.
-        log.warning("[EDITORIAL] %s generation unavailable (%s): %s", label, result.status.value,
-                    result.stderr[:500] or "no provider detail")
+        log.info("[EDITORIAL] %s generation unavailable (%s).", label, result.status.value)
         return {}
     try:
         value = json.loads(result.stdout)

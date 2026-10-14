@@ -82,9 +82,6 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
-    previous_handles: tuple = ()  # historical own-post URLs survive a rename
-    reposts: "Reposts" = None
-    replies: "Replies" = None
 
 
 def current() -> Account:
@@ -116,16 +113,11 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "previous_handles": list, "reposts": dict, "replies": dict})
+                 optional={"limits": dict, "relations": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
         top.fail("domain", "is blank")
-    previous = top.items("previous_handles", str) if "previous_handles" in top else []
-    for handle in [top["handle"], *previous]:
-        if not _HANDLE.fullmatch(handle):
-            top.fail("handle" if handle == top["handle"] else "previous_handles",
-                     "takes X handles without @, at most 15 letters, digits or underscores")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list})
@@ -138,7 +130,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top), previous_handles=tuple(previous), reposts=_reposts(top), replies=_replies(top),
+        searches=_searches(top),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -224,47 +216,6 @@ class Niche:
     post: re.Pattern
     ticker: re.Pattern | None  # case-sensitive: a $TICKER, not any dollar word; None when absent
     bio: re.Pattern
-    reply_instructions: str = ""
-    excluded: re.Pattern | None = None
-    reply_forbidden: re.Pattern | None = None
-    reply_preserve: re.Pattern | None = None
-    video: re.Pattern | None = None
-    video_credit: re.Pattern | None = None
-
-    @staticmethod
-    def prose(text: str, *, keep_mentions=False) -> str:
-        pattern = r"https?://\S+|(?:\b[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?"
-        if not keep_mentions:
-            pattern += r"|(?<!\w)@\w+"
-        return re.sub(pattern, " ", text or "")
-
-    def matches_video(self, text: str) -> bool:
-        """Discovery hint from the caption; never proof of unseen video content."""
-        if self.excludes(text):
-            return False
-        return bool((self.video and self.video.search(self.prose(text)))
-                    or (self.video_credit and self.video_credit.search(self.prose(text, keep_mentions=True))))
-
-    def reply_wording_problem(self, text: str) -> str:
-        # Literal links, handles and inline code retain their verified spelling.
-        prose = re.sub(r"https?://\S+|(?:\b[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?|(?<!\w)@\w+|`[^`]+`", " ", text)
-        if self.reply_preserve:
-            prose = self.reply_preserve.sub(" ", prose)
-        if self.reply_forbidden and self.reply_forbidden.search(prose):
-            return "use the Account's current Reply terminology and company names"
-        return ""
-
-    def excludes(self, text: str) -> bool:
-        return bool(self.excluded and self.excluded.search(text or ""))
-
-    def matches_post(self, text: str) -> bool:
-        """Judge the post's words, never a topic found only in a handle or URL."""
-        if self.excludes(text):
-            return False
-        if self.matches_video(text):
-            return True
-        text = self.prose(text)
-        return bool(self.post.search(text) or (self.ticker and self.ticker.search(text)))
 
 
 @dataclass(frozen=True)
@@ -273,18 +224,6 @@ class Searches:
     hot_tab: tuple
     likes: tuple
     trending: tuple  # the Top searches of the Trend slots and the Startup post
-    scope: str = ""  # Account topic alternatives and exclusions, on every search
-    exclusions: str = ""  # Always appended, including to declared topic queries
-    videos: tuple = ()
-    priority_reposts: tuple = ()
-
-    def scoped(self, query: str) -> str:
-        # Declared queries already encode their topic. Repeating a large OR
-        # scope made X return an error (browser incident 2026-10-12).
-        declared = query in self.replies + self.hot_tab + self.likes + self.trending + self.videos + self.priority_reposts
-        scope = "" if declared and self.exclusions else self.scope
-        suffix = " ".join(part for part in (scope, self.exclusions) if part)
-        return f"({query}) {suffix}" if suffix else query
 
 
 def _network(top) -> Network:
@@ -306,83 +245,18 @@ def _network(top) -> Network:
 
 def _niche(top) -> Niche:
     table = _Table(top.file, "niche", top["niche"], required={"post": str, "bio": str},
-                   optional={"ticker": str, "reply_instructions": str, "excluded": str,
-                             "reply_forbidden": str, "reply_preserve": str, "video": str, "video_credit": str})
+                   optional={"ticker": str})
     ticker = _pattern(table, "ticker", flags=0) if "ticker" in table else None
-    return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"),
-                 reply_instructions=table.get("reply_instructions", ""),
-                 excluded=_pattern(table, "excluded") if "excluded" in table else None,
-                 reply_forbidden=_pattern(table, "reply_forbidden") if "reply_forbidden" in table else None,
-                 reply_preserve=_pattern(table, "reply_preserve") if "reply_preserve" in table else None,
-                 video=_pattern(table, "video") if "video" in table else None,
-                 video_credit=_pattern(table, "video_credit") if "video_credit" in table else None)
+    return Niche(post=_pattern(table, "post"), ticker=ticker, bio=_pattern(table, "bio"))
 
 
 def _searches(top) -> Searches:
-    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
-                   optional={"scope": str, "exclusions": str, "videos": list, "priority_reposts": list})
-    for key in (*_SEARCHES, "videos", "priority_reposts"):
-        if key not in table:
-            continue
+    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES})
+    for key in _SEARCHES:
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
-    return Searches(**{key: tuple(table[key]) for key in _SEARCHES}, scope=table.get("scope", ""),
-                    exclusions=table.get("exclusions", ""), videos=tuple(table.get("videos", [])),
-                    priority_reposts=tuple(table.get("priority_reposts", [])))
-
-
-@dataclass(frozen=True)
-class Replies:
-    priority_handles: tuple = ()
-    min_score: int = 92
-    other_min_score: int = 97
-    protected_handles: tuple = ()
-
-    def is_protected(self, author: str) -> bool:
-        return (author or "").strip().lstrip("@").lower() in self.protected_handles
-
-    def is_priority(self, author: str) -> bool:
-        return not self.is_protected(author) and (author or "").lower() in self.priority_handles
-
-    def minimum_score(self, author: str) -> int:
-        return self.min_score if not self.priority_handles or self.is_priority(author) else self.other_min_score
-
-
-def _replies(top) -> Replies:
-    table = _Table(top.file, "replies", top.get("replies", {}), required={},
-                   optional={"priority_handles": list, "min_score": int, "other_min_score": int,
-                             "protected_handles": list})
-    handles = {}
-    for key in ("priority_handles", "protected_handles"):
-        handles[key] = table.items(key, str) if key in table else []
-        for i, handle in enumerate(handles[key]):
-            if not _HANDLE.fullmatch(handle):
-                table.fail(f"{key}[{i}]", "takes an X handle without @")
-    minimum = table.get("min_score", 92)
-    other = table.get("other_min_score", 97)
-    if not 85 <= minimum <= 100:
-        table.fail("min_score", "must be between 85 and 100")
-    if not max(85, minimum) <= other <= 100:
-        table.fail("other_min_score", "must be at least 85 and min_score, and at most 100")
-    return Replies(tuple(h.lower() for h in handles["priority_handles"]), minimum, other,
-                   tuple(h.lower() for h in handles["protected_handles"]))
-
-
-@dataclass(frozen=True)
-class Reposts:
-    priority_handles: tuple = ()
-    allow_off_topic_priority: bool = False
-
-
-def _reposts(top) -> Reposts:
-    table = _Table(top.file, "reposts", top.get("reposts", {}), required={},
-                   optional={"priority_handles": list, "allow_off_topic_priority": bool})
-    handles = table.items("priority_handles", str) if "priority_handles" in table else []
-    for i, handle in enumerate(handles):
-        if not _HANDLE.fullmatch(handle):
-            table.fail(f"priority_handles[{i}]", "takes an X handle without @")
-    return Reposts(tuple(h.lower() for h in handles), table.get("allow_off_topic_priority", False))
+    return Searches(**{key: tuple(table[key]) for key in _SEARCHES})
 
 
 class _Table:
