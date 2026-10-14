@@ -7,7 +7,8 @@ every earlier instruction to prioritize his posts for Replies. The Account's
 reading saved candidates and again at the Reply write chokepoint. Priority,
 perfect scores, cached approvals and Debate flags cannot override it. The
 opened post must expose its own author and status ID, matching the requested
-URL; quoted posts cannot supply that identity. Unreadable or misattributed
+URL; quoted posts cannot supply that identity. Native permalink anchors remain
+valid even with `role="link"`; only quoted-content wrappers are excluded. Unreadable or misattributed
 targets are refused before liking the parent or opening the Reply composer.
 Other eligible authors still require 97/100. Likes, follows, reposts and Voice
 keep their existing rules. Code and Account changes take effect on the next

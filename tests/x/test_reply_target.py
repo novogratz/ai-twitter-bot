@@ -160,8 +160,12 @@ def test_opened_page_classification(articles, expected, monkeypatch):
           const article = {innerText: f.text};
           const closest = selector => selector === 'article' ? article : f.quoted ? {} : null;
           const path = '/' + (f.author || 'author') + '/status/' + f.id;
+          const link = {pathname: path, href: 'https://x.com' + path, querySelector: () => ({})};
+          // Native permalink anchors have role="link"; quote wrappers are divs.
+          link.closest = selector => closest(selector)
+            || (selector.split(',').some(s => s.trim() === '[role="link"]') ? link : null);
           article.querySelectorAll = selector => selector === 'a[href]'
-            ? [{pathname: path, href: 'https://x.com' + path, querySelector: () => ({}), closest}]
+            ? [link]
             : f.has_text === false ? [] : [{innerText: f.text, closest}];
           return article;
         })};

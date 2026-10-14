@@ -125,6 +125,10 @@ Account.
 
 ## Invariants
 
+2026-10-13 — Native status permalink anchors may themselves have `role="link"`.
+Reply target verification excludes quoted-content div wrappers, not those
+anchors. Continue verifying the actual author/status and protected-author rule.
+
 2026-10-13 — The Operator permanently protected @elonmusk from all Replies,
 including replies to his comments or responses. Protection is enforced before
 drafting, on saved opportunities and at the write, with the actual opened
