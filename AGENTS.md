@@ -6,6 +6,26 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator requested a pace near 300 Replies per full day and
+a random mix with and without smileys. This supersedes the earlier 5–8 minute
+cooldown and model-chosen optional reactions below. The shared cooldown is now
+75–95 seconds: minimum/floor 75, default jitter 20, with the existing jitter
+range 0–180. The four windows total 9h10; browser work, selection ticks and
+model availability also take time. About 300 is a capacity aim, never a quota
+that forces weak Replies or an assurance of actual volume. Existing saved
+deadlines remain honored; retries, restarts and uncertain writes cannot reset them.
+
+Each new ranked draft independently draws a 50/50 smiley choice before writing:
+plain text, or exactly one friendly smiley/positive text emoticon in a natural
+position. The choice is saved with its length limit and checked during
+preparation, selection and the final write. Nothing is appended after review.
+Random draws may repeat; no mechanical alternation or fixed ending. Legacy
+drafts without the field retain the earlier optional-one rule until expiry.
+Dynamic lengths, the 278-character ceiling, kindness and evidence review,
+protected authors, standalone-only targets and permanent deduplication remain.
+The two local pacing keys become 75 and 20. The Operator requested a PR,
+merge, push and release; no start or restart is requested.
+
 2026-10-14 — The Operator requested occasional few-word Replies and varying
 maximum lengths without raising the existing 278-character ceiling. Each new
 ranked draft receives one random limit before generation: five words/60 characters
@@ -100,7 +120,7 @@ are preserved; the later pacing mandate above changes only the two Reply spacing
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the current source of
 truth. This mandate supersedes the September 26 snapshot's publishing behavior
 and the October 13 activity windows. The rollback history is in `docs/HISTORY.md`.
-Replies use the shared 5–8 minute cooldown and independent comparison, with no daily quota; likes and follows
+Replies use the shared 75–95 second cooldown and independent comparison, aiming near 300/day without a forced quota; likes and follows
 retain their existing caps and exclude Blocked accounts. Quotes, reposts,
 self-recycling and threads remain disabled. The Account remains The SI Maximalist:
 SI news, Grok Imagine videos, brainrot and clearly fictional celebrity parodies.

@@ -25,6 +25,10 @@ The live Account has `publish_originals = false`; `.env` cannot enable Originals
 Keep its no-contact protection in `network.blocked_accounts` as well as
 `replies.protected_handles`. Outgoing SI wording is in `text_replacements`.
 
-Reply pacing defaults to 300 seconds plus up to 180 seconds of jitter. The
-minimum cannot be lowered below 300. The live Account requires ranked selection;
+Reply pacing defaults to 75 seconds plus up to 20 seconds of jitter, aiming
+near 300 Replies per full day within the existing windows, subject to approved
+drafts and model/browser time. The minimum cannot be lowered below 75; jitter
+may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
+New ranked drafts independently choose roughly 50/50 between no smiley and
+exactly one friendly smiley, enforced within the assigned length limit through publication.

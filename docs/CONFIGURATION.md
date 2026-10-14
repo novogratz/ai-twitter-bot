@@ -45,7 +45,7 @@ hold whatever `.env` says:
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 300) plus `REPLY_JITTER_SECONDS` (0–180, default 180) space them |
+| Replies per day | Aim near 300, subject to quality and model/browser time; no forced quota or daily cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 75) plus `REPLY_JITTER_SECONDS` (0–180, default 20) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The live Account requires `replies.ranked_selection = true`: shared preparation
@@ -55,7 +55,7 @@ uncertain submissions; there is no catch-up burst after a restart.
 
 The Debate turn, Reply spacing, like, follow, price-target and duplicate
 settings, and `REPLY_MIN_CHARS`, carry the Operator's bounds of 2026-09-25
-(issue #201), with Reply pacing tightened on 2026-10-14, listed in
+(issue #201), with Reply pacing revised on 2026-10-14, listed in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md#bounds-on-volume-and-check-settings)
 and in the Bounds column below. `BAN_SHORT_TERM_PRICE_TARGETS` has floor `1`:
 `0` reads as `1`. `main.py --dry-run` prints each bounded setting's effective
@@ -115,8 +115,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
-| `MIN_SECONDS_BETWEEN_REPLIES` | int | `300` | floor `300` | Minimum gap between Replies, including uncertain submissions. |
-| `REPLY_JITTER_SECONDS` | int | `180` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 5–8 minutes. |
+| `MIN_SECONDS_BETWEEN_REPLIES` | int | `75` | floor `75` | Minimum gap between Replies, including uncertain submissions; aims near 300/day within the current windows, subject to quality and browser/model time. |
+| `REPLY_JITTER_SECONDS` | int | `20` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 75–95 seconds. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
 | `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |

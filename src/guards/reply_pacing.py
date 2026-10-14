@@ -1,7 +1,7 @@
 """Persist the cooldown before a Reply submit, even when its result is uncertain."""
 from datetime import datetime, timedelta
 
-from ..core import config
+from ..core import config, settings
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import GUARDED, StateFile, StatePath, process_lock
 from . import active_hours
@@ -18,7 +18,8 @@ def remaining() -> float:
         if set(value) != {"submitted_at", "next_at", "target"} or not isinstance(value["target"], str):
             raise ValueError("bad pacing record")
         submitted, due = (datetime.fromisoformat(value[key]) for key in ("submitted_at", "next_at"))
-        if submitted.tzinfo is None or due.tzinfo is None or (due - submitted).total_seconds() < 300:
+        floor = settings.DECLARED["MIN_SECONDS_BETWEEN_REPLIES"].floor
+        if submitted.tzinfo is None or due.tzinfo is None or (due - submitted).total_seconds() < floor:
             raise ValueError("bad pacing timestamps")
     except (ValueError, TypeError, KeyError) as exc:
         raise StateUnreadable("Reply pacing unreadable; refusing a possible burst") from exc

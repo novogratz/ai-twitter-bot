@@ -468,8 +468,10 @@ Five modules sit behind them:
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
-  retweets are always refused. Reply spacing is 300 seconds plus 0–180 seconds
-  of jitter; independent review and the rest of admission also apply. The jitter of the reply,
+  retweets are always refused. Reply spacing defaults to 75 seconds plus 0–20
+  seconds of jitter, aiming near 300 Replies per full day with browser work and
+  selector ticks. The minimum floor is 75; jitter may be 0–180. Independent
+  review and the rest of admission also apply. The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
   caller sees the same gap, and retrying cannot fish for a smaller draw. `seconds_until_allowed` returns what is left of it,
@@ -561,6 +563,12 @@ limit. Preparation checks the normalized, complete text without trimming to a
 smaller ceiling. Queue admission, selection and the write's selected-draft gate
 recheck that limit. Old rows without it retain the previous 278-character ceiling
 until expiry; invalid length metadata stops the queue without overwriting it.
+Each new draft also saves an independent random 50/50 `smiley` boolean. Plain
+drafts require zero reactions; smiley drafts require exactly one friendly face
+or positive text emoticon within the same length budget. The prompt carries the
+choice and the queue, selector and selected-draft write gate enforce it. The
+publisher never appends or removes a smiley after review. Older rows without the
+field retain the earlier optional-one rule until expiry; invalid fields fail closed.
 
 `reply_selection_job` has its own worker and process lock. Startup gives the
 collectors at least 60 seconds. During a cooldown it waits until the final 90
@@ -584,7 +592,7 @@ drafts are never automatically replayed. A weak pool leaves the slot empty.
 The Reply source still supplies each collector's age, niche and ordering rules;
 `StateUnreadable` and `OutsideActiveHours` stop collection/selection. A provider
 rate limit stops preparation for that cycle. The generic unranked Account path
-retains sequential and overlapping generation; it still shares the five-minute
+retains sequential and overlapping generation; it still shares the 75-second
 engine floor, persisted submit cooldown and all other write guards. It is not
 the live Account's publishing path.
 
@@ -875,8 +883,9 @@ source label, not visual analysis of an unseen clip.
 leaving literal links/handles intact. The pipeline logs normalized text and the
 write validates the normalized text. `reply_style.prompt` gives every generation
 context-led length/tone guidance and a bounded tail of recent shipped replies.
-The write preserves punctuation, adds no suffix and manufactures no typos; at
-most one optional emoji/text smiley is allowed. `REPLY_MIN_CHARS` defaults to 2.
+The write preserves punctuation, adds no suffix and manufactures no typos. New
+ranked drafts must match their saved plain-or-friendly-smiley choice; unranked
+and legacy drafts retain the at-most-one reaction rule. `REPLY_MIN_CHARS` defaults to 2.
 `replied_store` serializes permanent claims with `replied_tweets.lock`, including
 separate manual processes. Actual-author checks happen inside the like-click
 script, and the follow click must identify the requested account on its button.

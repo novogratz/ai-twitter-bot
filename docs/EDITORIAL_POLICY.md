@@ -1,5 +1,24 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — The Operator now wants a pace near 300 Replies per full Toronto
+day and a random mix with and without smileys. This supersedes the earlier
+5–8 minute cooldown and optional reaction guidance below. The shared gap is
+75–95 seconds (minimum/floor 75, default jitter 20). Existing 9h10 activity
+windows, selector ticks and browser/model time determine capacity. About 300
+is an aim, never a forced quota or guarantee; all quality and target checks win.
+Local pacing keys are updated to 75 and 20. Existing saved deadlines are not
+shortened, and uncertain submits still consume the gap across restarts.
+
+Each new ranked draft independently chooses no smiley or exactly one friendly
+smiley/positive text emoticon, roughly 50/50. The saved choice joins the length
+limit at generation, preparation, selection and the final write. Nothing is
+added after review. Position and smiley vary naturally; random streaks are
+allowed, with no fixed alternating pattern. Legacy drafts without the field
+keep their previous optional-one allowance until expiry. Malformed choices
+stop admission without overwriting state. Length ceilings include the smiley;
+kindness, evidence, protected authors and permanent deduplication remain.
+The Operator requested PR, merge, push and release; the bot remains stopped.
+
 2026-10-14 — Reply lengths now vary through per-draft limits, with the existing
 278-character maximum unchanged. Before generating each new ranked draft, choose
 five words/60 characters (30%), 120 characters (30%), 200 (20%) or 278 (20%).
@@ -144,8 +163,9 @@ random limits above vary the space available without requiring it to be filled.
 Maximum 278 characters, not a target; the brief option allows at most five words
 and 60 characters. A draft that cannot fit meaningfully is skipped.
 The 2-character floor permits meaningful brevity; generic praise and standalone
-reactions remain refused. Normally no smiley, at most one optional emoji or text
-smiley when appropriate, at any natural position. No automatic ending, random
+reactions remain refused. New ranked drafts use the saved random choice: no
+smiley or exactly one friendly smiley/positive text emoticon, at any natural
+position and within the length limit. No automatic ending, random
 case/period changes or manufactured spelling errors. Recent shipped replies are
 shown as untrusted examples to avoid repeating, never as instructions or facts.
 
@@ -180,7 +200,8 @@ Replyback, Debate, babysitter and notification jobs remain unscheduled; their
 retained manual paths cannot publish conversation replies. Automatic pinning is
 unscheduled. Non-publishing likes, follows, browser upkeep and measurement jobs
 keep their existing limits and respect the no-contact rule. Reply volume has no
-new daily target or cap; the shared cooldown and per-cycle preparation bounds apply.
+forced daily quota or cap; the aim is near 300 per full day, subject to the
+shared cooldown, model/browser time, quality and per-cycle preparation bounds.
 
 ## Bounds on volume and check settings
 
@@ -194,8 +215,8 @@ warnings under `settings_warnings`.
 | Setting | Bound | Default |
 |---|---|---|
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
-| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 300 s | 300 |
-| `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 180 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 75 s | 75 |
+| `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 20 |
 | `LIKE_BOT_PER_CYCLE`, likes per `like_job` cycle | 0 to 10 | 10 |
 | `LIKE_BOT_DAILY_CAP`, `like_job` likes per day | 0 to 500 | 500 |
 | `FOLLOW_TOTAL_CAP`, accounts followed in total | 0 to 3500 | 300 |

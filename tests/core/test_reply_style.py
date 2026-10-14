@@ -84,3 +84,24 @@ def test_every_length_also_respects_a_tighter_global_ceiling(monkeypatch):
     for length in reply_style.Length:
         assert length.max_chars <= 40
         assert not length.accepts("a" * 41)
+
+
+def test_smiley_choice_is_random_with_both_plain_and_friendly_drafts(monkeypatch):
+    monkeypatch.setattr(reply_style.random, "choice", random.Random(42).choice)
+    choices = [reply_style.choose_smiley() for _ in range(100)]
+    assert 35 <= sum(choices) <= 65
+    assert any(a == b for a, b in zip(choices, choices[1:]))  # No mechanical alternation.
+
+
+@pytest.mark.parametrize("text,smiley,accepted", [
+    ("Bandwidth matters.", False, True), ("Bandwidth matters.", True, False),
+    ("Bandwidth matters. 🙂", True, True), ("Bandwidth matters. 🙂", False, False),
+    ("🙂 Bandwidth matters.", True, True), ("Bandwidth matters :)", True, True),
+    ("Bandwidth matters :)", False, False), ("Bandwidth matters 😄😂", True, False),
+    ("Bandwidth matters. 🚀", True, False), ("Bandwidth matters :(", True, False),
+    ("Bandwidth matters https://example.com/🙂", False, True),
+    ("Bandwidth matters https://example.com/🙂", True, False),
+    ("Bandwidth matters. 🚀", None, True),  # Legacy drafts keep their prior rule.
+])
+def test_assigned_smiley_checks_the_actual_prose(text, smiley, accepted):
+    assert reply_style.accepts_smiley(text, smiley) is accepted
