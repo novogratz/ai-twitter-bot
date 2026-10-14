@@ -56,7 +56,8 @@ def _parse(text, ids):
 
 
 def _compare(rows):
-    payload = {sid: {"author": x_urls.author(row["url"]), "parent": row["parent"], "draft": row["text"]}
+    payload = {sid: {"author": x_urls.author(row["url"]), "parent": row["parent"], "draft": row["text"],
+                     "smiley": reply_queue.smiley_for(row)}
                for sid, row in rows.items()}
     prompt = "\n\n".join((
         personality_store.render_voice("en"),
@@ -67,6 +68,9 @@ def _compare(rows):
         "4 is strong; 5 is exceptional. Every dimension must be at least 4 to qualify. "
         "Even a specific two-to-five-word answer can earn full marks; length, jokes, favorite brands and flattery "
         "earn no automatic points. Penalize stock reactions, repeated wording or forced product plugs. "
+        "Each draft's smiley value is an assigned style: true requires one friendly smiley, false "
+        "requires none, null keeps the older optional rule. Do not reward or penalize smiley presence "
+        "by itself; assess whether the actual words and tone suit this parent. "
         "Set positive=true ONLY for a kind, humble, supportive contribution that follows the Voice. "
         "Reject insults, roasts, sarcasm at anyone's expense, contempt, condescension, backhanded "
         "compliments and negative product or creator takes, even if clever or otherwise highly scored. "
@@ -103,7 +107,7 @@ def _eligible():
         parent = judge_parent(row["url"])
         text = judge_text(parent.author, row["text"]) if parent else parent
         if (not parent or not text or text.text != row["text"]
-                or not reply_queue.length_for(row).accepts(row["text"])):
+                or not reply_queue.fits_style(row, row["text"])):
             reply_queue.discard(sid, "admission changed before selection")
             del rows[sid]
     return rows

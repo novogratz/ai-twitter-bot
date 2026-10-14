@@ -1,5 +1,25 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Pace near 300 Replies and random smiley presence
+
+The Operator requested a more aggressive pace near 300 Replies per full day,
+then a random mix with and without smileys and a PR, merge, push and release.
+The shared cooldown changes from 300–480 seconds to 75–95 seconds, with
+minimum/floor 75 and default jitter 20. The existing 9h10 windows, browser
+work and selection overhead leave capacity near the requested volume when
+approved drafts are available. Quality, topic and target guards still win;
+300 is not a forced quota or guaranteed result. Saved deadlines are preserved,
+including uncertain writes. Only the two pacing keys change in local `.env`.
+
+Each new ranked draft saves a random 50/50 plain-or-smiley choice alongside its
+length ceiling. The model writes exactly one friendly smiley/positive emoticon
+when requested, within its character and word budget, or none for a plain draft.
+Preparation, selection and final admission enforce the choice on the reviewed
+text; no suffix is added after approval. Old rows retain their earlier rule
+until expiry; malformed metadata fails closed. No bot start or restart accompanies
+this change. Protected authors, own/nested targets, permanent deduplication,
+Reply-only publishing and all kindness/evidence requirements are unchanged.
+
 ## 2026-10-14 — Dynamic Reply limits and occasional few-word answers
 
 The Operator requested varied maximum lengths, including Replies of just a few

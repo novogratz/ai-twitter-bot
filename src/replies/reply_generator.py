@@ -89,12 +89,13 @@ _LANGUAGE_OVERRIDE = {
 
 
 def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str = "",
-             fields: dict | None = None, length: reply_style.Length | None = None) -> Generation:
+             fields: dict | None = None, length: reply_style.Length | None = None,
+             smiley: bool | None = None) -> Generation:
     """One model call for one parent post. `author` is the parent's handle,
     `context` the post it answers (replyback), `fields` any other template
     field. Raises OutsideActiveHours; any other error is a FAILED generation."""
     language = _language(call, author, text or "")
-    prompt = _prompt(call, author, text or "", context or "", language, fields or {}, length)
+    prompt = _prompt(call, author, text or "", context or "", language, fields or {}, length, smiley)
     try:
         route = resolve(call.surface)
         options = route.options
@@ -142,7 +143,7 @@ def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
 
 
 def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict,
-            length: reply_style.Length | None = None) -> str:
+            length: reply_style.Length | None = None, smiley: bool | None = None) -> str:
     anchors = [personality_store.hard_rules_block()]
     if call.dossier:
         anchors = [personality_store.render_account_block(author)] + anchors
@@ -155,4 +156,4 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "domain": account.current().domain,
     })
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
-                                   reply_style.prompt(length), *anchors]))
+                                   reply_style.prompt(length, smiley), *anchors]))

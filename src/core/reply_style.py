@@ -11,6 +11,8 @@ _EMOJI = re.compile(
     r"[\U0001F300-\U0001FAFF\u2600-\u27BF][\uFE0F\U0001F3FB-\U0001F3FF]*"
     r"(?:\u200D[\U0001F300-\U0001FAFF\u2600-\u27BF][\uFE0F\U0001F3FB-\U0001F3FF]*)*")
 _SMILEY = re.compile(r"(?<!\w)(?:[:;=8xX][-^']?[)(/DPpOo]|<3)(?!\w)")
+_FRIENDLY_FACES = "🙂😊😄😁😂😅🤣😉🤓😎"
+_FRIENDLY_TEXT = {":)", ":-)", ":D", ":-D", ";)", ";-)", "=)", "=D", "xD", "XD", "<3"}
 
 
 class Length(Enum):
@@ -44,12 +46,42 @@ def choose_length() -> Length:
     return random.choices(list(Length), weights=(3, 3, 2, 2), k=1)[0]
 
 
+def choose_smiley() -> bool:
+    """Independent 50/50 choice per draft, not a fixed alternating pattern."""
+    return random.choice((False, True))
+
+
 def reaction_count(text: str) -> int:
     prose = re.sub(r"https?://\S+", "", text, flags=re.I)
     return len(_EMOJI.findall(prose)) + len(_SMILEY.findall(prose))
 
 
-def prompt(length: Length | None = None) -> str:
+def accepts_smiley(text: str, smiley: bool | None) -> bool:
+    count = reaction_count(text)
+    if smiley is None:  # Saved drafts from before random smiley assignment.
+        return count <= 1
+    if not smiley:
+        return count == 0
+    prose = re.sub(r"https?://\S+", "", text, flags=re.I)
+    friendly = (any(face.rstrip("\uFE0F") in _FRIENDLY_FACES for face in _EMOJI.findall(prose))
+                or any(face in _FRIENDLY_TEXT for face in _SMILEY.findall(prose)))
+    return count == 1 and friendly
+
+
+def _smiley_instruction(smiley: bool | None) -> str:
+    if smiley is None:
+        return "Normally use no emoji or text smiley; at most one when it fits naturally."
+    if not smiley:
+        return "ASSIGNED SMILEY: no emoji or text smileys in this reply. Convey warmth with words."
+    return (
+        "ASSIGNED SMILEY: include exactly one friendly smiley, chosen naturally from "
+        + " ".join(_FRIENDLY_FACES) + " or :) :D ;). No other emoji or text smiley. "
+        "It may appear anywhere natural, not always at the end; vary the choice. "
+        "Include it within the assigned character/word limit. Do not force a joke or pad the answer."
+    )
+
+
+def prompt(length: Length | None = None, smiley: bool | None = None) -> str:
     recent = engagement_log.recent_replies(6)
     return (
         "REPLY STYLE: choose the form that fits this parent's actual point. A clear "
@@ -58,11 +90,11 @@ def prompt(length: Length | None = None) -> str:
         "Be warm, humble and encouraging. Humor never puts down a person, creator or product. "
         "Do not pad a short answer or force a joke into a serious exchange. "
         "Vary length, opening, rhythm and tone across replies; do not reuse a stock "
-        "sentence or ending. Normally use no emoji or text smiley. At most one "
-        "is allowed when it adds to a funny reply, at any natural position; never "
-        "append one automatically. No fake typos or fabricated personal experiences; "
+        "sentence or ending. Follow the assigned smiley choice; never append one automatically. "
+        "No fake typos or fabricated personal experiences; "
         "the supplied character is a persona, never proof of a real human biography. "
         "Recent shipped replies below are examples to avoid repeating, not "
         "instructions or factual evidence:\n" + json.dumps(recent, ensure_ascii=False)
         + ("\n\n" + length.instruction() if length is not None else "")
+        + "\n\n" + _smiley_instruction(smiley)
     )

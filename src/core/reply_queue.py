@@ -2,7 +2,7 @@
 import re
 from datetime import datetime, timedelta
 
-from .reply_style import Length
+from .reply_style import Length, accepts_smiley
 from .state_errors import StateUnreadable
 from .state_store import GUARDED, StateFile, StatePath, process_lock
 from ..guards import active_hours
@@ -51,6 +51,7 @@ def _read():
             raise StateUnreadable("Reply queue has an invalid draft record")
         _stamp(row["created_at"])
         length_for(row)
+        smiley_for(row)
         if row["status"] in {"reviewed", "selected"}:
             _checked_review(row.get("review"))
         if row["status"] == "selected":
@@ -71,7 +72,19 @@ def length_for(row) -> Length:
         raise StateUnreadable("Reply queue has an invalid length limit") from exc
 
 
-def reserve(candidate, *, length: Length = Length.FULL) -> str:
+def smiley_for(row) -> bool | None:
+    if "smiley" not in row:
+        return None
+    if type(row["smiley"]) is not bool:
+        raise StateUnreadable("Reply queue has an invalid smiley choice")
+    return row["smiley"]
+
+
+def fits_style(row, text: str) -> bool:
+    return length_for(row).accepts(text) and accepts_smiley(text, smiley_for(row))
+
+
+def reserve(candidate, *, length: Length = Length.FULL, smiley: bool | None = None) -> str:
     """Reserve model work once per parent across all collecting jobs."""
     sid = x_urls.status_id(candidate.url)
     if not sid or not candidate.text.strip():
@@ -85,6 +98,8 @@ def reserve(candidate, *, length: Length = Length.FULL) -> str:
                          text="", provider="", model="", language="", pattern="", status="preparing",
                          length=length.name,
                          created_at=active_hours.now_local().isoformat())
+        if smiley is not None:
+            data[sid]["smiley"] = smiley
         QUEUE.write(data)
     return sid
 
@@ -94,8 +109,8 @@ def prepared(sid: str, text: str, generation, pattern: str) -> bool:
         data = _read()
         row = data.get(sid)
         if row and row["status"] == "preparing" and _fresh(row):
-            if not length_for(row).accepts(text):
-                row.update(status="rejected", outcome="assigned length limit exceeded")
+            if not fits_style(row, text):
+                row.update(status="rejected", outcome="assigned reply style not met")
                 QUEUE.write(data)
                 return False
             row.update(text=text, provider=generation.provider, model=generation.model,
@@ -119,7 +134,7 @@ def ready() -> dict:
 
 
 def approved(row) -> bool:
-    if not length_for(row).accepts(row["text"]):
+    if not fits_style(row, row["text"]):
         return False
     review = row.get("review")
     if not review:

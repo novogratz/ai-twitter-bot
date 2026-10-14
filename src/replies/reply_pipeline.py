@@ -143,12 +143,13 @@ def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
                 or x_urls.is_reply_like_tweet({"url": candidate.url, "text": candidate.text})):
             continue
         length = reply_style.choose_length()
-        sid = reply_queue.reserve(candidate, length=length)
+        smiley = reply_style.choose_smiley()
+        sid = reply_queue.reserve(candidate, length=length, smiley=smiley)
         if not sid:
             continue
         prepared += 1
         try:
-            generation = _generate(job, candidate, author, length)
+            generation = _generate(job, candidate, author, length, smiley)
             if generation.outcome is Outcome.RATE_LIMITED:
                 _stop_for_rate_limit(job, cycle)
             if generation.outcome is not Outcome.WRITTEN:
@@ -156,8 +157,8 @@ def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
                 continue
             text, pattern = extract_pattern(generation.text)
             text = outgoing_text.normalize(humanize(text))
-            if not length.accepts(text):
-                reply_queue.discard(sid, "assigned length limit exceeded")
+            if not length.accepts(text) or not reply_style.accepts_smiley(text, smiley):
+                reply_queue.discard(sid, "assigned reply style not met")
                 continue
             verdict = judge_text(author, text)
             if not verdict:
@@ -221,14 +222,14 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
 
 
 def _generate(job: Job, candidate: Candidate, author: str,
-              length: reply_style.Length | None = None) -> Generation:
+              length: reply_style.Length | None = None, smiley: bool | None = None) -> Generation:
     if candidate.reply:
         # The reply search prompt is English (LanguageRule.ENGLISH).
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
     return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
-                                    context=candidate.context, length=length)
+                                    context=candidate.context, length=length, smiley=smiley)
 
 
 def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:

@@ -70,6 +70,7 @@ def publisher(monkeypatch, memory_ledger):
 def test_collectors_prepare_without_publishing_and_deduplicate_model_work(clock, monkeypatch):
     generated = []
     monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
     monkeypatch.setattr(pipeline, "_generate", lambda *a: generated.append(a) or Generation(Outcome.WRITTEN, "en", TEXT))
     monkeypatch.setattr(twitter_client, "reply_to_tweet", lambda *a, **k: pytest.fail("collector published"))
     job = pipeline.Job("one", "ONE", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
@@ -104,7 +105,7 @@ def test_startup_collects_choices_then_publishes_the_best_one(clock, reviewer, p
     assert selection.run_selection_cycle() == 0 and len(publisher) == 1
     # Same prepared choices cannot send again until the shared deadline.
     wait = action_guard.seconds_until_allowed(action_guard.REPLY)
-    assert 300 <= wait <= 480
+    assert 75 <= wait <= 95
     clock[0] += timedelta(seconds=wait + 0.001)
     assert selection.run_selection_cycle() == 1 and len(publisher) == 2
 
@@ -197,7 +198,8 @@ def test_dry_run_starts_no_preparation_review_or_publication(clock, monkeypatch)
     assert Path(reply_queue.QUEUE.path).read_bytes() == before
 
 
-def test_a_better_draft_prepared_during_cooldown_wins(clock, reviewer, publisher):
+def test_a_better_draft_prepared_during_cooldown_wins(clock, reviewer, publisher, settings_override):
+    settings_override(MIN_SECONDS_BETWEEN_REPLIES=300, REPLY_JITTER_SECONDS=180)
     assert reply_pacing.reserve(fresh("previous"))
     first = stage("early", 1)
     due = datetime.fromisoformat(reply_pacing.PACE.read()["next_at"])
@@ -266,7 +268,7 @@ def test_selected_draft_reaches_real_write_guards_once(clock, reviewer, monkeypa
     assert pasted == [TEXT] and submitted == [url]
     assert url in replied_store.load_replied()
     assert action_guard.count_today(action_guard.REPLY) == 1
-    assert reply_pacing.remaining() >= 300
+    assert reply_pacing.remaining() >= 75
     assert selection.run_selection_cycle() == 0 and other in reply_queue.ready()
 
 
@@ -327,6 +329,7 @@ def test_saved_selected_draft_cannot_bypass_positive_gate(clock, monkeypatch, me
 
 def test_few_word_reply_reaches_independent_review_and_publication(clock, monkeypatch, llm, reviewer, publisher):
     monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FEW_WORDS)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
     llm.default = "Bandwidth matters."
     candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
     job = pipeline.Job("brief", "BRIEF", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "BRIEF"))
@@ -351,6 +354,7 @@ def test_few_word_reply_reaches_independent_review_and_publication(clock, monkey
 ])
 def test_prepared_search_drafts_cannot_bypass_assigned_limit_or_quality(clock, monkeypatch, text):
     monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FEW_WORDS)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
     candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST", reply=text)
     assert pipeline.run(pipeline.Job("search", "SEARCH", None), [candidate], pipeline.Cycle()) == 0
     assert reply_queue.ready() == {}
@@ -403,3 +407,65 @@ def test_saved_overlength_draft_cannot_reach_review_or_browser(clock, monkeypatc
     assert selection.run_selection_cycle() == 0
     assert twitter_client.reply_to_tweet(data[sid]["url"], TEXT) is WriteOutcome.REFUSED
     assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}
+
+
+@pytest.mark.parametrize("smiley,text", [(False, "Bandwidth matters."), (True, "🙂 Bandwidth matters.")])
+def test_smiley_choice_survives_preparation_review_and_publication(
+        clock, monkeypatch, llm, reviewer, publisher, smiley, text):
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FEW_WORDS)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: smiley)
+    llm.default = text
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    job = pipeline.Job("smiley", "SMILEY", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "SMILEY"))
+    assert pipeline.run(job, [candidate], pipeline.Cycle()) == 0
+    sid, row = next(iter(reply_queue.ready().items()))
+    assert row["smiley"] is smiley and row["text"] == text
+    instruction = "include exactly one friendly smiley" if smiley else "no emoji or text smileys"
+    assert instruction in llm.calls[0].prompt
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: not smiley)
+    assert pipeline.run(job, [candidate], pipeline.Cycle()) == 0
+    assert reply_queue.ready()[sid]["smiley"] is smiley and len(llm.calls) == 1
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 1
+    assert publisher == [(candidate.url, text)]  # Nothing added or removed after review.
+    assert text in reviewer[0][0][0]
+    assert '"smiley": ' + str(smiley).lower() in reviewer[0][0][0]
+    assert "Do not reward or penalize smiley presence" in reviewer[0][0][0]
+
+
+@pytest.mark.parametrize("smiley,text", [(True, TEXT), (False, TEXT + " 🙂"), (True, TEXT + " 🚀")])
+def test_queue_refuses_a_draft_that_ignores_its_smiley_choice(clock, smiley, text):
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    sid = reply_queue.reserve(candidate, smiley=smiley)
+    assert not reply_queue.prepared(sid, text, Generation(Outcome.WRITTEN, "en", text), "OTHER")
+    assert reply_queue.ready() == {}
+
+
+@pytest.mark.parametrize("status", ["ready", "selected"])
+@pytest.mark.parametrize("smiley,text", [(True, TEXT), (False, TEXT + " 🙂")])
+def test_saved_wrong_smiley_cannot_reach_review_or_browser(
+        clock, monkeypatch, memory_ledger, status, smiley, text):
+    sid = stage(text=text)
+    data = reply_queue.QUEUE.read()
+    data[sid].update(smiley=smiley, status=status,
+                     review={**review(5), "reviewed_at": clock[0].isoformat()},
+                     selected_at=clock[0].isoformat())
+    reply_queue.QUEUE.write(data)
+    monkeypatch.setattr(selection, "run_llm", lambda *a, **k: pytest.fail("wrong smiley reviewed"))
+    monkeypatch.setattr(twitter_client, "_activate_or_abort", lambda *a: pytest.fail("wrong smiley published"))
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 0
+    assert twitter_client.reply_to_tweet(data[sid]["url"], text) is WriteOutcome.REFUSED
+    assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}
+
+
+@pytest.mark.parametrize("smiley", [None, "true", 1, []])
+def test_corrupt_smiley_choice_stops_queue_without_overwriting(clock, smiley):
+    sid = stage()
+    data = reply_queue.QUEUE.read()
+    data[sid]["smiley"] = smiley
+    reply_queue.QUEUE.write(data)
+    before = Path(reply_queue.QUEUE.path).read_bytes()
+    with pytest.raises(StateUnreadable):
+        selection.run_selection_cycle()
+    assert Path(reply_queue.QUEUE.path).read_bytes() == before
