@@ -687,7 +687,7 @@ def test_repeated_invalid_reply_fails_without_silent_trimming(llm, text):
     llm.default = text
     call = replace(direct_reply.reply_call("someone"), style=reply_style.STYLES[0], max_chars=None)
     result = generator.generate(call, author="someone", text=EN)
-    assert result.outcome is generator.Outcome.FAILED and not result.text
+    assert result.outcome is generator.Outcome.INVALID and not result.text
     assert len(llm.calls) == 2
 
 
@@ -719,4 +719,39 @@ def test_reply_without_a_selected_style_still_rewrites_emojis(llm):
     result = generator.generate(call, author="someone", text=EN)
     assert result.outcome is generator.Outcome.WRITTEN
     assert result.text == "SI needs better evals."
+    assert len(llm.calls) == 2
+
+
+@pytest.mark.parametrize("ending", ["😂", "💀", "😂💀"])
+@pytest.mark.parametrize("styled", [False, True])
+def test_model_supplied_reply_ending_leaves_words_only_for_validation(llm, ending, styled):
+    from dataclasses import replace
+    from src.core import reply_style
+    from src.replies import direct_reply, reply_generator as generator
+    body = "SI needs better evals."
+    llm.default = LLMResult(0, f'"{body} {ending}"', "", provider="writer", model="draft-model")
+    call = replace(direct_reply.reply_call("someone"),
+                   style=reply_style.STYLES[0] if styled else None, max_chars=None)
+    result = generator.generate(call, author="someone", text=EN)
+    assert result.outcome is generator.Outcome.WRITTEN
+    assert result.text == body
+    assert (result.provider, result.model) == ("writer", "draft-model")
+    assert len(llm.calls) == 1
+
+
+@pytest.mark.parametrize("text", [
+    "😂", "💀", "😂💀",
+    "SI needs better evals 🙂 😂",
+    "SI needs 😂 better evals 💀",
+    "SI needs better evals 😂 😂",
+    "SI needs better evals ;-) 💀",
+    "SI needs better evals. 😂💀💀",
+    "AI needs better evals. 😂",
+    "These thirteen words still fail the requested format even with an approved ending. 😂",
+])
+def test_approved_suffix_cannot_hide_invalid_reply_body(llm, text):
+    from src.replies import direct_reply, reply_generator as generator
+    llm.default = text
+    result = generator.generate(direct_reply.reply_call("someone"), author="someone", text=EN)
+    assert result.outcome is generator.Outcome.INVALID and not result.text
     assert len(llm.calls) == 2

@@ -92,6 +92,6 @@ def test_long_reply_gets_one_rewrite_even_without_a_selected_style(llm, rewrites
     llm.default = lambda prompt: next(answers)
     call = reply_generator.ReplyCall("Parent: {tweet_text}", Surface.REPLY_ON_AI_CLI, "TEST", dossier=False)
     result = reply_generator.generate(call, author="someone", text="Grok Imagine generated video")
-    assert result.outcome is (reply_generator.Outcome.WRITTEN if rewrites else reply_generator.Outcome.FAILED)
+    assert result.outcome is (reply_generator.Outcome.WRITTEN if rewrites else reply_generator.Outcome.INVALID)
     assert result.text == (short if rewrites else "")
     assert len(llm.calls) == 2

@@ -8,6 +8,17 @@ Read an entry to understand why a legacy module behaves as it does, or before
 re-enabling a disabled surface. Dates in each entry are the source of truth;
 their order in the file is not strictly chronological.
 
+## October 13, 2026 — approved endings stalled Reply drafting
+
+Selection approved a post at 98/100, but the model kept supplying a permitted
+ending such as `😂💀`. The words-only generator treated it as a forbidden body
+emoji, including after a rewrite, so valid opportunities never reached posting.
+Separate one permitted suffix before all body checks; publishing still chooses
+its random ending. Other emojis, repeated endings, invalid wording and empty
+bodies remain refused. Exhausted format rewrites now return invalid content,
+distinct from provider failure. Caps, selection scores, protected authors and
+final write checks are unchanged.
+
 ## October 13, 2026 — native Reply permalink verification
 
 The protected-author browser check used a broad `[role="link"]` ancestor

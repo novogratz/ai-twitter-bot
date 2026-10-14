@@ -125,6 +125,11 @@ Account.
 
 ## Invariants
 
+2026-10-13 — A model-supplied approved Reply ending is separated before draft
+body validation; the publisher still chooses the ending. Other emojis, repeated
+endings, empty bodies and invalid wording remain refused. An exhausted format
+rewrite returns invalid content, distinct from a provider failure.
+
 2026-10-13 — Native status permalink anchors may themselves have `role="link"`.
 Reply target verification excludes quoted-content div wrappers, not those
 anchors. Continue verifying the actual author/status and protected-author rule.

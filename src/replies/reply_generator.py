@@ -27,6 +27,7 @@ from ..guards.active_hours import OutsideActiveHours
 class Outcome(Enum):
     WRITTEN = "written"  # reply text the job may send
     DECLINED = "declined"  # the model said SKIP: definitive for this post
+    INVALID = "invalid draft"  # answered, but both drafts failed the text checks
     FAILED = "failed"  # no usable answer: the post stays replayable
     RATE_LIMITED = "rate limited"  # provider exhausted: the job generates nothing more this cycle
 
@@ -126,8 +127,14 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
             return Generation(Outcome.FAILED, language=language)
         if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
             return Generation(Outcome.DECLINED, language=language)
+        if call.surface is not Surface.REPLY_SEARCH:
+            # 2026-10-13: models may supply the publisher's approved suffix.
+            # Check the words alone; leave all other decorations for refusal.
+            reply, _ = reply_style.split_ending(reply)
         problem = (call.style.problem(reply) if call.style else "")
         if call.surface is not Surface.REPLY_SEARCH:
+            if not reply:
+                problem = "an ending alone is not a Reply; write a substantive body or SKIP"
             if len(reply.split()) > reply_style.REPLY_MAX_WORDS:
                 problem = "use at most 12 words: one sharp stance or post-specific punchline, without a follow-up explanation"
             if has_emoji_or_smiley(reply):
@@ -140,7 +147,7 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
                            "\nRewrite it in the requested format and wording; return only the reply or SKIP.")
                 continue
             log.info("[%s] Draft still violates Reply instructions: %s", call.label, problem)
-            return Generation(Outcome.FAILED, language=language)
+            return Generation(Outcome.INVALID, language=language)
         if call.max_chars:
             reply = smart_trim(reply, call.max_chars)
         return Generation(Outcome.WRITTEN, language=language, text=reply,
