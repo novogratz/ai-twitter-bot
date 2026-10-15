@@ -39,8 +39,9 @@ before touching the browser or a model).
 ## Waking hours
 
 `src/guards/active_hours.py` owns fixed windows 06:00–09:00, 12:00–13:00
-and 17:00–22:30 Toronto time, with closing times exclusive and DST handled by
-`zoneinfo`. `WINDOWS` owns the bounds;
+and 17:00–24:00 Toronto time, with closing times exclusive and DST handled by
+`zoneinfo`. The evening's midnight end means the following day's 00:00;
+external work is refused from then until 06:00. `WINDOWS` owns the bounds;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 those windows or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
@@ -575,8 +576,8 @@ limit. Preparation checks the normalized, complete text without trimming to a
 smaller ceiling. Queue admission, selection and the write's selected-draft gate
 recheck that limit. Old rows without it retain the previous 278-character ceiling
 until expiry; invalid length metadata stops the queue without overwriting it.
-Each new draft also saves an independent random 50/50 `smiley` boolean. Plain
-drafts require zero reactions; smiley drafts require exactly one friendly face
+Each new draft also saves an independent random `smiley` boolean: 35% true,
+65% false. Plain drafts require zero reactions; smiley drafts require exactly one friendly face
 or positive text emoticon within the same length budget. The prompt carries the
 choice and the queue, selector and selected-draft write gate enforce it. The
 publisher never appends or removes a smiley after review. Older rows without the

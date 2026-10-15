@@ -86,10 +86,10 @@ def test_every_length_also_respects_a_tighter_global_ceiling(monkeypatch):
         assert not length.accepts("a" * 41)
 
 
-def test_smiley_choice_is_random_with_both_plain_and_friendly_drafts(monkeypatch):
-    monkeypatch.setattr(reply_style.random, "choice", random.Random(42).choice)
-    choices = [reply_style.choose_smiley() for _ in range(100)]
-    assert 35 <= sum(choices) <= 65
+def test_smiley_choice_targets_35_percent_with_random_streaks(monkeypatch):
+    monkeypatch.setattr(reply_style.random, "random", random.Random(42).random)
+    choices = [reply_style.choose_smiley() for _ in range(10_000)]
+    assert 3400 <= sum(choices) <= 3600
     assert any(a == b for a, b in zip(choices, choices[1:]))  # No mechanical alternation.
 
 

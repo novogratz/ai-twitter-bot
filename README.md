@@ -25,7 +25,7 @@ creation and uploads remain Operator-managed.
 
 - **Replies only:** no new original posts, including startup/restart posts. The
   Account's `publish_originals = false` wins over engine settings and CLI flags.
-- **Daily Toronto windows:** 06:00–09:00, 12:00–13:00 and 17:00–22:30.
+- **Daily Toronto windows:** 06:00–09:00, 12:00–13:00 and 17:00–24:00.
   Starts inclusive, closes exclusive, with automatic DST handling.
 - **Never interact with @elonmusk:** no replies, likes, follows, unfollows or @mentions,
   including his comments and responses. Saved approvals and whitelist entries
@@ -47,11 +47,11 @@ creation and uploads remain Operator-managed.
   words/60 characters (30%), 120 characters (30%), 200 (20%) or 278 (20%).
   The existing 278-character maximum stays fixed. Limits include spaces and
   reactions, never require padding, and remain enforced through publication.
-  Oversized drafts are skipped. Each draft also draws a roughly 50/50 choice:
-  no smiley, or exactly one friendly smiley/positive text emoticon in a natural
-  position. The saved choice is enforced through publication; no automatic
+  Oversized drafts are skipped. Each draft also draws an independent choice:
+  no smiley (65%), or exactly one friendly smiley/positive text emoticon (35%)
+  in a natural position. The saved choice is enforced through publication; no automatic
   ending or fake typos. Recent replies guide variety.
-- **More active Replies:** a shared 30–45 second cooldown within 9h30 of
+- **More active Replies:** a shared 30–45 second cooldown within 11 hours of
   daily activity windows.
   Actual volume depends on qualifying posts, approved drafts and model/browser
   time; there is no forced quota. Collectors prepare a shared

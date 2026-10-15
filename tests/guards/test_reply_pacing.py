@@ -106,7 +106,7 @@ def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, me
     """Capacity check, not a quota: assume an approved draft is always ready."""
     import math
     clock[0] = clock[0].replace(hour=6, minute=0)
-    end = clock[0].replace(hour=22, minute=30)
+    end = (clock[0] + timedelta(days=1)).replace(hour=0, minute=0)
     sent = 0
     while clock[0] < end:
         if action_guard.can_post(action_guard.REPLY)[0]:
@@ -119,7 +119,7 @@ def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, me
         # The selector runs every ten seconds and never catches up in bursts.
         next_tick = (math.floor(clock[0].timestamp() / 10) + 1) * 10
         clock[0] = datetime.fromtimestamp(next_tick, tz=TORONTO)
-    assert 500 <= sent <= 650, sent
+    assert 600 <= sent <= 750, sent
 
 
 def _reserve_child(folder, start, results, index):

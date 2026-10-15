@@ -100,7 +100,7 @@ def _in_window(clock: str, now) -> bool:
     else:
         hour, mins = map(int, clock.split(":"))
         start = now.replace(hour=hour, minute=mins, second=0, microsecond=0)
-    return start <= now < min(start + SLOT_WINDOW, bedtime(now))
+    return start <= now < min(start + SLOT_WINDOW, bedtime(start))
 
 
 def _open(clock: str, now, journal: SlotJournal) -> bool:
