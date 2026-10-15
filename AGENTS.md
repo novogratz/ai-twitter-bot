@@ -6,6 +6,14 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator lowered smiley frequency to 35%. Each new ranked
+draft independently chooses exactly one friendly smiley/positive text emoticon
+with 35% probability, or plain text with 65%, superseding the 50/50 choice below.
+The saved assignment remains enforced during preparation, selection and the
+final write; nothing is added after review. This is a random probability, not a
+fixed sequence or publication quota. Existing queued drafts retain their reviewed
+assignment until normal expiry. No start or restart accompanies this update.
+
 2026-10-14 — The Operator requested SI / Super intelligence keywords throughout
 research and discovery, and more aggressive Replies during the allowed windows.
 Every Account search query now includes SI, "super intelligence", superintelligence

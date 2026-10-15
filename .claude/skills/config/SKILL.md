@@ -30,8 +30,9 @@ Reply pacing defaults to 30 seconds plus up to 15 seconds of jitter within
 drafts and model/browser time. The minimum cannot be lowered below 30; jitter
 may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
-New ranked drafts independently choose roughly 50/50 between no smiley and
-exactly one friendly smiley, enforced within the assigned length limit through publication.
+New ranked drafts independently choose no smiley with 65% probability or
+exactly one friendly smiley with 35%, enforced within the assigned length limit
+through publication.
 The selector checks every ten seconds after its 60-second startup delay, with
 15 seconds for a new pool to collect choices before independent comparison.
 Every Account discovery query includes SI, "super intelligence", superintelligence

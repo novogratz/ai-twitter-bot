@@ -47,9 +47,9 @@ creation and uploads remain Operator-managed.
   words/60 characters (30%), 120 characters (30%), 200 (20%) or 278 (20%).
   The existing 278-character maximum stays fixed. Limits include spaces and
   reactions, never require padding, and remain enforced through publication.
-  Oversized drafts are skipped. Each draft also draws a roughly 50/50 choice:
-  no smiley, or exactly one friendly smiley/positive text emoticon in a natural
-  position. The saved choice is enforced through publication; no automatic
+  Oversized drafts are skipped. Each draft also draws an independent choice:
+  no smiley (65%), or exactly one friendly smiley/positive text emoticon (35%)
+  in a natural position. The saved choice is enforced through publication; no automatic
   ending or fake typos. Recent replies guide variety.
 - **More active Replies:** a shared 30–45 second cooldown within 9h30 of
   daily activity windows.

@@ -1,5 +1,17 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Smileys in roughly 35% of Replies
+
+The Operator asked for fewer smileys, ideally in only 35% of Replies. The shared
+chooser changes from 50/50 to an independent 35% smiley / 65% plain-text draw
+for every new ranked draft. The existing prompt and checks enforce that saved
+choice through generation, comparison and publication. Nothing is appended or
+removed after review, and existing queued drafts keep their reviewed assignment
+until expiry. Random streaks remain possible; quality review never receives a
+smiley quota. Tests pin the new probability and preserve both plain and friendly
+publication paths. No local environment or production state changes, start or
+restart accompany this update.
+
 ## 2026-10-14 — SI research aliases and faster approved Replies
 
 The Operator requested Super intelligence / SI keywords throughout research and

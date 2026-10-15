@@ -47,8 +47,8 @@ def choose_length() -> Length:
 
 
 def choose_smiley() -> bool:
-    """Independent 50/50 choice per draft, not a fixed alternating pattern."""
-    return random.choice((False, True))
+    """Independent 35% chance per draft, not a fixed alternating pattern."""
+    return random.random() < 0.35
 
 
 def reaction_count(text: str) -> int:

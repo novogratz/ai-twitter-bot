@@ -575,8 +575,8 @@ limit. Preparation checks the normalized, complete text without trimming to a
 smaller ceiling. Queue admission, selection and the write's selected-draft gate
 recheck that limit. Old rows without it retain the previous 278-character ceiling
 until expiry; invalid length metadata stops the queue without overwriting it.
-Each new draft also saves an independent random 50/50 `smiley` boolean. Plain
-drafts require zero reactions; smiley drafts require exactly one friendly face
+Each new draft also saves an independent random `smiley` boolean: 35% true,
+65% false. Plain drafts require zero reactions; smiley drafts require exactly one friendly face
 or positive text emoticon within the same length budget. The prompt carries the
 choice and the queue, selector and selected-draft write gate enforce it. The
 publisher never appends or removes a smiley after review. Older rows without the

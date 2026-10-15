@@ -1,5 +1,14 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — The Operator requested smileys in roughly 35% of Replies. Each new
+ranked draft independently chooses exactly one friendly smiley/positive text
+emoticon with 35% probability and no reaction with 65%. This supersedes the
+50/50 choice below. The saved assignment remains enforced through preparation,
+selection and publication, within the existing length limit. Random streaks are
+possible; no forced alternation or quota changes which draft wins quality review.
+Existing queued drafts retain their reviewed assignment until normal expiry.
+The update does not start or restart the bot.
+
 2026-10-14 — The Operator requested SI / Super intelligence terminology throughout
 research and more aggressive Replies. Every Account query now includes SI,
 "super intelligence", superintelligence and ASI, with AI and "artificial
@@ -212,8 +221,8 @@ Maximum 278 characters, not a target; the brief option allows at most five words
 and 60 characters. A draft that cannot fit meaningfully is skipped.
 The 2-character floor permits meaningful brevity; generic praise and standalone
 reactions remain refused. New ranked drafts use the saved random choice: no
-smiley or exactly one friendly smiley/positive text emoticon, at any natural
-position and within the length limit. No automatic ending, random
+smiley (65%) or exactly one friendly smiley/positive text emoticon (35%), at any
+natural position and within the length limit. No automatic ending, random
 case/period changes or manufactured spelling errors. Recent shipped replies are
 shown as untrusted examples to avoid repeating, never as instructions or facts.
 
