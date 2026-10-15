@@ -12,12 +12,12 @@ def test_reply_only_still_registers_the_reply_engine():
     assert scheduler.get_job("editorial_job") is None
 
 
-def test_discovery_runs_frequently_without_speeding_up_the_single_selector():
+def test_discovery_and_single_selector_run_frequently():
     from main import build_scheduler
     scheduler = build_scheduler(reply_only=True)
     assert scheduler.get_job("direct_reply_job").trigger.interval.total_seconds() == 60
     assert scheduler.get_job("feed_sweep_job").trigger.interval.total_seconds() == 120
-    assert scheduler.get_job("reply_selection_job").trigger.interval.total_seconds() == 15
+    assert scheduler.get_job("reply_selection_job").trigger.interval.total_seconds() == 10
     assert scheduler.get_job("reply_selection_job").executor == "reply_selection"
 
 

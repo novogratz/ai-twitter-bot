@@ -123,10 +123,10 @@ def run_selection_cycle():
         rows = _eligible()
         if not rows:
             return 0
-        # Let startup and post-break collection produce choices. During the
-        # cooldown, review in its last 90 seconds rather than blocking a worker.
+        # Give each new pool 15 seconds to collect choices. The scheduler still
+        # leaves 60 seconds at startup. Review in the cooldown's last 90 seconds.
         oldest = min(reply_queue._stamp(row["created_at"]) for row in rows.values())
-        if active_hours.now_local() - oldest < timedelta(seconds=60):
+        if active_hours.now_local() - oldest < timedelta(seconds=15):
             return 0
         if action_guard.seconds_until_allowed(action_guard.REPLY) > 90:
             return 0

@@ -18,6 +18,7 @@ from datetime import timedelta
 
 from ..x import x_urls
 from ..core.logger import log
+from ..core import reply_queue
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
 from .direct_reply import is_on_niche, reply_call
@@ -57,7 +58,8 @@ def run_mega_watch_cycle():
         if (cycle.work_done(posted) >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited
                 or not reply_pipeline.discovery_available()):
             break
-        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4)
+        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4,
+                                       text_limit=reply_queue.PARENT_TEXT_LIMIT)
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
                                      max_shipped=MAX_REPLIES_PER_CYCLE - cycle.work_done(posted))
 

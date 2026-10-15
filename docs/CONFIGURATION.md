@@ -45,7 +45,7 @@ hold whatever `.env` says:
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Replies per day | Subject to quality and model/browser time; no forced quota or daily cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 60) plus `REPLY_JITTER_SECONDS` (0–180, default 20) space them |
+| Replies per day | Subject to quality and model/browser time; no forced quota or daily cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 30) plus `REPLY_JITTER_SECONDS` (0–180, default 15) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The live Account requires `replies.ranked_selection = true`: shared preparation
@@ -115,8 +115,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
-| `MIN_SECONDS_BETWEEN_REPLIES` | int | `60` | floor `60` | Minimum gap between Replies, including uncertain submissions; actual throughput depends on approved drafts and browser/model time. |
-| `REPLY_JITTER_SECONDS` | int | `20` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 60–80 seconds. |
+| `MIN_SECONDS_BETWEEN_REPLIES` | int | `30` | floor `30` | Minimum gap between Replies, including uncertain submissions; actual throughput depends on approved drafts and browser/model time. |
+| `REPLY_JITTER_SECONDS` | int | `15` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 30–45 seconds. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
 | `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |

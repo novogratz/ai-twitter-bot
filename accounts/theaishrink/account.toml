@@ -13,26 +13,26 @@ previous_handles = ["TheAIShrink"]
 # Language of the Originals: en or fr. Replies follow the parent's language.
 language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
-# AI post", "a strict independent AI editor", "reliable, stable AI knowledge".
+# SI post", "a strict independent SI editor", "reliable, stable SI knowledge".
 domain = "SI / Super intelligence"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
-trend_angle = "Trending: SI or AI news, models and video creation, told from a trusted source"
+trend_angle = "Trending: SI / Super intelligence news, models and video creation, told from a trusted source"
 # Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
 # only news under twelve hours old or an unusually useful source.
 slots = [
-    { clock = "05:00", angle = "Priority: the SI or AI update worth understanding this morning" },
-    { clock = "07:15", angle = "An AI video or Grok Imagine workflow grounded in supplied evidence" },
-    { clock = "09:30", angle = "Priority: an AI article or model update with a sharp consequence" },
+    { clock = "05:00", angle = "Priority: the SI / Super intelligence update worth understanding this morning" },
+    { clock = "07:15", angle = "An SI video or Grok Imagine workflow grounded in supplied evidence" },
+    { clock = "09:30", angle = "Priority: an SI article or model update with a sharp consequence" },
     { clock = "10:00", trend = true },
-    { clock = "11:45", angle = "An AI concept explained through a clear example" },
+    { clock = "11:45", angle = "An SI concept explained through a clear example" },
     { clock = "13:00", trend = true },
     { clock = "14:00", angle = "A model or tool update and what changes for its users" },
     { clock = "15:00", trend = true },
-    { clock = "16:15", angle = "Priority: an evidence-backed take on an AI tradeoff" },
-    { clock = "18:30", angle = "A sharp SI or AI video insight, with playful tech chaos when the evidence fits" },
-    { clock = "20:45", angle = "Optional: an exceptional fresh AI update or unusually useful source", exceptional = true },
+    { clock = "16:15", angle = "Priority: an evidence-backed take on an SI tradeoff" },
+    { clock = "18:30", angle = "A sharp SI / Super intelligence video insight, with playful tech chaos when the evidence fits" },
+    { clock = "20:45", angle = "Optional: an exceptional fresh SI update or unusually useful source", exceptional = true },
 ]
 # News items: RSS or Atom feeds, read on a host of trusted_hosts only.
 feeds = [
@@ -63,13 +63,13 @@ publisher = "Hugging Face docs"
 
 [[editorial.evergreen]]
 topic = "evaluation"
-title = "How to evaluate an AI model on your own examples"
+title = "How to evaluate an SI model on your own examples"
 url = "https://huggingface.co/docs/evaluate/index"
 publisher = "Hugging Face docs"
 
 [[editorial.evergreen]]
 topic = "quantization"
-title = "What quantization trades for smaller AI models"
+title = "What quantization trades for smaller SI models"
 url = "https://huggingface.co/docs/transformers/quantization/overview"
 publisher = "Hugging Face docs"
 
@@ -173,11 +173,11 @@ last_interaction = "2026-05-02"
 category = "builder"
 stance = "fond"
 notes = [
-    "The Operator likes this account. Discuss its supplied AI and data-center work when relevant.",
-    "Be friendly and specific about relevant SI/AI posts; topic and Reply protections still apply.",
+    "The Operator likes this account. Discuss its supplied SI and data-center work when relevant.",
+    "Be friendly and specific about relevant SI / Super intelligence posts; topic and Reply protections still apply.",
 ]
 feelings = "Warm respect. Treat him as a useful operator sharing real results."
-do = "Be playful and specific about supplied AI and data-center claims without inventing results."
+do = "Be playful and specific about supplied SI and data-center claims without inventing results."
 dont = "Do not mock him, his work, his results, or his credibility. Never make him upset."
 
 # An engine setting that has a ceiling or a floor in src/core/settings.py,
@@ -296,49 +296,51 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # X search queries.
 [searches]
 # Every alternative of a query, read with AND before OR or OR before AND,
-# finds posts `post` keeps: a company or energy word goes with AI.
+# finds posts `post` keeps: a company or energy word goes with SI/AI.
+# Every discovery lane includes SI, Super intelligence and superintelligence.
+# AI/artificial intelligence and verified product names remain search aliases.
 # Direct Reply interleaves Latest `replies` and Top `hot_tab` queries, then
 # rotates a bounded slice per cycle. Latest has no popularity minimum;
 # every result still needs topic admission and independent draft review.
 replies = [
-    '("Grok Imagine" OR "AI video" OR "AI generated video") lang:en -filter:replies',
-    '("super intelligence" OR superintelligence OR "SI brainrot" OR "SI brain rot") lang:en -filter:replies',
-    '("AI parody" OR "AI brainrot" OR "AI filmmaking") lang:en -filter:replies',
-    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en -filter:replies',
-    '(OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
-    '(ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
-    '("AI agents" OR "agentic AI" OR "reasoning model" OR AGI) lang:en -filter:replies',
-    '("Claude Code" OR Cursor OR Copilot OR "AI coding") lang:en -filter:replies',
-    '("Meta AI" OR "Apple Intelligence" OR "Microsoft Copilot" OR "Amazon AI" OR "Tesla AI") lang:en -filter:replies',
-    '(Nvidia OR GPU OR "AI datacenter" OR "AI capex") lang:en -filter:replies',
-    '((TSMC OR AMD OR Broadcom) AI OR "AI chips" OR "AI power" OR "AI energy") lang:en -filter:replies',
-    '((CoreWeave OR Nebius OR "Applied Digital") AI OR "data center" OR "AI electricity") lang:en -filter:replies',
-    '("AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek) lang:en -filter:replies',
-    '("AI research" OR "machine learning" OR "AI paper" OR "AI benchmark") lang:en -filter:replies',
-    '("AI tools" OR "AI workflow" OR "AI tutorial" OR "AI demo") lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR "generated video") OR "Grok Imagine") lang:en -filter:replies',
+    '(SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (parody OR brainrot OR "brain rot" OR filmmaking)) lang:en -filter:replies',
+    '("why would" OR "why is" OR "what am I missing") (Nvidia OR (SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence")) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release OR research) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR chatbot) OR ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR agentic OR reasoning) OR "reasoning model" OR AGI) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding) OR "Claude Code" OR Cursor OR Copilot) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (Meta OR Apple OR Microsoft OR Amazon OR Tesla) OR "Apple Intelligence" OR "Microsoft Copilot") lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia OR GPU) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (TSMC OR AMD OR Broadcom OR chips OR power OR energy)) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR electricity)) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (startup OR funding OR layoffs OR jobs OR "open source") OR DeepSeek) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (research OR paper OR benchmark OR alignment) OR "machine learning") lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (tools OR workflow OR tutorial OR demo)) lang:en -filter:replies',
 ]
 hot_tab = [
-    '"Grok Imagine" OR "AI video" OR "AI brainrot" lang:en min_faves:300 -filter:replies',
-    'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
-    'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
-    '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
-    'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR brainrot) OR "Grok Imagine") lang:en min_faves:300 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:500 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:300 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:300 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:500 -filter:replies',
 ]
 # like_job picks one per cycle, on the Top or the Latest tab, and likes
 # what it finds without the niche check: the query is the only filter.
 likes = [
-    '("Grok Imagine" OR "AI video" OR "AI generated") filter:videos lang:en min_faves:50',
-    '("SI brainrot" OR "SI brain rot" OR "AI parody") filter:videos lang:en min_faves:50',
-    'AI datacenter OR AI power demand lang:en min_faves:50',
-    'megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50',
-    'Nvidia OR GPU OR AI compute cluster lang:en min_faves:50',
-    'robotics OR humanoid robots lang:en min_faves:50',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR generated) OR "Grok Imagine") filter:videos lang:en min_faves:50',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (brainrot OR "brain rot" OR parody)) filter:videos lang:en min_faves:50',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (megawatt OR gigawatt OR nuclear)) lang:en min_faves:50',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") ("compute cluster") OR Nvidia OR GPU) lang:en min_faves:50',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (robotics OR robots) OR robotics OR "humanoid robots") lang:en min_faves:50',
 ]
 # The Trend slots and the Startup post run each one on the Top tab, keep the
 # posts of the last 24 hours that pass the relevance filter, and take their
 # topic from the fastest-rising five.
 trending = [
-    '"Grok Imagine" OR "AI video" OR "super intelligence" OR superintelligence lang:en min_faves:50 -filter:replies',
-    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
-    'AI lang:en min_faves:200 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video) OR "Grok Imagine") lang:en min_faves:50 -filter:replies',
+    '(SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") lang:en min_faves:50 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (research OR model OR agents OR benchmark)) lang:en min_faves:200 -filter:replies',
 ]

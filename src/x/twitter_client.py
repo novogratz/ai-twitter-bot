@@ -497,7 +497,7 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
     Never use X's keyboard selection: it may point at a comment or a quote.
     An unreadable or ambiguous page cannot authorize a Reply.
     """
-    from ..core import account, config
+    from ..core import account, config, reply_queue
     from . import x_urls
 
     sid, expected = x_urls.status_id(url), x_urls.author(url)
@@ -507,7 +507,6 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
         return False
     expected_parent = None
     if account.current().replies.ranked_selection:
-        from ..core import reply_queue
         expected_parent = reply_queue.selected_parent(url)
         if expected_parent is None:
             return False
@@ -529,7 +528,7 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
       const expectedParent = __PARENT__;
       const normalize = s => s.replace(/\s+/g, ' ').trim();
       if (expectedParent !== null && normalize(text) !== normalize(expectedParent)
-          && !(expectedParent.length === 4000 && normalize(text).startsWith(normalize(expectedParent))))
+          && !(Array.from(expectedParent).length === __PARENT_LIMIT__ && normalize(text).startsWith(normalize(expectedParent))))
         return 'refused';
       const mentions = text.match(/@[A-Za-z0-9_]+/g) || [];
       if (mentions.some(h => blocked.some(b => h.toLowerCase().replace(/[\s_\-@]/g, '').includes(b))))
@@ -546,7 +545,8 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
     })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
     js = js.replace("__CLICK__", "true" if click else "false").replace(
         "__SELF__", json.dumps(sorted(config.own_handles())))
-    js = js.replace("__PARENT__", json.dumps(expected_parent))
+    js = js.replace("__PARENT__", json.dumps(expected_parent)).replace(
+        "__PARENT_LIMIT__", str(reply_queue.PARENT_TEXT_LIMIT))
     from ..guards.reply_admission import _normalise
     js = js.replace("__BLOCKED__", json.dumps([
         _normalise(h) for h in (*config.BLOCKLIST, *account.current().network.blocked_accounts) if _normalise(h)]))

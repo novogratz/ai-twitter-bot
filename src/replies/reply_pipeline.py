@@ -19,7 +19,7 @@ import random
 import time
 import traceback
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Callable
 
 from ..core import account, config, engagement_log, outgoing_text, reply_queue, reply_style
@@ -241,7 +241,10 @@ def _generate(job: Job, candidate: Candidate, author: str,
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
-    return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
+    call = job.reply_call(author)
+    if account.current().replies.ranked_selection:
+        call = replace(call, text_limit=reply_queue.PARENT_TEXT_LIMIT)
+    return reply_generator.generate(call, author=author, text=candidate.text,
                                     context=candidate.context, length=length, smiley=smiley)
 
 

@@ -1,5 +1,33 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — SI research aliases and faster approved Replies
+
+The Operator requested Super intelligence / SI keywords throughout research and
+more aggressive Replies within the allowed hours, with a pushed and merged PR
+and release. Every Account query now includes SI, "super intelligence",
+superintelligence and ASI, while keeping AI and "artificial intelligence" as
+search aliases. This covers replies, generated videos, tools, research, models,
+infrastructure, popular posts, likes and trends. Account-authored prose uses SI;
+real publisher/product names, handles and URLs remain intact. Both Voice files
+also replace their stale four-window wording with the three current windows.
+
+The shared cooldown becomes 30–45 seconds, with a 30-second floor and 15-second
+default jitter. The selector checks every ten seconds and gives new pools
+15 seconds to collect choices; its first run still waits 60 seconds. Independent
+review, factual support, kind tone and permanent target protection remain.
+Existing cooldown deadlines are honored and no quota forces a publication.
+
+Inspection found that collectors cut parent posts to 200 characters and ranked
+generation used 200/300-character snippets, while the final write compared the
+opened text with the saved parent. A legitimate longer post could therefore
+lose evidence before drafting and fail the final comparison. All Reply collectors
+now retain up to 4,000 visible characters, and ranked generation receives that
+same evidence. Browser and Python limits count Unicode characters consistently.
+The strict author, standalone and reviewed-parent checks still apply; changed,
+unreadable or unexpectedly expanded content cannot pass. Old saved drafts keep
+their reviewed snapshots. Production history is preserved; only the two local
+pacing values change. This release workflow does not start or restart the bot.
+
 ## 2026-10-14 — Three activity windows and broader, faster AI/SI discovery
 
 The Operator requested more aggressive Replies to interesting AI/SI posts from

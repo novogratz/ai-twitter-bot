@@ -80,3 +80,51 @@ def test_ownership_recognizes_new_and_historical_handles_but_not_display_names()
         assert scraper.is_own_post({"url": f"https://twitter.com/{handle}/status/123?s=20"})
     assert not scraper.is_own_post({"url": "https://x.com/other/status/123", "author": "The SI Maximalist"})
     assert not scraper.is_own_post({"url": "https://example.com/thesimaximalist/status/123"})
+
+
+@pytest.mark.parametrize("surface", ["profile", "home", "following", "search"])
+def test_reply_scrape_surfaces_forward_the_parent_text_limit(monkeypatch, surface):
+    from src.x import scraper, safari
+    monkeypatch.setattr(scraper, "_profile_visit_allowed", lambda username: True)
+    monkeypatch.setattr(scraper.time, "sleep", lambda *a: None)
+    for name in ("open_url", "_scroll_page", "close_front_tab"):
+        monkeypatch.setattr(safari, name, lambda *a, **k: None)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "CLICKED")
+    seen = []
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda label, count, limit:
+                        seen.append((count, limit)) or [])
+    calls = {"profile": lambda: scraper.scrape_profile_tweets("builder", 3, text_limit=4000),
+             "home": lambda: scraper.scrape_home_feed(3, text_limit=4000),
+             "following": lambda: scraper.scrape_following_feed(3, text_limit=4000),
+             "search": lambda: scraper.scrape_x_search("SI research", 3, text_limit=4000)}
+    assert calls[surface]() == []
+    assert seen == [(3, 4000)]
+
+
+@pytest.mark.parametrize("text", ["SI research.\n" * 30, "SI " + "🙂" * 4000])
+def test_scraped_visible_text_retains_long_evidence_and_counts_unicode_characters(monkeypatch, text):
+    import json
+    import shutil
+    import subprocess
+    from src.x import scraper, safari
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed to execute the browser script fixture")
+    harness = r"""
+const input = JSON.parse(process.argv[1]);
+const article = {
+  innerHTML: '', innerText: input.text,
+  querySelector: selector => selector === '[data-testid="tweetText"]'
+    ? {innerText: input.text, textContent: 'Hidden or differently formatted content'} : null,
+  querySelectorAll: () => [{getAttribute: () => '/builder/status/123'}]
+};
+global.document = {querySelectorAll: () => [article]};
+process.stdout.write(eval(input.js));
+"""
+    def run(js, *args, **kwargs):
+        return subprocess.run([node, "-e", harness, json.dumps({"text": text, "js": js})],
+                              capture_output=True, text=True, check=True).stdout
+    monkeypatch.setattr(safari, "_run_js", run)
+    rows = scraper._scrape_tweets_from_page("test", 1, 4000)
+    assert rows[0]["text"] == text.strip()[:4000]
+    assert len(rows[0]["text"]) > 200

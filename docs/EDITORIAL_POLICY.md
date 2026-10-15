@@ -1,5 +1,31 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — The Operator requested SI / Super intelligence terminology throughout
+research and more aggressive Replies. Every Account query now includes SI,
+"super intelligence", superintelligence and ASI, with AI and "artificial
+intelligence" retained as discovery aliases. This applies to reply, video, Top,
+like and trend research. Account-authored prompt and profile prose uses SI;
+verified publisher/product names, handles and literal links remain exact. The
+terminology does not establish that a system has achieved super intelligence.
+
+The shared cooldown is now 30–45 seconds: minimum/floor 30 and default jitter 15,
+superseding the earlier gap below. The selector runs every ten seconds, with a
+15-second collection delay for a new pool and the existing 60-second startup
+delay. One independently approved draft may ship per cycle; every dimension must
+still score at least 4/5, with positive tone, relevance and explicit factual
+support. Saved cooldowns and uncertain submissions remain binding. No volume
+quota forces a Reply. The three Toronto windows remain 06:00–09:00, 12:00–13:00
+and 17:00–22:30, including in both Voice files.
+
+Collectors and ranked drafting retain up to 4,000 visible parent characters
+instead of 200-character snippets. Browser and Python limits count Unicode
+characters consistently. The final write still verifies the actual author,
+standalone target and the reviewed text; changed or expanded content outside
+that existing bound remains refused. Elon protection, no own/nested replies,
+permanent deduplication, Reply-only publishing and random reply style remain.
+Only two local pacing settings change. The requested PR, push, merge and release
+do not start or restart the bot.
+
 2026-10-14 — The Operator requested more aggressive Replies to interesting
 AI/SI posts during 06:00–09:00, 12:00–13:00 and 17:00–22:30 Toronto every day.
 These fixed windows supersede the four windows below. The shared gap becomes
@@ -222,7 +248,7 @@ Replyback, Debate, babysitter and notification jobs remain unscheduled; their
 retained manual paths cannot publish conversation replies. Automatic pinning is
 unscheduled. Non-publishing likes, follows, browser upkeep and measurement jobs
 keep their existing limits and respect the no-contact rule. Reply volume has no
-forced daily quota or cap; the aim is near 300 per full day, subject to the
+forced daily quota or cap; actual volume depends on the
 shared cooldown, model/browser time, quality and per-cycle preparation bounds.
 
 ## Bounds on volume and check settings
@@ -237,8 +263,8 @@ warnings under `settings_warnings`.
 | Setting | Bound | Default |
 |---|---|---|
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
-| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 60 s | 60 |
-| `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 20 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 30 s | 30 |
+| `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 15 |
 | `LIKE_BOT_PER_CYCLE`, likes per `like_job` cycle | 0 to 10 | 10 |
 | `LIKE_BOT_DAILY_CAP`, `like_job` likes per day | 0 to 500 | 500 |
 | `FOLLOW_TOTAL_CAP`, accounts followed in total | 0 to 3500 | 300 |

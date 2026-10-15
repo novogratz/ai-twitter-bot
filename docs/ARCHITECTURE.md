@@ -88,7 +88,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `feed_sweep_job` | 2 min | Reads up to 40 posts each from For You and Following, alternating first priority; prepares up to four draft attempts per feed by default. |
 | `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
 | `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
-| `reply_selection_job` | 15 sec; first run after 60 sec | Dedicated worker independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
+| `reply_selection_job` | 10 sec; first run after 60 sec | Dedicated worker gives a new pool 15 seconds to gather choices, independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
@@ -468,9 +468,9 @@ Five modules sit behind them:
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
-  retweets are always refused. Reply spacing defaults to 60 seconds plus 0–20
+  retweets are always refused. Reply spacing defaults to 30 seconds plus 0–15
   seconds of jitter; browser work, selector ticks and model time also affect
-  throughput. The minimum floor is 60; jitter may be 0–180. Independent
+  throughput. The minimum floor is 30; jitter may be 0–180. Independent
   review and the rest of admission also apply. The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
@@ -555,6 +555,12 @@ root/niche/blocked-mention checks, reserves one draft per status ID, generates
 and validates the text, and saves the provider/model and parent snapshot in
 `reply_draft_queue.json`. Collectors do not publish or wait out the cooldown.
 The queue has at most eight active drafts; drafts expire after 30 minutes.
+All Reply searches and profile/feed collectors request up to 4,000 visible
+parent characters. The scraper uses rendered text, like the final verifier, and
+counts Unicode characters consistently with Python. Ranked generation receives
+the same limit instead of the old 200/300-character snippet. Independent review
+sees the saved parent; author/standalone checks and exact parent matching still
+run at the write, including refusal of changed or newly expanded text.
 All four collectors check queue capacity before starting another browser read.
 This is a read-only hint; reservation still enforces the bound under its process
 lock. Per-cycle budgets count reserved draft attempts, including declined or
@@ -577,7 +583,8 @@ publisher never appends or removes a smiley after review. Older rows without the
 field retain the earlier optional-one rule until expiry; invalid fields fail closed.
 
 `reply_selection_job` has its own worker and process lock. Startup gives the
-collectors at least 60 seconds. During a cooldown it waits until the final 90
+collectors at least 60 seconds. A new pool gets 15 seconds to gather choices.
+During a cooldown it waits until the final 90
 seconds to request an independent comparison on `Surface.REPLY_REVIEW`, using
 the Reply model/provider settings. Strict JSON requires exactly one review per
 supplied ID. Impact, sharpness and interest must each score at least 4/5, with
@@ -598,7 +605,7 @@ drafts are never automatically replayed. A weak pool leaves the slot empty.
 The Reply source still supplies each collector's age, niche and ordering rules;
 `StateUnreadable` and `OutsideActiveHours` stop collection/selection. A provider
 rate limit stops preparation for that cycle. The generic unranked Account path
-retains sequential and overlapping generation; it still shares the 60-second
+retains sequential and overlapping generation; it still shares the 30-second
 engine floor, persisted submit cooldown and all other write guards. It is not
 the live Account's publishing path.
 

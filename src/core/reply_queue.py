@@ -11,6 +11,7 @@ from ..x import x_urls
 QUEUE = StateFile("reply_draft_queue.json", {}, GUARDED)
 LOCK = StatePath("reply_draft_queue.lock")
 MAX_PENDING = 8
+PARENT_TEXT_LIMIT = 4000
 PENDING = {"preparing", "ready", "reviewed", "selected"}
 TTL = timedelta(minutes=30)
 REVIEW_TTL = timedelta(minutes=10)
@@ -100,7 +101,7 @@ def reserve(candidate, *, length: Length = Length.FULL, smiley: bool | None = No
         active = sum(row["status"] in PENDING for row in data.values())
         if sid in data or active >= MAX_PENDING:
             return ""
-        data[sid] = dict(url=candidate.url, parent=candidate.text[:4000], source=candidate.source,
+        data[sid] = dict(url=candidate.url, parent=candidate.text[:PARENT_TEXT_LIMIT], source=candidate.source,
                          text="", provider="", model="", language="", pattern="", status="preparing",
                          length=length.name,
                          created_at=active_hours.now_local().isoformat())
@@ -195,7 +196,7 @@ def matches_parent(url: str, text: str) -> bool:
         return False
     normalize = lambda s: re.sub(r"\s+", " ", s).strip()
     expected, actual = normalize(row["parent"]), normalize(text)
-    return actual == expected or (len(row["parent"]) == 4000 and actual.startswith(expected))
+    return actual == expected or (len(row["parent"]) == PARENT_TEXT_LIMIT and actual.startswith(expected))
 
 
 def selected_parent(url: str):

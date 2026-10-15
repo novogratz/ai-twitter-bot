@@ -121,7 +121,7 @@ Original, and rendered as one block, under the
 configured handle, at the top of every Original and Reply prompt. A prompt
 says what to write; only the Voice says who writes it.
 The current Voice takes precedence over old examples and learned memories.
-The SI Maximalist covers sourced SI/AI news, AI videos, SI brainrot and fictional
+The SI Maximalist covers sourced SI / Super intelligence news, SI videos, SI brainrot and fictional
 celebrity parodies; specific clip claims need supplied context. Her supplied
 character is a humble, fun, kind American mom from the San Francisco Bay Area.
 She is enthusiastic about SI, Trump, Elon and American builders, with Grok and
@@ -284,8 +284,8 @@ like or follow policy.
 ### Time and people
 
 **Waking hours**:
-The fixed daily Toronto windows when the account acts externally: 05:00–09:30,
-12:05–13:00, 17:15–20:00 and 22:00–23:00. `active_hours.WINDOWS` owns the bounds; starts
+The fixed daily Toronto windows when the account acts externally: 06:00–09:00,
+12:00–13:00 and 17:00–22:30. `active_hours.WINDOWS` owns the bounds; starts
 are inclusive and closing times exclusive, with no daily jitter.
 _Avoid_: active hours, working day, awake
 
@@ -337,3 +337,8 @@ unavailable at every entry point, including startup. Existing editorial terms
 above describe retained engine support and history, not live publishing.
 **Outgoing wording**: Account `text_replacements` applied before final validation;
 SI / Super intelligence in prose, exact literal links and handles.
+
+**Discovery aliases**: SI, "super intelligence", superintelligence and ASI in
+every Account search query, alongside AI and "artificial intelligence" to find
+sources using those terms. Discovery vocabulary does not change outgoing wording
+or establish a system's capabilities.
