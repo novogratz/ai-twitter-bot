@@ -197,7 +197,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         for (var i = 0; i < Math.min(articles.length, MAX_TWEETS); i++) {
             var a = articles[i];
             var textEl = a.querySelector('[data-testid="tweetText"]');
-            var text = textEl ? textEl.textContent.trim() : '';
+            var text = textEl ? (textEl.innerText || textEl.textContent || '').trim() : '';
             if (!text) continue;
             var links = a.querySelectorAll('a[href*="/status/"]');
             var url = '';
@@ -221,7 +221,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             var views = 0;
             var an = a.querySelector('a[href*="/analytics"]');
             if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            if (url) tweets.push(JSON.stringify({u: url, t: Array.from(text).slice(0, TEXT_LIMIT).join(''), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -330,7 +330,7 @@ def _profile_visit_allowed(username: str) -> bool:
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
 
 
-def scrape_profile_tweets(username: str, max_tweets: int = 5):
+def scrape_profile_tweets(username: str, max_tweets: int = 5, text_limit: int = 200):
     """Visit a profile and scrape their recent tweet URLs and text.
 
     Gated by `_profile_visit_allowed`: non-allowlisted profiles return []
@@ -345,7 +345,7 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
         time.sleep(8)
         safari._scroll_page()
 
-        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets)
+        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets, text_limit)
         safari.close_front_tab()
         return tweets
 
@@ -367,7 +367,7 @@ def scrape_mentions(max_tweets: int = 20):
         return tweets
 
 
-def scrape_home_feed(max_tweets: int = 15):
+def scrape_home_feed(max_tweets: int = 15, text_limit: int = 200):
     """Scrape tweets from the home feed (For You / algorithmic)."""
     with safari._safari_lock:
         log.info("[SCRAPE] Opening home feed...")
@@ -379,12 +379,12 @@ def scrape_home_feed(max_tweets: int = 15):
         for _ in range(max(4, min(15, max_tweets // 7))):
             safari._scroll_page()
 
-        tweets = _scrape_tweets_from_page("home feed", max_tweets)
+        tweets = _scrape_tweets_from_page("home feed", max_tweets, text_limit)
         safari.close_front_tab()
         return tweets
 
 
-def scrape_following_feed(max_tweets: int = 15):
+def scrape_following_feed(max_tweets: int = 15, text_limit: int = 200):
     """Scrape the chronological 'Following' tab — only accounts we follow.
 
     The Following tab is a JS-rendered tab on /home (not its own URL). We open
@@ -417,7 +417,7 @@ def scrape_following_feed(max_tweets: int = 15):
         for _ in range(max(2, min(8, max_tweets // 12))):
             safari._scroll_page()
 
-        tweets = _scrape_tweets_from_page("following feed", max_tweets)
+        tweets = _scrape_tweets_from_page("following feed", max_tweets, text_limit)
         safari.close_front_tab()
         return tweets
 

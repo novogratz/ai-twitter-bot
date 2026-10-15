@@ -84,7 +84,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job", enabled=False)
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
         from src.replies.reply_selection import run_selection_cycle
-        add(health.wrap_job(run_selection_cycle, "reply_selection", safari_health=False), 0.25,
+        add(health.wrap_job(run_selection_cycle, "reply_selection", safari_health=False), 10 / 60,
             "reply_selection_job", executor="reply_selection", first_seconds=60,
             enabled=account.current().replies.ranked_selection)
         add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job", enabled=False)

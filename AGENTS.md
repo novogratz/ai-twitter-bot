@@ -6,6 +6,30 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator requested SI / Super intelligence keywords throughout
+research and discovery, and more aggressive Replies during the allowed windows.
+Every Account search query now includes SI, "super intelligence", superintelligence
+and ASI; AI and "artificial intelligence" remain search aliases so source posts
+are still found. Product names, handles, feeds and URLs stay exact. Account-authored
+prompt and profile prose uses SI / Super intelligence. This is terminology,
+never evidence that a system has achieved super intelligence.
+
+The shared Reply cooldown becomes 30–45 seconds (minimum/floor 30, default jitter
+15), superseding 60–80 below. Saved deadlines remain honored. The selector runs
+every ten seconds, after the existing 60-second startup delay; each new pool gets
+15 seconds to collect choices before independent comparison. Only one approved
+draft can ship per cycle. Existing review scores, kindness, factual support,
+protected authors, Reply-only publishing, permanent deduplication and Toronto
+windows 06:00–09:00, 12:00–13:00, 17:00–22:30 remain. Volume is never a quota.
+
+Reply collectors and ranked drafting retain up to 4,000 visible parent characters,
+counted consistently in Python and browser scripts. A 200-character discovery
+snippet must not replace the full visible evidence. The final write still verifies
+the opened author, standalone parent and reviewed text; changed, expanded or
+unreadable content remains refused. Both Voice files now reflect the current
+windows. Only the two local pacing settings change. The Operator requested push,
+PR, merge and release; no start or restart accompanies this workflow.
+
 2026-10-14 — The Operator requested more aggressive AI/SI Replies during
 06:00–09:00, 12:00–13:00 and 17:00–22:30 America/Toronto every day, without
 jitter. These three windows supersede the four windows below; closing times
@@ -140,7 +164,7 @@ are preserved; the later pacing mandate above changes only the two Reply spacing
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the current source of
 truth. This mandate supersedes the September 26 snapshot's publishing behavior
 and the October 13 activity windows. The rollback history is in `docs/HISTORY.md`.
-Replies use the shared 60–80 second cooldown and independent comparison within
+Replies use the shared 30–45 second cooldown and independent comparison within
 the three current windows, without a forced quota; likes and follows
 retain their existing caps and exclude Blocked accounts. Quotes, reposts,
 self-recycling and threads remain disabled. The Account remains The SI Maximalist:

@@ -192,7 +192,7 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     # The Operator's bounds of #201.
     ("FOLLOW_TOTAL_CAP = 5000", "FOLLOW_TOTAL_CAP", 3500),
     ("LIKE_BOT_DAILY_CAP = 1800", "LIKE_BOT_DAILY_CAP", 500),
-    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 60),
+    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 30),
     ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
     ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
     ("FOLLOWBACK_CAP = -1", "FOLLOWBACK_CAP", 0),
@@ -334,28 +334,28 @@ NETWORK = {
         r"(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b",
         34),
     "SEARCH_QUERIES": [
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en -filter:replies',
-        '(OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
-        '(ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
-        '("AI agents" OR "agentic AI" OR "reasoning model" OR AGI) lang:en -filter:replies',
-        '("Claude Code" OR Cursor OR Copilot OR "AI coding") lang:en -filter:replies',
-        '("Meta AI" OR "Apple Intelligence" OR "Microsoft Copilot" OR "Amazon AI" OR "Tesla AI") lang:en -filter:replies',
-        '(Nvidia OR GPU OR "AI datacenter" OR "AI capex") lang:en -filter:replies',
-        '((TSMC OR AMD OR Broadcom) AI OR "AI chips" OR "AI power" OR "AI energy") lang:en -filter:replies',
-        '((CoreWeave OR Nebius OR "Applied Digital") AI OR "data center" OR "AI electricity") lang:en -filter:replies',
-        '("AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek) lang:en -filter:replies',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR (SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence")) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release OR research) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR chatbot) OR ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR agentic OR reasoning) OR "reasoning model" OR AGI) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding) OR "Claude Code" OR Cursor OR Copilot) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (Meta OR Apple OR Microsoft OR Amazon OR Tesla) OR "Apple Intelligence" OR "Microsoft Copilot") lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia OR GPU) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (TSMC OR AMD OR Broadcom OR chips OR power OR energy)) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR electricity)) lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (startup OR funding OR layoffs OR jobs OR "open source") OR DeepSeek) lang:en -filter:replies',
     ],
     "HOT_TAB_QUERIES": [
-        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
-        'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
-        '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
-        'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:500 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:300 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:300 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:500 -filter:replies',
     ],
     "LIKE_QUERIES": [
-        "AI datacenter OR AI power demand lang:en min_faves:50",
-        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
-        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
-        "robotics OR humanoid robots lang:en min_faves:50",
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (megawatt OR gigawatt OR nuclear)) lang:en min_faves:50',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") ("compute cluster") OR Nvidia OR GPU) lang:en min_faves:50',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (robotics OR robots) OR robotics OR "humanoid robots") lang:en min_faves:50',
     ],
 }
 
@@ -411,21 +411,21 @@ REMOVED_205 = {
 # paired with AI: before -> after.
 NARROWED_205 = {
     '"why would" OR "why is" OR "what am I missing" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30':
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en -filter:replies',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR (SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence")) lang:en -filter:replies',
     'Nvidia OR NVDA OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50':
-        '(Nvidia OR GPU OR "AI datacenter" OR "AI capex") lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia OR GPU) lang:en -filter:replies',
     'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30':
-        '((TSMC OR AMD OR Broadcom) AI OR "AI chips" OR "AI power" OR "AI energy") lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (TSMC OR AMD OR Broadcom OR chips OR power OR energy)) lang:en -filter:replies',
     'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30':
-        '((CoreWeave OR Nebius OR "Applied Digital") AI OR "data center" OR "AI electricity") lang:en -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR electricity)) lang:en -filter:replies',
     "AI datacenter OR power demand lang:en min_faves:50":
-        "AI datacenter OR AI power demand lang:en min_faves:50",
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
     "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50":
-        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (megawatt OR gigawatt OR nuclear)) lang:en min_faves:50',
     "Nvidia OR GPU OR compute cluster lang:en min_faves:50":
-        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") ("compute cluster") OR Nvidia OR GPU) lang:en min_faves:50',
     "robotics OR humanoid robots OR frontier tech lang:en min_faves:50":
-        "robotics OR humanoid robots lang:en min_faves:50",
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (robotics OR robots) OR robotics OR "humanoid robots") lang:en min_faves:50',
 }
 
 
@@ -820,6 +820,35 @@ def test_si_and_video_creators_match_the_account_scope(text):
     assert is_on_niche(text)
     assert loaded.niche.bio.search(text)
     assert loaded.relevance.topic.search(text)
+
+
+@pytest.mark.parametrize("lane", ["replies", "hot_tab", "likes", "trending"])
+def test_every_research_lane_includes_si_terms_and_legacy_search_aliases(lane):
+    for query in getattr(account.current().searches, lane):
+        assert all(term in query for term in ('SI', '"super intelligence"', 'superintelligence', 'ASI',
+                                               'AI', '"artificial intelligence"'))
+        assert len(query) < 500
+        if lane != "likes":
+            assert "-filter:replies" in query
+
+
+@pytest.mark.parametrize("alias", ["SI", "Super intelligence", "superintelligence", "ASI"])
+@pytest.mark.parametrize("subject", ["research", "videos", "tools", "models", "agents"])
+def test_si_subjects_qualify_for_posts_bios_and_source_titles(alias, subject):
+    loaded = account.current()
+    text = f"Building {alias} {subject}"
+    assert loaded.niche.post.search(text)
+    assert loaded.niche.bio.search(text)
+    assert loaded.relevance.topic.search(text)
+
+
+@pytest.mark.parametrize("language", ["en", "fr"])
+def test_voice_research_aliases_and_hours_match_current_policy(language):
+    from src.core import personality_store
+    voice = personality_store.render_voice(language)
+    assert all(term in voice for term in ('SI', '"super intelligence"', 'superintelligence', '"artificial intelligence"'))
+    assert all(window in voice for window in ("06:00–09:00", "12:00–13:00", "17:00–22:30"))
+    assert "05:00–09:30" not in voice
 
 
 @pytest.mark.parametrize("text", ["Si tu viens demain", "si j'avais su", "My vacation video", "Celebrity gossip today"])

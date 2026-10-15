@@ -25,13 +25,17 @@ The live Account has `publish_originals = false`; `.env` cannot enable Originals
 Keep its no-contact protection in `network.blocked_accounts` as well as
 `replies.protected_handles`. Outgoing SI wording is in `text_replacements`.
 
-Reply pacing defaults to 60 seconds plus up to 20 seconds of jitter within
+Reply pacing defaults to 30 seconds plus up to 15 seconds of jitter within
 06:00–09:00, 12:00–13:00 and 17:00–22:30 Toronto every day, subject to approved
-drafts and model/browser time. The minimum cannot be lowered below 60; jitter
+drafts and model/browser time. The minimum cannot be lowered below 30; jitter
 may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
 New ranked drafts independently choose roughly 50/50 between no smiley and
 exactly one friendly smiley, enforced within the assigned length limit through publication.
+The selector checks every ten seconds after its 60-second startup delay, with
+15 seconds for a new pool to collect choices before independent comparison.
+Every Account discovery query includes SI, "super intelligence", superintelligence
+and ASI, retaining AI and "artificial intelligence" as search aliases.
 
 Direct discovery runs every minute with three rotating Latest/Top queries and
 four draft attempts per cycle by default. Feed sweeps run every two minutes,

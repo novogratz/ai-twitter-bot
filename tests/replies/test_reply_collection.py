@@ -137,3 +137,31 @@ def test_mega_watch_counts_preparation_instead_of_zero_publications(monkeypatch,
         {"url": fresh("builder", minutes=1, n=n), "text": PARENT} for n in range(5)])
     mega.run_mega_watch_cycle()
     assert len(drafting.calls) == len(reply_queue.ready()) == mega.MAX_REPLIES_PER_CYCLE
+
+
+@pytest.mark.parametrize("run", [direct.run_direct_reply_cycle, feed.run_feed_sweep_cycle,
+                                  early.run_early_bird_cycle, mega.run_mega_watch_cycle])
+def test_collectors_and_drafts_keep_parent_evidence_after_200_characters(monkeypatch, settings_override, drafting, run):
+    parent = "SI model details. " * 22 + "Conclusion: latency depends on batching."
+    url = fresh("builder", minutes=1)
+    settings_override(VIP_SCAN_HANDLES="builder", DIRECT_REPLY_MAX_PER_CYCLE=1)
+    monkeypatch.setattr(early, "_scan_pool", lambda: ["builder"])
+    monkeypatch.setattr(mega, "_watch_pool", lambda: ["builder"])
+    requested = []
+    def scrape(*args, **kwargs):
+        requested.append(kwargs["text_limit"])
+        return [{"url": url, "text": parent}]
+    monkeypatch.setattr(pipeline, "scrape", scrape)
+    run()
+    assert requested and set(requested) == {4000}
+    assert len(drafting.calls) == 1
+    assert "Conclusion: latency depends on batching." in drafting.calls[0].prompt
+    assert next(iter(reply_queue.ready().values()))["parent"] == parent
+
+
+def test_topic_search_uses_the_same_parent_limit_as_the_vip_pass(monkeypatch, settings_override):
+    settings_override(VIP_SCAN_HANDLES="", DIRECT_REPLY_QUERIES_PER_CYCLE=1)
+    seen = []
+    monkeypatch.setattr(direct, "scrape_x_search", lambda *a, **k: seen.append(k["text_limit"]) or [])
+    direct.run_direct_reply_cycle()
+    assert seen == [4000]

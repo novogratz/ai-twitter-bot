@@ -15,7 +15,7 @@ import traceback
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core import account, config, settings
+from ..core import account, config, settings, reply_queue
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline, reply_source
@@ -82,7 +82,8 @@ def _sweep_one_feed(source, scraper, cycle):
     if not reply_pipeline.discovery_available():
         return
     log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
-    tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
+    tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"),
+                                   text_limit=reply_queue.PARENT_TEXT_LIMIT)
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
         return

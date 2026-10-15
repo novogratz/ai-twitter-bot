@@ -6,7 +6,7 @@ import random
 from datetime import timedelta
 from itertools import zip_longest
 from ..x import x_urls
-from ..core import account, settings
+from ..core import account, settings, reply_queue
 from ..core.llm_client import Surface
 from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
@@ -120,7 +120,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
             continue
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
-                                       max_tweets=20, tab="latest")
+                                       max_tweets=20, tab="latest", text_limit=reply_queue.PARENT_TEXT_LIMIT)
         candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
                       if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))
                       and not x_urls.is_reply_like_tweet(t, handle)]
@@ -226,7 +226,7 @@ def run_direct_reply_cycle(max_replies=None):
             break
         tab = "latest" if query in searches.replies else "top"
         tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
-                                       max_tweets=25, tab=tab)
+                                       max_tweets=25, tab=tab, text_limit=reply_queue.PARENT_TEXT_LIMIT)
         # Ranked collectors publish nothing: preparation attempts consume the
         # shared cycle budget, including drafts declined or refused on style.
         n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query), cycle,

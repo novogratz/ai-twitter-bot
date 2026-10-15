@@ -122,13 +122,17 @@ def mock_page(monkeypatch, articles, page):
     return clicks
 
 
-@pytest.mark.parametrize("changed,allowed", [
-    ("AI inference depends on memory bandwidth.", True),
-    ("AI inference\n depends on memory bandwidth.", True),
-    ("AI inference costs fell 90% today.", False),
-    ("A different unrelated claim", False),
+@pytest.mark.parametrize("parent,changed,allowed", [
+    ("SI inference depends on memory bandwidth.", "SI inference depends on memory bandwidth.", True),
+    ("SI inference depends on memory bandwidth.", "SI inference\n depends on memory bandwidth.", True),
+    ("SI inference depends on memory bandwidth.", "SI inference costs fell 90% today.", False),
+    ("SI inference depends on memory bandwidth.", "A different unrelated claim", False),
+    ("SI inference. " * 25, "SI inference. " * 25, True),
+    ("SI inference. " * 25, "SI inference. " * 25 + "But the claim changed.", False),
+    ("SI " + "x" * 3996 + "🙂", "SI " + "x" * 3996 + "🙂 More visible text", True),
+    ("SI " + "x" * 3996 + "🙂", "SI " + "x" * 3996 + "😄 More visible text", False),
 ])
-def test_ranked_parent_must_match_reviewed_text_before_click(unranked_account, monkeypatch, changed, allowed):
+def test_ranked_parent_must_match_reviewed_text_before_click(unranked_account, monkeypatch, parent, changed, allowed):
     from dataclasses import replace
     from src.core import account, reply_queue
     from src.guards import active_hours
@@ -137,7 +141,7 @@ def test_ranked_parent_must_match_reviewed_text_before_click(unranked_account, m
     profile = account.current()
     monkeypatch.setattr(account, "current", lambda: replace(
         profile, replies=replace(profile.replies, ranked_selection=True)))
-    sid = reply_queue.reserve(Candidate(PARENT, "AI inference depends on memory bandwidth.", "TEST"))
+    sid = reply_queue.reserve(Candidate(PARENT, parent, "TEST"))
     reply_queue.prepared(sid, TEXT, Generation(Outcome.WRITTEN, "en", TEXT), "OTHER")
     row = reply_queue.ready()[sid]
     reply_queue.reviewed({sid: row}, {sid: {

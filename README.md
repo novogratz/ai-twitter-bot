@@ -34,9 +34,11 @@ creation and uploads remain Operator-managed.
   standalone original only. Never our own posts/replies, comments or someone
   else's response. Current and historical handles count as ours. An ambiguous
   submission stays claimed, and a process lock prevents concurrent double claims.
-- **SI wording:** outgoing prose uses SI and Super intelligence in place of AI
+- **SI wording and research:** outgoing prose uses SI and Super intelligence in place of AI
   and artificial intelligence. Literal links, handles and embedded names such as
-  OpenAI stay valid; discovery still searches both vocabularies.
+  OpenAI stay valid. Every reply, video, trend and like query explicitly includes
+  SI, "super intelligence", superintelligence and ASI, alongside AI and
+  "artificial intelligence" as discovery aliases.
 - **Always kind and positive:** encourage creators, explain useful ideas and
   use gentle humor. No roasts, sarcastic digs, put-downs or negative takes about
   anyone or any product. Admit uncertainty; skip when no kind, truthful detail fits.
@@ -49,27 +51,33 @@ creation and uploads remain Operator-managed.
   no smiley, or exactly one friendly smiley/positive text emoticon in a natural
   position. The saved choice is enforced through publication; no automatic
   ending or fake typos. Recent replies guide variety.
-- **More active Replies:** a shared 60–80 second cooldown within 9h30 of
+- **More active Replies:** a shared 30–45 second cooldown within 9h30 of
   daily activity windows.
   Actual volume depends on qualifying posts, approved drafts and model/browser
-  time; 300 is not a forced quota. Collectors prepare a shared
+  time; there is no forced quota. Collectors prepare a shared
   pool during the cooldown. Independent review scores impact, sharpness and
   interest, requires positive tone, relevance and factual support, and chooses one strong winner.
   Weak pools send nothing. Uncertain submits consume the cooldown too; the
   deadline and permanent parent claims survive restarts.
+  The selector checks every ten seconds and gives a new pool 15 seconds for
+  choices; startup still allows 60 seconds. One approved winner per cycle.
 - **Broader AI/SI discovery:** direct scans run every minute, rotating one
   permitted VIP and three searches mixing Latest and Top. Latest searches have
   no like minimum and cover models, research, tools, workflows and generated
   videos. Feed sweeps run every two minutes and alternate which feed goes first.
   Small preparation budgets and a pause when the eight-draft queue fills leave
   browser time for publishing. Every draft still needs independent approval.
+  Collectors and drafting retain up to 4,000 visible parent characters, so
+  evidence after character 200 is available. The write still verifies the
+  actual author and matches the reviewed parent text before submitting.
 - Sourcing, content checks, respect rules and permanent history remain. Replies have no daily quota. No quotes, reposts or threads.
   Non-publishing like/follow jobs keep their existing limits and exclude Elon.
 
 Conversation jobs and automatic pinning are unscheduled. The historical editorial
 slots and state remain available for other Accounts, but cannot publish for this
 Account. Browser calls, model calls and the final Reply submit all check the
-activity windows. The bot remains stopped until an explicit start request.
+activity windows. Starting, stopping and restarting require an explicit Operator
+request; code and configuration load at process start.
 See [editorial policy](docs/EDITORIAL_POLICY.md) for the complete rules.
 
 ## Run

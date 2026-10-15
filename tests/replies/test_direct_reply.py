@@ -134,7 +134,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(unranked_account, monkeypa
     settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(scraper, "scrape_x_search",
-                        lambda q, max_tweets=20, tab="latest":
+                        lambda q, max_tweets=20, tab="latest", text_limit=200:
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
