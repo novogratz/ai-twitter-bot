@@ -39,8 +39,9 @@ before touching the browser or a model).
 ## Waking hours
 
 `src/guards/active_hours.py` owns fixed windows 06:00–09:00, 12:00–13:00
-and 17:00–22:30 Toronto time, with closing times exclusive and DST handled by
-`zoneinfo`. `WINDOWS` owns the bounds;
+and 17:00–24:00 Toronto time, with closing times exclusive and DST handled by
+`zoneinfo`. The evening's midnight end means the following day's 00:00;
+external work is refused from then until 06:00. `WINDOWS` owns the bounds;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 those windows or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its

@@ -225,13 +225,13 @@ def test_an_unreadable_state_halts_the_editorial_with_the_repair(monkeypatch, dr
 
 
 def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture, caplog):
-    """A Draft that ends past 23:30 stops the cycle before publishing; the
+    """A Draft that ends past midnight stops the cycle before publishing; the
     log names the Overnight."""
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("published overnight"))
     draft = draft_fixture[0]
     def past_bedtime(*a):
-        clock(monkeypatch, datetime(2026, 9, 20, 23, 45, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 21, 0, 15, tzinfo=TORONTO))
         return draft
     monkeypatch.setattr(editorial, "draft_post", past_bedtime)
 
@@ -744,11 +744,12 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
 
 def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    editorial.open_startup_window(at(22, 10))
+    editorial.open_startup_window(at(23, 40))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(22, 29), {})[0] == key
-    assert not editorial._in_window(key, at(22, 30))
-    assert editorial.startup_slot(at(22, 30), {}) is None
+    assert editorial.startup_slot(at(23, 59), {})[0] == key
+    midnight = datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO)
+    assert not editorial._in_window(key, midnight)
+    assert editorial.startup_slot(midnight, {}) is None
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):

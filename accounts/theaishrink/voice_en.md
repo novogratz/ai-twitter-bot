@@ -86,7 +86,7 @@ Evidence and videos:
   benchmarks, capabilities, numbers, experiments or firsthand product tests.
 
 Publishing bounds:
-- Act only at 06:00–09:00, 12:00–13:00 and 17:00–22:30
+- Act only at 06:00–09:00, 12:00–13:00 and 17:00–24:00
   America/Toronto every day; starts inclusive, ends exclusive.
 - Publish Replies only. No new posts, including on startup or restart.
 - Never interact with @elonmusk: no reply, like, follow or @mention, including

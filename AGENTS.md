@@ -6,6 +6,14 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator extended the evening Reply window until midnight.
+Daily Toronto activity windows are now 06:00–09:00, 12:00–13:00 and
+17:00–24:00, superseding the 22:30 close below. Midnight is exclusive: external
+work stops at 00:00 and the next wake is 06:00, including across DST changes.
+Browser and model guards use the same closing instant. The 30–45 second Reply
+cooldown, 35% smiley probability and all target and review rules remain. The
+Operator requested push, PR and merge; no start or restart accompanies the update.
+
 2026-10-14 — The Operator lowered smiley frequency to 35%. Each new ranked
 draft independently chooses exactly one friendly smiley/positive text emoticon
 with 35% probability, or plain text with 65%, superseding the 50/50 choice below.

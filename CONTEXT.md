@@ -285,7 +285,7 @@ like or follow policy.
 
 **Waking hours**:
 The fixed daily Toronto windows when the account acts externally: 06:00–09:00,
-12:00–13:00 and 17:00–22:30. `active_hours.WINDOWS` owns the bounds; starts
+12:00–13:00 and 17:00–24:00. `active_hours.WINDOWS` owns the bounds; starts
 are inclusive and closing times exclusive, with no daily jitter.
 _Avoid_: active hours, working day, awake
 

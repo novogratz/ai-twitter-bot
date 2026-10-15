@@ -9,15 +9,19 @@ from src.guards import active_hours as hours
 from tests.helpers import TORONTO, clock
 
 
-def test_browser_wait_rechecks_bedtime(monkeypatch):
+@pytest.mark.parametrize("before,after", [
+    (datetime(2026, 9, 20, 8, 59, tzinfo=TORONTO), datetime(2026, 9, 20, 9, 0, tzinfo=TORONTO)),
+    (datetime(2026, 9, 20, 23, 59, tzinfo=TORONTO), datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO)),
+])
+def test_browser_wait_rechecks_bedtime(monkeypatch, before, after):
     from src.x.safari import _AwakeSafariLock
-    clock(monkeypatch, datetime(2026, 9, 20, 8, 59, tzinfo=TORONTO))
+    clock(monkeypatch, before)
     browser = _AwakeSafariLock()
     released = []
 
     class SlowLock:
         def acquire(self):
-            clock(monkeypatch, datetime(2026, 9, 20, 9, 0, tzinfo=TORONTO))
+            clock(monkeypatch, after)
 
         def release(self):
             released.append(True)
@@ -29,14 +33,15 @@ def test_browser_wait_rechecks_bedtime(monkeypatch):
     assert released == [True]
 
 
-def test_submit_checks_bedtime_before_applescript(monkeypatch):
+@pytest.mark.parametrize("hour,minute", [(9, 30), (0, 0)])
+def test_submit_checks_bedtime_before_applescript(monkeypatch, hour, minute):
     from src.x import safari
     # Use the real helper (the suite normally prevents Safari calls).
     import importlib
     from unittest.mock import patch
     with patch("subprocess.run") as run:
         safari = importlib.reload(safari)
-        clock(monkeypatch, datetime(2026, 9, 20, 9, 30, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, hour, minute, tzinfo=TORONTO))
         with pytest.raises(hours.OutsideActiveHours):
             safari._run_applescript("submission")
         run.assert_not_called()

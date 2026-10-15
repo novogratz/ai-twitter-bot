@@ -1,5 +1,20 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Evening Replies until midnight
+
+The Operator extended the evening Reply window from 22:30 to midnight while
+the smiley-frequency PR was being prepared, and requested push, PR and merge.
+The three Toronto windows are now 06:00–09:00, 12:00–13:00 and 17:00–24:00.
+Midnight is the following calendar day's 00:00, exclusive; browser activity,
+model deadlines and writes stop there and the next wake is 06:00. Both Voice
+files and current operating guidance use the new close. Slot windows bind to
+their opening window's close so they cannot extend into the next day.
+
+Tests cover midnight, daytime breaks, all minutes of the week, both DST changes,
+browser waits crossing the cutoff, and the next wake. The 30–45 second Reply
+cooldown, 35% smiley choice, independent review and target protections remain.
+No environment or production-state changes, start or restart accompany the update.
+
 ## 2026-10-14 — Smileys in roughly 35% of Replies
 
 The Operator asked for fewer smileys, ideally in only 35% of Replies. The shared

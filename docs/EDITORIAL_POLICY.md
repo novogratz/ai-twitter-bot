@@ -1,5 +1,14 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — The Operator extended the evening window to midnight. Current
+Toronto activity windows are 06:00–09:00, 12:00–13:00 and 17:00–24:00, with
+closing times exclusive. This replaces the 22:30 close below. The evening's
+deadline is the next calendar day's 00:00; all external work stops then and
+the next wake is 06:00. DST-aware browser, model and publication guards share
+that boundary. The 30–45 second cooldown, 35% smiley probability, Reply-only
+publishing, protected authors, permanent deduplication and review remain.
+The requested push, PR and merge do not start or restart the bot.
+
 2026-10-14 — The Operator requested smileys in roughly 35% of Replies. Each new
 ranked draft independently chooses exactly one friendly smiley/positive text
 emoticon with 35% probability and no reaction with 65%. This supersedes the
@@ -238,7 +247,7 @@ and nested replies have no VIP exception.
 ## Scheduler and publishing permissions
 
 The three Toronto windows apply every day without jitter: 06:00–09:00,
-12:00–13:00 and 17:00–22:30. Browser locks, browser scripts, model
+12:00–13:00 and 17:00–24:00. Browser locks, browser scripts, model
 calls, queued jobs and the final submit all check the clock. Closing is exclusive;
 a request already issued may finish remotely but cannot authorize another write.
 

@@ -8,7 +8,8 @@ from ..core import config
 from ..core.logger import log
 
 
-WINDOWS = ((time(6), time(9)), (time(12), time(13)), (time(17), time(22, 30)))
+# A midnight end closes at the following day's 00:00, displayed as 24:00.
+WINDOWS = ((time(6), time(9)), (time(12), time(13)), (time(17), time.min))
 WAKE = WINDOWS[0][0]
 BEDTIME = WINDOWS[-1][1]
 
@@ -24,7 +25,9 @@ class OutsideActiveHours(RuntimeError):
 
 
 def window_label() -> str:
-    windows = ", ".join(f"{start:%H:%M}–{end:%H:%M}" for start, end in WINDOWS)
+    windows = ", ".join(
+        f"{start:%H:%M}–{'24:00' if end == time.min else end.strftime('%H:%M')}"
+        for start, end in WINDOWS)
     return f"{windows} {config.BOT_TIMEZONE}"
 
 
@@ -52,7 +55,8 @@ def is_past_day(stamped) -> bool:
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     clock = local.time().replace(tzinfo=None)
-    return any(start <= clock < end for start, end in WINDOWS)
+    return any(start <= clock and (end == time.min or clock < end)
+               for start, end in WINDOWS)
 
 
 def stop_requested() -> bool:
@@ -105,8 +109,11 @@ def bedtime(now: datetime) -> datetime:
     """
     local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
     clock = local.time().replace(tzinfo=None)
-    end = next((end for _, end in WINDOWS if clock < end), BEDTIME)
-    return local.replace(hour=end.hour, minute=end.minute, second=0, microsecond=0).astimezone(now.tzinfo)
+    end = next((end for _, end in WINDOWS if end == time.min or clock < end), BEDTIME)
+    close = local.replace(hour=end.hour, minute=end.minute, second=0, microsecond=0)
+    if end == time.min:
+        close += timedelta(days=1)
+    return close.astimezone(now.tzinfo)
 
 
 def seconds_until_bedtime() -> float:

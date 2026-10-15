@@ -26,7 +26,7 @@ Keep its no-contact protection in `network.blocked_accounts` as well as
 `replies.protected_handles`. Outgoing SI wording is in `text_replacements`.
 
 Reply pacing defaults to 30 seconds plus up to 15 seconds of jitter within
-06:00–09:00, 12:00–13:00 and 17:00–22:30 Toronto every day, subject to approved
+06:00–09:00, 12:00–13:00 and 17:00–24:00 Toronto every day, subject to approved
 drafts and model/browser time. The minimum cannot be lowered below 30; jitter
 may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
