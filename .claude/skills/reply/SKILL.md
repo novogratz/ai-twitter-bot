@@ -9,7 +9,7 @@ Trigger one reply scan, the same one `direct_reply_job` runs every minute.
 Only on an explicit operator request: it scans the real account and uses models.
 For the ranked live Account this prepares drafts only. The scheduler's separate
 selector compares and publishes at most one approved draft after the shared
-30–45 second cooldown. This skill does not start that scheduler or bypass review.
+20–30 second cooldown. This skill does not start that scheduler or bypass review.
 
 1. Preconditions in `docs/OPERATIONS.md#manual-writes`. Check:
    `pgrep -if "python.*main\.py"` prints nothing and

@@ -21,7 +21,7 @@ unfollow of a handle, and never knows where it stores them.
 import os
 import random
 import time
-from datetime import timedelta
+from datetime import timedelta, timezone
 from typing import Optional, Tuple
 
 from ..core import config, settings
@@ -73,7 +73,10 @@ def can_debate_turn(author: str) -> Tuple[bool, str]:
 
 def _seconds_since_last(action: str) -> float:
     last = _ledger().last_write(action)
-    return now_local().timestamp() - last.timestamp() if last else float("inf")
+    if last is None:
+        return float("inf")
+    # Preserve microseconds without epoch-float cancellation, including across DST.
+    return (now_local().astimezone(timezone.utc) - last.astimezone(timezone.utc)).total_seconds()
 
 
 def within_churn_cooldown(target: str) -> bool:

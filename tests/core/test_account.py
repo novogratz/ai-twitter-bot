@@ -22,7 +22,7 @@ def test_current_identity_keeps_the_storage_key_and_editorial_bounds():
     assert loaded.previous_handles == ("TheAIShrink",)
     assert loaded.bio == ("SI Maximalist: SI brain rot, Super Intelligence, SI news, "
                           "celebrity parodies, and SI tech chaos.")
-    assert loaded.language == "en" and loaded.domain == "SI / Super intelligence"
+    assert loaded.language == "en" and loaded.domain == "SI / Super intelligence and substantive technology"
     assert loaded.limits == {}
     ed = loaded.editorial
     assert [clock for clock, _ in ed.slots] == [
@@ -156,9 +156,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
     ('handle = "thesimaximalist"\n', "", "handle"),
-    ('domain = "SI / Super intelligence"', "domain = 3", "domain"),
-    ('domain = "SI / Super intelligence"', 'domain = " "', "domain is blank"),
-    ('domain = "SI / Super intelligence"\n', "", "domain is missing"),
+    ('domain = "SI / Super intelligence and substantive technology"', "domain = 3", "domain"),
+    ('domain = "SI / Super intelligence and substantive technology"', 'domain = " "', "domain is blank"),
+    ('domain = "SI / Super intelligence and substantive technology"\n', "", "domain is missing"),
     ('handle = "thesimaximalist"', 'handle = "thesimaximalist', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
@@ -192,7 +192,7 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     # The Operator's bounds of #201.
     ("FOLLOW_TOTAL_CAP = 5000", "FOLLOW_TOTAL_CAP", 3500),
     ("LIKE_BOT_DAILY_CAP = 1800", "LIKE_BOT_DAILY_CAP", 500),
-    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 30),
+    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 20),
     ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
     ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
     ("FOLLOWBACK_CAP = -1", "FOLLOWBACK_CAP", 0),
@@ -346,10 +346,10 @@ NETWORK = {
         '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (startup OR funding OR layoffs OR jobs OR "open source") OR DeepSeek) lang:en -filter:replies',
     ],
     "HOT_TAB_QUERIES": [
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:500 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:300 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:300 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:500 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:2 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:2 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:2 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:2 -filter:replies',
     ],
     "LIKE_QUERIES": [
         '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
@@ -553,6 +553,35 @@ def test_an_ai_post_is_on_the_niche(text):
 ])
 def test_the_follow_bio_niche_is_ai_only(bio, on_niche):
     assert bool(account.load("theaishrink").niche.bio.search(bio)) is on_niche
+
+
+@pytest.mark.parametrize("text", [
+    "Semiconductors need better packaging to improve memory bandwidth.",
+    "Chip design changes how much heat the processor produces.",
+    "This compiler catches more memory errors before deployment.",
+    "Open source software makes this workflow reproducible.",
+    "Developer tools can show which query is blocking the database.",
+    "Distributed systems need a clear consistency model.",
+    "Cybersecurity starts with protecting credentials.",
+])
+def test_substantive_technology_without_si_keyword_qualifies_for_post_review(text):
+    from src.replies.reply_source import is_on_niche
+    loaded = account.current()
+    assert is_on_niche(text)
+    assert loaded.relevance.topic.search(text)
+    assert not loaded.relevance.off_topic.search(text)
+
+
+@pytest.mark.parametrize("text", ["These potato chips are delicious", "My new software subscription costs too much", "Best beach holiday ever"])
+def test_generic_lifestyle_or_product_mentions_do_not_widen_reply_scope(text):
+    from src.replies.reply_source import is_on_niche
+    assert not is_on_niche(text)
+
+
+def test_top_reply_discovery_uses_the_same_two_like_minimum():
+    for query in account.current().searches.hot_tab:
+        assert re.findall(r"min_faves:(\d+)", query) == ["2"]
+        assert "-filter:replies" in query
 
 
 def test_the_account_network_fills_four_settings_and_env_wins(accounts, fresh):

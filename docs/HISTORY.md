@@ -1,5 +1,32 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-15 — Broader discovery and faster reviewed Replies
+
+The Operator requested more topics, more aggressive Replies and a push. The
+Account now admits explicit substantive technology topics alongside SI, with
+additional searches for creators, chips, developer tools and infrastructure.
+Top discovery previously required 300–500 likes despite the two-like publication
+minimum; it now searches down to that same minimum. Independent review still
+rejects weak or unsupported replies, and crypto/trading remain excluded.
+
+Inspection found that scrolling collectors only extracted the final viewport.
+X can remove earlier cards while scrolling, so increasing the requested feed
+size did not preserve those earlier discoveries. The shared reader now saves
+all bounded viewports, deduplicates by status ID and updates counters without
+losing an observed reply marker or fuller text. Tests model disappearing cards,
+duplicate URLs, changing engagement, result caps and tab cleanup on errors.
+The same fix covers feeds, search, profiles and retained unscheduled mentions.
+
+The cooldown becomes 20–30 seconds; prior saved deadlines remain honored. Direct
+and feed preparation budgets become six attempts, still sharing eight pending
+drafts and the independent selector. Local pacing/budget settings match the new
+defaults. No start, restart, live test publication or production-state edit.
+
+The faster gap exposed epoch-float subtraction losing fractions of a microsecond
+after a completed wait. Elapsed spacing now subtracts UTC datetimes directly,
+preserving clock precision and real elapsed time across daylight-saving changes.
+The final guard still refuses a write before its complete deadline.
+
 ## 2026-10-15 — Contextual BANGER signature
 
 The Operator requested "BANGER" and variants such as "absolute BANGER" for

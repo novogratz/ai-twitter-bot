@@ -45,7 +45,7 @@ hold whatever `.env` says:
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Reply count | Subject to quality and model/browser time; no forced quota or daily/hourly cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 30) plus `REPLY_JITTER_SECONDS` (0–180, default 15) space them |
+| Reply count | Subject to quality and model/browser time; no forced quota or daily/hourly cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 20) plus `REPLY_JITTER_SECONDS` (0–180, default 10) space them |
 | Reply parent likes | At least 2; discovery and the opened-target check enforce `reply_admission.has_reply_engagement`. Other metrics cannot substitute. |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
@@ -56,7 +56,7 @@ uncertain submissions; there is no catch-up burst after a restart.
 
 The Debate turn, Reply spacing, like, follow, price-target and duplicate
 settings, and `REPLY_MIN_CHARS`, carry the Operator's bounds of 2026-09-25
-(issue #201), with Reply pacing revised on 2026-10-14, listed in
+(issue #201), with Reply pacing revised on 2026-10-15, listed in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md#bounds-on-volume-and-check-settings)
 and in the Bounds column below. `BAN_SHORT_TERM_PRICE_TARGETS` has floor `1`:
 `0` reads as `1`. `main.py --dry-run` prints each bounded setting's effective
@@ -116,8 +116,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
-| `MIN_SECONDS_BETWEEN_REPLIES` | int | `30` | floor `30` | Minimum gap between Replies, including uncertain submissions; actual throughput depends on approved drafts and browser/model time. |
-| `REPLY_JITTER_SECONDS` | int | `15` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 30–45 seconds. |
+| `MIN_SECONDS_BETWEEN_REPLIES` | int | `20` | floor `20` | Minimum gap between Replies, including uncertain submissions; actual throughput depends on approved drafts and browser/model time. |
+| `REPLY_JITTER_SECONDS` | int | `10` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 20–30 seconds. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
 | `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |
@@ -166,14 +166,14 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `4` |  | Draft preparation attempts per ranked direct_reply cycle, or shipped Replies for an unranked Account. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `6` |  | Draft preparation attempts per ranked direct_reply cycle, or shipped Replies for an unranked Account. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `3` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
 | `FEED_SWEEP_SCAN_LIMIT` | int | `40` |  | Posts the feed sweep scrapes per feed. |
-| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `4` |  | Reply generations one feed sweep may run per feed. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `6` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |

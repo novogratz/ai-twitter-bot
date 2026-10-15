@@ -8,7 +8,7 @@ from ..core import config, settings
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
 from ..guards.active_hours import OutsideActiveHours
-from . import safari
+from . import safari, x_urls
 
 # Reactive black-screen recovery: track consecutive blank pages.
 # When Safari renders an empty app shell (service worker stale state), every
@@ -333,6 +333,36 @@ def _profile_visit_allowed(username: str) -> bool:
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
 
 
+def _collect_scrolling_tweets(label: str, max_tweets: int, text_limit: int, scrolls: int):
+    """Keep each viewport before X virtualizes it away; bound and deduplicate by status ID."""
+    found = {}
+    if max_tweets <= 0:
+        return []
+    for viewport in range(scrolls + 1):
+        if viewport:
+            safari._scroll_page()
+        tweets = _scrape_tweets_from_page(label, max_tweets, text_limit)
+        if not tweets:
+            break  # One blank-page recovery signal per visit, not one per scroll.
+        for tweet in tweets:
+            sid = x_urls.status_id(tweet.get("url", ""))
+            if not sid:
+                continue
+            previous = found.get(sid)
+            current = dict(tweet)
+            if previous:
+                # Preserve a fuller view of the same text, but use fresh counters.
+                old_text, new_text = previous.get("text", ""), current.get("text", "")
+                if old_text.startswith(new_text):
+                    current["text"] = old_text
+                # A later compact card must not erase evidence of a nested reply.
+                current["is_reply"] = bool(previous.get("is_reply") or current.get("is_reply"))
+            found[sid] = current
+            if len(found) >= max_tweets:
+                return list(found.values())
+    return list(found.values())
+
+
 def scrape_profile_tweets(username: str, max_tweets: int = 5, text_limit: int = 200):
     """Visit a profile and scrape their recent tweet URLs and text.
 
@@ -345,12 +375,11 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5, text_limit: int = 
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
         safari.open_url(profile_url)
-        time.sleep(8)
-        safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets, text_limit)
-        safari.close_front_tab()
-        return tweets
+        try:
+            time.sleep(8)
+            return _collect_scrolling_tweets(f"@{username}", max_tweets, text_limit, 1)
+        finally:
+            safari.close_front_tab()
 
 
 def scrape_mentions(max_tweets: int = 20):
@@ -362,12 +391,11 @@ def scrape_mentions(max_tweets: int = 20):
     with safari._safari_lock:
         log.info("[SCRAPE] Opening mentions notifications...")
         safari.open_url("https://x.com/notifications/mentions")
-        time.sleep(8)
-        for _ in range(2):
-            safari._scroll_page()
-        tweets = _scrape_tweets_from_page("mentions", max_tweets)
-        safari.close_front_tab()
-        return tweets
+        try:
+            time.sleep(8)
+            return _collect_scrolling_tweets("mentions", max_tweets, 200, 2)
+        finally:
+            safari.close_front_tab()
 
 
 def _select_home_tab(labels: tuple[str, ...]) -> bool:
@@ -403,9 +431,8 @@ def scrape_home_feed(max_tweets: int = 15, text_limit: int = 200):
                 log.info("[SCRAPE] For You tab could not be verified; skipping feed.")
                 return []
             # Each scroll reveals ~8-12 posts; keep each pass bounded.
-            for _ in range(max(4, min(15, max_tweets // 7))):
-                safari._scroll_page()
-            return _scrape_tweets_from_page("home feed", max_tweets, text_limit)
+            return _collect_scrolling_tweets("home feed", max_tweets, text_limit,
+                                             max(4, min(15, max_tweets // 7)))
         finally:
             safari.close_front_tab()
 
@@ -425,9 +452,8 @@ def scrape_following_feed(max_tweets: int = 15, text_limit: int = 200):
             if not _select_home_tab(("following", "abonnements", "suivi(e)s")):
                 log.info("[SCRAPE] Following tab could not be verified; skipping feed.")
                 return []
-            for _ in range(max(2, min(8, max_tweets // 12))):
-                safari._scroll_page()
-            return _scrape_tweets_from_page("following feed", max_tweets, text_limit)
+            return _collect_scrolling_tweets("following feed", max_tweets, text_limit,
+                                             max(2, min(8, max_tweets // 12)))
         finally:
             safari.close_front_tab()
 
@@ -445,13 +471,11 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
         search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
         log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
         safari.open_url(search_url)
-        time.sleep(8)
-        safari._scroll_page()
-        safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
-        safari.close_front_tab()
-        return tweets
+        try:
+            time.sleep(8)
+            return _collect_scrolling_tweets(f"search '{query}' ({f_param})", max_tweets, text_limit, 2)
+        finally:
+            safari.close_front_tab()
 
 
 def scrape_own_tweet_and_replies():

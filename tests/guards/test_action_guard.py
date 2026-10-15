@@ -105,6 +105,32 @@ def _ledger_clock(monkeypatch):
     return now
 
 
+@pytest.mark.parametrize("started,ended,elapsed", [
+    (datetime(2026, 9, 21, 12, 15, tzinfo=TORONTO),
+     datetime(2026, 9, 21, 12, 15, 25, 670102, tzinfo=TORONTO), 25.670102),
+    (datetime(2026, 11, 1, 1, 59, 50, tzinfo=TORONTO, fold=0),
+     datetime(2026, 11, 1, 1, 0, 10, tzinfo=TORONTO, fold=1), 20),
+    (datetime(2026, 3, 8, 1, 59, 50, tzinfo=TORONTO),
+     datetime(2026, 3, 8, 3, 0, 10, tzinfo=TORONTO), 20),
+])
+def test_elapsed_spacing_preserves_microseconds_and_dst(monkeypatch, started, ended, elapsed):
+    now = _ledger_clock(monkeypatch)
+    now[0] = started
+    ag.record(ag.REPLY, "https://x.com/builder/status/1")
+    now[0] = ended
+    assert ag._seconds_since_last(ag.REPLY) == elapsed
+
+
+def test_twenty_second_floor_still_refuses_one_microsecond_early(monkeypatch, settings_override):
+    now = _ledger_clock(monkeypatch)
+    settings_override(REPLY_JITTER_SECONDS=0)
+    ag.record(ag.REPLY, "https://x.com/builder/status/1")
+    now[0] += timedelta(seconds=20, microseconds=-1)
+    assert not ag.can_post(ag.REPLY)[0]
+    now[0] += timedelta(microseconds=1)
+    assert ag.can_post(ag.REPLY) == (True, "")
+
+
 def test_reply_gap_is_drawn_once_per_reply(monkeypatch):
     now = _ledger_clock(monkeypatch)
     ag.record(ag.REPLY, "https://x.com/a/status/1")

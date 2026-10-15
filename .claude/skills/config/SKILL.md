@@ -25,9 +25,9 @@ The live Account has `publish_originals = false`; `.env` cannot enable Originals
 Keep its no-contact protection in `network.blocked_accounts` as well as
 `replies.protected_handles`. Outgoing SI wording is in `text_replacements`.
 
-Reply pacing defaults to 30 seconds plus up to 15 seconds of jitter,
+Reply pacing defaults to 20 seconds plus up to 10 seconds of jitter,
 24/7 with no scheduled pause, subject to approved
-drafts and model/browser time. The minimum cannot be lowered below 30; jitter
+drafts and model/browser time. The minimum cannot be lowered below 20; jitter
 may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
 Reply volume has no daily or hourly count cap. Every Reply target needs at least
@@ -41,8 +41,11 @@ Every Account discovery query includes SI, "super intelligence", superintelligen
 and ASI, retaining AI and "artificial intelligence" as search aliases.
 
 Direct discovery runs every minute with three rotating Latest/Top queries and
-four draft attempts per cycle by default. Feed sweeps run every minute, with
-For You first in three of four cycles, reading 40 posts and attempting four
+six draft attempts per cycle by default. Feed sweeps run every minute, with
+For You first in three of four cycles, reading 40 posts and attempting six
 drafts per feed. Collectors stop new reads
 when the eight-draft queue is full. These are preparation bounds, not daily quotas.
 Each feed scan selects and verifies its native tab before reading posts.
+Collectors retain every viewport while scrolling and deduplicate status IDs.
+Top Reply queries use the same two-like minimum as publication. Reply scope
+includes substantive technology alongside SI; follow bios retain their SI gate.

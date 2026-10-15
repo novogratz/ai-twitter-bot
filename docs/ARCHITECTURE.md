@@ -77,8 +77,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 1 min | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least two likes. Prepares up to four draft attempts in the shared queue by default. Never publishes for the ranked Account. |
-| `feed_sweep_job` | 1 min | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Prepares up to four draft attempts per feed by default. |
+| `direct_reply_job` | 1 min | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least two likes. Prepares up to six draft attempts in the shared queue by default. Never publishes for the ranked Account. |
+| `feed_sweep_job` | 1 min | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Prepares up to six draft attempts per feed by default. |
 | `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
 | `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
 | `reply_selection_job` | 10 sec; first run after 60 sec | Dedicated worker gives a new pool 15 seconds to gather choices, independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
@@ -462,9 +462,9 @@ Five modules sit behind them:
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
-  retweets are always refused. Reply spacing defaults to 30 seconds plus 0–15
+  retweets are always refused. Reply spacing defaults to 20 seconds plus 0–10
   seconds of jitter; browser work, selector ticks and model time also affect
-  throughput. The minimum floor is 30; jitter may be 0–180. Independent
+  throughput. The minimum floor is 20; jitter may be 0–180. Independent
   review and the rest of admission also apply. The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
@@ -562,8 +562,15 @@ invalid generations, while the pipeline still returns only actual shipped
 Replies. Direct discovery shares its budget across VIP and search passes;
 feed sweeps give For You first use of available capacity in three of four cycles,
 with Following first in the fourth. Both feeds run every minute while capacity remains.
-Each collector selects and verifies the intended native tab before scrolling;
+Each feed collector selects and verifies the intended native tab before scrolling;
 an unverified tab yields no candidates instead of silently reading another feed.
+All scrolling readers save the first viewport and each later viewport before
+virtualization can remove posts. They deduplicate by status ID, refresh counters,
+retain fuller text and any observed nested-reply marker, and stop at the requested
+result limit or first empty viewport. Scroll budgets stay bounded. Profile and
+mention readers use the same collection helper without enabling disabled jobs.
+Top Reply searches now use the two-like minimum, with explicit substantive
+technology searches alongside SI research, videos, tools and news.
 Every Reply collector requires at least two readable likes before drafting. The
 final write rechecks the opened parent before a parent like or Reply click, using
 the same article-local like/unlike counter reader (`src/x/post_metrics.py`) as
