@@ -1,5 +1,32 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Three activity windows and broader, faster AI/SI discovery
+
+The Operator requested more aggressive Replies to interesting AI/SI posts from
+06:00–09:00, 12:00–13:00 and 17:00–22:30 Toronto every day. These fixed windows
+replace the previous four. The shared cooldown becomes 60–80 seconds, retaining
+existing saved deadlines. Direct discovery runs every minute and interleaves
+Latest searches without a like minimum with popular Top searches, rotating one
+permitted VIP per cycle. Research, tools and workflows join the existing topics.
+Feed sweeps run every two minutes and alternate their first feed.
+
+Inspection found that ranked collectors returned zero shipped Replies, while
+their outer loops subtracted only shipped counts from preparation budgets.
+They could therefore continue browsing and generating after the intended budget
+was spent; a full draft queue also did not stop additional browser reads. The
+shared cycle now counts reserved draft attempts, including declines, separately
+from publications. Direct, early-bird and mega-watch limits use that count;
+all four collectors stop new reads when the eight-draft queue is full. Atomic
+reservation still checks capacity, and corrupt state halts collection.
+
+Defaults and local overrides use four direct attempts, four attempts per feed
+and 40 posts read per feed to leave browser time for selection and publishing.
+Only these three local collection settings and the minimum reply gap change.
+Independent quality/kindness/evidence review, target protection, permanent
+deduplication, Reply-only publishing and random style limits remain. Actual
+volume depends on qualifying drafts and browser/model time; no quota forces a
+reply. Production history is preserved and the bot is not started or restarted.
+
 ## 2026-10-14 — Pace near 300 Replies and random smiley presence
 
 The Operator requested a more aggressive pace near 300 Replies per full day,

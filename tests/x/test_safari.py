@@ -11,13 +11,13 @@ from tests.helpers import TORONTO, clock
 
 def test_browser_wait_rechecks_bedtime(monkeypatch):
     from src.x.safari import _AwakeSafariLock
-    clock(monkeypatch, datetime(2026, 9, 20, 9, 29, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 8, 59, tzinfo=TORONTO))
     browser = _AwakeSafariLock()
     released = []
 
     class SlowLock:
         def acquire(self):
-            clock(monkeypatch, datetime(2026, 9, 20, 9, 30, tzinfo=TORONTO))
+            clock(monkeypatch, datetime(2026, 9, 20, 9, 0, tzinfo=TORONTO))
 
         def release(self):
             released.append(True)

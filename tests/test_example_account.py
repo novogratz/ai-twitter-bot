@@ -103,7 +103,7 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 
 def test_live_account_reports_reply_only_policy_and_current_windows(dry_run):
     shown = dry_run({})
-    assert shown["active"] == "05:00–09:30, 12:05–13:00, 17:15–20:00, 22:00–23:00 America/Toronto"
+    assert shown["active"] == "06:00–09:00, 12:00–13:00, 17:00–22:30 America/Toronto"
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (0, 0, 0)
     assert shown["startup_post"] == "disabled"
     assert shown["slots"] == [] and shown["trend_slots"] == []
@@ -112,9 +112,9 @@ def test_live_account_reports_reply_only_policy_and_current_windows(dry_run):
         "engage_job", "followback_job", "follow_engagers_job", "like_job", "session_refresh_job",
         "follower_tracker_job", "reach_report_job",
     ]
-    assert shown["reply_gap_seconds"] == [75, 95]
+    assert shown["reply_gap_seconds"] == [60, 80]
     assert shown["ranked_reply_selection"] is True
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {**PRE_187_BOUNDED, "MIN_SECONDS_BETWEEN_REPLIES": 75, "REPLY_JITTER_SECONDS": 20}
+    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {**PRE_187_BOUNDED, "MIN_SECONDS_BETWEEN_REPLIES": 60, "REPLY_JITTER_SECONDS": 20}
     assert shown["settings_warnings"] == []
 
 
@@ -139,7 +139,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
     assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
-                       "LIKE_BOT_DAILY_CAP": 100, "MIN_SECONDS_BETWEEN_REPLIES": 75, "REPLY_JITTER_SECONDS": 20}
+                       "LIKE_BOT_DAILY_CAP": 100, "MIN_SECONDS_BETWEEN_REPLIES": 60, "REPLY_JITTER_SECONDS": 20}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
     assert os.listdir(project / "state") == ["theaishrink"]

@@ -15,11 +15,13 @@ import traceback
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core import config, settings
+from ..core import account, config, settings
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
 from . import reply_pipeline, reply_source
 from .direct_reply import reply_call
+
+_FEED_ROTATION_OFFSET = [0]
 
 
 def _harvest_active_authors(tweets: list) -> None:
@@ -60,9 +62,16 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """Sweep BOTH For You and Following every cycle — the primary loop."""
+    """Sweep For You and Following while capacity remains, rotating first priority."""
     from ..x.scraper import scrape_home_feed, scrape_following_feed
-    for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
+    feeds = [("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)]
+    start = 0
+    if account.current().replies.ranked_selection:
+        start = _FEED_ROTATION_OFFSET[0]
+        _FEED_ROTATION_OFFSET[0] = (start + 1) % len(feeds)
+    for source, scraper in feeds[start:] + feeds[:start]:
+        if not reply_pipeline.discovery_available():
+            break
         cycle = reply_pipeline.Cycle()
         _sweep_one_feed(source, scraper, cycle)
         if cycle.rate_limited:
@@ -70,6 +79,8 @@ def run_feed_sweep_cycle():
 
 
 def _sweep_one_feed(source, scraper, cycle):
+    if not reply_pipeline.discovery_available():
+        return
     log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
     tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
     if not tweets:

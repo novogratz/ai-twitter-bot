@@ -11,6 +11,7 @@ from ..x import x_urls
 QUEUE = StateFile("reply_draft_queue.json", {}, GUARDED)
 LOCK = StatePath("reply_draft_queue.lock")
 MAX_PENDING = 8
+PENDING = {"preparing", "ready", "reviewed", "selected"}
 TTL = timedelta(minutes=30)
 REVIEW_TTL = timedelta(minutes=10)
 STATUSES = {"preparing", "ready", "reviewed", "rejected", "selected", "attempted"}
@@ -84,6 +85,11 @@ def fits_style(row, text: str) -> bool:
     return length_for(row).accepts(text) and accepts_smiley(text, smiley_for(row))
 
 
+def has_capacity() -> bool:
+    """Read-only hint for collectors; reserve still checks under the process lock."""
+    return sum(_fresh(row) and row["status"] in PENDING for row in _read().values()) < MAX_PENDING
+
+
 def reserve(candidate, *, length: Length = Length.FULL, smiley: bool | None = None) -> str:
     """Reserve model work once per parent across all collecting jobs."""
     sid = x_urls.status_id(candidate.url)
@@ -91,7 +97,7 @@ def reserve(candidate, *, length: Length = Length.FULL, smiley: bool | None = No
         return ""
     with process_lock(LOCK):
         data = {key: row for key, row in _read().items() if _fresh(row)}
-        active = sum(row["status"] in {"preparing", "ready", "reviewed", "selected"} for row in data.values())
+        active = sum(row["status"] in PENDING for row in data.values())
         if sid in data or active >= MAX_PENDING:
             return ""
         data[sid] = dict(url=candidate.url, parent=candidate.text[:4000], source=candidate.source,

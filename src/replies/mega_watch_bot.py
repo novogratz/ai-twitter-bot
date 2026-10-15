@@ -54,11 +54,12 @@ def run_mega_watch_cycle():
 
     cycle = reply_pipeline.Cycle()
     for username in sample:
-        if posted >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
+        if (cycle.work_done(posted) >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited
+                or not reply_pipeline.discovery_available()):
             break
         tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4)
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
-                                     max_shipped=MAX_REPLIES_PER_CYCLE - posted)
+                                     max_shipped=MAX_REPLIES_PER_CYCLE - cycle.work_done(posted))
 
     log.info(f"[MEGA] Cycle done: {posted} replies posted.")
 

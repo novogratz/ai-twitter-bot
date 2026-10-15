@@ -202,6 +202,9 @@ def _fresh_job_memory(monkeypatch):
     monkeypatch.setattr(_pipeline, "_skipped", {})
     from src.replies import direct_reply as _dr
     monkeypatch.setattr(_dr, "_QUERY_ROTATION_OFFSET", [0])
+    monkeypatch.setattr(_dr, "_VIP_ROTATION_OFFSET", [0])
+    from src.replies import feed_sweeper_bot as _fs
+    monkeypatch.setattr(_fs, "_FEED_ROTATION_OFFSET", [0])
     from src.guards import content_guard as _cg
     monkeypatch.setattr(_cg, "_RECENT_NORM", [])
     yield

@@ -29,29 +29,35 @@ def use_editorial(monkeypatch, **fields):
 
 def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
-    assert editorial.due_slot(at(5, 45), {}) is None
+    assert editorial.due_slot(at(5, 0), {}) is None
+    assert editorial.due_slot(at(7, 15), {})[0] == "07:15"
+    assert editorial.due_slot(at(8, 0), {}) is None
     assert editorial.due_slot(at(10, 15), {}) is None
     assert editorial.due_slot(at(10, 45), {}) is None
-    state = {"date": "2026-09-20", "slots": {"05:00": "published"}}
-    assert editorial.due_slot(at(5, 30), state) is None
-    state["slots"]["05:00"] = "pending"
-    assert editorial.due_slot(at(5, 30), state) is None
-    assert editorial.due_slot(at(20, 45), {}) is None
-    assert editorial.due_slot(at(21, 29), {}) is None
+    state = {"date": "2026-09-20", "slots": {"07:15": "published"}}
+    assert editorial.due_slot(at(7, 30), state) is None
+    state["slots"]["07:15"] = "pending"
+    assert editorial.due_slot(at(7, 30), state) is None
+    assert editorial.due_slot(at(20, 45), {})[0] == "20:45"
+    assert editorial.due_slot(at(21, 29), {})[0] == "20:45"
     assert editorial.due_slot(at(21, 30), {}) is None
     assert editorial.due_slot(at(22, 0), {}) is None
     assert editorial.due_slot(at(23, 0), {}) is None
     assert editorial.due_slot(at(23, 30), {}) is None
 
 
-def test_evening_slots_stay_inside_waking_hours():
-    """2026-07-19: the post-slot grid covers the measured best evening
-    hours, inside Waking hours. Moving bedtime to 23:30 on 2026-09-23
-    added no slot: 20:45 stays the last one, the exceptional one."""
+def test_retained_slots_outside_activity_hours_never_become_due():
+    """Reply-only policy preserves the old Original grid without allowing
+    an explicitly permitted Account to act outside current activity windows."""
     slots = editorial.slots()
-    wake, bedtime = f"{hours.WAKE:%H:%M}", f"{hours.BEDTIME:%H:%M}"
-    assert all(wake <= clock < bedtime for clock, _ in slots)
+    inactive = []
+    for slot in slots:
+        hour, minute = map(int, slot.clock.split(":"))
+        at = datetime(2026, 9, 20, hour, minute, tzinfo=TORONTO)
+        if not hours.is_active(at):
+            inactive.append(slot.clock)
+            assert editorial.due_slot(at, {}) is None
+    assert "05:00" in inactive
     assert max(clock for clock, _ in slots) == "20:45"
     assert slots[-1].exceptional
 
@@ -235,15 +241,20 @@ def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture
     assert not any(r.levelname == "ERROR" for r in caplog.records)
 
 
-def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture):
+@pytest.mark.parametrize("finish_hour", [8, 9])
+def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture, finish_hour):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("expired draft published"))
     draft = draft_fixture[0]
     def slow(*args):
-        clock(monkeypatch, datetime(2026, 9, 20, 9, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, finish_hour, tzinfo=TORONTO))
         return draft
     monkeypatch.setattr(editorial, "draft_post", slow)
-    editorial.run_editorial_cycle()
+    if finish_hour == 9:
+        with pytest.raises(hours.OutsideActiveHours):
+            editorial.run_editorial_cycle()
+    else:
+        editorial.run_editorial_cycle()
     assert not editorial._read_state().get("slots")
 
 
@@ -547,12 +558,12 @@ def test_source_collection_excludes_stale_future_and_undated_news(monkeypatch):
 
 
 def test_a_spent_slot_does_not_hold_the_overlapping_next_one(trend_fixture):
-    """09:00 and 09:15 overlap: a published or spent 09:00 frees 09:15."""
-    at = datetime(2026, 9, 20, 9, 20, tzinfo=TORONTO)
-    assert editorial.due_slot(at, {})[0] == "09:00"
-    assert editorial.due_slot(at, {"date": "2026-09-20", "slots": {"09:00": "published"}})[0] == "09:15"
-    assert editorial.due_slot(at, {"date": "2026-09-20", "attempts": {"09:00": 3}})[0] == "09:15"
-    assert editorial.due_slot(at, {"date": "2026-09-19", "attempts": {"09:00": 3}})[0] == "09:00"
+    """08:00 and 08:15 overlap: a published or spent 08:00 frees 08:15."""
+    at = datetime(2026, 9, 20, 8, 20, tzinfo=TORONTO)
+    assert editorial.due_slot(at, {})[0] == "08:00"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "slots": {"08:00": "published"}})[0] == "08:15"
+    assert editorial.due_slot(at, {"date": "2026-09-20", "attempts": {"08:00": 3}})[0] == "08:15"
+    assert editorial.due_slot(at, {"date": "2026-09-19", "attempts": {"08:00": 3}})[0] == "08:00"
 
 
 def test_trend_slots_sit_in_the_grid():
@@ -598,13 +609,13 @@ TRENDING = [dict(text=f"AI model story {i}", likes=100, views=1000, age_minutes=
 def trend_fixture(monkeypatch, draft_fixture):
     # Synthetic trend slots inside the activity windows for editor/review tests.
     # The shipped Account's historical slot grid is tested separately above.
-    clocks = {"09:30": "09:00", "10:00": "09:15", "13:00": "12:05", "15:00": "17:15"}
+    clocks = {"05:00": "06:00", "09:30": "08:00", "10:00": "08:15", "13:00": "12:05", "15:00": "17:15"}
     loaded = account.current().editorial
     use_editorial(monkeypatch,
                   slots=tuple(sorted((clocks.get(c, c), angle) for c, angle in loaded.slots)),
                   trend_clocks=frozenset(clocks[c] for c in loaded.trend_clocks))
     draft, source, review = draft_fixture
-    source.update(kind="news", published_at="2026-09-20T09:00:00-04:00")
+    source.update(kind="news", published_at="2026-09-20T06:00:00-04:00")
     review["trending"] = True
     calls = dict(sources=[], drafts=[])
     def sources(state, now=None, news_only=False):
@@ -718,44 +729,44 @@ def test_pending_source_is_released_only_when_nothing_was_sent(monkeypatch, draf
 
 
 def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, trend_fixture):
-    """A restart at 05:00 with no usable trend must not hide the 05:00 Slot."""
+    """A restart at 06:00 with no usable trend must not hide the 06:00 Slot."""
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
-    clock(monkeypatch, datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 6, 0, tzinfo=TORONTO))
     editorial.open_startup_window()
     monkeypatch.setattr(editorial, "collect_trending_posts", lambda slot, now=None: [])
-    assert editorial.run_editorial_cycle()["slot"] == "05:00"
-    assert editorial._read_state()["slots"] == {"05:00": "published"}
+    assert editorial.run_editorial_cycle()["slot"] == "06:00"
+    assert editorial._read_state()["slots"] == {"06:00": "published"}
     assert trend_fixture["sources"] == [False]
     assert len(posted) == 1
 
 
 def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    editorial.open_startup_window(at(22, 40))
+    editorial.open_startup_window(at(22, 10))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(22, 59), {})[0] == key
-    assert not editorial._in_window(key, at(23, 0))
-    assert editorial.startup_slot(at(23, 0), {}) is None
+    assert editorial.startup_slot(at(22, 29), {})[0] == key
+    assert not editorial._in_window(key, at(22, 30))
+    assert editorial.startup_slot(at(22, 30), {}) is None
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):
-    """At 09:20, 09:00 yields no Draft: 09:15 gets its pass at once, and a
+    """At 08:20, 08:00 yields no Draft: 08:15 gets its pass at once, and a
     pass with two Drafts available still submits once."""
     from src.x import twitter_client as tc
     posted = []
     monkeypatch.setattr(tc, "post_tweet", lambda text, **k: posted.append(text) or True)
-    clock(monkeypatch, datetime(2026, 9, 20, 9, 20, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 8, 20, tzinfo=TORONTO))
     draft = editorial.draft_post
     monkeypatch.setattr(editorial, "draft_post",
-                        lambda slot, *a: {} if slot.clock == "09:00" else draft(slot, *a))
-    assert editorial.run_editorial_cycle()["slot"] == "09:15"
-    assert editorial._read_state()["slots"] == {"09:15": "published"}
-    assert not editorial._read_state()["attempts"].get("09:00")
+                        lambda slot, *a: {} if slot.clock == "08:00" else draft(slot, *a))
+    assert editorial.run_editorial_cycle()["slot"] == "08:15"
+    assert editorial._read_state()["slots"] == {"08:15": "published"}
+    assert not editorial._read_state()["attempts"].get("08:00")
     monkeypatch.setattr(editorial, "draft_post", draft)
-    clock(monkeypatch, datetime(2026, 9, 21, 9, 20, tzinfo=TORONTO))
-    assert editorial.run_editorial_cycle()["slot"] == "09:00"
+    clock(monkeypatch, datetime(2026, 9, 21, 8, 20, tzinfo=TORONTO))
+    assert editorial.run_editorial_cycle()["slot"] == "08:00"
     assert len(posted) == 2
 
 
@@ -792,9 +803,9 @@ def test_a_crash_loop_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
         monkeypatch, trend_fixture, crash_every):
     """UNCONFIRMED writes no ledger row: without the pending count, every
     restart submitted a Startup post, 63 a day at a crash every 20 minutes."""
-    first = datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO)
+    first = datetime(2026, 9, 20, 6, 0, tzinfo=TORONTO)
     starts = [first + timedelta(minutes=crash_every * i)
-              for i in range(int(17.5 * 60 / crash_every))]
+              for i in range(int(16 * 60 / crash_every))]
     _assert_ceiling_and_spacing(_unconfirmed_day(monkeypatch, starts))
 
 
@@ -803,7 +814,7 @@ def test_one_process_of_unconfirmed_submissions_keeps_the_ceiling_and_spacing(
     """Eleven Slots and the Startup post, all UNCONFIRMED: 12 submissions
     before pending ones counted."""
     _assert_ceiling_and_spacing(
-        _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 5, 0, tzinfo=TORONTO)]))
+        _unconfirmed_day(monkeypatch, [datetime(2026, 9, 20, 6, 0, tzinfo=TORONTO)]))
 
 
 def test_pending_and_checked_submissions_count_toward_ceiling_and_spacing(monkeypatch, memory_ledger):

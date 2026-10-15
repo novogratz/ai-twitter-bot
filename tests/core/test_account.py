@@ -192,7 +192,7 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     # The Operator's bounds of #201.
     ("FOLLOW_TOTAL_CAP = 5000", "FOLLOW_TOTAL_CAP", 3500),
     ("LIKE_BOT_DAILY_CAP = 1800", "LIKE_BOT_DAILY_CAP", 500),
-    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 75),
+    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 60),
     ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
     ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
     ("FOLLOWBACK_CAP = -1", "FOLLOWBACK_CAP", 0),
@@ -240,7 +240,8 @@ def test_a_stricter_account_value_holds_for_the_operator_bounds(accounts, fresh)
 # The network, niche and searches of accounts/theaishrink/account.toml. #204
 # moved them there from the code unchanged; #205 (Operator, 2026-09-25: AI
 # only, like the policy) removed REMOVED_205 from them and narrowed
-# NARROWED_205. A pattern is (source, flags).
+# NARROWED_205. On 2026-10-14 Latest discovery removes popularity minimums
+# and groups the same topics explicitly. A pattern is (source, flags).
 NETWORK = {
     "PROFILE_VISIT_ALLOWLIST": "TheBTCTherapist,Graphseo",
     "VIP_SCAN_HANDLES": "Graphseo,TheBTCTherapist",
@@ -333,16 +334,16 @@ NETWORK = {
         r"(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b",
         34),
     "SEARCH_QUERIES": [
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
-        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
-        "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
-        '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
-        '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
-        'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
-        'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
-        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
-        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
-        '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en -filter:replies',
+        '(OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
+        '(ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
+        '("AI agents" OR "agentic AI" OR "reasoning model" OR AGI) lang:en -filter:replies',
+        '("Claude Code" OR Cursor OR Copilot OR "AI coding") lang:en -filter:replies',
+        '("Meta AI" OR "Apple Intelligence" OR "Microsoft Copilot" OR "Amazon AI" OR "Tesla AI") lang:en -filter:replies',
+        '(Nvidia OR GPU OR "AI datacenter" OR "AI capex") lang:en -filter:replies',
+        '((TSMC OR AMD OR Broadcom) AI OR "AI chips" OR "AI power" OR "AI energy") lang:en -filter:replies',
+        '((CoreWeave OR Nebius OR "Applied Digital") AI OR "data center" OR "AI electricity") lang:en -filter:replies',
+        '("AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek) lang:en -filter:replies',
     ],
     "HOT_TAB_QUERIES": [
         'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
@@ -410,13 +411,13 @@ REMOVED_205 = {
 # paired with AI: before -> after.
 NARROWED_205 = {
     '"why would" OR "why is" OR "what am I missing" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30':
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en -filter:replies',
     'Nvidia OR NVDA OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50':
-        'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
+        '(Nvidia OR GPU OR "AI datacenter" OR "AI capex") lang:en -filter:replies',
     'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30':
-        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+        '((TSMC OR AMD OR Broadcom) AI OR "AI chips" OR "AI power" OR "AI energy") lang:en -filter:replies',
     'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30':
-        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
+        '((CoreWeave OR Nebius OR "Applied Digital") AI OR "data center" OR "AI electricity") lang:en -filter:replies',
     "AI datacenter OR power demand lang:en min_faves:50":
         "AI datacenter OR AI power demand lang:en min_faves:50",
     "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50":

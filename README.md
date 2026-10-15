@@ -25,8 +25,8 @@ creation and uploads remain Operator-managed.
 
 - **Replies only:** no new original posts, including startup/restart posts. The
   Account's `publish_originals = false` wins over engine settings and CLI flags.
-- **Daily Toronto windows:** 05:00–09:30, 12:05–13:00, 17:15–20:00 and
-  22:00–23:00. Starts inclusive, closes exclusive, with automatic DST handling.
+- **Daily Toronto windows:** 06:00–09:00, 12:00–13:00 and 17:00–22:30.
+  Starts inclusive, closes exclusive, with automatic DST handling.
 - **Never interact with @elonmusk:** no replies, likes, follows, unfollows or @mentions,
   including his comments and responses. Saved approvals and whitelist entries
   cannot bypass protection; the browser checks the actual author before clicking.
@@ -49,14 +49,20 @@ creation and uploads remain Operator-managed.
   no smiley, or exactly one friendly smiley/positive text emoticon in a natural
   position. The saved choice is enforced through publication; no automatic
   ending or fake typos. Recent replies guide variety.
-- **Pacing aimed near 300 Replies per full day:** a shared 75–95 second cooldown
-  leaves room for browser work and selection within the 9h10 activity windows.
+- **More active Replies:** a shared 60–80 second cooldown within 9h30 of
+  daily activity windows.
   Actual volume depends on qualifying posts, approved drafts and model/browser
   time; 300 is not a forced quota. Collectors prepare a shared
   pool during the cooldown. Independent review scores impact, sharpness and
   interest, requires positive tone, relevance and factual support, and chooses one strong winner.
   Weak pools send nothing. Uncertain submits consume the cooldown too; the
   deadline and permanent parent claims survive restarts.
+- **Broader AI/SI discovery:** direct scans run every minute, rotating one
+  permitted VIP and three searches mixing Latest and Top. Latest searches have
+  no like minimum and cover models, research, tools, workflows and generated
+  videos. Feed sweeps run every two minutes and alternate which feed goes first.
+  Small preparation budgets and a pause when the eight-draft queue fills leave
+  browser time for publishing. Every draft still needs independent approval.
 - Sourcing, content checks, respect rules and permanent history remain. Replies have no daily quota. No quotes, reposts or threads.
   Non-publishing like/follow jobs keep their existing limits and exclude Elon.
 

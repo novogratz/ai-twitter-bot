@@ -1,5 +1,27 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — The Operator requested more aggressive Replies to interesting
+AI/SI posts during 06:00–09:00, 12:00–13:00 and 17:00–22:30 Toronto every day.
+These fixed windows supersede the four windows below. The shared gap becomes
+60–80 seconds (minimum/floor 60, default jitter 20); existing saved deadlines
+remain honored. Discovery runs direct scans every minute and feed sweeps every
+two minutes. Direct scans rotate one permitted VIP and three interleaved
+Latest/Top queries; Latest has no like minimum and covers research, tools,
+workflows and generated videos as well as models and infrastructure.
+
+Ranked collection counts preparation attempts, including declines, against
+its cycle budget: four for direct discovery and four per feed by default, with
+40 posts read per feed. Feed priority alternates. Every collector skips new
+browser reads when the eight-draft queue is full; locked reservation still
+enforces capacity. This frees browser time for the independent selector.
+Only useful, supported, kind drafts passing all existing scores may publish.
+No protected author, own post, nested reply or duplicate becomes eligible.
+Reply-only publishing, dynamic lengths and random smileys remain. Greater
+coverage is not a promise to answer every post or a forced volume quota.
+Local configuration changes the minimum gap and these three collection limits;
+all other settings and production history are preserved. No start or restart
+accompanies this update.
+
 2026-10-14 — The Operator now wants a pace near 300 Replies per full Toronto
 day and a random mix with and without smileys. This supersedes the earlier
 5–8 minute cooldown and optional reaction guidance below. The shared gap is
@@ -180,8 +202,8 @@ and nested replies have no VIP exception.
 
 ## Scheduler and publishing permissions
 
-The four Toronto windows apply every day without jitter: 05:00–09:30,
-12:05–13:00, 17:15–20:00 and 22:00–23:00. Browser locks, browser scripts, model
+The three Toronto windows apply every day without jitter: 06:00–09:00,
+12:00–13:00 and 17:00–22:30. Browser locks, browser scripts, model
 calls, queued jobs and the final submit all check the clock. Closing is exclusive;
 a request already issued may finish remotely but cannot authorize another write.
 
@@ -215,7 +237,7 @@ warnings under `settings_warnings`.
 | Setting | Bound | Default |
 |---|---|---|
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
-| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 75 s | 75 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 60 s | 60 |
 | `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 20 |
 | `LIKE_BOT_PER_CYCLE`, likes per `like_job` cycle | 0 to 10 | 10 |
 | `LIKE_BOT_DAILY_CAP`, `like_job` likes per day | 0 to 500 | 500 |
@@ -261,7 +283,7 @@ Reply pacing remains configurable within its floors. Restart after changing code
 ## Verification
 
 Run the full isolated test suite and the scheduler dry run from `AGENTS.md`.
-Validate all four activity boundaries, no startup or direct originals, protected
+Validate all three windows and their boundaries, no startup or direct originals, protected
 and misattributed authors, own/historical handles, nested targets, permanent and
 concurrent deduplication, SI normalization, short and long replies and optional
 smileys. Tests must not open Safari, call live models or change production state.
