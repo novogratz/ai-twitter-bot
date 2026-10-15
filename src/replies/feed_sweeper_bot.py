@@ -62,13 +62,14 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """Sweep For You and Following while capacity remains, rotating first priority."""
+    """Sweep both feeds, giving For You first priority in three of four cycles."""
     from ..x.scraper import scrape_home_feed, scrape_following_feed
     feeds = [("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)]
     start = 0
     if account.current().replies.ranked_selection:
-        start = _FEED_ROTATION_OFFSET[0]
-        _FEED_ROTATION_OFFSET[0] = (start + 1) % len(feeds)
+        offset = _FEED_ROTATION_OFFSET[0]
+        start = 1 if offset == 3 else 0
+        _FEED_ROTATION_OFFSET[0] = (offset + 1) % 4
     for source, scraper in feeds[start:] + feeds[:start]:
         if not reply_pipeline.discovery_available():
             break

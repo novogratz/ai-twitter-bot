@@ -89,7 +89,7 @@ def test_reply_scrape_surfaces_forward_the_parent_text_limit(monkeypatch, surfac
     monkeypatch.setattr(scraper.time, "sleep", lambda *a: None)
     for name in ("open_url", "_scroll_page", "close_front_tab"):
         monkeypatch.setattr(safari, name, lambda *a, **k: None)
-    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "CLICKED")
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "VERIFIED")
     seen = []
     monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda label, count, limit:
                         seen.append((count, limit)) or [])
@@ -99,6 +99,59 @@ def test_reply_scrape_surfaces_forward_the_parent_text_limit(monkeypatch, surfac
              "search": lambda: scraper.scrape_x_search("SI research", 3, text_limit=4000)}
     assert calls[surface]() == []
     assert seen == [(3, 4000)]
+
+
+@pytest.mark.parametrize("surface,target", [("scrape_home_feed", 0), ("scrape_following_feed", 1)])
+@pytest.mark.parametrize("labels", [("For you", "Following"), ("Pour vous", "Abonnements"),
+                                  ("Pour vous", "Suivi(e)s")])
+@pytest.mark.parametrize("scenario", ["already selected", "other feed", "missing", "duplicate", "ignored click"])
+def test_feeds_verify_the_native_tab_before_scrolling_or_collecting(monkeypatch, surface, target, labels, scenario):
+    import json
+    import shutil
+    import subprocess
+    from src.x import scraper, safari
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed to execute the browser script fixture")
+    tabs = list(labels)
+    if scenario == "missing":
+        tabs[target] = "A different list"
+    elif scenario == "duplicate":
+        tabs.append(labels[target])
+    state = {"selected": target if scenario == "already selected" else 1 - target}
+    clicks, seen, scrolls, closed = [], [], [], []
+    harness = r"""
+const input = JSON.parse(process.argv[1]), clicks = [];
+let selected = input.selected;
+const tabs = input.tabs.map((label, index) => ({
+  textContent: label,
+  getAttribute: name => name === 'aria-selected' ? String(index === selected) : null,
+  click: () => { clicks.push(index); if (!input.ignore) selected = index; }
+}));
+global.document = {querySelectorAll: selector => selector === '[role="tab"]' ? tabs : []};
+const answer = eval(input.js);
+process.stdout.write(JSON.stringify({answer, selected, clicks}));
+"""
+    def run(js, *args, **kwargs):
+        result = subprocess.run([node, "-e", harness, json.dumps(
+            {"js": js, "tabs": tabs, "selected": state["selected"], "ignore": scenario == "ignored click"})],
+            capture_output=True, text=True, check=True)
+        output = json.loads(result.stdout)
+        state["selected"] = output["selected"]
+        clicks.extend(output["clicks"])
+        return output["answer"]
+    monkeypatch.setattr(scraper.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(safari, "open_url", lambda url: None)
+    monkeypatch.setattr(safari, "_run_js", run)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: scrolls.append(state["selected"]))
+    monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: seen.append(state["selected"]) or ["post"])
+    allowed = scenario in ("already selected", "other feed")
+    assert getattr(scraper, surface)() == (["post"] if allowed else [])
+    assert seen == ([target] if allowed else [])
+    assert (bool(scrolls) and set(scrolls) == {target}) is allowed
+    assert clicks == ([target] if scenario in ("other feed", "ignored click") else [])
+    assert closed == [True]
 
 
 @pytest.mark.parametrize("text", ["SI research.\n" * 30, "SI " + "🙂" * 4000])
@@ -116,7 +169,8 @@ const article = {
   innerHTML: '', innerText: input.text,
   querySelector: selector => selector === '[data-testid="tweetText"]'
     ? {innerText: input.text, textContent: 'Hidden or differently formatted content'} : null,
-  querySelectorAll: () => [{getAttribute: () => '/builder/status/123'}]
+  querySelectorAll: selector => selector === 'a[href*="/status/"]'
+    ? [{getAttribute: () => '/builder/status/123'}] : []
 };
 global.document = {querySelectorAll: () => [article]};
 process.stdout.write(eval(input.js));
@@ -128,3 +182,45 @@ process.stdout.write(eval(input.js));
     rows = scraper._scrape_tweets_from_page("test", 1, 4000)
     assert rows[0]["text"] == text.strip()[:4000]
     assert len(rows[0]["text"]) > 200
+
+
+@pytest.mark.parametrize("testid", ["like", "unlike"])
+@pytest.mark.parametrize("label,visible,expected", [
+    ("0 Likes. Like", "", 0), ("1 Like. Like", "", 1),
+    ("2 Likes. Unlike", "", 2), ("Unlike", "2", 2),
+    ("1.2K Likes. Like", "", 1200), ("2\u202f300 Likes. Like", "", 2300),
+    ("Unknown", "", 0), ("1.2 Likes. Like", "", 0), (None, "", 0),
+])
+def test_scraper_reads_only_the_parent_like_or_unlike_counter(monkeypatch, testid, label, visible, expected):
+    import json
+    import shutil
+    import subprocess
+    from src.x import scraper, safari
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed to execute the browser script fixture")
+    harness = r"""
+const input = JSON.parse(process.argv[1]);
+const article = {innerText: 'SI inference research.', innerHTML: ''};
+const metric = (label, text, owner, quoted=false) => ({
+  getAttribute: () => label, innerText: text,
+  closest: selector => selector === 'article' ? owner : (quoted ? {} : null)
+});
+article.querySelectorAll = selector => {
+  if (selector === 'a[href*="/status/"]') return [{getAttribute: () => '/builder/status/123'}];
+  if (!selector.includes('[data-testid="' + input.testid + '"]')) return [];
+  return [metric('999K Likes', '', article, true), metric('999K Likes', '', {}),
+          ...(input.label === null ? [] : [metric(input.label, input.visible, article)])];
+};
+article.querySelector = selector => selector === '[data-testid="tweetText"]'
+  ? {innerText: article.innerText} : null;
+global.document = {querySelectorAll: () => [article]};
+process.stdout.write(eval(input.js));
+"""
+    def run(js, *args, **kwargs):
+        return subprocess.run([node, "-e", harness, json.dumps(
+            {"js": js, "testid": testid, "label": label, "visible": visible})],
+            capture_output=True, text=True, check=True).stdout
+    monkeypatch.setattr(safari, "_run_js", run)
+    rows = scraper._scrape_tweets_from_page("test", 1, 4000)
+    assert [(row["url"], row["likes"]) for row in rows] == [("https://x.com/builder/status/123", expected)]

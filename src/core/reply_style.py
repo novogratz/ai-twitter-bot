@@ -8,8 +8,11 @@ from . import engagement_log
 from ..guards import content_guard
 
 _EMOJI = re.compile(
-    r"[\U0001F300-\U0001FAFF\u2600-\u27BF][\uFE0F\U0001F3FB-\U0001F3FF]*"
-    r"(?:\u200D[\U0001F300-\U0001FAFF\u2600-\u27BF][\uFE0F\U0001F3FB-\U0001F3FF]*)*")
+    r"[\U0001F1E6-\U0001F1FF]{2}|[0-9#*]\uFE0F?\u20E3|"
+    r"[\U0001F000-\U0001FAFF\u2600-\u27BF\u231A\u231B\u23E9-\u23F3\u23F8-\u23FA\u2B50\u2B55]"
+    r"[\uFE0F\U0001F3FB-\U0001F3FF]*"
+    r"(?:\u200D[\U0001F000-\U0001FAFF\u2600-\u27BF][\uFE0F\U0001F3FB-\U0001F3FF]*)*"
+    r"|[^\s]\uFE0F")
 _SMILEY = re.compile(r"(?<!\w)(?:[:;=8xX][-^']?[)(/DPpOo]|<3)(?!\w)")
 _FRIENDLY_FACES = "🙂😊😄😁😂😅🤣😉🤓😎"
 _FRIENDLY_TEXT = {":)", ":-)", ":D", ":-D", ";)", ";-)", "=)", "=D", "xD", "XD", "<3"}
@@ -47,8 +50,8 @@ def choose_length() -> Length:
 
 
 def choose_smiley() -> bool:
-    """Independent 35% chance per draft, not a fixed alternating pattern."""
-    return random.random() < 0.35
+    """Independent 50/50 choice per draft, not a fixed alternating pattern."""
+    return random.random() < 0.5
 
 
 def reaction_count(text: str) -> int:

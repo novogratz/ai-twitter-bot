@@ -26,12 +26,14 @@ Keep its no-contact protection in `network.blocked_accounts` as well as
 `replies.protected_handles`. Outgoing SI wording is in `text_replacements`.
 
 Reply pacing defaults to 30 seconds plus up to 15 seconds of jitter within
-06:00–09:00, 12:00–13:00 and 17:00–24:00 Toronto every day, subject to approved
+05:00–24:00 Toronto every day, subject to approved
 drafts and model/browser time. The minimum cannot be lowered below 30; jitter
 may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
-New ranked drafts independently choose no smiley with 65% probability or
-exactly one friendly smiley with 35%, enforced within the assigned length limit
+Reply volume has no daily or hourly count cap. Every Reply target needs at least
+two likes, rechecked on the opened post; reposts and views cannot substitute.
+New ranked drafts independently choose no smiley with 50% probability or
+exactly one friendly smiley with 50%, enforced within the assigned length limit
 through publication.
 The selector checks every ten seconds after its 60-second startup delay, with
 15 seconds for a new pool to collect choices before independent comparison.
@@ -39,6 +41,8 @@ Every Account discovery query includes SI, "super intelligence", superintelligen
 and ASI, retaining AI and "artificial intelligence" as search aliases.
 
 Direct discovery runs every minute with three rotating Latest/Top queries and
-four draft attempts per cycle by default. Feed sweeps run every two minutes,
-reading 40 posts and attempting four drafts per feed. Collectors stop new reads
+four draft attempts per cycle by default. Feed sweeps run every minute, with
+For You first in three of four cycles, reading 40 posts and attempting four
+drafts per feed. Collectors stop new reads
 when the eight-draft queue is full. These are preparation bounds, not daily quotas.
+Each feed scan selects and verifies its native tab before reading posts.

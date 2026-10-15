@@ -501,7 +501,8 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
     from . import x_urls
 
     sid, expected = x_urls.status_id(url), x_urls.author(url)
-    from ..guards.reply_admission import is_blocked_account
+    from ..guards.reply_admission import is_blocked_account, has_reply_engagement, MIN_PARENT_LIKES
+    from .post_metrics import POST_METRICS_JS
     if (not sid or not expected or config.is_own_handle(expected)
             or is_blocked_account(expected) or account.current().replies.is_protected(expected)):
         return False
@@ -511,6 +512,7 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
         if expected_parent is None:
             return False
     js = r"""(() => {
+      __POST_METRICS__
       const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__, blocked = __BLOCKED__;
       const articles = [...document.querySelectorAll('article')];
       const own = (article, selector) => [...article.querySelectorAll(selector)]
@@ -538,15 +540,19 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
       // A visible prior answer also closes this thread, including older history.
       if (articles.slice(1).some(a => self.includes(status(permalink(a))?.[1].toLowerCase())))
         return 'refused';
+      const likes = postMetric(article, ['like', 'unlike']);
+      if (!(likes >= __MIN_ENGAGEMENT__)) return 'refused';
       const button = own(article, '[data-testid="reply"]')[0];
       if (!button) return 'refused';
       if (click) button.click();
-      return JSON.stringify({url: link.href, text: text, clicked: click});
+      return JSON.stringify({url: link.href, text: text, clicked: click, likes});
     })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
     js = js.replace("__CLICK__", "true" if click else "false").replace(
         "__SELF__", json.dumps(sorted(config.own_handles())))
     js = js.replace("__PARENT__", json.dumps(expected_parent)).replace(
         "__PARENT_LIMIT__", str(reply_queue.PARENT_TEXT_LIMIT))
+    js = js.replace("__POST_METRICS__", POST_METRICS_JS).replace(
+        "__MIN_ENGAGEMENT__", str(MIN_PARENT_LIKES))
     from ..guards.reply_admission import _normalise
     js = js.replace("__BLOCKED__", json.dumps([
         _normalise(h) for h in (*config.BLOCKLIST, *account.current().network.blocked_accounts) if _normalise(h)]))
@@ -554,7 +560,8 @@ def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
         opened = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]") or "null")
     except (TypeError, ValueError):
         return False
-    if not isinstance(opened, dict) or not isinstance(opened.get("url"), str):
+    if (not isinstance(opened, dict) or not isinstance(opened.get("url"), str)
+            or not has_reply_engagement(opened.get("likes"))):
         return False
     if account.current().replies.ranked_selection:
         from ..core import reply_queue
@@ -658,7 +665,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
             if not _standalone_reply_target(tweet_url):
-                log.info("[REPLY] Opened target is protected, nested, already answered or unreadable: %s", tweet_url)
+                log.info("[REPLY] Opened target is protected, nested, already answered, below engagement minimum or unreadable: %s", tweet_url)
                 return WriteOutcome.REFUSED
             _maybe_like_parent(tweet_url)
             time.sleep(1)

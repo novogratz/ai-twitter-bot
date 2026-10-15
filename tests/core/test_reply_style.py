@@ -86,10 +86,10 @@ def test_every_length_also_respects_a_tighter_global_ceiling(monkeypatch):
         assert not length.accepts("a" * 41)
 
 
-def test_smiley_choice_targets_35_percent_with_random_streaks(monkeypatch):
+def test_smiley_choice_targets_half_plain_replies_with_random_streaks(monkeypatch):
     monkeypatch.setattr(reply_style.random, "random", random.Random(42).random)
     choices = [reply_style.choose_smiley() for _ in range(10_000)]
-    assert 3400 <= sum(choices) <= 3600
+    assert 4900 <= sum(choices) <= 5100
     assert any(a == b for a, b in zip(choices, choices[1:]))  # No mechanical alternation.
 
 
@@ -102,6 +102,13 @@ def test_smiley_choice_targets_35_percent_with_random_streaks(monkeypatch):
     ("Bandwidth matters https://example.com/🙂", False, True),
     ("Bandwidth matters https://example.com/🙂", True, False),
     ("Bandwidth matters. 🚀", None, True),  # Legacy drafts keep their prior rule.
+    ("Bandwidth matters. 🇺🇸", False, False),
+    ("Bandwidth matters. 🇺🀸", False, False),
+    ("Bandwidth matters. 1️⃣", False, False),
+    ("Bandwidth matters. ©️", False, False),
+    ("Bandwidth matters. ⭐", False, False),
+    ("Bandwidth matters. ⏱️", False, False),
+    ("Bandwidth matters. 🇺🇸", True, False),
 ])
 def test_assigned_smiley_checks_the_actual_prose(text, smiley, accepted):
     assert reply_style.accepts_smiley(text, smiley) is accepted

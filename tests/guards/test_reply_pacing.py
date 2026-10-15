@@ -69,7 +69,7 @@ def test_dry_run_and_window_close_do_not_reserve_a_submission(clock, monkeypatch
     monkeypatch.setenv("DRY_RUN", "1")
     assert not reply_pacing.reserve(fresh("one"))
     monkeypatch.setenv("DRY_RUN", "0")
-    clock[0] = clock[0].replace(hour=9, minute=30)
+    clock[0] = clock[0].replace(hour=0, minute=30)
     with pytest.raises(active_hours.OutsideActiveHours):
         reply_pacing.reserve(fresh("one"))
     assert not Path(reply_pacing.PACE.path).exists()
@@ -105,7 +105,7 @@ def test_old_saved_cooldown_is_not_shortened_by_faster_defaults(clock, settings_
 def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, memory_ledger):
     """Capacity check, not a quota: assume an approved draft is always ready."""
     import math
-    clock[0] = clock[0].replace(hour=6, minute=0)
+    clock[0] = clock[0].replace(hour=5, minute=0)
     end = (clock[0] + timedelta(days=1)).replace(hour=0, minute=0)
     sent = 0
     while clock[0] < end:
@@ -119,7 +119,7 @@ def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, me
         # The selector runs every ten seconds and never catches up in bursts.
         next_tick = (math.floor(clock[0].timestamp() / 10) + 1) * 10
         clock[0] = datetime.fromtimestamp(next_tick, tz=TORONTO)
-    assert 600 <= sent <= 750, sent
+    assert 1000 <= sent <= 1300, sent
 
 
 def _reserve_child(folder, start, results, index):

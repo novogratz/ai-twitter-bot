@@ -6,6 +6,28 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator now wants activity continuously from 05:00 until
+24:00 America/Toronto every day, with no daytime breaks. Midnight remains
+exclusive and the next wake is 05:00. There is no daily or hourly Reply-count
+cap; the existing 30–45 second cooldown, preparation bounds, independent review,
+protected authors and permanent one Reply per standalone post still apply.
+
+Every Reply target must have at least two likes, regardless of reposts, comments
+or views. Discovery skips zero, one and unreadable like counts before drafting.
+The final write reads the actual parent again before any optional parent like
+and before clicking Reply; saved drafts and priority authors have no exemption.
+Discovery and publishing share the counter reader, including already-liked
+posts, and cannot borrow engagement from quotes or comments.
+
+New ranked drafts independently choose a smiley with 50% probability and plain
+text with 50%, superseding 35% below. Flags, keycaps and other emoji variants
+count as reactions and cannot bypass plain-text assignments. The saved choice
+is enforced through publication; nothing is appended after review. For You and
+Following scans run every minute, with For You first in three of every four
+cycles while queue capacity remains. Both collectors select and verify their
+native tab, skipping an unverified view. The Operator requested push, PR and merge.
+This change does not start or restart the bot or modify production state.
+
 2026-10-14 — The Operator extended the evening Reply window until midnight.
 Daily Toronto activity windows are now 06:00–09:00, 12:00–13:00 and
 17:00–24:00, superseding the 22:30 close below. Midnight is exclusive: external

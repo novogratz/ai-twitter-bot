@@ -38,10 +38,10 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns fixed windows 06:00–09:00, 12:00–13:00
-and 17:00–24:00 Toronto time, with closing times exclusive and DST handled by
+`src/guards/active_hours.py` owns one continuous 05:00–24:00 Toronto window,
+with midnight exclusive and DST handled by
 `zoneinfo`. The evening's midnight end means the following day's 00:00;
-external work is refused from then until 06:00. `WINDOWS` owns the bounds;
+external work is refused from then until 05:00. `WINDOWS` owns the bounds;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 those windows or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
@@ -85,8 +85,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 1 min | Rotates one permitted VIP and three interleaved Latest/Top searches; Latest queries have no like minimum. Prepares up to four draft attempts in the shared queue by default. Never publishes for the ranked Account. |
-| `feed_sweep_job` | 2 min | Reads up to 40 posts each from For You and Following, alternating first priority; prepares up to four draft attempts per feed by default. |
+| `direct_reply_job` | 1 min | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least two likes. Prepares up to four draft attempts in the shared queue by default. Never publishes for the ranked Account. |
+| `feed_sweep_job` | 1 min | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Prepares up to four draft attempts per feed by default. |
 | `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
 | `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
 | `reply_selection_job` | 10 sec; first run after 60 sec | Dedicated worker gives a new pool 15 seconds to gather choices, independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
@@ -567,7 +567,14 @@ This is a read-only hint; reservation still enforces the bound under its process
 lock. Per-cycle budgets count reserved draft attempts, including declined or
 invalid generations, while the pipeline still returns only actual shipped
 Replies. Direct discovery shares its budget across VIP and search passes;
-feed sweeps alternate which feed gets first use of available capacity.
+feed sweeps give For You first use of available capacity in three of four cycles,
+with Following first in the fourth. Both feeds run every minute while capacity remains.
+Each collector selects and verifies the intended native tab before scrolling;
+an unverified tab yields no candidates instead of silently reading another feed.
+Every Reply collector requires at least two readable likes before drafting. The
+final write rechecks the opened parent before a parent like or Reply click, using
+the same article-local like/unlike counter reader (`src/x/post_metrics.py`) as
+discovery. Quoted posts, comments, reposts and views cannot supply that count.
 
 `reply_style.choose_length()` assigns each new ranked draft a random ceiling:
 five words/60 characters, 120, 200 or the unchanged 278-character maximum.
@@ -576,8 +583,9 @@ limit. Preparation checks the normalized, complete text without trimming to a
 smaller ceiling. Queue admission, selection and the write's selected-draft gate
 recheck that limit. Old rows without it retain the previous 278-character ceiling
 until expiry; invalid length metadata stops the queue without overwriting it.
-Each new draft also saves an independent random `smiley` boolean: 35% true,
-65% false. Plain drafts require zero reactions; smiley drafts require exactly one friendly face
+Each new draft also saves an independent random `smiley` boolean: 50% true,
+50% false. Plain drafts require zero reactions, including flags and keycaps;
+smiley drafts require exactly one friendly face
 or positive text emoticon within the same length budget. The prompt carries the
 choice and the queue, selector and selected-draft write gate enforce it. The
 publisher never appends or removes a smiley after review. Older rows without the

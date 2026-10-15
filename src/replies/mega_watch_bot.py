@@ -18,6 +18,7 @@ from datetime import timedelta
 
 from ..x import x_urls
 from ..core.logger import log
+from ..guards.reply_admission import has_reply_engagement
 from ..core import reply_queue
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
@@ -70,7 +71,7 @@ def _fresh_candidates(username: str, tweets: list) -> list:
     candidates = []
     for t in tweets:
         url = t.get("url")
-        if not url:
+        if not url or not has_reply_engagement(t.get("likes")):
             continue
         text = (t.get("text") or "").strip()
         if not text:

@@ -38,14 +38,15 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Daily windows 06:00–09:00, 12:00–13:00, 17:00–24:00 America/Toronto; closing times exclusive, DST aware | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Daily windows 05:00–24:00 America/Toronto; closing times exclusive, DST aware | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Replies per day | Subject to quality and model/browser time; no forced quota or daily cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 30) plus `REPLY_JITTER_SECONDS` (0–180, default 15) space them |
+| Reply count | Subject to quality and model/browser time; no forced quota or daily/hourly cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 30) plus `REPLY_JITTER_SECONDS` (0–180, default 15) space them |
+| Reply parent likes | At least 2; discovery and the opened-target check enforce `reply_admission.has_reply_engagement`. Other metrics cannot substitute. |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The live Account requires `replies.ranked_selection = true`: shared preparation

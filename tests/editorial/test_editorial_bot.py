@@ -29,10 +29,11 @@ def use_editorial(monkeypatch, **fields):
 
 def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    assert editorial.due_slot(at(5, 0), {}) is None
+    assert editorial.due_slot(at(4, 59), {}) is None
+    assert editorial.due_slot(at(5, 0), {})[0] == "05:00"
     assert editorial.due_slot(at(7, 15), {})[0] == "07:15"
     assert editorial.due_slot(at(8, 0), {}) is None
-    assert editorial.due_slot(at(10, 15), {}) is None
+    assert editorial.due_slot(at(10, 15), {})[0] == "10:00"
     assert editorial.due_slot(at(10, 45), {}) is None
     state = {"date": "2026-09-20", "slots": {"07:15": "published"}}
     assert editorial.due_slot(at(7, 30), state) is None
@@ -46,20 +47,18 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     assert editorial.due_slot(at(23, 30), {}) is None
 
 
-def test_retained_slots_outside_activity_hours_never_become_due():
-    """Reply-only policy preserves the old Original grid without allowing
-    an explicitly permitted Account to act outside current activity windows."""
+def test_retained_slots_stay_in_waking_hours_and_slots_cannot_publish_overnight(monkeypatch):
+    """Even an explicitly permitted Account cannot use overnight Original slots."""
     slots = editorial.slots()
-    inactive = []
     for slot in slots:
         hour, minute = map(int, slot.clock.split(":"))
         at = datetime(2026, 9, 20, hour, minute, tzinfo=TORONTO)
-        if not hours.is_active(at):
-            inactive.append(slot.clock)
-            assert editorial.due_slot(at, {}) is None
-    assert "05:00" in inactive
+        assert hours.is_active(at)
     assert max(clock for clock, _ in slots) == "20:45"
     assert slots[-1].exceptional
+    use_editorial(monkeypatch, slots=(("00:00", "night"), ("04:45", "before wake")))
+    for hour, minute in ((0, 0), (4, 45), (4, 59)):
+        assert editorial.due_slot(datetime(2026, 9, 20, hour, minute, tzinfo=TORONTO), {}) is None
 
 
 @pytest.fixture
@@ -241,16 +240,16 @@ def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture
     assert not any(r.levelname == "ERROR" for r in caplog.records)
 
 
-@pytest.mark.parametrize("finish_hour", [8, 9])
+@pytest.mark.parametrize("finish_hour", [8, 0])
 def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture, finish_hour):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("expired draft published"))
     draft = draft_fixture[0]
     def slow(*args):
-        clock(monkeypatch, datetime(2026, 9, 20, finish_hour, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 21 if finish_hour == 0 else 20, finish_hour, tzinfo=TORONTO))
         return draft
     monkeypatch.setattr(editorial, "draft_post", slow)
-    if finish_hour == 9:
+    if finish_hour == 0:
         with pytest.raises(hours.OutsideActiveHours):
             editorial.run_editorial_cycle()
     else:

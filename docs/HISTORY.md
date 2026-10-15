@@ -1,5 +1,33 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-14 — Continuous waking hours, two-like minimum and more For You discovery
+
+The Operator requested continuous 05:00–24:00 Toronto activity, no daily or
+hourly Reply-count cap, no Replies to zero/one-like posts, a random 50/50 smiley
+choice and more For You discovery, with a pushed and merged PR. Existing reply
+spacing, independent review and permanent target protections remain in force.
+
+Discovery now requires at least two observed likes before drafting. The final
+write checks the actual parent's own count before any optional parent like and
+before clicking Reply, including for saved drafts and all manual callers.
+The shared counter reader recognizes like/unlike buttons and compact counts,
+ignoring quotes and comments. Unreadable counts cannot qualify, and other
+metrics never replace likes. The skipped post may qualify on a later scan.
+
+Inspection found regional-indicator flags and some other emoji forms outside
+the existing reaction regex. They could therefore pass a plain-text assignment.
+Flags, keycaps and additional emoji variants now count as reactions, with tests
+at the style check and saved-draft publication guard. The new 50/50 draw stays
+random, is saved before generation and never appends or removes text after review.
+
+Feed sweeps run every minute, prioritizing For You in three of four cycles and
+Following in the fourth while capacity remains. Home previously relied on the
+tab X remembered, so a For You pass could actually read Following. Both feeds
+now select and verify their native tab before scrolling or collecting; a missing
+tab or failed switch returns no posts. Both Voice files and current
+guidance use the continuous window. No environment or production-state changes,
+start or restart accompany the implementation.
+
 ## 2026-10-14 — Evening Replies until midnight
 
 The Operator extended the evening Reply window from 22:30 to midnight while

@@ -9,7 +9,7 @@ from ..core.logger import log
 
 
 # A midnight end closes at the following day's 00:00, displayed as 24:00.
-WINDOWS = ((time(6), time(9)), (time(12), time(13)), (time(17), time.min))
+WINDOWS = ((time(5), time.min),)
 WAKE = WINDOWS[0][0]
 BEDTIME = WINDOWS[-1][1]
 

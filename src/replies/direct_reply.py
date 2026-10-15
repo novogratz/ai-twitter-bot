@@ -9,6 +9,7 @@ from ..x import x_urls
 from ..core import account, settings, reply_queue
 from ..core.llm_client import Surface
 from ..core.logger import log
+from ..guards.reply_admission import has_reply_engagement
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
 from .reply_generator import LanguageRule, ReplyCall
@@ -123,6 +124,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
                                        max_tweets=20, tab="latest", text_limit=reply_queue.PARENT_TEXT_LIMIT)
         candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}") for t in tweets
                       if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))
+                      and has_reply_engagement(t.get("likes"))
                       and not x_urls.is_reply_like_tweet(t, handle)]
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
                                      max_shipped=None if remaining is None else remaining - used)
@@ -152,6 +154,7 @@ def _search_candidates(tweets: list, query: str) -> list:
     return [reply_pipeline.Candidate(t["url"], t.get("text") or "", f"SEARCH-HOT/{query[:60]}")
             for t in sorted(tweets, key=freshness_sort_key)
             if t.get("url") and not x_urls.is_reply_like_tweet(t)
+            and has_reply_engagement(t.get("likes"))
             and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
 
 
@@ -212,8 +215,8 @@ def run_direct_reply_cycle(max_replies=None):
     #    coverage still lands every ceil(N/K) cycles (~5 min); the freed
     #    Safari time goes to POSTING replies.
     searches = account.current().searches
-    # Interleave fresh discovery with popular posts; no author or likes floor
-    # applies to Latest discovery. Account queries define the topic scope.
+    # Interleave fresh discovery with popular posts. Account queries define the
+    # topic scope; the shared like minimum is checked on the scraped counts.
     all_queries = [query for pair in zip_longest(searches.replies, searches.hot_tab)
                    for query in pair if query]
     cycle_queries = _queries_for_cycle(all_queries)

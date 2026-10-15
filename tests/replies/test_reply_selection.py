@@ -277,7 +277,7 @@ def test_selected_draft_reaches_real_write_guards_once(clock, reviewer, monkeypa
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     url = reply_queue.ready()[sid]["url"]
     monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: json.dumps(
-        {"url": url, "text": PARENT, "clicked": "click = true" in js}))
+        {"url": url, "text": PARENT, "likes": 2, "clicked": "click = true" in js}))
     clock[0] += timedelta(seconds=61)
     assert selection.run_selection_cycle() == 1
     assert pasted == [TEXT] and submitted == [url]
@@ -457,7 +457,8 @@ def test_queue_refuses_a_draft_that_ignores_its_smiley_choice(clock, smiley, tex
 
 
 @pytest.mark.parametrize("status", ["ready", "selected"])
-@pytest.mark.parametrize("smiley,text", [(True, TEXT), (False, TEXT + " 🙂")])
+@pytest.mark.parametrize("smiley,text", [(True, TEXT), (False, TEXT + " 🙂"),
+                                       (False, TEXT + " 🇺🇸"), (False, TEXT + " 1️⃣")])
 def test_saved_wrong_smiley_cannot_reach_review_or_browser(
         clock, monkeypatch, memory_ledger, status, smiley, text):
     sid = stage(text=text)

@@ -25,8 +25,11 @@ creation and uploads remain Operator-managed.
 
 - **Replies only:** no new original posts, including startup/restart posts. The
   Account's `publish_originals = false` wins over engine settings and CLI flags.
-- **Daily Toronto windows:** 06:00–09:00, 12:00–13:00 and 17:00–24:00.
-  Starts inclusive, closes exclusive, with automatic DST handling.
+- **Daily Toronto window:** 05:00–24:00 continuously, with no daytime breaks.
+  Start inclusive, midnight exclusive, with automatic DST handling.
+- **At least two likes per Reply target:** zero, one or unreadable like counts
+  are skipped, regardless of reposts or views. Discovery and the final write
+  check the parent's own count, including posts already liked by the bot.
 - **Never interact with @elonmusk:** no replies, likes, follows, unfollows or @mentions,
   including his comments and responses. Saved approvals and whitelist entries
   cannot bypass protection; the browser checks the actual author before clicking.
@@ -48,11 +51,11 @@ creation and uploads remain Operator-managed.
   The existing 278-character maximum stays fixed. Limits include spaces and
   reactions, never require padding, and remain enforced through publication.
   Oversized drafts are skipped. Each draft also draws an independent choice:
-  no smiley (65%), or exactly one friendly smiley/positive text emoticon (35%)
+  no smiley (50%), or exactly one friendly smiley/positive text emoticon (50%)
   in a natural position. The saved choice is enforced through publication; no automatic
   ending or fake typos. Recent replies guide variety.
-- **More active Replies:** a shared 30–45 second cooldown within 11 hours of
-  daily activity windows.
+- **More active Replies:** no daily or hourly Reply-count cap; a shared
+  30–45 second cooldown within the 19-hour daily activity window.
   Actual volume depends on qualifying posts, approved drafts and model/browser
   time; there is no forced quota. Collectors prepare a shared
   pool during the cooldown. Independent review scores impact, sharpness and
@@ -62,9 +65,11 @@ creation and uploads remain Operator-managed.
   The selector checks every ten seconds and gives a new pool 15 seconds for
   choices; startup still allows 60 seconds. One approved winner per cycle.
 - **Broader AI/SI discovery:** direct scans run every minute, rotating one
-  permitted VIP and three searches mixing Latest and Top. Latest searches have
-  no like minimum and cover models, research, tools, workflows and generated
-  videos. Feed sweeps run every two minutes and alternate which feed goes first.
+  permitted VIP and three searches mixing Latest and Top. Latest searches cover
+  models, research, tools, workflows and generated videos; their results still
+  pass the shared two-like minimum. Feed sweeps run every minute, with For You
+  first in three of every four cycles and Following first in the fourth.
+  Each scan selects and verifies the intended native tab before reading posts.
   Small preparation budgets and a pause when the eight-draft queue fills leave
   browser time for publishing. Every draft still needs independent approval.
   Collectors and drafting retain up to 4,000 visible parent characters, so

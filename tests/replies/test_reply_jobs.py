@@ -145,8 +145,8 @@ def test_direct_reply_lanes_share_the_cycle(direct):
     never shipped. A post one lane tried is not tried again by the other."""
     dr, lanes, llm, chokepoint = direct
     vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
-    lanes["vip"] = [{"url": vip, "text": "vip post"}]
-    lanes["search"] = [{"url": searched, "text": "search post"}, {"url": vip, "text": "vip post"}]
+    lanes["vip"] = [{"likes": 2, "url": vip, "text": "vip post"}]
+    lanes["search"] = [{"likes": 2, "url": searched, "text": "search post"}, {"likes": 2, "url": vip, "text": "vip post"}]
     llm.answers["vip post"] = "réponse précise sur le trafic organique"
     chokepoint.answer = WriteOutcome.REFUSED
 
@@ -160,8 +160,8 @@ def test_direct_reply_lanes_share_the_cycle(direct):
 def test_direct_reply_search_keeps_fresh_on_niche_posts(direct):
     dr, lanes, llm, chokepoint = direct
     ok, off, old = fresh("someone", n=1), fresh("other", n=2), fresh("third", minutes=5 * 24 * 60 + 1, n=3)
-    lanes["search"] = [{"url": off, "text": "off-niche post"}, {"url": old, "text": "old post"},
-                       {"url": ok, "text": "post admitted"}, {"url": "https://x.com/nostatus", "text": "no id"}]
+    lanes["search"] = [{"likes": 2, "url": off, "text": "off-niche post"}, {"likes": 2, "url": old, "text": "old post"},
+                       {"likes": 2, "url": ok, "text": "post admitted"}, {"likes": 2, "url": "https://x.com/nostatus", "text": "no id"}]
 
     dr.run_direct_reply_cycle()
 
@@ -176,9 +176,9 @@ def test_direct_reply_search_skips_nested_replies(direct):
     neither the model nor the chokepoint, as in the feed sweep."""
     dr, lanes, llm, chokepoint = direct
     root, marked, mention = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
-    lanes["search"] = [{"url": marked, "text": "a nested reply", "is_reply": True},
-                       {"url": mention, "text": "  @someone a mention first"},
-                       {"url": root, "text": "a root post"}]
+    lanes["search"] = [{"likes": 2, "url": marked, "text": "a nested reply", "is_reply": True},
+                       {"likes": 2, "url": mention, "text": "  @someone a mention first"},
+                       {"likes": 2, "url": root, "text": "a root post"}]
 
     dr.run_direct_reply_cycle()
 
@@ -190,8 +190,8 @@ def test_direct_reply_vip_scan_never_answers_comments(direct):
     """VIP status never exempts comments from the one-Reply-per-thread rule."""
     dr, lanes, llm, chokepoint = direct
     marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
-    lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
-                    {"url": mention, "text": "@someone vip mention"}]
+    lanes["vip"] = [{"likes": 2, "url": marked, "text": "vip nested reply", "is_reply": True},
+                    {"likes": 2, "url": mention, "text": "@someone vip mention"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
@@ -203,7 +203,7 @@ def test_direct_reply_vip_scan_never_answers_comments(direct):
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     dr, lanes, llm, chokepoint = direct
     recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
-    lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
+    lanes["vip"] = [{"likes": 2, "url": old, "text": "vip old"}, {"likes": 2, "url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
@@ -215,7 +215,7 @@ def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
 def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
     """A rate limit in the VIP lane ends the whole cycle, the search lane included."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
+    lanes["vip"] = [{"likes": 2, "url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
     llm.default = EXHAUSTED
 
     dr.run_direct_reply_cycle()
@@ -228,7 +228,7 @@ def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
 def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     """Both lanes ran inside `except Exception`, which swallowed bedtime."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"url": fresh("graphseo"), "text": "vip post"}]
+    lanes["vip"] = [{"likes": 2, "url": fresh("graphseo"), "text": "vip post"}]
     chokepoint.answer = error
     with pytest.raises(type(error)):
         dr.run_direct_reply_cycle()
@@ -251,7 +251,7 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
 
     def fresh_posts(query, **k):
         lanes["queries"].append(query)
-        return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
+        return [{"likes": 2, "url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
     monkeypatch.setattr(dr, "scrape_x_search", fresh_posts)
     settings_override(DIRECT_REPLY_MAX_PER_CYCLE=3)
@@ -287,9 +287,9 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
     ok, thread, off, old = (fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3),
                             fresh("fourth", minutes=5 * 24 * 60 + 1, n=4))
     feeds["FEED"] = [
-        {"url": thread, "text": "OpenAI ships a model", "is_reply": True},
-        {"url": off, "text": "my sandwich today"},
-        {"url": old, "text": "OpenAI ships an old model"},
+        {"likes": 2, "url": thread, "text": "OpenAI ships a model", "is_reply": True},
+        {"likes": 2, "url": off, "text": "my sandwich today"},
+        {"likes": 2, "url": old, "text": "OpenAI ships an old model"},
         {"url": ok, "text": "OpenAI ships a new model", "likes": 50_000, "replies": 900},
     ]
 
@@ -305,8 +305,8 @@ def test_feed_sweep_reads_its_age_limit_at_call_time(feed, settings_override):
     DIRECT_REPLY_MAX_AGE_MINUTES applies without a restart of the module."""
     fs, feeds, llm, chokepoint = feed
     recent, older = fresh("someone", minutes=5, n=1), fresh("other", minutes=30, n=2)
-    feeds["FEED"] = [{"url": older, "text": "OpenAI ships a model"},
-                     {"url": recent, "text": "OpenAI ships a new model"}]
+    feeds["FEED"] = [{"likes": 2, "url": older, "text": "OpenAI ships a model"},
+                     {"likes": 2, "url": recent, "text": "OpenAI ships a new model"}]
     settings_override(DIRECT_REPLY_MAX_AGE_MINUTES=10)
 
     fs.run_feed_sweep_cycle()
@@ -316,7 +316,7 @@ def test_feed_sweep_reads_its_age_limit_at_call_time(feed, settings_override):
 
 def test_feed_sweep_stops_at_the_rate_limit(feed):
     fs, feeds, llm, chokepoint = feed
-    feeds["FEED"] = [{"url": fresh("someone"), "text": "OpenAI ships a new model"}]
+    feeds["FEED"] = [{"likes": 2, "url": fresh("someone"), "text": "OpenAI ships a new model"}]
     llm.default = EXHAUSTED
 
     fs.run_feed_sweep_cycle()
@@ -481,7 +481,7 @@ def profile_job(request, monkeypatch, llm, chokepoint):
 
 
 def post(handle, text, minutes=1, n=0, **fields):
-    return {"url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
+    return {"likes": 2, "url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
 
 
 def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
@@ -492,7 +492,7 @@ def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
         post("someone", "post stale", minutes=max_minutes + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
-        {"url": "https://x.com/someone", "text": "no status ID"},
+        {"likes": 2, "url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]
 
@@ -558,9 +558,9 @@ def test_debate_never_answers_mentions(debate, settings_override):
     settings_override(DEBATE_MAX_PER_CYCLE=2, DEBATE_MAX_AGE_HOURS=24.0)
     old = fresh("old", minutes=25 * 60, n=1)
     first, second, third = fresh("someone", n=2), fresh("other", minutes=10, n=3), fresh("third", minutes=20, n=4)
-    mentions += [{"url": third, "text": "mention three"}, {"url": old, "text": "mention old"},
-                 {"url": second, "text": "mention two"}, {"url": first, "text": "mention one"},
-                 {"url": fresh("empty", n=5), "text": "  "}]
+    mentions += [{"likes": 2, "url": third, "text": "mention three"}, {"likes": 2, "url": old, "text": "mention old"},
+                 {"likes": 2, "url": second, "text": "mention two"}, {"likes": 2, "url": first, "text": "mention one"},
+                 {"likes": 2, "url": fresh("empty", n=5), "text": "  "}]
 
     db.run_debate_cycle()
 
@@ -600,9 +600,9 @@ def test_replyback_never_answers_comments_on_own_posts(replyback, blocked_pgm_pm
     nb, replies, llm, chokepoint = replyback
     admitted = fresh("someone", n=1)
     replies += [
-        {"user": "No link @nolink", "text": "no status URL", "url": ""},
-        {"user": "Brief @brief", "text": "ok", "url": fresh("brief", n=2)},
-        {"user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
+        {"likes": 2, "user": "No link @nolink", "text": "no status URL", "url": ""},
+        {"likes": 2, "user": "Brief @brief", "text": "ok", "url": fresh("brief", n=2)},
+        {"likes": 2, "user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
     ]
 
     nb.run_replyback_cycle()
@@ -615,7 +615,7 @@ def test_replyback_never_answers_comments_on_own_posts(replyback, blocked_pgm_pm
 
 def test_replyback_never_answers_multiple_comments_under_a_busy_post(replyback):
     nb, replies, llm, chokepoint = replyback
-    replies += [{"user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
+    replies += [{"likes": 2, "user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
                 for i in range(12)]
 
     nb.run_replyback_cycle()

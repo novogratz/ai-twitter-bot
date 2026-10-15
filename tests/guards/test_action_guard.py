@@ -37,12 +37,13 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
+@pytest.mark.parametrize("previous_replies", [500, 10000])
+def test_replies_uncapped_per_day_and_hour_but_still_paced(monkeypatch, memory_ledger, previous_replies):
     now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(500):
+    for n in range(previous_replies):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
-                             now - timedelta(hours=6, seconds=n))
+                             now - timedelta(minutes=5, microseconds=n))
     assert ag.can_post(ag.REPLY)[0]
     ag.record(ag.REPLY, "https://x.com/a/status/500")
     assert not ag.can_post(ag.REPLY)[0]
