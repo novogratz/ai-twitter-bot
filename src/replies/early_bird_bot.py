@@ -72,7 +72,8 @@ def run_early_bird_cycle():
 
     cycle = reply_pipeline.Cycle()
     for username in picks:
-        if posted >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
+        if (cycle.work_done(posted) >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE or cycle.rate_limited
+                or not reply_pipeline.discovery_available()):
             break
 
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")

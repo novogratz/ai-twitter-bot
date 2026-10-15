@@ -17,21 +17,21 @@ def clock(monkeypatch):
     return now
 
 
-def test_default_gap_is_75_to_95_seconds_and_never_redrawn(clock, memory_ledger):
+def test_default_gap_is_60_to_80_seconds_and_never_redrawn(clock, memory_ledger):
     gaps = []
     for i in range(40):
         clock[0] += timedelta(seconds=600)
         action_guard.record(action_guard.REPLY, fresh("builder", n=i))
         gap = action_guard.seconds_until_allowed(action_guard.REPLY)
-        assert 75 <= gap <= 95
+        assert 60 <= gap <= 80
         assert action_guard.seconds_until_allowed(action_guard.REPLY) == gap
         gaps.append(round(gap, 2))
     assert len(set(gaps)) > 20
 
 
-def test_env_cannot_shorten_75_second_floor_or_raise_jitter(settings_override):
+def test_env_cannot_shorten_60_second_floor_or_raise_jitter(settings_override):
     settings_override(MIN_SECONDS_BETWEEN_REPLIES=4, REPLY_JITTER_SECONDS=999)
-    assert config.MIN_SECONDS_BETWEEN_REPLIES == 75
+    assert config.MIN_SECONDS_BETWEEN_REPLIES == 60
     assert config.REPLY_JITTER_SECONDS == 180
 
 
@@ -39,7 +39,7 @@ def test_uncertain_reservation_survives_restart_and_cannot_be_fished(clock, memo
     assert reply_pacing.reserve(fresh("one"))
     original = reply_pacing.PACE.read()
     gap = reply_pacing.remaining()
-    assert 75 <= gap <= 95 and memory_ledger.rows == []
+    assert 60 <= gap <= 80 and memory_ledger.rows == []
     for _ in range(5):
         assert not reply_pacing.reserve(fresh("two"))
         assert reply_pacing.PACE.read() == original
@@ -53,7 +53,7 @@ def test_uncertain_reservation_survives_restart_and_cannot_be_fished(clock, memo
 
 
 @pytest.mark.parametrize("value", ['{', '[]', '{"next_at":"bad"}',
-                                     '{"submitted_at":"2026-10-14T08:00:00-04:00", "next_at":"2026-10-14T08:01:14-04:00", "target":"x"}',
+                                     '{"submitted_at":"2026-10-14T08:00:00-04:00", "next_at":"2026-10-14T08:00:59-04:00", "target":"x"}',
                                      '{"submitted_at":"2026-10-14T08:00:00", "next_at":"2026-10-14T08:01:00", "target":"x"}'])
 def test_corrupt_pacing_stops_admission_without_overwriting(clock, value):
     from pathlib import Path
@@ -88,7 +88,7 @@ def test_uncertain_browser_submit_consumes_cooldown(unranked_account, clock, mon
     assert tc.reply_to_tweet(first, "Inference costs depend on memory bandwidth.") is WriteOutcome.UNCONFIRMED
     assert tc.reply_to_tweet(second, "Batching changes the latency budget.") is WriteOutcome.REFUSED
     assert first in replied_store.load_replied() and second not in replied_store.load_replied()
-    assert memory_ledger.rows == [] and reply_pacing.remaining() >= 75
+    assert memory_ledger.rows == [] and reply_pacing.remaining() >= 60
 
 
 def test_old_saved_cooldown_is_not_shortened_by_faster_defaults(clock, settings_override):
@@ -102,11 +102,11 @@ def test_old_saved_cooldown_is_not_shortened_by_faster_defaults(clock, settings_
     assert reply_pacing.remaining() == 600
 
 
-def test_full_day_can_approach_300_with_ready_drafts_and_browser_time(clock, memory_ledger):
+def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, memory_ledger):
     """Capacity check, not a quota: assume an approved draft is always ready."""
     import math
-    clock[0] = clock[0].replace(hour=5, minute=0)
-    end = clock[0].replace(hour=23)
+    clock[0] = clock[0].replace(hour=6, minute=0)
+    end = clock[0].replace(hour=22, minute=30)
     sent = 0
     while clock[0] < end:
         if action_guard.can_post(action_guard.REPLY)[0]:
@@ -119,7 +119,7 @@ def test_full_day_can_approach_300_with_ready_drafts_and_browser_time(clock, mem
         # The selector runs every fifteen seconds and never catches up in bursts.
         next_tick = (math.floor(clock[0].timestamp() / 15) + 1) * 15
         clock[0] = datetime.fromtimestamp(next_tick, tz=TORONTO)
-    assert 280 <= sent <= 320, sent
+    assert 330 <= sent <= 380, sent
 
 
 def _reserve_child(folder, start, results, index):

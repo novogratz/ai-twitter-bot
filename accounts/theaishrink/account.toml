@@ -297,22 +297,25 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 [searches]
 # Every alternative of a query, read with AND before OR or OR before AND,
 # finds posts `post` keeps: a company or energy word goes with AI.
-# direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
-# on the Top tab; a result must be on the niche.
+# Direct Reply interleaves Latest `replies` and Top `hot_tab` queries, then
+# rotates a bounded slice per cycle. Latest has no popularity minimum;
+# every result still needs topic admission and independent draft review.
 replies = [
-    '"Grok Imagine" OR "AI video" OR "AI generated video" lang:en min_faves:30 -filter:replies',
-    '"super intelligence" OR superintelligence OR "SI brainrot" OR "SI brain rot" lang:en min_faves:30 -filter:replies',
-    '"AI parody" OR "AI brainrot" OR "AI filmmaking" lang:en min_faves:30 -filter:replies',
-    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
-    'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
-    'ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50',
-    '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
-    '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
-    'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
-    'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
-    'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
-    'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
-    '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
+    '("Grok Imagine" OR "AI video" OR "AI generated video") lang:en -filter:replies',
+    '("super intelligence" OR superintelligence OR "SI brainrot" OR "SI brain rot") lang:en -filter:replies',
+    '("AI parody" OR "AI brainrot" OR "AI filmmaking") lang:en -filter:replies',
+    '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en -filter:replies',
+    '(OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
+    '(ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
+    '("AI agents" OR "agentic AI" OR "reasoning model" OR AGI) lang:en -filter:replies',
+    '("Claude Code" OR Cursor OR Copilot OR "AI coding") lang:en -filter:replies',
+    '("Meta AI" OR "Apple Intelligence" OR "Microsoft Copilot" OR "Amazon AI" OR "Tesla AI") lang:en -filter:replies',
+    '(Nvidia OR GPU OR "AI datacenter" OR "AI capex") lang:en -filter:replies',
+    '((TSMC OR AMD OR Broadcom) AI OR "AI chips" OR "AI power" OR "AI energy") lang:en -filter:replies',
+    '((CoreWeave OR Nebius OR "Applied Digital") AI OR "data center" OR "AI electricity") lang:en -filter:replies',
+    '("AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek) lang:en -filter:replies',
+    '("AI research" OR "machine learning" OR "AI paper" OR "AI benchmark") lang:en -filter:replies',
+    '("AI tools" OR "AI workflow" OR "AI tutorial" OR "AI demo") lang:en -filter:replies',
 ]
 hot_tab = [
     '"Grok Imagine" OR "AI video" OR "AI brainrot" lang:en min_faves:300 -filter:replies',

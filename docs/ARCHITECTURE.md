@@ -38,8 +38,8 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns fixed windows 05:00–09:30, 12:05–13:00,
-17:15–20:00 and 22:00–23:00 Toronto time, with closing times exclusive and DST handled by
+`src/guards/active_hours.py` owns fixed windows 06:00–09:00, 12:00–13:00
+and 17:00–22:30 Toronto time, with closing times exclusive and DST handled by
 `zoneinfo`. `WINDOWS` owns the bounds;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 those windows or once a stop was requested; `awake_job()` turns a job into a
@@ -72,7 +72,7 @@ authorize a new action.
 Account permission for Originals. Replyback, Debate, babysitter and notification
 registrations are disabled; retained manual paths still pass the conversation
 refusal. Reply jobs use `health.wrap_job`; `reach_report_job` excludes model or
-measurement failures from the Safari failure counter. Every job uses the four
+measurement failures from the Safari failure counter. Every job uses the three
 daily activity windows. Browser target verification and permanent claims enforce
 one Reply per original, with no protected-author or own-post exception.
 
@@ -84,8 +84,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 2 min | Scans permitted VIP profiles and rotating searches, preparing drafts in the shared queue; per-cycle bounds limit preparation. Never publishes for the ranked Account. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and prepares eligible drafts in the shared queue. |
+| `direct_reply_job` | 1 min | Rotates one permitted VIP and three interleaved Latest/Top searches; Latest queries have no like minimum. Prepares up to four draft attempts in the shared queue by default. Never publishes for the ranked Account. |
+| `feed_sweep_job` | 2 min | Reads up to 40 posts each from For You and Following, alternating first priority; prepares up to four draft attempts per feed by default. |
 | `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
 | `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
 | `reply_selection_job` | 15 sec; first run after 60 sec | Dedicated worker independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
@@ -468,9 +468,9 @@ Five modules sit behind them:
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
-  retweets are always refused. Reply spacing defaults to 75 seconds plus 0–20
-  seconds of jitter, aiming near 300 Replies per full day with browser work and
-  selector ticks. The minimum floor is 75; jitter may be 0–180. Independent
+  retweets are always refused. Reply spacing defaults to 60 seconds plus 0–20
+  seconds of jitter; browser work, selector ticks and model time also affect
+  throughput. The minimum floor is 60; jitter may be 0–180. Independent
   review and the rest of admission also apply. The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
@@ -555,6 +555,12 @@ root/niche/blocked-mention checks, reserves one draft per status ID, generates
 and validates the text, and saves the provider/model and parent snapshot in
 `reply_draft_queue.json`. Collectors do not publish or wait out the cooldown.
 The queue has at most eight active drafts; drafts expire after 30 minutes.
+All four collectors check queue capacity before starting another browser read.
+This is a read-only hint; reservation still enforces the bound under its process
+lock. Per-cycle budgets count reserved draft attempts, including declined or
+invalid generations, while the pipeline still returns only actual shipped
+Replies. Direct discovery shares its budget across VIP and search passes;
+feed sweeps alternate which feed gets first use of available capacity.
 
 `reply_style.choose_length()` assigns each new ranked draft a random ceiling:
 five words/60 characters, 120, 200 or the unchanged 278-character maximum.
@@ -592,7 +598,7 @@ drafts are never automatically replayed. A weak pool leaves the slot empty.
 The Reply source still supplies each collector's age, niche and ordering rules;
 `StateUnreadable` and `OutsideActiveHours` stop collection/selection. A provider
 rate limit stops preparation for that cycle. The generic unranked Account path
-retains sequential and overlapping generation; it still shares the 75-second
+retains sequential and overlapping generation; it still shares the 60-second
 engine floor, persisted submit cooldown and all other write guards. It is not
 the live Account's publishing path.
 

@@ -11,7 +11,7 @@ Preview what the bot would do. Nothing here touches the browser.
    Its `slots` list is the Account's Slot table (`slots` in
    `accounts/<BOT_ACCOUNT>/account.toml`), the last one the Exceptional slot. Each Slot runs 45 minutes from its
    start, cut at the current activity-window close (`due_slot`); external work
-   is allowed only during the four Toronto activity windows.
+   is allowed only during the three Toronto activity windows.
 2. If `startup_post` is `disabled` and `slots` is empty, report Reply-only mode;
    no Original preview is available. Otherwise, only while a listed Slot is open: draft and review the
    original the next pass would submit. Calls the models, writes no

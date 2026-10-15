@@ -8,8 +8,7 @@ from ..core import config
 from ..core.logger import log
 
 
-WINDOWS = ((time(5), time(9, 30)), (time(12, 5), time(13)),
-           (time(17, 15), time(20)), (time(22), time(23)))
+WINDOWS = ((time(6), time(9)), (time(12), time(13)), (time(17), time(22, 30)))
 WAKE = WINDOWS[0][0]
 BEDTIME = WINDOWS[-1][1]
 

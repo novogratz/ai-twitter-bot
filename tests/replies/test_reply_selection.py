@@ -105,7 +105,7 @@ def test_startup_collects_choices_then_publishes_the_best_one(clock, reviewer, p
     assert selection.run_selection_cycle() == 0 and len(publisher) == 1
     # Same prepared choices cannot send again until the shared deadline.
     wait = action_guard.seconds_until_allowed(action_guard.REPLY)
-    assert 75 <= wait <= 95
+    assert 60 <= wait <= 80
     clock[0] += timedelta(seconds=wait + 0.001)
     assert selection.run_selection_cycle() == 1 and len(publisher) == 2
 
@@ -268,7 +268,7 @@ def test_selected_draft_reaches_real_write_guards_once(clock, reviewer, monkeypa
     assert pasted == [TEXT] and submitted == [url]
     assert url in replied_store.load_replied()
     assert action_guard.count_today(action_guard.REPLY) == 1
-    assert reply_pacing.remaining() >= 75
+    assert reply_pacing.remaining() >= 60
     assert selection.run_selection_cycle() == 0 and other in reply_queue.ready()
 
 

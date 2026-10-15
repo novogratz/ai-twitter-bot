@@ -8,18 +8,17 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 
 @pytest.mark.parametrize("when,awake", [
-    ("2026-10-14T04:59:59-04:00", False), ("2026-10-14T05:00:00-04:00", True),
-    ("2026-10-14T09:29:59-04:00", True), ("2026-10-14T09:30:00-04:00", False),
-    ("2026-10-14T12:04:59-04:00", False), ("2026-10-14T12:05:00-04:00", True),
+    ("2026-10-14T05:59:59-04:00", False), ("2026-10-14T06:00:00-04:00", True),
+    ("2026-10-14T08:59:59-04:00", True), ("2026-10-14T09:00:00-04:00", False),
+    ("2026-10-14T11:59:59-04:00", False), ("2026-10-14T12:00:00-04:00", True),
     ("2026-10-14T12:59:59-04:00", True), ("2026-10-14T13:00:00-04:00", False),
-    ("2026-10-14T17:14:59-04:00", False), ("2026-10-14T17:15:00-04:00", True),
-    ("2026-10-14T19:59:59-04:00", True), ("2026-10-14T20:00:00-04:00", False),
-    ("2026-10-14T21:59:59-04:00", False), ("2026-10-14T22:00:00-04:00", True),
-    ("2026-10-14T22:59:59-04:00", True), ("2026-10-14T23:00:00-04:00", False),
-    ("2026-11-01T09:59:59+00:00", False), ("2026-11-01T10:00:00+00:00", True),
-    ("2026-11-02T03:59:59+00:00", True), ("2026-11-02T04:00:00+00:00", False),
-    ("2026-03-08T08:59:59+00:00", False), ("2026-03-08T09:00:00+00:00", True),
-    ("2026-03-09T02:59:59+00:00", True), ("2026-03-09T03:00:00+00:00", False),
+    ("2026-10-14T16:59:59-04:00", False), ("2026-10-14T17:00:00-04:00", True),
+    ("2026-10-14T20:00:00-04:00", True), ("2026-10-14T22:00:00-04:00", True),
+    ("2026-10-14T22:29:59-04:00", True), ("2026-10-14T22:30:00-04:00", False),
+    ("2026-11-01T10:59:59+00:00", False), ("2026-11-01T11:00:00+00:00", True),
+    ("2026-11-02T03:29:59+00:00", True), ("2026-11-02T03:30:00+00:00", False),
+    ("2026-03-08T09:59:59+00:00", False), ("2026-03-08T10:00:00+00:00", True),
+    ("2026-03-09T02:29:59+00:00", True), ("2026-03-09T02:30:00+00:00", False),
 ])
 def test_exact_waking_boundaries_and_dst(when, awake):
     assert hours.is_active(datetime.fromisoformat(when)) is awake
@@ -30,19 +29,18 @@ def test_fixed_windows_apply_every_minute_every_day_without_jitter():
     for day in range(7):
         for minute in range(24 * 60):
             now = monday + timedelta(days=day, minutes=minute)
-            expected = (300 <= minute < 570 or 725 <= minute < 780
-                        or 1035 <= minute < 1200 or 1320 <= minute < 1380)
+            expected = (360 <= minute < 540 or 720 <= minute < 780 or 1020 <= minute < 1350)
             assert hours.is_active(now) is expected
 
 
 def test_the_window_label_follows_the_constants():
-    assert hours.window_label() == "05:00–09:30, 12:05–13:00, 17:15–20:00, 22:00–23:00 America/Toronto"
+    assert hours.window_label() == "06:00–09:00, 12:00–13:00, 17:00–22:30 America/Toronto"
 
 
 @pytest.mark.parametrize("hour,minute,remaining", [
-    (4, 59, 0), (9, 29, 60), (9, 30, 0), (12, 4, 0), (12, 5, 3300),
-    (12, 59, 60), (13, 0, 0), (17, 14, 0), (19, 59, 60), (20, 0, 0),
-    (21, 59, 0), (22, 0, 3600), (22, 59, 60), (23, 0, 0),
+    (5, 59, 0), (6, 0, 10800), (8, 59, 60), (9, 0, 0), (11, 59, 0), (12, 0, 3600),
+    (12, 59, 60), (13, 0, 0), (16, 59, 0), (17, 0, 19800), (20, 0, 9000),
+    (22, 0, 1800), (22, 29, 60), (22, 30, 0), (23, 0, 0),
 ])
 def test_seconds_until_bedtime_stops_at_each_close(monkeypatch, hour, minute, remaining):
     clock(monkeypatch, datetime(2026, 10, 14, hour, minute, tzinfo=TORONTO))
@@ -50,20 +48,19 @@ def test_seconds_until_bedtime_stops_at_each_close(monkeypatch, hour, minute, re
 
 
 @pytest.mark.parametrize("now,wake", [
-    ("2026-10-14T04:59:59-04:00", "2026-10-14T05:00:00-04:00"),
-    ("2026-10-14T09:30:00-04:00", "2026-10-14T12:05:00-04:00"),
-    ("2026-10-14T13:00:00-04:00", "2026-10-14T17:15:00-04:00"),
-    ("2026-10-14T20:00:00-04:00", "2026-10-14T22:00:00-04:00"),
-    ("2026-10-14T23:00:00-04:00", "2026-10-15T05:00:00-04:00"),
-    ("2026-10-31T23:00:00-04:00", "2026-11-01T05:00:00-05:00"),
-    ("2026-03-07T23:00:00-05:00", "2026-03-08T05:00:00-04:00"),
+    ("2026-10-14T05:59:59-04:00", "2026-10-14T06:00:00-04:00"),
+    ("2026-10-14T09:00:00-04:00", "2026-10-14T12:00:00-04:00"),
+    ("2026-10-14T13:00:00-04:00", "2026-10-14T17:00:00-04:00"),
+    ("2026-10-14T22:30:00-04:00", "2026-10-15T06:00:00-04:00"),
+    ("2026-10-31T22:30:00-04:00", "2026-11-01T06:00:00-05:00"),
+    ("2026-03-07T22:30:00-05:00", "2026-03-08T06:00:00-04:00"),
 ])
 def test_next_wake_includes_each_break_and_dst(now, wake):
     local = datetime.fromisoformat(now).astimezone(TORONTO)
     assert hours.next_wake(local) == datetime.fromisoformat(wake)
 
 
-@pytest.mark.parametrize("hour,minute", [(9, 30), (13, 0), (20, 0), (23, 0)])
+@pytest.mark.parametrize("hour,minute", [(9, 0), (13, 0), (22, 30)])
 def test_closing_each_window_stops_queued_jobs_and_writes(monkeypatch, hour, minute):
     clock(monkeypatch, datetime(2026, 10, 14, hour, minute, tzinfo=TORONTO))
     ran = []

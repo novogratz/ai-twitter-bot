@@ -75,6 +75,11 @@ class Cycle:
     tried: set = field(default_factory=set)  # admitted this cycle, in memory only
     rate_limited: bool = False
     refusals: Counter = field(default_factory=Counter)  # Reply admission refusals by value
+    preparations: int = 0  # Reserved draft attempts, including invalid or declined drafts.
+
+    def work_done(self, shipped: int) -> int:
+        """Collectors count ranked preparation even though run() returns zero shipped."""
+        return self.preparations if account.current().replies.ranked_selection else shipped
 
 
 # Posts each job is done with until restart, by job name: definitive Reply
@@ -85,6 +90,11 @@ _skipped: dict[str, set] = {}
 
 _SPACING_WAIT_SLICE_SECONDS = 1.0
 _sleep = time.sleep
+
+
+def discovery_available() -> bool:
+    """Leave the browser free for publishing while the ranked queue is full."""
+    return not account.current().replies.ranked_selection or reply_queue.has_capacity()
 
 
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
@@ -136,6 +146,8 @@ def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
     for candidate in candidates:
         if cycle.rate_limited or _reached(prepared, max_generations) or _reached(prepared, max_shipped):
             break
+        if not discovery_available():
+            break
         author = _admit(job, candidate, cycle)
         if (author is None or not is_on_niche(candidate.text)
                 or account.current().relevance.off_topic.search(candidate.text)
@@ -148,6 +160,7 @@ def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
         if not sid:
             continue
         prepared += 1
+        cycle.preparations += 1
         try:
             generation = _generate(job, candidate, author, length, smiley)
             if generation.outcome is Outcome.RATE_LIMITED:

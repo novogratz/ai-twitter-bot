@@ -6,6 +6,26 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-14 — The Operator requested more aggressive AI/SI Replies during
+06:00–09:00, 12:00–13:00 and 17:00–22:30 America/Toronto every day, without
+jitter. These three windows supersede the four windows below; closing times
+remain exclusive. The shared cooldown is now 60–80 seconds, with minimum/floor
+60 and default jitter 20. Saved deadlines remain honored. More coverage is a
+capacity aim, never a quota or permission to publish weak or unsupported text.
+
+Direct discovery runs every minute, rotating one permitted VIP and three
+interleaved Latest/Top searches. Latest queries have no like minimum and include
+research, tools, workflows and generated videos. Feed sweeps run every two
+minutes, alternate which feed goes first and read up to 40 posts per feed.
+Ranked collection counts draft attempts, including declines, against its cycle
+budget: four for direct discovery and four per feed by default. Every collector
+stops new browser reads when the eight-draft queue is full; reservation still
+checks capacity under its process lock. Independent comparison, kindness,
+evidence, dynamic lengths, random smileys, protected authors, standalone parents,
+Reply-only publishing and permanent deduplication remain. Four local settings
+change: minimum gap 60, direct draft attempts 4, feed draft attempts 4 and feed
+scan limit 40. No start or restart accompanies this update.
+
 2026-10-14 — The Operator requested a pace near 300 Replies per full day and
 a random mix with and without smileys. This supersedes the earlier 5–8 minute
 cooldown and model-chosen optional reactions below. The shared cooldown is now
@@ -120,7 +140,8 @@ are preserved; the later pacing mandate above changes only the two Reply spacing
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the current source of
 truth. This mandate supersedes the September 26 snapshot's publishing behavior
 and the October 13 activity windows. The rollback history is in `docs/HISTORY.md`.
-Replies use the shared 75–95 second cooldown and independent comparison, aiming near 300/day without a forced quota; likes and follows
+Replies use the shared 60–80 second cooldown and independent comparison within
+the three current windows, without a forced quota; likes and follows
 retain their existing caps and exclude Blocked accounts. Quotes, reposts,
 self-recycling and threads remain disabled. The Account remains The SI Maximalist:
 SI news, Grok Imagine videos, brainrot and clearly fictional celebrity parodies.

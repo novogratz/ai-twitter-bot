@@ -76,8 +76,8 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.replies.mega_watch_bot import run_mega_watch_cycle
         from src.replies.first_hour_babysitter import run_babysit_cycle
 
-        add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
-        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
+        add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 1, "direct_reply_job", first_seconds=2)
+        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 2, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
         # Retained manual entry points share admission, but never run automatically.
         add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job", enabled=False)

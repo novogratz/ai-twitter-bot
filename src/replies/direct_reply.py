@@ -4,6 +4,7 @@ order come from the Reply source; early bird and mega watch import them from
 here until they take their candidates from it too."""
 import random
 from datetime import timedelta
+from itertools import zip_longest
 from ..x import x_urls
 from ..core import account, settings
 from ..core.llm_client import Surface
@@ -15,6 +16,7 @@ from .reply_source import freshness_sort_key, is_on_niche
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
+_VIP_ROTATION_OFFSET = [0]
 
 
 def always_reply_accounts() -> tuple:
@@ -94,16 +96,24 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     Each handle is a cheap `from:` search, no profile visit; the 6h
     btc_blitz converges full coverage, this lane keeps pickup fast.
 
-    `remaining` bounds the Replies shipped; `cycle` is shared with the
-    search lane.
+    Ranked Accounts rotate one handle per cycle. `remaining` bounds draft
+    attempts for them and shipped Replies otherwise; `cycle` is shared with
+    the search lane.
     """
     from ..x.scraper import scrape_x_search
 
     vip_scan_handles = [h.strip().lstrip("@") for h in settings.get("VIP_SCAN_HANDLES").split(",")
                         if h.strip()]
+    if account.current().replies.ranked_selection and vip_scan_handles:
+        pick = _VIP_ROTATION_OFFSET[0] % len(vip_scan_handles)
+        _VIP_ROTATION_OFFSET[0] = (pick + 1) % len(vip_scan_handles)
+        vip_scan_handles = [vip_scan_handles[pick]]
     posted = 0
+    started = cycle.work_done(0)
     for handle in vip_scan_handles:
-        if cycle.rate_limited or (remaining is not None and posted >= remaining):
+        used = cycle.work_done(posted) - started
+        if (cycle.rate_limited or not reply_pipeline.discovery_available()
+                or (remaining is not None and used >= remaining)):
             break
         if _vip_call(handle) is None:
             log.warning(f"[VIP] @{handle} skipped: no Relation prompt and no default prompt in the Account.")
@@ -115,7 +125,7 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
                       if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))
                       and not x_urls.is_reply_like_tweet(t, handle)]
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,
-                                     max_shipped=None if remaining is None else remaining - posted)
+                                     max_shipped=None if remaining is None else remaining - used)
         log.info(f"[VIP] @{handle} done.")
     log.info(f"[VIP] Total VIP replies posted: {posted}.")
     return posted
@@ -154,7 +164,7 @@ _QUERY_ROTATION_OFFSET = [0]
 def _queries_for_cycle(all_queries: list) -> list:
     """Return this cycle's rotating slice of the reply search queries.
 
-    DIRECT_REPLY_QUERIES_PER_CYCLE (default 8, read at call time) bounds
+    DIRECT_REPLY_QUERIES_PER_CYCLE (default 3, read at call time) bounds
     how many Safari search scrapes one cycle pays for. K >= N degrades to
     the old scan-everything behavior."""
     k = max(1, settings.get("DIRECT_REPLY_QUERIES_PER_CYCLE"))
@@ -168,9 +178,10 @@ def _queries_for_cycle(all_queries: list) -> list:
 
 
 def run_direct_reply_cycle(max_replies=None):
-    """Reply cycle — feed-first, no profile visits.
+    """Reply cycle — a rotating VIP search, then topic searches.
 
-    `max_replies` bounds the cycle and returns Safari to the scheduler. When
+    `max_replies` bounds draft attempts for ranked Accounts and shipped Replies
+    otherwise, returning Safari to the scheduler. When
     omitted, the steady-state default is DIRECT_REPLY_MAX_PER_CYCLE; pass 0
     or a negative value only in a manual/debug call to make it unbounded.
     The default bounds each scheduled pass so it finishes before the next
@@ -188,7 +199,7 @@ def run_direct_reply_cycle(max_replies=None):
     # 1. VIP scan — VIP_SCAN_HANDLES via search (fast, no profile page)
     total = _run_vip_scan(cycle, remaining=remaining)
     if remaining is not None:
-        remaining -= total
+        remaining = max_replies - cycle.work_done(total)
 
     # 2. SEARCH — primary reply engine for direct_reply.
     #    Feed sweeper owns For You / Following; this cycle owns search so
@@ -201,23 +212,27 @@ def run_direct_reply_cycle(max_replies=None):
     #    coverage still lands every ceil(N/K) cycles (~5 min); the freed
     #    Safari time goes to POSTING replies.
     searches = account.current().searches
-    all_queries = list(searches.replies + searches.hot_tab)
+    # Interleave fresh discovery with popular posts; no author or likes floor
+    # applies to Latest discovery. Account queries define the topic scope.
+    all_queries = [query for pair in zip_longest(searches.replies, searches.hot_tab)
+                   for query in pair if query]
     cycle_queries = _queries_for_cycle(all_queries)
     random.shuffle(cycle_queries)
     for query in cycle_queries:
-        if cycle.rate_limited:
+        if cycle.rate_limited or not reply_pipeline.discovery_available():
             break
         if remaining is not None and remaining <= 0:
             log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
+        tab = "latest" if query in searches.replies else "top"
         tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
-                                       max_tweets=25, tab="top")
-        # The budget bounds each query's generations; only the Replies
-        # shipped come off it.
+                                       max_tweets=25, tab=tab)
+        # Ranked collectors publish nothing: preparation attempts consume the
+        # shared cycle budget, including drafts declined or refused on style.
         n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query), cycle,
                                max_generations=remaining)
         total += n
         if remaining is not None:
-            remaining -= n
+            remaining = max_replies - cycle.work_done(total)
 
-    log.info(f"[DIRECT] Posted {total} replies this cycle.")
+    log.info("[DIRECT] Draft attempts: %s; shipped replies: %s.", cycle.preparations, total)

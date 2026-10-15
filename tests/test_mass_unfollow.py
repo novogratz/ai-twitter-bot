@@ -232,7 +232,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, c
     assert json.loads(script.results.read_text()) == []
     assert "var keep" in script.browser.calls[-1][0], "a page script ran after the refusal"
     out = capsys.readouterr().out
-    assert "STOP: Waking hours ended (05:00–09:30, 12:05–13:00, 17:15–20:00, 22:00–23:00 America/Toronto)" in out
+    assert "STOP: Waking hours ended (06:00–09:00, 12:00–13:00, 17:00–22:30 America/Toronto)" in out
     assert "TOTAL unfollowed: 0" in out
 
 
