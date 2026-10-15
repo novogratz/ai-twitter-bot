@@ -60,7 +60,7 @@ creation and uploads remain Operator-managed.
   ending or fake typos. Flags and decorative emojis cannot substitute for plain
   text or become a signature. Recent replies guide variety.
 - **More active Replies:** no daily or hourly Reply-count cap; a shared
-  30–45 second cooldown around the clock.
+  20–30 second cooldown around the clock.
   Actual volume depends on qualifying posts, approved drafts and model/browser
   time; there is no forced quota. Collectors prepare a shared
   pool during the cooldown. Independent review scores impact, sharpness and
@@ -69,14 +69,19 @@ creation and uploads remain Operator-managed.
   deadline and permanent parent claims survive restarts.
   The selector checks every ten seconds and gives a new pool 15 seconds for
   choices; startup still allows 60 seconds. One approved winner per cycle.
-- **Broader AI/SI discovery:** direct scans run every minute, rotating one
+- **Broader SI and technology discovery:** direct scans run every minute, rotating one
   permitted VIP and three searches mixing Latest and Top. Latest searches cover
-  models, research, tools, workflows and generated videos; their results still
-  pass the shared two-like minimum. Feed sweeps run every minute, with For You
+  models, research, tools, workflows, generated videos, robotics, chips,
+  developer tools, databases and infrastructure; their results still
+  pass the shared two-like minimum. Top queries also use this minimum instead
+  of requiring viral engagement. Feed sweeps run every minute, with For You
   first in three of every four cycles and Following first in the fourth.
   Each scan selects and verifies the intended native tab before reading posts.
-  Small preparation budgets and a pause when the eight-draft queue fills leave
-  browser time for publishing. Every draft still needs independent approval.
+  Each direct scan or feed prepares up to six draft attempts and pauses when
+  the eight-draft queue fills, leaving browser time for publishing. Every draft
+  still needs independent approval.
+  Each collector saves the initial viewport and every scroll before posts
+  disappear, deduplicates by status ID and stops at its result limit.
   Collectors and drafting retain up to 4,000 visible parent characters, so
   evidence after character 200 is available. The write still verifies the
   actual author and matches the reviewed parent text before submitting.

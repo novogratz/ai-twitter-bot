@@ -14,7 +14,7 @@ previous_handles = ["TheAIShrink"]
 language = "en"
 # The domain, as the editorial and Reply prompts name it: "Write ONE original
 # SI post", "a strict independent SI editor", "reliable, stable SI knowledge".
-domain = "SI / Super intelligence"
+domain = "SI / Super intelligence and substantive technology"
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.
@@ -138,7 +138,7 @@ publisher = "Grok Imagine docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b((?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|grok|xai|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu)\b'
+topic = '\b((?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|grok|xai|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|ai|artificial intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu|semiconductors?|cpus?|microprocessors?|chip\s+(?:design|manufacturing|architecture)|compilers?|developer\s+tools?|software\s+(?:engineering|development)|open[\s-]*source\s+(?:software|tools?)|databases?|distributed\s+systems?|cybersecurity)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -279,14 +279,15 @@ follow_engagers_skip = [
     "zerohedge", "unusual_whales", "cointelegraph",
 ]
 
-# Python regular expressions. SI/AI and generated videos (Operator, 2026-10-14): no crypto,
-# markets, space or general tech term, and no word too broad alone (token,
+# Python regular expressions. SI/AI, generated videos and substantive technology
+# (Operator, 2026-10-15): no crypto, markets or unrelated space posts.
+# Avoid words too broad alone (token,
 # coding, agent, meta, google, apple). AI in capitals always matches; any
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI|ASI)|super[\s-]*intelligence|superintelligen[ct]|kling|runwayml|text[ -]to[ -]video|image[ -]to[ -]video|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|semiconductors?|cpus?|microprocessors?|chip\s+(?:design|manufacturing|architecture)|compilers?|developer\s+tools?|software\s+(?:engineering|development)|open[\s-]*source\s+(?:software|tools?)|databases?|distributed\s+systems?|cybersecurity)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
@@ -296,12 +297,13 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # X search queries.
 [searches]
 # Every alternative of a query, read with AND before OR or OR before AND,
-# finds posts `post` keeps: a company or energy word goes with SI/AI.
+# finds posts `post` keeps: SI/AI terms or explicit substantive technology terms.
 # Every discovery lane includes SI, Super intelligence and superintelligence.
 # AI/artificial intelligence and verified product names remain search aliases.
 # Direct Reply interleaves Latest `replies` and Top `hot_tab` queries, then
 # rotates a bounded slice per cycle. Latest has no popularity minimum;
-# every result still needs topic admission and independent draft review.
+# every result still needs two likes, topic admission and independent draft review.
+# Top also uses min_faves:2; popularity is not a separate viral-only gate.
 replies = [
     '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR "generated video") OR "Grok Imagine") lang:en -filter:replies',
     '(SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") lang:en -filter:replies',
@@ -318,13 +320,20 @@ replies = [
     '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (startup OR funding OR layoffs OR jobs OR "open source") OR DeepSeek) lang:en -filter:replies',
     '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (research OR paper OR benchmark OR alignment) OR "machine learning") lang:en -filter:replies',
     '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (tools OR workflow OR tutorial OR demo)) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding OR workflow OR tutorial) OR "developer tools" OR "open source software" OR compilers) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (chips OR hardware) OR semiconductors OR CPUs OR "chip design" OR robotics) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (deployment OR infrastructure) OR databases OR "distributed systems" OR cybersecurity) lang:en -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (creator OR animation OR filmmaking) OR "text to video" OR "image to video" OR "Grok Imagine" OR Kling OR RunwayML) lang:en -filter:replies',
 ]
 hot_tab = [
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR brainrot) OR "Grok Imagine") lang:en min_faves:300 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:500 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:300 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:300 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:500 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR brainrot) OR "Grok Imagine") lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding OR workflow OR tutorial) OR "developer tools" OR "open source software" OR compilers) lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (chips OR hardware) OR semiconductors OR CPUs OR "chip design" OR robotics) lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (deployment OR infrastructure) OR databases OR "distributed systems" OR cybersecurity) lang:en min_faves:2 -filter:replies',
 ]
 # like_job picks one per cycle, on the Top or the Latest tab, and likes
 # what it finds without the niche check: the query is the only filter.

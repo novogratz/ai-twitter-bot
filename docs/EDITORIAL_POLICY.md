@@ -1,5 +1,27 @@
 # Publishing policy — October 15, 2026
 
+2026-10-15 — The Operator requested broader, more aggressive Replies and a push.
+Reply scope now includes substantive technology alongside SI: robotics, chips,
+developer tools, open-source software, databases, cybersecurity and infrastructure.
+Explicit technical terms qualify for discovery; semantic review must still find
+a useful, supported contribution. Unrelated politics, lifestyle, crypto and trading
+remain out. SI wording and search aliases remain; follow bios keep their SI gate.
+
+Top Reply queries use min_faves:2 instead of 300–500, retaining the same two-like
+minimum as every other source and the final write. Scrolling collectors save each
+viewport before posts disappear, deduplicate status IDs, refresh engagement and
+retain nested-reply evidence. Result and scroll bounds remain; empty views stop
+collection and every opened tab closes on failure. Disabled jobs stay disabled.
+
+The shared Reply gap becomes 20–30 seconds: minimum/default floor 20 and default
+jitter 10. Existing saved deadlines still apply, including uncertain submissions.
+Direct scans and each feed may attempt six drafts instead of four; the eight-draft
+queue and independent approval remain. Activity stays 24/7 with no daily/hourly
+Reply cap or quota. One Reply per standalone conversation, own-post refusals,
+Elon protection, kindness, factual support, length limits, the 50/50 smiley choice
+and contextual BANGER Voice remain. Four matching local settings are updated;
+this push does not start or restart the bot or alter production state.
+
 2026-10-15 — "BANGER" is the Operator's signature expression of enthusiasm,
 used occasionally for genuinely standout SI work supported by the supplied
 context. Both Voice files permit natural variants: "what a BANGER", "absolute

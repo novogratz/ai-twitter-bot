@@ -145,13 +145,76 @@ process.stdout.write(JSON.stringify({answer, selected, clicks}));
     monkeypatch.setattr(safari, "_run_js", run)
     monkeypatch.setattr(safari, "_scroll_page", lambda: scrolls.append(state["selected"]))
     monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
-    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: seen.append(state["selected"]) or ["post"])
+    post = {"url": "https://x.com/builder/status/123", "text": "SI research", "is_reply": False}
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: seen.append(state["selected"]) or [post])
     allowed = scenario in ("already selected", "other feed")
-    assert getattr(scraper, surface)() == (["post"] if allowed else [])
-    assert seen == ([target] if allowed else [])
+    assert getattr(scraper, surface)() == ([post] if allowed else [])
+    assert (bool(seen) and set(seen) == {target}) is allowed
     assert (bool(scrolls) and set(scrolls) == {target}) is allowed
     assert clicks == ([target] if scenario in ("other feed", "ignored click") else [])
     assert closed == [True]
+
+
+@pytest.mark.parametrize("surface", ["profile", "home", "following", "search", "mentions"])
+def test_virtualized_scrapes_keep_each_viewport_and_deduplicate_status_ids(monkeypatch, surface):
+    from src.x import scraper, safari
+    monkeypatch.setattr(scraper, "_profile_visit_allowed", lambda _: True)
+    monkeypatch.setattr(scraper.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a: None)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "VERIFIED")
+    scrolls, closed, seen = [], [], []
+    monkeypatch.setattr(safari, "_scroll_page", lambda: scrolls.append(True))
+    monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
+    first = {"url": "https://x.com/first/status/101", "text": "SI research", "likes": 8}
+    duplicate = {"url": "https://x.com/builder/status/102", "text": "SI full caption", "likes": 5, "is_reply": True}
+    updated = {"url": "https://twitter.com/builder/status/102?s=20", "text": "SI", "likes": 1, "is_reply": False}
+    last = {"url": "https://x.com/last/status/103", "text": "SI video", "likes": 6}
+    overflow = {"url": "https://x.com/last/status/104", "text": "Another SI video", "likes": 7}
+    frames = [[first, duplicate], [updated, last, overflow]]
+    def read(label, limit, text_limit):
+        seen.append((limit, text_limit))
+        return frames[len(scrolls)]
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", read)
+    calls = {"profile": lambda: scraper.scrape_profile_tweets("builder", 3, 4000),
+             "home": lambda: scraper.scrape_home_feed(3, 4000),
+             "following": lambda: scraper.scrape_following_feed(3, 4000),
+             "search": lambda: scraper.scrape_x_search("SI research", 3, text_limit=4000),
+             "mentions": lambda: scraper.scrape_mentions(3)}
+    rows = calls[surface]()
+    assert len(rows) == 3 and rows[0] == first and rows[2] == last
+    assert rows[1]["text"] == "SI full caption"
+    assert rows[1]["likes"] == 1  # Never retain a stale qualifying count.
+    assert rows[1]["is_reply"] is True  # A compact card cannot erase a reply marker.
+    assert seen == [(3, 200 if surface == "mentions" else 4000)] * 2
+    assert scrolls == closed == [True]
+
+
+@pytest.mark.parametrize("surface", ["profile", "home", "following", "search", "mentions"])
+def test_scrape_closes_its_tab_when_collection_fails(monkeypatch, surface):
+    from src.x import scraper, safari
+    monkeypatch.setattr(scraper, "_profile_visit_allowed", lambda _: True)
+    monkeypatch.setattr(scraper.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a: None)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: "VERIFIED")
+    closed = []
+    monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
+    def fail(*a):
+        raise RuntimeError("collection failed")
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", fail)
+    calls = {"profile": lambda: scraper.scrape_profile_tweets("builder"),
+             "home": scraper.scrape_home_feed, "following": scraper.scrape_following_feed,
+             "search": lambda: scraper.scrape_x_search("SI research"), "mentions": scraper.scrape_mentions}
+    with pytest.raises(RuntimeError, match="collection failed"):
+        calls[surface]()
+    assert closed == [True]
+
+
+def test_collector_stops_before_scrolling_when_first_viewport_fills_limit(monkeypatch):
+    from src.x import scraper, safari
+    row = {"url": "https://x.com/builder/status/101", "text": "SI result"}
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: [row])
+    monkeypatch.setattr(safari, "_scroll_page", lambda: pytest.fail("limit already filled"))
+    assert scraper._collect_scrolling_tweets("test", 1, 4000, 5) == [row]
 
 
 @pytest.mark.parametrize("text", ["SI research.\n" * 30, "SI " + "🙂" * 4000])
