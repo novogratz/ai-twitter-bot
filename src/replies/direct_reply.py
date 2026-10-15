@@ -28,7 +28,9 @@ def always_reply_accounts() -> tuple:
 REPLY_PROMPT = """Reply to the actual point in the tweet below. Offer one useful explanation,
 answer, grounded observation or thoughtful disagreement. If it is a question,
 answer it directly. A joke is optional. No mandatory formula or question ending.
-Avoid exaggerated hype, flattery and catchphrases.
+Keep enthusiasm grounded in the supplied context. An expression allowed by the
+Account Voice can fit when its stated context is met; avoid unsupported hype,
+empty flattery and forced or repetitive catchphrases.
 
 Use factual details from the supplied tweet or reliable, stable {domain} knowledge.
 Do not invent current figures, product capabilities, benchmark scores or tests.

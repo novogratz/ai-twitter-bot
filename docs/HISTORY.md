@@ -1,5 +1,20 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-15 — Contextual BANGER signature
+
+The Operator requested "BANGER" and variants such as "absolute BANGER" for
+genuinely cool content. Both English and French Voices now allow that occasional
+enthusiasm when a concrete detail in the supplied context earns it. Most messages
+omit it; no consecutive repetition, forced placement or automatic suffix.
+Playful superlatives are opinions, not claims of an objective record or ranking.
+
+The shared Reply prompt previously banned every catchphrase, and the plain-text
+style instruction banned every signature. These now distinguish contextual Voice
+expressions from forced repetition and emoji signatures. The expression is part
+of the draft, inside its assigned length and smiley choice, and receives normal
+independent review. Nothing is added after approval. No publishing guard, schedule,
+emoji probability or production state changes; no start or restart is performed.
+
 ## 2026-10-15 — Continuous 24/7 activity and plain-text emoji enforcement
 
 The Operator restored round-the-clock activity and reaffirmed no daily or

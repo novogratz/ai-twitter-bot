@@ -1,5 +1,18 @@
 # Publishing policy — October 15, 2026
 
+2026-10-15 — "BANGER" is the Operator's signature expression of enthusiasm,
+used occasionally for genuinely standout SI work supported by the supplied
+context. Both Voice files permit natural variants: "what a BANGER", "absolute
+BANGER", "ultimate BANGER" and "BANGER of all time". These are playful opinions,
+not evidence of a record or ranking. A concrete detail must earn the excitement;
+routine news, empty praise and unseen video details do not qualify.
+
+Most messages omit it, and consecutive replies should not repeat it. It has no
+quota, fixed placement or automatic suffix. Choose it during drafting, inside
+the assigned character/word limit and existing 50/50 smiley choice; never append
+it after approval. Independent review, factual support, kindness and every
+publishing guard remain. This Voice update does not start or restart the bot.
+
 2026-10-15 — The Operator restored 24/7 activity, with no scheduled overnight
 pause and no daily or hourly Reply-count cap. This supersedes all activity
 windows below. America/Toronto still defines calendar days for the remaining

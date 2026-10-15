@@ -6,6 +6,16 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-15 — The Operator added "BANGER" as an occasional signature expression
+for genuinely standout SI work, including creative video ideas supported by
+the supplied context. Both Voice files allow natural variants such as "what a
+BANGER", "absolute BANGER", "ultimate BANGER" and "BANGER of all time" as playful
+opinions, not factual rankings. Most messages omit it; no consecutive repetition,
+forced placement or automatic suffix. It is drafted within the assigned length
+and smiley choice and receives the same independent review. This permits grounded
+enthusiasm, never empty praise or invented video details. All publishing rules
+remain; no start or restart accompanies this Voice update.
+
 2026-10-15 — The Operator restored 24/7 activity, with no scheduled overnight
 pause and no daily or hourly Reply-count cap. This supersedes all activity
 windows below. America/Toronto still defines calendar days for the remaining
